@@ -510,20 +510,20 @@ and headers.
     .. code-block:: php
 
         // config/packages/mailer.php
-        $container->loadFromExtension('framework', [
-            // ...
-            'mailer' => [
-                'envelope' => [
-                    'sender' => 'fabien@example.com',
-                    'recipients' => ['foo@example.com', 'bar@example.com'],
-                ],
-                'headers' => [
-                    'from' => 'Fabien <fabien@example.com>',
-                    'bcc' => 'baz@example.com',
-                    'X-Custom-Header' => 'foobar',
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $mailer = $framework->mailer();
+            $mailer
+                ->envelope()
+                    ->sender('fabien@example.com')
+                    ->recipients(['foo@example.com', 'bar@example.com'])
+            ;
+
+            $mailer->header('from')->value('Fabien <fabien@example.com>');
+            $mailer->header('bcc')->value('baz@example.com');
+            $mailer->header('X-Custom-Header')->value('foobar');
+        };
 
 .. versionadded:: 5.2
 
@@ -1092,15 +1092,14 @@ This can be configured by replacing the ``dsn`` configuration entry with a
     .. code-block:: php
 
         // config/packages/mailer.php
-        $container->loadFromExtension('framework', [
-            // ...
-            'mailer' => [
-                'transports' => [
-                    'main' => '%env(MAILER_DSN)%',
-                    'alternative' => '%env(MAILER_DSN_IMPORTANT)%',
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->mailer()
+                ->transport('main', '%env(MAILER_DSN)%')
+                ->transport('alternative', '%env(MAILER_DSN_IMPORTANT)%')
+            ;
+        };
 
 By default the first transport is used. The other transports can be used by
 adding a text header ``X-Transport`` to an email::
@@ -1163,16 +1162,17 @@ you have a transport called ``async``, you can route the message there:
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'transports' => [
-                    'async' => '%env(MESSENGER_TRANSPORT_DSN)%',
-                ],
-                'routing' => [
-                    'Symfony\Component\Mailer\Messenger\SendEmailMessage' => 'async',
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->messenger()
+                ->transport('async')->dsn('%env(MESSENGER_TRANSPORT_DSN)%');
+
+            $framework->messenger()
+                ->routing('Symfony\Component\Mailer\Messenger\SendEmailMessage')
+                ->senders(['async']);
+        };
+
 
 Thanks to this, instead of being delivered immediately, messages will be sent to
 the transport to be handled later (see :ref:`messenger-worker`).
@@ -1213,11 +1213,12 @@ disable asynchronous delivery.
     .. code-block:: php
 
         // config/packages/mailer.php
-        $container->loadFromExtension('framework', [
-            'mailer' => [
-                'message_bus' => 'app.another_bus',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->mailer()
+                ->messageBus('app.another_bus');
+        };
 
 .. versionadded:: 5.1
 
@@ -1300,12 +1301,13 @@ the mailer configuration file (e.g. in the ``dev`` or ``test`` environments):
     .. code-block:: php
 
         // config/packages/mailer.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'mailer' => [
-                'dsn' => 'null://null',
-            ],
-        ]);
+            $framework->mailer()
+                ->dsn('null://null');
+        };
 
 .. note::
 
@@ -1352,14 +1354,15 @@ a specific address, instead of the *real* address:
     .. code-block:: php
 
         // config/packages/mailer.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'mailer' => [
-                'envelope' => [
-                    'recipients' => ['youremail@example.com'],
-                ],
-            ],
-        ]);
+            $framework->mailer()
+                ->envelope()
+                    ->recipients(['youremail@example.com'])
+            ;
+        };
 
 .. _`high availability`: https://en.wikipedia.org/wiki/High_availability
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)

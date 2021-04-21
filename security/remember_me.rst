@@ -288,7 +288,7 @@ so ``DoctrineTokenProvider`` can store the tokens:
 
         .. code-block:: php
 
-            # config/packages/doctrine.php
+            // config/packages/doctrine.php
             use Symfony\Config\DoctrineConfig;
 
             return static function (DoctrineConfig $doctrine) {

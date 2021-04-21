@@ -192,58 +192,62 @@ Below is the configuration for the pull request state machine.
     .. code-block:: php
 
         // config/packages/workflow.php
-        $container->loadFromExtension('framework', [
-            // ...
-            'workflows' => [
-                'pull_request' => [
-                    'type' => 'state_machine',
-                    'marking_store' => [
-                        'type' => 'method',
-                        'property' => 'currentPlace',
-                    ],
-                    'supports' => ['App\Entity\PullRequest'],
-                    'initial_marking' => 'start',
-                    'places' => [
-                        'start',
-                        'coding',
-                        'test',
-                        'review',
-                        'merged',
-                        'closed',
-                    ],
-                    'transitions' => [
-                        'submit'=> [
-                            'from' => 'start',
-                            'to' => 'test',
-                        ],
-                        'update'=> [
-                            'from' => ['coding', 'test', 'review'],
-                            'to' => 'test',
-                        ],
-                        'wait_for_review'=> [
-                            'from' => 'test',
-                            'to' => 'review',
-                        ],
-                        'request_change'=> [
-                            'from' => 'review',
-                            'to' => 'coding',
-                        ],
-                        'accept'=> [
-                            'from' => 'review',
-                            'to' => 'merged',
-                        ],
-                        'reject'=> [
-                            'from' => 'review',
-                            'to' => 'closed',
-                        ],
-                        'reopen'=> [
-                            'from' => 'start',
-                            'to' => 'review',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $pullRequest = $framework->workflows()->workflows('pull_request');
+
+            $pullRequest
+                ->type('state_machine')
+                ->supports(['App\Entity\PullRequest'])
+                ->initialMarking(['start']);
+
+            $pullRequest->markingStore()
+                ->type('method')
+                ->property('currentPlace');
+
+            $pullRequest->place()->name('start');
+            $pullRequest->place()->name('coding');
+            $pullRequest->place()->name('test');
+            $pullRequest->place()->name('review');
+            $pullRequest->place()->name('merged');
+            $pullRequest->place()->name('closed');
+
+            $pullRequest->transition()
+                ->name('submit')
+                    ->from(['start'])
+                    ->to(['test']);
+
+            $pullRequest->transition()
+                ->name('update')
+                    ->from(['coding', 'test', 'review'])
+                    ->to(['test']);
+
+            $pullRequest->transition()
+                ->name('wait_for_review')
+                    ->from(['test'])
+                    ->to(['review']);
+
+            $pullRequest->transition()
+                ->name('request_change')
+                    ->from(['review'])
+                    ->to(['coding']);
+
+            $pullRequest->transition()
+                ->name('accept')
+                    ->from(['review'])
+                    ->to(['merged']);
+
+            $pullRequest->transition()
+                ->name('reject')
+                    ->from(['review'])
+                    ->to(['closed']);
+
+            $pullRequest->transition()
+                ->name('accept')
+                    ->from(['closed'])
+                    ->to(['review']);
+        };
 
 In a Symfony application using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,

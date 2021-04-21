@@ -51,9 +51,13 @@ for more information):
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'csrf_protection' => null,
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->csrfProtection()
+                ->enabled(true)
+            ;
+        };
 
 The tokens used for CSRF protection are meant to be different for every user and
 they are stored in the session. That's why a session is started automatically as

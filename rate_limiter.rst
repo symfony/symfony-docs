@@ -177,21 +177,26 @@ enforce different levels of service (free or paid):
     .. code-block:: php
 
         // config/packages/rate_limiter.php
-        $container->loadFromExtension('framework', [
-            'rate_limiter' => [
-                'anonymous_api' => [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->rateLimiter()
+                ->limiter('anonymous_api')
                     // use 'sliding_window' if you prefer that policy
-                    'policy' => 'fixed_window',
-                    'limit' => 100,
-                    'interval' => '60 minutes',
-                ],
-                'authenticated_api' => [
-                    'policy' => 'token_bucket',
-                    'limit' => 5000,
-                    'rate' => [ 'interval' =>  '15 minutes', 'amount' =>  500 ],
-                ],
-            ],
-        ]);
+                    ->policy('fixed_window')
+                    ->limit(100)
+                    ->interval('60 minutes')
+                ;
+
+            $framework->rateLimiter()
+                ->limiter('authenticated_api')
+                    ->policy('token_bucket')
+                    ->limit(5000)
+                    ->rate()
+                        ->interval('15 minutes')
+                        ->amount(500)
+                ;
+        };
 
 .. note::
 
@@ -409,16 +414,17 @@ Use the ``cache_pool`` option to override the cache used by a specific limiter
     .. code-block:: php
 
         // config/packages/rate_limiter.php
-        $container->loadFromExtension('framework', [
-            'rate_limiter' => [
-                'anonymous_api' => [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->rateLimiter()
+                ->limiter('anonymous_api')
                     // ...
 
                     // use the "cache.anonymous_rate_limiter" cache pool
-                    'cache_pool' => 'cache.anonymous_rate_limiter',
-                ],
-            ],
-        ]);
+                    ->cachePool('cache.anonymous_rate_limiter')
+                ;
+        };
 
 .. note::
 
@@ -483,16 +489,17 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
     .. code-block:: php
 
         // config/packages/rate_limiter.php
-        $container->loadFromExtension('framework', [
-            'rate_limiter' => [
-                'anonymous_api' => [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->rateLimiter()
+                ->limiter('anonymous_api')
                     // ...
 
                     // use the "lock.rate_limiter.factory" for this limiter
-                    'lock_factory' => 'lock.rate_limiter.factory',
-                ],
-            ],
-        ]);
+                    ->lockFactory('lock.rate_limiter.factory')
+                ;
+        };
 
 .. _`DoS attacks`: https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html
 .. _`Apache mod_ratelimit`: https://httpd.apache.org/docs/current/mod/mod_ratelimit.html

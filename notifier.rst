@@ -132,14 +132,14 @@ configure the ``texter_transports``:
 
     .. code-block:: php
 
-        # config/packages/notifier.php
-        $container->loadFromExtension('framework', [
-            'notifier' => [
-                'texter_transports' => [
-                    'twilio' => '%env(TWILIO_DSN)%',
-                ],
-            ],
-        ]);
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->notifier()
+                ->texterTransport('twilio', '%env(TWILIO_DSN)%')
+            ;
+        };
 
 .. _notifier-chat-channel:
 .. _notifier-chatter-dsn:
@@ -224,14 +224,14 @@ Chatters are configured using the ``chatter_transports`` setting:
 
     .. code-block:: php
 
-        # config/packages/notifier.php
-        $container->loadFromExtension('framework', [
-            'notifier' => [
-                'chatter_transports' => [
-                    'slack' => '%env(SLACK_DSN)%',
-                ],
-            ],
-        ]);
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->notifier()
+                ->chatterTransport('slack', '%env(SLACK_DSN)%')
+            ;
+        };
 
 .. _notifier-email-channel:
 
@@ -288,15 +288,16 @@ notification emails:
 
     .. code-block:: php
 
-        # config/packages/mailer.php
-        $container->loadFromExtension('framework', [
-            'mailer' => [
-                'dsn' => '%env(MAILER_DSN)%',
-                'envelope' => [
-                    'sender' => 'notifications@example.com',
-                ],
-            ],
-        ]);
+        // config/packages/mailer.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->mailer()
+                ->dsn('%env(MAILER_DSN)%')
+                ->envelope()
+                    ->sender('notifications@example.com')
+            ;
+        };
 
 Configure to use Failover or Round-Robin Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -351,19 +352,19 @@ transport:
 
     .. code-block:: php
 
-        # config/packages/notifier.php
-        $container->loadFromExtension('framework', [
-            'notifier' => [
-                'chatter_transports' => [
-                    // Send notifications to Slack and use Telegram if
-                    // Slack errored
-                    'main' => '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%',
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
 
-                    // Send notifications to the next scheduled transport calculated by round robin
-                    'roundrobin' => '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%',
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $framework->notifier()
+                // Send notifications to Slack and use Telegram if
+                // Slack errored
+                ->chatterTransport('main', '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%')
+
+                // Send notifications to the next scheduled transport calculated by round robin
+                ->chatterTransport('roundrobin', '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%')
+            ;
+        };
 
 Creating & Sending Notifications
 --------------------------------
@@ -495,23 +496,21 @@ specify what channels should be used for specific levels (using
 
     .. code-block:: php
 
-        # config/packages/notifier.php
-        $container->loadFromExtension('framework', [
-            'notifier' => [
-                // ...
-                'channel_policy' => [
-                    // Use SMS, Slack and email for urgent notifications
-                    'urgent' => ['sms', 'chat/slack', 'email'],
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
 
-                    // Use Slack for highly important notifications
-                    'high' => ['chat/slack'],
-
-                    // Use browser for medium and low notifications
-                    'medium' => ['browser'],
-                    'low' => ['browser'],
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            // ...
+            $framework->notifier()
+                // Use SMS, Slack and email for urgent notifications
+                ->channelPolicy('urgent', ['sms', 'chat/slack', 'email'])
+                // Use Slack for highly important notifications
+                ->channelPolicy('high', ['chat/slack'])
+                // Use browser for medium and low notifications
+                ->channelPolicy('medium', ['browser'])
+                ->channelPolicy('medium', ['browser'])
+            ;
+        };
 
 Now, whenever the notification's importance is set to "high", it will be
 sent using the Slack transport::

@@ -273,10 +273,12 @@ configuration option to point to it:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'error_controller' => 'App\Controller\ErrorController::show',
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-        ]);
+            $framework->errorController('App\Controller\ErrorController::show');
+        };
 
 The :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`
 class used by the FrameworkBundle as a listener of the ``kernel.exception`` event creates

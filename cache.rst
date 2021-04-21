@@ -85,12 +85,15 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'app' => 'cache.adapter.filesystem',
-                'system' => 'cache.adapter.system',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                ->app('cache.adapter.filesystem')
+                ->system('cache.adapter.system')
+            ;
+        };
+
 
 The Cache component comes with a series of adapters pre-configured:
 
@@ -165,23 +168,24 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                // Only used with cache.adapter.filesystem
-                'directory' => '%kernel.cache_dir%/pools',
+        use Symfony\Config\FrameworkConfig;
 
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                // Only used with cache.adapter.filesystem
+                ->directory('%kernel.cache_dir%/pools')
                 // Service: cache.doctrine
-                'default_doctrine_provider' => 'app.doctrine_cache',
+                ->defaultDoctrineProvider('app.doctrine_cache')
                 // Service: cache.psr6
-                'default_psr6_provider' => 'app.my_psr6_service',
+                ->defaultPsr6Provider('app.my_psr6_service')
                 // Service: cache.redis
-                'default_redis_provider' => 'redis://localhost',
+                ->defaultRedisProvider('redis://localhost')
                 // Service: cache.memcached
-                'default_memcached_provider' => 'memcached://localhost',
+                ->defaultMemcachedProvider('memcached://localhost')
                 // Service: cache.pdo
-                'default_pdo_provider' => 'doctrine.dbal.default_connection',
-            ],
-        ]);
+                ->defaultPdoProvider('doctrine.dbal.default_connection')
+            ;
+        };
 
 .. _cache-create-pools:
 
@@ -267,43 +271,36 @@ You can also create more customized pools:
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'default_memcached_provider' => 'memcached://localhost',
-                'pools' => [
-                    // creates a "custom_thing.cache" service
-                    // autowireable via "CacheInterface $customThingCache"
-                    // uses the "app" cache configuration
-                    'custom_thing.cache' => [
-                        'adapter' => 'cache.app',
-                    ],
+        use Symfony\Config\FrameworkConfig;
 
-                    // creates a "my_cache_pool" service
-                    // autowireable via "CacheInterface $myCachePool"
-                    'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.filesystem',
-                    ],
+        return static function (FrameworkConfig $framework) {
+            $cache = $framework->cache();
+            $cache->defaultMemcachedProvider('memcached://localhost');
 
-                    // uses the default_memcached_provider from above
-                    'acme.cache' => [
-                        'adapter' => 'cache.adapter.memcached',
-                    ],
+            // creates a "custom_thing.cache" service
+            // autowireable via "CacheInterface $customThingCache"
+            // uses the "app" cache configuration
+            $cache->pool('custom_thing.cache')
+                ->adapters(['cache.app']);
 
-                    // control adapter's configuration
-                    'foobar.cache' => [
-                        'adapter' => 'cache.adapter.memcached',
-                        'provider' => 'memcached://user:password@example.com',
-                    ],
+            // creates a "my_cache_pool" service
+            // autowireable via "CacheInterface $myCachePool"
+            $cache->pool('my_cache_pool')
+                ->adapters(['cache.adapter.filesystem']);
 
-                    // uses the "foobar.cache" pool as its backend but controls
-                    // the lifetime and (like all pools) has a separate cache namespace
-                    'short_cache' => [
-                        'adapter' => 'foobar.cache',
-                        'default_lifetime' => 60,
-                    ],
-                ],
-            ],
-        ]);
+            // uses the default_memcached_provider from above
+            $cache->pool('acme.cache')
+                ->adapters(['cache.adapter.memcached']);
+
+             // control adapter's configuration
+            $cache->pool('foobar.cache')
+                ->adapters(['cache.adapter.memcached'])
+                ->provider('memcached://user:password@example.com');
+
+            $cache->pool('short_cache')
+                ->adapters(['foobar.cache'])
+                ->defaultLifetime(60);
+        };
 
 Each pool manages a set of independent cache keys: keys from different pools
 *never* collide, even if they share the same backend. This is achieved by prefixing
@@ -442,26 +439,25 @@ and use that when configuring the pool.
 
         // config/packages/cache.php
         use Symfony\Component\Cache\Adapter\RedisAdapter;
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+        use Symfony\Config\FrameworkConfig;
 
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'pools' => [
-                    'cache.my_redis' => [
-                        'adapter' => 'cache.adapter.redis',
-                        'provider' => 'app.my_custom_redis_provider',
-                    ],
-                ],
-            ],
-        ]);
+        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            $framework->cache()
+                ->pool('cache.my_redis')
+                    ->adapters(['cache.adapter.redis'])
+                    ->provider('app.my_custom_redis_provider');
 
-        $container->register('app.my_custom_redis_provider', \Redis::class)
-            ->setFactory([RedisAdapter::class, 'createConnection'])
-            ->addArgument('redis://localhost')
-            ->addArgument([
-                'retry_interval' => 2,
-                'timeout' => 10
-            ])
-        ;
+
+            $container->register('app.my_custom_redis_provider', \Redis::class)
+                ->setFactory([RedisAdapter::class, 'createConnection'])
+                ->addArgument('redis://localhost')
+                ->addArgument([
+                    'retry_interval' => 2,
+                    'timeout' => 10
+                ])
+            ;
+        };
 
 Creating a Cache Chain
 ----------------------
@@ -521,20 +517,19 @@ Symfony stores the item automatically in all the missing pools.
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'pools' => [
-                    'my_cache_pool' => [
-                        'default_lifetime' => 31536000, // One year
-                        'adapters' => [
-                            'cache.adapter.array',
-                            'cache.adapter.apcu',
-                            ['name' => 'cache.adapter.redis', 'provider' => 'redis://user:password@example.com'],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                ->pool('my_cache_pool')
+                    ->defaultLifetime(31536000) // One year
+                    ->adapters([
+                        'cache.adapter.array',
+                        'cache.adapter.apcu',
+                        ['name' => 'cache.adapter.redis', 'provider' => 'redis://user:password@example.com'],
+                    ])
+            ;
+        };
 
 Using Cache Tags
 ----------------
@@ -613,16 +608,15 @@ to enable this feature. This could be added by using the following configuration
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'pools' => [
-                    'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.redis',
-                        'tags' => true,
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                ->pool('my_cache_pool')
+                    ->tags(true)
+                    ->adapters(['cache.adapter.redis'])
+            ;
+        };
 
 Tags are stored in the same pool by default. This is good in most scenarios. But
 sometimes it might be better to store the tags in a different pool. That could be
@@ -663,19 +657,20 @@ achieved by specifying the adapter.
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'pools' => [
-                    'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.redis',
-                        'tags' => 'tag_pool',
-                    ],
-                    'tag_pool' => [
-                        'adapter' => 'cache.adapter.apcu',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                ->pool('my_cache_pool')
+                    ->tags('tag_pool')
+                    ->adapters(['cache.adapter.redis'])
+            ;
+
+            $framework->cache()
+                ->pool('tag_pool')
+                    ->adapters(['cache.adapter.apcu'])
+            ;
+        };
 
 .. note::
 

@@ -40,9 +40,11 @@ as integration of other related components:
 
     .. code-block:: php
 
-        $container->loadFromExtension('framework', [
-            'form' => true,
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->form()->enabled(true);
+        };
 
 Using the Bundle Extension
 --------------------------
@@ -81,12 +83,13 @@ can add some configuration that looks like this:
     .. code-block:: php
 
         // config/packages/acme_social.php
-        $container->loadFromExtension('acme_social', [
-            'twitter' => [
-                'client_id'     => 123,
-                'client_secret' => 'your_secret',
-            ],
-        ]);
+        use Symfony\Config\AcmeSocialConfig;
+
+        return static function (AcmeSocialConfig $acmeSocial) {
+            $acmeSocial->twitter()
+                ->clientId(123)
+                ->clientSecret('your_secret');
+        };
 
 The basic idea is that instead of having the user override individual
 parameters, you let the user configure just a few, specifically created,

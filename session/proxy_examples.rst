@@ -46,13 +46,14 @@ Symfony to use your session handler instead of the default one:
 
         // config/packages/framework.php
         use App\Session\CustomSessionHandler;
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'session' => [
-                // ...
-                'handler_id' => CustomSessionHandler::class,
-            ],
-        ]);
+            $framework->session()
+                ->handlerId(CustomSessionHandler::class)
+            ;
+        };
 
 Keep reading the next sections to learn how to use the session handlers in practice
 to solve two common use cases: encrypt session information and define read-only

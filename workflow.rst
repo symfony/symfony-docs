@@ -120,43 +120,40 @@ like this:
 
         // config/packages/workflow.php
         use App\Entity\BlogPost;
+        use Symfony\Config\FrameworkConfig;
 
-        $container->loadFromExtension('framework', [
-            'workflows' => [
-                'blog_publishing' => [
-                    'type' => 'workflow', // or 'state_machine'
-                    'audit_trail' => [
-                        'enabled' => true
-                    ],
-                    'marking_store' => [
-                        'type' => 'method',
-                        'property' => 'currentPlace',
-                    ],
-                    'supports' => [BlogPost::class],
-                    'initial_marking' => 'draft',
-                    'places' => [
-                        'draft',
-                        'reviewed',
-                        'rejected',
-                        'published',
-                    ],
-                    'transitions' => [
-                        'to_review' => [
-                            'from' => 'draft',
-                            'to' => 'reviewed',
-                        ],
-                        'publish' => [
-                            'from' => 'reviewed',
-                            'to' => 'published',
-                        ],
-                        'reject' => [
-                            'from' => 'reviewed',
-                            'to' => 'rejected',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            $blogPublishing
+                ->type('workflow') // or 'state_machine'
+                ->supports([BlogPost::class])
+                ->initialMarking(['draft']);
+
+            $blogPublishing->auditTrail()->enabled(true);
+            $blogPublishing->markingStore()
+                ->type('method')
+                ->property('currentPlace');
+
+            $blogPublishing->place()->name('draft');
+            $blogPublishing->place()->name('reviewed');
+            $blogPublishing->place()->name('rejected');
+            $blogPublishing->place()->name('published');
+
+            $blogPublishing->transition()
+                ->name('to_review')
+                    ->from(['draft'])
+                    ->to(['reviewed']);
+
+            $blogPublishing->transition()
+                ->name('publish')
+                    ->from(['reviewed'])
+                    ->to(['published']);
+
+            $blogPublishing->transition()
+                ->name('reject')
+                    ->from(['reviewed'])
+                    ->to(['rejected']);
+        };
 
 .. tip::
 
@@ -553,23 +550,25 @@ to :ref:`Guard events <workflow-usage-guard-events>`, which are always fired:
     .. code-block:: php
 
         // config/packages/workflow.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'workflows' => [
-                'blog_publishing' => [
-                    // you can pass one or more event names
-                    'events_to_dispatch' => [
-                        'workflow.leave',
-                        'workflow.completed',
-                    ],
 
-                    // pass an empty array to not dispatch any event
-                    'events_to_dispatch' => [],
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
 
-                    // ...
-                ],
-            ],
-        ]);
+            // ...
+            // you can pass one or more event names
+            $blogPublishing->eventsToDispatch([
+                'workflow.leave',
+                'workflow.completed',
+            ]);
+
+            // pass an empty array to not dispatch any event
+            $blogPublishing->eventsToDispatch([]);
+
+            // ...
+        };
 
 You can also disable a specific event from being fired when applying a transition::
 
@@ -731,36 +730,33 @@ transition. The value of this option is any valid expression created with the
     .. code-block:: php
 
         // config/packages/workflow.php
-        use App\Entity\BlogPost;
+        use Symfony\Config\FrameworkConfig;
 
-        $container->loadFromExtension('framework', [
-            'workflows' => [
-                'blog_publishing' => [
-                    // ... previous configuration
+        return static function (FrameworkConfig $framework) {
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            // ... previous configuration
 
-                    'transitions' => [
-                        'to_review' => [
-                            // the transition is allowed only if the current user has the ROLE_REVIEWER role.
-                            'guard' => 'is_granted("ROLE_REVIEWER")',
-                            'from' => 'draft',
-                            'to' => 'reviewed',
-                        ],
-                        'publish' => [
-                            // or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
-                            'guard' => 'is_authenticated',
-                            'from' => 'reviewed',
-                            'to' => 'published',
-                        ],
-                        'reject' => [
-                            // or any valid expression language with "subject" referring to the post
-                            'guard' => 'is_granted("ROLE_ADMIN") and subject.isStatusReviewed()',
-                            'from' => 'reviewed',
-                            'to' => 'rejected',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+            $blogPublishing->transition()
+                ->name('to_review')
+                    // the transition is allowed only if the current user has the ROLE_REVIEWER role.
+                    ->guard('is_granted("ROLE_REVIEWER")')
+                    ->from(['draft'])
+                    ->to(['reviewed']);
+
+            $blogPublishing->transition()
+                ->name('publish')
+                    // or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
+                    ->guard('is_authenticated')
+                    ->from(['reviewed'])
+                    ->to(['published']);
+
+            $blogPublishing->transition()
+                ->name('reject')
+                    // or any valid expression language with "subject" referring to the post
+                    ->guard('is_granted("ROLE_ADMIN") and subject.isStatusReviewed()')
+                    ->from(['reviewed'])
+                    ->to(['rejected']);
+        };
 
 You can also use transition blockers to block and return a user-friendly error
 message when you stop a transition from happening.
@@ -945,42 +941,43 @@ be only the title of the workflow or very complex objects:
     .. code-block:: php
 
         // config/packages/workflow.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            // ... previous configuration
+
+            $blogPublishing->metadata([
+                'title' => 'Blog Publishing Workflow'
+            ]);
+
             // ...
-            'workflows' => [
-                'blog_publishing' => [
-                    'metadata' => [
-                        'title' => 'Blog Publishing Workflow',
-                    ],
-                    // ...
-                    'places' => [
-                        'draft' => [
-                            'metadata' => [
-                                'max_num_of_words' => 500,
-                            ],
-                        ],
-                        // ...
-                    ],
-                    'transitions' => [
-                        'to_review' => [
-                            'from' => 'draft',
-                            'to' => 'review',
-                            'metadata' => [
-                                'priority' => 0.5,
-                            ],
-                        ],
-                        'publish' => [
-                            'from' => 'reviewed',
-                            'to' => 'published',
-                            'metadata' => [
-                                'hour_limit' => 20,
-                                'explanation' => 'You can not publish after 8 PM.',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+
+            $blogPublishing->place()
+                ->name('draft')
+                ->metadata([
+                    'max_num_of_words' => 500,
+                ]);
+
+            // ...
+
+            $blogPublishing->transition()
+                ->name('to_review')
+                    ->from(['draft'])
+                    ->to(['reviewed'])
+                    ->metadata([
+                        'priority' => 0.5,
+                    ]);
+
+            $blogPublishing->transition()
+                ->name('publish')
+                    ->from(['reviewed'])
+                    ->to(['published'])
+                    ->metadata([
+                        'hour_limit' => 20,
+                        'explanation' => 'You can not publish after 8 PM.',
+                    ]);
+        };
 
 Then you can access this metadata in your controller as follows::
 

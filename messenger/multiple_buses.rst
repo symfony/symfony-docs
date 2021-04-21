@@ -74,33 +74,25 @@ an **event bus**. The event bus could have zero or more subscribers.
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                // The bus that is going to be injected when injecting MessageBusInterface
-                'default_bus' => 'command.bus',
-                'buses' => [
-                    'command.bus' => [
-                        'middleware' => [
-                            'validation',
-                            'doctrine_transaction',
-                        ],
-                    ],
-                    'query.bus' => [
-                        'middleware' => [
-                            'validation',
-                        ],
-                    ],
-                    'event.bus' => [
-                        // the 'allow_no_handlers' middleware allows to have no handler
-                        // configured for this bus without throwing an exception
-                        'default_middleware' => 'allow_no_handlers',
-                        'middleware' => [
-                            'validation',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            // The bus that is going to be injected when injecting MessageBusInterface
+            $framework->messenger()->defaultBus('command.bus');
+
+            $commandBus = $framework->messenger()->bus('command.bus');
+            $commandBus->middleware()->id('validation');
+            $commandBus->middleware()->id('doctrine_transaction');
+
+            $queryBus = $framework->messenger()->bus('query.bus');
+            $queryBus->middleware()->id('validation');
+
+            $eventBus = $framework->messenger()->bus('event.bus');
+            // the 'allow_no_handlers' middleware allows to have no handler
+            // configured for this bus without throwing an exception
+            $eventBus->defaultMiddleware('allow_no_handlers');
+            $eventBus->middleware()->id('validation');
+        };
 
 This will create three new services:
 

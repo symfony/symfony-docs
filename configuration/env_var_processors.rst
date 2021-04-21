@@ -44,11 +44,15 @@ processor to turn the value of the ``HTTP_PORT`` env var into an integer:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'router' => [
-                'http_port' => '%env(int:HTTP_PORT)%',
-            ],
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->router()
+                ->httpPort(env('HTTP_PORT')->int())
+            ;
+        };
 
 Built-In Environment Variable Processors
 ----------------------------------------
@@ -90,10 +94,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(SECRET)', 'some_secret');
-            $container->loadFromExtension('framework', [
-                'secret' => '%env(string:SECRET)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(SECRET)', 'some_secret');
+                $framework->secret(env('SECRET')->string());
+            };
 
 ``env(bool:FOO)``
     Casts ``FOO`` to a bool (``true`` values are ``'true'``, ``'on'``, ``'yes'``
@@ -131,10 +140,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
-            $container->loadFromExtension('framework', [
-                'http_method_override' => '%env(bool:HTTP_METHOD_OVERRIDE)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
+                $framework->httpMethodOverride(env('HTTP_METHOD_OVERRIDE')->bool());
+            };
 
 ``env(not:FOO)``
 
@@ -269,10 +283,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
-            $container->loadFromExtension('framework', [
-                'trusted_hosts' => '%env(json:TRUSTED_HOSTS)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
+                $framework->trustedHosts(env('TRUSTED_HOSTS')->json());
+            };
 
 ``env(resolve:FOO)``
     If the content of ``FOO`` includes container parameters (with the syntax
@@ -353,10 +372,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
-            $container->loadFromExtension('framework', [
-                'trusted_hosts' => '%env(csv:TRUSTED_HOSTS)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
+                $framework->trustedHosts(env('TRUSTED_HOSTS')->csv());
+            };
 
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:

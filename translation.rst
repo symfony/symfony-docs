@@ -92,11 +92,16 @@ are located:
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'default_locale' => 'en',
-            'translator' => ['default_path' => '%kernel.project_dir%/translations'],
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-        ]);
+            $framework
+                ->defaultLocale('en')
+                ->translator()
+                    ->defaultPath('%kernel.project_dir%/translations')
+            ;
+        };
 
 The locale used in translations is the one stored on the request. This is
 typically set via a ``_locale`` attribute on your routes (see :ref:`translation-locale-url`).
@@ -571,13 +576,13 @@ if you're generating translations with specialized programs or teams.
         .. code-block:: php
 
             // config/packages/translation.php
-            $container->loadFromExtension('framework', [
-                'translator' => [
-                    'paths' => [
-                        '%kernel.project_dir%/custom/path/to/translations',
-                    ],
-                ],
-            ]);
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (FrameworkConfig $framework) {
+                $framework->translator()
+                    ->paths(['%kernel.project_dir%/custom/path/to/translations'])
+                ;
+            };
 
 .. note::
 
@@ -647,10 +652,14 @@ checks translation resources for several locales:
        .. code-block:: php
 
            // config/packages/translation.php
-           $container->loadFromExtension('framework', [
-               'translator' => ['fallbacks' => ['en']],
-               // ...
-           ]);
+           use Symfony\Config\FrameworkConfig;
+
+            return static function (FrameworkConfig $framework) {
+                // ...
+                $framework->translator()
+                    ->fallbacks(['en'])
+                ;
+            };
 
 .. note::
 

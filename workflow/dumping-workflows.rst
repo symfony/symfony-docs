@@ -251,75 +251,70 @@ Below is the configuration for the pull request state machine with styling added
     .. code-block:: php
 
         // config/packages/workflow.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'workflows' => [
-                'pull_request' => [
-                    'type' => 'state_machine',
-                    'marking_store' => [
-                        'type' => 'method',
-                        'property' => 'currentPlace',
-                    ],
-                    'supports' => ['App\Entity\PullRequest'],
-                    'initial_marking' => 'start',
-                    'places' => [
-                        'start',
-                        'coding',
-                        'test',
-                        'review' => [
-                          'metadata' => [
-                              'description' => 'Human review',
-                          ],
-                        ],
-                        'merged',
-                        'closed' => [
-                          'metadata' => [
-                              'bg_color' => 'DeepSkyBlue',
-                          ],
-                        ],
-                    ],
-                    'transitions' => [
-                        'submit'=> [
-                            'from' => 'start',
-                            'to' => 'test',
-                        ],
-                        'update'=> [
-                            'from' => ['coding', 'test', 'review'],
-                            'to' => 'test',
-                            'metadata' => [
-                                'arrow_color' => 'Turquoise',
-                            ],
-                        ],
-                        'wait_for_review'=> [
-                            'from' => 'test',
-                            'to' => 'review',
-                            'metadata' => [
-                                'color' => 'Orange',
-                            ],
-                        ],
-                        'request_change'=> [
-                            'from' => 'review',
-                            'to' => 'coding',
-                        ],
-                        'accept'=> [
-                            'from' => 'review',
-                            'to' => 'merged',
-                            'metadata' => [
-                                'label' => 'Accept PR',
-                            ],
-                        ],
-                        'reject'=> [
-                            'from' => 'review',
-                            'to' => 'closed',
-                        ],
-                        'reopen'=> [
-                            'from' => 'start',
-                            'to' => 'review',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+            $pullRequest = $framework->workflows()->workflows('pull_request');
+
+            $pullRequest
+                ->type('state_machine')
+                ->supports(['App\Entity\PullRequest'])
+                ->initialMarking(['start']);
+
+            $pullRequest->markingStore()
+                ->type('method')
+                ->property('currentPlace');
+
+            $pullRequest->place()->name('start');
+            $pullRequest->place()->name('coding');
+            $pullRequest->place()->name('test');
+            $pullRequest->place()
+                ->name('review')
+                ->metadata(['description' => 'Human review']);
+            $pullRequest->place()->name('merged');
+            $pullRequest->place()
+                ->name('closed')
+                ->metadata(['bg_color' => 'DeepSkyBlue',]);
+
+            $pullRequest->transition()
+                ->name('submit')
+                    ->from(['start'])
+                    ->to(['test']);
+
+            $pullRequest->transition()
+                ->name('update')
+                    ->from(['coding', 'test', 'review'])
+                    ->to(['test'])
+                    ->metadata(['arrow_color' => 'Turquoise']);
+
+            $pullRequest->transition()
+                ->name('wait_for_review')
+                    ->from(['test'])
+                    ->to(['review'])
+                    ->metadata(['color' => 'Orange']);
+
+            $pullRequest->transition()
+                ->name('request_change')
+                    ->from(['review'])
+                    ->to(['coding']);
+
+            $pullRequest->transition()
+                ->name('accept')
+                    ->from(['review'])
+                    ->to(['merged'])
+                    ->metadata(['label' => 'Accept PR']);
+
+            $pullRequest->transition()
+                ->name('reject')
+                    ->from(['review'])
+                    ->to(['closed']);
+
+            $pullRequest->transition()
+                ->name('accept')
+                    ->from(['closed'])
+                    ->to(['review']);
+        };
 
 The PlantUML image will look like this:
 
