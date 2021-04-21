@@ -183,6 +183,8 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             ],
         ]);
 
+.. _cache-create-pools:
+
 Creating Custom (Namespaced) Pools
 ----------------------------------
 

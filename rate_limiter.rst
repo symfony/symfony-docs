@@ -124,20 +124,74 @@ Configuration
 The following example creates two different rate limiters for an API service, to
 enforce different levels of service (free or paid):
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/rate_limiter.yaml
-    framework:
-        rate_limiter:
-            anonymous_api:
-                # use 'sliding_window' if you prefer that policy
-                policy: 'fixed_window'
-                limit: 100
-                interval: '60 minutes'
-            authenticated_api:
-                policy: 'token_bucket'
-                limit: 5000
-                rate: { interval: '15 minutes', amount: 500 }
+    .. code-block:: yaml
+
+        # config/packages/rate_limiter.yaml
+        framework:
+            rate_limiter:
+                anonymous_api:
+                    # use 'sliding_window' if you prefer that policy
+                    policy: 'fixed_window'
+                    limit: 100
+                    interval: '60 minutes'
+                authenticated_api:
+                    policy: 'token_bucket'
+                    limit: 5000
+                    rate: { interval: '15 minutes', amount: 500 }
+
+    .. code-block:: xml
+
+        <!-- config/packages/rate_limiter.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:rate-limiter>
+                    <!-- policy: use 'sliding_window' if you prefer that policy -->
+                    <framework:limiter name="anonymous_api"
+                        policy="fixed_window"
+                        limit="100"
+                        interval="60 minutes"
+                    />
+
+                    <framework:limiter name="authenticated_api"
+                        policy="token_bucket"
+                        limit="5000"
+                    >
+                        <framework:rate interval="15 minutes"
+                            amount="500"
+                        />
+                    </framework:limiter>
+                </framework:rate-limiter>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/rate_limiter.php
+        $container->loadFromExtension('framework', [
+            rate_limiter' => [
+                'anonymous_api' => [
+                    // use 'sliding_window' if you prefer that policy
+                    'policy' => 'fixed_window',
+                    'limit' => 100,
+                    'interval' => '60 minutes',
+                ],
+                'authenticated_api' => [
+                    'policy' => 'token_bucket',
+                    'limit' => 5000,
+                    'rate' => [ 'interval' =>  '15 minutes', 'amount' =>  500 ],
+                ],
+            ],
+        ]);
 
 .. note::
 
@@ -302,27 +356,146 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
         }
     }
 
-Rate Limiter Storage and Locking
---------------------------------
+Storing Rate Limiter State: Caching
+-----------------------------------
 
-Rate limiters use the default cache and locking mechanisms defined in your
-Symfony application. If you prefer to change that, use the ``lock_factory`` and
-``storage_service`` options:
+All rate limiter policies require to store the state of the rate limiter
+(e.g. how many hits were already made in the current time window). This
+state is stored by default using the :doc:`Cache component </cache>`.
 
-.. code-block:: yaml
+The default cache pool used by all limiters is ``cache.rate_limiter``. You
+can modify this cache pool by :ref:`defining a "rate_limiter" pool <cache-create-pools>`.
 
-    # config/packages/rate_limiter.yaml
-    framework:
-        rate_limiter:
-            anonymous_api_limiter:
-                # ...
-                # the value is the name of any cache pool defined in your application
-                cache_pool: 'app.redis_cache'
-                # or define a service implementing StorageInterface to use a different
-                # mechanism to store the limiter information
-                storage_service: 'App\RateLimiter\CustomRedisStorage'
-                # the value is the name of any lock defined in your application
-                lock_factory: 'app.rate_limiter_lock'
+You can also override the pool for a specific limiter using the ``cache_pool``
+option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/rate_limiter.yaml
+        framework:
+            rate_limiter:
+                anonymous_api:
+                    # ...
+
+                    # use the "cache.anonymous_rate_limiter" cache pool
+                    cache_pool: 'cache.anonymous_rate_limiter'
+
+    .. code-block:: xml
+
+        <!-- config/packages/rate_limiter.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:rate-limiter>
+                    <!-- cache-pool: use the "cache.anonymous_rate_limiter" cache pool -->
+                    <framework:limiter name="anonymous_api"
+                        policy="fixed_window"
+                        limit="100"
+                        interval="60 minutes"
+                        cache-pool="cache.anonymous_rate_limiter"
+                    />
+
+                    <!-- ... ->
+                </framework:rate-limiter>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/rate_limiter.php
+        $container->loadFromExtension('framework', [
+            rate_limiter' => [
+                'anonymous_api' => [
+                    // ...
+
+                    // use the "cache.anonymous_rate_limiter" cache pool
+                    'cache_pool' => 'cache.anonymous_rate_limiter',
+                ],
+            ],
+        ]);
+
+.. note::
+
+    Instead of using the Cache component, you can also implement a custom
+    storage. Create a PHP class that implements the
+    :class:`Symfony\\Component\\RateLimiter\\Storage\\StorageInterface` and
+    set the ``storage_service`` setting of each limiter to the service ID
+    of this class.
+
+Using Locks to Prevent Race Conditions
+--------------------------------------
+
+Rate limiting can be affected by race conditions, if the same limiter is
+applied to simultaneous requests (e.g. 3 servers of the same client call
+the same API). To prevent these race conditions, the rate limiting
+operations are protected using :doc:`locks </lock>`.
+
+By default, the global lock (configured by ``framework.lock``) is used. You
+can use a specific :ref:`named lock <lock-named-locks>` via the
+``lock_factory`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/rate_limiter.yaml
+        framework:
+            rate_limiter:
+                anonymous_api:
+                    # ...
+
+                    # use the "lock.rate_limiter.factory" for this limiter
+                    lock_factory: 'lock.rate_limiter.factory'
+
+    .. code-block:: xml
+
+        <!-- config/packages/rate_limiter.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:rate-limiter>
+                    <!-- limiter-factory: use the "lock.rate_limiter.factory" for this limiter -->
+                    <framework:limiter name="anonymous_api"
+                        policy="fixed_window"
+                        limit="100"
+                        interval="60 minutes"
+                        lock-factory="lock.rate_limiter.factory"
+                    />
+
+                    <!-- ... -->
+                </framework:rate-limiter>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/rate_limiter.php
+        $container->loadFromExtension('framework', [
+            rate_limiter' => [
+                'anonymous_api' => [
+                    // ...
+
+                    // use the "lock.rate_limiter.factory" for this limiter
+                    'lock_factory' => 'lock.rate_limiter.factory',
+                ],
+            ],
+        ]);
 
 .. _`DoS attacks`: https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html
 .. _`Apache mod_ratelimit`: https://httpd.apache.org/docs/current/mod/mod_ratelimit.html
