@@ -2215,6 +2215,53 @@ with a locale. This can be done by defining a different prefix for each locale
             ;
         };
 
+Another common requirement is to host the website on a different domain
+according to the locale. This can be done by defining a different host for each
+locale.
+
+.. versionadded:: 5.1
+
+    The ability to define an array of hosts was introduced in Symfony 5.1.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes/annotations.yaml
+        controllers:
+            resource: '../../src/Controller/'
+            type: annotation
+            host:
+                en: 'https://www.symfony.com'
+                nl: 'https://www.symfony.nl'
+
+    .. code-block:: xml
+
+        <!-- config/routes/annotations.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+            <import resource="../../src/Controller/" type="annotation">
+                <host locale="en">https://www.symfony.com</host>
+                <host locale="nl">https://www.symfony.nl</host>
+            </import>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes/annotations.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        return function (RoutingConfigurator $routes) {
+            $routes->import('../../src/Controller/', 'annotation')
+                ->host([
+                    'en' => 'https://www.symfony.com',
+                    'nl' => 'https://www.symfony.nl'
+                ])
+            ;
+        };
+
 .. _stateless-routing:
 
 Stateless Routes
