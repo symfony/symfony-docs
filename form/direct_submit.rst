@@ -34,6 +34,24 @@ control over when exactly your form is submitted and what data is passed to it::
         ]);
     }
 
+The list of fields submitted with the ``submit()`` method must be the same as
+the fields defined by the form class. Otherwise, you'll see a form validation error::
+
+    public function new(Request $request): Response
+    {
+        // ...
+
+        if ($request->isMethod('POST')) {
+            // '$json' represents payload data sent by React/Angular/Vue
+            // the merge of parameters is needed to submit all form fields
+            $form->submit(array_merge($json, $request->request->all()));
+
+            // ...
+        }
+
+        // ...
+    }
+
 .. tip::
 
     Forms consisting of nested fields expect an array in
