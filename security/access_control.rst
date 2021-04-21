@@ -65,7 +65,7 @@ Take the following ``access_control`` entries as an example:
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <srv:parameters>
-                <srv:parameter key="env(TRUSTED_IPS)">10.0.0.1, 10.0.0.2</parameter>
+                <srv:parameter key="env(TRUSTED_IPS)">10.0.0.1, 10.0.0.2</srv:parameter>
             </srv:parameters>
 
             <config>

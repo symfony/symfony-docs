@@ -90,7 +90,7 @@ and ``RedisProxy``:
                 arguments:
                     - '@Redis'
                     # you can optionally pass an array of options. The only options are 'prefix' and 'ttl',
-                    # which define the prefix to use for the keys to avoid collision on the Redis server 
+                    # which define the prefix to use for the keys to avoid collision on the Redis server
                     # and the expiration time for any given entry (in seconds), defaults are 'sf_s' and null:
                     # - { 'prefix' => 'my_prefix', 'ttl' => 600 }
 
@@ -101,7 +101,7 @@ and ``RedisProxy``:
             <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler">
                 <argument type="service" id="Redis"/>
                 <!-- you can optionally pass an array of options. The only options are 'prefix' and 'ttl',
-                     which define the prefix to use for the keys to avoid collision on the Redis server 
+                     which define the prefix to use for the keys to avoid collision on the Redis server
                      and the expiration time for any given entry (in seconds), defaults are 'sf_s' and null:
                 <argument type="collection">
                     <argument key="prefix">my_prefix</argument>
@@ -119,7 +119,7 @@ and ``RedisProxy``:
             ->addArgument(
                 new Reference('Redis'),
                 // you can optionally pass an array of options. The only options are 'prefix' and 'ttl',
-                // which define the prefix to use for the keys to avoid collision on the Redis server 
+                // which define the prefix to use for the keys to avoid collision on the Redis server
                 // and the expiration time for any given entry (in seconds), defaults are 'sf_s' and null:
                 // ['prefix' => 'my_prefix', 'ttl' => 600],
             );
@@ -611,7 +611,7 @@ configure these values with the second argument passed to the
             $services->set(MongoDbSessionHandler::class)
                 ->args([
                     service('doctrine_mongodb.odm.default_connection'),
-                    ['id_field' => '_guid', 'expiry_field' => 'eol'],,
+                    ['id_field' => '_guid', 'expiry_field' => 'eol'],
                 ])
             ;
         };
