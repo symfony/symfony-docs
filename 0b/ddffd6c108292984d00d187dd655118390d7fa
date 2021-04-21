@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-04-21T13:55:39Z
+
+Wouter, will you have the time and motivation of completing this contribution?  I know it's a lot of work ... but if we keep it unmerged, the list of merge conflicts will keep growing 😢
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-04-21T14:14:34Z
+
+Hi! Is there anything left, other than a rebase to fix the conflicts?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-04-21T14:54:45Z
+
+In my opinion this is finished and ready!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-04-21T15:04:12Z
+
+Alright, ready to go then :). The merge conflict were fortunately very easy (they all conflicted with the recent diff whitespace changes we made)
