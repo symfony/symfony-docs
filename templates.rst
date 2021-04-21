@@ -827,10 +827,12 @@ template fragments. Configure that special URL in the ``fragments`` option:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'fragments' => ['path' => '/_fragment'],
-        ]);
+            $framework->fragments()->path('/_fragment');
+        };
 
 .. caution::
 
@@ -1046,15 +1048,16 @@ the ``value`` is the Twig namespace, which is explained later:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'paths' => [
-                // directories are relative to the project root dir (but you
-                // can also use absolute directories)
-                'email/default/templates' => null,
-                'backend/templates' => null,
-            ],
-        ]);
+
+            // directories are relative to the project root dir (but you
+            // can also use absolute directories)
+            $twig->path('email/default/templates', null);
+            $twig->path('backend/templates', null);
+        };
 
 When rendering a template, Symfony looks for it first in the ``twig.paths``
 directories that don't define a namespace and then falls back to the default
@@ -1101,13 +1104,14 @@ configuration to define a namespace for each template directory:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'paths' => [
-                'email/default/templates' => 'email',
-                'backend/templates' => 'admin',
-            ],
-        ]);
+
+            $twig->path('email/default/templates', 'email');
+            $twig->path('backend/templates', 'admin');
+        };
 
 Now, if you render the ``layout.html.twig`` template, Symfony will render the
 ``templates/layout.html.twig`` file. Use the special syntax ``@`` + namespace to
