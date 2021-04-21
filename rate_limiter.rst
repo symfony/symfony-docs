@@ -178,7 +178,7 @@ enforce different levels of service (free or paid):
 
         // config/packages/rate_limiter.php
         $container->loadFromExtension('framework', [
-            rate_limiter' => [
+            'rate_limiter' => [
                 'anonymous_api' => [
                     // use 'sliding_window' if you prefer that policy
                     'policy' => 'fixed_window',
@@ -401,7 +401,7 @@ Use the ``cache_pool`` option to override the cache used by a specific limiter
                         cache-pool="cache.anonymous_rate_limiter"
                     />
 
-                    <!-- ... ->
+                    <!-- ... -->
                 </framework:rate-limiter>
             </framework:config>
         </container>
@@ -410,7 +410,7 @@ Use the ``cache_pool`` option to override the cache used by a specific limiter
 
         // config/packages/rate_limiter.php
         $container->loadFromExtension('framework', [
-            rate_limiter' => [
+            'rate_limiter' => [
                 'anonymous_api' => [
                     // ...
 
@@ -484,7 +484,7 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
 
         // config/packages/rate_limiter.php
         $container->loadFromExtension('framework', [
-            rate_limiter' => [
+            'rate_limiter' => [
                 'anonymous_api' => [
                     // ...
 

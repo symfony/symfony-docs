@@ -711,7 +711,7 @@ and set the ``limiter`` option to its service ID:
             'firewalls' => [
                 'main' => [
                     // use a custom rate limiter via its service ID
-                    'login_throttling' =>
+                    'login_throttling' => [
                         'limiter' => 'app.login_rate_limiter',
                     ],
                 ],
