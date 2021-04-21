@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-21T09:37:28Z
+
+I dont understand the build failure from Sphinx. I do change that file but 300 lines way from where Sphinx complain.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-04-21T09:52:07Z
+
+Is 5.2 stable maybe failing?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-21T09:53:30Z
+
+Yes. The failure is not related to this PR.
+
+Thank you
