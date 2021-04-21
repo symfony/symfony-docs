@@ -316,8 +316,8 @@ is restarted):
 
         $container
             ->register(SomeService::class)
-            ->addTag('container.preload', ['class' => SomeClass::class)
-            ->addTag('container.preload', ['class' => OtherClass::class)
+            ->addTag('container.preload', ['class' => SomeClass::class])
+            ->addTag('container.preload', ['class' => OtherClass::class])
             // ...
         ;
 
