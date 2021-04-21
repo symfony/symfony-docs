@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by alexsegura at 2021-03-30T13:41:59Z
+
+This PR helped me a lot to understand the problem with unique Redis consumer names 👍
+
+When using Supervisor, it's super useful to have this documented, indeed.
