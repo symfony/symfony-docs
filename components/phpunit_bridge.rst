@@ -629,7 +629,7 @@ constraint to test the validity of the email domain::
     {
         public function testEmail()
         {
-            $validator = ...
+            $validator = ...;
             $constraint = new Email(['checkMX' => true]);
 
             $result = $validator->validate('foo@example.com', $constraint);
@@ -654,7 +654,7 @@ the data you expect to get for the given hosts::
         {
             DnsMock::withMockedHosts(['example.com' => [['type' => 'MX']]]);
 
-            $validator = ...
+            $validator = ...;
             $constraint = new Email(['checkMX' => true]);
 
             $result = $validator->validate('foo@example.com', $constraint);

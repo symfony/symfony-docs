@@ -85,8 +85,8 @@ Now, examine the results to see this closely:
                 // true/false (depends on 2nd parameter of Kernel),
                 // as expected, because %kernel.debug% inside configuration
                 // gets evaluated before being passed to the extension
-            )
-        ];
+            ]
+        );
 
         $container->loadFromExtension('my_bundle');
         // passes the string "%kernel.debug%".

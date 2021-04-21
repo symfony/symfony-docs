@@ -547,7 +547,7 @@ represented by a PHP callable instead of a string::
     header in the response::
 
         // disables FastCGI buffering in nginx only for this response
-        $response->headers->set('X-Accel-Buffering', 'no')
+        $response->headers->set('X-Accel-Buffering', 'no');
 
 .. _component-http-foundation-serving-files:
 

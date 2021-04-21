@@ -1069,7 +1069,7 @@ configuration adds tests from a custom ``lib/tests`` directory:
         <!-- ... -->
         <testsuites>
             <testsuite name="Project Test Suite">
-                <!-- ... --->
+                <!-- ... -->
                 <directory>lib/tests</directory>
             </testsuite>
         </testsuites>

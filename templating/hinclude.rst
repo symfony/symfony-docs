@@ -94,7 +94,7 @@ Use the ``attributes`` option to define the value of hinclude.js options:
 
     {# by default, cross-site requests don't use credentials such as cookies, authorization
        headers or TLS client certificates; set this option to 'true' to use them #}
-    {{ render_hinclude(controller('...'), {attributes: {data-with-credentials: 'true'}}) }}
+    {{ render_hinclude(controller('...'), {attributes: {'data-with-credentials': 'true'}}) }}
 
     {# by default, the JavaScript code included in the loaded contents is not run;
        set this option to 'true' to run that JavaScript code #}

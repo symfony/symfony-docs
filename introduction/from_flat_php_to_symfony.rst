@@ -580,7 +580,7 @@ and uses Twig:
 
 .. code-block:: html+twig
 
-    <!-- templates/blog/list.html.twig -->
+    {# templates/blog/list.html.twig #}
     {% extends 'base.html.twig' %}
 
     {% block title %}List of Posts{% endblock %}

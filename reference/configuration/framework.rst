@@ -415,7 +415,9 @@ Since every developer uses a different IDE, the recommended way to enable this
 feature is to configure it on a system level. This can be done by setting the
 ``xdebug.file_link_format`` option in your ``php.ini`` configuration file. The
 format to use is the same as for the ``framework.ide`` option, but without the
-need to escape the percent signs (``%``) by doubling them::
+need to escape the percent signs (``%``) by doubling them:
+
+.. code-block:: ini
 
     // example for PhpStorm
     xdebug.file_link_format="phpstorm://open?file=%f&line=%l"
@@ -438,7 +440,9 @@ need to escape the percent signs (``%``) by doubling them::
     When running your app in a container or in a virtual machine, you can tell
     Symfony to map files from the guest to the host by changing their prefix.
     This map should be specified at the end of the URL template, using ``&`` and
-    ``>`` as guest-to-host separators::
+    ``>`` as guest-to-host separators:
+
+    .. code-block:: text
 
         // /path/to/guest/.../file will be opened
         // as /path/to/host/.../file on the host

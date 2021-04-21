@@ -188,7 +188,7 @@ expressions have access to a number of
 
     $expression = new Expression(
         '"ROLE_ADMIN" in roles or (not is_anonymous() and user.isSuperAdmin())'
-    )
+    );
 
     $vote = $expressionVoter->vote($token, $object, [$expression]);
 

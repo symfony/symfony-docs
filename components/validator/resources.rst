@@ -155,7 +155,7 @@ implement the PSR-6 interface :class:`Psr\\Cache\\CacheItemPoolInterface`)::
 
     $validator = Validation::createValidatorBuilder()
         // ... add loaders
-        ->setMappingCache(new SomePsr6Cache());
+        ->setMappingCache(new SomePsr6Cache())
         ->getValidator();
 
 .. versionadded:: 4.4
