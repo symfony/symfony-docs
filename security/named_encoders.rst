@@ -129,7 +129,7 @@ the name of the encoder to use::
 
     class User implements UserInterface, EncoderAwareInterface
     {
-        public function getEncoderName()
+        public function getEncoderName(): ?string
         {
             if ($this->isAdmin()) {
                 return 'harsh';

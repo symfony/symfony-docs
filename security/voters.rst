@@ -70,14 +70,14 @@ user can *edit* or *view* the object. In your controller, you'll check access wi
 code like this::
 
     // src/Controller/PostController.php
-    // ...
 
+    // ...
     class PostController extends AbstractController
     {
         /**
          * @Route("/posts/{id}", name="post_show")
          */
-        public function show($id)
+        public function show($id): Response
         {
             // get a Post object - e.g. query for it
             $post = ...;
@@ -91,7 +91,7 @@ code like this::
         /**
          * @Route("/posts/{id}/edit", name="post_edit")
          */
-        public function edit($id)
+        public function edit($id): Response
         {
             // get a Post object - e.g. query for it
             $post = ...;
@@ -130,7 +130,7 @@ would look like this::
         const VIEW = 'view';
         const EDIT = 'edit';
 
-        protected function supports(string $attribute, $subject)
+        protected function supports(string $attribute, $subject): bool
         {
             // if the attribute isn't one we support, return false
             if (!in_array($attribute, [self::VIEW, self::EDIT])) {
@@ -145,7 +145,7 @@ would look like this::
             return true;
         }
 
-        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
         {
             $user = $token->getUser();
 
@@ -168,7 +168,7 @@ would look like this::
             throw new \LogicException('This code should not be reached!');
         }
 
-        private function canView(Post $post, User $user)
+        private function canView(Post $post, User $user): bool
         {
             // if they can edit, they can view
             if ($this->canEdit($post, $user)) {
@@ -179,7 +179,7 @@ would look like this::
             return !$post->isPrivate();
         }
 
-        private function canEdit(Post $post, User $user)
+        private function canEdit(Post $post, User $user): bool
         {
             // this assumes that the Post object has a `getOwner()` method
             return $user === $post->getOwner();
@@ -243,7 +243,7 @@ with ``ROLE_SUPER_ADMIN``::
             $this->security = $security;
         }
 
-        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token)
+        protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
         {
             // ...
 

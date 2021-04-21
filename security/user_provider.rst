@@ -129,6 +129,7 @@ interface only requires one method: ``loadUserByUsername($username)``::
     // src/Repository/UserRepository.php
     namespace App\Repository;
 
+    use App\Entity\User;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
@@ -136,7 +137,7 @@ interface only requires one method: ``loadUserByUsername($username)``::
     {
         // ...
 
-        public function loadUserByUsername(string $usernameOrEmail)
+        public function loadUserByUsername(string $usernameOrEmail): ?User
         {
             $entityManager = $this->getEntityManager();
 

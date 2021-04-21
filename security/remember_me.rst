@@ -184,7 +184,7 @@ users to change their password. You can do this by leveraging a few special
     // src/Controller/AccountController.php
     // ...
 
-    public function accountInfo()
+    public function accountInfo(): Response
     {
         // allow any authenticated user - we don't care if they just
         // logged in, or are logged in via a remember me cookie
@@ -193,7 +193,7 @@ users to change their password. You can do this by leveraging a few special
         // ...
     }
 
-    public function resetPassword()
+    public function resetPassword(): Response
     {
         // require the user to log in during *this* session
         // if they were only logged in via a remember me cookie, they

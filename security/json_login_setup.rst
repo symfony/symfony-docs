@@ -80,7 +80,7 @@ The next step is to configure a route in your app matching this path:
             /**
              * @Route("/login", name="login", methods={"POST"})
              */
-            public function login(Request $request)
+            public function login(Request $request): Response
             {
                 $user = $this->getUser();
 

@@ -106,7 +106,7 @@ configuration (``login``):
             /**
              * @Route("/login", name="login", methods={"GET", "POST"})
              */
-            public function login()
+            public function login(): Response
             {
             }
         }
@@ -149,7 +149,7 @@ Great! Next, add the logic to ``login()`` that displays the login form::
     // src/Controller/SecurityController.php
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-    public function login(AuthenticationUtils $authenticationUtils)
+    public function login(AuthenticationUtils $authenticationUtils): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();

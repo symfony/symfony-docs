@@ -21,7 +21,7 @@ and make the ``name`` argument required::
     {
         // ...
 
-        protected function configure()
+        protected function configure(): void
         {
             $this
                 // ...
@@ -42,7 +42,7 @@ You now have access to a ``last_name`` argument in your command::
     {
         // ...
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             $text = 'Hi '.$input->getArgument('name');
 
