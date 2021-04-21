@@ -79,18 +79,46 @@ Configuring the Command
 You can optionally define a description, help message and the
 :doc:`input options and arguments </console/input>`::
 
-    // ...
-    protected function configure()
-    {
-        $this
-            // the short description shown while running "php bin/console list"
-            ->setDescription('Creates a new user.')
+.. versionadded:: 5.3
 
-            // the full command description shown when running the command with
-            // the "--help" option
-            ->setHelp('This command allows you to create a user...')
-        ;
-    }
+    The ability to use PHP attributes to configure commands was introduced in
+    Symfony 5.3.
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        use Symfony\Component\Console\Attribute\ConsoleCommand
+
+        // ...
+
+            #[ConsoleCommand(
+                name: 'app:create-user',
+                description: 'Creates a new user.'
+                hidden: false,
+                aliases: ['app:new-user'],
+            )]
+
+    .. code-block:: php
+
+        // ...
+        protected function configure()
+        {
+            $this
+                // the short description shown while running "php bin/console list"
+                ->setDescription('Creates a new user.')
+
+                // the full command description shown when running the command with
+                // the "--help" option
+                ->setHelp('This command allows you to create a user...')
+
+                // hidden command are not displayed while running "php bin/console list"
+                ->setHidden(false)
+
+                ->setName('app:create-user')
+                ->setAliases(['app:new-user'])
+            ;
+        }
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
@@ -418,7 +446,7 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
 
         $application = new Application();
         $application->setAutoExit(false);
-        
+
         $tester = new ApplicationTester($application);
 
 .. note::
