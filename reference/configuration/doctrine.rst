@@ -345,14 +345,17 @@ directory instead:
 
     .. code-block:: php
 
-        $container->loadFromExtension('doctrine', [
-            'orm' => [
-                'auto_mapping' => true,
-                'mappings' => [
-                    'AppBundle' => ['dir' => 'SomeResources/config/doctrine', 'type' => 'xml'],
-                ],
-            ],
-        ]);
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine) {
+            $emDefault = $doctrine->orm()->entityManager('default');
+
+            $emDefault->autoMapping(true);
+            $emDefault->mapping('AppBundle')
+                ->type('xml')
+                ->dir('SomeResources/config/doctrine')
+            ;
+        };
 
 Mapping Entities Outside of a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -402,20 +405,20 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
     .. code-block:: php
 
-        $container->loadFromExtension('doctrine', [
-            'orm' => [
-                'auto_mapping' => true,
-                'mappings' => [
-                    'SomeEntityNamespace' => [
-                        'type'      => 'annotation',
-                        'dir'       => '%kernel.project_dir%/src/Entity',
-                        'is_bundle' => false,
-                        'prefix'    => 'App\Entity',
-                        'alias'     => 'App',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine) {
+            $emDefault = $doctrine->orm()->entityManager('default');
+
+            $emDefault->autoMapping(true);
+            $emDefault->mapping('SomeEntityNamespace')
+                ->type('annotation')
+                ->dir('%kernel.project_dir%/src/Entity')
+                ->isBundle(false)
+                ->prefix('App\Entity')
+                ->alias('App')
+            ;
+        };
 
 Detecting a Mapping Configuration Format
 ........................................

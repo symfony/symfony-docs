@@ -138,11 +138,14 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
     .. code-block:: php
 
         // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                'password' => '%env(DATABASE_PASSWORD)%',
-            ]
-        ]);
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine) {
+            $doctrine->dbal()
+                ->connection('default')
+                    ->password('%env(DATABASE_PASSWORD)%')
+            ;
+        };
 
 The actual value will be resolved at runtime: container compilation and cache
 warmup don't need the **decryption key**.
