@@ -55,13 +55,13 @@ configuration:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'bootstrap_4_layout.html.twig',
-            ],
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes(['bootstrap_4_layout.html.twig']);
 
             // ...
-        ]);
+        };
 
 If you prefer to apply the Bootstrap styles on a form to form basis, include the
 ``form_theme`` tag in the templates where those forms are used:

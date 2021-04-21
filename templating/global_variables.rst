@@ -39,12 +39,13 @@ main Twig configuration file:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'globals' => [
-                'ga_tracking' => 'UA-xxxxx-x',
-            ],
-        ]);
+
+            $twig->global('ga_tracking')->value('UA-xxxxx-x');
+        };
 
 Now, the variable ``ga_tracking`` is available in all Twig templates, so you
 can use it without having to pass it explicitly from the controller or service
@@ -98,12 +99,13 @@ the ``@`` character, which is the usual syntax to
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'globals' => [
-                'uuid' => '@App\Generator\UuidGenerator',
-            ],
-        ]);
+
+            $twig->global('uuid')->value('@App\Generator\UuidGenerator');
+        };
 
 Now you can use the ``uuid`` variable in any Twig template to access to the
 ``UuidGenerator`` service:

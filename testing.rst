@@ -184,9 +184,11 @@ code to production:
     .. code-block:: php
 
         // config/packages/test/twig.php
-        $container->loadFromExtension('twig', [
-            'strict_variables' => true,
-        ]);
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->strictVariables(true);
+        };
 
 You can also use a different environment entirely, or override the default
 debug mode (``true``) by passing each as options to the ``bootKernel()``

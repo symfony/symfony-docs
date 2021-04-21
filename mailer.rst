@@ -704,13 +704,14 @@ image files as usual. First, to simplify things, define a Twig namespace called
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'paths' => [
-                // point this wherever your images live
-                '%kernel.project_dir%/assets/images' => 'images',
-            ],
-        ]);
+
+            // point this wherever your images live
+            $twig->path('%kernel.project_dir%/assets/images', 'images');
+        };
 
 Now, use the special ``email.image()`` Twig helper to embed the images inside
 the email contents:
@@ -812,13 +813,14 @@ called ``styles`` that points to the directory where ``email.css`` lives:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'paths' => [
-                // point this wherever your css files live
-                '%kernel.project_dir%/assets/styles' => 'styles',
-            ],
-        ]);
+
+            // point this wherever your css files live
+            $twig->path('%kernel.project_dir%/assets/styles', 'styles');
+        };
 
 .. _mailer-markdown:
 

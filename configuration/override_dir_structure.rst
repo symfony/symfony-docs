@@ -140,9 +140,11 @@ for multiple directories):
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'default_path' => '%kernel.project_dir%/resources/views',
-        ]);
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->defaultPath('%kernel.project_dir%/resources/views');
+        };
 
 Override the Translations Directory
 -----------------------------------
