@@ -740,6 +740,12 @@ Then, configure this service ID as the ``success_handler``:
             ],
         ]);
 
+.. tip::
+
+    If you want to customize the default failure handling, use the
+    ``failure_handler`` option and create a class that implements
+    :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
+
 Customizing the Login Link
 --------------------------
 
