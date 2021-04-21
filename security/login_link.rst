@@ -740,17 +740,16 @@ Then, configure this service ID as the ``success_handler``:
             ],
         ]);
 
-Customize generated Login Link
-------------------------------
+Customizing the Login Link
+--------------------------
 
 .. versionadded:: 5.3
 
     The possibility to customize the login link was introduced in Symfony 5.3.
 
-In some use cases it may be useful to customize the Login Link. In addition
-to the ``UserInterface``, it is therefore possible to pass a ``Request`` to the ``createLoginLink``
-method. In this example, our route is localized with the user locale which may
-be different from the current locale::
+The ``createLoginLink()`` method accepts a second optional argument to pass the
+``Request`` object used when generating the login link. This allows to customize
+features such as the locale used to generate the link::
 
     // src/Controller/SecurityController.php
     namespace App\Controller;
@@ -774,8 +773,7 @@ be different from the current locale::
                 $userRequest = clone $request;
                 $userRequest->setLocale($user->getLocale() ?? $request->getDefaultLocale());
 
-                // create a login link for $user this returns an instance
-                // of LoginLinkDetails
+                // create a login link for $user (this returns an instance of LoginLinkDetails)
                 $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $userRequest);
                 $loginLink = $loginLinkDetails->getUrl();
 
