@@ -34,6 +34,8 @@ an **event bus**. The event bus could have zero or more subscribers.
                         middleware:
                             - validation
                     event.bus:
+                        # the 'allow_no_handlers' middleware allows to have no handler
+                        # configured for this bus without throwing an exception
                         default_middleware: allow_no_handlers
                         middleware:
                             - validation
@@ -60,6 +62,8 @@ an **event bus**. The event bus could have zero or more subscribers.
                     <framework:bus name="query.bus">
                         <framework:middleware id="validation"/>
                     </framework:bus>
+                    <!-- the 'allow_no_handlers' middleware allows to have no handler
+                         configured for this bus without throwing an exception -->
                     <framework:bus name="event.bus" default-middleware="allow_no_handlers">
                         <framework:middleware id="validation"/>
                     </framework:bus>
@@ -87,6 +91,8 @@ an **event bus**. The event bus could have zero or more subscribers.
                         ],
                     ],
                     'event.bus' => [
+                        // the 'allow_no_handlers' middleware allows to have no handler
+                        // configured for this bus without throwing an exception
                         'default_middleware' => 'allow_no_handlers',
                         'middleware' => [
                             'validation',
