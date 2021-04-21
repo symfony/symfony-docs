@@ -36,7 +36,7 @@ Run this command from inside your controller via::
 
     class SpoolController extends AbstractController
     {
-        public function sendSpool($messages = 10, KernelInterface $kernel)
+        public function sendSpool(int $messages = 10, KernelInterface $kernel): Response
         {
             $application = new Application($kernel);
             $application->setAutoExit(false);
@@ -87,7 +87,7 @@ Now, use it in your controller::
 
     class SpoolController extends AbstractController
     {
-        public function sendSpool($messages = 10)
+        public function sendSpool(int $messages = 10): Response
         {
             // ...
             $output = new BufferedOutput(

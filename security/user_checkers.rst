@@ -29,7 +29,7 @@ or :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationExceptio
 
     class UserChecker implements UserCheckerInterface
     {
-        public function checkPreAuth(UserInterface $user)
+        public function checkPreAuth(UserInterface $user): void
         {
             if (!$user instanceof AppUser) {
                 return;
@@ -41,7 +41,7 @@ or :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationExceptio
             }
         }
 
-        public function checkPostAuth(UserInterface $user)
+        public function checkPostAuth(UserInterface $user): void
         {
             if (!$user instanceof AppUser) {
                 return;

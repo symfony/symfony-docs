@@ -49,7 +49,7 @@ level. For example::
     {
         // ...
 
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             $user = new User(...);
 
@@ -68,6 +68,8 @@ level. For example::
                 'Will only be printed in verbose mode or higher',
                 OutputInterface::VERBOSITY_VERBOSE
             );
+
+            return 0;
         }
     }
 

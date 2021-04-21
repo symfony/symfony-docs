@@ -80,7 +80,7 @@ class that processes the login submit and 4) updates the main security config fi
         /**
          * @Route("/logout", name="app_logout")
          */
-        public function logout()
+        public function logout(): void
         {
             throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
         }
@@ -197,6 +197,7 @@ a traditional HTML form that submits to ``/login``:
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -230,7 +231,7 @@ a traditional HTML form that submits to ``/login``:
             $this->passwordEncoder = $passwordEncoder;
         }
 
-        public function supports(Request $request)
+        public function supports(Request $request): bool
         {
             return self::LOGIN_ROUTE === $request->attributes->get('_route')
                 && $request->isMethod('POST');
@@ -251,7 +252,7 @@ a traditional HTML form that submits to ``/login``:
             return $credentials;
         }
 
-        public function getUser($credentials, UserProviderInterface $userProvider)
+        public function getUser($credentials, UserProviderInterface $userProvider): ?User
         {
             $token = new CsrfToken('authenticate', $credentials['csrf_token']);
             if (!$this->csrfTokenManager->isTokenValid($token)) {
@@ -268,7 +269,7 @@ a traditional HTML form that submits to ``/login``:
             return $user;
         }
 
-        public function checkCredentials($credentials, UserInterface $user)
+        public function checkCredentials($credentials, UserInterface $user): bool
         {
             return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
         }
@@ -281,7 +282,7 @@ a traditional HTML form that submits to ``/login``:
             return $credentials['password'];
         }
 
-        public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+        public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
         {
             if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
                 return new RedirectResponse($targetPath);
@@ -291,7 +292,7 @@ a traditional HTML form that submits to ``/login``:
             throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
         }
 
-        protected function getLoginUrl()
+        protected function getLoginUrl(): string
         {
             return $this->urlGenerator->generate(self::LOGIN_ROUTE);
         }
@@ -380,7 +381,7 @@ be redirected after success:
       // src/Security/LoginFormAuthenticator.php
 
       // ...
-      public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+      public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): Response
       {
           // ...
 
@@ -503,7 +504,7 @@ whenever the user browses a page::
             $this->saveTargetPath($this->session, 'main', $request->getUri());
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 KernelEvents::REQUEST => ['onKernelRequest']

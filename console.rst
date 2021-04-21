@@ -38,12 +38,12 @@ want a command to create a user::
         // the name of the command (the part after "bin/console")
         protected static $defaultName = 'app:create-user';
 
-        protected function configure()
+        protected function configure(): void
         {
             // ...
         }
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // ... put here the code to create the user
 
@@ -65,7 +65,7 @@ You can optionally define a description, help message and the
 :doc:`input options and arguments </console/input>`::
 
     // ...
-    protected function configure()
+    protected function configure(): void
     {
         $this
             // the short description shown while running "php bin/console list"
@@ -100,7 +100,7 @@ available in the ``configure()`` method::
             parent::__construct();
         }
 
-        protected function configure()
+        protected function configure(): void
         {
             $this
                 // ...
@@ -136,7 +136,7 @@ The ``execute()`` method has access to the output stream to write messages to
 the console::
 
     // ...
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln([
@@ -189,7 +189,7 @@ method, which returns an instance of
 
     class MyCommand extends Command
     {
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             if (!$output instanceof ConsoleOutputInterface) {
                 throw new \LogicException('This command accepts only an instance of "ConsoleOutputInterface".');
@@ -236,7 +236,7 @@ Use input options or arguments to pass information to the command::
     use Symfony\Component\Console\Input\InputArgument;
 
     // ...
-    protected function configure()
+    protected function configure(): void
     {
         $this
             // configure an argument
@@ -246,7 +246,7 @@ Use input options or arguments to pass information to the command::
     }
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln([
             'User Creator',
@@ -300,7 +300,7 @@ as a service, you can use normal dependency injection. Imagine you have a
 
         // ...
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // ...
 

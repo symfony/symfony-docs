@@ -78,7 +78,7 @@ provider::
             $this->setAuthenticated(count($roles) > 0);
         }
 
-        public function getCredentials()
+        public function getCredentials(): string
         {
             return '';
         }
@@ -123,7 +123,7 @@ set an authenticated token in the token storage if successful::
             $this->authenticationManager = $authenticationManager;
         }
 
-        public function __invoke(RequestEvent $event)
+        public function __invoke(RequestEvent $event): void
         {
             $request = $event->getRequest();
 
@@ -216,7 +216,7 @@ the ``PasswordDigest`` header value matches with the user's password::
             $this->cachePool = $cachePool;
         }
 
-        public function authenticate(TokenInterface $token)
+        public function authenticate(TokenInterface $token): WsseUserToken
         {
             $user = $this->userProvider->loadUserByUsername($token->getUsername());
 
@@ -236,7 +236,7 @@ the ``PasswordDigest`` header value matches with the user's password::
          * For more information specific to the logic here, see
          * https://github.com/symfony/symfony-docs/pull/3134#issuecomment-27699129
          */
-        protected function validateDigest($digest, $nonce, $created, $secret)
+        protected function validateDigest($digest, $nonce, $created, $secret): bool
         {
             // Check created time is not in the future
             if (strtotime($created) > time()) {
@@ -269,7 +269,7 @@ the ``PasswordDigest`` header value matches with the user's password::
             return hash_equals($expected, $digest);
         }
 
-        public function supports(TokenInterface $token)
+        public function supports(TokenInterface $token): bool
         {
             return $token instanceof WsseUserToken;
         }
@@ -307,7 +307,7 @@ create a class which implements
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
+        public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint): array
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
@@ -321,17 +321,17 @@ create a class which implements
             return [$providerId, $listenerId, $defaultEntryPoint];
         }
 
-        public function getPosition()
+        public function getPosition(): string
         {
             return 'pre_auth';
         }
 
-        public function getKey()
+        public function getKey(): string
         {
             return 'wsse';
         }
 
-        public function addConfiguration(NodeDefinition $node)
+        public function addConfiguration(NodeDefinition $node): void
         {
         }
     }
@@ -455,7 +455,7 @@ factory in the kernel::
 
     class Kernel extends BaseKernel
     {
-        public function build(ContainerBuilder $container)
+        public function build(ContainerBuilder $container): void
         {
             $extension = $container->getExtension('security');
             $extension->addSecurityListenerFactory(new WsseFactory());
@@ -547,7 +547,7 @@ the ``addConfiguration()`` method::
     {
         // ...
 
-        public function addConfiguration(NodeDefinition $node)
+        public function addConfiguration(NodeDefinition $node): void
         {
             $node
                 ->children()
@@ -568,7 +568,7 @@ in order to put it to use::
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
+        public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint): array
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container

@@ -123,7 +123,7 @@ response)::
 
     class AccessDeniedHandler implements AccessDeniedHandlerInterface
     {
-        public function handle(Request $request, AccessDeniedException $accessDeniedException)
+        public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
         {
             // ...
 
