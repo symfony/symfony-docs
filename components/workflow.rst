@@ -68,8 +68,8 @@ are trying to use it with::
     use Symfony\Component\Workflow\Registry;
     use Symfony\Component\Workflow\SupportStrategy\InstanceOfSupportStrategy;
 
-    $blogPostWorkflow = ...
-    $newsletterWorkflow = ...
+    $blogPostWorkflow = ...;
+    $newsletterWorkflow = ...;
 
     $registry = new Registry();
     $registry->addWorkflow($blogPostWorkflow, new InstanceOfSupportStrategy(BlogPost::class));

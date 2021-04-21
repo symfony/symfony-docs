@@ -11,7 +11,7 @@ The Intl Component
 .. caution::
 
     The replacement layer is limited to the ``en`` locale. If you want to use
-    other locales, you should `install the intl extension`_. There is no conflict 
+    other locales, you should `install the intl extension`_. There is no conflict
     between the two because, even if you use the extension, this package can still
     be useful to access the ICU data.
 
@@ -211,9 +211,9 @@ Locales
 ~~~~~~~
 
 A locale is the combination of a language, a region and some parameters that
-define the interface preferences of the user. For example, "Chinese" is the 
-language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified" 
-(script) + "Macau SAR China" (region). The ``Locales`` class provides access to 
+define the interface preferences of the user. For example, "Chinese" is the
+language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified"
+(script) + "Macau SAR China" (region). The ``Locales`` class provides access to
 the name of all locales::
 
     use Symfony\Component\Intl\Locales;
@@ -323,7 +323,7 @@ translate into any locale with the ``getName()`` method shown earlier::
 The reverse lookup is also possible thanks to the ``getCountryCode()`` method,
 which returns the code of the country where the given timezone ID belongs to::
 
-    $countryCode = Timezones::getCountryCode('America/Vancouver')
+    $countryCode = Timezones::getCountryCode('America/Vancouver');
     // => $countryCode = 'CA' (CA = Canada)
 
 The `UTC/GMT time offsets`_ of all timezones are provided by ``getRawOffset()``

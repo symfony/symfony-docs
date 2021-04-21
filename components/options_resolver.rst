@@ -507,7 +507,7 @@ the closure::
 
             $resolver->setDefault('host', function (Options $options, $previousValue) {
                 if ('ssl' === $options['encryption']) {
-                    return 'secure.example.org'
+                    return 'secure.example.org';
                 }
 
                 // Take default value configured in the base class

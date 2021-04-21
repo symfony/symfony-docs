@@ -252,7 +252,7 @@ absolute paths and returns the relative path from the second path to the first o
         '/var/lib/symfony/src/Symfony/Component'
     );
     // returns 'videos/'
-    $filesystem->makePathRelative('/tmp/videos', '/tmp')
+    $filesystem->makePathRelative('/tmp/videos', '/tmp');
 
 ``mirror``
 ~~~~~~~~~~

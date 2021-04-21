@@ -30,7 +30,9 @@ framework just a little to make templates even more readable::
     $response->send();
 
 As we now extract the request query parameters, simplify the ``hello.php``
-template as follows::
+template as follows:
+
+.. code-block:: html+php
 
     <!-- example.com/src/pages/hello.php -->
     Hello <?= htmlspecialchars(isset($name) ? $name : 'World', ENT_QUOTES, 'UTF-8') ?>
@@ -161,7 +163,9 @@ There are a few new things in the code:
 
 * ``500`` errors are now managed correctly;
 
-* Request attributes are extracted to keep our templates simple::
+* Request attributes are extracted to keep our templates simple:
+
+.. code-block:: html+php
 
     // example.com/src/pages/hello.php
     Hello <?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>

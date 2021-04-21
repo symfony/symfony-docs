@@ -131,16 +131,14 @@ In Symfony, you can register your custom DQL functions as follows:
             use App\DQL\DatetimeFunction;
 
             $container->loadFromExtension('doctrine', [
-                'doctrine' => [
-                    'orm' => [
-                        // ...
-                        'entity_managers' => [
-                            'example_manager' => [
-                                // place your functions here
-                                'dql' => [
-                                    'datetime_functions' => [
-                                        'test_datetime' => DatetimeFunction::class,
-                                    ],
+                'orm' => [
+                    // ...
+                    'entity_managers' => [
+                        'example_manager' => [
+                            // place your functions here
+                            'dql' => [
+                                'datetime_functions' => [
+                                    'test_datetime' => DatetimeFunction::class,
                                 ],
                             ],
                         ],

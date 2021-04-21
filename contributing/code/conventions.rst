@@ -183,7 +183,9 @@ after the use declarations, like in this example from `ServiceRouterLoader`_::
 
 .. _`ServiceRouterLoader`: https://github.com/symfony/symfony/blob/4.4/src/Symfony/Component/Routing/Loader/DependencyInjection/ServiceRouterLoader.php
 
-The deprecation must be added to the ``CHANGELOG.md`` file of the impacted component::
+The deprecation must be added to the ``CHANGELOG.md`` file of the impacted component:
+
+.. code-block:: markdown
 
     4.4
     ---
@@ -191,7 +193,9 @@ The deprecation must be added to the ``CHANGELOG.md`` file of the impacted compo
     * Deprecate the `Deprecated` class, use `Replacement` instead
 
 It must also be added to the ``UPGRADE.md`` file of the targeted minor version
-(``UPGRADE-4.4.md`` in our example)::
+(``UPGRADE-4.4.md`` in our example):
+
+.. code-block:: markdown
 
     DependencyInjection
     -------------------
