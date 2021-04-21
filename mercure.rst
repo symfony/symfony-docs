@@ -623,7 +623,7 @@ You can instead make use of the `MockHub`::
 
             $controller = new MessageController($hub);
 
-            ...
+            // ...
         }
     }
 
@@ -646,12 +646,13 @@ During functional testing you can instead decorate the Hub::
     }
 
 HubStub decorates the default hub service so no updates are actually
-sent. Here is the HubStub implementation::
+sent. Here is the HubStub implementation:
+
+.. code-block:: yaml
 
     # config/services_test.yaml
     App\Tests\Functional\Fixtures\HubStub:
         decorates: mercure.hub.default
-
 
 Debugging
 ---------

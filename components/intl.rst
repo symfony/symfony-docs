@@ -328,7 +328,7 @@ translate into any locale with the ``getName()`` method shown earlier::
 The reverse lookup is also possible thanks to the ``getCountryCode()`` method,
 which returns the code of the country where the given timezone ID belongs to::
 
-    $countryCode = Timezones::getCountryCode('America/Vancouver')
+    $countryCode = Timezones::getCountryCode('America/Vancouver');
     // => $countryCode = 'CA' (CA = Canada)
 
 The `UTC/GMT time offsets`_ of all timezones are provided by ``getRawOffset()``

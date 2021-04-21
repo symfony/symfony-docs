@@ -72,8 +72,8 @@ You can add a table separator anywhere in the output by passing an instance of
 You can optionally display titles at the top and the bottom of the table::
 
     // ...
-    $table->setHeaderTitle('Books')
-    $table->setFooterTitle('Page 1/2')
+    $table->setHeaderTitle('Books');
+    $table->setFooterTitle('Page 1/2');
     $table->render();
 
 .. code-block:: terminal

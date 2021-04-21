@@ -420,7 +420,9 @@ PHP Templates
 ~~~~~~~~~~~~~
 
 The translator service is accessible in PHP templates through the
-``translator`` helper::
+``translator`` helper:
+
+.. code-block:: html+php
 
     <?= $view['translator']->trans('Symfony is great') ?>
 

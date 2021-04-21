@@ -78,7 +78,9 @@ you can write::
     $truncatedMessage = $formatter->truncate($message, 7);
     $output->writeln($truncatedMessage);
 
-And the output will be::
+And the output will be:
+
+.. code-block:: text
 
     This is...
 
@@ -93,7 +95,9 @@ from the end of the string::
 
     $truncatedMessage = $formatter->truncate($message, -5);
 
-This will result in::
+This will result in:
+
+.. code-block:: text
 
     This is a very long message, which should be trun...
 

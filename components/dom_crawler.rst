@@ -524,7 +524,9 @@ You can virtually set and get values on the form::
     // where "registration" is its own array
     $values = $form->getPhpValues();
 
-To work with multi-dimensional fields::
+To work with multi-dimensional fields:
+
+.. code-block:: html
 
     <form>
         <input name="multi[]"/>

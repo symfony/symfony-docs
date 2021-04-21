@@ -1015,7 +1015,9 @@ For example, take an object normalized as following::
 
     ['foo' => [1, 2], 'bar' => true];
 
-The ``XmlEncoder`` will encode this object like that::
+The ``XmlEncoder`` will encode this object like that:
+
+.. code-block:: xml
 
     <?xml version="1.0" encoding="UTF-8" ?>
     <response>
