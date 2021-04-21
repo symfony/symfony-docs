@@ -20,7 +20,7 @@ In those cases, you can define the command as **hidden** by setting the
     {
         protected static $defaultName = 'app:legacy';
 
-        protected function configure()
+        protected function configure(): void
         {
             $this
                 ->setHidden(true)

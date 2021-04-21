@@ -85,7 +85,7 @@ this can be customized on a form-by-form basis::
 
     // src/Form/TaskType.php
     namespace App\Form;
-    
+
     // ...
     use App\Entity\Task;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -94,7 +94,7 @@ this can be customized on a form-by-form basis::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class'      => Task::class,
@@ -150,9 +150,10 @@ Then, get the value of the CSRF token in the controller action and use the
 to check its validity::
 
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    public function delete(Request $request)
+    public function delete(Request $request): Response
     {
         $submittedToken = $request->request->get('token');
 

@@ -35,13 +35,13 @@ For example, suppose you want to log something from within your command::
             parent::__construct();
         }
 
-        protected function configure()
+        protected function configure(): void
         {
             $this
                 ->setDescription('Good morning!');
         }
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             $this->logger->info('Waking up the sun');
             // ...

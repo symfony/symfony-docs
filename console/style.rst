@@ -21,7 +21,7 @@ Consider for example the code used to display the title of the following command
     {
         // ...
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             $output->writeln([
                 '<info>Lorem Ipsum Dolor Sit Amet</>',
@@ -62,7 +62,7 @@ title of the command::
     {
         // ...
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             $io = new SymfonyStyle($input, $output);
             $io->title('Lorem Ipsum Dolor Sit Amet');
@@ -412,7 +412,7 @@ of your commands to change their appearance::
     {
         // ...
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // Before
             $io = new SymfonyStyle($input, $output);

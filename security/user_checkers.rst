@@ -31,7 +31,7 @@ displayed to the user::
 
     class UserChecker implements UserCheckerInterface
     {
-        public function checkPreAuth(UserInterface $user)
+        public function checkPreAuth(UserInterface $user): void
         {
             if (!$user instanceof AppUser) {
                 return;
@@ -43,7 +43,7 @@ displayed to the user::
             }
         }
 
-        public function checkPostAuth(UserInterface $user)
+        public function checkPostAuth(UserInterface $user): void
         {
             if (!$user instanceof AppUser) {
                 return;

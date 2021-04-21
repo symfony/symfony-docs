@@ -933,7 +933,7 @@ You can deny access from inside a controller::
     // src/Controller/AdminController.php
     // ...
 
-    public function adminDashboard()
+    public function adminDashboard(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -977,7 +977,7 @@ using annotations:
     +      *
     +      * @IsGranted("ROLE_ADMIN")
     +      */
-          public function adminDashboard()
+          public function adminDashboard(): Response
           {
               // ...
           }
@@ -1024,7 +1024,7 @@ role::
 
     // ...
 
-    public function adminDashboard()
+    public function adminDashboard(): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -1074,7 +1074,7 @@ like this:
 After authentication, the ``User`` object of the current user can be accessed
 via the ``getUser()`` shortcut::
 
-    public function index()
+    public function index(): Response
     {
         // usually you'll want to make sure the user is authenticated first
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -1115,6 +1115,8 @@ If you need to get the logged in user from a service, use the
         {
             // returns User object or null if not authenticated
             $user = $this->security->getUser();
+
+            // ...
         }
     }
 
@@ -1207,7 +1209,7 @@ Next, you'll need to create a route for this URL (but not a controller):
             /**
              * @Route("/logout", name="app_logout", methods={"GET"})
              */
-            public function logout()
+            public function logout(): void
             {
                 // controller can be blank: it will never be executed!
                 throw new \Exception('Don\'t forget to activate logout in security.yaml');
