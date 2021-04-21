@@ -739,3 +739,51 @@ Then, configure this service ID as the ``success_handler``:
                 ],
             ],
         ]);
+
+Customize generated Login Link
+------------------------------
+
+.. versionadded:: 5.3
+
+    The possibility to customize the login link was introduced in Symfony 5.3.
+
+In some use cases it may be useful to customize the Login Link. In addition
+to the ``UserInterface``, it is therefore possible to pass a ``Request`` to the ``createLoginLink``
+method. In this example, our route is localized with the user locale which may
+be different from the current locale::
+
+    // src/Controller/SecurityController.php
+    namespace App\Controller;
+
+    // ...
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
+
+    class SecurityController extends AbstractController
+    {
+        /**
+         * @Route("/login", name="login")
+         */
+        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request)
+        {
+            // check if login form is submitted
+            if ($request->isMethod('POST')) {
+                // ... load the user in some way
+
+                // clone and customize Request
+                $userRequest = clone $request;
+                $userRequest->setLocale($user->getLocale() ?? $request->getDefaultLocale());
+
+                // create a login link for $user this returns an instance
+                // of LoginLinkDetails
+                $loginLinkDetails = $loginLinkHandler->createLoginLink($user, $userRequest);
+                $loginLink = $loginLinkDetails->getUrl();
+
+                // ...
+            }
+
+            return $this->render('security/login.html.twig');
+        }
+
+        // ...
+    }
