@@ -628,17 +628,16 @@ times:
 Change the ``async`` argument to use the name of your transport (or transports)
 and ``user`` to the Unix user on your server.
 
-If you use the Redis Transport, note that each worker needs a unique consumer name to
-avoid the same message being handled by multiple workers. One way to achieve this is
-to set an environment variable in the Supervisor configuration file, which you can
-then refer to in `messenger.yaml` (see Redis section above):
+If you use the Redis Transport, note that each worker needs a unique consumer
+name to avoid the same message being handled by multiple workers. One way to
+achieve this is to set an environment variable in the Supervisor configuration
+file, which you can then refer to in ``messenger.yaml`` (see Redis section above):
 
 .. code-block:: ini
 
     environment=MESSENGER_CONSUMER_NAME=%(program_name)s_%(process_num)02d
 
-Next, tell Supervisor to read your
-config and start your workers:
+Next, tell Supervisor to read your config and start your workers:
 
 .. code-block:: terminal
 
@@ -1251,9 +1250,9 @@ claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
 
     There should never be more than one ``messenger:consume`` command running with the same
     combination of ``stream``, ``group`` and ``consumer``, or messages could end up being
-    handled more than once. If you run multiple queue workers, ``consumer` can be set to an
-    environment variable (like ``%env(MESSENGER_CONSUMER_NAME)%`)` set by Supervisor
-    (example below) or whatever service used to manage the worker processes.
+    handled more than once. If you run multiple queue workers, ``consumer`` can be set to an
+    environment variable (like ``%env(MESSENGER_CONSUMER_NAME)%``) set by Supervisor
+    (example below) or any other service used to manage the worker processes.
     In a container environment, the ``HOSTNAME`` can be used as the consumer name, since
     there is only one worker per container/host. If using Kubernetes to orchestrate the
     containers, consider using a ``StatefulSet`` to have stable names.
