@@ -247,7 +247,7 @@ configurable with the ``verify_peer`` option. Although it's not recommended to
 disable this verification for security reasons, it can be useful while developing
 the application or when using a self-signed certificate::
 
-    $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=0'
+    $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=0';
 
 .. versionadded:: 5.1
 

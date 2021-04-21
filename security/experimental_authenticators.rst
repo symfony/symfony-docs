@@ -226,6 +226,7 @@ You can configure this using the ``entry_point`` setting:
                     <!-- allow authentication using a form or HTTP basic -->
                     <form-login/>
                     <http-basic/>
+                </firewall>
             </config>
         </srv:container>
 

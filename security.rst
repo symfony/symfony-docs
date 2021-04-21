@@ -368,7 +368,6 @@ important section is ``firewalls``:
                 <firewall name="main"
                     anonymous="true"
                     lazy="true"/>
-                </firewall>
             </config>
         </srv:container>
 
