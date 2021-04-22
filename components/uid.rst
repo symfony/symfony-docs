@@ -55,12 +55,12 @@ to create each type of UUID::
     $uuid = Uuid::v3($namespace, $name); // $uuid is an instance of Symfony\Component\Uid\UuidV3
     $uuid = Uuid::v5($namespace, $name); // $uuid is an instance of Symfony\Component\Uid\UuidV5
 
-    // the namespaces defined by RFC 4122 are available as constants
-    // (see https://tools.ietf.org/html/rfc4122#appendix-C)
-    $uuid = Uuid::v3(Uuid::NAMESPACE_DNS, $name);
-    $uuid = Uuid::v3(Uuid::NAMESPACE_URL, $name);
-    $uuid = Uuid::v3(Uuid::NAMESPACE_OID, $name);
-    $uuid = Uuid::v3(Uuid::NAMESPACE_X500, $name);
+    // the namespaces defined by RFC 4122 (see https://tools.ietf.org/html/rfc4122#appendix-C)
+    // are available as PHP constants and as string values
+    $uuid = Uuid::v3(Uuid::NAMESPACE_DNS, $name);  // same as: Uuid::v3('dns', $name);
+    $uuid = Uuid::v3(Uuid::NAMESPACE_URL, $name);  // same as: Uuid::v3('url', $name);
+    $uuid = Uuid::v3(Uuid::NAMESPACE_OID, $name);  // same as: Uuid::v3('oid', $name);
+    $uuid = Uuid::v3(Uuid::NAMESPACE_X500, $name); // same as: Uuid::v3('x500', $name);
 
     // UUID type 6 is not part of the UUID standard. It's lexicographically sortable
     // (like ULIDs) and contains a 60-bit timestamp and 63 extra unique bits.
@@ -69,7 +69,8 @@ to create each type of UUID::
 
 .. versionadded:: 5.3
 
-    The ``Uuid::NAMESPACE_*`` constants were introduced in Symfony 5.3.
+    The ``Uuid::NAMESPACE_*`` constants and the namespace string values (``'dns'``,
+    ``'url'``, etc.) were introduced in Symfony 5.3.
 
 If your UUID value is already generated in another format, use any of the
 following methods to create a ``Uuid`` object from it::
