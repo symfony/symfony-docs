@@ -353,8 +353,8 @@ of the event to dispatch::
 
 .. versionadded:: 4.3
 
-    The event name is now optional since Symfony 4.3 in
-    the :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch`.
+    The event name in :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch`
+    is optional since Symfony 4.3.
 
 Notice that the special ``OrderPlacedEvent`` object is created and passed to
 the ``dispatch()`` method. Now, any listener to the ``order.placed`` or the
