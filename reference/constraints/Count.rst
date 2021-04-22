@@ -232,4 +232,23 @@ Parameter        Description
 ``{{ limit }}``  The lower limit
 ===============  ==============================================================
 
+``condition``
+~~~~~~~~~~~~~
+
+**type**: ``string``
+
+This option is a symfony expression language string to which the variable ``item`` is passed and that should return a boolean.
+If the expression is true, the item will be counted, otherwise not.
+
+.. code-block:: php-annotations
+
+    /**
+     * @Assert\Count(
+     *      exactly = 1,
+     *      exactMessage = "Exactly one item with type 'foobar' must be provided",
+     *      condition = "'foobar' === item.getType()"
+     * )
+     */
+
+
 .. include:: /reference/constraints/_payload-option.rst.inc
