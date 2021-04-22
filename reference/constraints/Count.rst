@@ -238,7 +238,7 @@ Parameter        Description
 **type**: ``string``
 
 This option is a symfony expression language string to which the variable ``item`` is passed and that should return a boolean.
-If the expression is true, the item will be counted, otherwise not.
+If the expression is true, the item will be counted, otherwise not. The ``symfony/expression-language`` component must be installed in order to use the conditional count.
 
 .. code-block:: php-annotations
 
