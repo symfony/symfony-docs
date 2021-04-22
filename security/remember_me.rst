@@ -289,13 +289,13 @@ so ``DoctrineTokenProvider`` can store the tokens:
         .. code-block:: php
 
             # config/packages/doctrine.php
-            $container->loadFromExtension('doctrine', [
-                'dbal' => [
-                    'schema_filter'  => '~^(?!rememberme_token)~',
-                    // ...
-                ],
+            use Symfony\Config\DoctrineConfig;
+
+            return static function (DoctrineConfig $doctrine) {
+                $dbalDefault = $doctrine->dbal()->connection('default');
                 // ...
-            ]);
+                $dbalDefault->schemaFilter('~^(?!rememberme_token)~');
+            };
 
 Finally, set the ``token_provider`` option of the ``remember_me`` config to the
 service you created before:
