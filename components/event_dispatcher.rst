@@ -348,7 +348,7 @@ of the event to dispatch::
     // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
     $dispatcher->dispatch($event, OrderPlacedEvent::NAME);
-    // or since Symfony 4.3+
+    // you can also omit the second argument
     $dispatcher->dispatch($event);
 
 .. versionadded:: 4.3
