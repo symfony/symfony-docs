@@ -88,14 +88,13 @@ Then reference it in the Monolog configuration:
 
         // config/packages/prod/monolog.php
         use Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler;
+        use Symfony\Config\MonologConfig;
 
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'es' => [
-                    'type' => 'service',
-                    'id' => ElasticsearchLogstashHandler::class,
-                ],
-            ],
-        ]);
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('es')
+                ->type('service')
+                ->id(ElasticsearchLogstashHandler::class)
+            ;
+        };
 
 .. _`ELK stack`: https://www.elastic.co/what-is/elk-stack

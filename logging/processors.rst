@@ -149,16 +149,16 @@ Finally, set the formatter to be used on whatever handler you want:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'main' => [
-                    'type'      => 'stream',
-                    'path'      => '%kernel.logs_dir%/%kernel.environment%.log',
-                    'level'     => 'debug',
-                    'formatter' => 'monolog.formatter.session_request',
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('main')
+                ->type('stream')
+                ->path('%kernel.logs_dir%/%kernel.environment%.log')
+                ->level('debug')
+                ->formatter('monolog.formatter.session_request')
+            ;
+        };
 
 If you use several handlers, you can also register a processor at the
 handler level or at the channel level instead of registering it globally

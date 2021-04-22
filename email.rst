@@ -394,9 +394,11 @@ the report with details of the sent emails.
     .. code-block:: php
 
         // config/packages/dev/web_profiler.php
-        $container->loadFromExtension('web_profiler', [
-            'intercept_redirects' => 'true',
-        ]);
+        use Symfony\Config\WebProfilerConfig;
+
+        return static function (WebProfilerConfig $webProfiler) {
+            $webProfiler->interceptRedirects(true);
+        };
 
 .. tip::
 
