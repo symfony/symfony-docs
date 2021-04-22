@@ -190,10 +190,13 @@ parameter used, for example, to turn Twig's debug mode on:
 
     .. code-block:: php
 
-        $container->loadFromExtension('twig', [
-            'debug' => '%kernel.debug%',
+        // config/packages/twig.php
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-        ]);
+            $twig->debug('%kernel.debug%');
+        };
 
 The Environments
 ----------------
