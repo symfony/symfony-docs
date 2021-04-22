@@ -2402,7 +2402,7 @@ use the ``generateUrl()`` helper::
 
             // generate a URL with route arguments
             $userProfilePage = $this->generateUrl('user_profile', [
-                'username' => $user->getUsername(),
+                'username' => $user->getUserIdentifier(),
             ]);
 
             // generated URLs are "absolute paths" by default. Pass a third optional
@@ -2472,7 +2472,7 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
 
             // generate a URL with route arguments
             $userProfilePage = $this->router->generate('user_profile', [
-                'username' => $user->getUsername(),
+                'username' => $user->getUserIdentifier(),
             ]);
 
             // generated URLs are "absolute paths" by default. Pass a third optional
@@ -2595,7 +2595,7 @@ Now you'll get the expected results when generating URLs in your commands::
 
             // generate a URL with route arguments
             $userProfilePage = $this->router->generate('user_profile', [
-                'username' => $user->getUsername(),
+                'username' => $user->getUserIdentifier(),
             ]);
 
             // generated URLs are "absolute paths" by default. Pass a third optional

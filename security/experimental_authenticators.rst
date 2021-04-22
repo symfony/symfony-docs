@@ -456,7 +456,7 @@ using :ref:`the user provider <security-user-providers>`::
     You can optionally pass a user loader as second argument to the
     ``UserBadge``. This callable receives the ``$userIdentifier``
     and must return a ``UserInterface`` object (otherwise a
-    ``UsernameNotFoundException`` is thrown)::
+    ``UserNotFoundException`` is thrown)::
 
         // src/Security/CustomAuthenticator.php
         namespace App\Security;

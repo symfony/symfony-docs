@@ -85,7 +85,9 @@ The next step is to configure a route in your app matching this path:
                 $user = $this->getUser();
 
                 return $this->json([
-                    'username' => $user->getUsername(),
+                    // The getUserIdentifier() method was introduced in Symfony 5.3.
+                    // In previous versions it was called getUsername()
+                    'username' => $user->getUserIdentifier(),
                     'roles' => $user->getRoles(),
                 ]);
             }
