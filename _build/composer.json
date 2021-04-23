@@ -6,7 +6,7 @@
     ],
     "config": {
         "platform": {
-            "php": "7.2.9"
+            "php": "7.4.14"
         },
         "preferred-install": {
             "*": "dist"
@@ -14,9 +14,9 @@
         "sort-packages": true
     },
     "require": {
-        "php": ">=7.2.9",
-        "symfony/console": "^4.4",
-        "symfony/docs-builder": "^0.12.0",
-        "symfony/process": "^4.4"
+        "php": ">=7.4",
+        "symfony/console": "^5.2",
+        "symfony/docs-builder": "^0.15.0",
+        "symfony/process": "^5.2"
     }
 }
