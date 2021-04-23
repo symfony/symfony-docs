@@ -36,7 +36,7 @@ jobs:
                 run: make -C _build SPHINXOPTS="-nqW -j auto" html
 
     symfony-docs-builder-build:
-        name: Build (symfony/docs-builder)
+        name: Build (symfony-tools/docs-builder)
 
         runs-on: ubuntu-latest
 
