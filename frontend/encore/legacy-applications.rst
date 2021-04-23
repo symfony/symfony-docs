@@ -95,6 +95,7 @@ in your ``webpack_encore.yaml`` file:
 
     # config/packages/webpack_encore.yaml
     webpack_encore:
+        # ...
         script_attributes:
             defer: false
 
