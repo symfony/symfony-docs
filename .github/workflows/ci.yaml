@@ -138,10 +138,7 @@ jobs:
 
           - name: Install dependencies
             if: ${{ steps.find-files.outputs.files }}
-            run: |
-              git clone --depth 15 https://github.com/symfony-tools/code-block-checker.git ../_checker
-              cd ../_checker
-              composer install
+            run: composer create-project symfony-tools/code-block-checker ../_checker
 
           - name: Install test application
             if: ${{ steps.find-files.outputs.files }}
