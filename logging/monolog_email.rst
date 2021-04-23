@@ -99,36 +99,36 @@ it is broken down.
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'main' => [
-                    'type'         => 'fingers_crossed',
-                    // 500 errors are logged at the critical level
-                    'action_level' => 'critical',
-                    // to also log 400 level errors (but not 404's):
-                    // 'action_level' => 'error',
-                    // 'excluded_404s' => [
-                    //     '^/',
-                    // ],
-                    'handler'      => 'deduplicated',
-                ],
-                'deduplicated' => [
-                    'type'    => 'deduplication',
-                    'handler' => 'symfony_mailer',
-                ],
-                'symfony_mailer' => [
-                    'type'         => 'symfony_mailer',
-                    'from_email'   => 'error@example.com',
-                    'to_email'     => 'error@example.com',
-                    // or a list of recipients
-                    // 'to_email'   => ['dev1@example.com', 'dev2@example.com', ...],
-                    'subject'      => 'An Error Occurred! %%message%%',
-                    'level'        => 'debug',
-                    'formatter'    => 'monolog.formatter.html',
-                    'content_type' => 'text/html',
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('main')
+                ->type('fingers_crossed')
+                // 500 errors are logged at the critical level
+                ->actionLevel('critical')
+                // to also log 400 level errors (but not 404's):
+                // ->actionLevel('error')
+                // ->excluded404s(['^/'])
+
+                ->handler('deduplicated')
+            ;
+
+            $monolog->handler('deduplicated')
+                ->type('deduplicated')
+                ->handler('symfony_mailer');
+
+            $monolog->handler('symfony_mailer')
+                ->type('symfony_mailer')
+                ->fromEmail('error@example.com')
+                ->toEmail(['error@example.com'])
+                // or a list of recipients
+                // ->toEmail(['dev1@example.com', 'dev2@example.com', ...])
+                ->subject('An Error Occurred! %%message%%')
+                ->level('debug')
+                ->formatter('monolog.formatter.html')
+                ->contentType('text/html')
+            ;
+        };
 
 The ``main`` handler is a ``fingers_crossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
@@ -177,17 +177,18 @@ You can adjust the time period using the ``time`` option:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                // ...
-                'deduplicated' => [
-                    'type'    => 'deduplication',
-                    // the time in seconds during which duplicate entries are discarded (default: 60)
-                    'time' => 10,
-                    'handler' => 'symfony_mailer',
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            // ...
+
+            $monolog->handler('deduplicated')
+                ->type('deduplicated')
+                // the time in seconds during which duplicate entries are discarded (default: 60)
+                ->time(10)
+                ->handler('symfony_mailer')
+            ;
+        };
 
 The messages are then passed to the ``symfony_mailer`` handler. This is the handler that
 actually deals with emailing you the error. The settings for this are
@@ -285,39 +286,43 @@ get logged on the server as well as the emails being sent:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'main' => [
-                    'type'         => 'fingers_crossed',
-                    'action_level' => 'critical',
-                    'handler'      => 'grouped',
-                ],
-                'grouped' => [
-                    'type'    => 'group',
-                    'members' => ['streamed', 'deduplicated'],
-                ],
-                'streamed'  => [
-                    'type'  => 'stream',
-                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
-                    'level' => 'debug',
-                ],
-                'deduplicated' => [
-                    'type'     => 'deduplication',
-                    'handler'  => 'symfony_mailer',
-                ],
-                'symfony_mailer' => [
-                    'type'         => 'symfony_mailer',
-                    'from_email'   => 'error@example.com',
-                    'to_email'     => 'error@example.com',
-                    // or a list of recipients
-                    // 'to_email'   => ['dev1@example.com', 'dev2@example.com', ...],
-                    'subject'      => 'An Error Occurred! %%message%%',
-                    'level'        => 'debug',
-                    'formatter'    => 'monolog.formatter.html',
-                    'content_type' => 'text/html',
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('main')
+                ->type('fingers_crossed')
+                ->actionLevel('critical')
+                ->handler('grouped')
+            ;
+
+            $monolog->handler('group')
+                ->members(['streamed', 'deduplicated'])
+            ;
+
+            $monolog->handler('streamed')
+                ->type('stream')
+                ->path('%kernel.logs_dir%/%kernel.environment%.log')
+                ->level('debug')
+            ;
+
+            $monolog->handler('deduplicated')
+                ->type('deduplicated')
+                ->handler('symfony_mailer')
+            ;
+
+            // still passed *all* logs, and still only logs error or higher
+            $monolog->handler('symfony_mailer')
+                ->type('symfony_mailer')
+                ->fromEmail('error@example.com')
+                ->toEmail(['error@example.com'])
+                // or a list of recipients
+                // ->toEmail(['dev1@example.com', 'dev2@example.com', ...])
+                ->subject('An Error Occurred! %%message%%')
+                ->level('debug')
+                ->formatter('monolog.formatter.html')
+                ->contentType('text/html')
+            ;
+        };
 
 This uses the ``group`` handler to send the messages to the two
 group members, the ``deduplicated`` and the ``stream`` handlers. The messages will

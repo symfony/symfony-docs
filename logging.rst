@@ -138,23 +138,22 @@ to write logs using the :phpfunction:`syslog` function:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                // this "file_log" key could be anything
-                'file_log' => [
-                    'type'  => 'stream',
-                    // log to var/logs/(environment).log
-                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
-                    // log *all* messages (debug is lowest level)
-                    'level' => 'debug',
-                ],
-                'syslog_handler' => [
-                    'type'  => 'syslog',
-                    // log error-level messages and higher
-                    'level' => 'error',
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            // this "file_log" key could be anything
+            $monolog->handler('file_log')
+                ->type('stream')
+                // log to var/logs/(environment).log
+                ->path('%kernel.logs_dir%/%kernel.environment%.log')
+                // log *all* messages (debug is lowest level)
+                ->level('debug');
+
+            $monolog->handler('syslog_handler')
+                ->type('syslog')
+                // log error-level messages and higher
+                ->level('error');
+        };
 
 This defines a *stack* of handlers and each handler is called in the order that it's
 defined.
@@ -236,29 +235,29 @@ one of the messages reaches an ``action_level``. Take this example:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'filter_for_errors' => [
-                    'type'         => 'fingers_crossed',
-                    // if *one* log is error or higher, pass *all* to file_log
-                    'action_level' => 'error',
-                    'handler'      => 'file_log',
-                ],
+        use Symfony\Config\MonologConfig;
 
-                // now passed *all* logs, but only if one log is error or higher
-                'file_log' => [
-                    'type'  => 'stream',
-                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
-                    'level' => 'debug',
-                ],
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('filter_for_errors')
+                ->type('fingers_crossed')
+                // if *one* log is error or higher, pass *all* to file_log
+                ->actionLevel('error')
+                ->handler('file_log')
+            ;
 
-                // still passed *all* logs, and still only logs error or higher
-                'syslog_handler' => [
-                    'type'  => 'syslog',
-                    'level' => 'error',
-                ],
-            ],
-        ]);
+            // now passed *all* logs, but only if one log is error or higher
+            $monolog->handler('file_log')
+                ->type('stream')
+                ->path('%kernel.logs_dir%/%kernel.environment%.log')
+                ->level('debug')
+            ;
+
+            // still passed *all* logs, and still only logs error or higher
+            $monolog->handler('syslog_handler')
+                ->type('syslog')
+                ->level('error')
+            ;
+        };
 
 Now, if even one log entry has an ``error`` level or higher, then *all* log entries
 for that request are saved to a file via the ``file_log`` handler. That means that
@@ -331,18 +330,17 @@ option of your handler to ``rotating_file``:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'main' => [
-                    'type'  => 'rotating_file',
-                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
-                    'level' => 'debug',
-                    // max number of log files to keep
-                    // defaults to zero, which means infinite files
-                    'max_files' => 10,
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('main')
+                ->type('rotating_file')
+                ->path('%kernel.logs_dir%/%kernel.environment%.log')
+                ->level('debug')
+                // max number of log files to keep
+                // defaults to zero, which means infinite files
+                ->maxFiles(10);
+        };
 
 Using a Logger inside a Service
 -------------------------------

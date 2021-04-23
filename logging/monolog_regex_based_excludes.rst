@@ -54,18 +54,16 @@ configuration:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'main' => [
-                    // ...
-                    'type'          => 'fingers_crossed',
-                    'handler'       => ...,
-                    'excluded_404s' => [
-                        '^/phpmyadmin',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('main')
+                // ...
+                ->type('fingers_crossed')
+                ->handler(...)
+                ->excluded404s(['^/phpmyadmin'])
+            ;
+        };
 
 
 .. caution::
