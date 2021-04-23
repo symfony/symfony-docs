@@ -87,3 +87,19 @@ The ``global`` variable is a special way of setting things in the ``window``
 variable. In a web context, using ``global`` and ``window`` are equivalent,
 except that ``window.jQuery`` won't work when using ``autoProvidejQuery()``.
 In other words, use ``global``.
+
+Additionally, be sure to set the ``script_attributes.defer`` option to ``false``
+in your ``webpack_encore.yaml`` file:
+
+.. code-block:: yaml
+
+    # config/packages/webpack_encore.yaml
+    webpack_encore:
+        # ...
+        script_attributes:
+            defer: false
+
+This will make sure there is *not* a ``defer`` attribute on your ``script``
+tags. For more information, see `Moving <script> inside <head> and the "defer" Attribute`_
+
+.. _`Moving <script> inside <head> and the "defer" Attribute`: https://symfony.com/blog/moving-script-inside-head-and-the-defer-attribute
