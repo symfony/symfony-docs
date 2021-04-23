@@ -582,7 +582,7 @@ would initialize the passport like this::
             // ... validate no parameter is empty
 
             return new Passport(
-                new UserBadge($email),
+                new UserBadge($username),
                 new PasswordCredentials($password),
                 [new CsrfTokenBadge('login', $csrfToken)]
             );
