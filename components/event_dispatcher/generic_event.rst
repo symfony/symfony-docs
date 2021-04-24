@@ -80,7 +80,7 @@ access the event arguments::
     {
         public function handler(GenericEvent $event)
         {
-            if (isset($event['type']) && $event['type'] === 'foo') {
+            if (isset($event['type']) && 'foo' === $event['type']) {
                 // ... do something
             }
 
