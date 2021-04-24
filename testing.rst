@@ -128,7 +128,7 @@ class to help you creating and booting the kernel in your tests using
     }
 
 The ``KernelTestCase`` also makes sure your kernel is rebooted for each
-test. This assures that each test is run independently from eachother.
+test. This assures that each test is run independently from each other.
 
 To run your application tests, the ``KernelTestCase`` class needs to
 find the application kernel to initialize. The kernel class is
