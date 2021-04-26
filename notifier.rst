@@ -530,7 +530,7 @@ sent using the Slack transport::
                 ->content('You got a new invoice for 15 EUR.')
                 ->importance(Notification::IMPORTANCE_HIGH);
 
-            $notifier->send($notification, new Recipient('wouter@wouterj.nl'));
+            $notifier->send($notification, new Recipient('wouter@example.com'));
 
             // ...
         }
