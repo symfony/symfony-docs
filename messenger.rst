@@ -462,22 +462,29 @@ Deploying to Production
 
 On production, there are a few important things to think about:
 
-**Use Supervisor to keep your worker(s) running**
+**Use a process manager like Supervisor or systemd to keep your worker(s) running**
     You'll want one or more "workers" running at all times. To do that, use a
-    process control system like :ref:`Supervisor <messenger-supervisor>`.
+    process control system like :ref:`Supervisor <messenger-supervisor>`
+    or :ref:`systemd <messenger-systemd>`.
 
 **Don't Let Workers Run Forever**
     Some services (like Doctrine's ``EntityManager``) will consume more memory
     over time. So, instead of allowing your worker to run forever, use a flag
     like ``messenger:consume --limit=10`` to tell your worker to only handle 10
-    messages before exiting (then Supervisor will create a new process). There
+    messages before exiting (then the process manager will create a new process). There
     are also other options like ``--memory-limit=128M`` and ``--time-limit=3600``.
+
+**Stopping Workers That Encounter Errors**
+    If a worker dependency like your database server is down, or timeout is reached,
+    you can try to add :ref:`reconnect logic <middleware-doctrine>`, or just quit
+    the worker if it receives too many errors with the ``--failure-limit`` option of
+    the ``messenger:consume`` command.
 
 **Restart Workers on Deploy**
     Each time you deploy, you'll need to restart all your worker processes so
     that they see the newly deployed code. To do this, run ``messenger:stop-workers``
     on deploy. This will signal to each worker that it should finish the message
-    it's currently handling and shut down gracefully. Then, Supervisor will create
+    it's currently handling and shut down gracefully. Then, the process manager will create
     new worker processes. The command uses the :ref:`app <cache-configuration-with-frameworkbundle>`
     cache internally - so make sure this is configured to use an adapter you like.
 
@@ -632,6 +639,131 @@ config and start your workers:
     $ sudo supervisorctl start messenger-consume:*
 
 See the `Supervisor docs`_ for more details.
+
+It is possible to end up in a situation where the supervisor job gets into a
+FATAL (too many start retries) state when trying to restart when something is
+not yet available. You can prevent this by wrapping the Symfony script with a
+shell script and sleep when the script fails:
+
+.. code-block:: bash
+
+    #!/usr/bin/env bash
+
+    # Supervisor sends TERM to services when stopped.
+    # This wrapper has to pass the signal to it's child.
+    # Note that we send TERM (graceful) instead of KILL (immediate).
+    _term() {
+        echo "[GOT TERM, SIGNALING CHILD]"
+        kill -TERM "$child" 2>/dev/null
+        exit 1
+    }
+
+    trap _term SIGTERM
+
+    # Execute console.php with whatever arguments were specified to this script
+    "$@" &
+    child=$!
+    wait "$child"
+    rc=$?
+
+    # Delay to prevent supervisor from restarting too fast on failure
+    sleep 30
+
+    # Return with the exit code of the wrapped process
+    exit $rc
+
+The supervisor job would then look like this:
+
+.. code-block:: ini
+
+    ;/etc/supervisor/conf.d/messenger-worker.conf
+    [program:messenger-consume]
+    command=/path/to/your/app/bin/console_wrapper php /path/to/your/app/bin/console messenger:consume async --time-limit=3600"
+    ...
+
+.. _messenger-systemd:
+
+Systemd Configuration
+~~~~~~~~~~~~~~~~~~~~~
+
+While Supervisor is a great tool, it has the disadvantage that you need system
+access to run it. Systemd has become the standard on most Linux distributions,
+and has a good alternative called user services.
+
+Systemd user service configuration files typically live in a ``~/.config/systemd/user``
+directory. For example, you can create a new ``messenger-worker.service`` file. Or a
+``messenger-worker@.service`` file if you want more instances running at the same time:
+
+.. code-block:: ini
+
+    [Unit]
+    Description=Symfony messenger-consume %i
+
+    [Service]
+    ExecStart=php /path/to/your/app/bin/console messenger:consume async --time-limit=3600
+    Restart=always
+    RestartSec=30
+
+    [Install]
+    WantedBy=default.target
+
+Now, tell systemd to enable and start one worker:
+
+.. code-block:: terminal
+
+    $ systemctl --user enable messenger-worker@1.service
+
+    $ systemctl --user start messenger-worker@1.service
+
+Then enable and start another 19:
+
+.. code-block:: terminal
+
+    $ systemctl --user enable messenger-worker@{2..20}.service
+
+    $ systemctl --user start messenger-worker@{2..20}.service
+
+If you change your service config file, you need to reload the daemon:
+
+.. code-block:: terminal
+
+    $ systemctl --user daemon-reload
+
+To restart all your consumers:
+
+.. code-block:: terminal
+
+    $ systemctl --user restart messenger-consume@*.service
+
+The systemd user instance is only started after the first login of the
+particular user. We want to start our workers on system boot instead. Enable
+lingering on the user to activate that behavior:
+
+.. code-block:: terminal
+
+    $ loginctl enable-linger <your-username>
+
+Logs are managed by journald and can be worked with using the journalctl
+command, but you do need elevated privileges for that, or add your user to the
+systemd-journal group:
+
+.. code-block:: terminal
+
+    $ sudo usermod -a -G systemd-journal <your-username>
+
+Now you can watch your service logs as your user, for example tail and follow
+the logs of ``messenger-consume@11.service``, all ``messenger-consume`` services,
+or tail and follow all logs for your user ID:
+
+.. code-block:: terminal
+
+    $ journalctl -f --user-unit messenger-consume@11.service
+
+    $ journalctl -f --user-unit messenger-consume@*
+
+    $ journalctl -f _UID=$UID
+
+See the `systemd docs`_ for more details.
 
 .. _messenger-retries-failures:
 
@@ -1692,6 +1824,8 @@ middleware and *only* include your own:
     If a middleware service is abstract, a different instance of the service will
     be created per bus.
 
+.. _middleware-doctrine:
+
 Middleware for Doctrine
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1814,6 +1948,7 @@ Learn more
 .. _`Enqueue's transport`: https://github.com/sroze/messenger-enqueue-transport
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/
+.. _`systemd docs`: https://www.freedesktop.org/wiki/Software/systemd/
 .. _`SymfonyCasts' message serializer tutorial`: https://symfonycasts.com/screencast/messenger/transport-serializer
 .. _`Long polling`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-short-and-long-polling.html
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
