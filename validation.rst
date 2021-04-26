@@ -47,7 +47,7 @@ order to be valid. These rules are usually defined using PHP code or
 annotations but they can also be defined as ``.yaml`` or ``.xml`` files inside
 the ``config/validator/`` directory:
 
-For example, to guarantee that the ``$name`` property is not empty, add the
+For example, to indicate that the ``$name`` property must not be empty, add the
 following:
 
 .. configuration-block::
@@ -109,6 +109,11 @@ following:
                 $metadata->addPropertyConstraint('name', new NotBlank());
             }
         }
+
+Adding this configuration by itself does not yet guarantee that the value will
+not be blank; you can still set it to a blank value if you want.
+To actually guarantee that the value adheres to the constraint, the object must
+be passed to the Validator Service to be checked.
 
 .. tip::
 
