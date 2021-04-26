@@ -78,8 +78,8 @@ like ``/myAppSubdir``), you will need to configure that when calling ``Encore.se
     +     .setManifestKeyPrefix('build')
     ;
 
-If you're using the ``encore_entry_script_tags()`` and ``encore_entry_link_tags()``
-Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`
+If you're using one of the ``encore_entry_*()`` Twig shortcuts like
+``encore_entry_script_tags()`` (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`
 in some other way) you're done! These shortcut methods read from an
 :ref:`entrypoints.json <encore-entrypointsjson-simple-description>` file that will
 now contain the subdirectory.

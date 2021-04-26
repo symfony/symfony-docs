@@ -69,6 +69,7 @@ Guides
 
 * :doc:`Using Bootstrap CSS & JS </frontend/encore/bootstrap>`
 * :doc:`Creating Page-Specific CSS/JS </frontend/encore/page-specific-assets>`
+* :doc:`Rendering Multiple Templates in a Request: Emails, PDFs </frontend/encore/file-tracking>`
 * :doc:`jQuery and Legacy Applications </frontend/encore/legacy-applications>`
 * :doc:`Passing Information from Twig to JavaScript </frontend/encore/server-data>`
 * :doc:`webpack-dev-server and Hot Module Replacement (HMR) </frontend/encore/dev-server>`
