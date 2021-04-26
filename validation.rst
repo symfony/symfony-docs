@@ -303,6 +303,14 @@ In Symfony, constraints are similar: they are assertions that a condition
 is true. Given a value, a constraint will tell you if that value
 adheres to the rules of the constraint.
 
+Most constraints are only validated when the value is non-empty, i.e., it's not
+an empty string and not ``NULL``. This means that a property with a constraint for
+:doc:`Email </reference/constraints/Email>` for example will not be deemed
+invalid if no e-mail address was supplied at all. If an e-mail address is required
+then both the :doc:`Email </reference/constraints/Email>` as well as the
+:doc:`NotBlank </reference/constraints/NotBlank>` constraints must be configured
+for the property in question.
+
 Supported Constraints
 ~~~~~~~~~~~~~~~~~~~~~
 
