@@ -46,7 +46,7 @@ the component. This file runs the following logic:
 
 #. It instantiates a :class:`Symfony\\Component\\Runtime\\RuntimeInterface`;
 #. The callable (returned by ``public/index.php``) is passed to the Runtime, whose job
-   is to resolve the arguments (in this example: ``array $content``);
+   is to resolve the arguments (in this example: ``array $context``);
 #. Then, this callable is called to get the application (``App\Kernel``);
 #. At last, the Runtime is used to run the application (i.e. calling
    ``$kernel->handle(Request::createFromGlobals())->send()``).
@@ -172,12 +172,12 @@ a number of different applications are supported::
 The ``SymfonyRuntime`` can handle these applications:
 
 :class:`Symfony\\Component\\HttpKernel\\HttpKernelInterface`
-    The application will be run with :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\HttpKernelRunner``
+    The application will be run with :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\HttpKernelRunner`
     like a "standard" Symfony application.
 
 :class:`Symfony\\Component\\HttpFoundation\\Response`
     The Response will be printed by
-    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ResponseRunner``::
+    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ResponseRunner`::
 
         <?php
         // public/index.php
@@ -191,7 +191,7 @@ The ``SymfonyRuntime`` can handle these applications:
 
 :class:`Symfony\\Component\\Console\\Command\\Command`
     To write single command applications. This will use the
-    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner``::
+    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner`::
 
         <?php
 
@@ -211,7 +211,7 @@ The ``SymfonyRuntime`` can handle these applications:
 
 :class:`Symfony\\Component\\Console\\Application`
     Useful with console applications with more than one command. This will use the
-    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner``::
+    :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner`::
 
         <?php
 
@@ -361,7 +361,7 @@ class will have more control and can fix bugs and add features.
 
 .. note::
 
-    Before Symfony 5.3, the Symfony boostrap logic was part of a Flex recipe.
+    Before Symfony 5.3, the Symfony bootstrap logic was part of a Flex recipe.
     Since recipes are rarely updated by users, bug patches would rarely be
     installed.
 
@@ -377,7 +377,7 @@ application outside of the global state in 6 steps:
    represents the application.
 #. This *application object* is passed to ``RuntimeInterface::getRunner()``, which
    returns a :class:`Symfony\\Component\\Runtime\\RunnerInterface`: an instance
-   that knows how to "run" the appliction object.
+   that knows how to "run" the application object.
 #. The ``RunnerInterface::run(object $application)`` is called and it returns the
    exit status code as `int`.
 #. The PHP engine is exited with this status code.
