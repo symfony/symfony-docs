@@ -1591,7 +1591,7 @@ and ``BitBucketCodeRepository`` classes:
          *    "bitbucket"="App\BitBucketCodeRepository"
          * })
          */
-        interface CodeRepository
+        abstract class CodeRepository
         {
             // ...
         }
