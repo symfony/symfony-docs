@@ -6,8 +6,8 @@ Question Helper
 
 The :class:`Symfony\\Component\\Console\\Helper\\QuestionHelper` provides
 functions to ask the user for more information. It is included in the default
-helper set, which you can get by calling
-:method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
+helper set and you can get it by calling
+:method:`Symfony\\Component\\Console\\Command\\Command::getHelper`::
 
     $helper = $this->getHelper('question');
 
