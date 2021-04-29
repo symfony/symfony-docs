@@ -876,7 +876,7 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
                     // pass this value to any $projectDir argument for any service
                     // that's created in this file (including controller arguments)
                     ->bind('$projectDir', '%kernel.project_dir%');
-            
+
             // ...
         };
 
@@ -952,6 +952,12 @@ namespace ``Symfony\Config``::
 
         $security->accessControl(['path' => '^/admin', 'roles' => 'ROLE_ADMIN']);
     };
+
+.. caution::
+
+    Note that only "root" classes in the namespace ``Symfony\Config`` are ConfigBuilders.
+    Nested configs (e.g. ``\Symfony\Config\Framework\CacheConfig``) are the Plain Old PHP
+    Objects and cannot be autowired when you specify it as an argument type.
 
 Keep Going!
 -----------
