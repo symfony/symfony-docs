@@ -234,12 +234,15 @@ because the configuration started to get bigger:
     .. code-block:: php
 
         // config/framework.php
-        $container->loadFromExtension('framework', [
-            'secret' => 'S0ME_SECRET',
-            'profiler' => [
-                'only_exceptions' => false,
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework
+                ->secret('SOME_SECRET')
+                ->profiler()
+                    ->onlyExceptions(false)
+            ;
+        };
 
 This also loads annotation routes from an ``src/Controller/`` directory, which
 has one file in it::

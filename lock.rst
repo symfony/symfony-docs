@@ -129,32 +129,33 @@ this behavior by using the ``lock`` key like:
     .. code-block:: php
 
         // config/packages/lock.php
-        $container->loadFromExtension('framework', [
-            'lock' => null,
-            'lock' => 'flock',
-            'lock' => 'flock:///path/to/file',
-            'lock' => 'semaphore',
-            'lock' => 'memcached://m1.docker',
-            'lock' => ['memcached://m1.docker', 'memcached://m2.docker'],
-            'lock' => 'redis://r1.docker',
-            'lock' => ['redis://r1.docker', 'redis://r2.docker'],
-            'lock' => 'zookeeper://z1.docker',
-            'lock' => 'zookeeper://z1.docker,z2.docker',
-            'lock' => 'sqlite:///%kernel.project_dir%/var/lock.db',
-            'lock' => 'mysql:host=127.0.0.1;dbname=app',
-            'lock' => 'pgsql:host=127.0.0.1;dbname=app',
-            'lock' => 'pgsql+advisory:host=127.0.0.1;dbname=lock',
-            'lock' => 'sqlsrv:server=127.0.0.1;Database=app',
-            'lock' => 'oci:host=127.0.0.1;dbname=app',
-            'lock' => 'mongodb://127.0.0.1/app?collection=lock',
-            'lock' => '%env(LOCK_DSN)%',
+        use Symfony\Config\FrameworkConfig;
 
-            // named locks
-            'lock' => [
-                'invoice' => ['semaphore', 'redis://r2.docker'],
-                'report' => 'semaphore',
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $framework->lock()
+                ->resource('default', ['flock'])
+                ->resource('default', ['flock:///path/to/file'])
+                ->resource('default', ['semaphore'])
+                ->resource('default', ['memcached://m1.docker'])
+                ->resource('default', ['memcached://m1.docker', 'memcached://m2.docker'])
+                ->resource('default', ['redis://r1.docker'])
+                ->resource('default', ['redis://r1.docker', 'redis://r2.docker'])
+                ->resource('default', ['zookeeper://z1.docker'])
+                ->resource('default', ['zookeeper://z1.docker,z2.docker'])
+                ->resource('default', ['sqlite:///%kernel.project_dir%/var/lock.db'])
+                ->resource('default', ['mysql:host=127.0.0.1;dbname=app'])
+                ->resource('default', ['pgsql:host=127.0.0.1;dbname=app'])
+                ->resource('default', ['pgsql+advisory:host=127.0.0.1;dbname=lock'])
+                ->resource('default', ['sqlsrv:server=127.0.0.1;Database=app'])
+                ->resource('default', ['oci:host=127.0.0.1;dbname=app'])
+                ->resource('default', ['mongodb://127.0.0.1/app?collection=lock'])
+                ->resource('default', ['%env(LOCK_DSN)%'])
+
+                // named locks
+                ->resource('invoice', ['semaphore', 'redis://r2.docker'])
+                ->resource('report', ['semaphore'])
+            ;
+        };
 
 Locking a Resource
 ------------------
@@ -269,12 +270,15 @@ provides :ref:`named lock <reference-lock-resources-name>`:
     .. code-block:: php
 
         // config/packages/lock.php
-        $container->loadFromExtension('framework', [
-            'lock' => [
-                'invoice' => ['semaphore', 'redis://r2.docker'],
-                'report' => 'semaphore',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->lock()
+                ->resource('invoice', ['semaphore', 'redis://r2.docker'])
+                ->resource('report', ['semaphore']);
+            ;
+        };
+
 
 Each name becomes a service where the service id is part of the name of the
 lock (e.g. ``lock.invoice.factory``). An autowiring alias is also created for

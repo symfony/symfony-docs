@@ -186,11 +186,13 @@ configuration option to define your own translations directory (use :ref:`framew
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'translator' => [
-                'default_path' => '%kernel.project_dir%/i18n',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->translator()
+                ->defaultPath('%kernel.project_dir%/i18n')
+            ;
+        };
 
 .. _override-web-dir:
 .. _override-the-web-directory:

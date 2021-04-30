@@ -680,43 +680,41 @@ and set the ``limiter`` option to its service ID:
     .. code-block:: php
 
         // config/packages/security.php
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter;
+        use Symfony\Config\FrameworkConfig;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('framework', [
-            'rate_limiter' => [
-                // define 2 rate limiters (one for username+IP, the other for IP)
-                'username_ip_login' => [
-                    'policy' => 'token_bucket',
-                    'limit' => 5,
-                    'rate' => [ 'interval' => '5 minutes' ],
-                ],
-                'ip_login' => [
-                    'policy' => 'sliding_window',
-                    'limit' => 50,
-                    'interval' => '15 minutes',
-                ],
-            ],
-        ]);
+        return static function (ContainerBuilder $container, FrameworkConfig $framework, SecurityConfig $security) {
+            $framework->rateLimiter()
+                ->limiter('username_ip_login')
+                    ->policy('token_bucket')
+                    ->limit(5)
+                    ->rate()
+                        ->interval('5 minutes')
+            ;
 
-        $container->register('app.login_rate_limiter', DefaultLoginRateLimiter::class)
-            ->setArguments([
-                // 1st argument is the limiter for IP
-                new Reference('limiter.ip_login'),
-                // 2nd argument is the limiter for username+IP
-                new Reference('limiter.username_ip_login'),
-            ]);
+            $framework->rateLimiter()
+                ->limiter('ip_login')
+                    ->policy('sliding_window')
+                    ->limit(50)
+                    ->interval('15 minutes')
+            ;
 
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    // use a custom rate limiter via its service ID
-                    'login_throttling' => [
-                        'limiter' => 'app.login_rate_limiter',
-                    ],
-                ],
-            ],
-        ]);
+            $container->register('app.login_rate_limiter', DefaultLoginRateLimiter::class)
+                ->setArguments([
+                    // 1st argument is the limiter for IP
+                    new Reference('limiter.ip_login'),
+                    // 2nd argument is the limiter for username+IP
+                    new Reference('limiter.username_ip_login'),
+                ]);
+
+            $security->firewall('main')
+                ->loginThrottling()
+                    ->limiter('app.login_rate_limiter')
+            ;
+        };
 
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:

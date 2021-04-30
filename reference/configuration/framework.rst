@@ -454,9 +454,11 @@ doubling them to prevent Symfony from interpreting them as container parameters)
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'ide' => 'myide://open?url=file://%%f&line=%%l',
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->ide('myide://open?url=file://%%f&line=%%l');
+        };
 
 Since every developer uses a different IDE, the recommended way to enable this
 feature is to configure it on a system level. This can be done by setting the
@@ -596,9 +598,11 @@ the application won't respond and the user will receive a 400 response.
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'trusted_hosts' => ['^example\.com$', '^example\.org$'],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->trustedHosts(['^example\.com$', '^example\.org$']);
+        };
 
 Hosts can also be configured to respond to any subdomain, via
 ``^(.+\.)?example\.com$`` for instance.
@@ -724,9 +728,11 @@ You can also set ``esi`` to ``true`` to enable it:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'esi' => true,
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->esi()->enabled(true);
+        };
 
 fragments
 ~~~~~~~~~
@@ -1359,13 +1365,12 @@ To configure a ``jsonp`` format:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'request' => [
-                'formats' => [
-                    'jsonp' => 'application/javascript',
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->request()
+                ->format('jsonp', 'application/javascript');
+        };
 
 router
 ~~~~~~
@@ -1720,11 +1725,12 @@ setting the value to ``null``:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'session' => [
-                'save_path' => null,
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->session()
+                ->savePath(null);
+        };
 
 .. _reference-session-metadata-update-threshold:
 
@@ -1774,11 +1780,12 @@ Whether to enable the session support in the framework.
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'session' => [
-                'enabled' => true,
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->session()
+                ->enabled(true);
+        };
 
 use_cookies
 ...........
@@ -1830,12 +1837,13 @@ This option allows you to define a base path to be used for assets:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'assets' => [
-                'base_path' => '/images',
-            ],
-        ]);
+            $framework->assets()
+                ->basePath('/images');
+        };
 
 .. _reference-templating-base-urls:
 .. _reference-assets-base-urls:
@@ -1879,12 +1887,13 @@ collection each time it generates an asset's path:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'assets' => [
-                'base_urls' => ['http://cdn.example.com/'],
-            ],
-        ]);
+            $framework->assets()
+                ->baseUrls(['http://cdn.example.com/']);
+        };
 
 .. _reference-framework-assets-packages:
 
@@ -1928,16 +1937,14 @@ You can group assets into packages, to specify different base URLs for them:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'assets' => [
-                'packages' => [
-                    'avatars' => [
-                        'base_urls' => 'http://static_cdn.example.com/avatars',
-                    ],
-                ],
-            ],
-        ]);
+            $framework->assets()
+                ->package('avatars')
+                    ->baseUrls(['http://static_cdn.example.com/avatars']);
+        };
 
 Now you can use the ``avatars`` package in your templates:
 
@@ -2005,12 +2012,13 @@ Now, activate the ``version`` option:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'assets' => [
-                'version' => 'v2',
-            ],
-        ]);
+            $framework->assets()
+                ->version('v2');
+        };
 
 Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
 this feature, you **must** manually increment the ``version`` value
@@ -2132,25 +2140,25 @@ individually for each asset package:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'assets' => [
-                'version_strategy' => 'app.asset.my_versioning_strategy',
-                'packages' => [
-                    'foo_package' => [
-                        // this package removes any versioning (its assets won't be versioned)
-                        'version' => null,
-                    ],
-                    'bar_package' => [
-                        // this package uses its own strategy (the default strategy is ignored)
-                        'version_strategy' => 'app.asset.another_version_strategy',
-                    ],
-                    'baz_package' => [
-                        // this package inherits the default strategy
-                        'base_path' => '/images',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            // ...
+            $framework->assets()
+                ->versionStrategy('app.asset.my_versioning_strategy');
+
+            $framework->assets()->package('foo_package')
+                // this package removes any versioning (its assets won't be versioned)
+                ->version(null);
+
+            $framework->assets()->package('bar_package')
+                // this package uses its own strategy (the default strategy is ignored)
+                ->versionStrategy('app.asset.another_version_strategy');
+
+            $framework->assets()->package('baz_package')
+                // this package inherits the default strategy
+                ->basePath('/images');
+        };
 
 .. note::
 
@@ -2229,24 +2237,24 @@ package:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'assets' => [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            // ...
+            $framework->assets()
                 // this manifest is applied to every asset (including packages)
-                'json_manifest_path' => '%kernel.project_dir%/public/build/manifest.json',
-                // you can use absolute URLs too and Symfony will download them automatically
-                // 'json_manifest_path' => 'https://cdn.example.com/manifest.json',
-                'packages' => [
-                    'foo_package' => [
-                        // this package uses its own manifest (the default file is ignored)
-                        'json_manifest_path' => '%kernel.project_dir%/public/build/a_different_manifest.json',
-                    ],
-                    'bar_package' => [
-                        // this package uses the global manifest (the default file is used)
-                        'base_path' => '/images',
-                    ],
-                ],
-            ],
-        ]);
+                ->jsonManifestPath('%kernel.project_dir%/public/build/manifest.json');
+
+            // you can use absolute URLs too and Symfony will download them automatically
+            // 'json_manifest_path' => 'https://cdn.example.com/manifest.json',
+            $framework->assets()->package('foo_package')
+                // this package uses its own manifest (the default file is ignored)
+                ->jsonManifestPath('%kernel.project_dir%/public/build/a_different_manifest.json');
+
+            $framework->assets()->package('bar_package')
+                // this package uses the global manifest (the default file is used)
+                ->basePath('/images');
+        };
 
 .. versionadded:: 5.1
 
@@ -2335,11 +2343,12 @@ performance a bit:
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'translator' => [
-                'enabled_locales' => ['en', 'es'],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->translator()
+                ->enabledLocales(['en', 'es']);
+        };
 
 If some user makes requests with a locale not included in this option, the
 application won't display any error because Symfony will display contents using
@@ -2621,15 +2630,13 @@ the component will look for additional validation files:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'validation' => [
-                'mapping' => [
-                    'paths' => [
-                        '%kernel.project_dir%/config/validation/',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->validation()
+                ->mapping()
+                    ->paths(['%kernel.project_dir%/config/validation/']);
+        };
 
 annotations
 ~~~~~~~~~~~
@@ -2927,16 +2934,14 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'pools' => [
-                    'cache.mycache' => [
-                        'adapter' => 'cache.adapter.redis',
-                        'default_lifetime' => 3600,
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                ->pool('cache.mycache')
+                    ->adapters(['cache.adapter.redis'])
+                    ->defaultLifetime(3600);
+        };
 
 .. _reference-cache-pools-name:
 
@@ -3094,9 +3099,12 @@ A list of lock stores to be created by the framework extension.
     .. code-block:: php
 
         // config/packages/lock.php
-        $container->loadFromExtension('framework', [
-            'lock' => '%env(LOCK_DSN)%',
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->lock()
+                ->resource('default', ['%env(LOCK_DSN)%']);
+        };
 
 .. seealso::
 
@@ -3281,11 +3289,14 @@ A list of workflows to be created by the framework extension:
     .. code-block:: php
 
         // config/packages/workflow.php
-        $container->loadFromExtension('framework', [
-            'workflows' => [
-                'my_workflow' => // ...
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->workflows()
+                ->workflows('my_workflow')
+                    // ...
+            ;
+        };
 
 .. seealso::
 

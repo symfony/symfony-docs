@@ -251,11 +251,13 @@ file:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'validation' => [
-                'enabled' => true,
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->validation()
+                ->enabled(true)
+            ;
+        };
 
 Besides, if you plan to use annotations to configure validation, replace the
 previous configuration by the following:
@@ -287,11 +289,13 @@ previous configuration by the following:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'validation' => [
-                'enable_annotations' => true,
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->validation()
+                ->enableAnnotations(true)
+            ;
+        };
 
 .. tip::
 

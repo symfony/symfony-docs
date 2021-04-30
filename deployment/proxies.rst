@@ -68,16 +68,18 @@ and what headers your reverse proxy uses to send information:
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Config\FrameworkConfig;
 
-        $container->loadFromExtension('framework', [
-            // the IP address (or range) of your proxy
-            'trusted_proxies' => '192.0.0.1,10.0.0.0/8',
-            // trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers)
-            'trusted_headers' => ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port'],
-            // or, if your proxy instead uses the "Forwarded" header
-            'trusted_headers' => ['forwarded'],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $framework
+                // the IP address (or range) of your proxy
+                ->trustedProxies('192.0.0.1,10.0.0.0/8')
+                // trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers)
+                ->trustedHeaders(['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port'])
+                // or, if your proxy instead uses the "Forwarded" header
+                ->trustedHeaders(['forwarded'])
+            ;
+        };
 
 .. deprecated:: 5.2
 

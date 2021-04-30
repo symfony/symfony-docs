@@ -149,14 +149,14 @@ configuration option to tell Symfony to use this service as the session handler:
 
         // config/packages/framework.php
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler;
+        use Symfony\Config\FrameworkConfig;
 
-        // ...
-        $container->loadFromExtension('framework', [
+        return static function (FrameworkConfig $framework) {
             // ...
-            'session' => [
-                'handler_id' => RedisSessionHandler::class,
-            ],
-        ]);
+            $framework->session()
+                ->handlerId(RedisSessionHandler::class)
+            ;
+        };
 
 That's all! Symfony will now use your Redis server to read and write the session
 data. The main drawback of this solution is that Redis does not perform session
@@ -273,14 +273,14 @@ configuration option to tell Symfony to use this service as the session handler:
 
         // config/packages/framework.php
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+        use Symfony\Config\FrameworkConfig;
 
-        // ...
-        $container->loadFromExtension('framework', [
+        return static function (FrameworkConfig $framework) {
             // ...
-            'session' => [
-                'handler_id' => PdoSessionHandler::class,
-            ],
-        ]);
+            $framework->session()
+                ->handlerId(PdoSessionHandler::class)
+            ;
+        };
 
 Configuring the Session Table and Column Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -532,14 +532,14 @@ configuration option to tell Symfony to use this service as the session handler:
 
         // config/packages/framework.php
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
+        use Symfony\Config\FrameworkConfig;
 
-        // ...
-        $container->loadFromExtension('framework', [
+        return static function (FrameworkConfig $framework) {
             // ...
-            'session' => [
-                'handler_id' => MongoDbSessionHandler::class,
-            ],
-        ]);
+            $framework->session()
+                ->handlerId(MongoDbSessionHandler::class)
+            ;
+        };
 
 .. note::
 

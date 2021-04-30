@@ -308,13 +308,15 @@ The secrets system is enabled by default and some of its behavior can be configu
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'secrets' => [
-                // 'vault_directory' => '%kernel.project_dir%/config/secrets/%kernel.environment%',
-                // 'local_dotenv_file' => '%kernel.project_dir%/.env.%kernel.environment%.local',
-                // 'decryption_env_var' => 'base64:default::SYMFONY_DECRYPTION_SECRET',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->secrets()
+                // ->vaultDirectory('%kernel.project_dir%/config/secrets/%kernel.environment%')
+                // ->localDotenvFile('%kernel.project_dir%/.env.%kernel.environment%.local')
+                // ->decryptionEnvVar('base64:default::SYMFONY_DECRYPTION_SECRET')
+            ;
+        };
 
 
 .. _`libsodium`: https://pecl.php.net/package/libsodium
