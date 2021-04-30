@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-21T14:59:40Z
+
+Only the config reference and messeger left =)
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-21T20:31:46Z
+
+I cannot figure out why not all errors show in the diff.. I only see the first 5..
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-22T07:25:35Z
+
+Hm... About the CI not showing all errors.
+
+It will not show [this error](https://github.com/symfony/symfony-docs/pull/15269/checks#step:11:49) and anything after it. Earlier, it did not show [this error](https://github.com/symfony/symfony-docs/runs/2403843016#step:11:11) and anything after it.
+
+It make sense if there were a special character that was being printed, but I dont see any. But all `::error` [commands](https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message) are "reset" after line break. So if one has wrong syntax then it wont effect the next line.
+
+(Btw I [urlencode the line breaks](https://github.com/symfony-docs-tools/code-block-checker/blob/main/src/Command/CheckDocsCommand.php#L181) to have a multi line comment.)
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-26T21:40:58Z
+
+Wohoo. The code PR is merged.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-04-29T18:59:54Z
+
+Is there something I can do to help this PR to get merged?
