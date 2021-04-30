@@ -113,7 +113,7 @@ following:
 Adding this configuration by itself does not yet guarantee that the value will
 not be blank; you can still set it to a blank value if you want.
 To actually guarantee that the value adheres to the constraint, the object must
-be passed to the Validator Service to be checked.
+be passed to the validator service to be checked.
 
 .. tip::
 
