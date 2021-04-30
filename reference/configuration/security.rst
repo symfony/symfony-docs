@@ -89,8 +89,8 @@ If ``true``, when a user is not found a generic exception of type
 is thrown with the message "Bad credentials".
 
 If ``false``, the exception thrown is of type
-:class:`Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException`
-and it includes the given not found username.
+:class:`Symfony\\Component\\Security\\Core\\Exception\\UserNotFoundException`
+and it includes the given not found user identifier.
 
 session_fixation_strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~

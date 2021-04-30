@@ -401,7 +401,7 @@ The signed URL contains 3 parameters:
     The UNIX timestamp when the link expires.
 
 ``user``
-    The value returned from ``$user->getUsername()`` for this user.
+    The value returned from ``$user->getUserIdentifier()`` for this user.
 
 ``hash``
     A hash of ``expires``, ``user`` and any configured signature

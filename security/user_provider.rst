@@ -124,7 +124,7 @@ the ``property`` config key. If you want a bit more control over this - e.g. you
 want to find a user by ``email`` *or* ``username``, you can do that by making
 your ``UserRepository`` implement the
 :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`. This
-interface only requires one method: ``loadUserByUsername($username)``::
+interface only requires one method: ``loadUserByIdentifier($identifier)``::
 
     // src/Repository/UserRepository.php
     namespace App\Repository;
@@ -137,7 +137,9 @@ interface only requires one method: ``loadUserByUsername($username)``::
     {
         // ...
 
-        public function loadUserByUsername(string $usernameOrEmail): ?User
+        // The loadUserByIdentifier() method was introduced in Symfony 5.3.
+        // In previous versions it was called loadUserByUsername()
+        public function loadUserByIdentifier(string $usernameOrEmail): ?User
         {
             $entityManager = $this->getEntityManager();
 
@@ -209,7 +211,7 @@ To finish this, remove the ``property`` key from the user provider in
 This tells Symfony to *not* query automatically for the User. Instead, when
 needed (e.g. because :doc:`user impersonation </security/impersonating_user>`,
 :doc:`Remember Me </security/remember_me>`, or some other security feature is
-activated), the ``loadUserByUsername()`` method on ``UserRepository`` will be called.
+activated), the ``loadUserByIdentifier()`` method on ``UserRepository`` will be called.
 
 .. _security-memory-user-provider:
 
@@ -367,7 +369,7 @@ command will generate a nice skeleton to get you started::
     namespace App\Security;
 
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-    use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+    use Symfony\Component\Security\Core\Exception\UserNotFoundException;
     use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -375,23 +377,21 @@ command will generate a nice skeleton to get you started::
     class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     {
         /**
+         * The loadUserByIdentifier() method was introduced in Symfony 5.3.
+         * In previous versions it was called loadUserByUsername()
+         *
          * Symfony calls this method if you use features like switch_user
-         * or remember_me.
+         * or remember_me. If you're not using these features, you do not
+         * need to implement this method.
          *
-         * If you're not using these features, you do not need to implement
-         * this method.
-         *
-         * @return UserInterface
-         *
-         * @throws UsernameNotFoundException if the user is not found
+         * @throws UserNotFoundException if the user is not found
          */
-        public function loadUserByUsername(string $username)
+        public function loadUserByIdentifier(string $identifier): UserInterface
         {
-            // Load a User object from your data source or throw UsernameNotFoundException.
-            // The $username argument may not actually be a username:
-            // it is whatever value is being returned by the getUsername()
-            // method in your User class.
-            throw new \Exception('TODO: fill in loadUserByUsername() inside '.__FILE__);
+            // Load a User object from your data source or throw UserNotFoundException.
+            // The $identifier argument is whatever value is being returned by the
+            // getUserIdentifier() method in your User class.
+            throw new \Exception('TODO: fill in loadUserByIdentifier() inside '.__FILE__);
         }
 
         /**
@@ -414,7 +414,7 @@ command will generate a nice skeleton to get you started::
             }
 
             // Return a User object after making sure its data is "fresh".
-            // Or throw a UsernameNotFoundException if the user no longer exists.
+            // Or throw a UserNotFoundException if the user no longer exists.
             throw new \Exception('TODO: fill in refreshUser() inside '.__FILE__);
         }
 
@@ -467,8 +467,8 @@ request, it's deserialized and then passed to your user provider to "refresh" it
 Then, the two User objects (the original from the session and the refreshed User
 object) are "compared" to see if they are "equal". By default, the core
 ``AbstractToken`` class compares the return values of the ``getPassword()``,
-``getSalt()`` and ``getUsername()`` methods. If any of these are different, your
-user will be logged out. This is a security measure to make sure that malicious
+``getSalt()`` and ``getUserIdentifier()`` methods. If any of these are different,
+your user will be logged out. This is a security measure to make sure that malicious
 users can be de-authenticated if core user data changes.
 
 However, in some cases, this process can cause unexpected authentication problems.
