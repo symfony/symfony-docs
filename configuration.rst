@@ -953,11 +953,11 @@ namespace ``Symfony\Config``::
         $security->accessControl(['path' => '^/admin', 'roles' => 'ROLE_ADMIN']);
     };
 
-.. caution::
+.. note::
 
-    Note that only "root" classes in the namespace ``Symfony\Config`` are ConfigBuilders.
-    Nested configs (e.g. ``\Symfony\Config\Framework\CacheConfig``) are the Plain Old PHP
-    Objects and cannot be autowired when you specify it as an argument type.
+    Only root classes in the namespace ``Symfony\Config`` are ConfigBuilders.
+    Nested configs (e.g. ``\Symfony\Config\Framework\CacheConfig``) are regular
+    PHP objects which aren't autowired when using them as an argument type.
 
 Keep Going!
 -----------
