@@ -9,8 +9,8 @@ You can do more advanced things with this helper than you can in
 :doc:`/console/coloring`.
 
 The :class:`Symfony\\Component\\Console\\Helper\\FormatterHelper` is included
-in the default helper set, which you can get by calling
-:method:`Symfony\\Component\\Console\\Command\\Command::getHelperSet`::
+in the default helper set and you can get it by calling
+:method:`Symfony\\Component\\Console\\Command\\Command::getHelper`::
 
     $formatter = $this->getHelper('formatter');
 
