@@ -876,7 +876,7 @@ Crawler Assertions
     equal the expected value.
 ``assertCheckboxChecked(string $fieldName, string $message = '')``/``assertCheckboxNotChecked(string $fieldName, string $message = '')``
     Asserts that the checkbox with the given name is (not) checked.
-``assertFormValue(string $formSelector, string $fieldName, string $value, string $message = '')`` and ``assertNoFormValue(string $formSelector, string $fieldName, string $message = '')``
+``assertFormValue(string $formSelector, string $fieldName, string $value, string $message = '')``/``assertNoFormValue(string $formSelector, string $fieldName, string $message = '')``
     Asserts that value of the field of the first form matching the given
     selector does (not) equal the expected value.
 
