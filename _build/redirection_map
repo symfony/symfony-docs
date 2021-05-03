@@ -513,3 +513,4 @@
 /components/stopwatch https://github.com/symfony/stopwatch
 /service_container/3.3-di-changes https://symfony.com/doc/3.4/service_container/3.3-di-changes.html
 /frontend/encore/shared-entry /frontend/encore/split-chunks
+/testing/functional_tests_assertions /testing#testing-application-assertions
