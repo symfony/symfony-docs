@@ -814,17 +814,6 @@ However, Symfony provides useful shortcut methods for the most common cases:
     :local:
     :depth: 1
 
-.. versionadded:: 4.3
-
-    The shortcut methods for assertions using ``WebTestCase`` were introduced
-    in Symfony 4.3.
-
-.. versionadded:: 4.4
-
-    Starting from Symfony 4.4, when using `symfony/panther`_ for end-to-end
-    testing, you can use all the following assertions except the ones related to
-    the :doc:`Crawler </components/dom_crawler>`.
-
 Response Assertions
 ...................
 
