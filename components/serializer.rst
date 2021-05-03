@@ -1608,7 +1608,7 @@ and ``BitBucketCodeRepository`` classes:
             'github' => GitHubCodeRepository::class,
             'bitbucket' => BitBucketCodeRepository::class,
         ])]
-        interface CodeRepository
+        abstract class CodeRepository
         {
             // ...
         }
