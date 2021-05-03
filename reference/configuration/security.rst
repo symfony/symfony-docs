@@ -40,7 +40,7 @@ Some of these options define tens of sub-options and they are explained in
 separate articles:
 
 * `access_control`_
-* `encoders`_
+* `hashers`_
 * `firewalls`_
 * `providers`_
 * `role_hierarchy`_
@@ -120,15 +120,16 @@ and to allow anonymous users to the login form page.
 
 This option is explained in detail in :doc:`/security/access_control`.
 
-encoders
---------
+.. _encoders:
 
-This option defines the algorithm used to *encode* the password of the users.
-Although Symfony calls it *"password encoding"* for historical reasons, this is
-in fact, *"password hashing"*.
+hashers
+-------
+
+This option defines the algorithm used to *hash* the password of the users
+(which in previous Symfony versions was wrongly called *"password encoding"*).
 
 If your app defines more than one user class, each of them can define its own
-encoding algorithm. Also, each algorithm defines different config options:
+hashing algorithm. Also, each algorithm defines different config options:
 
 .. configuration-block::
 
@@ -138,25 +139,25 @@ encoding algorithm. Also, each algorithm defines different config options:
         security:
             # ...
 
-            encoders:
-                # auto encoder with default options
+            password_hashers:
+                # auto hasher with default options
                 App\Entity\User: 'auto'
 
-                # auto encoder with custom options
+                # auto hasher with custom options
                 App\Entity\User:
                     algorithm: 'auto'
                     cost:      15
 
-                # Sodium encoder with default options
+                # Sodium hasher with default options
                 App\Entity\User: 'sodium'
 
-                # Sodium encoder with custom options
+                # Sodium hasher with custom options
                 App\Entity\User:
                     algorithm:   'sodium'
                     memory_cost:  16384 # Amount in KiB. (16384 = 16 MiB)
                     time_cost:    2     # Number of iterations
 
-                # MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
+                # MessageDigestPasswordHasher hasher using SHA512 hashing with default options
                 App\Entity\User: 'sha512'
 
     .. code-block:: xml
@@ -173,37 +174,37 @@ encoding algorithm. Also, each algorithm defines different config options:
 
             <config>
                 <!-- ... -->
-                <!-- auto encoder with default options -->
-                <encoder
+                <!-- auto hasher with default options -->
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="auto"
                 />
 
-                <!-- auto encoder with custom options -->
-                <encoder
+                <!-- auto hasher with custom options -->
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="auto"
                     cost="15"
                 />
 
-                <!-- Sodium encoder with default options -->
-                <encoder
+                <!-- Sodium hasher with default options -->
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="sodium"
                 />
 
-                <!-- Sodium encoder with custom options -->
+                <!-- Sodium hasher with custom options -->
                 <!-- memory_cost: amount in KiB. (16384 = 16 MiB)
                      time_cost: number of iterations -->
-                <encoder
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="sodium"
                     memory_cost="16384"
                     time_cost="2"
                 />
 
-                <!-- MessageDigestPasswordEncoder encoder using SHA512 hashing with default options -->
-                <encoder
+                <!-- MessageDigestPasswordHasher hasher using SHA512 hashing with default options -->
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="sha512"
                 />
@@ -217,55 +218,61 @@ encoding algorithm. Also, each algorithm defines different config options:
 
         $container->loadFromExtension('security', [
             // ...
-            'encoders' => [
-                // auto encoder with default options
+            'password_hashers' => [
+                // auto hasher with default options
                 User::class => [
                     'algorithm' => 'auto',
                 ],
 
-                // auto encoder with custom options
+                // auto hasher with custom options
                 User::class => [
                     'algorithm' => 'auto',
                     'cost'      => 15,
                 ],
 
-                // Sodium encoder with default options
+                // Sodium hasher with default options
                 User::class => [
                     'algorithm' => 'sodium',
                 ],
 
-                // Sodium encoder with custom options
+                // Sodium hasher with custom options
                 User::class => [
                     'algorithm' => 'sodium',
                     'memory_cost' => 16384, // Amount in KiB. (16384 = 16 MiB)
                     'time_cost' => 2,       // Number of iterations
                 ],
 
-                // MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
+                // MessageDigestPasswordHasher hasher using SHA512 hashing with default options
                 User::class => [
                     'algorithm' => 'sha512',
                 ],
             ],
         ]);
 
+.. versionadded:: 5.3
+
+    The ``password_hashers`` option was introduced in Symfony 5.3. In previous
+    versions it was called ``encoders``.
+
 .. tip::
 
-    You can also create your own password encoders as services and you can even
-    select a different password encoder for each user instance. Read
-    :doc:`this article </security/named_encoders>` for more details.
+    You can also create your own password hashers as services and you can even
+    select a different password hasher for each user instance. Read
+    :doc:`this article </security/named_hashers>` for more details.
 
 .. tip::
 
-    Encoding passwords is resource intensive and takes time in order to generate
+    Hashing passwords is resource intensive and takes time in order to generate
     secure password hashes. In tests however, secure hashes are not important, so
-    you can change the encoders configuration in ``test`` environment to run tests faster:
+    you can change the password hasher configuration in ``test`` environment to
+    run tests faster:
 
     .. configuration-block::
 
         .. code-block:: yaml
 
             # config/packages/test/security.yaml
-            encoders:
+            password_hashers:
                 # Use your user class name here
                 App\Entity\User:
                     algorithm: auto # This should be the same value as in config/packages/security.yaml
@@ -289,7 +296,7 @@ encoding algorithm. Also, each algorithm defines different config options:
                     <!-- cost: Lowest possible value for bcrypt -->
                     <!-- time_cost: Lowest possible value for argon -->
                     <!-- memory_cost: Lowest possible value for argon -->
-                    <encoder
+                    <security:password-hasher
                         class="App\Entity\User"
                         algorithm="auto"
                         cost="4"
@@ -305,7 +312,7 @@ encoding algorithm. Also, each algorithm defines different config options:
             use App\Entity\User;
 
             $container->loadFromExtension('security', [
-                'encoders' => [
+                'password_hashers' => [
                     // Use your user class name here
                     User::class => [
                         'algorithm' => 'auto', // This should be the same value as in config/packages/security.yaml
@@ -318,44 +325,46 @@ encoding algorithm. Also, each algorithm defines different config options:
 
 .. _reference-security-sodium:
 .. _using-the-argon2i-password-encoder:
+.. _using-the-sodium-password-encoder:
 
-Using the Sodium Password Encoder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the Sodium Password Hasher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It uses the `Argon2 key derivation function`_ and it's the encoder recommended
+It uses the `Argon2 key derivation function`_ and it's the hasher recommended
 by Symfony. Argon2 support was introduced in PHP 7.2, but if you use an earlier
 PHP version, you can install the `libsodium`_ PHP extension.
 
-The encoded passwords are ``96`` characters long, but due to the hashing
+The hashed passwords are ``96`` characters long, but due to the hashing
 requirements saved in the resulting hash this may change in the future, so make
 sure to allocate enough space for them to be persisted. Also, passwords include
 the `cryptographic salt`_ inside them (it's generated automatically for each new
 password) so you don't have to deal with it.
 
 .. _reference-security-encoder-auto:
+.. _using-the-auto-password-encoder:
 
-Using the "auto" Password Encoder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the "auto" Password Hasher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It selects automatically the best possible encoder. Currently, it tries to use
+It selects automatically the best possible hasher. Currently, it tries to use
 Sodium by default and falls back to the `bcrypt password hashing function`_ if
 not possible. In the future, when PHP adds new hashing techniques, it may use
 different password hashers.
 
-It produces encoded passwords with ``60`` characters long, so make sure to
+It produces hashed passwords with ``60`` characters long, so make sure to
 allocate enough space for them to be persisted. Also, passwords include the
 `cryptographic salt`_ inside them (it's generated automatically for each new
 password) so you don't have to deal with it.
 
 Its only configuration option is ``cost``, which is an integer in the range of
 ``4-31`` (by default, ``13``). Each single increment of the cost **doubles the
-time** it takes to encode a password. It's designed this way so the password
+time** it takes to hash a password. It's designed this way so the password
 strength can be adapted to the future improvements in computation power.
 
 You can change the cost at any time — even if you already have some passwords
-encoded using a different cost. New passwords will be encoded using the new
-cost, while the already encoded ones will be validated using a cost that was
-used back when they were encoded.
+hashed using a different cost. New passwords will be hashed using the new
+cost, while the already hashed ones will be validated using a cost that was
+used back when they were hashed.
 
 .. tip::
 
@@ -364,13 +373,14 @@ used back when they were encoded.
     environment configuration.
 
 .. _reference-security-pbkdf2:
+.. _using-the-pbkdf2-encoder:
 
-Using the PBKDF2 Encoder
-~~~~~~~~~~~~~~~~~~~~~~~~
+Using the PBKDF2 Hasher
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Using the `PBKDF2`_ encoder is no longer recommended since PHP added support for
+Using the `PBKDF2`_ hasher is no longer recommended since PHP added support for
 Sodium and BCrypt. Legacy application still using it are encouraged to upgrade
-to those newer encoding algorithms.
+to those newer hashing algorithms.
 
 firewalls
 ---------
