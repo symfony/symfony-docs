@@ -617,7 +617,6 @@ to simulate a login request::
 
             // test e.g. the profile page
             $client->request('GET', '/profile');
-
             $this->assertResponseIsSuccessful();
             $this->assertSelectorTextContains('h1', 'Hello John!');
         }
