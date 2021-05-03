@@ -143,7 +143,7 @@ which is a common practice when following the `ADR pattern`_
         # config/routes.yaml
         hello:
             path:     /hello/{name}
-            defaults: { _controller: app.hello_controller }
+            controller: app.hello_controller
 
     .. code-block:: xml
 
