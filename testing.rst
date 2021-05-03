@@ -34,7 +34,10 @@ PHP class ending with "Test" (e.g. ``BlogControllerTest``) that lives in
 the ``tests/`` directory of your application.
 
 PHPUnit is configured by the ``phpunit.xml.dist`` file in the root of your
-application.
+application. The default configuration provided by Symfony Flex will be
+enough in most cases. Read the `PHPUnit documentation`_ to discover all
+possible configuration options (e.g. to enable code coverage or to split
+your test into multiple "test suites").
 
 .. note::
 
@@ -931,73 +934,6 @@ Mailer Assertions
     * testing javascript
     * UX or form collections as example?
 
-PHPUnit Configuration
----------------------
-
-Each application has its own PHPUnit configuration, stored in the
-``phpunit.xml.dist`` file. You can edit this file to change the defaults or
-create a ``phpunit.xml`` file to set up a configuration for your local machine
-only.
-
-.. tip::
-
-    Store the ``phpunit.xml.dist`` file in your code repository and ignore
-    the ``phpunit.xml`` file.
-
-By default, only the tests stored in ``tests/`` are run via the ``phpunit`` command,
-as configured in the ``phpunit.xml.dist`` file:
-
-.. code-block:: xml
-
-    <!-- phpunit.xml.dist -->
-    <phpunit>
-        <!-- ... -->
-        <testsuites>
-            <testsuite name="Project Test Suite">
-                <directory>tests</directory>
-            </testsuite>
-        </testsuites>
-        <!-- ... -->
-    </phpunit>
-
-But you can add more directories. For instance, the following
-configuration adds tests from a custom ``lib/tests`` directory:
-
-.. code-block:: xml
-
-    <!-- phpunit.xml.dist -->
-    <phpunit>
-        <!-- ... -->
-        <testsuites>
-            <testsuite name="Project Test Suite">
-                <!-- ... -->
-                <directory>lib/tests</directory>
-            </testsuite>
-        </testsuites>
-        <!-- ... -->
-    </phpunit>
-
-To include other directories in the `code coverage analysis`_, also edit the
-``<filter>`` section:
-
-.. code-block:: xml
-
-    <!-- phpunit.xml.dist -->
-    <phpunit>
-        <!-- ... -->
-        <filter>
-            <whitelist>
-                <!-- ... -->
-                <directory>lib</directory>
-                <exclude>
-                    <!-- ... -->
-                    <directory>lib/tests</directory>
-                </exclude>
-            </whitelist>
-        </filter>
-        <!-- ... -->
-    </phpunit>
-
 Learn more
 ----------
 
@@ -1012,11 +948,11 @@ Learn more
 .. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://phpunit.readthedocs.io/
 .. _`Writing Tests for PHPUnit`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html
+.. _`PHPUnit documentation`: https://phpunit.readthedocs.io/en/stable/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
 .. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`symfony/panther`: https://github.com/symfony/panther
 .. _`PHPUnit Assertion`: https://phpunit.readthedocs.io/en/stable/assertions.html
-.. _`code coverage analysis`: https://phpunit.readthedocs.io/en/9.1/code-coverage-analysis.html
 .. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18
