@@ -572,6 +572,65 @@ will no longer be followed::
 
     $client->followRedirects(false);
 
+.. _testing_logging_in_users:
+
+Logging in Users (Authentication)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``loginUser()`` method was introduced in Symfony 5.1.
+
+When you want to add application tests for protected pages, you have to
+first "login" as a user. Reproducing the actual steps - such as
+submitting a login form - make a test very slow. For this reason, Symfony
+provides a ``loginUser()`` method to simulate logging in in your functional
+tests.
+
+Instead of logging in with real users, it's recommended to create a user only for
+tests. You can do that with Doctrine :ref:`data fixtures <user-data-fixture>`,
+to load the testing users only in the test database.
+
+After loading users in your database, use your user repository to fetch
+this user and use
+:method:`$client->loginUser() <Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser>`
+to simulate a login request::
+
+    // tests/Controller/ProfileControllerTest.php
+    namespace App\Tests\Controller;
+
+    use App\Repository\UserRepository;
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    class ProfileControllerTest extends WebTestCase
+    {
+        // ...
+
+        public function testVisitingWhileLoggedIn()
+        {
+            $client = static::createClient();
+            $userRepository = static::$container->get(UserRepository::class);
+
+            // retrieve the test user
+            $testUser = $userRepository->findOneByEmail('john.doe@example.com');
+
+            // simulate $testUser being logged in
+            $client->loginUser($testUser);
+
+            // test e.g. the profile page
+            $client->request('GET', '/profile');
+
+            $this->assertResponseIsSuccessful();
+            $this->assertSelectorTextContains('h1', 'Hello John!');
+        }
+    }
+
+You can pass any
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` instance to
+``loginUser()``. This method creates a special
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\TestBrowserToken` object and
+stores in the session of the test client.
+
 Making AJAX Requests
 ....................
 
