@@ -92,7 +92,3 @@ The Crawler can extract information from the nodes::
     $data = $crawler->each(function ($node, $i) {
         return $node->attr('href');
     });
-
-.. versionadded:: 4.4
-
-    The option to trim white spaces in ``text()`` was introduced in Symfony 4.4.
