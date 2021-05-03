@@ -647,7 +647,7 @@ internal handling of that request. For example, the profiler could be used to
 verify that a given page runs less than a certain number of database
 queries when loading.
 
-To get the Profiler for the last request, do the following::
+To get the profiler for the last request, do the following::
 
     // enables the profiler for the very next request
     $client->enableProfiler();
