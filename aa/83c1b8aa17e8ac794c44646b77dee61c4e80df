@@ -1,0 +1,43 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-03T13:44:53Z
+
+@Nyholm there's a validation error related to a code example of this article and I don't know how to fix it. If you have some time, please give me a clue to solve it. Thanks!
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-05-03T13:50:32Z
+
+Thank you for the ping.
+
+The error message basically means: "if you copy/paste this code example to your app, you would get the following error message: "
+
+> Environment variable not found: "CODE_EDITOR".
+
+To fix this, we could define the environment variable `CODE_EDITOR` (or ugly trick it by defining parameter `env(CODE_EDITOR): ''`.
+
+In this particular case (considering how we usually do examples) I suggest just to ignore this error.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-03T14:11:59Z
+
+Thanks for the info ... but sadly we can't ignore this error because it will make all future builds in 5.x and up to fail (and also, GitHub sends an email for each failure, so it will be a bit annoying).
+
+Maybe we can tweak the validator to never check if an env var exists?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-05-03T14:14:21Z
+
+Im not sure that is true.
+
+This CI is using a baseline. So it first detects from where you branched out. It will create the baseline there. Secondly, it applies the patch and run the check again. The errors you see in the PR review is the "new" errors.
+
+This is the exact workflow symfony/symfony is using for psalm.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-03T14:21:22Z
+
+OK. I didn't understand the behavior. Sorry! Everything is OK then. Thanks!
