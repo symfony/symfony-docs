@@ -591,6 +591,158 @@ if you're generating translations with specialized programs or teams.
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
     See the :ref:`dic-tags-translation-loader` tag for more information.
 
+.. _translation-providers:
+
+Translation Providers
+---------------------
+
+.. versionadded:: 5.3
+
+    The "Translation Providers" feature was introduced in Symfony 5.3 as an
+    :doc:`experimental feature </contributing/code/experimental>`.
+
+The translation component can push and pull translations to third party providers (e.g. Crowdin or PoEditor).
+
+Installing and configuring a 3rd Party Provider
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of editing your translation files as code, you can push them to one of the supported third-party providers.
+This will make the translations edition easier for you or your translators.
+
+==================== ===========================================================
+Service              Install with
+==================== ===========================================================
+Crowdin              ``composer require symfony/crowdin-translation-provider``
+Loco (localise.biz)  ``composer require symfony/loco-translation-provider``
+Lokalise             ``composer require symfony/lokalise-translation-provider``
+PoEditor             ``composer require symfony/po-editor-translation-provider``
+==================== ===========================================================
+
+Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
+a configuration example to your ``.env`` file. For example, suppose you want to
+use Loco. First, install it:
+
+.. code-block:: terminal
+
+    $ composer require symfony/loco-translation-provider
+
+You'll now have a new line in your ``.env`` file that you can uncomment:
+
+.. code-block:: env
+
+    # .env
+    LOCO_DSN=loco://API_KEY@default
+
+The ``LOCO_DSN`` isn't a *real* address: it's a convenient format that
+offloads most of the configuration work to translation. The ``loco`` scheme
+activates the Loco provider that you just installed, which knows all about
+how to push and pull translations via Loco. The *only* part you need to change is the
+``API_KEY`` placeholder.
+
+This table shows the full list of available DSN formats for each third party provider:
+
+===================== =================================================================
+ Provider             DSN
+===================== =================================================================
+ Crowdin              crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default
+ Loco (localise.biz)  loco://API_KEY@default
+ Lokalise             lokalise://PROJECT_ID:API_KEY@default
+ PoEditor             poeditor://PROJECT_ID:API_KEY@default
+===================== =================================================================
+
+To enable a translation provider, add the correct DSN in your ``.env`` file and
+configure the ``providers``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/translation.yaml
+        framework:
+            translator:
+                providers:
+                    loco:
+                        dsn: '%env(LOCO_DSN)%'
+                        domains: ['messages']
+                        locales: ['en', 'fr']
+
+    .. code-block:: xml
+
+        <!-- config/packages/translation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:translator>
+                    <framework:provider name="loco" dsn="%env(LOCO_DSN)%">
+                        <framework:domain>messages</framework:domain>
+                        <!-- ... -->
+                        <framework:locale>en</framework:locale>
+                        <framework:locale>fr</framework:locale>
+                        <!-- ... -->
+                    </framework:provider>
+                </framework:translator>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        # config/packages/translation.php
+        $container->loadFromExtension('framework', [
+            'translator' => [
+                'providers' => [
+                    'loco' => [
+                        'dsn' => '%env(LOCO_DSN)%',
+                        'domains' => ['messages'],
+                        'locales' => ['en', 'fr'],
+                    ],
+                ],
+            ],
+        ]);
+
+Push and pull translations
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To push your existing translations to your configured third party provider, you have to use the `translation:push` command:
+
+.. code-block:: terminal
+
+    # push all local translations to the Loco provider for the locales and domains configured in config/packages/translation.yaml file
+    # it will update existing translations already on the provider.
+    $ php bin/console translation:push loco --force
+
+    # push new local translations to the Loco provider for the French locale and the validators domain.
+    # it will **not** update existing translations already on the provider.
+    $ php bin/console translation:push loco --locales fr --domain validators
+
+    # push new local translations and delete provider's translations that not exists anymore in local files for the French locale and the validators domain.
+    # it will **not** update existing translations already on the provider.
+    $ php bin/console translation:push loco --delete-missing --locales fr --domain validators
+
+    # check out the command help to see its options (format, domains, locales, etc.)
+    $ php bin/console translation:push --help
+
+To pull translations from a provider in your local files, you have to use the `translation:pull` command:
+
+.. code-block:: terminal
+
+    # pull all provider's translations to local files for the locales and domains configured in config/packages/translation.yaml file
+    # it will overwrite completely your local files.
+    $ php bin/console translation:pull loco --force
+
+    # pull new translations from the Loco provider to local files for the French locale and the validators domain.
+    # it will **not** overwrite your local files, only add new translations.
+    $ php bin/console translation:pull loco --locales fr --domain validators
+
+    # check out the command help to see its options (format, domains, locales, intl-icu, etc.)
+    $ php bin/console translation:pull --help
+
 Handling the User's Locale
 --------------------------
 
