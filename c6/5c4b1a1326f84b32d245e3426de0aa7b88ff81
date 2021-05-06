@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-04T07:41:21Z
+
+Oskar, it's true that the minimum PHP version supported by Symfony is 7.2 ... but that's an unsupported version. That's why I think this change could make sense. My vote would be 👍  but I'm not sure if this could introduce any issues.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2021-05-04T09:57:10Z
+
+The idea was to make it copy-pastable. Nobody who is starting a **new project** (which is the audience of this page) will go for anything prior to 7.4 today.
+The existing numbers don't fit for *everybody*, and the new ones won't also - so IMO there can't be any issues ;-)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-05-04T10:37:46Z
+
+Agree then 👍
