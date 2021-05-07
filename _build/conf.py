@@ -119,18 +119,8 @@ lexers['varnish2'] = CLexer()
 lexers['varnish3'] = CLexer()
 lexers['varnish4'] = CLexer()
 lexers['terminal'] = TerminalLexer()
+lexers['terminal-maker'] = TerminalLexer()
 lexers['env']  = BashLexer()
-
-config_block = {
-    'apache': 'Apache',
-    'markdown': 'Markdown',
-    'nginx': 'Nginx',
-    'rst': 'reStructuredText',
-    'varnish2': 'Varnish 2',
-    'varnish3': 'Varnish 3',
-    'varnish4': 'Varnish 4',
-    'env': '.env'
-}
 
 # don't enable Sphinx Domains
 primary_domain = None

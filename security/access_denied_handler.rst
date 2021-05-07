@@ -15,6 +15,8 @@ generates a response based on the authentication state:
 * **If the user is authenticated, but does not have the required
   permissions**, a *403 Forbidden* response is generated.
 
+.. _security-entry-point:
+
 Customize the Unauthorized Response
 -----------------------------------
 
