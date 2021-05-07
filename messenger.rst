@@ -1329,6 +1329,8 @@ The Redis transport DSN may looks like this:
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
     # Full DSN Example
     MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0&dbindex=0
+    # Redis Cluster Example
+    MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
 
