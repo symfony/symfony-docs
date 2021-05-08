@@ -213,8 +213,8 @@ are encoded as 26-character strings (vs 36-character UUIDs).
 
     If you generate more than one ULID during the same millisecond in the
     same process then the random portion is incremented by one bit in order
-    to provide monotonicity for sorting.  The random portion is **not**
-    random compared to the previous ULID in this case.
+    to provide monotonicity for sorting. The random portion is not random
+    compared to the previous ULID in this case.
 
 Generating ULIDs
 ~~~~~~~~~~~~~~~~
