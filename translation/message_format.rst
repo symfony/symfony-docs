@@ -485,7 +485,7 @@ The ``number`` formatter allows you to format numbers using Intl's :phpclass:`Nu
     // "9 988 776,65 €"
     echo $translator->trans('value_of_object', ['value' => 9988776.65]);
 
-.. _`online editor`: http://format-message.github.io/icu-message-format-for-translators/
+.. _`online editor`: https://devpal.co/icu-message-editor/
 .. _`ICU MessageFormat`: https://unicode-org.github.io/icu/userguide/format_parse/messages/
 .. _`switch statement`: https://www.php.net/control-structures.switch
 .. _`Language Plural Rules`: http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
