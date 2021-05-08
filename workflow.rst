@@ -163,7 +163,7 @@ like this:
     If you are creating your first workflows, consider using the ``workflow:dump``
     command to :doc:`debug the workflow contents </workflow/dumping-workflows>`.
 
-The configured property will be used via it's implemented getter/setter methods by the marking store::
+The configured property will be used via its implemented getter/setter methods by the marking store::
 
     // src/Entity/BlogPost.php
     namespace App\Entity;
