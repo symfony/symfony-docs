@@ -200,12 +200,13 @@ here: :doc:`User Providers </security/user_provider>`.
 
 .. _security-encoding-user-password:
 .. _encoding-the-user-s-password:
+.. _2c-encoding-passwords:
 
-2c) Encoding Passwords
-----------------------
+2c) Hashing Passwords
+---------------------
 
 Not all applications have "users" that need passwords. *If* your users have passwords,
-you can control how those passwords are encoded in ``security.yaml``. The ``make:user``
+you can control how those passwords are hashed in ``security.yaml``. The ``make:user``
 command will pre-configure this for you:
 
 .. configuration-block::
@@ -216,10 +217,10 @@ command will pre-configure this for you:
         security:
             # ...
 
-            encoders:
+            password_hashers:
                 # use your user class name here
                 App\Entity\User:
-                    # Use native password encoder, which auto-selects the best
+                    # Use native password hasher, which auto-selects the best
                     # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
                     algorithm: auto
 
@@ -238,7 +239,7 @@ command will pre-configure this for you:
             <config>
                 <!-- ... -->
 
-                <encoder class="App\Entity\User"
+                <security:password-hasher class="App\Entity\User"
                     algorithm="auto"
                     cost="12"/>
 
@@ -254,7 +255,7 @@ command will pre-configure this for you:
         $container->loadFromExtension('security', [
             // ...
 
-            'encoders' => [
+            'password_hashers' => [
                 User::class => [
                     'algorithm' => 'auto',
                     'cost' => 12,
@@ -264,8 +265,13 @@ command will pre-configure this for you:
             // ...
         ]);
 
-Now that Symfony knows *how* you want to encode the passwords, you can use the
-``UserPasswordEncoderInterface`` service to do this before saving your users to
+.. versionadded:: 5.3
+
+    The ``password_hashers`` option was introduced in Symfony 5.3. In previous
+    versions it was called ``encoders``.
+
+Now that Symfony knows *how* you want to hash the passwords, you can use the
+``UserPasswordHasherInterface`` service to do this before saving your users to
 the database.
 
 .. _user-data-fixture:
@@ -280,22 +286,22 @@ create dummy database users:
     The class name of the fixtures to create (e.g. AppFixtures):
     > UserFixtures
 
-Use this service to encode the passwords:
+Use this service to hash the passwords:
 
 .. code-block:: diff
 
       // src/DataFixtures/UserFixtures.php
 
-    + use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+    + use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
       // ...
 
       class UserFixtures extends Fixture
       {
-    +     private $passwordEncoder;
+    +     private $passwordHasher;
 
-    +     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    +     public function __construct(UserPasswordHasherInterface $passwordHasher)
     +     {
-    +         $this->passwordEncoder = $passwordEncoder;
+    +         $this->passwordHasher = $passwordHasher;
     +     }
 
           public function load(ObjectManager $manager)
@@ -303,7 +309,7 @@ Use this service to encode the passwords:
               $user = new User();
               // ...
 
-    +         $user->setPassword($this->passwordEncoder->encodePassword(
+    +         $user->setPassword($this->passwordHasher->hashPassword(
     +             $user,
     +             'the_new_password'
     +         ));
@@ -312,11 +318,11 @@ Use this service to encode the passwords:
           }
       }
 
-You can manually encode a password by running:
+You can manually hash a password by running:
 
 .. code-block:: terminal
 
-    $ php bin/console security:encode-password
+    $ php bin/console security:hash-password
 
 .. _security-yaml-firewalls:
 .. _security-firewalls:
@@ -1503,7 +1509,7 @@ Authentication (Identifying/Logging in the User)
     security/remember_me
     security/impersonating_user
     security/user_checkers
-    security/named_encoders
+    security/named_hashers
     security/multiple_guard_authenticators
     security/firewall_restriction
     security/csrf

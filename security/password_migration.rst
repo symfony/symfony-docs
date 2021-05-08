@@ -9,16 +9,18 @@ hash algorithms. This means that if a better hash algorithm is supported on your
 system, the user's password should be *rehashed* using the newer algorithm and
 stored. That's possible with the ``migrate_from`` option:
 
-#. `Configure a new Encoder Using "migrate_from"`_
+#. `Configure a new Hasher Using "migrate_from"`_
 #. `Upgrade the Password`_
-#. Optionally, `Trigger Password Migration From a Custom Encoder`_
+#. Optionally, `Trigger Password Migration From a Custom Hasher`_
 
-Configure a new Encoder Using "migrate_from"
-----------------------------------------------
+.. _configure-a-new-encoder-using migrate_from:
+
+Configure a new Hasher Using "migrate_from"
+-------------------------------------------
 
 When a better hashing algorithm becomes available, you should keep the existing
-encoder(s), rename it, and then define the new one. Set the ``migrate_from`` option
-on the new encoder to point to the old, legacy encoder(s):
+hasher(s), rename it, and then define the new one. Set the ``migrate_from`` option
+on the new hasher to point to the old, legacy hasher(s):
 
 .. configuration-block::
 
@@ -28,19 +30,19 @@ on the new encoder to point to the old, legacy encoder(s):
         security:
             # ...
 
-            encoders:
-                # an encoder used in the past for some users
+            password_hashers:
+                # a hasher used in the past for some users
                 legacy:
                     algorithm: sha256
                     encode_as_base64: false
                     iterations: 1
 
                 App\Entity\User:
-                    # the new encoder, along with its options
+                    # the new hasher, along with its options
                     algorithm: sodium
                     migrate_from:
-                        - bcrypt # uses the "bcrypt" encoder with the default options
-                        - legacy # uses the "legacy" encoder configured above
+                        - bcrypt # uses the "bcrypt" hasher with the default options
+                        - legacy # uses the "legacy" hasher configured above
 
     .. code-block:: xml
 
@@ -57,22 +59,22 @@ on the new encoder to point to the old, legacy encoder(s):
             <security:config>
                 <!-- ... -->
 
-                <security:encoder class="legacy"
+                <security:password-hasher class="legacy"
                     algorithm="sha256"
                     encode-as-base64="false"
                     iterations="1"
                 />
 
-                <!-- algorithm: the new encoder, along with its options -->
-                <security:encoder class="App\Entity\User"
+                <!-- algorithm: the new hasher, along with its options -->
+                <security:password-hasher class="App\Entity\User"
                     algorithm="sodium"
                 >
-                    <!-- uses the bcrypt encoder with the default options -->
+                    <!-- uses the bcrypt hasher with the default options -->
                     <security:migrate-from>bcrypt</security:migrate-from>
 
-                    <!-- uses the legacy encoder configured above -->
+                    <!-- uses the legacy hasher configured above -->
                     <security:migrate-from>legacy</security:migrate-from>
-                </security:encoder>
+                </security:password-hasher>
             </security:config>
         </container>
 
@@ -82,7 +84,7 @@ on the new encoder to point to the old, legacy encoder(s):
         $container->loadFromExtension('security', [
             // ...
 
-            'encoders' => [
+            'password_hashers' => [
                 'legacy' => [
                     'algorithm' => 'sha256',
                     'encode_as_base64' => false,
@@ -90,11 +92,11 @@ on the new encoder to point to the old, legacy encoder(s):
                 ],
 
                 'App\Entity\User' => [
-                    // the new encoder, along with its options
+                    // the new hasher, along with its options
                     'algorithm' => 'sodium',
                     'migrate_from' => [
-                        'bcrypt', // uses the "bcrypt" encoder with the default options
-                        'legacy', // uses the "legacy" encoder configured above
+                        'bcrypt', // uses the "bcrypt" hasher with the default options
+                        'legacy', // uses the "legacy" hasher configured above
                     ],
                 ],
             ],
@@ -102,14 +104,14 @@ on the new encoder to point to the old, legacy encoder(s):
 
 With this setup:
 
-* New users will be encoded with the new algorithm;
+* New users will be hashed with the new algorithm;
 * Whenever a user logs in whose password is still stored using the old algorithm,
   Symfony will verify the password with the old algorithm and then rehash
   and update the password using the new algorithm.
 
 .. tip::
 
-    The *auto*, *native*, *bcrypt* and *argon* encoders automatically enable
+    The *auto*, *native*, *bcrypt* and *argon* hashers automatically enable
     password migration using the following list of ``migrate_from`` algorithms:
 
     #. :ref:`PBKDF2 <reference-security-pbkdf2>` (which uses :phpfunction:`hash_pbkdf2`);
@@ -117,7 +119,7 @@ With this setup:
 
     Both use the ``hash_algorithm`` setting as the algorithm. It is recommended to
     use ``migrate_from`` instead of ``hash_algorithm``, unless the *auto*
-    encoder is used.
+    hasher is used.
 
 Upgrade the Password
 --------------------
@@ -182,10 +184,10 @@ storing the newly created password hash::
     {
         // ...
 
-        public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+        public function upgradePassword(UserInterface $user, string $newHashedPassword): void
         {
-            // set the new encoded password on the User object
-            $user->setPassword($newEncodedPassword);
+            // set the new hashed password on the User object
+            $user->setPassword($newHashedPassword);
 
             // execute the queries on the database
             $this->getEntityManager()->flush();
@@ -211,34 +213,36 @@ the user provider::
     {
         // ...
 
-        public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+        public function upgradePassword(UserInterface $user, string $newHashedPassword): void
         {
-            // set the new encoded password on the User object
-            $user->setPassword($newEncodedPassword);
+            // set the new hashed password on the User object
+            $user->setPassword($newHashedPassword);
 
             // ... store the new password
         }
     }
 
-Trigger Password Migration From a Custom Encoder
-------------------------------------------------
+.. _trigger-password-migration-from-a-custom-encoder:
 
-If you're using a custom password encoder, you can trigger the password
+Trigger Password Migration From a Custom Hasher
+-----------------------------------------------
+
+If you're using a custom password hasher, you can trigger the password
 migration by returning ``true`` in the ``needsRehash()`` method::
 
-    // src/Security/CustomPasswordEncoder.php
+    // src/Security/CustomPasswordHasher.php
     namespace App\Security;
 
     // ...
-    use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
+    use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-    class CustomPasswordEncoder implements PasswordEncoderInterface
+    class CustomPasswordHasher implements UserPasswordHasherInterface
     {
         // ...
 
-        public function needsRehash(string $encoded): bool
+        public function needsRehash(string $hashed): bool
         {
-            // check whether the current password is hash using an outdated encoder
+            // check whether the current password is hashed using an outdated hasher
             $hashIsOutdated = ...;
 
             return $hashIsOutdated;

@@ -224,7 +224,7 @@ prototypes and for limited applications that don't store users in databases.
 
 This user provider stores all user information in a configuration file,
 including their passwords. That's why the first step is to configure how these
-users will encode their passwords:
+users will hash their passwords:
 
 .. configuration-block::
 
@@ -233,7 +233,7 @@ users will encode their passwords:
         # config/packages/security.yaml
         security:
             # ...
-            encoders:
+            password_hashers:
                 # this internal class is used by Symfony to represent in-memory users
                 # (the 'InMemoryUser' class was introduced in Symfony 5.3.
                 # In previous versions it was called 'User')
@@ -257,7 +257,7 @@ users will encode their passwords:
                 <!-- this internal class is used by Symfony to represent in-memory users -->
                 <!-- (the 'InMemoryUser' class was introduced in Symfony 5.3.
                      In previous versions it was called 'User') -->
-                <encoder class="Symfony\Component\Security\Core\User\InMemoryUser"
+                <security:password-hasher class="Symfony\Component\Security\Core\User\InMemoryUser"
                     algorithm="auto"
                 />
             </config>
@@ -274,18 +274,18 @@ users will encode their passwords:
 
         $container->loadFromExtension('security', [
             // ...
-            'encoders' => [
+            'password_hashers' => [
                 User::class => [
                     'algorithm' => 'auto',
                 ],
             ],
         ]);
 
-Then, run this command to encode the plain text passwords of your users:
+Then, run this command to hash the plain text passwords of your users:
 
 .. code-block:: terminal
 
-    $ php bin/console security:encode-password
+    $ php bin/console security:hash-password
 
 Now you can configure all the user information in ``config/packages/security.yaml``:
 
@@ -304,7 +304,7 @@ Now you can configure all the user information in ``config/packages/security.yam
 .. caution::
 
     When using a ``memory`` provider, and not the ``auto`` algorithm, you have
-    to choose an encoding without salt (i.e. ``bcrypt``).
+    to choose a hashing algorithm without salt (i.e. ``bcrypt``).
 
 .. _security-ldap-user-provider:
 
@@ -427,13 +427,13 @@ command will generate a nice skeleton to get you started::
         }
 
         /**
-         * Upgrades the encoded password of a user, typically for using a better hash algorithm.
+         * Upgrades the hashed password of a user, typically for using a better hash algorithm.
          */
-        public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+        public function upgradePassword(UserInterface $user, string $newHashedPassword): void
         {
-            // TODO: when encoded passwords are in use, this method should:
+            // TODO: when hashed passwords are in use, this method should:
             // 1. persist the new password in the user storage
-            // 2. update the $user object with $user->setPassword($newEncodedPassword);
+            // 2. update the $user object with $user->setPassword($newHashedPassword);
         }
     }
 
