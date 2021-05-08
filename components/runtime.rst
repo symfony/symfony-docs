@@ -316,9 +316,7 @@ You can also configure ``extra.runtime.options`` in ``composer.json``:
         },
         "extra": {
             "runtime": {
-                "options": {
-                    "project_dir": "/var/task"
-                }
+                "project_dir": "/var/task"
             }
         }
     }
