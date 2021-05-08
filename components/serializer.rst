@@ -174,6 +174,8 @@ when this happens, set the ``AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES`` contex
 ``false`` and provide an object that implements ``ClassMetadataFactoryInterface``
 when constructing the normalizer::
 
+    use App\Model\Person;
+
     $data = <<<EOF
     <person>
         <name>foo</name>
@@ -189,7 +191,7 @@ when constructing the normalizer::
 
     // this will throw a Symfony\Component\Serializer\Exception\ExtraAttributesException
     // because "city" is not an attribute of the Person class
-    $person = $serializer->deserialize($data, 'App\Model\Person', 'xml', [
+    $person = $serializer->deserialize($data, Person::class, 'xml', [
         AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
     ]);
 

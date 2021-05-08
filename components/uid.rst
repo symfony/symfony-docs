@@ -238,6 +238,13 @@ ULIDs are an alternative to UUIDs when using those is impractical. They provide
 128-bit compatibility with UUID, they are lexicographically sortable and they
 are encoded as 26-character strings (vs 36-character UUIDs).
 
+.. note::
+
+    If you generate more than one ULID during the same millisecond in the
+    same process then the random portion is incremented by one bit in order
+    to provide monotonicity for sorting. The random portion is not random
+    compared to the previous ULID in this case.
+
 Generating ULIDs
 ~~~~~~~~~~~~~~~~
 
