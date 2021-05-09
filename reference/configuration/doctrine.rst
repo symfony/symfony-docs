@@ -50,7 +50,8 @@ The following block shows all possible configuration keys:
                 user:                 user
                 password:             secret
                 driver:               pdo_mysql
-                # if the url option is specified, it will override the above config
+                # until doctrine-bundle 2.2, the url option overrides the above config
+                # since doctrine-bundle 2.3 it is recommended to set override_url: true, which allows the above config to override the parts of the url
                 url:                  mysql://db_user:db_password@127.0.0.1:3306/db_name
                 # the DBAL driverClass option
                 driver_class:         App\DBAL\MyDatabaseDriver
@@ -91,6 +92,7 @@ The following block shows all possible configuration keys:
                     user="user"
                     password="secret"
                     driver="pdo_mysql"
+                    url="mysql://db_user:db_password@127.0.0.1:3306/db_name"
                     driver-class="App\DBAL\MyDatabaseDriver"
                     path="%kernel.project_dir%/var/data/data.sqlite"
                     memory="true"
@@ -127,6 +129,17 @@ The following block shows all possible configuration keys:
     If you don't define this option and you haven't created your database
     yet, you may get ``PDOException`` errors because Doctrine will try to
     guess the database server version automatically and none is available.
+
+.. note::
+
+    Version 2.3 of the DoctrineBundle introduced the ``override_url`` option.
+    When set to ``true``, each fragement of the ``url`` is overwritten by the
+    respective configuration option if set. This allows to e.g. only change the
+    database name for the test environment without having to repeat the whole
+    ``url``.
+
+Configuring Multiple Connections
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to configure multiple connections in YAML, put them under the
 ``connections`` key and give them a unique name:
