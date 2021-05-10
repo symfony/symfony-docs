@@ -717,6 +717,55 @@ In same way, parent options can access to the nested options as normal arrays::
     The fact that an option is defined as nested means that you must pass
     an array of values to resolve it at runtime.
 
+Prototype Options
+~~~~~~~~~~~~~~~~~
+
+There are situations where you will have to resolve and validate a set of
+options that may repeat many times within another option. Let's imagine a
+``connections`` option that will accept an array of database connections
+with ``host``, ``database``, ``user`` and ``password`` each.
+
+To achieve it, you can establish the nested definition of this ``connections``
+option as prototype::
+
+    $resolver->setDefault('connections', function (OptionsResolver $connResolver) {
+        $connResolver
+            ->setPrototype(true)
+            ->setRequired(['host', 'database'])
+            ->setDefaults(['user' => 'root', 'password' => null]);
+    });
+
+According to the prototype definition in the example above, it is possible
+to have multiple connection arrays like following::
+
+    $resolver->resolve([
+        'connections' => [
+            'default' => [
+                'host' => '127.0.0.1',
+                'database' => 'symfony',
+            ],
+            'test' => [
+                'host' => '127.0.0.1',
+                'database' => 'symfony_test',
+                'user' => 'test',
+                'password' => 'test',
+            ],
+            // ...
+        ],
+    ]);
+
+The array keys (``default``, ``test``, etc.) of this prototype option are
+validation-free and can be any valid key you want to differentiate the connections.
+
+.. note::
+
+    A prototype option can only be defined inside a nested option and
+    during its resolution it will expect an array of array.
+
+.. versionadded:: 5.3
+
+    The ``setPrototype()`` method was introduced in Symfony 5.3.
+
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
 
