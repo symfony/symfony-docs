@@ -720,13 +720,16 @@ In same way, parent options can access to the nested options as normal arrays::
 Prototype Options
 ~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 5.3
+
+    Prototype options were introduced in Symfony 5.3.
+
 There are situations where you will have to resolve and validate a set of
 options that may repeat many times within another option. Let's imagine a
 ``connections`` option that will accept an array of database connections
 with ``host``, ``database``, ``user`` and ``password`` each.
 
-To achieve it, you can establish the nested definition of this ``connections``
-option as prototype::
+The best way to implement this is to define the ``connections`` option as prototype::
 
     $resolver->setDefault('connections', function (OptionsResolver $connResolver) {
         $connResolver
@@ -736,7 +739,7 @@ option as prototype::
     });
 
 According to the prototype definition in the example above, it is possible
-to have multiple connection arrays like following::
+to have multiple connection arrays like the following::
 
     $resolver->resolve([
         'connections' => [
@@ -755,16 +758,13 @@ to have multiple connection arrays like following::
     ]);
 
 The array keys (``default``, ``test``, etc.) of this prototype option are
-validation-free and can be any valid key you want to differentiate the connections.
+validation-free and can be any arbitrary value that helps differentiate the
+connections.
 
 .. note::
 
     A prototype option can only be defined inside a nested option and
-    during its resolution it will expect an array of array.
-
-.. versionadded:: 5.3
-
-    The ``setPrototype()`` method was introduced in Symfony 5.3.
+    during its resolution it will expect an array of arrays.
 
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
