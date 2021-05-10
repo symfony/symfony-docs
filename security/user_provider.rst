@@ -275,7 +275,7 @@ users will hash their passwords:
         $container->loadFromExtension('security', [
             // ...
             'password_hashers' => [
-                User::class => [
+                InMemoryUser::class => [
                     'algorithm' => 'auto',
                 ],
             ],
