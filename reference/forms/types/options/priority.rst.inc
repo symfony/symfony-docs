@@ -3,8 +3,14 @@ priority
 
 **type**: ``integer`` **default**: ``0``
 
-    Allows you to set the field rendering priority. This option will affect
-    the view order only, sorting all fields in order of importance instead of
-    simply numerical order, i.e. fields with higher priority will be rendered
-    first, fields with lower priority will be rendered last and fields with
-    equal priority will keep the original order.
+.. versionadded:: 5.3
+
+    The ``priority`` option was introduced in Symfony 5.3.
+
+Fields are rendered in the same order as they are included in the form. This
+option changes the field rendering priority, allowing you to display fields
+earlier or later than their original order.
+
+This option will affect the view order only. The higher this priority, the
+earlier the field will be rendered. Priority can also be negative and fields
+with the same priority will keep their original order.
