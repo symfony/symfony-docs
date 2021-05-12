@@ -516,7 +516,7 @@ Handling Exceptions: the ``kernel.exception`` Event
 
 If an exception is thrown at any point inside ``HttpKernel::handle()``, another
 event - ``kernel.exception`` is thrown. Internally, the body of the ``handle()``
-function is wrapped in a try-catch block. When any exception is thrown, the
+method is wrapped in a try-catch block. When any exception is thrown, the
 ``kernel.exception`` event is dispatched so that your system can somehow respond
 to the exception.
 
