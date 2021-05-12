@@ -120,7 +120,7 @@ unauthenticated access (e.g. the login page):
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Component\Security\Http\Firewall\AccessListener;
+        use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
 
         $container->loadFromExtension('security', [
             'enable_authenticator_manager' => true,
@@ -128,7 +128,7 @@ unauthenticated access (e.g. the login page):
             // ...
             'access_control' => [
                 // allow unauthenticated users to access the login form
-                ['path' => '^/admin/login', 'roles' => AccessListener::PUBLIC_ACCESS],
+                ['path' => '^/admin/login', 'roles' => AuthenticatedVoter::PUBLIC_ACCESS],
 
                 // but require authentication for all other admin routes
                 ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
