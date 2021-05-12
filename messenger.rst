@@ -664,6 +664,70 @@ Next, tell Supervisor to read your config and start your workers:
 
 See the `Supervisor docs`_ for more details.
 
+.. _messenger-docker:
+
+Consuming Messages in Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you deploy your Symfony application via Docker, things work differently as in
+classical deployment environments. Following the concept of the `Twelve-Factor App`_
+and Docker in general, you only want one front-facing process per container, which
+will be either php-fpm or your chosen webserver. The font-facing process defines the
+lifecycle of the container.
+
+Background processes, like consuming messages, must not run in the same container as
+your application, since they have their own lifecycle (See
+`Admin processes in a twelve-factor app`_).
+
+**Create a separate entrypoint**
+  As you don't want to start your containers php-fpm or webserver process, you need to
+  create a custom entrypoint, pointing to your ``bin/console`` to run in in the foreground.
+
+.. code-block:: bash
+
+    #!/usr/bin/env sh
+
+    # depending on how you build your container the directories might be different
+    # lets assume you've registered your repository root as WORKINGDIR in your Dockerfile
+    php bin/console messenger:consume async
+
+.. code-block:: Dockerfile
+    # [...]
+    # copy the consumer entrypoint to your container but don't set it
+    # as the default entrypoint.
+    COPY entrypoint.consumer.sh /entrypoint.consumer.sh
+
+  Start your container with the new entrypoint:
+
+.. code-block:: bash
+    docker run --entrypoint=/entrypoint.consumer.sh my-registry/my-application-image:tag
+
+**Always define limits**
+  As you don't want to run the messenger consumer endlessly, always define limits. Like
+  within a classical environment its a good idea to gracefully restart the consumer process
+  on a regular basis.
+
+  To archive this, modify the process in your custom entrypoint accordingly. In the following
+  example we also have the opportunity to overwrite the default values with (real) environment
+  variables.
+
+.. code-block:: bash
+
+    #!/usr/bin/env sh
+    # entrypoint.consumer.sh
+    CONSUME_LIMIT=${APP_CONSUME_LIMIT:-100}
+    MEMORY_LIMIT=${APP_MEMORY_LIMIT:-128M}
+    TIME_LIMIT=${APP_TIME_LIMIT:-3600}
+    # make sure the php memory_limit is greater or equal the --memory-limit given to the consumer command
+    # especially, if php-fpm and php-cli share a php.ini
+    php -d memory_limit="${MEMORY_LIMIT}" bin/console messenger:consume async -vv --limit="${CONSUME_LIMIT}" --memory-limit="${MEMORY_LIMIT}" --time-limit="${TIME_LIMIT}"
+
+  This way the container will stop gracefully after any of the given limits has been reached
+  and will be restarted through the used orchestrator.
+
+**Let your orchestrator manage the restart**
+
+
 .. _messenger-retries-failures:
 
 Retries & Failures
@@ -2207,3 +2271,5 @@ Learn more
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
 .. _`FIFO queue`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
 .. _`LISTEN/NOTIFY`: https://www.postgresql.org/docs/current/sql-notify.html
+.. _`Twelve-Factor App`: https://12factor.net/
+.. _`Admin processes in a twelve-factor app`: https://12factor.net/admin-processes
