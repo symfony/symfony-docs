@@ -649,7 +649,7 @@ Create a separate entrypoint
 """"""""""""""""""""""""""""
 
 As you don't want to start your containers php-fpm or webserver process, you need to
-create a custom entrypoint, pointing to your ``bin/console`` to run in in the foreground.
+create a custom entrypoint, pointing to your ``bin/console`` to run in the foreground.
 
 .. code-block:: sh
 
