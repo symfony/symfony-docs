@@ -645,42 +645,61 @@ Background processes, like consuming messages, must not run in the same containe
 your application, since they have their own lifecycle (See
 `Admin processes in a twelve-factor app`_).
 
-**Create a separate entrypoint**
-  As you don't want to start your containers php-fpm or webserver process, you need to
-  create a custom entrypoint, pointing to your ``bin/console`` to run in in the foreground.
+Create a separate entrypoint
+""""""""""""""""""""""""""""
 
-.. code-block:: bash
+As you don't want to start your containers php-fpm or webserver process, you need to
+create a custom entrypoint, pointing to your ``bin/console`` to run in in the foreground.
 
+.. code-block:: sh
+
+    # entrypoint.consumer.sh
     #!/usr/bin/env sh
 
     # depending on how you build your container the directories might be different
-    # lets assume you've registered your repository root as WORKINGDIR in your Dockerfile
+    # lets assume you've set your repository root as WORKDIR in your Dockerfile
     php bin/console messenger:consume async
 
-.. code-block:: Dockerfile
+.. code-block:: dockerfile
+
+    # Dockerfile
     # [...]
     # copy the consumer entrypoint to your container but don't set it
     # as the default entrypoint.
     COPY entrypoint.consumer.sh /entrypoint.consumer.sh
+    # make it executable
+    RUN chmod +x /entrypoint.consumer.sh
 
-  Start your container with the new entrypoint:
+Start your container with the consumer entrypoint:
 
 .. code-block:: bash
+
     docker run --entrypoint=/entrypoint.consumer.sh my-registry/my-application-image:tag
 
-**Always define limits**
-  As you don't want to run the messenger consumer endlessly, always define limits. Like
-  within a classical environment its a good idea to gracefully restart the consumer process
-  on a regular basis.
+or with docker-compose:
 
-  To archive this, modify the process in your custom entrypoint accordingly. In the following
-  example we also have the opportunity to overwrite the default values with (real) environment
-  variables.
+.. code-block:: yaml
 
-.. code-block:: bash
+    services:
+      messenger-consumer:
+        image: my-registry/my-application-image:tag
+        entrypoint: /entrypoint.consumer.sh
 
-    #!/usr/bin/env sh
+Always define limits
+""""""""""""""""""""
+
+As you don't want to run the messenger consumer endlessly, always define limits. Like
+within a classical environment its a good idea to gracefully restart the consumer process
+on a regular basis.
+
+To archive this, modify the process in your custom entrypoint accordingly. In the following
+example you also have the opportunity to overwrite the default values with (real) environment
+variables.
+
+.. code-block:: sh
+
     # entrypoint.consumer.sh
+    #!/usr/bin/env sh
     CONSUME_LIMIT=${APP_CONSUME_LIMIT:-100}
     MEMORY_LIMIT=${APP_MEMORY_LIMIT:-128M}
     TIME_LIMIT=${APP_TIME_LIMIT:-3600}
@@ -688,11 +707,35 @@ your application, since they have their own lifecycle (See
     # especially, if php-fpm and php-cli share a php.ini
     php -d memory_limit="${MEMORY_LIMIT}" bin/console messenger:consume async -vv --limit="${CONSUME_LIMIT}" --memory-limit="${MEMORY_LIMIT}" --time-limit="${TIME_LIMIT}"
 
-  This way the container will stop gracefully after any of the given limits has been reached
-  and will be restarted through the used orchestrator.
+This way the container will stop gracefully after the first of the given limits has been reached
+and will be restarted through the used orchestrator.
 
-**Let your orchestrator manage the restart**
+Let your orchestrator manage the restart
+""""""""""""""""""""""""""""""""""""""""
 
+As your messenger-consumer has its own container and lifecycle now, we delegate restarting the consumer
+to your chosen orchestrator. What's an orchestrator, you ask? Docker, Docker-Compose, Docker Swarm,
+Kubernetes, etc.
+
+As you want your consumer to be restarted everytime it either stops gracefully (by hitting any of the given
+limits) or ungracefully (after an error), you should utilize the restart policy of your chosen orchestrator
+to restart your container.
+
+Docker:
+
+.. code-block:: bash
+
+    docker run --entrypoint=/entrypoint.consumer.sh --restart=always my-registry/my-application-image:tag
+
+Docker-Compose:
+
+.. code-block:: yaml
+
+    services:
+      messenger-consumer:
+        image: my-registry/my-application-image:tag
+        entrypoint: /entrypoint.consumer.sh
+        restart: always
 
 .. _messenger-retries-failures:
 
