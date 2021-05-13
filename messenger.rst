@@ -1619,5 +1619,6 @@ Learn more
 .. _`Enqueue's transport`: https://github.com/php-enqueue/messenger-adapter
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/
+.. _`SymfonyCasts' message serializer tutorial`: https://symfonycasts.com/screencast/messenger/transport-serializer
 .. _`Twelve-Factor App`: https://12factor.net/
 .. _`Admin processes in a twelve-factor app`: https://12factor.net/admin-processes
