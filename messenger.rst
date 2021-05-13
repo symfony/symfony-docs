@@ -645,6 +645,113 @@ config and start your workers:
 
 See the `Supervisor docs`_ for more details.
 
+.. _messenger-docker:
+
+Consuming Messages in Docker
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you deploy your Symfony application via Docker, things work differently as in
+classical deployment environments. Following the concept of the `Twelve-Factor App`_
+and Docker in general, you only want one front-facing process per container, which
+will be either php-fpm or your chosen webserver. The font-facing process defines the
+lifecycle of the container.
+
+Background processes, like consuming messages, must not run in the same container as
+your application, since they have their own lifecycle (See
+`Admin processes in a twelve-factor app`_).
+
+Create a separate entrypoint
+""""""""""""""""""""""""""""
+
+As you don't want to start your containers php-fpm or webserver process, you need to
+create a custom entrypoint, pointing to your ``bin/console`` to run in the foreground.
+
+.. code-block:: sh
+
+    # entrypoint.consumer.sh
+    #!/usr/bin/env sh
+
+    # depending on how you build your container the directories might be different
+    # lets assume you've set your repository root as WORKDIR in your Dockerfile
+    php bin/console messenger:consume async
+
+.. code-block:: dockerfile
+
+    # Dockerfile
+    # [...]
+    # copy the consumer entrypoint to your container but don't set it
+    # as the default entrypoint.
+    COPY entrypoint.consumer.sh /entrypoint.consumer.sh
+    # make it executable
+    RUN chmod +x /entrypoint.consumer.sh
+
+Start your container with the consumer entrypoint:
+
+.. code-block:: bash
+
+    docker run --entrypoint=/entrypoint.consumer.sh my-registry/my-application-image:tag
+
+or with docker-compose:
+
+.. code-block:: yaml
+
+    services:
+      messenger-consumer:
+        image: my-registry/my-application-image:tag
+        entrypoint: /entrypoint.consumer.sh
+
+Always define limits
+""""""""""""""""""""
+
+As you don't want to run the messenger consumer endlessly, always define limits. Like
+within a classical environment its a good idea to gracefully restart the consumer process
+on a regular basis.
+
+To archive this, modify the process in your custom entrypoint accordingly. In the following
+example you also have the opportunity to overwrite the default values with (real) environment
+variables.
+
+.. code-block:: sh
+
+    # entrypoint.consumer.sh
+    #!/usr/bin/env sh
+    CONSUME_LIMIT=${APP_CONSUME_LIMIT:-100}
+    MEMORY_LIMIT=${APP_MEMORY_LIMIT:-128M}
+    TIME_LIMIT=${APP_TIME_LIMIT:-3600}
+    # make sure the php memory_limit is greater or equal the --memory-limit given to the consumer command
+    # especially, if php-fpm and php-cli share a php.ini
+    php -d memory_limit="${MEMORY_LIMIT}" bin/console messenger:consume async -vv --limit="${CONSUME_LIMIT}" --memory-limit="${MEMORY_LIMIT}" --time-limit="${TIME_LIMIT}"
+
+This way the container will stop gracefully after the first of the given limits has been reached
+and will be restarted through the used orchestrator.
+
+Let your orchestrator manage the restart
+""""""""""""""""""""""""""""""""""""""""
+
+As your messenger-consumer has its own container and lifecycle now, we delegate restarting the consumer
+to your chosen orchestrator. What's an orchestrator, you ask? Docker, Docker-Compose, Docker Swarm,
+Kubernetes, etc.
+
+As you want your consumer to be restarted everytime it either stops gracefully (by hitting any of the given
+limits) or ungracefully (after an error), you should utilize the restart policy of your chosen orchestrator
+to restart your container.
+
+Docker:
+
+.. code-block:: bash
+
+    docker run --entrypoint=/entrypoint.consumer.sh --restart=always my-registry/my-application-image:tag
+
+Docker-Compose:
+
+.. code-block:: yaml
+
+    services:
+      messenger-consumer:
+        image: my-registry/my-application-image:tag
+        entrypoint: /entrypoint.consumer.sh
+        restart: always
+
 .. _messenger-retries-failures:
 
 Retries & Failures
@@ -1740,3 +1847,5 @@ Learn more
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/
 .. _`SymfonyCasts' message serializer tutorial`: https://symfonycasts.com/screencast/messenger/transport-serializer
+.. _`Twelve-Factor App`: https://12factor.net/
+.. _`Admin processes in a twelve-factor app`: https://12factor.net/admin-processes
