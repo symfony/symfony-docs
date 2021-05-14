@@ -30,7 +30,7 @@ To reference an image file from outside of a JavaScript file that's processed by
 Webpack - like a template - you can use the ``copyFiles()`` method to copy those
 files into your final output directory.
 
-First, install file-loader Webpack extension:
+First, install ``file-loader`` Webpack extension:
 
 .. code-block:: terminal
 
