@@ -410,7 +410,7 @@ Use the ``cache_pool`` option to override the cache used by a specific limiter
 
         // config/packages/rate_limiter.php
         $container->loadFromExtension('framework', [
-            rate_limiter' => [
+            'rate_limiter' => [
                 'anonymous_api' => [
                     // ...
 
@@ -484,7 +484,7 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
 
         // config/packages/rate_limiter.php
         $container->loadFromExtension('framework', [
-            rate_limiter' => [
+            'rate_limiter' => [
                 'anonymous_api' => [
                     // ...
 
