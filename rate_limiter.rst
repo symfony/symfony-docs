@@ -178,7 +178,7 @@ enforce different levels of service (free or paid):
 
         // config/packages/rate_limiter.php
         $container->loadFromExtension('framework', [
-            rate_limiter' => [
+            'rate_limiter' => [
                 'anonymous_api' => [
                     // use 'sliding_window' if you prefer that policy
                     'policy' => 'fixed_window',
@@ -484,7 +484,7 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
 
         // config/packages/rate_limiter.php
         $container->loadFromExtension('framework', [
-            rate_limiter' => [
+            'rate_limiter' => [
                 'anonymous_api' => [
                     // ...
 
