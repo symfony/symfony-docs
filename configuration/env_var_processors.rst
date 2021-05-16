@@ -234,15 +234,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/security.php
-            $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
-            $container->loadFromExtension('security', [
-                'access_control' => [
-                    [
-                        'path' => '^/health-check$',
-                        'methods' => '%env(const:HEALTH_CHECK_METHOD)%',
-                    ],
-                ],
-            ]);
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\SecurityConfig;
+
+            return static function (ContainerBuilder $container, SecurityConfig $security) {
+                $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
+                $security->accessControl()
+                    ->path('^/health-check$')
+                    ->methods(['%env(const:HEALTH_CHECK_METHOD)%']);
+            };
 
 ``env(base64:FOO)``
     Decodes the content of ``FOO``, which is a base64 encoded string.

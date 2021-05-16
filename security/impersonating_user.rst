@@ -55,16 +55,15 @@ listener:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main'=> [
-                    // ...
-                    'switch_user' => true,
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->switchUser()
+            ;
+        };
 
 To switch to another user, add a query string with the ``_switch_user``
 parameter and the username (or whatever field our user provider uses to load users)
@@ -191,19 +190,17 @@ also adjust the query parameter name via the ``parameter`` setting:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main'=> [
-                    // ...
-                    'switch_user' => [
-                        'role' => 'ROLE_ADMIN',
-                        'parameter' => '_want_to_be_this_user',
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->switchUser()
+                    ->role('ROLE_ADMIN')
+                    ->parameter('_want_to_be_this_user')
+            ;
+        };
 
 Limiting User Switching
 -----------------------
@@ -250,18 +247,16 @@ be called):
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main'=> [
-                    // ...
-                    'switch_user' => [
-                        'role' => 'CAN_SWITCH_USER',
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->switchUser()
+                    ->role('CAN_SWITCH_USER')
+            ;
+        };
 
 Then, create a voter class that responds to this role and includes whatever custom
 logic you want::

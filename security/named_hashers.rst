@@ -44,16 +44,15 @@ to apply to all instances of a specific class:
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'password_hashers' => [
-                User::class => [
-                    'algorithm' => 'auto',
-                    'cost' => 12,
-                ],
-            ],
-        ]);
+            $security->passwordHasher(User::class)
+                ->algorithm('auto')
+                ->cost(12)
+            ;
+        };
 
 Another option is to use a "named" hasher and then select which hasher
 you want to use dynamically.
@@ -99,15 +98,15 @@ be done with named hashers:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
-            'password_hashers' => [
-                'harsh' => [
-                    'algorithm' => 'auto',
-                    'cost'      => '15',
-                ],
-            ],
-        ]);
+            $security->passwordHasher('harsh')
+                ->algorithm('auto')
+                ->cost(15)
+            ;
+        };
 
 .. note::
 
@@ -177,17 +176,15 @@ you must register a service for it in order to use it as a named hasher:
     .. code-block:: php
 
         // config/packages/security.php
-        // ...
         use App\Security\Hasher\MyCustomPasswordHasher;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'password_hashers' => [
-                'app_hasher' => [
-                    'id' => MyCustomPasswordHasher::class,
-                ],
-            ],
-        ]);
+            $security->passwordHasher('app_hasher')
+                ->id(MyCustomPasswordHasher::class)
+            ;
+        };
 
 This creates a hasher named ``app_hasher`` from a service with the ID
 ``App\Security\Hasher\MyCustomPasswordHasher``.

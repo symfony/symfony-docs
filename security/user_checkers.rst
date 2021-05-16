@@ -110,14 +110,13 @@ is the service id of your user checker:
 
         // config/packages/security.php
         use App\Security\UserChecker;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'firewalls' => [
-                'main' => [
-                    'pattern' => '^/',
-                    'user_checker' => UserChecker::class,
-                    // ...
-                ],
-            ],
-        ]);
+            $security->firewall('main')
+                ->pattern('^/')
+                ->userChecker(UserChecker::class)
+                // ...
+            ;
+        };

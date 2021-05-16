@@ -48,10 +48,12 @@ The authenticator-based system can be enabled using the
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'enable_authenticator_manager' => true,
-            // ...
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->enableAuthenticatorManager(true);
+            // ....
+        };
 
 The new system is backwards compatible with the current authentication
 system, with some exceptions that will be explained in this article:
@@ -121,19 +123,24 @@ unauthenticated access (e.g. the login page):
 
         // config/packages/security.php
         use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'enable_authenticator_manager' => true,
+        return static function (SecurityConfig $security) {
+            $security->enableAuthenticatorManager(true);
+            // ....
 
-            // ...
-            'access_control' => [
-                // allow unauthenticated users to access the login form
-                ['path' => '^/admin/login', 'roles' => AuthenticatedVoter::PUBLIC_ACCESS],
+            // allow unauthenticated users to access the login form
+            $security->accessControl()
+                ->path('^/admin/login')
+                ->roles([AuthenticatedVoter::PUBLIC_ACCESS])
+            ;
 
-                // but require authentication for all other admin routes
-                ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
-            ],
-        ]);
+            // but require authentication for all other admin routes
+            $security->accessControl()
+                ->path('^/admin')
+                ->roles(['ROLE_ADMIN'])
+            ;
+        };
 
 Granting Anonymous Users Access in a Custom Voter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -233,23 +240,22 @@ You can configure this using the ``entry_point`` setting:
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Component\Security\Http\Firewall\AccessListener;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'enable_authenticator_manager' => true,
+        return static function (SecurityConfig $security) {
+            $security->enableAuthenticatorManager(true);
+            // ....
 
-            // ...
-            'firewalls' => [
-                'main' => [
-                    // allow authentication using a form or HTTP basic
-                    'form_login' => null,
-                    'http_basic' => null,
 
-                    // configure the form authentication as the entry point for unauthenticated users
-                    'entry_point' => 'form_login'
-                ],
-            ],
-        ]);
+            // allow authentication using a form or HTTP basic
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->formLogin();
+            $mainFirewall->httpBasic();
+
+            // configure the form authentication as the entry point for unauthenticated users
+            $mainFirewall
+                ->entryPoint('form_login');
+        };
 
 .. note::
 
@@ -359,7 +365,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
                     custom_authenticators:
                         - App\Security\ApiKeyAuthenticator
 
-                    # don't forget to also configure the entry_point if the
+                    # remember to also configure the entry_point if the
                     # authenticator implements AuthenticationEntryPointInterface
                     # entry_point: App\Security\CustomFormLoginAuthenticator
 
@@ -378,7 +384,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
             <config enable-authenticator-manager="true">
                 <!-- ... -->
 
-                <!-- don't forget to also configure the entry-point if the
+                <!-- remember to also configure the entry-point if the
                      authenticator implements AuthenticatorEntryPointInterface
                 <firewall name="main"
                     entry-point="App\Security\CustomFormLoginAuthenticator"> -->
@@ -393,24 +399,21 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
 
         // config/packages/security.php
         use App\Security\ApiKeyAuthenticator;
-        use Symfony\Component\Security\Http\Firewall\AccessListener;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'enable_authenticator_manager' => true,
+        return static function (SecurityConfig $security) {
+            $security->enableAuthenticatorManager(true);
+            // ....
 
-            // ...
-            'firewalls' => [
-                'main' => [
-                    'custom_authenticators' => [
-                        ApiKeyAuthenticator::class,
-                    ],
+            $security->firewall('main')
+                ->customAuthenticators([ApiKeyAuthenticator::class])
 
-                    // don't forget to also configure the entry_point if the
-                    // authenticator implements AuthenticatorEntryPointInterface
-                    // 'entry_point' => [App\Security\CustomFormLoginAuthenticator::class],
-                ],
-            ],
-        ]);
+                // remember to also configure the entry_point if the
+                // authenticator implements AuthenticatorEntryPointInterface
+                // ->entryPoint(App\Security\CustomFormLoginAuthenticator::class)
+            ;
+        };
+
 
 The ``authenticate()`` method is the most important method of the
 authenticator. Its job is to extract credentials (e.g. username &

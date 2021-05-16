@@ -215,39 +215,34 @@ hashing algorithm. Also, each algorithm defines different config options:
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'password_hashers' => [
-                // auto hasher with default options
-                User::class => [
-                    'algorithm' => 'auto',
-                ],
 
-                // auto hasher with custom options
-                User::class => [
-                    'algorithm' => 'auto',
-                    'cost'      => 15,
-                ],
+            // auto hasher with default options
+            $security->passwordHasher(User::class)
+                ->algorithm('auto');
 
-                // Sodium hasher with default options
-                User::class => [
-                    'algorithm' => 'sodium',
-                ],
+            // auto hasher with custom options
+            $security->passwordHasher(User::class)
+                ->algorithm('auto')
+                ->cost(15);
 
-                // Sodium hasher with custom options
-                User::class => [
-                    'algorithm' => 'sodium',
-                    'memory_cost' => 16384, // Amount in KiB. (16384 = 16 MiB)
-                    'time_cost' => 2,       // Number of iterations
-                ],
+            // Sodium hasher with default options
+            $security->passwordHasher(User::class)
+                ->algorithm('sodium');
 
-                // MessageDigestPasswordHasher hasher using SHA512 hashing with default options
-                User::class => [
-                    'algorithm' => 'sha512',
-                ],
-            ],
-        ]);
+            // Sodium hasher with custom options
+            $security->passwordHasher(User::class)
+                ->algorithm('sodium')
+                ->memoryCost(16384) // Amount in KiB. (16384 = 16 MiB)
+                ->timeCost(2);      // Number of iterations
+
+            // MessageDigestPasswordHasher hasher using SHA512 hashing with default options
+            $security->passwordHasher(User::class)
+                ->algorithm('sha512');
+        };
 
 .. versionadded:: 5.3
 
@@ -310,18 +305,19 @@ hashing algorithm. Also, each algorithm defines different config options:
 
             // config/packages/test/security.php
             use App\Entity\User;
+            use Symfony\Config\SecurityConfig;
 
-            $container->loadFromExtension('security', [
-                'password_hashers' => [
-                    // Use your user class name here
-                    User::class => [
-                        'algorithm' => 'auto', // This should be the same value as in config/packages/security.yaml
-                        'cost' => 4, // Lowest possible value for bcrypt
-                        'time_cost' => 3, // Lowest possible value for argon
-                        'memory_cost' => 10, // Lowest possible value for argon
-                    ]
-                ],
-            ]);
+            return static function (SecurityConfig $security) {
+                // ...
+
+                // Use your user class name here
+                $security->passwordHasher(User::class)
+                    ->algorithm('auto') // This should be the same value as in config/packages/security.yaml
+                    ->cost(4) // Lowest possible value for bcrypt
+                    ->timeCost(2) // Lowest possible value for argon
+                    ->memoryCost(10) // Lowest possible value for argon
+                ;
+            };
 
 .. _reference-security-sodium:
 .. _using-the-argon2i-password-encoder:
@@ -432,20 +428,20 @@ application:
     .. code-block:: php
 
         // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
 
-        // ...
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                // 'main' is the name of the firewall (can be chosen freely)
-                'main' => [
-                    // 'pattern' is a regular expression matched against the incoming
-                    // request URL. If there's a match, authentication is triggered
-                    'pattern' => '^/admin',
-                    // the rest of options depend on the authentication mechanism
-                    // ...
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+
+            // 'main' is the name of the firewall (can be chosen freely)
+            $security->firewall('main')
+                // 'pattern' is a regular expression matched against the incoming
+                // request URL. If there's a match, authentication is triggered
+                ->pattern('^/admin')
+                // the rest of options depend on the authentication mechanism
+                // ...
+            ;
+        };
 
 .. seealso::
 
@@ -807,18 +803,19 @@ multiple firewalls, the "context" could actually be shared:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'somename' => [
-                    // ...
-                    'context' => 'my_context',
-                ],
-                'othername' => [
-                    // ...
-                    'context' => 'my_context',
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('somename')
+                // ...
+                ->context('my_context')
+            ;
+
+            $security->firewall('othername')
+                // ...
+                ->context('my_context')
+            ;
+        };
 
 .. note::
 
