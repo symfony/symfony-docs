@@ -13,26 +13,27 @@ using `PHPUnit`_. Create a PHPUnit configuration file in
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8" ?>
+    <?xml version="1.0" encoding="UTF-8"?>
     <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/5.1/phpunit.xsd"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
         backupGlobals="false"
         colors="true"
         bootstrap="vendor/autoload.php"
     >
+        <coverage processUncoveredFiles="true">
+            <include>
+                <directory suffix=".php">./src</directory>
+            </include>
+        </coverage>
+        
         <testsuites>
             <testsuite name="Test Suite">
                 <directory>./tests</directory>
             </testsuite>
         </testsuites>
-
-        <filter>
-            <whitelist processUncoveredFilesFromWhitelist="true">
-                <directory suffix=".php">./src</directory>
-            </whitelist>
-        </filter>
     </phpunit>
+
 
 This configuration defines sensible defaults for most PHPUnit settings; more
 interesting, the autoloader is used to bootstrap the tests, and tests will be
@@ -215,6 +216,6 @@ Symfony code.
 Now that we are confident (again) about the code we have written, we can
 safely think about the next batch of features we want to add to our framework.
 
-.. _`PHPUnit`: https://phpunit.de/manual/current/en/index.html
-.. _`test doubles`: https://phpunit.de/manual/current/en/test-doubles.html
+.. _`PHPUnit`: https://phpunit.readthedocs.io/en/stable/
+.. _`test doubles`: https://phpunit.readthedocs.io/en/stable/test-doubles.html
 .. _`XDebug`: https://xdebug.org/
