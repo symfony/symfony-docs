@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-05-17T06:15:13Z
+
+Can you please check the CI? Thanks
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-05-17T07:17:48Z
+
+The config is not complete. It is missing the mandatory "policy". We left that out for intentionally because we want to make the example more simple.
