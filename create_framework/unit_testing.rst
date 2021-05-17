@@ -34,7 +34,6 @@ using `PHPUnit`_. Create a PHPUnit configuration file in
         </testsuites>
     </phpunit>
 
-
 This configuration defines sensible defaults for most PHPUnit settings; more
 interesting, the autoloader is used to bootstrap the tests, and tests will be
 stored under the ``example.com/tests/`` directory.
