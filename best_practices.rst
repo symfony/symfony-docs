@@ -130,7 +130,7 @@ Use Constants to Define Options that Rarely Change
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configuration options like the number of items to display in some listing rarely
-change. Instead of defining them as :ref:`service container parameters <configuration-parameters>`,
+change. Instead of defining them as :ref:`configuration parameters <configuration-parameters>`,
 define them as PHP constants in the related classes. Example::
 
     // src/Entity/Post.php

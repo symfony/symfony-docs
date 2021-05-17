@@ -328,7 +328,7 @@ arbitrary matching logic:
              *     condition="context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
              * )
              *
-             * expressions can also include config parameters:
+             * expressions can also include configuration parameters:
              * condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
              */
             public function contact(): Response
@@ -367,7 +367,7 @@ arbitrary matching logic:
             path:       /contact
             controller: 'App\Controller\DefaultController::contact'
             condition:  "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
-            # expressions can also include config parameters:
+            # expressions can also include configuration parameters:
             # condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
 
     .. code-block:: xml
@@ -381,7 +381,7 @@ arbitrary matching logic:
 
             <route id="contact" path="/contact" controller="App\Controller\DefaultController::contact">
                 <condition>context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'</condition>
-                <!-- expressions can also include config parameters: -->
+                <!-- expressions can also include configuration parameters: -->
                 <!-- <condition>request.headers.get('User-Agent') matches '%app.allowed_browsers%'</condition> -->
             </route>
         </routes>
@@ -396,7 +396,7 @@ arbitrary matching logic:
             $routes->add('contact', '/contact')
                 ->controller([DefaultController::class, 'contact'])
                 ->condition('context.getMethod() in ["GET", "HEAD"] and request.headers.get("User-Agent") matches "/firefox/i"')
-                // expressions can also include config parameters:
+                // expressions can also include configuration parameters:
                 // 'request.headers.get("User-Agent") matches "%app.allowed_browsers%"'
             ;
         };
@@ -702,7 +702,7 @@ URL                       Route          Parameters
 .. tip::
 
     Route requirements (and route paths too) can include
-    :ref:`container parameters <configuration-parameters>`, which is useful to
+    :ref:`configuration parameters <configuration-parameters>`, which is useful to
     define complex regular expressions once and reuse them in multiple routes.
 
 .. tip::
@@ -2047,7 +2047,7 @@ these routes.
             [],
             [],
             ['HTTP_HOST' => 'm.example.com']
-            // or get the value from some container parameter:
+            // or get the value from some configuration parameter:
             // ['HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain')]
         );
 
