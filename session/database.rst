@@ -92,7 +92,7 @@ and ``RedisProxy``:
                     # you can optionally pass an array of options. The only options are 'prefix' and 'ttl',
                     # which define the prefix to use for the keys to avoid collision on the Redis server 
                     # and the expiration time for any given entry (in seconds), defaults are 'sf_s' and null:
-                    # - { 'prefix' => 'my_prefix', 'ttl' => 600 }
+                    # - { 'prefix': 'my_prefix', 'ttl': 600 }
 
     .. code-block:: xml
 
