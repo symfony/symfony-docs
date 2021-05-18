@@ -357,7 +357,7 @@ Store                                         Scope   Blocking  Expiring Sharing
 :ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes      no
 :ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes      no
 :ref:`PdoStore <lock-store-pdo>`              remote  no        yes      no
-:ref:`PostgreSqlStore <lock-store-pgsql>`     remote  yes       yes      yes
+:ref:`PostgreSqlStore <lock-store-pgsql>`     remote  yes       no       yes
 :ref:`RedisStore <lock-store-redis>`          remote  no        yes      yes
 :ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no       no
 :ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no       no
