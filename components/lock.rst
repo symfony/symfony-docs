@@ -604,7 +604,7 @@ PHP process is terminated::
 Reliability
 -----------
 
-The component guarantees that the same resource can't be lock twice as long as
+The component guarantees that the same resource can't be locked twice as long as
 the component is used in the following way.
 
 Remote Stores
