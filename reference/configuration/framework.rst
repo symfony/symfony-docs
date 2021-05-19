@@ -283,6 +283,7 @@ Configuration
   * `formatter`_
   * `logging`_
   * :ref:`paths <reference-translator-paths>`
+  * :ref:`providers <reference-translator-providers>`
 
 * `trusted_headers`_
 * `trusted_hosts`_
@@ -2454,6 +2455,19 @@ default_path
 
 This option allows to define the path where the application translations files
 are stored.
+
+.. _reference-translator-providers:
+
+providers
+.........
+
+**type**: ``array`` **default**: ``[]``
+
+This option allows you to enable translation providers to push and pull your translations to third party providers.
+
+.. seealso::
+
+    For more information about how to configure providers, see :ref:`translation-providers`.
 
 property_access
 ~~~~~~~~~~~~~~~
