@@ -90,24 +90,22 @@ to retrieve them:
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'providers' => [
-                'users' => [
-                    'entity' => [
-                        // the class of the entity that represents users
-                        'class'    => User::class,
-                        // the property to query by - e.g. username, email, etc
-                        'property' => 'username',
-                        // optional: if you're using multiple Doctrine entity
-                        // managers, this option defines which one to use
-                        // 'manager_name' => 'customer',
-                    ],
-                ],
-            ],
+        return static function (SecurityConfig $security) {
+            $security->provider('users')
+                ->entity()
+                    // the class of the entity that represents users
+                    ->class(User::class)
+                    // the property to query by - e.g. username, email, etc
+                    ->property('username')
+                    // optional: if you're using multiple Doctrine entity
+                    // managers, this option defines which one to use
+                    ->managerName('customer')
+            ;
 
             // ...
-        ]);
+        };
 
 The ``providers`` section creates a "user provider" called ``users`` that knows
 how to query from your ``App\Entity\User`` entity by the ``username`` property.
@@ -195,18 +193,16 @@ To finish this, remove the ``property`` key from the user provider in
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
 
-            'providers' => [
-                'users' => [
-                    'entity' => [
-                        'class' => User::class,
-                    ],
-                ],
-            ],
-        ]);
+            $security->provider('users')
+                ->entity()
+                    ->class(User::class)
+            ;
+        };
 
 This tells Symfony to *not* query automatically for the User. Instead, when
 needed (e.g. because :doc:`user impersonation </security/impersonating_user>`,
@@ -271,15 +267,15 @@ users will hash their passwords:
         // (the 'InMemoryUser' class was introduced in Symfony 5.3.
         // In previous versions it was called 'User')
         use Symfony\Component\Security\Core\User\InMemoryUser;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'password_hashers' => [
-                InMemoryUser::class => [
-                    'algorithm' => 'auto',
-                ],
-            ],
-        ]);
+
+            $security->passwordHasher(InMemoryUser::class)
+                ->algorithm('auto')
+            ;
+        };
 
 Then, run this command to hash the plain text passwords of your users:
 

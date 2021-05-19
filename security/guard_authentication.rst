@@ -98,20 +98,18 @@ Next, configure your "user provider" to use this new ``apiToken`` property:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'providers' => [
-                'your_db_provider' => [
-                    'entity' => [
-                        'class' => 'App\Entity\User',
-                        'property' => 'apiToken',
-                    ],
-                ],
-            ],
+            $security->provider('your_db_provider')
+                ->entity('App\Entity\User')
+                ->property('apiToken')
+            ;
 
             // ...
-        ]);
+        };
 
 Step 2) Create the Authenticator Class
 --------------------------------------
@@ -292,28 +290,25 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
     .. code-block:: php
 
         // config/packages/security.php
-
-        // ...
         use App\Security\TokenAuthenticator;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main'       => [
-                    'pattern'        => '^/',
-                    'anonymous'      => true,
-                    'lazy'           => true,
-                    'logout'         => true,
-                    'guard'          => [
-                        'authenticators'  => [
-                            TokenAuthenticator::class,
-                        ],
-                    ],
-                    // if you want, disable storing the user in the session
-                    // 'stateless' => true,
-                    // ...
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall
+                ->pattern('^/')
+                ->lazy(true)
+                ->anonymous();
+
+            $mainFirewall->logout();
+            $mainFirewall
+                ->guard()
+                    ->authenticators([TokenAuthenticator::class])
+            ;
+            // if you want, disable storing the user in the session
+            // $mainFirewall->stateless(true);
+            // ...
+        };
 
 You did it! You now have a fully-working API token authentication system. If your
 homepage required ``ROLE_USER``, then you could test it under different conditions:

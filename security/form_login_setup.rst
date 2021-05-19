@@ -128,19 +128,19 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
-            'firewalls' => [
-                'main' => [
-                    // ...
-                    'logout' => [
-                        'path' => 'app_logout',
-                        // where to redirect after logout
-                        'target' => 'app_any_route'
-                    ],
-                ],
-            ],
-        ]);
+
+            $security->firewall('main')
+                // ...
+                ->logout()
+                    ->path('app_logout')
+                    // where to redirect after logout
+                    ->target('app_any_route')
+            ;
+        };
 
 **Step 2.** The template has very little to do with security: it generates
 a traditional HTML form that submits to ``/login``:
@@ -347,23 +347,24 @@ a traditional HTML form that submits to ``/login``:
 
         // config/packages/security.php
         use App\Security\LoginFormAuthenticator;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'firewalls' => [
-                'main' => [
-                    // ...,
-                    'guard' => [
-                        'authenticators' => [
-                            LoginFormAuthenticator::class,
-                        ]
-                    ],
-                    'logout' => [
-                        'path' => 'app_logout',
-                    ],
-                ],
-            ],
-        ]);
+
+            $mainFirewall = $security->firewall('main');
+            // ...
+
+            $mainFirewall
+                ->guard()
+                    ->authenticators([LoginFormAuthenticator::class])
+            ;
+
+            $mainFirewall
+                ->logout()
+                    ->path('app_logout')
+            ;
+        };
 
 Finishing the Login Form
 ------------------------

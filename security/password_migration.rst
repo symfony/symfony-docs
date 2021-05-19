@@ -81,26 +81,25 @@ on the new hasher to point to the old, legacy hasher(s):
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
+            $security->passwordHasher('legacy')
+                ->algorithm('sha256')
+                ->encodeAsBase64(true)
+                ->iterations(1)
+            ;
 
-            'password_hashers' => [
-                'legacy' => [
-                    'algorithm' => 'sha256',
-                    'encode_as_base64' => false,
-                    'iterations' => 1,
-                ],
-
-                'App\Entity\User' => [
-                    // the new hasher, along with its options
-                    'algorithm' => 'sodium',
-                    'migrate_from' => [
-                        'bcrypt', // uses the "bcrypt" hasher with the default options
-                        'legacy', // uses the "legacy" hasher configured above
-                    ],
-                ],
-            ],
-        ]);
+            $security->passwordHasher('App\Entity\User')
+                // the new hasher, along with its options
+                ->algorithm('sodium')
+                ->migrateFrom([
+                    'bcrypt', // uses the "bcrypt" hasher with the default options
+                    'legacy', // uses the "legacy" hasher configured above
+                ])
+            ;
+        };
 
 With this setup:
 

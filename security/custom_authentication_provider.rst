@@ -511,17 +511,17 @@ You are finished! You can now define parts of your app as under WSSE protection.
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'wsse_secured' => [
-                    'pattern'   => '^/api/',
-                    'stateless' => true,
-                    'wsse'      => true,
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ....
+
+            $security->firewall('wsse_secured')
+                ->pattern('^/api/')
+                ->stateless(true)
+                ->wsse()
+            ;
+        };
 
 Congratulations! You have written your very own custom security authentication
 provider!
@@ -634,19 +634,18 @@ set to any desirable value per firewall.
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'wsse_secured' => [
-                    'pattern'   => '^/api/',
-                    'stateless' => true,
-                    'wsse'      => [
-                        'lifetime' => 30,
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ....
+
+            $security->firewall('wsse_secured')
+                ->pattern('^/api/')
+                ->stateless(true)
+                ->wsse()
+                    ->lifetime(30)
+            ;
+        };
 
 The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.

@@ -333,12 +333,14 @@ security configuration:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'access_decision_manager' => [
-                'strategy' => 'unanimous',
-                'allow_if_all_abstain' => false,
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->accessDecisionManager()
+                ->strategy('unanimous')
+                ->allowIfAllAbstain(false)
+            ;
+        };
 
 Custom Access Decision Strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -378,10 +380,11 @@ must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Ac
 
         // config/packages/security.php
         use App\Security\MyCustomAccessDecisionManager;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'access_decision_manager' => [
-                'service' => MyCustomAccessDecisionManager::class,
+        return static function (SecurityConfig $security) {
+            $security->accessDecisionManager()
+                ->service(MyCustomAccessDecisionManager::class)
                 // ...
-            ],
-        ]);
+            ;
+        };

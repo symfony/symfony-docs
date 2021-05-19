@@ -75,10 +75,12 @@ install the security feature before using it:
         .. code-block:: php
 
             // config/packages/security.php
-            $container->loadFromExtension('security', [
-                'enable_authenticator_manager' => true,
+            use Symfony\Config\SecurityConfig;
+
+            return static function (SecurityConfig $security) {
+                $security->enableAuthenticatorManager(true);
                 // ...
-            ]);
+            };
 
 .. _initial-security-yml-setup-authentication:
 .. _initial-security-yaml-setup-authentication:
@@ -178,20 +180,18 @@ Fortunately, the ``make:user`` command already configured one for you in your
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
 
-            'providers' => [
-                // used to reload user from session & other features (e.g. switch_user)
-                'app_user_provider' => [
-                    'entity' => [
-                        'class' => User::class,
-                        'property' => 'email',
-                    ],
-                ],
-            ],
-        ]);
+            // used to reload user from session & other features (e.g. switch_user)
+            $security->provider('app_user_provider')
+                ->entity()
+                    ->class(User::class)
+                    ->property('email');
+        };
+
 
 If your ``User`` class is an entity, you don't need to do anything else. But if
 your class is *not* an entity, then ``make:user`` will also have generated a
@@ -251,19 +251,17 @@ command will pre-configure this for you:
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
 
-            'password_hashers' => [
-                User::class => [
-                    'algorithm' => 'auto',
-                    'cost' => 12,
-                ]
-            ],
+            $security->passwordHasher(User::class)
+                ->algorithm('auto')
+                ->cost(12);
 
             // ...
-        ]);
+        };
 
 .. versionadded:: 5.3
 
@@ -379,18 +377,17 @@ important section is ``firewalls``:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'dev' => [
-                    'pattern' => '^/(_(profiler|wdt)|css|images|js)/',
-                    'security' => false,
-                ],
-                'main' => [
-                    'anonymous' => true,
-                    'lazy' => true,
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('dev')
+                ->pattern('^/(_(profiler|wdt)|css|images|js)/')
+                ->security(false);
+
+            $security->firewall('main')
+                ->lazy(true)
+                ->anonymous();
+        };
 
 A "firewall" is your authentication system: the configuration below it defines
 *how* your users will be able to authenticate (e.g. login form, API token, etc).
@@ -548,29 +545,29 @@ You must enable this using the ``login_throttling`` setting:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'enable_authenticator_manager' => true,
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                // ...
+        return static function (SecurityConfig $security) {
+            $security->enableAuthenticatorManager(true);
 
-                'main' => [
-                    // by default, the feature allows 5 login attempts per minute
-                    'login_throttling' => null,
+            // ...
+            $mainFirewall = $security->firewall('main');
 
-                    // configure the maximum login attempts (per minute)
-                    'login_throttling' => [
-                        'max_attempts' => 3,
-                    ],
+            // by default, the feature allows 5 login attempts per minute
+            $mainFirewall
+                ->loginThrottling();
 
-                    // configure the maximum login attempts in a custom period of time
-                    'login_throttling' => [
-                        'max_attempts' => 3,
-                        'interval' => '15 minutes',
-                    ],
-                ],
-            ],
-        ]);
+            // configure the maximum login attempts (per minute)
+            $mainFirewall
+                ->loginThrottling()
+                    ->maxAttempts(3)
+                    ->interval('15 minutes');
+
+            // configure the maximum login attempts in a custom period of time
+            $mainFirewall
+                ->loginThrottling()
+                    ->maxAttempts(3);
+        };
 
 .. versionadded:: 5.3
 
@@ -863,27 +860,32 @@ start with ``/admin``, you can:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->enableAuthenticatorManager(true);
+
             // ...
+            $security->firewall('main')
+            // ...
+            ;
 
-            'firewalls' => [
-                // ...
-                'main' => [
-                    // ...
-                ],
-            ],
-            'access_control' => [
-                // require ROLE_ADMIN for /admin*
-                ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
+            // require ROLE_ADMIN for /admin*
+            $security->accessControl()
+                ->path('^/admin')
+                ->roles(['ROLE_ADMIN']);
 
-                // require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
-                ['path' => '^/admin', 'roles' => ['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']],
+            // require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
+            $security->accessControl()
+                ->path('^/admin')
+                ->roles(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']);
 
-                // the 'path' value can be any valid regular expression
-                // (this one will match URLs like /api/post/7298 and /api/comment/528491)
-                ['path' => '^/api/(post|comment)/\d+$', 'roles' => 'ROLE_USER'],
-            ],
-        ]);
+            // the 'path' value can be any valid regular expression
+            // (this one will match URLs like /api/post/7298 and /api/comment/528491)
+            $security->accessControl()
+                ->path('^/api/(post|comment)/\d+$')
+                ->roles(['ROLE_USER']);
+        };
 
 You can define as many URL patterns as you need - each is a regular expression.
 **BUT**, only **one** will be matched per request: Symfony starts at the top of
@@ -927,14 +929,19 @@ the list and stops when it finds the first match:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'access_control' => [
-                ['path' => '^/admin/users', 'roles' => 'ROLE_SUPER_ADMIN'],
-                ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
-            ],
-        ]);
+            $security->accessControl()
+                ->path('^/admin/users')
+                ->roles(['ROLE_SUPER_ADMIN']);
+
+            $security->accessControl()
+                ->path('^/admin')
+                ->roles(['ROLE_ADMIN']);
+        };
 
 Prepending the path with ``^`` means that only URLs *beginning* with the
 pattern are matched. For example, a path of ``/admin`` (without the ``^``)
@@ -1202,16 +1209,16 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'firewalls' => [
-                'secured_area' => [
-                    // ...
-                    'logout' => ['path' => 'app_logout'],
-                ],
-            ],
-        ]);
+            $security->firewall('secured_area')
+                // ...
+                ->logout()
+                    ->path('app_logout');
+        };
 
 Next, you'll need to create a route for this URL (but not a controller):
 
@@ -1419,17 +1426,14 @@ rules by creating a role hierarchy:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'role_hierarchy' => [
-                'ROLE_ADMIN'       => 'ROLE_USER',
-                'ROLE_SUPER_ADMIN' => [
-                    'ROLE_ADMIN',
-                    'ROLE_ALLOWED_TO_SWITCH',
-                ],
-            ],
-        ]);
+            $security->roleHierarchy('ROLE_ADMIN', ['ROLE_USER']);
+            $security->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH']);
+        };
 
 Users with the ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. And users with ``ROLE_SUPER_ADMIN``, will automatically have

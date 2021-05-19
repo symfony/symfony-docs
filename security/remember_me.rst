@@ -63,24 +63,23 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main' => [
-                    // ...
-                    'remember_me' => [
-                        'secret'   => '%kernel.secret%',
-                        'lifetime' => 604800, // 1 week in seconds
-                        'path'     => '/',
-                        // by default, the feature is enabled by checking a
-                        // checkbox in the login form (see below), uncomment
-                        // the following line to always enable it.
-                        //'always_remember_me' => true,
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->rememberMe()
+                    ->secret('%kernel.secret%')
+                    ->lifetime(604800) // 1 week in seconds
+                    ->path('/')
+
+                    // by default, the feature is enabled by checking a
+                    // checkbox in the login form (see below), uncomment
+                    // the following line to always enable it.
+                    // ->alwaysRememberMe(true)
+            ;
+        };
 
 The ``remember_me`` firewall defines the following configuration options:
 
@@ -344,16 +343,14 @@ service you created before:
 
         // config/packages/security.php
         use Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider;
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main' => [
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->rememberMe()
                     // ...
-                    'remember_me' => [
-                        // ...
-                        'token_provider' => DoctrineTokenProvider::class,
-                    ],
-                ],
-            ],
-        ]);
+                    ->tokenProvider(DoctrineTokenProvider::class)
+            ;
+        };

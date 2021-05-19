@@ -56,18 +56,17 @@ First, enable ``form_login`` under your firewall:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    'anonymous' => true,
-                    'lazy' => true,
-                    'form_login' => [
-                        'login_path' => 'login',
-                        'check_path' => 'login',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->lazy(true);
+            $mainFirewall->anonymous();
+            $mainFirewall->formLogin()
+                ->loginPath('login')
+                ->checkPath('login')
+            ;
+        };
 
 .. tip::
 
@@ -300,19 +299,17 @@ security component:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'firewalls' => [
-                'secured_area' => [
+            $security->firewall('secured_area')
+                ->formLogin()
                     // ...
-                    'form_login' => [
-                        // ...
-                        'csrf_token_generator' => 'security.csrf.token_manager',
-                    ],
-                ],
-            ],
-        ]);
+                    ->csrfTokenGenerator('security.csrf.token_manager')
+            ;
+        };
 
 .. _csrf-login-template:
 
@@ -386,20 +383,18 @@ After this, you have protected your login form against CSRF attacks.
         .. code-block:: php
 
             // config/packages/security.php
-            $container->loadFromExtension('security', [
+            use Symfony\Config\SecurityConfig;
+
+            return static function (SecurityConfig $security) {
                 // ...
 
-                'firewalls' => [
-                    'secured_area' => [
+                $security->firewall('secured_area')
+                    ->formLogin()
                         // ...
-                        'form_login' => [
-                            // ...
-                            'csrf_parameter' => '_csrf_security_token',
-                            'csrf_token_id'  => 'a_private_string',
-                        ],
-                    ],
-                ],
-            ]);
+                        ->csrfParameter('_csrf_security_token')
+                        ->csrfTokenId('a_private_string')
+                ;
+            };
 
 Redirecting after Success
 -------------------------
@@ -459,20 +454,18 @@ a relative/absolute URL or a Symfony route name:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'firewalls' => [
-                'main' => [
+            $security->firewall('main')
+                // ...
+                ->formLogin()
                     // ...
-
-                    'form_login' => [
-                        // ...
-                        'default_target_path' => 'after_login_route_name',
-                    ],
-                ],
-            ],
-        ]);
+                    ->defaultTargetPath('after_login_route_name')
+            ;
+        };
 
 Always Redirect to the default Page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -519,20 +512,18 @@ previously requested URL and always redirect to the default page:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'firewalls' => [
-                'main' => [
+            $security->firewall('main')
+                // ...
+                ->formLogin()
                     // ...
-
-                    'form_login' => [
-                        // ...
-                        'always_use_default_target_path' => true,
-                    ],
-                ],
-            ],
-        ]);
+                    ->alwaysUseDefaultTargetPath(true)
+            ;
+        };
 
 .. _control-the-redirect-url-from-inside-the-form:
 
@@ -609,19 +600,18 @@ parameter is included in the request, you may use the value of the
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'firewalls' => [
-                'main' => [
+            $security->firewall('main')
+                // ...
+                ->formLogin()
                     // ...
-                    'form_login' => [
-                        // ...
-                        'use_referer' => true,
-                    ],
-                ],
-            ],
-        ]);
+                    ->useReferer(true)
+            ;
+        };
 
 .. note::
 
@@ -677,19 +667,18 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'firewalls' => [
-                'main' => [
+            $security->firewall('main')
+                // ...
+                ->formLogin()
                     // ...
-                    'form_login' => [
-                        // ...
-                        'failure_path' => 'login_failure_route_name',
-                    ],
-                ],
-            ],
-        ]);
+                    ->failurePath('login_failure_route_name')
+            ;
+        };
 
 This option can also be set via the ``_failure_path`` request parameter:
 
@@ -755,19 +744,19 @@ redirects can be customized using the  ``target_path_parameter`` and
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'firewalls' => [
-                'main' => [
+            $security->firewall('main')
+                // ...
+                ->formLogin()
                     // ...
-                    'form_login' => [
-                        'target_path_parameter' => 'go_to',
-                        'failure_path_parameter' => 'back_to',
-                    ],
-                ],
-            ],
-        ]);
+                    ->targetPathParameter('go_to')
+                    ->failurePathParameter('back_to')
+            ;
+        };
 
 Using the above configuration, the query string parameters and hidden form fields
 are now fully customized:

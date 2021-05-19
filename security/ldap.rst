@@ -179,22 +179,21 @@ use the ``ldap`` user provider.
 
         // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'providers' => [
-                'ldap_users' => [
-                    'ldap' => [
-                        'service' => Ldap::class,
-                        'base_dn' => 'dc=example,dc=com',
-                        'search_dn' => 'cn=read-only-admin,dc=example,dc=com',
-                        'search_password' => 'password',
-                        'default_roles' => 'ROLE_USER',
-                        'uid_key' => 'uid',
-                        'extra_fields' => ['email'],
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->provider('ldap_users')
+                ->ldap()
+                    ->service(Ldap::class)
+                    ->baseDn('dc=example,dc=com')
+                    ->searchDn('cn=read-only-admin,dc=example,dc=com')
+                    ->searchPassword('password')
+                    ->defaultRoles(['ROLE_USER'])
+                    ->uidKey('uid')
+                    ->extraFields(['email'])
+            ;
+        };
+
 
 .. caution::
 
@@ -397,18 +396,15 @@ Configuration example for form login
 
         // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    'form_login_ldap' => [
-                        'service' => Ldap::class,
-                        'dn_string' => 'uid={username},dc=example,dc=com',
-                        // ...
-                    ],
-                ],
-            ]
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->formLoginLdap()
+                    ->service(Ldap::class)
+                    ->dnString('uid={username},dc=example,dc=com')
+            ;
+        };
 
 Configuration example for HTTP Basic
 ....................................
@@ -454,20 +450,16 @@ Configuration example for HTTP Basic
 
         // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            // ...
-
-            'firewalls' => [
-                'main' => [
-                    'http_basic_ldap' => [
-                        'service' => Ldap::class,
-                        'dn_string' => 'uid={username},dc=example,dc=com',
-                    ],
-                    'stateless' => true,
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->stateless(true)
+                ->formLoginLdap()
+                    ->service(Ldap::class)
+                    ->dnString('uid={username},dc=example,dc=com')
+            ;
+        };
 
 Configuration example for form login and query_string
 .....................................................
@@ -518,21 +510,19 @@ Configuration example for form login and query_string
 
         // config/packages/security.php
         use Symfony\Component\Ldap\Ldap;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    // ...
-                    'form_login_ldap' => [
-                        'service' => Ldap::class,
-                        'dn_string' => 'dc=example,dc=com',
-                        'query_string' => '(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))',
-                        'search_dn' => '...',
-                        'search_password' => 'the-raw-password',
-                    ],
-                ],
-            ]
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->stateless(true)
+                ->formLoginLdap()
+                    ->service(Ldap::class)
+                    ->dnString('dc=example,dc=com')
+                    ->queryString('(&(uid={username})(memberOf=cn=users,ou=Services,dc=example,dc=com))')
+                    ->searchDn('...')
+                    ->searchPassword('the-raw-password')
+            ;
+        };
 
 .. _`LDAP PHP extension`: https://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: http://www.faqs.org/rfcs/rfc4515.html
