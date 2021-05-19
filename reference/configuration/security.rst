@@ -593,6 +593,13 @@ required by the :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
 The path which triggers logout. If you change it from the default value ``/logout``,
 you need to set up a route with a matching path.
 
+target
+~~~~~~
+
+**type**: ``string`` **default**: ``/``
+
+The route, path or URL to redirect to after logout.
+
 success_handler
 ~~~~~~~~~~~~~~~
 
@@ -600,6 +607,8 @@ success_handler
 
 The service ID used for handling a successful logout. The service must implement
 :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
+
+If it is set, ``target`` will be ignored.
 
 .. _reference-security-logout-csrf:
 
