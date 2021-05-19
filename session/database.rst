@@ -404,7 +404,8 @@ MariaDB/MySQL
         `sess_id` VARBINARY(128) NOT NULL PRIMARY KEY,
         `sess_data` BLOB NOT NULL,
         `sess_lifetime` INTEGER UNSIGNED NOT NULL,
-        `sess_time` INTEGER UNSIGNED NOT NULL
+        `sess_time` INTEGER UNSIGNED NOT NULL,
+        INDEX `sessions_sess_lifetime_idx` (`sess_lifetime`)
     ) COLLATE utf8mb4_bin, ENGINE = InnoDB;
 
 .. note::
@@ -425,6 +426,7 @@ PostgreSQL
         sess_lifetime INTEGER NOT NULL,
         sess_time INTEGER NOT NULL
     );
+    CREATE INDEX sessions_sess_time_idx ON sessions (sess_lifetime);
 
 Microsoft SQL Server
 ....................
@@ -435,7 +437,8 @@ Microsoft SQL Server
         sess_id VARCHAR(128) NOT NULL PRIMARY KEY,
         sess_data NVARCHAR(MAX) NOT NULL,
         sess_lifetime INTEGER NOT NULL,
-        sess_time INTEGER NOT NULL
+        sess_time INTEGER NOT NULL,
+        INDEX sessions_sess_lifetime_idx (sess_lifetime)
     );
 
 Store Sessions in a NoSQL Database (MongoDB)
