@@ -598,7 +598,9 @@ target
 
 **type**: ``string`` **default**: ``/``
 
-The route, path or URL to redirect to after logout.
+The relative path (if the value starts with ``/``), or absolute URL (if it
+starts with ``http://`` or ``https://``) or the route name (otherwise) to
+redirect after logout.
 
 success_handler
 ~~~~~~~~~~~~~~~
@@ -608,7 +610,7 @@ success_handler
 The service ID used for handling a successful logout. The service must implement
 :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
 
-If it is set, ``target`` will be ignored.
+If it is set, the logout ``target`` option will be ignored.
 
 .. _reference-security-logout-csrf:
 
