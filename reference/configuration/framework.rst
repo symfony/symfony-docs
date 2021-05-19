@@ -1656,11 +1656,6 @@ The possible values for this option are:
   user consciously made the request (by clicking a link or submitting a form
   with the ``GET`` method).
 
-.. note::
-
-    This option is available starting from PHP 7.3, but Symfony has a polyfill
-    so you can use it with any older PHP version as well.
-
 cookie_secure
 .............
 
