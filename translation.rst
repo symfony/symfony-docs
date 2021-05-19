@@ -598,25 +598,32 @@ Translation Providers
 
 .. versionadded:: 5.3
 
-    The "Translation Providers" feature was introduced in Symfony 5.3 as an
+    Translation providers were introduced in Symfony 5.3 as an
     :doc:`experimental feature </contributing/code/experimental>`.
 
-The translation component can push and pull translations to third party providers (e.g. Crowdin or PoEditor).
+When using external translators to translate your application, you must send
+them the new contents to translate frequently and merge the results back in the
+application.
 
-Installing and configuring a 3rd Party Provider
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Instead of doing this manually, Symfony provides integration with several
+third-party translation services (e.g. Crowdin or PoEditor). You can upload and
+download (called "push" and "pull") translations to/from these services and
+merge the results automatically in the application.
 
-Instead of editing your translation files as code, you can push them to one of the supported third-party providers.
-This will make the translations edition easier for you or your translators.
+Installing and Configuring a Third Party Provider
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-==================== ===========================================================
-Service              Install with
-==================== ===========================================================
-Crowdin              ``composer require symfony/crowdin-translation-provider``
-Loco (localise.biz)  ``composer require symfony/loco-translation-provider``
-Lokalise             ``composer require symfony/lokalise-translation-provider``
-PoEditor             ``composer require symfony/po-editor-translation-provider``
-==================== ===========================================================
+Before pushing/pulling translations to a third-party provider, you must install
+the package that provides integration with that provider:
+
+====================  ===========================================================
+Provider              Install with
+====================  ===========================================================
+Crowdin               ``composer require symfony/crowdin-translation-provider``
+Loco (localise.biz)   ``composer require symfony/loco-translation-provider``
+Lokalise              ``composer require symfony/lokalise-translation-provider``
+PoEditor              ``composer require symfony/po-editor-translation-provider``
+====================  ===========================================================
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -633,25 +640,25 @@ You'll now have a new line in your ``.env`` file that you can uncomment:
     # .env
     LOCO_DSN=loco://API_KEY@default
 
-The ``LOCO_DSN`` isn't a *real* address: it's a convenient format that
-offloads most of the configuration work to translation. The ``loco`` scheme
-activates the Loco provider that you just installed, which knows all about
-how to push and pull translations via Loco. The *only* part you need to change is the
+The ``LOCO_DSN`` isn't a *real* address: it's a convenient format that offloads
+most of the configuration work to Symfony. The ``loco`` scheme activates the
+Loco provider that you just installed, which knows all about how to push and
+pull translations via Loco. The *only* part you need to change is the
 ``API_KEY`` placeholder.
 
-This table shows the full list of available DSN formats for each third party provider:
+This table shows the full list of available DSN formats for each provider:
 
-===================== =================================================================
- Provider             DSN
-===================== =================================================================
- Crowdin              crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default
- Loco (localise.biz)  loco://API_KEY@default
- Lokalise             lokalise://PROJECT_ID:API_KEY@default
- PoEditor             poeditor://PROJECT_ID:API_KEY@default
-===================== =================================================================
+=====================  ==========================================================
+Provider               DSN
+=====================  ==========================================================
+Crowdin                crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default
+Loco (localise.biz)    loco://API_KEY@default
+Lokalise               lokalise://PROJECT_ID:API_KEY@default
+PoEditor               poeditor://PROJECT_ID:API_KEY@default
+=====================  ==========================================================
 
 To enable a translation provider, add the correct DSN in your ``.env`` file and
-configure the ``providers``:
+configure the ``providers`` option:
 
 .. configuration-block::
 
@@ -706,37 +713,41 @@ configure the ``providers``:
             ],
         ]);
 
-Push and pull translations
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Pushing and Pulling Translations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To push your existing translations to your configured third party provider, you have to use the `translation:push` command:
+After configuring the credentials to access the translation provider, you can
+now use the following commands to push (upload) and pull (download) translations:
 
 .. code-block:: terminal
 
-    # push all local translations to the Loco provider for the locales and domains configured in config/packages/translation.yaml file
+    # push all local translations to the Loco provider for the locales and domains
+    # configured in config/packages/translation.yaml file.
     # it will update existing translations already on the provider.
     $ php bin/console translation:push loco --force
 
-    # push new local translations to the Loco provider for the French locale and the validators domain.
+    # push new local translations to the Loco provider for the French locale
+    # and the validators domain.
     # it will **not** update existing translations already on the provider.
     $ php bin/console translation:push loco --locales fr --domain validators
 
-    # push new local translations and delete provider's translations that not exists anymore in local files for the French locale and the validators domain.
+    # push new local translations and delete provider's translations that not
+    # exists anymore in local files for the French locale and the validators domain.
     # it will **not** update existing translations already on the provider.
     $ php bin/console translation:push loco --delete-missing --locales fr --domain validators
 
     # check out the command help to see its options (format, domains, locales, etc.)
     $ php bin/console translation:push --help
 
-To pull translations from a provider in your local files, you have to use the `translation:pull` command:
-
 .. code-block:: terminal
 
-    # pull all provider's translations to local files for the locales and domains configured in config/packages/translation.yaml file
+    # pull all provider's translations to local files for the locales and domains
+    # configured in config/packages/translation.yaml file.
     # it will overwrite completely your local files.
     $ php bin/console translation:pull loco --force
 
-    # pull new translations from the Loco provider to local files for the French locale and the validators domain.
+    # pull new translations from the Loco provider to local files for the French
+    # locale and the validators domain.
     # it will **not** overwrite your local files, only add new translations.
     $ php bin/console translation:pull loco --locales fr --domain validators
 

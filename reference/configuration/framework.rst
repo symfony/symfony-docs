@@ -2463,11 +2463,12 @@ providers
 
 **type**: ``array`` **default**: ``[]``
 
-This option allows you to enable translation providers to push and pull your translations to third party providers.
+.. versionadded:: 5.3
 
-.. seealso::
+    The ``providers`` option was introduced in Symfony 5.3.
 
-    For more information about how to configure providers, see :ref:`translation-providers`.
+This option enables and configures :ref:`translation providers <translation-providers>`
+to push and pull your translations to/from third party translation services.
 
 property_access
 ~~~~~~~~~~~~~~~
