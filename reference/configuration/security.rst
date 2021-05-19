@@ -644,6 +644,15 @@ the current firewall and not the other ones.
 The path which triggers logout. If you change it from the default value ``/logout``,
 you need to set up a route with a matching path.
 
+target
+~~~~~~
+
+**type**: ``string`` **default**: ``/``
+
+The relative path (if the value starts with ``/``), or absolute URL (if it
+starts with ``http://`` or ``https://``) or the route name (otherwise) to
+redirect after logout.
+
 success_handler
 ~~~~~~~~~~~~~~~
 
@@ -658,6 +667,8 @@ success_handler
 
 The service ID used for handling a successful logout. The service must implement
 :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
+
+If it is set, the logout ``target`` option will be ignored.
 
 .. _reference-security-logout-csrf:
 
