@@ -4,11 +4,26 @@ PostCSS and autoprefixing (postcss-loader)
 `PostCSS`_ is a CSS post-processing tool that can transform your CSS in a lot
 of cool ways, like `autoprefixing`_, `linting`_ and more!
 
-First, download ``postcss-loader`` and any plugins you want, like ``autoprefixer``:
+First enable it in ``webpack.config.js``:
+
+.. code-block:: diff
+
+      // webpack.config.js
+
+      Encore
+          // ...
+    +     .enablePostCssLoader()
+      ;
+
+Then restart Encore. When you do, it will give you a command you can run to
+install any missing dependencies. After running that command and restarting
+Encore, you're done!
+
+Next, download any plugins you want, like ``autoprefixer``:
 
 .. code-block:: terminal
 
-    $ yarn add postcss-loader autoprefixer --dev
+    $ yarn add autoprefixer --dev
 
 Next, create a ``postcss.config.js`` file at the root of your project:
 
@@ -23,19 +38,6 @@ Next, create a ``postcss.config.js`` file at the root of your project:
             autoprefixer: {}
         }
     }
-
-Then, enable the loader in Encore!
-
-.. code-block:: diff
-
-      // webpack.config.js
-
-      Encore
-          // ...
-    +     .enablePostCssLoader()
-      ;
-
-Because you just modified ``webpack.config.js``, stop and restart Encore.
 
 That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc files.
 You can also pass options to the `postcss-loader`_ by passing a callback:
