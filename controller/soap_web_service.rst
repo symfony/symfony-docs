@@ -38,7 +38,6 @@ In this case, the SOAP service will allow the client to call a method called
 
         public function hello($name)
         {
-
             $message = (new \Swift_Message('Hello Service'))
                 ->setTo('me@example.com')
                 ->setBody($name.' says hi!');
@@ -96,13 +95,13 @@ buffering the STDOUT and use ``ob_get_clean()`` to dump the echoed output
 into the content of the Response and clear the output buffer. Finally, you're
 ready to return the ``Response``.
 
-Below is an example calling the service using a `NuSOAP`_ client. This example
+Below is an example calling the service using a native `SoapClient`_ client. This example
 assumes that the ``index()`` method in the controller above is accessible via
 the route ``/soap``::
 
     $soapClient = new \SoapClient('http://example.com/index.php/soap?wsdl');
 
-    $result = $soapClient->call('hello', ['name' => 'Scott']);
+    $result = $soapClient->__soapCall('hello', ['name' => 'Scott']);
 
 An example WSDL is below.
 
@@ -170,3 +169,4 @@ An example WSDL is below.
 .. _`NuSOAP`: https://sourceforge.net/projects/nusoap
 .. _`output buffering`: https://www.php.net/manual/en/book.outcontrol.php
 .. _`Laminas SOAP`: https://docs.laminas.dev/laminas-soap/server/
+.. _`SoapClient`: https://www.php.net/manual/en/class.soapclient.php
