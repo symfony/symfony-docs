@@ -1,0 +1,112 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-05-16T05:22:29Z
+
+@weaverryan can you please verify this PR? Thanks
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-18T10:14:47Z
+
+I remember having to do this in some app ... but I don't know if it's still needed in all cases. Maybe @Kocal knows if this is still needed? Thanks!
+
+---------------------------------------------------------------------------
+
+by Kocal at 2021-05-18T10:32:17Z
+
+Hi!
+
+Indeed, `file-loader` dependency is required to use `.copyFiles` ([see `lib/features.js`](https://github.com/symfony/webpack-encore/blob/8fa29030339c4046afd537377db7ce779b3fb8ba/lib/features.js#L129-L135)).
+
+However, I think we prefer to write the following text when enabling a feature, instead of `yarn add ...`:
+> Then restart Encore. When you do, it will give you a command you can run to install any missing dependencies. After running that command and restarting Encore, you’re done!
+
+This text is used on:
+- https://symfony.com/doc/current/frontend/encore/css-preprocessors.html
+- https://symfony.com/doc/current/frontend/encore/vuejs.html
+- https://symfony.com/doc/current/frontend/encore/typescript.html
+
+But not on:
+- https://symfony.com/doc/current/frontend/encore/postcss.html
+- https://symfony.com/doc/current/frontend/encore/reactjs.html
+
+WDYT?
+
+---------------------------------------------------------------------------
+
+by piotrgradzinski at 2021-05-18T10:43:31Z
+
+Hi!
+Having the explicit list of steps, including libs I have to install looks better for me but once the dependencies change we have to change the docs as well, which is painful.
+
+Having a consistent approach across the documentation is also important, so please let me know which path you'd like to take and I can update appropriate parts as needed!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-18T11:08:10Z
+
+Thanks Hugo! Great and helpful answer as always!
+
+@piotrgradzinski given how fast things can change, I agree with @Kocal and we should use the standard message that tells the reader to just do what Webpack Encore tells them to do. Otherwise, maintenance will be harder. Could you please do that change? Thanks!
+
+---------------------------------------------------------------------------
+
+by piotrgradzinski at 2021-05-18T11:54:36Z
+
+## [Copy files](https://symfony.com/doc/current/frontend/encore/copy-files.html)
+Ok, I've pushed changed version for `copy-files`.
+
+For the other parts I have some issues:
+
+## [Post CSS](https://symfony.com/doc/current/frontend/encore/postcss.html)
+Skipping this step `yarn add postcss-loader autoprefixer --dev` results in the prompt that `postcss-loader` should be installed: `yarn add postcss-loader@^5.0.0 --dev`. That's ok, but when after adding `autoprefixer` in `postcss.config.js` file and running `yarn encore dev` I get an error:
+```
+Module Error (from ./node_modules/postcss-loader/dist/cjs.js):
+Loading PostCSS "autoprefixer" plugin failed: Cannot find module 'autoprefixer'
+```
+What should be done in this case? Leaving only `yarn add autoprefixer --dev`?
+
+## [ReactJS](https://symfony.com/doc/current/frontend/encore/reactjs.html)
+Similar question. In the docs we are suggesting to install:
+```
+yarn add @babel/preset-react --dev
+yarn add react react-dom prop-types
+```
+
+skipping this step results in a suggestion that only `yarn add @babel/preset-react@^7.0.0 --dev` should be installed. What about `react react-dom prop-types`?
+
+---------------------------------------------------------------------------
+
+by Kocal at 2021-05-18T12:26:58Z
+
+## Copy files
+
+Looks good to me, thanks!
+
+## PostCSS
+
+The thing is that you don't need `autoprefixer` to make PostCSS working. Here, we only need it as part of the tutorial. 😕
+WDYT about:
+- > PostCSS can be enabled with `.enablePostCssLoader()` in webpack.config.js [...]
+- > Then restart Encore. When you do, it will give you a command you can run to install any missing dependencies. After running that command and restarting Encore, you’re done!
+- > PostCSS can be configured through a postcss.config.js file [insert example with autoprefixer + command line to install the dependency]
+
+## React
+
+I think you can remove `yarn add @babel/preset-react --dev`, the following text is already present (my bad, didn't see it):
+> Then restart Encore. When you do, it will give you a command you can run to install any missing dependencies. After running that command and restarting Encore, you’re done!
+
+WDYT?
+
+---------------------------------------------------------------------------
+
+by piotrgradzinski at 2021-05-18T13:03:45Z
+
+Hi @Kocal !
+Thank you for your suggestions. I've removed `@babel/preset-react` in ReactJS section and reorder PostCSS. Please take a look. Thank you!
+
+---------------------------------------------------------------------------
+
+by Kocal at 2021-05-18T15:49:15Z
+
+@piotrgradzinski thanks, that looks nice to me! :)
