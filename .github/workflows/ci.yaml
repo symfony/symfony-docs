@@ -127,6 +127,7 @@ jobs:
 
           - name: Get composer cache directory
             id: composercache
+            working-directory: _build
             run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
           - name: Cache dependencies
