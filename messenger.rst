@@ -740,7 +740,7 @@ Docker:
 
 .. code-block:: bash
 
-    docker run --entrypoint=/entrypoint.consumer.sh --restart=always my-registry/my-application-image:tag
+    docker run --entrypoint=/entrypoint.consumer.sh --restart=unless-stopped my-registry/my-application-image:tag
 
 Docker-Compose:
 
@@ -750,7 +750,7 @@ Docker-Compose:
       messenger-consumer:
         image: my-registry/my-application-image:tag
         entrypoint: /entrypoint.consumer.sh
-        restart: always
+        restart: unless-stopped
 
 .. _messenger-retries-failures:
 
