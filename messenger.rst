@@ -715,12 +715,14 @@ variables.
 
     # entrypoint.consumer.sh
     #!/usr/bin/env sh
-    CONSUME_LIMIT=${APP_CONSUME_LIMIT:-100}
-    MEMORY_LIMIT=${APP_MEMORY_LIMIT:-128M}
-    TIME_LIMIT=${APP_TIME_LIMIT:-3600}
+    CONSUME_LIMIT=${CONSUMER_CONSUME_LIMIT:-100}
+    MEMORY_LIMIT=${CONSUMER_MEMORY_LIMIT:-128M}
+    TIME_LIMIT=${CONSUMER_TIME_LIMIT:-3600}
+    # if you want to run a container per queue, you can overwrite the queue name here.
+    QUEUE=${CONSUMER_QUEUE:-async}
     # make sure the php memory_limit is greater or equal the --memory-limit given to the consumer command
     # especially, if php-fpm and php-cli share a php.ini
-    php -d memory_limit="${MEMORY_LIMIT}" bin/console messenger:consume async -vv --limit="${CONSUME_LIMIT}" --memory-limit="${MEMORY_LIMIT}" --time-limit="${TIME_LIMIT}"
+    php -d memory_limit="${MEMORY_LIMIT}" bin/console messenger:consume "${QUEUE}" -vv --limit="${CONSUME_LIMIT}" --memory-limit="${MEMORY_LIMIT}" --time-limit="${TIME_LIMIT}"
 
 This way the container will stop gracefully after the first of the given limits has been reached
 and will be restarted through the used orchestrator.
@@ -748,7 +750,7 @@ Docker-Compose:
 
     services:
       messenger-consumer:
-        image: my-registry/my-application-image:tag
+        image: 'my-registry/my-application-image:tag'
         entrypoint: /entrypoint.consumer.sh
         restart: unless-stopped
 
