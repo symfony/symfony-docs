@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-18T10:13:16Z
+
+Thanks for reporting this.
+
+Apparently, NuSOAP was updated for the last time in 2016: https://sourceforge.net/projects/nusoap/
+
+So, we should rewrite this example to use pure PHP SOAP code: https://www.php.net/manual/en/class.soapclient.php @sebpacz do you know SOAP well enough to do this? Are you willing (and will you have time) to do it? Thanks!
+
+---------------------------------------------------------------------------
+
+by sebpacz at 2021-05-18T18:52:34Z
+
+Hi @javiereguiluz,
+
+I've updated this example. Using the native client in this case is a good idea.
