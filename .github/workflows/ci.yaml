@@ -111,6 +111,8 @@ jobs:
         steps:
           - name: Checkout code
             uses: actions/checkout@v2
+            with:
+                path: 'docs'
 
           - name: Set-up PHP
             uses: shivammathur/setup-php@v2
@@ -119,37 +121,41 @@ jobs:
                 coverage: none
 
           - name: Fetch branch from where the PR started
+            working-directory: docs
             run: git fetch --no-tags --prune --depth=1 origin +refs/heads/*:refs/remotes/origin/*
 
           - name: Find modified files
             id: find-files
+            working-directory: docs
             run: echo "::set-output name=files::$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep ".rst" | tr '\n' ' ')"
 
           - name: Get composer cache directory
             id: composercache
-            working-directory: _build
+            working-directory: docs/_build
             run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
           - name: Cache dependencies
+            if: ${{ steps.find-files.outputs.files }}
             uses: actions/cache@v2
             with:
                 path: ${{ steps.composercache.outputs.dir }}
-                key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                restore-keys: ${{ runner.os }}-composer-
+                key: ${{ runner.os }}-composer-codeBlocks-${{ hashFiles('_checker/composer.lock', '_sf_app/composer.lock') }}
+                restore-keys: ${{ runner.os }}-composer-codeBlocks-
 
           - name: Install dependencies
             if: ${{ steps.find-files.outputs.files }}
-            run: composer create-project symfony-tools/code-block-checker ../_checker
+            run: composer create-project symfony-tools/code-block-checker _checker
 
           - name: Install test application
             if: ${{ steps.find-files.outputs.files }}
             run: |
-              git clone -b ${{ github.base_ref }} --depth 5 --single-branch https://github.com/symfony-tools/symfony-application.git ../_sf_app
-              cd ../_sf_app
+              git clone -b ${{ github.base_ref }} --depth 5 --single-branch https://github.com/symfony-tools/symfony-application.git _sf_app
+              cd _sf_app
               composer update
 
           - name: Generate baseline
             if: ${{ steps.find-files.outputs.files }}
+            working-directory: docs
             run: |
               CURRENT=$(git rev-parse HEAD)
               git checkout -m ${{ github.base_ref }}
@@ -159,5 +165,6 @@ jobs:
 
           - name: Verify examples
             if: ${{ steps.find-files.outputs.files }}
+            working-directory: docs
             run: |
               ../_checker/code-block-checker.php verify:docs `pwd` ${{ steps.find-files.outputs.files }} --baseline=baseline.json --output-format=github --symfony-application=`realpath ../_sf_app`
