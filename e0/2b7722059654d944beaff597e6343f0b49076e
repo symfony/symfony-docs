@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-18T12:56:50Z
+
+Christopher, thanks for this proposal!
+
+~I think it's a good idea because, in a real app, this table will be accessed a lot. However, looking at PdoSession class, all `SELECT` and `UPDATE` queries use the `id` column as the only `WHERE` clause. Should we create the index on that column instead? I don't know, so I'm just asking.~
+
+Sorry ... I misread the description of your PR, so everything I said is wrong. Let's forget it 😊
+
+Before merging I'll wait for others to review this. Thanks!
