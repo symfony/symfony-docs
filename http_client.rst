@@ -212,7 +212,7 @@ autoconfigure the HTTP client based on the requested URL:
             http_client:
                 scoped_clients:
                     # only requests matching scope will use these options
-                    github:
+                    github.client:
                         scope: 'https://api\.github\.com'
                         headers:
                             Accept: 'application/vnd.github.v3+json'
@@ -221,7 +221,7 @@ autoconfigure the HTTP client based on the requested URL:
 
                     # using base_uri, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
                     # will default to these options
-                    github:
+                    github.client:
                         base_uri: 'https://api.github.com'
                         headers:
                             Accept: 'application/vnd.github.v3+json'
@@ -242,7 +242,7 @@ autoconfigure the HTTP client based on the requested URL:
             <framework:config>
                 <framework:http-client>
                     <!-- only requests matching scope will use these options -->
-                    <framework:scoped-client name="github"
+                    <framework:scoped-client name="github.client"
                         scope="https://api\.github\.com"
                     >
                         <framework:header name="Accept">application/vnd.github.v3+json</framework:header>
@@ -251,7 +251,7 @@ autoconfigure the HTTP client based on the requested URL:
 
                     <!-- using base-uri, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
                          will default to these options -->
-                    <framework:scoped-client name="github"
+                    <framework:scoped-client name="github.client"
                         base-uri="https://api.github.com"
                     >
                         <framework:header name="Accept">application/vnd.github.v3+json</framework:header>
@@ -268,7 +268,7 @@ autoconfigure the HTTP client based on the requested URL:
             'http_client' => [
                 'scoped_clients' => [
                     // only requests matching scope will use these options
-                    'github' => [
+                    'github.client' => [
                         'scope' => 'https://api\.github\.com',
                         'headers' => [
                             'Accept' => 'application/vnd.github.v3+json',
@@ -279,7 +279,7 @@ autoconfigure the HTTP client based on the requested URL:
 
                     // using base_url, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
                     // will default to these options
-                    'github' => [
+                    'github.client' => [
                         'base_uri' => 'https://api.github.com',
                         'headers' => [
                             'Accept' => 'application/vnd.github.v3+json',
@@ -326,8 +326,8 @@ Each client has a unique service named after its configuration.
 
 Each scoped client also defines a corresponding named autowiring alias.
 If you use for example
-``Symfony\Contracts\HttpClient\HttpClientInterface $myApiClient``
-as the type and name of an argument, autowiring will inject the ``my_api.client``
+``Symfony\Contracts\HttpClient\HttpClientInterface $githubClient``
+as the type and name of an argument, autowiring will inject the ``github.client``
 service into your autowired classes.
 
 .. note::
