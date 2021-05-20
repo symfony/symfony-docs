@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by wizacedric at 2021-05-12T16:01:06Z
+
+I don't understand how to fix the CI. The original YAML already had duplicated keys.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-05-16T12:26:57Z
+
+We test run the config block in a real application. If a user just copy/paste they will get that error "duplicate keys" etc..
+
+The reason you see the error here is because the error message changed. Ie the "baseline" included config like:
+
+> Duplicate key "github" detected at line 15.
+
+And with this PR the message changed to:
+
+> Duplicate key "github.client" detected at line 15.
+
+Since the error is different from the baseline, we think it is a new one and we show it.
+
+-------------
+
+You dont need to fix this issue, it is fine merging this PR with Code Blocks failing.
