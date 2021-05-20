@@ -767,6 +767,18 @@ called when new data is uploaded or downloaded and at least once per second::
 Any exceptions thrown from the callback will be wrapped in an instance of
 ``TransportExceptionInterface`` and will abort the request.
 
+HTTPS Certificates
+~~~~~~~~~~~~~~~~~~
+
+HttpClient uses the system's certificate store to validate SSL certificates
+(while browsers use their own stores). When using self-signed certificates
+during development, it's recommended to create your own certificate authority
+(CA) and add it to your system's store.
+
+Alternatively, you can also disable ``verify_host`` and ``verify_peer`` (see
+:ref:`http_client config reference <reference-http-client>`), but this is not
+recommended in production.
+
 Performance
 -----------
 
