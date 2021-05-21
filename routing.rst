@@ -1427,11 +1427,11 @@ A possible solution is to change the parameter requirements to be more permissiv
 
 .. note::
 
-    If the route defines several parameter and you apply this permissive
+    If the route defines several parameters and you apply this permissive
     regular expression to all of them, you might get unexpected results. For
     example, if the route definition is ``/share/{path}/{token}`` and both
-    ``path`` and ``token`` accept ``/``. The ``token`` only get the last path
-    and the rest of the match is matched by the first argument (``path``).
+    ``path`` and ``token`` accept ``/``, then ``token`` will only get the last part
+    and the rest is matched by ``path``.
 
 .. note::
 
