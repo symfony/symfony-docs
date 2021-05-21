@@ -1023,8 +1023,8 @@ The transport has a number of options:
 ``queues[name][binding_arguments]``           Arguments to be used while binding the queue.
 ``queues[name][binding_keys]``                The binding keys (if any) to bind to this queue
 ``queues[name][flags]``                       Queue flags                                        ``AMQP_DURABLE``
-``exchange[arguments]``                       Extra arguments for the exchange i.e.
-                                              alternate-exchange
+``exchange[arguments]``                       Extra arguments for the exchange (e.g.
+                                              ``alternate-exchange``)
 ``exchange[default_publish_routing_key]``     Routing key to use when publishing, if none is
                                               specified on the message
 ``exchange[flags]``                           Exchange flags                                     ``AMQP_DURABLE``
