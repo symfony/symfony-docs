@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-04-14T07:10:42Z
+
+I don't fully understand the proposed solution. Do we tell readers that they add the asterisk manually with some HTML tags? If that's the proposed solution, I'd prefer to wait for a better alternative.
+
+Maybe the solution is to no longer display errors inside `<label>`, which doesn't seem like a common practice (although it was originally well-intended to improve accessibility). Bootstrap 5 for example doesn't use that to add errors to forms: https://getbootstrap.com/docs/5.0/forms/validation/#server-side
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2021-04-14T12:09:15Z
+
+> Do we tell readers that they add the asterisk manually with some HTML tags?
+
+Yes ;-)
+
+What Bootstrap shows on its own page is not so relevant in this case, since they didn't have the error inside the label in v4 either: https://getbootstrap.com/docs/4.6/components/forms/#validation
+
+What's more important is that in the Bootstrap 5 theme, the error is now placed outside the label:
+https://github.com/symfony/symfony-docs/pull/15158/files#diff-6a410d85cbf857ef1ce4fd7e3f5c429e3497cd5d90353bca8fb55125433c9045R91
+
+BUT: Seeing that the Bootstrap 3 theme is still around https://github.com/symfony/symfony/blob/5.x/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_layout.html.twig, v4 will probably stay alive for some time too.
+
+Better solution? Well, any code change would be a BC break; that's certainly not worth it. So I think it's down to: Either give people a hint about this, or just don't ;-)
+
+Clarification: The HTML is only needed if you want the asterisk to be *red* - otherwise you obviously can just type it into the "regular" label.
