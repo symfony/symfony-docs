@@ -493,14 +493,13 @@ On production, there are a few important things to think about:
     new worker processes. The command uses the :ref:`app <cache-configuration-with-frameworkbundle>`
     cache internally - so make sure this is configured to use an adapter you like.
 
-.. note::
-
+**Use the Same Cache Between Deploys**
     If your deploy strategy involves the creation of new target directories, you
     should set a value for the :ref:`cache.prefix.seed <reference-cache-prefix-seed>`
-    configuration option in order to let this command use always the same cache namespace
-    between deployments. Otherwise, the ``cache.app`` pool will use the value of the
-    ``kernel.project_dir`` parameter as base for the namespace, which will lead to
-    different namespaces each time a new deployment is made.
+    configuration option in order to use the same cache namespace between deployments.
+    Otherwise, the ``cache.app`` pool will use the value of the ``kernel.project_dir``
+    parameter as base for the namespace, which will lead to different namespaces
+    each time a new deployment is made.
 
 Prioritized Transports
 ~~~~~~~~~~~~~~~~~~~~~~
