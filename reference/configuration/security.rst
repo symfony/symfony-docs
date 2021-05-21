@@ -327,8 +327,7 @@ Using the Sodium Password Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It uses the `Argon2 key derivation function`_ and it's the hasher recommended
-by Symfony. Argon2 support was introduced in PHP 7.2, but if you use an earlier
-PHP version, you can install the `libsodium`_ PHP extension.
+by Symfony.
 
 The hashed passwords are ``96`` characters long, but due to the hashing
 requirements saved in the resulting hash this may change in the future, so make
@@ -853,7 +852,6 @@ role inheritance rules by creating a role hierarchy, as explained in
 :ref:`security-role-hierarchy`.
 
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
-.. _`libsodium`: https://pecl.php.net/package/libsodium
 .. _`Session Fixation`: https://owasp.org/www-community/attacks/Session_fixation
 .. _`Argon2 key derivation function`: https://en.wikipedia.org/wiki/Argon2
 .. _`bcrypt password hashing function`: https://en.wikipedia.org/wiki/Bcrypt

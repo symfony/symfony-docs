@@ -14,10 +14,7 @@ store them by using Symfony's secrets management system - sometimes called a
 
 .. note::
 
-    The Secrets system requires the sodium PHP extension that is bundled
-    with PHP 7.2. If you're using an earlier PHP version, you can
-    install the `libsodium`_ PHP extension or use the
-    `paragonie/sodium_compat`_ package.
+    The Secrets system requires the Sodium PHP extension.
 
 .. _secrets-generate-keys:
 
@@ -317,7 +314,3 @@ The secrets system is enabled by default and some of its behavior can be configu
                 // ->decryptionEnvVar('base64:default::SYMFONY_DECRYPTION_SECRET')
             ;
         };
-
-
-.. _`libsodium`: https://pecl.php.net/package/libsodium
-.. _`paragonie/sodium_compat`: https://github.com/paragonie/sodium_compat

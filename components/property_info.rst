@@ -122,7 +122,7 @@ class exposes public methods to extract several types of information:
 
 * :ref:`List of properties <property-info-list>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyListExtractorInterface::getProperties`
 * :ref:`Property type <property-info-type>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface::getTypes`
-  (including typed properties since PHP 7.4)
+  (including typed properties)
 * :ref:`Property description <property-info-description>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getShortDescription` and :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getLongDescription`
 * :ref:`Property access details <property-info-access>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isReadable` and  :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isWritable`
 * :ref:`Property initializable through the constructor <property-info-initializable>`:  :method:`Symfony\\Component\\PropertyInfo\\PropertyInitializableExtractorInterface::isInitializable`
@@ -357,7 +357,7 @@ Using PHP reflection, the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\R
 provides list, type and access information from setter and accessor methods.
 It can also give the type of a property (even extracting it from the constructor
 arguments), and if it is initializable through the constructor. It supports
-return and scalar types for PHP 7::
+return and scalar types::
 
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 

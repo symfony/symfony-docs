@@ -110,9 +110,7 @@ be done with named hashers:
 
 .. note::
 
-    If you are running PHP 7.2+ or have the `libsodium`_ extension installed,
-    then the recommended hashing algorithm to use is
-    :ref:`Sodium <reference-security-sodium>`.
+    The recommended hashing algorithm to use is :ref:`Sodium <reference-security-sodium>`.
 
 This creates a hasher named ``harsh``. In order for a ``User`` instance
 to use it, the class must implement
@@ -188,5 +186,3 @@ you must register a service for it in order to use it as a named hasher:
 
 This creates a hasher named ``app_hasher`` from a service with the ID
 ``App\Security\Hasher\MyCustomPasswordHasher``.
-
-.. _`libsodium`: https://pecl.php.net/package/libsodium
