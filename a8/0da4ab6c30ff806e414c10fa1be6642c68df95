@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by ker0x at 2021-03-28T17:10:52Z
+
+Thank you @t-richard for your review !
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-04-16T13:45:56Z
+
+Romain, thanks for this contribution!
+
+We'll need to wait until the code PR is merged ... that will need to wait until Bootstrap 5 is released as stable.
+
+When this happens, we'll need to reevaluate if we add this new doc article or transform the existing "bootstrap4" doc article into a generic article about all Bootstrap versions. We'll probably do that if differences between versions are not many, because that makes things easier for readers. Thanks.
+
+---------------------------------------------------------------------------
+
+by ker0x at 2021-05-21T13:00:27Z
+
+Hello @javiereguiluz
+
+Now that the code PR has been merged and the release of 5.3 is coming, have you any feed back regarding this PR ?
