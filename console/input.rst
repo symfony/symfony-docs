@@ -205,8 +205,9 @@ There are five option variants you can use:
     This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``);
 
 ``InputOption::VALUE_NONE``
-    Do not accept input for this option (e.g. ``--yell``). This is the default
-    behavior of options;
+    Do not accept input for this option (e.g. ``--yell``). The value returned
+    from is a boolean (``false`` if the option is not provided).
+    This is the default behavior of options;
 
 ``InputOption::VALUE_REQUIRED``
     This value is required (e.g. ``--iterations=5`` or ``-i5``), the option
