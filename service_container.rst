@@ -645,7 +645,7 @@ But, you can control this and pass in a different logger:
             // ... same code as before
 
             // explicitly configure the service
-            $services->set(SiteUpdateManager::class)
+            $services->set(MessageGenerator::class)
                 ->arg('$logger', ref('monolog.logger.request'))
             ;
         };
