@@ -81,8 +81,6 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
         {{ form(form) }}
     {% endblock %}
 
-.. _reference-forms-bootstrap-error-messages:
-
 .. note::
 
     By default, all inputs are rendered with the ``mb-3`` class on their
