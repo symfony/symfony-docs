@@ -88,6 +88,13 @@ is a strong connection between the error and its ``<input>``, as required by the
 ``form_label()`` internally. If you call to ``form_errors()`` in your template,
 you'll get the error messages displayed *twice*.
 
+.. tip::
+
+    Since form errors are rendered *inside* the ``<label>``, you cannot use CSS
+    ``:after`` to append an asterisk to the label, because it would be displayed
+    after the error message. Use the :ref:`label <reference-form-option-label>`
+    or :ref:`label_html <reference-form-option-label-html>` options instead.
+
 Checkboxes and Radios
 ---------------------
 
