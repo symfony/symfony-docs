@@ -3,10 +3,10 @@ Bootstrap 5 Form Theme
 
 .. versionadded:: 5.3
 
-    The Bootstrap 5 Form Theme was introduce in Symfony 5.3.
+    The Bootstrap 5 Form Theme was introduced in Symfony 5.3.
 
-Symfony provides several ways of integrating Bootstrap into your application. The
-most straightforward way is to add the required ``<link>`` and ``<script>``
+Symfony provides several ways of integrating Bootstrap into your application.
+The most straightforward way is to add the required ``<link>`` and ``<script>``
 elements in your templates (usually you only include them in the main layout
 template which other templates extend from):
 
@@ -85,16 +85,16 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
 
 .. note::
 
-    By default, all inputs are rendered with the ``mb-3`` class on their container.
-    If you override the `row_attr` class option, the ``mb-3`` will be override too
-    and you will need to explicitly add it.
+    By default, all inputs are rendered with the ``mb-3`` class on their
+    container. If you override the ``row_attr`` class option, the ``mb-3`` will
+    be override too and you will need to explicitly add it.
 
 Error Messages
 --------------
 
-Unlike the Bootstrap 4 template, errors are rendered **after** the ``input`` element.
-However, this still make a strong connection between the error and its ``<input>``, as
-required by the `WCAG 2.0 standard`_.
+Unlike the :doc:`Bootstrap 4 theme </form/bootstrap4>`, errors are rendered
+**after** the ``input`` element. However, this still makes a strong connection
+between the error and its ``<input>``, as required by the `WCAG 2.0 standard`_.
 
 Checkboxes and Radios
 ---------------------
@@ -106,8 +106,8 @@ Inline Checkboxes and Radios
 ----------------------------
 
 If you want to render your checkboxes or radios fields `inline`_, you can add
-the `checkbox-inline` or `radio-inline` class, depending of your Symfony Form
-type or `ChoiceType` configuration, to the label class.
+the ``checkbox-inline`` or ``radio-inline`` class, depending of your Symfony
+Form type or ``ChoiceType`` configuration, to the label class.
 
 .. configuration-block::
 
@@ -142,8 +142,9 @@ type or `ChoiceType` configuration, to the label class.
 Switches
 ________
 
-Bootstrap 5 allows to render checkboxes as "`switches`_". You can enable this feature
-on your Symfony Form ``CheckboxType`` by adding the ``checkbox-switch`` class to the label:
+Bootstrap 5 allows to render checkboxes as `switches`_. You can enable this
+feature on your Symfony Form ``CheckboxType`` by adding the ``checkbox-switch``
+class to the label:
 
 .. configuration-block::
 
@@ -165,12 +166,12 @@ on your Symfony Form ``CheckboxType`` by adding the ``checkbox-switch`` class to
 
 .. tip::
 
-    You can also render your switches inline by simply adding the ``checkbox-inline`` class
-    on the ``label_attr`` option::
+    You can also render your switches inline by simply adding the
+    ``checkbox-inline`` class on the ``label_attr`` option::
 
         // ...
         'label_attr' => [
-            'class' => '`checkbox-inline checkbox-switch',
+            'class' => 'checkbox-inline checkbox-switch',
         ],
         // ...
 
@@ -181,8 +182,8 @@ on your Symfony Form ``CheckboxType`` by adding the ``checkbox-switch`` class to
 Input group
 ___________
 
-To create `input group`_ in your Symfony Form, simply add the `input-group` class
-to the ``row_attr`` option.
+To create `input group`_ in your Symfony Form, simply add the ``input-group``
+class to the ``row_attr`` option.
 
 .. configuration-block::
 
@@ -206,7 +207,7 @@ to the ``row_attr`` option.
 
 .. caution::
 
-    If you fill the `help` option of your form, it will also be rendered
+    If you fill the ``help`` option of your form, it will also be rendered
     as part of the group.
 
 Floating labels
@@ -244,19 +245,20 @@ of your form type.
 
 .. caution::
 
-    You **must** provide a ``label`` and a ``placeholder`` to make floating labels
-    work properly.
+    You **must** provide a ``label`` and a ``placeholder`` to make floating
+    labels work properly.
 
 Accessibility
 -------------
 
-The Bootstrap 5 framework has done a good job making it accessible for functional
-variations like impaired vision and cognitive ability. Symfony has taken this one
-step further to make sure the form theme complies with the `WCAG 2.0 standard`_.
+The Bootstrap 5 framework has done a good job making it accessible for
+functional variations like impaired vision and cognitive ability. Symfony has
+taken this one step further to make sure the form theme complies with the
+`WCAG 2.0 standard`_.
 
 This does not mean that your entire website automatically complies with the full
-standard, but it does mean that you have come far in your work to create a design
-for **all** users.
+standard, but it does mean that you have come far in your work to create a
+design for **all** users.
 
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
 .. _`inline`: https://getbootstrap.com/docs/5.0/forms/checks-radios/#inline
