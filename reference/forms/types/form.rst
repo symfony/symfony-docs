@@ -179,6 +179,8 @@ of the form type tree (i.e. it cannot be used as a form type on its own).
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
+.. _reference-form-option-label-html:
+
 .. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc

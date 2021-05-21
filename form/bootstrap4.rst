@@ -92,8 +92,8 @@ you'll get the error messages displayed *twice*.
 
     Since form errors are rendered *inside* the ``<label>``, you cannot use CSS
     ``:after`` to append an asterisk to the label, because it would be displayed
-    after the error message. Use the :ref:`label <reference-form-option-label-html>`
-    option instead.
+    after the error message. Use the :ref:`label <reference-form-option-label>`
+    or :ref:`label_html <reference-form-option-label-html>` options instead.
 
 Checkboxes and Radios
 ---------------------
