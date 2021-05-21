@@ -1042,6 +1042,7 @@ Form Themes and Customization:
     :maxdepth: 1
 
     /form/bootstrap4
+    /form/bootstrap5
     /form/form_customization
     /form/form_themes
 
