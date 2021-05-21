@@ -135,10 +135,10 @@ The result will be something like:
 
     The `field()` method was introduced in Symfony 5.1.
 
-Adding a header to a Slack Message
--------------------------------------------
+Adding a Header to a Slack Message
+----------------------------------
 
-To add a header to your message you can use the
+To add a header to your message use the
 :class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\Block\\SlackHeaderBlock` class::
 
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
@@ -173,12 +173,12 @@ The result will be something like:
 
 .. versionadded:: 5.3
 
-    The `SlackHeaderBlock` class was introduced in Symfony 5.3.
+    The ``SlackHeaderBlock`` class was introduced in Symfony 5.3.
 
-Adding a footer to a Slack Message
--------------------------------------------
+Adding a Footer to a Slack Message
+----------------------------------
 
-To add a footer to your message you can use the
+To add a footer to your message use the
 :class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\Block\\SlackContextBlock` class::
 
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackContextBlock;
@@ -216,12 +216,12 @@ The result will be something like:
 
 .. versionadded:: 5.3
 
-    The `SlackContextBlock` class was introduced in Symfony 5.3.
+    The ``SlackContextBlock`` class was introduced in Symfony 5.3.
 
-Sending a Slack Message as a reply
--------------------------------------------
+Sending a Slack Message as a Reply
+----------------------------------
 
-To send your slack message as a reply in a thread you can use the
+To send your slack message as a reply in a thread use the
 :method:`SlackOptions::threadTs() <Symfony\\Component\\Notifier\\Bridge\\Slack\\SlackOptions::threadTs>` method::
 
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackSectionBlock;
@@ -247,7 +247,7 @@ The result will be something like:
 
 .. versionadded:: 5.3
 
-    The `threadTs()` method was introduced in Symfony 5.3.
+    The ``threadTs()`` method was introduced in Symfony 5.3.
 
 Adding Interactions to a Discord Message
 ----------------------------------------
