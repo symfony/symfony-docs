@@ -138,6 +138,18 @@ You can configure the global options using the ``default_options`` option:
              'max_redirects' => 7,
         ]);
 
+You can also use the :method:`Symfony\\Contracts\\HttpClient\\HttpClientInterface::withOptions`
+method to retrieve a new instance of the client with new default options::
+
+        $this->client = $client->withOptions([
+            'base_uri' => 'https://...',
+            'headers' => ['header-name' => 'value0, value1, ...']
+        ]);
+
+.. versionadded:: 5.3
+
+    The :method:`Symfony\\Contracts\\HttpClient\\HttpClientInterface::withOptions` method was introduced in Symfony 5.3.
+
 Some options are described in this guide:
 
 * `Authentication`_
