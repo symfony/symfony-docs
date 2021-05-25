@@ -487,7 +487,7 @@ the MongoDB connection as argument:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
         return static function (ContainerConfigurator $container) {
             $services = $configurator->services();
@@ -596,7 +596,7 @@ configure these values with the second argument passed to the
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
         return static function (ContainerConfigurator $container) {
             $services = $configurator->services();
