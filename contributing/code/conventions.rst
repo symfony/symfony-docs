@@ -217,11 +217,11 @@ All these tasks are mandatory and must be done in the same pull request.
 Removing Deprecated Code
 ------------------------
 
-Removing deprecated code can only be done once every 2 years, on the next major version of the
-impacted component (``master`` branch).
+Removing deprecated code can only be done once every two years, on the next
+major version of the impacted component (``6.0`` branch, ``7.0`` branch, etc.).
 
-When removing deprecated code, the consequences of the deprecation must be added to the ``CHANGELOG.md`` file
-of the impacted component:
+When removing deprecated code, the consequences of the deprecation must be added
+to the ``CHANGELOG.md`` file of the impacted component:
 
 .. code-block:: markdown
 
