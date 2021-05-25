@@ -223,7 +223,7 @@ Removing Deprecated Code
 ------------------------
 
 Removing deprecated code can only be done once every 2 years, on the next major version of the
-impacted component (``master`` branch).
+impacted component (``6.0`` branch).
 
 When removing deprecated code, the consequences of the deprecation must be added to the ``CHANGELOG.md`` file
 of the impacted component:
