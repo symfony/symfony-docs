@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by sylfabre at 2021-02-03T20:20:38Z
+
+I don't understand what's wrong with https://github.com/symfony/symfony-docs/runs/1815088336?check_suite_focus=true
+
+It looks like the syntax I can find in other files like https://github.com/symfony/symfony-docs/blob/5.x/components/yaml.rst line 179
