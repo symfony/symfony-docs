@@ -796,32 +796,30 @@ the corresponding tests are run. Depending on how your tests are constructed,
 this might be too late.
 
 You can either:
-* Declare the namespaces of the tested classes in your ``phpunit.xml.dist``.
+
+* Declare the namespaces of the tested classes in your ``phpunit.xml.dist``;
 * Register the namespaces at the end of the ``config/bootstrap.php`` file.
 
 .. code-block:: xml
 
     <!-- phpunit.xml.dist -->
-    <phpunit
-        bootstrap="config/bootstrap.php"
-    >
-        <!-- ... -->
-        <listeners>
-            <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
-                    <arguments>
-                        <array>
-                            <element key="time-sensitive"><string>Acme\MyClassTest</string></element>
-                        </array>
-                    </arguments>
-                </listener>
-        </listeners>
-    </phpunit>
+    <!-- ... -->
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
+                <arguments>
+                    <array>
+                        <element key="time-sensitive"><string>Acme\MyClassTest</string></element>
+                    </array>
+                </arguments>
+            </listener>
+    </listeners>
 
-.. code-block:: php
+::
 
-    <!-- config/bootstrap.php -->
+    // config/bootstrap.php
     use Symfony\Bridge\PhpUnit\ClockMock;
     
+    // ...
     if ('test' === $_SERVER['APP_ENV']) {
         ClockMock::register('Acme\\MyClassTest\\');
     }
