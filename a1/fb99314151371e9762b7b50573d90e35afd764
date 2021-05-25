@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-25T11:47:10Z
+
+Here we can see that it was deprecated: https://github.com/webpack/webpack-dev-server/blob/08a83a65f5c500a648c12faa2fa03122ee380c8b/CHANGELOG.md#400-beta0-2020-11-27
+
+> the disableHostCheck and allowedHosts options were removed in favor of the firewall option
+
+And here we updated Symfony Docs with changes similar to this one: https://github.com/symfony/symfony-docs/pull/14895/files
+
+So, let's merge this.
+
+Thanks Marc!
