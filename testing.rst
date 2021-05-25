@@ -573,7 +573,7 @@ will no longer be followed::
 .. _testing_logging_in_users:
 
 Logging in Users (Authentication)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.................................
 
 .. versionadded:: 5.1
 
