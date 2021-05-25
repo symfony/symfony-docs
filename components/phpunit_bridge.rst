@@ -838,10 +838,16 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
 
 Under the hood, a PHPUnit listener injects the mocked functions in the tested
 classes' namespace. In order to work as expected, the listener has to run before
-the tested class ever runs. By default, the mocked functions are created when the
-annotation are found and the corresponding tests are run. Depending on how your
-tests are constructed, this might be too late. In this case, you will need to declare
-the namespaces of the tested classes in your ``phpunit.xml.dist``.
+the tested class ever runs.
+
+By default, the mocked functions are created when the annotation are found and
+the corresponding tests are run. Depending on how your tests are constructed,
+this might be too late.
+
+You can either:
+
+* Declare the namespaces of the tested classes in your ``phpunit.xml.dist``;
+* Register the namespaces at the end of the ``config/bootstrap.php`` file.
 
 .. code-block:: xml
 
@@ -856,6 +862,16 @@ the namespaces of the tested classes in your ``phpunit.xml.dist``.
                 </arguments>
             </listener>
     </listeners>
+
+::
+
+    // config/bootstrap.php
+    use Symfony\Bridge\PhpUnit\ClockMock;
+    
+    // ...
+    if ('test' === $_SERVER['APP_ENV']) {
+        ClockMock::register('Acme\\MyClassTest\\');
+    }
 
 Modified PHPUnit script
 -----------------------
