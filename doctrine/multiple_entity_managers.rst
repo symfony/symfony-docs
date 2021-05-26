@@ -254,6 +254,17 @@ the default entity manager (i.e. ``default``) is returned::
         }
     }
 
+You can leverage the service binding feature to reference the ``customer``
+entity manager so that you can inject it directly::
+
+    services:
+        _defaults:
+            bind:
+                $customerEntityManager: '@doctrine.orm.customer_entity_manager'
+
+Now type-hint your method with ``EntityManagerInterface $customerEntityManager``
+to inject this second entity manager as dependency.
+
 You can now use Doctrine like you did before - using the ``default`` entity
 manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
