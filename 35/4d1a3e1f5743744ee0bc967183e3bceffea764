@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-04-21T07:15:06Z
+
+Thanks Thomas! However, if I run this command in my app:
+
+```
+$ php bin/console config:dump framework http_client
+```
+
+I see this:
+
+```
+            # Indicates if the peer should be verified in an SSL/TLS context.
+            verify_peer:          ~
+
+            # Indicates if the host should exist as a certificate common name.
+            verify_host:          ~
+```
+
+So, it looks like they are `null` by default 🤔   In the DI extension, the node is defiend as `booleanNode()` without a default value defined for it.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2021-04-21T11:07:46Z
+
+Hm. When I don't set a value, I'm getting this error on several URL's:
+
+> SSL peer certificate or SSH remote key was not OK for "https://www.example.com/".
+
+Then, after setting `'verify_peer' => false`, they're all gone. So I figured that the default must be true ;-) @nicolas-grekas What's the correct answer?
