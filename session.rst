@@ -186,6 +186,50 @@ the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
         session.namespacedattributebag:
             class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
 
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="session" class="Symfony\Component\HttpFoundation\Session\Session" public="true">
+                    <argument type="service" id="session.storage"/>
+                    <argument type="service" id="session.namespacedattributebag"/>
+                    <argument type="service" id="session.flash_bag"/>
+                </service>
+
+                <service id="session.namespacedattributebag"
+                    class="Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag"
+                />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
+        use Symfony\Component\HttpFoundation\Session\Session;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set('session', Session::class)
+                ->public()
+                ->args([
+                    ref('session.storage'),
+                    ref('session.namespacedattributebag'),
+                    ref('session.flash_bag'),
+                ])
+            ;
+
+            $services->set('session.namespacedattributebag', NamespacedAttributeBag::class);
+        };
+
 .. _session-avoid-start:
 
 Avoid Starting Sessions for Anonymous Users
