@@ -251,6 +251,11 @@ the default entity manager (i.e. ``default``) is returned::
         }
     }
 
+Entity managers also benefit from :ref:`autowiring aliases <service-autowiring-alias>`
+when the :ref:`framework bundle <framework-bundle-configuration>` is used. For
+example, to inject the ``customer`` entity manager, type-hint your method with
+``EntityManagerInterface $customerEntityManager``.
+
 You can now use Doctrine like you did before - using the ``default`` entity
 manager to persist and fetch entities that it manages and the ``customer``
 entity manager to persist and fetch its entities.
