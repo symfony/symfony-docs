@@ -1244,7 +1244,7 @@ config option.
 verify_host
 ...........
 
-**type**: ``boolean``
+**type**: ``boolean`` **default**: ``true``
 
 If ``true``, the certificate sent by other servers is verified to ensure that
 their common name matches the host included in the URL. This is usually
@@ -1253,7 +1253,7 @@ combined with ``verify_peer`` to also verify the certificate authenticity.
 verify_peer
 ...........
 
-**type**: ``boolean``
+**type**: ``boolean`` **default**: ``true``
 
 If ``true``, the certificate sent by other servers when negotiating a TLS or SSL
 connection is verified for authenticity. Authenticating the certificate is not
