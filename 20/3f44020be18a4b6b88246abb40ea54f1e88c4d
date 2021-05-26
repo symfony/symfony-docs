@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by maxhelias at 2020-12-20T16:59:09Z
+
+FYI in the next DoctrineBundle 2.3 : https://github.com/doctrine/DoctrineBundle/pull/1259
+
+---------------------------------------------------------------------------
+
+by HypeMC at 2021-03-21T23:29:19Z
+
+FYI, DoctrineBundle 2.3 [is out](https://github.com/doctrine/DoctrineBundle/releases/tag/2.3.0), also there was a followup[ PR for connections](https://github.com/doctrine/DoctrineBundle/pull/1296), maybe it's worth adding that to the docs as well.
