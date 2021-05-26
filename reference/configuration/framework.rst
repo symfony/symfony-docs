@@ -1041,7 +1041,7 @@ config option.
 verify_host
 ...........
 
-**type**: ``boolean``
+**type**: ``boolean`` **default**: ``true``
 
 If ``true``, the certificate sent by other servers is verified to ensure that
 their common name matches the host included in the URL. This is usually
