@@ -5,51 +5,8 @@ Built-in Symfony Service Tags
 :doc:`DependencyInjection component </components/dependency_injection>` to flag
 services that require special processing, like console commands or Twig extensions.
 
-These are the most common tags provided by Symfony components, but in your
-application there could be more tags available provided by third-party bundles:
-
-========================================  ========================================================================
-Tag Name                                  Usage
-========================================  ========================================================================
-`auto_alias`_                             Define aliases based on the value of container parameters
-`assets.package`_                         Add an asset package
-`console.command`_                        Add a command
-`container.hot_path`_                     Add to list of always needed services
-`container.no_preload`_                   Remove a class from the list of classes preloaded by PHP
-`container.preload`_                      Add some class to the list of classes preloaded by PHP
-`controller.argument_value_resolver`_     Register a value resolver for controller arguments such as ``Request``
-`data_collector`_                         Create a class that collects custom data for the profiler
-`doctrine.event_listener`_                Add a Doctrine event listener
-`doctrine.event_subscriber`_              Add a Doctrine event subscriber
-`form.type`_                              Create a custom form field type
-`form.type_extension`_                    Create a custom "form extension"
-`form.type_guesser`_                      Add your own logic for "form type guessing"
-`kernel.cache_clearer`_                   Register your service to be called during the cache clearing process
-`kernel.cache_warmer`_                    Register your service to be called during the cache warming process
-`kernel.event_listener`_                  Listen to different events/hooks in Symfony
-`kernel.event_subscriber`_                To subscribe to a set of different events/hooks in Symfony
-`kernel.fragment_renderer`_               Add new HTTP content rendering strategies
-`kernel.reset`_                           Allows to clean up services between requests
-`mime.mime_type_guesser`_                 Add your own logic for guessing MIME types
-`monolog.logger`_                         Logging with a custom logging channel
-`monolog.processor`_                      Add a custom processor for logging
-`routing.loader`_                         Register a custom service that loads routes
-`routing.expression_language_provider`_   Register a provider for expression language functions in routing
-`security.expression_language_provider`_  Register a provider for expression language functions in security
-`security.voter`_                         Add a custom voter to Symfony's authorization logic
-`security.remember_me_aware`_             To allow remember me authentication
-`serializer.encoder`_                     Register a new encoder in the ``serializer`` service
-`serializer.normalizer`_                  Register a new normalizer in the ``serializer`` service
-`swiftmailer.default.plugin`_             Register a custom SwiftMailer Plugin
-`translation.loader`_                     Register a custom service that loads translations
-`translation.extractor`_                  Register a custom service that extracts translation messages from a file
-`translation.dumper`_                     Register a custom service that dumps translation messages
-`twig.extension`_                         Register a custom Twig Extension
-`twig.loader`_                            Register a custom service that loads Twig templates
-`twig.runtime`_                           Register a lazy-loaded Twig Extension
-`validator.constraint_validator`_         Create your own custom validation constraint
-`validator.initializer`_                  Register a service that initializes objects before validation
-========================================  ========================================================================
+This article shows the most common tags provided by Symfony components, but in
+your application there could be more tags available provided by third-party bundles.
 
 assets.package
 --------------
