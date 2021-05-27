@@ -201,41 +201,49 @@ your ``Session`` object with the default ``AttributeBag`` by the ``NamespacedAtt
         session.namespacedattributebag:
             class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
 
-.. code-block:: php
+    .. code-block:: xml
 
-    namespace App\Session;
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    use Symfony\Component\HttpFoundation\RequestStack;
-    use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
-    use Symfony\Component\HttpFoundation\Session\Session;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
-    use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageFactoryInterface;
+            <services>
+                <service id="session" class="Symfony\Component\HttpFoundation\Session\Session" public="true">
+                    <argument type="service" id="session.storage"/>
+                    <argument type="service" id="session.namespacedattributebag"/>
+                    <argument type="service" id="session.flash_bag"/>
+                </service>
 
-    class SessionFactory
-    {
-        private $requestStack;
-        private $storageFactory;
-        private $usageReporter;
-        private $sessionAttributes;
+                <service id="session.namespacedattributebag"
+                    class="Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag"
+                />
+            </services>
+        </container>
 
-        public function __construct(RequestStack $requestStack, SessionStorageFactoryInterface $storageFactory, callable $usageReporter, NamespacedAttributeBag $sessionAttributes)
-        {
-            $this->requestStack = $requestStack;
-            $this->storageFactory = $storageFactory;
-            $this->usageReporter = $usageReporter;
-            $this->sessionAttributes = $sessionAttributes;
-        }
+    .. code-block:: php
 
-        public function createSession(): SessionInterface
-        {
-            return new Session(
-                $this->storageFactory->createStorage($this->requestStack->getMainRequest()),
-                $this->sessionAttributes,
-                null,
-                $this->usageReporter
-            );
-        }
-    }
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
+        use Symfony\Component\HttpFoundation\Session\Session;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set('session', Session::class)
+                ->public()
+                ->args([
+                    ref('session.storage'),
+                    ref('session.namespacedattributebag'),
+                    ref('session.flash_bag'),
+                ])
+            ;
+
+            $services->set('session.namespacedattributebag', NamespacedAttributeBag::class);
+        };
 
 .. _session-avoid-start:
 
