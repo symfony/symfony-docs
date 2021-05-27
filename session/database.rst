@@ -63,8 +63,6 @@ First, define a Symfony service for the connection to the Redis server:
 
     .. code-block:: php
 
-        use Symfony\Component\DependencyInjection\Reference;
-
         // ...
         $container
             // you can also use \RedisArray, \RedisCluster or \Predis\Client classes
@@ -105,6 +103,7 @@ and ``RedisProxy``:
                      and the expiration time for any given entry (in seconds), defaults are 'sf_s' and null:
                 <argument type="collection">
                     <argument key="prefix">my_prefix</argument>
+                    <argument key="ttl">600</argument>
                 </argument> -->
             </service>
         </services>
@@ -112,6 +111,7 @@ and ``RedisProxy``:
     .. code-block:: php
 
         // config/services.php
+        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler;
 
         $container
@@ -208,7 +208,7 @@ first register a new handler service with your database credentials:
                     <argument>%env(DATABASE_URL)%</argument>
 
                     <!-- you can also use PDO configuration, but requires passing two arguments: -->
-                    <!-- <argument>mysql:dbname=mydatabase, host=myhost</argument>
+                    <!-- <argument>mysql:dbname=mydatabase; host=myhost; port=myport</argument>
                         <argument type="collection">
                             <argument key="db_username">myuser</argument>
                             <argument key="db_password">mypassword</argument>

@@ -29,7 +29,7 @@ All native save handlers are internal to PHP and as such, have no public facing 
 They must be configured by ``php.ini`` directives, usually ``session.save_path`` and
 potentially other driver specific directives. Specific details can be found in
 the docblock of the ``setOptions()`` method of each class. For instance, the one
-provided by the Memcached extension can be found on :phpmethod:`php.net <Memcached::setOption>`.
+provided by the Memcached extension can be found on :phpmethod:`php.net <Memcached::setOptions>`.
 
 While native save handlers can be activated by directly using
 ``ini_set('session.save_handler', $name);``, Symfony provides a convenient way to
@@ -170,12 +170,39 @@ collection. That's why Symfony now overwrites this value to ``1``.
 If you wish to use the original value set in your ``php.ini``, add the following
 configuration:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/framework.yaml
-    framework:
-        session:
-            gc_probability: null
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            session:
+                gc_probability: null
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:session gc_probability="null"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'session' => [
+                'gc_probability' => null,
+            ],
+        ]);
 
 You can configure these settings by passing ``gc_probability``, ``gc_divisor``
 and ``gc_maxlifetime`` in an array to the constructor of
