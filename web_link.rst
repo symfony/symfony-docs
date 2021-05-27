@@ -62,7 +62,7 @@ correct prioritization and the content security policy:
 
     <head>
         <!-- ... -->
-        <link rel="stylesheet" href="{{ preload('/app.css', { as: 'style' }) }}">
+        <link rel="preload" href="{{ preload('/app.css', { as: 'style' }) }}">
     </head>
 
 If you reload the page, the perceived performance will improve because the
@@ -77,7 +77,7 @@ requested the HTML page.
 
         <head>
             <!-- ... -->
-            <link rel="stylesheet" href="{{ preload(asset('build/app.css')) }}">
+            <link rel="preload" href="{{ preload(asset('build/app.css')) }}">
         </head>
 
 Additionally, according to `the Priority Hints specification`_, you can signal
@@ -87,7 +87,7 @@ the priority of the resource to download using the ``importance`` attribute:
 
     <head>
         <!-- ... -->
-        <link rel="stylesheet" href="{{ preload('/app.css', { as: 'style', importance: 'low' }) }}">
+        <link rel="preload" href="{{ preload('/app.css', { as: 'style', importance: 'low' }) }}">
     </head>
 
 How does it work?
@@ -111,7 +111,7 @@ issuing an early separate HTTP request, use the ``nopush`` option:
 
     <head>
         <!-- ... -->
-        <link rel="stylesheet" href="{{ preload('/app.css', { as: 'style', nopush: true }) }}">
+        <link rel="preload" href="{{ preload('/app.css', { as: 'style', nopush: true }) }}">
     </head>
 
 Resource Hints
@@ -145,7 +145,7 @@ any link implementing the `PSR-13`_ standard. For instance, any
     <head>
         <!-- ... -->
         <link rel="alternate" href="{{ link('/index.jsonld', 'alternate') }}">
-        <link rel="stylesheet" href="{{ preload('/app.css', { as: 'style', nopush: true }) }}">
+        <link rel="preload" href="{{ preload('/app.css', { as: 'style', nopush: true }) }}">
     </head>
 
 The previous snippet will result in this HTTP header being sent to the client:
