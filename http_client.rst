@@ -1387,12 +1387,27 @@ This allows using them where native PHP streams are needed::
     // later on if you need to, you can access the response from the stream
     $response = stream_get_meta_data($streamResource)['wrapper_data']->getResponse();
 
-Testing HTTP Clients and Responses
-----------------------------------
+Testing
+-------
 
 This component includes the ``MockHttpClient`` and ``MockResponse`` classes to
-use them in tests that need an HTTP client which doesn't make actual HTTP
-requests.
+use in tests that shouldn't make actual HTTP requests. Such tests can be
+useful, as they will run faster and produce consistent results, since they're
+not dependant on an external service. By not making actual HTTP requests there
+is no need to worry about the service being online or the request changing
+state, for example deleting a resource.
+
+``MockHttpClient`` implements the ``HttpClientInterface``, just like any actual
+HTTP client in this component. When you type-hint with ``HttpClientInterface``
+your code will accept the real client outside tests, while replacing it with
+``MockHttpClient`` in the test.
+
+When the ``request`` method is used on ``MockHttpClient``, it will respond with
+the supplied ``MockResponse``. There are a few ways to use it, as described
+below.
+
+HTTP Client and Responses
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The first way of using ``MockHttpClient`` is to pass a list of responses to its
 constructor. These will be yielded in order when requests are made::
@@ -1450,6 +1465,121 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
     };
 
     $mockResponse = new MockResponse($body());
+
+Testing Request Data
+~~~~~~~~~~~~~~~~~~~~
+
+The examples above describe how to return desired response. What if you wanted
+to also test the request itself? ``MockResponse`` comes with a few helper
+methods:
+
+* ``getRequestMethod()`` - returns the HTTP method
+* ``getRequestUrl()`` - returns the URL the request would be sent to
+* ``getRequestOptions()`` - returns an array containing other information about
+  the request such as headers, query parameters, body content etc.
+
+Usage example::
+
+    $mockResponse = new MockResponse('', ['http_code' => 204]);
+    $httpClient = new MockHttpClient($mockResponse, 'https://example.com');
+
+    $response = $httpClient->request('DELETE', 'api/article/1337', [
+        'headers' => [
+            'Accept: */*',
+            'Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l',
+        ],
+    ]);
+
+    // returns "DELETE"
+    $mockResponse->getRequestMethod();
+
+    // returns "https://example.com/api/article/1337"
+    $mockResponse->getRequestUrl();
+
+    // returns ["Accept: */*", "Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l"]
+    $mockResponse->getRequestOptions()['headers'];
+
+Example
+~~~~~~~
+
+The following standalone example demonstrates a way to use HTTP client and
+test it in a real application::
+
+    // ExternalArticleService.php
+    use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+    final class ExternalArticleService
+    {
+        private HttpClientInterface $httpClient;
+
+        public function __construct(HttpClientInterface $httpClient)
+        {
+            $this->httpClient = $httpClient;
+        }
+
+        public function createArticle(array $requestData): array
+        {
+            $requestJson = json_encode($requestData, JSON_THROW_ON_ERROR);
+
+            $response = $this->httpClient->request('POST', 'api/article', [
+                'headers' => [
+                    'Content-Type: application/json',
+                    'Accept: application/json',
+                ],
+                'body' => $requestJson,
+            ]);
+
+            if (201 !== $response->getStatusCode()) {
+                throw new Exception('Response status code is different than expected.');
+            }
+
+            // ... other checks
+
+            $responseJson = $response->getContent();
+            $responseData = json_decode($responseJson, true, 512, JSON_THROW_ON_ERROR);
+
+            return $responseData;
+        }
+    }
+
+    // ExternalArticleServiceTest.php
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\HttpClient\MockHttpClient;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    final class ExternalArticleServiceTest extends TestCase
+    {
+        public function testSubmitData(): void
+        {
+            // Arrange
+            $requestData = ['title' => 'Testing with Symfony HTTP Client'];
+            $expectedRequestData = json_encode($requestData, JSON_THROW_ON_ERROR);
+
+            $expectedResponseData = ['id' => 12345];
+            $mockResponseJson = json_encode($expectedResponseData, JSON_THROW_ON_ERROR);
+            $mockResponse = new MockResponse($mockResponseJson, [
+                'http_code' => 201,
+                'response_headers' => ['Content-Type: application/json'],
+            ]);
+
+            $httpClient = new MockHttpClient($mockResponse, 'https://example.com');
+            $service = new ExternalArticleService($httpClient);
+
+            // Act
+            $responseData = $service->createArticle($requestData);
+
+            // Assert
+            self::assertSame('POST', $mockResponse->getRequestMethod());
+            self::assertSame('https://example.com/api/article', $mockResponse->getRequestUrl());
+            self::assertContains(
+                'Content-Type: application/json',
+                $mockResponse->getRequestOptions()['headers']
+            );
+            self::assertSame($expectedRequestData, $mockResponse->getRequestOptions()['body']);
+
+            self::assertSame($responseData, $expectedResponseData);
+        }
+    }
 
 .. _`cURL PHP extension`: https://www.php.net/curl
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
