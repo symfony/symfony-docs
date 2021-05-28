@@ -1382,8 +1382,18 @@ Testing HTTP Clients and Responses
 ----------------------------------
 
 This component includes the ``MockHttpClient`` and ``MockResponse`` classes to
-use them in tests that need an HTTP client which doesn't make actual HTTP
-requests.
+use them in tests that shouldn't make actual HTTP requests. Such tests can be
+useful, as they are faster and consistent due to not being dependant on
+external service the request would be sent to. In result there is no need to
+worry about the service being online or the request changing some state,
+for example deleting a resource.
+
+``MockHttpClient`` implements the ``HttpClientInterface``, just like any actual
+HTTP client in this component. You can use the interface to accept real client
+in your code, while replacing it with ``MockHttpClient`` in the test.
+
+When the ``request`` method is used on ``MockHttpClient``, it will respond with
+supplied ``MockResponse``. There are few ways to use it:
 
 The first way of using ``MockHttpClient`` is to pass a list of responses to its
 constructor. These will be yielded in order when requests are made::
