@@ -22,8 +22,9 @@ interoperability standard for PHP namespaces and class names: it starts with a
 vendor segment, followed by zero or more category segments, and it ends with the
 namespace short name, which must end with ``Bundle``.
 
-A namespace becomes a bundle as soon as you add a bundle class to it. The
-bundle class name must follow these rules:
+A namespace becomes a bundle as soon as you add "a bundle class" to it (which is
+a class that extends :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle`).
+The bundle class name must follow these rules:
 
 * Use only alphanumeric characters and underscores;
 * Use a StudlyCaps name (i.e. camelCase with an uppercase first letter);
