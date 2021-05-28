@@ -97,7 +97,7 @@ You can now use it anywhere you need it:
             /**
              * @AcmeAssert\PasswordRequirements()
              */
-            public $password;
+            public $plainPassword;
         }
 
     .. code-block:: php-attributes
@@ -110,7 +110,7 @@ You can now use it anywhere you need it:
         class RegisterUser
         {
             #[AcmeAssert\PasswordRequirements]
-            public $password;
+            public $plainPassword;
         }
 
     .. code-block:: yaml
@@ -118,7 +118,7 @@ You can now use it anywhere you need it:
         # config/validator/validation.yaml
         App\User\RegisterUser:
             properties:
-                password:
+                plainPassword:
                     - App\Validator\Constraints\PasswordRequirements: ~
 
     .. code-block:: xml
@@ -130,7 +130,7 @@ You can now use it anywhere you need it:
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
             <class name="App\User\RegisterUser">
-                <property name="password">
+                <property name="plainPassword">
                     <constraint name="App\Validator\Constraints\PasswordRequirements"/>
                 </property>
             </class>
@@ -148,7 +148,7 @@ You can now use it anywhere you need it:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('password', new AcmeAssert\PasswordRequirements());
+                $metadata->addPropertyConstraint('plainPassword', new AcmeAssert\PasswordRequirements());
             }
         }
 
