@@ -1487,6 +1487,87 @@ Usage example::
     // returns ["Accept: */*", "Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l"]
     $mockResponse->getRequestOptions()['headers'];
 
+Example
+~~~~~~~
+
+The following standalone example demonstrates a way to HTTP client and test it
+in real application::
+
+    // ExternalArticleService.php
+    use Symfony\Contracts\HttpClient\HttpClientInterface;
+
+    final class ExternalArticleService
+    {
+        private HttpClientInterface $httpClient;
+
+        public function __construct(HttpClientInterface $httpClient)
+        {
+            $this->httpClient = $httpClient;
+        }
+
+        public function createArticle(array $requestData): array
+        {
+            $requestJson = json_encode($requestData, JSON_THROW_ON_ERROR);
+
+            $response = $this->httpClient->request('POST', 'api/article', [
+                'headers' => [
+                    'Content-Type: application/json',
+                    'Accept: application/json',
+                ],
+                'body' => $requestJson,
+            ]);
+
+            if (201 !== $response->getStatusCode()) {
+                throw new Exception('Response status code is different than expected.');
+            }
+
+            // ... other checks
+
+            $responseJson = $response->getContent();
+            $responseData = json_decode($responseJson, true, 512, JSON_THROW_ON_ERROR);
+
+            return $responseData;
+        }
+    }
+
+    // ExternalArticleServiceTest.php
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\HttpClient\MockHttpClient;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    final class ExternalArticleServiceTest extends TestCase
+    {
+        public function testSubmitData(): void
+        {
+            // Arrange
+            $requestData = ['title' => 'Testing with Symfony HTTP Client'];
+            $expectedRequestData = json_encode($requestData, JSON_THROW_ON_ERROR);
+
+            $expectedResponseData = ['id' => 12345];
+            $mockResponseJson = json_encode($expectedResponseData, JSON_THROW_ON_ERROR);
+            $mockResponse = new MockResponse($mockResponseJson, [
+                'http_code' => 201,
+                'response_headers' => ['Content-Type: application/json'],
+            ]);
+
+            $httpClient = new MockHttpClient($mockResponse, 'https://example.com/');
+            $service = new ExternalArticleService($httpClient);
+
+            // Act
+            $responseData = $service->createArticle($requestData);
+
+            // Assert
+            self::assertSame('POST', $mockResponse->getRequestMethod());
+            self::assertSame('https://example.com/api/article', $mockResponse->getRequestUrl());
+            self::assertContains(
+                'Content-Type: application/json',
+                $mockResponse->getRequestOptions()['headers']
+            );
+            self::assertSame($expectedRequestData, $mockResponse->getRequestOptions()['body']);
+
+            self::assertSame($responseData, $expectedResponseData);
+        }
+    }
 
 .. _`cURL PHP extension`: https://www.php.net/curl
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
