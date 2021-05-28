@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-01-22T15:00:21Z
+
+Thanks for this contribution. I wasn't sure about this, so I checked the code and I found this:
+
+https://github.com/symfony/symfony/blob/5.x/src/Symfony/Bundle/FrameworkBundle/Kernel/MicroKernelTrait.php#L89-L97
+
+Apparently, we don't check if the class is an instance of `Bundle::class`. I might be wrong, so please point me to the code where this class is enforced. Thanks!
+
+---------------------------------------------------------------------------
+
+by botris at 2021-01-22T15:11:37Z
+
+I don't think it's enforced, but I do think it's a best practice. I've been looking at various widely used packages to get familiar with bundles and they all seem to extend `Bundle::class`.
+As it offers some helper methods and eliminates the need to write your own `getName` implementation etc.
+But maybe state that it's a best practice but not enforced?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-05-28T07:34:29Z
+
+I've asked around but nobody gives me a clear answer ... so let's merge this. Thanks Boris!
