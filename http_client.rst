@@ -1378,8 +1378,8 @@ This allows using them where native PHP streams are needed::
     // later on if you need to, you can access the response from the stream
     $response = stream_get_meta_data($streamResource)['wrapper_data']->getResponse();
 
-Testing HTTP Clients and Responses
-----------------------------------
+Testing
+-------
 
 This component includes the ``MockHttpClient`` and ``MockResponse`` classes to
 use them in tests that shouldn't make actual HTTP requests. Such tests can be
@@ -1393,7 +1393,10 @@ HTTP client in this component. You can use the interface to accept real client
 in your code, while replacing it with ``MockHttpClient`` in the test.
 
 When the ``request`` method is used on ``MockHttpClient``, it will respond with
-supplied ``MockResponse``. There are few ways to use it:
+supplied ``MockResponse``. There are few ways to use it, as described below.
+
+HTTP Client and Responses
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The first way of using ``MockHttpClient`` is to pass a list of responses to its
 constructor. These will be yielded in order when requests are made::
@@ -1451,6 +1454,39 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
     };
 
     $mockResponse = new MockResponse($body());
+
+Testing Request Data
+~~~~~~~~~~~~~~~~~~~~
+
+The examples above describe how to return desired response. What if you wanted
+to also test the request itself? ``MockResponse`` comes with helper methods:
+
+* ``getRequestMethod()`` - returns HTTP method
+* ``getRequestUrl()`` - returns URL the request would be sent to
+* ``getRequestOptions()`` - returns an array containing other information about
+the request such as headers, query parameters, body content etc.
+
+Usage example::
+
+    $mockResponse = new MockResponse('', ['http_code' => 204]);
+    $httpClient = new MockHttpClient($mockResponse, 'https://example.com/');
+
+    $response = $httpClient->request('DELETE', '/api/article/1337', [
+        'headers' => [
+            'Accept: */*',
+            'Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l',
+        ],
+    ]);
+
+    // returns "DELETE"
+    $mockResponse->getRequestMethod();
+
+    // returns "https://example.com//api/article/1337"
+    $mockResponse->getRequestUrl();
+
+    // returns ["Accept: */*", "Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l"]
+    $mockResponse->getRequestOptions()['headers'];
+
 
 .. _`cURL PHP extension`: https://www.php.net/curl
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
