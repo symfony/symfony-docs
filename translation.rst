@@ -713,6 +713,18 @@ configure the ``providers`` option:
             ],
         ]);
 
+.. tip::
+
+    If you use Lokalise as provider and a locale format following the `ISO 639-1`_ (e.g., "en" or "fr"),
+    you have to set the `Custom Language Name setting`_ in Lokalise for each of your locales,
+    in order to override the default value (which follow the `ISO 639-1`_ succeeded by a sub-code
+    in capital letters that specifies the national variety (e.g., "GB" or "US" according to `ISO 3166-1 alpha-2`_)).
+
+.. tip::
+
+    If you use PoEditor as provider, you have to define a `Default Reference Language`_ in your project,
+    otherwise your translations could not be correctly exported.
+
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -879,3 +891,5 @@ Learn more
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/translatable.md
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
+.. _`Default Reference Language`: https://poeditor.com/kb/setting-a-default-reference-language
+.. _`Custom Language Name setting`: https://docs.lokalise.com/en/articles/1400492-uploading-files#custom-language-codes
