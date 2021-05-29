@@ -418,22 +418,6 @@ instead::
     );
     $process->run();
 
-Using a Prepared Command Line
------------------------------
-
-You can run a process by using a prepared command line with double quote
-variable notation. This allows you to use placeholders so that only the
-parameterized values can be changed, but not the rest of the script::
-
-    use Symfony\Component\Process\Process;
-
-    $process = Process::fromShellCommandline('echo "$name"');
-    $process->run(null, ['name' => 'Elsa']);
-
-.. caution::
-
-    A prepared command line will not be escaped automatically!
-
 Process Timeout
 ---------------
 
