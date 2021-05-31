@@ -606,7 +606,7 @@ them the new contents to translate frequently and merge the results back in the
 application.
 
 Instead of doing this manually, Symfony provides integration with several
-third-party translation services (e.g. Crowdin or PoEditor). You can upload and
+third-party translation services (e.g. Crowdin or Lokalise). You can upload and
 download (called "push" and "pull") translations to/from these services and
 merge the results automatically in the application.
 
@@ -622,7 +622,6 @@ Provider              Install with
 Crowdin               ``composer require symfony/crowdin-translation-provider``
 Loco (localise.biz)   ``composer require symfony/loco-translation-provider``
 Lokalise              ``composer require symfony/lokalise-translation-provider``
-PoEditor              ``composer require symfony/po-editor-translation-provider``
 ====================  ===========================================================
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
@@ -654,7 +653,6 @@ Provider               DSN
 Crowdin                crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default
 Loco (localise.biz)    loco://API_KEY@default
 Lokalise               lokalise://PROJECT_ID:API_KEY@default
-PoEditor               poeditor://PROJECT_ID:API_KEY@default
 =====================  ==========================================================
 
 To enable a translation provider, add the correct DSN in your ``.env`` file and
@@ -719,11 +717,6 @@ configure the ``providers`` option:
     you have to set the `Custom Language Name setting`_ in Lokalise for each of your locales,
     in order to override the default value (which follow the `ISO 639-1`_ succeeded by a sub-code
     in capital letters that specifies the national variety (e.g., "GB" or "US" according to `ISO 3166-1 alpha-2`_)).
-
-.. tip::
-
-    If you use PoEditor as provider, you have to define a `Default Reference Language`_ in your project,
-    otherwise your translations could not be correctly exported.
 
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -891,5 +884,4 @@ Learn more
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`Translatable Extension`: https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/translatable.md
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
-.. _`Default Reference Language`: https://poeditor.com/kb/setting-a-default-reference-language
 .. _`Custom Language Name setting`: https://docs.lokalise.com/en/articles/1400492-uploading-files#custom-language-codes
