@@ -115,6 +115,9 @@ You can configure PHP to use this preload file:
 
     ; php.ini
     opcache.preload=/path/to/project/config/preload.php
+    
+    ; required for opcache.preload:
+    opcache.preload_user=www-data
 
 .. _performance-configure-opcache:
 
