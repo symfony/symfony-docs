@@ -26,7 +26,7 @@ you can create your own named set or requirements to be reused consistently ever
 .. configuration-block::
 
     .. code-block:: php-annotations
-    
+
         // src/Validator/Constraints/PasswordRequirements.php
         namespace App\Validator\Constraints;
 
@@ -69,7 +69,7 @@ you can create your own named set or requirements to be reused consistently ever
                     new Assert\NotCompromisedPassword(),
                 ];
             }
-        }  
+        }
 
 Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
 use it as an annotation/attribute in other classes. If the constraint has
@@ -87,38 +87,38 @@ You can now use it anywhere you need it:
 
     .. code-block:: php-annotations
 
-        // src/User/RegisterUser.php
-        namespace App\User;
+        // src/Entity/User.php
+        namespace App\Entity\User;
 
-        use App\Validator\Constraints as AcmeAssert;
+        use App\Validator\Constraints as Assert;
 
-        class RegisterUser
+        class User
         {
             /**
-             * @AcmeAssert\PasswordRequirements()
+             * @Assert\PasswordRequirements()
              */
-            public $password;
+            public $plainPassword;
         }
 
     .. code-block:: php-attributes
 
-        // src/User/RegisterUser.php
-        namespace App\User;
+        // src/Entity/User.php
+        namespace App\Entity\User;
 
-        use App\Validator\Constraints as AcmeAssert;
+        use App\Validator\Constraints as Assert;
 
-        class RegisterUser
+        class User
         {
-            #[AcmeAssert\PasswordRequirements]
-            public $password;
+            #[Assert\PasswordRequirements]
+            public $plainPassword;
         }
 
     .. code-block:: yaml
 
         # config/validator/validation.yaml
-        App\User\RegisterUser:
+        App\Entity\User:
             properties:
-                password:
+                plainPassword:
                     - App\Validator\Constraints\PasswordRequirements: ~
 
     .. code-block:: xml
@@ -129,8 +129,8 @@ You can now use it anywhere you need it:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="App\User\RegisterUser">
-                <property name="password">
+            <class name="App\Entity\User">
+                <property name="plainPassword">
                     <constraint name="App\Validator\Constraints\PasswordRequirements"/>
                 </property>
             </class>
@@ -138,17 +138,17 @@ You can now use it anywhere you need it:
 
     .. code-block:: php
 
-        // src/User/RegisterUser.php
-        namespace App\User;
+        // src/Entity/User.php
+        namespace App\Entity\User;
 
-        use App\Validator\Constraints as AcmeAssert;
+        use App\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-        class RegisterUser
+        class User
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('password', new AcmeAssert\PasswordRequirements());
+                $metadata->addPropertyConstraint('plainPassword', new Assert\PasswordRequirements());
             }
         }
 
