@@ -5,7 +5,7 @@ Store Sessions in a Database
 ============================
 
 Symfony stores sessions in files by default. If your application is served by
-multiple servers, you'll need to use instead a database to make sessions work
+multiple servers, you'll need to use a database instead to make sessions work
 across different servers.
 
 Symfony can store sessions in all kinds of databases (relational, NoSQL and
