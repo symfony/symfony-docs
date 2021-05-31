@@ -403,7 +403,7 @@ example, suppose you want to make the admin email configurable:
 
 If you make this change and refresh, you'll see an error:
 
-    Cannot autowire service "App\Service\SiteUpdateManager": argument "$adminEmail"
+    Cannot autowire service "App\\Service\\SiteUpdateManager": argument "$adminEmail"
     of method "__construct()" must have a type-hint or be given a value explicitly.
 
 That makes sense! There is no way that the container knows what value you want to
