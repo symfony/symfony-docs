@@ -84,7 +84,7 @@ container into a single file, which could improve performance when using
         // config/services.php
 
         // ...
-        $container->setParameter('container.dumper.inline_factories', true);
+        $container->parameters()->set('container.dumper.inline_factories', true);
 
 .. _performance-use-opcache:
 
@@ -115,6 +115,9 @@ Symfony generates a file with the list of classes to preload in the
 
     ; php.ini
     opcache.preload=/path/to/project/config/preload.php
+    
+    ; required for opcache.preload:
+    opcache.preload_user=www-data
 
 If this file is missing, run this command to reinstall the Symfony Flex recipe:
 ``composer recipes:install symfony/framework-bundle --force -v``.
