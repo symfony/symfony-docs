@@ -80,7 +80,7 @@ method::
     // src/Kernel.php
 
     // ...
-    class Kernel extends Kernel
+    class Kernel extends BaseKernel
     {
         // ...
 
