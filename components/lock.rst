@@ -618,12 +618,7 @@ Remote stores (:ref:`MemcachedStore <lock-store-memcached>`,
 :ref:`ZookeeperStore <lock-store-zookeeper>`) use a unique token to recognize
 the true owner of the lock. This token is stored in the
 :class:`Symfony\\Component\\Lock\\Key` object and is used internally by
-the ``Lock``, therefore this key must not be shared between processes (session,
-caching, fork, ...).
-
-.. caution::
-
-    Do not share a key between processes.
+the ``Lock``.
 
 Every concurrent process must store the ``Lock`` in the same server. Otherwise two
 different machines may allow two different processes to acquire the same ``Lock``.
