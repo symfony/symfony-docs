@@ -214,7 +214,7 @@ you can configure them to be sent to a transport:
 
                 routing:
                     # async is whatever name you gave your transport above
-                    'App\Message\SmsNotification': async
+                    App\Message\SmsNotification: async
 
     .. code-block:: xml
 
@@ -245,7 +245,7 @@ you can configure them to be sent to a transport:
             'messenger' => [
                 'routing' => [
                     // async is whatever name you gave your transport above
-                    'App\Message\SmsNotification' => 'async',
+                    App\Message\SmsNotification => 'async',
                 ],
             ],
         ]);
@@ -266,10 +266,10 @@ to multiple transports:
             messenger:
                 routing:
                     # route all messages that extend this example base class or interface
-                    'App\Message\AbstractAsyncMessage': async
-                    'App\Message\AsyncMessageInterface': async
+                    App\Message\AbstractAsyncMessage: async
+                    App\Message\AsyncMessageInterface: async
 
-                    'My\Message\ToBeSentToTwoSenders': [async, audit]
+                    My\Message\ToBeSentToTwoSenders: [async, audit]
 
     .. code-block:: xml
 
@@ -307,9 +307,9 @@ to multiple transports:
             'messenger' => [
                 'routing' => [
                     // route all messages that extend this example base class or interface
-                    'App\Message\AbstractAsyncMessage' => 'async',
-                    'App\Message\AsyncMessageInterface' => 'async',
-                    'My\Message\ToBeSentToTwoSenders' => ['async', 'audit'],
+                    App\Message\AbstractAsyncMessage => 'async',
+                    App\Message\AsyncMessageInterface => 'async',
+                    My\Message\ToBeSentToTwoSenders => ['async', 'audit'],
                 ],
             ],
         ]);
@@ -534,8 +534,8 @@ different messages to them. For example:
                             queue_name: low
 
                 routing:
-                    'App\Message\SmsNotification':  async_priority_low
-                    'App\Message\NewUserWelcomeEmail':  async_priority_high
+                    App\Message\SmsNotification:  async_priority_low
+                    App\Message\NewUserWelcomeEmail:  async_priority_high
 
     .. code-block:: xml
 
@@ -1429,7 +1429,7 @@ Then, make sure to "route" your message to *both* transports:
 
                 routing:
                     # ...
-                    'App\Message\UploadedImage': [image_transport, async_priority_normal]
+                    App\Message\UploadedImage: [image_transport, async_priority_normal]
 
     .. code-block:: xml
 
