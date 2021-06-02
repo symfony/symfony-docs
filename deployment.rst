@@ -80,9 +80,6 @@ Using Build Scripts and other Tools
 There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
-`EasyDeployBundle`_
-    A Symfony bundle that adds deploy tools to your application.
-
 `Deployer`_
     This is another native PHP rewrite of Capistrano, with some ready recipes for
     Symfony.
@@ -279,7 +276,6 @@ Learn More
 .. _`Platform.sh`: https://docs.platform.sh/frameworks/symfony.html
 .. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
 .. _`fortrabbit`: https://help.fortrabbit.com/install-symfony-4-uni
-.. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle
 .. _`Clever Cloud`: https://www.clever-cloud.com/doc/php/tutorial-symfony/
 .. _`Symfony Cloud`: https://symfony.com/doc/master/cloud/intro.html
 .. _`Scalingo`: https://doc.scalingo.com/languages/php/symfony
