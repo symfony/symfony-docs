@@ -485,7 +485,7 @@ of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
                 tags:
                     - { name: 'app.handler', key: 'handler_two' }
 
-            App\HandlerCollection:
+            App\Handler\HandlerCollection:
                 # inject all services tagged with app.handler as first argument
                 arguments: [!tagged_locator { tag: 'app.handler', index_by: 'key' }]
 
