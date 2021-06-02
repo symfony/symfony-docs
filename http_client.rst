@@ -1464,7 +1464,7 @@ to also test the request itself? ``MockResponse`` comes with helper methods:
 * ``getRequestMethod()`` - returns HTTP method
 * ``getRequestUrl()`` - returns URL the request would be sent to
 * ``getRequestOptions()`` - returns an array containing other information about
-the request such as headers, query parameters, body content etc.
+  the request such as headers, query parameters, body content etc.
 
 Usage example::
 
@@ -1490,8 +1490,8 @@ Usage example::
 Example
 ~~~~~~~
 
-The following standalone example demonstrates a way to HTTP client and test it
-in real application::
+The following standalone example demonstrates a way to use HTTP client and
+test it in real application::
 
     // ExternalArticleService.php
     use Symfony\Contracts\HttpClient\HttpClientInterface;
