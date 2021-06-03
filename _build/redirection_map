@@ -516,3 +516,4 @@
 /testing/functional_tests_assertions /testing#testing-application-assertions
 /security/named_encoders /security/named_hashers
 /components/inflector /components/string#inflector
+/security/experimental_authenticators /security/authenticator_manager
