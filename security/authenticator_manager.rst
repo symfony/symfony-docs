@@ -3,9 +3,7 @@ Using the new Authenticator-based Security
 
 .. versionadded:: 5.1
 
-    Authenticator-based security was introduced as an
-    :doc:`experimental feature </contributing/code/experimental>` in
-    Symfony 5.1.
+    Authenticator-based security was introduced in Symfony 5.1.
 
 In Symfony 5.1, a new authentication system was introduced. This system
 changes the internals of Symfony Security, to make it more extensible

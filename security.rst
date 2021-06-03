@@ -40,7 +40,7 @@ install the security feature before using it:
 
 .. tip::
 
-    A :doc:`new experimental Security </security/experimental_authenticators>`
+    A :doc:`new authenticator-based Security </security/authenticator_manager>`
     was introduced in Symfony 5.1, which will eventually replace security in
     Symfony 6.0. This system is almost fully backwards compatible with the
     current Symfony security, add this line to your security configuration to start
@@ -478,7 +478,7 @@ Limiting Login Attempts
     Login throttling was introduced in Symfony 5.2.
 
 Symfony provides basic protection against `brute force login attacks`_ if
-you're using the :doc:`experimental authenticators </security/experimental_authenticators>`.
+you're using the :doc:`authenticator-based authenticators </security/authenticator_manager>`.
 You must enable this using the ``login_throttling`` setting:
 
 .. configuration-block::
@@ -1501,7 +1501,7 @@ Authentication (Identifying/Logging in the User)
 .. toctree::
     :maxdepth: 1
 
-    security/experimental_authenticators
+    security/authenticator_manager
     security/form_login_setup
     security/reset_password
     security/json_login_setup
