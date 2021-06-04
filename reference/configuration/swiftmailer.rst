@@ -152,7 +152,7 @@ auth_mode
 **type**: ``string``
 
 The authentication mode to use when using ``smtp`` as the transport. Valid
-values are ``plain``, ``login``, ``cram-md5``, or ``null``.
+values are ``plain``, ``login``, ``cram-md5``, ``ntlm`` or ``null``.
 
 spool
 ~~~~~
