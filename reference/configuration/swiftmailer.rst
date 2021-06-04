@@ -152,11 +152,7 @@ auth_mode
 **type**: ``string``
 
 The authentication mode to use when using ``smtp`` as the transport. Valid
-values are ``plain``, ``login``, ``cram-md5``,, ``ntlm`` or ``null``.
-
-.. versionadded:: 3.0.4
-
-    The ``ntlm`` authentication mode was introduced in SwiftMailerBundle 3.0.4.
+values are ``plain``, ``login``, ``cram-md5``, ``ntlm`` or ``null``.
 
 spool
 ~~~~~
