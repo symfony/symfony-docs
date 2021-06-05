@@ -59,7 +59,7 @@ to add some interactive options called `Block elements`_::
 
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackActionsBlock;
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
-    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackImageBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackImageBlockElement;
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackSectionBlock;
     use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
     use Symfony\Component\Notifier\Message\ChatMessage;
