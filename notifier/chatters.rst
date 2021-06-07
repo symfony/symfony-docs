@@ -26,7 +26,7 @@ you to send messages to chat services like Slack or Telegram::
          */
         public function thankyou(ChatterInterface $chatter)
         {
-            $message = (new ChatMessage('You got a new invoice for 15 EUR.'))
+            $message = (new ChatMessage('You got a new invoice for 15 EUR'))
                 // if not set explicitly, the message is send to the
                 // default transport (the first one configured)
                 ->transport('slack');
