@@ -61,7 +61,7 @@ configuration:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function(FrameworkConfig $twig) {
+        return static function(TwigConfig $twig) {
             $twig->formThemes(['bootstrap_5_layout.html.twig']);
 
             // ...
