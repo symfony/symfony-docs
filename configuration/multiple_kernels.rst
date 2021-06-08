@@ -90,17 +90,6 @@ files so they don't collide with the files from ``src/Kernel.php``::
     {
         use MicroKernelTrait;
 
-        public function registerBundles()
-        {
-            // load only the bundles strictly needed for the API
-            $contents = require $this->getProjectDir().'/config/api_bundles.php';
-            foreach ($contents as $class => $envs) {
-                if ($envs[$this->environment] ?? $envs['all'] ?? false) {
-                    yield new $class();
-                }
-            }
-        }
-
         public function getProjectDir(): string
         {
             return \dirname(__DIR__);
@@ -132,6 +121,12 @@ files so they don't collide with the files from ``src/Kernel.php``::
         {
             $confDir = $this->getProjectDir().'/config/api';
             // ... load only the config routes strictly needed for the API
+        }
+
+        private function getBundlesPath(): string
+        {
+            // load only the bundles strictly needed for the API
+            return $this->getProjectDir().'/config/api_bundles.php';
         }
     }
 
