@@ -185,15 +185,15 @@ by type-hinting your service arguments with the following syntax:
 ``Psr\Log\LoggerInterface $<channel>Logger``. The ``<channel>`` must have been
 :ref:`predefined in your Monolog configuration <monolog-channels-config>`.
 
-For example to inject the service related to the ``app`` logger channel,
+For example to inject the service related to the ``foo_bar`` logger channel,
 change your constructor like this:
 
 .. code-block:: diff
 
     -     public function __construct(LoggerInterface $logger)
-    +     public function __construct(LoggerInterface $appLogger)
+    +     public function __construct(LoggerInterface $fooBarLogger)
         {
-            $this->logger = $appLogger;
+            $this->logger = $fooBarLogger;
         }
 
 .. _`MonologBundle`: https://github.com/symfony/monolog-bundle
