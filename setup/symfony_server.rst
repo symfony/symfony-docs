@@ -352,7 +352,7 @@ RabbitMQ      5672      ``RABBITMQ_`` (set user and pass via Docker ``RABBITMQ_D
 Elasticsearch 9200      ``ELASTICSEARCH_``
 MongoDB       27017     ``MONGODB_`` (set the database via a Docker ``MONGO_DATABASE`` env var)
 Kafka         9092      ``KAFKA_``
-MailCatcher   1025/1080 ``MAILER_``
+MailCatcher   1025/1080 ``MAILCATCHER_``
               or 25/80
 Blackfire     8707      ``BLACKFIRE_``
 ============= ========= ======================
