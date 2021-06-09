@@ -153,10 +153,10 @@ controllers if you type-hint an argument with
             $this->requestStack->getSession()->set('attribute-name', 'attribute-value');
 
             // gets an attribute by name
-            $foo = $this->session->get('foo');
+            $foo = $this->requestStack->getSession()->get('foo');
 
             // the second argument is the value returned when the attribute doesn't exist
-            $filters = $this->session->get('filters', []);
+            $filters = $this->requestStack->getSession()->get('filters', []);
 
             // ...
         }
