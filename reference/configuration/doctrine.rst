@@ -265,7 +265,7 @@ you can control. The following configuration options exist for a mapping:
 ``type``
 ........
 
-One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
+One of ``annotation`` (the default value), ``attribute``, ``xml``, ``yml``, ``php`` or
 ``staticphp``. This specifies which type of metadata type your mapping uses.
 
 ``dir``
