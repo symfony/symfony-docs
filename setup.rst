@@ -50,10 +50,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_name --full
+    $ symfony new my_project_name --version=next --full
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_name
+    $ symfony new my_project_name --version=next
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--full`` option installs all the packages that you
