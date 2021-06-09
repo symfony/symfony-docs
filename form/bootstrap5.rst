@@ -187,7 +187,7 @@ class to the ``row_attr`` option.
 
     .. code-block:: php
 
-        $builder->add('email', TextType::class, [
+        $builder->add('email', EmailType::class, [
             'label' => '@',
             'row_attr' => [
                 'class' => 'input-group',
