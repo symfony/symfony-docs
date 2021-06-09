@@ -6,19 +6,19 @@ running those tests. For example, if you're running a functional test and
 have introduced a new translation resource, then you will need to clear your
 cache before running those tests.
 
-Symfony already created the following ``tests/bootstrap.php`` file when installing
-the package to work with tests. If you don't have this file, create it::
+To do this, first add a file that executes your bootstrap work::
 
     // tests/bootstrap.php
-    use Symfony\Component\Dotenv\Dotenv;
-
-    require dirname(__DIR__).'/vendor/autoload.php';
-
-    if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
-        require dirname(__DIR__).'/config/bootstrap.php';
-    } elseif (method_exists(Dotenv::class, 'bootEnv')) {
-        (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+    if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
+        // executes the "php bin/console cache:clear" command
+        passthru(sprintf(
+            'APP_ENV=%s php "%s/../bin/console" cache:clear --no-warmup',
+            $_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'],
+            __DIR__
+        ));
     }
+
+    require __DIR__.'/../config/bootstrap.php';
 
 Then, check that your ``phpunit.xml.dist`` file runs this ``bootstrap.php`` file
 before running the tests:
