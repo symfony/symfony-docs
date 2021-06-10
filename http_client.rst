@@ -840,9 +840,9 @@ Add an ``extra.curl`` option in your configuration to pass those extra options::
         // ...
         'extra' => [
             'curl' => [
-                CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V6
-            ]
-        ]
+                CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V6,
+            ],
+        ],
     ]);
 
 .. note::
