@@ -265,8 +265,11 @@ you can control. The following configuration options exist for a mapping:
 ``type``
 ........
 
-One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
+One of ``annotation`` (for PHP annotations; it's the default value),
+``attribute`` (for PHP attributes), ``xml``, ``yml``, ``php`` or
 ``staticphp``. This specifies which type of metadata type your mapping uses.
+
+See `Doctrine Metadata Drivers`_ for more information about this option.
 
 ``dir``
 .......
@@ -453,3 +456,4 @@ is ``true``, the DoctrineBundle will prefix the ``dir`` configuration with
 the path of the bundle.
 
 .. _DBAL documentation: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html
+.. _`Doctrine Metadata Drivers`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/metadata-drivers.html

@@ -149,14 +149,16 @@ controllers if you type-hint an argument with
 
         public function someMethod()
         {
+            $session = $this->requestStack->getSession();
+
             // stores an attribute in the session for later reuse
-            $this->requestStack->getSession()->set('attribute-name', 'attribute-value');
+            $session->set('attribute-name', 'attribute-value');
 
             // gets an attribute by name
-            $foo = $this->session->get('foo');
+            $foo = $session->get('foo');
 
             // the second argument is the value returned when the attribute doesn't exist
-            $filters = $this->session->get('filters', []);
+            $filters = $session->get('filters', []);
 
             // ...
         }
