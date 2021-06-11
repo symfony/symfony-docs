@@ -327,12 +327,12 @@ Using the "auto" Password Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It automatically selects the best available hasher. Starting from Symfony 5.3,
-it uses the Bcrypt Password Hasher. If PHP or Symfony adds new Password Hashers
-in the future, it might select a different hasher.
+it uses the Bcrypt hasher. If PHP or Symfony adds new password hashers in the
+future, it might select a different hasher.
 
-Because of this, the length of the hashed passwords may change in the future
-(if the "auto" implementation changes), so make sure to allocate enough space
-for them to be persisted. ``varchar(255)`` should be a good setting.
+Because of this, the length of the hashed passwords may change in the future, so
+make sure to allocate enough space for them to be persisted (``varchar(255)``
+should be a good setting).
 
 .. _reference-security-encoder-bcrypt:
 
