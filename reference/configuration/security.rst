@@ -319,34 +319,27 @@ hashing algorithm. Also, each algorithm defines different config options:
                 ;
             };
 
-.. _reference-security-sodium:
-.. _using-the-argon2i-password-encoder:
-.. _using-the-sodium-password-encoder:
-
-Using the Sodium Password Hasher
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-It uses the `Argon2 key derivation function`_ and it's the hasher recommended
-by Symfony.
-
-The hashed passwords are ``96`` characters long, but due to the hashing
-requirements saved in the resulting hash this may change in the future, so make
-sure to allocate enough space for them to be persisted. Also, passwords include
-the `cryptographic salt`_ inside them (it's generated automatically for each new
-password) so you don't have to deal with it.
-
 .. _reference-security-encoder-auto:
 .. _using-the-auto-password-encoder:
 
 Using the "auto" Password Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It selects automatically the best possible hasher. Currently, it tries to use
-Sodium by default and falls back to the `bcrypt password hashing function`_ if
-not possible. In the future, when PHP adds new hashing techniques, it may use
-different password hashers.
+It automatically selects the best available hasher. Starting from Symfony 5.3,
+it uses the Bcrypt hasher. If PHP or Symfony adds new password hashers in the
+future, it might select a different hasher.
 
-It produces hashed passwords with ``60`` characters long, so make sure to
+Because of this, the length of the hashed passwords may change in the future, so
+make sure to allocate enough space for them to be persisted (``varchar(255)``
+should be a good setting).
+
+.. _reference-security-encoder-bcrypt:
+
+Using the Bcrypt Password Hasher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It produces hashed passwords with the `bcrypt password hashing function`_.
+Hashed passwords are ``60`` characters long, so make sure to
 allocate enough space for them to be persisted. Also, passwords include the
 `cryptographic salt`_ inside them (it's generated automatically for each new
 password) so you don't have to deal with it.
@@ -366,6 +359,22 @@ used back when they were hashed.
     A simple technique to make tests much faster when using BCrypt is to set
     the cost to ``4``, which is the minimum value allowed, in the ``test``
     environment configuration.
+
+.. _reference-security-sodium:
+.. _using-the-argon2i-password-encoder:
+.. _using-the-sodium-password-encoder:
+
+Using the Sodium Password Hasher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It uses the `Argon2 key derivation function`_. Argon2 support was introduced
+in PHP 7.2 by bundeling the `libsodium`_ extension.
+
+The hashed passwords are ``96`` characters long, but due to the hashing
+requirements saved in the resulting hash this may change in the future, so make
+sure to allocate enough space for them to be persisted. Also, passwords include
+the `cryptographic salt`_ inside them (it's generated automatically for each new
+password) so you don't have to deal with it.
 
 .. _reference-security-pbkdf2:
 .. _using-the-pbkdf2-encoder:
