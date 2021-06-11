@@ -7,8 +7,7 @@ How to Deploy a Symfony Application
 ===================================
 
 Deploying a Symfony application can be a complex and varied task depending on
-the setup and the requirements of your application. This article is not a step-
-by-step guide, but is a general list of the most common requirements and ideas
+the setup and the requirements of your application. This article is not a step-by-step guide, but is a general list of the most common requirements and ideas
 for deployment.
 
 .. _symfony2-deployment-basics:
