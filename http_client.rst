@@ -1469,9 +1469,9 @@ to also test the request itself? ``MockResponse`` comes with helper methods:
 Usage example::
 
     $mockResponse = new MockResponse('', ['http_code' => 204]);
-    $httpClient = new MockHttpClient($mockResponse, 'https://example.com/');
+    $httpClient = new MockHttpClient($mockResponse, 'https://example.com');
 
-    $response = $httpClient->request('DELETE', '/api/article/1337', [
+    $response = $httpClient->request('DELETE', 'api/article/1337', [
         'headers' => [
             'Accept: */*',
             'Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l',
@@ -1481,7 +1481,7 @@ Usage example::
     // returns "DELETE"
     $mockResponse->getRequestMethod();
 
-    // returns "https://example.com//api/article/1337"
+    // returns "https://example.com/api/article/1337"
     $mockResponse->getRequestUrl();
 
     // returns ["Accept: */*", "Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l"]
@@ -1550,7 +1550,7 @@ test it in real application::
                 'response_headers' => ['Content-Type: application/json'],
             ]);
 
-            $httpClient = new MockHttpClient($mockResponse, 'https://example.com/');
+            $httpClient = new MockHttpClient($mockResponse, 'https://example.com');
             $service = new ExternalArticleService($httpClient);
 
             // Act
