@@ -114,7 +114,7 @@ it is broken down.
             ;
 
             $monolog->handler('deduplicated')
-                ->type('deduplicated')
+                ->type('deduplication')
                 ->handler('symfony_mailer');
 
             $monolog->handler('symfony_mailer')
