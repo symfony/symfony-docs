@@ -41,7 +41,7 @@ to look like this::
     };
 
 So how does this front-controller work? At first, the special
-``autoload_runtime.php`` is automatically created by the Composer plugin in
+``autoload_runtime.php`` file is automatically created by the Composer plugin in
 the component. This file runs the following logic:
 
 #. It instantiates a :class:`Symfony\\Component\\Runtime\\RuntimeInterface`;
@@ -50,6 +50,11 @@ the component. This file runs the following logic:
 #. Then, this callable is called to get the application (``App\Kernel``);
 #. At last, the Runtime is used to run the application (i.e. calling
    ``$kernel->handle(Request::createFromGlobals())->send()``).
+
+.. caution::
+
+    If you use the Composer ``--no-scripts`` option, make sure your Composer version is ``>=2.1.3``
+    or the special autoload file won't be created.
 
 To make a console application, the bootstrap code would look like::
 
