@@ -42,7 +42,6 @@ The example above could then be rewritten as::
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
-    // ...
 
     class YourCommand extends Command
     {
@@ -56,7 +55,6 @@ The example above could then be rewritten as::
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             $this->logger->debug('Some info');
-            // ...
             $this->logger->notice('Some more info');
         }
     }
