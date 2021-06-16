@@ -159,7 +159,7 @@ FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default
 Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
 Gitter          ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
 GoogleChat      ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
-Iterable        ``symfony/iterable-notifier``         ``iterable://API_KEY@default?campaign_id=ID``
+Iterable        ``symfony/iterable-notifier``         ``iterable://API_KEY@default?campaign_id=CAMPAIGN_ID``
 LinkedIn        ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
 Mattermost      ``symfony/mattermost-notifier``       ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
 Mercure         ``symfony/mercure-notifier``          ``mercure://HUB_ID?topic=TOPIC``
@@ -183,7 +183,11 @@ Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST
 
 .. versionadded:: 5.3
 
-    The Gitter, Mercure, FakeChat, Microsoft Teams and Iterable integrations were introduced in Symfony 5.3.
+    The Gitter, Mercure, FakeChat and Microsoft Teams integrations were introduced in Symfony 5.3.
+    
+.. versionadded:: 5.4
+
+    The Iterable integration was introduced in Symfony 5.4.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
