@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-06-16T10:55:52Z
+
+Thanks Thomas. I'm going to merge this, but let's be completely honest: the easy way only takes 1 line:
+
+```php
+$this->logger->debug('Some info');
+```
+
+While the hard way takes 3 lines:
+
+```php
+if ($output->isDebug()) {
+    $output->writeln('Some info');
+}
+```
+
+The overall setup needed for the easy way is not that important ... because real commands are long (and maybe they already use a constructor) so injecting another dependency is negligible.
