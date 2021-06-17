@@ -6,8 +6,8 @@ Cursor Helper
 
 .. versionadded:: 5.1
 
-    The :class:`Symfony\\Component\\Console\\Cursor`
-    class was introduced in Symfony 5.1.
+    The :class:`Symfony\\Component\\Console\\Cursor` class was introduced
+    in Symfony 5.1.
 
 The :class:`Symfony\\Component\\Console\\Cursor` allows you to change the
 cursor position in a console command. This allows you to write on any position
@@ -16,10 +16,11 @@ of the output:
 .. image:: /_images/components/console/cursor.gif
    :align: center
 
-
 .. code-block:: php
 
-    // src/Commande/MyCommand.php
+    // src/Command/MyCommand.php
+    namespace App\Command;
+
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Cursor;
     use Symfony\Component\Console\Input\InputInterface;
@@ -29,13 +30,14 @@ of the output:
     {
         // ...
 
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             // ...
 
             $cursor = new Cursor($output);
 
-            // moves the cursor to a specific column and row position
+            // moves the cursor to a specific column (1st argument) and
+            // row (2nd argument) position
             $cursor->moveToPosition(7, 11);
 
             // and write text on this position using the output
@@ -71,7 +73,8 @@ There are fews methods to control moving the command cursor::
     // same for left
     $cursor->moveLeft();
 
-    // move the cursor to a specific position from its current position
+    // move the cursor to a specific (column, row) position from the
+    // top-left position of the terminal
     $cursor->moveToPosition(7, 11);
 
 You can get the current command's cursor position by using::

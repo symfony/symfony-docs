@@ -103,3 +103,4 @@ whitelist:
         - '.. code-block:: twig'
         - '.. versionadded:: 3.6' # MonologBundle
         - 'End to End Tests (E2E)'
+        - '.. code-block:: php'
