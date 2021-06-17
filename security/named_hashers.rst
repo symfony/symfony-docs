@@ -139,7 +139,7 @@ the name of the hasher to use::
     }
 
 If you created your own password hasher implementing the
-:class:`Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface`,
+:class:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface`,
 you must register a service for it in order to use it as a named hasher:
 
 .. configuration-block::
