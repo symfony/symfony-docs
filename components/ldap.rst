@@ -163,7 +163,7 @@ delete existing ones::
 .. versionadded:: 5.3
 
     The option to make attribute names case-insensitive in ``getAttribute()``
-    and ``hasAttribute()`` was introduce in Symfony 5.3.
+    and ``hasAttribute()`` was introduced in Symfony 5.3.
 
 Batch Updating
 ______________

@@ -454,5 +454,6 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
 * :doc:`/components/console/helpers/debug_formatter`: provides functions to
   output debug information when running an external program
+* :doc:`/components/console/helpers/cursor`: allows to manipulate the cursor in the terminal
 
 .. _`exit status`: https://en.wikipedia.org/wiki/Exit_status
