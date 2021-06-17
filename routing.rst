@@ -2431,7 +2431,7 @@ use the ``generateUrl()`` helper::
 
     While objects are converted to string when used as placeholders, they are not
     converted when used as extra parameters. So, if you're passing an object (e.g. an Uuid)
-    as value of an extra parameter, you need to explictly convert it to a string::
+    as value of an extra parameter, you need to explicitly convert it to a string::
 
         $this->generateUrl('blog', ['uuid' => (string) $entity->getUuid()]);
 
