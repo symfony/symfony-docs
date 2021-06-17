@@ -1271,7 +1271,7 @@ check_delayed_interval   The interval to check for delayed           1000
                          Set to 0 to disable checks.
 get_notify_timeout       The length of time to wait for a            0
                          response when calling
-                         ``PDO::pgsqlGetNotify```, in milliseconds.
+                         ``PDO::pgsqlGetNotify``, in milliseconds.
 =======================  ==========================================  ======================
 
 Beanstalkd Transport
