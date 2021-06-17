@@ -90,6 +90,9 @@ generate and return the value::
     Use cache tags to delete more than one key at the time. Read more at
     :doc:`/components/cache/cache_invalidation`.
 
+Stampede prevention
+~~~~~~~~~~~~~~~~~~~
+
 The Cache Contracts also comes with built in `Stampede prevention`_. This will
 remove CPU spikes at the moments when the cache is cold. If an example application
 spends 5 seconds to compute data that is cached for 1 hour and this data is accessed
