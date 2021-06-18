@@ -1270,7 +1270,8 @@ Symfony's HTTP client provides an EventSource implementation to consume these
 server-sent events. Use the :class:`Symfony\\Component\\HttpClient\\EventSourceHttpClient`
 to wrap your HTTP client, open a connection to a server that responds with a
 ``text/event-stream`` content type and consume the stream as follows::
-
+    
+    use Symfony\Component\HttpClient\Chunk\ServerSentEvent;
     use Symfony\Component\HttpClient\EventSourceHttpClient;
 
     // the second optional argument is the reconnection time in seconds (default = 10)
