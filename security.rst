@@ -41,7 +41,7 @@ install the security feature before using it:
 .. tip::
 
     A :doc:`new authenticator-based Security </security/authenticator_manager>`
-    was introduced in Symfony 5.1, which will eventually replace security in
+    was introduced in Symfony 5.1, which will replace security in
     Symfony 6.0. This system is almost fully backwards compatible with the
     current Symfony security, add this line to your security configuration to start
     using it:
