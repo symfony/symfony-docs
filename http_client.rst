@@ -1001,6 +1001,13 @@ first and be read later on. This will allow the client to monitor all pending
 requests while your code waits for a specific one, as done in each iteration of
 the above "foreach" loop.
 
+.. note::
+
+    The maximum number of concurrent requests that you can perform depend on the
+    resources of your machine (e.g. your operating system may limit the number
+    of simultaneous reads of the file that stores the certificates file).
+    Make your requests in batches to avoid these issues.
+
 Multiplexing Responses
 ~~~~~~~~~~~~~~~~~~~~~~
 
