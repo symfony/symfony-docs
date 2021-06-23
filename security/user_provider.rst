@@ -534,4 +534,5 @@ user provider:
         # ...
 
         App\Security\LoginFormAuthenticator:
-            $userProvider: '@security.user.provider.concrete.backend_users'
+            arguments:
+                $userProvider: '@security.user.provider.concrete.backend_users'
