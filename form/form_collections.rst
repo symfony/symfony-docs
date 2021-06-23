@@ -255,7 +255,7 @@ On the rendered page, the result will look something like this:
 
 .. code-block:: html
 
-    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+    <ul class="tags" data-index="{{ form.tags|length > 0 ? form.bars|last.vars.name + 1 : 0 }}" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
 
 .. seealso::
 
@@ -290,19 +290,9 @@ functionality with JavaScript:
 
 .. code-block:: javascript
 
-    jQuery(document).ready(function() {
-        // Get the ul that holds the collection of tags
-        var $tagsCollectionHolder = $('ul.tags');
-        // count the current form inputs we have (e.g. 2), use that as the new
-        // index when inserting a new item (e.g. 2)
-        $tagsCollectionHolder.data('index', $tagsCollectionHolder.find('input').length);
-
-        $('body').on('click', '.add_item_link', function(e) {
-            var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
-            // add a new tag form (see next code block)
-            addFormToCollection($collectionHolderClass);
-        })
-    });
+    document
+      .querySelectorAll('.add_item_link')
+      .forEach(btn => btn.addEventListener("click", addFormToCollection));
 
 The ``addFormToCollection()`` function's job will be to use the ``data-prototype``
 attribute to dynamically add a new form when this link is clicked. The ``data-prototype``
@@ -312,34 +302,23 @@ you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``)
 
 .. code-block:: javascript
 
-    function addFormToCollection($collectionHolderClass) {
-        // Get the ul that holds the collection of tags
-        var $collectionHolder = $('.' + $collectionHolderClass);
+    const addFormToCollection = (e) => {
+      const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
-        // Get the data-prototype explained earlier
-        var prototype = $collectionHolder.data('prototype');
+      const item = document.createElement('li');
 
-        // get the new index
-        var index = $collectionHolder.data('index');
+      item.innerHTML = collectionHolder
+        .dataset
+        .prototype
+        .replace(
+          /__name__/g,
+          collectionHolder.dataset.index
+        );
 
-        var newForm = prototype;
-        // You need this only if you didn't set 'label' => false in your tags field in TaskType
-        // Replace '__name__label__' in the prototype's HTML to
-        // instead be a number based on how many items we have
-        // newForm = newForm.replace(/__name__label__/g, index);
+      collectionHolder.appendChild(item);
 
-        // Replace '__name__' in the prototype's HTML to
-        // instead be a number based on how many items we have
-        newForm = newForm.replace(/__name__/g, index);
-
-        // increase the index with one for the next item
-        $collectionHolder.data('index', index + 1);
-
-        // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<li></li>').append(newForm);
-        // Add the new form at the end of the list
-        $collectionHolder.append($newFormLi)
-    }
+      collectionHolder.dataset.index++;
+    };
 
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. When the form is submitted, any new tag forms will be converted
@@ -552,36 +531,35 @@ First, add a "delete this tag" link to each tag form:
 
 .. code-block:: javascript
 
-    jQuery(document).ready(function() {
-        // Get the ul that holds the collection of tags
-        $collectionHolder = $('ul.tags');
+    const tags = document.querySelectorAll('ul.tags')
+    tags.forEach((tag) => {
+        addTagFormDeleteLink(tag)
+    })
 
-        // add a delete link to all of the existing tag form li elements
-        $collectionHolder.find('li').each(function() {
-            addTagFormDeleteLink($(this));
-        });
-
-        // ... the rest of the block from above
-    });
-
+    // ... the rest of the block from above
+    
     function addFormToCollection() {
         // ...
 
         // add a delete link to the new form
-        addTagFormDeleteLink($newFormLi);
+        addTagFormDeleteLink(item);
     }
 
 The ``addTagFormDeleteLink()`` function will look something like this:
 
 .. code-block:: javascript
 
-    function addTagFormDeleteLink($tagFormLi) {
-        var $removeFormButton = $('<button type="button">Delete this tag</button>');
-        $tagFormLi.append($removeFormButton);
+    const addTagFormDeleteLink = (tagFormLi) => {
+        const removeFormButton = document.createElement('button')
+        removeFormButton.classList
+        removeFormButton.innerText = 'Delete this tag'
+        
+        tagFormLi.append(removeFormButton);
 
-        $removeFormButton.on('click', function(e) {
+        removeFormButton.addEventListener('click', (e) => {
+            e.preventDefault()
             // remove the li for the tag form
-            $tagFormLi.remove();
+            tagFormLi.remove();
         });
     }
 
@@ -677,7 +655,7 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
 .. _`Owning Side and Inverse Side`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork-associations.html
 .. _`jQuery`: http://jquery.com/
-.. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
+.. _`JSFiddle`: https://jsfiddle.net/ey8ozh6n/
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
 .. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
