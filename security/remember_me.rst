@@ -169,26 +169,25 @@ the cookie remains valid.
 
 Add the RememberMeBadge() to the Passport
 -----------------------------------------
-After uncommenting the login template and add some lines in the firewall configuration, the last thing to do is to add a new RememberMeBadge to the Password in the Authenticator.
 
-    // src/Security/Authenticator.php
-    // ...
-    
-    public function authenticate(Request $request): PassportInterface
-    {
-        $email = $request->request->get('email', '');
+Beware that in the new Authenitaction System you have to set the RememberMeBadge()
+in the authenticate method of the authenticator, like::
 
-        $request->getSession()->set(Security::LAST_USERNAME, $email);
+     public function authenticate(Request $request): PassportInterface
+        {
+            $email = $request->request->get('email', '');
 
-        return new Passport(
-            new UserBadge($email),
-            new PasswordCredentials($request->request->get('password', '')),
-            [
-                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
-                new RememberMeBadge(),
-            ]
-        );
-    }
+            $request->getSession()->set(Security::LAST_USERNAME, $email);
+
+            return new Passport(
+                new UserBadge($email),
+                new PasswordCredentials($request->request->get('password', '')),
+                [
+                    new CsrfTokenBadge('authenticate', $request->get('_csrf_token')),
+                    new RememberMeBadge(),
+                ]
+            );
+        }
 
 Forcing the User to Re-Authenticate before Accessing certain Resources
 ----------------------------------------------------------------------
