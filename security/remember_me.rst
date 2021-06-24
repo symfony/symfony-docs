@@ -167,6 +167,27 @@ this:
 The user will then automatically be logged in on subsequent visits while
 the cookie remains valid.
 
+Beware that in the new Authenitaction System you have to set the RememberMeBadge()
+in the authenticate method of the authenticator, like:
+
+.. code-block:: php
+ 
+     public function authenticate(Request $request): PassportInterface
+        {
+            $email = $request->request->get('email', '');
+
+            $request->getSession()->set(Security::LAST_USERNAME, $email);
+
+            return new Passport(
+                new UserBadge($email),
+                new PasswordCredentials($request->request->get('password', '')),
+                [
+                    new CsrfTokenBadge('authenticate', $request->get('_csrf_token')),
+                    new RememberMeBadge(),
+                ]
+            );
+        }
+
 Forcing the User to Re-Authenticate before Accessing certain Resources
 ----------------------------------------------------------------------
 
