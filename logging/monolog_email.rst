@@ -28,8 +28,7 @@ it is broken down.
                     action_level: critical
                     # to also log 400 level errors (but not 404's):
                     # action_level: error
-                    # excluded_404s:
-                    #     - ^/
+                    # excluded_http_codes: [404]
                     handler:      deduplicated
                 deduplicated:
                     type:    deduplication
@@ -62,7 +61,7 @@ it is broken down.
                 to also log 400 level errors (but not 404's):
                 action-level="error"
                 And add this child inside this monolog:handler
-                <monolog:excluded-404>^/</monolog:excluded-404>
+                <monolog:excluded-http-code code="404"/>
                 -->
                 <monolog:handler
                     name="main"
@@ -102,16 +101,17 @@ it is broken down.
         use Symfony\Config\MonologConfig;
 
         return static function (MonologConfig $monolog) {
-            $monolog->handler('main')
+            $mainHandler = $monolog->handler('main')
                 ->type('fingers_crossed')
                 // 500 errors are logged at the critical level
                 ->actionLevel('critical')
-                // to also log 400 level errors (but not 404's):
+                // to also log 400 level errors:
                 // ->actionLevel('error')
-                // ->excluded404s(['^/'])
-
                 ->handler('deduplicated')
             ;
+
+            // add this to exclude 404 errors
+            // $mainHandler->excludedHttpCode()->code(404);
 
             $monolog->handler('deduplicated')
                 ->type('deduplication')
