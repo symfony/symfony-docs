@@ -75,6 +75,7 @@ Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_
 Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
 SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
 SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
+TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
 ==============  ====================================  ===========================================================================
 
@@ -90,6 +91,10 @@ Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@defau
 
     The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms, LightSms, SmsBiuras
     and MessageBird integrations were introduced in Symfony 5.3.
+
+.. versionadded:: 5.4
+
+    The TurboSms integration was introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
