@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-06-23T13:17:43Z
+
+It looks good.
+
+The `Code Blocks` job does not complain so it all should be correct syntax and runnable.
+
+Im not sure about the Yaml error. I've never used PHP constants in yaml before.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-06-23T13:20:43Z
+
+Thanks Tobias!
