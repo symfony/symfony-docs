@@ -28,8 +28,7 @@ it is broken down.
                     action_level: critical
                     # to also log 400 level errors (but not 404's):
                     # action_level: error
-                    # excluded_404s:
-                    #     - ^/
+                    # excluded_http_codes: [404]
                     handler:      deduplicated
                 deduplicated:
                     type:    deduplication
@@ -62,7 +61,7 @@ it is broken down.
                 to also log 400 level errors (but not 404's):
                 action-level="error"
                 And add this child inside this monolog:handler
-                <monolog:excluded-404>^/</monolog:excluded-404>
+                <monolog:excluded-http-code code="404"/>
                 -->
                 <monolog:handler
                     name="main"
@@ -107,9 +106,7 @@ it is broken down.
                     'action_level' => 'critical',
                     // to also log 400 level errors (but not 404's):
                     // 'action_level' => 'error',
-                    // 'excluded_404s' => [
-                    //     '^/',
-                    // ],
+                    // 'excluded_http_codes' => [404],
                     'handler'      => 'deduplicated',
                 ],
                 'deduplicated' => [
