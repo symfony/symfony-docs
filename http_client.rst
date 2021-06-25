@@ -1003,10 +1003,10 @@ the above "foreach" loop.
 
 .. note::
 
-    The maximum number of concurrent requests that you can perform depend on the
-    resources of your machine (e.g. your operating system may limit the number
-    of simultaneous reads of the file that stores the certificates file).
-    Make your requests in batches to avoid these issues.
+    The maximum number of concurrent requests that you can perform depends on
+    the resources of your machine (e.g. your operating system may limit the
+    number of simultaneous reads of the file that stores the certificates
+    file). Make your requests in batches to avoid these issues.
 
 Multiplexing Responses
 ~~~~~~~~~~~~~~~~~~~~~~
