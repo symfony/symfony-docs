@@ -751,16 +751,62 @@ as a service named ``http_client`` or using the autowiring alias
 
 This service can be configured using ``framework.http_client.default_options``:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/framework.yaml
-    framework:
-        # ...
-        http_client:
-            max_host_connections: 10
-            default_options:
-                headers: { 'X-Powered-By': 'ACME App' }
-                max_redirects: 7
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            http_client:
+                max_host_connections: 10
+                default_options:
+                    headers: { 'X-Powered-By': 'ACME App' }
+                    max_redirects: 7
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client max-host-connections="10">
+                    <framework:default-options max-redirects="7">
+                        <framework:header name="X-Powered-By">ACME App</framework:header>
+                    </framework:default-options>
+                </framework:http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => [
+                'max_host_connections' => 10,
+                'default_options' => [
+                    'headers' => [
+                        'X-Powered-By' => 'ACME App',
+                    ],
+                    'max_redirects' => 7,
+                ],
+            ],
+        ]);
+
+    .. code-block:: php-standalone
+
+        $client = HttpClient::create([
+            'headers' => [
+                'X-Powered-By' => 'ACME App',
+            ],
+            'max_redirects' => 7,
+        ], 10);
 
 .. _reference-http-client-scoped-clients:
 
@@ -769,16 +815,57 @@ service name defined as a key under ``scoped_clients``. Scoped clients inherit
 the default options defined for the ``http_client`` service. You can override
 these options and can define a few others:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/framework.yaml
-    framework:
-        # ...
-        http_client:
-            scoped_clients:
-                my_api.client:
-                    auth_bearer: secret_bearer_token
-                    # ...
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            http_client:
+                scoped_clients:
+                    my_api.client:
+                        auth_bearer: secret_bearer_token
+                        # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <framework:scoped-client name="my_api.client" auth-bearer="secret_bearer_token"/>
+                </framework:http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'http_client' => [
+                'scoped_clients' => [
+                    'my_api.client' => [
+                        'auth_bearer' => 'secret_bearer_token',
+                        // ...
+                    ],
+                ],
+            ],
+        ]);
+
+    .. code-block:: php-standalone
+
+        $client = HttpClient::createForBaseUri('https://...', [
+            'auth_bearer' => 'secret_bearer_token',
+            // ...
+        ]);
 
 Options defined for scoped clients apply only to URLs that match either their
 `base_uri`_ or the `scope`_ option when it is defined. Non-matching URLs always
