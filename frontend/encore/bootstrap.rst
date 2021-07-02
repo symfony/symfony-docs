@@ -43,7 +43,7 @@ used in your application:
 .. code-block:: terminal
 
     // jQuery is only required in versions prior to Bootstrap 5
-    $ yarn add jquery popper.js --dev
+    $ yarn add jquery @popperjs/core --dev
 
 Now, require bootstrap from any of your JavaScript files:
 
