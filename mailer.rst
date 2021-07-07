@@ -1100,13 +1100,14 @@ This can be configured by replacing the ``dsn`` configuration entry with a
             ],
         ]);
 
-By default the first transport is used. The other transports can be used by
-adding a text header ``X-Transport`` to an email::
+By default the first transport is used. The other transports can be selected by
+adding an ``X-Transport`` header (which Mailer will remove automatically from
+the final email)::
 
-    // Send using first "main" transport ...
+    // Send using first transport ("main"):
     $mailer->send($email);
 
-    // ... or use the "alternative" one
+    // ... or use the transport "alternative":
     $email->getHeaders()->addTextHeader('X-Transport', 'alternative');
     $mailer->send($email);
 
