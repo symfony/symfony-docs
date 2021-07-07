@@ -2708,7 +2708,7 @@ email_validation_mode
 
 **type**: ``string`` **default**: ``loose``
 
-It controls the way email addresses are validated by the
+Sets the default value for 
 :doc:`/reference/constraints/Email` validator. The possible values are:
 
 * ``loose``, it uses a simple regular expression to validate the address (it
