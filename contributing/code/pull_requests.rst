@@ -429,6 +429,68 @@ After the `Psalm phar is installed`_, the analysis can be run locally with:
 
     $ psalm.phar src/Symfony/Component/Workflow
 
+Automated Tests
+~~~~~~~~~~~~~~~
+
+A series of automated tests will run when submitting the pull request.
+These test the code under different conditions, to be sure nothing
+important is broken. Test failures can be unrelated to your changes. If you
+think this is the case, you can check if the target branch has the same
+errors and leave a comment on your PR.
+
+Otherwise, the test failure might be caused by your changes. The following
+test scenarios run on each change:
+
+``PHPUnit / Tests``
+    This job runs on Ubuntu using multiple PHP versions (each in their
+    own job). These jobs run the testsuite just like you would do locally.
+
+    A failure in these jobs often indicates a bug in the code.
+
+``PHPUnit / Tests (high-deps)``
+    This job checks each package (bridge, bundle or component) in ``src/``
+    individually by calling ``composer update`` and ``phpunit`` from inside
+    each package.
+
+    A failure in this job often indicates a missing package in the
+    ``composer.json`` of the failing package (e.g.
+    ``src/Symfony/Bundle/FrameworkBundle/composer.json``).
+
+    This job also runs relevant packages using a "flipped" test (indicated
+    by a ``^`` suffix in the package name). These tests checkout the
+    previous major release (e.g. ``4.4`` for a pull requests on ``5.4``)
+    and run the tests with your branch as dependency.
+
+    A failure in these flipped tests indicate a backwards compatibility
+    break in your changes.
+
+``PHPUnit / Tests (low-deps)``
+    This job also checks each package individually, but then uses
+    ``composer update --prefer-lowest`` before running the tests.
+
+    A failure in this job often indicates a wrong version range or a
+    missing package in the ``composer.json`` of the failing package.
+
+``continuous-integration/appveyor/pr``
+    This job runs on Windows using the x86 architecture and the lowest
+    supported PHP version. All tests first run without extra PHP
+    extensions. Then, all skipped tests are run using all required PHP
+    extensions.
+
+    A failure in this job often indicate that your changes do not support
+    Windows, x86 or PHP with minimal extensions.
+
+``Integration / Tests``
+    Integration tests require other services (e.g. Redis or RabbitMQ) to
+    run. This job only runs the tests in the ``integration`` PHPUnit group.
+
+    A failure in this job indicates a bug in the communication with these
+    services.
+
+``PHPUnit / Tests (experimental)``
+    This job always passes (even with failing tests) and is used by the
+    core team to prepare for the upcoming PHP versions.
+
 .. _rework-your-patch:
 
 Rework your Pull Request
