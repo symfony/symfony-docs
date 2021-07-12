@@ -100,11 +100,12 @@ the ``@`` character, which is the usual syntax to
 
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
         return static function (TwigConfig $twig) {
             // ...
 
-            $twig->global('uuid')->value('@App\Generator\UuidGenerator');
+            $twig->global('uuid')->value(service('App\Generator\UuidGenerator'));
         };
 
 Now you can use the ``uuid`` variable in any Twig template to access to the
