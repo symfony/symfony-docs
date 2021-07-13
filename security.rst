@@ -759,8 +759,8 @@ like this:
   will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
 
 * ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
-  this - this is useful when *whitelisting* URLs to guarantee access - some
-  details are in :doc:`/security/access_control`.
+  this - this is useful when defining a list of URLs with no access restriction
+  - some details are in :doc:`/security/access_control`.
 
 .. _retrieving-the-user-object:
 
