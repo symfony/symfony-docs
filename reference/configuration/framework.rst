@@ -607,7 +607,7 @@ instance), the host might have been manipulated by an attacker.
 The Symfony :method:`Request::getHost() <Symfony\\Component\\HttpFoundation\\Request::getHost>`
 method might be vulnerable to some of these attacks because it depends on
 the configuration of your web server. One simple solution to avoid these
-attacks is to whitelist the hosts that your Symfony application can respond
+attacks is to configure a list of hosts that your Symfony application can respond
 to. That's the purpose of this ``trusted_hosts`` option. If the incoming
 request's hostname doesn't match one of the regular expressions in this list,
 the application won't respond and the user will receive a 400 response.
