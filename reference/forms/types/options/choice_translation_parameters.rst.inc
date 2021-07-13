@@ -50,7 +50,7 @@ Given this translation message:
 You can specify the placeholder values as follows::
 
     $builder->add('id', null, [
-        'choice' => [
+        'choices' => [
             'form.order.yes' => true,
             'form.order.no' => false,
         ],
@@ -66,7 +66,7 @@ You can specify the placeholder values as follows::
 If an array, the keys of the ``choices`` array must be used as keys::
 
     $builder->add('id', null, [
-        'choice' => [
+        'choices' => [
             'form.order.yes' => true,
             'form.order.no' => false,
         ],
