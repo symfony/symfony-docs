@@ -953,7 +953,7 @@ and in route imports. Symfony defines some special attributes with the same name
                 format="html">
 
                 <requirement key="_locale">en|fr</requirement>
-                <requirement key="_format">html|rss</requirement>
+                <requirement key="_format">html|xml</requirement>
 
             </route>
         </routes>
@@ -972,7 +972,7 @@ and in route imports. Symfony defines some special attributes with the same name
                 ->format('html')
                 ->requirements([
                     '_locale' => 'en|fr',
-                    '_format' => 'html|rss',
+                    '_format' => 'html|xml',
                 ])
             ;
         };
@@ -1662,7 +1662,7 @@ multi-tenant applications) and these parameters can be validated too with
         };
 
 In the above example, the ``subdomain`` parameter defines a default value because
-otherwise you need to include a domain value each time you generate a URL using
+otherwise you need to include a subdomain value each time you generate a URL using
 these routes.
 
 .. tip::
@@ -1682,7 +1682,7 @@ these routes.
             [],
             ['HTTP_HOST' => 'm.example.com']
             // or get the value from some configuration parameter:
-            // ['HTTP_HOST' => 'm.' . $client->getContainer()->getParameter('domain')]
+            // ['HTTP_HOST' => 'm.'.$client->getContainer()->getParameter('domain')]
         );
 
 .. _i18n-routing:
@@ -1813,7 +1813,7 @@ with a locale. This can be done by defining a different prefix for each locale
                 ->prefix([
                     // don't prefix URLs for English, the default locale
                     'en' => '',
-                    'nl' => '/nl'
+                    'nl' => '/nl',
                 ])
             ;
         };
