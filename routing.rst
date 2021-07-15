@@ -232,13 +232,13 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
         class BlogApiController extends AbstractController
         {
             #[Route('/api/posts/{id}', methods: ['GET', 'HEAD'])]
-            public function show(int $id)
+            public function show(int $id): Response
             {
                 // ... return a JSON response with the post
             }
 
             #[Route('/api/posts/{id}', methods: ['PUT'])]
-            public function edit(int $id)
+            public function edit(int $id): Response
             {
                 // ... edit a post
             }
@@ -343,6 +343,7 @@ arbitrary matching logic:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class DefaultController extends AbstractController
@@ -354,7 +355,7 @@ arbitrary matching logic:
             )]
             // expressions can also include config parameters:
             // condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
-            public function contact()
+            public function contact(): Response
             {
                 // ...
             }
@@ -517,6 +518,7 @@ defined as ``/blog/{slug}``:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends AbstractController
@@ -524,7 +526,7 @@ defined as ``/blog/{slug}``:
             // ...
 
             #[Route('/blog/{slug}', name: 'blog_show')]
-            public function show(string $slug)
+            public function show(string $slug): Response
             {
                 // $slug will equal the dynamic part of the URL
                 // e.g. at /blog/yay-routing, then $slug='yay-routing'
@@ -623,18 +625,19 @@ the ``{page}`` parameter using the ``requirements`` option:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends AbstractController
         {
             #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
-            public function list(int $page)
+            public function list(int $page): Response
             {
                 // ...
             }
 
             #[Route('/blog/{slug}', name: 'blog_show')]
-            public function show($slug)
+            public function show($slug): Response
             {
                 // ...
             }
@@ -750,12 +753,13 @@ concise, but it can decrease route readability when requirements are complex:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends AbstractController
         {
             #[Route('/blog/{page<\d+>}', name: 'blog_list')]
-            public function list(int $page)
+            public function list(int $page): Response
             {
                 // ...
             }
@@ -804,7 +808,7 @@ visit ``/blog/1``, it will match. But if they visit ``/blog``, it will **not**
 match. As soon as you add a parameter to a route, it must have a value.
 
 You can make ``blog_list`` once again match when the user visits ``/blog`` by
-adding a default value for the ``{page}`` parameter. When using annotations,
+adding a default value for the ``{page}`` parameter. When using annotations or attributes,
 default values are defined in the arguments of the controller action. In the
 other configuration formats they are defined with the ``defaults`` option:
 
@@ -836,12 +840,13 @@ other configuration formats they are defined with the ``defaults`` option:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends AbstractController
         {
             #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
-            public function list(int $page = 1)
+            public function list(int $page = 1): Response
             {
                 // ...
             }
@@ -940,12 +945,13 @@ parameter:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class BlogController extends AbstractController
         {
             #[Route('/blog/{page<\d+>?1}', name: 'blog_list')]
-            public function list(int $page)
+            public function list(int $page): Response
             {
                 // ...
             }
@@ -1194,7 +1200,7 @@ and in route imports. Symfony defines some special attributes with the same name
                     '_format' => 'html|xml',
                 ],
             )]
-            public function search()
+            public function search(): Response
             {
             }
         }
@@ -1285,12 +1291,14 @@ the controllers of the routes:
         // src/Controller/BlogController.php
         namespace App\Controller;
 
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class BlogController
+        class BlogController extends AbstractController
         {
             #[Route('/blog/{page}', name: 'blog_index', defaults: ['page' => 1, 'title' => 'Hello world!'])]
-            public function index(int $page, string $title)
+            public function index(int $page, string $title): Response
             {
                 // ...
             }
@@ -1375,13 +1383,15 @@ A possible solution is to change the parameter requirements to be more permissiv
 
         // src/Controller/DefaultController.php
         namespace App\Controller;
-
+        
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
-        class DefaultController
+        class DefaultController extends AbstractController
         {
             #[Route('/share/{token}', name: 'share', requirements: ['token' => '.+'])]
-            public function share($token)
+            public function share($token): Response
             {
                 // ...
             }
@@ -1493,20 +1503,22 @@ when importing the routes.
 
         // src/Controller/BlogController.php
         namespace App\Controller;
-
+        
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         #[Route('/blog', requirements: ['_locale' => 'en|es|fr'], name: 'blog_')]
-        class BlogController
+        class BlogController extends AbstractController
         {
             #[Route('/{_locale}', name: 'index')]
-            public function index()
+            public function index(): Response
             {
                 // ...
             }
 
             #[Route('/{_locale}/posts/{slug}', name: 'show')]
-            public function show(Post $post)
+            public function show(Post $post): Response
             {
                 // ...
             }
@@ -1837,18 +1849,19 @@ host name:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class MainController extends AbstractController
         {
             #[Route('/', name: 'mobile_homepage', host: 'm.example.com')]
-            public function mobileHomepage()
+            public function mobileHomepage(): Response
             {
                 // ...
             }
 
             #[Route('/', name: 'homepage')]
-            public function homepage()
+            public function homepage(): Response
             {
                 // ...
             }
@@ -1946,6 +1959,7 @@ multi-tenant applications) and these parameters can be validated too with
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class MainController extends AbstractController
@@ -1957,13 +1971,13 @@ multi-tenant applications) and these parameters can be validated too with
                 defaults: ['subdomain' => 'm'],
                 requirements: ['subdomain' => 'm|mobile'],
             )]
-            public function mobileHomepage()
+            public function mobileHomepage(): Response
             {
                 // ...
             }
 
             #[Route('/', name: 'homepage')]
-            public function homepage()
+            public function homepage(): Response
             {
                 // ...
             }
@@ -2101,6 +2115,7 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class CompanyController extends AbstractController
@@ -2109,7 +2124,7 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
                 'en' => '/about-us',
                 'nl' => '/over-ons'
             ], name: 'about_us')]
-            public function about()
+            public function about(): Response
             {
                 // ...
             }
@@ -2257,7 +2272,7 @@ locale.
             $routes->import('../../src/Controller/', 'annotation')
                 ->host([
                     'en' => 'https://www.example.com',
-                    'nl' => 'https://www.example.nl'
+                    'nl' => 'https://www.example.nl',
                 ])
             ;
         };
@@ -2711,12 +2726,13 @@ each route explicitly:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
         class SecurityController extends AbstractController
         {
             #[Route('/login', name: 'login', schemes: ['https'])]
-            public function login()
+            public function login(): Response
             {
                 // ...
             }
