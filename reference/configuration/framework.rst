@@ -2501,9 +2501,9 @@ logging
 **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 
 When ``true``, a log entry is made whenever the translator cannot find a translation
-for a given key. The logs are made to the ``translation`` channel and at the
-``debug`` for level for keys where there is a translation in the fallback
-locale and the ``warning`` level if there is no translation to use at all.
+for a given key. The logs are made to the ``translation`` channel at the
+``debug`` level for keys where there is a translation in the fallback
+locale, and the ``warning`` level if there is no translation to use at all.
 
 .. _reference-framework-translator-formatter:
 
