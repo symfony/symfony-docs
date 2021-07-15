@@ -2485,7 +2485,7 @@ email_validation_mode
 
 **type**: ``string`` **default**: ``loose``
 
-Sets the default value for 
+Sets the default value for
 :doc:`/reference/constraints/Email` validator. The possible values are:
 
 * ``loose``, it uses a simple regular expression to validate the address (it
@@ -2938,9 +2938,9 @@ The cache clearer used to clear your PSR-6 cache.
 prefix_seed
 ...........
 
-**type**: ``string`` **default**: ``null``
+**type**: ``string`` **default**: ``_%kernel.project_dir%.%kernel.container_class%``
 
-If defined, this value is used as part of the "namespace" generated for the
+This value is used as part of the "namespace" generated for the
 cache item keys. A common practice is to use the unique name of the application
 (e.g. ``symfony.com``) because that prevents naming collisions when deploying
 multiple applications into the same path (on different servers) that share the
