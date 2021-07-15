@@ -2801,6 +2801,10 @@ none
 a service id
     A service id referencing a `Doctrine Cache`_ implementation
 
+.. deprecated:: 5.3
+
+    Using a service ID as the value of ``cache`` is deprecated since Symfony 5.3.
+
 file_cache_dir
 ..............
 
