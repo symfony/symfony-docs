@@ -2785,10 +2785,12 @@ annotations
 cache
 .....
 
-**type**: ``string`` **default**: ``'file'``
+**type**: ``string`` **default**: ``'php_array'``
 
 This option can be one of the following values:
 
+php_array
+    Use a PHP array to cache annotations in memory
 file
     Use the filesystem to cache annotations
 none
