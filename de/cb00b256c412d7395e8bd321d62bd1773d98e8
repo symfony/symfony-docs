@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-06-23T07:44:53Z
+
+Jason, thanks for this contribution!
+
+Looking at https://github.com/symfony/symfony/blob/b617ee0cd014767fcf52971a9644d2f0bfbdf719/src/Symfony/Component/Ldap/Adapter/AbstractQuery.php#L43-L45 it seems that both strings and arrays are accepted. But I don't know LDAP much, so I'm not sure if `'foo, bar'` is equivalent to `['foo', 'bar']` (maybe the first one means AND and the second one means OR?)
+
+Let's ask to someone who knows LDAP well. Thanks!
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-15T08:49:19Z
+
+@jljohnstone can you confirm that the code before works as well? Or did you just spot this "issue" while reading the docs?
+
+---------------------------------------------------------------------------
+
+by jljohnstone at 2021-07-15T10:09:11Z
+
+@OskarStark No, the documented code did not work for me. I had to use separate array elements to get filtering to work.
