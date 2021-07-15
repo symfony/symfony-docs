@@ -943,6 +943,8 @@ following methods::
 
     // you can get individual info too
     $startTime = $response->getInfo('start_time');
+    // e.g. this returns the final response URL (resolving redirections if needed)
+    $url = $response->getInfo('url');
 
     // returns detailed logs about the requests and responses of the HTTP transaction
     $httpLogs = $response->getInfo('debug');
