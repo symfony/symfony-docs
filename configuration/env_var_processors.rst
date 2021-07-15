@@ -151,11 +151,6 @@ Symfony provides the following env var processors:
             };
 
 ``env(not:FOO)``
-
-    .. versionadded:: 5.3
-
-        The ``not:`` env var processor was introduced in Symfony 5.3.
-
     Casts ``FOO`` to a bool (just as ``env(bool:...)`` does) except it returns the inverted value
     (falsy values are returned as ``true``, truthy values are returned as ``false``):
 

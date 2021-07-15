@@ -160,11 +160,6 @@ delete existing ones::
     // Removing an existing entry
     $entryManager->remove(new Entry('cn=Test User,dc=symfony,dc=com'));
 
-.. versionadded:: 5.3
-
-    The option to make attribute names case-insensitive in ``getAttribute()``
-    and ``hasAttribute()`` was introduced in Symfony 5.3.
-
 Batch Updating
 ______________
 

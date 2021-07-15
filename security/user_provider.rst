@@ -135,8 +135,6 @@ interface only requires one method: ``loadUserByIdentifier($identifier)``::
     {
         // ...
 
-        // The loadUserByIdentifier() method was introduced in Symfony 5.3.
-        // In previous versions it was called loadUserByUsername()
         public function loadUserByIdentifier(string $usernameOrEmail): ?User
         {
             $entityManager = $this->getEntityManager();
@@ -231,8 +229,6 @@ users will hash their passwords:
             # ...
             password_hashers:
                 # this internal class is used by Symfony to represent in-memory users
-                # (the 'InMemoryUser' class was introduced in Symfony 5.3.
-                # In previous versions it was called 'User')
                 Symfony\Component\Security\Core\User\InMemoryUser: 'auto'
 
     .. code-block:: xml
@@ -251,8 +247,6 @@ users will hash their passwords:
                 <!-- ... -->
 
                 <!-- this internal class is used by Symfony to represent in-memory users -->
-                <!-- (the 'InMemoryUser' class was introduced in Symfony 5.3.
-                     In previous versions it was called 'User') -->
                 <security:password-hasher class="Symfony\Component\Security\Core\User\InMemoryUser"
                     algorithm="auto"
                 />
@@ -264,8 +258,6 @@ users will hash their passwords:
         // config/packages/security.php
 
         // this internal class is used by Symfony to represent in-memory users
-        // (the 'InMemoryUser' class was introduced in Symfony 5.3.
-        // In previous versions it was called 'User')
         use Symfony\Component\Security\Core\User\InMemoryUser;
         use Symfony\Config\SecurityConfig;
 
@@ -373,9 +365,6 @@ command will generate a nice skeleton to get you started::
     class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     {
         /**
-         * The loadUserByIdentifier() method was introduced in Symfony 5.3.
-         * In previous versions it was called loadUserByUsername()
-         *
          * Symfony calls this method if you use features like switch_user
          * or remember_me. If you're not using these features, you do not
          * need to implement this method.

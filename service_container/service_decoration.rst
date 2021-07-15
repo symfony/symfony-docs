@@ -172,14 +172,8 @@ automatically changed to ``'.inner'``):
             $services->set(DecoratingMailer::class)
                 ->decorate(Mailer::class)
                 // pass the old service as an argument
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args([service('.inner')]);
         };
-
-.. versionadded:: 5.1
-
-    The special ``.inner`` value was introduced in Symfony 5.1. In previous
-    versions you needed to use: ``decorating_service_id + '.inner'``.
 
 .. tip::
 

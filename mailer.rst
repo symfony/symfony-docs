@@ -80,10 +80,6 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
 Using Built-in Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The native protocol was introduced in Symfony 5.2.
-
 ============  ========================================  ==============================================================
 DSN protocol  Example                                   Description
 ============  ========================================  ==============================================================
@@ -113,10 +109,6 @@ Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
 ==================  ==============================================
-
-.. versionadded:: 5.2
-
-    The Sendinblue integration was introduced in Symfony 5.2.
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -179,11 +171,6 @@ party provider:
     When using SMTP, the default timeout for sending a message before throwing an
     exception is the value defined in the `default_socket_timeout`_ PHP.ini option.
 
-    .. versionadded:: 5.1
-
-        The usage of ``default_socket_timeout`` as the default timeout was
-        introduced in Symfony 5.1.
-
 .. tip::
 
     If you want to override the default host for a provider (to debug an issue using
@@ -234,11 +221,6 @@ As with the failover transport, round-robin retries deliveries until
 a transport succeeds (or all fail). In contrast to the failover transport,
 it *spreads* the load across all its transports.
 
-.. versionadded:: 5.1
-
-    The random selection of the first transport was introduced in Symfony 5.1.
-    In previous Symfony versions the first transport was always selected first.
-
 TLS Peer Verification
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -248,10 +230,6 @@ disable this verification for security reasons, it can be useful while developin
 the application or when using a self-signed certificate::
 
     $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=0';
-
-.. versionadded:: 5.1
-
-    The ``verify_peer`` option was introduced in Symfony 5.1.
 
 Creating & Sending Messages
 ---------------------------
@@ -332,10 +310,6 @@ both strings or address objects::
     The local part of the address (what goes before the ``@``) can include UTF-8
     characters, except for the sender address (to avoid issues with bounced emails).
     For example: ``föóbàr@example.com``, ``用户@example.com``, ``θσερ@example.com``, etc.
-
-    .. versionadded:: 5.2
-
-        Support for UTF-8 characters in email addresses was introduced in Symfony 5.2.
 
 Use ``addTo()``, ``addCc()``, or ``addBcc()`` methods to add more addresses::
 
@@ -524,10 +498,6 @@ and headers.
             $mailer->header('bcc')->value('baz@example.com');
             $mailer->header('X-Custom-Header')->value('foobar');
         };
-
-.. versionadded:: 5.2
-
-    The ``headers`` option was introduced in Symfony 5.2.
 
 Handling Sending Failures
 -------------------------
@@ -1004,10 +974,6 @@ key but not a certificate::
         ->toArray()
     );
 
-.. versionadded:: 5.2
-
-    The DKIM signer was introduced in Symfony 5.2.
-
 Encrypting Messages
 ~~~~~~~~~~~~~~~~~~~
 
@@ -1221,18 +1187,8 @@ disable asynchronous delivery.
                 ->messageBus('app.another_bus');
         };
 
-.. versionadded:: 5.1
-
-    The ``message_bus`` option was introduced in Symfony 5.1.
-
 Adding Tags and Metadata to Emails
 ----------------------------------
-
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Mailer\\Header\\TagHeader` and
-    :class:`Symfony\\Component\\Mailer\\Header\\MetadataHeader` classes were
-    introduced in Symfony 5.1.
 
 Certain 3rd party transports support email *tags* and *metadata*, which can be used
 for grouping, tracking and workflows. You can add those by using the

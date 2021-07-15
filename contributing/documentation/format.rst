@@ -174,32 +174,32 @@ If you are documenting a brand new feature, a change or a deprecation that's
 been made in Symfony, you should precede your description of the change with
 the corresponding directive and a short description:
 
-For a new feature or a behavior change use the ``.. versionadded:: 5.x``
+For a new feature or a behavior change use the ``.. versionadded:: 6.x``
 directive:
 
 .. code-block:: rst
 
-    .. versionadded:: 5.2
+    .. versionadded:: 6.2
 
-        ... ... ... was introduced in Symfony 5.2.
+        ... ... ... was introduced in Symfony 6.2.
 
 If you are documenting a behavior change, it may be helpful to *briefly*
 describe how the behavior has changed:
 
 .. code-block:: rst
 
-    .. versionadded:: 5.2
+    .. versionadded:: 6.2
 
-       ... ... ... was introduced in Symfony 5.2. Prior to this,
+       ... ... ... was introduced in Symfony 6.2. Prior to this,
        ... ... ... ... ... ... ... ... .
 
-For a deprecation use the ``.. deprecated:: 5.x`` directive:
+For a deprecation use the ``.. deprecated:: 6.x`` directive:
 
 .. code-block:: rst
 
-    .. deprecated:: 5.2
+    .. deprecated:: 6.2
 
-        ... ... ... was deprecated in Symfony 5.2.
+        ... ... ... was deprecated in Symfony 6.2.
 
 Whenever a new major version of Symfony is released (e.g. 6.0, 7.0, etc),
 a new branch of the documentation is created from the ``master`` branch.

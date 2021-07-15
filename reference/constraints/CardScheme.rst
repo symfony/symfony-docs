@@ -131,10 +131,6 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
-
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 ``schemes``

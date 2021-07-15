@@ -137,10 +137,6 @@ The ``remember_me`` firewall defines the following configuration options:
     Defines the ID of the service used to handle the Remember Me feature. It's
     useful if you need to overwrite the current behavior entirely.
 
-    .. versionadded:: 5.1
-
-        The ``service`` option was introduced in Symfony 5.1.
-
 Forcing the User to Opt-Out of the Remember Me Feature
 ------------------------------------------------------
 
@@ -206,10 +202,6 @@ users to change their password. You can do this by leveraging a few special
 
     There is also a ``IS_REMEMBERED`` attribute that grants *only* when the
     user is authenticated via the remember me mechanism.
-
-.. versionadded:: 5.1
-
-    The ``IS_REMEMBERED`` attribute was introduced in Symfony 5.1.
 
 .. _remember-me-token-in-database:
 

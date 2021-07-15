@@ -176,10 +176,6 @@ targeted parts of the plaintext. To mitigate these attacks, and prevent an
 attacker from guessing the CSRF tokens, a random mask is prepended to the token
 and used to scramble it.
 
-.. versionadded:: 5.3
-
-    The randomization of tokens was introduced in Symfony 5.3
-
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`BREACH`: https://en.wikipedia.org/wiki/BREACH
 .. _`CRIME`: https://en.wikipedia.org/wiki/CRIME

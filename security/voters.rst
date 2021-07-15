@@ -289,10 +289,6 @@ There are three strategies available:
     This grants or denies access by the first voter that does not abstain,
     based on their service priority;
 
-    .. versionadded:: 5.1
-
-        The ``priority`` version strategy was introduced in Symfony 5.1.
-
 Regardless the chosen strategy, if all voters abstained from voting, the
 decision is based on the ``allow_if_all_abstain`` config option (which
 defaults to ``false``).

@@ -577,10 +577,6 @@ will no longer be followed::
 Logging in Users (Authentication)
 .................................
 
-.. versionadded:: 5.1
-
-    The ``loginUser()`` method was introduced in Symfony 5.1.
-
 When you want to add application tests for protected pages, you have to
 first "login" as a user. Reproducing the actual steps - such as
 submitting a login form - make a test very slow. For this reason, Symfony
@@ -900,10 +896,6 @@ Response Assertions
     :method:`Symfony\\Component\\HttpFoundation\\Response::getFormat` method
     is the same as the expected value.
 
-.. versionadded:: 5.3
-
-    The ``assertResponseFormatSame()`` method was introduced in Symfony 5.3.
-
 Request Assertions
 ..................
 
@@ -948,19 +940,8 @@ Crawler Assertions
     Asserts that value of the field of the first form matching the given
     selector does (not) equal the expected value.
 
-.. versionadded:: 5.2
-
-    The ``assertCheckboxChecked()``, ``assertCheckboxNotChecked()``,
-    ``assertFormValue()`` and ``assertNoFormValue()`` methods were introduced
-    in Symfony 5.2.
-
 Mailer Assertions
 .................
-
-.. versionadded:: 5.1
-
-    Starting from Symfony 5.1, the following assertions no longer require to make
-    a request with the ``Client`` in a test case extending the ``WebTestCase`` class.
 
 ``assertEmailCount(int $count, string $transport = null, string $message = '')``
     Asserts that the expected number of emails was sent.

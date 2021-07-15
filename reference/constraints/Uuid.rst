@@ -113,10 +113,6 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
-
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc
@@ -150,10 +146,6 @@ The following PHP constants can also be used:
 * ``Uuid::V6_SORTABLE``
 
 All six versions are allowed by default.
-
-.. versionadded:: 5.2
-
-    The UUID 6 version support was introduced in Symfony 5.2.
 
 .. _`Universally unique identifier (UUID)`: https://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`RFC 4122`: https://tools.ietf.org/html/rfc4122

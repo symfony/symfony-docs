@@ -387,10 +387,6 @@ named ``kernel.http_method_override``.
 trusted_headers
 ~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The ``trusted_headers`` option was introduced in Symfony 5.2.
-
 The ``trusted_headers`` option is needed to configure which client information
 should be trusted (e.g. their host) when running Symfony behind a load balancer
 or a reverse proxy. See :doc:`/deployment/proxies`.
@@ -399,11 +395,6 @@ or a reverse proxy. See :doc:`/deployment/proxies`.
 
 trusted_proxies
 ~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The ``trusted_proxies`` option was reintroduced in Symfony 5.2 (it had been
-    removed in Symfony 3.3).
 
 The ``trusted_proxies`` option is needed to get precise information about the
 client (e.g. their IP address) when running Symfony behind a load balancer or a
@@ -498,11 +489,6 @@ some environment variable that stores the name of the IDE/editor:
             // the env var stores the IDE/editor name (e.g. 'phpstorm', 'vscode', etc.)
             $framework->ide('%env(resolve:CODE_EDITOR)%');
         };
-
-.. versionadded:: 5.3
-
-    The option to use env vars in the ``framework.ide`` option was introduced
-    in Symfony 5.3.
 
 Another alternative is to set the ``xdebug.file_link_format`` option in your
 ``php.ini`` configuration file. The format to use is the same as for the
@@ -990,10 +976,6 @@ will automatically retry failed HTTP requests.
                     retry_failed:
                         max_retries: 4
 
-.. versionadded:: 5.2
-
-    The ``retry_failed`` option was introduced in Symfony 5.2.
-
 auth_basic
 ..........
 
@@ -1096,10 +1078,6 @@ delay
 
 **type**: ``integer`` **default**: ``1000``
 
-.. versionadded:: 5.2
-
-    The ``delay`` option was introduced in Symfony 5.2.
-
 The initial delay in milliseconds used to compute the waiting time between retries.
 
 .. _reference-http-client-retry-enabled:
@@ -1127,10 +1105,6 @@ http_codes
 
 **type**: ``array`` **default**: :method:`Symfony\\Component\\HttpClient\\Retry\\GenericRetryStrategy::DEFAULT_RETRY_STATUS_CODES`
 
-.. versionadded:: 5.2
-
-    The ``http_codes`` option was introduced in Symfony 5.2.
-
 The list of HTTP status codes that triggers a retry of the request.
 
 http_version
@@ -1145,10 +1119,6 @@ jitter
 ......
 
 **type**: ``float`` **default**: ``0.1`` (must be between 0.0 and 1.0)
-
-.. versionadded:: 5.2
-
-    The ``jitter`` option was introduced in Symfony 5.2.
 
 This option adds some randomness to the delay. It's useful to avoid sending
 multiple requests to the server at the exact same time. The randomness is
@@ -1176,10 +1146,6 @@ max_delay
 .........
 
 **type**: ``integer`` **default**: ``0``
-
-.. versionadded:: 5.2
-
-    The ``max_delay`` option was introduced in Symfony 5.2.
 
 The maximum amount of milliseconds initial to wait between retries.
 Use ``0`` to not limit the duration.
@@ -1215,10 +1181,6 @@ max_retries
 
 **type**: ``integer`` **default**: ``3``
 
-.. versionadded:: 5.2
-
-    The ``max_retries`` option was introduced in Symfony 5.2.
-
 The maximum number of retries for failing requests. When the maximum is reached,
 the client returns the last received response.
 
@@ -1226,10 +1188,6 @@ multiplier
 ..........
 
 **type**: ``float`` **default**: ``2``
-
-.. versionadded:: 5.2
-
-    The ``multiplier`` option was introduced in Symfony 5.2.
 
 This value is multiplied to the delay each time a retry occurs, to distribute
 retries in time instead of making all of them sequentially.
@@ -1297,10 +1255,6 @@ retry_strategy
 ...............
 
 **type**: ``string``
-
-.. versionadded:: 5.2
-
-    The ``retry_strategy`` option was introduced in Symfony 5.2.
 
 The service is used to decide if a request should be retried and to compute the
 time to wait between retries. By default, it uses an instance of
@@ -1393,11 +1347,6 @@ only_main_requests
 ..................
 
 **type**: ``boolean`` **default**: ``false``
-
-.. versionadded:: 5.3
-
-    The ``only_main_requests`` option was introduced in Symfony 5.3. In previous
-    versions it was called ``only_master_requests``.
 
 When this is set to ``true``, the profiler will only be enabled on the main
 requests (and not on the subrequests).
@@ -1529,10 +1478,6 @@ default_uri
 
 **type**: ``string``
 
-.. versionadded:: 5.1
-
-    The ``default_uri`` option was introduced in Symfony 5.1.
-
 The default URI used to generate URLs in a non-HTTP context (see
 :ref:`Generating URLs in Commands <router-generate-urls-commands>`).
 
@@ -1576,12 +1521,7 @@ or ``null`` might be preferred in production.
 utf8
 ....
 
-**type**: ``boolean`` **default**: ``false``
-
-.. deprecated:: 5.1
-
-    Not setting this option is deprecated since Symfony 5.1. Moreover, the
-    default value of this option will change to ``true`` in Symfony 6.0.
+**type**: ``boolean`` **default**: ``true``
 
 When this option is set to ``true``, the regular expressions used in the
 :ref:`requirements of route parameters <routing-requirements>` will be run
@@ -1614,10 +1554,6 @@ To see a list of all available storages, run:
 .. code-block:: terminal
 
     $ php bin/console debug:container session.storage.factory.
-
-.. versionadded:: 5.3
-
-    The ``storage_factory_id`` option was introduced in Symfony 5.3.
 
 .. _config-framework-session-handler-id:
 
@@ -2381,11 +2317,6 @@ package:
                 ->basePath('/images');
         };
 
-.. versionadded:: 5.1
-
-    The option to use an absolute URL in  ``json_manifest_path`` was introduced
-    in Symfony 5.1.
-
 .. note::
 
     This parameter cannot be set at the same time as ``version`` or ``version_strategy``.
@@ -2427,10 +2358,6 @@ enabled_locales
 ...............
 
 **type**: ``array`` **default**: ``[]`` (empty array = enable all locales)
-
-.. versionadded:: 5.1
-
-    The ``enabled_locales`` option was introduced in Symfony 5.1.
 
 Symfony applications generate by default the translation files for validation
 and security messages in all locales. If your application only uses some
@@ -2545,10 +2472,6 @@ providers
 
 **type**: ``array`` **default**: ``[]``
 
-.. versionadded:: 5.3
-
-    The ``providers`` option was introduced in Symfony 5.3.
-
 This option enables and configures :ref:`translation providers <translation-providers>`
 to push and pull your translations to/from third party translation services.
 
@@ -2573,10 +2496,6 @@ When enabled, the ``property_accessor`` service uses PHP's
 :ref:`magic __get() method <components-property-access-magic-get>` when
 its ``getValue()`` method is called.
 
-.. versionadded:: 5.2
-
-    The ``magic_get`` option was introduced in Symfony 5.2.
-
 magic_set
 .........
 
@@ -2585,10 +2504,6 @@ magic_set
 When enabled, the ``property_accessor`` service uses PHP's
 :ref:`magic __set() method <components-property-access-writing-to-objects>` when
 its ``setValue()`` method is called.
-
-.. versionadded:: 5.2
-
-    The ``magic_set`` option was introduced in Symfony 5.2.
 
 throw_exception_on_invalid_index
 ................................
@@ -2992,10 +2907,6 @@ This option also accepts a map of PHP errors to log levels:
             // ...
         };
 
-.. versionadded:: 5.3
-
-    The option to map PHP errors to log levels was introduced in Symfony 5.3.
-
 throw
 .....
 
@@ -3243,12 +3154,6 @@ It's also useful when using `blue/green deployment`_ strategies and more
 generally, when you need to abstract out the actual deployment directory (for
 example, when warming caches offline).
 
-.. versionadded:: 5.2
-
-    Starting from Symfony 5.2, the ``%kernel.container_class%`` parameter is no
-    longer appended automatically to the value of this option. This allows
-    sharing caches between applications or different environments.
-
 .. _reference-lock:
 
 lock
@@ -3351,10 +3256,6 @@ mailer. A transport name is the key and the dsn is the value.
 message_bus
 ...........
 
-.. versionadded:: 5.1
-
-    The ``message_bus`` option was introduced in Symfony 5.1.
-
 **type**: ``string`` **default**: ``null`` or default bus if Messenger component is installed
 
 Service identifier of the message bus to use when using the
@@ -3433,10 +3334,6 @@ recipients set in the code.
 
 headers
 .......
-
-.. versionadded:: 5.2
-
-    The ``headers`` mailer option was introduced in Symfony 5.2.
 
 **type**: ``array``
 

@@ -8,10 +8,6 @@ The UID Component
     The UID component provides utilities to work with `unique identifiers`_ (UIDs)
     such as UUIDs and ULIDs.
 
-.. versionadded:: 5.1
-
-    The UID component was introduced in Symfony 5.1.
-
 Installation
 ------------
 
@@ -67,11 +63,6 @@ to create each type of UUID::
     // It's defined in http://gh.peabody.io/uuidv6/
     $uuid = Uuid::v6(); // $uuid is an instance of Symfony\Component\Uid\UuidV6
 
-.. versionadded:: 5.3
-
-    The ``Uuid::NAMESPACE_*`` constants and the namespace string values (``'dns'``,
-    ``'url'``, etc.) were introduced in Symfony 5.3.
-
 If your UUID value is already generated in another format, use any of the
 following methods to create a ``Uuid`` object from it::
 
@@ -81,11 +72,6 @@ following methods to create a ``Uuid`` object from it::
     $uuid = Uuid::fromBase32('6SWYGR8QAV27NACAHMK5RG0RPG');
     $uuid = Uuid::fromBase58('TuetYWNHhmuSQ3xPoVLv9M');
     $uuid = Uuid::fromRfc4122('d9e7a184-5d5b-11ea-a62a-3499710062d0');
-
-.. versionadded:: 5.3
-
-    The ``fromBinary()``, ``fromBase32()``, ``fromBase58()`` and ``fromRfc4122()``
-    methods were introduced in Symfony 5.3.
 
 Converting UUIDs
 ~~~~~~~~~~~~~~~~
@@ -133,11 +119,6 @@ UUID objects created with the ``Uuid`` class can use the following methods
     //   * int < 0 if $uuid1 is less than $uuid4
     $uuid1->compare($uuid4); // e.g. int(4)
 
-.. versionadded:: 5.3
-
-    The ``getDateTime()`` method was introduced in Symfony 5.3. In previous
-    versions it was called ``getTime()``.
-
 Storing UUIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -161,10 +142,6 @@ type, which converts to/from UUID objects automatically::
 
         // ...
     }
-
-.. versionadded:: 5.2
-
-    The UUID type was introduced in Symfony 5.2.
 
 There is no generator to assign UUIDs automatically as the value of your entity
 primary keys, but you can use the following::
@@ -264,11 +241,6 @@ following methods to create a ``Ulid`` object from it::
     $ulid = Ulid::fromBase58('1BKocMc5BnrVcuq2ti4Eqm');
     $ulid = Ulid::fromRfc4122('0171069d-593d-97d3-8b3e-23d06de5b308');
 
-.. versionadded:: 5.3
-
-    The ``fromBinary()``, ``fromBase32()``, ``fromBase58()`` and ``fromRfc4122()``
-    methods were introduced in Symfony 5.3.
-
 Converting ULIDs
 ~~~~~~~~~~~~~~~~
 
@@ -301,11 +273,6 @@ ULID objects created with the ``Ulid`` class can use the following methods::
     $ulid1->equals($ulid2); // false
     // this method returns $ulid1 <=> $ulid2
     $ulid1->compare($ulid2); // e.g. int(-1)
-
-.. versionadded:: 5.3
-
-    The ``getDateTime()`` method was introduced in Symfony 5.3. In previous
-    versions it was called ``getTime()``.
 
 Storing ULIDs in Databases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -361,10 +328,6 @@ entity primary keys::
 
     }
 
-.. versionadded:: 5.2
-
-    The ULID type and generator were introduced in Symfony 5.2.
-
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these ULID types to build the SQL query
 (e.g. ``->findOneBy(['user' => $user->getUlid()])``). However, when using DQL
@@ -396,10 +359,6 @@ of the ULID parameters::
 
 Generating and Inspecting UUIDs/ULIDs in the Console
 ----------------------------------------------------
-
-.. versionadded:: 5.3
-
-    The commands to inspect and generate UUIDs/ULIDs were introduced in Symfony 5.3.
 
 This component provides several commands to generate and inspect UUIDs/ULIDs in
 the console. They are not enabled by default, so you must add the following

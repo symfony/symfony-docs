@@ -559,10 +559,6 @@ provided by Symfony:
             ;
         };
 
-.. versionadded:: 5.1
-
-    The ``context`` option was introduced in Symfony 5.1.
-
 Checking if a Template Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

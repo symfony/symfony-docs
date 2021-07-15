@@ -12,10 +12,6 @@ applications needed to generate the images:
 * `Mermaid CLI`_, provides the ``mmdc`` command;
 * `PlantUML`_, provides the ``plantuml.jar`` file (which requires Java).
 
-.. versionadded:: 5.3
-
-    The ``mermaid`` dump format was introduced in Symfony 5.3.
-
 If you are defining the workflow inside a Symfony application, run this command
 to dump it as an image:
 

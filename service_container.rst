@@ -533,7 +533,6 @@ parameter and in PHP config use the ``service()`` function:
             $services = $configurator->services();
 
             $services->set(MessageGenerator::class)
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args([service('logger')])
             ;
         };
@@ -880,11 +879,6 @@ setting:
                 ->public()
             ;
         };
-
-.. deprecated:: 5.1
-
-    As of Symfony 5.1, it is no longer possible to autowire the service
-    container by type-hinting ``Psr\Container\ContainerInterface``.
 
 .. _service-psr4-loader:
 

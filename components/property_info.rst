@@ -441,10 +441,6 @@ If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
 checked but you will get only the properties considered by the Serializer
 Component (notably the ``@Ignore`` annotation is taken into account).
 
-.. versionadded:: 5.2
-
-    Support for the ``null`` value in ``serializer_groups`` was introduced in Symfony 5.2. 
-
 DoctrineExtractor
 ~~~~~~~~~~~~~~~~~
 

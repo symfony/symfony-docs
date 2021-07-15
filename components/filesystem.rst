@@ -287,10 +287,6 @@ exception on failure::
     // returns a path like : /tmp/prefix_wyjgtF.png
     $filesystem->tempnam('/tmp', 'prefix_', '.png');
 
-.. versionadded:: 5.1
-
-    The option to set a suffix in  ``tempnam()`` was introduced in Symfony 5.1.
-
 ``dumpFile``
 ~~~~~~~~~~~~
 

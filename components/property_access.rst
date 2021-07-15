@@ -215,10 +215,10 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 
     var_dump($propertyAccessor->getValue($person, 'Wouter')); // [...]
 
-.. versionadded:: 5.2
+.. note::
 
-    The magic ``__get()`` method can be disabled since in Symfony 5.2.
-    see `Enable other Features`_.
+    The ``__get()`` method support is enabled by default.
+    See `Enable other Features`_ if you want to disable it.
 
 .. _components-property-access-magic-call:
 
@@ -356,10 +356,10 @@ see `Enable other Features`_::
 
     var_dump($person->getWouter()); // [...]
 
-.. versionadded:: 5.2
+.. note::
 
-    The magic ``__set()`` method can be disabled since in Symfony 5.2.
-    see `Enable other Features`_.
+    The ``__set()`` method support is enabled by default.
+    See `Enable other Features`_ if you want to disable it.
 
 Writing to Array Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

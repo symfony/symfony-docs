@@ -342,10 +342,6 @@ Result Methods
             'Consectetur adipiscing elit',
         ]);
 
-.. versionadded:: 5.2
-
-    The ``info()`` method was introduced in Symfony 5.2.
-
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::warning`
     It displays the given string or array of strings highlighted as a warning
     message (with a red background and the ``[WARNING]`` label). It's meant to be

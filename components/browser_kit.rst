@@ -90,10 +90,6 @@ convert the request parameters into a JSON string and set the needed HTTP header
     // this encodes parameters as JSON and sets the required CONTENT_TYPE and HTTP_ACCEPT headers
     $crawler = $client->jsonRequest('GET', '/', ['some_parameter' => 'some_value']);
 
-.. versionadded:: 5.3
-
-    The ``jsonRequest()`` method was introduced in Symfony 5.3.
-
 The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest` method,
 which defines the same arguments as the ``request()`` method, is a shortcut to
 make AJAX requests::
@@ -177,10 +173,6 @@ provides access to the form properties (e.g. ``$form->getUri()``,
 
 Custom Header Handling
 ~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The ``getHeaders()`` method was introduced in Symfony 5.2.
 
 The optional HTTP headers passed to the ``request()`` method follows the FastCGI
 request format (uppercase, underscores instead of dashes and prefixed with ``HTTP_``).

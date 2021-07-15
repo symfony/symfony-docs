@@ -191,10 +191,6 @@ Then you can use the following command to start a server out-of-the-box:
 Configuring the Dump Server with Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The ``VAR_DUMPER_FORMAT=server`` feature was introduced in Symfony 5.2.
-
 If you prefer to not modify the application configuration (e.g. to quickly debug
 a project given to you) use the ``VAR_DUMPER_FORMAT`` env var.
 

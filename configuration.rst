@@ -919,11 +919,6 @@ parameters at once by type-hinting any of its constructor arguments with the
 Using PHP ConfigBuilders
 ------------------------
 
-.. versionadded:: 5.3
-
-    The "ConfigBuilders" feature was introduced in Symfony 5.3 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
-
 Writing PHP config is sometimes difficult because you end up with large nested
 arrays and you have no autocompletion help from your favorite IDE. A way to
 address this is to use "ConfigBuilders". They are objects that will help you

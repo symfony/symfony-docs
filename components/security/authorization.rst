@@ -54,10 +54,6 @@ recognizes several strategies:
 ``priority``
     grants or denies access by the first voter that does not abstain;
 
-    .. versionadded:: 5.1
-
-        The ``priority`` version strategy was introduced in Symfony 5.1.
-
 Usage of the available options in detail::
 
     use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
@@ -116,11 +112,6 @@ authenticated anonymously?
 It also supports the attributes ``IS_ANONYMOUS``, ``IS_REMEMBERED``,
 ``IS_IMPERSONATOR`` to grant access based on a specific state of
 authentication.
-
-.. versionadded:: 5.1
-
-    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATOR``
-    attributes were introduced in Symfony 5.1.
 
 ::
 

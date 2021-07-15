@@ -899,14 +899,6 @@ The Serializer component provides several built-in normalizers:
     Also it can denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
     or :class:`Symfony\\Component\\Uid\\Ulid`. The format does not matter.
 
-.. versionadded:: 5.2
-
-    The ``UidNormalizer`` was introduced in Symfony 5.2.
-
-.. versionadded:: 5.3
-
-    The ``UidNormalizer`` normalization formats were introduced in Symfony 5.3.
-
 .. _component-serializer-encoders:
 
 Encoders
@@ -1003,10 +995,6 @@ Option                  Description                                            D
 ``no_headers``          Disables header in the encoded CSV                     ``false``
 ``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data   ``false``
 ======================= =====================================================  ==========================
-
-.. versionadded:: 5.3
-
-    The ``csv_end_of_line`` option was introduced in Symfony 5.3.
 
 The ``XmlEncoder``
 ~~~~~~~~~~~~~~~~~~

@@ -35,12 +35,6 @@ once in your application to enable them:
 
     $ composer require doctrine/annotations
 
-.. versionadded:: 5.2
-
-    The ability to use PHP attributes to configure routes was introduced in
-    Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
-    annotate controller actions with routing configuration.
-
 This command also creates the following configuration file:
 
 .. code-block:: yaml
@@ -178,11 +172,11 @@ the ``BlogController``:
             ;
         };
 
-.. versionadded:: 5.1
+.. note::
 
-    Starting from Symfony 5.1, by default Symfony only loads the routes defined
-    in YAML format. If you define routes in XML and/or PHP formats, update the
-    ``src/Kernel.php`` file to add support for the ``.xml`` and ``.php`` file extensions.
+    By default Symfony only loads the routes defined in YAML format. If you
+    define routes in XML and/or PHP formats, update the ``src/Kernel.php`` file
+    to add support for the ``.xml`` and ``.php`` file extensions.
 
 .. _routing-matching-http-methods:
 
@@ -998,10 +992,6 @@ parameter:
 
 Priority Parameter
 ~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.1
-
-    The ``priority`` parameter was introduced in Symfony 5.1
 
 Symfony evaluates routes in the order they are defined. If the path of a route
 matches many different patterns, it might prevent other routes from being
@@ -2070,11 +2060,6 @@ these routes.
     You can also use the inline defaults and requirements format in the
     ``host`` option: ``{subdomain<m|mobile>?m}.example.com``
 
-.. versionadded:: 5.2
-
-    Inline parameter default values support in hosts were introduced in
-    Symfony 5.2. Prior to Symfony 5.2, they were supported in the path only.
-
 .. _i18n-routing:
 
 Localized Routes (i18n)
@@ -2234,10 +2219,6 @@ Another common requirement is to host the website on a different domain
 according to the locale. This can be done by defining a different host for each
 locale.
 
-.. versionadded:: 5.1
-
-    The ability to define an array of hosts was introduced in Symfony 5.1.
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -2281,10 +2262,6 @@ locale.
 
 Stateless Routes
 ----------------
-
-.. versionadded:: 5.1
-
-    The ``stateless`` option was introduced in Symfony 5.1.
 
 Sometimes, when an HTTP response should be cached, it is important to ensure
 that can happen. However, whenever a session is started during a request,
@@ -2575,10 +2552,6 @@ The solution is to configure the ``default_uri`` option to define the
         return static function (FrameworkConfig $framework) {
             $framework->router()->defaultUri('https://example.org/my/path/');
         };
-
-.. versionadded:: 5.1
-
-    The ``default_uri`` option was introduced in Symfony 5.1.
 
 Now you'll get the expected results when generating URLs in your commands::
 

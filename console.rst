@@ -64,15 +64,6 @@ want a command to create a user::
         }
     }
 
-.. versionadded:: 5.1
-
-    The ``Command::SUCCESS`` and ``Command::FAILURE`` constants were introduced
-    in Symfony 5.1.
-
-.. versionadded:: 5.3
-
-    The ``Command::INVALID`` constant was introduced in Symfony 5.3
-
 Configuring the Command
 -----------------------
 
@@ -396,15 +387,6 @@ console::
 
 If you are using a :doc:`single-command application </components/console/single_command_tool>`,
 call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``.
-
-.. versionadded:: 5.2
-
-    The ``setAutoExit()`` method for single-command applications was introduced
-    in Symfony 5.2.
-
-.. versionadded:: 5.4
-
-    The ``assertCommandIsSuccessful()`` method was introduced in Symfony 5.4.
 
 .. tip::
 

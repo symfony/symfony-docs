@@ -99,10 +99,6 @@ html5
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 5.2
-
-    This option was introduced in Symfony 5.2.
-
 If set to ``true``, the HTML input will be rendered as a native HTML5
 ``<input type="number">`` element.
 

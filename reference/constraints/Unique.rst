@@ -130,10 +130,6 @@ Parameter                      Description
 
 **type**: a `PHP callable`_ **default**: ``null``
 
-.. versionadded:: 5.3
-
-    The ``normalizer`` option was introduced in Symfony 5.3.
-
 This option defined the PHP callable applied to each element of the given
 collection before checking if the collection is valid.
 

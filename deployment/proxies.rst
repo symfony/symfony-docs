@@ -81,12 +81,6 @@ and what headers your reverse proxy uses to send information:
             ;
         };
 
-.. deprecated:: 5.2
-
-    In previous Symfony versions, the above example used ``HEADER_X_FORWARDED_ALL``
-    to trust all "X-Forwarded-" headers, but that constant is deprecated since
-    Symfony 5.2 in favor of the individual ``HEADER_X_FORWARDED_*`` constants.
-
 .. caution::
 
     Enabling the ``Request::HEADER_X_FORWARDED_HOST`` option exposes the
@@ -96,13 +90,6 @@ and what headers your reverse proxy uses to send information:
 The Request object has several ``Request::HEADER_*`` constants that control exactly
 *which* headers from your reverse proxy are trusted. The argument is a bit field,
 so you can also pass your own value (e.g. ``0b00110``).
-
-.. versionadded:: 5.2
-
-    The feature to configure trusted proxies and headers with ``trusted_proxies``
-    and ``trusted_headers`` options was introduced in Symfony 5.2. In earlier
-    Symfony versions you needed to use the ``Request::setTrustedProxies()``
-    method in the ``public/index.php`` file.
 
 .. caution::
 

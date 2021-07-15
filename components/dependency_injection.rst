@@ -299,12 +299,10 @@ config files:
             $services = $configurator->services();
 
             $services->set('mailer', 'Mailer')
-                // the param() method was introduced in Symfony 5.2.
                 ->args([param('mailer.transport')])
             ;
 
             $services->set('newsletter_manager', 'NewsletterManager')
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->call('setMailer', [service('mailer')])
             ;
         };

@@ -382,20 +382,14 @@ order:
 
         $workflow->apply($subject, $transitionName, [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
 
-    .. versionadded:: 5.1
+    The context is accessible in all events::
 
-        The ``Workflow::DISABLE_ANNOUNCE_EVENT`` constant was introduced in Symfony 5.1.
+        // $context must be an array
+        $context = ['context_key' => 'context_value'];
+        $workflow->apply($subject, $transitionName, $context);
 
-    .. versionadded:: 5.2
-
-        In Symfony 5.2, the context is accessible in all events::
-
-            // $context must be an array
-            $context = ['context_key' => 'context_value'];
-            $workflow->apply($subject, $transitionName, $context);
-
-            // in an event listener
-            $context = $event->getContext(); // returns ['context']
+        // in an event listener
+        $context = $event->getContext(); // returns ['context']
 
 .. note::
 
@@ -492,16 +486,8 @@ missing a title::
         }
     }
 
-.. versionadded:: 5.1
-
-    The optional second argument of ``setBlocked()`` was introduced in Symfony 5.1.
-
 Choosing which Events to Dispatch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    Ability to choose which events to dispatch was introduced in Symfony 5.2.
 
 If you prefer to control which events are fired when performing each transition,
 use the ``events_to_dispatch`` configuration option. This option does not apply
@@ -593,13 +579,7 @@ events specified in the workflow configuration. In the above example the
 ``workflow.leave`` event will not be fired, even if it has been specified as an
 event to be dispatched for all transitions in the workflow configuration.
 
-.. versionadded:: 5.1
-
-    The ``Workflow::DISABLE_ANNOUNCE_EVENT`` constant was introduced in Symfony 5.1.
-
-.. versionadded:: 5.2
-
-    The constants for other events (as seen below) were introduced in Symfony 5.2.
+Thees are all the available constants:
 
     * ``Workflow::DISABLE_LEAVE_EVENT``
     * ``Workflow::DISABLE_TRANSITION_EVENT``

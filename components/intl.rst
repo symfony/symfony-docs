@@ -250,10 +250,6 @@ can change if the number is used in cash transactions or in other scenarios
     $fractionDigits = Currencies::getFractionDigits('SEK');         // returns: 2
     $cashFractionDigits = Currencies::getCashFractionDigits('SEK'); // returns: 0
 
-.. versionadded:: 5.3
-
-    The ``getCashFractionDigits()`` method was introduced in Symfony 5.3.
-
 Some currencies require to round numbers to the nearest increment of some value
 (e.g. 5 cents). This increment might be different if numbers are formatted for
 cash transactions or other scenarios (e.g. accounting)::
@@ -267,10 +263,6 @@ cash transactions or other scenarios (e.g. accounting)::
     // 5 cents (e.g. if price is 7.42 you pay 7.40; if price is 7.48 you pay 7.50)
     $roundingIncrement = Currencies::getRoundingIncrement('CAD');         // returns: 0
     $cashRoundingIncrement = Currencies::getCashRoundingIncrement('CAD'); // returns: 5
-
-.. versionadded:: 5.3
-
-    The ``getCashRoundingIncrement()`` method was introduced in Symfony 5.3.
 
 All methods (except for ``getFractionDigits()``, ``getCashFractionDigits()``,
 ``getRoundingIncrement()`` and ``getCashRoundingIncrement()``) accept the

@@ -125,9 +125,7 @@ This option is explained in detail in :doc:`/security/access_control`.
 hashers
 -------
 
-This option defines the algorithm used to *hash* the password of the users
-(which in previous Symfony versions was wrongly called *"password encoding"*).
-
+This option defines the algorithm used to *hash* the password of the users.
 If your app defines more than one user class, each of them can define its own
 hashing algorithm. Also, each algorithm defines different config options:
 
@@ -244,11 +242,6 @@ hashing algorithm. Also, each algorithm defines different config options:
                 ->algorithm('sha512');
         };
 
-.. versionadded:: 5.3
-
-    The ``password_hashers`` option was introduced in Symfony 5.3. In previous
-    versions it was called ``encoders``.
-
 .. tip::
 
     You can also create your own password hashers as services and you can even
@@ -325,9 +318,9 @@ hashing algorithm. Also, each algorithm defines different config options:
 Using the "auto" Password Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It automatically selects the best available hasher. Starting from Symfony 5.3,
-it uses the Bcrypt hasher. If PHP or Symfony adds new password hashers in the
-future, it might select a different hasher.
+It automatically selects the best available hasher, which currently is the
+Bcrypt hasher. If PHP or Symfony adds new password hashers in the future, it
+might select a different hasher.
 
 Because of this, the length of the hashed passwords may change in the future, so
 make sure to allocate enough space for them to be persisted (``varchar(255)``
@@ -367,8 +360,8 @@ used back when they were hashed.
 Using the Sodium Password Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It uses the `Argon2 key derivation function`_. Argon2 support was introduced
-in PHP 7.2 by bundeling the `libsodium`_ extension.
+It uses the `Argon2 key derivation function`_, which PHP supports natively since
+PHP 7.2 version.
 
 The hashed passwords are ``96`` characters long, but due to the hashing
 requirements saved in the resulting hash this may change in the future, so make
@@ -500,11 +493,6 @@ the ``debug:firewall`` command:
     # displays the details of a specific firewall, including detailed information
     # about the event listeners for the firewall
     $ php bin/console debug:firewall main --include-listeners
-
-.. versionadded:: 5.3
-
-    The ``debug:firewall`` command was introduced in Symfony 5.3.
-
 
 .. _reference-security-firewall-form-login:
 
@@ -638,8 +626,6 @@ The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
-.. _reference-security-logout-success-handler:
-
 ``path``
 ~~~~~~~~
 
@@ -656,23 +642,6 @@ target
 The relative path (if the value starts with ``/``), or absolute URL (if it
 starts with ``http://`` or ``https://``) or the route name (otherwise) to
 redirect after logout.
-
-success_handler
-~~~~~~~~~~~~~~~
-
-.. deprecated:: 5.1
-
-    This option is deprecated since Symfony 5.1. Register an
-    :doc:`event listener </event_dispatcher>` on the
-    :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
-    instead.
-
-**type**: ``string`` **default**: ``'security.logout.success_handler'``
-
-The service ID used for handling a successful logout. The service must implement
-:class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
-
-If it is set, the logout ``target`` option will be ignored.
 
 .. _reference-security-logout-csrf:
 
