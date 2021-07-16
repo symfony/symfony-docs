@@ -7,9 +7,9 @@ also use them if you want to solve the problem they address.
 
 .. note::
 
-    The functions described in this article were introduced in PHP 5.6 or 7.
-    For older PHP versions, a polyfill is provided by the
-    `Symfony Polyfill Component`_.
+    The functions described in this article are available in modern PHP versions.
+    If your project uses a legacy PHP version, you can use them thanks to some
+    of the polyfills provided by the `Symfony Polyfill Component`_.
 
 Comparing Strings
 ~~~~~~~~~~~~~~~~~

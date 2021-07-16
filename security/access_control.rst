@@ -129,10 +129,6 @@ Take the following ``access_control`` entries as an example:
             ;
         };
 
-.. versionadded:: 5.2
-
-    Support for comma-separated IP addresses was introduced in Symfony 5.2.
-
 For each incoming request, Symfony will decide which ``access_control``
 to use based on the URI, the client's IP address, the incoming host name,
 and the request method. Remember, the first rule that matches is used, and

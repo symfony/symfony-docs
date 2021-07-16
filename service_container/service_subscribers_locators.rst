@@ -372,7 +372,6 @@ other services. To do so, create a new service definition using the
             $services = $configurator->services();
 
             $services->set('app.command_handler_locator', ServiceLocator::class)
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args([[
                     'App\FooCommand' => service('app.command_handler.foo'),
                     'App\BarCommand' => service('app.command_handler.bar'),

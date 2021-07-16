@@ -817,10 +817,6 @@ provide more custom validation.
 Debugging the Constraints
 -------------------------
 
-.. versionadded:: 5.2
-
-    The ``debug:validator`` command was introduced in Symfony 5.2.
-
 Use the ``debug:validator`` command to list the validation constraints of a
 given class:
 

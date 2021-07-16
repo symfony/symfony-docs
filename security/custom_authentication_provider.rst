@@ -216,9 +216,6 @@ the ``PasswordDigest`` header value matches with the user's password::
 
         public function authenticate(TokenInterface $token): WsseUserToken
         {
-            // The loadUserByIdentifier() and getUserIdentifier() methods were
-            // introduced in Symfony 5.3. In previous versions they were called
-            // loadUserByUsername() and getUsername() respectively
             $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
 
             if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {
@@ -439,7 +436,6 @@ to service ids that may not exist yet: ``App\Security\Authentication\Provider\Ws
 
             $services->set(WsseListener::class)
                 ->args([
-                    // In versions earlier to Symfony 5.1 the service() function was called ref()
                     service('security.token_storage'),
                     service('security.authentication.manager'),
                 ])

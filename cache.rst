@@ -107,10 +107,6 @@ The Cache component comes with a series of adapters pre-configured:
 * :doc:`cache.adapter.redis </components/cache/adapters/redis_adapter>`
 * :ref:`cache.adapter.redis_tag_aware <redis-tag-aware-adapter>` (Redis adapter optimized to work with tags)
 
-.. versionadded:: 5.2
-
-    ``cache.adapter.redis_tag_aware`` has been introduced in Symfony 5.2.
-
 Some of these adapters could be configured via shortcuts. Using these shortcuts
 will create pools with service IDs that follow the pattern ``cache.[type]``.
 
@@ -724,11 +720,6 @@ Clear all caches everywhere:
 
 Encrypting the Cache
 --------------------
-
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`
-    class was introduced in Symfony 5.1.
 
 To encrypt the cache using ``libsodium``, you can use the
 :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`.

@@ -18,10 +18,6 @@ For convenience, your data collectors can also extend from the
 class, which implements the interface and provides some utilities and the
 ``$this->data`` property to store the collected information.
 
-.. versionadded:: 5.2
-
-    The ``AbstractDataCollector`` class was introduced in Symfony 5.2.
-
 The following example shows a custom collector that stores information about the
 request::
 

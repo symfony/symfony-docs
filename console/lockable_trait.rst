@@ -43,8 +43,4 @@ that adds two convenient methods to lock and release commands::
         }
     }
 
-.. versionadded:: 5.1
-
-    The ``Command::SUCCESS`` constant was introduced in Symfony 5.1.
-
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)

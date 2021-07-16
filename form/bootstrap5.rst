@@ -1,10 +1,6 @@
 Bootstrap 5 Form Theme
 ======================
 
-.. versionadded:: 5.3
-
-    The Bootstrap 5 Form Theme was introduced in Symfony 5.3.
-
 Symfony provides several ways of integrating Bootstrap into your application.
 The most straightforward way is to add the required ``<link>`` and ``<script>``
 elements in your templates (usually you only include them in the main layout

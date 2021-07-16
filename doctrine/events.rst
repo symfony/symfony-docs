@@ -524,10 +524,6 @@ can do it in the service configuration:
             ;
         };
 
-.. versionadded:: 5.3
-
-    Subscriber priority was introduced in Symfony 5.3.
-
 .. tip::
 
     Symfony loads (and instantiates) Doctrine subscribers whenever the

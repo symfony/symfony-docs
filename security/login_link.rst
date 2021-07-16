@@ -743,10 +743,6 @@ Then, configure this service ID as the ``success_handler``:
 Customizing the Login Link
 --------------------------
 
-.. versionadded:: 5.3
-
-    The possibility to customize the login link was introduced in Symfony 5.3.
-
 The ``createLoginLink()`` method accepts a second optional argument to pass the
 ``Request`` object used when generating the login link. This allows to customize
 features such as the locale used to generate the link::

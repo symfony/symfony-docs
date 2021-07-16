@@ -7,11 +7,6 @@ Building a single Command Application
 When building a command line tool, you may not need to provide several commands.
 In such case, having to pass the command name each time is tedious.
 
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Console\\SingleCommandApplication` class was
-    introduced in Symfony 5.1.
-
 Fortunately, it is possible to remove this need by declaring a single command
 application::
 

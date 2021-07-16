@@ -179,10 +179,6 @@ with the :doc:`HttpClient component </http_client>`::
     $manifestUrl = 'https://cdn.example.com/rev-manifest.json';
     $package = new Package(new RemoteJsonManifestVersionStrategy($manifestUrl, $httpClient));
 
-.. versionadded:: 5.1
-
-    The ``RemoteJsonManifestVersionStrategy`` was introduced in Symfony 5.1.
-
 Custom Version Strategies
 .........................
 

@@ -126,10 +126,6 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
-
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 .. _`International Bank Account Number (IBAN)`: https://en.wikipedia.org/wiki/International_Bank_Account_Number

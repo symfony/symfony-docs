@@ -13,10 +13,6 @@ assets.package
 
 **Purpose**: Add an asset package to the application
 
-.. versionadded:: 5.3
-
-    The ``assets.package`` tag was introduced in Symfony 5.3.
-
 This is an alternative way to declare an :ref:`asset package <asset-packages>`.
 The name of the package is set in this order:
 
@@ -195,13 +191,6 @@ wrapping their names with ``%`` characters).
     sense most of the times to prevent accessing those services directly instead
     of using the generic service alias.
 
-.. versionadded:: 5.1
-
-    In Symfony versions prior to 5.1, you needed to manually add the
-    ``Symfony\Component\DependencyInjection\Compiler\AutoAliasServicePass``
-    compiler pass to the container for this feature to work. This compiler pass
-    is now added automatically.
-
 console.command
 ---------------
 
@@ -233,10 +222,6 @@ container.no_preload
 --------------------
 
 **Purpose**: Remove a class from the list of classes preloaded by PHP
-
-.. versionadded:: 5.1
-
-    The ``container.no_preload`` tag was introduced in Symfony 5.1.
 
 Add this tag to a service and its class won't be preloaded when using
 `PHP class preloading`_:
@@ -283,10 +268,6 @@ container.preload
 -----------------
 
 **Purpose**: Add some class to the list of classes preloaded by PHP
-
-.. versionadded:: 5.1
-
-    The ``container.preload`` tag was introduced in Symfony 5.1.
 
 When using `PHP class preloading`_, this tag allows you to define which PHP
 classes should be preloaded. This can improve performance by making some of the
@@ -515,12 +496,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 The ``warmUp()`` method must return an array with the files and classes to
 preload. Files must be absolute paths and classes must be fully-qualified class
 names. The only restriction is that files must be stored in the cache directory.
-If you don't need to preload anything, return an empty array
-
-.. deprecated:: 5.1
-
-    Not returning an array from the ``warmUp()`` method with the files to
-    preload is deprecated since Symfony 5.1.
+If you don't need to preload anything, return an empty array.
 
 The ``isOptional()`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony, optional warmers

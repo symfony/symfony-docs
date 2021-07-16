@@ -607,10 +607,6 @@ to a method, you can always explicitly :doc:`configure the method call </service
 If your PHP version doesn't support attributes (they were introduced in PHP 8),
 you can use the ``@required`` annotation instead.
 
-.. versionadded:: 5.2
-
-    The ``#[Required]`` attribute was introduced in Symfony 5.2.
-
 Despite property injection has some :ref:`drawbacks <property-injection>`,
 autowiring with ``#[Required]`` or ``@required`` can also be applied to public
 typed properties:
@@ -650,10 +646,6 @@ typed properties:
                 // ...
             }
         }
-
-.. versionadded:: 5.1
-
-    Public typed properties autowiring was introduced in Symfony 5.1.
 
 Autowiring Controller Action Methods
 ------------------------------------

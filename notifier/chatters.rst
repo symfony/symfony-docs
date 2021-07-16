@@ -4,10 +4,6 @@
 How to send Chat Messages
 =========================
 
-.. versionadded:: 5.0
-
-    The Notifier component was introduced in Symfony 5.0.
-
 The :class:`Symfony\\Component\\Notifier\\ChatterInterface` class allows
 you to send messages to chat services like Slack or Telegram::
 
@@ -40,10 +36,6 @@ you to send messages to chat services like Slack or Telegram::
 The ``send()`` method returns a variable of type
 :class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
 information such as the message ID and the original message contents.
-
-.. versionadded:: 5.2
-
-    The ``SentMessage`` class was introduced in Symfony 5.2.
 
 .. seealso::
 
@@ -131,10 +123,6 @@ The result will be something like:
 .. image:: /_images/notifier/slack/field-method.png
    :align: center
 
-.. versionadded:: 5.1
-
-    The `field()` method was introduced in Symfony 5.1.
-
 Adding a Header to a Slack Message
 ----------------------------------
 
@@ -170,10 +158,6 @@ The result will be something like:
 
 .. image:: /_images/notifier/slack/slack-header.png
    :align: center
-
-.. versionadded:: 5.3
-
-    The ``SlackHeaderBlock`` class was introduced in Symfony 5.3.
 
 Adding a Footer to a Slack Message
 ----------------------------------
@@ -214,10 +198,6 @@ The result will be something like:
 .. image:: /_images/notifier/slack/slack-footer.png
    :align: center
 
-.. versionadded:: 5.3
-
-    The ``SlackContextBlock`` class was introduced in Symfony 5.3.
-
 Sending a Slack Message as a Reply
 ----------------------------------
 
@@ -244,10 +224,6 @@ The result will be something like:
 
 .. image:: /_images/notifier/slack/message-reply.png
    :align: center
-
-.. versionadded:: 5.3
-
-    The ``threadTs()`` method was introduced in Symfony 5.3.
 
 Adding Interactions to a Discord Message
 ----------------------------------------

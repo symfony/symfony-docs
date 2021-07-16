@@ -313,11 +313,6 @@ Then, you can run the following command to use that file and ignore those deprec
 
     $ SYMFONY_DEPRECATIONS_HELPER='baselineFile=./tests/allowed.json' ./vendor/bin/simple-phpunit
 
-.. versionadded:: 5.2
-
-    The ``baselineFile`` and ``generateBaseline`` options were introduced in
-    Symfony 5.2.
-
 Disabling the Verbose Output
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -328,10 +323,6 @@ deprecations and where they arise. If this is too much for you, you can use
 It's also possible to change verbosity per deprecation type. For example, using
 ``quiet[]=indirect&quiet[]=other`` will hide details for deprecations of types
 "indirect" and "other".
-
-.. versionadded:: 5.1
-
-    The ``quiet`` option was introduced in Symfony 5.1.
 
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -375,19 +366,11 @@ the compiling and warming up of the container:
 
     $ php bin/console debug:container --deprecations
 
-.. versionadded:: 5.1
-
-    The ``--deprecations`` option was introduced in Symfony 5.1.
-
 Log Deprecations
 ~~~~~~~~~~~~~~~~
 
 For turning the verbose output off and write it to a log file instead you can use
 ``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``.
-
-.. versionadded:: 5.3
-
-    The ``logFile`` option was introduced in Symfony 5.3.
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -423,11 +406,6 @@ times (order matters)::
             $this->expectDeprecation('Since vendor-name/package-name 4.4: The second argument of the "%s" method is deprecated.');
         }
     }
-
-.. deprecated:: 5.1
-
-    Symfony versions previous to 5.1 also included a ``@expectedDeprecation``
-    annotation to test deprecations, but it was deprecated in favor of the method.
 
 Display the Full Stack Trace
 ----------------------------
@@ -935,11 +913,6 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     of PHPUnit to be considered. This is useful when testing a framework that does
     not support the latest version(s) of PHPUnit.
 
-.. versionadded:: 5.2
-
-    The ``SYMFONY_MAX_PHPUNIT_VERSION`` env variable was introduced in
-    Symfony 5.2.
-
 .. tip::
 
     If you still need to use ``prophecy`` (but not ``symfony/yaml``),
@@ -953,11 +926,6 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     the rest of the needed PHPUnit packages using the ``SYMFONY_PHPUNIT_REQUIRE``
     env variable. This is specially useful for installing PHPUnit plugins without
     having to add them to your main ``composer.json`` file.
-
-.. versionadded:: 5.3
-
-    The ``SYMFONY_PHPUNIT_REQUIRE`` env variable was introduced in
-    Symfony 5.3.
 
 Code Coverage Listener
 ----------------------

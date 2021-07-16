@@ -4,10 +4,6 @@ ExpressionLanguageSyntax
 This constraint checks that the value is valid as an `ExpressionLanguage`_
 expression.
 
-.. versionadded:: 5.1
-
-    The ``ExpressionLanguageSyntax`` constraint was introduced in Symfony 5.1.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Options     - `allowedVariables`_

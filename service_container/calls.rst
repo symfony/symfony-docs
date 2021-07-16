@@ -73,7 +73,6 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
             // ...
 
             $services->set(MessageGenerator::class)
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->call('setLogger', [service('logger')]);
         };
 
@@ -166,8 +165,3 @@ The configuration to tell the container it should do so would be like:
     PHP 8 ``static`` return type and a ``@required`` annotation to behave as
     a wither, you can add a ``@return $this`` annotation to disable the
     *returns clone* feature.
-
-    .. versionadded:: 5.1
-
-        Support for the PHP 8 ``static`` return type was introduced in
-        Symfony 5.1.

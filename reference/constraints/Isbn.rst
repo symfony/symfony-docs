@@ -128,10 +128,6 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
-
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``isbn10Message``
@@ -151,10 +147,6 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
-
 ``isbn13Message``
 ~~~~~~~~~~~~~~~~~
 
@@ -172,10 +164,6 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
-
 ``message``
 ~~~~~~~~~~~
 
@@ -192,10 +180,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

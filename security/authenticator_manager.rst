@@ -139,10 +139,6 @@ unauthenticated access (e.g. the login page):
 Granting Anonymous Users Access in a Custom Voter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The ``NullToken`` class was introduced in Symfony 5.2.
-
 If you're using a :doc:`custom voter </security/voters>`, you can allow
 anonymous users access by checking for a special
 :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\NullToken`. This token is used
@@ -424,11 +420,6 @@ into a security
 Security Passports
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The ``UserBadge`` was introduced in Symfony 5.2. Prior to 5.2, the user
-    instance was provided directly to the passport.
-
 A passport is an object that contains the user that will be authenticated as
 well as other pieces of information, like whether a password should be checked
 or if "remember me" functionality should be enabled.
@@ -550,10 +541,10 @@ the following badges are supported:
     initiated). This skips the
     :doc:`pre-authentication user checker </security/user_checkers>`.
 
-.. versionadded:: 5.2
+.. note::
 
-    Since 5.2, the ``PasswordUpgradeBadge`` is automatically added to
-    the passport if the passport has ``PasswordCredentials``.
+    The ``PasswordUpgradeBadge`` is automatically added to the passport if the
+    passport has ``PasswordCredentials``.
 
 For instance, if you want to add CSRF to your custom authenticator, you
 would initialize the passport like this::
@@ -618,7 +609,3 @@ would initialize the passport like this::
                 return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
             }
         }
-
-.. versionadded:: 5.2
-
-    Passport attributes were introduced in Symfony 5.2.

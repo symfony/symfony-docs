@@ -3,10 +3,6 @@
 
 **type**: ``callable``, ``string`` or :class:`Symfony\\Component\\PropertyAccess\\PropertyPath` **default**: ``null``
 
-.. versionadded:: 5.1
-
-    The ``choice_filter`` option has been introduced in Symfony 5.1.
-
 When using predefined choice types from Symfony core or vendor libraries (i.e.
 :doc:`CountryType </reference/forms/types/country>`) this option lets you
 define a callable that takes each choice as the only argument and must return

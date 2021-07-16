@@ -4,10 +4,6 @@
 Creating and Sending Notifications
 ==================================
 
-.. versionadded:: 5.0
-
-    The Notifier component was introduced in Symfony 5.0.
-
 Installation
 ------------
 
@@ -78,23 +74,6 @@ SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@
 SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
 ==============  ====================================  ===========================================================================
-
-.. versionadded:: 5.1
-
-    The OvhCloud, Sinch and FreeMobile integrations were introduced in Symfony 5.1.
-
-.. versionadded:: 5.2
-
-    The Smsapi, Infobip, Mobyt, Esendex and Sendinblue integrations were introduced in Symfony 5.2.
-
-.. versionadded:: 5.3
-
-    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms, LightSms, SmsBiuras
-    and MessageBird integrations were introduced in Symfony 5.3.
-
-.. versionadded:: 5.4
-
-    The MessageMedia integration was introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -173,21 +152,6 @@ Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?ch
 Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
 Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ==============  ====================================  ===========================================================================
-
-.. versionadded:: 5.1
-
-    The Firebase, Mattermost and RocketChat integrations were introduced in Symfony
-    5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
-    Webhooks instead of legacy tokens.
-
-.. versionadded:: 5.2
-
-    The GoogleChat, LinkedIn, Zulip and Discord integrations were introduced in Symfony 5.2.
-    The Slack DSN changed in Symfony 5.2 to use Slack Web API again same as in 5.0.
-
-.. versionadded:: 5.3
-
-    The Gitter, Mercure, FakeChat and Microsoft Teams integrations were introduced in Symfony 5.3.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
@@ -433,11 +397,6 @@ Symfony provides the following recipients:
     This can contain both email address and phonenumber of the user. This
     recipient can be used for all channels (depending on whether they are
     actually set).
-
-.. versionadded:: 5.2
-
-    The ``AdminRecipient`` class was removed in Symfony 5.2, you should use
-    ``Recipient`` instead.
 
 Configuring Channel Policies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

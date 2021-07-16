@@ -9,10 +9,6 @@ The Runtime Component
     to make sure the application can run with runtimes like PHP-FPM, ReactPHP,
     Swoole, etc. without any changes.
 
-.. versionadded:: 5.3
-
-    The Runtime component was introduced in Symfony 5.3.
-
 Installation
 ------------
 
@@ -361,12 +357,6 @@ Using the Runtime component will benefit maintainers because the bootstrap
 logic could be versioned as a part of a normal package. If the application
 author decides to use this component, the package maintainer of the Runtime
 class will have more control and can fix bugs and add features.
-
-.. note::
-
-    Before Symfony 5.3, the Symfony bootstrap logic was part of a Flex recipe.
-    Since recipes are rarely updated by users, bug patches would rarely be
-    installed.
 
 The Runtime component is designed to be totally generic and able to run any
 application outside of the global state in 6 steps:

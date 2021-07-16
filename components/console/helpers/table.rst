@@ -265,10 +265,6 @@ Here is a full list of things you can customize:
 
     This method can also be used to override a built-in style.
 
-.. versionadded:: 5.2
-
-    The option to style table cells was introduced in Symfony 5.2.
-
 In addition to the built-in table styles, you can also apply different styles
 to each table cell via :class:`Symfony\\Component\\Console\\Helper\\TableCellStyle`::
 

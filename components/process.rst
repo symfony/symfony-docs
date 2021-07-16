@@ -105,10 +105,6 @@ with a non-zero code)::
 Configuring Process Options
 ---------------------------
 
-.. versionadded:: 5.2
-
-    The feature to configure process options was introduced in Symfony 5.2.
-
 Symfony uses the PHP :phpfunction:`proc_open` function to run the processes.
 You can configure the options passed to the ``other_options`` argument of
 ``proc_open()`` using the ``setOptions()`` method::
@@ -451,10 +447,6 @@ check regularly::
 .. tip::
 
     You can get the process start time using the ``getStartTime()`` method.
-
-    .. versionadded:: 5.1
-
-        The ``getStartTime()`` method was introduced in Symfony 5.1.
 
 .. _reference-process-signal:
 

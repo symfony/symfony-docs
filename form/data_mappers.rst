@@ -224,10 +224,6 @@ If available, these options have priority over the property path accessor and
 the default data mapper will still use the :doc:`PropertyAccess component </components/property_access>`
 for the other form fields.
 
-.. versionadded:: 5.2
-
-    The ``getter`` and ``setter`` options were introduced in Symfony 5.2.
-
 .. caution::
 
     When a form has the ``inherit_data`` option set to ``true``, it does not use the data mapper and

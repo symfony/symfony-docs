@@ -50,10 +50,6 @@ Or you can use the ``serialize`` Twig filter in a template:
 See the :doc:`twig reference </reference/twig_reference>` for
 more information.
 
-.. versionadded:: 5.3
-
-    A ``serialize`` filter was introduced in Symfony 5.3 that uses the Serializer component.
-
 Adding Normalizers and Encoders
 -------------------------------
 

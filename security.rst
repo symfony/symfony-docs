@@ -221,7 +221,7 @@ command will pre-configure this for you:
                 # use your user class name here
                 App\Entity\User:
                     # Use native password hasher, which auto-selects the best
-                    # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+                    # possible hashing algorithm (which currently is "bcrypt")
                     algorithm: auto
 
     .. code-block:: xml
@@ -262,11 +262,6 @@ command will pre-configure this for you:
 
             // ...
         };
-
-.. versionadded:: 5.3
-
-    The ``password_hashers`` option was introduced in Symfony 5.3. In previous
-    versions it was called ``encoders``.
 
 Now that Symfony knows *how* you want to hash the passwords, you can use the
 ``UserPasswordHasherInterface`` service to do this before saving your users to
@@ -328,11 +323,6 @@ You can manually hash a password by running:
 
 3a) Authentication & Firewalls
 ------------------------------
-
-.. versionadded:: 5.1
-
-    The ``lazy: true`` option was introduced in Symfony 5.1. Prior to version 5.1,
-    it was enabled using ``anonymous: lazy``
 
 The security system is configured in ``config/packages/security.yaml``. The *most*
 important section is ``firewalls``:
@@ -478,10 +468,6 @@ here are a few common use-cases:
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    Login throttling was introduced in Symfony 5.2.
-
 Symfony provides basic protection against `brute force login attacks`_ if
 you're using the :doc:`authenticator-based authenticators </security/authenticator_manager>`.
 You must enable this using the ``login_throttling`` setting:
@@ -573,10 +559,6 @@ You must enable this using the ``login_throttling`` setting:
                 ->loginThrottling()
                     ->maxAttempts(3);
         };
-
-.. versionadded:: 5.3
-
-    The ``login_throttling.interval`` option was introduced in Symfony 5.3.
 
 By default, login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
@@ -1094,11 +1076,6 @@ like this:
   :doc:`impersonating </security/impersonating_user>` another user in this
   session, this attribute will match.
 
-.. versionadded:: 5.1
-
-    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATOR``
-    attributes were introduced in Symfony 5.1.
-
 .. _retrieving-the-user-object:
 
 5a) Fetching the User Object
@@ -1303,13 +1280,6 @@ Symfony will un-authenticate the current user and redirect them.
 Customizing Logout
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.1
-
-    The ``LogoutEvent`` was introduced in Symfony 5.1. Prior to this
-    version, you had to use a
-    :ref:`logout success handler <reference-security-logout-success-handler>`
-    to customize the logout.
-
 In some cases you need to execute extra logic upon logout (e.g. invalidate
 some tokens) or want to customize what happens after a logout. During
 logout, a :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
@@ -1325,7 +1295,6 @@ event class:
 ``getResponse()``
     Returns a response, if it is already set by a custom listener. Use
     ``setResponse()`` to configure a custom logout response.
-
 
 .. tip::
 

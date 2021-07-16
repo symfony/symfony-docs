@@ -4,10 +4,6 @@
 UlidType Field
 ==============
 
-.. versionadded:: 5.3
-
-    The ``UlidType`` field was introduced in Symfony 5.3.
-
 Renders an input text field with the ULID string value and transforms it back to
 a proper :ref:`Ulid object <ulid>` when submitting the form.
 
