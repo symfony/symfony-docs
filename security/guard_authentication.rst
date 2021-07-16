@@ -4,6 +4,11 @@
 Custom Authentication System with Guard (API Token Example)
 ===========================================================
 
+.. deprecated:: 5.3
+
+    Guard authenticators are deprecated since Symfony 5.3 in favor of the
+    :doc:`new authenticator-based system </security/authenticator_manager>`.
+
 Guard authentication can be used to:
 
 * :doc:`Build a Login Form </security/form_login_setup>`
@@ -13,11 +18,6 @@ Guard authentication can be used to:
 
 and many more. In this example, we'll build an API token authentication
 system, so we can learn more about Guard in detail.
-
-.. tip::
-
-    A :doc:`new authenticator-based system </security/authenticator_manager>`
-    was introduced in Symfony 5.1, which will eventually replace Guards in Symfony 6.0.
 
 Step 1) Prepare your User Class
 -------------------------------

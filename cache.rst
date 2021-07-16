@@ -187,6 +187,11 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             ;
         };
 
+.. deprecated:: 5.4
+
+    The ``default_doctrine_provider`` option was deprecated in Symfony 5.4 and
+    it will be removed in Symfony 6.0.
+
 .. _cache-create-pools:
 
 Creating Custom (Namespaced) Pools

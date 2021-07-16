@@ -1,6 +1,11 @@
 How to Use Multiple Guard Authenticators
 ========================================
 
+.. deprecated:: 5.3
+
+    Guard authenticators are deprecated since Symfony 5.3 in favor of the
+    :doc:`new authenticator-based system </security/authenticator_manager>`.
+
 The Guard authentication component allows you to use many different
 authenticators at a time.
 
