@@ -58,6 +58,11 @@ always_authenticate_before_granting
 
 **type**: ``boolean`` **default**: ``false``
 
+.. deprecated:: 5.4
+
+    The ``always_authenticate_before_granting`` option was deprecated in
+    Symfony 5.4 and it will be removed in Symfony 6.0.
+
 If ``true``, the user is asked to authenticate before each call to the
 ``isGranted()`` method in services and controllers or ``is_granted()`` from
 templates.
