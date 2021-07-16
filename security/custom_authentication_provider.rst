@@ -7,10 +7,8 @@ How to Create a custom Authentication Provider
 .. caution::
 
     Creating a custom authentication system is hard, and almost definitely
-    **not** needed. Instead, see :doc:`/security/guard_authentication` for a
-    simple way to create an authentication system you will love. Do **not**
-    keep reading unless you want to learn the lowest level details of
-    authentication.
+    **not** needed. Instead, see the
+    :doc:`new authenticator-based system </security/authenticator_manager>`
 
 Symfony provides support for the most
 :doc:`common authentication mechanisms </security/auth_providers>`. However, your

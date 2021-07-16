@@ -1,9 +1,9 @@
 Built-in Authentication Providers
 =================================
 
-If you need to add authentication to your app, we recommend using
-:doc:`Guard authentication </security/guard_authentication>` because it gives you
-full control over the process.
+If you need to add authentication to your app, we recommend using the
+:doc:`new authenticator-based system </security/authenticator_manager>` because
+it gives you full control over the process.
 
 But, Symfony also offers a number of built-in authentication providers: systems
 that are easier to implement, but harder to customize. If your authentication
