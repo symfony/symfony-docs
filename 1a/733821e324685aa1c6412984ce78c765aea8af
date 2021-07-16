@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-15T13:11:25Z
+
+I thought the same, but I would prefer we do this after the release of Symfony 6, to reduce merge conflicts, WDYT?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-07-15T13:14:39Z
+
+Yes ... but there shouldn't be conflicts, right? Only if we change the contents of these directives, which is extremely rare. But maybe I'm missing something.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-15T13:29:35Z
+
+We will for example a new bridge in 5.4 will always cause a conflict
