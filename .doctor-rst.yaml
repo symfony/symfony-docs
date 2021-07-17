@@ -104,3 +104,4 @@ whitelist:
         - '.. versionadded:: 3.6' # MonologBundle
         - 'End to End Tests (E2E)'
         - '.. code-block:: php'
+        - '.. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket'
