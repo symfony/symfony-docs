@@ -97,3 +97,4 @@ whitelist:
         - '.. versionadded:: 0.2' # MercureBundle
         - '.. code-block:: twig'
         - 'End to End Tests (E2E)'
+        - '.. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket'
