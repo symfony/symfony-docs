@@ -451,11 +451,11 @@ the ``HubInterface`` object::
     // src/Mercure/MyTokenProvider.php
     namespace App\Mercure;
 
-    use Symfony\Component\Mercure\JWT\TokenProviderInterface;
+    use Symfony\Component\Mercure\Jwt\TokenProviderInterface;
 
     final class MyTokenProvider implements TokenProviderInterface
     {
-        public function getToken(): string
+        public function getJwt(): string
         {
             return 'the-JWT';
         }
