@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-17T06:44:38Z
+
+cc @chalasr and @dunglas are you able to verify this PR?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2021-07-17T07:16:29Z
+
+Good catch @zspine.
+@OskarStark could you also merge https://github.com/symfony/symfony-docs/pull/15460 at the same time? It also contains some fixes and is ready.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-17T07:23:09Z
+
+In this case this should target `4.4` @dunglas ?
+
+---------------------------------------------------------------------------
+
+by dunglas at 2021-07-17T07:27:43Z
+
+yes indeed
