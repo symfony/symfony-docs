@@ -653,6 +653,25 @@ config and start your workers:
 
 See the `Supervisor docs`_ for more details.
 
+Graceful Shutdown
+~~~~~~~~~~~~~~~~~
+
+Workers can handle the ``SIGTERM`` POSIX signal to finish handling their
+current message before exiting, as long as the `PCNTL`_ extension is installed.
+
+.. tip::
+
+    In some cases the ``SIGTERM`` signal is sent by Supervisor itself (e.g.
+    stopping a Docker container having Supervisor as its entrypoint).
+    In these cases you need to add a ``stopwaitsecs`` key to the program
+    configuration (with a value of the desired grace period in seconds)
+    in order to perform a graceful shutdown.
+    
+    .. code-block:: ini
+    
+        [program:x]
+        stopwaitsecs=20
+
 .. _messenger-retries-failures:
 
 Retries & Failures
@@ -1747,4 +1766,5 @@ Learn more
 .. _`Enqueue's transport`: https://github.com/sroze/messenger-enqueue-transport
 .. _`streams`: https://redis.io/topics/streams-intro
 .. _`Supervisor docs`: http://supervisord.org/
+.. _`PCNTL`: https://www.php.net/manual/book.pcntl.php
 .. _`SymfonyCasts' message serializer tutorial`: https://symfonycasts.com/screencast/messenger/transport-serializer
