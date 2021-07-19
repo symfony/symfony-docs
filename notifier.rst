@@ -95,7 +95,7 @@ Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@defau
 
 .. versionadded:: 5.4
 
-    The MessageMedia and Smsc integration was introduced in Symfony 5.4.
+    The MessageMedia and Smsc integrations were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
