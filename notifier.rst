@@ -71,6 +71,7 @@ Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@def
 Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
 Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
 SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
+Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
 SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
 ==============  ====================================  ===========================================================================
