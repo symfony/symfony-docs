@@ -241,6 +241,13 @@ following methods to create a ``Ulid`` object from it::
     $ulid = Ulid::fromBase58('1BKocMc5BnrVcuq2ti4Eqm');
     $ulid = Ulid::fromRfc4122('0171069d-593d-97d3-8b3e-23d06de5b308');
 
+There's also a special ``NilUlid`` class to represent ULID ``null`` values::
+
+    use Symfony\Component\Uid\NilUlid;
+
+    $ulid = new NilUlid();
+    // equivalent to $ulid = new Ulid('00000000000000000000000000');
+
 Converting ULIDs
 ~~~~~~~~~~~~~~~~
 
