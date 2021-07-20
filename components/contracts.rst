@@ -61,7 +61,7 @@ convention. For example:
     {
         "...": "...",
         "provide": {
-            "symfony/cache-implementation": "1.0"
+            "symfony/cache-implementation": "3.0"
         }
     }
 
