@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-17T06:42:40Z
+
+Why is the `Code-Blocks` CI check failing? 🤔
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-07-17T08:08:30Z
+
+I can't understand the failure either. The FQCN is correct, right?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-17T08:14:16Z
+
+It is, yes https://github.com/symfony/symfony/blob/6aa60fac88bace3fd7c5b026d95c38bba4ce7259/src/Symfony/Component/Uid/NilUlid.php#L12-L20
+
+@Nyholm can you help us out here?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-07-19T21:55:24Z
+
+Excellent question. The CI job [check out](https://github.com/symfony/symfony-docs/blob/5.4/.github/workflows/ci.yaml#L152-L154) a Symfony application and try to insert the code example there.
+
+The Symfony application did not have the Uid component installed. I added the component in this PR: https://github.com/symfony-tools/symfony-application/pull/4
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-07-19T21:59:07Z
+
+I've now merged in the UID component to all 5.2+ branches. If this CI job is restarted it will (hopefully) pass.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-20T05:27:21Z
+
+Thank you Tobias
