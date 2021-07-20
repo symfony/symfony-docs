@@ -60,13 +60,6 @@ configure your applications. Symfony lets you choose between YAML, XML and PHP
 and throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
-.. versionadded:: 5.1
-
-    Starting from Symfony 5.1, by default Symfony only loads the configuration
-    files defined in YAML format. If you define configuration in XML and/or PHP
-    formats, update the ``src/Kernel.php`` file to add support for the ``.xml``
-    and ``.php`` file extensions.
-
 There isn't any practical difference between formats. In fact, Symfony
 transforms and caches all of them into PHP before running the application, so
 there's not even any performance difference between them.
@@ -80,6 +73,13 @@ readable. These are the main advantages and disadvantages of each format:
   but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
 * **PHP**: very powerful and it allows you to create dynamic configuration with
   arrays or a :ref:`ConfigBuilder <config-config-builder>`.
+
+.. note::
+
+    By default Symfony only loads the configuration files defined in YAML
+    format. If you define configuration in XML and/or PHP formats, update the
+    ``src/Kernel.php`` file to add support for the ``.xml`` and ``.php`` file
+    extensions.
 
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
