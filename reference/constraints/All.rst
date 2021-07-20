@@ -39,6 +39,26 @@ entry in that array:
             protected $favoriteColors = [];
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        // IMPORTANT: the code of this class requires using PHP 8.1 or higher, because of the use of nested attributes
+
+        class User
+        {
+            #[
+                Assert\All([
+                    new Assert\NotBlank,
+                    new Assert\Length(min: 5),
+                ])
+            ]
+            protected $favoriteColors = [];
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

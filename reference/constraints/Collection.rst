@@ -88,6 +88,38 @@ following:
             ];
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        // IMPORTANT: the code of this class requires using PHP 8.1 or higher, because of the use of nested attributes
+
+        class Author
+        {
+            #[
+                Assert\Collection(
+                    fields: [
+                        'personal_email' => new Assert\Email,
+                        'short_bio' => [
+                            new Assert\NotBlank,
+                            new Assert\Length(
+                                max: 100,
+                                maxMessage: 'Your short bio is too long!'
+                            )
+                        ]
+                    ],
+                    allowMissingFields: true,
+                )
+            ]
+            protected $profileData = [
+                'personal_email' => '...',
+                'short_bio' => '...',
+            ];
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
