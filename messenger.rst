@@ -656,21 +656,19 @@ See the `Supervisor docs`_ for more details.
 Graceful Shutdown
 ~~~~~~~~~~~~~~~~~
 
-Workers can handle the ``SIGTERM`` POSIX signal to finish handling their
-current message before exiting, as long as the `PCNTL`_ extension is installed.
+If you install the `PCNTL`_ PHP extension in your project, workers will handle
+the ``SIGTERM`` POSIX signal to finish processing their current message before
+exiting.
 
-.. tip::
+In some cases the ``SIGTERM`` signal is sent by Supervisor itself (e.g. stopping
+a Docker container having Supervisor as its entrypoint). In these cases you
+need to add a ``stopwaitsecs`` key to the program configuration (with a value
+of the desired grace period in seconds) in order to perform a graceful shutdown:
 
-    In some cases the ``SIGTERM`` signal is sent by Supervisor itself (e.g.
-    stopping a Docker container having Supervisor as its entrypoint).
-    In these cases you need to add a ``stopwaitsecs`` key to the program
-    configuration (with a value of the desired grace period in seconds)
-    in order to perform a graceful shutdown.
-    
-    .. code-block:: ini
-    
-        [program:x]
-        stopwaitsecs=20
+.. code-block:: ini
+
+    [program:x]
+    stopwaitsecs=20
 
 .. _messenger-retries-failures:
 
