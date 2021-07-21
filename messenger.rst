@@ -1423,7 +1423,7 @@ The transport has a number of options:
 ======================  ======================================  ===================================
      Option             Description                             Default
 ======================  ======================================  ===================================
-``access_key``          AWS access key
+``access_key``          AWS access key                          must be urlencoded
 ``account``             Identifier of the AWS account           The owner of the credentials
 ``auto_setup``          Whether the queue should be created     ``true``
                         automatically during send / get.
@@ -1433,7 +1433,7 @@ The transport has a number of options:
                         seconds
 ``queue_name``          Name of the queue                       messages
 ``region``              Name of the AWS region                  eu-west-1
-``secret_key``          AWS secret key
+``secret_key``          AWS secret key                          must be urlencoded
 ``visibility_timeout``  Amount of seconds the message will      Queue's configuration
                         not be visible (`Visibility Timeout`_)
 ``wait_time``           `Long polling`_ duration in seconds     20
