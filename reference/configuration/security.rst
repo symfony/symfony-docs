@@ -500,7 +500,7 @@ the ``debug:firewall`` command:
 
     # displays the details of a specific firewall, including detailed information
     # about the event listeners for the firewall
-    $ php bin/console debug:firewall main --include-listeners
+    $ php bin/console debug:firewall main --events
 
 .. versionadded:: 5.3
 
