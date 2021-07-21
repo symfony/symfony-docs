@@ -204,7 +204,7 @@ article) unless you set ``render_rest`` to false:
 .. code-block:: twig
 
     {# don't render unrendered fields #}
-    {{ form_end(form, {'render_rest': false}) }}
+    {{ form_end(form, {render_rest: false}) }}
 
 .. _reference-forms-twig-label:
 
