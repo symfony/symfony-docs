@@ -19,7 +19,3 @@ rendered below the field::
             'help' => new TranslatableMessage('order.status', ['%order_id%' => $order->getId()], 'store'),
         ])
     ;
-
-.. versionadded:: 5.4
-
-    Support for passing ``TranslatableMessage`` objects was introduced in Symfony 5.4.

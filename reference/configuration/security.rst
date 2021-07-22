@@ -28,7 +28,6 @@ Configuration
 **Basic Options**:
 
 * `access_denied_url`_
-* `always_authenticate_before_granting`_
 * `anonymous`_
 * `erase_credentials`_
 * `hide_user_not_found`_
@@ -52,20 +51,6 @@ access_denied_url
 
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access deny handler). Example: ``/no-permission``
-
-always_authenticate_before_granting
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-.. deprecated:: 5.4
-
-    The ``always_authenticate_before_granting`` option was deprecated in
-    Symfony 5.4 and it will be removed in Symfony 6.0.
-
-If ``true``, the user is asked to authenticate before each call to the
-``isGranted()`` method in services and controllers or ``is_granted()`` from
-templates.
 
 anonymous
 ~~~~~~~~~

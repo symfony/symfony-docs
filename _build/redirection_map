@@ -517,3 +517,5 @@
 /security/named_encoders /security/named_hashers
 /components/inflector /components/string#inflector
 /security/experimental_authenticators /security/authenticator_manager
+/security/guard_authentication /security/authenticator_manager
+/security/multiple_guard_authenticators /security/authenticator_manager

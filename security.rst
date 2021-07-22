@@ -452,18 +452,8 @@ you to control *every* part of the authentication process (see the next section)
 Guard Authenticators
 ~~~~~~~~~~~~~~~~~~~~
 
-.. deprecated:: 5.3
-
-    Guard authenticators are deprecated since Symfony 5.3 in favor of the
-    :doc:`new authenticator-based system </security/authenticator_manager>`.
-
-A Guard authenticator is a class that gives you *complete* control over your
-authentication process. There are many different ways to build an authenticator;
-here are a few common use-cases:
-
-* :doc:`/security/form_login_setup`
-* :doc:`/security/guard_authentication` – see this for the most detailed
-  description of authenticators and how they work
+Guard authenticators are deprecated in favor of the
+:doc:`new authenticator-based system </security/authenticator_manager>`.
 
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1436,7 +1426,7 @@ Frequently Asked Questions
 **Can I have Multiple Firewalls?**
     Yes! But it's usually not necessary. Each firewall is like a separate security
     system. And so, unless you have *very* different authentication needs, one
-    firewall usually works well. With :doc:`Guard authentication </security/guard_authentication>`,
+    firewall usually works well. With the :doc:`authenticator-based security </security/authenticator_manager>`,
     you can create various, diverse ways of allowing authentication (e.g. form login,
     API key authentication and LDAP) all under the same firewall.
 
@@ -1479,7 +1469,6 @@ Authentication (Identifying/Logging in the User)
     security/form_login_setup
     security/reset_password
     security/json_login_setup
-    security/guard_authentication
     security/password_migration
     security/auth_providers
     security/user_provider
@@ -1488,7 +1477,6 @@ Authentication (Identifying/Logging in the User)
     security/impersonating_user
     security/user_checkers
     security/named_hashers
-    security/multiple_guard_authenticators
     security/firewall_restriction
     security/csrf
     security/custom_authentication_provider

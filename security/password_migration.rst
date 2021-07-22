@@ -141,7 +141,7 @@ After this, you're done and passwords are always hashed as secure as possible!
 Provide the Password when using Guard
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When you're using a custom :doc:`guard authenticator </security/guard_authentication>`,
+When you're using a custom :doc:`authenticator </security/authenticator_manager>`,
 you need to implement :class:`Symfony\\Component\\Security\\Guard\\PasswordAuthenticatedInterface`.
 This interface defines a ``getPassword()`` method that returns the password
 for this login request. This password is used in the migration process::
