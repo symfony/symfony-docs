@@ -468,6 +468,14 @@ serves at dumping the compiled container::
         file_put_contents($file, $dumper->dump());
     }
 
+
+.. tip::
+
+    Call to `file_put_contents` is not atomic. When generating container in
+    a production  environment with multiple concurrent requests, use `dumpFile`
+    from `component-filesystem` instead. This generates file in tmp and moves it
+    to its destination only once it's fully written to.
+    
 ``ProjectServiceContainer`` is the default name given to the dumped container
 class. However, you can change this with the ``class`` option when you
 dump it::
@@ -559,6 +567,11 @@ for these resources and use them as metadata for the cache::
 
     require_once $file;
     $container = new MyCachedContainer();
+    
+.. note::
+
+    Using `$containerConfigCache->write` also makes sure that
+    the file write operation is atomic.
 
 Now the cached dumped container is used regardless of whether debug mode
 is on or not. The difference is that the ``ConfigCache`` is set to debug
