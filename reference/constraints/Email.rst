@@ -160,8 +160,10 @@ in the second host part of the email address.
 strict
 ......
 
-Uses the `egulias/email-validator`_ library to perform an RFC compliant
-validation. You will need to install that library to use this mode.
+If you're using Symfony Mailer to send emails to that address, this is
+the recommended mode, since both are using the same library, to perform an RFC
+compliant validation: `egulias/email-validator`_. If you're not using Symfony
+Mailer, you will need to install that library separately to use this mode.
 
 html5
 .....
