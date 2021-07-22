@@ -489,6 +489,9 @@ provided by Symfony:
                 # the path of the template to render
                 template:  'static/privacy.html.twig'
 
+                # the status code to include in the response headers
+                statusCode: 200
+
                 # special options defined by Symfony to set the page cache
                 maxAge:    86400
                 sharedAge: 86400
