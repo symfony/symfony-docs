@@ -513,7 +513,7 @@ start with ``/admin``, you can:
                 # require ROLE_ADMIN for /admin*
                 - { path: '^/admin', roles: ROLE_ADMIN }
 
-                # or require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
+                # or require multiple roles for /admin* (when defining multiple roles, the behavior depends on the strategy used in Access Decission Manager)
                 - { path: '^/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
 
                 # the 'path' value can be any valid regular expression
@@ -540,7 +540,7 @@ start with ``/admin``, you can:
                 <!-- require ROLE_ADMIN for /admin* -->
                 <rule path="^/admin" role="ROLE_ADMIN"/>
 
-                <!-- require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin* -->
+                <!-- require multiple roles for /admin* (when defining multiple roles, the behavior depends on the strategy used in Access Decission Manager) -->
                 <rule path="^/admin">
                     <role>ROLE_ADMIN</role>
                     <role>IS_AUTHENTICATED_FULLY</role>
@@ -568,7 +568,7 @@ start with ``/admin``, you can:
                 // require ROLE_ADMIN for /admin*
                 ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
 
-                // require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
+                // require multiple roles for /admin* (when defining multiple roles, the behavior depends on the strategy used in Access Decission Manager)
                 ['path' => '^/admin', 'roles' => ['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']],
 
                 // the 'path' value can be any valid regular expression
