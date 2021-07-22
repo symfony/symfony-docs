@@ -25,6 +25,13 @@ To use it, declare it as a service:
         # config/services.yaml
         services:
             Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler: ~
+            # If you don't want to run it locally you need to specify the following variables
+            # arguments:
+            #     $endpoint: "http://127.0.0.1:9200"
+            #     $index: "monolog"
+            #     $client: null
+            #     $level: Logger::DEBUG
+            #     $bubble: true
 
     .. code-block:: xml
 
