@@ -430,6 +430,9 @@ Then, execute the script for validating contents:
     # or all the files in multiple directories
     $ php lint.php path/to/directory1 path/to/directory2
 
+    # exclude specific files from directory
+    $ php lint.php path/to/directory --exclude="path/to/directory/exclude.yml"
+
     # or contents passed to STDIN
     $ cat path/to/file.yaml | php lint.php
 
@@ -439,6 +442,27 @@ Add the ``--format`` option to get the output in JSON format:
 .. code-block:: terminal
 
     $ php lint.php path/to/file.yaml --format json
+
+The yaml linter can also be configured through the yaml config file. To do so, add
+the ``--config=CONFIG`` option to read the linter configuration from
+the given yaml linter config file:
+
+.. code-block:: terminal
+
+    $ php lint.php --config=.yamllint.yml
+
+Example contents of the .yamllint.yml config:
+
+.. code-block:: yaml
+
+    parse-tags: false
+    format: txt
+    includes:
+      - path/to/directory/foo.yml
+      - path/to/directory/bar.yml
+      - path/to/directory/foo/path
+    excludes:
+      - path/to/directory/foo/path/exclude.yml
 
 .. tip::
 
