@@ -925,20 +925,18 @@ Handling Exceptions
 ~~~~~~~~~~~~~~~~~~~
 
 When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
-4xx or 5xx) your code is expected to handle it. If you don't do that, the
-``getHeaders()``, ``getContent()`` and ``toArray()`` methods throw an appropriate exception, all of
-which implement the :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`::
+4xx or 5xx), the ``getHeaders()``, ``getContent()`` and ``toArray()`` methods
+throw an appropriate exception, all of which implement the
+:class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`.
 
-    // the response of this request will be a 403 HTTP error
-    $response = $client->request('GET', 'https://httpbin.org/status/403');
+To opt-out from this exception and deal with 300-599 status codes on your own,
+pass ``false`` as the optional argument to every call of those methods,
+e.g. ``$response->getHeaders(false);``.
 
-    // this code results in a Symfony\Component\HttpClient\Exception\ClientException
-    // because it doesn't check the status code of the response
-    $content = $response->getContent();
-
-    // pass FALSE as the optional argument to not throw an exception and return
-    // instead the original response content (even if it's an error message)
-    $content = $response->getContent(false);
+If you do not call any of these 3 methods at all, the exception will still be thrown
+when the ``$response`` object is destructed (i.e. when the Symfony kernel delivers the final response).
+Calling ``$response->getStatusCode()`` is enough to disable this behavior
+(but then don't miss checking the status code yourself).
 
 While responses are lazy, their destructor will always wait for headers to come
 back. This means that the following request *will* complete; and if e.g. a 404
