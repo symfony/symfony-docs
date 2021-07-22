@@ -27,6 +27,7 @@ String Constraints
 * :doc:`Ulid </reference/constraints/Ulid>`
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
+* :doc:`CssColor </reference/constraints/CssColor>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
