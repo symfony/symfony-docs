@@ -647,6 +647,12 @@ method:
             }
         }
 
+.. caution::
+
+    The form's ``createView()`` method should be called *after* ``handleRequest()`` is
+    called. Otherwise, when using :doc:`form events </form/events>`, changes done
+    in the ``*_SUBMIT`` events won't be applied to the view (like validation errors).
+
 This defines a common form "workflow", which contains 3 different possibilities:
 
 1) On the initial GET request (i.e. when the user "surfs" to your page),
