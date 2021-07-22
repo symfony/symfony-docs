@@ -549,7 +549,7 @@ performance. Run this from the `MongoDB shell`_:
 .. code-block:: javascript
 
     use session_db
-    db.session.ensureIndex( { "expires_at": 1 }, { expireAfterSeconds: 0 } )
+    db.session.createIndex( { "expires_at": 1 }, { expireAfterSeconds: 0 } )
 
 Configuring the Session Field Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
