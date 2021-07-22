@@ -28,7 +28,7 @@ unauthenticated user tries to access a protected resource::
 
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
@@ -36,18 +36,18 @@ unauthenticated user tries to access a protected resource::
     class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
     {
         private $urlGenerator;
-        private $session;
+        private $flashBag;
 
-        public function __construct(UrlGeneratorInterface $urlGenerator, SessionInterface $session)
+        public function __construct(UrlGeneratorInterface $urlGenerator, FlashBagInterface $flashBag)
         {
             $this->urlGenerator = $urlGenerator;
-            $this->session = $session;
+            $this->flashBag = $flashBag;
         }
 
         public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
         {
             // add a custom flash message and redirect to the login page
-            $this->session->getFlashBag()->add('note', 'You have to login in order to access this page.');
+            $this->flashBag->add('note', 'You have to login in order to access this page.');
 
             return new RedirectResponse($this->urlGenerator->generate('security_login'));
         }
