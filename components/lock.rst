@@ -768,7 +768,7 @@ Such an index can be created manually:
 
 .. code-block:: javascript
 
-    db.lock.ensureIndex(
+    db.lock.createIndex(
         { "expires_at": 1 },
         { "expireAfterSeconds": 0 }
     )
