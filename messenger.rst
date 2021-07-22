@@ -313,6 +313,21 @@ to multiple transports:
             $messenger->routing('My\Message\ToBeSentToTwoSenders')->senders(['async', 'audit']);
         };
 
+.. versionadded:: 5.3
+
+    Ability to configure routing using attributes was introduced in Symfony 5.3.
+
+If you are using PHP 8.0 or above, you can use ``Senders`` attribute instead
+of ``routing`` key in the configuration::
+
+    use Symfony\Component\Messenger\Attribute\Senders;
+
+    #[Senders('async')]
+    class AsyncMessage
+    {
+        // ...
+    }
+
 .. note::
 
     If you configure routing for both a child and parent class, both rules
