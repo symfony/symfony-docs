@@ -60,6 +60,36 @@ The following constraints ensure that:
             protected $grades;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Student.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        // IMPORTANT: the code of this class requires using PHP 8.1 or higher, because of the use of nested attributes
+
+        class Student
+        {
+            #[
+                Assert\AtLeastOneOf([
+                    new Assert\Regex('/#/'),
+                    new Assert\Length(min: 10),
+                ])
+            ]
+            protected $plainPassword;
+
+            #[
+                Assert\AtLeastOneOf([
+                    new Assert\Count(min: 3),
+                    new Assert\All(
+                        new Assert\GreaterThanOrEqual(5)
+                    ),
+                ])
+            ]
+            protected $grades;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
