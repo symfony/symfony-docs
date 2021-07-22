@@ -8,35 +8,56 @@ If you need to simulate an interaction between different clients (think of a
 chat for instance), create several clients::
 
     // ...
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     use Symfony\Component\HttpFoundation\Response;
 
-    $harry = static::createClient();
-    $sally = static::createClient();
+    class MyTest extends WebTestCase
+    {
+        // ...
+        public function testWithMultipleClients()
+        {
+            self::ensureKernelShutdown();
+            $harry = static::createClient();
 
-    $harry->request('POST', '/say/sally/Hello');
-    $sally->request('GET', '/messages');
+            self::ensureKernelShutdown();
+            $sally = static::createClient();
 
-    $this->assertEquals(Response::HTTP_CREATED, $harry->getResponse()->getStatusCode());
-    $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
+            $harry->request('POST', '/say/sally/Hello');
+            $sally->request('GET', '/messages');
+
+            $this->assertEquals(Response::HTTP_CREATED, $harry->getResponse()->getStatusCode());
+            $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
+        }
+    }
 
 This works except when your code maintains a global state or if it depends on
 a third-party library that has some kind of global state. In such a case, you
 can insulate your clients::
 
     // ...
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
     use Symfony\Component\HttpFoundation\Response;
 
-    $harry = static::createClient();
-    $sally = static::createClient();
+    class MyTest extends WebTestCase
+    {
+        // ...
+        public function testWithMultipleInsulatedClients()
+        {
+            self::ensureKernelShutdown();
+            $harry = static::createClient();
+            $harry->insulate();
 
-    $harry->insulate();
-    $sally->insulate();
+            self::ensureKernelShutdown();
+            $sally = static::createClient();
+            $sally->insulate();
 
-    $harry->request('POST', '/say/sally/Hello');
-    $sally->request('GET', '/messages');
+            $harry->request('POST', '/say/sally/Hello');
+            $sally->request('GET', '/messages');
 
-    $this->assertEquals(Response::HTTP_CREATED, $harry->getResponse()->getStatusCode());
-    $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
+            $this->assertEquals(Response::HTTP_CREATED, $harry->getResponse()->getStatusCode());
+            $this->assertRegExp('/Hello/', $sally->getResponse()->getContent());
+        }
+    }
 
 Insulated clients transparently run their requests in a dedicated and
 clean PHP process, thus avoiding any side effects.
