@@ -405,6 +405,15 @@ The ``trans`` filter can be used to translate *variable texts* and complex expre
 
 .. tip::
 
+    When a number is provided as a parameter named "%count%", the message is parsed for plural
+    forms and a translation is chosen according to this number using the following rules:
+
+    .. code-block:: twig
+
+       {{ message|trans({'%name%': 'Fabien', '%count%' => 1}, 'app') }}
+
+.. tip::
+
     You can set the translation domain for an entire Twig template with a single tag:
 
     .. code-block:: twig
