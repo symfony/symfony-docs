@@ -342,6 +342,12 @@ explained in the article about :doc:`customizing form rendering </form/form_cust
 * :ref:`form_help() <reference-forms-twig-help>`
 * :ref:`form_row() <reference-forms-twig-row>`
 * :ref:`form_rest() <reference-forms-twig-rest>`
+* :ref:`field_name() <reference-forms-twig-rest>`
+* :ref:`field_value() <reference-forms-twig-rest>`
+* :ref:`field_label() <reference-forms-twig-rest>`
+* :ref:`field_help() <reference-forms-twig-rest>`
+* :ref:`field_errors() <reference-forms-twig-rest>`
+* :ref:`field_choices() <reference-forms-twig-rest>`
 
 .. _reference-twig-filters:
 
