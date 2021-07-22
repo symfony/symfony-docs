@@ -29,14 +29,14 @@ in a single Twig template and they are enabled in the
 * `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous
   theme, but the CSS classes applied are the ones used to display the forms
   horizontally (i.e. the label and the widget in the same row).
-* `bootstrap_4_layout.html.twig`_, same as ``bootstrap_3_layout.html.twig``, but
+* `bootstrap_4_layout.html.twig`_, same as ``bootstrap_4_layout.html.twig``, but
   updated for `Bootstrap 4 CSS framework`_ styles.
 * `bootstrap_4_horizontal_layout.html.twig`_, same as
-  ``bootstrap_3_horizontal_layout.html.twig`` but updated for Bootstrap 4 styles.
-* `bootstrap_5_layout.html.twig`_, same as ``bootstrap_4_layout.html.twig``, but
+  ``bootstrap_4_horizontal_layout.html.twig`` but updated for Bootstrap 4 styles.
+* `bootstrap_5_layout.html.twig`_, same as ``bootstrap_5_layout.html.twig``, but
   updated for `Bootstrap 5 CSS framework`_ styles.
 * `bootstrap_5_horizontal_layout.html.twig`_, same as
-  ``bootstrap_4_horizontal_layout.html.twig`` but updated for Bootstrap 5 styles.
+  ``bootstrap_5_horizontal_layout.html.twig`` but updated for Bootstrap 5 styles.
 * `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>``
   element with the appropriate CSS classes to apply the default styles of the
   version 5 of `Foundation CSS framework`_.
