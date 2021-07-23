@@ -266,14 +266,6 @@ The authenticator-based system dropped support for these providers and
 introduced a new authenticator interface as a base for custom
 authentication methods.
 
-.. tip::
-
-    :doc:`Guard authenticators </security/guard_authentication>` are still
-    supported in the authenticator-based system. It is however recommended
-    to also update these when you're refactoring your application to the
-    new system. The new authenticator interface has many similarities with the
-    guard authenticator interface, making the rewrite easier.
-
 Authenticators should implement the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AuthenticatorInterface`.
 You can also extend

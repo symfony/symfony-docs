@@ -45,7 +45,7 @@ and your generated code may be slightly different:
     Support for login form authentication was added to ``make:auth`` in MakerBundle 1.8.
 
 This generates the following: 1) login/logout routes & controller, 2) a template that
-renders the login form, 3) a :doc:`Guard authenticator </security/guard_authentication>`
+renders the login form, 3) an :doc:`authenticator </security/authenticator_manager>`
 class that processes the login submit and 4) updates the main security config file.
 
 **Step 1.** The ``/login``/``/logout`` routes & controller::
@@ -405,9 +405,9 @@ you have:
 .. image:: /_images/security/symfony_loggedin_wdt.png
    :align: center
 
-The Guard authentication system is powerful, and you can customize your authenticator
+The authentication system is powerful, and you can customize your authenticator
 class to do whatever you need. To learn more about what the individual methods do,
-see :doc:`/security/guard_authentication`.
+see :doc:`/security/authenticator_manager`.
 
 Controlling Error Messages
 --------------------------

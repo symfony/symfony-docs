@@ -99,7 +99,6 @@ The Cache component comes with a series of adapters pre-configured:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
 * :doc:`cache.adapter.array </components/cache/adapters/array_cache_adapter>`
-* :doc:`cache.adapter.doctrine </components/cache/adapters/doctrine_adapter>`
 * :doc:`cache.adapter.filesystem </components/cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </components/cache/adapters/memcached_adapter>`
 * :doc:`cache.adapter.pdo </components/cache/adapters/pdo_doctrine_dbal_adapter>`
@@ -119,8 +118,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             cache:
                 directory: '%kernel.cache_dir%/pools' # Only used with cache.adapter.filesystem
 
-                # service: cache.doctrine
-                default_doctrine_provider: 'app.doctrine_cache'
                 # service: cache.psr6
                 default_psr6_provider: 'app.my_psr6_service'
                 # service: cache.redis
@@ -144,7 +141,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
 
             <framework:config>
                 <!--
-                default_doctrine_provider: Service: cache.doctrine
                 default_psr6_provider: Service: cache.psr6
                 default_redis_provider: Service: cache.redis
                 default_memcached_provider: Service: cache.memcached
@@ -152,7 +148,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 -->
                 <!-- "directory" attribute is only used with cache.adapter.filesystem -->
                 <framework:cache directory="%kernel.cache_dir%/pools"
-                    default_doctrine_provider="app.doctrine_cache"
                     default_psr6_provider="app.my_psr6_service"
                     default_redis_provider="redis://localhost"
                     default_memcached_provider="memcached://localhost"
@@ -170,8 +165,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             $framework->cache()
                 // Only used with cache.adapter.filesystem
                 ->directory('%kernel.cache_dir%/pools')
-                // Service: cache.doctrine
-                ->defaultDoctrineProvider('app.doctrine_cache')
                 // Service: cache.psr6
                 ->defaultPsr6Provider('app.my_psr6_service')
                 // Service: cache.redis
@@ -182,11 +175,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 ->defaultPdoProvider('doctrine.dbal.default_connection')
             ;
         };
-
-.. deprecated:: 5.4
-
-    The ``default_doctrine_provider`` option was deprecated in Symfony 5.4 and
-    it will be removed in Symfony 6.0.
 
 .. _cache-create-pools:
 
