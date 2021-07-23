@@ -78,6 +78,7 @@ SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@
 Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
 SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
+Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
 ==============  ====================================  ===========================================================================
 
 .. versionadded:: 5.1
@@ -95,7 +96,7 @@ Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@defau
 
 .. versionadded:: 5.4
 
-    The MessageMedia and Smsc integrations were introduced in Symfony 5.4.
+    The MessageMedia, Smsc and Yunpian integrations were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
