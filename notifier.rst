@@ -57,6 +57,7 @@ with a couple popular SMS services:
 Service         Package                               DSN
 ==============  ====================================  ===========================================================================
 AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@default?from=FROM``
+AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
 Esendex         ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
 FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM``
@@ -96,7 +97,7 @@ Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default
 
 .. versionadded:: 5.4
 
-    The MessageMedia, Smsc and Yunpian integrations were introduced in Symfony 5.4.
+    The MessageMedia, Smsc, Yunpian and AmazonSns integrations were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -161,6 +162,7 @@ integration with these chat services:
 ==============  ====================================  ===========================================================================
 Service         Package                               DSN
 ==============  ====================================  ===========================================================================
+AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Discord         ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
 FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM``
 Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
@@ -190,6 +192,10 @@ Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST
 .. versionadded:: 5.3
 
     The Gitter, Mercure, FakeChat and Microsoft Teams integrations were introduced in Symfony 5.3.
+
+.. versionadded:: 5.4
+
+    The AmazonSns integration was introduced in Symfony 5.4.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
