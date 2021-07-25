@@ -74,6 +74,7 @@ SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@
 Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
 SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
+Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
 ==============  ====================================  ===========================================================================
 
 To enable a texter, add the correct DSN in your ``.env`` file and
