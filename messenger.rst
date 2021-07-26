@@ -1430,7 +1430,7 @@ claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
 .. deprecated:: 5.4
 
     Not setting a explicit value for the ``delete_after_ack`` option is
-    deprcated since Symfony 5.4. In Symfony 6.0, the default value of this
+    deprecated since Symfony 5.4. In Symfony 6.0, the default value of this
     option changes from ``false`` to ``true``.
 
 In Memory Transport
