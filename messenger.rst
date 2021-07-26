@@ -1311,7 +1311,7 @@ group                The Redis consumer group name          symfony
 consumer             Consumer name used in Redis            consumer
 auto_setup           Create the Redis group automatically?  true
 auth                 The Redis password
-delete_after_ack     If ``true``, messages are deleted      false
+delete_after_ack     If ``true``, messages are deleted      true
                      automatically after processing them
 delete_after_reject  If ``true``, messages are deleted      true
                      automatically if they are rejected
