@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by KamilKubicki at 2021-04-23T22:50:50Z
+
+Please review as complementary commit to:
+
+[Notifier] Add docs for Microsoft Teams Options #15232
+
+---------------------------------------------------------------------------
+
+by KamilKubicki at 2021-05-18T17:46:17Z
+
+Hi @Nyholm, related issue from @OskarStark was already merged - [Notifier] Microsoft Teams: JSON structure error fix for simple message #40834. Should you require any action from my side for this documentation or we can consider that it is ready for merge?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-05-18T20:19:15Z
+
+It's done but we can merge this for 5.4 when the feature got merged
