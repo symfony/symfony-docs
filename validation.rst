@@ -11,6 +11,10 @@ into a database or passed to a web service.
 Symfony provides a `Validator`_ component to handle this for you. This
 component is based on the `JSR303 Bean Validation specification`_.
 
+.. index::
+   pair: Validation; Installation
+   pair: Validation; Configuration
+
 Installation
 ------------
 
@@ -20,6 +24,12 @@ install the validator before using it:
 .. code-block:: terminal
 
     $ composer require symfony/validator doctrine/annotations
+
+.. note::
+
+    If your application doesn't use Symfony Flex, you might need to do some
+    manual configuration to enable validation. Check out the
+    :ref:`Validation configuration reference <reference-validation>`.
 
 .. index::
    single: Validation; The basics
@@ -205,20 +215,6 @@ Inside the template, you can output the list of errors exactly as needed:
 
     Each validation error (called a "constraint violation"), is represented by
     a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object.
-
-.. index::
-   pair: Validation; Configuration
-
-Configuration
--------------
-
-In the previous Symfony versions, enabling the validator in configuration was a requirement. It's not the case anymore, the validation is enabled by default as long as the Validator component is installed. In the same way, annotations are enabled by default if ``doctrine/annotations`` is installed.
-
-.. tip::
-
-    When using PHP, YAML, and XML files instead of annotations, Symfony looks
-    for by default in the ``config/validator/`` directory, but you can configure
-    other directories with the :ref:`validation.mapping.paths <reference-validation-mapping>` option.
 
 .. index::
    single: Validation; Constraints
