@@ -377,11 +377,6 @@ Learn more
     logging/monolog_exclude_http_codes
     logging/monolog_console
 
-.. toctree::
-    :hidden:
-
-    logging/monolog_regex_based_excludes
-
 .. _`the twelve-factor app methodology`: https://12factor.net/logs
 .. _PSR-3: https://www.php-fig.org/psr/psr-3/
 .. _`stderr`: https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)
