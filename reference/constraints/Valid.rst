@@ -243,6 +243,13 @@ the validation of the ``Address`` fields failed.
     App\Entity\Author.address.zipCode:
         This value is too long. It should have 5 characters or less.
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
+.. note::
+
+    This constraint is not aware what sub-object must be associated with it, a common solution is to combine this constraint
+    with :doc:`Type </reference/constraints/Type>`.
+
 Options
 -------
 
