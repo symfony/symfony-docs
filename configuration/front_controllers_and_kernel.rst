@@ -251,13 +251,12 @@ includes the following:
     The cached "service container" that represents the cached application
     configuration.
 
-``UrlGenerator.php``
-    The PHP class generated from the routing configuration and used when
-    generating URLs.
+``url_generating_routes.php``
+    The cached routing configuration used when generating URLs.
 
-``UrlMatcher.php``
-    The PHP class used for route matching - look here to see the compiled regular
-    expression logic used to match incoming URLs to different routes.
+``url_matching_routes.php``
+    The cached configuration used for route matching - look here to see the compiled
+    regular expression logic used to match incoming URLs to different routes.
 
 ``twig/``
     This directory contains all the cached Twig templates.
