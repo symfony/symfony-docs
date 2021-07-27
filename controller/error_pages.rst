@@ -183,13 +183,10 @@ automatically when installing ``symfony/framework-bundle``):
             ;
         };
 
-With this route added, you can use URLs like these to preview the *error* page
-for a given status code as HTML or for a given status code and format.
+Now you can preview your error page on these two routes:
 
-.. code-block:: text
-
-     http://localhost/index.php/_error/{statusCode}
-     http://localhost/index.php/_error/{statusCode}.{format}
+* `/_error/{statusCode}` for HTML
+* `/_error/{statusCode}.{format}` for any other format
 
 .. _overriding-non-html-error-output:
 
