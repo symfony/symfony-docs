@@ -335,7 +335,7 @@ to add `message options`_::
 Adding text to a Microsoft Teams Message
 ----------------------------------------
 
-With a Microsoft Teams, you can use the simple ChatMessage::
+With a Microsoft Teams, you can use the ChatMessage class::
 
     use Symfony\Component\Notifier\Bridge\MicrosoftTeams\MicrosoftTeamsTransport;
     use Symfony\Component\Notifier\Message\ChatMessage;
@@ -420,9 +420,9 @@ The result will be something like:
 .. image:: /_images/notifier/microsoft_teams/message-card.png
    :align: center
 
-.. versionadded:: 5.3
+.. versionadded:: 5.4
 
-    Options for Microsoft Teams were introduced in Symfony 5.3.
+    Options for Microsoft Teams were introduced in Symfony 5.4.
 
 .. _`Block elements`: https://api.slack.com/reference/block-kit/block-elements
 .. _`Embed elements`: https://discord.com/developers/docs/resources/webhook
