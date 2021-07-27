@@ -74,6 +74,7 @@ Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?f
 SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
 Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
 SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
+Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
 Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
 ==============  ====================================  ===========================================================================
