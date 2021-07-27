@@ -101,7 +101,7 @@ Git, setup your project with the following commands:
     $ cd my-project/
     $ composer install
 
-You'll probably also need to customize your :ref:`.env file <config-dot-env>`
+You'll also need to customize your :ref:`.env file <config-dot-env>`
 and do a few other project-specific tasks (e.g. creating a database). When
 working on a existing Symfony application for the first time, it may be useful
 to run this command which displays information about the project:
