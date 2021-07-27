@@ -82,9 +82,10 @@ Kernel. Be sure to also change the location of the cache, logs and configuration
 files so they don't collide with the files from ``src/Kernel.php``::
 
     // src/ApiKernel.php
-    use Symfony\Component\Config\Loader\LoaderInterface;
-    use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\HttpKernel\Kernel;
+    use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
     class ApiKernel extends Kernel
     {
@@ -101,14 +102,9 @@ files so they don't collide with the files from ``src/Kernel.php``::
             }
         }
 
-        public function getProjectDir(): string
-        {
-            return \dirname(__DIR__);
-        }
-
         public function getCacheDir(): string
         {
-            return $this->getProjectDir().'/var/cache/api/'.$this->getEnvironment();
+            return $this->getProjectDir().'/var/cache/api/'.$this->environment;
         }
 
         public function getLogDir(): string
@@ -116,21 +112,23 @@ files so they don't collide with the files from ``src/Kernel.php``::
             return $this->getProjectDir().'/var/log/api';
         }
 
-        public function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
+        protected function configureContainer(ContainerConfigurator $container): void
         {
-            $container->addResource(new FileResource($this->getProjectDir().'/config/api_bundles.php'));
-            $container->setParameter('container.dumper.inline_factories', true);
-            $confDir = $this->getProjectDir().'/config/api';
+            $container->import('../config/api/{packages}/*.yaml');
+            $container->import('../config/api/{packages}/'.$this->environment.'/*.yaml');
 
-            $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');
-            $loader->load($confDir.'/{packages}/'.$this->environment.'/*'.self::CONFIG_EXTS, 'glob');
-            $loader->load($confDir.'/{services}'.self::CONFIG_EXTS, 'glob');
-            $loader->load($confDir.'/{services}_'.$this->environment.self::CONFIG_EXTS, 'glob');
+            if (is_file(\dirname(__DIR__).'/config/api/services.yaml')) {
+                $container->import('../config/api/services.yaml');
+                $container->import('../config/api/{services}_'.$this->environment.'.yaml');
+            } else {
+                $container->import('../config/api/{services}.php');
+            }
         }
 
-        protected function configureRoutes(RouteCollectionBuilder $routes): void
+        protected function configureRoutes(RoutingConfigurator $routes): void
         {
-            $confDir = $this->getProjectDir().'/config/api';
+            $routes->import('../config/api/{routes}/'.$this->environment.'/*.yaml');
+            $routes->import('../config/api/{routes}/*.yaml');
             // ... load only the config routes strictly needed for the API
         }
     }
