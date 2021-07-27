@@ -290,6 +290,11 @@ the validation of the ``Address`` fields failed.
     App\Entity\Author.address.zipCode:
         This value is too long. It should have 5 characters or less.
 
+.. tip::
+
+    If you also want to validate that the ``address`` property is an instance of
+    the ``App\Entity\Address`` class, add the :doc:`Type constraint </reference/constraints/Type>`.
+
 Options
 -------
 
