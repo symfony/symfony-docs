@@ -608,6 +608,13 @@ errors. It's useful to run it before deploying your application to production
     # you can also show the deprecated features used in your templates
     $ php bin/console lint:twig --show-deprecations templates/email/
 
+When running the linter inside `GitHub Actions`_, the output is automatically
+adapted to the format required by GitHub, but you can force that format too:
+
+.. code-block:: terminal
+
+    $ php bin/console lint:twig --format=github
+
 Inspecting Twig Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1159,3 +1166,4 @@ Learn more
 .. _`Twig template inheritance`: https://twig.symfony.com/doc/2.x/tags/extends.html
 .. _`Twig block tag`: https://twig.symfony.com/doc/2.x/tags/block.html
 .. _`Cross-Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions

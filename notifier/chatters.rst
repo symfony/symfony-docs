@@ -396,10 +396,6 @@ The result will be something like:
 .. image:: /_images/notifier/microsoft_teams/message-card.png
    :align: center
 
-.. versionadded:: 5.4
-
-    Options for Microsoft Teams were introduced in Symfony 5.4.
-
 .. _`Block elements`: https://api.slack.com/reference/block-kit/block-elements
 .. _`Embed elements`: https://discord.com/developers/docs/resources/webhook
 .. _`message options`: https://core.telegram.org/bots/api

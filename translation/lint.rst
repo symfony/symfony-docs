@@ -33,12 +33,13 @@ The linter results can be exported to JSON using the ``--format`` option:
     $ php bin/console lint:yaml translations/ --format=json
     $ php bin/console lint:xliff translations/ --format=json
 
-When running the YAML linter inside `GitHub Actions`_, the output is automatically
+When running these linters inside `GitHub Actions`_, the output is automatically
 adapted to the format required by GitHub, but you can force that format too:
 
 .. code-block:: terminal
 
     $ php bin/console lint:yaml translations/ --format=github
+    $ php bin/console lint:xliff translations/ --format=github
 
 .. tip::
 

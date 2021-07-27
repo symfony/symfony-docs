@@ -157,28 +157,6 @@ Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default
 Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ==============  ====================================  ===========================================================================
 
-<<<<<<< HEAD
-=======
-.. versionadded:: 5.1
-
-    The Firebase, Mattermost and RocketChat integrations were introduced in Symfony
-    5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
-    Webhooks instead of legacy tokens.
-
-.. versionadded:: 5.2
-
-    The GoogleChat, LinkedIn, Zulip and Discord integrations were introduced in Symfony 5.2.
-    The Slack DSN changed in Symfony 5.2 to use Slack Web API again same as in 5.0.
-
-.. versionadded:: 5.3
-
-    The Gitter, Mercure, FakeChat and Microsoft Teams integrations were introduced in Symfony 5.3.
-
-.. versionadded:: 5.4
-
-    The AmazonSns integration was introduced in Symfony 5.4.
-
->>>>>>> 5.4
 Chatters are configured using the ``chatter_transports`` setting:
 
 .. code-block:: bash
