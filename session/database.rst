@@ -11,6 +11,74 @@ across different servers.
 Symfony can store sessions in all kinds of databases (relational, NoSQL and
 key-value) but recommends key-value databases like Redis to get best performance.
 
+Define Session Storage by DSN
+-----------------------------
+
+Besides specifying a service as the session-handler you can also provide a
+"DSN" directly and let Symfony create the necessary services/clients:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            session:
+                # ...
+                handler_id: 'redis://localhost'
+                handler_id: '%env(REDIS_URL)%'
+                handler_id: '%env(resolve:DATABASE_URL)%'
+                handler_id: 'file://%kernel.project_dir%/var/sessions'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:session enabled="true"
+                    handler-id="redis://localhost"
+                    handler-id="%env(REDIS_URL)%"
+                    handler-id="%env(resolve:DATABASE_URL)%"
+                    handler-id="file://%kernel.project_dir%/var/sessions"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        $container->loadFromExtension('framework', [
+            'session' => [
+                // ...
+                'handler_id' => 'redis://localhost',
+                'handler_id' => '%env(REDIS_URL)%',
+                'handler_id' => '%env(resolve:DATABASE_URL)%',
+                'handler_id' => 'file://%kernel.project_dir%/var/sessions',
+            ],
+        ]);
+
+Supported DSN protocols are:
+
+- file (i.e.: ``file://%kernel.project_dir%/var/sessions``)
+- redis (i.e.: ``redis://redis-server:6379``)
+- rediss
+- memcached
+- pdo_oci
+- mssql
+- mysql
+- mysql2
+- pgsql
+- postgres
+- postgresql
+- sqlsrv
+- sqlite
+- sqlite3
+
 Store Sessions in a key-value Database (Redis)
 ----------------------------------------------
 
