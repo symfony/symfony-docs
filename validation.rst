@@ -11,6 +11,10 @@ into a database or passed to a web service.
 Symfony provides a `Validator`_ component to handle this for you. This
 component is based on the `JSR303 Bean Validation specification`_.
 
+.. index::
+   pair: Validation; Installation
+   pair: Validation; Configuration
+
 Installation
 ------------
 
@@ -20,6 +24,12 @@ install the validator before using it:
 .. code-block:: terminal
 
     $ composer require symfony/validator doctrine/annotations
+
+.. note::
+
+    If your application doesn't use Symfony Flex, you might need to do some
+    manual configuration to enable validation. Check out the
+    :ref:`Validation configuration reference <reference-validation>`.
 
 .. index::
    single: Validation; The basics
@@ -219,94 +229,6 @@ Inside the template, you can output the list of errors exactly as needed:
 
     Each validation error (called a "constraint violation"), is represented by
     a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object.
-
-.. index::
-   pair: Validation; Configuration
-
-Configuration
--------------
-
-Before using the Symfony validator, make sure it's enabled in the main config
-file:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            validation: { enabled: true }
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:validation enabled="true"/>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework) {
-            $framework->validation()
-                ->enabled(true)
-            ;
-        };
-
-Besides, if you plan to use annotations to configure validation, replace the
-previous configuration by the following:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            validation: { enable_annotations: true }
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:validation enable-annotations="true"/>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework) {
-            $framework->validation()
-                ->enableAnnotations(true)
-            ;
-        };
-
-.. tip::
-
-    When using PHP, YAML, and XML files instead of annotations, Symfony looks
-    for by default in the ``config/validator/`` directory, but you can configure
-    other directories with the :ref:`validation.mapping.paths <reference-validation-mapping>` option.
 
 .. index::
    single: Validation; Constraints

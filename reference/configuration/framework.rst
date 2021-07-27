@@ -2531,6 +2531,8 @@ enabled
 
 **type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
+.. _reference-validation:
+
 validation
 ~~~~~~~~~~
 
