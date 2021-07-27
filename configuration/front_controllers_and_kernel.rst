@@ -249,7 +249,7 @@ includes the following:
     configuration.
 
 ``url_generating_routes.php``
-    The cached routing configuration that used when generating URLs.
+    The cached routing configuration used when generating URLs.
 
 ``url_matching_routes.php``
     The cached configuration used for route matching - look here to see the compiled
