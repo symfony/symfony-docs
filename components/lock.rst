@@ -487,6 +487,7 @@ support blocking, and expects a TTL to avoid stalled locks::
 
 The table where values are stored is created automatically on the first call to
 the :method:`Symfony\\Component\\Lock\\Store\\PdoStore::save` method.
+That feature could be turning off via passing ``'db_lazy_create_table' => false`` into the ``$option`` array.
 You can also create this table explicitly by calling the
 :method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable` method in
 your code.
