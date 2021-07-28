@@ -171,7 +171,7 @@ You should see your ``app_lucky_number`` route in the list:
  app_lucky_number   ANY      ANY      ANY    /lucky/number
 ================== ======== ======== ====== ===============
 
-You will also see debugging routes below ``app_lucky_number`` -- more on
+You will also see debugging routes besides ``app_lucky_number`` -- more on
 the debugging routes in the next section.
 
 You'll learn about many more commands as you continue!
