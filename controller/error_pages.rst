@@ -283,7 +283,7 @@ the request that will be dispatched to your controller. In addition, your contro
 will be passed two parameters:
 
 ``exception``
-    The original :class:`Throwable` instance being handled.
+    The original :class:`\Throwable` instance being handled.
 
 ``logger``
     A :class:`\\Symfony\\Component\\HttpKernel\\Log\\DebugLoggerInterface`
