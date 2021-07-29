@@ -166,6 +166,17 @@ party provider:
     For example, the DSN ``ses+smtp://ABC1234:abc+12/345@default`` should be
     configured as ``ses+smtp://ABC1234:abc%2B12%2F345@default``
 
+.. caution::
+
+    If you want to use ``ses+smtp`` transport together with :doc:`Messenger </messenger>`
+    to :ref:`send messages in background <mailer-sending-messages-async>`,
+    you need to add the ``ping_threshold`` parameter to your ``MAILER_DSN`` with
+    a value lower than ``10``: ``ses+smtp://USERNAME:PASSWORD@default?ping_threshold=9``
+
+    .. versionadded:: 5.4
+        
+        The ``ping_threshold`` option for ``ses-smtp`` was introduced in Symfony 5.4.
+
 .. note::
 
     When using SMTP, the default timeout for sending a message before throwing an
@@ -1077,6 +1088,8 @@ the final email)::
     // ... or use the transport "alternative":
     $email->getHeaders()->addTextHeader('X-Transport', 'alternative');
     $mailer->send($email);
+
+.. _mailer-sending-messages-async:
 
 Sending Messages Async
 ----------------------
