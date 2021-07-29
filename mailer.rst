@@ -178,8 +178,8 @@ party provider:
 
     If you want to use ``ses+smtp`` transport together with :doc:`Messenger </messenger>`
     to :ref:`send messages in background <mailer-sending-messages-async>`,
-    you need to add ``ping_threshold`` parameter to your ``MAILER_DSN`` with
-    value lower than ``10``: ``ses+smtp://USERNAME:PASSWORD@default?ping_threshold=9``
+    you need to add the ``ping_threshold`` parameter to your ``MAILER_DSN`` with
+    a value lower than ``10``: ``ses+smtp://USERNAME:PASSWORD@default?ping_threshold=9``
 
     .. versionadded:: 5.4
         
