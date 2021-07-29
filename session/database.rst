@@ -25,10 +25,7 @@ Besides specifying a service as the session-handler you can also provide a
         framework:
             session:
                 # ...
-                handler_id: 'redis://localhost'
-                handler_id: '%env(REDIS_URL)%'
-                handler_id: '%env(resolve:DATABASE_URL)%'
-                handler_id: 'file://%kernel.project_dir%/var/sessions'
+                handler_id: 'redis://password@redis-server:6379'
 
     .. code-block:: xml
 
@@ -41,11 +38,7 @@ Besides specifying a service as the session-handler you can also provide a
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
             <framework:config>
-                <framework:session enabled="true"
-                    handler-id="redis://localhost"
-                    handler-id="%env(REDIS_URL)%"
-                    handler-id="%env(resolve:DATABASE_URL)%"
-                    handler-id="file://%kernel.project_dir%/var/sessions"/>
+                <framework:session enabled="true" handler-id="redis://password@redis-server:6379"/>
             </framework:config>
         </container>
 
@@ -55,10 +48,7 @@ Besides specifying a service as the session-handler you can also provide a
         $container->loadFromExtension('framework', [
             'session' => [
                 // ...
-                'handler_id' => 'redis://localhost',
-                'handler_id' => '%env(REDIS_URL)%',
-                'handler_id' => '%env(resolve:DATABASE_URL)%',
-                'handler_id' => 'file://%kernel.project_dir%/var/sessions',
+                'handler_id' => 'redis://password@redis-server:6379',
             ],
         ]);
 
