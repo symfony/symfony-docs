@@ -242,6 +242,36 @@ the application or when using a self-signed certificate::
 
     $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=0';
 
+Other Options
+~~~~~~~~~~~~~
+
+``command``
+    Command to be executed by ``sendmail`` transport::
+
+        $dsn = 'sendmail://default?command=/usr/sbin/sendmail%20-oi%20-t'
+
+``local_domain``
+    The domain name to use in ``HELO`` command::
+
+        $dsn = 'smtps://smtp.example.com?local_domain=example.org'
+
+``restart_threshold``
+    The maximum number of messages to send before re-starting the transport. It
+    can be used together with ``restart_threshold_sleep``::
+
+        $dsn = 'smtps://smtp.example.com?restart_threshold=10&restart_threshold_sleep=1'
+
+``restart_threshold_sleep``
+    The number of seconds to sleep between stopping and re-starting the transport.
+    It's common to combine it with ``restart_threshold``::
+
+        $dsn = 'smtps://smtp.example.com?restart_threshold=10&restart_threshold_sleep=1'
+
+``ping_threshold``
+    The minimum number of seconds between two messages required to ping the server::
+
+        $dsn = 'smtps://smtp.example.com?ping_threshold=200'
+
 Creating & Sending Messages
 ---------------------------
 
