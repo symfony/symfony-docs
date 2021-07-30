@@ -287,7 +287,7 @@ Other Options
 
 ``restart_threshold_sleep``
     The number of seconds to sleep between stopping and re-starting the transport.
-    It's commont to combine it with ``restart_threshold``::
+    It's common to combine it with ``restart_threshold``::
 
         $dsn = 'smtps://smtp.example.com?restart_threshold=10&restart_threshold_sleep=1'
 
