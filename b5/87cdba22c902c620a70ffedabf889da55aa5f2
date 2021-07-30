@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by fritzmg at 2020-06-26T21:36:37Z
+
+May be it would be better to add `verify_peer` to the list of options, instead of it having its own section.
+
+---------------------------------------------------------------------------
+
+by fritzmg at 2020-08-27T07:54:46Z
+
+Since `components/mailer.rst` got removed, should I may be base this PR off of https://github.com/symfony/symfony-docs/pull/14083?
+
+---------------------------------------------------------------------------
+
+by fritzmg at 2020-08-27T08:24:49Z
+
+@OskarStark I'll wait for https://github.com/symfony/symfony-docs/pull/14083 to be merged, before I make any changes, since the whole thing needs to be restructured then anyway.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-30T07:19:02Z
+
+Can you please rebase? Thanks
