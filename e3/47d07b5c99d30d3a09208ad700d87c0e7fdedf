@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-07-30T06:52:46Z
+
+Can you please explain your change? Right now this is pinned to a commit which will never change, after your change its not which could lead to errors/understanding problems in the future.
+
+Thanks
+
+---------------------------------------------------------------------------
+
+by Seb33300 at 2021-07-30T07:24:12Z
+
+They are links to Symfony 4.1, 4.2 and 5.1
+
+---------------------------------------------------------------------------
+
+by Seb33300 at 2021-07-30T07:31:17Z
+
+Just modified the 2 links to use commit link instead of branch
