@@ -815,7 +815,8 @@ parameter:
 .. tip::
 
     To give a ``null`` default value to any parameter, add nothing after the
-    ``?`` character (e.g. ``/blog/{page?}``).
+    ``?`` character (e.g. ``/blog/{page?}``). Also, remember to add the
+    ``?`` character before the function parameter type to make it permit null values (e.g. ``?int``) 
 
 Parameter Conversion
 ~~~~~~~~~~~~~~~~~~~~
