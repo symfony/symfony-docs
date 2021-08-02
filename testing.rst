@@ -605,7 +605,7 @@ to simulate a login request::
         public function testVisitingWhileLoggedIn()
         {
             $client = static::createClient();
-            $userRepository = static::$container->get(UserRepository::class);
+            $userRepository = static::getContainer()->get(UserRepository::class);
 
             // retrieve the test user
             $testUser = $userRepository->findOneByEmail('john.doe@example.com');
