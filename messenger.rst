@@ -461,6 +461,17 @@ The first argument is the receiver's name (or service id if you routed to a
 custom service). By default, the command will run forever: looking for new messages
 on your transport and handling them. This command is called your "worker".
 
+.. tip::
+
+    To properly stop a worker, throw an instance of
+    :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`.
+
+    .. versionadded:: 5.4
+
+        The :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`
+        class was introduced in Symfony 5.4.
+
+
 Deploying to Production
 ~~~~~~~~~~~~~~~~~~~~~~~
 
