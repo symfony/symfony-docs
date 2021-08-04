@@ -466,7 +466,6 @@ on your transport and handling them. This command is called your "worker".
     To properly stop a worker, throw an instance of
     :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`.
 
-
 Deploying to Production
 ~~~~~~~~~~~~~~~~~~~~~~~
 
