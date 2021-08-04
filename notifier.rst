@@ -80,6 +80,7 @@ SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@
 Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
 SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
 Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
+TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
 Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
 ==============  ====================================  ===========================================================================
@@ -99,7 +100,7 @@ Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default
 
 .. versionadded:: 5.4
 
-    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx and Mailjet integrations were introduced
+    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms and Mailjet integrations were introduced
     in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
