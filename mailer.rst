@@ -173,10 +173,6 @@ party provider:
     you need to add the ``ping_threshold`` parameter to your ``MAILER_DSN`` with
     a value lower than ``10``: ``ses+smtp://USERNAME:PASSWORD@default?ping_threshold=9``
 
-    .. versionadded:: 5.4
-        
-        The ``ping_threshold`` option for ``ses-smtp`` was introduced in Symfony 5.4.
-
 .. note::
 
     When using SMTP, the default timeout for sending a message before throwing an
