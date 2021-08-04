@@ -466,11 +466,6 @@ on your transport and handling them. This command is called your "worker".
     To properly stop a worker, throw an instance of
     :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`.
 
-    .. versionadded:: 5.4
-
-        The :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`
-        class was introduced in Symfony 5.4.
-
 
 Deploying to Production
 ~~~~~~~~~~~~~~~~~~~~~~~
