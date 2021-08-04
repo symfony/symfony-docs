@@ -448,10 +448,6 @@ it via the marking::
     // contains the new value
     $marking->getContext();
 
-.. versionadded:: 5.4
-
-    The ability to get the new value from the marking was introduced in Symfony 5.4.
-
 .. _workflow-usage-guard-events:
 
 Guard Events
