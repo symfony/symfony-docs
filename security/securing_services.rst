@@ -14,7 +14,7 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
 
 .. code-block:: diff
 
-      // src/Newsletter/NewsletterManager.php
+      // src/SalesReport/SalesReportManager.php
 
       // ...
       use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -29,7 +29,7 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
     +         $this->security = $security;
     +     }
 
-          public function sendNewsletter()
+          public function generateReport()
           {
               $salesData = [];
 
