@@ -12,16 +12,23 @@ Security: Complex Access Controls with Expressions
 In addition to a role like ``ROLE_ADMIN``, the ``isGranted()`` method also
 accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
+    // src/Controller/MyController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\ExpressionLanguage\Expression;
-    // ...
+    use Symfony\Component\HttpFoundation\Response;
 
-    public function index(): Response
+    class MyController extends AbstractController
     {
-        $this->denyAccessUnlessGranted(new Expression(
-            '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
-        ));
+        public function index(): Response
+        {
+            $this->denyAccessUnlessGranted(new Expression(
+                '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
+            ));
 
-        // ...
+            // ...
+        }
     }
 
 In this example, if the current user has ``ROLE_ADMIN`` or if the current
