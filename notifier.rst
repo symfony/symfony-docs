@@ -62,6 +62,7 @@ GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@defau
 Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
 LightSms        ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
+Mailjet         ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?from=FROM``
 MessageBird     ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
 MessageMedia    ``symfony/message-media-notifier``    ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
 Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
