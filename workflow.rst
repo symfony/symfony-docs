@@ -446,16 +446,17 @@ workflow leaves a place::
         }
     }
 
-.. versionadded:: 5.4
-
-    Getting the up-to-date context was introduced in Symfony 5.4.
-
-If some listeners update the context during a transition, you can retrieve it via the marking::
+If some listeners update the context during a transition, you can retrieve
+it via the marking::
 
     $marking = $workflow->apply($post, 'to_review');
 
-    // Contains the new value
+    // contains the new value
     $marking->getContext();
+
+.. versionadded:: 5.4
+
+    The ability to get the new value from the marking was introduced in Symfony 5.4.
 
 .. _workflow-usage-guard-events:
 
