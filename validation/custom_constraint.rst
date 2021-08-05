@@ -233,6 +233,230 @@ then your validator is already registered as a service and :doc:`tagged </servic
 with the necessary ``validator.constraint_validator``. This means you can
 :ref:`inject services or configuration <services-constructor-injection>` like any other service.
 
+Constraint Validators with custom options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Define public properties on the constraint class for the desired configuration
+options:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Validator/Foo.php
+        namespace App\Validator;
+
+        use Symfony\Component\Validator\Constraint;
+
+        /**
+         * @Annotation
+         */
+        class Foo extends Constraint
+        {
+            public $mandatoryFooOption;
+            public $message = 'This value is invalid';
+            public $optionalBarOption = false;
+
+            public function __construct(
+                $mandatoryFooOption,
+                string $message = null,
+                bool $optionalBarOption = null,
+                array $groups = null,
+                $payload = null,
+                array $options = []
+            ) {
+                if (\is_array($mandatoryFooOption)) {
+                    $options = array_merge($mandatoryFooOption, $options);
+                } elseif (null !== $mandatoryFooOption) {
+                    $options['value'] = $mandatoryFooOption;
+                }
+
+                parent::__construct($options, $groups, $payload);
+
+                $this->message = $message ?? $this->message;
+                $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
+            }
+
+            public function getDefaultOption()
+            {
+                // If no associative array is passed to the constructor this
+                // property is set instead.
+
+                return 'mandatoryFooOption';
+            }
+
+            public function getRequiredOptions()
+            {
+                // return names of options which must be set.
+
+                return ['mandatoryFooOption'];
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Validator/Foo.php
+        namespace App\Validator;
+
+        use Symfony\Component\Validator\Constraint;
+
+        #[\Attribute]
+        class Foo extends Constraint
+        {
+            public $mandatoryFooOption;
+            public $message = 'This value is invalid';
+            public $optionalBarOption = false;
+
+            public function __construct(
+                $mandatoryFooOption,
+                string $message = null,
+                bool $optionalBarOption = null,
+                array $groups = null,
+                $payload = null,
+                array $options = []
+            ) {
+                if (\is_array($mandatoryFooOption)) {
+                    $options = array_merge($mandatoryFooOption, $options);
+                } elseif (null !== $mandatoryFooOption) {
+                    $options['value'] = $mandatoryFooOption;
+                }
+
+                parent::__construct($options, $groups, $payload);
+
+                $this->message = $message ?? $this->message;
+                $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
+            }
+
+            public function getDefaultOption()
+            {
+                return 'mandatoryFooOption';
+            }
+
+            public function getRequiredOptions()
+            {
+                return ['mandatoryFooOption'];
+            }
+        }
+
+Inside the validator, options can be accessed quite simple::
+
+    class FooValidator extends ConstraintValidator
+    {
+        public function validate($value, Constraint $constraint)
+        {
+            // Access the option of the constraint
+            if ($constraint->optionalBarOption) {
+                // ...
+            }
+
+            // ...
+        }
+    }
+
+Custom options can be passed to the constraints like for the ones provided by Symfony
+itself:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
+        use App\Validator as AcmeAssert;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class AcmeEntity
+        {
+            // ...
+
+            /**
+             * @Assert\NotBlank
+             * @AcmeAssert\Foo(
+             *     mandatoryFooOption="bar",
+             *     optionalBarOption=true
+             * )
+             */
+            protected $name;
+
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
+        use App\Validator as AcmeAssert;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class AcmeEntity
+        {
+            // ...
+
+            #[Assert\NotBlank]
+            #[AcmeAssert\Foo(
+                mandatoryFooOption: 'bar',
+                optionalBarOption: true
+            )]
+            protected $name;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\AcmeEntity:
+            properties:
+                name:
+                    - NotBlank: ~
+                    - App\Validator\Foo:
+                        mandatoryFooOption: bar
+                        optionalBarOption: true
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\AcmeEntity">
+                <property name="name">
+                    <constraint name="NotBlank"/>
+                    <constraint name="App\Validator\Foo">
+                        <option name="mandatoryFooOption">bar</option>
+                        <option name="optionalBarOption">true</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
+        use App\Validator\ContainsAlphanumeric;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class AcmeEntity
+        {
+            public $name;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('name', new NotBlank());
+                $metadata->addPropertyConstraint('name', new Foo([
+                    'mandatoryFooOption' => 'bar',
+                    'optionalBarOption' => true,
+                ]));
+            }
+        }
+
 Create a Reusable Set of Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
