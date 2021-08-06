@@ -20,7 +20,8 @@ If you want to apply any other comparison logic, use the `normalizer`_ option.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
+Options     - `fields`_
+            - `groups`_
             - `message`_
             - `normalizer`_
             - `payload`_
@@ -106,6 +107,20 @@ strings:
 
 Options
 -------
+
+``fields``
+~~~~~~~~~~
+
+**type**: ``array`` [:ref:`default option <validation-default-option>`]
+
+
+.. versionadded:: 5.4
+
+    The ``fields`` option was introduced in Symfony 5.4.
+
+This is optional and is an array defining all of the
+keys in the collection that should be checked for uniqueness. 
+By default, all collection keys are checked for uniqueness.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
