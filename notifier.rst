@@ -60,7 +60,7 @@ AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
 Esendex         ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
-FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM``
+FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
 FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
 Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
@@ -95,12 +95,12 @@ Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default
 
 .. versionadded:: 5.3
 
-    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms, LightSms, SmsBiuras
+    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms (email), LightSms, SmsBiuras
     and MessageBird integrations were introduced in Symfony 5.3.
 
 .. versionadded:: 5.4
 
-    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms and Mailjet integrations were introduced
+    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms, Mailjet and FakeSms (logger) integrations were introduced
     in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
