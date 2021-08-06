@@ -163,12 +163,12 @@ The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
 integration with these chat services:
 
-==============  ====================================  ===========================================================================
+==============  ====================================  =============================================================================
 Service         Package                               DSN
-==============  ====================================  ===========================================================================
+==============  ====================================  =============================================================================
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Discord         ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
-FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM``
+FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
 Gitter          ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
 GoogleChat      ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
@@ -180,7 +180,7 @@ RocketChat      ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPO
 Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
 Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
 Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
-==============  ====================================  ===========================================================================
+==============  ====================================  =============================================================================
 
 .. versionadded:: 5.1
 
@@ -195,11 +195,11 @@ Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST
 
 .. versionadded:: 5.3
 
-    The Gitter, Mercure, FakeChat and Microsoft Teams integrations were introduced in Symfony 5.3.
+    The Gitter, Mercure, FakeChat (email) and Microsoft Teams integrations were introduced in Symfony 5.3.
 
 .. versionadded:: 5.4
 
-    The AmazonSns integration was introduced in Symfony 5.4.
+    The AmazonSns and FakeChat (logger) integrations were introduced in Symfony 5.4.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
