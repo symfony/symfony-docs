@@ -100,8 +100,8 @@ Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default
 
 .. versionadded:: 5.4
 
-    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms, Mailjet and FakeSms (logger) integrations were introduced
-    in Symfony 5.4.
+    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms, Mailjet and FakeSms (logger) integrations
+    were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
