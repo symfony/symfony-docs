@@ -56,7 +56,7 @@ AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
 Esendex         ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
-FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM``
+FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
 FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
 GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
 Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
@@ -141,12 +141,12 @@ The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
 integration with these chat services:
 
-==============  ====================================  ===========================================================================
+==============  ====================================  =============================================================================
 Service         Package                               DSN
-==============  ====================================  ===========================================================================
+==============  ====================================  =============================================================================
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Discord         ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
-FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM``
+FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
 Gitter          ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
 GoogleChat      ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
@@ -158,7 +158,7 @@ RocketChat      ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPO
 Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
 Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
 Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
-==============  ====================================  ===========================================================================
+==============  ====================================  =============================================================================
 
 Chatters are configured using the ``chatter_transports`` setting:
 
