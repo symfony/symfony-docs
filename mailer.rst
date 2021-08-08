@@ -1062,7 +1062,7 @@ key but not a certificate::
     $signedEmail = $signer->sign($email, (new DkimOptions())
         ->bodyCanon('relaxed')
         ->headerCanon('relaxed')
-        ->headersToIgnore(['Message-ID'])
+        ->headersToIgnore(['Message-ID', 'X-Transport'])
         ->toArray()
     );
 
