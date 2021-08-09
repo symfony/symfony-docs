@@ -247,14 +247,6 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
 :method:`Symfony\\Component\\Validator\\Validation::createValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
 
-.. versionadded:: 5.1
-
-    ``Validation::createCallable()`` was introduced in Symfony 5.1.
-
-.. versionadded:: 5.3
-
-    ``Validation::createValidCallable()`` was introduced in Symfony 5.3.
-
 .. index::
    single: Validation; Constraints
 
