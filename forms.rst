@@ -853,14 +853,15 @@ method::
 
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Form\FormFactoryInterface;
     // ...
 
     class TaskController extends AbstractController
     {
-        public function new(): Response
+        public function new(FormFactoryInterface $formFactory): Response
         {
             $task = ...;
-            $form = $this->get('form.factory')->createNamed('my_name', TaskType::class, $task);
+            $form = $formFactory->createNamed('my_name', TaskType::class, $task);
 
             // ...
         }
