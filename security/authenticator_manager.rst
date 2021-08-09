@@ -616,7 +616,7 @@ would initialize the passport like this::
                 return $passport;
             }
 
-            public function createAuthenticatedToken(Passport $passport, string $firewallName): TokenInterface
+            public function createToken(Passport $passport, string $firewallName): TokenInterface
             {
                 // read the attribute value
                 return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
