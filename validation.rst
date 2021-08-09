@@ -236,6 +236,17 @@ Inside the template, you can output the list of errors exactly as needed:
 Validation Callables
 ~~~~~~~~~~~~~~~~~~~~
 
+The ``Validation`` also allows you to create a closure to validate values
+against a set of constraints (useful for example when
+:ref:`validating Console command answers <console-validate-question-answer>` or
+when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
+
+:method:`Symfony\\Component\\Validator\\Validation::createCallable`
+    This returns a closure that throws ``ValidationFailedException`` when the
+    constraints aren't matched.
+:method:`Symfony\\Component\\Validator\\Validation::createValidCallable`
+    This returns a closure that returns ``false`` when the constraints aren't matched.
+
 .. versionadded:: 5.1
 
     ``Validation::createCallable()`` was introduced in Symfony 5.1.
@@ -243,16 +254,6 @@ Validation Callables
 .. versionadded:: 5.3
 
     ``Validation::createValidCallable()`` was introduced in Symfony 5.3.
-
-The ``Validation`` also allows you to create a closure to validate values
-against a set of constraints (e.g. in :doc:`Console </components/console/helpers/questionhelper>`
-or :doc:`OptionsResolver </components/options_resolver>`):
-
-:method:`Symfony\\Component\\Validator\\Validation::createCallable`
-    This returns a closure that throws ``ValidationFailedException`` when the
-    constraints aren't matched.
-:method:`Symfony\\Component\\Validator\\Validation::createValidCallable`
-    This returns a closure that returns ``false`` when the constraints aren't matched.
 
 .. index::
    single: Validation; Constraints

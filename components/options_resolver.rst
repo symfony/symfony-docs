@@ -335,6 +335,8 @@ is thrown::
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 to add additional allowed types without erasing the ones already set.
 
+.. _optionsresolver-validate-value:
+
 Value Validation
 ~~~~~~~~~~~~~~~~
 

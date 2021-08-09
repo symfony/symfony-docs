@@ -353,6 +353,8 @@ method::
     of the validator. If the answer is invalid, don't throw exceptions in the
     normalizer and let the validator handle those errors.
 
+.. _console-validate-question-answer:
+
 Validating the Answer
 ---------------------
 
