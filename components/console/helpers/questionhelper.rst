@@ -353,6 +353,8 @@ method::
     of the validator. If the answer is invalid, don't throw exceptions in the
     normalizer and let the validator handle those errors.
 
+.. _console-validate-question-answer:
+
 Validating the Answer
 ---------------------
 
@@ -396,6 +398,22 @@ You can set the max number of times to ask with the
 If you reach this max number it will use the default value. Using ``null`` means
 the amount of attempts is infinite. The user will be asked as long as they provide an
 invalid answer and will only be able to proceed if their input is valid.
+
+.. tip::
+
+    You can even use the :doc:`Validator </validation>` component to
+    validate the input by using the :method:`Symfony\\Component\\Validator\\Validation::createCallable`
+    method::
+
+        use Symfony\Component\Validator\Constraints\Regex;
+        use Symfony\Component\Validator\Validation;
+
+        $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
+        $validation = Validation::createCallable(new Regex([
+            'pattern' => '/^[a-zA-Z]+Bundle$',
+            'message' => 'The name of the bundle should be suffixed with \'Bundle\'',
+        ]));
+        $question->setValidator($validation);
 
 Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
