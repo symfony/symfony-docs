@@ -406,18 +406,13 @@ want to log all the database activity. To do so, define a subscriber for the
         }
     }
 
-.. note::
-
-    ``Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface``
-    is a marker interface extending ``Doctrine\Common\EventSubscriber`` and was
-    introduced in DoctrineBundle 2.1.
-    Subscribers implementing this interface will be enabled automatically in the
-    Symfony application.
-    In older versions of DoctrineBundle, the service had to be added manually
-    and tagged with the ``doctrine.event_subscriber`` tag.
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
+and DoctrineBundle 2.1 (released May 25, 2020) or newer, this example will already
+work! Otherwise, :ref:`create a service <service-container-creating-service>` for this
+subscriber and :doc:`tag it </service_container/tags>` with ``doctrine.event_subscriber``.
 
 If you need to associate the subscriber with a specific Doctrine connection, you
-can do it in the service configuration:
+must do that in the manual service configuration:
 
 .. configuration-block::
 
