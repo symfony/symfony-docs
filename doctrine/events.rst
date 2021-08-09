@@ -357,11 +357,11 @@ want to log all the database activity. To do so, define a subscriber for the
     namespace App\EventListener;
 
     use App\Entity\Product;
-    use Doctrine\Common\EventSubscriber;
+    use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
     use Doctrine\ORM\Events;
     use Doctrine\Persistence\Event\LifecycleEventArgs;
 
-    class DatabaseActivitySubscriber implements EventSubscriber
+    class DatabaseActivitySubscriber implements EventSubscriberInterface
     {
         // this method can only return the event names; you cannot define a
         // custom method name to execute when each event triggers
@@ -406,45 +406,15 @@ want to log all the database activity. To do so, define a subscriber for the
         }
     }
 
-The next step is to enable the Doctrine subscriber in the Symfony application by
-creating a new service for it and :doc:`tagging it </service_container/tags>`
-with the ``doctrine.event_subscriber`` tag:
+.. note::
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\EventListener\DatabaseActivitySubscriber:
-                tags:
-                    - { name: 'doctrine.event_subscriber' }
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-            <services>
-                <!-- ... -->
-
-                <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        use App\EventListener\DatabaseActivitySubscriber;
-
-        $container->autowire(DatabaseActivitySubscriber::class)
-            ->addTag('doctrine.event_subscriber')
-        ;
+    ``Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface``
+    is a marker interface extending ``Doctrine\Common\EventSubscriber`` and was
+    introduced in DoctrineBundle 2.1.
+    Subscribers implementing this interface will be enabled automatically in the
+    Symfony application.
+    In older versions of DoctrineBundle, the service had to be added manually
+    and tagged with the ``doctrine.event_subscriber`` tag.
 
 If you need to associate the subscriber with a specific Doctrine connection, you
 can do it in the service configuration:
