@@ -540,24 +540,21 @@ them for you. Here's the same sample application, now built in Symfony::
     namespace App\Controller;
 
     use App\Entity\Post;
+    use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     class BlogController extends AbstractController
     {
-        public function list()
+        public function list(ManagerRegistry $doctrine)
         {
-            $posts = $this->getDoctrine()
-                ->getRepository(Post::class)
-                ->findAll();
+            $posts = $doctrine->getRepository(Post::class)->findAll();
 
             return $this->render('blog/list.html.twig', ['posts' => $posts]);
         }
 
-        public function show($id)
+        public function show(ManagerRegistry $doctrine, $id)
         {
-            $post = $this->getDoctrine()
-                ->getRepository(Post::class)
-                ->find($id);
+            $post = $doctrine->getRepository(Post::class)->find($id);
 
             if (!$post) {
                 // cause the 404 page not found to be displayed
