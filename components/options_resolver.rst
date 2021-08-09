@@ -376,6 +376,21 @@ returns ``true`` for acceptable values and ``false`` for invalid values::
         // return true or false
     });
 
+.. tip::
+
+    You can even use the :doc:`Validator </validation>` component to validate the
+    input by using the :method:`Symfony\\Component\\Validator\\Validation::createValidCallable`
+    method::
+
+        use Symfony\Component\OptionsResolver\OptionsResolver;
+        use Symfony\Component\Validator\Constraints\Length;
+        use Symfony\Component\Validator\Validation;
+
+        // ...
+        $resolver->setAllowedValues('transport', Validation::createValidCallable(
+            new Length(['min' => 10 ])
+        ));
+
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`
 to add additional allowed values without erasing the ones already set.
 
