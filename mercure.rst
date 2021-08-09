@@ -97,7 +97,7 @@ and you can skip straight to the next section.
 Otherwise, set the URL of your hub as the value of the ``MERCURE_URL``
 and ``MERCURE_PUBLIC_URL`` env vars.
 Sometimes a different URL must be called by the Symfony app (usually to publish),
-and the JavaScript client (usually to subscrribe). It's especially common when
+and the JavaScript client (usually to subscribe). It's especially common when
 the Symfony app must use a local URL and the client-side JavaScript code a public one.
 In this case, ``MERCURE_URL`` must contain the local URL that will be used by the
 Symfony app (e.g. ``https://mercure/.well-known/mercure``), and ``MERCURE_PUBLIC_URL``
