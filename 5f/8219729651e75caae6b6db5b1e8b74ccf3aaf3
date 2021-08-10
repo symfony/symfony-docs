@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-07-29T13:05:01Z
+
+@wouterj could you please confirm if this is correct? I see in Symfony a class called `RegisterLdapLocatorPass` created by you and which contains this code:
+
+```php
+foreach ($container->findTaggedServiceIds('ldap') as $serviceId => $tags) {
+    $locators[$serviceId] = new ServiceClosureArgument(new Reference($serviceId));
+}
+```
+
+So this proposal looks correct, but I'd prefer to be sure. Thanks!
