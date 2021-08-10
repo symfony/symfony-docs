@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-06-08T12:47:12Z
+
+If you rename your service to Kocal the will be prefixed with KOCAL_
+
+---------------------------------------------------------------------------
+
+by Kocal at 2021-06-08T13:24:52Z
+
+Ah you're right, I've totally forgot about that...
+
+However this list looks wrong to me:
+![image](https://user-images.githubusercontent.com/2103975/121192542-564fe880-c86d-11eb-9a13-bf07f61514f8.png)
+
+What's the point to document the `Symfony default prefix` given the configured port, if in fact it use the container's name for the prefix? :confused:
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-06-17T10:19:47Z
+
+@fabpot can you maybe help here?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-08-10T17:11:26Z
+
+I'm merging this because in the changelog of v4.16.0 (from June 8, 2020) we can see this:
+
+> [BC BREAK] Fix Mailer exposed env vars in a local Docker Compose environment The Docker mailcatcher service env var names (might have) changed depending on your Docker Compose configuration. Instead of always using MAILER_ and MAIL_ prefixes for the SMTP service, we are now using the service name and service prefix like any other services defined in .docker-compose.yml.
