@@ -25,7 +25,58 @@ override it to create your own structure:
     │  ├─ cache/
     │  ├─ log/
     │  └─ ...
-    └─ vendor/
+    ├─ vendor/
+    └─ .env
+
+.. _override-env-dir:
+
+Override the Environment (DotEnv) Files Directory
+-------------------------------------------------
+
+By default, the :ref:`.env configuration file <config-dot-env>` is located at
+the root directory of the project. If you store it in a different location,
+define the ``runtime.dotenv_path`` option in the ``composer.json`` file:
+
+.. code-block:: json
+
+    {
+        "...": "...",
+        "extra": {
+            "...": "...",
+            "runtime": {
+                "dotenv_path": "my/custom/path/to/.env"
+            }
+        }
+    }
+
+Then, update your Composer files (running ``composer update``, for instance),
+so that the ``vendor/autoload_runtime.php`` files gets regenerated with the new
+``.env`` path.
+
+You can also set up different ``.env`` paths for your console and web server
+calls. Edit the ``public/index.php`` and/or ``bin/console`` files to define the
+new file path.
+
+Console script::
+
+    // bin/console
+
+    // ...
+    $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'some/custom/path/to/.env';
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+    // ...
+
+Web front-controller::
+
+    // public/index.php
+    
+    // ...
+    $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'another/custom/path/to/.env';
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+    // ...
+
 
 .. _override-config-dir:
 
