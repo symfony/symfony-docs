@@ -25,7 +25,66 @@ override it to create your own structure:
     │  ├─ cache/
     │  ├─ log/
     │  └─ ...
-    └─ vendor/
+    ├─ vendor/
+    └─ .env
+
+
+.. _override-env-dir:
+
+Override the Environment (DotEnv) Files Directory
+-------------------------------------------------
+
+Though the environment files directory is supposed to be the current project 
+root directory, you can actually set it via Composer or specifically in each
+bootstrapper file ``index.php`` (your :ref:`front controller <from_flat_php-front-controller>`) 
+or your ``console`` file (located by default in the ``bin/`` directory of 
+your application).
+
+You can change the ``runtime.dotenv_path`` option in the ``composer.json``
+file:
+
+.. code-block:: json
+
+    {
+        "...": "...",
+        "extra": {
+            "...": "...",
+            "runtime": {
+                "dotenv_path": "my_new_env_dir/.env"
+            }
+        }
+    }
+    
+.. tip::
+
+    Don't forget to update your Composer files (via ``composer update``, for instance),
+    so that the ``vendor/autoload_runtime.php`` files gets regenerated to reflect
+    your environment overrides for this.
+    
+If you want to set up different specific paths for your environment directories
+for your console and web server calls, you'll have to use the PHP files to 
+achieve so, by altering the ``$_SERVER`` configuration.
+
+For instance, you can do the following (starting Symfony ``5.3``)::
+
+    // bin/console
+
+    // ...
+    $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'my_new_console_env_dir/.env';
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+    // ...
+
+And/or::
+
+    // public/index.php
+    
+    // ...
+    $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'my_new_web_env_dir/.env';
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+    // ...
+
 
 .. _override-config-dir:
 
