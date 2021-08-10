@@ -148,6 +148,29 @@ properties and setters (``setXxx()``) to change properties:
             ;
         };
 
+Serializer context
+------------------
+
+The serializer can use a (de)serialization context to control how a resource is (de)serialized.
+The context is passed to all normalizers. For example:
+
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` uses ``datetime_format`` key as date time format;
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractObjectNormalizer` uses ``empty_iterable_as_object`` to preserve empty objects (keeps ``{}`` instead of ``[]`` in JSON);
+
+.. versionadded:: 5.4
+
+    :class:`Symfony\\Component\\Serializer\\Serializer` uses ``empty_arrays_as_object`` to serialize empty array as object (uses ``{}`` instead of ``[]`` in JSON);
+
+You can pass the context like following::
+
+    $serializer->serialize($something, 'json', [
+        DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s',
+    ]);
+
+    $serializer->deserialize($someJson, Something::class, 'json', [
+        DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s',
+    ]);
+
 .. _serializer-using-serialization-groups-annotations:
 
 Using Serialization Groups Annotations
