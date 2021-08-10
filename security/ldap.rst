@@ -70,6 +70,8 @@ An LDAP client can be configured using the built-in
         services:
             Symfony\Component\Ldap\Ldap:
                 arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
+                tags:
+                    - ldap
             Symfony\Component\Ldap\Adapter\ExtLdap\Adapter:
                 arguments:
                     -   host: my-server
@@ -90,6 +92,7 @@ An LDAP client can be configured using the built-in
             <services>
                 <service id="Symfony\Component\Ldap\Ldap">
                     <argument type="service" id="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter"/>
+                    <tag name="ldap"/>
                 </service>
                 <service id="Symfony\Component\Ldap\Adapter\ExtLdap\Adapter">
                     <argument type="collection">
@@ -112,7 +115,8 @@ An LDAP client can be configured using the built-in
         use Symfony\Component\Ldap\Ldap;
 
         $container->register(Ldap::class)
-            ->addArgument(new Reference(Adapter::class));
+            ->addArgument(new Reference(Adapter::class))
+            ->tag('ldap');
 
         $container
             ->register(Adapter::class)
