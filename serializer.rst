@@ -156,11 +156,6 @@ resources. This context is passed to all normalizers. For example:
   uses ``empty_iterable_as_object`` to represent empty objects as ``{}`` instead
   of ``[]`` in JSON.
 
-.. versionadded:: 5.4
-
-    The usage of the ``empty_arrays_as_object`` option by default in the
-    Serializer was introduced in Symfony 5.4.
-
 You can pass the context like following::
 
     $serializer->serialize($something, 'json', [
