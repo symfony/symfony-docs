@@ -155,13 +155,22 @@ which is the first one defined or the one configured via the
 ``default_connection`` parameter.
 
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
-service where ``[name]`` is the name of the connection. In a controller
-extending ``AbstractController``, you can access it directly using the
-``getConnection()`` method and the name of the connection::
+service where ``[name]`` is the name of the connection. In a :doc:`controller </controller>`
+you can access it using the ``getConnection()`` method and the name of the connection::
 
-    $connection = $this->getDoctrine()->getConnection('customer');
+    // src/Controller/SomeController.php
+    use Doctrine\Persistence\ManagerRegistry;
 
-    $result = $connection->fetchAll('SELECT name FROM customer');
+    class SomeController
+    {
+        public function someMethod(ManagerRegistry $doctrine)
+        {
+            $connection = $doctrine->getConnection('customer');
+            $result = $connection->fetchAll('SELECT name FROM customer');
+
+            // ...
+        }
+    }
 
 Doctrine ORM Configuration
 --------------------------

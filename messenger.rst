@@ -99,9 +99,6 @@ You're ready! To dispatch the message (and call the handler), inject the
             // will cause the SmsNotificationHandler to be called
             $bus->dispatch(new SmsNotification('Look! I created a message!'));
 
-            // or use the shortcut
-            $this->dispatchMessage(new SmsNotification('Look! I created a message!'));
-
             // ...
         }
     }
