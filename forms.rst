@@ -397,10 +397,6 @@ written into the form object::
                 $task = $form->getData();
 
                 // ... perform some action, such as saving the task to the database
-                // for example, if Task is a Doctrine entity, save it!
-                // $entityManager = $this->getDoctrine()->getManager();
-                // $entityManager->persist($task);
-                // $entityManager->flush();
 
                 return $this->redirectToRoute('task_success');
             }
