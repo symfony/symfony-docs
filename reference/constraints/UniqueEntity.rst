@@ -76,15 +76,11 @@ between all of the rows in your user table:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        /**
-         * @ORM\Entity
-         */
+        #[ORM\Entity]
         #[UniqueEntity('email')]
         class User
         {
-            /**
-             * @ORM\Column(name="email", type="string", length=255, unique=true)
-             */
+            #[ORM\Column(name: 'email', type: 'string', length: 255, unique: true)]
             #[Assert\Email]
             protected $email;
         }
@@ -223,12 +219,11 @@ Consider this example:
         // src/Entity/Service.php
         namespace App\Entity;
 
+        use App\Entity\Host;
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-        /**
-         * @ORM\Entity
-         */
+        #[ORM\Entity]
         #[UniqueEntity(
             fields: ['host', 'port'],
             errorPath: 'port',
@@ -236,14 +231,10 @@ Consider this example:
         )]
         class Service
         {
-            /**
-             * @ORM\ManyToOne(targetEntity="App\Entity\Host")
-             */
+            #[ORM\ManyToOne(targetEntity: Host::class)]
             public $host;
 
-            /**
-             * @ORM\Column(type="integer")
-             */
+            #[ORM\Column(type: 'integer')]
             public $port;
         }
 
