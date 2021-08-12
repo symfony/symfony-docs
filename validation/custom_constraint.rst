@@ -29,6 +29,7 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
         class ContainsAlphanumeric extends Constraint
         {
             public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+            public $mode = 'strict'; // If the constraint has configuration options, define them as public properties
         }
 
     .. code-block:: php-attributes
@@ -45,8 +46,7 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
         }
 
 Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
-use it as an annotation/attribute in other classes. If the constraint has
-configuration options, define them as public properties on the constraint class.
+use it as an annotation/attribute in other classes.
 
 .. versionadded:: 5.2
 
@@ -103,6 +103,11 @@ The validator class only has one required method ``validate()``::
                 // separate multiple types using pipes
                 // throw new UnexpectedValueException($value, 'string|int');
             }
+            
+            // access your configuration options like this:
+            if ('strict' === $constraint->mode) {
+                // ...
+            }
 
             if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
                 // the argument must be a string or an object implementing __toString()
@@ -141,7 +146,7 @@ You can use custom validators like the ones provided by Symfony itself:
 
             /**
              * @Assert\NotBlank
-             * @AcmeAssert\ContainsAlphanumeric
+             * @AcmeAssert\ContainsAlphanumeric(mode="loose")
              */
             protected $name;
 
@@ -161,7 +166,7 @@ You can use custom validators like the ones provided by Symfony itself:
             // ...
 
             #[Assert\NotBlank]
-            #[AcmeAssert\ContainsAlphanumeric]
+            #[AcmeAssert\ContainsAlphanumeric(options: ['mode' => 'loose'])]
             protected $name;
 
             // ...
