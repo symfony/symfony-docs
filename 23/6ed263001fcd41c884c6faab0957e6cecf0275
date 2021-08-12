@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-04-21T14:14:16Z
+
+The original content might be not great ... but the proposed content doesn't look better in my opinion. It's harder to understand, at least to me.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2021-04-21T14:28:45Z
+
+The original "Sender used by the Mailer" is ambiguous, as there are two things called "Sender":
+* The `Sender:` header within the email: https://tools.ietf.org/html/rfc4021#section-2.1.3
+* The information used in the SMTP dialogue:
+```
+EHLO example.com
+MAIL FROM: <me@example.com>
+RCPT TO: <you@example.com>
+DATA
+```
+The latter is sometimes called "envelope sender", but this only makes things  worse, since for those who don't know, it's harder to find out what/where this "envelope" lives (correct answer: nowhere ;-) rather than find out what an SMTP session is - see also your https://github.com/symfony/symfony-docs/pull/15241#issuecomment-823930758 :-)
+
+So I would suggest to avoid the term "envelope" *completely*, and even rename the configuration key at https://symfony.com/doc/current/mailer.html#configuring-emails-globally to something like `smtp`
