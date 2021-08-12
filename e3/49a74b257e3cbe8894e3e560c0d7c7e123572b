@@ -1,0 +1,14 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-04-21T09:47:23Z
+
+I'm not against adding this ... but the proposed location feels a bit odd. It's like we abruptly add some content in that section  🤔
+
+---------------------------------------------------------------------------
+
+by noniagriconomie at 2021-04-22T08:56:55Z
+
+@javiereguiluz yes indeed, what do you think to move this tip after the:
+
+`Another complication is when you have translations that may or may not be plural, based on some variable:` code example?
+as it is question of the word `plural` here
