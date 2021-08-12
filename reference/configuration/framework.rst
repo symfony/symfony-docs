@@ -3373,8 +3373,11 @@ sender
 
 **type**: ``string``
 
-Sender used by the ``Mailer``. Keep in mind that this setting override a
-sender set in the code.
+Sender used as ``MAIL FROM`` in the SMTP session.
+
+.. caution::
+
+    This setting overrides a sender set in the code.
 
 recipients
 """"""""""
