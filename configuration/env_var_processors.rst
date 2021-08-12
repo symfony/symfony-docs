@@ -603,9 +603,9 @@ Symfony provides the following env var processors:
                 clients:
                     default:
                         hosts:
-                            - { host: '%env(key:host:url:MONGODB_URL)%', port: '%env(key:port:url:MONGODB_URL)%' }
-                        username: '%env(key:user:url:MONGODB_URL)%'
-                        password: '%env(key:pass:url:MONGODB_URL)%'
+                            - { host: '%env(string:key:host:url:MONGODB_URL)%', port: '%env(int:key:port:url:MONGODB_URL)%' }
+                        username: '%env(string:key:user:url:MONGODB_URL)%'
+                        password: '%env(string:key:pass:url:MONGODB_URL)%'
                 connections:
                     default:
                         database_name: '%env(key:path:url:MONGODB_URL)%'
@@ -620,8 +620,8 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <mongodb:config>
-                    <mongodb:client name="default" username="%env(key:user:url:MONGODB_URL)%" password="%env(key:pass:url:MONGODB_URL)%">
-                        <mongodb:host host="%env(key:host:url:MONGODB_URL)%" port="%env(key:port:url:MONGODB_URL)%"/>
+                    <mongodb:client name="default" username="%env(string:key:user:url:MONGODB_URL)%" password="%env(string:key:pass:url:MONGODB_URL)%">
+                        <mongodb:host host="%env(string:key:host:url:MONGODB_URL)%" port="%env(int:key:port:url:MONGODB_URL)%"/>
                     </mongodb:client>
                     <mongodb:connections name="default" database_name="%env(key:path:url:MONGODB_URL)%"/>
                 </mongodb:config>
@@ -635,12 +635,12 @@ Symfony provides the following env var processors:
                     'default' => [
                         'hosts' => [
                             [
-                                'host' => '%env(key:host:url:MONGODB_URL)%',
-                                'port' => '%env(key:port:url:MONGODB_URL)%',
+                                'host' => '%env(string:key:host:url:MONGODB_URL)%',
+                                'port' => '%env(int:key:port:url:MONGODB_URL)%',
                             ],
                         ],
-                        'username' => '%env(key:user:url:MONGODB_URL)%',
-                        'password' => '%env(key:pass:url:MONGODB_URL)%',
+                        'username' => '%env(string:key:user:url:MONGODB_URL)%',
+                        'password' => '%env(string:key:pass:url:MONGODB_URL)%',
                     ],
                 ],
                 'connections' => [
