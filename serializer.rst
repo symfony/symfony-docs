@@ -162,7 +162,7 @@ resources. This context is passed to all normalizers. For example:
 
 .. versionadded:: 5.4
 
-    The usage of the ``empty_arrays_as_object`` option by default in the
+    The usage of the ``empty_array_as_object`` option by default in the
     Serializer was introduced in Symfony 5.4.
 
 You can pass the context like following::
