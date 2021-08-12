@@ -297,6 +297,22 @@ To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
 using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 :doc:`/translation/message_format`.
 
+.. tip::
+
+    If you don't use the ICU MessageFormat syntax in your translation files,
+    pass a parameter named "%count%" to select the best plural form of the message:
+
+    .. code-block:: twig
+
+       {{ message|trans({'%name%': '...', '%count%' => 1}, 'app') }}
+
+    The ``message`` variable must include all the different versions of this
+    message based on the value of the ``count`` parameter. For example:
+
+    .. code-block:: text
+
+        {0}%name% has no apples|{1}%name% has one apple|]1,Inf[ %name% has %count% apples
+
 .. _translatable-objects:
 
 Translatable Objects
@@ -409,15 +425,6 @@ The ``trans`` filter can be used to translate *variable texts* and complex expre
         {# strings and variables translated via a filter are escaped by default #}
         {{ message|trans|raw }}
         {{ '<h3>bar</h3>'|trans|raw }}
-
-.. tip::
-
-    When a number is provided as a parameter named "%count%", the message is parsed for plural
-    forms and a translation is chosen according to this number using the following rules:
-
-    .. code-block:: twig
-
-       {{ message|trans({'%name%': 'Fabien', '%count%' => 1}, 'app') }}
 
 .. tip::
 
