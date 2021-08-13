@@ -3374,8 +3374,7 @@ sender
 **type**: ``string``
 
 The "envelope sender" which is used as the value of ``MAIL FROM`` during the
-`SMTP session`_. This value overrides any other sender
-set in the code.
+`SMTP session`_. This value overrides any other sender set in the code.
 
 recipients
 """"""""""
