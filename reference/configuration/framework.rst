@@ -3374,7 +3374,7 @@ sender
 **type**: ``string``
 
 The "envelope sender" which is used as the value of ``MAIL FROM`` during the
-the `establishment of the SMTP session`_. This value overrides any other sender
+`SMTP session`_. This value overrides any other sender
 set in the code.
 
 recipients
@@ -3640,4 +3640,4 @@ to know their differences.
 .. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/win32/secauthn/microsoft-ntlm
 .. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers
 .. _`Link HTTP header`: https://tools.ietf.org/html/rfc5988
-.. _`establishment of the SMTP session`: https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol#SMTP_transport_example
+.. _`SMTP session`: https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol#SMTP_transport_example
