@@ -3381,8 +3381,8 @@ recipients
 
 **type**: ``array``
 
-The "envelope recipient" which is used as the value of ``RCPT TO``  during the
-the `SMTP session`_. This value overrides any other sender set in the code.
+The "envelope recipient" which is used as the value of ``RCPT TO`` during the
+the `SMTP session`_. This value overrides any other recipient set in the code.
 
 .. configuration-block::
 
