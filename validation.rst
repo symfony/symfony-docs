@@ -244,7 +244,7 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
 :method:`Symfony\\Component\\Validator\\Validation::createCallable`
     This returns a closure that throws ``ValidationFailedException`` when the
     constraints aren't matched.
-:method:`Symfony\\Component\\Validator\\Validation::createValidCallable`
+:method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
 
 .. index::

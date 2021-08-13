@@ -381,7 +381,7 @@ returns ``true`` for acceptable values and ``false`` for invalid values::
 .. tip::
 
     You can even use the :doc:`Validator </validation>` component to validate the
-    input by using the :method:`Symfony\\Component\\Validator\\Validation::createValidCallable`
+    input by using the :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     method::
 
         use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -389,7 +389,7 @@ returns ``true`` for acceptable values and ``false`` for invalid values::
         use Symfony\Component\Validator\Validation;
 
         // ...
-        $resolver->setAllowedValues('transport', Validation::createValidCallable(
+        $resolver->setAllowedValues('transport', Validation::createIsValidCallable(
             new Length(['min' => 10 ])
         ));
 
