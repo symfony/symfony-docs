@@ -1485,7 +1485,7 @@ when importing the routes.
         class BlogController extends AbstractController
         {
             /**
-             * @Route("/{_locale}", name="index")
+             * @Route("/{_locale}", name="blog_index")
              */
             public function index(): Response
             {
@@ -1493,7 +1493,7 @@ when importing the routes.
             }
 
             /**
-             * @Route("/{_locale}/posts/{slug}", name="show")
+             * @Route("/{_locale}/posts/{slug}", name="blog_show")
              */
             public function show(Post $post): Response
             {
