@@ -82,7 +82,7 @@ Setting up Composer
 Another point you will have to look out for is conflicts between
 dependencies in both applications. This is especially important if your
 existing application already uses Symfony components or libraries commonly
-used in Symfony applications such as Doctrine ORM, Swiftmailer or Twig.
+used in Symfony applications such as Doctrine ORM or Twig.
 A good way for ensuring compatibility is to use the same ``composer.json``
 for both project's dependencies.
 
