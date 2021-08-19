@@ -72,11 +72,6 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
     encode them. See `RFC 3986`_ for the full list of reserved characters or use the
     :phpfunction:`urlencode` function to encode them.
 
-.. caution::
-
-    If you are migrating from Swiftmailer (and the Swiftmailer bundle), be
-    warned that the DSN format is different.
-
 Using Built-in Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -929,28 +929,6 @@ The priorities of the default normalizers can be found in the
 :method:`Symfony\\Bundle\\FrameworkBundle\\DependencyInjection\\FrameworkExtension::registerSerializerConfiguration`
 method.
 
-swiftmailer.default.plugin
---------------------------
-
-**Purpose**: Register a custom SwiftMailer Plugin
-
-If you're using a custom SwiftMailer plugin (or want to create one), you
-can register it with SwiftMailer by creating a service for your plugin and
-tagging it with ``swiftmailer.default.plugin`` (it has no options).
-
-.. note::
-
-    ``default`` in this tag is the name of the mailer. If you have multiple
-    mailers configured or have changed the default mailer name for some
-    reason, you should change it to the name of your mailer in order to
-    use this tag.
-
-A SwiftMailer plugin must implement the ``Swift_Events_EventListener`` interface.
-For more information on plugins, see `SwiftMailer's Plugin Documentation`_.
-
-Several SwiftMailer plugins are core to Symfony and can be activated via
-different configuration. For details, see :doc:`/reference/configuration/swiftmailer`.
-
 .. _dic-tags-translation-loader:
 
 translation.loader
@@ -1332,6 +1310,5 @@ For an example, see the ``DoctrineInitializer`` class inside the Doctrine
 Bridge.
 
 .. _`Twig's documentation`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
-.. _`SwiftMailer's Plugin Documentation`: https://swiftmailer.symfony.com/docs/plugins.html
 .. _`Twig Loader`: https://twig.symfony.com/doc/2.x/api.html#loaders
 .. _`PHP class preloading`: https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.preload
