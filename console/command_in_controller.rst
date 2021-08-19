@@ -20,11 +20,9 @@ Instead, you can run the command directly from the controller.
     a controller has a slight performance impact because of the request stack
     overhead.
 
-Imagine you want to send spooled Swift Mailer messages by
-:doc:`using the swiftmailer:spool:send command </email>`.
-Run this command from inside your controller via::
+Imagine you want to run the ``debug:twig`` from inside your controller::
 
-    // src/Controller/SpoolController.php
+    // src/Controller/DebugTwigController.php
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -34,19 +32,19 @@ Run this command from inside your controller via::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\KernelInterface;
 
-    class SpoolController extends AbstractController
+    class DebugTwigController extends AbstractController
     {
-        public function sendSpool(int $messages = 10, KernelInterface $kernel): Response
+        public function debugTwig(KernelInterface $kernel): Response
         {
             $application = new Application($kernel);
             $application->setAutoExit(false);
 
             $input = new ArrayInput([
-                'command' => 'swiftmailer:spool:send',
+                'command' => 'debug:twig',
                 // (optional) define the value of command arguments
                 'fooArgument' => 'barValue',
                 // (optional) pass options to the command
-                '--message-limit' => $messages,
+                '--bar' => 'fooValue',
             ]);
 
             // You can use NullOutput() if you don't need the output
@@ -76,7 +74,7 @@ First, require the package:
 
 Now, use it in your controller::
 
-    // src/Controller/SpoolController.php
+    // src/Controller/DebugTwigController.php
     namespace App\Controller;
 
     use SensioLabs\AnsiConverter\AnsiToHtmlConverter;
@@ -85,7 +83,7 @@ Now, use it in your controller::
     use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    class SpoolController extends AbstractController
+    class DebugTwigController extends AbstractController
     {
         public function sendSpool(int $messages = 10): Response
         {
