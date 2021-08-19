@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2021-08-18T15:01:48Z
+
+When merging up, I propose to remove everything related to Swiftmailer in the 6.0 branch.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2021-08-19T08:01:40Z
+
+More info here: More information here: https://symfony.com/blog/the-end-of-swiftmailer
+
+Ready to be merged.
