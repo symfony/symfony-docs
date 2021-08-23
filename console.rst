@@ -427,6 +427,48 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
     :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`
     and extend the normal ``\PHPUnit\Framework\TestCase``.
 
+Command Reacting to Signals
+---------------------------
+
+.. versionadded:: 5.2
+
+    The :class:`Symfony\\Component\\Console\\Command\\SignalableCommandInterface` interface
+    for reacting to signals was introduced in Symfony 5.2.
+
+You can make your commands react to signals by implementing the ``SignalableCommandInterface`` interface::
+
+    // ...
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\Command\SignalableCommandInterface;
+
+    class CreateUserCommand extends Command implements SignalableCommandInterface
+    {
+        // ...
+
+        public function getSubscribedSignals(): array
+        {
+            // constants defined by PCNTL extension
+            // https://www.php.net/manual/en/pcntl.constants.php
+            return [SIGINT, SIGTERM];
+        }
+
+        public function handleSignal(int $signal): void
+        {
+            if (SIGINT === $signal) {
+                // handle SIGINT signal
+            }
+
+            // handle SIGTERM signal
+        }
+
+        protected function execute(InputInterface $input, OutputInterface $output): int
+        {
+            // ...
+
+            return Command::SUCCESS;
+        }
+    }
+
 Logging Command Errors
 ----------------------
 

@@ -155,3 +155,20 @@ Listeners receive a
     The exit code received in this case is the exception code.
 
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
+
+The ``ConsoleEvents::SIGNAL`` Event
+-----------------------------------
+
+**Typical Purposes**: To handle some signals for all application commands.
+
+Listeners receive a
+:class:`Symfony\\Component\\Console\\Event\\ConsoleSignalEvent` event::
+
+    use Symfony\Component\Console\ConsoleEvents;
+    use Symfony\Component\Console\Event\ConsoleSignalEvent;
+
+    $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
+        $signal = $event->getHandlingSignal();
+
+        // ...
+    });
