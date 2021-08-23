@@ -383,9 +383,7 @@ important section is ``firewalls``:
                 ->security(false);
 
             $security->firewall('main')
-                ->lazy(true)
-                
-                ;
+                ->lazy(true);
         };
 
 A "firewall" is your authentication system: the configuration below it defines
