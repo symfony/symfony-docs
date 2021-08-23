@@ -348,7 +348,6 @@ important section is ``firewalls``:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
                 main:
-                    anonymous: true
                     lazy: true
 
     .. code-block:: xml
@@ -369,7 +368,6 @@ important section is ``firewalls``:
                     security="false"/>
 
                 <firewall name="main"
-                    anonymous="true"
                     lazy="true"/>
             </config>
         </srv:container>
@@ -386,7 +384,8 @@ important section is ``firewalls``:
 
             $security->firewall('main')
                 ->lazy(true)
-                ->anonymous();
+                
+                ;
         };
 
 A "firewall" is your authentication system: the configuration below it defines
