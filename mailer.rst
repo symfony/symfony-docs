@@ -117,7 +117,7 @@ OhMySMTP            ``composer require symfony/ohmysmtp-mailer``
 
 .. versionadded:: 5.4
 
-    The OhMySMTP integration was introduced in Symfony 5.2.
+    The OhMySMTP integration was introduced in Symfony 5.4.
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
