@@ -154,6 +154,18 @@ you can determine the message bus based on an implemented interface:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/MessageHandler/CommandHandlerInterface.php
+        namespace App\MessageHandler;
+
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(tags: [['name' => 'messenger.message_handler', 'bus' => 'command.bus']])]
+        interface CommandHandlerInterface
+        {
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
