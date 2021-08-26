@@ -112,7 +112,7 @@ Mailjet             ``composer require symfony/mailjet-mailer``
 Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
-OhMySMTP            ``composer require symfony/ohmysmtp-mailer``
+OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
 ==================  ==============================================
 
 .. versionadded:: 5.4
