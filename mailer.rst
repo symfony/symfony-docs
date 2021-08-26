@@ -115,6 +115,10 @@ Sendinblue          ``composer require symfony/sendinblue-mailer``
 OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
 ==================  ==============================================
 
+.. versionadded:: 5.2
+
+    The Sendinblue integration was introduced in Symfony 5.2.
+
 .. versionadded:: 5.4
 
     The OhMySMTP integration was introduced in Symfony 5.4.
