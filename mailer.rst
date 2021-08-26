@@ -1333,7 +1333,7 @@ The following transports currently support tags and metadata:
 * Postmark
 * Sendinblue
 
-The following transports only support tags:
+Only the following transports support tags:
 
 * OhMySMTP
 
