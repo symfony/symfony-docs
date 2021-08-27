@@ -1,12 +1,14 @@
 rules:
     american_english: ~
     avoid_repetetive_words: ~
+    blank_line_after_anchor: ~
     blank_line_after_directive: ~
     blank_line_before_directive: ~
     composer_dev_option_not_at_the_end: ~
     correct_code_block_directive_based_on_the_content: ~
     deprecated_directive_should_have_version: ~
     ensure_exactly_one_space_between_link_definition_and_link: ~
+    ensure_link_definition_contains_valid_url: ~
     ensure_order_of_code_blocks_in_configuration_block: ~
     extend_abstract_controller: ~
     extension_xlf_instead_of_xliff: ~
@@ -14,6 +16,7 @@ rules:
     lowercase_as_in_use_statements: ~
     max_blank_lines:
         max: 2
+    max_colons: ~
     no_app_console: ~
     no_blank_line_after_filepath_in_php_code_block: ~
     no_blank_line_after_filepath_in_twig_code_block: ~
@@ -76,7 +79,7 @@ whitelist:
         - 'The bin/console Command'
         - '# username is your full Gmail or Google Apps email address'
         - '.. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection'
-        - '.. versionadded:: 0.21.0' # Encore
+        - '.. versionadded:: 1.9.0' # Encore
         - '.. versionadded:: 0.28.4' # Encore
         - '.. versionadded:: 2.4.0' # SwiftMailer
         - '.. versionadded:: 1.30' # Twig
@@ -86,6 +89,7 @@ whitelist:
         - '.. versionadded:: 1.3' # MakerBundle
         - '.. versionadded:: 1.8' # MakerBundle
         - '.. versionadded:: 1.6' # Flex in setup/upgrade_minor.rst
+        - '.. versionadded:: 1.0.0' # Encore
         - '0 => 123' # assertion for var_dumper - components/var_dumper.rst
         - '1 => "foo"' # assertion for var_dumper - components/var_dumper.rst
         - '123,' # assertion for var_dumper - components/var_dumper.rst
@@ -98,3 +102,7 @@ whitelist:
         - 'provides a ``loginUser()`` method to simulate logging in in your functional'
         - '.. code-block:: twig'
         - '.. versionadded:: 3.6' # MonologBundle
+        - '// bin/console'
+        - 'End to End Tests (E2E)'
+        - '.. code-block:: php'
+        - '.. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket'

@@ -99,8 +99,11 @@ run:
 
 .. code-block:: terminal
 
-    // generates getter/setter methods
+    // generates getter/setter methods for all Entities
     $ php bin/console make:entity --regenerate App
+
+    // generates getter/setter methods for one specific Entity
+    $ php bin/console make:entity --regenerate App\\Entity\\Country
 
 .. note::
 

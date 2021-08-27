@@ -76,7 +76,7 @@ define a callback for the ``prePersist`` Doctrine event:
              */
             public function setCreatedAtValue(): void
             {
-                $this->createdAt = new \DateTime();
+                $this->createdAt = new \DateTimeImmutable();
             }
         }
 
@@ -166,7 +166,7 @@ with the ``doctrine.event_listener`` tag:
                         # this is the only required option for the lifecycle listener tag
                         event: 'postPersist'
 
-                        # listeners can define their priority in case multiple listeners are associated
+                        # listeners can define their priority in case multiple subscribers or listeners are associated
                         # to the same event (default priority = 0; higher numbers = listener is run earlier)
                         priority: 500
 
@@ -176,7 +176,7 @@ with the ``doctrine.event_listener`` tag:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
@@ -184,7 +184,7 @@ with the ``doctrine.event_listener`` tag:
 
                 <!--
                     * 'event' is the only required option that defines the lifecycle listener
-                    * 'priority': used when multiple listeners are associated to the same event
+                    * 'priority': used when multiple subscribers or listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
                 -->
@@ -213,7 +213,7 @@ with the ``doctrine.event_listener`` tag:
                     // this is the only required option for the lifecycle listener tag
                     'event' => 'postPersist',
 
-                    // listeners can define their priority in case multiple listeners are associated
+                    // listeners can define their priority in case multiple subscribers or listeners are associated
                     // to the same event (default priority = 0; higher numbers = listener is run earlier)
                     'priority' => 500,
 
@@ -289,7 +289,7 @@ with the ``doctrine.orm.entity_listener`` tag:
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
@@ -365,11 +365,11 @@ want to log all the database activity. To do so, define a subscriber for the
     namespace App\EventListener;
 
     use App\Entity\Product;
-    use Doctrine\Common\EventSubscriber;
+    use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
     use Doctrine\ORM\Events;
     use Doctrine\Persistence\Event\LifecycleEventArgs;
 
-    class DatabaseActivitySubscriber implements EventSubscriber
+    class DatabaseActivitySubscriber implements EventSubscriberInterface
     {
         // this method can only return the event names; you cannot define a
         // custom method name to execute when each event triggers
@@ -414,9 +414,13 @@ want to log all the database activity. To do so, define a subscriber for the
         }
     }
 
-The next step is to enable the Doctrine subscriber in the Symfony application by
-creating a new service for it and :doc:`tagging it </service_container/tags>`
-with the ``doctrine.event_subscriber`` tag:
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
+and DoctrineBundle 2.1 (released May 25, 2020) or newer, this example will already
+work! Otherwise, :ref:`create a service <service-container-creating-service>` for this
+subscriber and :doc:`tag it </service_container/tags>` with ``doctrine.event_subscriber``.
+
+If you need to configure some option of the subscriber (e.g. its priority or
+Doctrine connection to use) you must do that in the manual service configuration:
 
 .. configuration-block::
 
@@ -428,19 +432,31 @@ with the ``doctrine.event_subscriber`` tag:
 
             App\EventListener\DatabaseActivitySubscriber:
                 tags:
-                    - { name: 'doctrine.event_subscriber' }
+                    - name: 'doctrine.event_subscriber'
+
+                      # subscribers can define their priority in case multiple subscribers or listeners are associated
+                      # to the same event (default priority = 0; higher numbers = listener is run earlier)
+                      priority: 500
+
+                      # you can also restrict listeners to a specific Doctrine connection
+                      connection: 'default'
 
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
                 <!-- ... -->
 
+                <!--
+                    * 'priority': used when multiple subscribers or listeners are associated to the same event
+                    *             (default priority = 0; higher numbers = listener is run earlier)
+                    * 'connection': restricts the listener to a specific Doctrine connection
+                -->
                 <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber"/>
+                    <tag name="doctrine.event_subscriber" priority="500" connection="default"/>
                 </service>
             </services>
         </container>
@@ -456,54 +472,20 @@ with the ``doctrine.event_subscriber`` tag:
             $services = $configurator->services();
 
             $services->set(DatabaseActivitySubscriber::class)
-                ->tag('doctrine.event_subscriber')
+                ->tag('doctrine.event_subscriber'[
+                    // subscribers can define their priority in case multiple subscribers or listeners are associated
+                    // to the same event (default priority = 0; higher numbers = listener is run earlier)
+                    'priority' => 500,
+
+                    // you can also restrict listeners to a specific Doctrine connection
+                    'connection' => 'default',
+                ])
             ;
         };
 
-If you need to associate the subscriber with a specific Doctrine connection, you
-can do it in the service configuration:
+.. versionadded:: 5.3
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\EventListener\DatabaseActivitySubscriber:
-                tags:
-                    - { name: 'doctrine.event_subscriber', connection: 'default' }
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-            <services>
-                <!-- ... -->
-
-                <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber" connection="default"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\EventListener\DatabaseActivitySubscriber;
-
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
-
-            $services->set(DatabaseActivitySubscriber::class)
-                ->tag('doctrine.event_subscriber', ['connection' => 'default'])
-            ;
-        };
+    Subscriber priority was introduced in Symfony 5.3.
 
 .. tip::
 

@@ -335,6 +335,8 @@ is thrown::
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedTypes`
 to add additional allowed types without erasing the ones already set.
 
+.. _optionsresolver-validate-value:
+
 Value Validation
 ~~~~~~~~~~~~~~~~
 
@@ -375,6 +377,21 @@ returns ``true`` for acceptable values and ``false`` for invalid values::
     $resolver->setAllowedValues('transport', function ($value) {
         // return true or false
     });
+
+.. tip::
+
+    You can even use the :doc:`Validator </validation>` component to validate the
+    input by using the :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
+    method::
+
+        use Symfony\Component\OptionsResolver\OptionsResolver;
+        use Symfony\Component\Validator\Constraints\Length;
+        use Symfony\Component\Validator\Validation;
+
+        // ...
+        $resolver->setAllowedValues('transport', Validation::createIsValidCallable(
+            new Length(['min' => 10 ])
+        ));
 
 In sub-classes, you can use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addAllowedValues`
 to add additional allowed values without erasing the ones already set.
@@ -507,7 +524,7 @@ the closure::
 
             $resolver->setDefault('host', function (Options $options, $previousValue) {
                 if ('ssl' === $options['encryption']) {
-                    return 'secure.example.org'
+                    return 'secure.example.org';
                 }
 
                 // Take default value configured in the base class
@@ -716,6 +733,55 @@ In same way, parent options can access to the nested options as normal arrays::
 
     The fact that an option is defined as nested means that you must pass
     an array of values to resolve it at runtime.
+
+Prototype Options
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.3
+
+    Prototype options were introduced in Symfony 5.3.
+
+There are situations where you will have to resolve and validate a set of
+options that may repeat many times within another option. Let's imagine a
+``connections`` option that will accept an array of database connections
+with ``host``, ``database``, ``user`` and ``password`` each.
+
+The best way to implement this is to define the ``connections`` option as prototype::
+
+    $resolver->setDefault('connections', function (OptionsResolver $connResolver) {
+        $connResolver
+            ->setPrototype(true)
+            ->setRequired(['host', 'database'])
+            ->setDefaults(['user' => 'root', 'password' => null]);
+    });
+
+According to the prototype definition in the example above, it is possible
+to have multiple connection arrays like the following::
+
+    $resolver->resolve([
+        'connections' => [
+            'default' => [
+                'host' => '127.0.0.1',
+                'database' => 'symfony',
+            ],
+            'test' => [
+                'host' => '127.0.0.1',
+                'database' => 'symfony_test',
+                'user' => 'test',
+                'password' => 'test',
+            ],
+            // ...
+        ],
+    ]);
+
+The array keys (``default``, ``test``, etc.) of this prototype option are
+validation-free and can be any arbitrary value that helps differentiate the
+connections.
+
+.. note::
+
+    A prototype option can only be defined inside a nested option and
+    during its resolution it will expect an array of arrays.
 
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~

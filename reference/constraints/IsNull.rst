@@ -39,6 +39,19 @@ of an ``Author`` class exactly equal to ``null``, you could do the following:
             protected $firstName;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\IsNull]
+            protected $firstName;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

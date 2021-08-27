@@ -39,4 +39,9 @@ third parameters::
     A :class:`Symfony\\Component\\Cache\\DoctrineProvider` class is also provided by the
     component to use any PSR6-compatible implementations with Doctrine-compatible classes.
 
+    .. deprecated:: 5.4
+
+        The ``DoctrineProvider`` class was deprecated in Symfony 5.4 and it will
+        be removed in Symfony 6.0.
+
 .. _`Doctrine Cache`: https://github.com/doctrine/cache

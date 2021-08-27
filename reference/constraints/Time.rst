@@ -37,6 +37,22 @@ of the day when the event starts:
             protected $startsAt;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Event.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Event
+        {
+            /**
+             * @var string A "H:i:s" formatted value
+             */
+            #[Assert\Time]
+            protected $startsAt;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

@@ -44,7 +44,7 @@ if the request path matches the configured ``pattern``.
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -64,16 +64,16 @@ if the request path matches the configured ``pattern``.
     .. code-block:: php
 
         // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
 
-        // ...
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'secured_area' => [
-                    'pattern' => '^/admin',
-                    // ...
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ....
+
+            $security->firewall('secured_area')
+                ->pattern('^/admin')
+                // ...
+            ;
+        };
 
 The ``pattern`` is a regular expression. In this example, the firewall will only be
 activated if the path starts (due to the ``^`` regex character) with ``/admin``. If
@@ -103,7 +103,7 @@ only initialize if the host from the request matches against the configuration.
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -123,16 +123,16 @@ only initialize if the host from the request matches against the configuration.
     .. code-block:: php
 
         // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
 
-        // ...
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'secured_area' => [
-                    'host' => '^admin\.example\.com$',
-                    // ...
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ....
+
+            $security->firewall('secured_area')
+                ->host('^admin\.example\.com$')
+                // ...
+            ;
+        };
 
 The ``host`` (like the ``pattern``) is a regular expression. In this example,
 the firewall will only be activated if the host is equal exactly (due to
@@ -163,7 +163,7 @@ the provided HTTP methods.
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -183,16 +183,16 @@ the provided HTTP methods.
     .. code-block:: php
 
         // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
 
-        // ...
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'secured_area' => [
-                    'methods' => ['GET', 'POST'],
-                    // ...
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ....
+
+            $security->firewall('secured_area')
+                ->methods(['GET', 'POST'])
+                // ...
+            ;
+        };
 
 In this example, the firewall will only be activated if the HTTP method of the
 request is either ``GET`` or ``POST``. If the method is not in the array of the
@@ -221,7 +221,7 @@ If the above options don't fit your needs you can configure any service implemen
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -241,13 +241,13 @@ If the above options don't fit your needs you can configure any service implemen
     .. code-block:: php
 
         // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
 
-        // ...
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'secured_area' => [
-                    'request_matcher' => 'app.firewall.secured_area.request_matcher',
-                    // ...
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ....
+
+            $security->firewall('secured_area')
+                ->requestMatcher('app.firewall.secured_area.request_matcher')
+                // ...
+            ;
+        };

@@ -47,6 +47,33 @@ username and the password are different only if all other validation passes
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Security\Core\User\UserInterface;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        #[Assert\GroupSequence(['User', 'Strict'])]
+        class User implements UserInterface
+        {
+            #[Assert\NotBlank]
+            private $username;
+
+            #[Assert\NotBlank]
+            private $password;
+
+            #[Assert\IsTrue(
+                message: 'The password cannot match your username',
+                groups: ['Strict'],
+            )]
+            public function isPasswordSafe()
+            {
+                return ($this->username !== $this->password);
+            }
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -151,7 +178,7 @@ You can also define a group sequence in the ``validation_groups`` form option::
 
     // src/Form/MyType.php
     namespace App\Form;
-    
+
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Validator\Constraints\GroupSequence;
@@ -199,6 +226,27 @@ entity and a new constraint group called ``Premium``:
              *     groups={"Premium"},
              * )
              */
+            private $creditCard;
+
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            #[Assert\NotBlank]
+            private $name;
+
+            #[Assert\CardScheme(
+                schemes: [Assert\CardScheme::VISA],
+                groups: ['Premium'],
+            )]
             private $creditCard;
 
             // ...
@@ -263,7 +311,7 @@ entity and a new constraint group called ``Premium``:
             {
                 $metadata->addPropertyConstraint('name', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme([
-                    'schemes' => ['VISA'],
+                    'schemes' => [Assert\CardScheme::VISA],
                     'groups'  => ['Premium'],
                 ]));
             }
@@ -314,6 +362,19 @@ provides a sequence of groups to be validated:
         /**
          * @Assert\GroupSequenceProvider
          */
+        class User implements GroupSequenceProviderInterface
+        {
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        // ...
+
+        #[Assert\GroupSequenceProvider]
         class User implements GroupSequenceProviderInterface
         {
             // ...

@@ -92,11 +92,16 @@ are located:
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'default_locale' => 'en',
-            'translator' => ['default_path' => '%kernel.project_dir%/translations'],
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-        ]);
+            $framework
+                ->defaultLocale('en')
+                ->translator()
+                    ->defaultPath('%kernel.project_dir%/translations')
+            ;
+        };
 
 The locale used in translations is the one stored on the request. This is
 typically set via a ``_locale`` attribute on your routes (see :ref:`translation-locale-url`).
@@ -141,7 +146,7 @@ different formats:
     .. code-block:: xml
 
         <!-- translations/messages.fr.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -292,6 +297,24 @@ To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
 using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 :doc:`/translation/message_format`.
 
+.. tip::
+
+    If you don't use the ICU MessageFormat syntax in your translation files,
+    pass a parameter named "%count%" to select the best plural form of the message:
+
+    .. code-block:: twig
+
+       {{ message|trans({'%name%': '...', '%count%' => 1}, 'app') }}
+
+    The ``message`` variable must include all the different versions of this
+    message based on the value of the ``count`` parameter. For example:
+
+    .. code-block:: text
+
+        {0}%name% has no apples|{1}%name% has one apple|]1,Inf[ %name% has %count% apples
+
+.. _translatable-objects:
+
 Translatable Objects
 --------------------
 
@@ -337,14 +360,92 @@ Translations in Templates
 -------------------------
 
 Most of the time, translation occurs in templates. Symfony provides native
-support for both Twig and PHP templates:
+support for both Twig and PHP templates.
 
-.. code-block:: html+twig
+.. _translation-tags:
 
-    <h1>{% trans %}Symfony is great!{% endtrans %}</h1>
+Using Twig Tags
+~~~~~~~~~~~~~~~
 
-Read :doc:`/translation/templates` for more information about the Twig tags and
-filters for translation.
+Symfony provides a specialized Twig tag ``trans`` to help with message
+translation of *static blocks of text*:
+
+.. code-block:: twig
+
+    {% trans %}Hello %name%{% endtrans %}
+
+.. caution::
+
+    The ``%var%`` notation of placeholders is required when translating in
+    Twig templates using the tag.
+
+.. tip::
+
+    If you need to use the percent character (``%``) in a string, escape it by
+    doubling it: ``{% trans %}Percent: %percent%%%{% endtrans %}``
+
+You can also specify the message domain and pass some additional variables:
+
+.. code-block:: twig
+
+    {% trans with {'%name%': 'Fabien'} from 'app' %}Hello %name%{% endtrans %}
+
+    {% trans with {'%name%': 'Fabien'} from 'app' into 'fr' %}Hello %name%{% endtrans %}
+
+.. _translation-filters:
+
+Using Twig Filters
+~~~~~~~~~~~~~~~~~~
+
+The ``trans`` filter can be used to translate *variable texts* and complex expressions:
+
+.. code-block:: twig
+
+    {{ message|trans }}
+
+    {{ message|trans({'%name%': 'Fabien'}, 'app') }}
+
+.. tip::
+
+    Using the translation tags or filters have the same effect, but with
+    one subtle difference: automatic output escaping is only applied to
+    translations using a filter. In other words, if you need to be sure
+    that your translated message is *not* output escaped, you must apply
+    the ``raw`` filter after the translation filter:
+
+    .. code-block:: html+twig
+
+        {# text translated between tags is never escaped #}
+        {% trans %}
+            <h3>foo</h3>
+        {% endtrans %}
+
+        {% set message = '<h3>foo</h3>' %}
+
+        {# strings and variables translated via a filter are escaped by default #}
+        {{ message|trans|raw }}
+        {{ '<h3>bar</h3>'|trans|raw }}
+
+.. tip::
+
+    You can set the translation domain for an entire Twig template with a single tag:
+
+    .. code-block:: twig
+
+       {% trans_default_domain 'app' %}
+
+    Note that this only influences the current template, not any "included"
+    template (in order to avoid side effects).
+
+PHP Templates
+~~~~~~~~~~~~~
+
+The translator service is accessible in PHP templates through the
+``translator`` helper:
+
+.. code-block:: html+php
+
+    <?= $view['translator']->trans('Symfony is great') ?>
 
 Forcing the Translator Locale
 -----------------------------
@@ -385,7 +486,15 @@ The ``translation:update`` command looks for missing translations in:
   defined in the :ref:`twig.default_path <config-twig-default-path>` and
   :ref:`twig.paths <config-twig-paths>` config options);
 * Any PHP file/class that injects or :doc:`autowires </service_container/autowiring>`
-  the ``translator`` service and makes calls to the ``trans()`` function.
+  the ``translator`` service and makes calls to the ``trans()`` method.
+* Any PHP file/class stored in the ``src/`` directory that creates
+  :ref:`translatable-objects` using the constructor or the ``t()`` method or calls
+  the ``trans()`` method.
+
+.. versionadded:: 5.3
+
+    Support for extracting Translatable objects has been introduced in
+    Symfony 5.3.
 
 .. _translation-resource-locations:
 
@@ -483,13 +592,13 @@ if you're generating translations with specialized programs or teams.
         .. code-block:: php
 
             // config/packages/translation.php
-            $container->loadFromExtension('framework', [
-                'translator' => [
-                    'paths' => [
-                        '%kernel.project_dir%/custom/path/to/translations',
-                    ],
-                ],
-            ]);
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (FrameworkConfig $framework) {
+                $framework->translator()
+                    ->paths(['%kernel.project_dir%/custom/path/to/translations'])
+                ;
+            };
 
 .. note::
 
@@ -497,6 +606,174 @@ if you're generating translations with specialized programs or teams.
     providing a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
     See the :ref:`dic-tags-translation-loader` tag for more information.
+
+.. _translation-providers:
+
+Translation Providers
+---------------------
+
+.. versionadded:: 5.3
+
+    Translation providers were introduced in Symfony 5.3 as an
+    :doc:`experimental feature </contributing/code/experimental>`.
+
+When using external translators to translate your application, you must send
+them the new contents to translate frequently and merge the results back in the
+application.
+
+Instead of doing this manually, Symfony provides integration with several
+third-party translation services (e.g. Crowdin or Lokalise). You can upload and
+download (called "push" and "pull") translations to/from these services and
+merge the results automatically in the application.
+
+Installing and Configuring a Third Party Provider
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Before pushing/pulling translations to a third-party provider, you must install
+the package that provides integration with that provider:
+
+====================  ===========================================================
+Provider              Install with
+====================  ===========================================================
+Crowdin               ``composer require symfony/crowdin-translation-provider``
+Loco (localise.biz)   ``composer require symfony/loco-translation-provider``
+Lokalise              ``composer require symfony/lokalise-translation-provider``
+====================  ===========================================================
+
+Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
+a configuration example to your ``.env`` file. For example, suppose you want to
+use Loco. First, install it:
+
+.. code-block:: terminal
+
+    $ composer require symfony/loco-translation-provider
+
+You'll now have a new line in your ``.env`` file that you can uncomment:
+
+.. code-block:: env
+
+    # .env
+    LOCO_DSN=loco://API_KEY@default
+
+The ``LOCO_DSN`` isn't a *real* address: it's a convenient format that offloads
+most of the configuration work to Symfony. The ``loco`` scheme activates the
+Loco provider that you just installed, which knows all about how to push and
+pull translations via Loco. The *only* part you need to change is the
+``API_KEY`` placeholder.
+
+This table shows the full list of available DSN formats for each provider:
+
+=====================  ==========================================================
+Provider               DSN
+=====================  ==========================================================
+Crowdin                crowdin://PROJECT_ID:API_TOKEN@ORGANIZATION_DOMAIN.default
+Loco (localise.biz)    loco://API_KEY@default
+Lokalise               lokalise://PROJECT_ID:API_KEY@default
+=====================  ==========================================================
+
+To enable a translation provider, add the correct DSN in your ``.env`` file and
+configure the ``providers`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/translation.yaml
+        framework:
+            translator:
+                providers:
+                    loco:
+                        dsn: '%env(LOCO_DSN)%'
+                        domains: ['messages']
+                        locales: ['en', 'fr']
+
+    .. code-block:: xml
+
+        <!-- config/packages/translation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:translator>
+                    <framework:provider name="loco" dsn="%env(LOCO_DSN)%">
+                        <framework:domain>messages</framework:domain>
+                        <!-- ... -->
+                        <framework:locale>en</framework:locale>
+                        <framework:locale>fr</framework:locale>
+                        <!-- ... -->
+                    </framework:provider>
+                </framework:translator>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        # config/packages/translation.php
+        $container->loadFromExtension('framework', [
+            'translator' => [
+                'providers' => [
+                    'loco' => [
+                        'dsn' => '%env(LOCO_DSN)%',
+                        'domains' => ['messages'],
+                        'locales' => ['en', 'fr'],
+                    ],
+                ],
+            ],
+        ]);
+
+.. tip::
+
+    If you use Lokalise as provider and a locale format following the `ISO 639-1`_ (e.g., "en" or "fr"),
+    you have to set the `Custom Language Name setting`_ in Lokalise for each of your locales,
+    in order to override the default value (which follow the `ISO 639-1`_ succeeded by a sub-code
+    in capital letters that specifies the national variety (e.g., "GB" or "US" according to `ISO 3166-1 alpha-2`_)).
+
+Pushing and Pulling Translations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+After configuring the credentials to access the translation provider, you can
+now use the following commands to push (upload) and pull (download) translations:
+
+.. code-block:: terminal
+
+    # push all local translations to the Loco provider for the locales and domains
+    # configured in config/packages/translation.yaml file.
+    # it will update existing translations already on the provider.
+    $ php bin/console translation:push loco --force
+
+    # push new local translations to the Loco provider for the French locale
+    # and the validators domain.
+    # it will **not** update existing translations already on the provider.
+    $ php bin/console translation:push loco --locales fr --domain validators
+
+    # push new local translations and delete provider's translations that not
+    # exists anymore in local files for the French locale and the validators domain.
+    # it will **not** update existing translations already on the provider.
+    $ php bin/console translation:push loco --delete-missing --locales fr --domain validators
+
+    # check out the command help to see its options (format, domains, locales, etc.)
+    $ php bin/console translation:push --help
+
+.. code-block:: terminal
+
+    # pull all provider's translations to local files for the locales and domains
+    # configured in config/packages/translation.yaml file.
+    # it will overwrite completely your local files.
+    $ php bin/console translation:pull loco --force
+
+    # pull new translations from the Loco provider to local files for the French
+    # locale and the validators domain.
+    # it will **not** overwrite your local files, only add new translations.
+    $ php bin/console translation:pull loco --locales fr --domain validators
+
+    # check out the command help to see its options (format, domains, locales, intl-icu, etc.)
+    $ php bin/console translation:pull --help
 
 Handling the User's Locale
 --------------------------
@@ -559,10 +836,14 @@ checks translation resources for several locales:
        .. code-block:: php
 
            // config/packages/translation.php
-           $container->loadFromExtension('framework', [
-               'translator' => ['fallbacks' => ['en']],
-               // ...
-           ]);
+           use Symfony\Config\FrameworkConfig;
+
+            return static function (FrameworkConfig $framework) {
+                // ...
+                $framework->translator()
+                    ->fallbacks(['en'])
+                ;
+            };
 
 .. note::
 
@@ -608,7 +889,6 @@ Learn more
     :maxdepth: 1
 
     translation/message_format
-    translation/templates
     translation/locale
     translation/debug
     translation/lint
@@ -618,5 +898,6 @@ Learn more
 .. _`ICU MessageFormat`: https://unicode-org.github.io/icu/userguide/format_parse/messages/
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-.. _`Translatable Extension`: http://atlantic18.github.io/DoctrineExtensions/doc/translatable.html
+.. _`Translatable Extension`: https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/translatable.md
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
+.. _`Custom Language Name setting`: https://docs.lokalise.com/en/articles/1400492-uploading-files#custom-language-codes

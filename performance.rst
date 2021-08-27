@@ -84,7 +84,7 @@ container into a single file, which could improve performance when using
         // config/services.php
 
         // ...
-        $container->setParameter('container.dumper.inline_factories', true);
+        $container->parameters()->set('container.dumper.inline_factories', true);
 
 .. _performance-use-opcache:
 
@@ -106,17 +106,21 @@ make them available to all requests until the server is restarted, improving
 performance significantly.
 
 During container compilation (e.g. when running the ``cache:clear`` command),
-Symfony generates a file called ``preload.php`` in the ``config/`` directory
-with the list of classes to preload.
-
-The only requirement is that you need to set both ``container.dumper.inline_factories``
-and ``container.dumper.inline_class_loader`` parameters to ``true``. Then, you
-can configure PHP to use this preload file:
+Symfony generates a file with the list of classes to preload in the
+``var/cache/`` directory. Rather than use this file directly, use the
+``config/preload.php`` file that is created when
+:doc:`using Symfony Flex in your project </setup/flex>`:
 
 .. code-block:: ini
 
     ; php.ini
     opcache.preload=/path/to/project/config/preload.php
+    
+    ; required for opcache.preload:
+    opcache.preload_user=www-data
+
+If this file is missing, run this command to reinstall the Symfony Flex recipe:
+``composer recipes:install symfony/framework-bundle --force -v``.
 
 Use the :ref:`container.preload <dic-tags-container-preload>` and
 :ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
@@ -281,7 +285,7 @@ You can also profile your template code with the :ref:`stopwatch Twig tag <refer
 .. code-block:: twig
 
     {% stopwatch 'render-blog-posts' %}
-        {% for post in blog_posts%}
+        {% for post in blog_posts %}
             {# ... #}
         {% endfor %}
     {% endstopwatch %}

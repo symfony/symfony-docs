@@ -43,6 +43,12 @@ Other Fields
 * :doc:`FileType </reference/forms/types/file>`
 * :doc:`RadioType </reference/forms/types/radio>`
 
+UID Fields
+~~~~~~~~~~
+
+* :doc:`UuidType </reference/forms/types/uuid>`
+* :doc:`UlidType </reference/forms/types/ulid>`
+
 Field Groups
 ~~~~~~~~~~~~
 

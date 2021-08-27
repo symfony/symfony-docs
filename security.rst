@@ -40,8 +40,8 @@ install the security feature before using it:
 
 .. tip::
 
-    A :doc:`new experimental Security </security/experimental_authenticators>`
-    was introduced in Symfony 5.1, which will eventually replace security in
+    A :doc:`new authenticator-based Security </security/authenticator_manager>`
+    was introduced in Symfony 5.1, which will replace security in
     Symfony 6.0. This system is almost fully backwards compatible with the
     current Symfony security, add this line to your security configuration to start
     using it:
@@ -75,10 +75,12 @@ install the security feature before using it:
         .. code-block:: php
 
             // config/packages/security.php
-            $container->loadFromExtension('security', [
-                'enable_authenticator_manager' => true,
+            use Symfony\Config\SecurityConfig;
+
+            return static function (SecurityConfig $security) {
+                $security->enableAuthenticatorManager(true);
                 // ...
-            ]);
+            };
 
 .. _initial-security-yml-setup-authentication:
 .. _initial-security-yaml-setup-authentication:
@@ -159,7 +161,7 @@ Fortunately, the ``make:user`` command already configured one for you in your
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -178,20 +180,18 @@ Fortunately, the ``make:user`` command already configured one for you in your
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
 
-            'providers' => [
-                // used to reload user from session & other features (e.g. switch_user)
-                'app_user_provider' => [
-                    'entity' => [
-                        'class' => User::class,
-                        'property' => 'email',
-                    ],
-                ],
-            ],
-        ]);
+            // used to reload user from session & other features (e.g. switch_user)
+            $security->provider('app_user_provider')
+                ->entity()
+                    ->class(User::class)
+                    ->property('email');
+        };
+
 
 If your ``User`` class is an entity, you don't need to do anything else. But if
 your class is *not* an entity, then ``make:user`` will also have generated a
@@ -200,12 +200,13 @@ here: :doc:`User Providers </security/user_provider>`.
 
 .. _security-encoding-user-password:
 .. _encoding-the-user-s-password:
+.. _2c-encoding-passwords:
 
-2c) Encoding Passwords
-----------------------
+2c) Hashing Passwords
+---------------------
 
 Not all applications have "users" that need passwords. *If* your users have passwords,
-you can control how those passwords are encoded in ``security.yaml``. The ``make:user``
+you can control how those passwords are hashed in ``security.yaml``. The ``make:user``
 command will pre-configure this for you:
 
 .. configuration-block::
@@ -216,18 +217,17 @@ command will pre-configure this for you:
         security:
             # ...
 
-            encoders:
+            password_hashers:
                 # use your user class name here
                 App\Entity\User:
-                    # Use native password encoder
-                    # This value auto-selects the best possible hashing algorithm
-                    # (i.e. Sodium when available).
+                    # Use native password hasher, which auto-selects the best
+                    # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
                     algorithm: auto
 
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -239,7 +239,7 @@ command will pre-configure this for you:
             <config>
                 <!-- ... -->
 
-                <encoder class="App\Entity\User"
+                <security:password-hasher class="App\Entity\User"
                     algorithm="auto"
                     cost="12"/>
 
@@ -251,22 +251,25 @@ command will pre-configure this for you:
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
 
-            'encoders' => [
-                User::class => [
-                    'algorithm' => 'auto',
-                    'cost' => 12,
-                ]
-            ],
+            $security->passwordHasher(User::class)
+                ->algorithm('auto')
+                ->cost(12);
 
             // ...
-        ]);
+        };
 
-Now that Symfony knows *how* you want to encode the passwords, you can use the
-``UserPasswordEncoderInterface`` service to do this before saving your users to
+.. versionadded:: 5.3
+
+    The ``password_hashers`` option was introduced in Symfony 5.3. In previous
+    versions it was called ``encoders``.
+
+Now that Symfony knows *how* you want to hash the passwords, you can use the
+``UserPasswordHasherInterface`` service to do this before saving your users to
 the database.
 
 .. _user-data-fixture:
@@ -281,43 +284,43 @@ create dummy database users:
     The class name of the fixtures to create (e.g. AppFixtures):
     > UserFixtures
 
-Use this service to encode the passwords:
+Use this service to hash the passwords:
 
 .. code-block:: diff
 
-    // src/DataFixtures/UserFixtures.php
+      // src/DataFixtures/UserFixtures.php
 
-    + use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-    // ...
+    + use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+      // ...
 
-    class UserFixtures extends Fixture
-    {
-    +     private $passwordEncoder;
+      class UserFixtures extends Fixture
+      {
+    +     private $passwordHasher;
 
-    +     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    +     public function __construct(UserPasswordHasherInterface $passwordHasher)
     +     {
-    +         $this->passwordEncoder = $passwordEncoder;
+    +         $this->passwordHasher = $passwordHasher;
     +     }
 
-        public function load(ObjectManager $manager)
-        {
-            $user = new User();
-            // ...
+          public function load(ObjectManager $manager)
+          {
+              $user = new User();
+              // ...
 
-    +         $user->setPassword($this->passwordEncoder->encodePassword(
+    +         $user->setPassword($this->passwordHasher->hashPassword(
     +             $user,
     +             'the_new_password'
     +         ));
 
-            // ...
-        }
-    }
+              // ...
+          }
+      }
 
-You can manually encode a password by running:
+You can manually hash a password by running:
 
 .. code-block:: terminal
 
-    $ php bin/console security:encode-password
+    $ php bin/console security:hash-password
 
 .. _security-yaml-firewalls:
 .. _security-firewalls:
@@ -351,7 +354,7 @@ important section is ``firewalls``:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -368,25 +371,23 @@ important section is ``firewalls``:
                 <firewall name="main"
                     anonymous="true"
                     lazy="true"/>
-                </firewall>
             </config>
         </srv:container>
 
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'dev' => [
-                    'pattern' => '^/(_(profiler|wdt)|css|images|js)/',
-                    'security' => false,
-                ],
-                'main' => [
-                    'anonymous' => true,
-                    'lazy' => true,
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('dev')
+                ->pattern('^/(_(profiler|wdt)|css|images|js)/')
+                ->security(false);
+
+            $security->firewall('main')
+                ->lazy(true)
+                ->anonymous();
+        };
 
 A "firewall" is your authentication system: the configuration below it defines
 *how* your users will be able to authenticate (e.g. login form, API token, etc).
@@ -461,6 +462,11 @@ you to control *every* part of the authentication process (see the next section)
 Guard Authenticators
 ~~~~~~~~~~~~~~~~~~~~
 
+.. deprecated:: 5.3
+
+    Guard authenticators are deprecated since Symfony 5.3 in favor of the
+    :doc:`new authenticator-based system </security/authenticator_manager>`.
+
 A Guard authenticator is a class that gives you *complete* control over your
 authentication process. There are many different ways to build an authenticator;
 here are a few common use-cases:
@@ -468,6 +474,255 @@ here are a few common use-cases:
 * :doc:`/security/form_login_setup`
 * :doc:`/security/guard_authentication` – see this for the most detailed
   description of authenticators and how they work
+
+Limiting Login Attempts
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    Login throttling was introduced in Symfony 5.2.
+
+Symfony provides basic protection against `brute force login attacks`_ if
+you're using the :doc:`authenticator-based authenticators </security/authenticator_manager>`.
+You must enable this using the ``login_throttling`` setting:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            enable_authenticator_manager: true
+
+            firewalls:
+                # ...
+
+                main:
+                    # ...
+
+                    # by default, the feature allows 5 login attempts per minute
+                    login_throttling: null
+
+                    # configure the maximum login attempts (per minute)
+                    login_throttling:
+                        max_attempts: 3
+
+                    # configure the maximum login attempts in a custom period of time
+                    login_throttling:
+                        max_attempts: 3
+                        interval: '15 minutes'
+
+                    # use a custom rate limiter via its service ID
+                    login_throttling:
+                        limiter: app.my_login_rate_limiter
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config enable-authenticator-manager="true">
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- by default, the feature allows 5 login attempts per minute -->
+                    <login-throttling/>
+
+                    <!-- configure the maximum login attempts (per minute) -->
+                    <login-throttling max-attempts="3"/>
+
+                    <!-- configure the maximum login attempts in a custom period of time -->
+                    <login-throttling max-attempts="3" interval="15 minutes"/>
+
+                    <!-- use a custom rate limiter via its service ID -->
+                    <login-throttling limiter="app.my_login_rate_limiter"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->enableAuthenticatorManager(true);
+
+            // ...
+            $mainFirewall = $security->firewall('main');
+
+            // by default, the feature allows 5 login attempts per minute
+            $mainFirewall
+                ->loginThrottling();
+
+            // configure the maximum login attempts (per minute)
+            $mainFirewall
+                ->loginThrottling()
+                    ->maxAttempts(3)
+                    ->interval('15 minutes');
+
+            // configure the maximum login attempts in a custom period of time
+            $mainFirewall
+                ->loginThrottling()
+                    ->maxAttempts(3);
+        };
+
+.. versionadded:: 5.3
+
+    The ``login_throttling.interval`` option was introduced in Symfony 5.3.
+
+By default, login attempts are limited on ``max_attempts`` (default: 5)
+failed requests for ``IP address + username`` and ``5 * max_attempts``
+failed requests for ``IP address``. The second limit protects against an
+attacker using multiple usernames from bypassing the first limit, without
+distrupting normal users on big networks (such as offices).
+
+.. tip::
+
+    Limiting the failed login attempts is only one basic protection against
+    brute force attacks. The `OWASP Brute Force Attacks`_ guidelines mention
+    several other protections that you should consider depending on the
+    level of protection required.
+
+If you need a more complex limiting algorithm, create a class that implements
+:class:`Symfony\\Component\\HttpFoundation\\RateLimiter\\RequestRateLimiterInterface`
+(or use
+:class:`Symfony\\Component\\Security\\Http\\RateLimiter\\DefaultLoginRateLimiter`)
+and set the ``limiter`` option to its service ID:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        framework:
+            rate_limiter:
+                # define 2 rate limiters (one for username+IP, the other for IP)
+                username_ip_login:
+                    policy: token_bucket
+                    limit: 5
+                    rate: { interval: '5 minutes' }
+
+                ip_login:
+                    policy: sliding_window
+                    limit: 50
+                    interval: '15 minutes'
+
+        services:
+            # our custom login rate limiter
+            app.login_rate_limiter:
+                class: Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter
+                arguments:
+                    # globalFactory is the limiter for IP
+                    $globalFactory: '@limiter.ip_login'
+                    # localFactory is the limiter for username+IP
+                    $localFactory: '@limiter.username_ip_login'
+
+        security:
+            firewalls:
+                main:
+                    # use a custom rate limiter via its service ID
+                    login_throttling:
+                        limiter: app.login_rate_limiter
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <framework:config>
+                <framework:rate-limiter>
+                    <!-- define 2 rate limiters (one for username+IP, the other for IP) -->
+                    <framework:limiter name="username_ip_login"
+                        policy="token_bucket"
+                        limit="5"
+                    >
+                        <framework:rate interval="5 minutes"/>
+                    </framework:limiter>
+
+                    <framework:limiter name="ip_login"
+                        policy="sliding_window"
+                        limit="50"
+                        interval="15 minutes"
+                    />
+                </framework:rate-limiter>
+            </framework:config>
+
+            <srv:services>
+                <!-- our custom login rate limiter -->
+                <srv:service id="app.login_rate_limiter"
+                    class="Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter"
+                >
+                    <!-- 1st argument is the limiter for IP -->
+                    <srv:argument type="service" id="limiter.ip_login"/>
+                    <!-- 2nd argument is the limiter for username+IP -->
+                    <srv:argument type="service" id="limiter.username_ip_login"/>
+                </srv:service>
+            </srv:services>
+
+            <config>
+                <firewall name="main">
+                    <!-- use a custom rate limiter via its service ID -->
+                    <login-throttling limiter="app.login_rate_limiter"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+        use Symfony\Component\DependencyInjection\Reference;
+        use Symfony\Component\Security\Http\RateLimiter\DefaultLoginRateLimiter;
+        use Symfony\Config\FrameworkConfig;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (ContainerBuilder $container, FrameworkConfig $framework, SecurityConfig $security) {
+            $framework->rateLimiter()
+                ->limiter('username_ip_login')
+                    ->policy('token_bucket')
+                    ->limit(5)
+                    ->rate()
+                        ->interval('5 minutes')
+            ;
+
+            $framework->rateLimiter()
+                ->limiter('ip_login')
+                    ->policy('sliding_window')
+                    ->limit(50)
+                    ->interval('15 minutes')
+            ;
+
+            $container->register('app.login_rate_limiter', DefaultLoginRateLimiter::class)
+                ->setArguments([
+                    // 1st argument is the limiter for IP
+                    new Reference('limiter.ip_login'),
+                    // 2nd argument is the limiter for username+IP
+                    new Reference('limiter.username_ip_login'),
+                ]);
+
+            $security->firewall('main')
+                ->loginThrottling()
+                    ->limiter('app.login_rate_limiter')
+            ;
+        };
 
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:
@@ -576,7 +831,7 @@ start with ``/admin``, you can:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -610,27 +865,32 @@ start with ``/admin``, you can:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->enableAuthenticatorManager(true);
+
             // ...
+            $security->firewall('main')
+            // ...
+            ;
 
-            'firewalls' => [
-                // ...
-                'main' => [
-                    // ...
-                ],
-            ],
-            'access_control' => [
-                // require ROLE_ADMIN for /admin*
-                ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
+            // require ROLE_ADMIN for /admin*
+            $security->accessControl()
+                ->path('^/admin')
+                ->roles(['ROLE_ADMIN']);
 
-                // require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
-                ['path' => '^/admin', 'roles' => ['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']],
+            // require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
+            $security->accessControl()
+                ->path('^/admin')
+                ->roles(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']);
 
-                // the 'path' value can be any valid regular expression
-                // (this one will match URLs like /api/post/7298 and /api/comment/528491)
-                ['path' => '^/api/(post|comment)/\d+$', 'roles' => 'ROLE_USER'],
-            ],
-        ]);
+            // the 'path' value can be any valid regular expression
+            // (this one will match URLs like /api/post/7298 and /api/comment/528491)
+            $security->accessControl()
+                ->path('^/api/(post|comment)/\d+$')
+                ->roles(['ROLE_USER']);
+        };
 
 You can define as many URL patterns as you need - each is a regular expression.
 **BUT**, only **one** will be matched per request: Symfony starts at the top of
@@ -654,7 +914,7 @@ the list and stops when it finds the first match:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -674,14 +934,19 @@ the list and stops when it finds the first match:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'access_control' => [
-                ['path' => '^/admin/users', 'roles' => 'ROLE_SUPER_ADMIN'],
-                ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
-            ],
-        ]);
+            $security->accessControl()
+                ->path('^/admin/users')
+                ->roles(['ROLE_SUPER_ADMIN']);
+
+            $security->accessControl()
+                ->path('^/admin')
+                ->roles(['ROLE_ADMIN']);
+        };
 
 Prepending the path with ``^`` means that only URLs *beginning* with the
 pattern are matched. For example, a path of ``/admin`` (without the ``^``)
@@ -701,7 +966,7 @@ You can deny access from inside a controller::
     // src/Controller/AdminController.php
     // ...
 
-    public function adminDashboard()
+    public function adminDashboard(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -728,8 +993,8 @@ using annotations:
 
 .. code-block:: diff
 
-    // src/Controller/AdminController.php
-    // ...
+      // src/Controller/AdminController.php
+      // ...
 
     + use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -738,18 +1003,18 @@ using annotations:
     +  *
     +  * @IsGranted("ROLE_ADMIN")
     +  */
-    class AdminController extends AbstractController
-    {
+      class AdminController extends AbstractController
+      {
     +     /**
     +      * Require ROLE_ADMIN for only this controller method.
     +      *
     +      * @IsGranted("ROLE_ADMIN")
     +      */
-        public function adminDashboard()
-        {
-            // ...
-        }
-    }
+          public function adminDashboard(): Response
+          {
+              // ...
+          }
+      }
 
 For more information, see the `FrameworkExtraBundle documentation`_.
 
@@ -792,7 +1057,7 @@ role::
 
     // ...
 
-    public function adminDashboard()
+    public function adminDashboard(): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -816,8 +1081,8 @@ like this:
   will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
 
 * ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
-  this - this is useful when *whitelisting* URLs to guarantee access - some
-  details are in :doc:`/security/access_control`.
+  this - this is useful when defining a list of URLs with no access restriction
+  - some details are in :doc:`/security/access_control`.
 
 * ``IS_ANONYMOUS``: *Only* anonymous users are matched by this attribute.
 
@@ -842,7 +1107,7 @@ like this:
 After authentication, the ``User`` object of the current user can be accessed
 via the ``getUser()`` shortcut::
 
-    public function index()
+    public function index(): Response
     {
         // usually you'll want to make sure the user is authenticated first
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -883,6 +1148,8 @@ If you need to get the logged in user from a service, use the
         {
             // returns User object or null if not authenticated
             $user = $this->security->getUser();
+
+            // ...
         }
     }
 
@@ -925,7 +1192,7 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -947,16 +1214,16 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'firewalls' => [
-                'secured_area' => [
-                    // ...
-                    'logout' => ['path' => 'app_logout'],
-                ],
-            ],
-        ]);
+            $security->firewall('secured_area')
+                // ...
+                ->logout()
+                    ->path('app_logout');
+        };
 
 Next, you'll need to create a route for this URL (but not a controller):
 
@@ -975,6 +1242,24 @@ Next, you'll need to create a route for this URL (but not a controller):
             /**
              * @Route("/logout", name="app_logout", methods={"GET"})
              */
+            public function logout(): void
+            {
+                // controller can be blank: it will never be executed!
+                throw new \Exception('Don\'t forget to activate logout in security.yaml');
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/SecurityController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class SecurityController extends AbstractController
+        {
+            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
             public function logout()
             {
                 // controller can be blank: it will never be executed!
@@ -1126,7 +1411,7 @@ rules by creating a role hierarchy:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -1146,17 +1431,14 @@ rules by creating a role hierarchy:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'role_hierarchy' => [
-                'ROLE_ADMIN'       => 'ROLE_USER',
-                'ROLE_SUPER_ADMIN' => [
-                    'ROLE_ADMIN',
-                    'ROLE_ALLOWED_TO_SWITCH',
-                ],
-            ],
-        ]);
+            $security->roleHierarchy('ROLE_ADMIN', ['ROLE_USER']);
+            $security->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH']);
+        };
 
 Users with the ``ROLE_ADMIN`` role will also have the
 ``ROLE_USER`` role. And users with ``ROLE_SUPER_ADMIN``, will automatically have
@@ -1224,7 +1506,7 @@ Authentication (Identifying/Logging in the User)
 .. toctree::
     :maxdepth: 1
 
-    security/experimental_authenticators
+    security/authenticator_manager
     security/form_login_setup
     security/reset_password
     security/json_login_setup
@@ -1236,7 +1518,7 @@ Authentication (Identifying/Logging in the User)
     security/remember_me
     security/impersonating_user
     security/user_checkers
-    security/named_encoders
+    security/named_hashers
     security/multiple_guard_authenticators
     security/firewall_restriction
     security/csrf
@@ -1257,5 +1539,7 @@ Authorization (Denying Access)
 
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
+.. _`OWASP Brute Force Attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
+.. _`brute force login attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
 .. _`Symfony Security screencast series`: https://symfonycasts.com/screencast/symfony-security
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html

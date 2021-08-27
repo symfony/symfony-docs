@@ -35,6 +35,22 @@ Basic Usage
             protected $createdAt;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            /**
+             * @var string A "Y-m-d H:i:s" formatted value
+             */
+            #[Assert\DateTime]
+            protected $createdAt;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -84,8 +100,8 @@ Basic Usage
 Options
 -------
 
-format
-~~~~~~
+``format``
+~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Y-m-d H:i:s``
 

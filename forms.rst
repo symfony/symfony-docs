@@ -345,13 +345,13 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'bootstrap_4_layout.html.twig',
-            ],
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes(['bootstrap_4_layout.html.twig']);
 
             // ...
-        ]);
+        };
 
 The :ref:`built-in Symfony form themes <symfony-builtin-forms>` include
 Bootstrap 3 and 4 as well as Foundation 5 and 6. You can also
@@ -397,10 +397,6 @@ written into the form object::
                 $task = $form->getData();
 
                 // ... perform some action, such as saving the task to the database
-                // for example, if Task is a Doctrine entity, save it!
-                // $entityManager = $this->getDoctrine()->getManager();
-                // $entityManager->persist($task);
-                // $entityManager->flush();
 
                 return $this->redirectToRoute('task_success');
             }
@@ -448,6 +444,16 @@ possible paths:
     If you need more control over exactly when your form is submitted or which
     data is passed to it, you can
     :doc:`use the submit() method to handle form submissions </form/direct_submit>`.
+
+.. tip::
+
+    If you need to render and process the same form in different templates,
+    use the ``render()`` function to :ref:`embed the controller <templates-embed-controllers>`
+    that processes the form:
+
+    .. code-block:: twig
+
+        {{ render(controller('App\\Controller\\TaskController::new')) }}
 
 .. _validating-forms:
 
@@ -497,6 +503,23 @@ object.
             protected $dueDate;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Task.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Task
+        {
+            #[Assert\NotBlank]
+            public $task;
+
+            #[Assert\NotBlank]
+            #[Assert\Type(\DateTime::class)]
+            protected $dueDate;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -511,7 +534,7 @@ object.
     .. code-block:: xml
 
         <!-- config/validator/validation.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
@@ -600,11 +623,11 @@ these new messages set the ``legacy_error_messages`` option to ``false``:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'form' => [
-                'legacy_error_messages' => false,
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->form()->legacyErrorMessages(false);
+        };
 
 Other Common Form Features
 --------------------------
@@ -628,7 +651,7 @@ argument of ``createForm()``::
         {
             $task = new Task();
             // use some PHP logic to decide if this form field is required or not
-            $dueDateIsRequired = ...
+            $dueDateIsRequired = ...;
 
             $form = $this->createForm(TaskType::class, $task, [
                 'require_due_date' => $dueDateIsRequired,
@@ -731,8 +754,7 @@ Set the ``label`` option on fields to define their labels explicitly::
 .. tip::
 
     By default, ``<label>`` tags of required fields are rendered with a
-    ``required`` CSS class, so you can display an asterisk for required
-    fields applying these CSS styles:
+    ``required`` CSS class, so you can display an asterisk by applying a CSS style:
 
     .. code-block:: css
 
@@ -813,7 +835,8 @@ to the ``form()`` or the ``form_start()`` helper functions:
     that stores this method. The form will be submitted in a normal ``POST``
     request, but :doc:`Symfony's routing </routing>` is capable of detecting the
     ``_method`` parameter and will interpret it as a ``PUT``, ``PATCH`` or
-    ``DELETE`` request. See the :ref:`configuration-framework-http_method_override` option.
+    ``DELETE`` request. The :ref:`configuration-framework-http_method_override`
+    option must be enabled for this to work.
 
 Changing the Form Name
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -830,14 +853,15 @@ method::
 
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Form\FormFactoryInterface;
     // ...
 
     class TaskController extends AbstractController
     {
-        public function new(): Response
+        public function new(FormFactoryInterface $formFactory): Response
         {
             $task = ...;
-            $form = $this->get('form.factory')->createNamed('my_name', TaskType::class, $task);
+            $form = $formFactory->createNamed('my_name', TaskType::class, $task);
 
             // ...
         }
@@ -1015,6 +1039,7 @@ Form Themes and Customization:
     :maxdepth: 1
 
     /form/bootstrap4
+    /form/bootstrap5
     /form/form_customization
     /form/form_themes
 

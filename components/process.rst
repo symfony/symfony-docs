@@ -358,6 +358,35 @@ The input of a process can also be defined using `PHP streams`_::
     // will echo: 'foobar'
     echo $process->getOutput();
 
+Using TTY and PTY Modes
+-----------------------
+
+All examples above show that your program has control over the input of a
+process (using ``setInput()``) and the output from that process (using
+``getOutput()``). The Process component has two special modes that tweak
+the relationship between your program and the process: teletype (tty) and
+pseudo-teletype (pty).
+
+In TTY mode, you connect the input and output of the process to the input
+and output of your program. This allows for instance to open an editor like
+Vim or Nano as a process. You enable TTY mode by calling
+:method:`Symfony\\Component\\Process\\Process::setTty`::
+
+    $process = new Process(['vim']);
+    $process->setTty(true);
+    $process->run();
+
+    // As the output is connected to the terminal, it is no longer possible
+    // to read or modify the output from the process!
+    dump($process->getOutput()); // null
+
+In PTY mode, your program behaves as a terminal for the process instead of
+a plain input and output. Some programs behave differently when
+interacting with a real terminal instead of another program. For instance,
+some programs prompt for a password when talking with a terminal. Use
+:method:`Symfony\\Component\\Process\\Process::setPty` to enable this
+mode.
+
 Stopping a Process
 ------------------
 
@@ -388,22 +417,6 @@ instead::
     EOF
     );
     $process->run();
-
-Using a Prepared Command Line
------------------------------
-
-You can run a process by using a prepared command line with double quote
-variable notation. This allows you to use placeholders so that only the
-parameterized values can be changed, but not the rest of the script::
-
-    use Symfony\Component\Process\Process;
-
-    $process = Process::fromShellCommandline('echo "$name"');
-    $process->run(null, ['name' => 'Elsa']);
-
-.. caution::
-
-    A prepared command line will not be escaped automatically!
 
 Process Timeout
 ---------------
@@ -513,10 +526,31 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
     methods to handle process output in a streaming fashion.
 
+Finding an Executable
+---------------------
+
+The Process component provides a utility class called
+:class:`Symfony\\Component\\Process\\ExecutableFinder` which finds
+and returns the absolute path of an executable::
+
+    use Symfony\Component\Process\ExecutableFinder;
+
+    $executableFinder = new ExecutableFinder();
+    $chromedriverPath = $executableFinder->find('chromedriver');
+    // $chromedriverPath = '/usr/local/bin/chromedriver' (the result will be different on your computer)
+
+The :method:`Symfony\\Component\\Process\\ExecutableFinder::find` method also takes extra parameters to specify a default value
+to return and extra directories where to look for the executable::
+
+    use Symfony\Component\Process\ExecutableFinder;
+
+    $executableFinder = new ExecutableFinder();
+    $chromedriverPath = $executableFinder->find('chromedriver', '/path/to/chromedriver', ['local-bin/']);
+
 Finding the Executable PHP Binary
 ---------------------------------
 
-This component also provides a utility class called
+This component also provides a special utility class called
 :class:`Symfony\\Component\\Process\\PhpExecutableFinder` which returns the
 absolute path of the executable PHP binary available on your server::
 

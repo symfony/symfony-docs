@@ -377,6 +377,8 @@ sport like this::
     // src/Form/Type/SportMeetupType.php
     namespace App\Form\Type;
 
+    use App\Entity\Position;
+    use App\Entity\Sport;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -390,7 +392,7 @@ sport like this::
         {
             $builder
                 ->add('sport', EntityType::class, [
-                    'class'       => 'App\Entity\Sport',
+                    'class' => Sport::class,
                     'placeholder' => '',
                 ])
             ;
@@ -407,7 +409,7 @@ sport like this::
                     $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                     $form->add('position', EntityType::class, [
-                        'class' => 'App\Entity\Position',
+                        'class' => Position::class,
                         'placeholder' => '',
                         'choices' => $positions,
                     ]);
@@ -443,6 +445,7 @@ The type would now look like::
     // src/Form/Type/SportMeetupType.php
     namespace App\Form\Type;
 
+    use App\Entity\Position;
     use App\Entity\Sport;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Component\Form\FormInterface;
@@ -454,7 +457,7 @@ The type would now look like::
         {
             $builder
                 ->add('sport', EntityType::class, [
-                    'class'       => 'App\Entity\Sport',
+                    'class' => Sport::class,
                     'placeholder' => '',
                 ])
             ;
@@ -463,7 +466,7 @@ The type would now look like::
                 $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, [
-                    'class' => 'App\Entity\Position',
+                    'class' => Position::class,
                     'placeholder' => '',
                     'choices' => $positions,
                 ]);

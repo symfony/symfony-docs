@@ -54,6 +54,24 @@ The following constraints ensure that:
             protected $age;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\IdenticalTo('Mary')]
+            protected $firstName;
+
+            #[Assert\IdenticalTo(
+                value: 20,
+            )]
+            protected $age;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

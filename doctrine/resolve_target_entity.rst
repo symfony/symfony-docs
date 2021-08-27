@@ -139,15 +139,13 @@ about the replacement:
         // config/packages/doctrine.php
         use App\Entity\Customer;
         use App\Model\InvoiceSubjectInterface;
+        use Symfony\Config\DoctrineConfig;
 
-        $container->loadFromExtension('doctrine', [
-            'orm' => [
-                // ...
-                'resolve_target_entities' => [
-                    InvoiceSubjectInterface::class => Customer::class,
-                ],
-            ],
-        ]);
+        return static function (DoctrineConfig $doctrine) {
+            $orm = $doctrine->orm();
+            // ...
+            $orm->resolveTargetEntity(InvoiceSubjectInterface::class, Customer::class);
+        };
 
 Final Thoughts
 --------------

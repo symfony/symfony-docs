@@ -5,50 +5,63 @@ Built-in Symfony Service Tags
 :doc:`DependencyInjection component </components/dependency_injection>` to flag
 services that require special processing, like console commands or Twig extensions.
 
-These are the most common tags provided by Symfony components, but in your
-application there could be more tags available provided by third-party bundles:
+This article shows the most common tags provided by Symfony components, but in
+your application there could be more tags available provided by third-party bundles.
 
-========================================  ========================================================================
-Tag Name                                  Usage
-========================================  ========================================================================
-`auto_alias`_                             Define aliases based on the value of container parameters
-`console.command`_                        Add a command
-`container.hot_path`_                     Add to list of always needed services
-`container.no_preload`_                   Remove a class from the list of classes preloaded by PHP
-`container.preload`_                      Add some class to the list of classes preloaded by PHP
-`controller.argument_value_resolver`_     Register a value resolver for controller arguments such as ``Request``
-`data_collector`_                         Create a class that collects custom data for the profiler
-`doctrine.event_listener`_                Add a Doctrine event listener
-`doctrine.event_subscriber`_              Add a Doctrine event subscriber
-`form.type`_                              Create a custom form field type
-`form.type_extension`_                    Create a custom "form extension"
-`form.type_guesser`_                      Add your own logic for "form type guessing"
-`kernel.cache_clearer`_                   Register your service to be called during the cache clearing process
-`kernel.cache_warmer`_                    Register your service to be called during the cache warming process
-`kernel.event_listener`_                  Listen to different events/hooks in Symfony
-`kernel.event_subscriber`_                To subscribe to a set of different events/hooks in Symfony
-`kernel.fragment_renderer`_               Add new HTTP content rendering strategies
-`kernel.reset`_                           Allows to clean up services between requests
-`mime.mime_type_guesser`_                 Add your own logic for guessing MIME types
-`monolog.logger`_                         Logging with a custom logging channel
-`monolog.processor`_                      Add a custom processor for logging
-`routing.loader`_                         Register a custom service that loads routes
-`routing.expression_language_provider`_   Register a provider for expression language functions in routing
-`security.expression_language_provider`_  Register a provider for expression language functions in security
-`security.voter`_                         Add a custom voter to Symfony's authorization logic
-`security.remember_me_aware`_             To allow remember me authentication
-`serializer.encoder`_                     Register a new encoder in the ``serializer`` service
-`serializer.normalizer`_                  Register a new normalizer in the ``serializer`` service
-`swiftmailer.default.plugin`_             Register a custom SwiftMailer Plugin
-`translation.loader`_                     Register a custom service that loads translations
-`translation.extractor`_                  Register a custom service that extracts translation messages from a file
-`translation.dumper`_                     Register a custom service that dumps translation messages
-`twig.extension`_                         Register a custom Twig Extension
-`twig.loader`_                            Register a custom service that loads Twig templates
-`twig.runtime`_                           Register a lazy-loaded Twig Extension
-`validator.constraint_validator`_         Create your own custom validation constraint
-`validator.initializer`_                  Register a service that initializes objects before validation
-========================================  ========================================================================
+assets.package
+--------------
+
+**Purpose**: Add an asset package to the application
+
+.. versionadded:: 5.3
+
+    The ``assets.package`` tag was introduced in Symfony 5.3.
+
+This is an alternative way to declare an :ref:`asset package <asset-packages>`.
+The name of the package is set in this order:
+
+* first, the ``package`` attribute of the tag;
+* then, the value returned by the static method ``getDefaultPackageName()`` if defined;
+* finally, the service name.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\Assets\AvatarPackage:
+                tags:
+                    - { name: assets.package, package: avatars }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Assets\AvatarPackage">
+                    <tag name="assets.package" package="avatars"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\Assets\AvatarPackage;
+
+        $container
+            ->register(AvatarPackage::class)
+            ->addTag('assets.package', ['package' => 'avatars'])
+        ;
+
+Now you can use the ``avatars`` package in your templates:
+
+.. code-block:: html+twig
+
+    <img src="{{ asset('...', 'avatars') }}">
 
 auto_alias
 ----------
@@ -316,8 +329,8 @@ is restarted):
 
         $container
             ->register(SomeService::class)
-            ->addTag('container.preload', ['class' => SomeClass::class)
-            ->addTag('container.preload', ['class' => OtherClass::class)
+            ->addTag('container.preload', ['class' => SomeClass::class])
+            ->addTag('container.preload', ['class' => OtherClass::class])
             // ...
         ;
 

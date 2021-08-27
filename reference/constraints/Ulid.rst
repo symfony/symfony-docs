@@ -37,6 +37,19 @@ Basic Usage
             protected $identifier;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/File.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class File
+        {
+            #[Assert\Ulid]
+            protected $identifier;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

@@ -41,6 +41,22 @@ a service like: ``App\Controller\HelloController::index``:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/HelloController.php
+        namespace App\Controller;
+
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class HelloController
+        {
+            #[Route('/hello', name: 'hello', methods: ['GET'])]
+            public function index()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
@@ -105,12 +121,29 @@ which is a common practice when following the `ADR pattern`_
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Controller/Hello.php
+        namespace App\Controller;
+
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        #[Route('/hello/{name}', name: 'hello')]
+        class Hello
+        {
+            public function __invoke($name = 'World')
+            {
+                return new Response(sprintf('Hello %s!', $name));
+            }
+        }
+
     .. code-block:: yaml
 
         # config/routes.yaml
         hello:
             path:     /hello/{name}
-            defaults: { _controller: app.hello_controller }
+            controller: app.hello_controller
 
     .. code-block:: xml
 

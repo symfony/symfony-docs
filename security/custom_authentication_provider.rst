@@ -7,10 +7,8 @@ How to Create a custom Authentication Provider
 .. caution::
 
     Creating a custom authentication system is hard, and almost definitely
-    **not** needed. Instead, see :doc:`/security/guard_authentication` for a
-    simple way to create an authentication system you will love. Do **not**
-    keep reading unless you want to learn the lowest level details of
-    authentication.
+    **not** needed. Instead, see the
+    :doc:`new authenticator-based system </security/authenticator_manager>`
 
 Symfony provides support for the most
 :doc:`common authentication mechanisms </security/auth_providers>`. However, your
@@ -78,7 +76,7 @@ provider::
             $this->setAuthenticated(count($roles) > 0);
         }
 
-        public function getCredentials()
+        public function getCredentials(): string
         {
             return '';
         }
@@ -123,7 +121,7 @@ set an authenticated token in the token storage if successful::
             $this->authenticationManager = $authenticationManager;
         }
 
-        public function __invoke(RequestEvent $event)
+        public function __invoke(RequestEvent $event): void
         {
             $request = $event->getRequest();
 
@@ -216,9 +214,12 @@ the ``PasswordDigest`` header value matches with the user's password::
             $this->cachePool = $cachePool;
         }
 
-        public function authenticate(TokenInterface $token)
+        public function authenticate(TokenInterface $token): WsseUserToken
         {
-            $user = $this->userProvider->loadUserByUsername($token->getUsername());
+            // The loadUserByIdentifier() and getUserIdentifier() methods were
+            // introduced in Symfony 5.3. In previous versions they were called
+            // loadUserByUsername() and getUsername() respectively
+            $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
 
             if ($user && $this->validateDigest($token->digest, $token->nonce, $token->created, $user->getPassword())) {
                 $authenticatedToken = new WsseUserToken($user->getRoles());
@@ -236,7 +237,7 @@ the ``PasswordDigest`` header value matches with the user's password::
          * For more information specific to the logic here, see
          * https://github.com/symfony/symfony-docs/pull/3134#issuecomment-27699129
          */
-        protected function validateDigest($digest, $nonce, $created, $secret)
+        protected function validateDigest($digest, $nonce, $created, $secret): bool
         {
             // Check created time is not in the future
             if (strtotime($created) > time()) {
@@ -269,7 +270,7 @@ the ``PasswordDigest`` header value matches with the user's password::
             return hash_equals($expected, $digest);
         }
 
-        public function supports(TokenInterface $token)
+        public function supports(TokenInterface $token): bool
         {
             return $token instanceof WsseUserToken;
         }
@@ -307,7 +308,7 @@ create a class which implements
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint)
+        public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint): array
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
@@ -321,17 +322,17 @@ create a class which implements
             return [$providerId, $listenerId, $defaultEntryPoint];
         }
 
-        public function getPosition()
+        public function getPosition(): string
         {
             return 'pre_auth';
         }
 
-        public function getKey()
+        public function getKey(): string
         {
             return 'wsse';
         }
 
-        public function addConfiguration(NodeDefinition $node)
+        public function addConfiguration(NodeDefinition $node): void
         {
         }
     }
@@ -422,7 +423,7 @@ to service ids that may not exist yet: ``App\Security\Authentication\Provider\Ws
 
     .. code-block:: php
 
-         // config/services.php
+        // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Security\Authentication\Provider\WsseProvider;
@@ -456,7 +457,7 @@ factory in the kernel::
 
     class Kernel extends BaseKernel
     {
-        public function build(ContainerBuilder $container)
+        public function build(ContainerBuilder $container): void
         {
             $extension = $container->getExtension('security');
             $extension->addSecurityListenerFactory(new WsseFactory());
@@ -484,7 +485,7 @@ You are finished! You can now define parts of your app as under WSSE protection.
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -508,17 +509,17 @@ You are finished! You can now define parts of your app as under WSSE protection.
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'wsse_secured' => [
-                    'pattern'   => '^/api/',
-                    'stateless' => true,
-                    'wsse'      => true,
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ....
+
+            $security->firewall('wsse_secured')
+                ->pattern('^/api/')
+                ->stateless(true)
+                ->wsse()
+            ;
+        };
 
 Congratulations! You have written your very own custom security authentication
 provider!
@@ -550,7 +551,7 @@ the ``addConfiguration()`` method::
     {
         // ...
 
-        public function addConfiguration(NodeDefinition $node)
+        public function addConfiguration(NodeDefinition $node): void
         {
             $node
                 ->children()
@@ -566,12 +567,12 @@ in order to put it to use::
 
     // src/DependencyInjection/Security/Factory/WsseFactory.php
     namespace App\DependencyInjection\Security\Factory;
-    
+
     use App\Security\Authentication\Provider\WsseProvider;
 
     class WsseFactory implements SecurityFactoryInterface
     {
-        public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint)
+        public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint): array
         {
             $providerId = 'security.authentication.provider.wsse.'.$id;
             $container
@@ -610,7 +611,7 @@ set to any desirable value per firewall.
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -631,19 +632,18 @@ set to any desirable value per firewall.
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'wsse_secured' => [
-                    'pattern'   => '^/api/',
-                    'stateless' => true,
-                    'wsse'      => [
-                        'lifetime' => 30,
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ....
+
+            $security->firewall('wsse_secured')
+                ->pattern('^/api/')
+                ->stateless(true)
+                ->wsse()
+                    ->lifetime(30)
+            ;
+        };
 
 The rest is up to you! Any relevant configuration items can be defined
 in the factory and consumed or passed to the other classes in the container.

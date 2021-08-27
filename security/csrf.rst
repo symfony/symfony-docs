@@ -51,9 +51,13 @@ for more information):
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'csrf_protection' => null,
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->csrfProtection()
+                ->enabled(true)
+            ;
+        };
 
 The tokens used for CSRF protection are meant to be different for every user and
 they are stored in the session. That's why a session is started automatically as
@@ -85,7 +89,7 @@ this can be customized on a form-by-form basis::
 
     // src/Form/TaskType.php
     namespace App\Form;
-    
+
     // ...
     use App\Entity\Task;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -94,7 +98,7 @@ this can be customized on a form-by-form basis::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class'      => Task::class,
@@ -150,9 +154,10 @@ Then, get the value of the CSRF token in the controller action and use the
 to check its validity::
 
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    public function delete(Request $request)
+    public function delete(Request $request): Response
     {
         $submittedToken = $request->request->get('token');
 
@@ -162,4 +167,19 @@ to check its validity::
         }
     }
 
+CSRF Tokens and Compression Side-Channel Attacks
+------------------------------------------------
+
+`BREACH`_ and `CRIME`_ are security exploits against HTTPS when using HTTP
+compression. Attackers can leverage information leaked by compression to recover
+targeted parts of the plaintext. To mitigate these attacks, and prevent an
+attacker from guessing the CSRF tokens, a random mask is prepended to the token
+and used to scramble it.
+
+.. versionadded:: 5.3
+
+    The randomization of tokens was introduced in Symfony 5.3
+
 .. _`Cross-site request forgery`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
+.. _`BREACH`: https://en.wikipedia.org/wiki/BREACH
+.. _`CRIME`: https://en.wikipedia.org/wiki/CRIME

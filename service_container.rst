@@ -62,9 +62,6 @@ What other services are available? Find out by running:
       Request stack that controls the lifecycle of requests.
       Symfony\Component\HttpFoundation\RequestStack (request_stack)
 
-      Interface for the session.
-      Symfony\Component\HttpFoundation\Session\SessionInterface (session)
-
       RouterInterface is the interface that all Router classes must implement.
       Symfony\Component\Routing\RouterInterface (router.default)
 
@@ -80,7 +77,7 @@ in the container.
 .. tip::
 
     There are actually *many* more services in the container, and each service has
-    a unique id in the container, like ``session`` or ``router.default``. For a full
+    a unique id in the container, like ``request_stack`` or ``router.default``. For a full
     list, you can run ``php bin/console debug:container``. But most of the time,
     you won't need to worry about this. See :ref:`services-wire-specific-service`.
     See :doc:`/service_container/debug`.
@@ -283,9 +280,6 @@ type-hints by running:
       Request stack that controls the lifecycle of requests.
       Symfony\Component\HttpFoundation\RequestStack (request_stack)
 
-      Interface for the session.
-      Symfony\Component\HttpFoundation\Session\SessionInterface (session)
-
       RouterInterface is the interface that all Router classes must implement.
       Symfony\Component\Routing\RouterInterface (router.default)
 
@@ -341,18 +335,21 @@ you can type-hint the new ``SiteUpdateManager`` class and use it::
     // src/Controller/SiteController.php
     namespace App\Controller;
 
-    // ...
     use App\Service\SiteUpdateManager;
+    // ...
 
-    public function new(SiteUpdateManager $siteUpdateManager)
+    class SiteController extends AbstractController
     {
-        // ...
+        public function new(SiteUpdateManager $siteUpdateManager)
+        {
+            // ...
 
-        if ($siteUpdateManager->notifyOfSiteUpdate()) {
-            $this->addFlash('success', 'Notification mail was sent successfully.');
+            if ($siteUpdateManager->notifyOfSiteUpdate()) {
+                $this->addFlash('success', 'Notification mail was sent successfully.');
+            }
+
+            // ...
         }
-
-        // ...
     }
 
 Thanks to autowiring and your type-hints in ``__construct()``, the container creates
@@ -369,38 +366,38 @@ example, suppose you want to make the admin email configurable:
 
 .. code-block:: diff
 
-    // src/Service/SiteUpdateManager.php
-    // ...
+      // src/Service/SiteUpdateManager.php
+      // ...
 
-    class SiteUpdateManager
-    {
-        // ...
+      class SiteUpdateManager
+      {
+          // ...
     +    private $adminEmail;
 
     -    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
     +    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer, string $adminEmail)
-        {
-            // ...
+          {
+              // ...
     +        $this->adminEmail = $adminEmail;
-        }
+          }
 
-        public function notifyOfSiteUpdate(): bool
-        {
-            // ...
+          public function notifyOfSiteUpdate(): bool
+          {
+              // ...
 
-            $email = (new Email())
-                // ...
+              $email = (new Email())
+                  // ...
     -            ->to('manager@example.com')
     +            ->to($this->adminEmail)
-                // ...
-            ;
-            // ...
-        }
-    }
+                  // ...
+              ;
+              // ...
+          }
+      }
 
 If you make this change and refresh, you'll see an error:
 
-    Cannot autowire service "App\Service\SiteUpdateManager": argument "$adminEmail"
+    Cannot autowire service "App\\Service\\SiteUpdateManager": argument "$adminEmail"
     of method "__construct()" must have a type-hint or be given a value explicitly.
 
 That makes sense! There is no way that the container knows what value you want to
@@ -500,13 +497,14 @@ parameter and in PHP config use the ``service()`` function:
         # config/services.yaml
         services:
             App\Service\MessageGenerator:
-                # this is not a string, but a reference to a service called 'logger'
-                arguments: ['@logger']
+                arguments:
+                    # this is not a string, but a reference to a service called 'logger'
+                    - '@logger'
 
-                # if the value of a string parameter starts with '@', you need to escape
-                # it by adding another '@' so Symfony doesn't consider it a service
-                # (this will be parsed as the string '@securepassword')
-                mailer_password: '@@securepassword'
+                    # if the value of a string argument starts with '@', you need to escape
+                    # it by adding another '@' so Symfony doesn't consider it a service
+                    # the following example would be parsed as the string '@securepassword'
+                    # - '@@securepassword'
 
     .. code-block:: xml
 
@@ -642,7 +640,7 @@ But, you can control this and pass in a different logger:
             // ... same code as before
 
             // explicitly configure the service
-            $services->set(SiteUpdateManager::class)
+            $services->set(MessageGenerator::class)
                 ->arg('$logger', service('monolog.logger.request'))
             ;
         };
@@ -994,7 +992,6 @@ for classes under the same namespace:
             <services>
                 <prototype namespace="App\Domain"
                     resource="../src/App/Domain/*"/>
-                </prototype>
 
                 <!-- ... -->
             </services>

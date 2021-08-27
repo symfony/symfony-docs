@@ -63,24 +63,23 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main' => [
-                    // ...
-                    'remember_me' => [
-                        'secret'   => '%kernel.secret%',
-                        'lifetime' => 604800, // 1 week in seconds
-                        'path'     => '/',
-                        // by default, the feature is enabled by checking a
-                        // checkbox in the login form (see below), uncomment
-                        // the following line to always enable it.
-                        //'always_remember_me' => true,
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->rememberMe()
+                    ->secret('%kernel.secret%')
+                    ->lifetime(604800) // 1 week in seconds
+                    ->path('/')
+
+                    // by default, the feature is enabled by checking a
+                    // checkbox in the login form (see below), uncomment
+                    // the following line to always enable it.
+                    // ->alwaysRememberMe(true)
+            ;
+        };
 
 The ``remember_me`` firewall defines the following configuration options:
 
@@ -184,7 +183,7 @@ users to change their password. You can do this by leveraging a few special
     // src/Controller/AccountController.php
     // ...
 
-    public function accountInfo()
+    public function accountInfo(): Response
     {
         // allow any authenticated user - we don't care if they just
         // logged in, or are logged in via a remember me cookie
@@ -193,7 +192,7 @@ users to change their password. You can do this by leveraging a few special
         // ...
     }
 
-    public function resetPassword()
+    public function resetPassword(): Response
     {
         // require the user to log in during *this* session
         // if they were only logged in via a remember me cookie, they
@@ -283,19 +282,19 @@ so ``DoctrineTokenProvider`` can store the tokens:
 
         .. code-block:: xml
 
-            # config/packages/doctrine.xml
+            <!-- config/packages/doctrine.xml -->
             <doctrine:dbal schema-filter="~^(?!rememberme_token)~"/>
 
         .. code-block:: php
 
-            # config/packages/doctrine.php
-            $container->loadFromExtension('doctrine', [
-                'dbal' => [
-                    'schema_filter'  => '~^(?!rememberme_token)~',
-                    // ...
-                ],
+            // config/packages/doctrine.php
+            use Symfony\Config\DoctrineConfig;
+
+            return static function (DoctrineConfig $doctrine) {
+                $dbalDefault = $doctrine->dbal()->connection('default');
                 // ...
-            ]);
+                $dbalDefault->schemaFilter('~^(?!rememberme_token)~');
+            };
 
 Finally, set the ``token_provider`` option of the ``remember_me`` config to the
 service you created before:
@@ -344,16 +343,14 @@ service you created before:
 
         // config/packages/security.php
         use Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider;
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main' => [
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->rememberMe()
                     // ...
-                    'remember_me' => [
-                        // ...
-                        'token_provider' => DoctrineTokenProvider::class,
-                    ],
-                ],
-            ],
-        ]);
+                    ->tokenProvider(DoctrineTokenProvider::class)
+            ;
+        };

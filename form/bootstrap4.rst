@@ -55,13 +55,13 @@ configuration:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'bootstrap_4_layout.html.twig',
-            ],
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes(['bootstrap_4_layout.html.twig']);
 
             // ...
-        ]);
+        };
 
 If you prefer to apply the Bootstrap styles on a form to form basis, include the
 ``form_theme`` tag in the templates where those forms are used:
@@ -77,7 +77,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
         {{ form(form) }}
     {% endblock %}
 
-.. _reference-forms-bootstrap-error-messages:
+.. _reference-forms-bootstrap4-error-messages:
 
 Error Messages
 --------------
@@ -88,11 +88,25 @@ is a strong connection between the error and its ``<input>``, as required by the
 ``form_label()`` internally. If you call to ``form_errors()`` in your template,
 you'll get the error messages displayed *twice*.
 
+.. tip::
+
+    Since form errors are rendered *inside* the ``<label>``, you cannot use CSS
+    ``:after`` to append an asterisk to the label, because it would be displayed
+    after the error message. Use the :ref:`label <reference-form-option-label>`
+    or :ref:`label_html <reference-form-option-label-html>` options instead.
+
 Checkboxes and Radios
 ---------------------
 
 For a checkbox/radio field, calling ``form_label()`` doesn't render anything.
 Due to Bootstrap internals, the label is already rendered by ``form_widget()``.
+
+File inputs
+-----------
+
+File inputs are rendered using the Bootstrap "custom-file" class, which hides
+the name of the selected file. To fix that, use the `bs-custom-file-input`_
+JavaScript plugin, as recommended by `Bootstrap Forms documentation`_.
 
 Accessibility
 -------------
@@ -122,6 +136,8 @@ Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the la
     {{ form_row(form.myCheckbox, {label_attr: {class: 'switch-custom'} }) }}
 
 .. _`WCAG 2.0 standard`: https://www.w3.org/TR/WCAG20/
+.. _`bs-custom-file-input`: https://www.npmjs.com/package/bs-custom-file-input
+.. _`Bootstrap Forms documentation`: https://getbootstrap.com/docs/4.4/components/forms/#file-browser
 .. _`custom forms`: https://getbootstrap.com/docs/4.4/components/forms/#custom-forms
 .. _`custom radio`: https://getbootstrap.com/docs/4.4/components/forms/#radios
 .. _`custom checkbox`: https://getbootstrap.com/docs/4.4/components/forms/#checkboxes

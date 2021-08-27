@@ -208,7 +208,7 @@ to and from the issue number and the ``Issue`` object::
         {
             // no issue number? It's optional, so that's ok
             if (!$issueNumber) {
-                return;
+                return null;
             }
 
             $issue = $this->entityManager

@@ -528,7 +528,7 @@ The Sample Application in Symfony
 
 The blog has come a *long* way, but it still contains a lot of code for such
 a basic application. Along the way, you've made a basic routing system and
-a method using ``ob_start()`` and ``ob_get_clean()`` to render templates.
+a function using ``ob_start()`` and ``ob_get_clean()`` to render templates.
 If, for some reason, you needed to continue building this "framework" from
 scratch, you could at least use Symfony's standalone :doc:`Routing </routing>`
 component and :doc:`Twig </templates>`, which already solve these problems.
@@ -540,24 +540,21 @@ them for you. Here's the same sample application, now built in Symfony::
     namespace App\Controller;
 
     use App\Entity\Post;
+    use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     class BlogController extends AbstractController
     {
-        public function list()
+        public function list(ManagerRegistry $doctrine)
         {
-            $posts = $this->getDoctrine()
-                ->getRepository(Post::class)
-                ->findAll();
+            $posts = $doctrine->getRepository(Post::class)->findAll();
 
             return $this->render('blog/list.html.twig', ['posts' => $posts]);
         }
 
-        public function show($id)
+        public function show(ManagerRegistry $doctrine, $id)
         {
-            $post = $this->getDoctrine()
-                ->getRepository(Post::class)
-                ->find($id);
+            $post = $doctrine->getRepository(Post::class)->find($id);
 
             if (!$post) {
                 // cause the 404 page not found to be displayed
@@ -580,7 +577,7 @@ and uses Twig:
 
 .. code-block:: html+twig
 
-    <!-- templates/blog/list.html.twig -->
+    {# templates/blog/list.html.twig #}
     {% extends 'base.html.twig' %}
 
     {% block title %}List of Posts{% endblock %}
@@ -609,10 +606,10 @@ The ``layout.php`` file is nearly identical:
             <meta charset="UTF-8">
             <title>{% block title %}Welcome!{% endblock %}</title>
             {% block stylesheets %}{% endblock %}
+            {% block javascripts %}{% endblock %}
         </head>
         <body>
             {% block body %}{% endblock %}
-            {% block javascripts %}{% endblock %}
         </body>
     </html>
 

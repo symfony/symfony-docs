@@ -58,31 +58,41 @@ Field Options
 ``rounding_mode``
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``IntegerToLocalizedStringTransformer::ROUND_DOWN``
+**type**: ``integer`` **default**: ``\NumberFormatter::ROUND_HALFUP``
 
 By default, if the user enters a non-integer number, it will be rounded
-down. There are several other rounding methods and each is a constant
-on the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\IntegerToLocalizedStringTransformer`:
+down. You have several configurable options for that rounding. Each option
+is a constant on the :phpclass:`NumberFormatter` class:
 
-* ``IntegerToLocalizedStringTransformer::ROUND_DOWN`` Round towards zero.
+* ``\NumberFormatter::ROUND_DOWN`` Round towards zero. It
+  rounds ``1.4`` to ``1`` and ``-1.4`` to ``-1``.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_FLOOR`` Round towards negative
-  infinity.
+* ``\NumberFormatter::ROUND_FLOOR`` Round towards negative
+  infinity. It rounds ``1.4`` to ``1`` and ``-1.4`` to ``-2``.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_UP`` Round away from zero.
+* ``\NumberFormatter::ROUND_UP`` Round away from zero. It
+  rounds ``1.4`` to ``2`` and ``-1.4`` to ``-2``.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_CEILING`` Round towards
-  positive infinity.
+* ``\NumberFormatter::ROUND_CEILING`` Round towards positive
+  infinity. It rounds ``1.4`` to ``2`` and ``-1.4`` to ``-1``.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_HALF_DOWN`` Round towards the
-  "nearest neighbor". If both neighbors are equidistant, round down.
+* ``\NumberFormatter::ROUND_HALFDOWN`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round down. It rounds
+  ``2.5`` and ``1.6`` to ``2``, ``1.5`` and ``1.4`` to ``1``.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_HALF_EVEN`` Round towards the
-  "nearest neighbor". If both neighbors are equidistant, round towards the
-  even neighbor.
+* ``\NumberFormatter::ROUND_HALFEVEN`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round towards the even
+  neighbor. It rounds ``2.5``, ``1.6`` and ``1.5`` to ``2`` and ``1.4`` to ``1``.
 
-* ``IntegerToLocalizedStringTransformer::ROUND_HALF_UP`` Round towards the
-  "nearest neighbor". If both neighbors are equidistant, round up.
+* ``\NumberFormatter::ROUND_HALFUP`` Round towards the
+  "nearest neighbor". If both neighbors are equidistant, round up. It rounds
+  ``2.5`` to ``3``, ``1.6`` and ``1.5`` to ``2`` and ``1.4`` to ``1``.
+
+.. deprecated:: 5.1
+
+    In Symfony versions prior to 5.1, these constants were also defined as aliases
+    in the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`
+    class, but they are now deprecated in favor of the :phpclass:`NumberFormatter` constants.
 
 Overridden Options
 ------------------

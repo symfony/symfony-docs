@@ -40,7 +40,7 @@ Some of these options define tens of sub-options and they are explained in
 separate articles:
 
 * `access_control`_
-* `encoders`_
+* `hashers`_
 * `firewalls`_
 * `providers`_
 * `role_hierarchy`_
@@ -57,6 +57,11 @@ always_authenticate_before_granting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
+
+.. deprecated:: 5.4
+
+    The ``always_authenticate_before_granting`` option was deprecated in
+    Symfony 5.4 and it will be removed in Symfony 6.0.
 
 If ``true``, the user is asked to authenticate before each call to the
 ``isGranted()`` method in services and controllers or ``is_granted()`` from
@@ -89,8 +94,8 @@ If ``true``, when a user is not found a generic exception of type
 is thrown with the message "Bad credentials".
 
 If ``false``, the exception thrown is of type
-:class:`Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException`
-and it includes the given not found username.
+:class:`Symfony\\Component\\Security\\Core\\Exception\\UserNotFoundException`
+and it includes the given not found user identifier.
 
 session_fixation_strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,15 +125,16 @@ and to allow anonymous users to the login form page.
 
 This option is explained in detail in :doc:`/security/access_control`.
 
-encoders
---------
+.. _encoders:
 
-This option defines the algorithm used to *encode* the password of the users.
-Although Symfony calls it *"password encoding"* for historical reasons, this is
-in fact, *"password hashing"*.
+hashers
+-------
+
+This option defines the algorithm used to *hash* the password of the users
+(which in previous Symfony versions was wrongly called *"password encoding"*).
 
 If your app defines more than one user class, each of them can define its own
-encoding algorithm. Also, each algorithm defines different config options:
+hashing algorithm. Also, each algorithm defines different config options:
 
 .. configuration-block::
 
@@ -138,31 +144,31 @@ encoding algorithm. Also, each algorithm defines different config options:
         security:
             # ...
 
-            encoders:
-                # auto encoder with default options
+            password_hashers:
+                # auto hasher with default options
                 App\Entity\User: 'auto'
 
-                # auto encoder with custom options
+                # auto hasher with custom options
                 App\Entity\User:
                     algorithm: 'auto'
                     cost:      15
 
-                # Sodium encoder with default options
+                # Sodium hasher with default options
                 App\Entity\User: 'sodium'
 
-                # Sodium encoder with custom options
+                # Sodium hasher with custom options
                 App\Entity\User:
                     algorithm:   'sodium'
                     memory_cost:  16384 # Amount in KiB. (16384 = 16 MiB)
                     time_cost:    2     # Number of iterations
 
-                # MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
+                # MessageDigestPasswordHasher hasher using SHA512 hashing with default options
                 App\Entity\User: 'sha512'
 
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -173,37 +179,37 @@ encoding algorithm. Also, each algorithm defines different config options:
 
             <config>
                 <!-- ... -->
-                <!-- auto encoder with default options -->
-                <encoder
+                <!-- auto hasher with default options -->
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="auto"
                 />
 
-                <!-- auto encoder with custom options -->
-                <encoder
+                <!-- auto hasher with custom options -->
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="auto"
                     cost="15"
                 />
 
-                <!-- Sodium encoder with default options -->
-                <encoder
+                <!-- Sodium hasher with default options -->
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="sodium"
                 />
 
-                <!-- Sodium encoder with custom options -->
+                <!-- Sodium hasher with custom options -->
                 <!-- memory_cost: amount in KiB. (16384 = 16 MiB)
                      time_cost: number of iterations -->
-                <encoder
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="sodium"
                     memory_cost="16384"
                     time_cost="2"
                 />
 
-                <!-- MessageDigestPasswordEncoder encoder using SHA512 hashing with default options -->
-                <encoder
+                <!-- MessageDigestPasswordHasher hasher using SHA512 hashing with default options -->
+                <security:password-hasher
                     class="App\Entity\User"
                     algorithm="sha512"
                 />
@@ -214,86 +220,145 @@ encoding algorithm. Also, each algorithm defines different config options:
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'encoders' => [
-                // auto encoder with default options
-                User::class => [
-                    'algorithm' => 'auto',
-                ],
 
-                // auto encoder with custom options
-                User::class => [
-                    'algorithm' => 'auto',
-                    'cost'      => 15,
-                ],
+            // auto hasher with default options
+            $security->passwordHasher(User::class)
+                ->algorithm('auto');
 
-                // Sodium encoder with default options
-                User::class => [
-                    'algorithm' => 'sodium',
-                ],
+            // auto hasher with custom options
+            $security->passwordHasher(User::class)
+                ->algorithm('auto')
+                ->cost(15);
 
-                // Sodium encoder with custom options
-                User::class => [
-                    'algorithm' => 'sodium',
-                    'memory_cost' => 16384, // Amount in KiB. (16384 = 16 MiB)
-                    'time_cost' => 2,       // Number of iterations
-                ],
+            // Sodium hasher with default options
+            $security->passwordHasher(User::class)
+                ->algorithm('sodium');
 
-                // MessageDigestPasswordEncoder encoder using SHA512 hashing with default options
-                User::class => [
-                    'algorithm' => 'sha512',
-                ],
-            ],
-        ]);
+            // Sodium hasher with custom options
+            $security->passwordHasher(User::class)
+                ->algorithm('sodium')
+                ->memoryCost(16384) // Amount in KiB. (16384 = 16 MiB)
+                ->timeCost(2);      // Number of iterations
+
+            // MessageDigestPasswordHasher hasher using SHA512 hashing with default options
+            $security->passwordHasher(User::class)
+                ->algorithm('sha512');
+        };
+
+.. versionadded:: 5.3
+
+    The ``password_hashers`` option was introduced in Symfony 5.3. In previous
+    versions it was called ``encoders``.
 
 .. tip::
 
-    You can also create your own password encoders as services and you can even
-    select a different password encoder for each user instance. Read
-    :doc:`this article </security/named_encoders>` for more details.
+    You can also create your own password hashers as services and you can even
+    select a different password hasher for each user instance. Read
+    :doc:`this article </security/named_hashers>` for more details.
 
-.. _reference-security-sodium:
-.. _using-the-argon2i-password-encoder:
+.. tip::
 
-Using the Sodium Password Encoder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Hashing passwords is resource intensive and takes time in order to generate
+    secure password hashes. In tests however, secure hashes are not important, so
+    you can change the password hasher configuration in ``test`` environment to
+    run tests faster:
 
-It uses the `Argon2 key derivation function`_ and it's the encoder recommended
-by Symfony. Argon2 support was introduced in PHP 7.2, but if you use an earlier
-PHP version, you can install the `libsodium`_ PHP extension.
+    .. configuration-block::
 
-The encoded passwords are ``96`` characters long, but due to the hashing
-requirements saved in the resulting hash this may change in the future, so make
-sure to allocate enough space for them to be persisted. Also, passwords include
-the `cryptographic salt`_ inside them (it's generated automatically for each new
-password) so you don't have to deal with it.
+        .. code-block:: yaml
+
+            # config/packages/test/security.yaml
+            password_hashers:
+                # Use your user class name here
+                App\Entity\User:
+                    algorithm: auto # This should be the same value as in config/packages/security.yaml
+                    cost: 4 # Lowest possible value for bcrypt
+                    time_cost: 3 # Lowest possible value for argon
+                    memory_cost: 10 # Lowest possible value for argon
+
+        .. code-block:: xml
+
+            <!-- config/packages/test/security.xml -->
+            <?xml version="1.0" encoding="UTF-8"?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <config>
+                    <!-- class: Use your user class name here -->
+                    <!-- algorithm: This should be the same value as in config/packages/security.yaml -->
+                    <!-- cost: Lowest possible value for bcrypt -->
+                    <!-- time_cost: Lowest possible value for argon -->
+                    <!-- memory_cost: Lowest possible value for argon -->
+                    <security:password-hasher
+                        class="App\Entity\User"
+                        algorithm="auto"
+                        cost="4"
+                        time_cost="3"
+                        memory_cost="10"
+                    />
+                </config>
+            </srv:container>
+
+        .. code-block:: php
+
+            // config/packages/test/security.php
+            use App\Entity\User;
+            use Symfony\Config\SecurityConfig;
+
+            return static function (SecurityConfig $security) {
+                // ...
+
+                // Use your user class name here
+                $security->passwordHasher(User::class)
+                    ->algorithm('auto') // This should be the same value as in config/packages/security.yaml
+                    ->cost(4) // Lowest possible value for bcrypt
+                    ->timeCost(2) // Lowest possible value for argon
+                    ->memoryCost(10) // Lowest possible value for argon
+                ;
+            };
+
 
 .. _reference-security-encoder-auto:
+.. _using-the-auto-password-encoder:
 
-Using the "auto" Password Encoder
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using the "auto" Password Hasher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It selects automatically the best possible encoder. Currently, it tries to use
-Sodium by default and falls back to the `bcrypt password hashing function`_ if
-not possible. In the future, when PHP adds new hashing techniques, it may use
-different password hashers.
+It automatically selects the best available hasher. Starting from Symfony 5.3,
+it uses the Bcrypt hasher. If PHP or Symfony adds new password hashers in the
+future, it might select a different hasher.
 
-It produces encoded passwords with ``60`` characters long, so make sure to
+Because of this, the length of the hashed passwords may change in the future, so
+make sure to allocate enough space for them to be persisted (``varchar(255)``
+should be a good setting).
+
+.. _reference-security-encoder-bcrypt:
+
+Using the Bcrypt Password Hasher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It produces hashed passwords with the `bcrypt password hashing function`_.
+Hashed passwords are ``60`` characters long, so make sure to
 allocate enough space for them to be persisted. Also, passwords include the
 `cryptographic salt`_ inside them (it's generated automatically for each new
 password) so you don't have to deal with it.
 
 Its only configuration option is ``cost``, which is an integer in the range of
 ``4-31`` (by default, ``13``). Each single increment of the cost **doubles the
-time** it takes to encode a password. It's designed this way so the password
+time** it takes to hash a password. It's designed this way so the password
 strength can be adapted to the future improvements in computation power.
 
 You can change the cost at any time — even if you already have some passwords
-encoded using a different cost. New passwords will be encoded using the new
-cost, while the already encoded ones will be validated using a cost that was
-used back when they were encoded.
+hashed using a different cost. New passwords will be hashed using the new
+cost, while the already hashed ones will be validated using a cost that was
+used back when they were hashed.
 
 .. tip::
 
@@ -301,14 +366,31 @@ used back when they were encoded.
     the cost to ``4``, which is the minimum value allowed, in the ``test``
     environment configuration.
 
+.. _reference-security-sodium:
+.. _using-the-argon2i-password-encoder:
+.. _using-the-sodium-password-encoder:
+
+Using the Sodium Password Hasher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It uses the `Argon2 key derivation function`_. Argon2 support was introduced
+in PHP 7.2 by bundeling the `libsodium`_ extension.
+
+The hashed passwords are ``96`` characters long, but due to the hashing
+requirements saved in the resulting hash this may change in the future, so make
+sure to allocate enough space for them to be persisted. Also, passwords include
+the `cryptographic salt`_ inside them (it's generated automatically for each new
+password) so you don't have to deal with it.
+
 .. _reference-security-pbkdf2:
+.. _using-the-pbkdf2-encoder:
 
-Using the PBKDF2 Encoder
-~~~~~~~~~~~~~~~~~~~~~~~~
+Using the PBKDF2 Hasher
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Using the `PBKDF2`_ encoder is no longer recommended since PHP added support for
+Using the `PBKDF2`_ hasher is no longer recommended since PHP added support for
 Sodium and BCrypt. Legacy application still using it are encouraged to upgrade
-to those newer encoding algorithms.
+to those newer hashing algorithms.
 
 firewalls
 ---------
@@ -336,7 +418,7 @@ application:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -360,20 +442,20 @@ application:
     .. code-block:: php
 
         // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
 
-        // ...
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                // 'main' is the name of the firewall (can be chosen freely)
-                'main' => [
-                    // 'pattern' is a regular expression matched against the incoming
-                    // request URL. If there's a match, authentication is triggered
-                    'pattern' => '^/admin',
-                    // the rest of options depend on the authentication mechanism
-                    // ...
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+
+            // 'main' is the name of the firewall (can be chosen freely)
+            $security->firewall('main')
+                // 'pattern' is a regular expression matched against the incoming
+                // request URL. If there's a match, authentication is triggered
+                ->pattern('^/admin')
+                // the rest of options depend on the authentication mechanism
+                // ...
+            ;
+        };
 
 .. seealso::
 
@@ -409,6 +491,26 @@ depend on the authentication mechanism, which can be any of these:
                         # ...
                     http_digest:
                         # ...
+
+You can view actual information about the firewalls in your application with
+the ``debug:firewall`` command:
+
+.. code-block:: terminal
+
+    # displays a list of firewalls currently configured for your application
+    $ php bin/console debug:firewall
+
+    # displays the details of a specific firewall
+    $ php bin/console debug:firewall main
+
+    # displays the details of a specific firewall, including detailed information
+    # about the event listeners for the firewall
+    $ php bin/console debug:firewall main --events
+
+.. versionadded:: 5.3
+
+    The ``debug:firewall`` command was introduced in Symfony 5.3.
+
 
 .. _reference-security-firewall-form-login:
 
@@ -552,6 +654,15 @@ the current firewall and not the other ones.
 The path which triggers logout. If you change it from the default value ``/logout``,
 you need to set up a route with a matching path.
 
+target
+~~~~~~
+
+**type**: ``string`` **default**: ``/``
+
+The relative path (if the value starts with ``/``), or absolute URL (if it
+starts with ``http://`` or ``https://``) or the route name (otherwise) to
+redirect after logout.
+
 success_handler
 ~~~~~~~~~~~~~~~
 
@@ -566,6 +677,8 @@ success_handler
 
 The service ID used for handling a successful logout. The service must implement
 :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
+
+If it is set, the logout ``target`` option will be ignored.
 
 .. _reference-security-logout-csrf:
 
@@ -682,7 +795,7 @@ multiple firewalls, the "context" could actually be shared:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -704,18 +817,19 @@ multiple firewalls, the "context" could actually be shared:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'somename' => [
-                    // ...
-                    'context' => 'my_context',
-                ],
-                'othername' => [
-                    // ...
-                    'context' => 'my_context',
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('somename')
+                // ...
+                ->context('my_context')
+            ;
+
+            $security->firewall('othername')
+                // ...
+                ->context('my_context')
+            ;
+        };
 
 .. note::
 

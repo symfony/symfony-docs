@@ -5,7 +5,7 @@ Configuring in the Kernel
 =========================
 
 Some configuration can be done on the kernel class itself (located by default at
-``src/Kernel.php``). You can do this by overriding specific methods in
+``src/Kernel.php``). You can do this by overriding specific methods of
 the parent :class:`Symfony\\Component\\HttpKernel\\Kernel` class.
 
 Configuration
@@ -103,6 +103,8 @@ the :method:`Symfony\\Component\\HttpKernel\\Kernel::getCacheDir` method. To
 change this setting, override the ``getCacheDir()`` method to return the correct
 cache directory.
 
+.. _configuration-kernel-build-directory:
+
 Build Directory
 ~~~~~~~~~~~~~~~
 
@@ -122,7 +124,6 @@ This value is exposed via the ``kernel.build_dir`` configuration parameter and
 the :method:`Symfony\\Component\\HttpKernel\\Kernel::getBuildDir` method. To
 change this setting, override the ``getBuildDir()`` method to return the correct
 build directory.
-
 
 Log Directory
 ~~~~~~~~~~~~~

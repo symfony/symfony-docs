@@ -224,7 +224,20 @@ in mind the following:
 * Never fix coding standards in some existing code as it makes the code review
   more difficult;
 
-* Write good commit messages (see the tip below).
+.. _commit-messages:
+
+* Write good commit messages: Start by a short subject line (the first line),
+  followed by a blank line and a more detailed description.
+
+  The subject line should start with the Component, Bridge or Bundle you are
+  working on in square brackets (``[DependencyInjection]``,
+  ``[FrameworkBundle]``, ...).
+
+  Then, capitalize the sentence, do not end with a period, and use an
+  imperative verb to start.
+
+  Here is a full example of a subject line: ``[MagicBundle] Add `MagicConfig`
+  that allows configuring things``.
 
 .. tip::
 
@@ -234,15 +247,6 @@ in mind the following:
 
     A status is posted below the pull request description with a summary
     of any problems it detects or any `Travis-CI`_ build failures.
-
-.. tip::
-
-    A good commit message is composed of a summary (the first line),
-    optionally followed by a blank line and a more detailed description. The
-    summary should start with the Component you are working on in square
-    brackets (``[DependencyInjection]``, ``[FrameworkBundle]``, ...). Use a
-    verb (``fixed ...``, ``added ...``, ...) to start the summary and don't
-    add a period at the end.
 
 .. _prepare-your-patch-for-submission:
 
@@ -366,8 +370,7 @@ because you want early feedback on your work, add an item to todo-list:
     - [ ] gather feedback for my changes
 
 As long as you have items in the todo-list, please prefix the pull request
-title with "[WIP]". If you do not yet want to trigger the automated tests,
-you can also set the PR to `draft status`_.
+title with "[WIP]".
 
 In the pull request description, give as much detail as possible about your
 changes (don't hesitate to give code examples to illustrate your points). If
@@ -395,6 +398,98 @@ receive feedback you find abusive please contact the
 The :doc:`core team </contributing/code/core_team>` is responsible for deciding
 which PR gets merged, so their feedback is the most relevant. So do not feel
 pressured to refactor your code immediately when someone provides feedback.
+
+Automated Feedback
+~~~~~~~~~~~~~~~~~~
+
+There are many automated scripts that will provide feedback on a pull request.
+
+fabbot
+""""""
+
+`fabbot`_ will review code style, check for common typos and make sure the git
+history looks good. If there are any issues, fabbot will often suggest what changes
+that should be done. Most of the time you get a command to run to automatically
+fix the changes.
+
+It is rare, but fabbot could be wrong. One should verify if the suggested changes
+make sense and that they are related to the pull request.
+
+Psalm
+"""""
+
+`Psalm`_ will make a comment on a pull request if it discovers any potential
+type errors. The Psalm errors are not always correct, but each should be reviewed
+and discussed. A pull request should not update the Psalm baseline nor add ``@psalm-``
+annotations.
+
+After the `Psalm phar is installed`_, the analysis can be run locally with:
+
+.. code-block:: terminal
+
+    $ psalm.phar src/Symfony/Component/Workflow
+
+Automated Tests
+~~~~~~~~~~~~~~~
+
+A series of automated tests will run when submitting the pull request.
+These test the code under different conditions, to be sure nothing
+important is broken. Test failures can be unrelated to your changes. If you
+think this is the case, you can check if the target branch has the same
+errors and leave a comment on your PR.
+
+Otherwise, the test failure might be caused by your changes. The following
+test scenarios run on each change:
+
+``PHPUnit / Tests``
+    This job runs on Ubuntu using multiple PHP versions (each in their
+    own job). These jobs run the testsuite just like you would do locally.
+
+    A failure in these jobs often indicates a bug in the code.
+
+``PHPUnit / Tests (high-deps)``
+    This job checks each package (bridge, bundle or component) in ``src/``
+    individually by calling ``composer update`` and ``phpunit`` from inside
+    each package.
+
+    A failure in this job often indicates a missing package in the
+    ``composer.json`` of the failing package (e.g.
+    ``src/Symfony/Bundle/FrameworkBundle/composer.json``).
+
+    This job also runs relevant packages using a "flipped" test (indicated
+    by a ``^`` suffix in the package name). These tests checkout the
+    previous major release (e.g. ``4.4`` for a pull requests on ``5.4``)
+    and run the tests with your branch as dependency.
+
+    A failure in these flipped tests indicate a backwards compatibility
+    break in your changes.
+
+``PHPUnit / Tests (low-deps)``
+    This job also checks each package individually, but then uses
+    ``composer update --prefer-lowest`` before running the tests.
+
+    A failure in this job often indicates a wrong version range or a
+    missing package in the ``composer.json`` of the failing package.
+
+``continuous-integration/appveyor/pr``
+    This job runs on Windows using the x86 architecture and the lowest
+    supported PHP version. All tests first run without extra PHP
+    extensions. Then, all skipped tests are run using all required PHP
+    extensions.
+
+    A failure in this job often indicate that your changes do not support
+    Windows, x86 or PHP with minimal extensions.
+
+``Integration / Tests``
+    Integration tests require other services (e.g. Redis or RabbitMQ) to
+    run. This job only runs the tests in the ``integration`` PHPUnit group.
+
+    A failure in this job indicates a bug in the communication with these
+    services.
+
+``PHPUnit / Tests (experimental)``
+    This job always passes (even with failing tests) and is used by the
+    core team to prepare for the upcoming PHP versions.
 
 .. _rework-your-patch:
 
@@ -427,9 +522,10 @@ before merging.
 .. _Symfony repository: https://github.com/symfony/symfony
 .. _`documentation repository`: https://github.com/symfony/symfony-docs
 .. _`fabbot`: https://fabbot.io
+.. _`Psalm`: https://psalm.dev/
 .. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
 .. _`searching on GitHub`: https://github.com/symfony/symfony/issues?q=+is%3Aopen+
 .. _`Symfony Slack`: https://symfony.com/slack-invite
 .. _`Travis-CI`: https://travis-ci.org/symfony/symfony
-.. _`draft status`: https://help.github.com/github/collaborating-with-issues-and-pull-requests/about-pull-requests#draft-pull-requests
+.. _`Psalm phar is installed`: https://psalm.dev/docs/running_psalm/installation/

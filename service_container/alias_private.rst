@@ -172,7 +172,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
     .. code-block:: yaml
 
         app.mailer:
-            alias: '@App\Mail\PhpMailer'
+            alias: 'App\Mail\PhpMailer'
 
             # this outputs the following generic deprecation message:
             # Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future
@@ -283,7 +283,7 @@ The following example shows how to inject an anonymous service into another serv
 
             $services->set(Foo::class)
                 // In versions earlier to Symfony 5.1 the inline_service() function was called inline()
-                ->args([inline_service(AnonymousBar::class)])
+                ->args([inline_service(AnonymousBar::class)]);
         };
 
 .. note::
@@ -334,7 +334,7 @@ Using an anonymous service as a factory looks like this:
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                ->factory([inline_service(AnonymousBar::class), 'constructFoo'])
+                ->factory([inline_service(AnonymousBar::class), 'constructFoo']);
         };
 
 Deprecating Services

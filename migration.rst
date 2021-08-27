@@ -7,7 +7,7 @@ Migrating an Existing Application to Symfony
 When you have an existing application that was not built with Symfony,
 you might want to move over parts of that application without rewriting
 the existing logic completely. For those cases there is a pattern called
-`Strangler Application`_. The basic idea of this pattern is to create a
+`Strangler Fig Application`_. The basic idea of this pattern is to create a
 new application that gradually takes over functionality from an existing
 application. This migration approach can be implemented with Symfony in
 various ways and has some benefits over a rewrite such as being able
@@ -82,7 +82,7 @@ Setting up Composer
 Another point you will have to look out for is conflicts between
 dependencies in both applications. This is especially important if your
 existing application already uses Symfony components or libraries commonly
-used in Symfony applications such as Doctrine ORM, Swiftmailer or Twig.
+used in Symfony applications such as Doctrine ORM or Twig.
 A good way for ensuring compatibility is to use the same ``composer.json``
 for both project's dependencies.
 
@@ -238,6 +238,7 @@ could look something like this::
     // public/index.php
     use App\Kernel;
     use App\LegacyBridge;
+    use Symfony\Component\Dotenv\Dotenv;
     use Symfony\Component\ErrorHandler\Debug;
     use Symfony\Component\HttpFoundation\Request;
 
@@ -315,11 +316,11 @@ somewhat like this::
 
     class LegacyBridge
     {
-        public static function prepareLegacyScript(Request $request, Response $response, string $publicDirectory): string
+        public static function prepareLegacyScript(Request $request, Response $response, string $publicDirectory): ?string
         {
             // If Symfony successfully handled the route, you do not have to do anything.
             if (false === $response->isNotFound()) {
-                return;
+                return null;
             }
 
             // Figure out how to map to the needed script file
@@ -463,7 +464,7 @@ chance to use Symfony's event lifecycle. For instance, this allows you to
 transition the authentication and authorization of the legacy application over
 to the Symfony application using the Security component and its firewalls.
 
-.. _`Strangler Application`: https://martinfowler.com/bliki/StranglerFigApplication.html
+.. _`Strangler Fig Application`: https://martinfowler.com/bliki/StranglerFigApplication.html
 .. _`autoload`: https://getcomposer.org/doc/04-schema.md#autoload
 .. _`Modernizing with Symfony`: https://youtu.be/YzyiZNY9htQ
 .. _`Symfony Panther`: https://github.com/symfony/panther

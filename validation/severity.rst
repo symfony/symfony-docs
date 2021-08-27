@@ -50,6 +50,25 @@ Use the ``payload`` option to configure the error level for each constraint:
             protected $bankAccountNumber;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            #[Assert\NotBlank(payload: ['severity' => 'error'])]
+            protected $username;
+
+            #[Assert\NotBlank(payload: ['severity' => 'error'])]
+            protected $password;
+
+            #[Assert\Iban(payload: ['severity' => 'warning'])]
+            protected $bankAccountNumber;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -137,7 +156,7 @@ method. Each constraint exposes the attached payload as a public property::
     // Symfony\Component\Validator\ConstraintViolation
     $constraintViolation = ...;
     $constraint = $constraintViolation->getConstraint();
-    $severity = isset($constraint->payload['severity']) ? $constraint->payload['severity'] : null;
+    $severity = $constraint->payload['severity'] ?? null;
 
 For example, you can leverage this to customize the ``form_errors`` block
 so that the severity is added as an additional HTML class:

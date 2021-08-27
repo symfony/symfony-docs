@@ -120,7 +120,6 @@ option names and their respective values::
 
         // associative array of configuration options
         [
-            'compression' => true,
             'libketama_compatible' => true,
             'serializer' => 'igbinary',
         ]
@@ -138,17 +137,6 @@ Available Options
     commands to buffer instead of being immediately sent to the remote
     server(s). Any action that retrieves data, quits the connection, or closes
     down the connection will cause the buffer to be committed.
-
-``compression`` (type: ``bool``, default: ``true``)
-    Enables or disables payload compression, where item values longer than 100
-    bytes are compressed during storage and decompressed during retrieval.
-
-``compression_type`` (type: ``string``)
-    Specifies the compression method used on value payloads. when the
-    **compression** option is enabled.
-
-    Valid option values include ``fastlz`` and ``zlib``, with a default value
-    that *varies based on flags used at compilation*.
 
 ``connect_timeout`` (type: ``int``, default: ``1000``)
     Specifies the timeout (in milliseconds) of socket connection operations when

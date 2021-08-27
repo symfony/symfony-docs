@@ -16,7 +16,7 @@ To reference an image tag from inside a JavaScript file, *require* the file:
 
     // returns the final, public path to this file
     // path is relative to this file - e.g. assets/images/logo.png
-    const logoPath = require('../images/logo.png');
+    import logoPath from '../images/logo.png';
 
     let html = `<img src="${logoPath}" alt="ACME logo">`;
 
@@ -28,15 +28,15 @@ Referencing Image files from a Template
 
 To reference an image file from outside of a JavaScript file that's processed by
 Webpack - like a template - you can use the ``copyFiles()`` method to copy those
-files into your final output directory.
+files into your final output directory. First enable it in ``webpack.config.js``:
 
 .. code-block:: diff
 
-    // webpack.config.js
+      // webpack.config.js
 
-    Encore
-        // ...
-        .setOutputPath('public/build/')
+      Encore
+          // ...
+          .setOutputPath('public/build/')
 
     +     .copyFiles({
     +         from: './assets/images',
@@ -50,6 +50,10 @@ files into your final output directory.
     +         // only copy files matching this pattern
     +         //pattern: /\.(png|jpg|jpeg)$/
     +     })
+
+Then restart Encore. When you do, it will give you a command you can run to
+install any missing dependencies. After running that command and restarting
+Encore, you're done!
 
 This will copy all files from ``assets/images`` into ``public/build`` (the output
 path). If you have :doc:`versioning enabled <versioning>`, the copied files will

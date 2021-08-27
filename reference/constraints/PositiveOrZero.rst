@@ -36,6 +36,19 @@ is positive or zero:
             protected $siblings;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\PositiveOrZero]
+            protected $siblings;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -80,8 +93,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be either positive or zero.``
 

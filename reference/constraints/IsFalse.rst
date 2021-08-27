@@ -3,7 +3,7 @@ IsFalse
 
 Validates that a value is ``false``. Specifically, this checks to see if
 the value is exactly ``false``, exactly the integer ``0``, or exactly the
-string "``0``".
+string ``'0'``.
 
 Also see :doc:`IsTrue <IsTrue>`.
 
@@ -58,6 +58,24 @@ method returns **false**:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\IsFalse(
+                message: "You've entered an invalid state."
+            )]
+            public function isStateInvalid()
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -97,15 +115,17 @@ method returns **false**:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addGetterConstraint('stateInvalid', new Assert\IsFalse([
-                    'message' => 'You've entered an invalid state.',
+                    'message' => "You've entered an invalid state.",
                 ]));
+            }
+
+            public function isStateInvalid()
+            {
+                // ...
             }
         }
 
-        public function isStateInvalid()
-        {
-            // ...
-        }
+.. include:: /reference/constraints/_null-values-are-valid.rst.inc
 
 Options
 -------

@@ -80,7 +80,7 @@ class that processes the login submit and 4) updates the main security config fi
         /**
          * @Route("/logout", name="app_logout")
          */
-        public function logout()
+        public function logout(): void
         {
             throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
         }
@@ -107,7 +107,7 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -128,19 +128,19 @@ Edit the ``security.yaml`` file in order to declare the ``/logout`` path:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
-            'firewalls' => [
-                'main' => [
-                    // ...
-                    'logout' => [
-                        'path' => 'app_logout',
-                        // where to redirect after logout
-                        'target' => 'app_any_route'
-                    ],
-                ],
-            ],
-        ]);
+
+            $security->firewall('main')
+                // ...
+                ->logout()
+                    ->path('app_logout')
+                    // where to redirect after logout
+                    ->target('app_any_route')
+            ;
+        };
 
 **Step 2.** The template has very little to do with security: it generates
 a traditional HTML form that submits to ``/login``:
@@ -199,6 +199,7 @@ a traditional HTML form that submits to ``/login``:
     use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -232,7 +233,7 @@ a traditional HTML form that submits to ``/login``:
             $this->passwordEncoder = $passwordEncoder;
         }
 
-        public function supports(Request $request)
+        public function supports(Request $request): bool
         {
             return self::LOGIN_ROUTE === $request->attributes->get('_route')
                 && $request->isMethod('POST');
@@ -253,7 +254,7 @@ a traditional HTML form that submits to ``/login``:
             return $credentials;
         }
 
-        public function getUser($credentials, UserProviderInterface $userProvider)
+        public function getUser($credentials, UserProviderInterface $userProvider): ?User
         {
             $token = new CsrfToken('authenticate', $credentials['csrf_token']);
             if (!$this->csrfTokenManager->isTokenValid($token)) {
@@ -270,7 +271,7 @@ a traditional HTML form that submits to ``/login``:
             return $user;
         }
 
-        public function checkCredentials($credentials, UserInterface $user)
+        public function checkCredentials($credentials, UserInterface $user): bool
         {
             return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
         }
@@ -283,7 +284,7 @@ a traditional HTML form that submits to ``/login``:
             return $credentials['password'];
         }
 
-        public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+        public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
         {
             if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
                 return new RedirectResponse($targetPath);
@@ -293,7 +294,7 @@ a traditional HTML form that submits to ``/login``:
             throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
         }
 
-        protected function getLoginUrl()
+        protected function getLoginUrl(): string
         {
             return $this->urlGenerator->generate(self::LOGIN_ROUTE);
         }
@@ -321,7 +322,7 @@ a traditional HTML form that submits to ``/login``:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" charset="UTF-8" ?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -346,23 +347,24 @@ a traditional HTML form that submits to ``/login``:
 
         // config/packages/security.php
         use App\Security\LoginFormAuthenticator;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'firewalls' => [
-                'main' => [
-                    // ...,
-                    'guard' => [
-                        'authenticators' => [
-                            LoginFormAuthenticator::class,
-                        ]
-                    ],
-                    'logout' => [
-                        'path' => 'app_logout',
-                    ],
-                ],
-            ],
-        ]);
+
+            $mainFirewall = $security->firewall('main');
+            // ...
+
+            $mainFirewall
+                ->guard()
+                    ->authenticators([LoginFormAuthenticator::class])
+            ;
+
+            $mainFirewall
+                ->logout()
+                    ->path('app_logout')
+            ;
+        };
 
 Finishing the Login Form
 ------------------------
@@ -381,17 +383,17 @@ be redirected after success:
 
 .. code-block:: diff
 
-    // src/Security/LoginFormAuthenticator.php
+      // src/Security/LoginFormAuthenticator.php
 
-    // ...
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
-    {
-        // ...
+      // ...
+      public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): Response
+      {
+          // ...
 
     -     throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     +     // redirect to some "app_homepage" route - of wherever you want
     +     return new RedirectResponse($this->urlGenerator->generate('app_homepage'));
-    }
+      }
 
 Unless you have any other TODOs in that file, that's it! If you're loading users
 from the database, make sure you've loaded some :ref:`dummy users <doctrine-fixtures>`.
@@ -424,7 +426,7 @@ domain:
     .. code-block:: xml
 
         <!-- translations/security.en.xlf -->
-        <?xml version="1.0"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
             <file source-language="en" datatype="plaintext" original="file.ext">
                 <body>
@@ -477,7 +479,6 @@ whenever the user browses a page::
     namespace App\EventSubscriber;
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\HttpKernel\Event\RequestEvent;
     use Symfony\Component\HttpKernel\KernelEvents;
     use Symfony\Component\Security\Http\Util\TargetPathTrait;
@@ -486,28 +487,21 @@ whenever the user browses a page::
     {
         use TargetPathTrait;
 
-        private $session;
-
-        public function __construct(SessionInterface $session)
-        {
-            $this->session = $session;
-        }
-
         public function onKernelRequest(RequestEvent $event): void
         {
             $request = $event->getRequest();
             if (
-                !$event->isMasterRequest()
+                !$event->isMainRequest()
                 || $request->isXmlHttpRequest()
                 || 'app_login' === $request->attributes->get('_route')
             ) {
                 return;
             }
 
-            $this->saveTargetPath($this->session, 'main', $request->getUri());
+            $this->saveTargetPath($request->getSession(), 'main', $request->getUri());
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 KernelEvents::REQUEST => ['onKernelRequest']

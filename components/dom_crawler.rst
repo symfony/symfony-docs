@@ -122,7 +122,7 @@ Consider the XML below:
 
 .. code-block:: xml
 
-    <?xml version="1.0" encoding="UTF-8"?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <entry
         xmlns="http://www.w3.org/2005/Atom"
         xmlns:media="http://search.yahoo.com/mrss/"
@@ -187,10 +187,14 @@ Get the same level nodes after or before the current selection::
     $crawler->filter('body > p')->nextAll();
     $crawler->filter('body > p')->previousAll();
 
-Get all the child or parent nodes::
+Get all the child or ancestor nodes::
 
     $crawler->filter('body')->children();
-    $crawler->filter('body > p')->parents();
+    $crawler->filter('body > p')->ancestors();
+
+.. versionadded:: 5.3
+
+    The ``ancestors()`` method was introduced in Symfony 5.3.
 
 Get all the direct child nodes matching a CSS selector::
 
@@ -269,7 +273,9 @@ context of the crawler::
 Adding the Content
 ~~~~~~~~~~~~~~~~~~
 
-The crawler supports multiple ways of adding the content::
+The crawler supports multiple ways of adding the content, but they are mutually
+exclusive, so you can only use one of them to add content (e.g. if you pass the
+content to the ``Crawler`` constructor, you can't call ``addContent()`` later)::
 
     $crawler = new Crawler('<html><body/></html>');
 
@@ -518,7 +524,9 @@ You can virtually set and get values on the form::
     // where "registration" is its own array
     $values = $form->getPhpValues();
 
-To work with multi-dimensional fields::
+To work with multi-dimensional fields:
+
+.. code-block:: html
 
     <form>
         <input name="multi[]"/>

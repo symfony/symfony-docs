@@ -1,10 +1,10 @@
 .. index::
     single: Security; Named Encoders
 
-How to Use A Different Password Encoder Algorithm Per User
-==========================================================
+How to Use A Different Password Hasher Algorithm Per User
+=========================================================
 
-Usually, the same password encoder is used for all users by configuring it
+Usually, the same password hasher is used for all users by configuring it
 to apply to all instances of a specific class:
 
 .. configuration-block::
@@ -14,7 +14,7 @@ to apply to all instances of a specific class:
         # config/packages/security.yaml
         security:
             # ...
-            encoders:
+            password_hashers:
                 App\Entity\User:
                     algorithm: auto
                     cost: 12
@@ -22,7 +22,7 @@ to apply to all instances of a specific class:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -33,9 +33,9 @@ to apply to all instances of a specific class:
         >
             <config>
                 <!-- ... -->
-                <encoder class="App\Entity\User"
+                <security:password-hasher class="App\Entity\User"
                     algorithm="auto"
-                    cost=12
+                    cost="12"
                 />
             </config>
         </srv:container>
@@ -44,24 +44,23 @@ to apply to all instances of a specific class:
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'encoders' => [
-                User::class => [
-                    'algorithm' => 'auto',
-                    'cost' => 12,
-                ],
-            ],
-        ]);
+            $security->passwordHasher(User::class)
+                ->algorithm('auto')
+                ->cost(12)
+            ;
+        };
 
-Another option is to use a "named" encoder and then select which encoder
+Another option is to use a "named" hasher and then select which hasher
 you want to use dynamically.
 
 In the previous example, you've set the ``auto`` algorithm for ``App\Entity\User``.
 This may be secure enough for a regular user, but what if you want your admins
 to have a stronger algorithm, for example ``auto`` with a higher cost. This can
-be done with named encoders:
+be done with named hashers:
 
 .. configuration-block::
 
@@ -70,7 +69,7 @@ be done with named encoders:
         # config/packages/security.yaml
         security:
             # ...
-            encoders:
+            password_hashers:
                 harsh:
                     algorithm: auto
                     cost: 15
@@ -90,7 +89,7 @@ be done with named encoders:
 
             <config>
                 <!-- ... -->
-                <encoder class="harsh"
+                <security:password-hasher class="harsh"
                     algorithm="auto"
                     cost="15"/>
             </config>
@@ -99,15 +98,15 @@ be done with named encoders:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
-            'encoders' => [
-                'harsh' => [
-                    'algorithm' => 'auto',
-                    'cost'      => '15',
-                ],
-            ],
-        ]);
+            $security->passwordHasher('harsh')
+                ->algorithm('auto')
+                ->cost(15)
+            ;
+        };
 
 .. note::
 
@@ -115,33 +114,33 @@ be done with named encoders:
     then the recommended hashing algorithm to use is
     :ref:`Sodium <reference-security-sodium>`.
 
-This creates an encoder named ``harsh``. In order for a ``User`` instance
+This creates a hasher named ``harsh``. In order for a ``User`` instance
 to use it, the class must implement
-:class:`Symfony\\Component\\Security\\Core\\Encoder\\EncoderAwareInterface`.
-The interface requires one method - ``getEncoderName()`` - which should return
-the name of the encoder to use::
+:class:`Symfony\\Component\\PasswordHasher\\Hasher\\PasswordHasherAwareInterface`.
+The interface requires one method - ``getPasswordHasherName()`` - which should return
+the name of the hasher to use::
 
     // src/Entity/User.php
     namespace App\Entity;
 
-    use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
+    use Symfony\Component\PasswordHasher\Hasher\PasswordHasherAwareInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
 
-    class User implements UserInterface, EncoderAwareInterface
+    class User implements UserInterface, PasswordHasherAwareInterface
     {
-        public function getEncoderName()
+        public function getPasswordHasherName(): ?string
         {
             if ($this->isAdmin()) {
                 return 'harsh';
             }
 
-            return null; // use the default encoder
+            return null; // use the default hasher
         }
     }
 
-If you created your own password encoder implementing the
-:class:`Symfony\\Component\\Security\\Core\\Encoder\\PasswordEncoderInterface`,
-you must register a service for it in order to use it as a named encoder:
+If you created your own password hasher implementing the
+:class:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface`,
+you must register a service for it in order to use it as a named hasher:
 
 .. configuration-block::
 
@@ -150,9 +149,9 @@ you must register a service for it in order to use it as a named encoder:
         # config/packages/security.yaml
         security:
             # ...
-            encoders:
-                app_encoder:
-                    id: 'App\Security\Encoder\MyCustomPasswordEncoder'
+            password_hashers:
+                app_hasher:
+                    id: 'App\Security\Hasher\MyCustomPasswordHasher'
 
     .. code-block:: xml
 
@@ -169,27 +168,25 @@ you must register a service for it in order to use it as a named encoder:
 
             <config>
                 <!-- ... -->
-                <encoder class="app_encoder"
-                    id="App\Security\Encoder\MyCustomPasswordEncoder"/>
+                <security:password_hasher class="app_hasher"
+                    id="App\Security\Hasher\MyCustomPasswordHasher"/>
             </config>
         </srv:container>
 
     .. code-block:: php
 
         // config/packages/security.php
-        // ...
-        use App\Security\Encoder\MyCustomPasswordEncoder;
+        use App\Security\Hasher\MyCustomPasswordHasher;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'encoders' => [
-                'app_encoder' => [
-                    'id' => MyCustomPasswordEncoder::class,
-                ],
-            ],
-        ]);
+            $security->passwordHasher('app_hasher')
+                ->id(MyCustomPasswordHasher::class)
+            ;
+        };
 
-This creates an encoder named ``app_encoder`` from a service with the ID
-``App\Security\Encoder\MyCustomPasswordEncoder``.
+This creates a hasher named ``app_hasher`` from a service with the ID
+``App\Security\Hasher\MyCustomPasswordHasher``.
 
 .. _`libsodium`: https://pecl.php.net/package/libsodium

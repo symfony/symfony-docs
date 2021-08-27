@@ -88,7 +88,7 @@ Validation of arrays is possible using the ``Collection`` constraint::
                 new Assert\Collection([
                     'slug' => [
                         new Assert\NotBlank(),
-                        new Assert\Type(['type' => 'string'])
+                        new Assert\Type(['type' => 'string']),
                     ],
                     'label' => [
                         new Assert\NotBlank(),
@@ -105,3 +105,10 @@ The ``validate()`` method returns a :class:`Symfony\\Component\\Validator\\Const
 object, which acts like an array of errors. Each error in the collection
 is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
 which holds the error message on its ``getMessage()`` method.
+
+.. note::
+
+    When using groups with the
+    :doc:`Collection </reference/constraints/Collection>` constraint, be sure to
+    use the ``Optional`` constraint when appropriate as explained in its
+    reference documentation.

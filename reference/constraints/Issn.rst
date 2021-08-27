@@ -35,6 +35,19 @@ Basic Usage
             protected $issn;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Journal.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Journal
+        {
+            #[Assert\Issn]
+            protected $issn;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -79,8 +92,8 @@ Basic Usage
 Options
 -------
 
-caseSensitive
-~~~~~~~~~~~~~
+``caseSensitive``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` default: ``false``
 
@@ -89,8 +102,8 @@ When switching this to ``true``, the validator requires an upper case 'X'.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` default: ``This value is not a valid ISSN.``
 
@@ -111,8 +124,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-requireHyphen
-~~~~~~~~~~~~~
+``requireHyphen``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` default: ``false``
 

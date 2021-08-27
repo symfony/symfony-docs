@@ -7,9 +7,9 @@ How to Deploy a Symfony Application
 ===================================
 
 Deploying a Symfony application can be a complex and varied task depending on
-the setup and the requirements of your application. This article is not a step-
-by-step guide, but is a general list of the most common requirements and ideas
-for deployment.
+the setup and the requirements of your application. This article is not a
+step-by-step guide, but is a general list of the most common requirements and
+ideas for deployment.
 
 .. _symfony2-deployment-basics:
 
@@ -46,7 +46,7 @@ Basic File Transfer
 The most basic way of deploying an application is copying the files manually
 via FTP/SCP (or similar method). This has its disadvantages as you lack control
 over the system as the upgrade progresses. This method also requires you
-to take some manual steps after transferring the files (see `Common Post-Deployment Tasks`_)
+to take some manual steps after transferring the files (see `Common Deployment Tasks`_)
 
 Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
@@ -58,7 +58,7 @@ system. When using Git, a common approach is to create a tag for each release
 and check out the appropriate tag on deployment (see `Git Tagging`_).
 
 This makes updating your files *easier*, but you still need to worry about
-manually taking other steps (see `Common Post-Deployment Tasks`_).
+manually taking other steps (see `Common Deployment Tasks`_).
 
 Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -80,9 +80,6 @@ Using Build Scripts and other Tools
 There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
-`EasyDeployBundle`_
-    A Symfony bundle that adds deploy tools to your application.
-
 `Deployer`_
     This is another native PHP rewrite of Capistrano, with some ready recipes for
     Symfony.
@@ -103,17 +100,43 @@ specifically tailored to the requirements of Symfony.
     `Symfony plugin`_ is a plugin to ease Symfony related tasks, inspired by `Capifony`_
     (which works only with Capistrano 2).
 
-Common Post-Deployment Tasks
-----------------------------
+.. _common-post-deployment-tasks:
 
-After deploying your actual source code, there are a number of common things
-you'll need to do:
+Common Deployment Tasks
+-----------------------
+
+Before and after deploying your actual source code, there are a number of common
+things you'll need to do:
 
 A) Check Requirements
 ~~~~~~~~~~~~~~~~~~~~~
 
-Use the ``check:requirements`` command to check if your server meets the
-:ref:`technical requirements for running Symfony applications <symfony-tech-requirements>`.
+There are some :ref:`technical requirements for running Symfony applications <symfony-tech-requirements>`.
+In your development machine, the recommended way to check these requirements is
+to use `Symfony CLI`_. However, in your production server you might prefer to
+not install the Symfony CLI tool. In those cases, install this other package in
+your application:
+
+.. code-block:: terminal
+
+    $ composer require symfony/requirements-checker
+
+Then, make sure that the checker is included in your Composer scripts:
+
+.. code-block:: json
+
+    {
+        "...": "...",
+
+        "scripts": {
+            "auto-scripts": {
+                "vendor/bin/requirements-checker": "php-script",
+                "...": "..."
+            },
+
+            "...": "..."
+        }
+    }
 
 .. _b-configure-your-app-config-parameters-yml-file:
 
@@ -213,7 +236,7 @@ are simple and more complex tools and one can make the deployment as easy
 
 Don't forget that deploying your application also involves updating any dependency
 (typically via Composer), migrating your database, clearing your cache and
-other potential things like pushing assets to a CDN (see `Common Post-Deployment Tasks`_).
+other potential things like pushing assets to a CDN (see `Common Deployment Tasks`_).
 
 Troubleshooting
 ---------------
@@ -253,7 +276,7 @@ Learn More
 .. _`Platform.sh`: https://docs.platform.sh/frameworks/symfony.html
 .. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
 .. _`fortrabbit`: https://help.fortrabbit.com/install-symfony-4-uni
-.. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle
 .. _`Clever Cloud`: https://www.clever-cloud.com/doc/php/tutorial-symfony/
 .. _`Symfony Cloud`: https://symfony.com/doc/master/cloud/intro.html
 .. _`Scalingo`: https://doc.scalingo.com/languages/php/symfony
+.. _`Symfony CLI`: https://symfony.com/download

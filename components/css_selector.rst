@@ -25,8 +25,8 @@ Usage
     component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
     article to learn about how to use it when creating Symfony tests.
 
-Why to Use CSS selectors?
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Why Use CSS selectors?
+~~~~~~~~~~~~~~~~~~~~~~
 
 When you're parsing an HTML or an XML document, by far the most powerful
 method is `XPath`_.

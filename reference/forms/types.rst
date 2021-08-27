@@ -41,6 +41,9 @@ Form Types Reference
    types/file
    types/radio
 
+   types/uuid
+   types/ulid
+
    types/collection
    types/repeated
 

@@ -19,6 +19,7 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 |                           | - `choice_loader`_                                                   |
 |                           | - `choice_name`_                                                     |
 |                           | - `choice_translation_domain`_                                       |
+|                           | - `choice_translation_parameters`_                                   |
 |                           | - `choice_value`_                                                    |
 |                           | - `expanded`_                                                        |
 |                           | - `group_by`_                                                        |
@@ -231,6 +232,8 @@ correct types will be assigned to the model.
 .. include:: /reference/forms/types/options/choice_name.rst.inc
 
 .. include:: /reference/forms/types/options/choice_translation_domain_enabled.rst.inc
+
+.. include:: /reference/forms/types/options/choice_translation_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/choice_value.rst.inc
 

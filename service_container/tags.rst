@@ -89,7 +89,7 @@ If you want to apply tags automatically for your own services, use the
     .. code-block:: xml
 
         <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
             <services>
                 <!-- this config only applies to the services created by this file -->
@@ -796,7 +796,7 @@ array element. For example, to retrieve the ``handler_two`` handler::
     {
         public function __construct(iterable $handlers)
         {
-            $handlers = iterator_to_array($handlers);
+            $handlers = $handlers instanceof \Traversable ? iterator_to_array($handlers) : $handlers;
 
             $handlerTwo = $handlers['handler_two'];
         }
@@ -805,7 +805,7 @@ array element. For example, to retrieve the ``handler_two`` handler::
 .. tip::
 
     Just like the priority, you can also implement a static
-    ``getDefaultIndexAttributeName()`` method in the handlers and omit the
+    ``getDefaultIndexName()`` method in the handlers and omit the
     index attribute (``key``)::
 
         // src/Handler/One.php
@@ -845,7 +845,7 @@ array element. For example, to retrieve the ``handler_two`` handler::
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <services>
-                    <!-- ... --!>
+                    <!-- ... -->
 
                     <service id="App\HandlerCollection">
                         <!-- use getIndex() instead of getDefaultIndexName() -->

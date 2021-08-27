@@ -38,6 +38,19 @@ The following constraint ensures that the ``rawPassword`` property of the
             protected $rawPassword;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            #[Assert\NotCompromisedPassword]
+            protected $rawPassword;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -102,8 +115,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This password has been leaked in a data breach, it must not be used. Please use another password.``
 
@@ -111,8 +124,8 @@ The default message supplied when the password has been compromised.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-skipOnError
-~~~~~~~~~~~
+``skipOnError``
+~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -120,8 +133,8 @@ When the HTTP request made to the ``haveibeenpwned.com`` API fails for any
 reason, an exception is thrown (no validation error is displayed). Set this
 option to ``true`` to not throw the exception and consider the password valid.
 
-threshold
-~~~~~~~~~
+``threshold``
+~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: ``1``
 

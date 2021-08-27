@@ -197,7 +197,7 @@ The XML version of the config would then look like this:
 
 .. code-block:: xml
 
-    <?xml version="1.0" ?>
+    <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:acme_demo="http://www.example.com/symfony/schema/"

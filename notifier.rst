@@ -6,8 +6,7 @@ Creating and Sending Notifications
 
 .. versionadded:: 5.0
 
-    The Notifier component was introduced in Symfony 5.0 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
+    The Notifier component was introduced in Symfony 5.0.
 
 Installation
 ------------
@@ -54,20 +53,37 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-==========  ================================  ====================================================
-Service     Package                           DSN
-==========  ================================  ====================================================
-Esendex     ``symfony/esendex-notifier``      ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
-FreeMobile  ``symfony/free-mobile-notifier``  ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
-Infobip     ``symfony/infobip-notifier``      ``infobip://TOKEN@default?from=FROM``
-Mobyt       ``symfony/mobyt-notifier``        ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
-Nexmo       ``symfony/nexmo-notifier``        ``nexmo://KEY:SECRET@default?from=FROM``
-OvhCloud    ``symfony/ovh-cloud-notifier``    ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
-Sendinblue  ``symfony/sendinblue-notifier``   ``sendinblue://API_KEY@default?sender=PHONE``
-Sinch       ``symfony/sinch-notifier``        ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-Smsapi      ``symfony/smsapi-notifier``       ``smsapi://TOKEN@default?from=FROM``
-Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=FROM``
-==========  ================================  ====================================================
+==============  ====================================  ===========================================================================
+Service         Package                               DSN
+==============  ====================================  ===========================================================================
+AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@default?from=FROM``
+AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
+Esendex         ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
+FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
+FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
+GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
+Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
+Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
+LightSms        ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
+Mailjet         ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?from=FROM``
+MessageBird     ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
+MessageMedia    ``symfony/message-media-notifier``    ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
+Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
+Nexmo           ``symfony/nexmo-notifier``            ``nexmo://KEY:SECRET@default?from=FROM``
+Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
+OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
+Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
+Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
+Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
+SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
+Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
+SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
+Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
+TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
+Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
+Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
+==============  ====================================  ===========================================================================
 
 .. versionadded:: 5.1
 
@@ -76,6 +92,16 @@ Twilio      ``symfony/twilio-notifier``       ``twilio://SID:TOKEN@default?from=
 .. versionadded:: 5.2
 
     The Smsapi, Infobip, Mobyt, Esendex and Sendinblue integrations were introduced in Symfony 5.2.
+
+.. versionadded:: 5.3
+
+    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms (email), LightSms, SmsBiuras
+    and MessageBird integrations were introduced in Symfony 5.3.
+
+.. versionadded:: 5.4
+
+    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms, Mailjet and FakeSms (logger) integrations
+    were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -118,14 +144,14 @@ configure the ``texter_transports``:
 
     .. code-block:: php
 
-        # config/packages/notifier.php
-        $container->loadFromExtension('framework', [
-            'notifier' => [
-                'texter_transports' => [
-                    'twilio' => '%env(TWILIO_DSN)%',
-                ],
-            ],
-        ]);
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->notifier()
+                ->texterTransport('twilio', '%env(TWILIO_DSN)%')
+            ;
+        };
 
 .. _notifier-chat-channel:
 .. _notifier-chatter-dsn:
@@ -137,27 +163,43 @@ The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
 integration with these chat services:
 
-==========  ================================  ===========================================================================
-Service     Package                           DSN
-==========  ================================  ===========================================================================
-Discord     ``symfony/discord-notifier``      ``discord://TOKEN@default?webhook_id=ID``
-GoogleChat  ``symfony/google-chat-notifier``  ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?threadKey=THREAD_KEY``
-LinkedIn    ``symfony/linked-in-notifier``    ``linkedin://TOKEN:USER_ID@default``
-Mattermost  ``symfony/mattermost-notifier``   ``mattermost://TOKEN@ENDPOINT?channel=CHANNEL``
-RocketChat  ``symfony/rocket-chat-notifier``  ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
-Slack       ``symfony/slack-notifier``        ``slack://TOKEN@default?channel=CHANNEL``
-Telegram    ``symfony/telegram-notifier``     ``telegram://TOKEN@default?channel=CHAT_ID``
-Zulip       ``symfony/zulip-notifier``        ``zulip://EMAIL:APIKEY@ENDPOINT?channel=CHANNEL``
-==========  ================================  ===========================================================================
+==============  ====================================  =============================================================================
+Service         Package                               DSN
+==============  ====================================  =============================================================================
+AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+Discord         ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
+FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
+Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
+Gitter          ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
+GoogleChat      ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
+LinkedIn        ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
+Mattermost      ``symfony/mattermost-notifier``       ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
+Mercure         ``symfony/mercure-notifier``          ``mercure://HUB_ID?topic=TOPIC``
+MicrosoftTeams  ``symfony/microsoft-teams-notifier``  ``microsoftteams://default/PATH``
+RocketChat      ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
+Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
+Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
+==============  ====================================  =============================================================================
 
 .. versionadded:: 5.1
 
-    The Mattermost and RocketChat integrations were introduced in Symfony 5.1.
+    The Firebase, Mattermost and RocketChat integrations were introduced in Symfony
+    5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
+    Webhooks instead of legacy tokens.
 
 .. versionadded:: 5.2
 
     The GoogleChat, LinkedIn, Zulip and Discord integrations were introduced in Symfony 5.2.
     The Slack DSN changed in Symfony 5.2 to use Slack Web API again same as in 5.0.
+
+.. versionadded:: 5.3
+
+    The Gitter, Mercure, FakeChat (email) and Microsoft Teams integrations were introduced in Symfony 5.3.
+
+.. versionadded:: 5.4
+
+    The AmazonSns and FakeChat (logger) integrations were introduced in Symfony 5.4.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
@@ -199,14 +241,14 @@ Chatters are configured using the ``chatter_transports`` setting:
 
     .. code-block:: php
 
-        # config/packages/notifier.php
-        $container->loadFromExtension('framework', [
-            'notifier' => [
-                'chatter_transports' => [
-                    'slack' => '%env(SLACK_DSN)%',
-                ],
-            ],
-        ]);
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->notifier()
+                ->chatterTransport('slack', '%env(SLACK_DSN)%')
+            ;
+        };
 
 .. _notifier-email-channel:
 
@@ -263,15 +305,16 @@ notification emails:
 
     .. code-block:: php
 
-        # config/packages/mailer.php
-        $container->loadFromExtension('framework', [
-            'mailer' => [
-                'dsn' => '%env(MAILER_DSN)%',
-                'envelope' => [
-                    'sender' => 'notifications@example.com',
-                ],
-            ],
-        ]);
+        // config/packages/mailer.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->mailer()
+                ->dsn('%env(MAILER_DSN)%')
+                ->envelope()
+                    ->sender('notifications@example.com')
+            ;
+        };
 
 Configure to use Failover or Round-Robin Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -326,19 +369,19 @@ transport:
 
     .. code-block:: php
 
-        # config/packages/notifier.php
-        $container->loadFromExtension('framework', [
-            'notifier' => [
-                'chatter_transports' => [
-                    // Send notifications to Slack and use Telegram if
-                    // Slack errored
-                    'main' => '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%',
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
 
-                    // Send notifications to the next scheduled transport calculated by round robin
-                    'roundrobin' => '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%',
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $framework->notifier()
+                // Send notifications to Slack and use Telegram if
+                // Slack errored
+                ->chatterTransport('main', '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%')
+
+                // Send notifications to the next scheduled transport calculated by round robin
+                ->chatterTransport('roundrobin', '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%')
+            ;
+        };
 
 Creating & Sending Notifications
 --------------------------------
@@ -377,7 +420,7 @@ To send a notification, autowire the
             );
 
             // Send the notification to the recipient
-            $sentMessage = $notifier->send($notification, $recipient);
+            $notifier->send($notification, $recipient);
 
             // ...
         }
@@ -387,14 +430,6 @@ The ``Notification`` is created by using two arguments: the subject and
 channels. The channels specify which channel (or transport) should be used
 to send the notification. For instance, ``['email', 'sms']`` will send
 both an email and sms notification to the user.
-
-The ``send()`` method used to send the notification returns a variable of type
-:class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
-information such as the message ID and the original message contents.
-
-.. versionadded:: 5.2
-
-    The ``SentMessage`` class was introduced in Symfony 5.2.
 
 The default notification also has a ``content()`` and ``emoji()`` method to
 set the notification content and icon.
@@ -478,23 +513,21 @@ specify what channels should be used for specific levels (using
 
     .. code-block:: php
 
-        # config/packages/notifier.php
-        $container->loadFromExtension('framework', [
-            'notifier' => [
-                // ...
-                'channel_policy' => [
-                    // Use SMS, Slack and email for urgent notifications
-                    'urgent' => ['sms', 'chat/slack', 'email'],
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
 
-                    // Use Slack for highly important notifications
-                    'high' => ['chat/slack'],
-
-                    // Use browser for medium and low notifications
-                    'medium' => ['browser'],
-                    'low' => ['browser'],
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            // ...
+            $framework->notifier()
+                // Use SMS, Slack and email for urgent notifications
+                ->channelPolicy('urgent', ['sms', 'chat/slack', 'email'])
+                // Use Slack for highly important notifications
+                ->channelPolicy('high', ['chat/slack'])
+                // Use browser for medium and low notifications
+                ->channelPolicy('medium', ['browser'])
+                ->channelPolicy('medium', ['browser'])
+            ;
+        };
 
 Now, whenever the notification's importance is set to "high", it will be
 sent using the Slack transport::
@@ -513,7 +546,7 @@ sent using the Slack transport::
                 ->content('You got a new invoice for 15 EUR.')
                 ->importance(Notification::IMPORTANCE_HIGH);
 
-            $notifier->send($notification, new Recipient('wouter@wouterj.nl'));
+            $notifier->send($notification, new Recipient('wouter@example.com'));
 
             // ...
         }

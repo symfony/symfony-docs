@@ -6,15 +6,15 @@ built files are uploaded to the CDN, configure it in Encore:
 
 .. code-block:: diff
 
-    // webpack.config.js
-    // ...
+      // webpack.config.js
+      // ...
 
-    Encore
-        .setOutputPath('public/build/')
-        // in dev mode, don't use the CDN
-        .setPublicPath('/build');
-        // ...
-    ;
+      Encore
+          .setOutputPath('public/build/')
+          // in dev mode, don't use the CDN
+          .setPublicPath('/build');
+          // ...
+      ;
 
     + if (Encore.isProduction()) {
     +     Encore.setPublicPath('https://my-cool-app.com.global.prod.fastly.net');
@@ -38,6 +38,10 @@ You *do* need to make sure that the ``script`` and ``link`` tags you include on 
 pages also use the CDN. Fortunately, the
 :ref:`entrypoints.json <encore-entrypointsjson-simple-description>` paths are updated
 to include the full URL to the CDN.
+
+When deploying to a subdirectory of your CDN, you must add the path at the end of your URL -
+e.g. ``Encore.setPublicPath('https://my-cool-app.com.global.prod.fastly.net/awesome-website')``
+will generate assets URLs like ``https://my-cool-app.com.global.prod.fastly.net/awesome-website/dashboard.js``
 
 If you are using ``Encore.enableIntegrityHashes()`` and your CDN and your domain
 are not the `same-origin`_, you may need to set the ``crossorigin`` option in

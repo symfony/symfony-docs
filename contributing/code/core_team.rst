@@ -60,7 +60,6 @@ Active Core Members
   * **Christian Flothmann** (`xabbuh`_);
   * **Tobias Schultze** (`Tobion`_);
   * **Kévin Dunglas** (`dunglas`_);
-  * **Jakub Zalas** (`jakzal`_);
   * **Javier Eguiluz** (`javiereguiluz`_);
   * **Grégoire Pineau** (`lyrixx`_);
   * **Ryan Weaver** (`weaverryan`_);
@@ -72,7 +71,8 @@ Active Core Members
   * **Wouter De Jong** (`wouterj`_);
   * **Alexander M. Turek** (`derrabus`_);
   * **Jérémy Derussé** (`jderusse`_);
-  * **Titouan Galopin** (`tgalopin`_).
+  * **Titouan Galopin** (`tgalopin`_);
+  * **Oskar Stark** (`OskarStark`_).
 
 * **Security Team** (``@symfony/security`` on GitHub):
 
@@ -91,7 +91,6 @@ Active Core Members
   * **Ryan Weaver** (`weaverryan`_);
   * **Christian Flothmann** (`xabbuh`_);
   * **Wouter De Jong** (`wouterj`_);
-  * **Jules Pietri** (`HeahDude`_);
   * **Javier Eguiluz** (`javiereguiluz`_).
   * **Oskar Stark** (`OskarStark`_).
 
@@ -105,7 +104,9 @@ Symfony contributions:
 * **Abdellatif AitBoudad** (`aitboudad`_);
 * **Romain Neutron** (`romainneutron`_);
 * **Jordi Boggiano** (`Seldaek`_);
-* **Lukas Kahwe Smith** (`lsmith77`_).
+* **Lukas Kahwe Smith** (`lsmith77`_);
+* **Jules Pietri** (`HeahDude`_);
+* **Jakub Zalas** (`jakzal`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

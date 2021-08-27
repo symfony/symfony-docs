@@ -75,7 +75,7 @@ with the ``User`` class::
     {
         public function index(User $user)
         {
-            return new Response('Hello '.$user->getUsername().'!');
+            return new Response('Hello '.$user->getUserIdentifier().'!');
         }
     }
 

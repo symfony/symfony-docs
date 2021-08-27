@@ -4,10 +4,11 @@
 Swift Mailer
 ============
 
-.. note::
+.. caution::
 
-    In Symfony 4.3, the :doc:`Mailer </mailer>` component was introduced and can
-    be used instead of Swift Mailer.
+    In Symfony 4.3, the :doc:`Mailer </mailer>` component was introduced and should
+    be used instead of Swift Mailer as it won't be maintained anymore as of November
+    2021.
 
 Symfony provides a mailer feature based on the popular `Swift Mailer`_ library
 via the `SwiftMailerBundle`_. This mailer supports sending messages with your
@@ -394,9 +395,11 @@ the report with details of the sent emails.
     .. code-block:: php
 
         // config/packages/dev/web_profiler.php
-        $container->loadFromExtension('web_profiler', [
-            'intercept_redirects' => 'true',
-        ]);
+        use Symfony\Config\WebProfilerConfig;
+
+        return static function (WebProfilerConfig $webProfiler) {
+            $webProfiler->interceptRedirects(true);
+        };
 
 .. tip::
 

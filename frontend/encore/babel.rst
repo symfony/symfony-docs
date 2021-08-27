@@ -24,7 +24,7 @@ Need to extend the Babel configuration further? The easiest way is via
             babelConfig.plugins.push('styled-jsx/babel');
         }, {
             // node_modules is not processed through Babel by default
-            // but you can whitelist specific modules to process
+            // but you can allow some specific modules to be processed
             includeNodeModules: ['foundation-sites'],
 
             // or completely control the exclude rule (note that you

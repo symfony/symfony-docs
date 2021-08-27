@@ -12,12 +12,12 @@ To do that, modify the config after fetching it from Encore:
 
     // webpack.config.js
 
-    var Encore = require('@symfony/webpack-encore');
+    const Encore = require('@symfony/webpack-encore');
 
     // ... all Encore config here
 
     // fetch the config, then modify it!
-    var config = Encore.getWebpackConfig();
+    const config = Encore.getWebpackConfig();
 
     // add an extension
     config.resolve.extensions.push('json');
@@ -208,8 +208,8 @@ The following code is equivalent:
 The following loaders are configurable with ``configureLoaderRule()``:
   - ``javascript`` (alias ``js``)
   - ``css``
-  - ``images``
-  - ``fonts``
+  - ``images`` (but use ``configureImageRule()`` instead)
+  - ``fonts`` (but use ``configureFontRule()`` instead)
   - ``sass`` (alias ``scss``)
   - ``less``
   - ``stylus``

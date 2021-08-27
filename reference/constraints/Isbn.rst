@@ -43,6 +43,22 @@ on an object that will contain an ISBN.
             protected $isbn;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Book.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Book
+        {
+            #[Assert\Isbn(
+                type: Assert\Isbn::ISBN_10,
+                message: 'This value is not valid.',
+            )]
+            protected $isbn;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -84,7 +100,7 @@ on an object that will contain an ISBN.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('isbn', new Assert\Isbn([
-                    'type' => 'isbn10',
+                    'type' => Assert\Isbn::ISBN_10,
                     'message' => 'This value is not valid.',
                 ]));
             }
@@ -95,8 +111,8 @@ on an object that will contain an ISBN.
 Available Options
 -----------------
 
-bothIsbnMessage
-~~~~~~~~~~~~~~~
+``bothIsbnMessage``
+~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is neither a valid ISBN-10 nor a valid ISBN-13.``
 
@@ -118,8 +134,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-isbn10Message
-~~~~~~~~~~~~~
+``isbn10Message``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-10.``
 
@@ -139,8 +155,8 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-isbn13Message
-~~~~~~~~~~~~~
+``isbn13Message``
+~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid ISBN-13.``
 
@@ -160,8 +176,8 @@ Parameter        Description
 
     The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
@@ -183,8 +199,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-type
-~~~~
+``type``
+~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 

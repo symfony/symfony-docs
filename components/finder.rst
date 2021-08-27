@@ -210,7 +210,7 @@ Use the forward slash (i.e. ``/``) as the directory separator on all platforms,
 including Windows. The component makes the necessary conversion internally.
 
 The ``path()`` method accepts a string, a regular expression or an array of
-strings or regulars expressions::
+strings or regular expressions::
 
     $finder->path('foo/bar');
     $finder->path('/^foo\/bar/');
@@ -293,6 +293,7 @@ Directory Depth
 By default, the Finder recursively traverses directories. Restrict the depth of
 traversing with :method:`Symfony\\Component\\Finder\\Finder::depth`::
 
+    // this will only consider files/directories which are direct children
     $finder->depth('== 0');
     $finder->depth('< 3');
 

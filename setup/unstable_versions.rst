@@ -33,14 +33,14 @@ new version and change your ``minimum-stability`` to ``beta``:
 
 .. code-block:: diff
 
-    {
-        "require": {
+      {
+          "require": {
     +         "symfony/framework-bundle": "^4.0",
     +         "symfony/finder": "^4.0",
-            "...": "..."
-        },
+              "...": "..."
+          },
     +     "minimum-stability": "beta"
-    }
+      }
 
 You can also use set ``minimum-stability`` to ``dev``, or omit this line
 entirely, and opt into your stability on each package by using constraints
@@ -68,7 +68,7 @@ Symfony version has deprecated some of its features.
         $ cd projects/my_project/
         $ git checkout -b testing_new_symfony
         # ... update composer.json configuration
-        $ composer update symfony/symfony
+        $ composer update "symfony/*"
 
         # ... after testing the new Symfony version
         $ git checkout master

@@ -31,7 +31,7 @@ access control:
         .. code-block:: xml
 
             <!-- config/packages/security.xml -->
-            <?xml version="1.0" encoding="UTF-8"?>
+            <?xml version="1.0" encoding="UTF-8" ?>
             <srv:container xmlns="http://symfony.com/schema/dic/security"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:srv="http://symfony.com/schema/dic/services"
@@ -60,27 +60,29 @@ access control:
         .. code-block:: php
 
             // config/packages/security.php
-            $container->loadFromExtension('security', [
-                // ...
+            use Symfony\Config\SecurityConfig;
 
-                'access_control' => [
-                    [
-                        'path'             => '^/secure',
-                        'roles'            => 'ROLE_ADMIN',
-                        'requires_channel' => 'https',
-                    ],
-                    [
-                        'path'             => '^/login',
-                        'role'             => 'IS_AUTHENTICATED_ANONYMOUSLY',
-                        'requires_channel' => 'https',
-                    ],
-                    [
-                        'path'             => '^/',
-                        'role'             => 'IS_AUTHENTICATED_ANONYMOUSLY',
-                        'requires_channel' => 'https',
-                    ],
-                ],
-            ]);
+            return static function (SecurityConfig $security) {
+                // ....
+
+                $security->accessControl()
+                    ->path('^/secure')
+                    ->roles(['ROLE_ADMIN'])
+                    ->requiresChannel('https')
+                ;
+
+                $security->accessControl()
+                    ->path('^/login')
+                    ->roles(['IS_AUTHENTICATED_ANONYMOUSLY'])
+                    ->requiresChannel('https')
+                ;
+
+                $security->accessControl()
+                    ->path('^/')
+                    ->roles(['IS_AUTHENTICATED_ANONYMOUSLY'])
+                    ->requiresChannel('https')
+                ;
+            };
 
 To make life easier while developing, you can also use an environment variable,
 like ``requires_channel: '%env(SECURE_SCHEME)%'``. In your ``.env`` file, set

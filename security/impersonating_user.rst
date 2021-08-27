@@ -33,7 +33,7 @@ listener:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -55,16 +55,15 @@ listener:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main'=> [
-                    // ...
-                    'switch_user' => true,
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->switchUser()
+            ;
+        };
 
 To switch to another user, add a query string with the ``_switch_user``
 parameter and the username (or whatever field our user provider uses to load users)
@@ -170,7 +169,7 @@ also adjust the query parameter name via the ``parameter`` setting:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -191,19 +190,17 @@ also adjust the query parameter name via the ``parameter`` setting:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main'=> [
-                    // ...
-                    'switch_user' => [
-                        'role' => 'ROLE_ADMIN',
-                        'parameter' => '_want_to_be_this_user',
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->switchUser()
+                    ->role('ROLE_ADMIN')
+                    ->parameter('_want_to_be_this_user')
+            ;
+        };
 
 Limiting User Switching
 -----------------------
@@ -229,7 +226,7 @@ be called):
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -250,23 +247,21 @@ be called):
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
+        use Symfony\Config\SecurityConfig;
 
-            'firewalls' => [
-                'main'=> [
-                    // ...
-                    'switch_user' => [
-                        'role' => 'CAN_SWITCH_USER',
-                    ],
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->switchUser()
+                    ->role('CAN_SWITCH_USER')
+            ;
+        };
 
 Then, create a voter class that responds to this role and includes whatever custom
 logic you want::
 
-    // src/Service/Voter/SwitchToCustomerVoter.php
+    // src/Security/Voter/SwitchToCustomerVoter.php
     namespace App\Security\Voter;
 
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -283,13 +278,13 @@ logic you want::
             $this->security = $security;
         }
 
-        protected function supports($attribute, $subject)
+        protected function supports($attribute, $subject): bool
         {
             return in_array($attribute, ['CAN_SWITCH_USER'])
                 && $subject instanceof UserInterface;
         }
 
-        protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+        protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
         {
             $user = $token->getUser();
             // if the user is anonymous or if the subject is not a user, do not grant access
@@ -341,7 +336,7 @@ you switch users, add an event subscriber on this event::
 
     class SwitchUserSubscriber implements EventSubscriberInterface
     {
-        public function onSwitchUser(SwitchUserEvent $event)
+        public function onSwitchUser(SwitchUserEvent $event): void
         {
             $request = $event->getRequest();
 
@@ -354,7 +349,7 @@ you switch users, add an event subscriber on this event::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 // constant for security.switch_user

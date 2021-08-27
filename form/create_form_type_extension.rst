@@ -191,14 +191,10 @@ Specifically, you need to override the ``file_widget`` block:
     {% extends 'form_div_layout.html.twig' %}
 
     {% block file_widget %}
-        {% spaceless %}
-
         {{ block('form_widget') }}
         {% if image_url is not null %}
             <img src="{{ asset(image_url) }}"/>
         {% endif %}
-
-        {% endspaceless %}
     {% endblock %}
 
 Be sure to :ref:`configure this form theme template <forms-theming-global>` so that

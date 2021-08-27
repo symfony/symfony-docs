@@ -35,6 +35,19 @@ Basic Usage
             protected $bioUrl;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Url]
+            protected $bioUrl;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -85,8 +98,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value is not a valid URL.``
 
@@ -121,6 +134,21 @@ Parameter        Description
              *    message = "The url '{{ value }}' is not a valid url",
              * )
              */
+            protected $bioUrl;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Url(
+                message: 'The url {{ value }} is not a valid url',
+            )]
             protected $bioUrl;
         }
 
@@ -172,8 +200,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-protocols
-~~~~~~~~~
+``protocols``
+~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``['http', 'https']``
 
@@ -197,6 +225,21 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
              *    protocols = {"http", "https", "ftp"}
              * )
              */
+            protected $bioUrl;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Url(
+                protocols: ['http', 'https', 'ftp'],
+            )]
             protected $bioUrl;
         }
 
@@ -247,8 +290,8 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
             }
         }
 
-relativeProtocol
-~~~~~~~~~~~~~~~~
+``relativeProtocol``
+~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -272,6 +315,21 @@ also relative URLs that contain no protocol (e.g. ``//example.com``).
              *    relativeProtocol = true
              * )
              */
+            protected $bioUrl;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Url(
+                relativeProtocol: true,
+            )]
             protected $bioUrl;
         }
 

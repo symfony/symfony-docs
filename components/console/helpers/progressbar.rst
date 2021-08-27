@@ -349,7 +349,7 @@ placeholder before displaying the progress bar::
     // 0/100 -- Start
 
     $progressBar->setMessage('Task is in progress...');
-    $progressBar->advance();    
+    $progressBar->advance();
     // 1/100 -- Task is in progress...
 
 Messages can be combined with custom placeholders too. In this example, the

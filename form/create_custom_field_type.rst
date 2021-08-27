@@ -405,12 +405,14 @@ rest of files):
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes([
                 'form/custom_types.html.twig',
                 '...',
-            ],
-        ]);
+            ]);
+        };
 
 The last step is to create the actual Twig template that will render the type.
 The template contents depend on which HTML, CSS and JavaScript frameworks and

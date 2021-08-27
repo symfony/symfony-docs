@@ -130,7 +130,7 @@ Use Constants to Define Options that Rarely Change
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configuration options like the number of items to display in some listing rarely
-change. Instead of defining them as :ref:`service container parameters <configuration-parameters>`,
+change. Instead of defining them as :ref:`configuration parameters <configuration-parameters>`,
 define them as PHP constants in the related classes. Example::
 
     // src/Entity/Post.php
@@ -170,7 +170,7 @@ Use Autowiring to Automate the Configuration of Application Services
 
 :doc:`Service autowiring </service_container/autowiring>` is a feature that
 reads the type-hints on your constructor (or other methods) and automatically
-passes the correct services to each method, making unnecessary to configure
+passes the correct services to each method, making it unnecessary to configure
 services explicitly and simplifying the application maintenance.
 
 Use it in combination with :ref:`service autoconfiguration <services-autoconfigure>`
@@ -244,7 +244,7 @@ Use Dependency Injection to Get Services
 
 If you extend the base ``AbstractController``, you can only access to the most
 common services (e.g ``twig``, ``router``, ``doctrine``, etc.), directly from the
-container via ``$this->container->get()`` or ``$this->get()``.
+container via ``$this->container->get()``.
 Instead, you must use dependency injection to fetch services by
 :ref:`type-hinting action method arguments <controller-accessing-services>` or
 constructor arguments.
@@ -321,6 +321,8 @@ are two of the main tasks when handling forms. Both are too similar (most of the
 times, almost identical), so it's much simpler to let a single controller action
 handle both.
 
+.. _best-practice-internationalization:
+
 Internationalization
 --------------------
 
@@ -366,7 +368,7 @@ Use the ``auto`` Password Hasher
 
 The :ref:`auto password hasher <reference-security-encoder-auto>` automatically
 selects the best possible encoder/hasher depending on your PHP installation.
-Currently, it tries to use ``sodium`` by default and falls back to ``bcrypt``.
+Starting from Symfony 5.3, the default auto hasher is ``bcrypt``.
 
 Use Voters to Implement Fine-grained Security Restrictions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -398,8 +400,8 @@ Smoke Test your URLs
 
 In software engineering, `smoke testing`_ consists of *"preliminary testing to
 reveal simple failures severe enough to reject a prospective software release"*.
-Using :ref:`PHPUnit data providers <testing-data-providers>` you can define a
-functional test that checks that all application URLs load successfully::
+Using `PHPUnit data providers`_ you can define a functional test that
+checks that all application URLs load successfully::
 
     // tests/ApplicationAvailabilityFunctionalTest.php
     namespace App\Tests;
@@ -453,3 +455,4 @@ you must set up a redirection.
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
 .. _`Webpack`: https://webpack.js.org/
+.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html#data-providers

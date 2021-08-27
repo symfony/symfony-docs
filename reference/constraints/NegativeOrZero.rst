@@ -36,6 +36,19 @@ is a negative number or equal to zero:
             protected $level;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/TransferItem.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class UnderGroundGarage
+        {
+            #[Assert\NegativeOrZero]
+            protected $level;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -80,8 +93,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should be either negative or zero.``
 

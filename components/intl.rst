@@ -6,12 +6,11 @@ The Intl Component
 ==================
 
     This component provides access to the localization data of the `ICU library`_.
-    It also provides a PHP replacement layer for the C `intl extension`_.
 
 .. caution::
 
     The replacement layer is limited to the ``en`` locale. If you want to use
-    other locales, you should `install the intl extension`_. There is no conflict 
+    other locales, you should `install the intl extension`_. There is no conflict
     between the two because, even if you use the extension, this package can still
     be useful to access the ICU data.
 
@@ -29,30 +28,6 @@ Installation
     $ composer require symfony/intl
 
 .. include:: /components/require_autoload.rst.inc
-
-If you install the component via Composer, the following classes and functions
-of the intl extension will be automatically provided if the intl extension is
-not loaded:
-
-* :phpclass:`Collator`
-* :phpclass:`IntlDateFormatter`
-* :phpclass:`Locale`
-* :phpclass:`NumberFormatter`
-* :phpfunction:`intl_error_name`
-* :phpfunction:`intl_is_failure`
-* :phpfunction:`intl_get_error_code`
-* :phpfunction:`intl_get_error_message`
-
-When the intl extension is not available, the following classes are used to
-replace the intl classes:
-
-* :class:`Symfony\\Component\\Intl\\Collator\\Collator`
-* :class:`Symfony\\Component\\Intl\\DateFormatter\\IntlDateFormatter`
-* :class:`Symfony\\Component\\Intl\\Locale\\Locale`
-* :class:`Symfony\\Component\\Intl\\NumberFormatter\\NumberFormatter`
-* :class:`Symfony\\Component\\Intl\\Globals\\IntlGlobals`
-
-Composer automatically exposes these classes in the global namespace.
 
 Accessing ICU Data
 ------------------
@@ -110,7 +85,7 @@ to catching the exception, you can also check if a given language code is valid:
 
     $isValidLanguage = Languages::exists($languageCode);
 
-Or if you have a alpha3 language code you want to check::
+Or if you have an alpha3 language code you want to check::
 
     $isValidLanguage = Languages::alpha3CodeExists($alpha3Code);
 
@@ -197,7 +172,7 @@ to catching the exception, you can also check if a given country code is valid::
 
     $isValidCountry = Countries::exists($alpha2Code);
 
-Or if you have a alpha3 country code you want to check::
+Or if you have an alpha3 country code you want to check::
 
     $isValidCountry = Countries::alpha3CodeExists($alpha3Code);
 
@@ -211,9 +186,9 @@ Locales
 ~~~~~~~
 
 A locale is the combination of a language, a region and some parameters that
-define the interface preferences of the user. For example, "Chinese" is the 
-language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified" 
-(script) + "Macau SAR China" (region). The ``Locales`` class provides access to 
+define the interface preferences of the user. For example, "Chinese" is the
+language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified"
+(script) + "Macau SAR China" (region). The ``Locales`` class provides access to
 the name of all locales::
 
     use Symfony\Component\Intl\Locales;
@@ -262,15 +237,45 @@ as some of their information (symbol, fraction digits, etc.)::
     $symbol = Currencies::getSymbol('INR');
     // => '₹'
 
-    $fractionDigits = Currencies::getFractionDigits('INR');
-    // => 2
+The fraction digits methods return the number of decimal digits to display when
+formatting numbers with this currency. Depending on the currency, this value
+can change if the number is used in cash transactions or in other scenarios
+(e.g. accounting)::
 
-    $roundingIncrement = Currencies::getRoundingIncrement('INR');
-    // => 0
+    // Indian rupee defines the same value for both
+    $fractionDigits = Currencies::getFractionDigits('INR');         // returns: 2
+    $cashFractionDigits = Currencies::getCashFractionDigits('INR'); // returns: 2
 
-All methods (except for ``getFractionDigits()`` and ``getRoundingIncrement()``)
-accept the translation locale as the last, optional parameter, which defaults to
-the current default locale::
+    // Swedish krona defines different values
+    $fractionDigits = Currencies::getFractionDigits('SEK');         // returns: 2
+    $cashFractionDigits = Currencies::getCashFractionDigits('SEK'); // returns: 0
+
+.. versionadded:: 5.3
+
+    The ``getCashFractionDigits()`` method was introduced in Symfony 5.3.
+
+Some currencies require to round numbers to the nearest increment of some value
+(e.g. 5 cents). This increment might be different if numbers are formatted for
+cash transactions or other scenarios (e.g. accounting)::
+
+    // Indian rupee defines the same value for both
+    $roundingIncrement = Currencies::getRoundingIncrement('INR');         // returns: 0
+    $cashRoundingIncrement = Currencies::getCashRoundingIncrement('INR'); // returns: 0
+
+    // Canadian dollar defines different values because they have eliminated
+    // the smaller coins (1-cent and 2-cent) and prices in cash must be rounded to
+    // 5 cents (e.g. if price is 7.42 you pay 7.40; if price is 7.48 you pay 7.50)
+    $roundingIncrement = Currencies::getRoundingIncrement('CAD');         // returns: 0
+    $cashRoundingIncrement = Currencies::getCashRoundingIncrement('CAD'); // returns: 5
+
+.. versionadded:: 5.3
+
+    The ``getCashRoundingIncrement()`` method was introduced in Symfony 5.3.
+
+All methods (except for ``getFractionDigits()``, ``getCashFractionDigits()``,
+``getRoundingIncrement()`` and ``getCashRoundingIncrement()``) accept the
+translation locale as the last, optional parameter, which defaults to the
+current default locale::
 
     $currencies = Currencies::getNames('de');
     // => ['AFN' => 'Afghanischer Afghani', 'EGP' => 'Ägyptisches Pfund', ...]
@@ -323,7 +328,7 @@ translate into any locale with the ``getName()`` method shown earlier::
 The reverse lookup is also possible thanks to the ``getCountryCode()`` method,
 which returns the code of the country where the given timezone ID belongs to::
 
-    $countryCode = Timezones::getCountryCode('America/Vancouver')
+    $countryCode = Timezones::getCountryCode('America/Vancouver');
     // => $countryCode = 'CA' (CA = Canada)
 
 The `UTC/GMT time offsets`_ of all timezones are provided by ``getRawOffset()``
@@ -353,8 +358,8 @@ arguments to get the offset at any given point in time::
 The string representation of the GMT offset can vary depending on the locale, so
 you can pass the locale as the third optional argument::
 
-    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'ar')); // $offset = 'غرينتش+01:00'
-    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'dz')); // $offset = 'ཇི་ཨེམ་ཏི་+01:00'
+    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'ar'); // $offset = 'غرينتش+01:00'
+    $offset = Timezones::getGmtOffset('Europe/Madrid', strtotime('October 28, 2019'), 'dz'); // $offset = 'ཇི་ཨེམ་ཏི་+01:00'
 
 If the given timezone ID doesn't exist, the methods trigger a
 :class:`Symfony\\Component\\Intl\\Exception\\MissingResourceException`. In addition
@@ -375,7 +380,6 @@ Learn more
     /reference/forms/types/locale
     /reference/forms/types/timezone
 
-.. _intl extension: https://www.php.net/manual/en/book.intl.php
 .. _install the intl extension: https://www.php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html

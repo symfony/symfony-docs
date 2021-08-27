@@ -65,10 +65,10 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/website-skeleton:"5.2.x@dev" my_project_name
+    $ composer create-project symfony/website-skeleton:"5.4.x@dev" my_project_name
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"5.2.x@dev" my_project_name
+    $ composer create-project symfony/skeleton:"5.4.x@dev" my_project_name
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_name/`` directory, download some dependencies
@@ -80,6 +80,35 @@ started. In other words, your new application is ready!
     The project's cache and logs directory (by default, ``<project>/var/cache/``
     and ``<project>/var/log/``) must be writable by the web server. If you have
     any issue, read how to :doc:`set up permissions for Symfony applications </setup/file_permissions>`.
+
+.. _install-existing-app:
+
+Setting up an Existing Symfony Project
+--------------------------------------
+
+In addition to creating new Symfony projects, you will also work on projects
+already created by other developers. In that case, you only need to get the
+project code and install the dependencies with Composer. Assuming your team uses
+Git, setup your project with the following commands:
+
+.. code-block:: terminal
+
+    # clone the project to download its contents
+    $ cd projects/
+    $ git clone ...
+
+    # make Composer install the project's dependencies into vendor/
+    $ cd my-project/
+    $ composer install
+
+You'll probably also need to customize your :ref:`.env file <config-dot-env>`
+and do a few other project-specific tasks (e.g. creating a database). When
+working on a existing Symfony application for the first time, it may be useful
+to run this command which displays information about the project:
+
+.. code-block:: terminal
+
+    $ php bin/console about
 
 Running Symfony Applications
 ----------------------------
@@ -111,35 +140,6 @@ the server by pressing ``Ctrl+C`` from your terminal.
 
     The web server works with any PHP application, not only Symfony projects,
     so it's a very useful generic development tool.
-
-.. _install-existing-app:
-
-Setting up an Existing Symfony Project
---------------------------------------
-
-In addition to creating new Symfony projects, you will also work on projects
-already created by other developers. In that case, you only need to get the
-project code and install the dependencies with Composer. Assuming your team uses
-Git, setup your project with the following commands:
-
-.. code-block:: terminal
-
-    # clone the project to download its contents
-    $ cd projects/
-    $ git clone ...
-
-    # make Composer install the project's dependencies into vendor/
-    $ cd my-project/
-    $ composer install
-
-You'll probably also need to customize your :ref:`.env file <config-dot-env>`
-and do a few other project-specific tasks (e.g. creating a database). When
-working on a existing Symfony application for the first time, it may be useful
-to run this command which displays information about the project:
-
-.. code-block:: terminal
-
-    $ php bin/console about
 
 .. _symfony-flex:
 
@@ -210,12 +210,11 @@ For example, to add debugging features in your application, you can run the
 which in turn installs several packages like ``symfony/debug-bundle``,
 ``symfony/monolog-bundle``, ``symfony/var-dumper``, etc.
 
-By default, when installing Symfony packs, your ``composer.json`` file shows the
-pack dependency (e.g. ``"symfony/debug-pack": "^1.0"``) instead of the actual
-packages installed. To show the packages, add the ``--unpack`` option when
-installing a pack (e.g. ``composer require debug --dev --unpack``) or run this
-command to unpack the already installed packs: ``composer unpack PACK_NAME``
-(e.g. ``composer unpack debug``).
+You won't see the ``symfony/debug-pack`` dependency in your ``composer.json``,
+as Flex automatically unpacks the pack. This means that it only adds the real
+packages as dependencies (e.g. you will see a new ``symfony/var-dumper`` in
+``require-dev``). While it is not recommended, you can use the ``composer
+require --no-unpack ...`` option to disable unpacking.
 
 .. _security-checker:
 

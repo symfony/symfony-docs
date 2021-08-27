@@ -49,16 +49,18 @@ logging these HTTP codes based on the MonologBundle configuration:
     .. code-block:: php
 
         // config/packages/prod/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'main' => [
-                    // ...
-                    'type'                => 'fingers_crossed',
-                    'handler'             => ...,
-                    'excluded_http_codes' => [403, 404],
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $mainHandler = $monolog->handler('main')
+                // ...
+                ->type('fingers_crossed')
+                ->handler(...)
+            ;
+
+            $mainHandler->excludedHttpCode()->code(403);
+            $mainHandler->excludedHttpCode()->code(404);
+        };
 
 .. caution::
 

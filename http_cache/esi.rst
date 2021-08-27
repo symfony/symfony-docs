@@ -88,10 +88,13 @@ First, to use ESI, be sure to enable it in your application configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            // ...
-            'esi' => ['enabled' => true],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->esi()
+                ->enabled(true)
+            ;
+        };
 
 Now, suppose you have a page that is relatively static, except for a news
 ticker at the bottom of the content. With ESI, you can cache the news ticker
@@ -99,7 +102,7 @@ independently of the rest of the page::
 
     // src/Controller/DefaultController.php
     namespace App\Controller;
-    
+
     // ...
     class DefaultController extends AbstractController
     {
@@ -156,12 +159,12 @@ used ``render()``.
 
 .. note::
 
-    Symfony detects if a gateway cache supports ESI via another Akamai
-    specification that is supported out of the box by the Symfony reverse
-    proxy.
+    Symfony considers that a gateway cache supports ESI if its request include
+    the ``Surrogate-Capability`` HTTP header and the value of that header
+    contains the ``ESI/1.0`` string anywhere.
 
 The embedded action can now specify its own caching rules entirely independently
-of the master page::
+of the main page::
 
     // src/Controller/NewsController.php
     namespace App\Controller;
@@ -225,10 +228,14 @@ that must be enabled in your configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'fragments' => ['path' => '/_fragment'],
-        ]);
+            $framework->fragments()
+                ->path('/_fragment')
+            ;
+        };
 
 One great advantage of the ESI renderer is that you can make your application
 as dynamic as needed and at the same time, hit the application as little as

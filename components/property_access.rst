@@ -225,7 +225,7 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 Magic ``__call()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At last, ``getValue()`` can use the magic ``__call()`` method, but you need to
+Lastly, ``getValue()`` can use the magic ``__call()`` method, but you need to
 enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\PropertyAccessorBuilder`::
 
     // ...
@@ -239,9 +239,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
         {
             $property = lcfirst(substr($name, 3));
             if ('get' === substr($name, 0, 3)) {
-                return isset($this->children[$property])
-                    ? $this->children[$property]
-                    : null;
+                return $this->children[$property] ?? null;
             } elseif ('set' === substr($name, 0, 3)) {
                 $value = 1 == count($args) ? $args[0] : null;
                 $this->children[$property] = $value;
@@ -338,9 +336,7 @@ see `Enable other Features`_::
         {
             $property = lcfirst(substr($name, 3));
             if ('get' === substr($name, 0, 3)) {
-                return isset($this->children[$property])
-                    ? $this->children[$property]
-                    : null;
+                return $this->children[$property] ?? null;
             } elseif ('set' === substr($name, 0, 3)) {
                 $value = 1 == count($args) ? $args[0] : null;
                 $this->children[$property] = $value;
@@ -439,7 +435,7 @@ Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`
 
     $list = new PeopleList();
     $reflectionExtractor = new ReflectionExtractor(null, null, ['join', 'leave']);
-    $propertyAccessor = new PropertyAccessor(false, false, null, true, $reflectionExtractor, $reflectionExtractor);
+    $propertyAccessor = new PropertyAccessor(PropertyAccessor::DISALLOW_MAGIC_METHODS, PropertyAccessor::THROW_ON_INVALID_PROPERTY_PATH, null, $reflectionExtractor, $reflectionExtractor);
     $propertyAccessor->setValue($person, 'peoples', ['kevin', 'wouter']);
 
     var_dump($person->getPeoples()); // ['kevin', 'wouter']
@@ -519,10 +515,10 @@ configured to enable extra features. To do that you could use the
     $propertyAccessorBuilder->enableMagicSet(); // enables magic __set
     $propertyAccessorBuilder->enableMagicMethods(); // enables magic __get, __set and __call
 
-    $propertyAccessorBuilder->disableMagicCall(); // enables magic __call
-    $propertyAccessorBuilder->disableMagicGet(); // enables magic __get
-    $propertyAccessorBuilder->disableMagicSet(); // enables magic __set
-    $propertyAccessorBuilder->disableMagicMethods(); // enables magic __get, __set and __call
+    $propertyAccessorBuilder->disableMagicCall(); // disables magic __call
+    $propertyAccessorBuilder->disableMagicGet(); // disables magic __get
+    $propertyAccessorBuilder->disableMagicSet(); // disables magic __set
+    $propertyAccessorBuilder->disableMagicMethods(); // disables magic __get, __set and __call
 
     // checks if magic __call, __get or __set handling are enabled
     $propertyAccessorBuilder->isMagicCallEnabled(); // true or false

@@ -352,6 +352,26 @@ forgot to merge as ``gh merge NNNNN -s 5.1`` to change the merge branch. Solutio
     $ git merge 5.1
     $ ...
 
+Merging while the target branch changed
+.......................................
+
+Sometimes, someone else merges a PR in ``5.x`` at the same time as you are
+doing it. In these cases, ``gh merge ...`` failes to push. Solve this by
+resetting your local branch and restarting the merge:
+
+.. code-block:: terminal
+
+    $ gh merge ...
+    # this failed
+
+    # fetch the updated 5.x branch from GitHub
+    $ git fetch upstream
+    $ git checkout 5.x
+    $ git reset --hard upstream/5.x
+
+    # restart the merge
+    $ gh merge ...
+
 .. _`symfony/symfony-docs`: https://github.com/symfony/symfony-docs
 .. _`Symfony Docs team`: https://github.com/orgs/symfony/teams/team-symfony-docs
 .. _`Symfony's respectful review comments`: https://symfony.com/doc/current/contributing/community/review-comments.html

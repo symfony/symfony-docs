@@ -204,7 +204,7 @@ method name:
 
             App\Email\NewsletterManager:
                 class:   App\Email\NewsletterManager
-                factory: '@App\Email\NewsletterManagerFactory'
+                factory: '@App\Email\InvokableNewsletterManagerFactory'
 
     .. code-block:: xml
 
@@ -220,7 +220,7 @@ method name:
 
                 <service id="App\Email\NewsletterManager"
                          class="App\Email\NewsletterManager">
-                    <factory service="App\Email\NewsletterManagerFactory"/>
+                    <factory service="App\Email\InvokableNewsletterManagerFactory"/>
                 </service>
             </services>
         </container>
@@ -237,7 +237,7 @@ method name:
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                ->factory(service(NewsletterManagerFactory::class));
+                ->factory(service(InvokableNewsletterManagerFactory::class));
         };
 
 .. _factories-passing-arguments-factory-method:

@@ -72,8 +72,8 @@ You can add a table separator anywhere in the output by passing an instance of
 You can optionally display titles at the top and the bottom of the table::
 
     // ...
-    $table->setHeaderTitle('Books')
-    $table->setFooterTitle('Page 1/2')
+    $table->setHeaderTitle('Books');
+    $table->setFooterTitle('Page 1/2');
     $table->render();
 
 .. code-block:: terminal
@@ -233,7 +233,7 @@ If the built-in styles do not fit your need, define your own::
 
     // customizes the style
     $tableStyle
-        ->setDefaultCrossingChars('<fg=magenta>|</>')
+        ->setHorizontalBorderChars('<fg=magenta>|</>')
         ->setVerticalBorderChars('<fg=magenta>-</>')
         ->setDefaultCrossingChar(' ')
     ;
@@ -244,7 +244,7 @@ If the built-in styles do not fit your need, define your own::
 Here is a full list of things you can customize:
 
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setPaddingChar`
-*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChars`
+*  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setHorizontalBorderChars`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setVerticalBorderChars`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setCrossingChars`
 *  :method:`Symfony\\Component\\Console\\Helper\\TableStyle::setDefaultCrossingChar`
@@ -338,7 +338,7 @@ This results in:
         $table->setHeaders([
             [new TableCell('Main table title', ['colspan' => 3])],
             ['ISBN', 'Title', 'Author'],
-        ])
+        ]);
         // ...
 
     This generates:

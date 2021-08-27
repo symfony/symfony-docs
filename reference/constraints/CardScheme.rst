@@ -41,6 +41,22 @@ on an object that will contain a credit card number.
             protected $cardNumber;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Transaction.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Transaction
+        {
+            #[Assert\CardScheme(
+                schemes: [Assert\CardScheme::VISA],
+                message: 'Your credit card number is invalid.',
+            )]
+            protected $cardNumber;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -85,7 +101,7 @@ on an object that will contain a credit card number.
             {
                 $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme([
                     'schemes' => [
-                        'VISA',
+                        Assert\CardScheme::VISA,
                     ],
                     'message' => 'Your credit card number is invalid.',
                 ]));
@@ -99,8 +115,8 @@ Available Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 
@@ -121,8 +137,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-schemes
-~~~~~~~
+``schemes``
+~~~~~~~~~~~
 
 **type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 

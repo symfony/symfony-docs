@@ -235,13 +235,16 @@ all the forms of the application:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes([
                 'bootstrap_4_layout.html.twig',
                 'form/my_theme.html.twig',
-            ],
+            ]);
+
             // ...
-        ]);
+        };
 
 The order in which themes are defined is important because each theme overrides
 all the previous one. When rendering a form field whose block is not defined in
@@ -348,13 +351,14 @@ the directory defined in the :ref:`default_path option <config-twig-default-path
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'paths' => [
-                'email/default/templates' => null,
-                'backend/templates' => 'admin',
-            ],
-        ]);
+
+            $twig->path('email/default/templates', null);
+            $twig->path('backend/templates', 'admin');
+        };
 
 Read more about :ref:`template directories and namespaces <templates-namespaces>`.
 

@@ -1,9 +1,9 @@
 Using Bootstrap CSS & JS
 ========================
 
-Want to use Bootstrap (or something similar) in your project? No problem!
-First, install it. To be able to customize things further, we'll install
-``bootstrap``:
+This article explains how to install and integrate the `Bootstrap CSS framework`_
+in your Symfony application using :doc:`Webpack Encore </frontend>`.
+First, to be able to customize things further, we'll install ``bootstrap``:
 
 .. code-block:: terminal
 
@@ -37,11 +37,13 @@ file into ``global.scss``. You can even customize the Bootstrap variables first!
 Importing Bootstrap JavaScript
 ------------------------------
 
-Bootstrap JavaScript requires jQuery and Popper.js, so make sure you have this installed:
+First, install the JavaScript dependencies required by the Bootstrap version
+used in your application:
 
 .. code-block:: terminal
 
-    $ yarn add jquery popper.js --dev
+    // jQuery is only required in versions prior to Bootstrap 5
+    $ yarn add jquery @popperjs/core --dev
 
 Now, require bootstrap from any of your JavaScript files:
 
@@ -79,3 +81,5 @@ and CSS like normal:
     // require 2 CSS files needed
     require('bootstrap-star-rating/css/star-rating.css');
     require('bootstrap-star-rating/themes/krajee-svg/theme.css');
+
+.. _`Bootstrap CSS framework`: https://getbootstrap.com/

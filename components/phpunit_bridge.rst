@@ -289,6 +289,35 @@ Here is a summary that should help you pick the right configuration:
 |                        | cannot afford to use one of the modes above.        |
 +------------------------+-----------------------------------------------------+
 
+Baseline Deprecations
+.....................
+
+If your application has some deprecations that you can't fix for some reasons,
+you can tell Symfony to ignore them. The trick is to create a file with the
+allowed deprecations and define it as the "deprecation baseline". Deprecations
+inside that file are ignore but the rest of deprecations are still reported.
+
+First, generate the file with the allowed deprecations (run the same command
+whenever you want to update the existing file):
+
+.. code-block:: terminal
+
+    $ SYMFONY_DEPRECATIONS_HELPER='generateBaseline=true&baselineFile=./tests/allowed.json' ./vendor/bin/simple-phpunit
+
+This command stores all the deprecations reported while running tests in the
+given file path and encoded in JSON.
+
+Then, you can run the following command to use that file and ignore those deprecations:
+
+.. code-block:: terminal
+
+    $ SYMFONY_DEPRECATIONS_HELPER='baselineFile=./tests/allowed.json' ./vendor/bin/simple-phpunit
+
+.. versionadded:: 5.2
+
+    The ``baselineFile`` and ``generateBaseline`` options were introduced in
+    Symfony 5.2.
+
 Disabling the Verbose Output
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -349,6 +378,16 @@ the compiling and warming up of the container:
 .. versionadded:: 5.1
 
     The ``--deprecations`` option was introduced in Symfony 5.1.
+
+Log Deprecations
+~~~~~~~~~~~~~~~~
+
+For turning the verbose output off and write it to a log file instead you can use
+``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``.
+
+.. versionadded:: 5.3
+
+    The ``logFile`` option was introduced in Symfony 5.3.
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -809,10 +848,16 @@ namespaces in the ``phpunit.xml`` file, as done for example in the
 
 Under the hood, a PHPUnit listener injects the mocked functions in the tested
 classes' namespace. In order to work as expected, the listener has to run before
-the tested class ever runs. By default, the mocked functions are created when the
-annotation are found and the corresponding tests are run. Depending on how your
-tests are constructed, this might be too late. In this case, you will need to declare
-the namespaces of the tested classes in your ``phpunit.xml.dist``.
+the tested class ever runs.
+
+By default, the mocked functions are created when the annotation are found and
+the corresponding tests are run. Depending on how your tests are constructed,
+this might be too late.
+
+You can either:
+
+* Declare the namespaces of the tested classes in your ``phpunit.xml.dist``;
+* Register the namespaces at the end of the ``config/bootstrap.php`` file.
 
 .. code-block:: xml
 
@@ -827,6 +872,16 @@ the namespaces of the tested classes in your ``phpunit.xml.dist``.
                 </arguments>
             </listener>
     </listeners>
+
+::
+
+    // config/bootstrap.php
+    use Symfony\Bridge\PhpUnit\ClockMock;
+    
+    // ...
+    if ('test' === $_SERVER['APP_ENV']) {
+        ClockMock::register('Acme\\MyClassTest\\');
+    }
 
 Modified PHPUnit script
 -----------------------
@@ -891,6 +946,18 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
 
     It's also possible to set this env var in the ``phpunit.xml.dist`` file.
+    
+.. tip::
+
+    It is also possible to require additional packages that will be installed along
+    the rest of the needed PHPUnit packages using the ``SYMFONY_PHPUNIT_REQUIRE``
+    env variable. This is specially useful for installing PHPUnit plugins without
+    having to add them to your main ``composer.json`` file.
+
+.. versionadded:: 5.3
+
+    The ``SYMFONY_PHPUNIT_REQUIRE`` env variable was introduced in
+    Symfony 5.3.
 
 Code Coverage Listener
 ----------------------

@@ -1,6 +1,11 @@
 How to Use Multiple Guard Authenticators
 ========================================
 
+.. deprecated:: 5.3
+
+    Guard authenticators are deprecated since Symfony 5.3 in favor of the
+    :doc:`new authenticator-based system </security/authenticator_manager>`.
+
 The Guard authentication component allows you to use many different
 authenticators at a time.
 
@@ -38,7 +43,7 @@ This is how your security configuration can look in action:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -63,23 +68,21 @@ This is how your security configuration can look in action:
         // config/packages/security.php
         use App\Security\FacebookConnectAuthenticator;
         use App\Security\LoginFormAuthenticator;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'firewalls' => [
-                'default' => [
-                    'anonymous' => true,
-                    'lazy' => true,
-                    'guard' => [
-                        'entry_point' => LoginFormAuthenticator::class,
-                        'authenticators' => [
-                            LoginFormAuthenticator::class,
-                            FacebookConnectAuthenticator::class,
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+
+            $defaultFirewall = $security->firewall('default');
+            $defaultFirewall->lazy(true);
+            $defaultFirewall->anonymous();
+            $defaultFirewall->guard()
+                ->entryPoint(LoginFormAuthenticator::class)
+                ->authenticators([
+                    LoginFormAuthenticator::class,
+                    FacebookConnectAuthenticator::class,
+                ]);
+        };
 
 There is one limitation with this approach - you have to use exactly one entry point.
 
@@ -119,7 +122,7 @@ the solution is to split the configuration into two separate firewalls:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -151,31 +154,32 @@ the solution is to split the configuration into two separate firewalls:
         // config/packages/security.php
         use App\Security\ApiTokenAuthenticator;
         use App\Security\LoginFormAuthenticator;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            // ...
-            'firewalls' => [
-                'api' => [
-                    'pattern' => '^/api',
-                    'guard' => [
-                        'authenticators' => [
-                            ApiTokenAuthenticator::class,
-                        ],
-                    ],
-                ],
-                'default' => [
-                    'anonymous' => true,
-                    'lazy' => true,
-                    'guard' => [
-                        'authenticators' => [
-                            LoginFormAuthenticator::class,
-                        ],
-                    ],
-                ],
-            ],
-            'access_control' => [
-                ['path' => '^/login', 'roles' => 'IS_AUTHENTICATED_ANONYMOUSLY'],
-                ['path' => '^/api', 'roles' => 'ROLE_API_USER'],
-                ['path' => '^/', 'roles' => 'ROLE_USER'],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->firewall('api')
+                ->pattern('^/api')
+                ->guard()
+                ->authenticators([
+                    ApiTokenAuthenticator::class,
+                ]);
+
+            $defaultFirewall = $security->firewall('default');
+            $defaultFirewall->lazy(true);
+            $defaultFirewall->anonymous();
+            $defaultFirewall->guard()
+                ->authenticators([
+                    LoginFormAuthenticator::class,
+                ]);
+
+            $security->accessControl()
+                ->path('^/login')
+                ->roles(['IS_AUTHENTICATED_ANONYMOUSLY']);
+            $security->accessControl()
+                ->path('^/api')
+                ->roles(['ROLE_API_USER']);
+            $security->accessControl()
+                ->path('^/')
+                ->roles(['ROLE_USER']);
+        };
+

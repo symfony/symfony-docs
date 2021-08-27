@@ -31,7 +31,6 @@ request::
     use Symfony\Bundle\FrameworkBundle\DataCollector\AbstractDataCollector;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 
     class RequestCollector extends AbstractDataCollector
     {
@@ -96,7 +95,7 @@ template that includes some specific blocks.
 
 First, add the ``getTemplate()`` method in your data collector class to return
 the path of the Twig template to use. Then, add some *getters* to give the
-template access to the collected information::::
+template access to the collected information::
 
     // src/DataCollector/RequestCollector.php
     namespace App\DataCollector;

@@ -44,6 +44,7 @@ to retrieve them:
     .. code-block:: yaml
 
         # config/packages/security.yaml
+        security:
             # ...
 
             providers:
@@ -62,7 +63,7 @@ to retrieve them:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -89,24 +90,22 @@ to retrieve them:
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'providers' => [
-                'users' => [
-                    'entity' => [
-                        // the class of the entity that represents users
-                        'class'    => User::class,
-                        // the property to query by - e.g. username, email, etc
-                        'property' => 'username',
-                        // optional: if you're using multiple Doctrine entity
-                        // managers, this option defines which one to use
-                        // 'manager_name' => 'customer',
-                    ],
-                ],
-            ],
+        return static function (SecurityConfig $security) {
+            $security->provider('users')
+                ->entity()
+                    // the class of the entity that represents users
+                    ->class(User::class)
+                    // the property to query by - e.g. username, email, etc
+                    ->property('username')
+                    // optional: if you're using multiple Doctrine entity
+                    // managers, this option defines which one to use
+                    ->managerName('customer')
+            ;
 
             // ...
-        ]);
+        };
 
 The ``providers`` section creates a "user provider" called ``users`` that knows
 how to query from your ``App\Entity\User`` entity by the ``username`` property.
@@ -123,11 +122,12 @@ the ``property`` config key. If you want a bit more control over this - e.g. you
 want to find a user by ``email`` *or* ``username``, you can do that by making
 your ``UserRepository`` implement the
 :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`. This
-interface only requires one method: ``loadUserByUsername($username)``::
+interface only requires one method: ``loadUserByIdentifier($identifier)``::
 
     // src/Repository/UserRepository.php
     namespace App\Repository;
 
+    use App\Entity\User;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
     use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 
@@ -135,10 +135,12 @@ interface only requires one method: ``loadUserByUsername($username)``::
     {
         // ...
 
-        public function loadUserByUsername(string $usernameOrEmail)
+        // The loadUserByIdentifier() method was introduced in Symfony 5.3.
+        // In previous versions it was called loadUserByUsername()
+        public function loadUserByIdentifier(string $usernameOrEmail): ?User
         {
             $entityManager = $this->getEntityManager();
-            
+
             return $entityManager->createQuery(
                     'SELECT u
                     FROM App\Entity\User u
@@ -169,7 +171,7 @@ To finish this, remove the ``property`` key from the user provider in
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -191,23 +193,21 @@ To finish this, remove the ``property`` key from the user provider in
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
 
-            'providers' => [
-                'users' => [
-                    'entity' => [
-                        'class' => User::class,
-                    ],
-                ],
-            ],
-        ]);
+            $security->provider('users')
+                ->entity()
+                    ->class(User::class)
+            ;
+        };
 
 This tells Symfony to *not* query automatically for the User. Instead, when
 needed (e.g. because :doc:`user impersonation </security/impersonating_user>`,
 :doc:`Remember Me </security/remember_me>`, or some other security feature is
-activated), the ``loadUserByUsername()`` method on ``UserRepository`` will be called.
+activated), the ``loadUserByIdentifier()`` method on ``UserRepository`` will be called.
 
 .. _security-memory-user-provider:
 
@@ -220,7 +220,7 @@ prototypes and for limited applications that don't store users in databases.
 
 This user provider stores all user information in a configuration file,
 including their passwords. That's why the first step is to configure how these
-users will encode their passwords:
+users will hash their passwords:
 
 .. configuration-block::
 
@@ -229,14 +229,16 @@ users will encode their passwords:
         # config/packages/security.yaml
         security:
             # ...
-            encoders:
+            password_hashers:
                 # this internal class is used by Symfony to represent in-memory users
-                Symfony\Component\Security\Core\User\User: 'auto'
+                # (the 'InMemoryUser' class was introduced in Symfony 5.3.
+                # In previous versions it was called 'User')
+                Symfony\Component\Security\Core\User\InMemoryUser: 'auto'
 
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -249,7 +251,9 @@ users will encode their passwords:
                 <!-- ... -->
 
                 <!-- this internal class is used by Symfony to represent in-memory users -->
-                <encoder class="Symfony\Component\Security\Core\User\User"
+                <!-- (the 'InMemoryUser' class was introduced in Symfony 5.3.
+                     In previous versions it was called 'User') -->
+                <security:password-hasher class="Symfony\Component\Security\Core\User\InMemoryUser"
                     algorithm="auto"
                 />
             </config>
@@ -260,22 +264,24 @@ users will encode their passwords:
         // config/packages/security.php
 
         // this internal class is used by Symfony to represent in-memory users
-        use Symfony\Component\Security\Core\User\User;
+        // (the 'InMemoryUser' class was introduced in Symfony 5.3.
+        // In previous versions it was called 'User')
+        use Symfony\Component\Security\Core\User\InMemoryUser;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
+        return static function (SecurityConfig $security) {
             // ...
-            'encoders' => [
-                User::class => [
-                    'algorithm' => 'auto',
-                ],
-            ],
-        ]);
 
-Then, run this command to encode the plain text passwords of your users:
+            $security->passwordHasher(InMemoryUser::class)
+                ->algorithm('auto')
+            ;
+        };
+
+Then, run this command to hash the plain text passwords of your users:
 
 .. code-block:: terminal
 
-    $ php bin/console security:encode-password
+    $ php bin/console security:hash-password
 
 Now you can configure all the user information in ``config/packages/security.yaml``:
 
@@ -294,7 +300,7 @@ Now you can configure all the user information in ``config/packages/security.yam
 .. caution::
 
     When using a ``memory`` provider, and not the ``auto`` algorithm, you have
-    to choose an encoding without salt (i.e. ``bcrypt``).
+    to choose a hashing algorithm without salt (i.e. ``bcrypt``).
 
 .. _security-ldap-user-provider:
 
@@ -359,7 +365,7 @@ command will generate a nice skeleton to get you started::
     namespace App\Security;
 
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-    use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+    use Symfony\Component\Security\Core\Exception\UserNotFoundException;
     use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -367,23 +373,21 @@ command will generate a nice skeleton to get you started::
     class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     {
         /**
+         * The loadUserByIdentifier() method was introduced in Symfony 5.3.
+         * In previous versions it was called loadUserByUsername()
+         *
          * Symfony calls this method if you use features like switch_user
-         * or remember_me.
+         * or remember_me. If you're not using these features, you do not
+         * need to implement this method.
          *
-         * If you're not using these features, you do not need to implement
-         * this method.
-         *
-         * @return UserInterface
-         *
-         * @throws UsernameNotFoundException if the user is not found
+         * @throws UserNotFoundException if the user is not found
          */
-        public function loadUserByUsername(string $username)
+        public function loadUserByIdentifier(string $identifier): UserInterface
         {
-            // Load a User object from your data source or throw UsernameNotFoundException.
-            // The $username argument may not actually be a username:
-            // it is whatever value is being returned by the getUsername()
-            // method in your User class.
-            throw new \Exception('TODO: fill in loadUserByUsername() inside '.__FILE__);
+            // Load a User object from your data source or throw UserNotFoundException.
+            // The $identifier argument is whatever value is being returned by the
+            // getUserIdentifier() method in your User class.
+            throw new \Exception('TODO: fill in loadUserByIdentifier() inside '.__FILE__);
         }
 
         /**
@@ -406,7 +410,7 @@ command will generate a nice skeleton to get you started::
             }
 
             // Return a User object after making sure its data is "fresh".
-            // Or throw a UsernameNotFoundException if the user no longer exists.
+            // Or throw a UserNotFoundException if the user no longer exists.
             throw new \Exception('TODO: fill in refreshUser() inside '.__FILE__);
         }
 
@@ -417,15 +421,15 @@ command will generate a nice skeleton to get you started::
         {
             return User::class === $class || is_subclass_of($class, User::class);
         }
-        
+
         /**
-         * Upgrades the encoded password of a user, typically for using a better hash algorithm.
+         * Upgrades the hashed password of a user, typically for using a better hash algorithm.
          */
-        public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+        public function upgradePassword(UserInterface $user, string $newHashedPassword): void
         {
-            // TODO: when encoded passwords are in use, this method should:
+            // TODO: when hashed passwords are in use, this method should:
             // 1. persist the new password in the user storage
-            // 2. update the $user object with $user->setPassword($newEncodedPassword);
+            // 2. update the $user object with $user->setPassword($newHashedPassword);
         }
     }
 
@@ -459,8 +463,8 @@ request, it's deserialized and then passed to your user provider to "refresh" it
 Then, the two User objects (the original from the session and the refreshed User
 object) are "compared" to see if they are "equal". By default, the core
 ``AbstractToken`` class compares the return values of the ``getPassword()``,
-``getSalt()`` and ``getUsername()`` methods. If any of these are different, your
-user will be logged out. This is a security measure to make sure that malicious
+``getSalt()`` and ``getUserIdentifier()`` methods. If any of these are different,
+your user will be logged out. This is a security measure to make sure that malicious
 users can be de-authenticated if core user data changes.
 
 However, in some cases, this process can cause unexpected authentication problems.

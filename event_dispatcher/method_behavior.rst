@@ -21,7 +21,7 @@ end of the method::
             $event = new BeforeSendMailEvent($subject, $message);
             $this->dispatcher->dispatch($event, 'mailer.pre_send');
 
-            // get $foo and $bar from the event, they may have been modified
+            // get $subject and $message from the event, they may have been modified
             $subject = $event->getSubject();
             $message = $event->getMessage();
 
@@ -134,7 +134,7 @@ could listen to the ``mailer.post_send`` event and change the method's return va
         public static function getSubscribedEvents()
         {
             return [
-                'mailer.post_send' => 'onMailerPostSend'
+                'mailer.post_send' => 'onMailerPostSend',
             ];
         }
     }

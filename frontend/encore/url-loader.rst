@@ -1,18 +1,11 @@
-Inlining files in CSS with Webpack URL Loader
-=============================================
+Inlining Images & Fonts in CSS
+==============================
 
 A simple technique to improve the performance of web applications is to reduce
 the number of HTTP requests inlining small files as base64 encoded URLs in the
 generated CSS files.
 
-Webpack Encore provides this feature via Webpack's `URL Loader`_ plugin, but
-it's disabled by default. First, add the URL loader to your project:
-
-.. code-block:: terminal
-
-    $ yarn add url-loader --dev
-
-Then enable it in your ``webpack.config.js``:
+You can enable this in ``webpack.config.js`` for images, fonts or both:
 
 .. code-block:: javascript
 
@@ -21,31 +14,19 @@ Then enable it in your ``webpack.config.js``:
 
     Encore
         // ...
-        .configureUrlLoader({
-            fonts: { limit: 4096 },
-            images: { limit: 4096 }
+        .configureImageRule({
+            // tell Webpack it should consider inlining
+            type: 'asset',
+            //maxSize: 4 * 1024, // 4 kb - the default is 8kb
+        })
+
+        .configureFontRule({
+            type: 'asset',
+            //maxSize: 4 * 1024
         })
     ;
 
-The ``limit`` option defines the maximum size in bytes of the inlined files. In
-the previous example, font and image files having a size below or equal to 4 KB
-will be inlined and the rest of files will be processed as usual.
+This leverages Webpack `Asset Modules`_. You can read more about this and the
+configuration there.
 
-You can also use all the other options supported by the `URL Loader`_. If you
-want to disable this loader for either images or fonts, remove the corresponding
-key from the object that is passed to the ``configureUrlLoader()`` method:
-
-.. code-block:: javascript
-
-    // webpack.config.js
-    // ...
-
-    Encore
-        // ...
-        .configureUrlLoader({
-            // 'fonts' is not defined, so only images will be inlined
-            images: { limit: 4096 }
-        })
-    ;
-
-.. _`URL Loader`: https://github.com/webpack-contrib/url-loader
+.. _`Asset Modules`: https://webpack.js.org/guides/asset-modules/

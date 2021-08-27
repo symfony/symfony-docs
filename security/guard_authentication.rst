@@ -4,6 +4,11 @@
 Custom Authentication System with Guard (API Token Example)
 ===========================================================
 
+.. deprecated:: 5.3
+
+    Guard authenticators are deprecated since Symfony 5.3 in favor of the
+    :doc:`new authenticator-based system </security/authenticator_manager>`.
+
 Guard authentication can be used to:
 
 * :doc:`Build a Login Form </security/form_login_setup>`
@@ -13,11 +18,6 @@ Guard authentication can be used to:
 
 and many more. In this example, we'll build an API token authentication
 system, so we can learn more about Guard in detail.
-
-.. tip::
-
-    A :doc:`new experimental authenticator-based system </security/experimental_authenticators>`
-    was introduced in Symfony 5.1, which will eventually replace Guards in Symfony 6.0.
 
 Step 1) Prepare your User Class
 -------------------------------
@@ -32,22 +32,22 @@ your ``User`` class (the ``make:entity`` command is a good way to do this):
 
 .. code-block:: diff
 
-    // src/Entity/User.php
-    namespace App\Entity;
+      // src/Entity/User.php
+      namespace App\Entity;
 
-    // ...
+      // ...
 
-    class User implements UserInterface
-    {
-        // ...
+      class User implements UserInterface
+      {
+          // ...
 
     +     /**
     +      * @ORM\Column(type="string", unique=true, nullable=true)
     +      */
     +     private $apiToken;
 
-        // the getter and setter methods
-    }
+          // the getter and setter methods
+      }
 
 Don't forget to generate and run the migration:
 
@@ -77,7 +77,7 @@ Next, configure your "user provider" to use this new ``apiToken`` property:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -98,20 +98,18 @@ Next, configure your "user provider" to use this new ``apiToken`` property:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
             // ...
 
-            'providers' => [
-                'your_db_provider' => [
-                    'entity' => [
-                        'class' => 'App\Entity\User',
-                        'property' => 'apiToken',
-                    ],
-                ],
-            ],
+            $security->provider('your_db_provider')
+                ->entity('App\Entity\User')
+                ->property('apiToken')
+            ;
 
             // ...
-        ]);
+        };
 
 Step 2) Create the Authenticator Class
 --------------------------------------
@@ -150,7 +148,7 @@ This requires you to implement several methods::
          * used for the request. Returning `false` will cause this authenticator
          * to be skipped.
          */
-        public function supports(Request $request)
+        public function supports(Request $request): bool
         {
             return $request->headers->has('X-AUTH-TOKEN');
         }
@@ -164,7 +162,7 @@ This requires you to implement several methods::
             return $request->headers->get('X-AUTH-TOKEN');
         }
 
-        public function getUser($credentials, UserProviderInterface $userProvider)
+        public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
         {
             if (null === $credentials) {
                 // The token header was empty, authentication fails with HTTP Status
@@ -172,13 +170,13 @@ This requires you to implement several methods::
                 return null;
             }
 
-            // The "username" in this case is the apiToken, see the key `property`
+            // The user identifier in this case is the apiToken, see the key `property`
             // of `your_db_provider` in `security.yaml`.
             // If this returns a user, checkCredentials() is called next:
-            return $userProvider->loadUserByUsername($credentials);
+            return $userProvider->loadUserByIdentifier($credentials);
         }
 
-        public function checkCredentials($credentials, UserInterface $user)
+        public function checkCredentials($credentials, UserInterface $user): bool
         {
             // Check credentials - e.g. make sure the password is valid.
             // In case of an API token, no credential check is needed.
@@ -187,13 +185,13 @@ This requires you to implement several methods::
             return true;
         }
 
-        public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+        public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): ?Response
         {
             // on success, let the request continue
             return null;
         }
 
-        public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+        public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
         {
             $data = [
                 // you may want to customize or obfuscate the message first
@@ -209,7 +207,7 @@ This requires you to implement several methods::
         /**
          * Called when authentication is needed, but it's not sent
          */
-        public function start(Request $request, AuthenticationException $authException = null)
+        public function start(Request $request, AuthenticationException $authException = null): Response
         {
             $data = [
                 // you might translate this message
@@ -219,7 +217,7 @@ This requires you to implement several methods::
             return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
         }
 
-        public function supportsRememberMe()
+        public function supportsRememberMe(): bool
         {
             return false;
         }
@@ -264,7 +262,7 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
@@ -292,28 +290,25 @@ Finally, configure your ``firewalls`` key in ``security.yaml`` to use this authe
     .. code-block:: php
 
         // config/packages/security.php
-
-        // ...
         use App\Security\TokenAuthenticator;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main'       => [
-                    'pattern'        => '^/',
-                    'anonymous'      => true,
-                    'lazy'           => true,
-                    'logout'         => true,
-                    'guard'          => [
-                        'authenticators'  => [
-                            TokenAuthenticator::class,
-                        ],
-                    ],
-                    // if you want, disable storing the user in the session
-                    // 'stateless' => true,
-                    // ...
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall
+                ->pattern('^/')
+                ->lazy(true)
+                ->anonymous();
+
+            $mainFirewall->logout();
+            $mainFirewall
+                ->guard()
+                    ->authenticators([TokenAuthenticator::class])
+            ;
+            // if you want, disable storing the user in the session
+            // $mainFirewall->stateless(true);
+            // ...
+        };
 
 You did it! You now have a fully-working API token authentication system. If your
 homepage required ``ROLE_USER``, then you could test it under different conditions:
@@ -466,7 +461,7 @@ completes registration. To do that, use your authenticator and a service called
 
     // src/Controller/RegistrationController.php
     namespace App\Controller;
-    
+
     // ...
     use App\Security\LoginFormAuthenticator;
     use Symfony\Component\HttpFoundation\Request;
@@ -474,7 +469,7 @@ completes registration. To do that, use your authenticator and a service called
 
     class RegistrationController extends AbstractController
     {
-        public function register(LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler, Request $request)
+        public function register(LoginFormAuthenticator $authenticator, GuardAuthenticatorHandler $guardHandler, Request $request): Response
         {
             // ...
 
@@ -504,7 +499,7 @@ the user's session is "migrated" to a new session id.
 This is an edge-case, and unless you're having session or CSRF token issues, you
 can ignore this. Here is an example of good and bad behavior::
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         // GOOD behavior: only authenticate (i.e. return true) on a specific route
         return 'login_route' === $request->attributes->get('_route') && $request->isMethod('POST');
@@ -526,13 +521,13 @@ are two possible fixes:
 
 .. code-block:: diff
 
-    // src/Security/MyIpAuthenticator.php
-    // ...
+      // src/Security/MyIpAuthenticator.php
+      // ...
 
     + use Symfony\Component\Security\Core\Security;
 
-    class MyIpAuthenticator
-    {
+      class MyIpAuthenticator
+      {
     +     private $security;
 
     +     public function __construct(Security $security)
@@ -540,8 +535,8 @@ are two possible fixes:
     +         $this->security = $security;
     +     }
 
-        public function supports(Request $request)
-        {
+          public function supports(Request $request): bool
+          {
     +         // if there is already an authenticated user (likely due to the session)
     +         // then return false and skip authentication: there is no need.
     +         if ($this->security->getUser()) {
@@ -550,8 +545,8 @@ are two possible fixes:
 
     +         // the user is not logged in, so the authenticator should continue
     +         return true;
-        }
-    }
+          }
+      }
 
 If you use autowiring, the ``Security``  service will automatically be passed to
 your authenticator.

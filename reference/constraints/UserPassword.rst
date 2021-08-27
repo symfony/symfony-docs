@@ -12,7 +12,7 @@ password, but needs to enter their old password for security.
 
 .. note::
 
-    In order to use this constraints, you should have installed the
+    In order to use this constraint, you should have installed the
     symfony/security-core component with Composer.
 
 ==========  ===================================================================
@@ -48,6 +48,21 @@ the user's current password:
              *     message = "Wrong value for your current password"
              * )
              */
+            protected $oldPassword;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Form/Model/ChangePassword.php
+        namespace App\Form\Model;
+
+        use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
+
+        class ChangePassword
+        {
+            #[SecurityAssert\UserPassword(
+                message: 'Wrong value for your current password',
+            )]
             protected $oldPassword;
         }
 

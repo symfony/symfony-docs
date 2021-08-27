@@ -4,10 +4,10 @@
 How to Embed a Collection of Forms
 ==================================
 
-In this article, you'll learn how to create a form that embeds a collection
-of many other forms. This could be useful, for example, if you had a ``Task``
-class and you wanted to edit/create/remove many ``Tag`` objects related to
-that Task, right inside the same form.
+Symfony Forms can embed a collection of many other forms, which is useful to
+edit related entities in a single form. In this article, you'll create a form to
+edit a ``Task`` class and, right inside the same form, you'll be able to edit,
+create and remove many ``Tag`` objects related to that Task.
 
 Let's start by creating a ``Task`` entity::
 
@@ -45,9 +45,8 @@ Let's start by creating a ``Task`` entity::
 
 .. note::
 
-    The ``ArrayCollection`` is specific to Doctrine and is basically the
-    same as using an ``array`` (but it must be an ``ArrayCollection`` if
-    you're using Doctrine).
+    The `ArrayCollection`_ is specific to Doctrine and is similar to a PHP array
+    but provides many utility methods.
 
 Now, create a ``Tag`` class. As you saw above, a ``Task`` can have many ``Tag``
 objects::
@@ -246,7 +245,7 @@ the following ``data-prototype`` attribute to the existing ``<ul>`` in your temp
 
     <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
 
-Now add a button just next to the ``<ul>`` to dynamically add a new tag
+Now add a button just next to the ``<ul>`` to dynamically add a new tag:
 
 .. code-block:: html+twig
 
@@ -256,7 +255,7 @@ On the rendered page, the result will look something like this:
 
 .. code-block:: html
 
-    <ul class="tags" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+    <ul class="tags" data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
 
 .. seealso::
 
@@ -281,74 +280,45 @@ On the rendered page, the result will look something like this:
     the ``data-prototype`` attribute is automatically added to the containing ``div``,
     and you need to adjust the following JavaScript accordingly.
 
-The goal of this section will be to use JavaScript to read this attribute
-and dynamically add new tag forms when the user clicks the "Add a tag" button.
-This example uses jQuery and assumes you have it included somewhere on your page.
+Now add some JavaScript to read this attribute and dynamically add new tag forms
+when the user clicks the "Add a tag" link. This example uses `jQuery`_ and
+assumes you have it included somewhere on your page (e.g. using Symfony's
+:doc:`Webpack Encore </frontend>`).
 
-Add a ``script`` tag somewhere on your page so you can start writing some
-JavaScript. In this script, bind to the "click" event of the "Add a tag"
-button so you can add a new tag form (``addFormToCollection()`` will be show next):
-
-.. code-block:: javascript
-
-    jQuery(document).ready(function() {
-        // Get the ul that holds the collection of tags
-        var $tagsCollectionHolder = $('ul.tags');
-        // count the current form inputs we have (e.g. 2), use that as the new
-        // index when inserting a new item (e.g. 2)
-        $tagsCollectionHolder.data('index', $tagsCollectionHolder.find('input').length);
-
-        $('body').on('click', '.add_item_link', function(e) {
-            var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
-            // add a new tag form (see next code block)
-            addFormToCollection($collectionHolderClass);
-        })
-    });
-
-The ``addTagForm()`` function's job will be to use the ``data-prototype`` attribute
-to dynamically add a new form when this link is clicked. The ``data-prototype``
-HTML contains the tag ``text`` input element with a name of ``task[tags][__name__][name]``
-and id of ``task_tags___name___name``. The ``__name__`` is a little "placeholder",
-which you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``).
-
-The actual code needed to make this all work can vary quite a bit, but here's
-one example:
+Add a ``<script>`` tag somewhere on your page to include the required
+functionality with JavaScript:
 
 .. code-block:: javascript
 
-    function addFormToCollection($collectionHolderClass) {
-        // Get the ul that holds the collection of tags
-        var $collectionHolder = $('.' + $collectionHolderClass);
+    document
+      .querySelectorAll('.add_item_link')
+      .forEach(btn => btn.addEventListener("click", addFormToCollection));
 
-        // Get the data-prototype explained earlier
-        var prototype = $collectionHolder.data('prototype');
+The ``addFormToCollection()`` function's job will be to use the ``data-prototype``
+attribute to dynamically add a new form when this link is clicked. The ``data-prototype``
+HTML contains the tag's ``text`` input element with a name of ``task[tags][__name__][name]``
+and id of ``task_tags___name___name``. The ``__name__`` is a placeholder, which
+you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``):
 
-        // get the new index
-        var index = $collectionHolder.data('index');
+.. code-block:: javascript
 
-        var newForm = prototype;
-        // You need this only if you didn't set 'label' => false in your tags field in TaskType
-        // Replace '__name__label__' in the prototype's HTML to
-        // instead be a number based on how many items we have
-        // newForm = newForm.replace(/__name__label__/g, index);
+    const addFormToCollection = (e) => {
+      const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
-        // Replace '__name__' in the prototype's HTML to
-        // instead be a number based on how many items we have
-        newForm = newForm.replace(/__name__/g, index);
+      const item = document.createElement('li');
 
-        // increase the index with one for the next item
-        $collectionHolder.data('index', index + 1);
+      item.innerHTML = collectionHolder
+        .dataset
+        .prototype
+        .replace(
+          /__name__/g,
+          collectionHolder.dataset.index
+        );
 
-        // Display the form in the page in an li, before the "Add a tag" link li
-        var $newFormLi = $('<li></li>').append(newForm);
-        // Add the new form at the end of the list
-        $collectionHolder.append($newFormLi)
-    }
+      collectionHolder.appendChild(item);
 
-.. note::
-
-    It is better to separate your JavaScript in real JavaScript files than
-    to write it inside the HTML as is done here.
+      collectionHolder.dataset.index++;
+    };
 
 Now, each time a user clicks the ``Add a tag`` link, a new sub form will
 appear on the page. When the form is submitted, any new tag forms will be converted
@@ -561,36 +531,35 @@ First, add a "delete this tag" link to each tag form:
 
 .. code-block:: javascript
 
-    jQuery(document).ready(function() {
-        // Get the ul that holds the collection of tags
-        $collectionHolder = $('ul.tags');
+    const tags = document.querySelectorAll('ul.tags')
+    tags.forEach((tag) => {
+        addTagFormDeleteLink(tag)
+    })
 
-        // add a delete link to all of the existing tag form li elements
-        $collectionHolder.find('li').each(function() {
-            addTagFormDeleteLink($(this));
-        });
-
-        // ... the rest of the block from above
-    });
-
-    function addTagForm() {
+    // ... the rest of the block from above
+    
+    function addFormToCollection() {
         // ...
 
         // add a delete link to the new form
-        addTagFormDeleteLink($newFormLi);
+        addTagFormDeleteLink(item);
     }
 
 The ``addTagFormDeleteLink()`` function will look something like this:
 
 .. code-block:: javascript
 
-    function addTagFormDeleteLink($tagFormLi) {
-        var $removeFormButton = $('<button type="button">Delete this tag</button>');
-        $tagFormLi.append($removeFormButton);
+    const addTagFormDeleteLink = (tagFormLi) => {
+        const removeFormButton = document.createElement('button')
+        removeFormButton.classList
+        removeFormButton.innerText = 'Delete this tag'
+        
+        tagFormLi.append(removeFormButton);
 
-        $removeFormButton.on('click', function(e) {
+        removeFormButton.addEventListener('click', (e) => {
+            e.preventDefault()
             // remove the li for the tag form
-            $tagFormLi.remove();
+            tagFormLi.remove();
         });
     }
 
@@ -685,6 +654,8 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     the `symfony-collection`_ package based on jQuery for the rest of browsers.
 
 .. _`Owning Side and Inverse Side`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork-associations.html
-.. _`JSFiddle`: http://jsfiddle.net/847Kf/4/
+.. _`jQuery`: http://jquery.com/
+.. _`JSFiddle`: https://jsfiddle.net/ey8ozh6n/
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
+.. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html

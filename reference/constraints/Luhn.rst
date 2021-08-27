@@ -37,6 +37,19 @@ will contain a credit card number.
             protected $cardNumber;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Transaction.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Transaction
+        {
+            #[Assert\Luhn(message: 'Please check your credit card number.')]
+            protected $cardNumber;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

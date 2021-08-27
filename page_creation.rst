@@ -105,21 +105,21 @@ You can now add your route directly *above* the controller:
 
 .. code-block:: diff
 
-    // src/Controller/LuckyController.php
+      // src/Controller/LuckyController.php
 
-    // ...
+      // ...
     + use Symfony\Component\Routing\Annotation\Route;
 
-    class LuckyController
-    {
+      class LuckyController
+      {
     +     /**
     +      * @Route("/lucky/number")
     +      */
-        public function number()
-        {
-            // this looks exactly the same
-        }
-    }
+          public function number()
+          {
+              // this looks exactly the same
+          }
+      }
 
 That's it! The page - http://localhost:8000/lucky/number will work exactly
 like before! Annotations are the recommended way to configure routes.
@@ -163,7 +163,7 @@ To get a list of *all* of the routes in your system, use the ``debug:router`` co
 
     $ php bin/console debug:router
 
-You should see your ``app_lucky_number`` route at the very top:
+You should see your ``app_lucky_number`` route in the list:
 
 ================== ======== ======== ====== ===============
  Name               Method   Scheme   Host   Path
@@ -171,7 +171,7 @@ You should see your ``app_lucky_number`` route at the very top:
  app_lucky_number   ANY      ANY      ANY    /lucky/number
 ================== ======== ======== ====== ===============
 
-You will also see debugging routes below ``app_lucky_number`` -- more on
+You will also see debugging routes besides ``app_lucky_number`` -- more on
 the debugging routes in the next section.
 
 You'll learn about many more commands as you continue!
@@ -209,18 +209,18 @@ Make sure that ``LuckyController`` extends Symfony's base
 
 .. code-block:: diff
 
-    // src/Controller/LuckyController.php
+      // src/Controller/LuckyController.php
 
-    // ...
+      // ...
     + use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     - class LuckyController
     + class LuckyController extends AbstractController
-    {
-        // ...
-    }
+      {
+          // ...
+      }
 
-Now, use the handy ``render()`` function to render a template. Pass it a ``number``
+Now, use the handy ``render()`` method to render a template. Pass it a ``number``
 variable so you can use it in Twig::
 
     // src/Controller/LuckyController.php

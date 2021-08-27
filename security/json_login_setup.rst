@@ -25,7 +25,7 @@ First, enable the JSON login under your firewall:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -44,17 +44,16 @@ First, enable the JSON login under your firewall:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    'anonymous' => true,
-                    'lazy' => true,
-                    'json_login' => [
-                        'check_path' => '/login',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->anonymous();
+            $mainFirewall->lazy(true);
+            $mainFirewall->jsonLogin()
+                ->checkPath('/login')
+            ;
+        };
 
 .. tip::
 
@@ -80,12 +79,14 @@ The next step is to configure a route in your app matching this path:
             /**
              * @Route("/login", name="login", methods={"POST"})
              */
-            public function login(Request $request)
+            public function login(Request $request): Response
             {
                 $user = $this->getUser();
 
                 return $this->json([
-                    'username' => $user->getUsername(),
+                    // The getUserIdentifier() method was introduced in Symfony 5.3.
+                    // In previous versions it was called getUsername()
+                    'username' => $user->getUserIdentifier(),
                     'roles' => $user->getRoles(),
                 ]);
             }
@@ -177,7 +178,7 @@ The security configuration should be:
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
+        <?xml version="1.0" encoding="UTF-8" ?>
         <srv:container xmlns="http://symfony.com/schema/dic/security"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -198,16 +199,15 @@ The security configuration should be:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    'anonymous' => true,
-                    'lazy' => true,
-                    'json_login' => [
-                        'check_path' => 'login',
-                        'username_path' => 'security.credentials.login',
-                        'password_path' => 'security.credentials.password',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->anonymous();
+            $mainFirewall->lazy(true);
+            $mainFirewall->jsonLogin()
+                ->checkPath('/login')
+                ->usernamePath('security.credentials.login')
+                ->passwordPath('security.credentials.password')
+            ;
+        };

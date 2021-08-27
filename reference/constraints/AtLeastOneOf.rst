@@ -141,7 +141,7 @@ The following constraints ensure that:
                         new Assert\Count(['min' => 3]),
                         new Assert\All([
                             'constraints' => [
-                                new Assert\GreaterThanOrEqual(['value' => 5]),
+                                new Assert\GreaterThanOrEqual(5),
                             ],
                         ]),
                     ],

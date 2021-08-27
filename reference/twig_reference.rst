@@ -558,6 +558,29 @@ project's root directory:
 If the given file path is out of the project directory, a ``null`` value
 will be returned.
 
+serialize
+~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ object|serialize(format = 'json', context = []) }}
+
+``object``
+    **type**: ``mixed``
+
+``format`` *(optional)*
+    **type**: ``string``
+
+``context`` *(optional)*
+    **type**: ``array``
+
+.. versionadded:: 5.3
+
+    The ``serialize`` filter was introduced in Symfony 5.3.
+
+Accepts any data that can be serialized by the :doc:`Serializer component </serializer>`
+and returns a serialized string in the specified ``format``.
+
 .. _reference-twig-tags:
 
 Tags

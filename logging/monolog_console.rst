@@ -42,7 +42,6 @@ The example above could then be rewritten as::
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
-    // ...
 
     class YourCommand extends Command
     {
@@ -56,7 +55,6 @@ The example above could then be rewritten as::
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             $this->logger->debug('Some info');
-            // ...
             $this->logger->notice('Some more info');
         }
     }
@@ -66,6 +64,16 @@ configuration (see below), these messages may or may not be displayed to
 the console. If they are displayed, they are timestamped and colored appropriately.
 Additionally, error logs are written to the error output (``php://stderr``).
 There is no need to conditionally handle the verbosity settings anymore.
+
+===============  =======================================  ============
+LoggerInterface  Verbosity                                Command line
+===============  =======================================  ============
+->error()        OutputInterface::VERBOSITY_QUIET         stderr
+->warning()      OutputInterface::VERBOSITY_NORMAL        stdout
+->notice()       OutputInterface::VERBOSITY_VERBOSE       -v
+->info()         OutputInterface::VERBOSITY_VERY_VERBOSE  -vv
+->debug()        OutputInterface::VERBOSITY_DEBUG         -vvv
+===============  =======================================  ============
 
 The Monolog console handler is enabled by default:
 
@@ -112,15 +120,15 @@ The Monolog console handler is enabled by default:
     .. code-block:: php
 
         // config/packages/dev/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'console' => [
-                   'type' => 'console',
-                   'process_psr_3_messages' => false,
-                   'channels' => ['!event', '!doctrine', '!console'],
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('console')
+                ->type('console')
+                ->processPsr3Messages(false)
+                ->channels()->elements(['!event', '!doctrine', '!console'])
+            ;
+        };
 
 Now, log messages will be shown on the console based on the log levels and verbosity.
 By default (normal verbosity level), warnings and higher will be shown. But in

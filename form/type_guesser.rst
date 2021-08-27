@@ -101,7 +101,7 @@ With this knowledge, you can implement the ``guessType()`` method of the
             $annotations = $this->readPhpDocAnnotations($class, $property);
 
             if (!isset($annotations['var'])) {
-                return; // guess nothing if the @var annotation is not available
+                return null; // guess nothing if the @var annotation is not available
             }
 
             // otherwise, base the type on the @var annotation

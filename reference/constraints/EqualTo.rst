@@ -52,6 +52,24 @@ and that the ``age`` is ``20``, you could do the following:
             protected $age;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Person.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Person
+        {
+            #[Assert\EqualTo('Mary')]
+            protected $firstName;
+
+            #[Assert\EqualTo(
+                value: 20,
+            )]
+            protected $age;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml

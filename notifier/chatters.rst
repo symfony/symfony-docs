@@ -6,8 +6,7 @@ How to send Chat Messages
 
 .. versionadded:: 5.0
 
-    The Notifier component was introduced in Symfony 5.0 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
+    The Notifier component was introduced in Symfony 5.0.
 
 The :class:`Symfony\\Component\\Notifier\\ChatterInterface` class allows
 you to send messages to chat services like Slack or Telegram::
@@ -60,7 +59,7 @@ to add some interactive options called `Block elements`_::
 
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackActionsBlock;
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
-    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackImageBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackImageBlockElement;
     use Symfony\Component\Notifier\Bridge\Slack\Block\SlackSectionBlock;
     use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
     use Symfony\Component\Notifier\Message\ChatMessage;
@@ -97,6 +96,158 @@ to add some interactive options called `Block elements`_::
     $chatMessage->options($slackOptions);
 
     $chatter->send($chatMessage);
+
+Adding Fields and Values to a Slack Message
+-------------------------------------------
+
+To add fields and values to your message you can use the
+:method:`SlackSectionBlock::field() <Symfony\\Component\\Notifier\\Bridge\\Slack\\Block\\SlackSectionBlock::field>` method::
+
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackSectionBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('Symfony Feature');
+
+    $options = (new SlackOptions())
+        ->block((new SlackSectionBlock())->text('My message'))
+        ->block(new SlackDividerBlock())
+        ->block(
+            (new SlackSectionBlock())
+                ->field('*Max Rating*')
+                ->field('5.0')
+                ->field('*Min Rating*')
+                ->field('1.0')
+        );
+
+    // Add the custom options to the chat message and send the message
+    $chatMessage->options($options);
+
+    $chatter->send($chatMessage);
+
+The result will be something like:
+
+.. image:: /_images/notifier/slack/field-method.png
+   :align: center
+
+.. versionadded:: 5.1
+
+    The `field()` method was introduced in Symfony 5.1.
+
+Adding a Header to a Slack Message
+----------------------------------
+
+To add a header to your message use the
+:class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\Block\\SlackHeaderBlock` class::
+
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackHeaderBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackSectionBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('Symfony Feature');
+
+    $options = (new SlackOptions())
+        ->block((new SlackHeaderBlock('My Header')))
+        ->block((new SlackSectionBlock())->text('My message'))
+        ->block(new SlackDividerBlock())
+        ->block(
+            (new SlackSectionBlock())
+                ->field('*Max Rating*')
+                ->field('5.0')
+                ->field('*Min Rating*')
+                ->field('1.0')
+        );
+
+    // Add the custom options to the chat message and send the message
+    $chatMessage->options($options);
+
+    $chatter->send($chatMessage);
+
+The result will be something like:
+
+.. image:: /_images/notifier/slack/slack-header.png
+   :align: center
+
+.. versionadded:: 5.3
+
+    The ``SlackHeaderBlock`` class was introduced in Symfony 5.3.
+
+Adding a Footer to a Slack Message
+----------------------------------
+
+To add a footer to your message use the
+:class:`Symfony\\Component\\Notifier\\Bridge\\Slack\\Block\\SlackContextBlock` class::
+
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackContextBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackDividerBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackSectionBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('Symfony Feature');
+
+    $contextBlock = (new SlackContextBlock())
+        ->text('My Context')
+        ->image('https://symfony.com/logos/symfony_white_03.png', 'Symfony Logo')
+    ;
+
+    $options = (new SlackOptions())
+        ->block((new SlackSectionBlock())->text('My message'))
+        ->block(new SlackDividerBlock())
+        ->block(
+            (new SlackSectionBlock())
+                ->field('*Max Rating*')
+                ->field('5.0')
+                ->field('*Min Rating*')
+                ->field('1.0')
+        )
+        ->block($contextBlock)
+    ;
+
+    $chatter->send($chatMessage);
+
+The result will be something like:
+
+.. image:: /_images/notifier/slack/slack-footer.png
+   :align: center
+
+.. versionadded:: 5.3
+
+    The ``SlackContextBlock`` class was introduced in Symfony 5.3.
+
+Sending a Slack Message as a Reply
+----------------------------------
+
+To send your slack message as a reply in a thread use the
+:method:`SlackOptions::threadTs() <Symfony\\Component\\Notifier\\Bridge\\Slack\\SlackOptions::threadTs>` method::
+
+    use Symfony\Component\Notifier\Bridge\Slack\Block\SlackSectionBlock;
+    use Symfony\Component\Notifier\Bridge\Slack\SlackOptions;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('Symfony Feature');
+
+    $options = (new SlackOptions())
+        ->block((new SlackSectionBlock())->text('My reply'))
+        ->threadTs('1621592155.003100')
+    ;
+
+    // Add the custom options to the chat message and send the message
+    $chatMessage->options($options);
+
+    $chatter->send($chatMessage);
+
+The result will be something like:
+
+.. image:: /_images/notifier/slack/message-reply.png
+   :align: center
+
+.. versionadded:: 5.3
+
+    The ``threadTs()`` method was introduced in Symfony 5.3.
 
 Adding Interactions to a Discord Message
 ----------------------------------------
@@ -181,6 +332,99 @@ to add `message options`_::
 
     $chatter->send($chatMessage);
 
+Adding text to a Microsoft Teams Message
+----------------------------------------
+
+With a Microsoft Teams, you can use the ChatMessage class::
+
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\MicrosoftTeamsTransport;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = (new ChatMessage('Contribute To Symfony'))->transport('microsoftteams');
+    $chatter->send($chatMessage);
+
+The result will be something like:
+
+.. image:: /_images/notifier/microsoft_teams/message.png
+   :align: center
+
+Adding Interactions to a Microsoft Teams Message
+------------------------------------------------
+
+With a Microsoft Teams Message, you can use the
+:class:`Symfony\\Component\\Notifier\\Bridge\\MicrosoftTeams\\MicrosoftTeamsOptions` class
+to add `MessageCard options`_::
+
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\Action\ActionCard;
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\Action\HttpPostAction;
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\Action\Input\DateInput;
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\Action\Input\TextInput;
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\MicrosoftTeamsOptions;
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\MicrosoftTeamsTransport;
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\Section\Field\Fact;
+    use Symfony\Component\Notifier\Bridge\MicrosoftTeams\Section\Section;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('');
+
+    // Action elements
+    $input = new TextInput();
+    $input->id('input_title');
+    $input->isMultiline(true)->maxLength(5)->title('In a few words, why would you like to participate?');
+
+    $inputDate = new DateInput();
+    $inputDate->title('Proposed date')->id('input_date');
+
+    // Create Microsoft Teams MessageCard
+    $microsoftTeamsOptions = (new MicrosoftTeamsOptions())
+        ->title('Symfony Online Meeting')
+        ->text('Symfony Online Meeting are the events where the best developers meet to share experiences...')
+        ->summary('Summary')
+        ->themeColor('#F4D35E')
+        ->section((new Section())
+            ->title('Talk about Symfony 5.3 - would you like to join? Please give a shout!')
+            ->fact((new Fact())
+                ->name('Presenter')
+                ->value('Fabien Potencier')
+            )
+            ->fact((new Fact())
+                ->name('Speaker')
+                ->value('Patricia Smith')
+            )
+            ->fact((new Fact())
+                ->name('Duration')
+                ->value('90 min')
+            )
+            ->fact((new Fact())
+                ->name('Date')
+                ->value('TBA')
+            )
+        )
+        ->action((new ActionCard())
+            ->name('ActionCard')
+            ->input($input)
+            ->input($inputDate)
+            ->action((new HttpPostAction())
+                ->name('Add comment')
+                ->target('http://target')
+            )
+        )
+    ;
+
+    // Add the custom options to the chat message and send the message
+    $chatMessage->options($microsoftTeamsOptions);
+    $chatter->send($chatMessage);
+
+The result will be something like:
+
+.. image:: /_images/notifier/microsoft_teams/message-card.png
+   :align: center
+
+.. versionadded:: 5.4
+
+    Options for Microsoft Teams were introduced in Symfony 5.4.
+
 .. _`Block elements`: https://api.slack.com/reference/block-kit/block-elements
 .. _`Embed elements`: https://discord.com/developers/docs/resources/webhook
 .. _`message options`: https://core.telegram.org/bots/api
+.. _`MessageCard options`: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference

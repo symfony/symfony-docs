@@ -36,6 +36,19 @@ Basic Usage
             protected $ipAddress;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Ip]
+            protected $ipAddress;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -82,8 +95,8 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
-message
-~~~~~~~
+``message``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This is not a valid IP address.``
 
@@ -106,8 +119,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-version
-~~~~~~~
+``version``
+~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``4``
 

@@ -64,8 +64,8 @@ Enabling PHP-FPM
 
     PHP-FPM must be installed locally for the Symfony server to utilize.
 
-When the server starts it will check for common patterns like ``web/app.php``,
-``web/app_dev.php`` or ``public/index.php``. If a file like this is found the
+When the server starts, it checks for ``web/index_dev.php``, ``web/index.php``,
+``public/app_dev.php``, ``public/app.php`` in that order. If one is found, the
 server will automatically start with PHP-FPM enabled. Otherwise the server will
 start without PHP-FPM and will show a ``Page not found`` page when trying to
 access a ``.php`` file in the browser.
@@ -282,8 +282,11 @@ The local Symfony server provides full `Docker`_ integration for projects that
 use it.
 
 When the web server detects that Docker Compose is running for the project, it
-automatically exposes environment variables according to the exposed port and
-the name of the ``docker-compose`` services.
+automatically exposes some environment variables.
+
+Via the ``docker-compose`` API, it looks for exposed ports used for common
+services. When it detects one it knows about, it uses the service name to
+expose environment variables.
 
 Consider the following configuration:
 
@@ -318,6 +321,22 @@ In this example, the service is named ``db``, so environment variables would be
 prefixed with ``DB_``, but as the ``com.symfony.server.service-prefix`` is set
 to ``DATABASE``, the web server creates environment variables starting with
 ``DATABASE_`` instead as expected by the default Symfony configuration.
+
+You don't need to create two containers for the main database and the test
+database. Using ``APP_ENV=test symfony`` will automatically adjust
+``DATABASE_*`` environment variables for the ``test`` environment:
+
+.. code-block:: terminal
+
+    $ symfony var:export --multiline 
+    export DATABASE_DATABASE=app
+    export DATABASE_NAME=app
+    export DATABASE_URL=postgres://app:app@127.0.0.1:49160/app?sslmode=disable&charset=utf8
+
+    $ APP_ENV=test symfony var:export --multiline 
+    export DATABASE_DATABASE=app_test
+    export DATABASE_NAME=app_test
+    export DATABASE_URL=postgres://app:app@127.0.0.1:49160/app_test?sslmode=disable&charset=utf8
 
 Here is the list of supported services with their ports and default Symfony
 prefixes:
