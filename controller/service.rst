@@ -6,11 +6,26 @@ How to Define Controllers as Services
 
 In Symfony, a controller does *not* need to be registered as a service. But if you're
 using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-your controllers *are* already registered as services. This means you can use dependency
+and that your controllers extend the `AbstractController`_ class,
+they *are* already registered as services. This means you can use dependency
 injection like any other normal service.
 
-Referencing your Service from Routing
--------------------------------------
+If your controllers don't extend the `AbstractController`_ class, you must explicitly mark your controller
+services as ``public``.
+Alternatively, you can also tag controller services with the ``controller.service_arguments``.
+This will make the tagged services ``public`` and will allow you to inject services in method parameters:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+
+        # controllers are imported separately to make sure services can be injected
+        # as action arguments even if you don't extend any base controller class
+        App\Controller\:
+           resource: '../src/Controller/'
+           tags: ['controller.service_arguments']
 
 Registering your controller as a service is the first step, but you also need to
 update your routing config to reference the service properly, so that Symfony
@@ -221,6 +236,5 @@ If you want to know what type-hints to use for each service, see the
 ``getSubscribedServices()`` method in `AbstractController`_.
 
 .. _`Controller class source code`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php
-.. _`AbstractController`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php
 .. _`AbstractController`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/AbstractController.php
 .. _`ADR pattern`: https://en.wikipedia.org/wiki/Action%E2%80%93domain%E2%80%93responder
