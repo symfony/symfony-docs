@@ -171,6 +171,32 @@ the ``Product`` entity (and getter & setter methods):
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Product.php
+        namespace App\Entity;
+
+        // ...
+        class Product
+        {
+            // ...
+
+            #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: "products")]
+            private $category;
+
+            public function getCategory(): ?Category
+            {
+                return $this->category;
+            }
+
+            public function setCategory(?Category $category): self
+            {
+                $this->category = $category;
+
+                return $this;
+            }
+        }
+
     .. code-block:: yaml
 
         # src/Resources/config/doctrine/Product.orm.yml
@@ -230,6 +256,38 @@ class that will hold these objects:
             /**
              * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
              */
+            private $products;
+
+            public function __construct()
+            {
+                $this->products = new ArrayCollection();
+            }
+
+            /**
+             * @return Collection|Product[]
+             */
+            public function getProducts(): Collection
+            {
+                return $this->products;
+            }
+
+            // addProduct() and removeProduct() were also added
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Category.php
+        namespace App\Entity;
+
+        // ...
+        use Doctrine\Common\Collections\ArrayCollection;
+        use Doctrine\Common\Collections\Collection;
+
+        class Category
+        {
+            // ...
+
+            #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category")]
             private $products;
 
             public function __construct()
@@ -589,16 +647,30 @@ on that ``Product`` will be set to ``null`` in the database.
 
 But, instead of setting the ``category_id`` to null, what if you want the ``Product``
 to be *deleted* if it becomes "orphaned" (i.e. without a ``Category``)? To choose
-that behavior, use the `orphanRemoval`_ option inside ``Category``::
+that behavior, use the `orphanRemoval`_ option inside ``Category``:
 
-    // src/Entity/Category.php
+.. configuration-block::
 
-    // ...
+    .. code-block:: php-annotations
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", orphanRemoval=true)
-     */
-    private $products;
+        // src/Entity/Category.php
+
+        // ...
+
+        /**
+         * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", orphanRemoval=true)
+         */
+        private $products;
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Category.php
+
+        // ...
+
+        #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category", orphanRemoval=true)]
+        private $products;
+
 
 Thanks to this, if the ``Product`` is removed from the ``Category``, it will be
 removed from the database entirely.
