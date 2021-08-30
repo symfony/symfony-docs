@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by mathieu-ducrot at 2021-08-23T16:49:18Z
+
+I don't know why but the CI / Code Blocks is failing :
+
+Uncaught Error: Failed opening required '/home/runner/work/symfony-docs/symfony-docs/_checker/vendor/composer/../phpunit/phpunit/src/Framework/Assert/Functions.php'
+
+Do i need to do something for this ?
