@@ -150,8 +150,8 @@ generate a CSRF token in the template and store it as a hidden form field:
     </form>
 
 Then, get the value of the CSRF token in the controller action and use the
-:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::isCsrfTokenValid`
-to check its validity::
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerTrait::isCsrfTokenValid`
+method to check its validity::
 
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
