@@ -295,7 +295,7 @@ Consider the following configuration:
     # docker-compose.yaml
     services:
         database:
-            ports: [3306]
+            ports: ["3306:3306"]
 
 The web server detects that a service exposing port ``3306`` is running for the
 project. It understands that this is a MySQL service and creates environment
@@ -313,7 +313,7 @@ label to override the environment variables prefix:
     # docker-compose.yaml
     services:
         db:
-            ports: [3306]
+            ports: ["3306:3306"]
             labels:
                 com.symfony.server.service-prefix: 'DATABASE'
 
@@ -393,7 +393,7 @@ check the "Symfony Server" section in the web debug toolbar; you'll see that
         # docker-compose.yaml
         services:
             db:
-                ports: [3306]
+                ports: ["3306:3306"]
                 labels:
                     com.symfony.server.service-ignore: true
 
