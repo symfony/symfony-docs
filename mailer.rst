@@ -103,6 +103,7 @@ Mailjet             ``composer require symfony/mailjet-mailer``
 Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
+OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
 ==================  ==============================================
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
@@ -153,6 +154,8 @@ party provider:
  Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
  Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
  Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
+ OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a                                         ohmysmtp+api://API_TOKEN@default
+
 ==================== ==================================================== =========================================== ========================================
 
 .. caution::
@@ -1251,6 +1254,10 @@ The following transports currently support tags and metadata:
 * Mailgun
 * Postmark
 * Sendinblue
+
+The following transports only support tags:
+
+* OhMySMTP
 
 Development & Debugging
 -----------------------
