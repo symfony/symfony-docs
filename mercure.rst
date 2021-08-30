@@ -66,7 +66,7 @@ clients.
 
 .. image:: /_images/mercure/schema.png
 
-If you use the `Symfony Local Web Server </doc/current/setup/symfony_server>`_ or `Symfony Docker`_,
+If you use the :doc:`Symfony Local Web Server </setup/symfony_server>` or `Symfony Docker`_,
 a Mercure Hub is automatically available.
 
 For production usage, an official and open source (AGPL) Hub based on the Caddy web server
