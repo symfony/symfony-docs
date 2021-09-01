@@ -1612,6 +1612,59 @@ and its URL will be ``/blog/{_locale}``. The route of the ``show()`` action will
 will also validate that the ``_locale`` parameter matches the regular expression
 defined in the class annotation.
 
+.. note::
+
+    If any of the prefixed routes defines an empty path, Symfony adds a trailing
+    slash to it. In the previous example, an empty path prefixed with ``/blog``
+    will result in the ``/blog/`` URL. If you want to avoid this behavior, set
+    the ``trailing_slash_on_root`` option to ``false`` (this option is not
+    available when using PHP attributes or annotations):
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/routes/annotations.yaml
+            controllers:
+                resource: '../../src/Controller/'
+                type:     annotation
+                prefix:   '/blog'
+                trailing_slash_on_root: false
+                # ...
+
+        .. code-block:: xml
+
+            <!-- config/routes/annotations.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <routes xmlns="http://symfony.com/schema/routing"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/routing
+                    https://symfony.com/schema/routing/routing-1.0.xsd">
+
+                <import resource="../../src/Controller/"
+                    type="annotation"
+                    prefix="/blog"
+                    name-prefix="blog_"
+                    trailing-slash-on-root="false"
+                    exclude="../../src/Controller/{DebugEmailController}.php">
+                    <!-- ... -->
+                </import>
+            </routes>
+
+        .. code-block:: php
+
+            // config/routes/annotations.php
+            use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+            return function (RoutingConfigurator $routes) {
+                $routes->import('../../src/Controller/', 'annotation')
+                    // the second argument is the $trailingSlashOnRoot option
+                    ->prefix('/blog', false)
+
+                    // ...
+                ;
+            };
+
 .. seealso::
 
     Symfony can :doc:`import routes from different sources </routing/custom_route_loader>`
@@ -2369,6 +2422,7 @@ session shouldn't be used when matching a request:
 
 Now, if the session is used, the application will report it based on your
 ``kernel.debug`` parameter:
+
 * ``enabled``: will throw an :class:`Symfony\\Component\\HttpKernel\\Exception\\UnexpectedSessionUsageException` exception
 * ``disabled``: will log a warning
 
