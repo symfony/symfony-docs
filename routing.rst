@@ -2369,6 +2369,7 @@ session shouldn't be used when matching a request:
 
 Now, if the session is used, the application will report it based on your
 ``kernel.debug`` parameter:
+
 * ``enabled``: will throw an :class:`Symfony\\Component\\HttpKernel\\Exception\\UnexpectedSessionUsageException` exception
 * ``disabled``: will log a warning
 
