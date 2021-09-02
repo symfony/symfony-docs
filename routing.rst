@@ -1247,7 +1247,11 @@ the common configuration using options when importing the routes.
         return function (RoutingConfigurator $routes) {
             // use the optional fourth argument of import() to exclude some files
             // or subdirectories when loading annotations
-            $routes->import('../../src/Controller/', 'annotation')
+            $routes->import(
+                    resource: '../../src/Controller/',
+                    type: 'annotation',
+                    exclude: '../../src/Controller/{DebugEmailController}.php'
+                )
                 // this is added to the beginning of all imported route URLs
                 ->prefix('/blog')
 
@@ -1260,9 +1264,6 @@ the common configuration using options when importing the routes.
 
                 // these requirements are added to all imported routes
                 ->requirements(['_locale' => 'en|es|fr'])
-
-                // you can optionally exclude some files/subdirectories when loading annotations
-                ->exclude('../../src/Controller/{DebugEmailController}.php')
             ;
         };
 
