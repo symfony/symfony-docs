@@ -449,7 +449,7 @@ Turn static into non static                         No
 .. [9] Allowed for the ``void`` return type.
 
 .. [10] Parameter names are only covered by the compatibility promise for
-        constructors of Attribute classes. Using PHP 8's named arguments
-        feature might break your code when upgrading to newer Symfony versions.
+        constructors of Attribute classes. Using PHP named arguments might
+        break your code when upgrading to newer Symfony versions.
 
 .. _`Semantic Versioning`: https://semver.org/
