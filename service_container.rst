@@ -33,6 +33,7 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController
     {
@@ -122,6 +123,7 @@ inside your controller::
     // src/Controller/ProductController.php
     use App\Service\MessageGenerator;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     /**
      * @Route("/products/new")
