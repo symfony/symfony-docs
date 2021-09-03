@@ -243,7 +243,7 @@ the following ``data-prototype`` attribute to the existing ``<ul>`` in your temp
 
 .. code-block:: html+twig
 
-    <ul class="tags" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
+    <ul class="tags" data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
 
 Now add a button just next to the ``<ul>`` to dynamically add a new tag:
 
@@ -255,7 +255,7 @@ On the rendered page, the result will look something like this:
 
 .. code-block:: html
 
-    <ul class="tags" data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+    <ul class="tags" data-index="0" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
 
 .. seealso::
 
@@ -537,7 +537,7 @@ First, add a "delete this tag" link to each tag form:
     })
 
     // ... the rest of the block from above
-    
+
     function addFormToCollection() {
         // ...
 
@@ -553,7 +553,7 @@ The ``addTagFormDeleteLink()`` function will look something like this:
         const removeFormButton = document.createElement('button')
         removeFormButton.classList
         removeFormButton.innerText = 'Delete this tag'
-        
+
         tagFormLi.append(removeFormButton);
 
         removeFormButton.addEventListener('click', (e) => {
