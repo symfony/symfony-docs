@@ -67,6 +67,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
             $services->set(MailerConfiguration::class);
 
             $services->set(Mailer::class)
+                // because of the escaping applied by PHP, you must add 4 backslashes for each original backslash
                 ->args([expr("service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()")]);
         };
 
