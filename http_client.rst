@@ -1393,7 +1393,7 @@ Testing
 This component includes the ``MockHttpClient`` and ``MockResponse`` classes to
 use in tests that shouldn't make actual HTTP requests. Such tests can be
 useful, as they will run faster and produce consistent results, since they're
-not dependant on an external service. By not making actual HTTP requests there
+not dependent on an external service. By not making actual HTTP requests there
 is no need to worry about the service being online or the request changing
 state, for example deleting a resource.
 
@@ -1469,12 +1469,10 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
 Testing Request Data
 ~~~~~~~~~~~~~~~~~~~~
 
-The examples above describe how to return desired response. What if you wanted
-to also test the request itself? ``MockResponse`` comes with a few helper
-methods:
+The ``MockResponse`` class comes with some helper methods to test the request:
 
-* ``getRequestMethod()`` - returns the HTTP method
-* ``getRequestUrl()`` - returns the URL the request would be sent to
+* ``getRequestMethod()`` - returns the HTTP method;
+* ``getRequestUrl()`` - returns the URL the request would be sent to;
 * ``getRequestOptions()`` - returns an array containing other information about
   the request such as headers, query parameters, body content etc.
 
@@ -1490,19 +1488,19 @@ Usage example::
         ],
     ]);
 
-    // returns "DELETE"
     $mockResponse->getRequestMethod();
+    // returns "DELETE"
 
-    // returns "https://example.com/api/article/1337"
     $mockResponse->getRequestUrl();
+    // returns "https://example.com/api/article/1337"
 
-    // returns ["Accept: */*", "Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l"]
     $mockResponse->getRequestOptions()['headers'];
+    // returns ["Accept: */*", "Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l"]
 
-Example
-~~~~~~~
+Full Example
+~~~~~~~~~~~~
 
-The following standalone example demonstrates a way to use HTTP client and
+The following standalone example demonstrates a way to use the HTTP client and
 test it in a real application::
 
     // ExternalArticleService.php
