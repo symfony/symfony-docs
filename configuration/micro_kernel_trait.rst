@@ -129,7 +129,7 @@ your ``composer.json`` file to load from there:
     }
 
 Then, run ``composer dump-autoload`` to dump your new autoload config.
-    
+
 Now, suppose you want to use Twig and load routes via annotations. Instead of
 putting *everything* in ``index.php``, create a new ``app/AppKernel.php`` to
 hold the kernel. Now it looks like this::
