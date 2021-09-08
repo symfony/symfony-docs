@@ -107,8 +107,8 @@ To get started, you'll need to download Symfony and get the basic Subversion set
 
 .. tip::
 
-	If you rely on any "dev" versions, then Git may be used to install
-	those libraries, since there is no archive available for download.
+    If you rely on any "dev" versions, then Git may be used to install
+    those libraries, since there is no archive available for download.
 
 At this point, you have a fully-functional Symfony project stored in your
 Subversion repository. The development can start with commits in the Subversion
