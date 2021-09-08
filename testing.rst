@@ -422,7 +422,7 @@ have a very specific workflow:
 
 #. :ref:`Make a request <testing-applications-arrange>`;
 #. :ref:`Interact with the page <testing-applications-act>` (e.g. click on a link or submit a form);
-#. :Ref:`Test the response <testing-application-assertions>`;
+#. :ref:`Test the response <testing-application-assertions>`;
 #. Rinse and repeat.
 
 .. note::
