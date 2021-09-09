@@ -267,6 +267,11 @@ command will pre-configure this for you:
 
     The ``password_hashers`` option was introduced in Symfony 5.3. In previous
     versions it was called ``encoders``.
+    
+.. versionadded:: 5.3
+    In 5.2, using the ``auto`` option for hashing algorithm picked Sodium if it
+    was available. Starting with 5.3 the default algorithm is "bcrypt", even if
+    Sodium is available.
 
 Now that Symfony knows *how* you want to hash the passwords, you can use the
 ``UserPasswordHasherInterface`` service to do this before saving your users to
