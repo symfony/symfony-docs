@@ -269,6 +269,7 @@ command will pre-configure this for you:
     versions it was called ``encoders``.
     
 .. versionadded:: 5.3
+
     In 5.2, using the ``auto`` option for hashing algorithm picked Sodium if it
     was available. Starting with 5.3 the default algorithm is "bcrypt", even if
     Sodium is available.
