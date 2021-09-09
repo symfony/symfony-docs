@@ -20,6 +20,11 @@ The Cache Component
     Doctrine caches. See :doc:`/components/cache/psr6_psr16_adapters` and
     :doc:`/components/cache/adapters/doctrine_adapter`.
 
+    .. deprecated:: 5.4
+
+        Support for Doctrine Cache was deprecated in Symfony 5.4
+        and it will be removed in Symfony 6.0.
+
 Installation
 ------------
 
