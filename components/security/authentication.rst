@@ -302,6 +302,11 @@ request if you have session-based authentication, if ``always_authenticate_befor
 is enabled or if token is not authenticated before AccessListener is invoked.
 See ``security.interactive_login`` below if you need to do something when a user *actually* logs in.
 
+.. deprecated:: 5.4
+
+    The ``always_authenticate_before_granting`` option was deprecated in
+    Symfony 5.4 and it will be removed in Symfony 6.0.
+
 When a provider attempts authentication but fails (i.e. throws an ``AuthenticationException``),
 a ``security.authentication.failure`` event is dispatched. You could listen on
 the ``security.authentication.failure`` event, for example, in order to log

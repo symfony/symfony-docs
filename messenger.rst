@@ -99,9 +99,6 @@ You're ready! To dispatch the message (and call the handler), inject the
             // will cause the SmsNotificationHandler to be called
             $bus->dispatch(new SmsNotification('Look! I created a message!'));
 
-            // or use the shortcut
-            $this->dispatchMessage(new SmsNotification('Look! I created a message!'));
-
             // ...
         }
     }
@@ -460,6 +457,16 @@ You can do this with the ``messenger:consume`` command:
 The first argument is the receiver's name (or service id if you routed to a
 custom service). By default, the command will run forever: looking for new messages
 on your transport and handling them. This command is called your "worker".
+
+.. tip::
+
+    To properly stop a worker, throw an instance of
+    :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`.
+
+    .. versionadded:: 5.4
+
+        The :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`
+        class was introduced in Symfony 5.4.
 
 Deploying to Production
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1354,7 +1361,7 @@ The Redis transport DSN may looks like this:
     # .env
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
     # Full DSN Example
-    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0&dbindex=0
+    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0&dbindex=0&delete_after_ack=true
     # Redis Cluster Example
     MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
     # Unix Socket Example
@@ -1426,6 +1433,12 @@ claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
 .. versionadded:: 5.2
 
     The ``delete_after_reject`` and ``lazy`` options were introduced in Symfony 5.2.
+
+.. deprecated:: 5.4
+
+    Not setting a explicit value for the ``delete_after_ack`` option is
+    deprecated since Symfony 5.4. In Symfony 6.0, the default value of this
+    option changes from ``false`` to ``true``.
 
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
