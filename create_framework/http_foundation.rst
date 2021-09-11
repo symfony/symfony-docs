@@ -11,7 +11,7 @@ top of the Symfony components is better than creating a framework from scratch.
 
     We won't talk about the traditional benefits of using a framework when
     working on big applications with more than a few developers; the Internet
-    has already plenty of good resources on that topic.
+    already has plenty of good resources on that topic.
 
 Even if the "application" we wrote in the previous chapter was simple enough,
 it suffers from a few problems::
@@ -265,7 +265,7 @@ So, the ``getClientIp()`` method works securely in all circumstances. You can
 use it in all your projects, whatever the configuration is, it will behave
 correctly and safely. That's one of the goals of using a framework. If you were
 to write a framework from scratch, you would have to think about all these
-cases by yourself. Why not using a technology that already works?
+cases by yourself. Why not use a technology that already works?
 
 .. note::
 
