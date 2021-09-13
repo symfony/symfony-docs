@@ -1176,6 +1176,35 @@ to ``true``::
 
 .. _component-serializer-handling-circular-references:
 
+Collecting type errors while denormalizing
+------------------------------------------
+
+When denormalizing a payload to an object with type hints, if the payload
+contains a property that doesn't have the same type as the object, an exception
+is thrown.
+
+It's possible to collect all exceptions at once, and to get the object partially
+denormalized::
+
+    try {
+        $dto = $serializer->deserialize($request->getContent(), MyDto::class, 'json', [
+            DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS => true,
+        ]);
+    } catch (PartialDenormalizationException $e) {
+        $violations = new ConstraintViolationList();
+        /** @var NotNormalizableValueException */
+        foreach ($e->getErrors() as $exception) {
+            $message = sprintf('The type must be one of "%s" ("%s" given).', implode(', ', $exception->getExpectedTypes()), $exception->getCurrentType());
+            $parameters = [];
+            if ($exception->canUseMessageForUser()) {
+                $parameters['hint'] = $exception->getMessage();
+            }
+            $violations->add(new ConstraintViolation($message, '', $parameters, null, $exception->getPath(), null));
+        };
+
+        return $this->json($violations, 400);
+    }
+
 Handling Circular References
 ----------------------------
 
