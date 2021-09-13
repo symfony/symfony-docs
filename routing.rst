@@ -192,6 +192,11 @@ Matching HTTP Methods
 By default, routes match any HTTP verb (``GET``, ``POST``, ``PUT``, etc.)
 Use the ``methods`` option to restrict the verbs each route should respond to:
 
+.. note::
+
+    ``HEAD`` verb is considered as ``GET`` verb. Please use both ``GET`` and ``HEAD`` 
+    in verb conditionned routes.
+
 .. configuration-block::
 
     .. code-block:: php-annotations
