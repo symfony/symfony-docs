@@ -229,7 +229,7 @@ Making Tests Fail
 By default, any non-legacy-tagged or any non-`@-silenced <@-silencing operator>`_
 deprecation notices will make tests fail. Alternatively, you can configure
 an arbitrary threshold by setting ``SYMFONY_DEPRECATIONS_HELPER`` to
-``max[total]=320`` for instance. It will make the tests fails only if a
+``max[total]=320`` for instance. It will make the tests fail only if a
 higher number of deprecation notices is reached (``0`` is the default
 value).
 
