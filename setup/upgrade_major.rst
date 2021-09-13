@@ -1,7 +1,7 @@
 .. index::
     single: Upgrading; Major Version
 
-Upgrading a Major Version (e.g. 4.4.0 to 5.0.0)
+Upgrading a Major Version (e.g. 5.4.0 to 6.0.0)
 ===============================================
 
 Every two years, Symfony releases a new major version release (the first number
@@ -30,7 +30,7 @@ backwards incompatible changes. To accomplish this, the "old" (e.g. functions,
 classes, etc) code still works, but is marked as *deprecated*, indicating that
 it will be removed/changed in the future and that you should stop using it.
 
-When the major version is released (e.g. 5.0.0), all deprecated features and
+When the major version is released (e.g. 6.0.0), all deprecated features and
 functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
 ``4.4.*``), you should be able to upgrade without a problem. That means that
@@ -95,6 +95,12 @@ Now, you can start fixing the notices:
 Once you fixed them all, the command ends with ``0`` (success) and you're
 done!
 
+.. caution::
+
+    You will probably see many deprecations about incompatible native
+    return types. See :ref:`Add Native Return Types <upgrading-native-return-types>`
+    for guidance in fixing these deprecations.
+
 .. sidebar:: Using the Weak Deprecations Mode
 
     Sometimes, you can't fix all deprecations (e.g. something was deprecated
@@ -135,12 +141,12 @@ starting with ``symfony/`` to the new major version:
           "...": "...",
 
           "require": {
-    -         "symfony/cache": "4.4.*",
-    +         "symfony/cache": "5.0.*",
-    -         "symfony/config": "4.4.*",
-    +         "symfony/config": "5.0.*",
-    -         "symfony/console": "4.4.*",
-    +         "symfony/console": "5.0.*",
+    -         "symfony/cache": "5.4.*",
+    +         "symfony/cache": "6.0.*",
+    -         "symfony/config": "5.4.*",
+    +         "symfony/config": "6.0.*",
+    -         "symfony/console": "5.4.*",
+    +         "symfony/console": "6.0.*",
               "...": "...",
 
               "...": "A few libraries starting with
@@ -154,7 +160,7 @@ starting with ``symfony/`` to the new major version:
 
 At the bottom of your ``composer.json`` file, in the ``extra`` block you can
 find a data setting for the Symfony version. Make sure to also upgrade
-this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
+this one. For instance, update it to ``6.0.*`` to upgrade to Symfony 6.0:
 
 .. code-block:: diff
 
@@ -162,7 +168,7 @@ this one. For instance, update it to ``5.0.*`` to upgrade to Symfony 5.0:
           "symfony": {
               "allow-contrib": false,
     -       "require": "4.4.*"
-    +       "require": "5.0.*"
+    +       "require": "6.0.*"
           }
       }
 
@@ -186,3 +192,128 @@ Next, use Composer to download new versions of the libraries:
 In some rare situations, the next major version *may* contain backwards-compatibility
 breaks. Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major version)
 included in the Symfony repository for any BC break that you need to be aware of.
+
+.. _upgrading-native-return-types:
+
+Upgrading to Symfony 6: Add Native Return Types
+-----------------------------------------------
+
+.. versionadded:: 5.4
+
+    The return-type checking and fixing features were introduced in Symfony 5.4.
+
+Symfony 6 will come with native PHP return types to (almost all) methods.
+
+In PHP, if the parent has a return type declaration, any class implementing
+or overriding the method must have the return type as well. However, you
+can add a return type before the parent adds one. This means that it is
+important to add the native PHP return types to your classes before
+upgrading to Symfony 6.0. Otherwise, you will get incompatible declaration
+errors.
+
+When debug mode is enabled (typically in the dev and test environment),
+Symfony will trigger deprecations for every incompatible method
+declarations. For instance, the ``UserInterface::getRoles()`` method will
+have an ``array`` return type in Symfony 6. In Symfony 5.4, you will get a
+deprecation notice about this and you must add the return type declaration
+to your ``getRoles()`` method.
+
+To help with this, Symfony provides a script that can add these return
+types automatically for you. Make sure you installed the ``symfony/error-handler``
+component. When installed, generate a complete class map using Composer and
+run the script to iterate over the class map and fix any incompatible
+method:
+
+.. code-block:: terminal
+
+    # Make sure "exclude-from-classmap" is not filled in your "composer.json". Then dump the autoloader:
+
+    # "-o" is important! This forces Composer to find all classes
+    $ composer dump-autoload -o
+
+    # patch all incompatible method declarations
+    $ ./vendor/bin/patch-type-declarations
+
+.. tip::
+
+    This feature is not limited to Symfony packages. It will also help you
+    add types and prepare for other dependencies in your project.
+
+The behavior of this script can be modified using the ``SYMFONY_PATCH_TYPE_DECLARATIONS``
+env var. The value of this env var is url-encoded (e.g.
+``param1=value2&param2=value2``), the following parameters are available:
+
+``force``
+    Enables fixing return types, the value must be one of:
+
+    * ``2`` to add all possible return types (default, recommended for applications);
+    * ``1`` to add return types only to tests, final, internal or private methods;
+    * ``phpdoc`` to only add ``@return`` docblock annotations to the incompatible
+      methods, or ``#[\ReturnTypeWillChange]`` if it's triggered by the PHP engine.
+
+``php``
+    The target version of PHP - e.g. ``7.1`` doesn't generate "object"
+    types (which were introduced in 7.2). This defaults to the PHP version
+    used when running the script.
+
+``deprecations``
+    Set to ``0`` to disable deprecations. Otherwise, a deprecation notice
+    when a child class misses a return type while the parent declares an
+    ``@return`` annotation (defaults to ``1``).
+
+If there are specific files that should be ignored, you can set the
+``SYMFONY_PATCH_TYPE_EXCLUDE`` env var to a regex. This regex will be
+matched to the full path to the class and each matching path will be
+ignored (e.g. ``SYMFONY_PATCH_TYPE_EXCLUDE="/tests\/Fixtures\//"``).
+Classes in the ``vendor/`` directory are always ignored.
+
+.. tip::
+
+    The script does not care about code style. Run your code style fixer,
+    or `PHP CS Fixer`_ with the ``phpdoc_trim_consecutive_blank_line_separation``,
+    ``no_superfluous_phpdoc_tags`` and ``ordered_imports`` rules, after
+    patching the types.
+
+.. _patching-types-for-open-source-maintainers:
+
+.. sidebar:: Patching Types for Open Source Maintainers
+
+    Open source bundles and packages need to be more cautious with adding
+    return types, as adding a return type forces all users extending the
+    class to add the return type as well. The recommended approach is to
+    use a 2 step process:
+
+    1. First, create a minor release (i.e. without backwards compatibility
+       breaks) where you add types that can be safely introduced and add
+       ``@return`` PHPDoc to all other methods:
+
+       .. code-block:: terminal
+
+           # Add type declarations to all internal, final, tests and private methods.
+           # Update the "php" parameter to match your minimum required PHP version
+           $ SYMFONY_DEPRECATIONS_HELPER="force=1&php=7.4" ./vendor/bin/patch-type-declarations
+
+           # Add PHPDoc to the leftover public and protected methods
+           $ SYMFONY_DEPRECATIONS_HELPER="force=phpdoc&php=7.4" ./vendor/bin/patch-type-declarations
+
+       After running the scripts, check your classes and add more ``@return``
+       PHPDoc where they are missing. The deprecations and patch script
+       work purely based on the PHPDoc information. Users of this release
+       will get deprecation notices telling them to add the missing return
+       types from your package to their code.
+
+       If you didn't need any PHPDoc and all your method declarations are
+       already compatible with Symfony, you can safely allow ``^6.0`` for
+       the Symfony dependencies. Otherwise, you have to continue with (2).
+
+    2. Create a new major release (i.e. *with* backwards compatibility
+       breaks) where you add types to all methods:
+
+       .. code-block:: terminal
+
+           # Update the "php" parameter to match your minimum required PHP version
+           $ SYMFONY_DEPRECATIONS_HELPER="force=2&php=7.4" ./vendor/bin/patch-type-declarations
+
+       Now, you can safely allow ``^6.0`` for the Symfony dependencies.
+
+.. _`PHP CS Fixer`: https://github.com/friendsofphp/php-cs-fixer
