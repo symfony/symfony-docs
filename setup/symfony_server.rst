@@ -355,6 +355,7 @@ Kafka         9092      ``KAFKA_``
 MailCatcher   1025/1080 ``MAILER_``
               or 25/80
 Blackfire     8707      ``BLACKFIRE_``
+Mercure       80        Always exposes ``MERCURE_PUBLIC_URL`` and ``MERCURE_URL`` (only works with the ``dunglas/mercure`` Docker image)
 ============= ========= ======================
 
 You can open web management interfaces for the services that expose them:
@@ -369,7 +370,7 @@ Or click on the links in the "Server" section of the web debug toolbar.
 .. tip::
 
     To debug and list all exported environment variables, run ``symfony
-    var:export``.
+    var:export --debug``.
 
 .. tip::
 
