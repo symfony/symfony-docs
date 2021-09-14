@@ -107,12 +107,6 @@ Check that the current Tests Pass
 Now that Symfony is installed, check that all unit tests pass for your
 environment as explained in the dedicated :doc:`document <tests>`.
 
-.. tip::
-
-    If tests are failing, check on `Travis-CI`_ if the same test is
-    failing there as well. In that case you do not need to be concerned
-    about the test failing locally.
-
 .. _step-2-work-on-your-patch:
 
 Step 3: Work on your Pull Request
@@ -252,7 +246,7 @@ in mind the following:
     as defined in `PSR-1`_ and `PSR-2`_.
 
     A status is posted below the pull request description with a summary
-    of any problems it detects or any `Travis-CI`_ build failures.
+    of any problems it detects or any GitHub Actions build failures.
 
 .. _prepare-your-patch-for-submission:
 
@@ -533,6 +527,5 @@ before merging.
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
 .. _`searching on GitHub`: https://github.com/symfony/symfony/issues?q=+is%3Aopen+
 .. _`Symfony Slack`: https://symfony.com/slack-invite
-.. _`Travis-CI`: https://travis-ci.org/symfony/symfony
 .. _`Psalm phar is installed`: https://psalm.dev/docs/running_psalm/installation/
 .. _`Contributing Back To Symfony`: https://symfonycasts.com/screencast/contributing
