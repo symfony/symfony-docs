@@ -101,6 +101,22 @@ deprecations, you can upgrade to the new major version (e.g. 5.0) without
 effort, because it contains the same features (the only difference are the
 deprecated features, which your project no longer uses).
 
+PHP Compatibility
+-----------------
+
+The **minimum** PHP version is decided for each major Symfony version by consensus
+amongst the :doc:`core team </contributing/code/core_team>` and documented as
+part of the :ref:`technical requirements for running Symfony applications
+<symfony-tech-requirements>`.
+
+Throughout each Symfony release's support lifetime, all released versions of PHP
+including new major versions will be supported. In this way, the **maximum** supported
+version of PHP for a maintained Symfony release is the latest released
+one that is publicly available.
+
+For out-of-support releases of Symfony, the latest PHP version at time of EOL is the last
+supported PHP version. Newer versions of PHP may or may not function.
+
 Rationale
 ---------
 
