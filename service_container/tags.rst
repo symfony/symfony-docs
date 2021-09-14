@@ -490,7 +490,7 @@ use this, update the compiler::
                 foreach ($tags as $attributes) {
                     $definition->addMethodCall('addTransport', [
                         new Reference($id),
-                        $attributes['alias']
+                        $attributes['alias'],
                     ]);
                 }
             }

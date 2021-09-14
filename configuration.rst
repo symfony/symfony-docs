@@ -521,7 +521,7 @@ This example shows how you could configure the database connection using an env 
                 'dbal' => [
                     // by convention the env var names are always uppercase
                     'url' => '%env(resolve:DATABASE_URL)%',
-                ]
+                ],
             ]);
         };
 
@@ -888,7 +888,7 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
                     // pass this value to any $projectDir argument for any service
                     // that's created in this file (including controller arguments)
                     ->bind('$projectDir', '%kernel.project_dir%');
-            
+
             // ...
         };
 

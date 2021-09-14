@@ -161,7 +161,7 @@ The following configuration code shows how you can configure two entity managers
                                 'dir' => '%kernel.project_dir%/src/Entity/Main',
                                 'prefix' => 'App\Entity\Main',
                                 'alias' => 'Main',
-                            ]
+                            ],
                         ],
                     ],
                     'customer' => [
@@ -173,7 +173,7 @@ The following configuration code shows how you can configure two entity managers
                                 'dir' => '%kernel.project_dir%/src/Entity/Customer',
                                 'prefix' => 'App\Entity\Customer',
                                 'alias' => 'Customer',
-                            ]
+                            ],
                         ],
                     ],
                 ],

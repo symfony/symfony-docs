@@ -352,7 +352,7 @@ a traditional HTML form that submits to ``/login``:
                     'guard' => [
                         'authenticators' => [
                             LoginFormAuthenticator::class,
-                        ]
+                        ],
                     ],
                     'logout' => [
                         'path' => 'app_logout',
@@ -507,7 +507,7 @@ whenever the user browses a page::
         public static function getSubscribedEvents(): array
         {
             return [
-                KernelEvents::REQUEST => ['onKernelRequest']
+                KernelEvents::REQUEST => ['onKernelRequest'],
             ];
         }
     }

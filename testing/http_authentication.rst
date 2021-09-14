@@ -72,7 +72,7 @@ encoders configuration to generate password hashes as fast as possible:
                     'cost' => 4, // Lowest possible value for bcrypt
                     'time_cost' => 3, // Lowest possible value for argon
                     'memory_cost' => 10, // Lowest possible value for argon
-                ]
+                ],
             ],
         ]);
 
