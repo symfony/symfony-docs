@@ -395,6 +395,52 @@ other services. To do so, create a new service definition using the
     The services defined in the service locator argument must include keys,
     which later become their unique identifiers inside the locator.
 
+.. versionadded:: 5.4
+
+    Since Symfony 5.4 you can create a reusable service locator from tagged services too:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                app.command_handler_locator:
+                    class: Symfony\Component\DependencyInjection\ServiceLocator
+                    arguments: [!tagged_iterator { tag: 'app.handler', default_index_method: 'getCommandName' }]
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+
+                    <service id="app.command_handler_locator" class="Symfony\Component\DependencyInjection\ServiceLocator">
+                        <argument type="tagged_iterator" tag="app.handler" default-index-method="getCommandName"/>
+                    </service>
+
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ServiceLocator;
+
+            return function(ContainerConfigurator $configurator) {
+                $services = $configurator->services();
+
+                $services->set('app.command_handler_locator', ServiceLocator::class)
+                    ->args([tagged_iterator('app.handler', null, 'getCommandName')])
+                ;
+            };
+
 Now you can inject the service locator in any other services:
 
 .. configuration-block::
