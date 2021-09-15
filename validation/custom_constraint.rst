@@ -48,6 +48,66 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
 Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
 use it as an annotation/attribute in other classes.
 
+When using attributes, if your Constraint class (``AcmeConstraint`` for illustration purposes) has configurable options, then there are two ways of setting those options in the ``#[AcmeConstraint()]`` statement of the validated field.
+
+Option 1:
+
+Code the `AcmeConstraint` class with configurable settings as public properties, and no methods. For example:
+
+.. attribute-custom-settings-one-constraint-block::
+
+    .. code-block:: php-attributes
+
+        #[\Attribute]
+        class AcmeConstraint extends Constraint
+        {
+            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+            public $maxLength = 80;
+        }
+
+You will then code the ``#[AcmeConstraint()]`` statement as follows:
+
+.. attribute-custom-settings-one-statement-block::
+
+    .. code-block:: php-attributes
+
+        #[AcmeConstraint(
+            options: ['maxLength' => 120]
+        )]
+        private $validatedProperty;
+
+Option 2:
+
+Code the `AcmeConstraint` class with configurable settings as public properties, and a ``__construct()`` method. For example:
+
+.. attribute-custom-settings-two-constraint-block::
+
+    .. code-block:: php-attributes
+
+        #[\Attribute]
+        class AcmeConstraint extends Constraint
+        {
+            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+            public $maxLength = 80;
+            
+            public function __construct($options = null, array $groups = null, $payload = null, $maxLength = 80)
+            {
+                parent::__construct($options, $groups, $payload);
+                $this->maxLength = $maxLength;
+            }
+        }
+
+You will then code the ``#[AcmeConstraint()]`` statement as follows:
+
+.. attribute-custom-settings-two-statement-block::
+
+    .. code-block:: php-attributes
+
+        #[AcmeConstraint(maxLength: 120)]
+        private $validatedProperty;
+
+In other words, coding the constraint with a ``__construct()`` method exposes the public properties of the constraint class as named parameters.
+
 .. versionadded:: 5.2
 
     The ability to use PHP attributes to configure constraints was introduced in
