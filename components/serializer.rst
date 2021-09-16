@@ -1174,6 +1174,27 @@ to ``true``::
     $result = $normalizer->normalize($dummy, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
     // ['bar' => 'notNull']
 
+Skipping uninitialized properties
+---------------------------------
+
+PHP 7.4 introduced typed properties, which have a new state - ``uninitialized``.
+This is different from the default ``null`` of untyped properties.
+When you try to access it before giving it an explicit value - you get an error.
+
+To avoid serializer throwing an error when serializing or normalizing an object with
+uninitialized properties - then you can set ``AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES`` to ``true``.
+
+.. note::
+
+    Error is thrown only if you inject a ``ClassMetadataFactory`` into the normalizer.
+    Otherwise the properties are checked with reflection and uninitialized ones are skipped.
+    This option is useful when, for example, you want to serialize subset of properties by serialization groups,
+    which requires the ``ClassMetadataFactory``
+
+.. versionadded:: 5.4
+
+    The ``AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES`` constant was introduced in Symfony 5.4.
+
 .. _component-serializer-handling-circular-references:
 
 Handling Circular References
