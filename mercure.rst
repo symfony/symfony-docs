@@ -577,7 +577,7 @@ You can instead make use of the `MockHub`::
     {
         public function testPublishing()
         {
-            $hub = new MockHub('default', 'https://internal/.well-known/mercure', new StaticTokenProvider('foo'), function(Update $update): string {
+            $hub = new MockHub('https://internal/.well-known/mercure', new StaticTokenProvider('foo'), function(Update $update): string {
                 // $this->assertTrue($update->isPrivate());
 
                 return 'id';

@@ -7,6 +7,11 @@
 Doctrine Cache Adapter
 ======================
 
+.. deprecated:: 5.4
+
+    The ``DoctrineAdapter`` and ``DoctrineProvider`` classes were deprecated in Symfony 5.4
+    and it will be removed in Symfony 6.0.
+
 This adapter wraps any class extending the `Doctrine Cache`_ abstract provider, allowing
 you to use these providers in your application as if they were Symfony Cache adapters.
 
