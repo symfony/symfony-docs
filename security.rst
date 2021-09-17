@@ -1029,8 +1029,8 @@ using annotations or attributes:
         // src/Controller/SecurityController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
         /**
         * Require ROLE_ADMIN for *every* controller method in this class.
@@ -1055,8 +1055,8 @@ using annotations or attributes:
         // src/Controller/SecurityController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
         /**
         * Require ROLE_ADMIN for *every* controller method in this class.
@@ -1154,8 +1154,8 @@ There are several special attributes that you can use:
   :doc:`remember me functionality </security/remember_me>` (i.e. a
   remember-me cookie), have this attribute.
 
-* ``IS_IMPERSONATOR``: When the current user is
-  :doc:`impersonating another user</security/impersonating_user>` in this
+* ``IS_IMPERSONATOR``: When the current user is 
+  :doc:`impersonating another user </security/impersonating_user>` in this
   session, this attribute will match.
 
 * ``IS_AUTHENTICATED``: *All* authenticated users have this attribute, regardless of the method
