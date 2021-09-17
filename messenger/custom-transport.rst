@@ -65,7 +65,7 @@ Here is a simplified example of a database transport::
                     WHERE (delivered_at IS NULL OR delivered_at < :redeliver_timeout)
                     AND handled = FALSE'
                 )
-                ->setParameter('redeliver_timeout', new DateTimeImmutable('-5minutes'))
+                ->setParameter('redeliver_timeout', new DateTimeImmutable('-5 minutes'))
                 ->getOneOrNullResult();
 
             if (null === $row) {

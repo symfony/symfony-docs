@@ -805,7 +805,7 @@ Forcing Retrying
 Sometimes handling a message must fail in a way that you *know* is temporary
 and must be retried. If you throw
 :class:`Symfony\\Component\\Messenger\\Exception\\RecoverableMessageHandlingException`,
-the message will always be retried.
+the message will always be retried infinitely and ``max_retries`` setting will be ignored.
 
 .. _messenger-failure-transport:
 
