@@ -19,11 +19,6 @@ The Cache Component
     The component also contains adapters to convert between PSR-6 and PSR-16.
     See :doc:`/components/cache/psr6_psr16_adapters`.
 
-    .. deprecated:: 5.4
-
-        Support for Doctrine Cache was deprecated in Symfony 5.4
-        and it will be removed in Symfony 6.0.
-
 Installation
 ------------
 

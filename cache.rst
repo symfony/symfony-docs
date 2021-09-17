@@ -30,11 +30,6 @@ The following example shows a typical usage of the cache::
 Symfony supports Cache Contracts and PSR-6/16 interfaces.
 You can read more about these at the :doc:`component documentation </components/cache>`.
 
-.. deprecated:: 5.4
-
-    Support for Doctrine Cache was deprecated in Symfony 5.4
-    and it will be removed in Symfony 6.0.
-
 .. _cache-configuration-with-frameworkbundle:
 
 Configuring Cache with FrameworkBundle

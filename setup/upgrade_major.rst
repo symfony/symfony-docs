@@ -198,10 +198,6 @@ included in the Symfony repository for any BC break that you need to be aware of
 Upgrading to Symfony 6: Add Native Return Types
 -----------------------------------------------
 
-.. versionadded:: 5.4
-
-    The return-type checking and fixing features were introduced in Symfony 5.4.
-
 Symfony 6 will come with native PHP return types to (almost all) methods.
 
 In PHP, if the parent has a return type declaration, any class implementing
