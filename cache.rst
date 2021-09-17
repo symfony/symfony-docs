@@ -27,7 +27,7 @@ The following example shows a typical usage of the cache::
     // ... and to remove the cache key
     $pool->delete('my_cache_key');
 
-Symfony supports Cache Contracts, PSR-6/16 and Doctrine Cache interfaces.
+Symfony supports Cache Contracts and PSR-6/16 interfaces.
 You can read more about these at the :doc:`component documentation </components/cache>`.
 
 .. deprecated:: 5.4

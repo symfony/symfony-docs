@@ -16,9 +16,8 @@ The Cache Component
 
 .. tip::
 
-    The component also contains adapters to convert between PSR-6, PSR-16 and
-    Doctrine caches. See :doc:`/components/cache/psr6_psr16_adapters` and
-    :doc:`/components/cache/adapters/doctrine_adapter`.
+    The component also contains adapters to convert between PSR-6 and PSR-16.
+    See :doc:`/components/cache/psr6_psr16_adapters`.
 
     .. deprecated:: 5.4
 
@@ -164,7 +163,7 @@ concepts:
 **Adapter**
     It implements the actual caching mechanism to store the information in the
     filesystem, in a database, etc. The component provides several ready to use
-    adapters for common caching backends (Redis, APCu, Doctrine, PDO, etc.)
+    adapters for common caching backends (Redis, APCu, PDO, etc.)
 
 Basic Usage (PSR-6)
 -------------------
