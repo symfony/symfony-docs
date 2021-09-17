@@ -524,7 +524,7 @@ This example shows how you could configure the database connection using an env 
                 'dbal' => [
                     // by convention the env var names are always uppercase
                     'url' => '%env(resolve:DATABASE_URL)%',
-                ]
+                ],
             ]);
         };
 

@@ -168,7 +168,7 @@ values for the year, month and day fields::
     $builder->add('dueDate', DateType::class, [
         'placeholder' => [
             'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-        ]
+        ],
     ]);
 
 .. _reference-forms-type-date-format:

@@ -113,7 +113,7 @@ add a "blank" entry to the top of each select box::
 Alternatively, you can specify a string to be displayed for the "blank" value::
 
     $builder->add('remindEvery', DateIntervalType::class, [
-        'placeholder' => ['years' => 'Years', 'months' => 'Months', 'days' => 'Days']
+        'placeholder' => ['years' => 'Years', 'months' => 'Months', 'days' => 'Days'],
     ]);
 
 ``hours``

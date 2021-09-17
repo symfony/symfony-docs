@@ -3320,9 +3320,9 @@ the `SMTP session`_. This value overrides any other recipient set in the code.
                         'recipients' => [
                             'admin@symfony.com',
                             'lead@symfony.com',
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ]);
         };
 

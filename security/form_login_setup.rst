@@ -504,7 +504,7 @@ whenever the user browses a page::
         public static function getSubscribedEvents(): array
         {
             return [
-                KernelEvents::REQUEST => ['onKernelRequest']
+                KernelEvents::REQUEST => ['onKernelRequest'],
             ];
         }
     }

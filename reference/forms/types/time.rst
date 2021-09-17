@@ -115,7 +115,7 @@ values for the hour, minute and second fields::
     $builder->add('startTime', 'time', [
         'placeholder' => [
             'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
-        ]
+        ],
     ]);
 
 .. include:: /reference/forms/types/options/hours.rst.inc
