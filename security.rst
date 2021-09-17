@@ -214,7 +214,7 @@ command will pre-configure this for you:
                 User::class => [
                     'algorithm' => 'auto',
                     'cost' => 12,
-                ]
+                ],
             ],
 
             // ...

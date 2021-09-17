@@ -72,7 +72,7 @@ You can also use multi dimensional arrays::
         ],
         [
             'first_name' => 'Ryan',
-        ]
+        ],
     ];
 
     var_dump($propertyAccessor->getValue($persons, '[0][first_name]')); // 'Wouter'

@@ -145,7 +145,7 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
         $container->loadFromExtension('doctrine', [
             'dbal' => [
                 'password' => '%env(DATABASE_PASSWORD)%',
-            ]
+            ],
         ]);
 
 The actual value will be resolved at runtime: container compilation and cache

@@ -61,7 +61,7 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
             $containerConfigurator->extension('framework', [
                 'mailer' => [
                     'dsn' => '%env(MAILER_DSN)%',
-                ]
+                ],
             ]);
         };
 

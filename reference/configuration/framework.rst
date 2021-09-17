@@ -3126,9 +3126,9 @@ recipients set in the code.
                         'recipients' => [
                             'admin@symfony.com',
                             'lead@symfony.com',
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ]);
         };
 

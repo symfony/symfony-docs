@@ -95,7 +95,7 @@ values for the year, month and day fields::
     $builder->add('birthdate', BirthdayType::class, [
         'placeholder' => [
             'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-        ]
+        ],
     ]);
 
 .. include:: /reference/forms/types/options/date_format.rst.inc

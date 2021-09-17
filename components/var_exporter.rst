@@ -120,12 +120,12 @@ created by using the special ``"\0"`` property name to define their internal val
 
     // Creates an SplObjectHash where $info1 is associated to $object1, etc.
     $theObject = Instantiator::instantiate(SplObjectStorage::class, [
-        "\0" => [$object1, $info1, $object2, $info2...]
+        "\0" => [$object1, $info1, $object2, $info2...],
     ]);
 
     // creates an ArrayObject populated with $inputArray
     $theObject = Instantiator::instantiate(ArrayObject::class, [
-        "\0" => [$inputArray]
+        "\0" => [$inputArray],
     ]);
 
 .. _`OPcache`: https://www.php.net/opcache

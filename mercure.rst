@@ -400,7 +400,7 @@ Add your JWT secret to the configuration as follow:
                     'url' => 'https://mercure-hub.example.com/.well-known/mercure',
                     'jwt' => [
                         'secret' => '!ChangeMe!',
-                    ]
+                    ],
                 ],
             ],
         ]);
@@ -498,7 +498,7 @@ Then, reference this service in the bundle configuration:
                     'url' => 'https://mercure-hub.example.com/.well-known/mercure',
                     'jwt' => [
                         'provider' => MyJwtProvider::class,
-                    ]
+                    ],
                 ],
             ],
         ]);
