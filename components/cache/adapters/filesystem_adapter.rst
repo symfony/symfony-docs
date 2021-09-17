@@ -45,8 +45,7 @@ and cache root path as constructor parameters::
     choices. If throughput is paramount, the in-memory adapters
     (:ref:`Apcu <apcu-adapter>`, :ref:`Memcached <memcached-adapter>`, and
     :ref:`Redis <redis-adapter>`) or the database adapters
-    (:ref:`Doctrine <doctrine-adapter>` and :ref:`PDO <pdo-doctrine-adapter>`)
-    are recommended.
+    (:ref:`PDO <pdo-doctrine-adapter>`) are recommended.
 
 .. note::
 
