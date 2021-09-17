@@ -196,6 +196,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
 
     ``HEAD`` verb is considered as ``GET`` verb. Please use both ``GET`` and ``HEAD`` 
     in verb conditionned routes.
+    This behaviour is defined in RFC 7231 https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.2
 
 .. configuration-block::
 
