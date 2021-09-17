@@ -1331,6 +1331,7 @@ The following transports currently support tags and metadata:
 * MailChimp
 * Mailgun
 * Postmark
+* Sendgrid
 * Sendinblue
 
 The following transports only support tags:
