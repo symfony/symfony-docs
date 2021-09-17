@@ -26,7 +26,7 @@ using `PHPUnit`_. Create a PHPUnit configuration file in
                 <directory suffix=".php">./src</directory>
             </include>
         </coverage>
-        
+
         <testsuites>
             <testsuite name="Test Suite">
                 <directory>./tests</directory>
@@ -167,7 +167,7 @@ Response::
             ->will($this->returnValue([
                 '_route' => 'is_leap_year/{year}',
                 'year' => '2000',
-                '_controller' => [new LeapYearController(), 'index']
+                '_controller' => [new LeapYearController(), 'index'],
             ]))
         ;
         $matcher

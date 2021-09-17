@@ -687,7 +687,7 @@ option when building each field:
                 'constraints' => [
                     new NotBlank(),
                     new Type(\DateTime::class),
-                ]
+                ],
             ])
             ->getForm();
 
@@ -714,7 +714,7 @@ option when building each field:
                         'constraints' => [
                             new NotBlank(),
                             new Type(\DateTime::class),
-                        ]
+                        ],
                     ])
                     ->getForm();
                 // ...

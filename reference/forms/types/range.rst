@@ -51,7 +51,7 @@ Basic Usage
         'attr' => [
             'min' => 5,
             'max' => 50
-        ]
+        ],
     ]);
 
 Overridden Options
