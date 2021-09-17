@@ -1334,6 +1334,10 @@ The following transports currently support tags and metadata:
 * Sendgrid
 * Sendinblue
 
+.. versionadded:: 5.4
+
+    The tag and metadata support for Sendgrid was introduced in Symfony 5.4.
+
 The following transports only support tags:
 
 * OhMySMTP
