@@ -1,11 +1,14 @@
 Proposing a Change
 ==================
 
+.. admonition:: Screencast
+    :class: screencast
+
+    Do you prefer video tutorials? Check out the `Contributing Back To Symfony`_
+    screencast series.
+
 A pull request, "PR" for short, is the best way to provide a bug fix or to
 propose enhancements to Symfony.
-
-If you prefer video tutorials instead of a wall of text, then please watch
-this comprehensive and free `Contributing Back To Symfony`_ tutorial by `SymfonyCasts.com`_. 
 
 Step 1: Check existing Issues and Pull Requests
 -----------------------------------------------
@@ -533,4 +536,3 @@ before merging.
 .. _`Travis-CI`: https://travis-ci.org/symfony/symfony
 .. _`Psalm phar is installed`: https://psalm.dev/docs/running_psalm/installation/
 .. _`Contributing Back To Symfony`: https://symfonycasts.com/screencast/contributing
-.. _`SymfonyCasts.com`: https://symfonycasts.com
