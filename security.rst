@@ -9,9 +9,12 @@ Security
 
     Do you prefer video tutorials? Check out the `Symfony Security screencast series`_.
 
-Symfony's security system is incredibly powerful, but it can also be confusing
-to set up. Don't worry! In this article, you'll learn how to set up your app's
-security system step-by-step:
+Symfony's security system is powerful and comprehensive, and as such it can be challenging
+to set up.
+
+Don't worry!
+
+Here you will learn how to set up your app's security system step-by-step:
 
 #. :ref:`Installing security support <security-installation>`;
 
@@ -23,7 +26,7 @@ security system step-by-step:
 
 #. :ref:`Fetching the current User object <retrieving-the-user-object>`.
 
-A few other important topics are discussed after.
+There are links to more advanced security configuration topics at the bottom of this page.
 
 .. _security-installation:
 
@@ -31,7 +34,7 @@ A few other important topics are discussed after.
 ---------------
 
 In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
-install the security feature before using it:
+install the security feature:
 
 .. code-block:: terminal
 
@@ -40,11 +43,11 @@ install the security feature before using it:
 
 .. tip::
 
-    A :doc:`new authenticator-based Security </security/authenticator_manager>`
-    was introduced in Symfony 5.1, which will replace security in
-    Symfony 6.0. This system is almost fully backwards compatible with the
-    current Symfony security, add this line to your security configuration to start
-    using it:
+    Symfony 5.4 has a :doc:`new authenticator-based security system </security/authenticator_manager>`
+    that will become the de facto security system in Symfony 6.0. This new system is almost fully backwards compatible with the
+    current Symfony security system.
+
+    Add the following to your security configuration to start using the new authenticator-based security system:
 
     .. configuration-block::
 
@@ -82,6 +85,9 @@ install the security feature before using it:
                 // ...
             };
 
+    Without this configuration, your app will continue to use the deprecated security system that
+    you know from Symfony 4.4, until such time that the deprecated system is removed in Symfony 6.0.
+
 .. _initial-security-yml-setup-authentication:
 .. _initial-security-yaml-setup-authentication:
 .. _create-user-class:
@@ -90,8 +96,11 @@ install the security feature before using it:
 --------------------------
 
 No matter *how* you will authenticate (e.g. login form or API tokens) or *where*
-your user data will be stored (database, single sign-on), the next step is always the same:
-create a "User" class. The easiest way is to use the `MakerBundle`_.
+your user data will be stored (database, single sign-on), the next step is always the same, namely:
+
+Create a "User" class.
+
+The easiest way is to use the `MakerBundle`_.
 
 Let's assume that you want to store your user data in the database with Doctrine:
 
@@ -118,10 +127,16 @@ Let's assume that you want to store your user data in the database with Doctrine
     updated: config/packages/security.yaml
 
 That's it! The command asks several questions so that it can generate exactly what
-you need. The most important is the ``User.php`` file itself. The *only* rule about
+you need.
+
+The most important is the ``User.php`` file itself. The *only* rule about
 your ``User`` class is that it *must* implement :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
-Feel free to add *any* other fields or logic you need. If your ``User`` class is
-an entity (like in this example), you can use the :ref:`make:entity command <doctrine-add-more-fields>`
+The `MakerBundle`_ will do that automatically.
+
+Feel free to add *any* other fields or logic you need.
+
+If your ``User`` class is
+an entity (see the example), you can use the :ref:`make:entity command <doctrine-add-more-fields>`
 to add more fields. Also, make sure to make and run a migration for the new entity:
 
 .. code-block:: terminal
@@ -135,12 +150,11 @@ to add more fields. Also, make sure to make and run a migration for the new enti
 2b) The "User Provider"
 -----------------------
 
-In addition to your ``User`` class, you also need a "User provider": a class that
-helps with a few things, like reloading the User data from the session and some
-optional features, like :doc:`remember me </security/remember_me>` and
+In addition to your ``User`` class, you also need a "user provider". This class is responsible for reloading the User data from the session and some other
+optional features, such as :doc:`remember me </security/remember_me>` and
 :doc:`impersonation </security/impersonating_user>`.
 
-Fortunately, the ``make:user`` command already configured one for you in your
+The ``make:user`` command will have automatically configured one in your
 ``security.yaml`` file under the ``providers`` key:
 
 .. configuration-block::
@@ -195,7 +209,7 @@ Fortunately, the ``make:user`` command already configured one for you in your
 
 If your ``User`` class is an entity, you don't need to do anything else. But if
 your class is *not* an entity, then ``make:user`` will also have generated a
-``UserProvider`` class that you need to finish. Learn more about user providers
+``UserProvider`` class that you need to flush out and finalize. Learn more about user providers
 here: :doc:`User Providers </security/user_provider>`.
 
 .. _security-encoding-user-password:
@@ -263,11 +277,6 @@ command will pre-configure this for you:
             // ...
         };
 
-.. versionadded:: 5.3
-
-    The ``password_hashers`` option was introduced in Symfony 5.3. In previous
-    versions it was called ``encoders``.
-
 Now that Symfony knows *how* you want to hash the passwords, you can use the
 ``UserPasswordHasherInterface`` service to do this before saving your users to
 the database.
@@ -316,7 +325,44 @@ Use this service to hash the passwords:
           }
       }
 
-You can manually hash a password by running:
+As another example, in the ``RegistrationController`` class of your app, where you create and persist a new User entity, you will also use the ``UserPasswordHasherInterface`` service to hash the user's password.
+
+.. code-block:: registration-password-hash
+
+    class RegistrationController extends AbstractController
+    {
+        #[Route('/register', name: 'app_register')]
+        public function register(
+            Request $request,
+            UserPasswordHasherInterface $passwordHasher,
+            EntityManagerInterface $entityManager
+        ): Response
+        {
+            $user = new User();
+            $form = $this->createForm(RegistrationFormType::class, $user);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $user->setPassword(
+                    $passwordHasher->hashPassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_profile');
+            }
+
+            return $this->render('registration/register.html.twig', [
+                'registrationForm' => $form->createView(),
+            ]);
+        }
+    }
+
+If you need to manually hash a password, run the following command in your terminal:
 
 .. code-block:: terminal
 
@@ -348,7 +394,6 @@ important section is ``firewalls``:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
                 main:
-                    anonymous: true
                     lazy: true
 
     .. code-block:: xml
@@ -369,7 +414,6 @@ important section is ``firewalls``:
                     security="false"/>
 
                 <firewall name="main"
-                    anonymous="true"
                     lazy="true"/>
             </config>
         </srv:container>
@@ -385,37 +429,43 @@ important section is ``firewalls``:
                 ->security(false);
 
             $security->firewall('main')
-                ->lazy(true)
-                ->anonymous();
+                ->lazy(true);
         };
 
-A "firewall" is your authentication system: the configuration below it defines
+A "firewall" is your primary authentication system. Its configuration defines
 *how* your users will be able to authenticate (e.g. login form, API token, etc).
 
-Only one firewall is active on each request: Symfony uses the ``pattern`` key
+Only one firewall is active on each request. Symfony uses the ``pattern`` key
 to find the first match (you can also :doc:`match by host or other things </security/firewall_restriction>`).
-The ``dev`` firewall is really a fake firewall: it makes sure that you don't
-accidentally block Symfony's dev tools - which live under URLs like ``/_profiler``
+
+The ``dev`` firewall is really a fake firewall. It ensures that you can access Symfony's dev tools - which live under URLs such as ``/_profiler``
 and ``/_wdt``.
 
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
-it matches *all* URLs). A firewall can have many modes of authentication,
-in other words many ways to ask the question "Who are you?". Often, the
-user is unknown (i.e. not logged in) when they first visit your website. The
-``anonymous`` mode, if enabled, is used for these requests.
+it matches *all* URLs).
 
-In fact, if you go to the homepage right now, you *will* have access and you'll
-see that you're "authenticated" as ``anon.``. The firewall verified that it
-does not know your identity, and so, you are anonymous:
+A firewall can have many modes of authentication. In other words, it can employ many ways to ask the question "Who are you?".
 
-.. image:: /_images/security/anonymous_wdt.png
-   :align: center
+Often, the user is unknown (i.e. not logged in) when they first visit your website.
 
-It means any request can have an anonymous token to access some resource,
+If you go to the home page of your dev app, you *will* have access and you'll
+see in the debug toolbar that you're "authenticated" as ``n/a``. The firewall verified that you have access to that resource, and that it
+does not know your identity.
+
+.. note::
+
+    If you do not see the debug toolbar at the bottom of your dev app, install the :doc:`profiler </profiler>` with:
+
+    .. code-block:: terminal
+
+        $ composer require --dev symfony/profiler-pack
+
+This means a request can have unauthenticated access to some resources,
 while some actions (i.e. some pages or buttons) can still require specific
-privileges. A user can then access a form login without being authenticated
-as a unique user (otherwise an infinite redirection loop would happen
-asking the user to authenticate while trying to doing so).
+privileges.
+
+The user can then access the home page, login form or registration form without being authenticated
+as a unique user.
 
 You'll learn later how to deny access to certain URLs, controllers, or part of
 templates.
@@ -427,30 +477,22 @@ templates.
     privilege). This is important to keep requests cacheable (see
     :doc:`/http_cache`).
 
-.. note::
-
-    If you do not see the toolbar, install the :doc:`profiler </profiler>` with:
-
-    .. code-block:: terminal
-
-        $ composer require --dev symfony/profiler-pack
-
 Now that we understand our firewall, the next step is to create a way for your
 users to authenticate!
 
 .. _security-form-login:
 
-3b) Authenticating your Users
+3b) Authenticating Your Users
 -----------------------------
 
 Authentication in Symfony can feel a bit "magic" at first. That's because, instead
 of building a route & controller to handle login, you'll activate an
-*authentication provider*: some code that runs automatically *before* your controller
+*authentication provider*. This is code that runs automatically *before* your controller
 is called.
 
 Symfony has several :doc:`built-in authentication providers </security/auth_providers>`.
 If your use-case matches one of these *exactly*, great! But, in most cases - including
-a login form - *we recommend building a Guard Authenticator*: a class that allows
+a login form - *we recommend using the new Authentication Manager*, which is a class that allows
 you to control *every* part of the authentication process (see the next section).
 
 .. tip::
@@ -459,31 +501,23 @@ you to control *every* part of the authentication process (see the next section)
     Facebook or Twitter (social login), check out the `HWIOAuthBundle`_ community
     bundle.
 
-Guard Authenticators
-~~~~~~~~~~~~~~~~~~~~
+Authentication Manager
+~~~~~~~~~~~~~~~~~~~~~~
 
-.. deprecated:: 5.3
-
-    Guard authenticators are deprecated since Symfony 5.3 in favor of the
-    :doc:`new authenticator-based system </security/authenticator_manager>`.
-
-A Guard authenticator is a class that gives you *complete* control over your
+The authentication manager is a class that gives you *complete* control over your
 authentication process. There are many different ways to build an authenticator;
 here are a few common use-cases:
 
 * :doc:`/security/form_login_setup`
-* :doc:`/security/guard_authentication` – see this for the most detailed
-  description of authenticators and how they work
+* :doc:`/security/authenticator_manager` – see this for the most detailed
+  description of authenticator managers and how they work
 
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    Login throttling was introduced in Symfony 5.2.
-
 Symfony provides basic protection against `brute force login attacks`_ if
 you're using the :doc:`authenticator-based authenticators </security/authenticator_manager>`.
+
 You must enable this using the ``login_throttling`` setting:
 
 .. configuration-block::
@@ -574,15 +608,11 @@ You must enable this using the ``login_throttling`` setting:
                     ->maxAttempts(3);
         };
 
-.. versionadded:: 5.3
-
-    The ``login_throttling.interval`` option was introduced in Symfony 5.3.
-
 By default, login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
 failed requests for ``IP address``. The second limit protects against an
 attacker using multiple usernames from bypassing the first limit, without
-distrupting normal users on big networks (such as offices).
+disrupting normal users on big networks (such as offices).
 
 .. tip::
 
@@ -727,26 +757,25 @@ and set the ``limiter`` option to its service ID:
 .. _`security-authorization`:
 .. _denying-access-roles-and-other-authorization:
 
-4) Denying Access, Roles and other Authorization
+4) Denying Access, Roles and Other Authorization
 ------------------------------------------------
 
 Users can now log in to your app using your login form. Great! Now, you need to learn
 how to deny access and work with the User object. This is called **authorization**,
-and its job is to decide if a user can access some resource (a URL, a model object,
-a method call, ...).
+and its job is to decide if a user can access a specific resource (a URL, a model object,
+a method call, etc.).
 
 The process of authorization has two different sides:
 
 #. The user receives a specific set of roles when logging in (e.g. ``ROLE_ADMIN``).
 #. You add code so that a resource (e.g. URL, controller) requires a specific
-   "attribute" (most commonly a role like ``ROLE_ADMIN``) in order to be
-   accessed.
+   "attribute" (most commonly a role like ``ROLE_ADMIN``) for access to be granted.
 
 Roles
 ~~~~~
 
 When a user logs in, Symfony calls the ``getRoles()`` method on your ``User``
-object to determine which roles this user has. In the ``User`` class that we
+object to determine the roles of the user. In the ``User`` class that we
 generated earlier, the roles are an array that's stored in the database, and
 every user is *always* given at least one role: ``ROLE_USER``::
 
@@ -776,7 +805,7 @@ a user should have. Here are a few guidelines:
 
 * Every role **must start with** ``ROLE_`` (otherwise, things won't work as expected)
 
-* Other than the above rule, a role is just a string and you can invent what you
+* Other than the above rule, a role is just a string and you can invent whatever you
   need (e.g. ``ROLE_PRODUCT_ADMIN``).
 
 You'll use these roles next to grant access to specific sections of your site.
@@ -790,10 +819,10 @@ Add Code to Deny Access
 
 There are **two** ways to deny access to something:
 
-#. :ref:`access_control in security.yaml <security-authorization-access-control>`
-   allows you to protect URL patterns (e.g. ``/admin/*``). Simpler, but less flexible;
+#. The :ref:`access_control section in security.yaml <security-authorization-access-control>`
+   allows you to protect URL patterns (e.g. ``/admin/*``). Simpler, but less flexible; or
 
-#. :ref:`in your controller (or other code) <security-securing-controller>`.
+#. Define it in your :ref:`controller (or other code) <security-securing-controller>`.
 
 .. _security-authorization-access-control:
 
@@ -802,7 +831,7 @@ Securing URL patterns (access_control)
 
 The most basic way to secure part of your app is to secure an entire URL pattern
 in ``security.yaml``. For example, to require ``ROLE_ADMIN`` for all URLs that
-start with ``/admin``, you can:
+start with ``/admin``, you can do the following:
 
 .. configuration-block::
 
@@ -892,9 +921,9 @@ start with ``/admin``, you can:
                 ->roles(['ROLE_USER']);
         };
 
-You can define as many URL patterns as you need - each is a regular expression.
-**BUT**, only **one** will be matched per request: Symfony starts at the top of
-the list and stops when it finds the first match:
+You can define as many URL patterns as you need -- each is a regular expression.
+**BUT**, only **one** will be matched per request. Symfony starts at the top of
+the list and stops when it finds the first match.
 
 .. configuration-block::
 
@@ -950,15 +979,17 @@ the list and stops when it finds the first match:
 
 Prepending the path with ``^`` means that only URLs *beginning* with the
 pattern are matched. For example, a path of ``/admin`` (without the ``^``)
-would match ``/admin/foo`` but would also match URLs like ``/foo/admin``.
+would match ``/admin/foo`` and it would also match URLs like ``/foo/admin``.
+
+A path with ``^/admin`` would match ``/admin/foo``, but would not match ``/foo/admin``.
 
 Each ``access_control`` can also match on IP address, hostname and HTTP methods.
 It can also be used to redirect a user to the ``https`` version of a URL pattern.
-See :doc:`/security/access_control`.
+For more details, please see :doc:`/security/access_control`.
 
 .. _security-securing-controller:
 
-Securing Controllers and other Code
+Securing Controllers and Other Code
 ...................................
 
 You can deny access from inside a controller::
@@ -980,7 +1011,7 @@ is thrown and no more code in your controller is called. Then, one of two things
 will happen:
 
 1) If the user isn't logged in yet, they will be asked to log in (e.g. redirected
-   to the login page).
+   to the login page); or
 
 2) If the user *is* logged in, but does *not* have the ``ROLE_ADMIN`` role, they'll
    be shown the 403 access denied page (which you can
@@ -989,39 +1020,68 @@ will happen:
 .. _security-securing-controller-annotations:
 
 Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
-using annotations:
+using annotations or attributes:
 
-.. code-block:: diff
+.. code-block:: sensio-securing-controllers
 
-      // src/Controller/AdminController.php
-      // ...
+    .. code-block:: php-annotations
 
-    + use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+        // src/Controller/SecurityController.php
+        namespace App\Controller;
 
-    + /**
-    +  * Require ROLE_ADMIN for *every* controller method in this class.
-    +  *
-    +  * @IsGranted("ROLE_ADMIN")
-    +  */
-      class AdminController extends AbstractController
-      {
-    +     /**
-    +      * Require ROLE_ADMIN for only this controller method.
-    +      *
-    +      * @IsGranted("ROLE_ADMIN")
-    +      */
-          public function adminDashboard(): Response
-          {
-              // ...
-          }
-      }
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+        /**
+        * Require ROLE_ADMIN for *every* controller method in this class.
+        *
+        * @IsGranted("ROLE_ADMIN")
+        */
+        class AdminController extends AbstractController
+        {
+            /**
+            * Require ROLE_ADMIN for only this controller method.
+            *
+            * @IsGranted("ROLE_ADMIN")
+            */
+            public function adminDashboard(): Response
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/SecurityController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+        /**
+        * Require ROLE_ADMIN for *every* controller method in this class.
+        *
+        * #[IsGranted('ROLE_ADMIN')]
+        */
+        class AdminController extends AbstractController
+        {
+            /**
+            * Require ROLE_ADMIN for only this controller method.
+            *
+            * #[IsGranted('ROLE_ADMIN')]
+            */
+            public function adminDashboard(): Response
+            {
+                // ...
+            }
+        }
 
 For more information, see the `FrameworkExtraBundle documentation`_.
 
 .. _security-template:
 
-Access Control in Templates
-...........................
+Access Control in Twig Templates
+................................
 
 If you want to check if the current user has a certain role, you can use
 the built-in ``is_granted()`` helper function in any Twig template:
@@ -1040,19 +1100,27 @@ See :doc:`/security/securing_services`.
 Setting Individual User Permissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most applications require more specific access rules. For instance, a user
-should be able to only edit their *own* comments on a blog. Voters allow you
-to write *whatever* business logic you need to determine access. Using
+Most applications require more specific access rules.
+
+For instance, a user should be able to only edit their *own* comments on a blog.
+
+Voters allow you to write *whatever* business logic you need to determine access. Using
 these voters is similar to the role-based access checks implemented in the
-previous chapters. Read :doc:`/security/voters` to learn how to implement
+previous chapters.
+
+Please read :doc:`/security/voters` to learn how to implement
 your own voter.
 
 Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you *only* want to check if a user is logged in (you don't care about roles),
-you have two options. First, if you've given *every* user ``ROLE_USER``, you can
-check for that role. Otherwise, you can use a special "attribute" in place of a
+you have two options.
+
+If you've given *every* user ``ROLE_USER``, you can
+check for that role.
+
+Alternatively, you can use a special "attribute" in place of a
 role::
 
     // ...
@@ -1067,37 +1135,41 @@ role::
 You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like
 ``access_control`` or in Twig.
 
-``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
-user that has logged in will have this. Actually, there are some special attributes
-like this:
+Technically, ``IS_AUTHENTICATED_FULLY`` isn't an actual role. Yet, it acts like a role, and every
+logged-in user will have that specific attribute.
+
+There are several special attributes that you can use:
 
 * ``IS_AUTHENTICATED_REMEMBERED``: *All* logged in users have this, even
-  if they are logged in because of a "remember me cookie". Even if you don't
-  use the :doc:`remember me functionality </security/remember_me>`,
-  you can use this to check if the user is logged in.
+  if they are logged in because of a "remember me cookie". You can use this to check
+  if the user is logged in regardless of whether you're using
+  the :doc:`remember me functionality </security/remember_me>` or not,
+  .
 
 * ``IS_AUTHENTICATED_FULLY``: This is similar to ``IS_AUTHENTICATED_REMEMBERED``,
   but stronger. Users who are logged in only because of a "remember me cookie"
   will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
 
-* ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
-  this - this is useful when defining a list of URLs with no access restriction
-  - some details are in :doc:`/security/access_control`.
-
-* ``IS_ANONYMOUS``: *Only* anonymous users are matched by this attribute.
-
 * ``IS_REMEMBERED``: *Only* users authenticated using the
-  :doc:`remember me functionality </security/remember_me>`, (i.e. a
-  remember-me cookie).
+  :doc:`remember me functionality </security/remember_me>` (i.e. a
+  remember-me cookie), have this attribute.
 
 * ``IS_IMPERSONATOR``: When the current user is
-  :doc:`impersonating </security/impersonating_user>` another user in this
+  :doc:`impersonating another user</security/impersonating_user>` in this
   session, this attribute will match.
 
-.. versionadded:: 5.1
+* ``IS_AUTHENTICATED``: *All* authenticated users have this attribute, regardless of the method
+  of their authentication.
 
-    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATOR``
-    attributes were introduced in Symfony 5.1.
+* ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even unauthenticated ones) have
+  this. Note that this attribute is deprecated since Symfony 5.4. Use ``PUBLIC_ACCESS`` instead.
+
+* ``IS_ANONYMOUS``: This attribute is deprecated since Symfony 5.4 and should not be used. We are moving away
+  from the concept of an anonymous user.
+
+* ``PUBLIC_ACCESS``: All users, including unauthenticated users, will have this attribute.
+
+If you really need to know if a request was made by an unauthenticated user, then check for *not* ``IS_AUTHENTICATED``.
 
 .. _retrieving-the-user-object:
 
@@ -1139,8 +1211,9 @@ If you need to get the logged in user from a service, use the
 
         public function __construct(Security $security)
         {
-            // Avoid calling getUser() in the constructor: auth may not
-            // be complete yet. Instead, store the entire Security object.
+            // Avoid calling getUser() in the constructor: the authentication
+            //  process might not be complete yet during class instantiation.
+            // Instead, store the entire Security object.
             $this->security = $security;
         }
 
@@ -1225,7 +1298,7 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
                     ->path('app_logout');
         };
 
-Next, you'll need to create a route for this URL (but not a controller):
+Next, you'll need to create a route for this URL:
 
 .. configuration-block::
 
@@ -1244,7 +1317,7 @@ Next, you'll need to create a route for this URL (but not a controller):
              */
             public function logout(): void
             {
-                // controller can be blank: it will never be executed!
+                // method can be blank: it will never be executed!
                 throw new \Exception('Don\'t forget to activate logout in security.yaml');
             }
         }
@@ -1262,7 +1335,7 @@ Next, you'll need to create a route for this URL (but not a controller):
             #[Route('/logout', name: 'app_logout', methods: ['GET'])]
             public function logout()
             {
-                // controller can be blank: it will never be executed!
+                // method can be blank: it will never be executed!
                 throw new \Exception('Don\'t forget to activate logout in security.yaml');
             }
         }
@@ -1298,22 +1371,20 @@ Next, you'll need to create a route for this URL (but not a controller):
         };
 
 And that's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
-Symfony will un-authenticate the current user and redirect them.
+Symfony will remove authentication from the user session and redirect the user to
+the home page of your app, if you did not configure a specific target page for the logout
+process (see below).
 
 Customizing Logout
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.1
+You might need to execute extra logic upon logout (e.g., invalidate
+tokens) or you might want to customize what happens after a logout.
 
-    The ``LogoutEvent`` was introduced in Symfony 5.1. Prior to this
-    version, you had to use a
-    :ref:`logout success handler <reference-security-logout-success-handler>`
-    to customize the logout.
+During logout, a :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
+is dispatched.
 
-In some cases you need to execute extra logic upon logout (e.g. invalidate
-some tokens) or want to customize what happens after a logout. During
-logout, a :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
-is dispatched. Register an :doc:`event listener or subscriber </event_dispatcher>`
+Register an :doc:`event listener or subscriber </event_dispatcher>`
 to execute custom logic. The following information is available in the
 event class:
 
@@ -1325,6 +1396,12 @@ event class:
 ``getResponse()``
     Returns a response, if it is already set by a custom listener. Use
     ``setResponse()`` to configure a custom logout response.
+
+To redirect a user to a specific location after logout, you can either set the location
+in ``security.yaml`` using the ``target`` key as described in :doc:`/reference/configuration/security`,
+or you can use ``setResponse()`` to set a redirect response in the ``LogoutEvent`` subscriber,
+as described above. This latter option is ideal if the post-logout action can vary based upon
+certain conditions or circumstances.
 
 
 .. tip::
@@ -1405,7 +1482,7 @@ rules by creating a role hierarchy:
             # ...
 
             role_hierarchy:
-                ROLE_ADMIN:       ROLE_USER
+                ROLE_ADMIN:       ROLE_APPROVER
                 ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     .. code-block:: xml
@@ -1423,7 +1500,7 @@ rules by creating a role hierarchy:
             <config>
                 <!-- ... -->
 
-                <role id="ROLE_ADMIN">ROLE_USER</role>
+                <role id="ROLE_ADMIN">ROLE_APPROVER</role>
                 <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
             </config>
         </srv:container>
@@ -1436,21 +1513,31 @@ rules by creating a role hierarchy:
         return static function (SecurityConfig $security) {
             // ...
 
-            $security->roleHierarchy('ROLE_ADMIN', ['ROLE_USER']);
+            $security->roleHierarchy('ROLE_ADMIN', ['ROLE_APPROVER']);
             $security->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH']);
         };
 
-Users with the ``ROLE_ADMIN`` role will also have the
-``ROLE_USER`` role. And users with ``ROLE_SUPER_ADMIN``, will automatically have
-``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH`` and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
+The above configuration has the following meaning:
+
+Users with the ``ROLE_ADMIN`` role also have the ``ROLE_APPROVER`` role.
+
+Users with ``ROLE_SUPER_ADMIN`` also have the ``ROLE_ADMIN`` and ``ROLE_ALLOWED_TO_SWITCH`` roles.
+In addition, they also have ``ROLE_APPROVER``, which is inherited from ``ROLE_ADMIN``.
+
+.. tip::
+
+    If you automatically assign a lowest-level role, such as ``ROLE_USER`` (or any other role), to all
+    users in the ``setRoles()`` method of your ``User`` class, then you do not need to include that ``ROLE_USER``
+    in the role hierarchy.
+
 
 For role hierarchy to work, do not try to call ``$user->getRoles()`` manually.
 For example, in a controller extending from the :ref:`base controller <the-base-controller-class-services>`::
 
-    // BAD - $user->getRoles() will not know about the role hierarchy
+    // NO! - $user->getRoles() will not know about the role hierarchy
     $hasAccess = in_array('ROLE_ADMIN', $user->getRoles());
 
-    // GOOD - use of the normal security methods
+    // YES! - use of the normal security methods
     $hasAccess = $this->isGranted('ROLE_ADMIN');
     $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -1467,14 +1554,15 @@ Frequently Asked Questions
 **Can I have Multiple Firewalls?**
     Yes! But it's usually not necessary. Each firewall is like a separate security
     system. And so, unless you have *very* different authentication needs, one
-    firewall usually works well. With :doc:`Guard authentication </security/guard_authentication>`,
-    you can create various, diverse ways of allowing authentication (e.g. form login,
+    firewall usually works well. With the :doc:`built-in authentication providers </security/auth_providers>`
+    and your own :doc:`custom authentication providers </security/custom_authentication_provider>`,
+    you can create diverse ways of allowing authentication (e.g. form login,
     API key authentication and LDAP) all under the same firewall.
 
 **Can I Share Authentication Between Firewalls?**
     Yes, but only with some configuration. If you're using multiple firewalls and
-    you authenticate against one firewall, you will *not* be authenticated against
-    any other firewalls automatically. Different firewalls are like different security
+    you authenticate against one firewall, you will *not* be automatically authenticated against
+    any other firewalls. Different firewalls are like different security
     systems. To do this you have to explicitly specify the same
     :ref:`reference-security-firewall-context` for different firewalls. But usually
     for most applications, having one main firewall is enough.
@@ -1489,11 +1577,11 @@ Frequently Asked Questions
     Sometimes authentication may be successful, but after redirecting, you're
     logged out immediately due to a problem loading the ``User`` from the session.
     To see if this is an issue, check your log file (``var/log/dev.log``) for
-    the log message:
+    the error message.
 
 **Cannot refresh token because user has changed**
-    If you see this, there are two possible causes. First, there may be a problem
-    loading your User from the session. See :ref:`user_session_refresh`. Second,
+    If you see this, there are two possible causes. Firstly, there might be a problem
+    loading your ``User`` from the session. See :ref:`user_session_refresh`. Secondly,
     if certain user information was changed in the database since the last page
     refresh, Symfony will purposely log out the user for security reasons.
 
