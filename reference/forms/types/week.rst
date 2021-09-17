@@ -79,7 +79,7 @@ values for the year and week fields::
         'placeholder' => [
             'year' => 'Year',
             'week' => 'Week',
-        ]
+        ],
     ]);
 
 .. include:: /reference/forms/types/options/html5.rst.inc

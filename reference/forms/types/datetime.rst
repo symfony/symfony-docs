@@ -125,7 +125,7 @@ values for the year, month, day, hour, minute and second fields::
         'placeholder' => [
             'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
             'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
-        ]
+        ],
     ]);
 
 format
