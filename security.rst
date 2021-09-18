@@ -327,7 +327,7 @@ Use this service to hash the passwords:
 
 As another example, in the ``RegistrationController`` class of your app, where you create and persist a new User entity, you will also use the ``UserPasswordHasherInterface`` service to hash the user's password.
 
-.. code-block:: registration-password-hash
+.. code-block:: php
 
     class RegistrationController extends AbstractController
     {
@@ -501,16 +501,30 @@ you to control *every* part of the authentication process (see the next section)
     Facebook or Twitter (social login), check out the `HWIOAuthBundle`_ community
     bundle.
 
-Authentication Manager
+Authenticator Managers
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The authentication manager is a class that gives you *complete* control over your
+The authenticator manager is a class that gives you *complete* control over your
 authentication process. There are many different ways to build an authenticator;
 here are a few common use-cases:
 
 * :doc:`/security/form_login_setup`
 * :doc:`/security/authenticator_manager` – see this for the most detailed
   description of authenticator managers and how they work
+
+Guard Authenticators
+~~~~~~~~~~~~~~~~~~~~
+
+.. deprecated:: 5.3
+
+    Guard authenticators are deprecated since Symfony 5.3 in favor of the
+    :doc:`new authenticator manager system </security/authenticator_manager>`
+    referenced in the previous section.
+
+If you still need to use the deprecated Guard Authenticators, then please refer to the
+separate documentation page:
+
+* :doc:`/security/guard_authentication`
 
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1022,7 +1036,7 @@ will happen:
 Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
 using annotations or attributes:
 
-.. code-block:: sensio-securing-controllers
+.. code-block:: php
 
     .. code-block:: php-annotations
 
@@ -1060,16 +1074,14 @@ using annotations or attributes:
 
         /**
         * Require ROLE_ADMIN for *every* controller method in this class.
-        *
-        * #[IsGranted('ROLE_ADMIN')]
         */
+        #[IsGranted('ROLE_ADMIN')]
         class AdminController extends AbstractController
         {
             /**
             * Require ROLE_ADMIN for only this controller method.
-            *
-            * #[IsGranted('ROLE_ADMIN')]
             */
+            #[IsGranted('ROLE_ADMIN')]
             public function adminDashboard(): Response
             {
                 // ...
@@ -1154,7 +1166,7 @@ There are several special attributes that you can use:
   :doc:`remember me functionality </security/remember_me>` (i.e. a
   remember-me cookie), have this attribute.
 
-* ``IS_IMPERSONATOR``: When the current user is 
+* ``IS_IMPERSONATOR``: When the current user is
   :doc:`impersonating another user </security/impersonating_user>` in this
   session, this attribute will match.
 
@@ -1169,7 +1181,7 @@ There are several special attributes that you can use:
 
 * ``PUBLIC_ACCESS``: All users, including unauthenticated users, will have this attribute.
 
-If you really need to know if a request was made by an unauthenticated user, then check for *not* ``IS_AUTHENTICATED``.
+If you really need to know if a request was made by an unauthenticated user, then check for **not** ``IS_AUTHENTICATED``.
 
 .. _retrieving-the-user-object:
 
