@@ -514,6 +514,11 @@ you to control *every* part of the authentication process (see the next section)
 Authenticator Managers
 ~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 5.1
+
+    Authenticator-based security was introduced in Symfony 5.1 and is now the
+    recommended method to use.
+
 The authenticator manager is a class that gives you *complete* control over your
 authentication process. There are many different ways to build an authenticator;
 here are a few common use-cases:
@@ -529,7 +534,7 @@ Guard Authenticators
 
     Guard authenticators are deprecated since Symfony 5.3 in favor of the
     :doc:`new authenticator manager system </security/authenticator_manager>`
-    referenced in the previous section.
+    referenced in the previous section. They will be removed in Symfony 6.
 
 If you still need to use the deprecated Guard Authenticators, then please refer to the
 separate documentation page:
