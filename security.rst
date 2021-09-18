@@ -328,6 +328,16 @@ Use this service to hash the passwords:
 As another example, in the ``RegistrationController`` class of your app, where you create and persist a new User entity, you will also use the ``UserPasswordHasherInterface`` service to hash the user's password.
 
 .. code-block:: php
+    // src/App/Controller/RegistrationController.php
+    namespace App\Controller;
+
+    use App\Entity\User;
+    use App\Form\RegistrationFormType;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class RegistrationController extends AbstractController
     {
