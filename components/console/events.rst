@@ -159,7 +159,11 @@ Listeners receive a
 The ``ConsoleEvents::SIGNAL`` Event
 -----------------------------------
 
-**Typical Purposes**: To handle some signals for all application commands.
+.. versionadded:: 5.2
+
+     The ``ConsoleSignalEvent`` class was introduced in Symfony 5.2.
+
+**Typical Purposes**: To handle some signals for all application commands while being executed.
 
 Listeners receive a
 :class:`Symfony\\Component\\Console\\Event\\ConsoleSignalEvent` event::
@@ -168,6 +172,7 @@ Listeners receive a
     use Symfony\Component\Console\Event\ConsoleSignalEvent;
 
     $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
+        // https://www.php.net/manual/en/pcntl.constants.php
         $signal = $event->getHandlingSignal();
 
         // ...
