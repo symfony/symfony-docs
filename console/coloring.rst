@@ -60,7 +60,7 @@ Any hex color is supported for foreground and background colors. Besides that, t
 
 .. versionadded:: 5.4
 
-    Support for RGB functional notation was introduced in Symfony 5.4.
+    Support for RGB and HSL functional notation was introduced in Symfony 5.4.
 
 .. note::
 
@@ -83,6 +83,9 @@ You can also set these colors and options directly inside the tag name::
 
     // chartreuse text
     $output->writeln('<fg=rgb(127, 255, 0)>foo</>');
+
+    // beige text
+    $output->writeln('<fg=hsl(34, 48%, 70%)>foo</>');
 
     // black text on a cyan background
     $output->writeln('<fg=black;bg=cyan>foo</>');
