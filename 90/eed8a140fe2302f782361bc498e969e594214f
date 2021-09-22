@@ -1,0 +1,72 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-09-17T15:45:05Z
+
+Did you experience some issue because of these quotes?
+
+If I remember correctly, we added these quotes (here and in other commands across the docs) because not adding them causes problems for Windows users.
+
+---------------------------------------------------------------------------
+
+by aliz71 at 2021-09-17T16:46:54Z
+
+Yes, when I added these quotes I got an error message in console and when I
+executed without quotes the error was gone. By the way, my develop
+environment is win 10.
+
+On Fri, Sep 17, 2021, 8:15 PM Javier Eguiluz ***@***.***>
+wrote:
+
+> Did you experience some issue because of these quotes?
+>
+> If I remember correctly, we added these quotes (here and in other commands
+> across the docs) because not adding them causes problems for Windows users.
+>
+> —
+> You are receiving this because you authored the thread.
+> Reply to this email directly, view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/15820#issuecomment-921898516>,
+> or unsubscribe
+> <https://github.com/notifications/unsubscribe-auth/ADTOAYDH4N2ZSJ2NB2JH7BLUCNPAXANCNFSM5EBX5JJA>
+> .
+> Triage notifications on the go with GitHub Mobile for iOS
+> <https://apps.apple.com/app/apple-store/id1477376905?ct=notification-email&mt=8&pt=524675>
+> or Android
+> <https://play.google.com/store/apps/details?id=com.github.android&referrer=utm_campaign%3Dnotification-email%26utm_medium%3Demail%26utm_source%3Dgithub>.
+>
+>
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-09-22T13:10:38Z
+
+Thanks for the feedback! This is now more confusing to me. I remember that when we add unneeded quotes in some command it's because someone using Windows asked us to do that because otherwise it fails.
+
+---------------------------------------------------------------------------
+
+by aliz71 at 2021-09-22T13:25:03Z
+
+You are welcome. By the way, I use without quotes it seems when I add the
+quotes the framework thinks it is a part of my service name.
+I attached an example for you to this email.
+
+On Wed, 22 Sept 2021 at 16:40, Javier Eguiluz ***@***.***>
+wrote:
+
+> Thanks for the feedback! This is now more confusing to me. I remember that
+> when we add unneeded quotes in some command it's because someone using
+> Windows asked us to do that because otherwise it fails.
+>
+> —
+> You are receiving this because you authored the thread.
+> Reply to this email directly, view it on GitHub
+> <https://github.com/symfony/symfony-docs/pull/15820#issuecomment-924915637>,
+> or unsubscribe
+> <https://github.com/notifications/unsubscribe-auth/ADTOAYHZ2FFYM3OMDP6ILXTUDHIVVANCNFSM5EBX5JJA>
+> .
+> Triage notifications on the go with GitHub Mobile for iOS
+> <https://apps.apple.com/app/apple-store/id1477376905?ct=notification-email&mt=8&pt=524675>
+> or Android
+> <https://play.google.com/store/apps/details?id=com.github.android&referrer=utm_campaign%3Dnotification-email%26utm_medium%3Demail%26utm_source%3Dgithub>.
+>
+>
