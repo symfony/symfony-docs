@@ -29,7 +29,7 @@ its id:
 
 .. code-block:: terminal
 
-    $ php bin/console debug:container 'App\Service\Mailer'
+    $ php bin/console debug:container App\Service\Mailer
 
     # to show the service arguments:
-    $ php bin/console debug:container 'App\Service\Mailer' --show-arguments
+    $ php bin/console debug:container App\Service\Mailer --show-arguments
