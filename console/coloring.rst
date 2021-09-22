@@ -63,11 +63,14 @@ commonly used when asking the user to type sensitive information).
 
 You can also set these colors and options directly inside the tag name::
 
-    // green text
+    // using named colors
     $output->writeln('<fg=green>foo</>');
 
-    // red text
+    // using hexadecimal colors
     $output->writeln('<fg=#c0392b>foo</>');
+
+    // using RGB colors
+    $output->writeln('<fg=rgb(127, 255, 0)>foo</>');
 
     // black text on a cyan background
     $output->writeln('<fg=black;bg=cyan>foo</>');
