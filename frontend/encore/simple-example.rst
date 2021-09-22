@@ -55,23 +55,33 @@ together and - thanks to the first ``app`` argument - output final ``app.js`` an
 
 .. _encore-build-assets:
 
-To build the assets, run:
+To build the assets, run the following if you use the Yarn package manager:
 
 .. code-block:: terminal
 
     # compile assets once
     $ yarn encore dev
-    # if you prefer npm, run:
-    $ npm run dev
 
     # or, recompile assets automatically when files change
     $ yarn encore dev --watch
-    # if you prefer npm, run:
-    $ npm run watch
 
     # on deploy, create a production build
     $ yarn encore production
-    # if you prefer npm, run:
+
+    # if you use the npm package manager
+    $ npm install react react-dom prop-types --save
+
+If you use the npm package manager, run the following commands instead:
+
+.. code-block:: terminal
+
+    # compile assets once
+    $ npm run dev
+
+    # or, recompile assets automatically when files change
+    $ npm run watch
+
+    # on deploy, create a production build
     $ npm run build
 
 .. note::
@@ -161,7 +171,11 @@ We'll use jQuery to print this message on the page. Install it via:
 
 .. code-block:: terminal
 
+    # if you use the Yarn package manager
     $ yarn add jquery --dev
+
+    # if you use the npm package manager
+    $ npm install jquery --save-dev
 
 Great! Use ``import`` to import ``jquery`` and ``greet.js``:
 
@@ -222,7 +236,11 @@ and restart Encore:
 
 .. code-block:: terminal
 
+    # if you use the Yarn package manager
     $ yarn run encore dev --watch
+
+    # if you use the npm package manager
+    $ npm run watch
 
 Webpack will now output a new ``checkout.js`` file and a new ``account.js`` file
 in your build directory. And, if any of those files require/import CSS, Webpack
@@ -291,8 +309,13 @@ you need a feature, Encore will tell you what you need to install. Run:
 
 .. code-block:: terminal
 
+    # if you use the Yarn package manager
     $ yarn add sass-loader@^10.0.0 sass --dev
     $ yarn encore dev --watch
+
+    # if you use the npm package manager
+    $ npm install sass-loader@^10.0.0 sass --save-dev
+    $ npm run watch
 
 Your app now supports Sass. Encore also supports LESS and Stylus. See
 :doc:`/frontend/encore/css-preprocessors`.

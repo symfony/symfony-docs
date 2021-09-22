@@ -105,7 +105,11 @@ prefer to build configs separately, pass the ``--config-name`` option:
 
 .. code-block:: terminal
 
+    # if you use the Yarn package manager
     $ yarn encore dev --config-name firstConfig
+
+    # if you use the npm package manager
+    $ npm run dev -- --config-name firstConfig
 
 Next, define the output directories of each build:
 
