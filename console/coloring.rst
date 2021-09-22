@@ -58,6 +58,10 @@ Any hex color is supported for foreground and background colors. Besides that, t
 
     Support for bright colors was introduced in Symfony 5.3.
 
+.. versionadded:: 5.4
+
+    Support for RGB functional notation was introduced in Symfony 5.4.
+
 .. note::
 
     If the terminal doesn't support true colors, the nearest named color is used.
@@ -76,6 +80,9 @@ You can also set these colors and options directly inside the tag name::
 
     // red text
     $output->writeln('<fg=#c0392b>foo</>');
+
+    // chartreuse text
+    $output->writeln('<fg=rgb(127, 255, 0)>foo</>');
 
     // black text on a cyan background
     $output->writeln('<fg=black;bg=cyan>foo</>');
