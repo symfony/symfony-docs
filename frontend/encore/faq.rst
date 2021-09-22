@@ -53,7 +53,7 @@ and the built files. Your ``.gitignore`` file should include:
     # whatever path you're passing to Encore.setOutputPath()
     /public/build
 
-You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock``.
+You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock`` or ``package-lock.json``.
 
 My App Lives under a Subdirectory
 ---------------------------------
@@ -105,8 +105,9 @@ file script tag is rendered automatically.
 This dependency was not found: some-module in ./path/to/file.js
 ---------------------------------------------------------------
 
-Usually, after you install a package via yarn, you can require / import it to use
-it. For example, after running ``yarn add respond.js``, you try to require that module:
+Usually, after you install a package via yarn or npm, you can require / import
+it to use it. For example, after running ``yarn add respond.js`` or ``npm install respond.js``,
+you try to require that module:
 
 .. code-block:: javascript
 

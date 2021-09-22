@@ -10,7 +10,11 @@ Using React? First add some dependencies with Yarn:
 
 .. code-block:: terminal
 
+    # if you use the Yarn package manager
     $ yarn add react react-dom prop-types
+
+    # if you use the npm package manager
+    $ npm install react react-dom prop-types --save
 
 Enable react in your ``webpack.config.js``:
 
