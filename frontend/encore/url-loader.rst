@@ -8,15 +8,13 @@ generated CSS files.
 Webpack Encore provides this feature via Webpack's `URL Loader`_ plugin, but
 it's disabled by default. First, add the URL loader to your project:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    # if you use the Yarn package manager
+    $ yarn add url-loader --dev
 
-        $ yarn add url-loader --dev
-
-    .. code-block:: terminal
-
-        $ npm install url-loader --save-dev
+    # if you use the npm package manager
+    $ npm install url-loader --save-dev
 
 Then enable it in your ``webpack.config.js``:
 

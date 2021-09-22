@@ -35,15 +35,13 @@ The ``vue-loader`` supports hot module replacement: just update your code and wa
 your Vue.js app update *without* a browser refresh! To activate it, use the
 ``dev-server`` with the ``--hot`` option:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    # if you use the Yarn package manager
+    $ yarn encore dev-server --hot
 
-        $ yarn encore dev-server --hot
-
-    .. code-block:: terminal
-
-        $ npm run dev-server -- --hot
+    # if you use the npm package manager
+    $ npm run dev-server -- --hot
 
 That's it! Change one of your ``.vue`` files and watch your browser update. But
 note: this does *not* currently work for *style* changes in a ``.vue`` file. Seeing

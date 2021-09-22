@@ -57,31 +57,34 @@ together and - thanks to the first ``app`` argument - output final ``app.js`` an
 
 .. _encore-build-assets:
 
-To build the assets, run:
+To build the assets, run the following if you use the Yarn package manager:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    # compile assets once
+    $ yarn encore dev
 
-        # compile assets once
-        $ yarn encore dev
+    # or, recompile assets automatically when files change
+    $ yarn encore dev --watch
 
-        # or, recompile assets automatically when files change
-        $ yarn encore dev --watch
+    # on deploy, create a production build
+    $ yarn encore production
 
-        # on deploy, create a production build
-        $ yarn encore production
+    # if you use the npm package manager
+    $ npm install react react-dom prop-types --save
 
-    .. code-block:: terminal
+If you use the npm package manager, run the following commands instead:
 
-        # compile assets once
-        $ npm run dev
+.. code-block:: terminal
 
-        # or, recompile assets automatically when files change
-        $ npm run watch
+    # compile assets once
+    $ npm run dev
 
-        # on deploy, create a production build
-        $ npm run build
+    # or, recompile assets automatically when files change
+    $ npm run watch
+
+    # on deploy, create a production build
+    $ npm run build
 
 .. note::
 
@@ -166,15 +169,13 @@ files. First, create a file that exports a function:
 
 We'll use jQuery to print this message on the page. Install it via:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    # if you use the Yarn package manager
+    $ yarn add jquery --dev
 
-        $ yarn add jquery --dev
-
-    .. code-block:: terminal
-
-        $ npm install jquery --save-dev
+    # if you use the npm package manager
+    $ npm install jquery --save-dev
 
 Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
 
@@ -264,16 +265,13 @@ Next, use ``addEntry()`` to tell Webpack to read these two new files when it bui
 And because you just changed the ``webpack.config.js`` file, make sure to stop
 and restart Encore:
 
+.. code-block:: terminal
 
-.. configuration-block::
+    # if you use the Yarn package manager
+    $ yarn run encore dev --watch
 
-    .. code-block:: terminal
-
-        $ yarn run encore dev --watch
-
-    .. code-block:: terminal
-
-        $ npm run watch
+    # if you use the npm package manager
+    $ npm run watch
 
 Webpack will now output a new ``checkout.js`` file and a new ``account.js`` file
 in your build directory. And, if any of those files require/import CSS, Webpack
@@ -340,17 +338,15 @@ Encore. When you do, you'll see an error!
 Encore supports many features. But, instead of forcing all of them on you, when
 you need a feature, Encore will tell you what you need to install. Run:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    # if you use the Yarn package manager
+    $ yarn add sass-loader@^10.0.0 sass --dev
+    $ yarn encore dev --watch
 
-        $ yarn add sass-loader@^10.0.0 sass --dev
-        $ yarn encore dev --watch
-
-    .. code-block:: terminal
-
-        $ npm install sass-loader@^10.0.0 sass --save-dev
-        $ npm run watch
+    # if you use the npm package manager
+    $ npm install sass-loader@^10.0.0 sass --save-dev
+    $ npm run watch
 
 Your app now supports Sass. Encore also supports LESS and Stylus. See
 :doc:`/frontend/encore/css-preprocessors`.

@@ -4,15 +4,13 @@ Using webpack-dev-server and HMR
 While developing, instead of using ``yarn encore dev --watch``, you can use the
 `webpack-dev-server`_:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    # if you use the Yarn package manager
+    $ yarn encore dev-server
 
-        $ yarn encore dev-server
-
-    .. code-block:: terminal
-
-        $ npm run dev-server
+    # if you use the npm package manager
+    $ npm run dev-server
 
 This builds and serves the front-end assets from a new server. This server runs at
 ``localhost:8080`` by default, meaning your build assets are available at ``localhost:8080/build``.
@@ -27,15 +25,13 @@ you're done: the paths in your templates will automatically point to the dev ser
 The ``dev-server`` command supports all the options defined by `webpack-dev-server`_.
 You can set these options via command line options:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    # if you use the Yarn package manager
+    $ yarn encore dev-server --https --port 9000
 
-        $ yarn encore dev-server --https --port 9000
-
-    .. code-block:: terminal
-
-        $ npm run dev-server -- --https --port 9000
+    # if you use the npm package manager
+    $ npm run dev-server -- --https --port 9000
 
 You can also set these options using the ``Encore.configureDevServerOptions()``
 method in your ``webpack.config.js`` file:

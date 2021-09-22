@@ -11,17 +11,15 @@ Installing Encore in Symfony Applications
 Run these commands to install both the PHP and JavaScript dependencies in your
 project:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    $ composer require symfony/webpack-encore-bundle
 
-        $ composer require symfony/webpack-encore-bundle
-        $ yarn install
+    # if you use the Yarn package manager
+    $ yarn install
 
-    .. code-block:: terminal
-
-        $ composer require symfony/webpack-encore-bundle
-        $ npm install
+    # if you use the npm package manager
+    $ npm install
 
 If you are using :ref:`Symfony Flex <symfony-flex>`, this will install and enable
 the `WebpackEncoreBundle`_, create the ``assets/`` directory, add a
@@ -37,15 +35,13 @@ Installing Encore in non Symfony Applications
 
 Install Encore into your project via Yarn:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    # if you use the Yarn package manager
+    $ yarn add @symfony/webpack-encore --dev
 
-        $ yarn add @symfony/webpack-encore --dev
-
-    .. code-block:: terminal
-
-        $ npm install @symfony/webpack-encore --save-dev
+    # if you use the npm package manager
+    $ npm install @symfony/webpack-encore --save-dev
 
 This command creates (or modifies) a ``package.json`` file and downloads
 dependencies into a ``node_modules/`` directory. Yarn also creates/updates a

@@ -103,15 +103,13 @@ state of the current configuration to build a new one:
 When running Encore, both configurations will be built in parallel. If you
 prefer to build configs separately, pass the ``--config-name`` option:
 
-.. configuration-block::
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    # if you use the Yarn package manager
+    $ yarn encore dev --config-name firstConfig
 
-        $ yarn encore dev --config-name firstConfig
-
-    .. code-block:: terminal
-
-        $ npm run dev -- --config-name firstConfig
+    # if you use the npm package manager
+    $ npm run dev -- --config-name firstConfig
 
 Next, define the output directories of each build:
 
