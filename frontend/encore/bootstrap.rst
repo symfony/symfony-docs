@@ -7,7 +7,11 @@ First, to be able to customize things further, we'll install ``bootstrap``:
 
 .. code-block:: terminal
 
+    # if you use the Yarn package manager
     $ yarn add bootstrap --dev
+
+    # if you use the npm package manager
+    $ npm install bootstrap --save-dev
 
 Importing Bootstrap Styles
 --------------------------
@@ -42,8 +46,13 @@ used in your application:
 
 .. code-block:: terminal
 
-    // jQuery is only required in versions prior to Bootstrap 5
+    # if you use the Yarn package manager
+    # (jQuery is only required in versions prior to Bootstrap 5)
     $ yarn add jquery @popperjs/core --dev
+
+    # if you use the npm package manager
+    # (jQuery is only required in versions prior to Bootstrap 5)
+    $ npm install jquery @popperjs/core --save-dev
 
 Now, require bootstrap from any of your JavaScript files:
 
