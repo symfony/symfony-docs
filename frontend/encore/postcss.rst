@@ -21,9 +21,15 @@ Encore, you're done!
 
 Next, download any plugins you want, like ``autoprefixer``:
 
-.. code-block:: terminal
+.. configuration-block::
 
-    $ yarn add autoprefixer --dev
+  .. code-block:: terminal
+
+      $ yarn add autoprefixer --dev
+
+  .. code-block:: terminal
+
+      $ npm install autoprefixer --save-dev
 
 Next, create a ``postcss.config.js`` file at the root of your project:
 

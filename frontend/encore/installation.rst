@@ -11,10 +11,17 @@ Installing Encore in Symfony Applications
 Run these commands to install both the PHP and JavaScript dependencies in your
 project:
 
-.. code-block:: terminal
+.. configuration-block::
 
-    $ composer require symfony/webpack-encore-bundle
-    $ yarn install
+    .. code-block:: terminal
+
+        $ composer require symfony/webpack-encore-bundle
+        $ yarn install
+
+    .. code-block:: terminal
+
+        $ composer require symfony/webpack-encore-bundle
+        $ npm install
 
 If you are using :ref:`Symfony Flex <symfony-flex>`, this will install and enable
 the `WebpackEncoreBundle`_, create the ``assets/`` directory, add a
@@ -30,12 +37,15 @@ Installing Encore in non Symfony Applications
 
 Install Encore into your project via Yarn:
 
-.. code-block:: terminal
+.. configuration-block::
 
-    $ yarn add @symfony/webpack-encore --dev
+    .. code-block:: terminal
 
-    # if you prefer npm, run this command instead:
-    $ npm install @symfony/webpack-encore --save-dev
+        $ yarn add @symfony/webpack-encore --dev
+
+    .. code-block:: terminal
+
+        $ npm install @symfony/webpack-encore --save-dev
 
 This command creates (or modifies) a ``package.json`` file and downloads
 dependencies into a ``node_modules/`` directory. Yarn also creates/updates a
@@ -145,7 +155,7 @@ Next, open the new ``assets/js/app.js`` file which contains some JavaScript code
     // any CSS you import will output into a single css file (app.css in this case)
     import '../css/app.css';
 
-    // Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
+    // Need jQuery? Install it with "yarn add jquery"(or "npm install jquery"), then uncomment to import it.
     // import $ from 'jquery';
 
     console.log('Hello Webpack Encore! Edit me in assets/js/app.js');

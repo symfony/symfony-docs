@@ -5,9 +5,15 @@ This article explains how to install and integrate the `Bootstrap CSS framework`
 in your Symfony application using :doc:`Webpack Encore </frontend>`.
 First, to be able to customize things further, we'll install ``bootstrap``:
 
-.. code-block:: terminal
+.. configuration-block::
 
-    $ yarn add bootstrap --dev
+    .. code-block:: terminal
+
+        $ yarn add bootstrap --dev
+
+    .. code-block:: terminal
+
+        $ npm install bootstrap --save-dev
 
 Importing Bootstrap Styles
 --------------------------
@@ -40,10 +46,17 @@ Importing Bootstrap JavaScript
 First, install the JavaScript dependencies required by the Bootstrap version
 used in your application:
 
-.. code-block:: terminal
+.. configuration-block::
 
-    // jQuery is only required in versions prior to Bootstrap 5
-    $ yarn add jquery @popperjs/core --dev
+    .. code-block:: terminal
+
+        // jQuery is only required in versions prior to Bootstrap 5
+        $ yarn add jquery @popperjs/core --dev
+
+    .. code-block:: terminal
+
+        // jQuery is only required in versions prior to Bootstrap 5
+        $ npm install jquery @popperjs/core --save-dev
 
 Now, require bootstrap from any of your JavaScript files:
 

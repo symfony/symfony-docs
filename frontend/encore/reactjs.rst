@@ -8,9 +8,16 @@ Enabling React.js
 
 Using React? First add some dependencies with Yarn:
 
-.. code-block:: terminal
 
-    $ yarn add react react-dom prop-types
+.. configuration-block::
+
+    .. code-block:: terminal
+
+        $ yarn add react react-dom prop-types
+
+    .. code-block:: terminal
+
+        $ npm install react react-dom prop-types --save
 
 Enable react in your ``webpack.config.js``:
 
