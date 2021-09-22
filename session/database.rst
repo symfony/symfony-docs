@@ -436,7 +436,7 @@ PostgreSQL
         sess_lifetime INTEGER NOT NULL,
         sess_time INTEGER NOT NULL
     );
-    CREATE INDEX sessions_sess_time_idx ON sessions (sess_lifetime);
+    CREATE INDEX sessions_sess_lifetime_idx ON sessions (sess_lifetime);
 
 Microsoft SQL Server
 ....................
