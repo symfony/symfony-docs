@@ -883,7 +883,7 @@ method::
             $resolver->define('transport')
                 ->required()
                 ->default('transport')
-                ->allowedValues(['sendmail', 'mail', 'smtp']);
+                ->allowedValues('sendmail', 'mail', 'smtp');
         }
     }
 
