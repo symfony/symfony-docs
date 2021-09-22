@@ -74,6 +74,7 @@ Nexmo           ``symfony/nexmo-notifier``            ``nexmo://KEY:SECRET@defau
 Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
 OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
 Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
+Sms77           ``symfony/sms77-notifier``            ``sms77://API_KEY@default?from=FROM``
 Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
 Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
 SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
@@ -100,7 +101,7 @@ Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default
 
 .. versionadded:: 5.4
 
-    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms, Mailjet and FakeSms (logger) integrations
+    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms, Mailjet, FakeSms (logger) and Sms77 integrations
     were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
@@ -653,9 +654,9 @@ all configured texter and chatter transports only in the ``dev`` (and/or
                 slack: 'null://null'
 
 .. TODO
-    - Using the message bus for asynchronous notification
-    - Describe notifier monolog handler
-    - Describe notification_on_failed_messages integration
+- Using the message bus for asynchronous notification
+- Describe notifier monolog handler
+- Describe notification_on_failed_messages integration
 
 Learn more
 ----------
