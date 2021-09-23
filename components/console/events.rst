@@ -153,5 +153,36 @@ Listeners receive a
     This event is also dispatched when an exception is thrown by the command.
     It is then dispatched just after the ``ConsoleEvents::ERROR`` event.
     The exit code received in this case is the exception code.
+    
+
+The ``ConsoleEvents::SIGNAL`` Event
+-----------------------------------
+
+**Typical Purposes**: To perform some actions after the command execution was interrupted.
+
+After the command has been interrupted, the ``ConsoleEvents::SIGNAL`` event is
+dispatched. It can be used to do any actions
+(to log or profile commands / to perform some cleanup tasks when quitting a command).
+
+Listeners receive a
+:class:`Symfony\\Component\\Console\\Event\\ConsoleSignalEvent` event::
+
+    use Symfony\Component\Console\ConsoleEvents;
+    use Symfony\Component\Console\Event\ConsoleSignalEvent;
+
+    $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
+       
+        // gets the signal number
+        $signal = $event->getHandlingSignal();
+        
+        if (\SIGINT === $signal) {
+            echo "bye bye!";
+        }
+    });
+
+.. versionadded:: 5.2
+
+    The ``ConsoleSignalEvent`` class was introduced in Symfony 5.2.
+
 
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
