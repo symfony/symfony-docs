@@ -255,9 +255,7 @@ the ``data_class`` option by adding the following to your form type class::
 Rendering Forms
 ---------------
 
-Now that the form has been created, the next step is to render it. Instead of
-passing the entire form object to the template, use the ``createView()`` method
-to build another object with the visual representation of the form::
+Now that the form has been created, the next step is to render it::
 
     // src/Controller/TaskController.php
     namespace App\Controller;
@@ -277,11 +275,20 @@ to build another object with the visual representation of the form::
 
             $form = $this->createForm(TaskType::class, $task);
 
-            return $this->render('task/new.html.twig', [
-                'form' => $form->createView(),
+            return $this->renderForm('task/new.html.twig', [
+                'form' => $form,
             ]);
         }
     }
+
+In versions prior to Symfony 5.3, controllers used the method
+``$this->render('...', ['form' => $form->createView()])`` to render the form.
+The ``renderForm()`` method abstracts this logic and it also sets the 422 HTTP
+status code in the response automatically when the submitted form is not valid.
+
+.. versionadded:: 5.3
+
+    The ``renderForm()`` method was introduced in Symfony 5.3.
 
 Then, use some :ref:`form helper functions <reference-form-twig-functions>` to
 render the form contents:
@@ -401,8 +408,8 @@ written into the form object::
                 return $this->redirectToRoute('task_success');
             }
 
-            return $this->render('task/new.html.twig', [
-                'form' => $form->createView(),
+            return $this->renderForm('task/new.html.twig', [
+                'form' => $form,
             ]);
         }
     }
@@ -432,12 +439,6 @@ possible paths:
     Redirecting a user after a successful form submission is a best practice
     that prevents the user from being able to hit the "Refresh" button of
     their browser and re-post the data.
-
-.. caution::
-
-    The ``createView()`` method should be called *after* ``handleRequest()`` is
-    called. Otherwise, when using :doc:`form events </form/events>`, changes done
-    in the ``*_SUBMIT`` events won't be applied to the view (like validation errors).
 
 .. seealso::
 
