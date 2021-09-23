@@ -92,7 +92,7 @@ the ``@`` character, which is the usual syntax to
 
             <twig:config>
                 <!-- ... -->
-                <twig:global key="foo" id="App\Generator\UuidGenerator" type="service"/>
+                <twig:global key="uuid" id="App\Generator\UuidGenerator" type="service"/>
             </twig:config>
         </container>
 
