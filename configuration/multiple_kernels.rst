@@ -126,12 +126,18 @@ files so they don't collide with the files from ``src/Kernel.php``::
             // ... load only the config routes strictly needed for the API
         }
 
+        // If you need to run some logic to decide which bundles to load,
+        // you might prefer to use the registerBundles() method instead
         private function getBundlesPath(): string
         {
             // load only the bundles strictly needed for the API
             return $this->getProjectDir().'/config/api_bundles.php';
         }
     }
+
+.. versionadded:: 5.4
+
+    The ``getBundlesPath()`` method was introduced in Symfony 5.4.
 
 Step 3) Define the Kernel Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
