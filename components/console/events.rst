@@ -218,11 +218,6 @@ handle signals themselves. To do so, implement the
         }
     }
 
-.. versionadded:: 5.2
-
-    The ``ConsoleSignalEvent`` and ``SignalableCommandInterface`` classes were
-    introduced in Symfony 5.2.
-
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
 .. _`Signals`: https://en.wikipedia.org/wiki/Signal_(IPC)
 .. _`constants of the PCNTL PHP extension`: https://www.php.net/manual/en/pcntl.constants.php
