@@ -286,10 +286,6 @@ In versions prior to Symfony 5.3, controllers used the method
 The ``renderForm()`` method abstracts this logic and it also sets the 422 HTTP
 status code in the response automatically when the submitted form is not valid.
 
-.. versionadded:: 5.3
-
-    The ``renderForm()`` method was introduced in Symfony 5.3.
-
 Then, use some :ref:`form helper functions <reference-form-twig-functions>` to
 render the form contents:
 
