@@ -42,7 +42,7 @@ files into your final output directory. First enable it in ``webpack.config.js``
     +         from: './assets/images',
     +
     +         // optional target path, relative to the output dir
-    +         //to: 'images/[path][name].[ext]',
+    +         to: 'images/[path][name].[ext]',
     +
     +         // if versioning is enabled, add the file hash too
     +         //to: 'images/[path][name].[hash:8].[ext]',
@@ -55,19 +55,19 @@ Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
 Encore, you're done!
 
-This will copy all files from ``assets/images`` into ``public/build`` (the output
-path). If you have :doc:`versioning enabled <versioning>`, the copied files will
+This will copy all files from ``assets/images`` into ``public/build/images``.
+If you have :doc:`versioning enabled <versioning>`, the copied files will
 include a hash based on their content.
 
 To render inside Twig, use the ``asset()`` function:
 
 .. code-block:: html+twig
 
-    {# assets/images/logo.png was copied to public/build/logo.png #}
-    <img src="{{ asset('build/logo.png') }}" alt="ACME logo">
+    {# assets/images/logo.png was copied to public/build/images/logo.png #}
+    <img src="{{ asset('build/images/logo.png') }}" alt="ACME logo">
 
-    {# assets/images/subdir/logo.png was copied to public/build/subdir/logo.png #}
-    <img src="{{ asset('build/subdir/logo.png') }}" alt="ACME logo">
+    {# assets/images/subdir/logo.png was copied to public/build/images/subdir/logo.png #}
+    <img src="{{ asset('build/images/subdir/logo.png') }}" alt="ACME logo">
 
 Make sure you've enabled the :ref:`json_manifest_path <load-manifest-files>` option,
 which tells the ``asset()`` function to read the final paths from the ``manifest.json``
