@@ -1,0 +1,75 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-04-14T15:36:42Z
+
+Don't merge yet. Let's wait for https://github.com/symfony/symfony/pull/40799 to decide the best way of solving this.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-04-20T15:22:03Z
+
+After the latest changes made on `handleForm()`, I propose to not use it to document form handling. The reason is that the resulting code looks a bit messy.
+
+Traditional form handling:
+
+```php
+#[Route('/{id}/edit', name: 'conference_edit', methods: ['GET', 'POST'])]
+public function edit(Request $request, Conference $conference): Response
+{
+    $form = $this->createForm(ConferenceType::class, $conference);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('conference_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    return $this->render('conference/edit.html.twig', [
+        'conference' => $conference,
+        'form' => $form->createView(),
+    ]);
+}
+```
+
+Form handling with `handleForm()`:
+
+```php
+#[Route('/{id}/edit', name: 'conference_edit', methods: ['GET', 'POST'])]
+public function edit(Request $request, Conference $conference): Response
+{
+    return $this->handleForm(
+        $request,
+        $this->createForm(ConferenceType::class, $conference),
+        function (FormInterface $form) use ($conference) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute(
+                'conference_show',
+                ['id' => $conference->getId()],
+                Response::HTTP_SEE_OTHER
+            );
+        },
+        function (FormInterface $form) {
+            return $this->render('conference/edit.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+    );
+}
+```
+
+-----
+
+However, since this `handleForm()` method does some additional tasks needed when using Stimulus ... we could document it in the docs related to Stimulus. What do you think?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2021-05-12T09:14:41Z
+
+renderForm() [is back](https://github.com/symfony/symfony/pull/41178), so that this PR might be good to merge now :)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2021-05-12T12:10:48Z
+
+Should be updated for https://github.com/symfony/symfony/pull/41190
