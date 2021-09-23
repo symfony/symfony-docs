@@ -534,7 +534,9 @@ your application. Assume that you have a sport meetup creation controller::
                 // ... save the meetup, redirect etc.
             }
 
-            return $this->renderForm('meetup/create.html.twig', $form);
+            return $this->renderForm('meetup/create.html.twig', [
+                'form' => $form,
+            ]);
         }
 
         // ...
