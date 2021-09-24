@@ -614,8 +614,7 @@ Translation Providers
 
 .. versionadded:: 5.3
 
-    Translation providers were introduced in Symfony 5.3 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
+    Translation providers were introduced in Symfony 5.3.
 
 When using external translators to translate your application, you must send
 them the new contents to translate frequently and merge the results back in the

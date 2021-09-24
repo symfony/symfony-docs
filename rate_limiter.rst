@@ -3,8 +3,7 @@ Rate Limiter
 
 .. versionadded:: 5.2
 
-    The RateLimiter component was introduced in Symfony 5.2 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
+    The RateLimiter component was introduced in Symfony 5.2.
 
 A "rate limiter" controls how frequently some event (e.g. an HTTP request or a
 login attempt) is allowed to happen. Rate limiting is commonly used as a

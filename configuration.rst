@@ -928,8 +928,7 @@ Using PHP ConfigBuilders
 
 .. versionadded:: 5.3
 
-    The "ConfigBuilders" feature was introduced in Symfony 5.3 as an
-    :doc:`experimental feature </contributing/code/experimental>`.
+    The "ConfigBuilders" feature was introduced in Symfony 5.3.
 
 Writing PHP config is sometimes difficult because you end up with large nested
 arrays and you have no autocompletion help from your favorite IDE. A way to
