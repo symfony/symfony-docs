@@ -80,17 +80,26 @@ You can optionally define a description, help message and the
 :doc:`input options and arguments </console/input>`::
 
     // ...
+    // the short description shown while running "php bin/console list"
+    protected static $defaultDescription = 'Creates a new user.';
+
+    // ...
     protected function configure(): void
     {
         $this
-            // the short description shown while running "php bin/console list"
-            ->setDescription('Creates a new user.')
+            ->setDescription(self::$defaultDescription)
 
             // the full command description shown when running the command with
             // the "--help" option
             ->setHelp('This command allows you to create a user...')
         ;
     }
+
+.. versionadded:: 5.3
+
+    The ``$defaultDescription`` static property was introduced in Symfony 5.3.
+    It allows to make the ``php bin/console list`` lazy.
+    You can as well use ``php bin/console list --short`` option to have the output faster.
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
