@@ -64,13 +64,15 @@ The following sections assume that Monolog is installed.
 Where Logs are Stored
 ---------------------
 
-By default, log entries are written to the ``var/log/dev.log`` file when you're in
-the ``dev`` environment. In the ``prod`` environment, logs are written to ``var/log/prod.log``,
-but *only* during a request where an error or high-priority log entry was made
-(i.e. ``error()`` , ``critical()``, ``alert()`` or ``emergency()``).
+By default, log entries are written to the ``var/log/dev.log`` file when you're
+in the ``dev`` environment.
 
-To control this, you'll configure different *handlers* that handle log entries, sometimes
-modify them, and ultimately store them.
+In the ``prod`` environment, logs are written to `STDERR PHP stream`_, which
+works best in modern containerized applications deployed to servers without
+disk write permissions.
+
+If you prefer to store production logs in a file, set the ``path`` of your
+log handler(s) to the path of the file to use (e.g. ``var/log/prod.log``).
 
 Handlers: Writing Logs to different Locations
 ---------------------------------------------
@@ -384,3 +386,4 @@ Learn more
 .. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
 .. _`logrotate`: https://github.com/logrotate/logrotate
 .. _`Monolog Configuration`: https://github.com/symfony/monolog-bundle/blob/master/DependencyInjection/Configuration.php#L25
+.. _`STDERR PHP stream`: https://www.php.net/manual/en/features.commandline.io-streams.php
