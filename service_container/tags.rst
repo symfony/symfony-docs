@@ -598,9 +598,9 @@ application handlers::
 Tagged Services with Priority
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The tagged services can be prioritized using the ``priority`` attribute.
-The priority is a positive or negative integer. The higher the number,
-the earlier the tagged service will be located in the collection:
+The tagged services can be prioritized using the ``priority`` attribute. The
+priority is a positive or negative integer that defaults to ``0``. The higher
+the number, the earlier the tagged service will be located in the collection:
 
 .. configuration-block::
 
