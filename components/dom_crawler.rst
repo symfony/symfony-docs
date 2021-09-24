@@ -232,10 +232,6 @@ Access the value of the first node of the current selection::
     // if content is <p>Foo <span>Bar</span></p>
     // innerText() returns 'Foo' and text() returns 'Foo Bar'
 
-.. versionadded:: 5.4
-
-    The ``innerText()`` method was introduced in Symfony 5.4.
-
 Access the attribute value of the first node of the current selection::
 
     $class = $crawler->filterXPath('//body/p')->attr('class');
