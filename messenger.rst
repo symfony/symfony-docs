@@ -807,6 +807,23 @@ and must be retried. If you throw
 :class:`Symfony\\Component\\Messenger\\Exception\\RecoverableMessageHandlingException`,
 the message will always be retried infinitely and ``max_retries`` setting will be ignored.
 
+Retry logging
+~~~~~~~~~~~~~
+
+.. versionadded:: 5.4
+
+    The ``LogRetryAsWarningInterface`` was introduced in Symfony 5.4.
+
+When a message is sent for retry, a log message is logged indicating how many times the
+message was retried along with the number of milliseconds of the delay. By default, retry
+log messages have log severity `ERROR` except the final failed retry which is logged as
+`CRITICAL`.
+
+Exceptions implementing the
+:class:`Symfony\\Component\\Messenger\\Exception\\LogRetryAsWarningInterface` are logged
+in a similar fashion: each failed message handling attempt is logged as a warning and
+the final failed attempt is logged as `CRITICAL`.
+
 .. _messenger-failure-transport:
 
 Saving & Retrying Failed Messages
