@@ -14,8 +14,7 @@ This authentication method can help you eliminate most of the customer support
 related to authentication (e.g. I forgot my password, how can I change or reset
 my password, etc.)
 
-Login links are supported by Symfony when using the experimental
-authenticator system. You must
+Login links are supported by Symfony when using the authenticator system. You must
 :ref:`enable the authenticator system <security-enable-authenticator-manager>`
 in your configuration to use this feature.
 
