@@ -97,11 +97,6 @@ to it (``php bin/console list --short``). This will avoid instantiating command
 classes, but it won't show any description for commands that use the
 ``setDescription()`` method instead of the static property.
 
-.. versionadded:: 5.3
-
-    The ``$defaultDescription`` static property and the ``--short`` option
-    were introduced in Symfony 5.3.
-
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
 first and then call to the parent constructor, to make those properties
