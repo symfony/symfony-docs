@@ -135,7 +135,7 @@ address. Valid values are:
 
 * ``loose``, it uses a simple regular expression to validate the address (it
   checks that at least one ``@`` character is present, etc.). This validation is
-  too simple and it's recommended to use the ``html5`` validation instead;
+  very simple and it's recommended to use one of the other methods instead;
 * ``html5``, it validates email addresses using the same regular expression
   as the `HTML5 email input element`_, making the backend validation consistent
   with the one provided by browsers;
@@ -152,3 +152,4 @@ configuration option.
 
 .. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator
 .. _HTML5 email input element: https://www.w3.org/TR/html5/sec-forms.html#valid-e-mail-address
+.. _RFC 5322: https://tools.ietf.org/html/rfc5322
