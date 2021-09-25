@@ -2628,7 +2628,7 @@ email_validation_mode
 **type**: ``string`` **default**: ``loose``
 
 Sets the default value for the
-:ref:`mode option of the Email validator <reference-constraint-email-mode>`.
+:ref:`"mode" option of the Email validator <reference-constraint-email-mode>`.
 
 .. _reference-validation-mapping:
 
