@@ -2710,22 +2710,15 @@ metadata of the class. You can define an array of strings with the names of
 several methods. In that case, all of them will be called in that order to load
 the metadata.
 
+.. _reference-validation-email_validation_mode:
+
 email_validation_mode
 .....................
 
 **type**: ``string`` **default**: ``loose``
 
-Sets the default value for
-:doc:`/reference/constraints/Email` validator. The possible values are:
-
-* ``loose``, it uses a simple regular expression to validate the address (it
-  checks that at least one ``@`` character is present, etc.). This validation is
-  too simple and it's recommended to use the ``html5`` validation instead;
-* ``html5``, it validates email addresses using the same regular expression
-  defined in the HTML5 standard, making the backend validation consistent with
-  the one provided by browsers;
-* ``strict``, it uses the `egulias/email-validator`_ library (which you must
-  install separately) to validate the addresses according to the `RFC 5322`_.
+Sets the default value for the
+:ref:`mode option of the Email validator <reference-constraint-email-mode>`.
 
 .. _reference-validation-mapping:
 
@@ -3619,8 +3612,6 @@ to know their differences.
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: https://www.doctrine-project.org/projects/doctrine-cache/en/current/index.html
-.. _`egulias/email-validator`: https://github.com/egulias/EmailValidator
-.. _`RFC 5322`: https://tools.ietf.org/html/rfc5322
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
 .. _`blue/green deployment`: https://martinfowler.com/bliki/BlueGreenDeployment.html
