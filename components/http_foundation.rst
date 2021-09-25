@@ -178,10 +178,6 @@ doesn't support returning arrays, so you need to use the following code::
     $request->query->all()['foo']['bar'];
     // returns 'baz'
 
-.. deprecated:: 5.1
-
-    The array support in ``get()`` method was deprecated in Symfony 5.1.
-
 .. _component-foundation-attributes:
 
 Thanks to the public ``attributes`` property, you can store additional data
