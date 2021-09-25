@@ -163,19 +163,24 @@ exist::
     // returns 'baz'
 
 When PHP imports the request query, it handles request parameters like
-``foo[bar]=baz`` in a special way as it creates an array. So you can get the
-``foo`` parameter and you will get back an array with a ``bar`` element::
+``foo[bar]=baz`` in a special way as it creates an array. The ``get()`` method
+doesn't support returning arrays, so you need to use the following code::
 
     // the query string is '?foo[bar]=baz'
 
-    $request->query->get('foo');
+    // don't use $request->query->get('foo'); use the following instead:
+    $request->query->all()['foo'];
     // returns ['bar' => 'baz']
 
     $request->query->get('foo[bar]');
     // returns null
 
-    $request->query->get('foo')['bar'];
+    $request->query->all()['foo']['bar'];
     // returns 'baz'
+
+.. deprecated:: 5.1
+
+    The array support in ``get()`` method was deprecated in Symfony 5.1.
 
 .. _component-foundation-attributes:
 
