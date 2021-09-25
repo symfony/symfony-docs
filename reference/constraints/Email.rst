@@ -119,34 +119,28 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
+.. _reference-constraint-email-mode:
+
 ``mode``
 ~~~~~~~~
 
-**type**: ``string`` **default**: ``loose``
+**type**: ``string`` **default**: (see below)
 
-This option is optional and defines the pattern the email address is validated against.
-Valid values are:
+This option is optional and defines the pattern used to validate the email
+address. Valid values are:
 
-* ``loose``
-* ``strict``
-* ``html5``
+* ``loose``, it uses a simple regular expression to validate the address (it
+  checks that at least one ``@`` character is present, etc.). This validation is
+  too simple and it's recommended to use the ``html5`` validation instead;
+* ``html5``, it validates email addresses using the same regular expression
+  as the `HTML5 email input element`_, making the backend validation consistent
+  with the one provided by browsers;
+* ``strict``, it uses the `egulias/email-validator`_ library (which you must
+  install separately) to validate the addresses according to the `RFC 5322`_.
 
-``loose``
-.........
-
-A simple regular expression. Allows all values with an "@" symbol in, and a "."
-in the second host part of the email address.
-
-``strict``
-..........
-
-Uses the `egulias/email-validator`_ library to perform an RFC compliant
-validation. You will need to install that library to use this mode.
-
-``html5``
-.........
-
-This matches the pattern used for the `HTML5 email input element`_.
+The default value used by this option is set in the
+:ref:`framework.validation.email_validation_mode <reference-validation-email_validation_mode>`
+configuration option.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
