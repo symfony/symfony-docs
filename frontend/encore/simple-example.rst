@@ -268,7 +268,7 @@ and restart Encore:
 .. code-block:: terminal
 
     # if you use the Yarn package manager
-    $ yarn run encore dev --watch
+    $ yarn run dev --watch
 
     # if you use the npm package manager
     $ npm run watch
