@@ -141,12 +141,16 @@ default when looking for files and directories, but you can change this with the
 
     $finder->ignoreVCS(false);
 
-If the search directory contains a ``.gitignore`` file, you can reuse those
-rules to exclude files and directories from the results with the
+If the search directory and its subdirectories contain ``.gitignore`` files, you
+can reuse those rules to exclude files and directories from the results with the
 :method:`Symfony\\Component\\Finder\\Finder::ignoreVCSIgnored` method::
 
     // excludes files/directories matching the .gitignore patterns
     $finder->ignoreVCSIgnored(true);
+
+.. versionadded:: 5.4
+
+    ``.gitignore`` files recursive support was introduced in Symfony 5.4.
 
 File Name
 ~~~~~~~~~
