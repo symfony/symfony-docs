@@ -69,9 +69,6 @@ You can also set these colors and options directly inside the tag name::
     // using hexadecimal colors
     $output->writeln('<fg=#c0392b>foo</>');
 
-    // using RGB colors
-    $output->writeln('<fg=rgb(127, 255, 0)>foo</>');
-
     // black text on a cyan background
     $output->writeln('<fg=black;bg=cyan>foo</>');
 

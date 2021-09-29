@@ -12,5 +12,5 @@ to render the :ref:`form type row <form-rendering-basics>`::
 
 .. seealso::
 
-    Use the ``attr`` option if you want to add these attributes to the
+    Use the ``attr`` option if you want to add these attributes to
     the :ref:`form type widget <form-rendering-basics>` element.
