@@ -35,6 +35,34 @@ with the ``value`` attribute set to its true value only upon submission.
 If you want to render your password field *with* the password value already
 entered into the box, set this to false and submit the form.
 
+``hash_property_path``
+~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``null``
+
+.. versionadded:: 6.2
+
+    The ``hash_property_path`` option was introduced in Symfony 6.2.
+
+If set, the password will be hashed using the
+:doc:`PasswordHasher component </security/passwords>` and stored in the
+specified property.
+
+Data passed to the form must be a
+:class:`Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface`
+object.
+
+.. caution::
+
+    To minimize the risk of leaking the plain password, this option can
+    only be used with the :ref:`"mapped" option <reference-form-password-mapped>`
+    set to ``false``::
+
+        $builder->add('plainPassword', PasswordType::class, [
+            'hash_property_path' => 'password',
+            'mapped' => false,
+        ]);
+
 Overridden Options
 ------------------
 
@@ -80,6 +108,8 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
+
+.. _reference-form-password-mapped:
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
 
