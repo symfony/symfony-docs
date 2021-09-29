@@ -13,5 +13,5 @@ as keys. This can be useful when you need to set a custom class for some widget:
 
 .. seealso::
 
-    Use the ``row_attr`` option if you want to add these attributes to the
+    Use the ``row_attr`` option if you want to add these attributes to
     the :ref:`form type row <form-rendering-basics>` element.
