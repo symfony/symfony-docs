@@ -806,6 +806,33 @@ a ``user_checker`` option to define the service used to perform those checks.
 
 Learn more about user checkers in :doc:`/security/user_checkers`.
 
+Login throttling
+~~~~~~~~~~~~~~~~
+
+A new limiter with a ``fixed_window`` policy is created with the given 
+``max_attempts``, ``interval`` and ``lock_factory`` options. To override this
+create provide only the ``limiter`` option with a service id of the limiter
+to use.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+        # config/packages/security.yaml
+        security:
+            # ...
+            firewalls:
+                main:
+                    # ...
+                    login_throttling:
+                        max_attempts: 5            # default
+                        interval: 1 minute         # default
+                        lock_factory: lock.factory # default
+                        limiter: ~                 # service id of a limiter to override the default limiter
+.. versionadded:: 5.3
+
+    The ``login_throttling`` option was introduced in Symfony 5.2.
+
+
 providers
 ---------
 
