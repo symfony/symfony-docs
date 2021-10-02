@@ -1440,6 +1440,55 @@ claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
     deprecated since Symfony 5.4. In Symfony 6.0, the default value of this
     option changes from ``false`` to ``true``.
 
+Kafka Transport
+~~~~~~~~~~~~~~~~~~~
+
+The Kafka transport uses the ``rdkafka`` PHP extension to interact with Kafka.
+
+Install it by running:
+
+.. code-block:: terminal
+
+    $ composer require symfony/kafka-messenger
+
+The Kafka transport DSN may looks like this:
+
+.. code-block:: env
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=kafka://localhost:9092
+
+A number of options can be configured via the DSN or via the ``options`` key
+under the transport in ``messenger.yaml``:
+
+===================  =====================================  =================================
+     Option               Description                       Default
+===================  =====================================  =================================
+conf                 Common Kafka Config                    []
+consumer             Consumer specific settings             []
+producer             Producer specific settings             []
+
+The consumer options are:
+
+===================  =====================================  =================================
+     Option               Description                       Default
+===================  =====================================  =================================
+conf                 Common Kafka Config                    []
+topics               An array of topic names to consume     []
+commit_async         Commits offsets asynchronously         false
+receive_timeout      Time in ms until receive timeout
+
+
+The producer options are:
+
+===================  =====================================  =================================
+     Option               Description                       Default
+===================  =====================================  =================================
+conf                 Common Kafka Config                    []
+topic_name           The topic to produce to
+flush_timeout        Time in ms until flush timeout
+flush_retries        Amount of times to retry flush
+
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
 
