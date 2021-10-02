@@ -817,6 +817,7 @@ to use.
 .. configuration-block::
 
     .. code-block:: yaml
+
         # config/packages/security.yaml
         security:
             # ...
@@ -828,6 +829,7 @@ to use.
                         interval: 1 minute         # default
                         lock_factory: lock.factory # default
                         limiter: ~                 # service id of a limiter to override the default limiter
+
 .. versionadded:: 5.3
 
     The ``login_throttling`` option was introduced in Symfony 5.2.
