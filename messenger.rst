@@ -1473,7 +1473,7 @@ The consumer options are:
 ===================  =====================================  =================================
      Option               Description                       Default
 ===================  =====================================  =================================
-conf                 Common Kafka Config                    []
+conf                 Consumer Kafka Config                  []
 topics               An array of topic names to consume     []
 commit_async         Commits offsets asynchronously         false
 receive_timeout      Time in ms until receive timeout
@@ -1484,10 +1484,12 @@ The producer options are:
 ===================  =====================================  =================================
      Option               Description                       Default
 ===================  =====================================  =================================
-conf                 Common Kafka Config                    []
+conf                 Producer Kafka Config                  []
 topic_name           The topic to produce to
 flush_timeout        Time in ms until flush timeout
 flush_retries        Amount of times to retry flush
+
+The options under ``conf`` are documented here: https://github.com/edenhill/librdkafka/blob/master/CONFIGURATION.md
 
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
