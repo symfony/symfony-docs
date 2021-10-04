@@ -357,10 +357,6 @@ these options:
     Defines the name of the env var that stores the value of the
     :ref:`debug mode <debug-mode>` flag to use when running the application.
 
-.. versionadded:: 5.4
-
-    The ``env_var_name`` and ``debug_var_name`` options were introduced in Symfony 5.4.
-
 Create Your Own Runtime
 -----------------------
 
