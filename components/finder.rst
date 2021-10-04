@@ -150,7 +150,7 @@ can reuse those rules to exclude files and directories from the results with the
 
 .. versionadded:: 5.4
 
-    ``.gitignore`` files recursive support was introduced in Symfony 5.4.
+    Recursive support for ``.gitignore`` files was introduced in Symfony 5.4.
 
 File Name
 ~~~~~~~~~
