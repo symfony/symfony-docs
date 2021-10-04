@@ -749,10 +749,6 @@ reset the service container between two messages:
             ;
         };
 
-.. versionadded:: 5.4
-
-    The ``reset_on_message`` option was introduced in Symfony 5.4.
-
 .. _messenger-retries-failures:
 
 Retries & Failures
