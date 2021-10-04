@@ -56,7 +56,10 @@ to use the `IgnorePlugin`_ (see `moment/moment#2373`_):
       Encore
           // ...
 
-    +     .addPlugin(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
+    +     .addPlugin(new webpack.IgnorePlugin({
+              resourceRegExp: /^\.\/locale$/,
+              contextRegExp: /moment$/,
+          }))
       ;
 
 .. _`handlebars-loader`: https://github.com/pcardune/handlebars-loader
