@@ -351,6 +351,14 @@ these options:
     knows how to deal with each of them.
 ``error_handler`` (default: :class:`Symfony\\Component\\Runtime\\Internal\\BasicErrorHandler` or :class:`Symfony\\Component\\Runtime\\Internal\\SymfonyErrorHandler` for ``SymfonyRuntime``)
     Defines the class to use to handle PHP errors.
+``env_var_name`` (default: ``"APP_ENV"``)
+    To define the name of the env var for the Symfony env.
+``debug_var_name`` (default: ``"APP_DEBUG"``)
+    To define the name of the debug var for the debug flag.
+
+.. versionadded:: 5.4
+
+    The ``env_var_name`` and ``debug_var_name`` options was introduced in Symfony 5.4.
 
 Create Your Own Runtime
 -----------------------
