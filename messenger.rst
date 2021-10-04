@@ -687,6 +687,72 @@ of the desired grace period in seconds) in order to perform a graceful shutdown:
     [program:x]
     stopwaitsecs=20
 
+Stateless Worker
+~~~~~~~~~~~~~~~~
+
+PHP is designed to be stateless, there are no shared resources across different
+requests. In HTTP context PHP cleans everything after sending the response, so
+you can decide to not take care of services that may leak memory.
+
+On the other hand, workers usually run in long-running CLI processes, which don't
+finish after processing a message. That's why you need to be careful about services
+state to not leak information and/or memory from one message to another message.
+
+However, certain Symfony services, such as the Monolog
+:ref:`fingers crossed handler <logging-handler-fingers_crossed>`, leak by design.
+In those cases, use the ``reset_on_message`` transport option to automatically
+reset the service container between two messages:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    async:
+                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                        reset_on_message: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="async" dsn="%env(MESSENGER_TRANSPORT_DSN)%" reset-on-message="true">
+                    </framework:transport>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $messenger->transport('async')
+                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->resetOnMessage(true)
+            ;
+        };
+
+.. versionadded:: 5.4
+
+    The ``reset_on_message`` option was introduced in Symfony 5.4.
+
 .. _messenger-retries-failures:
 
 Retries & Failures
