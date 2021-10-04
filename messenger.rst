@@ -696,22 +696,21 @@ of the desired grace period in seconds) in order to perform a graceful shutdown:
     [program:x]
     stopwaitsecs=20
 
-
 Stateless Worker
 ~~~~~~~~~~~~~~~~
 
-PHP was designed to be stateless: everything is lost after processing an HTTP
-request. When you run your application in an HTTP context, you may not take care
-of services states that may leak services since PHP clean everything after
-sending the response.
+PHP is designed to be stateless, there are no shared resources across different
+requests. In HTTP context PHP cleans everything after sending the response, so
+you can decide to not take care of services that may leak memory.
 
-Since worker run in a CLI context, you need to be careful about services state.
-You should avoid to put a state in a service to avoid leaking some information
-and/or memory from one message to another message.
+On the other hand, workers usually run in long-running CLI processes, which don't
+finish after processing a message. That's why you need to be careful about services
+state to not leak information and/or memory from one message to another message.
 
-Some symfony services leak by nature. For example the monolog fingers crossed
-handler. To avoid such situations, you can configure a transport to
-automatically reset the container between two messages:
+However, certain Symfony services, such as the Monolog
+:ref:`fingers crossed handler <logging-handler-fingers_crossed>`, leak by design.
+In those cases, use the ``reset_on_message`` transport option to automatically
+reset the service container between two messages:
 
 .. configuration-block::
 
@@ -758,6 +757,10 @@ automatically reset the container between two messages:
                 ->resetOnMessage(true)
             ;
         };
+
+.. versionadded:: 5.4
+
+    The ``reset_on_message`` option was introduced in Symfony 5.4.
 
 .. _messenger-retries-failures:
 

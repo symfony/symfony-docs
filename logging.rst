@@ -167,6 +167,8 @@ defined.
     from the two files cannot be merged because the order matters and a merge does
     not allow to control the order.
 
+.. _logging-handler-fingers_crossed:
+
 Handlers that Modify Log Entries
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
