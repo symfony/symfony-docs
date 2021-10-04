@@ -35,11 +35,11 @@ First, create the form type extension class extending from
     class ImageTypeExtension extends AbstractTypeExtension
     {
         /**
-         * Return the class of the type being extended.
+         * Returns an array of extended types.
          */
         public static function getExtendedTypes(): iterable
         {
-            // return FormType::class to modify (nearly) every field in the system
+            // return [FormType::class] to modify (nearly) every field in the system
             return [FileType::class];
         }
     }
@@ -145,7 +145,7 @@ For example::
     {
         public static function getExtendedTypes(): iterable
         {
-            // return FormType::class to modify (nearly) every field in the system
+            // return [FormType::class] to modify (nearly) every field in the system
             return [FileType::class];
         }
 
