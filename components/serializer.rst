@@ -1193,10 +1193,6 @@ collect all exceptions at once, and to get the object partially denormalized::
         return $this->json($violations, 400);
     }
 
-.. versionadded:: 5.4
-
-    The ``COLLECT_DENORMALIZATION_ERRORS`` option was introduced in Symfony 5.4.
-
 Handling Circular References
 ----------------------------
 
