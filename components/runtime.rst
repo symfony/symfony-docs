@@ -340,13 +340,26 @@ The following options are supported by the ``SymfonyRuntime``:
 Besides these, the ``GenericRuntime`` and ``SymfonyRuntime`` also support
 these options:
 
-``debug`` (default: ``APP_DEBUG`` environment variable, or ``true``)
-    Toggles displaying errors.
+``debug`` (default: the value of the env var defined by ``debug_var_name`` option
+    (usually, ``APP_DEBUG``), or ``true`` if such env var is not defined)
+    Toggles the :ref:`debug mode <debug-mode>` of Symfony applications (e.g. to
+    display errors)
 ``runtimes``
     Maps "application types" to a ``GenericRuntime`` implementation that
     knows how to deal with each of them.
 ``error_handler`` (default: :class:`Symfony\\Component\\Runtime\\Internal\\BasicErrorHandler` or :class:`Symfony\\Component\\Runtime\\Internal\\SymfonyErrorHandler` for ``SymfonyRuntime``)
     Defines the class to use to handle PHP errors.
+``env_var_name`` (default: ``"APP_ENV"``)
+    Defines the name of the env var that stores the name of the
+    :ref:`configuration environment <configuration-environments>`
+    to use when running the application.
+``debug_var_name`` (default: ``"APP_DEBUG"``)
+    Defines the name of the env var that stores the value of the
+    :ref:`debug mode <debug-mode>` flag to use when running the application.
+
+.. versionadded:: 5.4
+
+    The ``env_var_name`` and ``debug_var_name`` options were introduced in Symfony 5.4.
 
 Create Your Own Runtime
 -----------------------
