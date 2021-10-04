@@ -1,11 +1,15 @@
 .. index::
     single: Cache Pool
-    single: Couchbase Cache
+    single: Couchabase Cache
 
-.. _couchbase-adapter:
+.. _couchbase-collection-adapter:
 
 Couchbase Cache Adapter
 =======================
+
+.. versionadded:: 5.4
+
+    The Couchbase Cache Adapter was introduced in Symfony 5.4.
 
 This adapter stores the values in-memory using one (or more) `Couchbase server`_
 instances. Unlike the :ref:`APCu adapter <apcu-adapter>`, and similarly to the
@@ -17,21 +21,18 @@ is also available.
 .. caution::
 
     **Requirements:** The `Couchbase PHP extension`_ as well as a `Couchbase server`_
-    must be installed, active, and running to use this adapter. Version ``2.6`` or
-    less than 3.0 of the `Couchbase PHP extension`_ is required for this adapter.
+    must be installed, active, and running to use this adapter. Version ``3.0`` or
+    greater of the `Couchbase PHP extension`_ is required for this adapter.
 
-This adapter expects a `Couchbase Bucket`_ instance to be passed as the first
+This adapter expects a `Couchbase Collection`_ instance to be passed as the first
 parameter. A namespace and default cache lifetime can optionally be passed as
 the second and third parameters::
 
-    use Symfony\Component\Cache\Adapter\CouchbaseBucketAdapter;
+    use Symfony\Component\Cache\Adapter\CouchbaseCollectionAdapter;
 
-    $cache = new CouchbaseBucketAdapter(
+    $cache = new CouchbaseCollectionAdapter(
         // the client object that sets options and adds the server instance(s)
         $client,
-
-        // the name of bucket
-        $bucket,
 
         // a string prefixed to the keys of the items stored in this cache
         $namespace,
@@ -45,22 +46,22 @@ the second and third parameters::
 Configure the Connection
 ------------------------
 
-The :method:`Symfony\\Component\\Cache\\Adapter\\CouchbaseBucketAdapter::createConnection`
-helper method allows creating and configuring a `Couchbase Bucket`_ class instance using a
+The :method:`Symfony\\Component\\Cache\\Adapter\\CouchbaseCollectionAdapter::createConnection`
+helper method allows creating and configuring a `Couchbase Collection`_ class instance using a
 `Data Source Name (DSN)`_ or an array of DSNs::
 
-    use Symfony\Component\Cache\Adapter\CouchbaseBucketAdapter;
+    use Symfony\Component\Cache\Adapter\CouchbaseCollectionAdapter;
 
     // pass a single DSN string to register a single server with the client
-    $client = CouchbaseBucketAdapter::createConnection(
+    $client = CouchbaseCollectionAdapter::createConnection(
         'couchbase://localhost'
         // the DSN can include config options (pass them as a query string):
         // 'couchbase://localhost:11210?operationTimeout=10'
-        // 'couchbase://localhost:11210?operationTimeout=10&configTimeout=20'
+        // 'couchbase://localhost:11210?operationTimeout=10&configTimout=20'
     );
 
     // pass an array of DSN strings to register multiple servers with the client
-    $client = CouchbaseBucketAdapter::createConnection([
+    $client = CouchbaseCollectionAdapter::createConnection([
         'couchbase://10.0.0.100',
         'couchbase://10.0.0.101',
         'couchbase://10.0.0.102',
@@ -69,7 +70,7 @@ helper method allows creating and configuring a `Couchbase Bucket`_ class instan
 
     // a single DSN can define multiple servers using the following syntax:
     // host[hostname-or-IP:port] (where port is optional). Sockets must include a trailing ':'
-    $client = CouchbaseBucketAdapter::createConnection(
+    $client = CouchbaseCollectionAdapter::createConnection(
         'couchbase:?host[localhost]&host[localhost:12345]'
     );
 
@@ -77,14 +78,14 @@ helper method allows creating and configuring a `Couchbase Bucket`_ class instan
 Configure the Options
 ---------------------
 
-The :method:`Symfony\\Component\\Cache\\Adapter\\CouchbaseBucketAdapter::createConnection`
+The :method:`Symfony\\Component\\Cache\\Adapter\\CouchbaseCollectionAdapter::createConnection`
 helper method also accepts an array of options as its second argument. The
 expected format is an associative array of ``key => value`` pairs representing
 option names and their respective values::
 
-    use Symfony\Component\Cache\Adapter\CouchbaseBucketAdapter;
+    use Symfony\Component\Cache\Adapter\CouchbaseCollectionAdapter;
 
-    $client = CouchbaseBucketAdapter::createConnection(
+    $client = CouchbaseCollectionAdapter::createConnection(
         // a DSN string or an array of DSN strings
         [],
 
@@ -136,11 +137,11 @@ Available Options
 
 .. tip::
 
-    Reference the `Couchbase Bucket`_ extension's `predefined constants`_ documentation
+    Reference the `Couchbase Collection`_ extension's `predefined constants`_ documentation
     for additional information about the available options.
 
-.. _`Couchbase PHP extension`: https://docs.couchbase.com/sdk-api/couchbase-php-client-2.6.0/files/couchbase.html
-.. _`predefined constants`: https://docs.couchbase.com/sdk-api/couchbase-php-client-2.6.0/classes/Couchbase.Bucket.html
+.. _`Couchbase PHP extension`: https://docs.couchbase.com/sdk-api/couchbase-php-client/namespaces/couchbase.html
+.. _`predefined constants`: https://docs.couchbase.com/sdk-api/couchbase-php-client/classes/Couchbase-Bucket.html
 .. _`Couchbase server`: https://couchbase.com/
-.. _`Couchbase Bucket`: https://docs.couchbase.com/sdk-api/couchbase-php-client-2.6.0/classes/Couchbase.Bucket.html
+.. _`Couchbase Collection`: https://docs.couchbase.com/sdk-api/couchbase-php-client/classes/Couchbase-Collection.html
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
