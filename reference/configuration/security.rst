@@ -374,7 +374,7 @@ Using the Sodium Password Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It uses the `Argon2 key derivation function`_. Argon2 support was introduced
-in PHP 7.2 by bundeling the `libsodium`_ extension.
+in PHP 7.2 by bundling the `libsodium`_ extension.
 
 The hashed passwords are ``96`` characters long, but due to the hashing
 requirements saved in the resulting hash this may change in the future, so make
