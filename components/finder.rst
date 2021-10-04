@@ -148,10 +148,6 @@ can reuse those rules to exclude files and directories from the results with the
     // excludes files/directories matching the .gitignore patterns
     $finder->ignoreVCSIgnored(true);
 
-.. versionadded:: 5.4
-
-    Recursive support for ``.gitignore`` files was introduced in Symfony 5.4.
-
 File Name
 ~~~~~~~~~
 
