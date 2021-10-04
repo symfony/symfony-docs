@@ -1176,15 +1176,15 @@ to ``true``::
 
 .. _component-serializer-handling-circular-references:
 
-Collecting type errors while denormalizing
+Collecting Type Errors While Denormalizing
 ------------------------------------------
 
-When denormalizing a payload to an object with type hints, if the payload
-contains a property that doesn't have the same type as the object, an exception
-is thrown.
+When denormalizing a payload to an object with typed properties, you'll get an
+exception if the payload contains properties that don't have the same type as
+the object.
 
-It's possible to collect all exceptions at once, and to get the object partially
-denormalized::
+In those situations, use the ``COLLECT_DENORMALIZATION_ERRORS`` option to
+collect all exceptions at once, and to get the object partially denormalized::
 
     try {
         $dto = $serializer->deserialize($request->getContent(), MyDto::class, 'json', [
@@ -1204,6 +1204,10 @@ denormalized::
 
         return $this->json($violations, 400);
     }
+
+.. versionadded:: 5.4
+
+    The ``COLLECT_DENORMALIZATION_ERRORS`` option was introduced in Symfony 5.4.
 
 Handling Circular References
 ----------------------------
