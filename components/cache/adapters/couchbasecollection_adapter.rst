@@ -7,10 +7,6 @@
 Couchbase Cache Adapter
 =======================
 
-.. versionadded:: 5.4
-
-    The Couchbase Cache Adapter was introduced in Symfony 5.4.
-
 This adapter stores the values in-memory using one (or more) `Couchbase server`_
 instances. Unlike the :ref:`APCu adapter <apcu-adapter>`, and similarly to the
 :ref:`Memcached adapter <memcached-adapter>`, it is not limited to the current server's
