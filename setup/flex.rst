@@ -133,7 +133,7 @@ manual steps:
 
 #. Move the public assets, such as images or compiled CSS/JS files, from
    ``src/AppBundle/Resources/public/`` to ``public/`` (e.g. ``public/images/``).
-   
+
 #. Remove ``src/AppBundle/``.
 
 #. Move the source of the assets (e.g. the SCSS files) to ``assets/`` and use
@@ -188,6 +188,11 @@ The configurable paths are:
 If you customize these paths, some files copied from a recipe still may contain
 references to the original path. In other words: you may need to update some things
 manually after a recipe is installed.
+
+Learn more
+----------
+
+* :doc:`/setup/flex_private_recipes`
 
 .. _`default services.yaml file`: https://github.com/symfony/recipes/blob/master/symfony/framework-bundle/4.4/config/services.yaml
 .. _`shown in this example`: https://github.com/symfony/skeleton/blob/8e33fe617629f283a12bbe0a6578bd6e6af417af/composer.json#L24-L33
