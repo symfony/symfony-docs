@@ -2,8 +2,8 @@ Choice
 ======
 
 This constraint is used to ensure that the given value is one of a given
-set of *valid* choices. It can also be used to validate that each item in
-an array of items is one of those valid choices.
+set of *valid* choices. To validate that each item in
+an array of items is one of those valid choices, set the `multiple`_ option.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
