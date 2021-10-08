@@ -485,17 +485,16 @@ To use the view transformer, call ``addViewTransformer()``.
 .. caution::
 
     Be careful with model transformers and
-    :doc:`Collection </reference/forms/types/collection>` field types: As the
-    Collection's children are created early at `PRE_SET_DATA` by its
-    `ResizeFormListener`, their data is populated later from the Norm Data. So
-    your model transformer cannot reduce the number of items within the
+    :doc:`Collection </reference/forms/types/collection>` field types.
+    Collection's children are created early at ``PRE_SET_DATA`` by its
+    ``ResizeFormListener`` and their data is populated later from the normalized
+    data. So your model transformer cannot reduce the number of items within the
     Collection (i.e. filtering out some items), as in that case the collection
     ends up with some empty children.
     
     A possible workaround for that limitation could be not using the underlying
     object directly, but a DTO (Data Transfer Object) instead, that implements
     the transformation of such incompatible data structures.
-    
 
 So why Use the Model Transformer?
 ---------------------------------
