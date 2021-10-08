@@ -1073,8 +1073,7 @@ Parameter Conversion
 
 A common routing need is to convert the value stored in some parameter (e.g. an
 integer acting as the user ID) into another value (e.g. the object that
-represents the user). This feature is called "param converter" and is only
-available when using annotations to define routes.
+represents the user). This feature is called "param converter".
 
 To add support for "param converters" we need SensioFrameworkExtraBundle:
 
