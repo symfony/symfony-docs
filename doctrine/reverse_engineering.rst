@@ -103,7 +103,7 @@ run:
     $ php bin/console make:entity --regenerate App
 
     // generates getter/setter methods for one specific Entity
-    $ php bin/console make:entity --regenerate App\\Entity\\Country
+    $ php bin/console make:entity --regenerate App\Entity\Country
 
 .. note::
 
