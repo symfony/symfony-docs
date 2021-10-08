@@ -11,13 +11,6 @@ the parent :class:`Symfony\\Component\\HttpKernel\\Kernel` class.
 Configuration
 -------------
 
-* `Charset`_
-* `Kernel Name`_
-* `Project Directory`_
-* `Cache Directory`_
-* `Log Directory`_
-* `Container Build Time`_
-
 .. _configuration-kernel-charset:
 
 Charset
