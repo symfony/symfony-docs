@@ -25,35 +25,6 @@ under the ``twig`` key in your application configuration.
 Configuration
 -------------
 
-.. rst-class:: list-config-options list-config-options--complex
-
-* `auto_reload`_
-* `autoescape`_
-* `autoescape_service`_
-* `autoescape_service_method`_
-* `base_template_class`_
-* `cache`_
-* `charset`_
-* `date`_
-
-  * `format`_
-  * `interval_format`_
-  * `timezone`_
-
-* `debug`_
-* `default_path`_
-* `form_themes`_
-* `globals`_
-* `number_format`_
-
-  * `decimals`_
-  * `decimal_point`_
-  * `thousands_separator`_
-
-* `optimizations`_
-* `paths`_
-* `strict_variables`_
-
 auto_reload
 ~~~~~~~~~~~
 
