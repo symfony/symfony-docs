@@ -337,7 +337,7 @@ following complex example where a ``TaskManagerType`` has a collection of
         }
     }
 
-    class TaskType
+    class TaskType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options = []): void
         {
