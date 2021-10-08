@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by derrabus at 2021-10-06T17:39:27Z
+
+The feature PR has been merged.
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2021-10-06T19:28:35Z
+
+It needs some work here to report the last changes (modes instead of mode) from the code.
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2021-10-07T15:51:23Z
+
+I don't understand why the CI fails :thinking:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-10-08T06:13:40Z
+
+friendly ping @Nyholm can you help?
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-10-08T06:23:02Z
+
+The CI is correct. The class is called “Constraint”
+
+https://github.com/symfony/symfony/blob/5.4/src/Symfony/Component/Validator/Constraint.php
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-10-08T06:25:00Z
+
+Oh. Sorry. I see now that you import partial FQCN. Ci does not support that (appearently)
+
+Feel free to ignore that :)
