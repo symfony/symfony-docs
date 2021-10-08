@@ -25,13 +25,6 @@ key in your application configuration.
 Configuration
 -------------
 
-.. rst-class:: list-config-options
-
-* `dump_destination`_
-* `max_items`_
-* `min_depth`_
-* `max_string_length`_
-
 max_items
 ~~~~~~~~~
 

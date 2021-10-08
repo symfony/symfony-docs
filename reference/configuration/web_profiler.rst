@@ -30,12 +30,6 @@ under the ``web_profiler`` key in your application configuration.
 Configuration
 -------------
 
-.. rst-class:: list-config-options
-
-* `excluded_ajax_paths`_
-* `intercept_redirects`_
-* `toolbar`_
-
 excluded_ajax_paths
 ~~~~~~~~~~~~~~~~~~~
 

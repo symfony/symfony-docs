@@ -25,36 +25,6 @@ to :doc:`send emails </email>`. All these options are configured under the
 Configuration
 -------------
 
-.. rst-class:: list-config-options list-config-options--complex
-
-* `antiflood`_
-
-  * `sleep`_
-  * `threshold`_
-
-* `auth_mode`_
-* `command`_
-* `delivery_addresses`_
-* `delivery_whitelist`_
-* `disable_delivery`_
-* `encryption`_
-* `host`_
-* `local_domain`_
-* `logging`_
-* `password`_
-* `port`_
-* `sender_address`_
-* `source_ip`_
-* `spool`_
-
-  * `path`_
-  * `type`_
-
-* `timeout`_
-* `transport`_
-* `url`_
-* `username`_
-
 url
 ~~~
 
