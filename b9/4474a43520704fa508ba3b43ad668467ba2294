@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-10-08T13:27:36Z
+
+@Ahummeling thanks for this fix. I agree that the original text is wrong. However, I think we should fix differently. Instead of mentioning the `ParamConverter` annotation, which is not used in the example and it's mentioned later in a cross link, I'd just remove the wrong phrase claiming that this only works when using annotations. What do you think?
+
+---------------------------------------------------------------------------
+
+by Ahummeling at 2021-10-08T14:32:12Z
+
+Yeah, that actually makes much more sense. I'll go make the changes and update my PR, thanks!
