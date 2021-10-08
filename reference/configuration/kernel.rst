@@ -11,12 +11,6 @@ the parent :class:`Symfony\\Component\\HttpKernel\\Kernel` class.
 Configuration
 -------------
 
-* `Charset`_
-* `Project Directory`_
-* `Cache Directory`_
-* `Log Directory`_
-* `Container Build Time`_
-
 In previous Symfony versions there was another configuration option to define
 the "kernel name", which is only important when
 :doc:`using applications with multiple kernels </configuration/multiple_kernels>`.
