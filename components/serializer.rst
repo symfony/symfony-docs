@@ -307,6 +307,11 @@ Then, create your groups definition:
             public $foo;
 
             /**
+             * @Groups({"group4"})
+             */
+            public $anotherProperty;
+
+            /**
              * @Groups("group3")
              */
             public function getBar() // is* methods are also supported
@@ -328,6 +333,9 @@ Then, create your groups definition:
             #[Groups(['group1', 'group2'])]
             public $foo;
 
+            #[Groups(['group4'])]
+            public $anotherProperty;
+
             #[Groups(['group3'])]
             public function getBar() // is* methods are also supported
             {
@@ -343,6 +351,8 @@ Then, create your groups definition:
             attributes:
                 foo:
                     groups: ['group1', 'group2']
+                anotherProperty:
+                    groups: ['group4']
                 bar:
                     groups: ['group3']
 
@@ -360,6 +370,10 @@ Then, create your groups definition:
                     <group>group2</group>
                 </attribute>
 
+                <attribute name="anotherProperty">
+                    <group>group4</group>
+                </attribute>
+
                 <attribute name="bar">
                     <group>group3</group>
                 </attribute>
@@ -373,6 +387,7 @@ You are now able to serialize only attributes in the groups you want::
 
     $obj = new MyObj();
     $obj->foo = 'foo';
+    $obj->anotherProperty = 'anotherProperty';
     $obj->setBar('bar');
 
     $normalizer = new ObjectNormalizer($classMetadataFactory);
@@ -382,12 +397,22 @@ You are now able to serialize only attributes in the groups you want::
     // $data = ['foo' => 'foo'];
 
     $obj2 = $serializer->denormalize(
-        ['foo' => 'foo', 'bar' => 'bar'],
+        ['foo' => 'foo', 'anotherProperty' => 'anotherProperty', 'bar' => 'bar'],
         'MyObj',
         null,
         ['groups' => ['group1', 'group3']]
     );
     // $obj2 = MyObj(foo: 'foo', bar: 'bar')
+
+    // You can use `groups` with value `*` to get all groups:
+
+    $obj3 = $serializer->denormalize(
+        ['foo' => 'foo', 'anotherProperty' => 'anotherProperty', 'bar' => 'bar'],
+        'MyObj',
+        null,
+        ['groups' => ['*']]
+    );
+    // $obj2 = MyObj(foo: 'foo', anotherProperty: 'anotherProperty', bar: 'bar')
 
 .. _ignoring-attributes-when-serializing:
 
