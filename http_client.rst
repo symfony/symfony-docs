@@ -784,6 +784,28 @@ Alternatively, you can also disable ``verify_host`` and ``verify_peer`` (see
 :ref:`http_client config reference <reference-http-client>`), but this is not
 recommended in production.
 
+SSRF (Server-side request forgery) Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+[SSRF](https://portswigger.net/web-security/ssrf) allows an attacker to induce the backend application to make HTTP requests to an arbitrary domain. These attacks can also target the internal hosts and IPs of the attacked server.
+
+If you use an ``HttpClient`` together with user-provided URIs, it is probably a good idea to decorate it with a ``NoPrivateNetworkHttpClient``. This will ensure local networks are made inaccessible to the HTTP client::
+
+    use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
+
+    $client = new NoPrivateNetworkHttpClient(HttpClient::create());
+    // nothing changes when requesting public networks
+    $client->request('GET', 'https://example.com/');
+
+    // however, all requests to private networks are now blocked by default
+    $client->request('GET', 'http://localhost/');
+
+    // the second optional argument defines the networks to block
+    // in this example, requests from 104.26.14.0 to 104.26.15.255 will result in an exception
+    // but all the other requests, including other internal networks, will be allowed
+    $client = new NoPrivateNetworkHttpClient(HttpClient::create(), ['104.26.14.0/23']);
+
 Performance
 -----------
 
@@ -1074,7 +1096,7 @@ This behavior provided at destruction-time is part of the fail-safe design of th
 component. No errors will be unnoticed: if you don't write the code to handle
 errors, exceptions will notify you when needed. On the other hand, if you write
 the error-handling code (by calling ``$response->getStatusCode()``), you will
-opt-out from these fallback mechanisms as the destructor won't have anything 
+opt-out from these fallback mechanisms as the destructor won't have anything
 remaining to do.
 
 Concurrent Requests
