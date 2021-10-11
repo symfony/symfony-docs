@@ -28,6 +28,9 @@ creates a ``security.yaml`` configuration file for you:
     security:
         # https://symfony.com/doc/current/security/experimental_authenticators.html
         enable_authenticator_manager: true
+        # https://symfony.com/doc/current/security.html#c-hashing-passwords
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
         # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
         providers:
             users_in_memory: { memory: null }
@@ -79,7 +82,7 @@ The User
 Permissions in Symfony are always linked to a user object. If you need to
 secure (parts of) your application, you need to create a user class. This
 is a class that implements :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
-This class is often a Doctrine entity, but you can also use a dedicated
+This is often a Doctrine entity, but you can also use a dedicated
 Security user class.
 
 The easiest way to generate a user class is using the ``make:user`` command
@@ -324,8 +327,8 @@ User providers are used in a couple places during the security lifecycle:
 **Reload the User from the session**
     At the beginning of each request, the user is loaded from the
     session (unless your firewall is ``stateless``). The provider
-    "refreshes" the user  (e.g. the database is queried again for fresh
-    data), to make sure all user information is up to date (and if
+    "refreshes" the user (e.g. the database is queried again for fresh
+    data) to make sure all user information is up to date (and if
     necessary, the user is de-authenticated/logged out if something
     changed). See :ref:`user_session_refresh` for more information about
     this process.
@@ -341,7 +344,7 @@ Symfony comes with several built-in user providers:
 :ref:`Chain User Provider <security-chain-user-provider>`
     Merges two or more user providers into a new user provider.
 
-The built-in user providers cover most the common needs for applications, but you
+The built-in user providers cover the most common needs for applications, but you
 can also create your own :ref:`custom user provider <security-custom-user-provider>`.
 
 .. note::
@@ -350,14 +353,16 @@ can also create your own :ref:`custom user provider <security-custom-user-provid
     in your custom authenticator). All user providers follow this pattern
     for their service ID: ``security.user.provider.concrete.<your-provider-name>``
     (where ``<your-provider-name>`` is the configuration key, e.g.
-    ``app_user_provider``).
+    ``app_user_provider``). If you only have one user provider, you can autowire
+    it using the :class:`Symfony\Component\Security\Core\User\UserProviderInterface`
+    type-hint.
 
 .. _security-encoding-user-password:
 
 Registering the User: Hashing Passwords
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most applications require a user to login with a password. For these
+Many applications require a user to log in with a password. For these
 applications, the SecurityBundle provides password hashing and verification
 functionality.
 
@@ -382,8 +387,9 @@ First, make sure your User class implements the
         }
     }
 
-Then, configure which password hasher should be used for this class. The
-``make:user`` pre-configured this for you:
+Then, configure which password hasher should be used for this class. If your
+``security.yaml`` file wasn't already pre-configured, then ``make:user`` should
+have done this for you:
 
 .. configuration-block::
 
@@ -393,10 +399,9 @@ Then, configure which password hasher should be used for this class. The
         security:
             # ...
             password_hashers:
-                App\Entity\User:
-                    # Use native password hasher, which auto-selects and migrates the best
-                    # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
-                    algorithm: auto
+                # Use native password hasher, which auto-selects and migrates the best
+                # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+                Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
     .. code-block:: xml
 
@@ -414,7 +419,7 @@ Then, configure which password hasher should be used for this class. The
                 <!-- ... -->
                 <!-- Use native password hasher, which auto-selects and migrates the best
                      possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt") -->
-                <password-hasher class="App\Entity\User" algorithm="auto"/>
+                <password-hasher class="Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface" algorithm="auto"/>
             </config>
         </srv:container>
 
@@ -422,14 +427,14 @@ Then, configure which password hasher should be used for this class. The
 
         // config/packages/security.php
         use App\Entity\User;
-        use Symfony\Config\SecurityConfig;
+        use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
         return static function (SecurityConfig $security) {
             // ...
 
             // Use native password hasher, which auto-selects and migrates the best
             // possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
-            $security->passwordHasher(User::class)
+            $security->passwordHasher(PasswordAuthenticatedUserInterface::class)
                 ->algorithm('auto')
             ;
         };
@@ -591,7 +596,7 @@ you'll see that you're visiting a page behind the firewall in the toolbar:
 .. image:: /_images/security/anonymous_wdt.png
    :align: center
 
-Visiting a secured section doesn't necessarily require you to authenticate
+Visiting a URL under a firewall doesn't necessarily require you to be authenticated
 (e.g. the login form has to be accessible or some parts of your application
 are public). You'll learn how to restrict access to URLs, controllers or
 anything else within your firewall in the :ref:`access control
@@ -769,13 +774,13 @@ Edit the login controller to render the login form:
           }
       }
 
-Don't let this controller confuse you. The form login authenticators
-handles the form submission for you. If the user submits an invalid
-username or password, this controller reads the form submission error from
-the security system (using ``AuthenticationUtils``), so that it can be
-displayed back to the user.
+Don't let this controller confuse you. Its job is only to *render* the form:
+the ``form_login`` authenticator will handle the form *submission* automatically.
+If the user submits an invalid email or password, that authenticator will store
+the error and redirect back to this controller, where we read the error (using
+``AuthenticationUtils``) so that it can be displayed back to the user.
 
-Finally, create the template:
+Finally, create or updaate the template:
 
 .. code-block:: html+twig
 
@@ -790,7 +795,7 @@ Finally, create the template:
         {% endif %}
 
         <form action="{{ path('login') }}" method="post">
-            <label for="username">Username:</label>
+            <label for="username">Email:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
             <label for="password">Password:</label>
@@ -808,15 +813,16 @@ Finally, create the template:
     The ``error`` variable passed into the template is an instance of
     :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`.
     It may contain sensitive information about the authentication failure.
-    *Never* use ``error.message``, but the ``messageKey`` property instead
+    *Never* use ``error.message``: use the ``messageKey`` property instead,
     as shown in the example. This message is always safe to display.
 
 The form can look like anything, but it usually follows some conventions:
 
 * The ``<form>`` element sends a ``POST`` request to the ``login`` route, since
-  that's what you configured under the ``form_login`` key in ``security.yaml``;
-* The username field has the name ``_username`` and the password field has the
-  name ``_password``.
+  that's what you configured as the ``check_path`` under the ``form_login`` key in
+  ``security.yaml``;
+* The username (or whatever your user's "identifier" is, like an email) field has
+  the name ``_username`` and the password field has the name ``_password``.
 
 .. tip::
 
@@ -829,20 +835,21 @@ The form can look like anything, but it usually follows some conventions:
     :ref:`form_login-csrf` on how to protect your login form.
 
 And that's it! When you submit the form, the security system automatically
-checks the user's credentials and either authenticate the user or send the
-user back to the login form where the error can be displayed.
+reads the ``_username`` and ``_email`` POST parameter, loads the user via
+the user provider, checks the user's credentials and either authenticates the
+user or sends them back to the login form where the error can be displayed.
 
 To review the whole process:
 
-#. The user tries to access a resource that is protected;
+#. The user tries to access a resource that is protected (e.g. ``/admin``);
 #. The firewall initiates the authentication process by redirecting the
    user to the login form (``/login``);
 #. The ``/login`` page renders login form via the route and controller created
    in this example;
 #. The user submits the login form to ``/login``;
-#. The security system intercepts the request, checks the user's submitted
-   credentials, authenticates the user if they are correct, and sends the
-   user back to the login form if they are not.
+#. The security system (i.e. the ``form_login`` authenticator) intercepts the
+   request, checks the user's submitted credentials, authenticates the user if
+   they are correct, and sends the user back to the login form if they are not.
 
 .. _form_login-csrf:
 
@@ -940,8 +947,8 @@ JSON Login
 
 Some applications provide an API that is secured using tokens. These
 applications may use an endpoint that provides these tokens based on a
-username and password. The JSON login authenticator helps you create this
-functionality.
+username (or email) and password. The JSON login authenticator helps you create
+this functionality.
 
 Enable the authenticator using the ``json_login`` setting:
 
@@ -957,6 +964,7 @@ Enable the authenticator using the ``json_login`` setting:
                 main:
                     # ...
                     json_login:
+                        # app_login is a route we will create below
                         check_path: api_login
 
     .. code-block:: xml
@@ -1045,7 +1053,7 @@ token (or whatever you need to return) and return the JSON response:
     -     public function index(): Response
     +     public function index(#[CurrentUser] User $user): Response
           {
-    +         $token = ...; // somehow create a token for $user
+    +         $token = ...; // somehow create an API token for $user
     +
               return $this->json([
     -             'message' => 'Welcome to your new controller!',
@@ -1065,12 +1073,14 @@ token (or whatever you need to return) and return the JSON response:
 That's it! To summarize the process:
 
 #. A client (e.g. the front-end) makes a *POST request* with the
-   ``Content-Type: application/json`` header to ``/api/login``:
+   ``Content-Type: application/json`` header to ``/api/login`` with
+   ``username`` (even if your identifier is actually an email) and
+   ``password`` keys:
 
    .. code-block:: json
 
         {
-            "username": "dunglas",
+            "username": "dunglas@example.com",
             "password": "MyPassword"
         }
 #. The security system intercepts the request, checks the user's submitted
@@ -1082,7 +1092,7 @@ That's it! To summarize the process:
    .. code-block:: json
 
         {
-            "user": "dunglas",
+            "user": "dunglas@example.com",
             "token": "45be42..."
         }
 
@@ -2510,21 +2520,23 @@ However, in some cases, this process can cause unexpected authentication problem
 If you're having problems authenticating, it could be that you *are* authenticating
 successfully, but you immediately lose authentication after the first redirect.
 
-In that case, review the serialization logic (e.g. ``SerializableInterface``) if
-you have any, to make sure that all the fields necessary are serialized.
+In that case, review the serialization logic (e.g. ``SerializableInterface``) on
+you user class (if you have any) to make sure that all the fields necessary are
+serialized.
 
 Comparing Users Manually with EquatableInterface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Or, if you need more control over the "compare users" process, make your User class
 implement :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`.
-Then, your ``isEqualTo()`` method will be called when comparing users.
+Then, your ``isEqualTo()`` method will be called when comparing users instead
+of the core logic.
 
 Security Events
 ---------------
 
-During the authentication process, multiple events are dispatched to
-hook into the process or customize the response sent back to the user. You
+During the authentication process, multiple events are dispatched that allow you
+to hook into the process or customize the response sent back to the user. You
 can do this by creating an :doc:`event listener or subscriber </event_dispatcher>`
 for these events.
 
@@ -2542,7 +2554,7 @@ Authentication Events
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\AuthenticationTokenCreatedEvent`
     Dispatched after the passport was validated and the authenticator
-    created the security token. This can be used in advanced use-cases
+    created the security token (and user). This can be used in advanced use-cases
     where you need to modify the created token (e.g. for multi factor
     authentication).
 
@@ -2553,12 +2565,12 @@ Authentication Events
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\LoginSuccessEvent`
     Dispatched after authentication was fully successful. Listeners to this
-    event can modify the response send back to the user.
+    event can modify the response sent back to the user.
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\LoginFailureEvent`
-    Dispatched after an ``AuthenticationException`` was thrown during the
+    Dispatched after an ``AuthenticationException`` was thrown during
     authentication. Listeners to this event can modify the error response
-    send back to the user.
+    sent back to the user.
 
 Other Events
 ~~~~~~~~~~~~

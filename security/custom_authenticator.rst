@@ -1,7 +1,7 @@
 How to Write a Custom Authenticator
 ===================================
 
-Symfony comes with :ref:`many autenticators <security-authenticators>` and
+Symfony comes with :ref:`many authenticators <security-authenticators>` and
 third party bundles also implement more complex cases like JWT and oAuth
 2.0. However, sometimes you need to implement a custom authentication
 mechanism that doesn't exists yet or you need to customize one. In such
@@ -146,9 +146,9 @@ into a security
 
 .. tip::
 
-    If you want to customize the login form, you can also extend from the
+    If your custom authenticator is a login form, you can extend from the
     :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractLoginFormAuthenticator`
-    class instead.
+    class instead to make your job easier.
 
 .. _security-passport:
 
@@ -166,7 +166,7 @@ or if "remember me" functionality should be enabled.
 
 The default
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`
-requires a user and credentials.
+requires a user and some sort of "credentials" (e.g. a password).
 
 Use the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\UserBadge`
@@ -250,8 +250,7 @@ Self Validating Passport
 If you don't need any credentials to be checked (e.g. when using API
 tokens), you can use the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\SelfValidatingPassport`.
-This class only requires a ``UserBadge`` object and optionally `Passport
-Badges`_.
+This class only requires a ``UserBadge`` object and optionally `Passport Badges`_.
 
 Passport Badges
 ---------------
@@ -268,7 +267,7 @@ the following badges are supported:
 
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\PasswordUpgradeBadge`
     This is used to automatically upgrade the password to a new hash upon
-    successful login. This badge requires the plaintext password and a
+    successful login (if needed). This badge requires the plaintext password and a
     password upgrader (e.g. the user repository). See :ref:`security-password-migration`.
 
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\CsrfTokenBadge`
