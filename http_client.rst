@@ -787,9 +787,17 @@ recommended in production.
 SSRF (Server-side request forgery) Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-[SSRF](https://portswigger.net/web-security/ssrf) allows an attacker to induce the backend application to make HTTP requests to an arbitrary domain. These attacks can also target the internal hosts and IPs of the attacked server.
+.. versionadded:: 5.1
 
-If you use an ``HttpClient`` together with user-provided URIs, it is probably a good idea to decorate it with a ``NoPrivateNetworkHttpClient``. This will ensure local networks are made inaccessible to the HTTP client::
+    The SSRF protection was introduced in Symfony 5.1.
+
+`SSRF`_ allows an attacker to induce the backend application to make HTTP
+requests to an arbitrary domain. These attacks can also target the internal
+hosts and IPs of the attacked server.
+
+If you use an ``HttpClient`` together with user-provided URIs, it is probably a
+good idea to decorate it with a ``NoPrivateNetworkHttpClient``. This will
+ensure local networks are made inaccessible to the HTTP client::
 
     use Symfony\Component\HttpClient\HttpClient;
     use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
@@ -1932,3 +1940,4 @@ test it in a real application::
 .. _`Server-sent events`: https://html.spec.whatwg.org/multipage/server-sent-events.html
 .. _`EventSource`: https://www.w3.org/TR/eventsource/#eventsource
 .. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods_and_web_applications
+.. _`SSRF`: https://portswigger.net/web-security/ssrf
