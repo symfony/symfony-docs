@@ -354,7 +354,7 @@ can also create your own :ref:`custom user provider <security-custom-user-provid
     for their service ID: ``security.user.provider.concrete.<your-provider-name>``
     (where ``<your-provider-name>`` is the configuration key, e.g.
     ``app_user_provider``). If you only have one user provider, you can autowire
-    it using the :class:`Symfony\Component\Security\Core\User\UserProviderInterface`
+    it using the :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`
     type-hint.
 
 .. _security-encoding-user-password:
