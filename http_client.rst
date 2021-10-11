@@ -775,10 +775,6 @@ recommended in production.
 SSRF (Server-side request forgery) Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.1
-
-    The SSRF protection was introduced in Symfony 5.1.
-
 `SSRF`_ allows an attacker to induce the backend application to make HTTP
 requests to an arbitrary domain. These attacks can also target the internal
 hosts and IPs of the attacked server.
