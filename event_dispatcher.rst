@@ -335,9 +335,9 @@ or can get everything which partial matches the event name:
 
     The ability to match partial event names was introduced in Symfony 5.3.
 
-The :doc:`new authenticator-based Security </security/authenticator_manager>`
-system adds an event dispatcher per firewall. Use the ``--dispatcher`` option to
-get the registered listeners for a particular event dispatcher:
+The :doc:`security </security>` system uses an event dispatcher per
+firewall. Use the ``--dispatcher`` option to get the registered listeners
+for a particular event dispatcher:
 
 .. code-block:: terminal
 

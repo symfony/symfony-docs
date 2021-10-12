@@ -1,286 +1,11 @@
-Using the new Authenticator-based Security
-==========================================
-
-.. versionadded:: 5.1
-
-    Authenticator-based security was introduced in Symfony 5.1.
-
-In Symfony 5.1, a new authentication system was introduced. This system
-changes the internals of Symfony Security, to make it more extensible
-and more understandable.
-
-.. _security-enable-authenticator-manager:
-
-Enabling the System
--------------------
-
-The authenticator-based system can be enabled using the
-``enable_authenticator_manager`` setting:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            enable_authenticator_manager: true
-            # ...
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config enable-authenticator-manager="true">
-                <!-- ... -->
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
-
-        return static function (SecurityConfig $security) {
-            $security->enableAuthenticatorManager(true);
-            // ....
-        };
-
-The new system is backwards compatible with the current authentication
-system, with some exceptions that will be explained in this article:
-
-* :ref:`Anonymous users no longer exist <authenticators-removed-anonymous>`
-* :ref:`Configuring the authentication entry point is required when more than one authenticator is used <authenticators-required-entry-point>`
-* :ref:`The authentication providers are refactored into Authenticators <authenticators-removed-authentication-providers>`
-
-.. _authenticators-removed-anonymous:
-
-Adding Support for Unsecured Access (i.e. Anonymous Users)
-----------------------------------------------------------
-
-In Symfony, visitors that haven't yet logged in to your website were called
-:ref:`anonymous users <firewalls-authentication>`. The new system no longer
-has anonymous authentication. Instead, these sessions are now treated as
-unauthenticated (i.e. there is no security token). When using
-``isGranted()``, the result will always be ``false`` (i.e. denied) as this
-session is handled as a user without any privileges.
-
-In the ``access_control`` configuration, you can use the new
-``PUBLIC_ACCESS`` security attribute to whitelist some routes for
-unauthenticated access (e.g. the login page):
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            enable_authenticator_manager: true
-
-            # ...
-            access_control:
-                # allow unauthenticated users to access the login form
-                - { path: ^/admin/login, roles: PUBLIC_ACCESS }
-
-                # but require authentication for all other admin routes
-                - { path: ^/admin, roles: ROLE_ADMIN }
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config enable-authenticator-manager="true">
-                <!-- ... -->
-
-                <access-control>
-                    <!-- allow unauthenticated users to access the login form -->
-                    <rule path="^/admin/login" role="PUBLIC_ACCESS"/>
-
-                    <!-- but require authentication for all other admin routes -->
-                    <rule path="^/admin" role="ROLE_ADMIN"/>
-                </access-control>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
-        use Symfony\Config\SecurityConfig;
-
-        return static function (SecurityConfig $security) {
-            $security->enableAuthenticatorManager(true);
-            // ....
-
-            // allow unauthenticated users to access the login form
-            $security->accessControl()
-                ->path('^/admin/login')
-                ->roles([AuthenticatedVoter::PUBLIC_ACCESS])
-            ;
-
-            // but require authentication for all other admin routes
-            $security->accessControl()
-                ->path('^/admin')
-                ->roles(['ROLE_ADMIN'])
-            ;
-        };
-
-Granting Anonymous Users Access in a Custom Voter
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The ``NullToken`` class was introduced in Symfony 5.2.
-
-If you're using a :doc:`custom voter </security/voters>`, you can allow
-anonymous users access by checking for a special
-:class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\NullToken`. This token is used
-in the voters to represent the unauthenticated access::
-
-    // src/Security/PostVoter.php
-    namespace App\Security;
-
-    // ...
-    use Symfony\Component\Security\Core\Authentication\Token\NullToken;
-    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-
-    class PostVoter extends Voter
-    {
-        // ...
-
-        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
-        {
-            // ...
-
-            if ($token instanceof NullToken) {
-                // the user is not authenticated, e.g. only allow them to
-                // see public posts
-                return $subject->isPublic();
-            }
-        }
-    }
-
-.. _authenticators-required-entry-point:
-
-Configuring the Authentication Entry Point
-------------------------------------------
-
-Sometimes, one firewall has multiple ways to authenticate (e.g. both a form
-login and an API token authentication). In these cases, it is now required
-to configure the *authentication entry point*. The entry point is used to
-generate a response when the user is not yet authenticated but tries to access
-a page that requires authentication. This can be used for instance to redirect
-the user to the login page.
-
-You can configure this using the ``entry_point`` setting:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            enable_authenticator_manager: true
-
-            # ...
-            firewalls:
-                main:
-                    # allow authentication using a form or HTTP basic
-                    form_login: ~
-                    http_basic: ~
-
-                    # configure the form authentication as the entry point for unauthenticated users
-                    entry_point: form_login
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config enable-authenticator-manager="true">
-                <!-- ... -->
-
-                <!-- entry-point: configure the form authentication as the entry
-                                  point for unauthenticated users -->
-                <firewall name="main"
-                    entry-point="form_login"
-                >
-                    <!-- allow authentication using a form or HTTP basic -->
-                    <form-login/>
-                    <http-basic/>
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
-
-        return static function (SecurityConfig $security) {
-            $security->enableAuthenticatorManager(true);
-            // ....
-
-
-            // allow authentication using a form or HTTP basic
-            $mainFirewall = $security->firewall('main');
-            $mainFirewall->formLogin();
-            $mainFirewall->httpBasic();
-
-            // configure the form authentication as the entry point for unauthenticated users
-            $mainFirewall
-                ->entryPoint('form_login');
-        };
-
-.. note::
-
-    You can also create your own authentication entry point by creating a
-    class that implements
-    :class:`Symfony\\Component\\Security\\Http\\EntryPoint\\AuthenticationEntryPointInterface`.
-    You can then set ``entry_point`` to the service id (e.g.
-    ``entry_point: App\Security\CustomEntryPoint``)
-
-.. _authenticators-removed-authentication-providers:
-
-Creating a Custom Authenticator
--------------------------------
-
-Security traditionally could be extended by writing
-:doc:`custom authentication providers </security/custom_authentication_provider>`.
-The authenticator-based system dropped support for these providers and
-introduced a new authenticator interface as a base for custom
-authentication methods.
-
-.. tip::
-
-    :doc:`Guard authenticators </security/guard_authentication>` are still
-    supported in the authenticator-based system. It is however recommended
-    to also update these when you're refactoring your application to the
-    new system. The new authenticator interface has many similarities with the
-    guard authenticator interface, making the rewrite easier.
+How to Write a Custom Authenticator
+===================================
+
+Symfony comes with :ref:`many authenticators <security-authenticators>` and
+third party bundles also implement more complex cases like JWT and oAuth
+2.0. However, sometimes you need to implement a custom authentication
+mechanism that doesn't exists yet or you need to customize one. In such
+cases, you must create and use your own authenticator.
 
 Authenticators should implement the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AuthenticatorInterface`.
@@ -347,6 +72,12 @@ method that fits most use-cases::
         }
     }
 
+.. tip::
+
+    If your custom authenticator is a login form, you can extend from the
+    :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractLoginFormAuthenticator`
+    class instead to make your job easier.
+
 The authenticator can be enabled using the ``custom_authenticators`` setting:
 
 .. configuration-block::
@@ -363,10 +94,6 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
                     custom_authenticators:
                         - App\Security\ApiKeyAuthenticator
 
-                    # remember to also configure the entry_point if the
-                    # authenticator implements AuthenticationEntryPointInterface
-                    # entry_point: App\Security\CustomFormLoginAuthenticator
-
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
@@ -381,11 +108,6 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
 
             <config enable-authenticator-manager="true">
                 <!-- ... -->
-
-                <!-- remember to also configure the entry-point if the
-                     authenticator implements AuthenticatorEntryPointInterface
-                <firewall name="main"
-                    entry-point="App\Security\CustomFormLoginAuthenticator"> -->
 
                 <firewall name="main">
                     <custom-authenticator>App\Security\ApiKeyAuthenticator</custom-authenticator>
@@ -405,28 +127,59 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
 
             $security->firewall('main')
                 ->customAuthenticators([ApiKeyAuthenticator::class])
-
-                // remember to also configure the entry_point if the
-                // authenticator implements AuthenticatorEntryPointInterface
-                // ->entryPoint(App\Security\CustomFormLoginAuthenticator::class)
             ;
         };
 
+.. versionadded:: 5.2
+
+    Starting with Symfony 5.2, the custom authenticator is automatically
+    registered as entry point if it implements ``AuthenticationEntryPointInterface``.
+
+    Prior to 5.2, you had to configure the entry point separately using the
+    ``entry_point`` option. Read :doc:`/security/entry_point` for more
+    information.
 
 The ``authenticate()`` method is the most important method of the
 authenticator. Its job is to extract credentials (e.g. username &
 password, or API tokens) from the ``Request`` object and transform these
 into a security
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`.
+See :ref:`security-passport` below for a detailed look into the
+authentication process.
 
-.. tip::
+After the authentication process finished, the user is either authenticated
+or there was something wrong (e.g. incorrect password). The authenticator
+can define what happens in these cases:
 
-    If you want to customize the login form, you can also extend from the
-    :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractLoginFormAuthenticator`
-    class instead.
+``onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response``
+    If the user is authenticated, this method is called with the
+    authenticated ``$token``. This method can return a response (e.g.
+    redirect the user to the homepage).
+
+    If ``null`` is returned, the request continues like normal (i.e. the
+    controller matching the login route is called). This is useful for API
+    routes where each route is protected by an API key header.
+
+``onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response``
+    If an ``AuthenticationException`` is thrown during authentication, the
+    process fails and this method is called. This method can return a
+    response (e.g. to return a 401 Unauthorized response in API routes).
+
+    If ``null`` is returned, the request continues like normal. This is
+    useful for e.g. login forms, where the login controller is run again
+    with the login errors.
+
+    **Caution**: Never use ``$exception->getMessage()`` for ``AuthenticationException``
+    instances. This message might contain sensitive information that you
+    don't want to expose publicly. Instead, use ``$exception->getMessageKey()``
+    and ``$exception->getMessageData()`` like shown in the full example
+    above. Use :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`
+    if you want to set custom error messages.
+
+.. _security-passport:
 
 Security Passports
-~~~~~~~~~~~~~~~~~~
+------------------
 
 .. versionadded:: 5.2
 
@@ -439,7 +192,7 @@ or if "remember me" functionality should be enabled.
 
 The default
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`
-requires a user and credentials.
+requires a user and some sort of "credentials" (e.g. a password).
 
 Use the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\UserBadge`
@@ -518,16 +271,15 @@ The following credential classes are supported by default:
 
 
 Self Validating Passport
-........................
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you don't need any credentials to be checked (e.g. when using API
 tokens), you can use the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\SelfValidatingPassport`.
-This class only requires a ``UserBadge`` object and optionally `Passport
-Badges`_.
+This class only requires a ``UserBadge`` object and optionally `Passport Badges`_.
 
 Passport Badges
-~~~~~~~~~~~~~~~
+---------------
 
 The ``Passport`` also optionally allows you to add *security badges*.
 Badges attach more data to the passport (to extend security). By default,
@@ -541,8 +293,8 @@ the following badges are supported:
 
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\PasswordUpgradeBadge`
     This is used to automatically upgrade the password to a new hash upon
-    successful login. This badge requires the plaintext password and a
-    password upgrader (e.g. the user repository). See :doc:`/security/password_migration`.
+    successful login (if needed). This badge requires the plaintext password and a
+    password upgrader (e.g. the user repository). See :ref:`security-password-migration`.
 
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Badge\\CsrfTokenBadge`
     Automatically validates CSRF tokens for this authenticator during
