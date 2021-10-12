@@ -4,144 +4,271 @@
 Security
 ========
 
-.. admonition:: Screencast
-    :class: screencast
 
-    Do you prefer video tutorials? Check out the `Symfony Security screencast series`_.
-
-Symfony's security system is incredibly powerful, but it can also be confusing
-to set up. Don't worry! In this article, you'll learn how to set up your app's
-security system step-by-step:
-
-#. :ref:`Installing security support <security-installation>`;
-
-#. :ref:`Create your User Class <create-user-class>`;
-
-#. :ref:`Authentication & Firewalls <security-yaml-firewalls>`;
-
-#. :ref:`Denying access to your app (authorization) <security-authorization>`;
-
-#. :ref:`Fetching the current User object <retrieving-the-user-object>`.
-
-A few other important topics are discussed after.
+Symfony provides many tools to secure your application. Some HTTP-related
+security tools, like :doc:`secure session cookies </session>` and
+:doc:`CSRF protection </security/csrf>` are provided by default. The
+SecurityBundle, which you will learn about in this guide, provides all
+authentication and authorization features needed to secure your
+application.
 
 .. _security-installation:
 
-1) Installation
----------------
-
-In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
-install the security feature before using it:
+To get started, install the SecurityBundle:
 
 .. code-block:: terminal
 
     $ composer require symfony/security-bundle
 
+If you have :ref:`Symfony Flex <symfony-flex>` installed, this also
+creates a ``security.yaml`` configuration file for you:
 
-.. tip::
+.. code-block:: yaml
 
-    A :doc:`new authenticator-based Security </security/authenticator_manager>`
-    was introduced in Symfony 5.1, which will replace security in
-    Symfony 6.0. This system is almost fully backwards compatible with the
-    current Symfony security, add this line to your security configuration to start
-    using it:
+    # config/packages/security.yaml
+    security:
+        # https://symfony.com/doc/current/security/experimental_authenticators.html
+        enable_authenticator_manager: true
+        # https://symfony.com/doc/current/security.html#c-hashing-passwords
+        password_hashers:
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+        providers:
+            users_in_memory: { memory: null }
+        firewalls:
+            dev:
+                pattern: ^/(_(profiler|wdt)|css|images|js)/
+                security: false
+            main:
+                lazy: true
+                provider: users_in_memory
 
-    .. configuration-block::
+                # activate different ways to authenticate
+                # https://symfony.com/doc/current/security.html#firewalls-authentication
 
-        .. code-block:: yaml
+                # https://symfony.com/doc/current/security/impersonating_user.html
+                # switch_user: true
 
-            # config/packages/security.yaml
-            security:
-                enable_authenticator_manager: true
-                # ...
+        # Easy way to control access for large sections of your site
+        # Note: Only the *first* access control that matches will be used
+        access_control:
+            # - { path: ^/admin, roles: ROLE_ADMIN }
+            # - { path: ^/profile, roles: ROLE_USER }
 
-        .. code-block:: xml
+That's a lot of config! In the next sections, the three main elements are
+discussed:
 
-            <!-- config/packages/security.xml -->
-            <?xml version="1.0" encoding="UTF-8"?>
-            <srv:container xmlns="http://symfony.com/schema/dic/security"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:srv="http://symfony.com/schema/dic/services"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/security
-                    https://symfony.com/schema/dic/security/security-1.0.xsd">
+`The User`_ (``providers``)
+    Any secured section of your application needs some concept of
+    a user. The user provider loads users from any storage (e.g. the
+    database) based on a "user identifier" (e.g. the user's email address);
 
-                <config enable-authenticator-manager="true">
-                    <!-- ... -->
-                </config>
-            </srv:container>
+`The Firewall`_ & `Authenticating Users`_ (``firewalls``)
+    The firewall is the core of securing your application. Every request
+    within the firewall is checked if it needs an authenticated user. The
+    firewall also takes care of authenticating this user (e.g. using a
+    login form);
 
-        .. code-block:: php
+`Access Control (Authorization)`_ (``access_control``)
+    Using access control and the authorization checker, you control the
+    required permissions to perform a specific action or visit a specific
+    URL.
 
-            // config/packages/security.php
-            use Symfony\Config\SecurityConfig;
+.. caution::
 
-            return static function (SecurityConfig $security) {
-                $security->enableAuthenticatorManager(true);
-                // ...
-            };
+    Symfony Security has received major changes in 5.3. This article
+    explains the *new authenticator-based* system (identified by the
+    ``enable_authenticator_manager: true`` config option).
 
-.. _initial-security-yml-setup-authentication:
-.. _initial-security-yaml-setup-authentication:
+    Refer to the `5.2 version of this documentation`_ if you're still using
+    the legacy security system.
+
 .. _create-user-class:
+.. _a-create-your-user-class:
 
-2a) Create your User Class
---------------------------
+The User
+--------
 
-No matter *how* you will authenticate (e.g. login form or API tokens) or *where*
-your user data will be stored (database, single sign-on), the next step is always the same:
-create a "User" class. The easiest way is to use the `MakerBundle`_.
+Permissions in Symfony are always linked to a user object. If you need to
+secure (parts of) your application, you need to create a user class. This
+is a class that implements :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
+This is often a Doctrine entity, but you can also use a dedicated
+Security user class.
 
-Let's assume that you want to store your user data in the database with Doctrine:
+The easiest way to generate a user class is using the ``make:user`` command
+from the `MakerBundle`_:
 
 .. code-block:: terminal
 
     $ php bin/console make:user
+     The name of the security user class (e.g. User) [User]:
+     > User
 
-    The name of the security user class (e.g. User) [User]:
-    > User
+     Do you want to store user data in the database (via Doctrine)? (yes/no) [yes]:
+     > yes
 
-    Do you want to store user data in the database (via Doctrine)? (yes/no) [yes]:
-    > yes
+     Enter a property name that will be the unique "display" name for the user (e.g. email, username, uuid) [email]:
+     > email
 
-    Enter a property name that will be the unique "display" name for the user (e.g.
-    email, username, uuid [email]
-    > email
+     Will this app need to hash/check user passwords? Choose No if passwords are not needed or will be checked/hashed by some other system (e.g. a single sign-on server).
 
-    Does this app need to hash/check user passwords? (yes/no) [yes]:
-    > yes
+     Does this app need to hash/check user passwords? (yes/no) [yes]:
+     > yes
 
-    created: src/Entity/User.php
-    created: src/Repository/UserRepository.php
-    updated: src/Entity/User.php
-    updated: config/packages/security.yaml
+     created: src/Entity/User.php
+     created: src/Repository/UserRepository.php
+     updated: src/Entity/User.php
+     updated: config/packages/security.yaml
 
-That's it! The command asks several questions so that it can generate exactly what
-you need. The most important is the ``User.php`` file itself. The *only* rule about
-your ``User`` class is that it *must* implement :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`.
-Feel free to add *any* other fields or logic you need. If your ``User`` class is
-an entity (like in this example), you can use the :ref:`make:entity command <doctrine-add-more-fields>`
-to add more fields. Also, make sure to make and run a migration for the new entity:
+.. code-block:: php
+
+    // src/Entity/User.php
+    namespace App\Entity;
+
+    use App\Repository\UserRepository;
+    use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+    use Symfony\Component\Security\Core\User\UserInterface;
+
+    /**
+     * @ORM\Entity(repositoryClass=UserRepository::class)
+     */
+    class User implements UserInterface, PasswordAuthenticatedUserInterface
+    {
+        /**
+         * @ORM\Id
+         * @ORM\GeneratedValue
+         * @ORM\Column(type="integer")
+         */
+        private $id;
+
+        /**
+         * @ORM\Column(type="string", length=180, unique=true)
+         */
+        private $email;
+
+        /**
+         * @ORM\Column(type="json")
+         */
+        private $roles = [];
+
+        /**
+         * @var string The hashed password
+         * @ORM\Column(type="string")
+         */
+        private $password;
+
+        public function getId(): ?int
+        {
+            return $this->id;
+        }
+
+        public function getEmail(): ?string
+        {
+            return $this->email;
+        }
+
+        public function setEmail(string $email): self
+        {
+            $this->email = $email;
+
+            return $this;
+        }
+
+        /**
+         * The public representation of the user (e.g. a username, an email address, etc.)
+         *
+         * @see UserInterface
+         */
+        public function getUserIdentifier(): string
+        {
+            return (string) $this->email;
+        }
+
+        /**
+         * @deprecated since Symfony 5.3
+         */
+        public function getUsername(): string
+        {
+            return (string) $this->email;
+        }
+
+        /**
+         * @see UserInterface
+         */
+        public function getRoles(): array
+        {
+            $roles = $this->roles;
+            // guarantee every user at least has ROLE_USER
+            $roles[] = 'ROLE_USER';
+
+            return array_unique($roles);
+        }
+
+        public function setRoles(array $roles): self
+        {
+            $this->roles = $roles;
+
+            return $this;
+        }
+
+        /**
+         * @see PasswordAuthenticatedUserInterface
+         */
+        public function getPassword(): string
+        {
+            return $this->password;
+        }
+
+        public function setPassword(string $password): self
+        {
+            $this->password = $password;
+
+            return $this;
+        }
+
+        /**
+         * Returning a salt is only needed, if you are not using a modern
+         * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+         *
+         * @see UserInterface
+         */
+        public function getSalt(): ?string
+        {
+            return null;
+        }
+
+        /**
+         * @see UserInterface
+         */
+        public function eraseCredentials()
+        {
+            // If you store any temporary, sensitive data on the user, clear it here
+            // $this->plainPassword = null;
+        }
+    }
+
+.. versionadded:: 5.3
+
+    The :class:`Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface`
+    interface and ``getUserIdentifier()`` method were introduced in Symfony 5.3.
+
+If your user is a Doctrine entity, like in the example above, don't forget
+to create the tables by :ref:`creating and running a migration <doctrine-creating-the-database-tables-schema>`:
 
 .. code-block:: terminal
 
     $ php bin/console make:migration
     $ php bin/console doctrine:migrations:migrate
 
-.. _security-user-providers:
 .. _where-do-users-come-from-user-providers:
+.. _security-user-providers:
 
-2b) The "User Provider"
------------------------
+Loading the User: The User Provider
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to your ``User`` class, you also need a "User provider": a class that
-helps with a few things, like reloading the User data from the session and some
-optional features, like :doc:`remember me </security/remember_me>` and
-:doc:`impersonation </security/impersonating_user>`.
-
-Fortunately, the ``make:user`` command already configured one for you in your
-``security.yaml`` file under the ``providers`` key:
+Besides creating the entity, the ``make:user`` command also adds config
+for a user provider in your security configuration:
 
 .. configuration-block::
 
@@ -152,7 +279,6 @@ Fortunately, the ``make:user`` command already configured one for you in your
             # ...
 
             providers:
-                # used to reload user from session & other features (e.g. switch_user)
                 app_user_provider:
                     entity:
                         class: App\Entity\User
@@ -166,10 +292,13 @@ Fortunately, the ``make:user`` command already configured one for you in your
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:srv="http://symfony.com/schema/dic/services"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
-                <!-- used to reload user from session & other features (e.g. switch-user) -->
+                <!-- ... -->
+
                 <provider name="app_user_provider">
                     <entity class="App\Entity\User" property="email"/>
                 </provider>
@@ -185,29 +314,92 @@ Fortunately, the ``make:user`` command already configured one for you in your
         return static function (SecurityConfig $security) {
             // ...
 
-            // used to reload user from session & other features (e.g. switch_user)
             $security->provider('app_user_provider')
                 ->entity()
                     ->class(User::class)
-                    ->property('email');
+                    ->property('email')
+            ;
         };
 
+This user provider knows how to (re)load users from a storage (e.g. a database)
+based on a "user identifier" (e.g. the user's email address or username).
+The configuration above uses Doctrine to load the ``User`` entity using the
+``email`` property as "user identifier".
 
-If your ``User`` class is an entity, you don't need to do anything else. But if
-your class is *not* an entity, then ``make:user`` will also have generated a
-``UserProvider`` class that you need to finish. Learn more about user providers
-here: :doc:`User Providers </security/user_provider>`.
+User providers are used in a couple places during the security lifecycle:
+
+**Load the User based on an identifier**
+    During login (or any other authenticator), the provider loads the user
+    based on the user identifier. Some other features, like
+    :doc:`user impersonation </security/impersonating_user>` and
+    :doc:`Remember Me </security/remember_me>` also use this.
+
+**Reload the User from the session**
+    At the beginning of each request, the user is loaded from the
+    session (unless your firewall is ``stateless``). The provider
+    "refreshes" the user (e.g. the database is queried again for fresh
+    data) to make sure all user information is up to date (and if
+    necessary, the user is de-authenticated/logged out if something
+    changed). See :ref:`user_session_refresh` for more information about
+    this process.
+
+Symfony comes with several built-in user providers:
+
+:ref:`Entity User Provider <security-entity-user-provider>`
+    Loads users from a database using :doc:`Doctrine </doctrine>`;
+:ref:`LDAP User Provider <security-ldap-user-provider>`
+    Loads users from a LDAP server;
+:ref:`Memory User Provider <security-memory-user-provider>`
+    Loads users from a configuration file;
+:ref:`Chain User Provider <security-chain-user-provider>`
+    Merges two or more user providers into a new user provider.
+
+The built-in user providers cover the most common needs for applications, but you
+can also create your own :ref:`custom user provider <security-custom-user-provider>`.
+
+.. note::
+
+    Sometimes, you need to inject the user provider in another class (e.g.
+    in your custom authenticator). All user providers follow this pattern
+    for their service ID: ``security.user.provider.concrete.<your-provider-name>``
+    (where ``<your-provider-name>`` is the configuration key, e.g.
+    ``app_user_provider``). If you only have one user provider, you can autowire
+    it using the :class:`Symfony\\Component\\Security\\Core\\User\\UserProviderInterface`
+    type-hint.
 
 .. _security-encoding-user-password:
-.. _encoding-the-user-s-password:
-.. _2c-encoding-passwords:
 
-2c) Hashing Passwords
----------------------
+Registering the User: Hashing Passwords
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Not all applications have "users" that need passwords. *If* your users have passwords,
-you can control how those passwords are hashed in ``security.yaml``. The ``make:user``
-command will pre-configure this for you:
+Many applications require a user to log in with a password. For these
+applications, the SecurityBundle provides password hashing and verification
+functionality.
+
+First, make sure your User class implements the
+:class:`Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface`::
+
+    // src/Entity/User.php
+
+    // ...
+    use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
+    class User implements UserInterface, PasswordAuthenticatedUserInterface
+    {
+        // ...
+
+        /**
+         * @return string the hashed password for this user
+         */
+        public function getPassword(): string
+        {
+            return $this->password;
+        }
+    }
+
+Then, configure which password hasher should be used for this class. If your
+``security.yaml`` file wasn't already pre-configured, then ``make:user`` should
+have done this for you:
 
 .. configuration-block::
 
@@ -216,13 +408,10 @@ command will pre-configure this for you:
         # config/packages/security.yaml
         security:
             # ...
-
             password_hashers:
-                # use your user class name here
-                App\Entity\User:
-                    # Use native password hasher, which auto-selects the best
-                    # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
-                    algorithm: auto
+                # Use native password hasher, which auto-selects and migrates the best
+                # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+                Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
     .. code-block:: xml
 
@@ -238,12 +427,9 @@ command will pre-configure this for you:
 
             <config>
                 <!-- ... -->
-
-                <security:password-hasher class="App\Entity\User"
-                    algorithm="auto"
-                    cost="12"/>
-
-                <!-- ... -->
+                <!-- Use native password hasher, which auto-selects and migrates the best
+                     possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt") -->
+                <password-hasher class="Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface" algorithm="auto"/>
             </config>
         </srv:container>
 
@@ -251,16 +437,16 @@ command will pre-configure this for you:
 
         // config/packages/security.php
         use App\Entity\User;
-        use Symfony\Config\SecurityConfig;
+        use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
         return static function (SecurityConfig $security) {
             // ...
 
-            $security->passwordHasher(User::class)
+            // Use native password hasher, which auto-selects and migrates the best
+            // possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+            $security->passwordHasher(PasswordAuthenticatedUserInterface::class)
                 ->algorithm('auto')
-                ->cost(12);
-
-            // ...
+            ;
         };
 
 .. versionadded:: 5.3
@@ -270,72 +456,63 @@ command will pre-configure this for you:
 
 Now that Symfony knows *how* you want to hash the passwords, you can use the
 ``UserPasswordHasherInterface`` service to do this before saving your users to
-the database.
+the database::
 
-.. _user-data-fixture:
+    // src/Controller/RegistrationController.php
+    namespace App\Controller;
 
-For example, by using :ref:`DoctrineFixturesBundle <doctrine-fixtures>`, you can
-create dummy database users:
+    // ...
+    use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-.. code-block:: terminal
+    class RegistrationController extends AbstractController
+    {
+        public function index(UserPasswordHasherInterface $passwordHasher)
+        {
+            // ... e.g. get the user data from a registration form
+            $user = new User(...);
+            $plaintextPassword = ...;
 
-    $ php bin/console make:fixtures
+            // hash the password (based on the security.yaml config for the $user class)
+            $hashedPassword = $passwordHasher->hash(
+                $user,
+                $plaintextPassword
+            );
+            $user->setPassword($hashedPassword);
 
-    The class name of the fixtures to create (e.g. AppFixtures):
-    > UserFixtures
+            // ...
+        }
+    }
 
-Use this service to hash the passwords:
+.. tip::
 
-.. code-block:: diff
+    The ``make:registration-form`` maker command can help you set-up the
+    registration controller and add features like email address
+    verification using the `SymfonyCastsVerifyEmailBundle`_.
 
-      // src/DataFixtures/UserFixtures.php
+    .. code-block:: terminal
 
-    + use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-      // ...
+        $ composer require symfonycasts/verify-email-bundle
+        $ php bin/console make:registration-form
 
-      class UserFixtures extends Fixture
-      {
-    +     private $passwordHasher;
-
-    +     public function __construct(UserPasswordHasherInterface $passwordHasher)
-    +     {
-    +         $this->passwordHasher = $passwordHasher;
-    +     }
-
-          public function load(ObjectManager $manager)
-          {
-              $user = new User();
-              // ...
-
-    +         $user->setPassword($this->passwordHasher->hashPassword(
-    +             $user,
-    +             'the_new_password'
-    +         ));
-
-              // ...
-          }
-      }
-
-You can manually hash a password by running:
+You can also manually hash a password by running:
 
 .. code-block:: terminal
 
     $ php bin/console security:hash-password
 
-.. _security-yaml-firewalls:
-.. _security-firewalls:
+Read more about all available hashers and password migration in
+:doc:`security/passwords`.
+
 .. _firewalls-authentication:
+.. _a-authentication-firewalls:
 
-3a) Authentication & Firewalls
-------------------------------
+The Firewall
+------------
 
-.. versionadded:: 5.1
-
-    The ``lazy: true`` option was introduced in Symfony 5.1. Prior to version 5.1,
-    it was enabled using ``anonymous: lazy``
-
-The security system is configured in ``config/packages/security.yaml``. The *most*
-important section is ``firewalls``:
+The ``firewalls`` section of ``config/packages/security.yaml`` is the *most*
+important section. A "firewall" is your authentication system: the firewall
+defines which parts of your application are secured and *how* your users
+will be able to authenticate (e.g. login form, API token, etc).
 
 .. configuration-block::
 
@@ -343,13 +520,20 @@ important section is ``firewalls``:
 
         # config/packages/security.yaml
         security:
+            # ...
             firewalls:
                 dev:
                     pattern: ^/(_(profiler|wdt)|css|images|js)/
                     security: false
                 main:
-                    anonymous: true
                     lazy: true
+                    provider: users_in_memory
+
+                    # activate different ways to authenticate
+                    # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+                    # https://symfony.com/doc/current/security/impersonating_user.html
+                    # switch_user: true
 
     .. code-block:: xml
 
@@ -364,13 +548,19 @@ important section is ``firewalls``:
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
+                <!-- ... -->
                 <firewall name="dev"
                     pattern="^/(_(profiler|wdt)|css|images|js)/"
                     security="false"/>
 
                 <firewall name="main"
-                    anonymous="true"
                     lazy="true"/>
+
+                <!-- activate different ways to authenticate
+                     https://symfony.com/doc/current/security.html#firewalls-authentication -->
+
+                <!-- https://symfony.com/doc/current/security/impersonating_user.html -->
+                <!-- <switch-user/> -->
             </config>
         </srv:container>
 
@@ -380,45 +570,47 @@ important section is ``firewalls``:
         use Symfony\Config\SecurityConfig;
 
         return static function (SecurityConfig $security) {
+            // ...
             $security->firewall('dev')
                 ->pattern('^/(_(profiler|wdt)|css|images|js)/')
-                ->security(false);
+                ->security(false)
+            ;
 
             $security->firewall('main')
                 ->lazy(true)
-                ->anonymous();
+
+                // activate different ways to authenticate
+                // https://symfony.com/doc/current/security.html#firewalls-authentication
+
+                // https://symfony.com/doc/current/security/impersonating_user.html
+                // ->switchUser(true)
+            ;
         };
 
-A "firewall" is your authentication system: the configuration below it defines
-*how* your users will be able to authenticate (e.g. login form, API token, etc).
-
 Only one firewall is active on each request: Symfony uses the ``pattern`` key
-to find the first match (you can also :doc:`match by host or other things </security/firewall_restriction>`).
-The ``dev`` firewall is really a fake firewall: it makes sure that you don't
-accidentally block Symfony's dev tools - which live under URLs like ``/_profiler``
-and ``/_wdt``.
+to find the first match (you can also
+:doc:`match by host or other things </security/firewall_restriction>`).
+
+The ``dev`` firewall is really a fake firewall: it makes sure that you
+don't accidentally block Symfony's dev tools - which live under URLs like
+``/_profiler`` and ``/_wdt``.
 
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
 it matches *all* URLs). A firewall can have many modes of authentication,
-in other words many ways to ask the question "Who are you?". Often, the
-user is unknown (i.e. not logged in) when they first visit your website. The
-``anonymous`` mode, if enabled, is used for these requests.
+in other words many ways to ask the question "Who are you?".
 
-In fact, if you go to the homepage right now, you *will* have access and you'll
-see that you're "authenticated" as ``anon.``. The firewall verified that it
-does not know your identity, and so, you are anonymous:
+Often, the user is unknown (i.e. not logged in) when they first visit your
+website. If you visit your homepage right now, you *will* have access and
+you'll see that you're visiting a page behind the firewall in the toolbar:
 
 .. image:: /_images/security/anonymous_wdt.png
    :align: center
 
-It means any request can have an anonymous token to access some resource,
-while some actions (i.e. some pages or buttons) can still require specific
-privileges. A user can then access a form login without being authenticated
-as a unique user (otherwise an infinite redirection loop would happen
-asking the user to authenticate while trying to doing so).
-
-You'll learn later how to deny access to certain URLs, controllers, or part of
-templates.
+Visiting a URL under a firewall doesn't necessarily require you to be authenticated
+(e.g. the login form has to be accessible or some parts of your application
+are public). You'll learn how to restrict access to URLs, controllers or
+anything else within your firewall in the :ref:`access control
+<security-access-control>` section.
 
 .. tip::
 
@@ -429,7 +621,8 @@ templates.
 
 .. note::
 
-    If you do not see the toolbar, install the :doc:`profiler </profiler>` with:
+    If you do not see the toolbar, install the :doc:`profiler </profiler>`
+    with:
 
     .. code-block:: terminal
 
@@ -438,42 +631,744 @@ templates.
 Now that we understand our firewall, the next step is to create a way for your
 users to authenticate!
 
-.. _security-form-login:
+.. _security-authenticators:
 
-3b) Authenticating your Users
------------------------------
+Authenticating Users
+--------------------
 
-Authentication in Symfony can feel a bit "magic" at first. That's because, instead
-of building a route & controller to handle login, you'll activate an
-*authentication provider*: some code that runs automatically *before* your controller
-is called.
+During authentication, the system tries to find a matching user for the
+visitor of the webpage. Traditionally, this was done using a login form or
+a HTTP basic dialog in the browser. However, the SecurityBundle comes with
+many other authenticators:
 
-Symfony has several :doc:`built-in authentication providers </security/auth_providers>`.
-If your use-case matches one of these *exactly*, great! But, in most cases - including
-a login form - *we recommend building a Guard Authenticator*: a class that allows
-you to control *every* part of the authentication process (see the next section).
+* `Form Login`_
+* `JSON Login`_
+* `HTTP Basic`_
+* `Login Link`_
+* `X.509 Client Certificates`_
+* `Remote users`_
+* :doc:`Custom Authenticators </security/custom_authenticator>`
 
 .. tip::
 
-    If your application logs users in via a third-party service such as Google,
-    Facebook or Twitter (social login), check out the `HWIOAuthBundle`_ community
-    bundle.
+    If your application logs users in via a third-party service such as
+    Google, Facebook or Twitter (social login), check out the `HWIOAuthBundle`_
+    community bundle.
 
-Guard Authenticators
-~~~~~~~~~~~~~~~~~~~~
+.. _security-form-login:
 
-.. deprecated:: 5.3
+Form Login
+~~~~~~~~~~
 
-    Guard authenticators are deprecated since Symfony 5.3 in favor of the
-    :doc:`new authenticator-based system </security/authenticator_manager>`.
+Most websites have a login form where users authenticate using an
+identifier (e.g. email address or username) and a password. This
+functionality is provided by the *form login authenticator*.
 
-A Guard authenticator is a class that gives you *complete* control over your
-authentication process. There are many different ways to build an authenticator;
-here are a few common use-cases:
+First, create a controller for the login form:
 
-* :doc:`/security/form_login_setup`
-* :doc:`/security/guard_authentication` – see this for the most detailed
-  description of authenticators and how they work
+.. code-block:: terminal
+
+    $ php bin/console make:controller Login
+
+     created: src/Controller/LoginController.php
+     created: templates/login/index.html.twig
+
+.. code-block:: php
+
+    // src/Controller/LoginController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class LoginController extends AbstractController
+    {
+        #[Route('/login', name: 'login')]
+        public function index(): Response
+        {
+            return $this->render('login/index.html.twig', [
+                'controller_name' => 'LoginController',
+            ]);
+        }
+    }
+
+Then, enable the form login authenticator using the ``form_login`` setting:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    form_login:
+                        # "login" is the name of the route created previously
+                        login_path: login
+                        check_path: login
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+                <firewall name="main">
+                    <!-- "login" is the name of the route created previously -->
+                    <form-login login-path="login" check-path="login"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+
+            $mainFirewall = $security->firewall('main');
+
+            // "login" is the name of the route created previously
+            $mainFirewall->formLogin()
+                ->loginPath('login')
+                ->checkPath('login')
+            ;
+        };
+
+.. note::
+
+    The ``login_path`` and ``check_path`` support URLs and route names (but
+    cannot have mandatory wildcards - e.g. ``/login/{foo}`` where ``foo``
+    has no default value).
+
+Once enabled, the security system redirects unauthenticated visitors to the
+``login_path`` when they try to access a secured place (this behavior can
+be customized using :ref:`authentication entry points <security-entry-point>`).
+
+Edit the login controller to render the login form:
+
+.. code-block:: diff
+
+      // ...
+    + use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+
+      class LoginController extends AbstractController
+      {
+          #[Route('/login', name: 'login')]
+    -     public function index(): Response
+    +     public function index(AuthenticationUtils $authenticationUtils): Response
+          {
+    +         // get the login error if there is one
+    +         $error = $authenticationUtils->getLastAuthenticationError();
+    +
+    +         // last username entered by the user
+    +         $lastUsername = $authenticationUtils->getLastUsername();
+    +
+              return $this->render('login/index.html.twig', [
+    -             'controller_name' => 'LoginController',
+    +             'last_username' => $lastUsername,
+    +             'error'         => $error,
+              ]);
+          }
+      }
+
+Don't let this controller confuse you. Its job is only to *render* the form:
+the ``form_login`` authenticator will handle the form *submission* automatically.
+If the user submits an invalid email or password, that authenticator will store
+the error and redirect back to this controller, where we read the error (using
+``AuthenticationUtils``) so that it can be displayed back to the user.
+
+Finally, create or update the template:
+
+.. code-block:: html+twig
+
+    {# templates/login/index.html.twig #}
+    {% extends 'base.html.twig' %}
+
+    {# ... #}
+
+    {% block body %}
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <form action="{{ path('login') }}" method="post">
+            <label for="username">Email:</label>
+            <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="_password"/>
+
+            {# If you want to control the URL the user is redirected to on success
+            <input type="hidden" name="_target_path" value="/account"/> #}
+
+            <button type="submit">login</button>
+        </form>
+    {% endblock %}
+
+.. caution::
+
+    The ``error`` variable passed into the template is an instance of
+    :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`.
+    It may contain sensitive information about the authentication failure.
+    *Never* use ``error.message``: use the ``messageKey`` property instead,
+    as shown in the example. This message is always safe to display.
+
+The form can look like anything, but it usually follows some conventions:
+
+* The ``<form>`` element sends a ``POST`` request to the ``login`` route, since
+  that's what you configured as the ``check_path`` under the ``form_login`` key in
+  ``security.yaml``;
+* The username (or whatever your user's "identifier" is, like an email) field has
+  the name ``_username`` and the password field has the name ``_password``.
+
+.. tip::
+
+    Actually, all of this can be configured under the ``form_login`` key. See
+    :ref:`reference-security-firewall-form-login` for more details.
+
+.. caution::
+
+    This login form is currently not protected against CSRF attacks. Read
+    :ref:`form_login-csrf` on how to protect your login form.
+
+And that's it! When you submit the form, the security system automatically
+reads the ``_username`` and ``_email`` POST parameter, loads the user via
+the user provider, checks the user's credentials and either authenticates the
+user or sends them back to the login form where the error can be displayed.
+
+To review the whole process:
+
+#. The user tries to access a resource that is protected (e.g. ``/admin``);
+#. The firewall initiates the authentication process by redirecting the
+   user to the login form (``/login``);
+#. The ``/login`` page renders login form via the route and controller created
+   in this example;
+#. The user submits the login form to ``/login``;
+#. The security system (i.e. the ``form_login`` authenticator) intercepts the
+   request, checks the user's submitted credentials, authenticates the user if
+   they are correct, and sends the user back to the login form if they are not.
+
+.. seealso::
+
+    You can customize the responses on a successful or failed login
+    attempt. See :doc:`/security/form_login`.
+
+.. _form_login-csrf:
+
+CSRF Protection in Login Forms
+..............................
+
+`Login CSRF attacks`_ can be prevented using the same technique of adding hidden
+CSRF tokens into the login forms. The Security component already provides CSRF
+protection, but you need to configure some options before using it.
+
+First, you need to enable CSRF on the form login:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                secured_area:
+                    # ...
+                    form_login:
+                        # ...
+                        enable_csrf: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="secured_area">
+                    <!-- ... -->
+                    <form-login enable-csrf="true"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->formLogin()
+                // ...
+                ->enableCsrf(true)
+            ;
+        };
+
+.. _csrf-login-template:
+
+Then, use the ``csrf_token()`` function in the Twig template to generate a CSRF
+token and store it as a hidden field of the form. By default, the HTML field
+must be called ``_csrf_token`` and the string used to generate the value must
+be ``authenticate``:
+
+.. code-block:: html+twig
+
+    {# templates/security/login.html.twig #}
+
+    {# ... #}
+    <form action="{{ path('login') }}" method="post">
+        {# ... the login fields #}
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <button type="submit">login</button>
+    </form>
+
+After this, you have protected your login form against CSRF attacks.
+
+.. tip::
+
+    You can change the name of the field by setting ``csrf_parameter`` and change
+    the token ID by setting  ``csrf_token_id`` in your configuration. See
+    :ref:`reference-security-firewall-form-login` for more details.
+
+JSON Login
+~~~~~~~~~~
+
+Some applications provide an API that is secured using tokens. These
+applications may use an endpoint that provides these tokens based on a
+username (or email) and password. The JSON login authenticator helps you create
+this functionality.
+
+Enable the authenticator using the ``json_login`` setting:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    json_login:
+                        # app_login is a route we will create below
+                        check_path: api_login
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+                <firewall name="main">
+                    <json-login check-path="api_login"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->jsonLogin()
+                ->checkPath('api_login')
+            ;
+        };
+
+.. note::
+
+    The ``check_path`` supports URLs and route names (but cannot have
+    mandatory wildcards - e.g. ``/login/{foo}`` where ``foo`` has no
+    default value).
+
+The authenticator runs when a client request the ``check_path``. First,
+create a controller for this path:
+
+.. code-block:: terminal
+
+    $ php bin/console make:controller --no-template ApiLogin
+
+     created: src/Controller/ApiLoginController.php
+
+.. code-block:: php
+
+    // src/Controller/ApiLoginController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class ApiLoginController extends AbstractController
+    {
+        #[Route('/api/login', name: 'api_login')]
+        public function index(): Response
+        {
+            return $this->json([
+                'message' => 'Welcome to your new controller!',
+                'path' => 'src/Controller/ApiLoginController.php',
+            ]);
+        }
+    }
+
+This login controller will be called after the authenticator successfully
+authenticates the user. You can get the authenticated user, generate a
+token (or whatever you need to return) and return the JSON response:
+
+.. code-block:: diff
+
+      // ...
+    + use App\Entity\User;
+    + use Symfony\Component\Security\Http\Attribute\CurrentUser;
+
+      class ApiLoginController extends AbstractController
+      {
+          #[Route('/api/login', name: 'api_login')]
+    -     public function index(): Response
+    +     public function index(#[CurrentUser] ?User $user): Response
+          {
+    +         if (null === $user) {
+    +             return $this->json([
+    +                 'message' => 'missing credentials',
+    +             ], Response::HTTP_UNAUTHENTICATED);
+    +         }
+    +
+    +         $token = ...; // somehow create an API token for $user
+    +
+              return $this->json([
+    -             'message' => 'Welcome to your new controller!',
+    -             'path' => 'src/Controller/ApiLoginController.php',
+    +             'user'  => $user->getUserIdentifier(),
+    +             'token' => $token,
+              ]);
+          }
+      }
+
+.. note::
+
+    The ``#[CurrentUser]`` can only be used in controller arguments to
+    retrieve the authenticated user. In services, you would use
+    :method:`Symfony\\Component\\Security\\Core\\Security::getUser`.
+
+That's it! To summarize the process:
+
+#. A client (e.g. the front-end) makes a *POST request* with the
+   ``Content-Type: application/json`` header to ``/api/login`` with
+   ``username`` (even if your identifier is actually an email) and
+   ``password`` keys:
+
+   .. code-block:: json
+
+        {
+            "username": "dunglas@example.com",
+            "password": "MyPassword"
+        }
+#. The security system intercepts the request, checks the user's submitted
+   credentials and authenticates the user. If the credentials is incorrect,
+   an HTTP 401 Unauthorized JSON response is returned, otherwise your
+   controller is run;
+#. Your controller creates the correct response:
+
+   .. code-block:: json
+
+        {
+            "user": "dunglas@example.com",
+            "token": "45be42..."
+        }
+
+.. tip::
+
+    The JSON request format can be configured under the ``json_login`` key.
+    See :ref:`reference-security-firewall-json-login` for more details.
+
+.. _security-http_basic:
+
+HTTP Basic
+~~~~~~~~~~
+
+`HTTP Basic authentication`_ is a standardized HTTP authentication
+framework. It asks credentials (username and password) using a dialog in
+the browser and the HTTP basic authenticator of Symfony will verify these
+credentials.
+
+Add the ``http_basic`` key to your firewall to enable HTTP Basic
+authentication:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    http_basic:
+                        realm: Secured Area
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+                <firewall name="main">
+                    <http-basic realm="Secured Area"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->httpBasic()
+                ->realm('Secured Area')
+            ;
+        };
+
+That's it! Whenever an unauthenticated user tries to visit a protected
+page, Symfony will inform the browser that it needs to start HTTP basic
+authentication (using the ``WWW-Authenticate`` response header). Then, the
+authenticator verifies the credentials and authenticates the user.
+
+.. note::
+
+    You cannot use :ref:`log out <security-logging-out>` with the HTTP
+    basic authenticator. Even if you log out from Symfony, your browser
+    "remembers" your credentials and will send them on every request.
+
+Login Link
+~~~~~~~~~~
+
+Login links are a passwordless authentication mechanism. The user will
+receive a short-lived link (e.g. via email) which will authenticate them to the
+website.
+
+You can learn all about this authenticator in :doc:`/security/login_link`.
+
+X.509 Client Certificates
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using client certificates, your web server does all the authentication
+itself. The X.509 authenticator provided by Symfony extracts the email from
+the "distinguished name" (DN) of the client certificate. Then, it uses this
+email as user identifier in the user provider.
+
+First, configure your web server to enable client certificate verification
+and to expose the certificate's DN to the Symfony application:
+
+.. configuration-block::
+
+    .. code-block:: nginx
+
+        server {
+            # ...
+
+            ssl_client_certificate /path/to/my-custom-CA.pem;
+
+            # enable client certificate verification
+            ssl_verify_client optional;
+            ssl_verify_depth 1;
+
+            location / {
+                # pass the DN as "SSL_CLIENT_S_DN" to the application
+                fastcgi_param SSL_CLIENT_S_DN $ssl_client_s_dn;
+
+                # ...
+            }
+        }
+
+    .. code-block:: apache
+
+        # ...
+        SSLCACertificateFile "/path/to/my-custom-CA.pem"
+        SSLVerifyClient optional
+        SSLVerifyDepth 1
+
+        # pass the DN to the application
+        SSLOptions +StdEnvVars
+
+Then, enable the X.509 authenticator using ``x509`` on your firewall:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    x509:
+                        provider: your_user_provider
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <x509 provider="your_user_provider"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->x509()
+                ->provider('your_user_provider')
+            ;
+        };
+
+By default, Symfony extracts the email address from the DN in two different
+ways:
+
+#. First, it tries the ``SSL_CLIENT_S_DN_Email`` server parameter, which is
+   exposed by Apache;
+#. If it is not set (e.g. when using Nginx), it uses ``SSL_CLIENT_S_DN`` and
+   matches the value following ``emailAddress=``.
+
+You can customize the name of both parameters under the ``x509`` key. See
+:ref:`the configuration reference <reference-security-firewall-x509>` for
+more details.
+
+Remote Users
+~~~~~~~~~~~~
+
+Besides client certificate authentication, there are more web server
+modules that pre-authenticate a user (e.g. kerberos). The remote user
+authenticator provides a basic integration for these services.
+
+These modules often expose the authenticated user in the ``REMOTE_USER``
+environment variable. The remote user authenticator uses this value as the
+user identifier to load the corresponding user.
+
+Enable remote user authentication using the ``remote_user`` key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    # ...
+                    remote_user:
+                        provider: your_user_provider
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <remote-user provider="your_user_provider"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->remoteUser()
+                ->provider('your_user_provider')
+            ;
+        };
+
+.. tip::
+
+    You can customize the name of this server variable under the
+    ``remote_user`` key. See
+    :ref:`the configuration reference <reference-security-firewall-remote-user>`
+    for more details.
 
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -482,8 +1377,7 @@ Limiting Login Attempts
 
     Login throttling was introduced in Symfony 5.2.
 
-Symfony provides basic protection against `brute force login attacks`_ if
-you're using the :doc:`authenticator-based authenticators </security/authenticator_manager>`.
+Symfony provides basic protection against `brute force login attacks`_.
 You must enable this using the ``login_throttling`` setting:
 
 .. configuration-block::
@@ -492,6 +1386,7 @@ You must enable this using the ``login_throttling`` setting:
 
         # config/packages/security.yaml
         security:
+            # you must use the authenticator manager
             enable_authenticator_manager: true
 
             firewalls:
@@ -528,6 +1423,7 @@ You must enable this using the ``login_throttling`` setting:
                 http://symfony.com/schema/dic/security
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
+            <!-- you must use the authenticator manager -->
             <config enable-authenticator-manager="true">
                 <!-- ... -->
 
@@ -555,23 +1451,21 @@ You must enable this using the ``login_throttling`` setting:
         return static function (SecurityConfig $security) {
             $security->enableAuthenticatorManager(true);
 
-            // ...
             $mainFirewall = $security->firewall('main');
 
             // by default, the feature allows 5 login attempts per minute
-            $mainFirewall
-                ->loginThrottling();
+            $mainFirewall->loginThrottling();
 
             // configure the maximum login attempts (per minute)
-            $mainFirewall
-                ->loginThrottling()
-                    ->maxAttempts(3)
-                    ->interval('15 minutes');
+            $mainFirewall->loginThrottling()
+                ->maxAttempts(3)
+            ;
 
             // configure the maximum login attempts in a custom period of time
-            $mainFirewall
-                ->loginThrottling()
-                    ->maxAttempts(3);
+            $mainFirewall->loginThrottling()
+                ->maxAttempts(3)
+                ->interval('15 minutes')
+            ;
         };
 
 .. versionadded:: 5.3
@@ -724,11 +1618,253 @@ and set the ``limiter`` option to its service ID:
             ;
         };
 
-.. _`security-authorization`:
-.. _denying-access-roles-and-other-authorization:
+.. _security-logging-out:
 
-4) Denying Access, Roles and other Authorization
-------------------------------------------------
+Logging Out
+-----------
+
+To enable logging out, activate the  ``logout`` config parameter under your firewall:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        path: app_logout
+
+                        # where to redirect after logout
+                        # target: app_any_route
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <logout path="app_logout"/>
+
+                    <!-- use "target" to configure where to redirect after logout
+                    <logout path="app_logout" target="app_any_route"/>
+                    -->
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+
+            $mainFirewall = $security->firewall('main');
+            // ...
+            $mainFirewall->logout()
+                ->path('app_logout')
+
+                // where to redirect after logout
+                // ->target('app_any_route')
+            ;
+        };
+
+Next, you need to create a route for this URL (but not a controller):
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/SecurityController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class SecurityController extends AbstractController
+        {
+            /**
+             * @Route("/logout", name="app_logout", methods={"GET"})
+             */
+            public function logout(): void
+            {
+                // controller can be blank: it will never be called!
+                throw new \Exception('Don\'t forget to activate logout in security.yaml');
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/SecurityController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class SecurityController extends AbstractController
+        {
+            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
+            public function logout()
+            {
+                // controller can be blank: it will never be called!
+                throw new \Exception('Don\'t forget to activate logout in security.yaml');
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        app_logout:
+            path: /logout
+            methods: GET
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="app_logout" path="/logout" methods="GET"/>
+        </routes>
+
+    ..  code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->add('app_logout', '/logout')
+                ->methods(['GET'])
+            ;
+        };
+
+That's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
+Symfony will un-authenticate the current user and redirect them.
+
+Customizing Logout
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.1
+
+    The ``LogoutEvent`` was introduced in Symfony 5.1. Prior to this
+    version, you had to use a
+    :ref:`logout success handler <reference-security-logout-success-handler>`
+    to customize the logout.
+
+In some cases you need to run extra logic upon logout (e.g. invalidate
+some tokens) or want to customize what happens after a logout. During
+logout, a :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
+is dispatched. Register an :doc:`event listener or subscriber </event_dispatcher>`
+to run custom logic. The following information is available in the
+event class:
+
+``getToken()``
+    Returns the security token of the session that is about to be logged
+    out.
+``getRequest()``
+    Returns the current request.
+``getResponse()``
+    Returns a response, if it is already set by a custom listener. Use
+    ``setResponse()`` to configure a custom logout response.
+
+.. _retrieving-the-user-object:
+
+Fetching the User Object
+------------------------
+
+After authentication, the ``User`` object of the current user can be
+accessed via the ``getUser()`` shortcut in the
+:ref:`base controller <the-base-controller-class-services>`::
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+    class ProfileController extends AbstractController
+    {
+        public function index(): Response
+        {
+            // usually you'll want to make sure the user is authenticated first,
+            // see "Authorization" below
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+            // returns your User object, or null if the user is not authenticated
+            // use inline documentation to tell your editor your exact User class
+            /** @var \App\Entity\User $user */
+            $user = $this->getUser();
+
+            // Call whatever methods you've added to your User class
+            // For example, if you added a getFirstName() method, you can use that.
+            return new Response('Well hi there '.$user->getFirstName());
+        }
+    }
+
+Fetching the User from a Service
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to get the logged in user from a service, use the
+:class:`Symfony\\Component\\Security\\Core\\Security` service::
+
+    // src/Service/ExampleService.php
+    // ...
+
+    use Symfony\Component\Security\Core\Security;
+
+    class ExampleService
+    {
+        private $security;
+
+        public function __construct(Security $security)
+        {
+            // Avoid calling getUser() in the constructor: auth may not
+            // be complete yet. Instead, store the entire Security object.
+            $this->security = $security;
+        }
+
+        public function someMethod()
+        {
+            // returns User object or null if not authenticated
+            $user = $this->security->getUser();
+
+            // ...
+        }
+    }
+
+Fetch the User in a Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In a Twig Template the user object is available via the ``app.user`` variable
+thanks to the :ref:`Twig global app variable <twig-app-variable>`:
+
+.. code-block:: html+twig
+
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <p>Email: {{ app.user.email }}</p>
+    {% endif %}
+
+.. _denying-access-roles-and-other-authorization:
+.. _security-access-control:
+
+Access Control (Authorization)
+------------------------------
 
 Users can now log in to your app using your login form. Great! Now, you need to learn
 how to deny access and work with the User object. This is called **authorization**,
@@ -737,18 +1873,17 @@ a method call, ...).
 
 The process of authorization has two different sides:
 
-#. The user receives a specific set of roles when logging in (e.g. ``ROLE_ADMIN``).
+#. The user receives a specific role when logging in (e.g. ``ROLE_ADMIN``).
 #. You add code so that a resource (e.g. URL, controller) requires a specific
-   "attribute" (most commonly a role like ``ROLE_ADMIN``) in order to be
-   accessed.
+   "attribute" (e.g. a role like ``ROLE_ADMIN``) in order to be accessed.
 
 Roles
 ~~~~~
 
 When a user logs in, Symfony calls the ``getRoles()`` method on your ``User``
-object to determine which roles this user has. In the ``User`` class that we
-generated earlier, the roles are an array that's stored in the database, and
-every user is *always* given at least one role: ``ROLE_USER``::
+object to determine which roles this user has. In the ``User`` class that
+was generated earlier, the roles are an array that's stored in the
+database and every user is *always* given at least one role: ``ROLE_USER``::
 
     // src/Entity/User.php
 
@@ -780,8 +1915,82 @@ a user should have. Here are a few guidelines:
   need (e.g. ``ROLE_PRODUCT_ADMIN``).
 
 You'll use these roles next to grant access to specific sections of your site.
-You can also use a :ref:`role hierarchy <security-role-hierarchy>` where having
-some roles automatically give you other roles.
+
+.. _security-role-hierarchy:
+
+Hierarchical Roles
+..................
+
+Instead of giving many roles to each user, you can define role inheritance
+rules by creating a role hierarchy:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            role_hierarchy:
+                ROLE_ADMIN:       ROLE_USER
+                ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <role id="ROLE_ADMIN">ROLE_USER</role>
+                <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+
+            $security->roleHierarchy('ROLE_ADMIN', ['ROLE_USER']);
+            $security->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH']);
+        };
+
+Users with the ``ROLE_ADMIN`` role will also have the ``ROLE_USER`` role.
+Users with ``ROLE_SUPER_ADMIN``, will automatically have ``ROLE_ADMIN``,
+``ROLE_ALLOWED_TO_SWITCH`` and ``ROLE_USER`` (inherited from
+``ROLE_ADMIN``).
+
+.. caution::
+
+    For role hierarchy to work, do not use ``$user->getRoles()`` manually.
+    For example, in a controller extending from the :ref:`base controller <the-base-controller-class-services>`::
+
+        // BAD - $user->getRoles() will not know about the role hierarchy
+        $hasAccess = in_array('ROLE_ADMIN', $user->getRoles());
+
+        // GOOD - use of the normal security methods
+        $hasAccess = $this->isGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
+.. note::
+
+    The ``role_hierarchy`` values are static - you can't, for example, store the
+    role hierarchy in a database. If you need that, create a custom
+    :doc:`security voter </security/voters>` that looks for the user roles
+    in the database.
 
 .. _security-role-authorization:
 
@@ -1032,10 +2241,159 @@ the built-in ``is_granted()`` helper function in any Twig template:
         <a href="...">Delete</a>
     {% endif %}
 
+.. _security-isgranted:
+
 Securing other Services
 .......................
 
-See :doc:`/security/securing_services`.
+You can check access *anywhere* in your code by injecting the ``Security``
+service. For example, suppose you have a ``SalesReportManager`` service and you
+want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` role:
+
+.. code-block:: diff
+
+      // src/SalesReport/SalesReportManager.php
+
+      // ...
+      use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+    + use Symfony\Component\Security\Core\Security;
+
+      class SalesReportManager
+      {
+    +     private $security;
+
+    +     public function __construct(Security $security)
+    +     {
+    +         $this->security = $security;
+    +     }
+
+          public function generateReport()
+          {
+              $salesData = [];
+
+    +         if ($this->security->isGranted('ROLE_SALES_ADMIN')) {
+    +             $salesData['top_secret_numbers'] = rand();
+    +         }
+
+              // ...
+          }
+
+          // ...
+      }
+
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+Symfony will automatically pass the ``security.helper`` to your service
+thanks to autowiring and the ``Security`` type-hint.
+
+You can also use a lower-level
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\AuthorizationCheckerInterface`
+service. It does the same thing as ``Security``, but allows you to type-hint a
+more-specific interface.
+
+Allowing Unsecured Access (i.e. Anonymous Users)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a visitor isn't yet logged in to your website, they are treated as
+"unauthenticated" and don't have any roles. This will block them from
+visiting your pages if you defined an ``access_control`` rule.
+
+In the ``access_control`` configuration, you can use the ``PUBLIC_ACCESS``
+security attribute to exclude some routes for unauthenticated access (e.g.
+the login page):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            enable_authenticator_manager: true
+
+            # ...
+            access_control:
+                # allow unauthenticated users to access the login form
+                - { path: ^/admin/login, roles: PUBLIC_ACCESS }
+
+                # but require authentication for all other admin routes
+                - { path: ^/admin, roles: ROLE_ADMIN }
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config enable-authenticator-manager="true">
+                <!-- ... -->
+
+                <access-control>
+                    <!-- allow unauthenticated users to access the login form -->
+                    <rule path="^/admin/login" role="PUBLIC_ACCESS"/>
+
+                    <!-- but require authentication for all other admin routes -->
+                    <rule path="^/admin" role="ROLE_ADMIN"/>
+                </access-control>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->enableAuthenticatorManager(true);
+            // ....
+
+            // allow unauthenticated users to access the login form
+            $security->accessControl()
+                ->path('^/admin/login')
+                ->roles([AuthenticatedVoter::PUBLIC_ACCESS])
+            ;
+
+            // but require authentication for all other admin routes
+            $security->accessControl()
+                ->path('^/admin')
+                ->roles(['ROLE_ADMIN'])
+            ;
+        };
+
+Granting Anonymous Users Access in a Custom Voter
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using a :doc:`custom voter </security/voters>`, you can allow
+anonymous users access by checking if there is no user set on the token::
+
+    // src/Security/PostVoter.php
+    namespace App\Security;
+
+    // ...
+    use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+    use Symfony\Component\Security\Core\Authentication\User\UserInterface;
+    use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+
+    class PostVoter extends Voter
+    {
+        // ...
+
+        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
+        {
+            // ...
+
+            if (!$token->getUser() instanceof UserInterface) {
+                // the user is not authenticated, e.g. only allow them to
+                // see public posts
+                return $subject->isPublic();
+            }
+        }
+    }
 
 Setting Individual User Permissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1080,12 +2438,6 @@ like this:
   but stronger. Users who are logged in only because of a "remember me cookie"
   will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
 
-* ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
-  this - this is useful when defining a list of URLs with no access restriction
-  - some details are in :doc:`/security/access_control`.
-
-* ``IS_ANONYMOUS``: *Only* anonymous users are matched by this attribute.
-
 * ``IS_REMEMBERED``: *Only* users authenticated using the
   :doc:`remember me functionality </security/remember_me>`, (i.e. a
   remember-me cookie).
@@ -1096,244 +2448,62 @@ like this:
 
 .. versionadded:: 5.1
 
-    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATOR``
-    attributes were introduced in Symfony 5.1.
+    The ``IS_REMEMBERED`` and ``IS_IMPERSONATOR`` attributes were
+    introduced in Symfony 5.1.
 
-.. _retrieving-the-user-object:
+.. deprecated:: 5.3
 
-5a) Fetching the User Object
-----------------------------
+   The ``IS_ANONYMOUS`` and ``IS_AUTHENTICATED_ANONYMOUSLY`` attributes are
+   deprecated since Symfony 5.3.
 
-After authentication, the ``User`` object of the current user can be accessed
-via the ``getUser()`` shortcut::
+.. _user_session_refresh:
 
-    public function index(): Response
-    {
-        // usually you'll want to make sure the user is authenticated first
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+Understanding how Users are Refreshed from the Session
+------------------------------------------------------
 
-        // returns your User object, or null if the user is not authenticated
-        // use inline documentation to tell your editor your exact User class
-        /** @var \App\Entity\User $user */
-        $user = $this->getUser();
+At the end of every request (unless your firewall is ``stateless``), your
+``User`` object is serialized to the session. At the beginning of the next
+request, it's deserialized and then passed to your user provider to "refresh" it
+(e.g. Doctrine queries for a fresh user).
 
-        // Call whatever methods you've added to your User class
-        // For example, if you added a getFirstName() method, you can use that.
-        return new Response('Well hi there '.$user->getFirstName());
-    }
+Then, the two User objects (the original from the session and the refreshed User
+object) are "compared" to see if they are "equal". By default, the core
+``AbstractToken`` class compares the return values of the ``getPassword()``,
+``getSalt()`` and ``getUserIdentifier()`` methods. If any of these are different,
+your user will be logged out. This is a security measure to make sure that malicious
+users can be de-authenticated if core user data changes.
 
-5b) Fetching the User from a Service
-------------------------------------
+However, in some cases, this process can cause unexpected authentication problems.
+If you're having problems authenticating, it could be that you *are* authenticating
+successfully, but you immediately lose authentication after the first redirect.
 
-If you need to get the logged in user from a service, use the
-:class:`Symfony\\Component\\Security\\Core\\Security` service::
+In that case, review the serialization logic (e.g. ``SerializableInterface``) on
+you user class (if you have any) to make sure that all the fields necessary are
+serialized.
 
-    // src/Service/ExampleService.php
-    // ...
+Comparing Users Manually with EquatableInterface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    use Symfony\Component\Security\Core\Security;
+Or, if you need more control over the "compare users" process, make your User class
+implement :class:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface`.
+Then, your ``isEqualTo()`` method will be called when comparing users instead
+of the core logic.
 
-    class ExampleService
-    {
-        private $security;
+Security Events
+---------------
 
-        public function __construct(Security $security)
-        {
-            // Avoid calling getUser() in the constructor: auth may not
-            // be complete yet. Instead, store the entire Security object.
-            $this->security = $security;
-        }
-
-        public function someMethod()
-        {
-            // returns User object or null if not authenticated
-            $user = $this->security->getUser();
-
-            // ...
-        }
-    }
-
-Fetch the User in a Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In a Twig Template the user object is available via the ``app.user`` variable
-thanks to the :ref:`Twig global app variable <twig-app-variable>`:
-
-.. code-block:: html+twig
-
-    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <p>Email: {{ app.user.email }}</p>
-    {% endif %}
-
-.. _security-logging-out:
-
-Logging Out
------------
-
-To enable logging out, activate the  ``logout`` config parameter under your firewall:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            firewalls:
-                main:
-                    # ...
-                    logout:
-                        path:   app_logout
-
-                        # where to redirect after logout
-                        # target: app_any_route
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="secured_area">
-                    <!-- ... -->
-                    <logout path="app_logout"/>
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
-
-        return static function (SecurityConfig $security) {
-            // ...
-
-            $security->firewall('secured_area')
-                // ...
-                ->logout()
-                    ->path('app_logout');
-        };
-
-Next, you'll need to create a route for this URL (but not a controller):
-
-.. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Controller/SecurityController.php
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class SecurityController extends AbstractController
-        {
-            /**
-             * @Route("/logout", name="app_logout", methods={"GET"})
-             */
-            public function logout(): void
-            {
-                // controller can be blank: it will never be executed!
-                throw new \Exception('Don\'t forget to activate logout in security.yaml');
-            }
-        }
-
-    .. code-block:: php-attributes
-
-        // src/Controller/SecurityController.php
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class SecurityController extends AbstractController
-        {
-            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
-            public function logout()
-            {
-                // controller can be blank: it will never be executed!
-                throw new \Exception('Don\'t forget to activate logout in security.yaml');
-            }
-        }
-
-    .. code-block:: yaml
-
-        # config/routes.yaml
-        app_logout:
-            path: /logout
-            methods: GET
-
-    .. code-block:: xml
-
-        <!-- config/routes.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <routes xmlns="http://symfony.com/schema/routing"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/routing
-                https://symfony.com/schema/routing/routing-1.0.xsd">
-
-            <route id="app_logout" path="/logout" methods="GET"/>
-        </routes>
-
-    ..  code-block:: php
-
-        // config/routes.php
-        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-
-        return function (RoutingConfigurator $routes) {
-            $routes->add('app_logout', '/logout')
-                ->methods(['GET'])
-            ;
-        };
-
-And that's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
-Symfony will un-authenticate the current user and redirect them.
-
-Customizing Logout
-~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.1
-
-    The ``LogoutEvent`` was introduced in Symfony 5.1. Prior to this
-    version, you had to use a
-    :ref:`logout success handler <reference-security-logout-success-handler>`
-    to customize the logout.
-
-In some cases you need to execute extra logic upon logout (e.g. invalidate
-some tokens) or want to customize what happens after a logout. During
-logout, a :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
-is dispatched. Register an :doc:`event listener or subscriber </event_dispatcher>`
-to execute custom logic. The following information is available in the
-event class:
-
-``getToken()``
-    Returns the security token of the session that is about to be logged
-    out.
-``getRequest()``
-    Returns the current request.
-``getResponse()``
-    Returns a response, if it is already set by a custom listener. Use
-    ``setResponse()`` to configure a custom logout response.
-
+During the authentication process, multiple events are dispatched that allow you
+to hook into the process or customize the response sent back to the user. You
+can do this by creating an :doc:`event listener or subscriber </event_dispatcher>`
+for these events.
 
 .. tip::
 
     Every Security firewall has its own event dispatcher
-    (``security.event_dispatcher.FIREWALLNAME``). The logout event is
-    dispatched on both the global and firewall dispatcher. You can register
+    (``security.event_dispatcher.FIREWALLNAME``). Events are dispatched on
+    both the global and the firewall-specific dispatcher. You can register
     on the firewall dispatcher if you want your listener to only be
-    executed for a specific firewall. For instance, if you have an ``api``
+    called for a specific firewall. For instance, if you have an ``api``
     and ``main`` firewall, use this configuration to register only on the
     logout event in the ``main`` firewall:
 
@@ -1388,88 +2558,61 @@ event class:
                     ]);
             };
 
-.. _security-role-hierarchy:
+Authentication Events
+~~~~~~~~~~~~~~~~~~~~~
 
-Hierarchical Roles
-------------------
+.. raw:: html
 
-Instead of giving many roles to each user, you can define role inheritance
-rules by creating a role hierarchy:
+    <object data="../_images/security/security_events.svg" type="image/svg+xml"></object>
 
-.. configuration-block::
+:class:`Symfony\\Component\\Security\\Http\\Event\\CheckPassportEvent`
+    Dispatched after the authenticator created the :ref:`security passport <security-passport>`.
+    Listeners of this event do the actual authentication checks (like
+    checking the passport, validating the CSRF token, etc.)
 
-    .. code-block:: yaml
+:class:`Symfony\\Component\\Security\\Http\\Event\\AuthenticationTokenCreatedEvent`
+    Dispatched after the passport was validated and the authenticator
+    created the security token (and user). This can be used in advanced use-cases
+    where you need to modify the created token (e.g. for multi factor
+    authentication).
 
-        # config/packages/security.yaml
-        security:
-            # ...
+:class:`Symfony\\Component\\Security\\Http\\Event\\AuthenticationSuccessEvent`
+    Dispatched when authentication is nearing success. This is the last
+    event that can make an authentication fail by throwing an
+    ``AuthenticationException``.
 
-            role_hierarchy:
-                ROLE_ADMIN:       ROLE_USER
-                ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+:class:`Symfony\\Component\\Security\\Http\\Event\\LoginSuccessEvent`
+    Dispatched after authentication was fully successful. Listeners to this
+    event can modify the response sent back to the user.
 
-    .. code-block:: xml
+:class:`Symfony\\Component\\Security\\Http\\Event\\LoginFailureEvent`
+    Dispatched after an ``AuthenticationException`` was thrown during
+    authentication. Listeners to this event can modify the error response
+    sent back to the user.
 
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
+Other Events
+~~~~~~~~~~~~
 
-            <config>
-                <!-- ... -->
+:class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
+    Dispatched just before a user logs out of your application. See
+    :ref:`security-logging-out`.
 
-                <role id="ROLE_ADMIN">ROLE_USER</role>
-                <role id="ROLE_SUPER_ADMIN">ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH</role>
-            </config>
-        </srv:container>
+:class:`Symfony\\Component\\Security\\Http\\Event\\TokenDeauthenticatedEvent`
+    Dispatched when a user is deauthenticated, for instance because the
+    password was changed. See :ref:`user_session_refresh`.
 
-    .. code-block:: php
-
-        // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
-
-        return static function (SecurityConfig $security) {
-            // ...
-
-            $security->roleHierarchy('ROLE_ADMIN', ['ROLE_USER']);
-            $security->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH']);
-        };
-
-Users with the ``ROLE_ADMIN`` role will also have the
-``ROLE_USER`` role. And users with ``ROLE_SUPER_ADMIN``, will automatically have
-``ROLE_ADMIN``, ``ROLE_ALLOWED_TO_SWITCH`` and ``ROLE_USER`` (inherited from ``ROLE_ADMIN``).
-
-For role hierarchy to work, do not try to call ``$user->getRoles()`` manually.
-For example, in a controller extending from the :ref:`base controller <the-base-controller-class-services>`::
-
-    // BAD - $user->getRoles() will not know about the role hierarchy
-    $hasAccess = in_array('ROLE_ADMIN', $user->getRoles());
-
-    // GOOD - use of the normal security methods
-    $hasAccess = $this->isGranted('ROLE_ADMIN');
-    $this->denyAccessUnlessGranted('ROLE_ADMIN');
-
-.. note::
-
-    The ``role_hierarchy`` values are static - you can't, for example, store the
-    role hierarchy in a database. If you need that, create a custom
-    :doc:`security voter </security/voters>` that looks for the user roles
-    in the database.
+:class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent`
+    Dispatched after impersonation is completed. See
+    :doc:`/security/impersonating_user`.
 
 Frequently Asked Questions
 --------------------------
 
 **Can I have Multiple Firewalls?**
     Yes! But it's usually not necessary. Each firewall is like a separate security
-    system. And so, unless you have *very* different authentication needs, one
-    firewall usually works well. With :doc:`Guard authentication </security/guard_authentication>`,
-    you can create various, diverse ways of allowing authentication (e.g. form login,
-    API key authentication and LDAP) all under the same firewall.
+    system, being authenticated in one firewall doesn't make you authenticated in
+    another one. One firewall can have multiple diverse ways of allowing
+    authentication (e.g. form login, API key authentication and LDAP).
 
 **Can I Share Authentication Between Firewalls?**
     Yes, but only with some configuration. If you're using multiple firewalls and
@@ -1506,23 +2649,16 @@ Authentication (Identifying/Logging in the User)
 .. toctree::
     :maxdepth: 1
 
-    security/authenticator_manager
-    security/form_login_setup
-    security/reset_password
-    security/json_login_setup
-    security/guard_authentication
-    security/password_migration
-    security/auth_providers
-    security/user_provider
+    security/passwords
     security/ldap
     security/remember_me
     security/impersonating_user
     security/user_checkers
-    security/named_hashers
-    security/multiple_guard_authenticators
     security/firewall_restriction
     security/csrf
-    security/custom_authentication_provider
+    security/form_login
+    security/custom_authenticator
+    security/entry_point
 
 Authorization (Denying Access)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1531,15 +2667,16 @@ Authorization (Denying Access)
     :maxdepth: 1
 
     security/voters
-    security/securing_services
     security/access_control
     security/access_denied_handler
-    security/acl
     security/force_https
 
+.. _`5.2 version of this documentation`: https://symfony.com/doc/5.2/security.html
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`OWASP Brute Force Attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
 .. _`brute force login attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
-.. _`Symfony Security screencast series`: https://symfonycasts.com/screencast/symfony-security
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
+.. _`SymfonyCastsVerifyEmailBundle`: https://github.com/symfonycasts/verify-email-bundle
+.. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication
+.. _`Login CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
