@@ -72,6 +72,12 @@ method that fits most use-cases::
         }
     }
 
+.. tip::
+
+    If your custom authenticator is a login form, you can extend from the
+    :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractLoginFormAuthenticator`
+    class instead to make your job easier.
+
 The authenticator can be enabled using the ``custom_authenticators`` setting:
 
 .. configuration-block::
@@ -88,10 +94,6 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
                     custom_authenticators:
                         - App\Security\ApiKeyAuthenticator
 
-                    # remember to also configure the entry_point if the
-                    # authenticator implements AuthenticationEntryPointInterface
-                    # entry_point: App\Security\CustomFormLoginAuthenticator
-
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
@@ -106,11 +108,6 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
 
             <config enable-authenticator-manager="true">
                 <!-- ... -->
-
-                <!-- remember to also configure the entry-point if the
-                     authenticator implements AuthenticatorEntryPointInterface
-                <firewall name="main"
-                    entry-point="App\Security\CustomFormLoginAuthenticator"> -->
 
                 <firewall name="main">
                     <custom-authenticator>App\Security\ApiKeyAuthenticator</custom-authenticator>
@@ -130,25 +127,54 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
 
             $security->firewall('main')
                 ->customAuthenticators([ApiKeyAuthenticator::class])
-
-                // remember to also configure the entry_point if the
-                // authenticator implements AuthenticatorEntryPointInterface
-                // ->entryPoint(App\Security\CustomFormLoginAuthenticator::class)
             ;
         };
 
+.. versionadded:: 5.2
+
+    Starting with Symfony 5.2, the custom authenticator is automatically
+    registered as entry point if it implements ``AuthenticationEntryPointInterface``.
+
+    Prior to 5.2, you had to configure the entry point separately using the
+    ``entry_point`` option. Read :doc:`/security/entry_point` for more
+    information.
 
 The ``authenticate()`` method is the most important method of the
 authenticator. Its job is to extract credentials (e.g. username &
 password, or API tokens) from the ``Request`` object and transform these
 into a security
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`.
+See :ref:`security-passport` below for a detailed look into the
+authentication process.
 
-.. tip::
+After the authentication process finished, the user is either authenticated
+or there was something wrong (e.g. incorrect password). The authenticator
+can define what happens in these cases:
 
-    If your custom authenticator is a login form, you can extend from the
-    :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractLoginFormAuthenticator`
-    class instead to make your job easier.
+``onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response``
+    If the user is authenticated, this method is called with the
+    authenticated ``$token``. This method can return a response (e.g.
+    redirect the user to the homepage).
+
+    If ``null`` is returned, the request continues like normal (i.e. the
+    controller matching the login route is called). This is useful for API
+    routes where each route is protected by an API key header.
+
+``onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response``
+    If an ``AuthenticationException`` is thrown during authentication, the
+    process fails and this method is called. This method can return a
+    response (e.g. to return a 401 Unauthorized response in API routes).
+
+    If ``null`` is returned, the request continues like normal. This is
+    useful for e.g. login forms, where the login controller is run again
+    with the login errors.
+
+    **Caution**: Never use ``$exception->getMessage()`` for ``AuthenticationException``
+    instances. This message might contain sensitive information that you
+    don't want to expose publicly. Instead, use ``$exception->getMessageKey()``
+    and ``$exception->getMessageData()`` like shown in the full example
+    above. Use :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`
+    if you want to set custom error messages.
 
 .. _security-passport:
 

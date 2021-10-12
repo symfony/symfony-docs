@@ -1,8 +1,21 @@
 User Providers
 ==============
 
-.. TODO intro paragraph
-   don't forget to mention LDAP user provider (documented in security/ldap)
+User providers (re)load users from a storage (e.g. a database) based on a
+"user identifier" (e.g. the user's email address or username). See
+:ref:`security-user-providers` for more detailed information when a user
+provider is used.
+
+Symfony provides several user providers:
+
+:ref:`Entity User Provider <security-entity-user-provider>`
+    Loads users from a database using :doc:`Doctrine </doctrine>`;
+:ref:`LDAP User Provider <security-ldap-user-provider>`
+    Loads users from a LDAP server;
+:ref:`Memory User Provider <security-memory-user-provider>`
+    Loads users from a configuration file;
+:ref:`Chain User Provider <security-chain-user-provider>`
+    Merges two or more user providers into a new user provider.
 
 .. _security-entity-user-provider:
 

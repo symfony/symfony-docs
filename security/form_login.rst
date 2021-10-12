@@ -1,10 +1,15 @@
 .. index::
    single: Security; Customizing form login redirect
 
-Using the form_login Authentication Provider
-============================================
+Customizing the Form Login Authenticator Responses
+==================================================
 
-.. TODO
+The form login authenticator creates a login form where users authenticate
+using an identifier (e.g. email address or username) and a password. In
+:ref:`security-form-login` the usage of this authenticator is explained.
+
+This article describes how to customize the responses (success or failure)
+of this authenticator.
 
 Redirecting after Success
 -------------------------

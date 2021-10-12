@@ -4,6 +4,7 @@
 Security
 ========
 
+
 Symfony provides many tools to secure your application. Some HTTP-related
 security tools, like :doc:`secure session cookies </session>` and
 :doc:`CSRF protection </security/csrf>` are provided by default. The
@@ -72,6 +73,15 @@ discussed:
     Using access control and the authorization checker, you control the
     required permissions to perform a specific action or visit a specific
     URL.
+
+.. caution::
+
+    Symfony Security has received major changes in 5.3. This article
+    explains the *new authenticator-based* system (identified by the
+    ``enable_authenticator_manager: true`` config option).
+
+    Refer to the `5.2 version of this documentation`_ if you're still using
+    the legacy security system.
 
 .. _create-user-class:
 .. _a-create-your-user-class:
@@ -645,6 +655,8 @@ many other authenticators:
     Google, Facebook or Twitter (social login), check out the `HWIOAuthBundle`_
     community bundle.
 
+.. _security-form-login:
+
 Form Login
 ~~~~~~~~~~
 
@@ -780,7 +792,7 @@ If the user submits an invalid email or password, that authenticator will store
 the error and redirect back to this controller, where we read the error (using
 ``AuthenticationUtils``) so that it can be displayed back to the user.
 
-Finally, create or updaate the template:
+Finally, create or update the template:
 
 .. code-block:: html+twig
 
@@ -850,6 +862,11 @@ To review the whole process:
 #. The security system (i.e. the ``form_login`` authenticator) intercepts the
    request, checks the user's submitted credentials, authenticates the user if
    they are correct, and sends the user back to the login form if they are not.
+
+.. seealso::
+
+    You can customize the responses on a successful or failed login
+    attempt. See :doc:`/security/form_login`.
 
 .. _form_login-csrf:
 
@@ -1051,8 +1068,14 @@ token (or whatever you need to return) and return the JSON response:
       {
           #[Route('/api/login', name: 'api_login')]
     -     public function index(): Response
-    +     public function index(#[CurrentUser] User $user): Response
+    +     public function index(#[CurrentUser] ?User $user): Response
           {
+    +         if (null === $user) {
+    +             return $this->json([
+    +                 'message' => 'missing credentials',
+    +             ], Response::HTTP_UNAUTHENTICATED);
+    +         }
+    +
     +         $token = ...; // somehow create an API token for $user
     +
               return $this->json([
@@ -1764,67 +1787,6 @@ event class:
     Returns a response, if it is already set by a custom listener. Use
     ``setResponse()`` to configure a custom logout response.
 
-.. tip::
-
-    Every Security firewall has its own event dispatcher
-    (``security.event_dispatcher.FIREWALLNAME``). The logout event is
-    dispatched on both the global and firewall dispatcher. You can register
-    on the firewall dispatcher if you want your listener to only be
-    called for a specific firewall. For instance, if you have an ``api``
-    and ``main`` firewall, use this configuration to register only on the
-    logout event in the ``main`` firewall:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/services.yaml
-            services:
-                # ...
-
-                App\EventListener\CustomLogoutSubscriber:
-                    tags:
-                        - name: kernel.event_subscriber
-                          dispatcher: security.event_dispatcher.main
-
-        .. code-block:: xml
-
-            <!-- config/services.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-                <services>
-                    <!-- ... -->
-
-                    <service id="App\EventListener\CustomLogoutSubscriber">
-                        <tag name="kernel.event_subscriber"
-                             dispacher="security.event_dispatcher.main"
-                         />
-                    </service>
-                </services>
-            </container>
-
-        .. code-block:: php
-
-            // config/services.php
-            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-            use App\EventListener\CustomLogoutListener;
-            use App\EventListener\CustomLogoutSubscriber;
-            use Symfony\Component\Security\Http\Event\LogoutEvent;
-
-            return function(ContainerConfigurator $configurator) {
-                $services = $configurator->services();
-
-                $services->set(CustomLogoutSubscriber::class)
-                    ->tag('kernel.event_subscriber', [
-                        'dispatcher' => 'security.event_dispatcher.main',
-                    ]);
-            };
-
 .. _retrieving-the-user-object:
 
 Fetching the User Object
@@ -2406,10 +2368,6 @@ the login page):
 Granting Anonymous Users Access in a Custom Voter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The ``NullToken`` class was introduced in Symfony 5.2.
-
 If you're using a :doc:`custom voter </security/voters>`, you can allow
 anonymous users access by checking if there is no user set on the token::
 
@@ -2480,12 +2438,6 @@ like this:
   but stronger. Users who are logged in only because of a "remember me cookie"
   will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
 
-* ``IS_AUTHENTICATED_ANONYMOUSLY``: *All* users (even anonymous ones) have
-  this - this is useful when defining a list of URLs with no access restriction
-  - some details are in :doc:`/security/access_control`.
-
-* ``IS_ANONYMOUS``: *Only* anonymous users are matched by this attribute.
-
 * ``IS_REMEMBERED``: *Only* users authenticated using the
   :doc:`remember me functionality </security/remember_me>`, (i.e. a
   remember-me cookie).
@@ -2496,8 +2448,13 @@ like this:
 
 .. versionadded:: 5.1
 
-    The ``IS_ANONYMOUS``, ``IS_REMEMBERED`` and ``IS_IMPERSONATOR``
-    attributes were introduced in Symfony 5.1.
+    The ``IS_REMEMBERED`` and ``IS_IMPERSONATOR`` attributes were
+    introduced in Symfony 5.1.
+
+.. deprecated:: 5.3
+
+   The ``IS_ANONYMOUS`` and ``IS_AUTHENTICATED_ANONYMOUSLY`` attributes are
+   deprecated since Symfony 5.3.
 
 .. _user_session_refresh:
 
@@ -2540,6 +2497,67 @@ to hook into the process or customize the response sent back to the user. You
 can do this by creating an :doc:`event listener or subscriber </event_dispatcher>`
 for these events.
 
+.. tip::
+
+    Every Security firewall has its own event dispatcher
+    (``security.event_dispatcher.FIREWALLNAME``). Events are dispatched on
+    both the global and the firewall-specific dispatcher. You can register
+    on the firewall dispatcher if you want your listener to only be
+    called for a specific firewall. For instance, if you have an ``api``
+    and ``main`` firewall, use this configuration to register only on the
+    logout event in the ``main`` firewall:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                # ...
+
+                App\EventListener\CustomLogoutSubscriber:
+                    tags:
+                        - name: kernel.event_subscriber
+                          dispatcher: security.event_dispatcher.main
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <!-- ... -->
+
+                    <service id="App\EventListener\CustomLogoutSubscriber">
+                        <tag name="kernel.event_subscriber"
+                             dispacher="security.event_dispatcher.main"
+                         />
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use App\EventListener\CustomLogoutListener;
+            use App\EventListener\CustomLogoutSubscriber;
+            use Symfony\Component\Security\Http\Event\LogoutEvent;
+
+            return function(ContainerConfigurator $configurator) {
+                $services = $configurator->services();
+
+                $services->set(CustomLogoutSubscriber::class)
+                    ->tag('kernel.event_subscriber', [
+                        'dispatcher' => 'security.event_dispatcher.main',
+                    ]);
+            };
+
 Authentication Events
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -2576,7 +2594,7 @@ Other Events
 ~~~~~~~~~~~~
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
-    Dispatched when a user logs out of your application. See
+    Dispatched just before a user logs out of your application. See
     :ref:`security-logging-out`.
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\TokenDeauthenticatedEvent`
@@ -2640,6 +2658,7 @@ Authentication (Identifying/Logging in the User)
     security/csrf
     security/form_login
     security/custom_authenticator
+    security/entry_point
 
 Authorization (Denying Access)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2652,6 +2671,7 @@ Authorization (Denying Access)
     security/access_denied_handler
     security/force_https
 
+.. _`5.2 version of this documentation`: https://symfony.com/doc/5.2/security.html
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`OWASP Brute Force Attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks

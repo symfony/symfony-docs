@@ -29,7 +29,6 @@ Configuration
 
 * `access_denied_url`_
 * `always_authenticate_before_granting`_
-* `anonymous`_
 * `erase_credentials`_
 * `hide_user_not_found`_
 * `session_fixation_strategy`_
@@ -61,15 +60,6 @@ always_authenticate_before_granting
 If ``true``, the user is asked to authenticate before each call to the
 ``isGranted()`` method in services and controllers or ``is_granted()`` from
 templates.
-
-anonymous
-~~~~~~~~~
-
-**type**: ``string`` **default**: ``~``
-
-When set to ``lazy``, Symfony loads the user (and starts the session) only if
-the application actually accesses the ``User`` object (e.g. via a ``is_granted()``
-call in a template or ``isGranted()`` in a controller or service).
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
@@ -116,7 +106,7 @@ access_control
 
 Defines the security protection of the URLs of your application. It's used for
 example to trigger the user authentication when trying to access to the backend
-and to allow anonymous users to the login form page.
+and to allow unauthenticated users to the login form page.
 
 This option is explained in detail in :doc:`/security/access_control`.
 
@@ -478,7 +468,6 @@ The security configuration should be:
 
             firewalls:
                 main:
-                    anonymous: true
                     lazy: true
                     json_login:
                         check_path:    login
@@ -498,7 +487,7 @@ The security configuration should be:
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
             <config>
-                <firewall name="main" anonymous="true" lazy="true">
+                <firewall name="main" lazy="true">
                     <json-login check-path="login"
                         username-path="security.credentials.login"
                         password-path="security.credentials.password"/>
@@ -513,7 +502,6 @@ The security configuration should be:
 
         return static function (SecurityConfig $security) {
             $mainFirewall = $security->firewall('main');
-            $mainFirewall->anonymous();
             $mainFirewall->lazy(true);
             $mainFirewall->jsonLogin()
                 ->checkPath('/login')

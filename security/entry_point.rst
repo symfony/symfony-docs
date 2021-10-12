@@ -1,13 +1,14 @@
-How to Use Multiple Authenticators
-==================================
+The Entry Point: Helping Users Start Authentication
+===================================================
 
-Sometimes, one firewall has multiple ways to authenticate (e.g. both a form
-login and a social login). In these cases, it is now required to configure
-the *authentication entry point*.
+When an unauthenticated user tries to access a protected page, Symfony
+gives them a suitable response to let them start authentication (e.g.
+redirect to a login form or show a 401 Unauthorized HTTP response for
+APIs).
 
-The entry point is used to generate a response when the user is not yet
-authenticated but tries to access a page that requires authentication. This
-can be used for instance to redirect the user to the login page.
+However sometimes, one firewall has multiple ways to authenticate (e.g.
+both a form login and a social login). In these cases, it is required to
+configure the *authentication entry point*.
 
 You can configure this using the ``entry_point`` setting:
 
