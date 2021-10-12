@@ -28,7 +28,6 @@ Configuration
 **Basic Options**:
 
 * `access_denied_url`_
-* `anonymous`_
 * `erase_credentials`_
 * `hide_user_not_found`_
 * `session_fixation_strategy`_
@@ -39,7 +38,7 @@ Some of these options define tens of sub-options and they are explained in
 separate articles:
 
 * `access_control`_
-* `hashers`_
+* :ref:`hashers <passwordhasher-supported-algorithms>`
 * `firewalls`_
 * `providers`_
 * `role_hierarchy`_
@@ -51,15 +50,6 @@ access_denied_url
 
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access deny handler). Example: ``/no-permission``
-
-anonymous
-~~~~~~~~~
-
-**type**: ``string`` **default**: ``~``
-
-When set to ``lazy``, Symfony loads the user (and starts the session) only if
-the application actually accesses the ``User`` object (e.g. via a ``is_granted()``
-call in a template or ``isGranted()`` in a controller or service).
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
@@ -106,268 +96,9 @@ access_control
 
 Defines the security protection of the URLs of your application. It's used for
 example to trigger the user authentication when trying to access to the backend
-and to allow anonymous users to the login form page.
+and to allow unauthenticated users to the login form page.
 
 This option is explained in detail in :doc:`/security/access_control`.
-
-.. _encoders:
-
-hashers
--------
-
-This option defines the algorithm used to *hash* the password of the users.
-If your app defines more than one user class, each of them can define its own
-hashing algorithm. Also, each algorithm defines different config options:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            password_hashers:
-                # auto hasher with default options
-                App\Entity\User: 'auto'
-
-                # auto hasher with custom options
-                App\Entity\User:
-                    algorithm: 'auto'
-                    cost:      15
-
-                # Sodium hasher with default options
-                App\Entity\User: 'sodium'
-
-                # Sodium hasher with custom options
-                App\Entity\User:
-                    algorithm:   'sodium'
-                    memory_cost:  16384 # Amount in KiB. (16384 = 16 MiB)
-                    time_cost:    2     # Number of iterations
-
-                # MessageDigestPasswordHasher hasher using SHA512 hashing with default options
-                App\Entity\User: 'sha512'
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-                <!-- auto hasher with default options -->
-                <security:password-hasher
-                    class="App\Entity\User"
-                    algorithm="auto"
-                />
-
-                <!-- auto hasher with custom options -->
-                <security:password-hasher
-                    class="App\Entity\User"
-                    algorithm="auto"
-                    cost="15"
-                />
-
-                <!-- Sodium hasher with default options -->
-                <security:password-hasher
-                    class="App\Entity\User"
-                    algorithm="sodium"
-                />
-
-                <!-- Sodium hasher with custom options -->
-                <!-- memory_cost: amount in KiB. (16384 = 16 MiB)
-                     time_cost: number of iterations -->
-                <security:password-hasher
-                    class="App\Entity\User"
-                    algorithm="sodium"
-                    memory_cost="16384"
-                    time_cost="2"
-                />
-
-                <!-- MessageDigestPasswordHasher hasher using SHA512 hashing with default options -->
-                <security:password-hasher
-                    class="App\Entity\User"
-                    algorithm="sha512"
-                />
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        use App\Entity\User;
-        use Symfony\Config\SecurityConfig;
-
-        return static function (SecurityConfig $security) {
-            // ...
-
-            // auto hasher with default options
-            $security->passwordHasher(User::class)
-                ->algorithm('auto');
-
-            // auto hasher with custom options
-            $security->passwordHasher(User::class)
-                ->algorithm('auto')
-                ->cost(15);
-
-            // Sodium hasher with default options
-            $security->passwordHasher(User::class)
-                ->algorithm('sodium');
-
-            // Sodium hasher with custom options
-            $security->passwordHasher(User::class)
-                ->algorithm('sodium')
-                ->memoryCost(16384) // Amount in KiB. (16384 = 16 MiB)
-                ->timeCost(2);      // Number of iterations
-
-            // MessageDigestPasswordHasher hasher using SHA512 hashing with default options
-            $security->passwordHasher(User::class)
-                ->algorithm('sha512');
-        };
-
-.. tip::
-
-    You can also create your own password hashers as services and you can even
-    select a different password hasher for each user instance. Read
-    :doc:`this article </security/named_hashers>` for more details.
-
-.. tip::
-
-    Hashing passwords is resource intensive and takes time in order to generate
-    secure password hashes. In tests however, secure hashes are not important, so
-    you can change the password hasher configuration in ``test`` environment to
-    run tests faster:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/packages/test/security.yaml
-            password_hashers:
-                # Use your user class name here
-                App\Entity\User:
-                    algorithm: auto # This should be the same value as in config/packages/security.yaml
-                    cost: 4 # Lowest possible value for bcrypt
-                    time_cost: 3 # Lowest possible value for argon
-                    memory_cost: 10 # Lowest possible value for argon
-
-        .. code-block:: xml
-
-            <!-- config/packages/test/security.xml -->
-            <?xml version="1.0" encoding="UTF-8"?>
-            <srv:container xmlns="http://symfony.com/schema/dic/security"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:srv="http://symfony.com/schema/dic/services"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-                <config>
-                    <!-- class: Use your user class name here -->
-                    <!-- algorithm: This should be the same value as in config/packages/security.yaml -->
-                    <!-- cost: Lowest possible value for bcrypt -->
-                    <!-- time_cost: Lowest possible value for argon -->
-                    <!-- memory_cost: Lowest possible value for argon -->
-                    <security:password-hasher
-                        class="App\Entity\User"
-                        algorithm="auto"
-                        cost="4"
-                        time_cost="3"
-                        memory_cost="10"
-                    />
-                </config>
-            </srv:container>
-
-        .. code-block:: php
-
-            // config/packages/test/security.php
-            use App\Entity\User;
-            use Symfony\Config\SecurityConfig;
-
-            return static function (SecurityConfig $security) {
-                // ...
-
-                // Use your user class name here
-                $security->passwordHasher(User::class)
-                    ->algorithm('auto') // This should be the same value as in config/packages/security.yaml
-                    ->cost(4) // Lowest possible value for bcrypt
-                    ->timeCost(2) // Lowest possible value for argon
-                    ->memoryCost(10) // Lowest possible value for argon
-                ;
-            };
-
-.. _reference-security-encoder-auto:
-.. _using-the-auto-password-encoder:
-
-Using the "auto" Password Hasher
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-It automatically selects the best available hasher, which currently is the
-Bcrypt hasher. If PHP or Symfony adds new password hashers in the future, it
-might select a different hasher.
-
-Because of this, the length of the hashed passwords may change in the future, so
-make sure to allocate enough space for them to be persisted (``varchar(255)``
-should be a good setting).
-
-.. _reference-security-encoder-bcrypt:
-
-Using the Bcrypt Password Hasher
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-It produces hashed passwords with the `bcrypt password hashing function`_.
-Hashed passwords are ``60`` characters long, so make sure to
-allocate enough space for them to be persisted. Also, passwords include the
-`cryptographic salt`_ inside them (it's generated automatically for each new
-password) so you don't have to deal with it.
-
-Its only configuration option is ``cost``, which is an integer in the range of
-``4-31`` (by default, ``13``). Each single increment of the cost **doubles the
-time** it takes to hash a password. It's designed this way so the password
-strength can be adapted to the future improvements in computation power.
-
-You can change the cost at any time — even if you already have some passwords
-hashed using a different cost. New passwords will be hashed using the new
-cost, while the already hashed ones will be validated using a cost that was
-used back when they were hashed.
-
-.. tip::
-
-    A simple technique to make tests much faster when using BCrypt is to set
-    the cost to ``4``, which is the minimum value allowed, in the ``test``
-    environment configuration.
-
-.. _reference-security-sodium:
-.. _using-the-argon2i-password-encoder:
-.. _using-the-sodium-password-encoder:
-
-Using the Sodium Password Hasher
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-It uses the `Argon2 key derivation function`_, which PHP supports natively since
-PHP 7.2 version.
-
-The hashed passwords are ``96`` characters long, but due to the hashing
-requirements saved in the resulting hash this may change in the future, so make
-sure to allocate enough space for them to be persisted. Also, passwords include
-the `cryptographic salt`_ inside them (it's generated automatically for each new
-password) so you don't have to deal with it.
-
-.. _reference-security-pbkdf2:
-.. _using-the-pbkdf2-encoder:
-
-Using the PBKDF2 Hasher
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Using the `PBKDF2`_ hasher is no longer recommended since PHP added support for
-Sodium and BCrypt. Legacy application still using it are encouraged to upgrade
-to those newer hashing algorithms.
 
 firewalls
 ---------
@@ -657,6 +388,102 @@ csrf_token_id
 
 An arbitrary string used to identify the token (and check its validity afterwards).
 
+.. _reference-security-firewall-json-login:
+
+JSON Login Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+check_path
+..........
+
+**type**: ``string`` **default**: ``/login_check``
+
+This is the URL or route name the system must post to authenticate using
+the JSON authenticator. The path must be covered by the firewall to which
+the user will authenticate.
+
+username_path
+.............
+
+**type**: ``string`` **default**: ``username``
+
+Use this and ``password_path`` to modify the expected request body
+structure of the JSON authenticator. For instance, if the JSON document has
+the following structure:
+
+.. code-block:: json
+
+    {
+        "security": {
+            "credentials": {
+                "login": "dunglas",
+                "password": "MyPassword"
+            }
+        }
+    }
+
+The security configuration should be:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    lazy: true
+                    json_login:
+                        check_path:    login
+                        username_path: security.credentials.login
+                        password_path: security.credentials.password
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main" lazy="true">
+                    <json-login check-path="login"
+                        username-path="security.credentials.login"
+                        password-path="security.credentials.password"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->lazy(true);
+            $mainFirewall->jsonLogin()
+                ->checkPath('/login')
+                ->usernamePath('security.credentials.login')
+                ->passwordPath('security.credentials.password')
+            ;
+        };
+
+password_path
+.............
+
+**type**: ``string`` **default**: ``password``
+
+Use this option to modify the expected request body structure. See
+`username_path`_ for more details.
+
 .. _reference-security-ldap:
 
 LDAP Authentication
@@ -713,12 +540,157 @@ fetch your users from an LDAP server, you will need to use the
 :doc:`LDAP User Provider </security/ldap>` and any of these authentication
 providers: ``form_login_ldap`` or ``http_basic_ldap`` or ``json_login_ldap``.
 
+.. _reference-security-firewall-x509:
+
+X.509 Authentication
+~~~~~~~~~~~~~~~~~~~~
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    x509:
+                        provider:    your_user_provider
+                        user:        SSL_CLIENT_S_DN_Email
+                        credentials: SSL_CLIENT_S_DN
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <x509 provider="your_user_provider"
+                        user="SSL_CLIENT_S_DN_Email"
+                        credentials="SSL_CLIENT_S_DN"
+                    />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->x509()
+                ->provider('your_user_provider')
+                ->user('SSL_CLIENT_S_DN_Email')
+                ->credentials('SSL_CLIENT_S_DN')
+            ;
+        };
+
+user
+....
+
+**type**: ``string`` **default**: ``SSL_CLIENT_S_DN_Email``
+
+The name of the ``$_SERVER`` parameter containing the user identifier used
+to load the user in Symfony. The default value is exposed by Apache.
+
+credentials
+...........
+
+**type**: ``string`` **default**: ``SSL_CLIENT_S_DN``
+
+If the ``user`` parameter is not available, the name of the ``$_SERVER``
+parameter containing the full "distinguished name" of the certificate
+(exposed by e.g. Nginx).
+
+Symfony identifies the value following ``emailAddress=`` in this parameter.
+
+.. _reference-security-firewall-remote-user:
+
+Remote User Authentication
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    # ...
+                    remote_user:
+                        provider: your_user_provider
+                        user:     REMOTE_USER
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <remote-user provider="your_user_provider"
+                        user="REMOTE_USER"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->remoteUser()
+                ->provider('your_user_provider')
+                ->user('REMOTE_USER')
+            ;
+        };
+
+provider
+........
+
+**type**: ``string``
+
+The service ID of the user provider that should be used by this
+authenticator.
+
+user
+....
+
+**type**: ``string`` **default**: ``REMOTE_USER``
+
+The name of the ``$_SERVER`` parameter holding the user identifier.
+
 .. _reference-security-firewall-context:
 
 Firewall Context
 ~~~~~~~~~~~~~~~~
 
-Most applications will only need one :ref:`firewall <security-firewalls>`.
+Most applications will only need one :ref:`firewall <firewalls-authentication>`.
 But if your application *does* use multiple firewalls, you'll notice that
 if you're authenticated in one firewall, you're not automatically authenticated
 in another. In other words, the systems don't share a common "context":
@@ -804,13 +776,9 @@ providers
 ---------
 
 This options defines how the application users are loaded (from a database,
-an LDAP server, a configuration file, etc.) Read the following articles to learn
-more about each of those providers:
-
-* :ref:`Load users from a database <security-entity-user-provider>`
-* :ref:`Load users from an LDAP server <security-ldap-user-provider>`
-* :ref:`Load users from a configuration file <security-memory-user-provider>`
-* :ref:`Create your own user provider <custom-user-provider>`
+an LDAP server, a configuration file, etc.) Read
+:doc:`/security/user_providers` to learn more about each of those
+providers.
 
 role_hierarchy
 --------------
@@ -819,8 +787,4 @@ Instead of associating many roles to users, this option allows you to define
 role inheritance rules by creating a role hierarchy, as explained in
 :ref:`security-role-hierarchy`.
 
-.. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`Session Fixation`: https://owasp.org/www-community/attacks/Session_fixation
-.. _`Argon2 key derivation function`: https://en.wikipedia.org/wiki/Argon2
-.. _`bcrypt password hashing function`: https://en.wikipedia.org/wiki/Bcrypt
-.. _`cryptographic salt`: https://en.wikipedia.org/wiki/Salt_(cryptography)

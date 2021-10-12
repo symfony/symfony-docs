@@ -583,9 +583,9 @@ submitting a login form - make a test very slow. For this reason, Symfony
 provides a ``loginUser()`` method to simulate logging in in your functional
 tests.
 
-Instead of logging in with real users, it's recommended to create a user only for
-tests. You can do that with Doctrine :ref:`data fixtures <user-data-fixture>`,
-to load the testing users only in the test database.
+Instead of logging in with real users, it's recommended to create a user
+only for tests. You can do that with `Doctrine data fixtures`_ to load the
+testing users only in the test database.
 
 After loading users in your database, use your user repository to fetch
 this user and use
@@ -997,6 +997,7 @@ Learn more
 .. _`PHPUnit documentation`: https://phpunit.readthedocs.io/en/stable/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
+.. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`PHPUnit Assertion`: https://phpunit.readthedocs.io/en/stable/assertions.html
