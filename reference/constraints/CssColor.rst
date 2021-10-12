@@ -1,5 +1,5 @@
 CssColor
-=========
+========
 
 .. versionadded:: 5.4
 
