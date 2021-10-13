@@ -275,6 +275,8 @@ server provides a ``run`` command to wrap them as follows:
     # stop the web server (and all the associated commands) when you are finished
     $ symfony server:stop
 
+.. _symfony-server-docker:
+
 Docker Integration
 ------------------
 
