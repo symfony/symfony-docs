@@ -371,6 +371,66 @@ by ``row``, ``widget``, ``label``, or ``help``):
         {# the field of TaskType #}
     {% endblock %}
 
+Access data in a Form Choice
+.............................
+
+When you have a ChoiceType or an EntityType, and you want to customize the `entry`, row or widget, you can also retrieve
+the data of the choice, but not directly in the `form.vars.data` of the child. See an exemple:
+
+.. code-block:: php
+
+    class TaskManagerType extends AbstractType
+    {
+        public function buildForm(FormBuilderInterface $builder, array $options = []): void
+        {
+            // $tasks = [
+            //     new Task('one', 'blue', 'open'),  // id: 1
+            //     new Task('two', 'red', 'closed'), // id: 2
+            // ];
+
+            $builder->add('taskLists', EntityType::class, [
+                'class' => Task::class,
+                'multiple' => true,
+                'expanded' => true,
+                'choice_label' => function (Task $task) {
+                    return $task->getName();
+                }
+            ]);
+        }
+    }
+
+Now we want to display each checkbox inside a table element. The entity is not accessible in `form.vars.value` nor `form.vars.data`.
+In the example above, if we dump `form.vars.value` we can see `"1"` and `form.vars.data` = `false`.
+
+Because the value is "1", in case of EntityType, is in reality the `id` of the entity, and data is the value of the checkbox,
+and the checkbox is unchecked by default.
+
+So the real data is inside `form.parent.vars.choices[key].data`, because the parent knows all the choices, and for each
+`ChoiceView` we have:
+
+.. code-block:: php
+    // form.parent.vars.choices
+    choices = [
+        1 => ChoiceView(label: 'one', value: '1', data: 'a Task Entity', other_fields...),
+        2 => ChoiceView(label: 'two', value: '2', data: 'a Task Entity', other_fields...),
+    ]
+
+Get the entity from the array of choices and use the key of the child:
+
+.. code-block:: twig
+
+    {% block _task_manager_taskLists_entry_widget %}
+        {% set entity = form.parent.vars.choices[form.vars.value].data %}
+
+        <tr>
+            <td>{{ form_widget(form) }}</td>
+            <td>{{ form.vars.label }}</td>
+            <td>
+                {{ entity.name }} | {{ entity.color }} | {{ entity.status }}
+            </td>
+        </tr>
+    {% endblock %}
+
 Template Fragment Inheritance
 .............................
 
