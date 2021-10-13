@@ -375,9 +375,7 @@ Access data in a Form Choice
 .............................
 
 When you have a ChoiceType or an EntityType, and you want to customize the ``entry``, row or widget, you can also retrieve
-the data of the choice, but not directly in the ``form.vars.data`` of the child. See an exemple:
-
-.. code-block:: php
+the data of the choice, but not directly in the ``form.vars.data`` of the child. See an exemple::
 
     class TaskManagerType extends AbstractType
     {
@@ -414,9 +412,7 @@ So the real data is inside ``form.parent.vars.choices[key].data``, because the p
         2 => ChoiceView(label: 'two', value: '2', data: 'a Task Entity', other_fields...),
     ]
 
-Get the entity from the array of choices and use the key of the child:
-
-.. code-block:: twig
+Get the entity from the array of choices and use the key of the child::
 
     {% block _task_manager_taskLists_entry_widget %}
         {% set entity = form.parent.vars.choices[form.vars.value].data %}
