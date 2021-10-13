@@ -406,7 +406,7 @@ Because the value is "1", in case of EntityType, is in reality the ``id`` of the
 and the checkbox is unchecked by default.
 
 So the real data is inside ``form.parent.vars.choices[key].data``, because the parent knows all the choices, and for each
-``ChoiceView``` we have:
+``ChoiceView``` we have::
 
     // form.parent.vars.choices
     choices = [
