@@ -404,15 +404,19 @@ Because the value is "1", in case of EntityType, is in reality the ``id`` of the
 and the checkbox is unchecked by default.
 
 So the real data is inside ``form.parent.vars.choices[key].data``, because the parent knows all the choices, and for each
-``ChoiceView``` we have::
+``ChoiceView``` we have:
+
+.. code-block:: text
 
     // form.parent.vars.choices
-    choices = [
-        1 => ChoiceView(label: 'one', value: '1', data: 'a Task Entity', other_fields...),
+     choices = [
+         1 => ChoiceView(label: 'one', value: '1', data: 'a Task Entity', other_fields...),
         2 => ChoiceView(label: 'two', value: '2', data: 'a Task Entity', other_fields...),
-    ]
+     ]
 
-Get the entity from the array of choices and use the key of the child::
+Get the entity from the array of choices and use the key of the child:
+
+.. code-block:: html+twig
 
     {% block _task_manager_taskLists_entry_widget %}
         {% set entity = form.parent.vars.choices[form.vars.value].data %}
