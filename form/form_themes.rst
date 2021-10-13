@@ -408,7 +408,6 @@ and the checkbox is unchecked by default.
 So the real data is inside ``form.parent.vars.choices[key].data``, because the parent knows all the choices, and for each
 ``ChoiceView``` we have:
 
-.. code-block:: php
     // form.parent.vars.choices
     choices = [
         1 => ChoiceView(label: 'one', value: '1', data: 'a Task Entity', other_fields...),
