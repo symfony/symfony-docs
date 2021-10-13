@@ -1121,6 +1121,57 @@ a specific address, instead of the *real* address:
             ],
         ]);
 
+How to Test that an Email is Sent in a Functional Test
+------------------------------------------------------
+
+To functionally test that an email was sent, and even assert the email subject,
+content or any other headers, you can use the methods in
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`
+
+Start with a controller action that sends an email::
+
+    public function sendEmail(MailerInterface $mailer)
+    {
+        $message = new Email();
+        $message
+            ->from('send@example.com')
+            ->to('recipient@example.com')
+            ->text('This is my message')
+        ;
+
+        $mailer->send($message);
+
+        // ...
+    }
+
+In your functional test, assert the data of the message sent on the previous request::
+
+    // tests/Controller/MailControllerTest.php
+    namespace App\Tests\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    class MailControllerTest extends WebTestCase
+    {
+        public function testMailIsSentAndContentIsOk()
+        {
+            $client = static::createClient();
+
+            $crawler = $client->request('POST', '/path/to/above/action');
+
+            // checks that an email was sent
+            $this->assertEmailCount(1);
+
+            $messages = $this->getMailerMessages();
+            $message = $messages[0];
+
+            // Asserting email data
+            $this->assertEmailAddressContains($message, 'From', 'send@example.com');
+            $this->assertEmailAddressContains($message, 'To', 'recipient@example.com');
+            $this->assertEmailTextBodyContains($message, 'This is my message');
+        }
+    }
+
 .. _`high availability`: https://en.wikipedia.org/wiki/High_availability
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
 .. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
