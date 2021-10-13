@@ -841,7 +841,6 @@ separator::
     $children = $node->getChildren();
     $childChildren = $children['connection']->getChildren();
     $path = $childChildren['driver']->getPath();
-    $path = $children['driver']->getPath();
     // $path = 'database/connection/driver'
 
 Processing Configuration Values
