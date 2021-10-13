@@ -374,8 +374,8 @@ by ``row``, ``widget``, ``label``, or ``help``):
 Access data in a Form Choice
 .............................
 
-When you have a ChoiceType or an EntityType, and you want to customize the `entry`, row or widget, you can also retrieve
-the data of the choice, but not directly in the `form.vars.data` of the child. See an exemple:
+When you have a ChoiceType or an EntityType, and you want to customize the ``entry``, row or widget, you can also retrieve
+the data of the choice, but not directly in the ``form.vars.data`` of the child. See an exemple:
 
 .. code-block:: php
 
@@ -399,14 +399,14 @@ the data of the choice, but not directly in the `form.vars.data` of the child. S
         }
     }
 
-Now we want to display each checkbox inside a table element. The entity is not accessible in `form.vars.value` nor `form.vars.data`.
-In the example above, if we dump `form.vars.value` we can see `"1"` and `form.vars.data` = `false`.
+Now we want to display each checkbox inside a table element. The entity is not accessible in ``form.vars.value`` nor ``form.vars.data``.
+In the example above, if we dump ``form.vars.value`` we can see ``"1"`` and ``form.vars.data`` = ``false``.
 
-Because the value is "1", in case of EntityType, is in reality the `id` of the entity, and data is the value of the checkbox,
+Because the value is "1", in case of EntityType, is in reality the ``id`` of the entity, and data is the value of the checkbox,
 and the checkbox is unchecked by default.
 
-So the real data is inside `form.parent.vars.choices[key].data`, because the parent knows all the choices, and for each
-`ChoiceView` we have:
+So the real data is inside ``form.parent.vars.choices[key].data``, because the parent knows all the choices, and for each
+``ChoiceView``` we have:
 
 .. code-block:: php
     // form.parent.vars.choices
