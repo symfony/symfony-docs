@@ -89,7 +89,7 @@ manual steps:
        $ rm -rf vendor/*
        $ composer install
 
-#. No matter which of the previous steps you followed. At this point, you'll have
+#. Regardless of which of the previous steps you followed, at this point you'll have
    lots of new config files in ``config/``. They contain the default config
    defined by Symfony, so you must check your original files in ``app/config/``
    and make the needed changes in the new files. Flex config doesn't use suffixes
