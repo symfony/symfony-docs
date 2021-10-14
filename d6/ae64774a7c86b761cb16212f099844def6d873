@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by dunglas at 2021-10-13T14:37:48Z
+
+GHA failures are false positives.
+
+---------------------------------------------------------------------------
+
+by dunglas at 2021-10-14T08:58:17Z
+
+Ready. Needs https://github.com/symfony-tools/code-block-checker/pull/41 and https://github.com/symfony-tools/symfony-application/pull/7 for the CI to be green.
