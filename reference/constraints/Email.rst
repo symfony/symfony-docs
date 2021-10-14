@@ -130,17 +130,15 @@ Parameter        Description
 
 **type**: ``string`` **default**: (see below)
 
-This option is optional and defines the pattern used to validate the email
-address. Valid values are:
+This option defines the pattern used to validate the email address. Valid values are:
 
-* ``loose``, it uses a simple regular expression to validate the address (it
-  checks that at least one ``@`` character is present, etc.). This validation is
-  too simple and it's recommended to use one of the other modes instead;
-* ``html5``, it validates email addresses using the same regular expression
-  as the `HTML5 email input element`_, making the backend validation consistent
-  with the one provided by browsers;
-* ``strict``, it uses the `egulias/email-validator`_ library (which you must
-  install separately) to validate the addresses according to the `RFC 5322`_.
+* ``loose`` uses a simple regular expression (just checks that at least one ``@``
+  character is present, etc.). This validation is too simple and it's recommended
+  to use one of the other modes instead;
+* ``html5`` uses the same regular expression as the `HTML5 email input element`_,
+  making the backend validation consistent with the one provided by browsers;
+* ``strict`` uses the `egulias/email-validator`_ library (which you must
+  install separately) for validation according to `RFC 5322`_.
 
 The default value used by this option is set in the
 :ref:`framework.validation.email_validation_mode <reference-validation-email_validation_mode>`
