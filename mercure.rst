@@ -57,16 +57,17 @@ can be downloaded as a static binary from `Mercure.rocks`_.
 A Docker image, a Helm chart for Kubernetes
 and a managed, High Availability Hub are also provided.
 
-If you use `Symfony Docker`_ or the `API Platform distribution`_,
-a Mercure Hub is automatically installed and your Symfony application
-is automatically configured to use it.
-You can jump directly to the next section.
+If you use `Symfony Docker`_ or the `API Platform distribution`_, a Mercure Hub
+is automatically installed and your Symfony application is automatically
+configured to use it. You can jump directly to the next section.
 
 If you use the :doc:`Symfony Local Web Server </setup/symfony_server>`,
-a Mercure hub will be automatically available as a Docker service thanks to its :ref:`Docker integration <symfony-server-docker>.
+a Mercure hub will be automatically available as a Docker service thanks to its
+:ref:`Docker integration <symfony-server-docker>.
 
-Be sure that recent versions of Docker and Docker Compose are properly installed on your computer
-and to start the Symfony Local Web Server with the ``--no-tls`` option:
+Be sure that recent versions of Docker and Docker Compose are properly installed
+on your computer and to start the Symfony Local Web Server with the ``--no-tls``
+option:
 
 .. code-block:: terminal
 
@@ -81,9 +82,9 @@ Run this command to install the Mercure support before using it:
 
     $ composer require mercure
 
-:ref:`Symfony Flex <symfony-flex>` has automatically installed and configured MercureBundle.
-It also created (if needed) and configured a Docker Compose definition that provides a Mercure service.
-Run ``docker-compose up`` to start it.
+:ref:`Symfony Flex <symfony-flex>` has automatically installed and configured
+MercureBundle. It also created (if needed) and configured a Docker Compose
+definition that provides a Mercure service. Run ``docker-compose up`` to start it.
 
 Configuration
 -------------
@@ -94,8 +95,9 @@ The preferred way to configure the MercureBundle is using
 When MercureBundle has been installed, the ``.env`` file of your project
 has been updated by the Flex recipe to include the available env vars.
 
-If you use the Symfony Local Web Server, Symfony Docker or the API Platform distribution,
-the Symfony app is automatically configured and you can skip straight to the next section.
+If you use the Symfony Local Web Server, Symfony Docker or the API Platform
+distribution, the Symfony app is automatically configured and you can skip
+straight to the next section.
 
 Otherwise, set the URL of your hub as the value of the ``MERCURE_URL``
 and ``MERCURE_PUBLIC_URL`` env vars.
@@ -251,10 +253,12 @@ Subscribing to updates in JavaScript from a Twig template is straightforward:
     }
     <script>
 
-The ``mercure()`` Twig function will generate the URL of the Mercure hub according to the configuration.
-The URL will include the ``topic`` query parameters corresponding to the topics passed as first argument.
+The ``mercure()`` Twig function will generate the URL of the Mercure hub
+according to the configuration. The URL will include the ``topic`` query
+parameters corresponding to the topics passed as first argument.
 
-If you want to access to this URL from an external JavaScript file, generate the URL in a dedicated HTML element:
+If you want to access to this URL from an external JavaScript file, generate the
+URL in a dedicated HTML element:
 
 .. code:: twig
 
@@ -397,11 +401,11 @@ a JWT containing a topic selector matching by the update's topic.
 To provide this JWT, the subscriber can use a cookie,
 or a ``Authorization`` HTTP header.
 
-Cookies can be set automatically by Symfony by passing the appropriate options to the ``mercure()`` Twig function.
-Cookies set by Symfony will be automatically passed by the browsers to the Mercure hub
-if the ``withCredentials`` attribute of the ``EventSource`` class is set to ``true``.
-Then, the Hub will verify the validity of the provided JWT, and extract the topic selectors
-from it.
+Cookies can be set automatically by Symfony by passing the appropriate options
+to the ``mercure()`` Twig function. Cookies set by Symfony will be automatically
+passed by the browsers to the Mercure hub if the ``withCredentials`` attribute
+of the ``EventSource`` class is set to ``true``. Then, the Hub will verify the
+validity of the provided JWT, and extract the topic selectors from it.
 
 .. code-block:: twig
 
@@ -413,8 +417,8 @@ from it.
 
 The supported options are:
 
-* ``subscribe``:  the list of topic selectors to include in the ``mercure.subscribe`` claim of the JWT
-* ``publish``:  the list of topic selectors to include in the ``mercure.publish`` claim of the JWT
+* ``subscribe``: the list of topic selectors to include in the ``mercure.subscribe`` claim of the JWT
+* ``publish``: the list of topic selectors to include in the ``mercure.publish`` claim of the JWT
 * ``additionalClaims``: extra claims to include in the JWT (expiration date, token ID...)
 
 Using cookies is the most secure and preferred way when the client is a web
@@ -444,12 +448,12 @@ is the way to go.
 Programmatically Setting The Cookie
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sometimes, it can be convenient to set the authorization cookie from
-your code instead of using the Twig function.
-MercureBundle provides a convenient service, :class:`Symfony\\Component\\Mercure\\Authorization`, to do so.
+Sometimes, it can be convenient to set the authorization cookie from your code
+instead of using the Twig function. MercureBundle provides a convenient service,
+:class:`Symfony\\Component\\Mercure\\Authorization`, to do so.
 
-In the following example controller,
-the added cookie contains a JWT, itself containing the appropriate topic selector.
+In the following example controller, the added cookie contains a JWT, itself
+containing the appropriate topic selector.
 
 And here is the controller::
 
@@ -714,9 +718,10 @@ it will be handled automatically::
 Going further
 -------------
 
-* The Mercure protocol is also supported by :doc:`the Notifier component </notifier>`. Use it to send push notifications to web browsers.
-* `Symfony UX Turbo`_ is a library using Mercure to provide the same experience as with Single Page Applications but without having to write a single line of JavaScript!
-
+* The Mercure protocol is also supported by :doc:`the Notifier component </notifier>`.
+  Use it to send push notifications to web browsers.
+* `Symfony UX Turbo`_ is a library using Mercure to provide the same experience
+  as with Single Page Applications but without having to write a single line of JavaScript!
 
 .. _`the Mercure protocol`: https://mercure.rocks/spec
 .. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
