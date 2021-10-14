@@ -34,7 +34,7 @@ and what headers your reverse proxy uses to send information:
             # the IP address (or range) of your proxy
             trusted_proxies: '192.0.0.1,10.0.0.0/8'
             # trust *all* "X-Forwarded-*" headers
-            trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port']
+            trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port', 'x-forwarded-prefix']
             # or, if your proxy instead uses the "Forwarded" header
             trusted_headers: ['forwarded']
 
@@ -59,6 +59,7 @@ and what headers your reverse proxy uses to send information:
                 <framework:trusted-header>x-forwarded-host</framework:trusted-header>
                 <framework:trusted-header>x-forwarded-proto</framework:trusted-header>
                 <framework:trusted-header>x-forwarded-port</framework:trusted-header>
+                <framework:trusted-header>x-forwarded-prefix</framework:trusted-header>
 
                 <!-- or, if your proxy instead uses the "Forwarded" header -->
                 <framework:trusted-header>forwarded</framework:trusted-header>
@@ -75,7 +76,7 @@ and what headers your reverse proxy uses to send information:
                 // the IP address (or range) of your proxy
                 ->trustedProxies('192.0.0.1,10.0.0.0/8')
                 // trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers)
-                ->trustedHeaders(['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port'])
+                ->trustedHeaders(['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port', 'x-forwarded-prefix'])
                 // or, if your proxy instead uses the "Forwarded" header
                 ->trustedHeaders(['forwarded'])
             ;
