@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by carsonbot at 2021-10-10T18:52:33Z
+
+Hey!
+
+Oh no, it looks like you have made this PR towards a branch that is not maintained anymore. :/
+Could you update the [PR base branch](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/changing-the-base-branch-of-a-pull-request) to target one of these branches instead? 4.4, 5.3, 5.4, 6.0.
+
+Cheers!
+
+Carsonbot
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-10-11T13:59:42Z
+
+Thanks @JohJohan! About the label ... we already have `hacktoberfest` as a topic of this repository so, if I'm right, merging this PR will give you the needed attribution without having to add the label too.
+
+---------------------------------------------------------------------------
+
+by JohJohan at 2021-10-11T15:13:34Z
+
+@javiereguiluz i think you are right thanks!
