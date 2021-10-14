@@ -820,7 +820,7 @@ The form can look like anything, but it usually follows some conventions:
     :ref:`form_login-csrf` on how to protect your login form.
 
 And that's it! When you submit the form, the security system automatically
-reads the ``_username`` and ``_email`` POST parameter, loads the user via
+reads the ``_username`` and ``_password`` POST parameter, loads the user via
 the user provider, checks the user's credentials and either authenticates the
 user or sends them back to the login form where the error can be displayed.
 
