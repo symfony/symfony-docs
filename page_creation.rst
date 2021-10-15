@@ -166,9 +166,9 @@ To get a list of *all* of the routes in your system, use the ``debug:router`` co
 You should see your ``app_lucky_number`` route in the list:
 
 ================== ======== ======== ====== ===============
- Name               Method   Scheme   Host   Path
+Name               Method   Scheme   Host   Path
 ================== ======== ======== ====== ===============
- app_lucky_number   ANY      ANY      ANY    /lucky/number
+app_lucky_number   ANY      ANY      ANY    /lucky/number
 ================== ======== ======== ====== ===============
 
 You will also see debugging routes besides ``app_lucky_number`` -- more on
