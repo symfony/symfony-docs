@@ -1017,7 +1017,7 @@ The transport has a number of options:
 Options defined under ``options`` take precedence over ones defined in the DSN.
 
 ==================  =====================================  ======================
-     Option         Description                            Default
+Option              Description                            Default
 ==================  =====================================  ======================
 table_name          Name of the table                      messenger_messages
 queue_name          Name of the queue (a column in the     default
@@ -1066,7 +1066,7 @@ A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
 ==================  =====================================  =========================
-     Option               Description                      Default
+Option              Description                            Default
 ==================  =====================================  =========================
 stream              The Redis stream name                  messages
 group               The Redis consumer group name          symfony
