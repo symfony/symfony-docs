@@ -999,7 +999,7 @@ the exchange, queues binding keys and more. See the documentation on
 The transport has a number of options:
 
 ============================================  =================================================  ===================================
-     Option                                   Description                                        Default
+Option                                        Description                                        Default
 ============================================  =================================================  ===================================
 ``auto_setup``                                Whether the table should be created                ``true``
                                               automatically during send / get.
@@ -1126,7 +1126,7 @@ Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 The transport has a number of options:
 
 ==================  =====================================  ======================
-     Option         Description                            Default
+Option              Description                            Default
 ==================  =====================================  ======================
 table_name          Name of the table                      messenger_messages
 queue_name          Name of the queue (a column in the     default
@@ -1192,7 +1192,7 @@ The Beanstalkd transport DSN may looks like this:
 The transport has a number of options:
 
 ==================  ===================================  ======================
-     Option         Description                          Default
+Option              Description                          Default
 ==================  ===================================  ======================
 tube_name           Name of the queue                    default
 timeout             Message reservation timeout          0 (will cause the
@@ -1240,7 +1240,7 @@ A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
 ===================  =====================================  =================================
-     Option               Description                       Default
+Option               Description                            Default
 ===================  =====================================  =================================
 stream               The Redis stream name                  messages
 group                The Redis consumer group name          symfony
@@ -1421,7 +1421,7 @@ The SQS transport DSN may looks like this:
 The transport has a number of options:
 
 ======================  ======================================  ===================================
-     Option             Description                             Default
+Option                  Description                             Default
 ======================  ======================================  ===================================
 ``access_key``          AWS access key                          must be urlencoded
 ``account``             Identifier of the AWS account           The owner of the credentials
