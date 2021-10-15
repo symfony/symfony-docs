@@ -1269,7 +1269,7 @@ Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 The transport has a number of options:
 
 ==================  =====================================  ======================
-     Option         Description                            Default
+Option              Description                            Default
 ==================  =====================================  ======================
 table_name          Name of the table                      messenger_messages
 queue_name          Name of the queue (a column in the     default
@@ -1367,8 +1367,9 @@ The Redis transport DSN may looks like this:
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
+
 ===================  =====================================  =================================
-     Option               Description                       Default
+Option               Description                            Default
 ===================  =====================================  =================================
 stream               The Redis stream name                  messages
 group                The Redis consumer group name          symfony
