@@ -954,7 +954,7 @@ Enable the authenticator using the ``json_login`` setting:
                 main:
                     # ...
                     json_login:
-                        # app_login is a route we will create below
+                        # api_login is a route we will create below
                         check_path: api_login
 
     .. code-block:: xml
