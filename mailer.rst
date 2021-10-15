@@ -161,18 +161,17 @@ This table shows the full list of available DSN formats for each third
 party provider:
 
 ==================== ==================================================== =========================================== ========================================
- Provider             SMTP                                                 HTTP                                        API
+Provider             SMTP                                                 HTTP                                        API
 ==================== ==================================================== =========================================== ========================================
- Amazon SES           ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
- Google Gmail         gmail+smtp://USERNAME:PASSWORD@default               n/a                                         n/a
- Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
- Mailgun              mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
- Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
- Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
- Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
- Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
- OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a                                         ohmysmtp+api://API_TOKEN@default
-
+Amazon SES           ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
+Google Gmail         gmail+smtp://USERNAME:PASSWORD@default               n/a                                         n/a
+Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
+Mailgun              mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
+Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
+Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
+Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
+Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
+OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a                                         ohmysmtp+api://API_TOKEN@default
 ==================== ==================================================== =========================================== ========================================
 
 .. caution::
@@ -189,7 +188,7 @@ party provider:
     a value lower than ``10``: ``ses+smtp://USERNAME:PASSWORD@default?ping_threshold=9``
 
     .. versionadded:: 5.4
-        
+
         The ``ping_threshold`` option for ``ses-smtp`` was introduced in Symfony 5.4.
 
 .. note::
