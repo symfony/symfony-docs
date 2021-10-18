@@ -2,8 +2,6 @@ Installing Encore
 =================
 
 First, make sure you `install Node.js`_ and also the `Yarn package manager`_.
-The following instructions depend on whether you are installing Encore in a
-Symfony application or not.
 
 Installing Encore in Symfony Applications
 -----------------------------------------
@@ -15,10 +13,8 @@ project:
 
     $ composer require symfony/webpack-encore-bundle
 
-    # if you use the Yarn package manager
     $ yarn install
-
-    # if you use the npm package manager
+    # or
     $ npm install
 
 If you are using :ref:`Symfony Flex <symfony-flex>`, this will install and enable
