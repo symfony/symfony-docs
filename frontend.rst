@@ -17,9 +17,8 @@ Webpack Encore
 --------------
 
 `Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your application.
-It *wraps* Webpack, giving you a clean & powerful API for bundling JavaScript modules,
-pre-processing CSS & JS and compiling and minifying assets. Encore gives you professional
-asset system that's a *delight* to use.
+It wraps Webpack, giving you a clean & powerful API for bundling JavaScript modules,
+pre-processing CSS & JS, and compiling and minifying assets.
 
 Encore is inspired by `Webpacker`_ and `Mix`_, but stays in the spirit of Webpack:
 using its features, concepts and naming conventions for a familiar feel. It aims
