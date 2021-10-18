@@ -4,8 +4,8 @@ Encore: Setting up your Project
 After :doc:`installing Encore </frontend/encore/installation>`, your app already has one
 CSS and one JS file, organized into an ``assets/`` directory:
 
-* ``assets/js/app.js``
-* ``assets/css/app.css``
+* ``assets/app.js``
+* ``assets/styles/app.css``
 
 With Encore, think of your ``app.js`` file like a standalone JavaScript
 application: it will *require* all of the dependencies it needs (e.g. jQuery or React),
@@ -14,12 +14,10 @@ application: it will *require* all of the dependencies it needs (e.g. jQuery or 
 
 .. code-block:: javascript
 
-    // assets/js/app.js
+    // assets/app.js
     // ...
 
-    import '../css/app.css';
-
-    // var $ = require('jquery');
+    import './styles/app.css';
 
 Encore's job (via Webpack) is simple: to read and follow *all* of the ``require()``
 statements and create one final ``app.js`` (and ``app.css``) that contains *everything*
