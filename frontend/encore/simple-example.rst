@@ -35,7 +35,9 @@ of your project. It already holds the basic config you need:
 .. code-block:: javascript
 
     // webpack.config.js
-    var Encore = require('@symfony/webpack-encore');
+    const Encore = require('@symfony/webpack-encore');
+    
+    // ...
 
     Encore
         // directory where compiled assets will be stored
@@ -43,7 +45,7 @@ of your project. It already holds the basic config you need:
         // public path used by the web server to access the output path
         .setPublicPath('/build')
 
-        .addEntry('app', './assets/js/app.js')
+        .addEntry('app', './assets/app.js')
 
         // ...
     ;
