@@ -40,7 +40,7 @@ Getting Started
 ...............
 
 * :doc:`Installation </frontend/encore/installation>`
-* :doc:`First Example </frontend/encore/simple-example>`
+* :doc:`Setting up your Project </frontend/encore/simple-example>`
 
 Adding more Features
 ....................
