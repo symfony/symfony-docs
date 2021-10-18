@@ -33,6 +33,13 @@ to solve the most common Webpack use cases.
 
 .. _encore-toc:
 
+Technical Requirements
+----------------------
+
+* Node.js on your development machine(s)
+* Yarn or npm on your development machine(s)
+* No requirements on your production machine(s)
+
 Encore Documentation
 --------------------
 
