@@ -43,7 +43,7 @@ features, such as the APCu Cache adapter.
 Restrict the Number of Locales Enabled in the Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use the :ref:`framework.translator.enabled_locales <reference-translator-enabled-locales>`
+Use the :ref:`framework.enabled_locales <reference-enabled-locales>`
 option to only generate the translation files actually used in your application.
 
 .. _performance-service-container-single-file:
@@ -115,7 +115,7 @@ Symfony generates a file with the list of classes to preload in the
 
     ; php.ini
     opcache.preload=/path/to/project/config/preload.php
-    
+
     ; required for opcache.preload:
     opcache.preload_user=www-data
 

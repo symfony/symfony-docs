@@ -68,9 +68,6 @@ To build the assets, run the following if you use the Yarn package manager:
     # on deploy, create a production build
     $ yarn encore production
 
-    # if you use the npm package manager
-    $ npm install react react-dom prop-types --save
-
 If you use the npm package manager, run the following commands instead:
 
 .. code-block:: terminal
