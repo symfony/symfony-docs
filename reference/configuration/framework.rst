@@ -282,6 +282,7 @@ method.
     You can read more information about the default locale in
     :ref:`translation-default-locale`.
 
+.. _reference-translator-enabled-locales:
 .. _reference-enabled-locales:
 
 enabled_locales
@@ -337,7 +338,7 @@ application won't display any error because Symfony will display contents using
 the fallback locale.
 
 set_content_language_from_locale
-...............
+................................
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -349,7 +350,7 @@ If this option is set to ``true``, the response will have a ``Content-Language``
 HTTP header set with the ``Request`` locale.
 
 set_locale_from_accept_language
-...............
+...............................
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -357,8 +358,8 @@ set_locale_from_accept_language
 
     The ``set_locale_from_accept_language`` option was introduced in Symfony 5.4.
 
-The ``Request`` locale will automatically be set to the value of the
-``Accept-Language`` HTTP header.
+If this option is set to ``true``, the ``Request`` locale will automatically be
+set to the value of the ``Accept-Language`` HTTP header.
 
 When the ``_locale`` request attribute is passed, the ``Accept-Language`` header
 is ignored.
