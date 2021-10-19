@@ -145,7 +145,8 @@ framework does not need to be modified in any way, create a new
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing;
 
-    function is_leap_year($year = null) {
+    function is_leap_year($year = null)
+    {
         if (null === $year) {
             $year = date('Y');
         }
