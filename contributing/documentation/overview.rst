@@ -121,7 +121,7 @@ branch of the ``upstream`` remote, which is the original Symfony Docs repository
 Fixes should always be based on the **oldest maintained branch** which contains
 the error. Nowadays this is the ``4.4`` branch. If you are instead documenting a
 new feature, switch to the first Symfony version that included it, e.g.
-``upstream/3.1``.
+``upstream/5.4``.
 
 **Step 5.** Now make your changes in the documentation. Add, tweak, reword and
 even remove any content and do your best to comply with the
