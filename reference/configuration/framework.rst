@@ -2226,7 +2226,7 @@ enabled_locales
 
 .. deprecated:: 5.4
 
-    Using `framework.translator.enabled_locales` has been deprecated in favour of
+    Using ``framework.translator.enabled_locales`` has been deprecated in favor of
     :ref:`framework.enabled_locales <reference-enabled-locales>` since Symfony 5.4.
 
 .. _fallback:
