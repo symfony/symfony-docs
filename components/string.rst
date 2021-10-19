@@ -306,6 +306,16 @@ Methods to Pad and Trim
     u('   Lorem Ipsum   ')->trimStart(); // 'Lorem Ipsum   '
     u('   Lorem Ipsum   ')->trimEnd();   // '   Lorem Ipsum'
 
+    // removes the given content(s) from the start/end of the string
+    u('file-0001.png')->trimPrefix('file-');                 // '0001.png'
+    u('file-0001.png')->trimPrefix(['file-', 'image-']);     // '0001.png'
+    u('template.html.twig')->trimSuffix('.twig');            // 'template.html'
+    u('template.html.twig')->trimSuffix(['.twig', '.html']); // 'template'
+
+.. versionadded:: 5.4
+
+    The ``trimPrefix()`` and ``trimSuffix()`` methods were introduced in Symfony 5.4.
+
 Methods to Search and Replace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
