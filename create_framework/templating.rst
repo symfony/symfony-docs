@@ -38,8 +38,7 @@ that renders a template when there is no specific logic. To keep the same
 template as before, request attributes are extracted before the template is
 rendered::
 
-    function render_template($request)
-    {
+    function render_template($request) {
         extract($request->attributes->all(), EXTR_SKIP);
         ob_start();
         include sprintf(__DIR__.'/../src/pages/%s.php', $_route);
@@ -106,8 +105,7 @@ Here is the updated and improved version of our framework::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing;
 
-    function render_template($request)
-    {
+    function render_template($request) {
         extract($request->attributes->all(), EXTR_SKIP);
         ob_start();
         include sprintf(__DIR__.'/../src/pages/%s.php', $_route);
