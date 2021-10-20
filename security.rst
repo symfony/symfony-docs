@@ -473,7 +473,7 @@ the database::
             $plaintextPassword = ...;
 
             // hash the password (based on the security.yaml config for the $user class)
-            $hashedPassword = $passwordHasher->hash(
+            $hashedPassword = $passwordHasher->hashPassword(
                 $user,
                 $plaintextPassword
             );
