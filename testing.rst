@@ -922,6 +922,8 @@ Browser Assertions
 ``assertBrowserCookieValueSame(string $name, string $expectedValue, string $path = '/', string $domain = null, string $message = '')``
     Asserts the given cookie in the test Client is set to the expected
     value.
+``assertThatForClient(Constraint $constraint, string $message = '')``
+    Asserts the given Constraint in Client.
 
 Crawler Assertions
 ..................
