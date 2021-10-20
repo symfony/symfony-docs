@@ -361,12 +361,11 @@ blank, ``findBy()`` will be used. The method receives as its argument a
 fields configured in the ``fields`` option). The method should return a
 :phpfunction:`countable PHP variable <is_countable>`.
 
-This method should ensure two return a maximum of two entities,
+This method should ensure to return a maximum of two entities,
 if a custom method is used. This is necessary to avoid potential memory and
-performance isuses. Retrieving two entities is enough to determine uniqueness:
+performance issues. Retrieving two entities is enough to determine uniqueness:
 - No entity found, it is unique.
 - Two or more entities found, it is not unique.
 - One entity found, it depends on the entity that is checked.
-
 
 .. _`race conditions`: https://en.wikipedia.org/wiki/Race_condition
