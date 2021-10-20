@@ -55,7 +55,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             ];
 
             $model = new TestObject();
-            // $formData will retrieve data from the form submission; pass it as the second argument
+            // $model will retrieve data from the form submission; pass it as the second argument
             $form = $this->factory->create(TestedType::class, $model);
 
             $expected = new TestObject();
@@ -67,7 +67,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             // This check ensures there are no transformation failures
             $this->assertTrue($form->isSynchronized());
 
-            // check that $formData was modified as expected when the form was submitted
+            // check that $model was modified as expected when the form was submitted
             $this->assertEquals($expected, $model);
         }
 
@@ -88,7 +88,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 So, what does it test? Here comes a detailed explanation.
 
 First you verify if the ``FormType`` compiles. This includes basic class
-inheritance, the ``buildForm()`` function and options resolution. This should
+inheritance, the ``buildForm()`` method and options resolution. This should
 be the first test you write::
 
     $form = $this->factory->create(TestedType::class, $formData);

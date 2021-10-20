@@ -111,7 +111,7 @@ Symfony contributions:
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At present, new Symfony Core membership applications are not accepted.
+About once a year, the core team discuss the opportunity to invite new members.
 
 Core Membership Revocation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -122,9 +122,6 @@ A Symfony Core membership can be revoked for any of the following reasons:
 * Lack of activity for the past six months;
 * Willful negligence or intent to harm the Symfony project;
 * Upon decision of the **Project Leader**.
-
-Should new Symfony Core memberships be accepted in the future, revoked
-members must wait at least 12 months before re-applying.
 
 Code Development Rules
 ----------------------

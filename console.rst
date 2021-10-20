@@ -426,7 +426,7 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
 .. note::
 
     When using the Console component in a standalone project, use
-    :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`
+    :class:`Symfony\\Component\\Console\\Application`
     and extend the normal ``\PHPUnit\Framework\TestCase``.
 
 Logging Command Errors
