@@ -300,10 +300,6 @@ Methods to Pad and Trim
     u('template.html.twig')->trimSuffix('.twig');            // 'template.html'
     u('template.html.twig')->trimSuffix(['.twig', '.html']); // 'template'
 
-.. versionadded:: 5.4
-
-    The ``trimPrefix()`` and ``trimSuffix()`` methods were introduced in Symfony 5.4.
-
 Methods to Search and Replace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
