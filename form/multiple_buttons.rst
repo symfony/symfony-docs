@@ -6,7 +6,7 @@ How to Submit a Form with Multiple Buttons
 
 When your form contains more than one submit button, you will want to check
 which of the buttons was clicked to adapt the program flow in your controller.
-To do this, add a second button with the caption "Save and add" to your form::
+To do this, add a second button with the caption "Save and Add" to your form::
 
     $form = $this->createFormBuilder($task)
         ->add('task', TextType::class)
@@ -17,7 +17,7 @@ To do this, add a second button with the caption "Save and add" to your form::
 
 In your controller, use the button's
 :method:`Symfony\\Component\\Form\\ClickableInterface::isClicked` method for
-querying if the "Save and add" button was clicked::
+querying if the "Save and Add" button was clicked::
 
     if ($form->isSubmitted() && $form->isValid()) {
         // ... perform some action, such as saving the task to the database
