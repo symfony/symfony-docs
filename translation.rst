@@ -354,6 +354,33 @@ Templates are now much simpler because you can pass translatable objects to the
     There's also a :ref:`function called t() <reference-twig-function-t>`,
     available both in Twig and PHP, as a shortcut to create translatable objects.
 
+.. _translatable-classes:
+
+Translatable Classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.4
+
+    Additional translatable classes were introduced in Symfony 5.4.
+
+Apart from :class:`Symfony\\Component\\Translation\\TranslatableMessage` class, you can use
+one of a few helper classes. It could eventually allow you to type-hint code base with
+:class:`Symfony\\Contracts\\Translation\\TranslatableInterface` and defer translation
+in application.
+
+Available classes and their respective shortcuts:
+
+* :class:`Symfony\\Component\\Translation\\Message\\FormattedTranslatableMessage`
+  and `ft(string $format, ...$parameters)` function. When translated it translates all
+  `TranslatableInterface` parameters and passes them to :phpfunction:`sprintf` with
+  specified `$format`.
+* :class:`Symfony\\Component\\Translation\\Message\\ImplodedTranslatableMessage`
+  and `it(string $glue, ...$parameters)` function. When translated it translates all
+  `TranslatableInterface` parameters and join them with specified `$glue`.
+* :class:`Symfony\\Component\\Translation\\Message\\NonTranslatableMessage`
+  and `nt(string $message)` function. When translated it returns unmodified `$message`
+  without any translation applied.
+
 .. _translation-in-templates:
 
 Translations in Templates
