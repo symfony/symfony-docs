@@ -106,6 +106,8 @@ object, which acts like an array of errors. Each error in the collection
 is a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object,
 which holds the error message on its ``getMessage()`` method.
 
+You can determine if the list contains any violations using the ``isEmpty()`` method.
+
 .. note::
 
     When using groups with the
