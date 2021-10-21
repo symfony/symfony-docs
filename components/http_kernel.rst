@@ -194,7 +194,7 @@ attributes).
     When setting a response for the ``kernel.request`` event, the propagation
     is stopped. This means listeners with lower priority won't be executed.
 
-.. sidebar:: ``kernel.request`` in the Symfony Framework
+.. sidebar:: kernel.request in the Symfony Framework
 
     The most important listener to ``kernel.request`` in the Symfony Framework
     is the :class:`Symfony\\Component\\HttpKernel\\EventListener\\RouterListener`.
