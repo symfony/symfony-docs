@@ -165,6 +165,14 @@ Content Methods
             ['foo4' => 'bar4']
         );
 
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createTable`
+    Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\Table`
+    styled according to the Symfony Style Guide.
+
+.. versionadded:: 5.4
+
+    The ``createTable()`` method was introduced in Symfony 5.4.
+
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
     most of the times you won't need it at all. The reason is that every helper
@@ -242,6 +250,24 @@ Progress Bar Methods
     length is known)::
 
         $io->progressFinish();
+
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::progressIterate`
+    If your progress bar loops over an iterable collection, use the
+    ``progressIterate()`` helper::
+
+        $iterable = [1, 2];
+
+        foreach ($io->progressIterate($iterable) as $value) {
+            // ... do some work
+        }
+
+.. versionadded:: 5.4
+
+    The ``progressIterate`` method was introduced in Symfony 5.4.
+
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createProgressBar`
+    Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
+    styled according to the Symfony Style Guide.
 
 User Input Methods
 ~~~~~~~~~~~~~~~~~~
