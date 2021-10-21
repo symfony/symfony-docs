@@ -87,6 +87,15 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
     container. If you override the ``row_attr`` class option, the ``mb-3`` will
     be override too and you will need to explicitly add it.
 
+Upgrading from Bootstrap 4
+--------------------------
+
+* ``form_row()`` is now rendering the error messages *after* the ``<input>`` element.
+So if you're sometimes rendering ``form_widget()`` manually, you need to change the order to:
+.. code-block:: html+twig
+    {{ form_widget(form.foo) }}
+    {{ form_errors(form.foo) }}
+
 Error Messages
 --------------
 
