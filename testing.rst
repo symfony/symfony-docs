@@ -923,7 +923,18 @@ Browser Assertions
     Asserts the given cookie in the test Client is set to the expected
     value.
 ``assertThatForClient(Constraint $constraint, string $message = '')``
-    Asserts the given Constraint in Client.
+    Asserts the given Constraint in the Client. Useful to use your custom asserts
+    in the same way of built-in asserts (i.e. without passing the Client as argument)::
+
+        // add this method in some custom class imported in your tests
+        protected static function assertMyOwnCustomAssert(): void
+        {
+            self::assertThatForClient(new SomeCustomConstraint());
+        }
+
+.. versionadded:: 5.4
+
+    The ``assertThatForClient()`` method was introduced in Symfony 5.4.
 
 Crawler Assertions
 ..................
