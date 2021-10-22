@@ -103,9 +103,9 @@ Due to Bootstrap internals, the label is already rendered by ``form_widget()``.
 Inline Checkboxes and Radios
 ----------------------------
 
-If you want to render your checkboxes or radios fields `inline`_, you can add
-the ``checkbox-inline`` or ``radio-inline`` class, depending of your Symfony
-Form type or ``ChoiceType`` configuration, to the label class.
+If you want to render your checkbox or radio fields `inline`_, you can add
+the ``checkbox-inline`` or ``radio-inline`` class (depending on your Symfony
+Form type or ``ChoiceType`` configuration) to the label class.
 
 .. configuration-block::
 
