@@ -85,7 +85,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
 
     By default, all inputs are rendered with the ``mb-3`` class on their
     container. If you override the ``row_attr`` class option, the ``mb-3`` will
-    be override too and you will need to explicitly add it.
+    be overriden too and you will need to explicitly add it.
 
 Error Messages
 --------------
