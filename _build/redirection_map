@@ -508,6 +508,6 @@
 /frontend/encore/versus-assetic /frontend
 /components/http_client /http_client
 /components/mailer /mailer
-/messenger/message-recorder messenger/dispatch_after_current_bus
+/messenger/message-recorder /messenger/dispatch_after_current_bus
 /components/stopwatch https://github.com/symfony/stopwatch
 /service_container/3.3-di-changes https://symfony.com/doc/3.4/service_container/3.3-di-changes.html
