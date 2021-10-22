@@ -51,17 +51,19 @@ serialized::
 .. _messenger-handler:
 
 A message handler is a PHP callable, the recommended way to create it is to
-create a class that implements :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
-and has an ``__invoke()`` method that's type-hinted with the message class (or a
-message interface)::
+create a class using :class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`
+attribute which has an ``__invoke()`` method that's type-hinted with the
+message class (or a message interface) or you can create a class without the attribute, by implementing
+:class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
 
     use App\Message\SmsNotification;
-    use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-    class SmsNotificationHandler implements MessageHandlerInterface
+    #[AsMessageHandler]
+    class SmsNotificationHandler
     {
         public function __invoke(SmsNotification $message)
         {
@@ -349,9 +351,10 @@ Then, in your handler, you can query for a fresh object::
 
     use App\Message\NewUserWelcomeEmail;
     use App\Repository\UserRepository;
-    use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-    class NewUserWelcomeEmailHandler implements MessageHandlerInterface
+    #[AsMessageHandler]
+    class NewUserWelcomeEmailHandler
     {
         private $userRepository;
 
@@ -1768,6 +1771,36 @@ Customizing Handlers
 --------------------
 
 .. _messenger-handler-config:
+
+Configuring Handlers Using Attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can configure your handler easily by passing options to the attribute::
+
+    // src/MessageHandler/SmsNotificationHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\OtherSmsNotification;
+    use App\Message\SmsNotification;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+    #[AsMessageHandler(fromTransport: 'async', priority: 10)]
+    class SmsNotificationHandler
+    {
+        public function __invoke(SmsNotification $message)
+        {
+            // ...
+        }
+    }
+
+
+Possible options to configure with the attribute are:
+
+* ``bus``
+* ``fromTransport``
+* ``handles``
+* ``method``
+* ``priority``
 
 Manually Configuring Handlers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
