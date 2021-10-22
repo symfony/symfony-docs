@@ -123,8 +123,8 @@ Type                                                 Directory
 Commands                                             ``src/Command/``
 Controllers                                          ``src/Controller/``
 Service Container Extensions                         ``src/DependencyInjection/``
-Doctrine ORM entities (when not using annotations)   ``src/Entity/``
-Doctrine ODM documents (when not using annotations)  ``src/Document/``
+Doctrine ORM entities                                ``src/Entity/``
+Doctrine ODM documents                               ``src/Document/``
 Event Listeners                                      ``src/EventListener/``
 Configuration (routes, services, etc.)               ``config/``
 Web Assets (CSS, JS, images)                         ``public/``
@@ -161,6 +161,15 @@ standard Symfony autoloading instead.
 
 A bundle should also not embed third-party libraries written in JavaScript,
 CSS or any other language.
+
+Doctrine Entities/Documents
+---------------------------
+
+If the bundle includes Doctrine ORM entities and/or ODM documents, it's
+recommended to define their mapping using XML files stored in
+``Resources/config/doctrine/``. This allows to override that mapping using the
+:doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
+This is not possible when using annotations/attributes to define the mapping.
 
 Tests
 -----
