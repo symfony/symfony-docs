@@ -924,10 +924,6 @@ Browser Assertions
             self::assertThatForClient(new SomeCustomConstraint());
         }
 
-.. versionadded:: 5.4
-
-    The ``assertThatForClient()`` method was introduced in Symfony 5.4.
-
 Crawler Assertions
 ..................
 
