@@ -85,7 +85,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
 
     By default, all inputs are rendered with the ``mb-3`` class on their
     container. If you override the ``row_attr`` class option, the ``mb-3`` will
-    be override too and you will need to explicitly add it.
+    be overridden too and you will need to explicitly add it.
 
 Error Messages
 --------------
@@ -103,9 +103,9 @@ Due to Bootstrap internals, the label is already rendered by ``form_widget()``.
 Inline Checkboxes and Radios
 ----------------------------
 
-If you want to render your checkboxes or radios fields `inline`_, you can add
-the ``checkbox-inline`` or ``radio-inline`` class, depending of your Symfony
-Form type or ``ChoiceType`` configuration, to the label class.
+If you want to render your checkbox or radio fields `inline`_, you can add
+the ``checkbox-inline`` or ``radio-inline`` class (depending on your Symfony
+Form type or ``ChoiceType`` configuration) to the label class.
 
 .. configuration-block::
 
