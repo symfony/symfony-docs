@@ -194,16 +194,19 @@ you'll need to configure services (or parts of them) manually.
 YAML is the format recommended to configure services because it's friendly to
 newcomers and concise, but Symfony also supports XML and PHP configuration.
 
-Use Annotations to Define the Doctrine Entity Mapping
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use Attributes to Define the Doctrine Entity Mapping
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Doctrine entities are plain PHP objects that you store in some "database".
 Doctrine only knows about your entities through the mapping metadata configured
 for your model classes.
 
-Doctrine supports several metadata formats, but it's recommended to use
-annotations because they are by far the most convenient and agile way of setting
+Doctrine supports several metadata formats, but it's recommended to use PHP
+attributes because they are by far the most convenient and agile way of setting
 up and looking for mapping information.
+
+If your PHP version doesn't support attributes yet, use annotations, which is
+similar but requires installing some extra dependencies in your project.
 
 Controllers
 -----------
