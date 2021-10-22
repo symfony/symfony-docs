@@ -82,8 +82,8 @@ you run off to play the lottery, check out how this works. Remember the two step
 to creating a page?
 
 #. *Create a route*: In ``config/routes.yaml``, the route defines the URL to your
-    page (``path``) and what ``controller`` to call. You'll learn more about :doc:`routing </routing>`
-    in its own section, including how to make *variable* URLs;
+   page (``path``) and what ``controller`` to call. You'll learn more about :doc:`routing </routing>`
+   in its own section, including how to make *variable* URLs;
 
 #. *Create a controller*: This is a function where *you* build the page and ultimately
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
