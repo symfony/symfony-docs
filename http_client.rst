@@ -1939,5 +1939,5 @@ test it in a real application::
 .. _`cURL options`: https://www.php.net/manual/en/function.curl-setopt.php
 .. _`Server-sent events`: https://html.spec.whatwg.org/multipage/server-sent-events.html
 .. _`EventSource`: https://www.w3.org/TR/eventsource/#eventsource
-.. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods_and_web_applications
+.. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods
 .. _`SSRF`: https://portswigger.net/web-security/ssrf
