@@ -43,6 +43,7 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
         class ContainsAlphanumeric extends Constraint
         {
             public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+            public $mode = 'strict'; // If the constraint has configuration options, define them as public properties
         }
 
 Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
@@ -166,7 +167,7 @@ You can use custom validators like the ones provided by Symfony itself:
             // ...
 
             #[Assert\NotBlank]
-            #[AcmeAssert\ContainsAlphanumeric(options: ['mode' => 'loose'])]
+            #[AcmeAssert\ContainsAlphanumeric(mode: 'loose')]
             protected $name;
 
             // ...
@@ -179,7 +180,8 @@ You can use custom validators like the ones provided by Symfony itself:
             properties:
                 name:
                     - NotBlank: ~
-                    - App\Validator\ContainsAlphanumeric: ~
+                    - App\Validator\ContainsAlphanumeric:
+                        mode: 'loose'
 
     .. code-block:: xml
 
@@ -192,7 +194,9 @@ You can use custom validators like the ones provided by Symfony itself:
             <class name="App\Entity\AcmeEntity">
                 <property name="name">
                     <constraint name="NotBlank"/>
-                    <constraint name="App\Validator\ContainsAlphanumeric"/>
+                    <constraint name="App\Validator\ContainsAlphanumeric">
+                        <option name="mode">loose</option>
+                    </constraint>
                 </property>
             </class>
         </constraint-mapping>
@@ -213,7 +217,7 @@ You can use custom validators like the ones provided by Symfony itself:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('name', new NotBlank());
-                $metadata->addPropertyConstraint('name', new ContainsAlphanumeric());
+                $metadata->addPropertyConstraint('name', new ContainsAlphanumeric(['mode' => 'loose']));
             }
         }
 
