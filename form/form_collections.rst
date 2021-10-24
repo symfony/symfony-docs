@@ -243,7 +243,7 @@ the following ``data-prototype`` attribute to the existing ``<ul>`` in your temp
 
 .. code-block:: html+twig
 
-    <ul class="tags" data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
+    <ul class="tags" data-index="{{ form.tags|length }}" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
 
 Now add a button just next to the ``<ul>`` to dynamically add a new tag:
 
