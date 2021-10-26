@@ -289,7 +289,7 @@ could look something like this::
 
 There are 2 major deviations from the original file:
 
-Line 15
+Line 18
   First of all, ``$kernel`` is made globally available. This allows you to use
   Symfony features inside your existing application and gives access to
   services configured in our Symfony application. This helps you prepare your
@@ -297,7 +297,7 @@ Line 15
   it over. For instance, by replacing outdated or redundant libraries with
   Symfony components.
 
-Line 38 - 47
+Line 41 - 50
   Instead of sending the Symfony response directly, a ``LegacyBridge`` is
   called to decide whether the legacy application should be booted and used to
   create the response instead.
