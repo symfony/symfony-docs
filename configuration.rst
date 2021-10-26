@@ -718,8 +718,41 @@ you can encrypt the value using the :doc:`secrets management system </configurat
 Listing Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Regardless of how you set environment variables, you can see a full list with
-their values by running:
+Use the ``debug:dotenv`` command to understand how Symfony parses the different
+``.env`` files to set the value of each environment variable:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:dotenv
+
+    Dotenv Variables & Files
+    ========================
+
+    Scanned Files (in descending priority)
+    --------------------------------------
+
+    * ⨯ .env.local.php
+    * ⨯ .env.dev.local
+    * ✓ .env.dev
+    * ⨯ .env.local
+    * ✓ .env
+
+    Variables
+    ---------
+
+    ---------- ------- ---------- ------
+     Variable   Value   .env.dev   .env
+    ---------- ------- ---------- ------
+     FOO        BAR     n/a        BAR
+     ALICE      BOB     BOB        bob
+    ---------- ------- ---------- ------
+
+.. versionadded:: 5.4
+
+    The ``debug:dotenv`` command was introduced in Symfony 5.4.
+
+Additionally, and regardless of how you set environment variables, you can see all
+environment variables, with their values, referenced in Symfony's container configuration:
 
 .. code-block:: terminal
 
