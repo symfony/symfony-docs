@@ -747,10 +747,6 @@ Use the ``debug:dotenv`` command to understand how Symfony parses the different
      ALICE      BOB     BOB        bob
     ---------- ------- ---------- ------
 
-.. versionadded:: 5.4
-
-    The ``debug:dotenv`` command was introduced in Symfony 5.4.
-
 Additionally, and regardless of how you set environment variables, you can see all
 environment variables, with their values, referenced in Symfony's container configuration:
 
