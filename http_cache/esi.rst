@@ -174,9 +174,8 @@ of the main page::
     {
         public function latest($maxPerPage)
         {
-            // ...
-            $response->setPublic();
-            $response->setMaxAge(60);
+            // sets to public and adds some expiration
+            $response->setSharedMaxAge(60);
 
             return $response;
         }
