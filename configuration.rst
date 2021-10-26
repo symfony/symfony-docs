@@ -718,8 +718,8 @@ you can encrypt the value using the :doc:`secrets management system </configurat
 Listing Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To understand how environment variables are set by the Dotenv component parsing various
-files, you can run the following command:
+Use the ``debug:dotenv`` command to understand how Symfony parses the different
+``.env`` files to set the value of each environment variable:
 
 .. code-block:: terminal
 
@@ -746,6 +746,10 @@ files, you can run the following command:
      FOO        BAR     n/a        BAR
      ALICE      BOB     BOB        bob
     ---------- ------- ---------- ------
+
+.. versionadded:: 5.4
+
+    The ``debug:dotenv`` command was introduced in Symfony 5.4.
 
 Additionally, and regardless of how you set environment variables, you can see all
 environment variables, with their values, referenced in Symfony's container configuration:
