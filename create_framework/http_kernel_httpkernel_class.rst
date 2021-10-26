@@ -133,7 +133,7 @@ instead of a full Response object::
 
     class LeapYearController
     {
-        public function index(Request $request, $year)
+        public function index($year)
         {
             $leapYear = new LeapYear();
             if ($leapYear->isLeapYear($year)) {

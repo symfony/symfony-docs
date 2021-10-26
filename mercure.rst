@@ -251,7 +251,7 @@ Subscribing to updates in JavaScript from a Twig template is straightforward:
         // Will be called every time an update is published by the server
         console.log(JSON.parse(event.data));
     }
-    <script>
+    </script>
 
 The ``mercure()`` Twig function will generate the URL of the Mercure hub
 according to the configuration. The URL will include the ``topic`` query
@@ -260,13 +260,15 @@ parameters corresponding to the topics passed as first argument.
 If you want to access to this URL from an external JavaScript file, generate the
 URL in a dedicated HTML element:
 
-.. code:: twig
+.. code-block:: twig
 
-    <script type="application/json" id="mercure-url">{{ mercure('https://example.com/books/1')|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}</script>
+    <script type="application/json" id="mercure-url">
+    {{ mercure('https://example.com/books/1')|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}
+    </script>
 
 Then retrieve it from your JS file:
 
-.. code:: javascript
+.. code-block:: javascript
 
     const url = JSON.parse(document.getElementById("mercure-url").textContent);
     const eventSource = new EventSource(url);
