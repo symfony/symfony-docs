@@ -95,7 +95,8 @@ Annotation Routes
 -----------------
 
 Instead of defining your route in YAML, Symfony also allows you to use *annotation*
-routes. To do this, install the annotations package:
+or *attribute* routes. Attributes are built-in in PHP starting from PHP 8. In earlier
+PHP versions you can use annotations. To do this, install the annotations package:
 
 .. code-block:: terminal
 
@@ -103,26 +104,44 @@ routes. To do this, install the annotations package:
 
 You can now add your route directly *above* the controller:
 
-.. code-block:: diff
+.. configuration-block::
 
-      // src/Controller/LuckyController.php
+    .. code-block:: php-annotations
 
-      // ...
-    + use Symfony\Component\Routing\Annotation\Route;
+        // src/Controller/LuckyController.php
 
-      class LuckyController
-      {
-    +     /**
-    +      * @Route("/lucky/number")
-    +      */
-          public function number()
-          {
-              // this looks exactly the same
-          }
-      }
+        // ...
+        + use Symfony\Component\Routing\Annotation\Route;
+
+        class LuckyController
+        {
+        +   /**
+        +    * @Route("/lucky/number")
+        +    */
+            public function number()
+            {
+                // this looks exactly the same
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/LuckyController.php
+
+        // ...
+        + use Symfony\Component\Routing\Annotation\Route;
+
+        class LuckyController
+        {
+        +   #[Route('/lucky/number')
+            public function number()
+            {
+                // this looks exactly the same
+            }
+        }
 
 That's it! The page - http://localhost:8000/lucky/number will work exactly
-like before! Annotations are the recommended way to configure routes.
+like before! Annotations/attributes are the recommended way to configure routes.
 
 .. _flex-quick-intro:
 
