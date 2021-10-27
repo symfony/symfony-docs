@@ -45,7 +45,7 @@ runtime. This means that you *can* do either of these:
     });
 
 If you do *not* need this functionality (e.g. you use single file components),
-then you can tell Encore to create a *smaller* and CSP-compliant build:
+then you can tell Encore to create a *smaller* build following Content Security Policy:
 
 .. code-block:: javascript
 
