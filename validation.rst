@@ -193,7 +193,7 @@ message:
 .. code-block:: text
 
     Object(App\Entity\Author).name:
-        This value should not be blank
+        This value should not be blank.
 
 If you insert a value into the ``name`` property, the happy success message
 will appear.
