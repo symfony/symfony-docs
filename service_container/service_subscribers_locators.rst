@@ -627,8 +627,9 @@ Service Subscriber Trait
 
 The :class:`Symfony\\Contracts\\Service\\ServiceSubscriberTrait` provides an
 implementation for :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`
-that looks through all methods in your class that have no arguments and a return
-type. It provides a ``ServiceLocator`` for the services of those return types.
+that looks through all methods in your class that are marked with the
+:class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` attribute. It
+provides a ``ServiceLocator`` for the services of each method's return type.
 The service id is ``__METHOD__``. This allows you to add dependencies to your
 services based on type-hinted helper methods::
 
@@ -637,6 +638,7 @@ services based on type-hinted helper methods::
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
     use Symfony\Contracts\Service\ServiceSubscriberInterface;
     use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
@@ -650,11 +652,13 @@ services based on type-hinted helper methods::
             // $this->logger() ...
         }
 
+        #[SubscribedService]
         private function router(): RouterInterface
         {
             return $this->container->get(__METHOD__);
         }
 
+        #[SubscribedService]
         private function logger(): LoggerInterface
         {
             return $this->container->get(__METHOD__);
@@ -668,9 +672,11 @@ and compose your services with them::
     namespace App\Service;
 
     use Psr\Log\LoggerInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
 
     trait LoggerAware
     {
+        #[SubscribedService]
         private function logger(): LoggerInterface
         {
             return $this->container->get(__CLASS__.'::'.__FUNCTION__);
@@ -681,9 +687,11 @@ and compose your services with them::
     namespace App\Service;
 
     use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
 
     trait RouterAware
     {
+        #[SubscribedService]
         private function router(): RouterInterface
         {
             return $this->container->get(__CLASS__.'::'.__FUNCTION__);
@@ -712,5 +720,13 @@ and compose your services with them::
     When creating these helper traits, the service id cannot be ``__METHOD__``
     as this will include the trait name, not the class name. Instead, use
     ``__CLASS__.'::'.__FUNCTION__`` as the service id.
+
+.. deprecated:: 5.4
+
+    Defining your *subscribed service* methods with the
+    :class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` attribute
+    was added in Symfony 5.4. Previously, any methods with no arguments and a
+    return type were *subscribed*. This still works in 5.4 but is deprecated (only
+    when using PHP 8) and will be removed in 6.0.
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
