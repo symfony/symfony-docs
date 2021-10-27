@@ -1,7 +1,7 @@
 Installing Encore
 =================
 
-First, make sure you `install Node.js`_ and also the `Yarn package manager`_.
+First, make sure you `install Node.js`_ and optionally the `Yarn package manager`_.
 The following instructions depend on whether you are installing Encore in a
 Symfony application or not.
 
