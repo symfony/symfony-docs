@@ -462,21 +462,27 @@ Extracting Translation Contents and Updating Catalogs Automatically
 
 The most time-consuming tasks when translating an application is to extract all
 the template contents to be translated and to keep all the translation files in
-sync. Symfony includes a command called ``translation:update`` that helps you
+sync. Symfony includes a command called ``translation:extract`` that helps you
 with these tasks:
 
 .. code-block:: terminal
 
     # shows all the messages that should be translated for the French language
-    $ php bin/console translation:update --dump-messages fr
+    $ php bin/console translation:extract --dump-messages fr
 
     # updates the French translation files with the missing strings for that locale
-    $ php bin/console translation:update --force fr
+    $ php bin/console translation:extract --force fr
 
     # check out the command help to see its options (prefix, output format, domain, sorting, etc.)
-    $ php bin/console translation:update --help
+    $ php bin/console translation:extract --help
 
-The ``translation:update`` command looks for missing translations in:
+.. deprecated:: 5.4
+
+    In previous Symfony versions, the ``translation:extract`` command was called
+    ``translation:update``, but that name was deprecated in Symfony 5.4
+    and it will be removed in Symfony 6.0.
+
+The ``translation:extract`` command looks for missing translations in:
 
 * Templates stored in the ``templates/`` directory (or any other directory
   defined in the :ref:`twig.default_path <config-twig-default-path>` and

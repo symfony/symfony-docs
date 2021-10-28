@@ -997,7 +997,7 @@ translation.extractor
 **Purpose**: To register a custom service that extracts messages from a
 file
 
-When executing the ``translation:update`` command, it uses extractors to
+When executing the ``translation:extract`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony Framework
 has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
 :class:`Symfony\\Component\\Translation\\Extractor\\PhpExtractor`, which
