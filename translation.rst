@@ -476,12 +476,6 @@ with these tasks:
     # check out the command help to see its options (prefix, output format, domain, sorting, etc.)
     $ php bin/console translation:extract --help
 
-.. deprecated:: 5.4
-
-    In previous Symfony versions, the ``translation:extract`` command was called
-    ``translation:update``, but that name was deprecated in Symfony 5.4
-    and it will be removed in Symfony 6.0.
-
 The ``translation:extract`` command looks for missing translations in:
 
 * Templates stored in the ``templates/`` directory (or any other directory
