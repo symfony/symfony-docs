@@ -482,7 +482,8 @@ with these tasks:
 
 .. deprecated:: 5.4
 
-    Support for ``translation:update`` was deprecated in Symfony 5.4
+    In previous Symfony versions, the ``translation:extract`` command was called
+    ``translation:update``, but that name was deprecated in Symfony 5.4
     and it will be removed in Symfony 6.0.
 
 The ``translation:extract`` command looks for missing translations in:
