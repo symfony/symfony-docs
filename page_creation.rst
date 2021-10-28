@@ -133,7 +133,7 @@ You can now add your route directly *above* the controller:
 
         class LuckyController
         {
-        +   #[Route('/lucky/number')
+        +   #[Route('/lucky/number')]
             public function number()
             {
                 // this looks exactly the same
