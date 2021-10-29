@@ -345,7 +345,58 @@ security configuration:
 Custom Access Decision Strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If none of the built-in strategies fits your use case, define the ``service``
+.. versionadded:: 5.4
+
+    The ``strategy_service`` option was introduced in Symfony 5.4.
+
+If none of the built-in strategies fits your use case, define the ``strategy_service``
+option to use a custom service (your service must implement the
+:class:`Symfony\\Component\\Security\\Core\Authorization\\Strategy\\AccessDecisionStrategyInterface`):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            access_decision_manager:
+                strategy_service: App\Security\MyCustomAccessDecisionStrategy
+                # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+
+            <config>
+                <access-decision-manager
+                    strategy-service="App\Security\MyCustomAccessDecisionStrategy"/>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Security\MyCustomAccessDecisionStrategy;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->accessDecisionManager()
+                ->strategyService(MyCustomAccessDecisionStrategy::class)
+                // ...
+            ;
+        };
+
+Custom Access Decision Manager
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to provide an entirely custom access decision manager, define the ``service``
 option to use a custom service as the Access Decision Manager (your service
 must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\AccessDecisionManagerInterface`):
 
