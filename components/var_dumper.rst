@@ -463,6 +463,35 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/09-cut.png
 
+.. code-block:: php
+
+    $var = [
+        'item_1_level_1' => [
+            'item_1_level_2' => [
+                'item_1_level_3' => 1
+            ],
+            'item_2_level_2' => [
+                'item_2_level_3' => 2
+            ]
+        ],
+        'item_2_level_1' => [
+            'item_3_level_2' => [
+                'item_3_level_3' => 3
+            ],
+            'item_4_level_2' => [
+                'item_4_level_3' => 4
+            ]
+        ],
+    ];
+    edump($var);
+
+.. note::
+
+    To expand nested structures by default and to avoid having to click the expand button
+    manually for each level, there is a function called `edump()` making use of the `$extraDisplayOptions`
+    argument in `VarDumper::dump()`. If you want the same behavior with the `dd()` function
+    use `edd()`.
+
 Learn More
 ----------
 
