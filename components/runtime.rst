@@ -87,7 +87,7 @@ which uses PHP's ``$_SERVER``, ``$_POST``, ``$_GET``, ``$_FILES`` and
 ``$_SESSION`` superglobals. You may also use a custom Runtime (e.g. to
 integrate with Swoole or AWS Lambda).
 
-Use the ``APP_RUNTIME`` environment variable or by specifying the
+Use the ``APP_RUNTIME`` environment variable (PHP's ``$_SERVER`` is used first, then ``$_ENV``) or by specifying the
 ``extra.runtime.class`` in ``composer.json`` to change the Runtime class:
 
 .. code-block:: json
