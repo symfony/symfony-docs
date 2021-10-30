@@ -14,9 +14,6 @@ issues with wrong uppercase/lowercase values and to remove unneeded elements
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Locale`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LocaleValidator`
 ==========  ===================================================================

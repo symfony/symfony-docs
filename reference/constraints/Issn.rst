@@ -6,11 +6,6 @@ Validates that a value is a valid
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `caseSensitive`_
-            - `groups`_
-            - `message`_
-            - `payload`_
-            - `requireHyphen`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Issn`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IssnValidator`
 ==========  ===================================================================

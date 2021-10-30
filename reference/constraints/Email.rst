@@ -6,11 +6,6 @@ cast to a string before being validated.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `mode`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Email`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\EmailValidator`
 ==========  ===================================================================

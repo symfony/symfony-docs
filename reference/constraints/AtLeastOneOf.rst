@@ -6,12 +6,6 @@ constraints. The validation stops as soon as one constraint is satisfied.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `constraints`_
-            - `includeInternalMessages`_
-            - `message`_
-            - `messageCollection`_
-            - `groups`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\AtLeastOneOf`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\AtLeastOneOfValidator`
 ==========  ===================================================================

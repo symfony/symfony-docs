@@ -5,13 +5,6 @@ Validates that a value matches a regular expression.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `htmlPattern`_
-            - `match`_
-            - `message`_
-            - `pattern`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Regex`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RegexValidator`
 ==========  ===================================================================

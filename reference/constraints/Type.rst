@@ -7,10 +7,6 @@ option to validate this.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - :ref:`type <reference-constraint-type-type>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Type`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TypeValidator`
 ==========  ===================================================================

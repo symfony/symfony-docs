@@ -6,10 +6,6 @@ Validates that a value is a valid language *Unicode language identifier*
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `alpha3`_
-            - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Language`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LanguageValidator`
 ==========  ===================================================================

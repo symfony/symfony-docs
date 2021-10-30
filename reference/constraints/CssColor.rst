@@ -6,10 +6,6 @@ casted to a string before being validated.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `formats`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\CssColor`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CssColorValidator`
 ==========  ===================================================================

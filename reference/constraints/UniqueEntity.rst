@@ -17,15 +17,6 @@ using an email address that already exists in the system.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
-Options     - `em`_
-            - `entityClass`_
-            - `errorPath`_
-            - `fields`_
-            - `groups`_
-            - `ignoreNull`_
-            - `message`_
-            - `payload`_
-            - `repositoryMethod`_
 Class       :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`
 Validator   :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator`
 ==========  ===================================================================

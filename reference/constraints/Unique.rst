@@ -20,10 +20,6 @@ If you want to apply any other comparison logic, use the `normalizer`_ option.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Unique`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UniqueValidator`
 ==========  ===================================================================

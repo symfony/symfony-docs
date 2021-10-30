@@ -5,8 +5,6 @@ Validates that a value has valid `JSON`_ syntax.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Json`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\JsonValidator`
 ==========  ===================================================================

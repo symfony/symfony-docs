@@ -6,13 +6,6 @@ is either a valid ISBN-10 or a valid ISBN-13.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `bothIsbnMessage`_
-            - `groups`_
-            - `isbn10Message`_
-            - `isbn13Message`_
-            - `message`_
-            - `payload`_
-            - `type`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Isbn`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsbnValidator`
 ==========  ===================================================================

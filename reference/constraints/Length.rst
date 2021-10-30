@@ -5,16 +5,6 @@ Validates that a given string length is *between* some minimum and maximum value
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `charset`_
-            - `charsetMessage`_
-            - `exactMessage`_
-            - `groups`_
-            - `max`_
-            - `maxMessage`_
-            - `min`_
-            - `minMessage`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Length`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LengthValidator`
 ==========  ===================================================================
