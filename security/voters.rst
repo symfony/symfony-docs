@@ -62,6 +62,18 @@ which makes creating a voter even easier::
 
 .. _how-to-use-the-voter-in-a-controller:
 
+.. tip::
+
+    Checking each voter several times can be time consumming for applications
+    that perform a lot of permission checks. To improve performance in those cases,
+    you can make your voters implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\CacheableVoterInterface`.
+    This allows the access decision manager to remember the attribute and type
+    of subject supported by the voter, to only call the needed voters each time.
+
+    .. versionadded:: 5.4
+
+        The ``CacheableVoterInterface`` interface was introduced in Symfony 5.4.
+
 Setup: Checking for Access in a Controller
 ------------------------------------------
 
