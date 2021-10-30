@@ -9,12 +9,6 @@ Validates that a value is a valid timezone identifier (e.g. ``Europe/Paris``).
 
 ==========  ======================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `countryCode`_
-            - `groups`_
-            - `intlCompatible`_
-            - `message`_
-            - `payload`_
-            - `zone`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Timezone`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TimezoneValidator`
 ==========  ======================================================================

@@ -18,24 +18,6 @@ form field.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `binaryFormat`_
-            - `disallowEmptyMessage`_
-            - `groups`_
-            - `maxSize`_
-            - `maxSizeMessage`_
-            - `mimeTypes`_
-            - `mimeTypesMessage`_
-            - `notFoundMessage`_
-            - `notReadableMessage`_
-            - `payload`_
-            - `uploadCantWriteErrorMessage`_
-            - `uploadErrorMessage`_
-            - `uploadExtensionErrorMessage`_
-            - `uploadFormSizeErrorMessage`_
-            - `uploadIniSizeErrorMessage`_
-            - `uploadNoFileErrorMessage`_
-            - `uploadNoTmpDirErrorMessage`_
-            - `uploadPartialErrorMessage`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\File`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`
 ==========  ===================================================================

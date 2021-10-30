@@ -10,11 +10,6 @@ not included in any of the public data breaches tracked by `haveibeenpwned.com`_
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `skipOnError`_
-            - `threshold`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotCompromisedPassword`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotCompromisedPasswordValidator`
 ==========  ===================================================================

@@ -10,10 +10,6 @@ followed by an underscore (``_``) and the `ISO 3166-1 alpha-2`_ *country* code
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `canonicalize`_
-            - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Locale`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LocaleValidator`
 ==========  ===================================================================

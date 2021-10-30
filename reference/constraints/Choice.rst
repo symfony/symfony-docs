@@ -7,17 +7,6 @@ an array of items is one of those valid choices.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `callback`_
-            - `choices`_
-            - `groups`_
-            - `max`_
-            - `maxMessage`_
-            - `message`_
-            - `min`_
-            - `minMessage`_
-            - `multiple`_
-            - `multipleMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Choice`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ChoiceValidator`
 ==========  ===================================================================
