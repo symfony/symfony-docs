@@ -7,9 +7,6 @@ an object and all sub-objects associated with it.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `payload`_
-            - `traverse`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Valid`
 ==========  ===================================================================
 

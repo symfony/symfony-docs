@@ -8,11 +8,6 @@ that a value is not equal to ``null``, see the
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowNull`_
-            - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotBlank`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotBlankValidator`
 ==========  ===================================================================

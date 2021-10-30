@@ -11,9 +11,6 @@ want to allow zero as value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Positive`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanValidator`
 ==========  ===================================================================

@@ -19,9 +19,6 @@ are considered different elements (a string and an integer, respectively).
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Unique`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UniqueValidator`
 ==========  ===================================================================

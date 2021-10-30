@@ -5,9 +5,6 @@ Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Currency`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CurrencyValidator`
 ==========  ===================================================================

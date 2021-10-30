@@ -7,11 +7,6 @@ IPv6 and many other combinations.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
-            - `version`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Ip`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IpValidator`
 ==========  ===================================================================

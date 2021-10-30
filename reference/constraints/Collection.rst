@@ -18,13 +18,6 @@ and that extra keys are not present.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowExtraFields`_
-            - `allowMissingFields`_
-            - `extraFieldsMessage`_
-            - `fields`_
-            - `groups`_
-            - `missingFieldsMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Collection`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CollectionValidator`
 ==========  ===================================================================
