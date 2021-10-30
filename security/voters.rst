@@ -70,10 +70,6 @@ which makes creating a voter even easier::
     This allows the access decision manager to remember the attribute and type
     of subject supported by the voter, to only call the needed voters each time.
 
-    .. versionadded:: 5.4
-
-        The ``CacheableVoterInterface`` interface was introduced in Symfony 5.4.
-
 Setup: Checking for Access in a Controller
 ------------------------------------------
 
