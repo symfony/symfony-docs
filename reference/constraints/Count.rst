@@ -6,15 +6,6 @@ Countable) element count is *between* some minimum and maximum value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `divisibleBy`_
-            - `divisibleByMessage`_
-            - `exactMessage`_
-            - `groups`_
-            - `max`_
-            - `maxMessage`_
-            - `min`_
-            - `minMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Count`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CountValidator`
 ==========  ===================================================================

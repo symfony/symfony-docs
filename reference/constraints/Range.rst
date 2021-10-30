@@ -5,17 +5,6 @@ Validates that a given number or ``DateTime`` object is *between* some minimum a
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `invalidDateTimeMessage`_
-            - `invalidMessage`_
-            - `max`_
-            - `maxMessage`_
-            - `maxPropertyPath`_
-            - `min`_
-            - `minMessage`_
-            - `minPropertyPath`_
-            - `notInRangeMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Range`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RangeValidator`
 ==========  ===================================================================

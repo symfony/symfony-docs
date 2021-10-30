@@ -7,9 +7,6 @@ constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotNull`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotNullValidator`
 ==========  ===================================================================

@@ -8,12 +8,6 @@ check that the BIC's country code is the same as a given IBAN's one.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `iban`_
-            - `ibanMessage`_
-            - `ibanPropertyPath`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Bic`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\BicValidator`
 ==========  ===================================================================

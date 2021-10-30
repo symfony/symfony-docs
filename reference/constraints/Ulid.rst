@@ -9,10 +9,6 @@ Validates that a value is a valid `Universally Unique Lexicographically Sortable
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Ulid`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UlidValidator`
 ==========  ===================================================================

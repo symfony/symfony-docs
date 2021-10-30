@@ -11,10 +11,6 @@ function).
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `requireTld`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Hostname`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\HostnameValidator`
 ==========  ===================================================================

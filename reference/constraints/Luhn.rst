@@ -7,9 +7,6 @@ card: before communicating with a payment gateway.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Luhn`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LuhnValidator`
 ==========  ===================================================================

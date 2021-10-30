@@ -13,11 +13,6 @@ options. To force that a value is equal, see
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotEqualTo`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotEqualToValidator`
 ==========  ===================================================================
