@@ -44,6 +44,7 @@ Options     - `allowLandscape`_
             - See :doc:`File </reference/constraints/File>` for inherited options
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Image`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ImageValidator`
+Extends     :doc:`File constraint </reference/constraints/File>`
 ==========  ===================================================================
 
 Basic Usage
@@ -551,6 +552,14 @@ be displayed. This will only occur when at least one of the size constraint
 options has been set.
 
 This message has no parameters.
+
+Options Inherited from File
+---------------------------
+
+The ``Image`` constraint extends the :doc:`File constraint </reference/constraints/File>`
+and inherits the following options from it.
+
+.. include:: /reference/constraints/_file-constraint-options.rst.inc
 
 .. _`IANA website`: http://www.iana.org/assignments/media-types/media-types.xhtml
 .. _`PHP GD extension`: https://www.php.net/manual/en/book.image.php
