@@ -167,7 +167,8 @@ Content Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createTable`
     Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\Table`
-    styled according to the Symfony Style Guide.
+    styled according to the Symfony Style Guide, which allows you to use
+    features such as appending rows dynamically.
 
 .. versionadded:: 5.4
 
