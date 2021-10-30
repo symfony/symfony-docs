@@ -9,11 +9,6 @@ gives you similar flexibility.
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
             or :ref:`property/method <validation-property-target>`
-Options     - :ref:`expression <reference-constraint-expression-option>`
-            - `groups`_
-            - `message`_
-            - `payload`_
-            - `values`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Expression`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionValidator`
 ==========  ===================================================================

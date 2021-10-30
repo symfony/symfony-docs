@@ -10,10 +10,6 @@ expression.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowedVariables`_
-            - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionLanguageSyntax`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionLanguageSyntaxValidator`
 ==========  ===================================================================

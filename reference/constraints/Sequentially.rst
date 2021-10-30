@@ -13,9 +13,6 @@ using :doc:`GroupSequence </validation/sequence_provider>` which allows more con
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `constraints`_
-            - `groups`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Sequentially`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\SequentiallyValidator`
 ==========  ===================================================================

@@ -13,35 +13,6 @@ of the documentation on this constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowLandscape`_
-            - `allowLandscapeMessage`_
-            - `allowPortrait`_
-            - `allowPortraitMessage`_
-            - `allowSquare`_
-            - `allowSquareMessage`_
-            - `corruptedMessage`_
-            - `detectCorrupted`_
-            - `groups`_
-            - `maxHeight`_
-            - `maxHeightMessage`_
-            - `maxPixels`_
-            - `maxPixelsMessage`_
-            - `maxRatio`_
-            - `maxRatioMessage`_
-            - `maxWidth`_
-            - `maxWidthMessage`_
-            - `mimeTypes`_
-            - `mimeTypesMessage`_
-            - `minHeight`_
-            - `minHeightMessage`_
-            - `minPixels`_
-            - `minPixelsMessage`_
-            - `minRatio`_
-            - `minRatioMessage`_
-            - `minWidth`_
-            - `minWidthMessage`_
-            - `sizeNotDetectedMessage`_
-            - See :doc:`File </reference/constraints/File>` for inherited options
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Image`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ImageValidator`
 ==========  ===================================================================

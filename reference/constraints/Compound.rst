@@ -11,8 +11,6 @@ rules to use consistently across your application, by extending the constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>` or :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Compound`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CompoundValidator`
 ==========  ===================================================================

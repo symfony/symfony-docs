@@ -5,12 +5,6 @@ Validates that a value is a valid URL string.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
-            - `protocols`_
-            - `relativeProtocol`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Url`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UrlValidator`
 ==========  ===================================================================

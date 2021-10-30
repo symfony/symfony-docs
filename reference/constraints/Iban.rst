@@ -8,9 +8,6 @@ borders with a reduced risk of propagating transcription errors.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Iban`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IbanValidator`
 ==========  ===================================================================

@@ -8,11 +8,6 @@ than another value, see :doc:`/reference/constraints/GreaterThan`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\LessThan`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LessThanValidator`
 ==========  ===================================================================

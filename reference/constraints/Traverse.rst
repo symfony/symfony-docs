@@ -8,8 +8,6 @@ constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
-Options     - `payload`_
-            - :ref:`traverse <traverse-option>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Traverse`
 ==========  ===================================================================
 

@@ -8,12 +8,6 @@ UUID versions can also be restricted using a list of allowed versions.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
-            - `strict`_
-            - `versions`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Uuid`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UuidValidator`
 ==========  ===================================================================
