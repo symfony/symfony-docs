@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by kbond at 2021-10-21T13:04:04Z
+
+~When I built the docs using the new system, the generated docs in `_build/output` were not styled and missing stuff so I wasn't able to confirm this looks correct...~
+
+Edit, I was able to correct this by upgrading `symfony-tools/doc-builder` and `build.php`.
