@@ -12,27 +12,6 @@ accuracy.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | input ``text`` field by default, but see `type`_ option                |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `first_name`_                                                        |
-|             | - `first_options`_                                                     |
-|             | - `options`_                                                           |
-|             | - `second_name`_                                                       |
-|             | - `second_options`_                                                    |
-|             | - `type`_                                                              |
-+-------------+------------------------------------------------------------------------+
-| Overridden  | - `error_bubbling`_                                                    |
-| options     |                                                                        |
-+-------------+------------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                              |
-| options     | - `data`_                                                              |
-|             | - `error_mapping`_                                                     |
-|             | - `help`_                                                              |
-|             | - `help_attr`_                                                         |
-|             | - `help_html`_                                                         |
-|             | - `invalid_message`_                                                   |
-|             | - `invalid_message_parameters`_                                        |
-|             | - `mapped`_                                                            |
-|             | - `row_attr`_                                                          |
-+-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\RepeatedType` |

@@ -9,18 +9,6 @@ A submit button.
 +----------------------+----------------------------------------------------------------------+
 | Rendered as          | ``button`` ``submit`` tag                                            |
 +----------------------+----------------------------------------------------------------------+
-| Options              | - `validate`_                                                        |
-+----------------------+----------------------------------------------------------------------+
-| Inherited            | - `attr`_                                                            |
-| options              | - `attr_translation_parameters`_                                     |
-|                      | - `disabled`_                                                        |
-|                      | - `label`_                                                           |
-|                      | - `label_format`_                                                    |
-|                      | - `label_translation_parameters`_                                    |
-|                      | - `row_attr`_                                                        |
-|                      | - `translation_domain`_                                              |
-|                      | - `validation_groups`_                                               |
-+----------------------+----------------------------------------------------------------------+
 | Parent type          | :doc:`ButtonType </reference/forms/types/button>`                    |
 +----------------------+----------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\SubmitType` |

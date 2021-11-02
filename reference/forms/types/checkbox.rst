@@ -14,27 +14,6 @@ if you want to handle submitted values like "0" or "false").
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``checkbox`` field                                           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `false_values`_                                                      |
-|             | - `value`_                                                             |
-+-------------+------------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                          |
-| options     | - `empty_data`_                                                        |
-+-------------+------------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                              |
-| options     | - `data`_                                                              |
-|             | - `disabled`_                                                          |
-|             | - `error_bubbling`_                                                    |
-|             | - `error_mapping`_                                                     |
-|             | - `help`_                                                              |
-|             | - `help_attr`_                                                         |
-|             | - `help_html`_                                                         |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `label_format`_                                                      |
-|             | - `mapped`_                                                            |
-|             | - `required`_                                                          |
-|             | - `row_attr`_                                                          |
-+-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CheckboxType` |

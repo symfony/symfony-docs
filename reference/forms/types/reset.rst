@@ -9,14 +9,6 @@ A button that resets all fields to their original values.
 +----------------------+---------------------------------------------------------------------+
 | Rendered as          | ``input`` ``reset`` tag                                             |
 +----------------------+---------------------------------------------------------------------+
-| Inherited            | - `attr`_                                                           |
-| options              | - `attr_translation_parameters`_                                    |
-|                      | - `disabled`_                                                       |
-|                      | - `label`_                                                          |
-|                      | - `label_translation_parameters`_                                   |
-|                      | - `row_attr`_                                                       |
-|                      | - `translation_domain`_                                             |
-+----------------------+---------------------------------------------------------------------+
 | Parent type          | :doc:`ButtonType </reference/forms/types/button>`                   |
 +----------------------+---------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ResetType` |

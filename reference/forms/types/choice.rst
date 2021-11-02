@@ -12,44 +12,6 @@ To use this field, you must specify *either* ``choices`` or ``choice_loader`` op
 +-------------+------------------------------------------------------------------------------+
 | Rendered as | can be various tags (see below)                                              |
 +-------------+------------------------------------------------------------------------------+
-| Options     | - `choices`_                                                                 |
-|             | - `choice_attr`_                                                             |
-|             | - `choice_label`_                                                            |
-|             | - `choice_loader`_                                                           |
-|             | - `choice_name`_                                                             |
-|             | - `choice_translation_domain`_                                               |
-|             | - `choice_value`_                                                            |
-|             | - `expanded`_                                                                |
-|             | - `group_by`_                                                                |
-|             | - `multiple`_                                                                |
-|             | - `placeholder`_                                                             |
-|             | - `preferred_choices`_                                                       |
-+-------------+------------------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                                |
-| options     | - `empty_data`_                                                              |
-|             | - `error_bubbling`_                                                          |
-|             | - `trim`_                                                                    |
-+-------------+------------------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                                    |
-| options     | - `by_reference`_                                                            |
-|             | - `data`_                                                                    |
-|             | - `disabled`_                                                                |
-|             | - `error_mapping`_                                                           |
-|             | - `help`_                                                                    |
-|             | - `help_attr`_                                                               |
-|             | - `help_html`_                                                               |
-|             | - `inherit_data`_                                                            |
-|             | - `label`_                                                                   |
-|             | - `label_attr`_                                                              |
-|             | - `label_format`_                                                            |
-|             | - `mapped`_                                                                  |
-|             | - `required`_                                                                |
-|             | - `row_attr`_                                                                |
-|             | - `translation_domain`_                                                      |
-|             | - `label_translation_parameters`_                                            |
-|             | - `attr_translation_parameters`_                                             |
-|             | - `help_translation_parameters`_                                             |
-+-------------+------------------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                                |
 +-------------+------------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ChoiceType`         |

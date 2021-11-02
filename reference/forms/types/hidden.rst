@@ -9,18 +9,6 @@ The hidden type represents a hidden input field.
 +-------------+----------------------------------------------------------------------+
 | Rendered as | ``input`` ``hidden`` field                                           |
 +-------------+----------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                        |
-| options     | - `error_bubbling`_                                                  |
-|             | - `required`_                                                        |
-+-------------+----------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                            |
-| options     | - `data`_                                                            |
-|             | - `empty_data`_                                                      |
-|             | - `error_mapping`_                                                   |
-|             | - `mapped`_                                                          |
-|             | - `property_path`_                                                   |
-|             | - `row_attr`_                                                        |
-+-------------+----------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                        |
 +-------------+----------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\HiddenType` |

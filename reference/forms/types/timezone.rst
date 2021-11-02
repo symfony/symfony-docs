@@ -17,39 +17,6 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `input`_                                                             |
-|             | - `intl`_                                                              |
-|             | - `regions`_                                                           |
-+-------------+------------------------------------------------------------------------+
-| Overridden  | - `choices`_                                                           |
-| options     | - `choice_translation_domain`_                                         |
-+-------------+------------------------------------------------------------------------+
-| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
-| options     |                                                                        |
-|             | - `expanded`_                                                          |
-|             | - `multiple`_                                                          |
-|             | - `placeholder`_                                                       |
-|             | - `preferred_choices`_                                                 |
-|             | - `trim`_                                                              |
-|             |                                                                        |
-|             | from the :doc:`FormType </reference/forms/types/form>`                 |
-|             |                                                                        |
-|             | - `attr`_                                                              |
-|             | - `data`_                                                              |
-|             | - `disabled`_                                                          |
-|             | - `empty_data`_                                                        |
-|             | - `error_bubbling`_                                                    |
-|             | - `error_mapping`_                                                     |
-|             | - `help`_                                                              |
-|             | - `help_attr`_                                                         |
-|             | - `help_html`_                                                         |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `label_format`_                                                      |
-|             | - `mapped`_                                                            |
-|             | - `required`_                                                          |
-|             | - `row_attr`_                                                          |
-+-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TimezoneType` |
