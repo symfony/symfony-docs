@@ -9,26 +9,6 @@ The ``PasswordType`` field renders an input password text box.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | ``input`` ``password`` field                                           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `always_empty`_                                                      |
-+-------------+------------------------------------------------------------------------+
-| Overridden  | - `trim`_                                                              |
-| options     |                                                                        |
-+-------------+------------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                              |
-| options     | - `disabled`_                                                          |
-|             | - `empty_data`_                                                        |
-|             | - `error_bubbling`_                                                    |
-|             | - `error_mapping`_                                                     |
-|             | - `help`_                                                              |
-|             | - `help_attr`_                                                         |
-|             | - `help_html`_                                                         |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `label_format`_                                                      |
-|             | - `mapped`_                                                            |
-|             | - `required`_                                                          |
-|             | - `row_attr`_                                                          |
-+-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`TextType </reference/forms/types/text>`                          |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\PasswordType` |

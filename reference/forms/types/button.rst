@@ -9,14 +9,6 @@ A simple, non-responsive button.
 +----------------------+----------------------------------------------------------------------+
 | Rendered as          | ``button`` tag                                                       |
 +----------------------+----------------------------------------------------------------------+
-| Inherited            | - `attr`_                                                            |
-| options              | - `attr_translation_parameters`_                                     |
-|                      | - `disabled`_                                                        |
-|                      | - `label`_                                                           |
-|                      | - `label_translation_parameters`_                                    |
-|                      | - `row_attr`_                                                        |
-|                      | - `translation_domain`_                                              |
-+----------------------+----------------------------------------------------------------------+
 | Parent type          | none                                                                 |
 +----------------------+----------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ButtonType` |

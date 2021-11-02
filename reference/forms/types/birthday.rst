@@ -20,35 +20,6 @@ option defaults to 120 years ago to the current year.
 +----------------------+-------------------------------------------------------------------------------+
 | Rendered as          | can be three select boxes or 1 or 3 text boxes, based on the `widget`_ option |
 +----------------------+-------------------------------------------------------------------------------+
-| Overridden options   | - `years`_                                                                    |
-+----------------------+-------------------------------------------------------------------------------+
-| Inherited options    | from the :doc:`DateType </reference/forms/types/date>`:                       |
-|                      |                                                                               |
-|                      | - `choice_translation_domain`_                                                |
-|                      | - `days`_                                                                     |
-|                      | - `placeholder`_                                                              |
-|                      | - `format`_                                                                   |
-|                      | - `input`_                                                                    |
-|                      | - `input_format`_                                                             |
-|                      | - `model_timezone`_                                                           |
-|                      | - `months`_                                                                   |
-|                      | - `view_timezone`_                                                            |
-|                      | - `widget`_                                                                   |
-|                      |                                                                               |
-|                      | from the :doc:`FormType </reference/forms/types/form>`:                       |
-|                      |                                                                               |
-|                      | - `attr`_                                                                     |
-|                      | - `data`_                                                                     |
-|                      | - `disabled`_                                                                 |
-|                      | - `help`_                                                                     |
-|                      | - `help_attr`_                                                                |
-|                      | - `help_html`_                                                                |
-|                      | - `inherit_data`_                                                             |
-|                      | - `invalid_message`_                                                          |
-|                      | - `invalid_message_parameters`_                                               |
-|                      | - `mapped`_                                                                   |
-|                      | - `row_attr`_                                                                 |
-+----------------------+-------------------------------------------------------------------------------+
 | Parent type          | :doc:`DateType </reference/forms/types/date>`                                 |
 +----------------------+-------------------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\BirthdayType`        |

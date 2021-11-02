@@ -9,26 +9,6 @@ The ``FileType`` represents a file input in your form.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``file`` field                                            |
 +-------------+---------------------------------------------------------------------+
-| Options     | - `multiple`_                                                       |
-+-------------+---------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                       |
-| options     | - `data_class`_                                                     |
-|             | - `empty_data`_                                                     |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                           |
-| options     | - `disabled`_                                                       |
-|             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                  |
-|             | - `help`_                                                           |
-|             | - `help_attr`_                                                      |
-|             | - `help_html`_                                                      |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `label_format`_                                                   |
-|             | - `mapped`_                                                         |
-|             | - `required`_                                                       |
-|             | - `row_attr`_                                                       |
-+-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FileType`  |

@@ -14,36 +14,6 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +-------------+------------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +-------------+------------------------------------------------------------------------+
-| Options     | - `choice_translation_locale`_                                         |
-+-------------+------------------------------------------------------------------------+
-| Overridden  | - `choices`_                                                           |
-| options     | - `choice_translation_domain`_                                         |
-+-------------+------------------------------------------------------------------------+
-| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
-| options     |                                                                        |
-|             | - `error_bubbling`_                                                    |
-|             | - `expanded`_                                                          |
-|             | - `multiple`_                                                          |
-|             | - `placeholder`_                                                       |
-|             | - `preferred_choices`_                                                 |
-|             | - `trim`_                                                              |
-|             |                                                                        |
-|             | from the :doc:`FormType </reference/forms/types/form>` type            |
-|             |                                                                        |
-|             | - `attr`_                                                              |
-|             | - `data`_                                                              |
-|             | - `disabled`_                                                          |
-|             | - `empty_data`_                                                        |
-|             | - `help`_                                                              |
-|             | - `help_attr`_                                                         |
-|             | - `help_html`_                                                         |
-|             | - `label`_                                                             |
-|             | - `label_attr`_                                                        |
-|             | - `label_format`_                                                      |
-|             | - `mapped`_                                                            |
-|             | - `required`_                                                          |
-|             | - `row_attr`_                                                          |
-+-------------+------------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                      |
 +-------------+------------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\CurrencyType` |

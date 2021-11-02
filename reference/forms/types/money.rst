@@ -14,33 +14,6 @@ how the input and output of the data is handled.
 +-------------+---------------------------------------------------------------------+
 | Rendered as | ``input`` ``text`` field                                            |
 +-------------+---------------------------------------------------------------------+
-| Options     | - `currency`_                                                       |
-|             | - `divisor`_                                                        |
-|             | - `grouping`_                                                       |
-|             | - `rounding_mode`_                                                  |
-|             | - `scale`_                                                          |
-+-------------+---------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                       |
-| options     |                                                                     |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                           |
-| options     | - `data`_                                                           |
-|             | - `disabled`_                                                       |
-|             | - `empty_data`_                                                     |
-|             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                  |
-|             | - `help`_                                                           |
-|             | - `help_attr`_                                                      |
-|             | - `help_html`_                                                      |
-|             | - `invalid_message`_                                                |
-|             | - `invalid_message_parameters`_                                     |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `label_format`_                                                   |
-|             | - `mapped`_                                                         |
-|             | - `required`_                                                       |
-|             | - `row_attr`_                                                       |
-+-------------+---------------------------------------------------------------------+
 | Parent type | :doc:`FormType </reference/forms/types/form>`                       |
 +-------------+---------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\MoneyType` |
