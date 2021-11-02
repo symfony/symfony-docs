@@ -16,29 +16,6 @@ integers. By default, all non-integer values (e.g. 6.78) will round down
 +---------------------------+-----------------------------------------------------------------------+
 | Rendered as               | ``input`` ``number`` field                                            |
 +---------------------------+-----------------------------------------------------------------------+
-| Options                   | - `grouping`_                                                         |
-|                           | - `rounding_mode`_                                                    |
-+---------------------------+-----------------------------------------------------------------------+
-| Overridden options        | - `compound`_                                                         |
-|                           | - `invalid_message`_                                                  |
-+---------------------------+-----------------------------------------------------------------------+
-| Inherited options         | - `attr`_                                                             |
-|                           | - `data`_                                                             |
-|                           | - `disabled`_                                                         |
-|                           | - `empty_data`_                                                       |
-|                           | - `error_bubbling`_                                                   |
-|                           | - `error_mapping`_                                                    |
-|                           | - `help`_                                                             |
-|                           | - `help_attr`_                                                        |
-|                           | - `help_html`_                                                        |
-|                           | - `invalid_message_parameters`_                                       |
-|                           | - `label`_                                                            |
-|                           | - `label_attr`_                                                       |
-|                           | - `label_format`_                                                     |
-|                           | - `mapped`_                                                           |
-|                           | - `required`_                                                         |
-|                           | - `row_attr`_                                                         |
-+---------------------------+-----------------------------------------------------------------------+
 | Default invalid message   | Please enter an integer.                                              |
 +---------------------------+-----------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                   |

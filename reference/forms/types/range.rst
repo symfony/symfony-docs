@@ -10,24 +10,6 @@ The ``RangeType`` field is a slider that is rendered using the HTML5
 +---------------------------+---------------------------------------------------------------------+
 | Rendered as               | ``input`` ``range`` field (slider in HTML5 supported browser)       |
 +---------------------------+---------------------------------------------------------------------+
-| Overridden options        | - `invalid_message`_                                                |
-+---------------------------+---------------------------------------------------------------------+
-| Inherited options         | - `attr`_                                                           |
-|                           | - `data`_                                                           |
-|                           | - `disabled`_                                                       |
-|                           | - `empty_data`_                                                     |
-|                           | - `error_bubbling`_                                                 |
-|                           | - `error_mapping`_                                                  |
-|                           | - `help`_                                                           |
-|                           | - `help_attr`_                                                      |
-|                           | - `help_html`_                                                      |
-|                           | - `label`_                                                          |
-|                           | - `label_attr`_                                                     |
-|                           | - `mapped`_                                                         |
-|                           | - `required`_                                                       |
-|                           | - `row_attr`_                                                       |
-|                           | - `trim`_                                                           |
-+---------------------------+---------------------------------------------------------------------+
 | Default invalid message   | Please choose a valid range.                                        |
 +---------------------------+---------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                 |

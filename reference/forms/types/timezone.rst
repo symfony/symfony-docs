@@ -17,39 +17,6 @@ manually, but then you should just use the ``ChoiceType`` directly.
 +---------------------------+------------------------------------------------------------------------+
 | Rendered as               | can be various tags (see :ref:`forms-reference-choice-tags`)           |
 +---------------------------+------------------------------------------------------------------------+
-| Options                   | - `input`_                                                             |
-|                           | - `intl`_                                                              |
-+---------------------------+------------------------------------------------------------------------+
-| Overridden options        | - `choices`_                                                           |
-|                           | - `choice_translation_domain`_                                         |
-|                           | - `invalid_message`_                                                   |
-+---------------------------+------------------------------------------------------------------------+
-| Inherited options         | from the :doc:`ChoiceType </reference/forms/types/choice>`             |
-|                           |                                                                        |
-|                           | - `expanded`_                                                          |
-|                           | - `multiple`_                                                          |
-|                           | - `placeholder`_                                                       |
-|                           | - `preferred_choices`_                                                 |
-|                           | - `trim`_                                                              |
-|                           |                                                                        |
-|                           | from the :doc:`FormType </reference/forms/types/form>`                 |
-|                           |                                                                        |
-|                           | - `attr`_                                                              |
-|                           | - `data`_                                                              |
-|                           | - `disabled`_                                                          |
-|                           | - `empty_data`_                                                        |
-|                           | - `error_bubbling`_                                                    |
-|                           | - `error_mapping`_                                                     |
-|                           | - `help`_                                                              |
-|                           | - `help_attr`_                                                         |
-|                           | - `help_html`_                                                         |
-|                           | - `label`_                                                             |
-|                           | - `label_attr`_                                                        |
-|                           | - `label_format`_                                                      |
-|                           | - `mapped`_                                                            |
-|                           | - `required`_                                                          |
-|                           | - `row_attr`_                                                          |
-+---------------------------+------------------------------------------------------------------------+
 | Default invalid message   | Please select a valid timezone.                                        |
 +---------------------------+------------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                    |

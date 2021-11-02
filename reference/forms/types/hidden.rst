@@ -9,19 +9,6 @@ The hidden type represents a hidden input field.
 +---------------------------+----------------------------------------------------------------------+
 | Rendered as               | ``input`` ``hidden`` field                                           |
 +---------------------------+----------------------------------------------------------------------+
-| Overridden options        | - `compound`_                                                        |
-|                           | - `error_bubbling`_                                                  |
-|                           | - `invalid_message`_                                                 |
-|                           | - `required`_                                                        |
-+---------------------------+----------------------------------------------------------------------+
-| Inherited options         | - `attr`_                                                            |
-|                           | - `data`_                                                            |
-|                           | - `empty_data`_                                                      |
-|                           | - `error_mapping`_                                                   |
-|                           | - `mapped`_                                                          |
-|                           | - `property_path`_                                                   |
-|                           | - `row_attr`_                                                        |
-+---------------------------+----------------------------------------------------------------------+
 | Default invalid message   | The hidden field is invalid.                                         |
 +---------------------------+----------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                  |

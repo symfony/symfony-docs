@@ -9,27 +9,6 @@ The ``FileType`` represents a file input in your form.
 +---------------------------+--------------------------------------------------------------------+
 | Rendered as               | ``input`` ``file`` field                                           |
 +---------------------------+--------------------------------------------------------------------+
-| Options                   | - `multiple`_                                                      |
-+---------------------------+--------------------------------------------------------------------+
-| Overridden options        | - `compound`_                                                      |
-|                           | - `data_class`_                                                    |
-|                           | - `empty_data`_                                                    |
-|                           | - `invalid_message`_                                               |
-+---------------------------+--------------------------------------------------------------------+
-| Inherited options         | - `attr`_                                                          |
-|                           | - `disabled`_                                                      |
-|                           | - `error_bubbling`_                                                |
-|                           | - `error_mapping`_                                                 |
-|                           | - `help`_                                                          |
-|                           | - `help_attr`_                                                     |
-|                           | - `help_html`_                                                     |
-|                           | - `label`_                                                         |
-|                           | - `label_attr`_                                                    |
-|                           | - `label_format`_                                                  |
-|                           | - `mapped`_                                                        |
-|                           | - `required`_                                                      |
-|                           | - `row_attr`_                                                      |
-+---------------------------+--------------------------------------------------------------------+
 | Default invalid message   | Please select a valid file.                                        |
 +---------------------------+--------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                |

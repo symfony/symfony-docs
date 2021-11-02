@@ -16,30 +16,6 @@ If you want to have a boolean field, use :doc:`CheckboxType </reference/forms/ty
 +---------------------------+---------------------------------------------------------------------+
 | Rendered as               | ``input`` ``radio`` field                                           |
 +---------------------------+---------------------------------------------------------------------+
-| Overridden options        | - `invalid_message`_                                                |
-+---------------------------+---------------------------------------------------------------------+
-| Inherited options         | from the :doc:`CheckboxType </reference/forms/types/checkbox>`:     |
-|                           |                                                                     |
-|                           | - `value`_                                                          |
-|                           |                                                                     |
-|                           | from the :doc:`FormType </reference/forms/types/form>`:             |
-|                           |                                                                     |
-|                           | - `attr`_                                                           |
-|                           | - `data`_                                                           |
-|                           | - `disabled`_                                                       |
-|                           | - `empty_data`_                                                     |
-|                           | - `error_bubbling`_                                                 |
-|                           | - `error_mapping`_                                                  |
-|                           | - `help`_                                                           |
-|                           | - `help_attr`_                                                      |
-|                           | - `help_html`_                                                      |
-|                           | - `label`_                                                          |
-|                           | - `label_attr`_                                                     |
-|                           | - `label_format`_                                                   |
-|                           | - `mapped`_                                                         |
-|                           | - `required`_                                                       |
-|                           | - `row_attr`_                                                       |
-+---------------------------+---------------------------------------------------------------------+
 | Default invalid message   | Please select a valid option.                                       |
 +---------------------------+---------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                 |
