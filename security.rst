@@ -1476,7 +1476,7 @@ By default, login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
 failed requests for ``IP address``. The second limit protects against an
 attacker using multiple usernames from bypassing the first limit, without
-distrupting normal users on big networks (such as offices).
+disrupting normal users on big networks (such as offices).
 
 .. tip::
 
