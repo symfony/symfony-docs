@@ -14,32 +14,6 @@ photos).
 +---------------------------+--------------------------------------------------------------------------+
 | Rendered as               | depends on the `entry_type`_ option                                      |
 +---------------------------+--------------------------------------------------------------------------+
-| Options                   | - `allow_add`_                                                           |
-|                           | - `allow_delete`_                                                        |
-|                           | - `delete_empty`_                                                        |
-|                           | - `entry_options`_                                                       |
-|                           | - `entry_type`_                                                          |
-|                           | - `prototype`_                                                           |
-|                           | - `prototype_data`_                                                      |
-|                           | - `prototype_name`_                                                      |
-+---------------------------+--------------------------------------------------------------------------+
-| Overridden options        | - `invalid_message`_                                                     |
-+---------------------------+--------------------------------------------------------------------------+
-| Inherited options         | - `attr`_                                                                |
-|                           | - `by_reference`_                                                        |
-|                           | - `empty_data`_                                                          |
-|                           | - `error_bubbling`_                                                      |
-|                           | - `error_mapping`_                                                       |
-|                           | - `help`_                                                                |
-|                           | - `help_attr`_                                                           |
-|                           | - `help_html`_                                                           |
-|                           | - `label`_                                                               |
-|                           | - `label_attr`_                                                          |
-|                           | - `label_format`_                                                        |
-|                           | - `mapped`_                                                              |
-|                           | - `required`_                                                            |
-|                           | - `row_attr`_                                                            |
-+---------------------------+--------------------------------------------------------------------------+
 | Default invalid message   | The collection is invalid.                                               |
 +---------------------------+--------------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                      |
