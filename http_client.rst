@@ -1646,7 +1646,7 @@ the response, replace the current request by another one or change the chunk
 passthru itself.
 
 Checking the test cases implemented in
-:class:`Symfony\\Component\\HttpClient\\Response\\Tests\\AsyncDecoratorTraitTest`
+:class:`Symfony\\Component\\HttpClient\\Tests\\AsyncDecoratorTraitTest`
 might be a good start to get various working examples for a better understanding.
 Here are the use cases that it simulates:
 
