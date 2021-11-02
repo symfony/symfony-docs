@@ -176,21 +176,21 @@ We'll use jQuery to print this message on the page. Install it via:
 
 Great! Use ``require()`` to import ``jquery`` and ``greet.js``:
 
-.. code-block:: diff
+.. code-block:: javascript
 
-      // assets/js/app.js
-      // ...
+    // assets/js/app.js
+    // ...
 
-    + // loads the jquery package from node_modules
-    + var $ = require('jquery');
+    // loads the jquery package from node_modules
+    var $ = require('jquery');
 
-    + // import the function from greet.js (the .js extension is optional)
-    + // ./ (or ../) means to look for a local file
-    + var greet = require('./greet');
+    // import the function from greet.js (the .js extension is optional)
+    // ./ (or ../) means to look for a local file
+    var greet = require('./greet');
 
-    + $(document).ready(function() {
-    +     $('body').prepend('<h1>'+greet('jill')+'</h1>');
-    + });
+    $(document).ready(function() {
+        $('body').prepend('<h1>'+greet('jill')+'</h1>');
+    });
 
 That's it! If you previously ran ``encore dev --watch``, your final, built files
 have already been updated: jQuery and ``greet.js`` have been automatically
