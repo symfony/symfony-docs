@@ -37,14 +37,11 @@ used to add more entropy to security related operations. Its value should
 be a series of characters, numbers and symbols chosen randomly and the
 recommended length is around 32 characters.
 
-.. caution::
-
-    This configuration option's value is a real secret. You should treat it
-    with a lot of care.
-
 In practice, Symfony uses this value for encrypting the cookies used
 in the :doc:`remember me functionality </security/remember_me>` and for
 creating signed URIs when using :ref:`ESI (Edge Side Includes) <edge-side-includes>`.
+That's why you should treat this value as if it were a sensitive credential and
+**never make it public**.
 
 This option becomes the service container parameter named ``kernel.secret``,
 which you can use whenever the application needs an immutable random string
