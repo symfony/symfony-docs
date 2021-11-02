@@ -14,33 +14,6 @@ how the input and output of the data is handled.
 +---------------------------+---------------------------------------------------------------------+
 | Rendered as               | ``input`` ``text`` field                                            |
 +---------------------------+---------------------------------------------------------------------+
-| Options                   | - `currency`_                                                       |
-|                           | - `divisor`_                                                        |
-|                           | - `grouping`_                                                       |
-|                           | - `html5`_                                                          |
-|                           | - `rounding_mode`_                                                  |
-|                           | - `scale`_                                                          |
-+---------------------------+---------------------------------------------------------------------+
-| Overridden options        | - `compound`_                                                       |
-|                           | - `invalid_message`_                                                |
-+---------------------------+---------------------------------------------------------------------+
-| Inherited options         | - `attr`_                                                           |
-|                           | - `data`_                                                           |
-|                           | - `disabled`_                                                       |
-|                           | - `empty_data`_                                                     |
-|                           | - `error_bubbling`_                                                 |
-|                           | - `error_mapping`_                                                  |
-|                           | - `help`_                                                           |
-|                           | - `help_attr`_                                                      |
-|                           | - `help_html`_                                                      |
-|                           | - `invalid_message_parameters`_                                     |
-|                           | - `label`_                                                          |
-|                           | - `label_attr`_                                                     |
-|                           | - `label_format`_                                                   |
-|                           | - `mapped`_                                                         |
-|                           | - `required`_                                                       |
-|                           | - `row_attr`_                                                       |
-+---------------------------+---------------------------------------------------------------------+
 | Default invalid message   | Please enter a valid money amount.                                  |
 +---------------------------+---------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                 |

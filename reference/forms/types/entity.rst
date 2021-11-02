@@ -12,49 +12,6 @@ objects from the database.
 +-------------+------------------------------------------------------------------+
 | Rendered as | can be various tags (see :ref:`forms-reference-choice-tags`)     |
 +-------------+------------------------------------------------------------------+
-| Options     | - `choice_label`_                                                |
-|             | - `class`_                                                       |
-|             | - `em`_                                                          |
-|             | - `query_builder`_                                               |
-+-------------+------------------------------------------------------------------+
-| Overridden  | - `choice_name`_                                                 |
-| options     | - `choice_value`_                                                |
-|             | - `choices`_                                                     |
-|             | - `data_class`_                                                  |
-+-------------+------------------------------------------------------------------+
-| Inherited   | from the :doc:`ChoiceType </reference/forms/types/choice>`:      |
-| options     |                                                                  |
-|             | - `choice_attr`_                                                 |
-|             | - `choice_translation_domain`_                                   |
-|             | - `expanded`_                                                    |
-|             | - `group_by`_                                                    |
-|             | - `multiple`_                                                    |
-|             | - `placeholder`_                                                 |
-|             | - `preferred_choices`_                                           |
-|             | - `translation_domain`_                                          |
-|             | - `trim`_                                                        |
-|             |                                                                  |
-|             | from the :doc:`FormType </reference/forms/types/form>`:          |
-|             |                                                                  |
-|             | - `attr`_                                                        |
-|             | - `data`_                                                        |
-|             | - `disabled`_                                                    |
-|             | - `empty_data`_                                                  |
-|             | - `error_bubbling`_                                              |
-|             | - `error_mapping`_                                               |
-|             | - `help`_                                                        |
-|             | - `help_attr`_                                                   |
-|             | - `help_html`_                                                   |
-|             | - `label`_                                                       |
-|             | - `label_attr`_                                                  |
-|             | - `label_format`_                                                |
-|             | - `mapped`_                                                      |
-|             | - `required`_                                                    |
-|             | - `row_attr`_                                                    |
-|             | - `label_translation_parameters`_                                |
-|             | - `attr_translation_parameters`_                                 |
-|             | - `help_translation_parameters`_                                 |
-+-------------+------------------------------------------------------------------+
 | Parent type | :doc:`ChoiceType </reference/forms/types/choice>`                |
 +-------------+------------------------------------------------------------------+
 | Class       | :class:`Symfony\\Bridge\\Doctrine\\Form\\Type\\EntityType`       |

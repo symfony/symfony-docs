@@ -17,39 +17,6 @@ or an array (see `input`_).
 +---------------------------+----------------------------------------------------------------------------------+
 | Rendered as               | single text box, multiple text boxes or select fields - see the `widget`_ option |
 +---------------------------+----------------------------------------------------------------------------------+
-| Options                   | - `days`_                                                                        |
-|                           | - `hours`_                                                                       |
-|                           | - `minutes`_                                                                     |
-|                           | - `months`_                                                                      |
-|                           | - `seconds`_                                                                     |
-|                           | - `weeks`_                                                                       |
-|                           | - `input`_                                                                       |
-|                           | - `labels`_                                                                      |
-|                           | - `placeholder`_                                                                 |
-|                           | - `widget`_                                                                      |
-|                           | - `with_days`_                                                                   |
-|                           | - `with_hours`_                                                                  |
-|                           | - `with_invert`_                                                                 |
-|                           | - `with_minutes`_                                                                |
-|                           | - `with_months`_                                                                 |
-|                           | - `with_seconds`_                                                                |
-|                           | - `with_weeks`_                                                                  |
-|                           | - `with_years`_                                                                  |
-|                           | - `years`_                                                                       |
-+---------------------------+----------------------------------------------------------------------------------+
-| Overridden options        | - `invalid_message`_                                                             |
-+---------------------------+----------------------------------------------------------------------------------+
-| Inherited options         | - `attr`_                                                                        |
-|                           | - `data`_                                                                        |
-|                           | - `disabled`_                                                                    |
-|                           | - `help`_                                                                        |
-|                           | - `help_attr`_                                                                   |
-|                           | - `help_html`_                                                                   |
-|                           | - `inherit_data`_                                                                |
-|                           | - `invalid_message_parameters`_                                                  |
-|                           | - `mapped`_                                                                      |
-|                           | - `row_attr`_                                                                    |
-+---------------------------+----------------------------------------------------------------------------------+
 | Default invalid message   | Please choose a valid date interval.                                             |
 +---------------------------+----------------------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                              |

@@ -16,25 +16,6 @@ to input phone numbers.
 +---------------------------+-------------------------------------------------------------------+
 | Rendered as               | ``input`` ``tel`` field (a text box)                              |
 +---------------------------+-------------------------------------------------------------------+
-| Overridden options        | - `invalid_message`_                                              |
-+---------------------------+-------------------------------------------------------------------+
-| Inherited options         | - `attr`_                                                         |
-|                           | - `data`_                                                         |
-|                           | - `disabled`_                                                     |
-|                           | - `empty_data`_                                                   |
-|                           | - `error_bubbling`_                                               |
-|                           | - `error_mapping`_                                                |
-|                           | - `help`_                                                         |
-|                           | - `help_attr`_                                                    |
-|                           | - `help_html`_                                                    |
-|                           | - `label`_                                                        |
-|                           | - `label_attr`_                                                   |
-|                           | - `label_format`_                                                 |
-|                           | - `mapped`_                                                       |
-|                           | - `required`_                                                     |
-|                           | - `row_attr`_                                                     |
-|                           | - `trim`_                                                         |
-+---------------------------+-------------------------------------------------------------------+
 | Default invalid message   | Please provide a valid phone number.                              |
 +---------------------------+-------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                               |

@@ -14,28 +14,6 @@ if you want to handle submitted values like "0" or "false").
 +---------------------------+------------------------------------------------------------------------+
 | Rendered as               | ``input`` ``checkbox`` field                                           |
 +---------------------------+------------------------------------------------------------------------+
-| Options                   | - `false_values`_                                                      |
-|                           | - `value`_                                                             |
-+---------------------------+------------------------------------------------------------------------+
-| Overridden options        | - `compound`_                                                          |
-|                           | - `empty_data`_                                                        |
-|                           | - `invalid_message`_                                                   |
-+---------------------------+------------------------------------------------------------------------+
-| Inherited options         | - `attr`_                                                              |
-|                           | - `data`_                                                              |
-|                           | - `disabled`_                                                          |
-|                           | - `error_bubbling`_                                                    |
-|                           | - `error_mapping`_                                                     |
-|                           | - `help`_                                                              |
-|                           | - `help_attr`_                                                         |
-|                           | - `help_html`_                                                         |
-|                           | - `label`_                                                             |
-|                           | - `label_attr`_                                                        |
-|                           | - `label_format`_                                                      |
-|                           | - `mapped`_                                                            |
-|                           | - `required`_                                                          |
-|                           | - `row_attr`_                                                          |
-+---------------------------+------------------------------------------------------------------------+
 | Default invalid message   | The checkbox has an invalid value.                                     |
 +---------------------------+------------------------------------------------------------------------+
 | Legacy invalid message    | The value {{ value }} is not valid.                                    |
