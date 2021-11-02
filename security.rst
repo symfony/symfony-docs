@@ -1073,7 +1073,7 @@ token (or whatever you need to return) and return the JSON response:
     +         if (null === $user) {
     +             return $this->json([
     +                 'message' => 'missing credentials',
-    +             ], Response::HTTP_UNAUTHENTICATED);
+    +             ], Response::HTTP_UNAUTHORIZED);
     +         }
     +
     +         $token = ...; // somehow create an API token for $user
