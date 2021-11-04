@@ -179,7 +179,6 @@ that the ORM resolves to:
             proxy_namespace: Proxies
             proxy_dir: '%kernel.cache_dir%/doctrine/orm/Proxies'
             default_entity_manager: default
-            metadata_cache_driver: array
             query_cache_driver: array
             result_cache_driver: array
 
@@ -198,8 +197,6 @@ can be placed directly under ``doctrine.orm`` config level.
         orm:
             # ...
             query_cache_driver:
-                # ...
-            metadata_cache_driver:
                 # ...
             result_cache_driver:
                 # ...
