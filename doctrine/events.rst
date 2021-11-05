@@ -171,8 +171,7 @@ with the ``doctrine.event_listener`` tag:
                         priority: 500
 
                         # you can also restrict listeners to a specific Doctrine connection
-                        # '%doctrine_default_connection%' = 'default'
-                        connection: '%doctrine_default_connection%'
+                        connection: 'default'
 
     .. code-block:: xml
 
@@ -188,13 +187,12 @@ with the ``doctrine.event_listener`` tag:
                     * 'priority': used when multiple subscribers or listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
-                    *               '%doctrine_default_connection%' = 'default'
                 -->
                 <service id="App\EventListener\SearchIndexer">
                     <tag name="doctrine.event_listener"
                         event="postPersist"
                         priority="500"
-                        connection="%doctrine_default_connection%"/>
+                        connection="default"/>
                 </service>
             </services>
         </container>
@@ -220,8 +218,7 @@ with the ``doctrine.event_listener`` tag:
                     'priority' => 500,
 
                     # you can also restrict listeners to a specific Doctrine connection
-                    # '%doctrine_default_connection%' = 'default'
-                    'connection' => '%doctrine_default_connection%',
+                    'connection' => 'default',
                 ])
             ;
         };
@@ -231,6 +228,16 @@ with the ``doctrine.event_listener`` tag:
     Symfony loads (and instantiates) Doctrine listeners only when the related
     Doctrine event is actually fired; whereas Doctrine subscribers are always
     loaded (and instantiated) by Symfony, making them less performant.
+
+.. tip::
+
+    The value of the ``connection`` option can also be a
+    :ref:`configuration parameter <configuration-parameters>`.
+
+    .. versionadded:: 5.4
+
+        The feature to allow using configuration parameters in ``connection``
+        was introduced in Symfony 5.4.
 
 Doctrine Entity Listeners
 -------------------------
@@ -442,8 +449,7 @@ Doctrine connection to use) you must do that in the manual service configuration
                       priority: 500
 
                       # you can also restrict listeners to a specific Doctrine connection
-                      # '%doctrine_default_connection%' = 'default'
-                      connection: '%doctrine_default_connection%'
+                      connection: 'default'
 
     .. code-block:: xml
 
@@ -458,10 +464,9 @@ Doctrine connection to use) you must do that in the manual service configuration
                     * 'priority': used when multiple subscribers or listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
-                    *               '%doctrine_default_connection%' = 'default'
                 -->
                 <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber" priority="500" connection="%doctrine_default_connection%"/>
+                    <tag name="doctrine.event_subscriber" priority="500" connection="default"/>
                 </service>
             </services>
         </container>
@@ -483,8 +488,7 @@ Doctrine connection to use) you must do that in the manual service configuration
                     'priority' => 500,
 
                     // you can also restrict listeners to a specific Doctrine connection
-                    # '%doctrine_default_connection%' = 'default'
-                    'connection' => '%doctrine_default_connection%',
+                    'connection' => 'default',
                 ])
             ;
         };
@@ -492,10 +496,6 @@ Doctrine connection to use) you must do that in the manual service configuration
 .. versionadded:: 5.3
 
     Subscriber priority was introduced in Symfony 5.3.
-
-.. versionadded:: 5.4
-
-    Parameter as connection value was introduced in Symfony 5.4.
 
 .. tip::
 
