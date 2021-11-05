@@ -360,7 +360,7 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
             return function(ContainerConfigurator $configurator) {
                 $services = $configurator->services();
 
-                $services->set('app.cace.adapter.redis')
+                $services->set('app.cache.adapter.redis')
                     ->parent('cache.adapter.redis')
                     ->tag('cache.pool', ['namespace' => 'my_custom_namespace']);
             };
