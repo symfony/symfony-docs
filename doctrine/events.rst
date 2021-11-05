@@ -229,6 +229,16 @@ with the ``doctrine.event_listener`` tag:
     Doctrine event is actually fired; whereas Doctrine subscribers are always
     loaded (and instantiated) by Symfony, making them less performant.
 
+.. tip::
+
+    The value of the ``connection`` option can also be a
+    :ref:`configuration parameter <configuration-parameters>`.
+
+    .. versionadded:: 5.4
+
+        The feature to allow using configuration parameters in ``connection``
+        was introduced in Symfony 5.4.
+
 Doctrine Entity Listeners
 -------------------------
 
