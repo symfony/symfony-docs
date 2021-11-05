@@ -171,7 +171,8 @@ with the ``doctrine.event_listener`` tag:
                         priority: 500
 
                         # you can also restrict listeners to a specific Doctrine connection
-                        connection: 'default'
+                        # '%doctrine_default_connection%' = 'default'
+                        connection: '%doctrine_default_connection%'
 
     .. code-block:: xml
 
@@ -187,12 +188,13 @@ with the ``doctrine.event_listener`` tag:
                     * 'priority': used when multiple subscribers or listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
+                    *               '%doctrine_default_connection%' = 'default'
                 -->
                 <service id="App\EventListener\SearchIndexer">
                     <tag name="doctrine.event_listener"
                         event="postPersist"
                         priority="500"
-                        connection="default"/>
+                        connection="%doctrine_default_connection%"/>
                 </service>
             </services>
         </container>
@@ -218,7 +220,8 @@ with the ``doctrine.event_listener`` tag:
                     'priority' => 500,
 
                     # you can also restrict listeners to a specific Doctrine connection
-                    'connection' => 'default',
+                    # '%doctrine_default_connection%' = 'default'
+                    'connection' => '%doctrine_default_connection%',
                 ])
             ;
         };
@@ -439,7 +442,8 @@ Doctrine connection to use) you must do that in the manual service configuration
                       priority: 500
 
                       # you can also restrict listeners to a specific Doctrine connection
-                      connection: 'default'
+                      # '%doctrine_default_connection%' = 'default'
+                      connection: '%doctrine_default_connection%'
 
     .. code-block:: xml
 
@@ -454,9 +458,10 @@ Doctrine connection to use) you must do that in the manual service configuration
                     * 'priority': used when multiple subscribers or listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
+                    *               '%doctrine_default_connection%' = 'default'
                 -->
                 <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber" priority="500" connection="default"/>
+                    <tag name="doctrine.event_subscriber" priority="500" connection="%doctrine_default_connection%"/>
                 </service>
             </services>
         </container>
@@ -478,7 +483,8 @@ Doctrine connection to use) you must do that in the manual service configuration
                     'priority' => 500,
 
                     // you can also restrict listeners to a specific Doctrine connection
-                    'connection' => 'default',
+                    # '%doctrine_default_connection%' = 'default'
+                    'connection' => '%doctrine_default_connection%',
                 ])
             ;
         };
@@ -486,6 +492,10 @@ Doctrine connection to use) you must do that in the manual service configuration
 .. versionadded:: 5.3
 
     Subscriber priority was introduced in Symfony 5.3.
+
+.. versionadded:: 5.4
+
+    Parameter as connection value was introduced in Symfony 5.4.
 
 .. tip::
 
