@@ -356,7 +356,7 @@ Merging while the target branch changed
 .......................................
 
 Sometimes, someone else merges a PR in ``5.x`` at the same time as you are
-doing it. In these cases, ``gh merge ...`` failes to push. Solve this by
+doing it. In these cases, ``gh merge ...`` fails to push. Solve this by
 resetting your local branch and restarting the merge:
 
 .. code-block:: terminal
