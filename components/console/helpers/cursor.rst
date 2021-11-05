@@ -53,7 +53,7 @@ Using the cursor
 Moving the cursor
 .................
 
-There are fews methods to control moving the command cursor::
+There are few methods to control moving the command cursor::
 
     // moves the cursor 1 line up from its current position
     $cursor->moveUp();
