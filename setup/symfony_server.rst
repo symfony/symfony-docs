@@ -322,22 +322,6 @@ prefixed with ``DB_``, but as the ``com.symfony.server.service-prefix`` is set
 to ``DATABASE``, the web server creates environment variables starting with
 ``DATABASE_`` instead as expected by the default Symfony configuration.
 
-You don't need to create two containers for the main database and the test
-database. Using ``APP_ENV=test symfony`` will automatically adjust
-``DATABASE_*`` environment variables for the ``test`` environment:
-
-.. code-block:: terminal
-
-    $ symfony var:export --multiline 
-    export DATABASE_DATABASE=app
-    export DATABASE_NAME=app
-    export DATABASE_URL=postgres://app:app@127.0.0.1:49160/app?sslmode=disable&charset=utf8
-
-    $ APP_ENV=test symfony var:export --multiline 
-    export DATABASE_DATABASE=app_test
-    export DATABASE_NAME=app_test
-    export DATABASE_URL=postgres://app:app@127.0.0.1:49160/app_test?sslmode=disable&charset=utf8
-
 Here is the list of supported services with their ports and default Symfony
 prefixes:
 
