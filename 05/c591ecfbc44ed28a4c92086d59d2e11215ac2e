@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-06-19T06:48:56Z
+
+IIRC 4.25.4 fixes the issue
+
+---------------------------------------------------------------------------
+
+by Kocal at 2021-06-19T07:02:03Z
+
+Sorry, I mean 4.25.3 and 4.25.4, not the 4.25.2! (op edited)
+
+I've updated to 4.25.4 and `APP_ENV=test symfony var:export` does not suffix the database name with `_test`, the solution was to update the Doctrine Bundle to ^2.4 and use `dbname_suffix` in test environment.
+
+---------------------------------------------------------------------------
+
+by Kocal at 2021-09-26T07:51:10Z
+
+Someone got an issue with `APP_ENV=test` behaviour with the database, see https://github.com/symfony/cli/issues/470
+
+Friendly ping @javiereguiluz, thanks 🙏
