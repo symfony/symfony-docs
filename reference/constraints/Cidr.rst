@@ -1,18 +1,17 @@
 Cidr
-==
+====
 
-Validates that a value is a valid CIDR notation. By default, this will validate
-the CIDR's IP and netmask both for version 4 and version 6, with the option of allowing
-only one type of IP version to be valid. It also supports a minimum and maximum range
-constraint in which the value of the netmask is valid.
+.. versionadded:: 5.4
+
+    The ``Cidr`` constraint was introduced in Symfony 5.4.
+
+Validates that a value is a valid `CIDR`_ (Classless Inter-Domain Routing) notation.
+By default, this will validate the CIDR's IP and netmask both for version 4 and 6,
+with the option of allowing only one type of IP version to be valid. It also supports
+a minimum and maximum range constraint in which the value of the netmask is valid.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `netmaskRangeViolationMessage`_
-            - `payload`_
-            - `version`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Cidr`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CidrValidator`
 ==========  ===================================================================
@@ -153,3 +152,4 @@ of a variety of different values:
 ``all``
     Validates all CIDR formats
 
+.. _`CIDR`: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
