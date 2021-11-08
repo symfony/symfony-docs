@@ -895,6 +895,8 @@ Response Assertions
     Asserts the response format returned by the
     :method:`Symfony\\Component\\HttpFoundation\\Response::getFormat` method
     is the same as the expected value.
+``assertResponseIsUnprocessable(string $message = '')``
+    Asserts the response is unprocessable (HTTP status is 422)
 
 Request Assertions
 ..................
