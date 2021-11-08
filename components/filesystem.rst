@@ -311,7 +311,7 @@ The ``file.txt`` file contains ``Hello World`` now.
 contents at the end of some file::
 
     $filesystem->appendToFile('logs.txt', 'Email sent to user@example.com');
-    // with the third argument set to true you can lock the file when writing to it.
+    // the third argument tells whether the file should be locked when writing to it
     $filesystem->appendToFile('logs.txt', 'Email sent to user@example.com', true);
 
 If either the file or its containing directory doesn't exist, this method
@@ -319,7 +319,7 @@ creates them before appending the contents.
 
 .. versionadded:: 5.4
 
-    The third argument ``$lock`` was introduced in Symfony 5.4.
+    The third argument of ``appendToFile()`` was introduced in Symfony 5.4.
 
 Error Handling
 --------------
