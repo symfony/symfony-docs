@@ -17,8 +17,10 @@ Get the Notifier installed using:
 
     $ composer require symfony/notifier
 
-Channels: Chatters, Texters, Email and Browser
-----------------------------------------------
+.. _channels-chatters-texters-email-and-browser:
+
+Channels: Chatters, Texters, Email, Browser and Push
+----------------------------------------------------
 
 The notifier component can send notifications to different channels. Each
 channel can integrate with different providers (e.g. Slack or Twilio SMS)
@@ -32,6 +34,7 @@ The notifier component supports the following channels:
   services like Slack and Telegram;
 * :ref:`Email channel <notifier-email-channel>` integrates the :doc:`Symfony Mailer </mailer>`;
 * Browser channel uses :ref:`flash messages <flash-messages>`.
+* Push Channel sends notifications to phones via push notifications.
 
 .. tip::
 
@@ -273,6 +276,75 @@ notification emails:
                 ->dsn('%env(MAILER_DSN)%')
                 ->envelope()
                     ->sender('notifications@example.com')
+            ;
+        };
+
+Push Channel
+~~~~~~~~~~~~
+
+The push channel is used to send notifications to users by using
+:class:`Symfony\\Component\\Notifier\\Texter` classes. Symfony provides
+integration with these push services:
+
+==============  ====================================  =================================================================================
+Service         Package                               DSN
+==============  ====================================  =================================================================================
+Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
+Expo            ``symfony/expo-notifier``              ``expo://Token@default``
+OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID''``
+==============  ====================================  =================================================================================
+
+.. versionadded:: 5.4
+
+    The Expo and OneSignal integrations were introduced in Symfony 5.4.
+
+To enable a texter, add the correct DSN in your ``.env`` file and
+configure the ``texter_transports``:
+
+.. code-block:: bash
+
+    # .env
+    EXPO_DSN=expo://TOKEN@default
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/notifier.yaml
+        framework:
+            notifier:
+                texter_transports:
+                    expo: '%env(EXPO_DSN)%'
+
+    .. code-block:: xml
+
+        <!-- config/packages/notifier.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:notifier>
+                    <framework:texter-transport name="expo">
+                        %env(EXPO_DSN)%
+                    </framework:texter-transport>
+                </framework:notifier>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/notifier.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->notifier()
+                ->texterTransport('expo', '%env(EXPO_DSN)%')
             ;
         };
 
