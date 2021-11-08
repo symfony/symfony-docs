@@ -27,11 +27,8 @@ Imagine you have a ``Mailer`` class which has four options: ``host``,
 
     class Mailer
     {
-        protected $options;
-
-        public function __construct(array $options = [])
+        public function __construct(protected array $options = [])
         {
-            $this->options = $options;
         }
     }
 

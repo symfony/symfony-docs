@@ -533,12 +533,9 @@ the same key could be invalidated with one function call::
 
     class SomeClass
     {
-        private $myCachePool;
-
         // using autowiring to inject the cache pool
-        public function __construct(TagAwareCacheInterface $myCachePool)
+        public function __construct(private TagAwareCacheInterface $myCachePool)
         {
-            $this->myCachePool = $myCachePool;
         }
 
         public function someMethod()

@@ -412,13 +412,8 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
 
     class ReactPHPRunner implements RunnerInterface
     {
-        private $application;
-        private $port;
-
-        public function __construct(RequestHandlerInterface $application, int $port)
+        public function __construct(private RequestHandlerInterface $application, private int $port)
         {
-            $this->application = $application;
-            $this->port = $port;
         }
 
         public function run(): int

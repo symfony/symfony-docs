@@ -26,11 +26,8 @@ correct locale however you want::
 
     class LocaleSubscriber implements EventSubscriberInterface
     {
-        private $defaultLocale;
-
-        public function __construct(string $defaultLocale = 'en')
+        public function __construct(private string $defaultLocale = 'en')
         {
-            $this->defaultLocale = $defaultLocale;
         }
 
         public function onKernelRequest(RequestEvent $event)
