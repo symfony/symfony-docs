@@ -47,7 +47,7 @@ object::
     // src/Controller/UserController.php
     namespace App\Controller;
 
-    use Doctrine\DBAL\Driver\Connection;
+    use Doctrine\DBAL\Connection;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
 
