@@ -55,6 +55,7 @@ option on the form.
 
 .. include:: /reference/forms/types/options/empty_data.rst.inc
     :end-before: DEFAULT_PLACEHOLDER
+    :start-after: DEFAULT_PLACEHOLDER
 
 The actual default value of this option depends on other field options:
 
@@ -63,10 +64,7 @@ The actual default value of this option depends on other field options:
 * If ``data_class`` is not set and ``compound`` is ``true``, then ``[]``
   (empty array);
 * If ``data_class`` is not set and ``compound`` is ``false``, then ``''``
-  (empty string).
-
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+  (empty string).  
 
 .. _reference-form-option-error-bubbling:
 
