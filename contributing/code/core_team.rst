@@ -65,7 +65,6 @@ Active Core Members
   * **Ryan Weaver** (`weaverryan`_);
   * **Robin Chalas** (`chalasr`_);
   * **Maxime Steinhausser** (`ogizanagi`_);
-  * **Samuel Rozé** (`sroze`_);
   * **Yonel Ceruto** (`yceruto`_);
   * **Tobias Nyholm** (`Nyholm`_);
   * **Wouter De Jong** (`wouterj`_);
@@ -106,7 +105,8 @@ Symfony contributions:
 * **Jordi Boggiano** (`Seldaek`_);
 * **Lukas Kahwe Smith** (`lsmith77`_);
 * **Jules Pietri** (`HeahDude`_);
-* **Jakub Zalas** (`jakzal`_).
+* **Jakub Zalas** (`jakzal`_);
+* **Samuel Rozé** (`sroze`_).
 
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
