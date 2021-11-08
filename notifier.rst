@@ -38,7 +38,7 @@ The notifier component supports the following channels:
   services like Slack and Telegram;
 * :ref:`Email channel <notifier-email-channel>` integrates the :doc:`Symfony Mailer </mailer>`;
 * Browser channel uses :ref:`flash messages <flash-messages>`.
-* Push Channel sends notifications to phones via push notifications.
+* Push Channel sends notifications to phones and browsers via push notifications.
 
 .. tip::
 
