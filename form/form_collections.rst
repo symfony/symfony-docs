@@ -238,24 +238,25 @@ it will receive an *unknown* number of tags. Otherwise, you'll see a
 
 The ``allow_add`` option also makes a ``prototype`` variable available to you.
 This "prototype" is a little "template" that contains all the HTML needed to
-dynamically create any new "tag" forms with JavaScript. To render the prototype, add
-the following ``data-prototype`` attribute to the existing ``<ul>`` in your template:
+dynamically create any new "tag" forms with JavaScript. Now add the following
+``data-index`` (containing the current "form row" number for the following JavaScript)
+and ``data-prototype`` attribute to the existing ``<ul>`` in your template:
 
 .. code-block:: html+twig
 
     <ul class="tags" data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
-
-Now add a button just next to the ``<ul>`` to dynamically add a new tag:
-
-.. code-block:: html+twig
-
-    <button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
 
 On the rendered page, the result will look something like this:
 
 .. code-block:: html
 
     <ul class="tags" data-index="0" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+
+Now add a button to dynamically add a new tag:
+
+.. code-block:: html+twig
+
+    <button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
 
 .. seealso::
 
@@ -265,7 +266,7 @@ On the rendered page, the result will look something like this:
 .. tip::
 
     The ``form.tags.vars.prototype`` is a form element that looks and feels just
-    like the individual ``form_widget(tag)`` elements inside your ``for`` loop.
+    like the individual ``form_widget(tag.*)`` elements inside your ``for`` loop.
     This means that you can call ``form_widget()``, ``form_row()`` or ``form_label()``
     on it. You could even choose to render only one of its fields (e.g. the
     ``name`` field):
@@ -303,9 +304,9 @@ you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``)
     const addFormToCollection = (e) => {
       const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
-      const item = document.createElement('li');
+      const element = document.createElement('li');
 
-      item.innerHTML = collectionHolder
+      element.innerHTML = collectionHolder
         .dataset
         .prototype
         .replace(
@@ -313,7 +314,7 @@ you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``)
           collectionHolder.dataset.index
         );
 
-      collectionHolder.appendChild(item);
+      collectionHolder.appendChild(element);
 
       collectionHolder.dataset.index++;
     };
@@ -540,24 +541,23 @@ First, add a "delete this tag" link to each tag form:
         // ...
 
         // add a delete link to the new form
-        addTagFormDeleteLink(item);
+        addTagFormDeleteLink(element);
     }
 
 The ``addTagFormDeleteLink()`` function will look something like this:
 
 .. code-block:: javascript
 
-    const addTagFormDeleteLink = (tagFormLi) => {
-        const removeFormButton = document.createElement('button')
-        removeFormButton.classList
-        removeFormButton.innerText = 'Delete this tag'
+    const addTagFormDeleteLink = (element) => {
+        const removeFormButton = document.createElement('button');
+        removeFormButton.innerText = 'Delete this tag';
 
-        tagFormLi.append(removeFormButton);
+        element.append(removeFormButton);
 
         removeFormButton.addEventListener('click', (e) => {
-            e.preventDefault()
+            e.preventDefault();
             // remove the li for the tag form
-            tagFormLi.remove();
+            element.remove();
         });
     }
 
@@ -652,7 +652,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     the `symfony-collection`_ package based on `jQuery`_ for the rest of browsers.
 
 .. _`Owning Side and Inverse Side`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork-associations.html
-.. _`jQuery`: http://jquery.com/
 .. _`JSFiddle`: https://jsfiddle.net/ey8ozh6n/
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
