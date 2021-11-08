@@ -313,10 +313,6 @@ contents at the end of some file::
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.
 
-.. versionadded:: 5.4
-
-    The third argument of ``appendToFile()`` was introduced in Symfony 5.4.
-
 Error Handling
 --------------
 
