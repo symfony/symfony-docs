@@ -21,6 +21,8 @@ Get the Notifier installed using:
 
     $ composer require symfony/notifier
 
+.. _channels-chatters-texters-email-and-browser:
+
 Channels: Chatters, Texters, Email, Browser and Push
 ----------------------------------------------------
 
