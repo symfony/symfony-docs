@@ -65,6 +65,7 @@ FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:PASSW
 GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
 Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
+KazInfoTeh      ``symfony/kaz-info-teh-notifier``     ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
 LightSms        ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
 Mailjet         ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?from=FROM``
 MessageBird     ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
@@ -90,7 +91,7 @@ Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default
 
 .. versionadded:: 6.1
 
-    The 46elks and OrangeSms integrations were introduced in Symfony 6.1.
+    The 46elks, OrangeSms and KazInfoTeh integrations were introduced in Symfony 6.1.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
