@@ -995,7 +995,7 @@ Mailer Assertions
     End to End Tests (E2E)
     ----------------------
 
-    * panther
+    * panther [panther github](https://github.com/symfony/panther)
     * testing javascript
     * UX or form collections as example?
 
