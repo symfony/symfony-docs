@@ -46,7 +46,7 @@ Basic File Transfer
 The most basic way of deploying an application is copying the files manually
 via FTP/SCP (or similar method). This has its disadvantages as you lack control
 over the system as the upgrade progresses. This method also requires you
-to take some manual steps after transferring the files (see `Common Deployment Tasks`_)
+to take some manual steps after transferring the files (see `Common Deployment Tasks`_).
 
 Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
@@ -278,7 +278,7 @@ Learn More
 .. _`Heroku`: https://devcenter.heroku.com/articles/deploying-symfony4
 .. _`Platform.sh`: https://docs.platform.sh/frameworks/symfony.html
 .. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
-.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony-4-uni
+.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony-5
 .. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle
 .. _`Clever Cloud`: https://www.clever-cloud.com/doc/php/tutorial-symfony/
 .. _`Symfony Cloud`: https://symfony.com/doc/master/cloud/intro.html
