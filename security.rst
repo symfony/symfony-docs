@@ -1909,7 +1909,8 @@ database and every user is *always* given at least one role: ``ROLE_USER``::
 This is a nice default, but you can do *whatever* you want to determine which roles
 a user should have. Here are a few guidelines:
 
-* Every role **must start with** ``ROLE_`` (otherwise, things won't work as expected)
+* Every role **must start with** ``ROLE_`` (otherwise, things won't work as expected
+regarding Symfony's internal Security logic)
 
 * Other than the above rule, a role is just a string and you can invent what you
   need (e.g. ``ROLE_PRODUCT_ADMIN``).
