@@ -23,12 +23,12 @@ Basic Usage
 
     .. code-block:: php-annotations
 
-        // src/Entity/Author.php
+        // src/Entity/NetworkSettings.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        class Author
+        class NetworkSettings
         {
             /**
              * @Assert\Cidr
@@ -38,12 +38,12 @@ Basic Usage
 
     .. code-block:: php-attributes
 
-        // src/Entity/Author.php
+        // src/Entity/NetworkSettings.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        class Author
+        class NetworkSettings
         {
             #[Assert\Cidr]
             protected $cidrNotation;
@@ -52,7 +52,7 @@ Basic Usage
     .. code-block:: yaml
 
         # config/validator/validation.yaml
-        App\Entity\Author:
+        App\Entity\NetworkSettings:
             properties:
                 cidrNotation:
                     - Cidr: ~
@@ -65,7 +65,7 @@ Basic Usage
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
 
-            <class name="App\Entity\Author">
+            <class name="App\Entity\NetworkSettings">
                 <property name="cidrNotation">
                     <constraint name="Cidr"/>
                 </property>
@@ -74,13 +74,13 @@ Basic Usage
 
     .. code-block:: php
 
-        // src/Entity/Author.php
+        // src/Entity/NetworkSettings.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-        class Author
+        class NetworkSettings
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
@@ -103,34 +103,34 @@ Options
 This message is shown if the string is not a valid CIDR notation.
 
 ``netmaskMin``
-~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: ``0``
 
 It's a constraint for the lowest value a valid netmask may have.
 
 ``netmaskMax``
-~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``32 for IPv4 or 128 for IPv6``
+**type**: ``string`` **default**: ``32`` for IPv4 or ``128`` for IPv6
 
 It's a constraint for the biggest value a valid netmask may have.
 
 ``netmaskRangeViolationMessage``
-~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The value of the netmask should be between {{ min }} and {{ max }}.``
 
-This message is shown if the value of the CIDR's netmask is bigger then the value of the `max_` or lower than
-the value of the `min_`.
+This message is shown if the value of the CIDR's netmask is bigger than the
+``netmaskMax`` value or lower than the ``netmaskMin`` value.
 
 You can use the following parameters in this message:
 
 ===============  ==============================================================
 Parameter        Description
 ===============  ==============================================================
-``{{ min }}``  The minimum value a CIDR netmask may have
-``{{ max }}``  The maximum value a CIDR netmask may have
+``{{ min }}``    The minimum value a CIDR netmask may have
+``{{ max }}``    The maximum value a CIDR netmask may have
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
@@ -141,15 +141,10 @@ Parameter        Description
 **type**: ``string`` **default**: ``all``
 
 This determines exactly *how* the CIDR notation is validated and can take one
-of a variety of different values:
+of these values:
 
-**All ranges**
-
-``4``
-    Validates for CIDR notations that have an IPv4.
-``6``
-    Validates for CIDR notations that have an IPv6.
-``all``
-    Validates all CIDR formats
+* ``4``: validates for CIDR notations that have an IPv4;
+* ``6``: validates for CIDR notations that have an IPv6;
+* ``all``: validates all CIDR formats.
 
 .. _`CIDR`: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
