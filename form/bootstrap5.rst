@@ -114,7 +114,7 @@ Form type or ``ChoiceType`` configuration) to the label class.
         $builder
             ->add('myCheckbox', CheckboxType::class, [
                 'label_attr' => [
-                    'class' => '`checkbox-inline',
+                    'class' => 'checkbox-inline',
                 ],
             ])
             ->add('myRadio', RadioType::class, [
