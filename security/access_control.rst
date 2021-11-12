@@ -326,7 +326,7 @@ key:
             access_control:
                 -
                     path: ^/_internal/secure
-                    # the 'roles' and 'allow-if' options work like an OR expression, so
+                    # the 'roles' and 'allow_if' options work like an OR expression, so
                     # access is granted if the expression is TRUE or the user has ROLE_ADMIN
                     roles: 'ROLE_ADMIN'
                     allow_if: "'127.0.0.1' == request.getClientIp() or request.headers.has('X-Secure-Access')"
