@@ -41,7 +41,7 @@ To log a message, inject the default logger in your controller or service::
     }
 
 The ``logger`` service has different methods for different logging levels/priorities.
-See `LoggerInterface`_ for a list of all of the methods on the logger.
+See `LoggerInterface <https://github.com/php-fig/log/blob/master/src/LoggerInterface.php>`_ for a list of all of the methods on the logger.
 
 Monolog
 -------
