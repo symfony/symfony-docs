@@ -8,13 +8,8 @@ The preferred way to develop your Symfony application is to use
 :doc:`Symfony Local Web Server </setup/symfony_server>`.
 
 However, when running the application in the production environment, you'll need
-to use a fully-featured web server. This article describes several ways to use
-Symfony with Apache or Nginx.
-
-When using Apache, you can configure PHP as an
-:ref:`Apache module <web-server-apache-mod-php>` or with FastCGI using
-:ref:`PHP FPM <web-server-apache-fpm>`. FastCGI also is the preferred way
-to use PHP :ref:`with Nginx <web-server-nginx>`.
+to use a fully-featured web server. This article describes how to use Symfony
+with Apache or Nginx.
 
 .. sidebar:: The public directory
 
@@ -29,147 +24,6 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
     If your hosting provider requires you to change the ``public/`` directory to
     another location (e.g. ``public_html/``) make sure you
     :ref:`override the location of the public/ directory <override-web-dir>`.
-
-.. _web-server-apache-mod-php:
-
-Adding Rewrite Rules
---------------------
-
-The easiest way is to install the ``apache`` :ref:`Symfony pack <symfony-packs>`
-by executing the following command:
-
-.. code-block:: terminal
-
-    $ composer require symfony/apache-pack
-
-This pack installs a ``.htaccess`` file in the ``public/`` directory that contains
-the rewrite rules needed to serve the Symfony application.
-
-In production servers, you should move the ``.htaccess`` rules into the main
-Apache configuration file to improve performance. To do so, copy the
-``.htaccess`` contents inside the ``<Directory>`` configuration associated to
-the Symfony application ``public/`` directory (and replace ``AllowOverride All``
-by ``AllowOverride None``):
-
-.. code-block:: apache
-
-    <VirtualHost *:80>
-        # ...
-        DocumentRoot /var/www/project/public
-
-        <Directory /var/www/project/public>
-            AllowOverride None
-
-            # Copy .htaccess contents here
-        </Directory>
-    </VirtualHost>
-
-Apache with mod_php/PHP-CGI
----------------------------
-
-The **minimum configuration** to get your application running under Apache is:
-
-.. code-block:: apache
-
-    <VirtualHost *:80>
-        ServerName domain.tld
-        ServerAlias www.domain.tld
-
-        DocumentRoot /var/www/project/public
-        <Directory /var/www/project/public>
-            AllowOverride All
-            Order Allow,Deny
-            Allow from All
-        </Directory>
-
-        # uncomment the following lines if you install assets as symlinks
-        # or run into problems when compiling LESS/Sass/CoffeeScript assets
-        # <Directory /var/www/project>
-        #     Options FollowSymlinks
-        # </Directory>
-
-        ErrorLog /var/log/apache2/project_error.log
-        CustomLog /var/log/apache2/project_access.log combined
-    </VirtualHost>
-
-.. tip::
-
-    If your system supports the ``APACHE_LOG_DIR`` variable, you may want
-    to use ``${APACHE_LOG_DIR}/`` instead of hardcoding ``/var/log/apache2/``.
-
-Use the following **optimized configuration** to disable ``.htaccess`` support
-and increase web server performance:
-
-.. code-block:: apache
-
-    <VirtualHost *:80>
-        ServerName domain.tld
-        ServerAlias www.domain.tld
-
-        DocumentRoot /var/www/project/public
-        DirectoryIndex /index.php
-
-        <Directory /var/www/project/public>
-            AllowOverride None
-            Order Allow,Deny
-            Allow from All
-
-            FallbackResource /index.php
-        </Directory>
-
-        # uncomment the following lines if you install assets as symlinks
-        # or run into problems when compiling LESS/Sass/CoffeeScript assets
-        # <Directory /var/www/project>
-        #     Options FollowSymlinks
-        # </Directory>
-
-        # optionally disable the fallback resource for the asset directories
-        # which will allow Apache to return a 404 error when files are
-        # not found instead of passing the request to Symfony
-        <Directory /var/www/project/public/bundles>
-            DirectoryIndex disabled
-            FallbackResource disabled
-        </Directory>
-        ErrorLog /var/log/apache2/project_error.log
-        CustomLog /var/log/apache2/project_access.log combined
-
-        # optionally set the value of the environment variables used in the application
-        #SetEnv APP_ENV prod
-        #SetEnv APP_SECRET <app-secret-id>
-        #SetEnv DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name"
-    </VirtualHost>
-
-.. caution::
-
-    Use ``FallbackResource`` on Apache 2.4.25 or higher, due to a bug which was
-    fixed on that release causing the root ``/`` to hang.
-
-.. tip::
-
-    If you are using **php-cgi**, Apache does not pass HTTP basic username and
-    password to PHP by default. To work around this limitation, you should use
-    the following configuration snippet:
-
-    .. code-block:: apache
-
-        RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-
-Using mod_php/PHP-CGI with Apache 2.4
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In Apache 2.4, ``Order Allow,Deny`` has been replaced by ``Require all granted``.
-Hence, you need to modify your ``Directory`` permission settings as follows:
-
-.. code-block:: apache
-
-    <Directory /var/www/project/public>
-        Require all granted
-        # ...
-    </Directory>
-
-For advanced Apache configuration options, read the official `Apache documentation`_.
-
-.. _web-server-apache-fpm:
 
 Apache with PHP-FPM
 -------------------
@@ -234,9 +88,9 @@ requests to PHP-FPM. Configure PHP-FPM to listen on a TCP or Unix socket, enable
 
         DocumentRoot /var/www/project/public
         <Directory /var/www/project/public>
-            # enable the .htaccess rewrites
-            AllowOverride All
+            AllowOverride None
             Require all granted
+            FallbackResource /index.php
         </Directory>
 
         # uncomment the following lines if you install assets as symlinks
@@ -248,51 +102,6 @@ requests to PHP-FPM. Configure PHP-FPM to listen on a TCP or Unix socket, enable
         ErrorLog /var/log/apache2/project_error.log
         CustomLog /var/log/apache2/project_access.log combined
     </VirtualHost>
-
-PHP-FPM with Apache 2.2
-~~~~~~~~~~~~~~~~~~~~~~~
-
-On Apache 2.2 or lower, you cannot use ``mod_proxy_fcgi``. You have to use
-the `FastCgiExternalServer`_ directive instead. Therefore, your Apache configuration
-should look something like this:
-
-.. code-block:: apache
-
-    <VirtualHost *:80>
-        ServerName domain.tld
-        ServerAlias www.domain.tld
-
-        AddHandler php7-fcgi .php
-        Action php7-fcgi /php7-fcgi
-        Alias /php7-fcgi /usr/lib/cgi-bin/php7-fcgi
-        FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -host 127.0.0.1:9000 -pass-header Authorization
-
-        DocumentRoot /var/www/project/public
-        <Directory /var/www/project/public>
-            # enable the .htaccess rewrites
-            AllowOverride All
-            Order Allow,Deny
-            Allow from all
-        </Directory>
-
-        # uncomment the following lines if you install assets as symlinks
-        # or run into problems when compiling LESS/Sass/CoffeeScript assets
-        # <Directory /var/www/project>
-        #     Options FollowSymlinks
-        # </Directory>
-
-        ErrorLog /var/log/apache2/project_error.log
-        CustomLog /var/log/apache2/project_access.log combined
-    </VirtualHost>
-
-If you prefer to use a Unix socket, you have to use the ``-socket`` option
-instead:
-
-.. code-block:: apache
-
-    FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php/php7.4-fpm.sock -pass-header Authorization
-
-.. _web-server-nginx:
 
 Nginx
 -----
