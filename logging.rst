@@ -382,10 +382,10 @@ Learn more
     logging/monolog_console
 
 .. _`the twelve-factor app methodology`: https://12factor.net/logs
-.. _PSR-3: https://www.php-fig.org/psr/psr-3/
+.. _`PSR-3`: https://www.php-fig.org/psr/psr-3/
 .. _`stderr`: https://en.wikipedia.org/wiki/Standard_streams#Standard_error_(stderr)
-.. _Monolog: https://github.com/Seldaek/monolog
-.. _LoggerInterface: https://github.com/php-fig/log/blob/master/Psr/Log/LoggerInterface.php
+.. _`Monolog`: https://github.com/Seldaek/monolog
+.. _`LoggerInterface`: https://github.com/php-fig/log/blob/master/src/LoggerInterface.php
 .. _`logrotate`: https://github.com/logrotate/logrotate
 .. _`Monolog Configuration`: https://github.com/symfony/monolog-bundle/blob/master/DependencyInjection/Configuration.php#L25
 .. _`STDERR PHP stream`: https://www.php.net/manual/en/features.commandline.io-streams.php
