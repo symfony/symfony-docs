@@ -992,12 +992,11 @@ Mailer Assertions
     <jane@example.com>`` into ``jane@example.com``.
 
 .. TODO
-    End to End Tests (E2E)
-    ----------------------
-
-    * panther
-    * testing javascript
-    * UX or form collections as example?
+..  End to End Tests (E2E)
+..  ----------------------
+..  * panther
+..  * testing javascript
+..  * UX or form collections as example?
 
 Learn more
 ----------
