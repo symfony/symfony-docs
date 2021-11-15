@@ -388,7 +388,7 @@ order:
 
     .. versionadded:: 5.2
 
-        In Symfony 5.2, the context is accessible in all events::
+        In Symfony 5.2, the context is customizable for all events except for workflow.guard events, which will not receive the custom $context::
 
             // $context must be an array
             $context = ['context_key' => 'context_value'];
