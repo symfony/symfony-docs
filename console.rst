@@ -376,7 +376,7 @@ console::
 
             // the output of the command in the console
             $output = $commandTester->getDisplay();
-            $this->assertContains('Username: Wouter', $output);
+            $this->assertStringContainsString('Username: Wouter', $output);
 
             // ...
         }
