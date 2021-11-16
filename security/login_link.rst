@@ -108,6 +108,23 @@ intercept requests to this route:
                 throw new \LogicException('This code should never be reached');
             }
         }
+        
+    .. code-block:: php-attributes
+    
+        // src/Controller/SecurityController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class SecurityController extends AbstractController
+        {
+            #[Route('/login_check', name: 'login_check')]
+            public function check()
+            {
+                throw new \LogicException('This code should never be reached');
+            }
+        }
 
     .. code-block:: yaml
 
