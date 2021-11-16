@@ -32,24 +32,12 @@ endpoint for filesystem operations::
         echo "An error occurred while creating your directory at ".$exception->getPath();
     }
 
-.. note::
-
-    Methods :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::exists`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::touch`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::remove`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chmod`,
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chown` and
-    :method:`Symfony\\Component\\Filesystem\\Filesystem::chgrp` can receive a
-    string, an array or any object implementing :phpclass:`Traversable` as
-    the target argument.
-
 ``mkdir``
 ~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::mkdir` creates a directory recursively.
 On POSIX filesystems, directories are created with a default mode value
-`0777`. You can use the second argument to set your own mode::
+``0777``. You can use the second argument to set your own mode::
 
     $filesystem->mkdir('/tmp/photos', 0700);
 
