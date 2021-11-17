@@ -361,7 +361,7 @@ console::
     {
         public function testExecute()
         {
-            $kernel = static::createKernel();
+            $kernel = self::bootKernel();
             $application = new Application($kernel);
 
             $command = $application->find('app:create-user');
