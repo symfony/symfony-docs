@@ -20,10 +20,9 @@ Want to use `TypeScript`_? No problem! First, enable it:
     +     //.enableForkedTypeScriptTypesChecking()
       ;
 
-Then add a `tsconfig.json` file with the contents `{}` to the project folder,
-or in the folder where your TypeScript files are located, like the `/assets`
-folder. In `tsconfig.json` you can define more options on how to process
-TypeScript, but defining no additional options will already work.
+Then create an empty ``tsconfig.json`` file with the contents ``{}`` in the project
+root folder (or in the folder where your TypeScript files are located; e.g. ``assets/``).
+In ``tsconfig.json`` you can define more options, as shown in `tsconfig.json reference`_.
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
