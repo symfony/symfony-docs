@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by iquito at 2021-11-15T14:03:53Z
+
+Targeting `symfony:5.4` is probably incorrect, as this affects all versions of Webpack Encore that support TypeScript - although Webpack Encore does have a different versioning scheme than Symfony anyway, so I am not sure which version to target.
