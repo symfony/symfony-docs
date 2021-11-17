@@ -35,7 +35,7 @@ using a processor::
         public function __invoke(array $record)
         {
             try {
-                $session = $requestStack->getSession();
+                $session = $this->requestStack->getSession();
             } catch (SessionNotFoundException $e) {
                 return;
             }
