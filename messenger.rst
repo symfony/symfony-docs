@@ -1367,39 +1367,47 @@ The Redis transport DSN may looks like this:
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-
-===================  =====================================  =================================
-Option               Description                            Default
-===================  =====================================  =================================
-stream               The Redis stream name                  messages
-group                The Redis consumer group name          symfony
-consumer             Consumer name used in Redis            consumer
-auto_setup           Create the Redis group automatically?  true
-auth                 The Redis password
-delete_after_ack     If ``true``, messages are deleted      true
-                     automatically after processing them
-delete_after_reject  If ``true``, messages are deleted      true
-                     automatically if they are rejected
-lazy                 Connect only when a connection is      false
-                     really needed
-serializer           How to serialize the final payload     ``Redis::SERIALIZER_PHP``
-                     in Redis (the
-                     ``Redis::OPT_SERIALIZER`` option)
-stream_max_entries   The maximum number of entries which    ``0`` (which means "no trimming")
-                     the stream will be trimmed to. Set
-                     it to a large enough number to
-                     avoid losing pending messages
-tls                  Enable TLS support for the connection  false
-redeliver_timeout    Timeout before retrying a pending      ``3600``
-                     message which is owned by an
-                     abandoned consumer (if a worker died
-                     for some reason, this will occur,
-                     eventually you should retry the
-                     message) - in seconds.
-claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
-                     messages should be checked for to
-                     claim - in milliseconds
-===================  =====================================  =================================
+=======================  =====================================  =================================
+Option                   Description                            Default
+=======================  =====================================  =================================
+stream                   The Redis stream name                  messages
+group                    The Redis consumer group name          symfony
+consumer                 Consumer name used in Redis            consumer
+auto_setup               Create the Redis group automatically?  true
+auth                     The Redis password
+delete_after_ack         If ``true``, messages are deleted      true
+                         automatically after processing them
+delete_after_reject      If ``true``, messages are deleted      true
+                         automatically if they are rejected
+lazy                     Connect only when a connection is      false
+                         really needed
+serializer               How to serialize the final payload     ``Redis::SERIALIZER_PHP``
+                         in Redis (the
+                         ``Redis::OPT_SERIALIZER`` option)
+stream_max_entries       The maximum number of entries which    ``0`` (which means "no trimming")
+                         the stream will be trimmed to. Set
+                         it to a large enough number to
+                         avoid losing pending messages
+tls                      Enable TLS support for the connection  false
+redeliver_timeout        Timeout before retrying a pending      ``3600``
+                         message which is owned by an
+                         abandoned consumer (if a worker died
+                         for some reason, this will occur,
+                         eventually you should retry the
+                         message) - in seconds.
+claim_interval           Interval on which pending/abandoned    ``60000`` (1 Minute)
+                         messages should be checked for to
+                         claim - in milliseconds
+sentinel_persistent_id   String, if null connection is          null
+                         non-persistent.
+sentinel_retry_interval  Int, value in milliseconds             ``0``
+sentinel_read_timeout    Float, value in seconds                ``0``
+                         default indicates unlimited
+sentinel_timeout         Float, value in seconds                ``0``
+                         default indicates unlimited
+sentinel_master          String, if null or empty Sentinel      null
+                         support is disabled
+=======================  =====================================  =================================
 
 .. caution::
 
