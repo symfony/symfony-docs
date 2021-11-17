@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by carsonbot at 2021-11-16T11:36:20Z
+
+It looks like you unchecked the "Allow edits from maintainer" box. That is fine, but please note that if you have multiple commits, you'll need to squash your commits into one before this can be merged. Or, you can check the "Allow edits from maintainers" box and the maintainer can squash for you.
+
+Cheers!
+
+Carsonbot
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-11-16T16:40:01Z
+
+Thanks for this contribution!
+
+If you can, please update your PR to remove the changes introduced in the first part of the table (the existing contents). The changes in the headers especially caused some troubles for us in the past (because of the leading white spaces ... so we must keep the current contents).
+
+Also, after the updated table, please add the following:
+
+```rst
+.. versionadded:: 5.4
+
+    The ``sentinel_persistent_id``, ``sentinel_retry_interval``, ``sentinel_read_timeout``,
+    ``sentinel_timeout``, and ``sentinel_master`` options were introduced in Symfony 5.4.
+```
+
+---------------------------------------------------------------------------
+
+by norbertschultheisz at 2021-11-17T10:07:08Z
+
+Made some adjustments on the content but I am affraid due to the length of the argument names I can't undo the changes on the table header. But if I am missing something about rst tables please give a hand
