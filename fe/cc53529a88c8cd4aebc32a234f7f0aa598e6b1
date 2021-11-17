@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-11-08T21:27:13Z
+
+@chalasr just asking, why does the [UserPasswordHasher](https://github.com/symfony/symfony/blob/5.4/src/Symfony/Component/PasswordHasher/Hasher/UserPasswordHasher.php) define methods like `hashPassword()` instead of implementing the [PasswordHasherInterface](https://github.com/symfony/symfony/blob/5.4/src/Symfony/Component/PasswordHasher/PasswordHasherInterface.php), which uses methods like `hash()`? Thanks!
+
+---------------------------------------------------------------------------
+
+by chalasr at 2021-11-09T09:36:46Z
+
+@javiereguiluz It cannot implement nor extend the `PasswordHasherInterface` as there would be a signature mismatch (the `$user` parameter only exists in `UserPasswordHasherInterface`).
+I guess you are mostly wondering about why they have a different name, and I have to admit that I don't know.
+Maybe it was in the hope of making it clear that it's about hashing the password for the passed user, but I'm not sure it does.
