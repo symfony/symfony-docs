@@ -91,6 +91,11 @@ in ``config/secrets/prod``. You can also set the secret in a few other ways:
     # or let Symfony generate a random value for you
     $ php bin/console secrets:set REMEMBER_ME --random
 
+.. note::
+
+    There's no command to rename secrets, so you'll need to create a new secret
+    and remove the old one.
+
 Referencing Secrets in Configuration Files
 ------------------------------------------
 
