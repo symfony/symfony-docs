@@ -230,7 +230,7 @@ After configuring the correct algorithm, you can use the
                 $plaintextPassword = ...;
 
                 // hash the password (based on the security.yaml config for the $user class)
-                $hashedPassword = $passwordHasher->hash(
+                $hashedPassword = $passwordHasher->hashPassword(
                     $user,
                     $plaintextPassword
                 );
@@ -260,7 +260,7 @@ After configuring the correct algorithm, you can use the
         $plaintextPassword = ...;
 
         // hash the password (based on the password hasher factory config for the $user class)
-        $hashedPassword = $passwordHasher->hash(
+        $hashedPassword = $passwordHasher->hashPassword(
             $user,
             $plaintextPassword
         );
