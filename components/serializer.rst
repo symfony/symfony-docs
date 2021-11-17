@@ -972,7 +972,7 @@ Option                          Description                                     
 ``xml_version``                 Sets the XML version attribute                     ``1.1``
 ``xml_encoding``                Sets the XML encoding attribute                    ``utf-8``
 ``xml_standalone``              Adds standalone attribute in the generated XML     ``true``
-``xml_type_cast_attributes``    This provides the ability to forgot the attribute  ``true``
+``xml_type_cast_attributes``    This provides the ability to forget the attribute  ``true``
                                 type casting
 ``xml_root_node_name``          Sets the root node name                            ``response``
 ``as_collection``               Always returns results as a collection, even if    ``false``
