@@ -118,7 +118,7 @@ You can now add your route directly *above* the controller:
         +   /**
         +    * @Route("/lucky/number")
         +    */
-            public function number()
+            public function number(): Response
             {
                 // this looks exactly the same
             }
@@ -134,7 +134,7 @@ You can now add your route directly *above* the controller:
         class LuckyController
         {
         +   #[Route('/lucky/number')]
-            public function number()
+            public function number(): Response
             {
                 // this looks exactly the same
             }
