@@ -25,7 +25,7 @@ use SymfonyDocsBuilder\DocBuilder;
             ->setOutputDir($outputDir)
             ->setImagesDir(__DIR__.'/output/_images')
             ->setImagesPublicPrefix('_images')
-            ->setTheme('sfdocs')
+            ->setTheme('rtd')
         ;
 
         $buildConfig->setExcludedPaths(['.github/', '_build/']);
