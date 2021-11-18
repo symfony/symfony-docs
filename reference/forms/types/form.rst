@@ -53,8 +53,7 @@ option on the form.
 
 .. _reference-form-option-empty-data:
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The actual default value of this option depends on other field options:
 
@@ -65,8 +64,7 @@ The actual default value of this option depends on other field options:
 * If ``data_class`` is not set and ``compound`` is ``false``, then ``''``
   (empty string).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. _reference-form-option-error-bubbling:
 
