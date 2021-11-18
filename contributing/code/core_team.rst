@@ -71,7 +71,11 @@ Active Core Members
   * **Alexander M. Turek** (`derrabus`_);
   * **Jérémy Derussé** (`jderusse`_);
   * **Titouan Galopin** (`tgalopin`_);
-  * **Oskar Stark** (`OskarStark`_).
+  * **Oskar Stark** (`OskarStark`_);
+  * **Thomas Calvet** (`fancyweb`_);
+  * **Mathieu Santostefano** (`welcomattic`_);
+  * **Kevin Bond** (`kbond`_);
+  * **Jérôme Tamarelle** (`gromnan`_).
 
 * **Security Team** (``@symfony/security`` on GitHub):
 
@@ -207,3 +211,7 @@ discretion of the **Project Leader**.
 .. _`derrabus`: https://github.com/derrabus/
 .. _`jderusse`: https://github.com/jderusse/
 .. _`tgalopin`: https://github.com/tgalopin/
+.. _`fancyweb`: https://github.com/fancyweb/
+.. _`welcomattic`: https://github.com/welcomattic/
+.. _`kbond`: https://github.com/kbond/
+.. _`gromnan`: https://github.com/gromnan/
