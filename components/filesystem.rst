@@ -4,8 +4,8 @@
 The Filesystem Component
 ========================
 
-    The Filesystem component provides basic utilities for the filesystem and
-    paths manipulation.
+    The Filesystem component provides platform-independent utilities for
+    filesystem operations and for file/directory paths manipulation.
 
 Installation
 ------------
@@ -19,12 +19,8 @@ Installation
 Usage
 -----
 
-The component contains two classes:
-
-- The :class:`Symfony\\Component\\Filesystem\\Filesystem` which provides utilities
-  for filesystem write operations.
-- The :class:`Symfony\\Component\\Filesystem\\Path` which provides utilities
-  for paths manipulation.::
+The component contains two main classes called :class:`Symfony\\Component\\Filesystem\\Filesystem`
+and :class:`Symfony\\Component\\Filesystem\\Path`::
 
     use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
     use Symfony\Component\Filesystem\Filesystem;
@@ -40,8 +36,8 @@ The component contains two classes:
         echo "An error occurred while creating your directory at ".$exception->getPath();
     }
 
-Filesystem
-----------
+Filesystem Utilities
+--------------------
 
 ``mkdir``
 ~~~~~~~~~
@@ -325,8 +321,8 @@ creates them before appending the contents.
 
     The third argument of ``appendToFile()`` was introduced in Symfony 5.4.
 
-Path
-----
+Path Manipulation Utilities
+---------------------------
 
 .. versionadded:: 5.4
 
@@ -334,13 +330,12 @@ Path
 
 Dealing with file paths usually involves some difficulties:
 
-- System Heterogeneity: file paths look different on different platforms. UNIX
+- Platform differences: file paths look different on different platforms. UNIX
   file paths start with a slash ("/"), while Windows file paths start with a
   system drive ("C:"). UNIX uses forward slashes, while Windows uses backslashes
-  by default ("").
+  by default.
 - Absolute/relative paths: web applications frequently need to deal with absolute
-  and relative paths. Converting one to the other properly is tricky and
-  repetitive.
+  and relative paths. Converting one to the other properly is tricky and repetitive.
 
 :class:`Symfony\\Component\\Filesystem\\Path` provides utility methods to tackle
 those issues.
@@ -509,7 +504,6 @@ to obtain the root of a path::
 
     echo Path::getRoot("C:\Programs\Apache\Config");
     // => C:/
->>>>>>> a992f6342 ([Filesystem] Add documentation for the Path class)
 
 Error Handling
 --------------
