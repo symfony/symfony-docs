@@ -226,8 +226,7 @@ compound
 This option specifies if a form is compound. The value is by default
 overridden by the value of the ``expanded`` option.
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The actual default value of this option depends on other field options:
 
@@ -235,8 +234,7 @@ The actual default value of this option depends on other field options:
   (empty string);
 * Otherwise ``[]`` (empty array).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~

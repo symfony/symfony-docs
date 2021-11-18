@@ -102,16 +102,14 @@ Overridden Options
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The actual default value of this option depends on other field options:
 
 * If ``widget`` is ``single_text``, then ``''`` (empty string);
 * Otherwise ``[]`` (empty array).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~
