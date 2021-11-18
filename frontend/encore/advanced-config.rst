@@ -122,7 +122,6 @@ Next, define the output directories of each build:
             firstConfig: '%kernel.project_dir%/public/first_build'
             secondConfig: '%kernel.project_dir%/public/second_build'
 
-
 Also define the asset manifests for each build:
 
 .. code-block:: yaml
@@ -135,7 +134,6 @@ Also define the asset manifests for each build:
                     json_manifest_path: '%kernel.project_dir%/public/first_build/manifest.json'
                 second_build:
                     json_manifest_path: '%kernel.project_dir%/public/second_build/manifest.json'
-
 
 Finally, use the third optional parameter of the ``encore_entry_*_tags()``
 functions to specify which build to use:
