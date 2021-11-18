@@ -44,8 +44,12 @@ jobs:
                 run: composer install --prefer-dist --no-progress
 
             -   name: "Build the docs"
-                working-directory: _build
-                run: php build.php -vvv
+                run: >
+                    php _build/vendor/bin/docs-builder build:docs \
+                        --config _build/docs.json \
+                        --fail-on-errors \
+                        --error-output-format github \
+                        --save-errors _build/logs.txt
 
             -   name: Show log file
                 if: ${{ always() }}

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4cd8dc9a70f9ccfb279a426fffbcf2bc",
+    "content-hash": "2058b638ae5e71c8741d8cbab27f143a",
     "packages": [
         {
             "name": "doctrine/event-manager",
@@ -102,16 +102,16 @@
         },
         {
             "name": "doctrine/rst-parser",
-            "version": "0.4.4",
+            "version": "0.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/rst-parser.git",
-                "reference": "73992ea579f6bfcb0697e4df29499c48b7542203"
+                "reference": "44e4ccb97000e42e4dd04b13a745ef0e775f70eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/rst-parser/zipball/73992ea579f6bfcb0697e4df29499c48b7542203",
-                "reference": "73992ea579f6bfcb0697e4df29499c48b7542203",
+                "url": "https://api.github.com/repos/doctrine/rst-parser/zipball/44e4ccb97000e42e4dd04b13a745ef0e775f70eb",
+                "reference": "44e4ccb97000e42e4dd04b13a745ef0e775f70eb",
                 "shasum": ""
             },
             "require": {
@@ -169,26 +169,26 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/rst-parser/issues",
-                "source": "https://github.com/doctrine/rst-parser/tree/0.4.4"
+                "source": "https://github.com/doctrine/rst-parser/tree/0.5.1"
             },
-            "time": "2021-10-21T18:44:45+00:00"
+            "time": "2021-11-03T20:04:35+00:00"
         },
         {
             "name": "psr/container",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
-                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/513e0666f7216c7459170d56df27dfcefe1689ea",
+                "reference": "513e0666f7216c7459170d56df27dfcefe1689ea",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.2.0"
+                "php": ">=7.4.0"
             },
             "type": "library",
             "autoload": {
@@ -217,9 +217,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/1.1.1"
+                "source": "https://github.com/php-fig/container/tree/1.1.2"
             },
-            "time": "2021-03-05T17:36:06+00:00"
+            "time": "2021-11-05T16:50:12+00:00"
         },
         {
             "name": "psr/log",
@@ -351,23 +351,23 @@
         },
         {
             "name": "symfony-tools/docs-builder",
-            "version": "v0.18.2",
+            "version": "dev-build-docs-command",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony-tools/docs-builder.git",
-                "reference": "53632711147e08782e2be782d5cbe68109c497be"
+                "url": "https://github.com/wouterj/docs-builder.git",
+                "reference": "41794a9b78257aea72ad123d7d0cb9c197f524e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-tools/docs-builder/zipball/53632711147e08782e2be782d5cbe68109c497be",
-                "reference": "53632711147e08782e2be782d5cbe68109c497be",
+                "url": "https://api.github.com/repos/wouterj/docs-builder/zipball/41794a9b78257aea72ad123d7d0cb9c197f524e3",
+                "reference": "41794a9b78257aea72ad123d7d0cb9c197f524e3",
                 "shasum": ""
             },
             "require": {
-                "doctrine/rst-parser": "^0.4",
+                "doctrine/rst-parser": "^0.5",
                 "ext-curl": "*",
                 "ext-json": "*",
-                "php": "^7.2 || ^8.0",
+                "php": ">=7.4",
                 "scrivo/highlight.php": "^9.12.0",
                 "symfony/console": "^5.2",
                 "symfony/css-selector": "^5.2",
@@ -382,35 +382,41 @@
                 "symfony/phpunit-bridge": "^5.2",
                 "symfony/process": "^5.2"
             },
+            "bin": [
+                "bin/docs-builder"
+            ],
             "type": "project",
             "autoload": {
                 "psr-4": {
                     "SymfonyDocsBuilder\\": "src"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "SymfonyDocsBuilder\\Tests\\": "tests"
+                }
+            },
             "license": [
                 "MIT"
             ],
             "description": "The build system for Symfony's documentation",
             "support": {
-                "issues": "https://github.com/symfony-tools/docs-builder/issues",
-                "source": "https://github.com/symfony-tools/docs-builder/tree/v0.18.2"
+                "source": "https://github.com/wouterj/docs-builder/tree/build-docs-command"
             },
-            "time": "2021-10-15T07:59:06+00:00"
+            "time": "2021-11-18T12:24:42+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "5.4.x-dev",
+            "version": "v5.4.0-BETA1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "4b9af1b40d7e11750b248ceb38bb45a0d013ba29"
+                "reference": "bea7632e3b1d12decedba0a7fe7a7e0ebf7ee2f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/4b9af1b40d7e11750b248ceb38bb45a0d013ba29",
-                "reference": "4b9af1b40d7e11750b248ceb38bb45a0d013ba29",
+                "url": "https://api.github.com/repos/symfony/console/zipball/bea7632e3b1d12decedba0a7fe7a7e0ebf7ee2f4",
+                "reference": "bea7632e3b1d12decedba0a7fe7a7e0ebf7ee2f4",
                 "shasum": ""
             },
             "require": {
@@ -423,6 +429,7 @@
                 "symfony/string": "^5.1|^6.0"
             },
             "conflict": {
+                "psr/log": ">=3",
                 "symfony/dependency-injection": "<4.4",
                 "symfony/dotenv": "<5.1",
                 "symfony/event-dispatcher": "<4.4",
@@ -479,7 +486,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/5.4"
+                "source": "https://github.com/symfony/console/tree/v5.4.0-BETA1"
             },
             "funding": [
                 {
@@ -495,7 +502,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-03T09:24:47+00:00"
+            "time": "2021-11-04T16:48:04+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -1863,7 +1870,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "symfony-tools/docs-builder": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

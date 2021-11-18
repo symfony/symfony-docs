@@ -1,0 +1,4 @@
+{
+    "exclude": [".github/", "_build/"],
+    "symfony-version": "4.4"
+}
