@@ -122,6 +122,8 @@ In production, you should install a webserver like Nginx or Apache and
 method can also be used if you're not using the Symfony local web server for
 development.
 
+.. _symfony-binary-web-server:
+
 However for local development, the most convenient way of running Symfony is by
 using the :doc:`local web server </setup/symfony_server>` provided by the
 ``symfony`` binary. This local server provides among other things support for
@@ -144,6 +146,11 @@ the server by pressing ``Ctrl+C`` from your terminal.
 
     The web server works with any PHP application, not only Symfony projects,
     so it's a very useful generic development tool.
+
+Symfony Docker Integration
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you'd like to use Docker with Symfony, see :doc:`setup/docker`
 
 .. _symfony-flex:
 
@@ -303,6 +310,7 @@ Learn More
     :maxdepth: 1
     :glob:
 
+    setup/docker
     setup/homestead
     setup/web_server_configuration
     setup/*
