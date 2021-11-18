@@ -388,7 +388,7 @@ order:
         $context = ['context_key' => 'context_value'];
         $workflow->apply($subject, $transitionName, $context);
 
-        // in an event listener
+        // in an event listener (workflow.guard events)
         $context = $event->getContext(); // returns ['context']
 
 .. note::
