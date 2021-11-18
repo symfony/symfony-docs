@@ -92,7 +92,6 @@ Other Front-End Articles
     :hidden:
     :glob:
 
-    frontend/assetic/index
     frontend/encore/installation
     frontend/encore/simple-example
     frontend/encore/*
