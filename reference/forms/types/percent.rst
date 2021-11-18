@@ -97,13 +97,11 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The default value is ``''`` (the empty string).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 

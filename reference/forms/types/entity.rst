@@ -288,8 +288,7 @@ type:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The actual default value of this option depends on other field options:
 
@@ -297,8 +296,7 @@ The actual default value of this option depends on other field options:
   (empty string);
 * Otherwise ``[]`` (empty array).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
