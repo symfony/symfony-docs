@@ -1,15 +1,12 @@
 How To Configure and Use Flex Private Recipe Repositories
 =========================================================
 
-Since the `release of version 1.16`_ of ``symfony/flex``, you can build your own private
-flex recipe repositories, and seamlessly integrate them into the ``composer`` package
-installation and maintenance process.
+Since the `release of version 1.16`_ of ``symfony/flex``, you can build your own
+private Symfony Flex recipe repositories, and seamlessly integrate them into the
+``composer`` package installation and maintenance process.
 
-This is particularly useful when you have private bundles or packages that must perform their own
-installation tasks, in a similar fashion that Symfony and other open-source bundles and packages handle their
-own installation tasks via ``symfony/flex``.
-
-To do this, in broad strokes, you:
+This is particularly useful when you have private bundles or packages that must
+perform their own installation tasks. To do this, you need to complete several steps:
 
 * Create a private GitHub repository;
 * Create your private recipes;
@@ -22,20 +19,21 @@ To do this, in broad strokes, you:
 Create a Private GitHub Repository
 ----------------------------------
 
-Log in to your GitHub.com account, click your account icon in the top-right corner, and select
-**Your Repositories**. Then click the **New** button, fill in the **repository name**, select the
-**Private** radio button, and click the **Create Repository** button.
+Log in to your GitHub.com account, click your account icon in the top-right
+corner, and select **Your Repositories**. Then click the **New** button, fill in
+the **repository name**, select the **Private** radio button, and click the
+**Create Repository** button.
 
 Create Your Private Recipes
 ---------------------------
 
-A ``symfony/flex`` recipe is a standard JSON file that has the following structure:
+A ``symfony/flex`` recipe is a JSON file that has the following structure:
 
 .. code-block:: json
 
     {
         "manifests": {
-            "myorg/package-name": {
+            "acme/package-name": {
                 "manifest": {
                 },
                 "ref": "7405f3af1312d1f9121afed4dddef636c6c7ff00"
@@ -49,10 +47,10 @@ If your package is a private Symfony bundle, you will have the following in the 
 
     {
         "manifests": {
-            "myorg/private-bundle": {
+            "acme/private-bundle": {
                 "manifest": {
                     "bundles": {
-                        "Myorg\\PrivateBundle\\MyorgPrivateBundle": [
+                        "Acme\\PrivateBundle\\AcmePrivateBundle": [
                             "all"
                         ]
                     }
@@ -62,11 +60,10 @@ If your package is a private Symfony bundle, you will have the following in the 
         }
     }
 
-Replace ``myorg`` and ``private-bundle`` with your own private bundle details.
-
-The ``"ref"`` entry is just a random 40-character string, which is used by ``composer`` to determine if
-your recipe was modified. Every time that you make changes to your recipe, you also need to
-generate a new ``"ref"`` value.
+Replace ``acme`` and ``private-bundle`` with your own private bundle details.
+The ``"ref"`` entry is a random 40-character string used by ``composer`` to
+determine if your recipe was modified. Every time that you make changes to your
+recipe, you also need to generate a new ``"ref"`` value.
 
 .. tip::
 
@@ -74,31 +71,30 @@ generate a new ``"ref"`` value.
 
     .. code-block::
 
-        $bytes = random_bytes(20);
-        var_dump(bin2hex($bytes));
+        echo bin2hex(random_bytes(20));
 
-The ``"all"`` entry tells ``symfony/flex`` to create an entry in your project's ``bundles.php`` file
-for all environments. To load your bundle only for the ``dev`` environment, replace ``"all"`` with ``"dev"``.
+The ``"all"`` entry tells ``symfony/flex`` to create an entry in your project's
+``bundles.php`` file for all environments. To load your bundle only for the
+``dev`` environment, replace ``"all"`` with ``"dev"``.
 
-The name of your recipe JSON file must conform to the following convention:
+The name of your recipe JSON file must conform to the following convention,
+where ``1.0`` is the version number of your bundle (replace ``acme`` and
+``private-bundle`` with your own private bundle or package details):
 
-    ``myorg.private-bundle.1.0.json``
+    ``acme.private-bundle.1.0.json``
 
-where ``1.0`` is the version number of your bundle.
-
-Replace ``myorg`` and ``private-bundle`` with your own private bundle or package details.
-
-You will probably also want ``symfony/flex`` to create configuration files for your bundle or package in the
-project's ``/config/packages`` directory. To do that, change the recipe JSON file as follows:
+You will probably also want ``symfony/flex`` to create configuration files for
+your bundle or package in the project's ``/config/packages`` directory. To do
+that, change the recipe JSON file as follows:
 
 .. code-block:: json
 
     {
         "manifests": {
-            "myorg/private-bundle": {
+            "acme/private-bundle": {
                 "manifest": {
                     "bundles": {
-                        "Myorg\\PrivateBundle\\MyorgPrivateBundle": [
+                        "Acme\\PrivateBundle\\AcmePrivateBundle": [
                             "all"
                         ]
                     },
@@ -107,9 +103,9 @@ project's ``/config/packages`` directory. To do that, change the recipe JSON fil
                     }
                 },
                 "files": {
-                    "config/packages/myorg_private.yaml": {
+                    "config/packages/acme_private.yaml": {
                         "contents": [
-                            "myorg_private:",
+                            "acme_private:",
                             "    encode: true",
                             ""
                         ],
@@ -121,13 +117,14 @@ project's ``/config/packages`` directory. To do that, change the recipe JSON fil
         }
     }
 
-For more examples of what you can include in a recipe file, browse the live `Symfony recipe files`_.
+For more examples of what you can include in a recipe file, browse the
+`Symfony recipe files`_.
 
 Create an Index to the Recipes
 ------------------------------
 
-The next step is to create an ``index.json`` file, which will contain entries for all your
-private recipes, and other general configuration information.
+The next step is to create an ``index.json`` file, which will contain entries
+for all your private recipes, and other general configuration information.
 
 The ``index.json`` file has the following format:
 
@@ -135,7 +132,7 @@ The ``index.json`` file has the following format:
 
     {
         "recipes": {
-            "myorg/private-bundle": [
+            "acme/private-bundle": [
                 "1.0"
             ]
         },
@@ -148,26 +145,24 @@ The ``index.json`` file has the following format:
         }
     }
 
-Create an entry in ``"recipes"`` for each of your bundle recipes.
-
-Replace ``your-github-account-name`` and ``your-recipes-repository`` with your own details.
+Create an entry in ``"recipes"`` for each of your bundle recipes. Replace
+``your-github-account-name`` and ``your-recipes-repository`` with your own details.
 
 Store Your Recipes in the Private Repository
 --------------------------------------------
 
-Upload the recipe ``.json`` file(s) and the ``index.json`` file into the root directory of your
-private GitHub repository.
+Upload the recipe ``.json`` file(s) and the ``index.json`` file into the root
+directory of your private GitHub repository.
 
 Grant ``composer`` Access to the Private Repository
--------------------------------------------------
+---------------------------------------------------
 
 In your GitHub account, click your account icon in the top-right corner, select
 ``Settings`` and ``Developer Settings``. Then select ``Personal Access Tokens``.
 
-Generate a new access token with ``Full control of private repositories`` privileges.
-
-Copy the access token value, switch to the terminal of your local computer, and execute
-the following command:
+Generate a new access token with ``Full control of private repositories``
+privileges. Copy the access token value, switch to the terminal of your local
+computer, and execute the following command:
 
 .. code-block:: terminal
 
@@ -176,7 +171,7 @@ the following command:
 Replace ``[token]`` with the value of your GitHub personal access token.
 
 Configure Your Project's ``composer.json`` File
----------------------------------------------
+-----------------------------------------------
 
 Add the following to your project's ``composer.json`` file:
 
@@ -197,25 +192,27 @@ Replace ``your-github-account-name`` and ``your-recipes-repository`` with your o
 
 .. tip::
 
-    The ``extra.symfony`` key will most probably already exist in your ``composer.json``. Simply
-    add the ``"endpoint"`` key to the existing ``extra.symfony`` entry.
+    The ``extra.symfony`` key will most probably already exist in your
+    ``composer.json``. In that case, add the ``"endpoint"`` key to the existing
+    ``extra.symfony`` entry.
 
 .. tip::
 
-    The ``endpoint`` URL **must** point to ``https://api.github.com/repos`` and **not* to
-    ``https://www.github.com``. The latter will not work.
+    The ``endpoint`` URL **must** point to ``https://api.github.com/repos`` and
+    **not* to ``https://www.github.com``.
 
 Install the Recipes in Your Project
 -----------------------------------
 
-If your private bundles / packages have not yet been installed in your project, run the following command:
+If your private bundles/packages have not yet been installed in your project,
+run the following command:
 
 .. code-block:: terminal
 
     composer update
 
-If the private bundles / packages have already been installed and you just want to install the new
-private recipes, run the following command:
+If the private bundles/packages have already been installed and you just want to
+install the new private recipes, run the following command:
 
 .. code-block:: terminal
 
