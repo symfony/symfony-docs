@@ -1,14 +1,3 @@
-``empty_data``
-~~~~~~~~~~~~~~
-
-**type**: ``mixed``
-
-.. This file should only be included with start-after or end-before that's
-   set to this placeholder value. Its purpose is to let us include only
-   part of this file.
-
-DEFAULT_PLACEHOLDER
-
 This option determines what value the field will *return* when the submitted
 value is empty (or missing). It does not set an initial value if none is
 provided when the form is rendered in a view.

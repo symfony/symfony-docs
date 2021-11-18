@@ -384,13 +384,11 @@ Not all options are listed here - only the most applicable to this type:
 
 .. include:: /reference/forms/types/options/by_reference.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The default value is ``[]`` (empty array).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 error_bubbling
 ~~~~~~~~~~~~~~
