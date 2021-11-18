@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-11-05T14:58:13Z
+
+About using the script or not ... to be honest I never liked the script. The doc building is something "internal", so I think it's better to have absolute control ... and expose the entire feature via a command to end-users.
+
+For example, does the CLI command provide arguments/options to configure all this that we use here? I haven't checked. Just asking.
+
+```php
+        $buildConfig = (new BuildConfig())
+            ->setSymfonyVersion('4.4')
+            ->setContentDir(__DIR__.'/..')
+            ->setOutputDir($outputDir)
+            ->setImagesDir(__DIR__.'/output/_images')
+            ->setImagesPublicPrefix('_images')
+            ->setTheme('sfdocs')
+        ;
+```
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-11-09T09:36:15Z
+
+Not sure, but if it hasn't we can always add it (as docs builder is an internal library, we can move quickly and add and remove things as we wish).
+
+I do agree with @stof that it is much easier to update the code in 1 repo, instead of 2 (having to do it in 2 actually blocks us from moving quickly).
+
+I can see why the tool isn't used on symfony.com: using the process component and such feels "not optimal". But for the CI of the docs repo (and maybe also the CI for the hosted bundle docs), having a single tool (maybe even a github action) makes things easier imho.
