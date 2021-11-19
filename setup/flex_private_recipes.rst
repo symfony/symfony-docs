@@ -197,7 +197,7 @@ Replace ``your-github-account-name`` and ``your-recipes-repository`` with your o
 .. tip::
 
     The ``endpoint`` URL **must** point to ``https://api.github.com/repos`` and
-    **not* to ``https://www.github.com``.
+    **not** to ``https://www.github.com``.
 
 Install the Recipes in Your Project
 -----------------------------------
