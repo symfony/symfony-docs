@@ -26,7 +26,7 @@ your ``docker-compose.yml`` file will automatically be updated to include a
 
 The first time you install a recipe containing Docker config, Flex will ask you
 if you want to include it. Or, you can set your preference in ``composer.json``,
-by seting the ``symfony.extra.docker`` config to ``true`` or ``false``.
+by setting the ``symfony.extra.docker`` config to ``true`` or ``false``.
 
 Some recipes also include additions to your ``Dockerfile``. To get those changes,
 you need to already have a ``Dockerfile`` at the root of your app *with* the
