@@ -281,7 +281,7 @@ Docker Integration
 ------------------
 
 The local Symfony server provides full `Docker`_ integration for projects that
-use it.
+use it. To learn more about Docker & Symfony, see :doc:`docker`.
 
 When the web server detects that Docker Compose is running for the project, it
 automatically exposes some environment variables.
