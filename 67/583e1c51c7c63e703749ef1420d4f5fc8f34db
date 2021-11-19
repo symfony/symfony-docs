@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-11-18T17:43:48Z
+
+The DOCtor-RST has a false failure - this is a case where we DO want `.yml`. Is there a way to silence this in `.doctor-rst.yaml`?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-11-18T18:09:35Z
+
+> The DOCtor-RST has a false failure - this is a case where we DO want .yml. Is there a way to silence this in .doctor-rst.yaml?
+
+Yes, add `/docker-compose\.yml/` to the `whitelist.regex` section
