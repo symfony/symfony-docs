@@ -67,9 +67,7 @@ recipe, you also need to generate a new ``"ref"`` value.
 
 .. tip::
 
-    Use the following PHP script to generate a random ``"ref"`` value.
-
-    .. code-block::
+    Use the following PHP script to generate a random ``"ref"`` value::
 
         echo bin2hex(random_bytes(20));
 
