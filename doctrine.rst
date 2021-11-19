@@ -54,7 +54,7 @@ The database connection information is stored as an environment variable called
 
     # to use postgresql:
     # DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=11&charset=utf8"
-    
+
     # to use oracle:
     # DATABASE_URL="oci8://db_user:db_password@127.0.0.1:1521/db_name"
 
@@ -921,5 +921,5 @@ Learn more
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
 .. _`PDO`: https://www.php.net/pdo
-.. _`available Doctrine extensions`: https://github.com/Atlantic18/DoctrineExtensions
+.. _`available Doctrine extensions`: https://github.com/doctrine-extensions/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle
