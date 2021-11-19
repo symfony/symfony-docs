@@ -166,7 +166,7 @@ computer, and execute the following command:
 
 .. code-block:: terminal
 
-    composer config --global --auth github-oauth.github.com [token]
+    $ composer config --global --auth github-oauth.github.com [token]
 
 Replace ``[token]`` with the value of your GitHub personal access token.
 
@@ -209,14 +209,14 @@ run the following command:
 
 .. code-block:: terminal
 
-    composer update
+    $ composer update
 
 If the private bundles/packages have already been installed and you just want to
 install the new private recipes, run the following command:
 
 .. code-block:: terminal
 
-    composer recipes
+    $ composer recipes
 
 .. _`release of version 1.16`: https://github.com/symfony/cli
 .. _`Symfony recipe files`: https://github.com/symfony/recipes/tree/flex/main
