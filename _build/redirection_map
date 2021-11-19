@@ -534,3 +534,5 @@
 /security/multiple_guard_authenticators /security/entry_point
 /security/guard_authentication /security/custom_authenticator
 /email /mailer
+/frontend/assetic /frontend
+/frontend/assetic/index /frontend
