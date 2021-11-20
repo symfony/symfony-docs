@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2021-11-19T17:10:38Z
+
+IIRC it only works with Backed Enums, right? If so we should add a warning/hint about this
