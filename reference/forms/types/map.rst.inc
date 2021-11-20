@@ -19,6 +19,7 @@ Choice Fields
 ~~~~~~~~~~~~~
 
 * :doc:`ChoiceType </reference/forms/types/choice>`
+* :doc:`EnumType </reference/forms/types/enum>`
 * :doc:`EntityType </reference/forms/types/entity>`
 * :doc:`CountryType </reference/forms/types/country>`
 * :doc:`LanguageType </reference/forms/types/language>`
