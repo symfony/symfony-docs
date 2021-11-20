@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-11-20T14:26:16Z
+
+Mathieu, thanks for fixing this error!
+
+-----
+
+@wouterj I think this worked in the past (references used the text of the next heading, unless you specified an explicit text content for the reference). But now it's not working, because this is how it looks on symfony.com right now:
+
+![wrong-doc-references](https://user-images.githubusercontent.com/73419/142729897-7688cb25-a317-45b4-ae0b-733e7f6c5f2f.png)
+
+So, I'm asking: do you know if this is supported in the new RST parser? Maybe I'm missing some dependency update on symfony.com? Thanks!
