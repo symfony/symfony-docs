@@ -668,7 +668,7 @@ that behavior, use the `orphanRemoval`_ option inside ``Category``:
 
         // ...
 
-        #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category", orphanRemoval=true)]
+        #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category", orphanRemoval: true)]
         private $products;
 
 
