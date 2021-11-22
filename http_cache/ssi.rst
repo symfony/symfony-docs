@@ -126,7 +126,7 @@ The ``render_ssi`` twig helper will generate something like:
 
     <!--#include virtual="/_fragment?_hash=abcdef1234&_path=_controller=App\Controller\ProfileController::gdpr" -->
 
-``render_ssi`` ensures that SSI directive are generated only if the request
+``render_ssi`` ensures that SSI directive is generated only if the request
 has the header requirement like ``Surrogate-Capability: device="SSI/1.0"``
 (normally given by the web server).
 Otherwise it will embed directly the sub-response.
