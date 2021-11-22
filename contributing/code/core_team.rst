@@ -24,27 +24,21 @@ The Symfony Core groups, in descending order of priority, are as follows:
 
 1. **Project Leader**
 
-* Elects members in any other group;
-* Merges pull requests in all Symfony repositories.
+   * Elects members in any other group;
+   * Merges pull requests in all Symfony repositories.
 
 2. **Mergers Team**
 
-* Merge pull requests on the main Symfony repository.
+   * Merge pull requests on the main Symfony repository.
 
 In addition, there are other groups created to manage specific topics:
 
-**Security Team**
+* **Security Team**: manages the whole security process (triaging reported vulnerabilities,
+  fixing the reported issues, coordinating the release of security fixes, etc.)
 
-* Manage the whole security process (triaging reported vulnerabilities, fixing
-  the reported issues, coordinating the release of security fixes, etc.)
+* **Recipes Team**: manages the recipes in the main and contrib recipe repositories.
 
-**Recipes Team**
-
-* Manage the recipes in the main and contrib recipe repositories.
-
-**Documentation Team**
-
-* Manage the whole `symfony-docs repository`_.
+* **Documentation Team**: manages the whole `symfony-docs repository`_.
 
 Active Core Members
 ~~~~~~~~~~~~~~~~~~~
