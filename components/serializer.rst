@@ -694,7 +694,7 @@ Normalizers
 -----------
 
 Normalizers turn **object** into **array** and vice versa. They implement
-::class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`
+:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`
 for normalize (object to array) and
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizableInterface` for denormalize
 (array to object).
