@@ -790,7 +790,7 @@ Normalizers
 -----------
 
 Normalizers turn **object** into **array** and vice versa. They implement
-::class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`
+:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`
 for normalize (object to array) and
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizableInterface` for denormalize
 (array to object).
@@ -872,7 +872,7 @@ The Serializer component provides several built-in normalizers:
     This normalizer works with classes that implement
     :class:`Symfony\\Component\\Form\\FormInterface`.
 
-    It will get errors from the form and normalize them into an normalized array.
+    It will get errors from the form and normalize them into a normalized array.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
     This normalizer converts objects that implement
