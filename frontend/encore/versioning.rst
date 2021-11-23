@@ -28,11 +28,12 @@ To link to these assets, Encore creates two files ``entrypoints.json`` and
 Loading Assets from ``entrypoints.json`` & ``manifest.json``
 ------------------------------------------------------------
 
-Whenever you run Encore, two configuration files are generated: ``entrypoints.json``
+Whenever you run Encore, two configuration files are generated in your
+output folder (default location: ``public/build/``): ``entrypoints.json``
 and ``manifest.json``. Each file is similar, and contains a map to the final, versioned
-filename.
+filenames.
 
-The first file - ``entrypoints.json`` - is used by the ``encore_entry_script_tags()``
+The first file – ``entrypoints.json`` – is used by the ``encore_entry_script_tags()``
 and ``encore_entry_link_tags()`` Twig helpers. If you're using these, then your
 CSS and JavaScript files will render with the new, versioned filename. If you're
 not using Symfony, your app will need to read this file in a similar way.
