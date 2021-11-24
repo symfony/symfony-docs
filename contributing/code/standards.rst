@@ -220,6 +220,9 @@ Naming Conventions
 
 * Suffix exceptions with ``Exception``;
 
+* Prefix PHP attributes with ``As`` where applicable (e.g. ``#[AsCommand]``
+  instead of ``#[Command]``, but ``#[When]`` is kept as-is);
+
 * Use UpperCamelCase for naming PHP files (e.g. ``EnvVarProcessor.php``) and
   snake case for naming Twig templates and web assets (``section_layout.html.twig``,
   ``index.scss``);
