@@ -111,38 +111,7 @@ the publicly available URL (e.g. ``https://example.com/.well-known/mercure``).
 The clients must also bear a `JSON Web Token`_ (JWT)
 to the Mercure Hub to be authorized to publish updates and, sometimes, to subscribe.
 
-This JWT should be stored in the ``MERCURE_JWT_SECRET`` environment variable.
-
-The JWT must be signed with the same secret key as the one used by
-the Hub to verify the JWT (``!ChangeMe!`` in you use the Local Web Server or
-Symfony Docker).
-Its payload must contain at least the following structure to be allowed to
-publish:
-
-.. code-block:: json
-
-    {
-        "mercure": {
-            "publish": []
-        }
-    }
-
-Because the array is empty, the Symfony app will only be authorized to publish
-public updates (see the authorization_ section for further information).
-
-.. tip::
-
-    The jwt.io website is a convenient way to create and sign JWTs.
-    Checkout this `example JWT`_, that grants publishing rights for all *topics*
-    (notice the star in the array).
-    Don't forget to set your secret key properly in the bottom of the right panel of the form!
-
-.. caution::
-
-    Don't put the secret key in ``MERCURE_JWT_SECRET``, it will not work!
-    This environment variable must contain a JWT, signed with the secret key.
-
-    Also, be sure to keep both the secret key and the JWTs... secrets!
+This token must be signed with the same secret key as the one used by the Hub to verify the JWT (``!ChangeMe!`` in you use the Local Web Server or Symfony Docker), which should be stored in the ``MERCURE_JWT_SECRET`` environment variable.
 
 If you don't want to use the provided environment variables,
 use the following configuration:
@@ -481,6 +450,14 @@ And here is the controller::
             ]);
         }
     }
+
+
+.. tip::
+
+    You cannot use the ``mercure()`` helper and the ``setCookie()``
+    method at the same time (it would set the cookie twice on a single request). Choose
+    either one method or the other.
+
 
 Programmatically Generating The JWT Used to Publish
 ---------------------------------------------------
