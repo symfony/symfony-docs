@@ -615,7 +615,7 @@ The
 :class:`Symfony\\Component\\Notifier\\Notification\\SmsNotificationInterface`
 and
 :class:`Symfony\\Component\\Notifier\\Notification\\EmailNotificationInterface`
-also exists to modify messages send to those channels.
+also exists to modify messages sent to those channels.
 
 Disabling Delivery
 ------------------
