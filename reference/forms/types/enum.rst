@@ -27,7 +27,7 @@ Example Usage
 
 Before using this field, you'll need to have some PHP enumeration (or "enum" for
 short) defined somewhere in your application. This enum has to be of type
-"backed enum", where each keyword defines a scalar value such a string::
+"backed enum", where each keyword defines a scalar value such as a string::
 
     // src/Config/TextAlign.php
     namespace App\Config;
@@ -49,8 +49,8 @@ Instead of using the values of the enumeration in a ``choices`` option, the
     $builder->add('alignment', EnumType::class, ['class' => TextAlign::class]);
 
 This will display a ``<select>`` tag with the three possible values defined in
-the ``TextAlign`` enum. Use the ``expanded`` and ``multiple`` options to display
-these values as ``<input type="checkbox">`` and ``<input type="radio">``.
+the ``TextAlign`` enum. Use the `expanded`_ and `multiple`_ options to display
+these values as ``<input type="checkbox">`` or ``<input type="radio">``.
 
 Field Options
 -------------
