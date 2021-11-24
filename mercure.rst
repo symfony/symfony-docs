@@ -711,7 +711,6 @@ Going further
 .. _`Symfony Docker`: https://github.com/dunglas/symfony-docker/
 .. _`API Platform distribution`: https://api-platform.com/docs/distribution/
 .. _`JSON Web Token`: https://tools.ietf.org/html/rfc7519
-.. _`example JWT`: https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJtZXJjdXJlIjp7InB1Ymxpc2giOlsiKiJdfX0.iHLdpAEjX4BqCsHJEegxRmO-Y6sMxXwNATrQyRNt3GY
 .. _`IRI`: https://tools.ietf.org/html/rfc3987
 .. _`practical UI`: https://twitter.com/ChromeDevTools/status/562324683194785792
 .. _`the dedicated API Platform documentation`: https://api-platform.com/docs/core/mercure/
