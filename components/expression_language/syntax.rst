@@ -200,7 +200,6 @@ Examples::
         'life == everything',
         [
             'life' => 10,
-            'universe' => 10,
             'everything' => 22,
         ]
     );
@@ -209,7 +208,6 @@ Examples::
         'life > everything',
         [
             'life' => 10,
-            'universe' => 10,
             'everything' => 22,
         ]
     );
