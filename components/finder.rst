@@ -148,6 +148,15 @@ can reuse those rules to exclude files and directories from the results with the
     // excludes files/directories matching the .gitignore patterns
     $finder->ignoreVCSIgnored(true);
 
+The rules of a directory always override the rules of its parent directories.
+
+.. note::
+
+    Git looks for ``.gitignore`` files starting from the repository root directory.
+    Symfony's Finder behavior is different and it looks for ``.gitignore`` files
+    starting from the directory used to search files/directories. To be consistent
+    with Git behavior, you should explicitly search from the Git repository root.
+
 File Name
 ~~~~~~~~~
 
