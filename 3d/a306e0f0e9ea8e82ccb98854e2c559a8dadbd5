@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-11-05T15:30:21Z
+
+@julienfalque I was reading [Git's manual about gitignore](https://git-scm.com/docs/gitignore) and I found the following:
+
+```
+When deciding whether to ignore a path, Git normally checks gitignore
+patterns from multiple sources, with the following order of precedence,
+from highest to lowest [...]:
+
+(1) [...]
+(2) Patterns read from a .gitignore file in the same directory as the path,
+    or in any parent directory (up to the top-level of the working tree),
+    with patterns in the higher level files being overridden by those in
+    lower level files down to the directory containing the file.
+
+    These patterns match relative to the location of the .gitignore file.
+    A project normally includes such .gitignore files in its repository,
+    containing patterns for files generated as part of the project build.
+(3) ...
+(4) ...
+```
+
+So, we say that we ignore `.gitignore` files in parent dirs to follow Git's behavior ... but it's the opposite, right?
+
+---------------------------------------------------------------------------
+
+by julienfalque at 2021-11-05T16:42:29Z
+
+The current `Finder` implementation does follow this rule (this is the first sentence added in this PR) with one limitation: instead of starting from the top-level of the Git working tree down to the checked files, it starts from the search directory provided to `Finder` (this is the note added in this PR). This limitation should be removed with https://github.com/symfony/symfony/pull/43239.
+
+Maybe the wording in this PR is confusing, I'm open to suggestions.
