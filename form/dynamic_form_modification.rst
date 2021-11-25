@@ -568,11 +568,11 @@ field according to the current selection in the ``sport`` field:
         url : $form.attr('action'),
         type: $form.attr('method'),
         data : data,
-        success: function(html) {
+        complete: function(html) {
           // Replace current position field ...
           $('#meetup_position').replaceWith(
             // ... with the returned one from the AJAX response.
-            $(html).find('#meetup_position')
+            $(html.responseText).find('#meetup_position')
           );
           // Position field now displays the appropriate positions.
         }
