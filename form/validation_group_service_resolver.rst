@@ -42,7 +42,7 @@ Then in your form, inject the resolver and set it as the ``validation_groups``::
     // src/Form/MyClassType.php;
     namespace App\Form;
 
-    use App\Validator\ValidationGroupResolver;
+    use App\Validation\ValidationGroupResolver;
     use Symfony\Component\Form\AbstractType
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
