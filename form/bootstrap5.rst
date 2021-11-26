@@ -90,7 +90,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
 Error Messages
 --------------
 
-Unlike the :doc:`Bootstrap 4 theme </form/bootstrap4>`, errors are rendered
+Unlike in the :doc:`Bootstrap 4 theme </form/bootstrap4>`, errors are rendered
 **after** the ``input`` element. However, this still makes a strong connection
 between the error and its ``<input>``, as required by the `WCAG 2.0 standard`_.
 
