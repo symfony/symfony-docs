@@ -119,6 +119,7 @@ Next, define the output directories of each build:
             secondConfig: '%kernel.project_dir%/public/second_build'
 
 Also define the asset manifests for each build:
+
 .. code-block:: yaml
 
     # config/packages/assets.yaml
