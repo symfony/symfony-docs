@@ -272,8 +272,8 @@ Assume the following for the decorated class::
     }
 
 Also assume that your service definitions are configured so that you would type-hint
-`App\Mailer\MailerInterface` instead of `App\Mailer\Mailer` to inject the service into other services.
-(If not, and you instead must type-hint 'App\Mailer\Mailer', then skip to "Extend The Decorated Service".)
+`App\\Mailer\\MailerInterface` instead of `App\\Mailer\\Mailer` to inject the service into other services.
+(If not, and you instead must type-hint `App\\Mailer\\Mailer`, then skip to "Extend The Decorated Service".)
 
 In this case, you would inject the decorated mailer service as follows::
 
@@ -308,7 +308,7 @@ Your decoration configuration will be as follows:
             App\Mailer\MailerInterface:
                 class: App\Mailer\Mailer
 
-            App\Mailer\AppDecoratingMailer:
+            App\Mailer\DecoratingMailer:
                 decorates: App\Mailer\MailerInterface
 
     .. code-block:: xml
@@ -336,8 +336,8 @@ Your decoration configuration will be as follows:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+        use App\Mailer\DecoratingMailer;
         use App\Mailer\Mailer;
-        use App\Mailer\AppDecoratingMailer;
         use App\Mailer\MailerInterface;
 
         return function(ContainerConfigurator $configurator) {
@@ -373,7 +373,7 @@ Assume the following::
     class Mailer {
     }
 
-In this case, you would inject the `App\Mailer\Mailer` service as follows into another service::
+In this case, you would inject the `App\\Mailer\\Mailer` service as follows into another service::
 
     // Services/AcmeService.php
     namespace App\Services;
@@ -433,8 +433,8 @@ Your decoration configuration will be as follows:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Mailer\Mailer;
         use App\Mailer\DecoratingMailer;
+        use App\Mailer\Mailer;
 
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
@@ -447,11 +447,11 @@ Your decoration configuration will be as follows:
 
 .. tip::
 
-    If the `App\Mailer\Mailer` class is marked as `final`, and it does not implement an injectable
+    If the `App\\Mailer\\Mailer` class is marked as `final`, and it does not implement an injectable
     interface, then you will not be able to decorate it, because a final class cannot be extended.
 
-Congratulations! With both options, when you type-hint `App\Mailer\MailerInterface`, the `App\Mailer\DecoratingMailer`
-class is automatically injected instead of the `App\Mailer\Mailer` class.
+Congratulations! With both options, when you type-hint `App\\Mailer\\MailerInterface`, the `App\\Mailer\\DecoratingMailer`
+class is automatically injected instead of the `App\\Mailer\\Mailer` class.
 
 Decoration Priority
 -------------------
