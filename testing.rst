@@ -573,7 +573,7 @@ will no longer be followed::
 Making AJAX Requests
 ....................
 
-The client provides a
+The client provides an
 :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest`
 method, which has the same arguments as the ``request()`` method and is
 a shortcut to make AJAX requests::
