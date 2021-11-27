@@ -331,13 +331,14 @@ integration with these push services:
 Service         Package                               DSN
 ==============  ====================================  =================================================================================
 Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
+Engagespot      ``symfony/engagespot-notifier``        ``engagespot://API_KEY@default?campaign_name=DEFAULT_CAMPAIGN``
 Expo            ``symfony/expo-notifier``              ``expo://Token@default``
 OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID''``
 ==============  ====================================  =================================================================================
 
 .. versionadded:: 5.4
 
-    The Expo and OneSignal integrations were introduced in Symfony 5.4.
+    The Engagespot, Expo and OneSignal integrations were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
