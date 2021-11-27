@@ -222,7 +222,7 @@ message contains the ``"foobar"`` string.
 Making Tests Fail
 ~~~~~~~~~~~~~~~~~
 
-By default, any non-legacy-tagged or any non-`@-silenced <@-silencing operator>`_
+By default, any non-legacy-tagged or any non-silenced (`@-silencing operator`_)
 deprecation notices will make tests fail. Alternatively, you can configure
 an arbitrary threshold by setting ``SYMFONY_DEPRECATIONS_HELPER`` to
 ``max[total]=320`` for instance. It will make the tests fail only if a
