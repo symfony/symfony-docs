@@ -338,7 +338,7 @@ OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_
 
 .. versionadded:: 5.4
 
-    The Engagespot, Expo and OneSignal integrations were introduced in Symfony 5.4.
+    The Expo, OneSignal and Engagespot integrations were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
