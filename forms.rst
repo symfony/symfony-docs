@@ -274,15 +274,14 @@ Now that the form has been created, the next step is to render it::
             // ...
 
             $form = $this->createForm(TaskType::class, $task);
-
+ 
             return $this->renderForm('task/new.html.twig', [
-                'form' => $form,
+                'form' => $form->createView(),
             ]);
         }
     }
 
-In versions prior to Symfony 5.3, controllers used the method
-``$this->render('...', ['form' => $form->createView()])`` to render the form.
+
 The ``renderForm()`` method abstracts this logic and it also sets the 422 HTTP
 status code in the response automatically when the submitted form is not valid.
 
