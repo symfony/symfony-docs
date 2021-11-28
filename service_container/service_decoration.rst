@@ -450,8 +450,8 @@ Your decoration configuration will be as follows:
     If the ``App\Mailer\Mailer`` class is marked as ``final``, and it does not implement an injectable
     interface, then you will not be able to decorate it, because a final class cannot be extended.
 
-Congratulations! With both options, when you type-hint ``App\Mailer\MailerInterface``, the ``App\Mailer\DecoratingMailer``
-class is automatically injected instead of the ``App\Mailer\Mailer`` class.
+Congratulations! With both options, the ``App\Mailer\DecoratingMailer`` class is automatically injected 
+instead of the ``App\Mailer\Mailer`` class.
 
 Decoration Priority
 -------------------
