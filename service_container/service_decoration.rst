@@ -265,7 +265,7 @@ Implementing The Same Interface As The Decorated Service
 
 Assume the following for the decorated class::
 
-    // Mailer/Mailer.php
+    // src/Mailer/Mailer.php
     namespace App\Mailer;
 
     class Mailer implements MailerInterface {
@@ -277,7 +277,7 @@ Also assume that your service definitions are configured so that you would type-
 
 In this case, you would inject the decorated mailer service as follows::
 
-    // Services/AcmeService.php
+    // src/Services/AcmeService.php
     namespace App\Services;
 
     use App\Mailer\MailerInterface;
@@ -289,7 +289,7 @@ In this case, you would inject the decorated mailer service as follows::
 
 Create your decorating class as follows::
 
-    // Mailer/DecoratingMailer.php
+    // src/Mailer/DecoratingMailer.php
     namespace App\Mailer;
 
     class DecoratingMailer implements MailerInterface {
@@ -367,7 +367,7 @@ Extend The Decorated Service
 
 Assume the following::
 
-    // Mailer/Mailer.php
+    // src/Mailer/Mailer.php
     namespace App\Mailer;
 
     class Mailer {
@@ -375,7 +375,7 @@ Assume the following::
 
 In this case, you would inject the ``App\Mailer\Mailer`` service as follows into another service::
 
-    // Services/AcmeService.php
+    // src/Services/AcmeService.php
     namespace App\Services;
 
     use App\Mailer\Mailer;
@@ -387,7 +387,7 @@ In this case, you would inject the ``App\Mailer\Mailer`` service as follows into
 
 Create your decorating class as follows::
 
-    // Mailer/DecoratingMailer.php
+    // src/Mailer/DecoratingMailer.php
     namespace App\Mailer;
 
     use App\Mailer\Mailer;
