@@ -56,6 +56,9 @@ This will display a ``<select>`` tag with the three possible values defined in
 the ``TextAlign`` enum. Use the `expanded`_ and `multiple`_ options to display
 these values as ``<input type="checkbox">`` or ``<input type="radio">``.
 
+In order to persist this field to the database, you need to create a DataTransformer
+that converts the Enum object to its scalar value (`int` or `string`).
+
 Field Options
 -------------
 
