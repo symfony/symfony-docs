@@ -82,6 +82,7 @@ SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?
 Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
+Vonage          ``symfony/vonage-notifier``           ``vonage://KEY:SECRET@default?from=FROM``
 Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
 ==============  ====================================  ===========================================================================
 
