@@ -587,7 +587,7 @@ events specified in the workflow configuration. In the above example the
 ``workflow.leave`` event will not be fired, even if it has been specified as an
 event to be dispatched for all transitions in the workflow configuration.
 
-Thees are all the available constants:
+These are all the available constants:
 
     * ``Workflow::DISABLE_LEAVE_EVENT``
     * ``Workflow::DISABLE_TRANSITION_EVENT``
