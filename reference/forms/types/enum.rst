@@ -112,4 +112,4 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
 
-.. _`PHP enumeration`: https://wiki.php.net/rfc/enumerations
+.. _`PHP enumeration`: https://www.php.net/manual/language.enumerations.php
