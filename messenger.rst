@@ -723,7 +723,6 @@ reset the service container between two messages:
                 transports:
                     async:
                         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                        
 
     .. code-block:: xml
 
