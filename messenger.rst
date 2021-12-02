@@ -710,10 +710,10 @@ reset the service container between two messages:
         # config/packages/messenger.yaml
         framework:
             messenger:
+                reset_on_message: true
                 transports:
                     async:
                         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                        reset_on_message: true
 
     .. code-block:: xml
 
