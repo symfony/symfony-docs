@@ -513,7 +513,7 @@ provided by Symfony:
                 # the path of the template to render
                 template:  'static/privacy.html.twig'
 
-                # the status code to include in the response headers
+                # the response status code (default: 200)
                 statusCode: 200
 
                 # special options defined by Symfony to set the page cache
@@ -541,6 +541,9 @@ provided by Symfony:
                 controller="Symfony\Bundle\FrameworkBundle\Controller\TemplateController">
                 <!-- the path of the template to render -->
                 <default key="template">static/privacy.html.twig</default>
+
+                <!-- the response status code (default: 200) -->
+                <default key="statusCode">200</default>
 
                 <!-- special options defined by Symfony to set the page cache -->
                 <default key="maxAge">86400</default>
@@ -570,6 +573,9 @@ provided by Symfony:
                     // the path of the template to render
                     'template'  => 'static/privacy.html.twig',
 
+                    // the response status code (default: 200)
+                    'statusCode' => 200,
+
                     // special options defined by Symfony to set the page cache
                     'maxAge'    => 86400,
                     'sharedAge' => 86400,
@@ -589,6 +595,10 @@ provided by Symfony:
 .. versionadded:: 5.1
 
     The ``context`` option was introduced in Symfony 5.1.
+
+.. versionadded:: 5.4
+
+    The ``statusCode`` option was introduced in Symfony 5.4.
 
 Checking if a Template Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
