@@ -226,8 +226,8 @@ Access the value of the first node of the current selection::
     // pass FALSE as the second argument to return the original text unchanged
     $crawler->filterXPath('//body/p')->text('Default text content', false);
 
-    // innerText() is similar to text() but returns only the text that is
-    // the direct descendent of the current node, excluding any child nodes
+    // innerText() is similar to text() but only returns the text that is
+    // the direct descendant of the current node, excluding any child nodes
     $text = $crawler->filterXPath('//body/p')->innerText();
     // if content is <p>Foo <span>Bar</span></p>
     // innerText() returns 'Foo' and text() returns 'Foo Bar'
