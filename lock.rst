@@ -189,8 +189,8 @@ Locking a Dynamic Resource
 --------------------------
 
 Sometimes the application is able to cut the resource into small pieces in order
-to lock a small subset of process and let other through. In our previous example
-we've seen how to lock the ``$pdf->getOrCreatePdf('terms-of-use')`` for everybody,
+to lock a small subset of process and let other through. The previous example
+showed how to lock the ``$pdf->getOrCreatePdf('terms-of-use')`` for everybody,
 now let's see how to lock ``$pdf->getOrCreatePdf($version)`` only for
 processes asking for the same ``$version``::
 
