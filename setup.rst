@@ -23,7 +23,7 @@ Before creating your first Symfony application you must:
 
   * Note that all newer, released versions of PHP will be supported during the
     lifetime of each Symfony release (including new major versions).
-    For example, PHP 8.0 is supported.
+    For example, PHP 8.1 is supported.
 * `Install Composer`_, which is used to install PHP packages.
 
 Optionally, you can also `install Symfony CLI`_. This creates a binary called
