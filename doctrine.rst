@@ -361,7 +361,7 @@ and save it::
 
     // ...
     use App\Entity\Product;
-    use Doctrine\ORM\EntityManagerInterface;
+    use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Component\HttpFoundation\Response;
 
     class ProductController extends AbstractController
