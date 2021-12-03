@@ -761,10 +761,6 @@ The following example shows how to detect if the user agent prefers "safe" conte
 Generating Relative and Absolute URLs
 -------------------------------------
 
-.. versionadded:: 5.4
-
-    The feature to generate relative and absolute URLs was introduced in Symfony 5.4.
-
 Generating absolute and relative URLs for a given path is a common need
 in some applications. In Twig templates you can use the
 :ref:`absolute_url() <reference-twig-function-absolute-url>` and
