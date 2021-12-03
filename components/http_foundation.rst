@@ -757,6 +757,43 @@ The following example shows how to detect if the user agent prefers "safe" conte
         $response->setContentSafe();
 
         return $response;
+
+Generating Relative and Absolute URLs
+-------------------------------------
+
+.. versionadded:: 5.4
+
+    The feature to generate relative and absolute URLs was introduced in Symfony 5.4.
+
+Generating absolute and relative URLs for a given path is a common need
+in some applications. In Twig templates you can use the
+:ref:`absolute_url() <reference-twig-function-absolute-url>` and
+:ref:`relative_path() <reference-twig-function-relative-path>` functions to do that.
+
+The :class:`Symfony\\Component\\HttpFoundation\\UrlHelper` class provides the
+same functionality for PHP code via the ``getAbsoluteUrl()`` and ``getRelativePath()``
+methods. You can inject this as a service anywhere in your application::
+
+    // src/Normalizer/UserApiNormalizer.php
+    namespace App\Normalizer;
+
+    use Symfony\Component\HttpFoundation\UrlHelper;
+
+    class UserApiNormalizer
+    {
+        private UrlHelper $urlHelper;
+
+        public function __construct(UrlHelper $urlHelper)
+        {
+            $this->urlHelper = $urlHelper;
+        }
+
+        public function normalize($user)
+        {
+            return [
+                'avatar' => $this->urlHelper->getAbsoluteUrl($user->avatar()->path()),
+            ];
+        }
     }
 
 Learn More
