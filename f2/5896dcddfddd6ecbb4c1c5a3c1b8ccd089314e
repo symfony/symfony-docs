@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by gnito-org at 2021-11-29T22:52:22Z
+
+Isn't the more accepted way to generate absolute URLs by using ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::generate`` and passing ``Symfony\Component\Routing\Generator\UrlGeneratorInterface::ABSOLUTE_URL`` as the third argument?
+
+---------------------------------------------------------------------------
+
+by dreadnip at 2021-11-30T09:26:44Z
+
+As far as I know, `UrlGeneratorInterface` is only used for routes, while`UrlHelper` allows you to make any link absolute, provided that you're within a request context in your application (it uses `requestStack` and `requestContext`). That explains why the class is under the HttpFoundation component and not Routing.
+
+The use-case is different too. I use it to generate absolute images before I send them to Slack using the Symfony Notifier for example. Combined with the `Packages` service from the Asset component, you can really easily generate an absolute URL for your image, just like you would with `{{ absolute_url(asset(imagePath)) }}` in [Twig](https://symfony.com/doc/current/reference/twig_reference.html#absolute-url)
