@@ -44,7 +44,7 @@ in the web console:
     ...
 
 If your Symfony application is running on a custom domain (e.g.
-``http://app.vm``), you must configure the public path explicitly in your
+``http://app.vm``), you must configure the URL to the web socket server explicitly in your
 ``package.json``:
 
 .. code-block:: diff
@@ -53,7 +53,7 @@ If your Symfony application is running on a custom domain (e.g.
           ...
           "scripts": {
     -        "dev-server": "encore dev-server",
-    +        "dev-server": "encore dev-server --public http://app.vm:8080",
+    +        "dev-server": "encore dev-server --client-web-socket-url http://app.vm:8080",
               ...
           }
       }
@@ -81,8 +81,8 @@ connections:
       {
           ...
           "scripts": {
-    -        "dev-server": "encore dev-server --public http://app.vm:8080",
-    +        "dev-server": "encore dev-server --public http://app.vm:8080 --host 0.0.0.0",
+    -        "dev-server": "encore dev-server --client-web-socket-url http://app.vm:8080",
+    +        "dev-server": "encore dev-server --client-web-socket-url http://app.vm:8080 --host 0.0.0.0",
               ...
           }
       }
