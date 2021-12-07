@@ -118,7 +118,7 @@ listener class:
 #. If the ``kernel.event_listener`` tag defines the ``method`` attribute, that's
    the name of the method to be called;
 #. If no ``method`` attribute is defined, try to call the method whose name
-   is ``on`` + "camel-cased event name" (e.g. ``onKernelException()`` method for
+   is ``on`` + "PascalCased event name" (e.g. ``onKernelException()`` method for
    the ``kernel.exception`` event);
 #. If that method is not defined either, try to call the ``__invoke()`` magic
    method (which makes event listeners invokable);
