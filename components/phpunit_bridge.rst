@@ -332,8 +332,6 @@ to completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
 related to deprecations.
 
-.. _write-assertions-about-deprecations:
-
 Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -371,6 +369,8 @@ Log Deprecations
 
 For turning the verbose output off and write it to a log file instead you can use
 ``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``.
+
+.. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -855,7 +855,7 @@ You can either:
 
     // config/bootstrap.php
     use Symfony\Bridge\PhpUnit\ClockMock;
-    
+
     // ...
     if ('test' === $_SERVER['APP_ENV']) {
         ClockMock::register('Acme\\MyClassTest\\');
@@ -919,7 +919,7 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
 
     It's also possible to set this env var in the ``phpunit.xml.dist`` file.
-    
+
 .. tip::
 
     It is also possible to require additional packages that will be installed along
