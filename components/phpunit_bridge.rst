@@ -341,8 +341,6 @@ to completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
 related to deprecations.
 
-.. _write-assertions-about-deprecations:
-
 Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -388,6 +386,8 @@ For turning the verbose output off and write it to a log file instead you can us
 .. versionadded:: 5.3
 
     The ``logFile`` option was introduced in Symfony 5.3.
+
+.. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -877,7 +877,7 @@ You can either:
 
     // config/bootstrap.php
     use Symfony\Bridge\PhpUnit\ClockMock;
-    
+
     // ...
     if ('test' === $_SERVER['APP_ENV']) {
         ClockMock::register('Acme\\MyClassTest\\');
