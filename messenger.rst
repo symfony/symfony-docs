@@ -604,11 +604,17 @@ transport is always bound to an exchange. By default, the worker consumes from a
 queues attached to the exchange of the specified transport. However, there are use
 cases to want a worker to only consume from specific queues.
 
-You can limit the worker to only process messages from specific queues:
+You can limit the worker to only process messages from specific queue:
 
 .. code-block:: terminal
 
     $ php bin/console messenger:consume my_transport --queues=fasttrack
+
+Or you can limit the worker to only process messages from specific queues:
+
+.. code-block:: terminal
+
+    $ php bin/console messenger:consume my_transport --queues=fasttrack1 --queues=fasttrack2
 
 To allow using the ``queues`` option, the receiver must implement the
 :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\QueueReceiverInterface`.
