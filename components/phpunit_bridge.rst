@@ -308,8 +308,6 @@ to completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
 related to deprecations.
 
-.. _write-assertions-about-deprecations:
-
 Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -335,6 +333,8 @@ time. This can be disabled with the ``debug-class-loader`` option.
 .. versionadded:: 4.2
 
     The ``DebugClassLoader`` integration was introduced in Symfony 4.2.
+
+.. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -818,7 +818,7 @@ You can either:
 
     // config/bootstrap.php
     use Symfony\Bridge\PhpUnit\ClockMock;
-    
+
     // ...
     if ('test' === $_SERVER['APP_ENV']) {
         ClockMock::register('Acme\\MyClassTest\\');
