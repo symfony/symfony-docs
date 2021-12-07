@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by JohJohan at 2021-10-24T09:48:56Z
+
+> Thanks. I let few comments
+
+Thanks for the review, should i make it one commit again? Or is it okay like this?
+
+---------------------------------------------------------------------------
+
+by kbond at 2021-10-26T12:35:21Z
+
+I was wondering if it uses an instance of the exception class. I checked the code and it does, maybe this should be documented? Also, [the order is important](https://github.com/symfony/symfony/pull/42244/files#r675956867).
+
+---------------------------------------------------------------------------
+
+by JohJohan at 2021-10-26T17:09:19Z
+
+> I was wondering if it uses an instance of the exception class. I checked the code and it does, maybe this should be documented? Also, [the order is important](https://github.com/symfony/symfony/pull/42244/files#r675956867).
+
+@kbond So it would be nice to have 2 notices 1 mentioning the exception should extend from `\Exception`? And one note about that the ordering is imported?
+
+---------------------------------------------------------------------------
+
+by kbond at 2021-10-26T17:18:58Z
+
+> mentioning the exception should extend from \Exception
+
+This isn't what I meant. I meant that the first exception class that passes an `instanceof` is what is used.
+
+I think one notice is sufficient as it is related:
+
+```yaml
+framework:
+    exceptions:
+        Exception:
+            log_level: debug
+            status_code: 404
+        RuntimeException: # this will never be used as \RuntimeException extends \Exception
+            log_level: debug
+            status_code: 422
+```
+
+The fix would be to reverse the above:
+
+```yaml
+framework:
+    exceptions:
+        RuntimeException:
+            log_level: debug
+            status_code: 422
+        Exception:
+            log_level: debug
+            status_code: 404
+```
+
+Hope that makes sense.
