@@ -3220,6 +3220,84 @@ Defines the kind of workflow that is going to be created, which can be either
 a normal workflow or a state machine. Read :doc:`this article </workflow/workflow-and-state-machine>`
 to know their differences.
 
+exceptions
+""""""""""
+
+**type**: ``array``
+
+.. versionadded:: 5.4
+
+    The ``exceptions`` option was introduced in Symfony 5.4.
+
+Defines the :ref:`log level </logging>` and HTTP status code applied to the
+exceptions that match the given exception class:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/exceptions.yaml
+        framework:
+            exceptions:
+                Symfony\Component\HttpKernel\Exception\BadRequestHttpException:
+                    log_level: 'debug'
+                    status_code: 422
+
+    .. code-block:: xml
+
+        <!-- config/packages/exceptions.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:exceptions>
+                    <exception id="Symfony\Component\HttpKernel\Exception\BadRequestHttpException">
+                        <framework:log_level>debug</framework:log_level>
+                        <framework:status_code>422</framework:status_code>
+                    </exception>
+                </framework:exceptions>
+                <!-- ... -->
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/exceptions.php
+        use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework
+                ->exceptions(BadRequestHttpException::class)
+                ->log_level('debug');
+
+            $framework
+                ->exceptions(BadRequestHttpException::class)
+                ->status_code(422);
+            ;
+        };
+
+The order in which you configure exceptions is important because Symfony will
+use the configuration of the first exception that matches ``instanceof``:
+
+.. code-block:: yaml
+
+        # config/packages/exceptions.yaml
+        framework:
+            exceptions:
+                Exception:
+                    log_level: 'debug'
+                    status_code: 404
+                # The following configuration will never be used because \RuntimeException extends \Exception
+                RuntimeException:
+                    log_level: 'debug'
+                    status_code: 422
+
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
