@@ -3363,7 +3363,8 @@ exceptions
 
 **type**: ``array``
 
-Defines what ``log_level`` and ``status_code`` should be returned by exception class:
+Defines the :ref:`log level </logging>` and HTTP status code applied to the
+exceptions that match the given exception class:
 
 .. configuration-block::
 
@@ -3373,7 +3374,7 @@ Defines what ``log_level`` and ``status_code`` should be returned by exception c
         framework:
             exceptions:
                 Symfony\Component\HttpKernel\Exception\BadRequestHttpException:
-                    log_level: debug
+                    log_level: 'debug'
                     status_code: 422
 
     .. code-block:: xml
@@ -3401,24 +3402,22 @@ Defines what ``log_level`` and ``status_code`` should be returned by exception c
     .. code-block:: php
 
         // config/packages/exceptions.php
+        use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework) {
             $framework
-                ->exceptions('Symfony\Component\HttpKernel\Exception\BadRequestHttpException')
+                ->exceptions(BadRequestHttpException::class)
                 ->log_level('debug');
 
             $framework
-                ->exceptions('Symfony\Component\HttpKernel\Exception\BadRequestHttpException')
+                ->exceptions(BadRequestHttpException::class)
                 ->status_code(422);
             ;
         };
 
-.. note::
-
-    When defining exceptions the order is important as it will use the first exception that matches ``instanceof``
-
-Example with ``\RuntimeException`` and ``\Exception``:
+The order in which you configure exceptions is important because Symfony will
+use the configuration of the first exception that matches ``instanceof``:
 
 .. code-block:: yaml
 
@@ -3426,10 +3425,11 @@ Example with ``\RuntimeException`` and ``\Exception``:
         framework:
             exceptions:
                 Exception:
-                    log_level: debug
+                    log_level: 'debug'
                     status_code: 404
-                RuntimeException: # This will never be used as \RuntimeException extends \Exception
-                    log_level: debug
+                # The following configuration will never be used because \RuntimeException extends \Exception
+                RuntimeException:
+                    log_level: 'debug'
                     status_code: 422
 
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
