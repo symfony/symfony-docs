@@ -3363,6 +3363,10 @@ exceptions
 
 **type**: ``array``
 
+.. versionadded:: 5.4
+
+    The ``exceptions`` option was introduced in Symfony 5.4.
+
 Defines the :ref:`log level </logging>` and HTTP status code applied to the
 exceptions that match the given exception class:
 
