@@ -132,6 +132,7 @@ If you want to redirect the user to another page, use the ``redirectToRoute()``
 and ``redirect()`` methods::
 
     use Symfony\Component\HttpFoundation\RedirectResponse;
+    use Symfony\Component\HttpFoundation\Response
 
     // ...
     public function index(): RedirectResponse
@@ -142,8 +143,10 @@ and ``redirect()`` methods::
         // redirectToRoute is a shortcut for:
         // return new RedirectResponse($this->generateUrl('homepage'));
 
-        // does a permanent - 301 redirect
+        // does a permanent HTTP 301 redirect
         return $this->redirectToRoute('homepage', [], 301);
+        // if you prefer, you can use PHP constants instead of hardcoded numbers
+        return $this->redirectToRoute('homepage', [], Response::HTTP_MOVED_PERMANENTLY);
 
         // redirect to a route with parameters
         return $this->redirectToRoute('app_lucky_number', ['max' => 10]);
