@@ -2575,7 +2575,7 @@ Authentication Events
     where you need to modify the created token (e.g. for multi factor
     authentication).
 
-:class:`Symfony\\Component\\Security\\Http\\Event\\AuthenticationSuccessEvent`
+:class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationSuccessEvent`
     Dispatched when authentication is nearing success. This is the last
     event that can make an authentication fail by throwing an
     ``AuthenticationException``.
