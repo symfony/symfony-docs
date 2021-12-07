@@ -144,6 +144,8 @@ and ``redirect()`` methods::
         // return new RedirectResponse($this->generateUrl('homepage'));
 
         // does a permanent HTTP 301 redirect
+        return $this->redirectToRoute('homepage', [], 301);
+        // if you prefer, you can use PHP constants instead of hardcoded numbers
         return $this->redirectToRoute('homepage', [], Response::HTTP_MOVED_PERMANENTLY);
 
         // redirect to a route with parameters
