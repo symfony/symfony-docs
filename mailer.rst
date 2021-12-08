@@ -1362,6 +1362,37 @@ a specific address, instead of the *real* address:
             ;
         };
 
+Write a Functional Test
+~~~~~~~~~~~~~~~~~~~~~~~
+
+To functionally test that an email was sent, and even assert the email content or headers,
+you can use the built in assertions::
+
+    // tests/Controller/MailControllerTest.php
+    namespace App\Tests\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    class MailControllerTest extends WebTestCase
+    {
+        use MailerAssertionsTrait;
+
+        public function testMailIsSentAndContentIsOk()
+        {
+            $client = $this->createClient();
+            $client->request('GET', '/mail/send');
+            $this->assertResponseIsSuccessful();
+
+            $this->assertEmailCount(1);
+
+            $email = $this->getMailerMessage();
+
+            $this->assertEmailHtmlBodyContains($email, 'Welcome');
+            $this->assertEmailTextBodyContains($email, 'Welcome');
+        }
+    }
+
 .. _`high availability`: https://en.wikipedia.org/wiki/High_availability
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
 .. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
