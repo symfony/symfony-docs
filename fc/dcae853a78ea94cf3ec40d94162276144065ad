@@ -1,0 +1,66 @@
+---------------------------------------------------------------------------
+
+by famoser at 2021-12-05T10:44:36Z
+
+The failing build is due to failing:
+
+```
+git clone -b 4.4 --depth 5 --single-branch https://github.com/symfony-tools/symfony-application.git _sf_app
+cd _sf_app/
+composer update
+```
+
+The problem is that `composer update` installs symfony@6.0 but then the deprecated `Symfony\Component\Routing\RouteCollectionBuilder` is still used in `src/Kernel.php`. Note that https://github.com/symfony-tools/symfony-application/blob/4.4/composer.json uses wildcards for symfony dependencies.
+
+---------------------------------------------------------------------------
+
+by famoser at 2021-12-05T10:52:18Z
+
+This can be solved either here or upstream.
+
+## Here
+```
+composer update --no-scripts # prevent the failing cache:clear command to run
+composer recipes:install symfony/framework-bundle --force # path Kernel.php
+rm -rf vendor/ # remove deps again
+composer update # now proceed as before
+```
+(note: not removing the vendor directory downgrades the dependencies back to `^4.4`. Not seeing why though at the moment.)
+
+## Upstream
+
+I think it would be cleaner to solve it upstream: Specify the symfony dependency in composer json: https://github.com/symfony-tools/symfony-application/blob/4.4/composer.json. For example, specify `"symfony/framework-bundle": "^4.4"` on branch 4.4. I'll ping the author @Nyholm who probably knows why it is not done that way at the moment.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-12-06T07:47:35Z
+
+You are correct. Branch 4.4 on https://github.com/symfony-tools/symfony-application should install only version 4.4 of all symfony packages. Feel free to prepare a PR and I'll make sure to fix this ASAP.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-12-08T07:28:11Z
+
+Could we rerun the CI?
+
+Either docs team restart it or @famoser runs:
+```
+git commit --allow-empty  -m "Trigger CI"
+git push
+```
+
+---------------------------------------------------------------------------
+
+by famoser at 2021-12-08T08:44:47Z
+
+Done, thanks for your help!
+
+I see that all PR from the last three days look stuck from the same issue we have just fixed. It might be quicker if the doc team could restart for all of them, rather than each one makes its own empty commit.
+
+---------------------------------------------------------------------------
+
+by Nyholm at 2021-12-08T08:49:03Z
+
+I've notified the doc team.
+
+Thank you for testing and confirming that it works.
