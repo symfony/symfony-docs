@@ -341,8 +341,6 @@ to completely disable the deprecation helper. This is useful to make use of the
 rest of features provided by this component without getting errors or messages
 related to deprecations.
 
-.. _write-assertions-about-deprecations:
-
 Deprecation Notices at Autoloading Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -388,6 +386,8 @@ For turning the verbose output off and write it to a log file instead you can us
 .. versionadded:: 5.3
 
     The ``logFile`` option was introduced in Symfony 5.3.
+
+.. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
 -----------------------------------
@@ -877,7 +877,7 @@ You can either:
 
     // config/bootstrap.php
     use Symfony\Bridge\PhpUnit\ClockMock;
-    
+
     // ...
     if ('test' === $_SERVER['APP_ENV']) {
         ClockMock::register('Acme\\MyClassTest\\');
@@ -903,18 +903,6 @@ configured by the ``SYMFONY_PHPUNIT_DIR`` env var, or in the same directory as
 the ``simple-phpunit`` if it is not provided. It's also possible to set this
 env var in the ``phpunit.xml.dist`` file.
 
-By default, these are the PHPUnit versions used depending on the installed PHP versions:
-
-=====================  ===============================
-Installed PHP version  PHPUnit version used by default
-=====================  ===============================
-PHP <= 5.5             PHPUnit 4.8
-PHP 5.6                PHPUnit 5.7
-PHP 7.0                PHPUnit 6.5
-PHP 7.1                PHPUnit 7.5
-PHP >= 7.2             PHPUnit 8.3
-=====================  ===============================
-
 If you have installed the bridge through Composer, you can run it by calling e.g.:
 
 .. code-block:: terminal
@@ -923,7 +911,7 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
 .. tip::
 
-    It's possible to change the base version of PHPUnit by setting the
+    It's possible to change the PHPUnit version by setting the
     ``SYMFONY_PHPUNIT_VERSION`` env var in the ``phpunit.xml.dist`` file (e.g.
     ``<server name="SYMFONY_PHPUNIT_VERSION" value="5.5"/>``). This is the
     preferred method as it can be committed to your version control repository.
