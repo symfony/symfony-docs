@@ -321,11 +321,18 @@ to return the choices array. See
 ``choices``
 ~~~~~~~~~~~
 
-**type**: ``array`` [:ref:`default option <validation-default-option>`]
+**type**: ``array|BackedEnum`` [:ref:`default option <validation-default-option>`]
 
 A required option (unless `callback`_ is specified) - this is the array
 of options that should be considered in the valid set. The input value
 will be matched against this array.
+
+If `BackedEnum <https://www.php.net/manual/en/language.enumerations.backed.php>`_ is passed,
+all the enum values will be converted to an array and matched the same way.
+
+.. versionadded:: 6.1
+
+    The \BackedEnum choices type was introduced in Symfony 6.1.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
