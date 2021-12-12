@@ -1,7 +1,7 @@
 .. index::
     single: Upgrading; Minor Version
 
-Upgrading a Minor Version (e.g. 4.0.0 to 4.1.0)
+Upgrading a Minor Version (e.g. 5.0.0 to 5.1.0)
 ===============================================
 
 If you're upgrading a minor version (where the middle number changes), then
@@ -24,7 +24,7 @@ There are two steps to upgrading a minor version:
 The ``composer.json`` file is configured to allow Symfony packages to be
 upgraded to patch versions. But to upgrade to a new minor version, you will
 probably need to update the version constraint next to each library starting
-``symfony/``. Suppose you are upgrading from Symfony 4.3 to 4.4:
+``symfony/``. Suppose you are upgrading from Symfony 5.3 to 5.4:
 
 .. code-block:: diff
 
@@ -32,12 +32,12 @@ probably need to update the version constraint next to each library starting
           "...": "...",
 
           "require": {
-    -         "symfony/cache": "4.3.*",
-    +         "symfony/cache": "4.4.*",
-    -         "symfony/config": "4.3.*",
-    +         "symfony/config": "4.4.*",
-    -         "symfony/console": "4.3.*",
-    +         "symfony/console": "4.4.*",
+    -         "symfony/cache": "5.3.*",
+    +         "symfony/cache": "5.4.*",
+    -         "symfony/config": "5.3.*",
+    +         "symfony/config": "5.4.*",
+    -         "symfony/console": "5.3.*",
+    +         "symfony/console": "5.4.*",
               "...": "...",
 
               "...": "A few libraries starting with
@@ -57,8 +57,8 @@ Your ``composer.json`` file should also have an ``extra`` block that you will
       "extra": {
           "symfony": {
               "...": "...",
-    -         "require": "4.3.*"
-    +         "require": "4.4.*"
+    -         "require": "5.3.*"
+    +         "require": "5.4.*"
           }
       }
 
@@ -82,7 +82,7 @@ to your code to get everything working. Additionally, some features you're
 using might still work, but might now be deprecated. While that's fine,
 if you know about these deprecations, you can start to fix them over time.
 
-Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-4.4.md`_)
+Every version of Symfony comes with an UPGRADE file (e.g. `UPGRADE-5.4.md`_)
 included in the Symfony directory that describes these changes. If you follow
 the instructions in the document and update your code accordingly, it should be
 safe to update in the future.
@@ -94,4 +94,4 @@ These documents can also be found in the `Symfony Repository`_.
 .. include:: /setup/_update_recipes.rst.inc
 
 .. _`Symfony Repository`: https://github.com/symfony/symfony
-.. _`UPGRADE-4.4.md`: https://github.com/symfony/symfony/blob/4.4/UPGRADE-4.4.md
+.. _`UPGRADE-5.4.md`: https://github.com/symfony/symfony/blob/5.4/UPGRADE-5.4.md
