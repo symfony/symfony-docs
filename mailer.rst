@@ -95,6 +95,13 @@ native        ``native://default``                      Mailer uses the sendmail
                                                         ``php.ini`` settings when ``sendmail_path`` is not configured.
 ============  ========================================  ==============================================================
 
+.. caution::
+
+    When using ``native://default``, if ``php.ini`` uses the ``sendmail -t``
+    command, you won't have error reporting and ``Bcc`` headers won't be removed.
+    It's highly recommended to NOT use ``native://default`` as you cannot control
+    how sendmail is configured (prefer using ``sendmail://default`` if possible).
+
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
