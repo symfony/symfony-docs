@@ -167,10 +167,10 @@ In those cases, use the
     echo $package->getUrl('css/app.css');
     // result: build/css/app.b916426ea1d10021f3f17ce8031f93c2.css
 
-If you request an asset that is *not found* in the ``rev-manifest.json`` file, the original -
-*unmodified* - asset path will be returned.
-The ``$strictMode`` argument helps for debugging as it throws an exception when the asset is
-not listed in the manifest::
+If you request an asset that is *not found* in the ``rev-manifest.json`` file,
+the original - *unmodified* - asset path will be returned. The ``$strictMode``
+argument helps debug issues because it throws an exception when the asset is not
+listed in the manifest::
 
     use Symfony\Component\Asset\Package;
     use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;

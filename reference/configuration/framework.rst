@@ -2209,12 +2209,13 @@ strict_mode
 
 **type**: ``boolean`` **default**: ``false``
 
-When enabled, the strict mode assert that all requested assets are in the manifest file.
-This option is useful to detect typo or missing assets, the recommended value is ``%kernel.debug%``.
-
 .. versionadded:: 5.4
 
-    This option was introduced in Symfony 5.4.
+    The ``strict_mode`` option was introduced in Symfony 5.4.
+
+When enabled, the strict mode asserts that all requested assets are in the
+manifest file. This option is useful to detect typos or missing assets, the
+recommended value is ``%kernel.debug%``.
 
 translator
 ~~~~~~~~~~
