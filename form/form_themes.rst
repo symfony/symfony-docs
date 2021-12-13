@@ -76,7 +76,7 @@ want to use another theme for all the forms of your app, configure it in the
 
         # config/packages/twig.yaml
         twig:
-            form_themes: ['bootstrap_4_horizontal_layout.html.twig']
+            form_themes: ['bootstrap_5_horizontal_layout.html.twig']
             # ...
 
     .. code-block:: xml
@@ -91,7 +91,7 @@ want to use another theme for all the forms of your app, configure it in the
                 http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form-theme>bootstrap_4_horizontal_layout.html.twig</twig:form-theme>
+                <twig:form-theme>bootstrap_5_horizontal_layout.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
         </container>
@@ -103,7 +103,7 @@ want to use another theme for all the forms of your app, configure it in the
 
         return static function (TwigConfig $twig) {
             $twig->formThemes([
-                'bootstrap_4_horizontal_layout.html.twig',
+                'bootstrap_5_horizontal_layout.html.twig',
             ]);
 
             // ...
