@@ -1798,6 +1798,7 @@ Each package can configure the following options:
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
 * :ref:`json_manifest_path <reference-assets-json-manifest-path>`
+* :ref:`strict_mode <reference-assets-strict-mode>`
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
@@ -2041,6 +2042,8 @@ package:
                     foo_package:
                         # this package uses its own manifest (the default file is ignored)
                         json_manifest_path: "%kernel.project_dir%/public/build/a_different_manifest.json"
+                        # Throws an exception when an asset is not found in the manifest
+                        strict_mode: %kernel.debug%
                     bar_package:
                         # this package uses the global manifest (the default file is used)
                         base_path: '/images'
@@ -2061,9 +2064,10 @@ package:
                 <!-- you can use absolute URLs too and Symfony will download them automatically -->
                 <!-- <framework:assets json-manifest-path="https://cdn.example.com/manifest.json"> -->
                     <!-- this package uses its own manifest (the default file is ignored) -->
+                    <!-- Throws an exception when an asset is not found in the manifest -->
                     <framework:package
                         name="foo_package"
-                        json-manifest-path="%kernel.project_dir%/public/build/a_different_manifest.json"/>
+                        json-manifest-path="%kernel.project_dir%/public/build/a_different_manifest.json" strict-mode="%kernel.debug%"/>
                     <!-- this package uses the global manifest (the default file is used) -->
                     <framework:package
                         name="bar_package"
@@ -2087,7 +2091,9 @@ package:
             // 'json_manifest_path' => 'https://cdn.example.com/manifest.json',
             $framework->assets()->package('foo_package')
                 // this package uses its own manifest (the default file is ignored)
-                ->jsonManifestPath('%kernel.project_dir%/public/build/a_different_manifest.json');
+                ->jsonManifestPath('%kernel.project_dir%/public/build/a_different_manifest.json')
+                // Throws an exception when an asset is not found in the manifest
+                ->setStrictMode('%kernel.debug%');
 
             $framework->assets()->package('bar_package')
                 // this package uses the global manifest (the default file is used)
@@ -2104,10 +2110,22 @@ package:
 
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
+    Since Symfony 5.4, you can set ``strict_mode`` to ``true`` to get an exception when an asset is *not found*.
 
 .. note::
 
     If an URL is set, the JSON manifest is downloaded on each request using the `http_client`_.
+
+.. _reference-assets-strict-mode:
+
+strict_mode
+...........
+
+**type**: ``boolean`` **default**: ``false``
+
+When enabled, the strict mode asserts that all requested assets are in the
+manifest file. This option is useful to detect typos or missing assets, the
+recommended value is ``%kernel.debug%``.
 
 translator
 ~~~~~~~~~~
