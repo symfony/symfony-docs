@@ -316,8 +316,8 @@ suitable for being rendered in an HTML form.
 
 As short as this rendering is, it's not very flexible. Usually, you'll need more
 control about how the entire form or some of its fields look. For example, thanks
-to the :doc:`Bootstrap 4 integration with Symfony forms </form/bootstrap4>` you
-can set this option to generate forms compatible with the Bootstrap 4 CSS framework:
+to the :doc:`Bootstrap 5 integration with Symfony forms </form/bootstrap5>` you
+can set this option to generate forms compatible with the Bootstrap 5 CSS framework:
 
 .. configuration-block::
 
@@ -325,7 +325,7 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
 
         # config/packages/twig.yaml
         twig:
-            form_themes: ['bootstrap_4_layout.html.twig']
+            form_themes: ['bootstrap_5_layout.html.twig']
 
     .. code-block:: xml
 
@@ -340,7 +340,7 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
                 https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form-theme>bootstrap_4_layout.html.twig</twig:form-theme>
+                <twig:form-theme>bootstrap_5_layout.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
         </container>
@@ -351,13 +351,13 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
         use Symfony\Config\TwigConfig;
 
         return static function (TwigConfig $twig) {
-            $twig->formThemes(['bootstrap_4_layout.html.twig']);
+            $twig->formThemes(['bootstrap_5_layout.html.twig']);
 
             // ...
         };
 
 The :ref:`built-in Symfony form themes <symfony-builtin-forms>` include
-Bootstrap 3 and 4 as well as Foundation 5 and 6. You can also
+Bootstrap 3, 4 and 5, Foundation 5 and 6, as well as Tailwind 2. You can also
 :ref:`create your own Symfony form theme <create-your-own-form-theme>`.
 
 In addition to form themes, Symfony allows you to
