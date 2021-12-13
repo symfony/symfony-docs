@@ -596,7 +596,7 @@ don't accidentally block Symfony's dev tools - which live under URLs like
 
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
 it matches *all* URLs). A firewall can have many modes of authentication,
-in other words many ways to ask the question "Who are you?".
+in other words, it enables many ways to ask the question "Who are you?".
 
 Often, the user is unknown (i.e. not logged in) when they first visit your
 website. If you visit your homepage right now, you *will* have access and
@@ -1023,7 +1023,7 @@ Enable the authenticator using the ``json_login`` setting:
     mandatory wildcards - e.g. ``/login/{foo}`` where ``foo`` has no
     default value).
 
-The authenticator runs when a client request the ``check_path``. First,
+The authenticator runs when a client requests the ``check_path``. First,
 create a controller for this path:
 
 .. code-block:: terminal
@@ -2533,7 +2533,7 @@ for these events.
 
                     <service id="App\EventListener\CustomLogoutSubscriber">
                         <tag name="kernel.event_subscriber"
-                             dispacher="security.event_dispatcher.main"
+                             dispatcher="security.event_dispatcher.main"
                          />
                     </service>
                 </services>
@@ -2618,8 +2618,8 @@ Frequently Asked Questions
     you authenticate against one firewall, you will *not* be authenticated against
     any other firewalls automatically. Different firewalls are like different security
     systems. To do this you have to explicitly specify the same
-    :ref:`reference-security-firewall-context` for different firewalls. But usually
-    for most applications, having one main firewall is enough.
+    :ref:`reference-security-firewall-context` for different firewalls. However,
+    having one main firewall is enough for most applications.
 
 **Security doesn't seem to work on my Error Pages**
     As routing is done *before* security, 404 error pages are not covered by
