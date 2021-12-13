@@ -183,10 +183,6 @@ listed in the manifest::
     echo $package->getUrl('not-found.css');
     // error:
 
-.. versionadded:: 5.4
-
-    The ``$strictMode`` option was introduced in Symfony 5.4.
-
 If your JSON file is not on your local filesystem but is accessible over HTTP,
 use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
 with the :doc:`HttpClient component </http_client>`::
