@@ -27,7 +27,6 @@ creates a ``security.yaml`` configuration file for you:
 
     # config/packages/security.yaml
     security:
-        enable_authenticator_manager: true
         # https://symfony.com/doc/current/security.html#c-hashing-passwords
         password_hashers:
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
