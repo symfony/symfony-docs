@@ -167,6 +167,26 @@ In those cases, use the
     echo $package->getUrl('css/app.css');
     // result: build/css/app.b916426ea1d10021f3f17ce8031f93c2.css
 
+If you request an asset that is *not found* in the ``rev-manifest.json`` file,
+the original - *unmodified* - asset path will be returned. The ``$strictMode``
+argument helps debug issues because it throws an exception when the asset is not
+listed in the manifest::
+
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
+
+    // The value of $strictMode can be specific per environment "true" for debugging and "false" for stability.
+    $strictMode = true;
+    // assumes the JSON file above is called "rev-manifest.json"
+    $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/rev-manifest.json', null, $strictMode));
+
+    echo $package->getUrl('not-found.css');
+    // error:
+
+.. versionadded:: 5.4
+
+    The ``$strictMode`` option was introduced in Symfony 5.4.
+
 If your JSON file is not on your local filesystem but is accessible over HTTP,
 use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
 with the :doc:`HttpClient component </http_client>`::
