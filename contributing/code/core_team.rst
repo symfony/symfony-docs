@@ -109,7 +109,7 @@ Symfony contributions:
 Core Membership Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-About once a year, the core team discuss the opportunity to invite new members.
+About once a year, the core team discusses the opportunity to invite new members.
 
 Core Membership Revocation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
