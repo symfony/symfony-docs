@@ -5,7 +5,7 @@
 How to Define Relationships with Abstract Classes and Interfaces
 ================================================================
 
-One of the goals of bundles is to create discreet bundles of functionality
+One of the goals of bundles is to create discrete bundles of functionality
 that do not have many (if any) dependencies, allowing you to use that
 functionality in other applications without including unnecessary items.
 

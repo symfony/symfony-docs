@@ -8,7 +8,7 @@ How to Simplify Configuration of Multiple Bundles
 When building reusable and extensible applications, developers are often
 faced with a choice: either create a single large bundle or multiple smaller
 bundles. Creating a single bundle has the drawback that it's impossible for
-users to choose to remove functionality they are not using. Creating multiple
+users to remove unused functionality. Creating multiple
 bundles has the drawback that configuration becomes more tedious and settings
 often need to be repeated for various bundles.
 

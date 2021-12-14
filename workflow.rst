@@ -401,7 +401,7 @@ order:
 .. note::
 
     The leaving and entering events are triggered even for transitions that stay
-    in same place.
+    in the same place.
 
 .. note::
 
@@ -452,7 +452,7 @@ workflow leaves a place::
 Guard Events
 ~~~~~~~~~~~~
 
-There are a special kind of events called "Guard events". Their event listeners
+There are special types of events called "Guard events". Their event listeners
 are invoked every time a call to ``Workflow::can()``, ``Workflow::apply()`` or
 ``Workflow::getEnabledTransitions()`` is executed. With the guard events you may
 add custom logic to decide which transitions should be blocked or not. Here is a

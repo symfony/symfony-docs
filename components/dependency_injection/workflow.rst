@@ -25,7 +25,7 @@ container exists. The kernel has a debug setting and if this is false,
 the cached version is used if it exists. If debug is true then the kernel
 :doc:`checks to see if configuration is fresh </components/config/caching>`
 and if it is, the cached version of the container is used. If not then the
-container is built from the application-level configuration and the bundles's
+container is built from the application-level configuration and the bundles'
 extension configuration.
 
 Read :ref:`Dumping the Configuration for Performance <components-dependency-injection-dumping>`
