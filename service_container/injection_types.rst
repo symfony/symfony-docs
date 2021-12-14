@@ -196,7 +196,7 @@ This approach is useful if you need to configure your service according to your 
 so, here's the advantages of immutable-setters:
 
 * Immutable setters works with optional dependencies, this way, if you don't need
-  a dependency, the setter don't need to be called.
+  a dependency, the setter doesn't need to be called.
 
 * Like the constructor injection, using immutable setters force the dependency to stay
   the same during the lifetime of a service.

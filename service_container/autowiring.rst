@@ -186,7 +186,7 @@ If there is *not* a service whose id exactly matches the type, a clear exception
 will be thrown.
 
 Autowiring is a great way to automate configuration, and Symfony tries to be as
-*predictable* and clear as possible.
+*predictable* and as clear as possible.
 
 .. _service-autowiring-alias:
 
@@ -273,7 +273,7 @@ class is type-hinted.
 
 .. versionadded:: 4.2
 
-    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
+    Since Monolog Bundle 3.5 each channel binds into the container by type-hinted alias.
     More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
 
 .. _autowiring-interface-alias:
