@@ -480,7 +480,7 @@ The ``composer.json`` file should include at least the following metadata:
     Consists of the vendor and the short bundle name. If you are releasing the
     bundle on your own instead of on behalf of a company, use your personal name
     (e.g. ``johnsmith/blog-bundle``). Exclude the vendor name from the bundle
-    short name and separate each word with an hyphen. For example: AcmeBlogBundle
+    short name and separate each word with a hyphen. For example: AcmeBlogBundle
     is transformed into ``blog-bundle`` and AcmeSocialConnectBundle is
     transformed into ``social-connect-bundle``.
 
