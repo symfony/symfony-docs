@@ -127,7 +127,7 @@ its sub-directories (only if needed -- see above tip).
 
 .. tip::
 
-    You don't even need to setup a web server to test the code. Instead,
+    You don't even need to set up a web server to test the code. Instead,
     replace the ``$request = Request::createFromGlobals();`` call to something
     like ``$request = Request::create('/hello?name=Fabien');`` where the
     argument is the URL path you want to simulate.
