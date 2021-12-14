@@ -191,7 +191,7 @@ Comparison Operators
 
         $expressionLanguage->evaluate('not ("foo" matches "/bar/")'); // returns true
 
-    You must use parenthesis because the unary operator ``not`` has precedence
+    You must use parentheses because the unary operator ``not`` has precedence
     over the binary operator ``matches``.
 
 Examples::

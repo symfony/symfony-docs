@@ -147,7 +147,7 @@ The output of this command will be:
     | 99921 | Divine Com | Dante Alighieri                |
     | -58-1 | edy        |                                |
     | 0-7   |            |                                |
-    |                (the rest of rows...)                |
+    |                (the rest of the rows...)            |
     +-------+------------+--------------------------------+
 
 The table style can be changed to any built-in styles via
@@ -379,7 +379,7 @@ This outputs:
     | 978-0804169127 | Divine Comedy | spans multiple rows |
     +----------------+---------------+---------------------+
 
-You can use the ``colspan`` and ``rowspan`` options at the same time which allows
+You can use the ``colspan`` and ``rowspan`` options at the same time, which allows
 you to create any table layout you may wish.
 
 .. _console-modify-rendered-tables:

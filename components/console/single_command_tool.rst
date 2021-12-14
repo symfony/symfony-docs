@@ -5,10 +5,8 @@ Building a single Command Application
 =====================================
 
 When building a command line tool, you may not need to provide several commands.
-In such case, having to pass the command name each time is tedious.
-
-Fortunately, it is possible to remove this need by declaring a single command
-application::
+In such a case, having to pass the command name each time is tedious. Fortunately,
+it is possible to remove this need by declaring a single command application::
 
     #!/usr/bin/env php
     <?php
