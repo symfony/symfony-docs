@@ -223,7 +223,7 @@ unique approach for migration. This guide shows two examples of commonly used
 approaches, which you can use as a base for your own approach:
 
 * `Front Controller with Legacy Bridge`_, which leaves the legacy application
-  untouched and allows to migrate it in phases to the Symfony application.
+  untouched and allows migrating it in phases to the Symfony application.
 * `Legacy Route Loader`_, where the legacy application is integrated in phases
   into Symfony, with a fully integrated final result.
 
