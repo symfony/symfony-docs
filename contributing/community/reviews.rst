@@ -109,7 +109,7 @@ to understand the functionality that has been fixed or added and find out
 whether the implementation is complete.
 
 It is okay to do partial reviews! If you do a partial review, comment how far
-you got and leave the PR in "Needs Review" state.
+you got and leave the PR in the "Needs Review" state.
 
 Pick a pull request from the `PRs in need of review`_ and follow these steps:
 
