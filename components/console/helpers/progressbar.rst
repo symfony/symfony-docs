@@ -301,7 +301,7 @@ to display it can be customized::
 
 .. caution::
 
-    For performance reasons, Symfony redraws screen every 100ms. If this is too
+    For performance reasons, Symfony redraws the screen once every 100ms. If this is too
     fast or to slow for your application, use the methods
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws` and
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::maxSecondsBetweenRedraws`::

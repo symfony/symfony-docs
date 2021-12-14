@@ -123,7 +123,7 @@ option is the default one.
 If the user enters an invalid string, an error message is shown and the user
 is asked to provide the answer another time, until they enter a valid string
 or reach the maximum number of attempts. The default value for the maximum number
-of attempts is ``null``, which means infinite number of attempts. You can define
+of attempts is ``null``, which means an infinite number of attempts. You can define
 your own error message using
 :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setErrorMessage`.
 
@@ -367,7 +367,7 @@ was successful.
 You can set the max number of times to ask with the
 :method:`Symfony\\Component\\Console\\Question\\Question::setMaxAttempts` method.
 If you reach this max number it will use the default value. Using ``null`` means
-the amount of attempts is infinite. The user will be asked as long as they provide an
+the number of attempts is infinite. The user will be asked as long as they provide an
 invalid answer and will only be able to proceed if their input is valid.
 
 Validating a Hidden Response
