@@ -79,12 +79,12 @@ That's it! If you are using Symfony web server, try it out by going to: http://l
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works. Remember the two steps
-to creating a page?
+to create a page?
 
 #. *Create a controller and a method*: This is a function where *you* build the page and ultimately
    return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses;
-   
+
 #. *Create a route*: In ``config/routes.yaml``, the route defines the URL to your
    page (``path``) and what ``controller`` to call. You'll learn more about :doc:`routing </routing>`
    in its own section, including how to make *variable* URLs.
@@ -159,7 +159,7 @@ Second, after this package was downloaded, Flex runs a *recipe*, which is a
 set of automated instructions that tell Symfony how to integrate an external
 package. `Flex recipes`_ exist for many packages and have the ability
 to do a lot, like adding configuration files, creating directories, updating ``.gitignore``
-and adding new config to your ``.env`` file. Flex *automates* the installation of
+and adding a new config to your ``.env`` file. Flex *automates* the installation of
 packages so you can get back to coding.
 
 The bin/console Command
