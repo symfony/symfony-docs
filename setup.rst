@@ -117,7 +117,7 @@ to run this command which displays information about the project:
 Running Symfony Applications
 ----------------------------
 
-In production, you should install a webserver like Nginx or Apache and
+In production, you should install a web server like Nginx or Apache and
 :doc:`configure it to run Symfony </setup/web_server_configuration>`. This
 method can also be used if you're not using the Symfony local web server for
 development.
@@ -190,7 +190,7 @@ and enables all the packages needed to use the official Symfony logger.
 
 This is possible because lots of Symfony packages/bundles define **"recipes"**,
 which are a set of automated instructions to install and enable packages into
-Symfony applications. Flex keeps tracks of the recipes it installed in a
+Symfony applications. Flex keeps track of the recipes it installed in a
 ``symfony.lock`` file, which must be committed to your code repository.
 
 Symfony Flex recipes are contributed by the community and they are stored in
