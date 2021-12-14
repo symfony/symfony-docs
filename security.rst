@@ -346,7 +346,7 @@ and ``/_wdt``.
 
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
 it matches *all* URLs). A firewall can have many modes of authentication,
-in other words many ways to ask the question "Who are you?". Often, the
+in other words, it enables many ways to ask the question "Who are you?". Often, the
 user is unknown (i.e. not logged in) when they first visit your website. The
 ``anonymous`` mode, if enabled, is used for these requests.
 
@@ -361,7 +361,7 @@ It means any request can have an anonymous token to access some resource,
 while some actions (i.e. some pages or buttons) can still require specific
 privileges. A user can then access a form login without being authenticated
 as a unique user (otherwise an infinite redirection loop would happen
-asking the user to authenticate while trying to doing so).
+asking the user to authenticate while trying to do so).
 
 You'll learn later how to deny access to certain URLs, controllers, or part of
 templates.
@@ -729,9 +729,11 @@ Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you *only* want to check if a user is logged in (you don't care about roles),
-you have two options. First, if you've given *every* user ``ROLE_USER``, you can
-check for that role. Otherwise, you can use a special "attribute" in place of a
-role::
+you have the following two options.
+
+Firstly, if you've given *every* user ``ROLE_USER``, you can check for that role.
+
+Secondly, you can use a special "attribute" in place of a role::
 
     // ...
 
@@ -1038,8 +1040,8 @@ Frequently Asked Questions
     you authenticate against one firewall, you will *not* be authenticated against
     any other firewalls automatically. Different firewalls are like different security
     systems. To do this you have to explicitly specify the same
-    :ref:`reference-security-firewall-context` for different firewalls. But usually
-    for most applications, having one main firewall is enough.
+    :ref:`reference-security-firewall-context` for different firewalls. However,
+    one main firewall is usually sufficient for the needs of most applications.
 
 **Security doesn't seem to work on my Error Pages**
     As routing is done *before* security, 404 error pages are not covered by
