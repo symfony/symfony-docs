@@ -159,7 +159,7 @@ Array Nodes
 ~~~~~~~~~~~
 
 It is possible to add a deeper level to the hierarchy, by adding an array
-node. The array node itself, may have a pre-defined set of variable nodes::
+node. The array node itself, may have a predefined set of variable nodes::
 
     $rootNode
         ->children()
@@ -197,7 +197,7 @@ above, it is possible to have multiple connection arrays (containing a ``driver`
 ``host``, etc.).
 
 Sometimes, to improve the user experience of your application or bundle, you may
-allow to use a simple string or numeric value where an array value is required.
+allow the use of a simple string or numeric value where an array value is required.
 Use the ``castToArray()`` helper to turn those variables into arrays::
 
     ->arrayNode('hosts')
