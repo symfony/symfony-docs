@@ -358,8 +358,8 @@ methods described in :doc:`/service_container/definitions`.
     method call if some required service is not available.
 
 A common use-case of compiler passes is to search for all service definitions
-that have a certain tag in order to process dynamically plug each into some
-other service. See the section on :ref:`service tags <service-container-compiler-pass-tags>`
+that have a certain tag, in order to dynamically plug each one into other services.
+See the section on :ref:`service tags <service-container-compiler-pass-tags>`
 for an example.
 
 .. _components-di-separate-compiler-passes:
