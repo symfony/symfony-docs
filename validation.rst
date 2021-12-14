@@ -257,7 +257,7 @@ are simple whereas others, like the :doc:`Choice </reference/constraints/Choice>
 constraint, have several configuration options available. Suppose that the
 ``Author`` class has another property called ``genre`` that defines the
 literature genre mostly associated with the author, which can be set to either
-"fiction" or "non-fiction":
+"fiction" or "nonfiction":
 
 .. configuration-block::
 
