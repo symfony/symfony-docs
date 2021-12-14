@@ -583,7 +583,7 @@ URL                       Route          Parameters
     Parameters also support `PCRE Unicode properties`_, which are escape
     sequences that match generic character types. For example, ``\p{Lu}``
     matches any uppercase character in any language, ``\p{Greek}`` matches any
-    Greek character, etc.
+    Greek characters, etc.
 
 .. note::
 
@@ -824,7 +824,7 @@ Parameter Conversion
 
 A common routing need is to convert the value stored in some parameter (e.g. an
 integer acting as the user ID) into another value (e.g. the object that
-represents the user). This feature is called "param converter".
+represents the user). This feature is called a "param converter".
 
 In case you didn't run this command before, run it now to add support for
 annotations and "param converters":
