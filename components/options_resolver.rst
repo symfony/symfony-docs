@@ -434,8 +434,8 @@ if you need to use other options during normalization::
         }
     }
 
-To normalize a new allowed value in sub-classes that are being normalized
-in parent classes use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addNormalizer`.
+To normalize a new allowed value in subclasses that are being normalized
+in parent classes, use :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::addNormalizer` method.
 This way, the ``$value`` argument will receive the previously normalized
 value, otherwise you can prepend the new normalizer by passing ``true`` as
 third argument.
@@ -452,7 +452,7 @@ encryption chosen by the user of the ``Mailer`` class. More precisely, you want
 to set the port to ``465`` if SSL is used and to ``25`` otherwise.
 
 You can implement this feature by passing a closure as the default value of
-the ``port`` option. The closure receives the options as argument. Based on
+the ``port`` option. The closure receives the options as arguments. Based on
 these options, you can return the desired default value::
 
     use Symfony\Component\OptionsResolver\Options;
@@ -484,7 +484,7 @@ these options, you can return the desired default value::
 .. note::
 
     The closure is only executed if the ``port`` option isn't set by the user
-    or overwritten in a sub-class.
+    or overwritten in a subclass.
 
 A previously set default value can be accessed by adding a second argument to
 the closure::

@@ -118,7 +118,7 @@ any other methods::
 Instances of ``ArrayObject``, ``ArrayIterator`` and ``SplObjectHash`` can be
 created by using the special ``"\0"`` property name to define their internal value::
 
-    // Creates an SplObjectHash where $info1 is associated to $object1, etc.
+    // Creates an SplObjectHash where $info1 is associated with $object1, etc.
     $theObject = Instantiator::instantiate(SplObjectStorage::class, [
         "\0" => [$object1, $info1, $object2, $info2...],
     ]);
