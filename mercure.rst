@@ -27,7 +27,7 @@ out of the box in most modern browsers (old versions of Edge and IE require
 languages.
 
 Mercure comes with an authorization mechanism,
-automatic re-connection in case of network issues
+automatic reconnection in case of network issues
 with retrieving of lost updates, a presence API,
 "connection-less" push for smartphones and auto-discoverability (a supported
 client can automatically discover and subscribe to updates of a given resource
@@ -84,7 +84,7 @@ and a managed, High Availability Hub are also provided.
 Configuration
 -------------
 
-The preferred way to configure the MercureBundle is using
+The preferred way to configure MercureBundle is using
 :doc:`environment variables </configuration>`.
 
 When MercureBundle has been installed, the ``.env`` file of your project
@@ -97,7 +97,7 @@ and you can skip straight to the next section.
 Otherwise, set the URL of your hub as the value of the ``MERCURE_URL``
 and ``MERCURE_PUBLIC_URL`` env vars.
 Sometimes a different URL must be called by the Symfony app (usually to publish),
-and the JavaScript client (usually to subscrribe). It's especially common when
+and the JavaScript client (usually to subscribe). It's especially common when
 the Symfony app must use a local URL and the client-side JavaScript code a public one.
 In this case, ``MERCURE_URL`` must contain the local URL that will be used by the
 Symfony app (e.g. ``https://mercure/.well-known/mercure``), and ``MERCURE_PUBLIC_URL``
@@ -297,7 +297,7 @@ and to subscribe to it:
 Authorization
 -------------
 
-Mercure also allows to dispatch updates only to authorized clients.
+Mercure also allows dispatching updates only to authorized clients.
 To do so, mark the update as **private** by setting the third parameter
 of the ``Update`` constructor to ``true``::
 
@@ -348,7 +348,7 @@ is the way to go.
 .. tip::
 
     The native implementation of EventSource doesn't allow specifying headers.
-    For example, authorization using Bearer token. In order to achieve that, use `a polyfill`_
+    For example, authorization using a Bearer token. In order to achieve that, use `a polyfill`_
 
     .. code-block:: javascript
 
@@ -559,7 +559,7 @@ its Mercure support.
 Testing
 --------
 
-During unit testing there is not need to send updates to Mercure.
+During unit testing there is no need to send updates to Mercure.
 
 You can instead make use of the `MockHub`::
 
