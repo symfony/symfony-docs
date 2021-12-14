@@ -25,7 +25,7 @@ Creating a Message & Handler
 Messenger centers around two different classes that you'll create: (1) a message
 class that holds data and (2) a handler(s) class that will be called when that
 message is dispatched. The handler class will read the message class and perform
-some task.
+one or more tasks.
 
 There are no specific requirements for a message class, except that it can be
 serialized::
@@ -488,8 +488,8 @@ On production, there are a few important things to think about:
 **Restart Workers on Deploy**
     Each time you deploy, you'll need to restart all your worker processes so
     that they see the newly deployed code. To do this, run ``messenger:stop-workers``
-    on deploy. This will signal to each worker that it should finish the message
-    it's currently handling and shut down gracefully. Then, Supervisor will create
+    on deployment. This will signal to each worker that it should finish the message
+    it's currently handling and should shut down gracefully. Then, Supervisor will create
     new worker processes. The command uses the :ref:`app <cache-configuration-with-frameworkbundle>`
     cache internally - so make sure this is configured to use an adapter you like.
 
@@ -658,7 +658,7 @@ Graceful Shutdown
 
 If you install the `PCNTL`_ PHP extension in your project, workers will handle
 the ``SIGTERM`` POSIX signal to finish processing their current message before
-exiting.
+terminating.
 
 In some cases the ``SIGTERM`` signal is sent by Supervisor itself (e.g. stopping
 a Docker container having Supervisor as its entrypoint). In these cases you
@@ -879,7 +879,7 @@ To use Symfony's built-in AMQP transport, you need the AMQP PHP extension.
     may not work correctly (like delayed queues).
 
 The transport has a number of other options, including ways to configure
-the exchange, queues binding keys and more. See the documentation on
+the exchange, queues, binding keys and more. See the documentation on
 :class:`Symfony\\Component\\Messenger\\Transport\\AmqpExt\\Connection`.
 
 You can also configure AMQP-specific settings on your message by adding
@@ -1037,7 +1037,7 @@ auto_setup          Whether the table should be created
 
     The datetime property of the messages stored in the database uses the
     timezone of the current system. This may cause issues if multiple machines
-    with different timezone configuration use the same storage.
+    with different timezone configurations use the same storage.
 
 Redis Transport
 ~~~~~~~~~~~~~~~
@@ -1647,7 +1647,7 @@ Middleware for Doctrine
 
 .. versionadded:: 1.11
 
-    The following Doctrine middleware were introduced in DoctrineBundle 1.11.
+    The following Doctrine middleware was introduced in DoctrineBundle 1.11.
 
 If you use Doctrine in your app, a number of optional middleware exist that you
 may want to use:
