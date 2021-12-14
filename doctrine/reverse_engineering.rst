@@ -5,7 +5,7 @@ How to Generate Entities from an Existing Database
 ==================================================
 
 When starting work on a brand new project that uses a database, two different
-situations comes naturally. In most cases, the database model is designed
+situations can occur. In most cases, the database model is designed
 and built from scratch. Sometimes, however, you'll start with an existing and
 probably unchangeable database model. Fortunately, Doctrine comes with a bunch
 of tools to help generate model classes from your existing database.
@@ -47,7 +47,7 @@ to a post record thanks to a foreign key constraint.
     ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 Before diving into the recipe, be sure your database connection parameters are
-correctly setup in the ``.env`` file (or ``.env.local`` override file).
+correctly set up in the ``.env`` file (or ``.env.local`` override file).
 
 The first step towards building entity classes from an existing database
 is to ask Doctrine to introspect the database and generate the corresponding

@@ -4,7 +4,7 @@
 How to Dynamically Modify Forms Using Form Events
 =================================================
 
-Often times, a form can't be created statically. In this article, you'll learn
+Oftentimes, a form can't be created statically. In this article, you'll learn
 how to customize your form based on three common use-cases:
 
 1) :ref:`Customizing your Form Based on the Underlying Data <form-events-underlying-data>`
@@ -506,8 +506,8 @@ exactly the same things on a given form.
 
 .. tip::
 
-    The ``FormEvents::POST_SUBMIT`` event does not allow to modify the form
-    the listener is bound to, but it allows to modify its parent.
+    The ``FormEvents::POST_SUBMIT`` event does not allow modifications to the form
+    the listener is bound to, but it allows modifications to its parent.
 
 One piece that is still missing is the client-side updating of your form after
 the sport is selected. This should be handled by making an AJAX call back to

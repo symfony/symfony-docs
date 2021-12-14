@@ -27,7 +27,7 @@ out of the box in most modern browsers (old versions of Edge and IE require
 languages.
 
 Mercure comes with an authorization mechanism,
-automatic re-connection in case of network issues
+automatic reconnection in case of network issues
 with retrieving of lost updates, a presence API,
 "connection-less" push for smartphones and auto-discoverability (a supported
 client can automatically discover and subscribe to updates of a given resource
@@ -89,7 +89,7 @@ definition that provides a Mercure service. Run ``docker-compose up`` to start i
 Configuration
 -------------
 
-The preferred way to configure the MercureBundle is using
+The preferred way to configure MercureBundle is using
 :doc:`environment variables </configuration>`.
 
 When MercureBundle has been installed, the ``.env`` file of your project
@@ -435,7 +435,7 @@ is the way to go.
 .. tip::
 
     The native implementation of EventSource doesn't allow specifying headers.
-    For example, authorization using Bearer token. In order to achieve that, use `a polyfill`_
+    For example, authorization using a Bearer token. In order to achieve that, use `a polyfill`_
 
     .. code-block:: twig
 
@@ -595,7 +595,7 @@ its Mercure support.
 Testing
 --------
 
-During unit testing there is not need to send updates to Mercure.
+During unit testing there is no need to send updates to Mercure.
 
 You can instead make use of the `MockHub`::
 
