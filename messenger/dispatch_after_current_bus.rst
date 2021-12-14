@@ -126,7 +126,7 @@ will not be rolled back.
     If ``WhenUserRegisteredThenSendWelcomeEmail`` throws an exception, that
     exception will be wrapped into a ``DelayedMessageHandlingException``. Using
     ``DelayedMessageHandlingException::getExceptions`` will give you all
-    exceptions that are thrown while handing a message with the
+    exceptions that are thrown while handling a message with the
     ``DispatchAfterCurrentBusStamp``.
 
 The ``dispatch_after_current_bus`` middleware is enabled by default. If you're
