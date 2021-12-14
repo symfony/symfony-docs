@@ -31,7 +31,7 @@ provider for WSSE authentication. The security protocol for WSSE provides
 several security benefits:
 
 #. Username / Password encryption
-#. Safe guarding against replay attacks
+#. Safeguarding against replay attacks
 #. No web server configuration required
 
 WSSE is very useful for the securing of web services, may they be SOAP or
@@ -147,7 +147,7 @@ set an authenticated token in the token storage if successful::
             } catch (AuthenticationException $failed) {
                 // ... you might log something here
 
-                // To deny the authentication clear the token. This will redirect to the login page.
+                // To deny the authentication, clear the token. This will redirect to the login page.
                 // Make sure to only clear your token, not those of other authentication listeners.
                 // $token = $this->tokenStorage->getToken();
                 // if ($token instanceof WsseUserToken && $this->providerKey === $token->getProviderKey()) {
@@ -372,8 +372,8 @@ a firewall in your security configuration.
     You may be wondering "why do you need a special factory class to add listeners
     and providers to the dependency injection container?". This is a very
     good question. The reason is you can use your firewall multiple times,
-    to secure multiple parts of your application. Because of this, each
-    time your firewall is used, a new service is created in the DI container.
+    to secure multiple parts of your application. Because of this, when
+    your firewall is used, a new service is created in the DI container.
     The factory is what creates these new services.
 
 Configuration

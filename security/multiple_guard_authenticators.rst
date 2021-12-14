@@ -13,7 +13,7 @@ Multiple Authenticators with Shared Entry Point
 Sometimes you want to offer your users different authentication mechanisms like
 a form login and a Facebook login while both entry points redirect the user to
 the same login page.
-However, in your configuration you have to explicitly say which entry point
+However, in your configuration you have to explicitly specify which entry point
 you want to use.
 
 This is how your security configuration can look in action:
@@ -85,7 +85,7 @@ Multiple Authenticators with Separate Entry Points
 
 However, there are use cases where you have authenticators that protect different
 parts of your application. For example, you have a login form that protects
-the secured area of your application front-end and API end points that are
+the secured area of your application front-end and API endpoints that are
 protected with API tokens. As you can only configure one entry point per firewall,
 the solution is to split the configuration into two separate firewalls:
 
