@@ -418,7 +418,7 @@ How to Spool Emails
 The default behavior of the Symfony mailer is to send the email messages
 immediately. You may, however, want to avoid the performance hit of the
 communication to the email server, which could cause the user to wait for the
-next page to load while the email is sending. This can be avoided by choosing to
+next page to load while the email is being sent. This can be avoided by choosing to
 "spool" the emails instead of sending them directly.
 
 This makes the mailer to not attempt to send the email message but instead save
