@@ -5,7 +5,7 @@ Summarized, Encore generates the Webpack configuration that's used in your
 ``webpack.config.js`` file. Encore doesn't support adding all of Webpack's
 `configuration options`_, because many can be added on your own.
 
-For example, suppose you need to resolve automatically a new extension.
+For example, suppose you need to automatically resolve a new extension.
 To do that, modify the config after fetching it from Encore:
 
 .. code-block:: javascript
