@@ -158,7 +158,7 @@ added a submit button with a custom label for submitting the form to the server.
 Creating Form Classes
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony recommends to put as little logic as possible in controllers. That's why
+Symfony recommends putting as little logic as possible in controllers. That's why
 it's better to move complex forms to dedicated classes instead of defining them
 in controller actions. Besides, forms defined in classes can be reused in
 multiple actions and services.
@@ -385,7 +385,7 @@ written into the form object::
     {
         public function new(Request $request): Response
         {
-            // just setup a fresh $task object (remove the example data)
+            // just set up a fresh $task object (remove the example data)
             $task = new Task();
 
             $form = $this->createForm(TaskType::class, $task);
@@ -665,7 +665,7 @@ The ``required`` Option
 
 The most common option is the ``required`` option, which can be applied to any
 field. By default, this option is set to ``true``, meaning that HTML5-ready
-browsers will require to fill in all fields before submitting the form.
+browsers will require you to fill in all fields before submitting the form.
 
 If you don't want this behavior, either
 :ref:`disable client-side validation <forms-html5-validation-disable>` for the
