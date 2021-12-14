@@ -299,7 +299,7 @@ config.
     *exactly* like an array, but has some added flexibility. Just imagine that
     it is an ``array`` and you'll be in good shape.
 
-Your database is setup! Now, run the migrations like normal:
+Your database is set up! Now, run the migrations like normal:
 
 .. code-block:: terminal
 
