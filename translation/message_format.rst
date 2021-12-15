@@ -9,7 +9,7 @@ How to Translate Messages using the ICU MessageFormat
    Support for ICU MessageFormat was introduced in Symfony 4.2.
 
 Messages (i.e. strings) in applications are almost never completely static.
-They contain variables or other complex logic like pluralization. In order to
+They contain variables or other complex logic like pluralization. To
 handle this, the Translator component supports the `ICU MessageFormat`_ syntax.
 
 .. tip::
@@ -92,7 +92,7 @@ Selecting Different Messages Based on a Condition
 
 The curly brace syntax allows to "modify" the output of the variable. One of
 these functions is the ``select`` function. It acts like PHP's `switch statement`_
-and allows to use different strings based on the value of the variable. A
+and allows you to use different strings based on the value of the variable. A
 typical usage of this is gender:
 
 .. configuration-block::
@@ -104,9 +104,9 @@ typical usage of this is gender:
         # the 'other' key is required, and is selected if no other case matches
         invitation_title: >-
             {organizer_gender, select,
-                female {{organizer_name} has invited you for her party!}
-                male   {{organizer_name} has invited you for his party!}
-                other  {{organizer_name} have invited you for their party!}
+                female {{organizer_name} has invited you to her party!}
+                male   {{organizer_name} has invited you to his party!}
+                other  {{organizer_name} have invited you to their party!}
             }
 
     .. code-block:: xml
@@ -120,9 +120,9 @@ typical usage of this is gender:
                         <source>invitation_title</source>
                         <!-- the 'other' key is required, and is selected if no other case matches -->
                         <target>{organizer_gender, select,
-                            female {{organizer_name} has invited you for her party!}
-                            male {{organizer_name} has invited you for his party!}
-                            other {{organizer_name} have invited you for their party!}
+                            female {{organizer_name} has invited you to her party!}
+                            male {{organizer_name} has invited you to his party!}
+                            other {{organizer_name} have invited you to their party!}
                         }</target>
                     </trans-unit>
                 </body>
@@ -135,9 +135,9 @@ typical usage of this is gender:
         return [
             // the 'other' key is required, and is selected if no other case matches
             'invitation_title' => '{organizer_gender, select,
-                female {{organizer_name} has invited you for her party!}
-                male   {{organizer_name} has invited you for his party!}
-                other  {{organizer_name} have invited you for their party!}
+                female {{organizer_name} has invited you to her party!}
+                male   {{organizer_name} has invited you to his party!}
+                other  {{organizer_name} have invited you to their party!}
             }',
         ];
 
@@ -147,13 +147,13 @@ later, ``function_statement`` is optional for some functions). In this case,
 the function name is ``select`` and its statement contains the "cases" of this
 select. This function is applied over the ``organizer_gender`` variable::
 
-    // prints "Ryan has invited you for his party!"
+    // prints "Ryan has invited you to his party!"
     echo $translator->trans('invitation_title', [
         'organizer_name' => 'Ryan',
         'organizer_gender' => 'male',
     ]);
 
-    // prints "John & Jane have invited you for their party!"
+    // prints "John & Jane have invited you to their party!"
     echo $translator->trans('invitation_title', [
         'organizer_name' => 'John & Jane',
         'organizer_gender' => 'not_applicable',
@@ -164,10 +164,10 @@ you to use literal text in the select statements:
 
 #. The first ``{organizer_gender, select, ...}`` block starts the "code" mode,
    which means ``organizer_gender`` is processed as a variable.
-#. The inner ``{... has invited you for her party!}`` block brings you back in
+#. The inner ``{... has invited you to her party!}`` block brings you back in
    "literal" mode, meaning the text is not processed.
 #. Inside this block, ``{organizer_name}`` starts "code" mode again, allowing
-   ``organizer_name`` to be processed as variable.
+   ``organizer_name`` to be processed as a variable.
 
 .. tip::
 
@@ -225,7 +225,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
 Pluralization rules are actually quite complex and differ for each language.
 For instance, Russian uses different plural forms for numbers ending with 1;
 numbers ending with 2, 3 or 4; numbers ending with 5, 6, 7, 8 or 9; and even
-some exceptions of this!
+some exceptions to this!
 
 In order to properly translate this, the possible cases in the ``plural``
 function are also different for each language. For instance, Russian has
@@ -279,7 +279,7 @@ Usage of this string is the same as with variables and select::
 .. sidebar:: Using Ranges in Messages
 
     The pluralization in the legacy Symfony syntax could be used with custom
-    ranges (e.g. have a different messages for 0-12, 12-40 and 40+). The ICU
+    ranges (e.g. have different messages for 0-12, 12-40 and 40+). The ICU
     message format does not have this feature. Instead, this logic should be
     moved to PHP code::
 
