@@ -186,7 +186,7 @@ If there is *not* a service whose id exactly matches the type, a clear exception
 will be thrown.
 
 Autowiring is a great way to automate configuration, and Symfony tries to be as
-*predictable* and clear as possible.
+*predictable* and as clear as possible.
 
 .. _service-autowiring-alias:
 

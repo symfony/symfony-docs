@@ -89,7 +89,7 @@ configuration of PHP, your session cookie has the name ``PHPSESSID``:
                 set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
 
                 if (req.http.Cookie == "") {
-                    // If there are no more cookies, remove the header to get page cached.
+                    // If there are no more cookies, remove the header to get the page cached.
                     unset req.http.Cookie;
                 }
             }

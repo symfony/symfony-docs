@@ -5,7 +5,7 @@ ElasticsearchLogstashHandler
 ----------------------------
 
 This handler deals directly with the HTTP interface of Elasticsearch. This means
-it will slow down your application if Elasticsearch takes times to answer. Even
+it will slow down your application if Elasticsearch takes time to answer. Even
 if all HTTP calls are done asynchronously.
 
 In a development environment, it's fine to keep the default configuration: for
