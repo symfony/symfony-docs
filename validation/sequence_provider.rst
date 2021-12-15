@@ -288,7 +288,7 @@ method, which should return an array of groups to use::
         public function getGroupSequence()
         {
             // when returning a simple array, if there's a violation in any group
-            // the rest of groups are not validated. E.g. if 'User' fails,
+            // the rest of the groups are not validated. E.g. if 'User' fails,
             // 'Premium' and 'Api' are not validated:
             return ['User', 'Premium', 'Api'];
 
