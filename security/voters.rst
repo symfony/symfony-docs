@@ -28,7 +28,7 @@ example for voters.
 
     Take a look at the
     :doc:`authorization </components/security/authorization>`
-    article for an even deeper understanding on voters.
+    article for an even deeper understanding of voters.
 
 Here's how Symfony works with voters:
 All voters are called each time you use the ``isGranted()`` method on Symfony's

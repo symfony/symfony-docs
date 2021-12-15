@@ -29,7 +29,7 @@ are included in your ``composer.json`` file:
         "symfony/yaml": "^4.1"
     }
 
-This makes Symfony different than any other PHP framework! Instead of starting with
+This makes Symfony different from any other PHP framework! Instead of starting with
 a *bulky* app with *every* possible feature you might ever need, a Symfony app is
 small, simple and *fast*. And you're in total control of what you add.
 
@@ -253,7 +253,7 @@ Not convinced yet? No problem: remove the library:
 
     $ composer remove api
 
-Flex will *uninstall* the recipes: removing files and un-doing changes to put your
+Flex will *uninstall* the recipes: removing files and undoing changes to put your
 app back in its original state. Experiment without worry.
 
 More Features, Architecture and Speed

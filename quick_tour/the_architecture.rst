@@ -287,8 +287,7 @@ Environment Variables
 ---------------------
 
 Every app contains configuration that's different on each server - like database
-connection information or passwords. How should these be stored? In files? Or some
-other way?
+connection information or passwords. How should these be stored? In files? Or another way?
 
 Symfony follows the industry best practice by storing server-based configuration
 as *environment* variables. This means that Symfony works *perfectly* with
