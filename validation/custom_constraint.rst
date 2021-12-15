@@ -29,8 +29,8 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
 
 .. note::
 
-    The ``@Annotation`` annotation is necessary for this new constraint in
-    order to make it available for use in classes via annotations.
+    The ``@Annotation`` annotation is necessary for this new constraint
+    to make it available for use in classes via annotations.
     Options for your constraint are represented as public properties on the
     constraint class.
 
@@ -217,8 +217,8 @@ With this, the validator's ``validate()`` method gets an object as its first arg
 
 .. tip::
 
-    The ``atPath()`` method defines the property which the validation error is
-    associated to. Use any :doc:`valid PropertyAccess syntax </components/property_access>`
+    The ``atPath()`` method defines the property with which the validation error is
+    associated. Use any :doc:`valid PropertyAccess syntax </components/property_access>`
     to define that property.
 
 A class constraint validator is applied to the class itself, and
