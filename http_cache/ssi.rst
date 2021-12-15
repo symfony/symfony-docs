@@ -33,7 +33,7 @@ Symfony manages only the ``#include virtual`` one.
 
 .. caution::
 
-    Be careful with SSI, your website may be victim of injections.
+    Be careful with SSI, your website may fall victim to injections.
     Please read this `OWASP article`_ first!
 
 When the web server reads an SSI directive, it requests the given URI or gives

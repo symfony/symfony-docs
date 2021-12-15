@@ -227,7 +227,7 @@ Debugging the Buses
 -------------------
 
 The ``debug:messenger`` command lists available messages & handlers per bus.
-You can also restrict the list to a specific bus by providing its name as argument.
+You can also restrict the list to a specific bus by providing its name as an argument.
 
 .. code-block:: terminal
 

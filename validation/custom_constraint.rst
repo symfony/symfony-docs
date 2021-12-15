@@ -103,7 +103,7 @@ The validator class only has one required method ``validate()``::
                 // separate multiple types using pipes
                 // throw new UnexpectedValueException($value, 'string|int');
             }
-            
+
             // access your configuration options like this:
             if ('strict' === $constraint->mode) {
                 // ...
@@ -266,8 +266,8 @@ With this, the validator's ``validate()`` method gets an object as its first arg
 
 .. tip::
 
-    The ``atPath()`` method defines the property which the validation error is
-    associated to. Use any :doc:`valid PropertyAccess syntax </components/property_access>`
+    The ``atPath()`` method defines the property with which the validation error is
+    associated. Use any :doc:`valid PropertyAccess syntax </components/property_access>`
     to define that property.
 
 A class constraint validator is applied to the class itself, and

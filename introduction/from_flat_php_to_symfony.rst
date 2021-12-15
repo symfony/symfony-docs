@@ -402,7 +402,7 @@ have *many* controller functions: one for each page.
 
 By now, the application has evolved from a single PHP file into a structure
 that is organized and allows for code reuse. You should be happier, but far
-from satisfied. For example, the routing system is fickle, and wouldn't
+from being satisfied. For example, the routing system is fickle, and wouldn't
 recognize that the list page - ``/index.php``  - should be accessible also via ``/``
 (if Apache rewrite rules were added). Also, instead of developing the blog,
 a lot of time is being spent working on the "architecture" of the code (e.g.

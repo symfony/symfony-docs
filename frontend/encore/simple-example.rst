@@ -282,7 +282,7 @@ file to ``app.scss`` and update the ``import`` statement:
     - import './styles/app.css';
     + import './styles/app.scss';
 
-Then, tell Encore to enable the Sass pre-processor:
+Then, tell Encore to enable the Sass preprocessor:
 
 .. code-block:: diff
 
