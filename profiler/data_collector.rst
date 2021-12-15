@@ -92,7 +92,7 @@ Enabling Custom Data Collectors
 
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
 with ``autoconfigure``, then Symfony will automatically see your new data collector!
-Your ``collect()`` method should be called next time your refresh.
+Your ``collect()`` method should be called the next time you refresh.
 
 If you're not using ``autoconfigure``, you can also :ref:`manually wire your service <services-explicitly-configure-wire-services>`
 and :doc:`tag </service_container/tags>` it with ``data_collector``.
