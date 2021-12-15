@@ -463,7 +463,7 @@ deal with this low level session variable. However, the
 can be used to read (like in the example above) or set this value manually.
 
 When the user tries to access a restricted page, they are being redirected to
-the login page. At that point target path will be set. After a successful login,
+the login page. At that point the target path will be set. After a successful login,
 the user will be redirected to this previously set target path.
 
 If you also want to apply this behavior to public pages, you can create an

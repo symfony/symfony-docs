@@ -135,7 +135,7 @@ password should be stored:
 * :ref:`When using Doctrine's entity user provider <upgrade-the-password-doctrine>`
 * :ref:`When using a custom user provider <upgrade-the-password-custom-provider>`
 
-After this, you're done and passwords are always hashed as secure as possible!
+After this, you're done and passwords are always hashed as securely as possible!
 
 .. _provide-the-password-guard:
 
