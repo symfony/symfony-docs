@@ -24,7 +24,7 @@ When all routes are known during deploy time and the number is not too
 high, using a :doc:`custom route loader <custom_route_loader>` is the
 preferred way to add more routes. When working with only one type of
 objects, a slug parameter on the object and the ``@ParamConverter``
-annotation work fine (see `FrameworkExtraBundle`_) .
+annotation works fine (see `FrameworkExtraBundle`_) .
 
 The ``DynamicRouter`` is useful when you need ``Route`` objects with
 the full feature set of Symfony. Each route can define a specific
