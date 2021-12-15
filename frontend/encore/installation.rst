@@ -168,7 +168,7 @@ And the new ``assets/css/app.css`` file:
         background-color: lightgray;
     }
 
-You'll customize and learn more about these file in :doc:`/frontend/encore/simple-example`.
+You'll customize and learn more about these files in :doc:`/frontend/encore/simple-example`.
 
 .. caution::
 

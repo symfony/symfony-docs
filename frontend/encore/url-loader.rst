@@ -33,7 +33,7 @@ Then enable it in your ``webpack.config.js``:
 
 The ``limit`` option defines the maximum size in bytes of the inlined files. In
 the previous example, font and image files having a size below or equal to 4 KB
-will be inlined and the rest of files will be processed as usual.
+will be inlined and the rest of the files will be processed as usual.
 
 You can also use all the other options supported by the `URL Loader`_. If you
 want to disable this loader for either images or fonts, remove the corresponding
