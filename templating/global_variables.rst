@@ -4,7 +4,7 @@
 How to Inject Variables Automatically into all Templates
 ========================================================
 
-Twig allows to inject automatically one or more variables into all templates.
+Twig allows you to automatically inject one or more variables into all templates.
 These global variables are defined in the ``twig.globals`` option inside the
 main Twig configuration file:
 

@@ -163,7 +163,7 @@ With this configuration, there are three validation groups:
 
 ``registration``
     This is a custom validation group, so it only contains the constraints
-    explicitly associated to it. In this example, only the ``email`` and
+    that are explicitly associated with it. In this example, only the ``email`` and
     ``password`` fields.
 
 Constraints in the ``Default`` group of a class are the constraints that have
