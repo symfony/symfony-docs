@@ -4,7 +4,7 @@
 Upgrading a Third-Party Bundle for a Major Symfony Version
 ==========================================================
 
-Symfony 3 was released on November 2015. Although this version doesn't contain
+Symfony 3 was released in November 2015. Although this version doesn't contain
 any new features, it removes all the backward compatibility layers included in
 the previous 2.8 version. If your bundle uses any deprecated feature and it's
 published as a third-party bundle, applications upgrading to Symfony 3 will no
@@ -26,8 +26,8 @@ Most third-party bundles define their Symfony dependencies using the ``~2.N`` or
         }
     }
 
-These constraints prevent the bundle from using Symfony 3 components, so it makes
-it impossible to install it in a Symfony 3 based application. Thanks to the
+These constraints prevent the bundle from using Symfony 3 components, which
+means the bundle cannot be installed in a Symfony 3 based application. Thanks to the
 flexibility of Composer dependencies constraints, you can specify more than one
 major version by replacing ``~2.N`` by ``~2.N|~3.0`` (or ``^2.N`` by ``^2.N|~3.0``).
 
