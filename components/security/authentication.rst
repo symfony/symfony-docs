@@ -322,7 +322,7 @@ The ``security.switch_user`` event is triggered every time you activate
 the ``switch_user`` firewall listener.
 
 The ``Symfony\Component\Security\Http\Event\DeauthenticatedEvent`` event is triggered when a token has been deauthenticated
-because of a user change, it can help you doing some clean-up task.
+because of a user change. It can help you perform clean-up tasks.
 
 .. seealso::
 
