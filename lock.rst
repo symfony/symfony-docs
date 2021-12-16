@@ -8,7 +8,7 @@ When a program runs concurrently, some part of code which modify shared
 resources should not be accessed by multiple processes at the same time.
 Symfony's :doc:`Lock component </components/lock>` provides a locking mechanism to ensure
 that only one process is running the critical section of code at any point of
-time to prevent race condition from happening.
+time to prevent race conditions from happening.
 
 The following example shows a typical usage of the lock::
 
@@ -189,7 +189,7 @@ Locking a Dynamic Resource
 --------------------------
 
 Sometimes the application is able to cut the resource into small pieces in order
-to lock a small subset of process and let other through. The previous example
+to lock a small subset of processes and let others through. The previous example
 showed how to lock the ``$pdf->getOrCreatePdf('terms-of-use')`` for everybody,
 now let's see how to lock ``$pdf->getOrCreatePdf($version)`` only for
 processes asking for the same ``$version``::
