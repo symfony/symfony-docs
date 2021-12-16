@@ -52,6 +52,9 @@ Take the following ``access_control`` entries as an example:
                 - { path: '^/admin', roles: ROLE_USER_IP, ips: '%env(TRUSTED_IPS)%' }
                 - { path: '^/admin', roles: ROLE_USER_IP, ips: [127.0.0.1, ::1, '%env(TRUSTED_IPS)%'] }
 
+                # Request matchers can be used to define access control rules
+                - { roles: ROLE_USER, request_matcher: App\Security\RequestMatcher\MyRequestMatcher }
+
     .. code-block:: xml
 
         <!-- config/packages/security.xml -->
@@ -82,6 +85,9 @@ Take the following ``access_control`` entries as an example:
                     <ip>::1</ip>
                     <ip>%env(TRUSTED_IPS)%</ip>
                 </rule>
+
+                <!-- Request matchers can be used to define access control rules -->
+                <rule role="ROLE_USER" request-matcher="App\Security\RequestMatcher\MyRequestMatcher"/>
             </config>
         </srv:container>
 
@@ -127,7 +133,17 @@ Take the following ``access_control`` entries as an example:
                 ->roles(['ROLE_USER_IP'])
                 ->ips(['127.0.0.1', '::1', '%env(TRUSTED_IPS)%'])
             ;
+
+            // Request matchers can be used to define access control rules
+            $security->accessControl()
+                ->roles(['ROLE_USER'])
+                ->requestMatcher('App\Security\RequestMatcher\MyRequestMatcher')
+            ;
         };
+
+.. versionadded:: 6.1
+
+    Support for access control rule definition based on a RequestMatcher was introduced in Symfony 6.1.
 
 For each incoming request, Symfony will decide which ``access_control``
 to use based on the URI, the client's IP address, the incoming host name,

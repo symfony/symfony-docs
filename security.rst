@@ -2119,6 +2119,12 @@ would match ``/admin/foo`` but would also match URLs like ``/foo/admin``.
 
 Each ``access_control`` can also match on IP address, hostname and HTTP methods.
 It can also be used to redirect a user to the ``https`` version of a URL pattern.
+
+.. versionadded:: 6.1
+
+    Since Symfony 6.1, an access control rule can also be directly configured by passing a service
+    implementing `RequestMatcherInterface` through the `request_matcher` option.
+
 See :doc:`/security/access_control`.
 
 .. _security-securing-controller:
