@@ -165,7 +165,7 @@ defined.
     If you want to override the ``monolog`` configuration via another config
     file, you will need to redefine the entire ``handlers`` stack. The configuration
     from the two files cannot be merged because the order matters and a merge does
-    not allow to control the order.
+    not allow you to control the order.
 
 .. _logging-handler-fingers_crossed:
 

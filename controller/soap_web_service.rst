@@ -95,7 +95,7 @@ buffering the STDOUT and use ``ob_get_clean()`` to dump the echoed output
 into the content of the Response and clear the output buffer. Finally, you're
 ready to return the ``Response``.
 
-Below is an example calling the service using a native `SoapClient`_ client. This example
+Below is an example of calling the service using a native `SoapClient`_ client. This example
 assumes that the ``index()`` method in the controller above is accessible via
 the route ``/soap``::
 

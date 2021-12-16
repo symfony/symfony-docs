@@ -583,8 +583,8 @@ Symfony provides the following env var processors:
             $container->setParameter('private_key', '%env(default:raw_key:file:PRIVATE_KEY)%');
             $container->setParameter('raw_key', '%env(PRIVATE_KEY)%');
 
-    When the fallback parameter is omitted (e.g. ``env(default::API_KEY)``), the
-    value returned is ``null``.
+    When the fallback parameter is omitted (e.g. ``env(default::API_KEY)``), then the
+    returned value is ``null``.
 
 ``env(url:FOO)``
     Parses an absolute URL and returns its components as an associative array.

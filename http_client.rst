@@ -1020,7 +1020,7 @@ response sequentially instead of waiting for the entire response::
     ``php://temp`` stream. You can control this behavior by using the ``buffer``
     option: set it to ``true``/``false`` to enable/disable buffering, or to a
     closure that should return the same based on the response headers it receives
-    as argument.
+    as an argument.
 
 Canceling Responses
 ~~~~~~~~~~~~~~~~~~~
@@ -1190,7 +1190,7 @@ method will yield a special chunk whose ``isTimeout()`` will return ``true``::
 
     foreach ($client->stream($responses, 1.5) as $response => $chunk) {
         if ($chunk->isTimeout()) {
-            // $response staled for more than 1.5 seconds
+            // $response stale for more than 1.5 seconds
         }
     }
 

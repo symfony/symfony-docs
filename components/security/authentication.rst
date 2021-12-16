@@ -299,7 +299,7 @@ Authentication Success and Failure Events
 When a provider authenticates the user, a ``security.authentication.success``
 event is dispatched. But beware - this event may fire, for example, on *every*
 request if you have session-based authentication, if ``always_authenticate_before_granting``
-is enabled or if token is not authenticated before AccessListener is invoked.
+is enabled or if the token is not authenticated before AccessListener is invoked.
 See ``security.interactive_login`` below if you need to do something when a user *actually* logs in.
 
 .. deprecated:: 5.4
@@ -329,7 +329,7 @@ The ``security.switch_user`` event is triggered every time you activate
 the ``switch_user`` firewall listener.
 
 The ``Symfony\Component\Security\Http\Event\DeauthenticatedEvent`` event is triggered when a token has been deauthenticated
-because of a user change, it can help you doing some clean-up task.
+because of a user change. It can help you perform clean-up tasks.
 
 .. seealso::
 
