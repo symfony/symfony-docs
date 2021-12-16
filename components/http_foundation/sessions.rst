@@ -53,7 +53,7 @@ Quick example::
 .. caution::
 
     Symfony sessions are incompatible with ``php.ini`` directive ``session.auto_start = 1``
-    This directive should be turned off in ``php.ini``, in the webserver directives or
+    This directive should be turned off in ``php.ini``, in the web server directives or
     in ``.htaccess``.
 
 Session API
@@ -152,7 +152,7 @@ the following API which is intended mainly for internal purposes:
     Returns the name of the session bag.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::clear`
-    Clears out data from bag.
+    Clears out data from the bag.
 
 .. _attribute-bag-interface:
 
@@ -301,7 +301,7 @@ has the API
     Gets flashes by type (read only).
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peekAll`
-    Gets all flashes (read only) as keyed array of arrays.
+    Gets all flashes (read only) as a keyed array of arrays.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::has`
     Returns true if the type exists, false if not.

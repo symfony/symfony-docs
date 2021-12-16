@@ -135,7 +135,7 @@ should run in "debug mode". Regardless of the
 :ref:`configuration environment <configuration-environments>`, a Symfony
 application can be run with debug mode set to ``true`` or ``false``.
 
-This affects many things in the application, such as displaying stacktraces on
+This affects many things in the application, such as displaying stack traces on
 error pages or if cache files are dynamically rebuilt on each request. Though
 not a requirement, debug mode is generally set to ``true`` for the ``dev`` and
 ``test`` environments and ``false`` for the ``prod`` environment.

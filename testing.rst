@@ -29,7 +29,7 @@ After the library is installed, try running PHPUnit:
 
     $ php ./vendor/bin/phpunit
 
-This commands automatically runs your application's tests. Each test is a
+This command automatically runs your application tests. Each test is a
 PHP class ending with "Test" (e.g. ``BlogControllerTest``) that lives in
 the ``tests/`` directory of your application.
 
@@ -147,7 +147,7 @@ usually defined in the ``KERNEL_CLASS`` environment variable
 
     If your use case is more complex, you can also override the
     ``getKernelClass()`` or ``createKernel()`` methods of your functional
-    test, which take precedence over the ``KERNEL_CLASS`` env var.
+    test, which takes precedence over the ``KERNEL_CLASS`` env var.
 
 Set-up your Test Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -378,7 +378,7 @@ generate an empty fixture class:
     The class name of the fixtures to create (e.g. AppFixtures):
     > ProductFixture
 
-Then you modify use this class to load new entities in the database. For
+Then you modify and use this class to load new entities in the database. For
 instance, to load ``Product`` objects into Doctrine, use::
 
     // src/DataFixtures/ProductFixture.php
@@ -911,7 +911,7 @@ Request Assertions
     Asserts the given :ref:`request attribute <component-foundation-attributes>`
     is set to the expected value.
 ``assertRouteSame($expectedRoute, array $parameters = [], string $message = '')``
-    Asserts the request matched the given route and optionally route parameters.
+    Asserts the request matches the given route and optionally route parameters.
 
 Browser Assertions
 ..................
@@ -974,7 +974,7 @@ Mailer Assertions
 ``assertEmailAttachmentCount(RawMessage $email, int $count, string $message = '')``
     Asserts that the given email has the expected number of attachments. Use
     ``getMailerMessage(int $index = 0, string $transport = null)`` to
-    retrievea specific email by index.
+    retrieve a specific email by index.
 ``assertEmailTextBodyContains(RawMessage $email, string $text, string $message = '')``/``assertEmailTextBodyNotContains(RawMessage $email, string $text, string $message = '')``
     Asserts that the text body of the given email does (not) contain the
     expected text.
