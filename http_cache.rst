@@ -71,7 +71,7 @@ Symfony Reverse Proxy
 
 Symfony comes with a reverse proxy (i.e. gateway cache) written in PHP.
 :ref:`It's not a fully-featured reverse proxy cache like Varnish <http-cache-symfony-versus-varnish>`,
-but is a great way to start.
+but it is a great way to start.
 
 .. tip::
 

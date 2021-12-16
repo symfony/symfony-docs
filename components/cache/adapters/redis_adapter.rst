@@ -205,7 +205,7 @@ try to add data when no memory is available. An example setting could look as fo
     maxmemory 100mb
     maxmemory-policy allkeys-lru
 
-Read more about this topic in the offical `Redis LRU Cache Documentation`_.
+Read more about this topic in the official `Redis LRU Cache Documentation`_.
 
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`Redis server`: https://redis.io/
