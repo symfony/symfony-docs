@@ -650,7 +650,7 @@ You can instead make use of the `MockHub` class::
         }
     }
 
-During functional testing you can instead create a stub of the Hub::
+For functional testing, you can instead create a stub of the Hub::
 
     // tests/Functional/Stub/HubStub.php
     namespace App\Tests\Functional\Stub;
@@ -679,7 +679,6 @@ sent:
 
 As MercureBundle support multiple hubs, you may have to replace
 the other service definitions accordingly.
-
 
 .. tip::
 
