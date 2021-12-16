@@ -111,8 +111,16 @@ This token must be signed with the same secret key as the one used by the Hub to
 This secret key must be stored in the ``MERCURE_JWT_SECRET`` environment variable.
 MercureBundle will use it to automatically generate and sign the needed JWTs.
 
-If you don't want to use the provided environment variables,
-use the following configuration:
+In addition to these environment variables,
+MercureBundle provides a more advanced configuration configuration:
+
+* ``secret``: the key to use to sign the JWT
+* ``publish``: a list of topics to allow publishing to when generating the JWT
+* ``subscribe``: a list of topics to allow subscribing to when generating the JWT
+* ``algorithm``: The algorithm to use to sign the JWT
+* ``provider``: The ID of a service to call to provide the JWT
+* ``factory``: The ID of a service to call to create the JWT
+* ``value``: the raw JWT to use (all other options will be ignored)
 
 .. configuration-block::
 
@@ -125,6 +133,12 @@ use the following configuration:
                     url: https://mercure-hub.example.com/.well-known/mercure
                     jwt:
                         secret: '!ChangeMe!'
+                        publish: ['foo', 'https://example.com/foo']
+                        subscribe: ['bar', 'https://example.com/bar']
+                        algorithm: 'hmac.sha256'
+                        provider: 'My\Provider'
+                        factory: 'My\Factory'
+                        value: 'my.jwt'
 
     .. code-block:: xml
 
@@ -135,7 +149,18 @@ use the following configuration:
                 name="default"
                 url="https://mercure-hub.example.com/.well-known/mercure"
             >
-                <jwt secret="!ChangeMe!"/>
+                <jwt
+                    secret="!ChangeMe!"
+                    algorithm="hmac.sha256"
+                    provider="My\Provider"
+                    factory="My\Factory"
+                    value="my.jwt"
+                >
+                    <publish>foo</publish>
+                    <publish>https://example.com/foo</publish>
+                    <subscribe>bar</subscribe>
+                    <subscribe>https://example.com/bar</subscribe>
+                </jwt>
             </hub>
         </config>
 
@@ -148,68 +173,32 @@ use the following configuration:
                     'url' => 'https://mercure-hub.example.com/.well-known/mercure',
                     'jwt' => [
                         'secret' => '!ChangeMe!',
+                        'publish' => ['foo', 'https://example.com/foo'],
+                        'subscribe' => ['bar', 'https://example.com/bar'],
+                        'algorithm' => 'hmac.sha256',
+                        'provider' => 'My\Provider',
+                        'factory' => 'My\Factory',
+                        'value' => 'my.jwt',
                     ],
                 ],
             ],
         ]);
-
-Alternatively, it's also possible to pass directly the JWT to use:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/mercure.yaml
-        mercure:
-            hubs:
-                default:
-                    url: https://mercure-hub.example.com/.well-known/mercure
-                    jwt:
-                        value: 'the.JWT'
-
-    .. code-block:: xml
-
-        <!-- config/packages/mercure.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <config>
-            <hub
-                name="default"
-                url="https://mercure-hub.example.com/.well-known/mercure"
-            >
-                <jwt value="the.JWT"/>
-            </hub>
-        </config>
-
-    .. code-block:: php
-
-        // config/packages/mercure.php
-        $container->loadFromExtension('mercure', [
-            'hubs' => [
-                'default' => [
-                    'url' => 'https://mercure-hub.example.com/.well-known/mercure',
-                    'jwt' => [
-                        'value' => 'the.JWT',
-                    ],
-                ],
-            ],
-        ]);
-
-
-The JWT payload must contain at least the following structure to be allowed to
-publish:
-
-.. code-block:: json
-
-    {
-        "mercure": {
-            "publish": []
-        }
-    }
-
-Because the array is empty, the Symfony app will only be authorized to publish
-public updates (see the authorization_ section for further information).
 
 .. tip::
+
+    The JWT payload must contain at least the following structure to be allowed to
+    publish:
+
+    .. code-block:: json
+
+        {
+            "mercure": {
+                "publish": []
+            }
+        }
+
+    Because the array is empty, the Symfony app will only be authorized to publish
+    public updates (see the authorization_ section for further information).
 
     The jwt.io website is a convenient way to create and sign JWTs.
     Checkout this `example JWT`_, that grants publishing rights for all *topics*
@@ -364,7 +353,7 @@ by using the ``AbstractController::addLink`` helper method::
     {
         public function discover(Request $request, Discovery $discovery): JsonResponse
         {
-            // Link: <http://hub.example.com/.well-known/mercure>; rel="mercure"
+            // Link: <https://hub.example.com/.well-known/mercure>; rel="mercure"
             $discovery->addLink($request);
 
             return $this->json([
@@ -380,7 +369,7 @@ and to subscribe to it:
 .. code-block:: javascript
 
     // Fetch the original resource served by the Symfony web API
-    fetch('/books/1') // Has Link: <http://hub.example.com/.well-known/mercure>; rel="mercure"
+    fetch('/books/1') // Has Link: <https://hub.example.com/.well-known/mercure>; rel="mercure"
         .then(response => {
             // Extract the hub URL from the Link header
             const hubUrl = response.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1];
@@ -687,6 +676,10 @@ sent:
     # config/services_test.yaml
     mercure.hub.default:
         class: App\Tests\Functional\Stub\HubStub
+
+As MercureBundle support multiple hubs, you may have to replace
+the other service definitions accordingly.
+
 
 .. tip::
 
