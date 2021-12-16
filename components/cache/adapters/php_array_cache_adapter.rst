@@ -7,7 +7,7 @@ PHP Array Cache Adapter
 
 This adapter is a high performance cache for static data (e.g. application configuration)
 that is optimized and preloaded into OPcache memory storage. It is suited for any data that
-is mostly read-only after warmup::
+is mostly read-only after warm-up::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Component\Cache\Adapter\PhpArrayAdapter;
@@ -23,7 +23,7 @@ is mostly read-only after warmup::
         $cache = new PhpArrayAdapter(
             // single file where values are cached
             __DIR__ . '/somefile.cache',
-            // a backup adapter, if you set values after warmup
+            // a backup adapter, if you set values after warm-up
             new FilesystemAdapter()
         );
         $cache->warmUp($values);
