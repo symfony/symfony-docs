@@ -117,7 +117,7 @@ MercureBundle provides a more advanced configuration configuration:
 * ``secret``: the key to use to sign the JWT
 * ``publish``: a list of topics to allow publishing to when generating the JWT
 * ``subscribe``: a list of topics to allow subscribing to when generating the JWT
-* ``algorithm``: The algorithm to use to sign the JWT
+* ``algorithm``: The algorithm to use to sign the JWT (only usable when `secret` is provided )
 * ``provider``: The ID of a service to call to provide the JWT
 * ``factory``: The ID of a service to call to create the JWT (all other options, beside `subscribe`, and `publish` will be ignored)
 * ``value``: the raw JWT to use (all other options will be ignored)
