@@ -51,6 +51,17 @@ This command also creates the following configuration file:
 This configuration tells Symfony to look for routes defined as annotations in
 any PHP class stored in the ``src/Controller/`` directory.
 
+.. caution::
+
+    If you want to use only native attributes to configure routes, then do not
+    delete the ``config/routes.yaml`` file that Symfony installs by default. Even
+    though that config file contains a ``type: annotation`` entry, it still is
+    required for configuring routes via attributes to work. In this particular
+    context, ``annotation`` is interpreted as being synonymous with ``attribute``.
+
+    To be clear, you do not need to install ``doctrine/annotations`` if you use
+    attributes to configure your routes.
+
 Suppose you want to define a route for the ``/blog`` URL in your application. To
 do so, create a :doc:`controller class </controller>` like the following:
 
