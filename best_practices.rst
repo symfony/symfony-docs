@@ -265,7 +265,7 @@ Templates
 Use Snake Case for Template Names and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use lowercased snake_case for template names, directories and variables (e.g.
+Use lowercase snake_case for template names, directories and variables (e.g.
 ``user_profile`` instead of ``userProfile`` and ``product/edit_form.html.twig``
 instead of ``Product/EditForm.html.twig``).
 
@@ -383,7 +383,7 @@ Use Webpack Encore to Process Web Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Web assets are things like CSS, JavaScript and image files that make the
-frontend of your site look and work great. `Webpack`_ is the leading JavaScript
+frontend of your site looks and works great. `Webpack`_ is the leading JavaScript
 module bundler that compiles, transforms and packages assets for usage in a browser.
 
 :doc:`Webpack Encore </frontend>` is a JavaScript library that gets rid of most
@@ -435,7 +435,7 @@ Add this test while creating your application because it requires little effort
 and checks that none of your pages returns an error. Later, you'll add more
 specific tests for each page.
 
-Hardcode URLs in a Functional Test
+Hard-code URLs in a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Symfony applications, it's recommended to :ref:`generate URLs <routing-generating-urls>`
