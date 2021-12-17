@@ -194,7 +194,7 @@ Your Next Documentation Contributions
 
 Check you out! You've made your first contribution to the Symfony documentation!
 Somebody throw a party! Your first contribution took a little extra time because
-you needed to learn a few standards and setup your computer. But from now on,
+you had to learn a few standards and set up your computer. But from now on,
 your contributions will be much easier to complete.
 
 Here is a **checklist** of steps that will guide you through your next
@@ -288,7 +288,7 @@ The generated documentation is available in the ``_build/html`` directory.
 Frequently Asked Questions
 --------------------------
 
-Why Do my Changes Take so Long to Be Reviewed and/or Merged?
+Why Do My Changes Take So Long to Be Reviewed and/or Merged?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Please be patient. It can take up to several days before your pull request can

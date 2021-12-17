@@ -129,7 +129,7 @@ format
 **type**: ``string`` **default**: ``F j, Y H:i``
 
 The format used by the ``date`` filter to display values when no specific format
-is passed as argument.
+is passed as an argument.
 
 interval_format
 ...............
@@ -145,7 +145,7 @@ timezone
 **type**: ``string`` **default**: (the value returned by ``date_default_timezone_get()``)
 
 The timezone used when formatting date values with the ``date`` filter and no
-specific timezone is passed as argument.
+specific timezone is passed as an argument.
 
 debug
 ~~~~~

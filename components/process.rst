@@ -116,7 +116,7 @@ You can configure the options passed to the ``other_options`` argument of
 Using Features From the OS Shell
 --------------------------------
 
-Using array of arguments is the recommended way to define commands. This
+Using an array of arguments is the recommended way to define commands. This
 saves you from any escaping and allows sending signals seamlessly
 (e.g. to stop processes while they run)::
 
@@ -327,7 +327,7 @@ provides the :class:`Symfony\\Component\\Process\\InputStream` class::
     echo $process->getOutput();
 
 The :method:`Symfony\\Component\\Process\\InputStream::write` method accepts scalars,
-stream resources or ``Traversable`` objects as argument. As shown in the above example,
+stream resources or ``Traversable`` objects as arguments. As shown in the above example,
 you need to explicitly call the :method:`Symfony\\Component\\Process\\InputStream::close`
 method when you are done writing to the standard input of the subprocess.
 

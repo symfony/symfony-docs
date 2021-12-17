@@ -8,7 +8,7 @@ The Asset Component
     The Asset component manages URL generation and versioning of web assets such
     as CSS stylesheets, JavaScript files and image files.
 
-In the past, it was common for web applications to hardcode URLs of web assets.
+In the past, it was common for web applications to hard-code the URLs of web assets.
 For example:
 
 .. code-block:: html
@@ -387,7 +387,7 @@ they all have different base paths::
     $packages = new Packages($defaultPackage, $namedPackages);
 
 The ``Packages`` class allows to define a default package, which will be applied
-to assets that don't define the name of package to use. In addition, this
+to assets that don't define the name of the package to use. In addition, this
 application defines a package named ``img`` to serve images from an external
 domain and a ``doc`` package to avoid repeating long paths when linking to a
 document inside a template::

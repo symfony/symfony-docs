@@ -78,7 +78,7 @@ short example containing most features described below::
         }
 
         /**
-         * Transforms the input given as first argument.
+         * Transforms the input given as the first argument.
          *
          * @param bool|string $dummy   Some argument description
          * @param array       $options An options collection to be used within the transformation

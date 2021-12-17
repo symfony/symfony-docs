@@ -64,11 +64,11 @@ knowing that the responsibility they accept for said vote is justified.
 Voting
 ~~~~~~
 
-The guidance team have the right to vote on proposals for actionable items.
+The guidance team has the right to vote on proposals for actionable items.
 The quorum of "yes" or "no" votes required for a decision to be considered valid
 is at least 75% of active, appointed members of the guidance team - to abstain
 from voting means that vote will not be counted towards the quorum.
-For an actionable item to pass, approval from greater than 50% of the voting
+For an actionable item to pass, approval from more than 50% of the voting
 guidance team members is required. Use or management of finances/donations
 require at least a two-thirds majority to pass.
 

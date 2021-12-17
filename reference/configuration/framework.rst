@@ -1054,7 +1054,7 @@ timeout
 
 **type**: ``float`` **default**: depends on your PHP config
 
-Time, in seconds, to wait for a response. If the response stales for longer, a
+Time, in seconds, to wait for a response. If the response takes longer, a
 :class:`Symfony\\Component\\HttpClient\\Exception\\TransportException` is thrown.
 Its default value is the same as the value of PHP's `default_socket_timeout`_
 config option.
@@ -1307,7 +1307,7 @@ when using ``.``, instead of matching only a single byte.
 
 If the charset of your application is UTF-8 (as defined in the
 :ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it's
-recommended to set it to ``true``. This will make non-UTF8 URLs to generate 404
+recommended setting it to ``true``. This will make non-UTF8 URLs to generate 404
 errors.
 
 .. _config-framework-session:
@@ -1431,8 +1431,8 @@ cookie_samesite
 
 **type**: ``string`` or ``null`` **default**: ``'lax'``
 
-It controls the way cookies are sent when the HTTP request was not originated
-from the same domain the cookies are associated to. Setting this option is
+It controls the way cookies are sent when the HTTP request did not originate
+from the same domain that is associated with the cookies. Setting this option is
 recommended to mitigate `CSRF security attacks`_.
 
 By default, browsers send all cookies related to the domain of the HTTP request.
@@ -1450,7 +1450,7 @@ The possible values for this option are:
   (previously this was the default behavior of null, but in newer browsers ``'lax'``
   would be applied when the header has not been set)
 * ``'strict'`` (or the ``Cookie::SAMESITE_STRICT`` constant), use it to never
-  send any cookie when the HTTP request is not originated from the same domain.
+  send any cookie when the HTTP request did not originate from the same domain.
 * ``'lax'`` (or the ``Cookie::SAMESITE_LAX`` constant), use it to allow sending
   cookies when the request originated from a different domain, but only when the
   user consciously made the request (by clicking a link or submitting a form
@@ -1517,7 +1517,7 @@ sid_bits_per_character
 
 **type**: ``integer`` **default**: ``4``
 
-This determines the number of bits in encoded session ID character. The possible
+This determines the number of bits in the encoded session ID character. The possible
 values are ``4`` (0-9, a-f), ``5`` (0-9, a-v), and ``6`` (0-9, a-z, A-Z, "-", ",").
 The more bits results in stronger session ID. ``5`` is recommended value for
 most environments.
@@ -2300,7 +2300,7 @@ The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
 Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
-cache provide from the Doctrine project.
+cache provided by the Doctrine project.
 
 .. _reference-validation-enable_annotations:
 
@@ -2349,7 +2349,7 @@ By default, the :doc:`NotCompromisedPassword </reference/constraints/NotCompromi
 constraint uses the public API provided by `haveibeenpwned.com`_. This option
 allows to define a different, but compatible, API endpoint to make the password
 checks. It's useful for example when the Symfony application is run in an
-intranet without public access to Internet.
+intranet without public access to the internet.
 
 static_method
 .............
@@ -2741,7 +2741,7 @@ A list of cache pools to be created by the framework extension.
 
 .. seealso::
 
-    For more information about how pools works, see :ref:`cache pools <component-cache-cache-pools>`.
+    For more information about how pools work, see :ref:`cache pools <component-cache-cache-pools>`.
 
 To configure a Redis cache pool with a default lifetime of 1 hour, do the following:
 
@@ -2853,8 +2853,8 @@ provider
 
 Overwrite the default service name or DSN respectively, if you do not want to
 use what is configured as ``default_X_provider`` under ``cache``. See the
-description of the default provider setting above for the type of adapter
-you use for information on how to specify the provider.
+description of the default provider setting above for information on how to
+specify your specific provider.
 
 clearer
 """""""
