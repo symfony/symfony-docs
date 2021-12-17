@@ -819,7 +819,7 @@ can change your code to do the configuration only once per class::
     }
 
 Now the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver` instance
-will be created once per class and reused from that on. Be aware that this may
+will be created once per class and reused from that point onwards. Be aware that this may
 lead to memory leaks in long-running applications, if the default options contain
 references to objects or object graphs. If that's the case for you, implement a
 method ``clearOptionsConfig()`` and call it periodically::

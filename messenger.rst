@@ -491,7 +491,7 @@ On production, there are a few important things to think about:
     on deployment. This will signal to each worker that it should finish the message
     it's currently handling and should shut down gracefully. Then, Supervisor will create
     new worker processes. The command uses the :ref:`app <cache-configuration-with-frameworkbundle>`
-    cache internally - so make sure this is configured to use an adapter you like.
+    cache internally - so make sure this is configured to use a preferred adapter.
 
 **Use the Same Cache Between Deploys**
     If your deploy strategy involves the creation of new target directories, you
@@ -1500,7 +1500,7 @@ That's it! You can now consume each transport:
 .. caution::
 
     If a handler does *not* have ``from_transport`` config, it will be executed
-    on *every* transport that the message is received from.
+    on *every* transport from where the message is received.
 
 Extending Messenger
 -------------------

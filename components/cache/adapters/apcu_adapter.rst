@@ -43,7 +43,7 @@ and cache items version string as constructor arguments::
 
 .. tip::
 
-    This adapter's CRUD operations are specific to the PHP SAPI it is running under. This
+    This adapter's CRUD operations are specific to the PHP SAPI under which it is running. This
     means cache operations (such as additions, deletions, etc) using the CLI will not be
     available under the FPM or CGI SAPIs.
 

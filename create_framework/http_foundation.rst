@@ -82,7 +82,8 @@ unit test for the above code::
 At this point, if you are not convinced that security and testing are indeed
 two very good reasons to stop writing code the old way and adopt a framework
 instead (whatever adopting a framework means in this context), you can stop
-reading this book now and go back to whatever code you were working on before.
+reading this book now and go back to whatever code on which you were previously
+working.
 
 .. note::
 

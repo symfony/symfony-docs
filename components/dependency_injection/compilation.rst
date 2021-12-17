@@ -50,7 +50,7 @@ well as manipulate the container definitions using the methods shown in
 :doc:`/service_container/definitions`.
 
 The ``load()`` method is passed a fresh container to set up, which is then
-merged afterwards into the container it is registered with. This allows
+merged afterwards into the container with which it is registered. This allows
 you to have several extensions managing container definitions independently.
 The extensions do not add to the containers configuration when they are
 added but are processed when the container's ``compile()`` method is called.

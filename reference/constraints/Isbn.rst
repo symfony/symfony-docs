@@ -161,7 +161,7 @@ Parameter        Description
 
 **type**: ``string`` **default**: ``null``
 
-The type of ISBN to validate against. Valid values are ``isbn10``, ``isbn13``
+The type of ISBN against which to validate. Valid values are ``isbn10``, ``isbn13``
 and ``null`` to accept any kind of ISBN.
 
 .. _`International Standard Book Number (ISBN)`: https://en.wikipedia.org/wiki/Isbn

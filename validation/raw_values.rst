@@ -38,7 +38,7 @@ address. From inside a controller, it looks like this::
     }
 
 By calling ``validate()`` on the validator, you can pass in a raw value and
-the constraint object that you want to validate that value against. A full
+the constraint object against which you want to validate that value. A full
 list of the available constraints - as well as the full class name for each
 constraint - is available in the :doc:`constraints reference </reference/constraints>`
 section.

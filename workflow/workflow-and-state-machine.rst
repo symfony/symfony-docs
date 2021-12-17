@@ -32,7 +32,7 @@ workflow below describes the process to fill in a job application.
 .. image:: /_images/components/workflow/job_application.png
 
 When you fill in a job application in this example there are 4 to 7 steps
-depending on the job you are applying for. Some jobs require personality
+depending on the job for which you are applying. Some jobs require personality
 tests, logic tests and/or formal requirements to be answered by the user. Some
 jobs don't. The ``GuardEvent`` is used to decide what next steps are allowed for
 a specific application.

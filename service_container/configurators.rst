@@ -104,7 +104,7 @@ to create a configurator class to configure these instances::
 
 The ``EmailConfigurator``'s job is to inject the enabled formatters into
 ``NewsletterManager`` and ``GreetingCardManager`` because they are not aware of
-where the enabled formatters come from. On the other hand, the
+the source of the enabled formatters. On the other hand, the
 ``EmailFormatterManager`` holds the knowledge about the enabled formatters and
 how to load them, keeping the single responsibility principle.
 

@@ -78,7 +78,7 @@ Additionally, you have access to a number of functions inside the expression:
     Equal to checking if the user has the ``IS_AUTHENTICATED_FULLY`` role.
 ``is_granted()``
     Checks if the user has the given permission. Optionally accepts a second argument
-    with the object where permission is checked on. It's equivalent to using
+    with the object where permission is checked. It's equivalent to using
     the :doc:`isGranted() method </security/securing_services>` from the authorization
     checker service.
 

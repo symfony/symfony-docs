@@ -23,7 +23,7 @@ Native PHP Save Handlers
 ------------------------
 
 So-called native handlers, are save handlers which are either compiled into
-PHP or provided by PHP extensions, such as PHP-SQLite, PHP-Memcached and so on.
+PHP or provided by PHP extensions, such as PHP-SQLite, PHP-Memcached, etc.
 
 All native save handlers are internal to PHP and as such, have no public facing API.
 They must be configured by ``php.ini`` directives, usually ``session.save_path`` and

@@ -112,7 +112,7 @@ The default message supplied when the value does not pass the combined BIC/IBAN 
 
     The ``ibanPropertyPath`` option was introduced in Symfony 4.3.
 
-It defines the object property whose value stores the IBAN used to check the BIC with.
+It defines the object property whose value stores the IBAN that's used to check the BIC.
 
 For example, if you want to compare the ``$bic`` property of some object
 with regard to the ``$iban`` property of the same object, use

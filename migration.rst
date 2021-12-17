@@ -291,7 +291,7 @@ Line 15
   Symfony features inside your existing application and gives access to
   services configured in our Symfony application. This helps you prepare your
   own code to work better within the Symfony application before you transition
-  it over. For instance, by replacing outdated or redundant libraries with
+  it over a newer version. For instance, by replacing outdated or redundant libraries with
   Symfony components.
 
 Line 38 - 47

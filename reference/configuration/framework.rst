@@ -2476,7 +2476,7 @@ the ``dev`` environment).
 
     It might be tough to understand at the beginning, so to avoid confusion
     remember that all pools perform the same actions but on different medium
-    given the adapter they are based on. Internally, a pool wraps the definition
+    given the adapter upon which they are based. Internally, a pool wraps the definition
     of an adapter.
 
 .. _reference-cache-system:

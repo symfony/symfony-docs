@@ -80,8 +80,8 @@ Then you can set the choice of transport in the container::
 This class is now much more flexible as you have separated the choice of
 transport out of the implementation and into the container.
 
-Which mail transport you have chosen may be something other services need
-to know about. You can avoid having to change it in multiple places by making
+Which mail transport you have chosen may be something about which other services
+need to know. You can avoid having to change it in multiple places by making
 it a parameter in the container and then referring to this parameter for
 the ``Mailer`` service's constructor argument::
 

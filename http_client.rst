@@ -977,7 +977,7 @@ This behavior provided at destruction-time is part of the fail-safe design of th
 component. No errors will be unnoticed: if you don't write the code to handle
 errors, exceptions will notify you when needed. On the other hand, if you write
 the error-handling code (by calling ``$response->getStatusCode()``), you will
-opt-out from these fallback mechanisms as the destructor won't have anything 
+opt-out from these fallback mechanisms as the destructor won't have anything
 remaining to do.
 
 Concurrent Requests
@@ -1000,7 +1000,7 @@ half a second when cURL is used::
 
 As you can read in the first "for" loop, requests are issued but are not consumed
 yet. That's the trick when concurrency is desired: requests should be sent
-first and be read later on. This will allow the client to monitor all pending
+first and be read afterwards. This will allow the client to monitor all pending
 requests while your code waits for a specific one, as done in each iteration of
 the above "foreach" loop.
 

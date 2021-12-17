@@ -468,7 +468,7 @@ methods to get more information about the selected link itself::
     transforms it into how it should really be processed. For example, for a
     link with ``href="#foo"``, this would return the full URI of the current
     page suffixed with ``#foo``. The return from ``getUri()`` is always a full
-    URI that you can act on.
+    URI that you can use.
 
 Images
 ~~~~~~

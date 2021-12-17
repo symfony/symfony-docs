@@ -201,7 +201,7 @@ yet to add new tags or delete existing ones.
 
 .. caution::
 
-    You can embed nested collections as many levels down as you like. However,
+    You can embed nested collections as many levels down as desired. However,
     if you use Xdebug, you may receive a ``Maximum function nesting level of '100'
     reached, aborting!`` error. To fix this, increase the ``xdebug.max_nesting_level``
     PHP setting, or render each form field by hand using ``form_row()`` instead of

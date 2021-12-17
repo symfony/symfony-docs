@@ -275,8 +275,8 @@ Parameter        Description
 
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 
-This required option is the regular expression pattern that the input will
-be matched against. By default, this validator will fail if the input string
+This required option is the regular expression pattern against which the input will
+be matched. By default, this validator will fail if the input string
 does *not* match this regular expression (via the :phpfunction:`preg_match`
 PHP function). However, if `match`_ is set to false, then validation will
 fail if the input string *does* match this pattern.

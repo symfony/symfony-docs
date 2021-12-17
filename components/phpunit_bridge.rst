@@ -298,7 +298,7 @@ Disabling the Verbose Output
 
 By default, the bridge will display a detailed output with the number of
 deprecations and where they arise. If this is too much for you, you can use
-``SYMFONY_DEPRECATIONS_HELPER=verbose=0`` to turn the verbose output off.
+``SYMFONY_DEPRECATIONS_HELPER=verbose=0`` to turn off the verbose output.
 
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

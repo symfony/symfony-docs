@@ -172,7 +172,7 @@ logout_path
     **type**: ``string``
 
 Generates a relative logout URL for the given firewall. If no key is provided,
-the URL is generated for the current firewall the user is logged into.
+the URL is generated for the current firewall where the user is currently logged in.
 
 logout_url
 ~~~~~~~~~~

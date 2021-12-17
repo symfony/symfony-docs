@@ -52,7 +52,7 @@ Twig for the View).
 
 When creating a framework, following the MVC pattern is not the right goal. The
 main goal should be the **Separation of Concerns**; this is probably the only
-design pattern that you should really care about. The fundamental principles of
+important design pattern. The fundamental principles of
 the Symfony Components are focused on the HTTP specification. As such, the
 framework that you are going to create should be more accurately labelled as a
 HTTP framework or Request/Response framework.

@@ -395,7 +395,7 @@ method. This namespace is then followed by the rest of the path from the base
 path to the file itself.
 
 By convention, the XSD file lives in the ``Resources/config/schema/``, but you
-can place it anywhere you like. You should return this path as the base path::
+can place it anywhere else. You should return this path as the base path::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
 

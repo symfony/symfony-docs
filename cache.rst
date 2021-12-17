@@ -43,7 +43,7 @@ When configuring the cache component there are a few concepts you should know
 of:
 
 **Pool**
-    This is a service that you will interact with. Each pool will always have
+    This is a service with which you will interact. Each pool will always have
     its own namespace and cache items. There is never a conflict between pools.
 **Adapter**
     An adapter is a *template* that you use to create pools.

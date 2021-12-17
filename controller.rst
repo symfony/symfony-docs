@@ -193,7 +193,7 @@ Fetching Services
 
 Symfony comes *packed* with a lot of useful classes and functionalities, called :doc:`services </service_container>`.
 These are used for rendering templates, sending emails, querying the database and
-any other "work" you can think of.
+any other "work" you can imagine.
 
 If you need a service in a controller, type-hint an argument with its class
 (or interface) name. Symfony will automatically pass you the service you need::

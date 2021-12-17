@@ -435,8 +435,8 @@ On a form, we can usually listen to the following events:
 * ``SUBMIT``
 * ``POST_SUBMIT``
 
-The key is to add a ``POST_SUBMIT`` listener to the field that your new field
-depends on. If you add a ``POST_SUBMIT`` listener to a form child (e.g. ``sport``),
+The key is to add a ``POST_SUBMIT`` listener to the field upon which your new field
+depends. If you add a ``POST_SUBMIT`` listener to a form child (e.g. ``sport``),
 and add new children to the parent form, the Form component will detect the
 new field automatically and map it to the submitted client data.
 

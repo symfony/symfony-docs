@@ -155,8 +155,8 @@ changes should be applied:
    :align: center
 
 In this example, the **base fork** should be ``symfony/symfony-docs`` and
-the **base** branch should be the ``4.4``, which is the branch that you selected
-to base your changes on. The **head fork** should be your forked copy
+the **base** branch should be the ``4.4``, which is the branch upon which you selected
+to base your changes. The **head fork** should be your forked copy
 of ``symfony-docs`` and the **compare** branch should be ``improve_install_article``,
 which is the name of the branch you created and where you made your changes.
 

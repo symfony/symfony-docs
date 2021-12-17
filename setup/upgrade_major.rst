@@ -185,4 +185,4 @@ Next, use Composer to download new versions of the libraries:
 
 In some rare situations, the next major version *may* contain backwards-compatibility
 breaks. Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major version)
-included in the Symfony repository for any BC break that you need to be aware of.
+included in the Symfony repository for any BC break of which you need to be aware.

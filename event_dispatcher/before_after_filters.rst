@@ -232,6 +232,6 @@ header on the response if it's found::
 That's it! The ``TokenSubscriber`` is now notified before every controller is
 executed (``onKernelController()``) and after every controller returns a response
 (``onKernelResponse()``). By making specific controllers implement the ``TokenAuthenticatedController``
-interface, your listener knows which controllers it should take action on.
+interface, your listener knows on which controllers it should act.
 And by storing a value in the request's "attributes" bag, the ``onKernelResponse()``
 method knows to add the extra header. Have fun!

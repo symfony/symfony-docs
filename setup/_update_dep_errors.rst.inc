@@ -9,7 +9,7 @@ that, pass the ``--with-all-dependencies`` flag:
 
     $ composer update "symfony/*" --with-all-dependencies
 
-This updates ``symfony/*`` and *all* packages that those packages depend on.
+This updates ``symfony/*`` and *all* packages upon which those packages depend.
 By using tight version constraints in ``composer.json``, you can control what
 versions each library upgrades to.
 

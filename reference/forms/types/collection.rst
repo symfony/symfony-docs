@@ -317,8 +317,8 @@ prototype
 
 This option is useful when using the `allow_add`_ option. If ``true`` (and
 if `allow_add`_ is also ``true``), a special "prototype" attribute will
-be available so that you can render a "template" example on your page of
-what a new element should look like. The ``name`` attribute given to this
+be available so that you can render a "template" example on your page, which
+will showcase the desired appearance of a new element. The ``name`` attribute given to this
 element is ``__name__``. This allows you to add a "add another" button via
 JavaScript which reads the prototype, replaces ``__name__`` with some unique
 name or number and render it inside your form. When submitted, it will

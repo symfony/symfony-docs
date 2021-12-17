@@ -6,7 +6,7 @@ The Serializer Component
 ========================
 
     The Serializer component is meant to be used to turn objects into a
-    specific format (XML, JSON, YAML, ...) and the other way around.
+    specific format (XML, JSON, YAML, ...) and vice versa.
 
 In order to do so, the Serializer component follows the following schema.
 

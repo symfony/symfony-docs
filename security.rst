@@ -23,7 +23,7 @@ security system step-by-step:
 
 #. :ref:`Fetching the current User object <retrieving-the-user-object>`.
 
-A few other important topics are discussed after.
+A few other important topics are discussed below these topics.
 
 .. _security-installation:
 

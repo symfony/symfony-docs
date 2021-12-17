@@ -137,7 +137,7 @@ Parameter        Description
 
 **type**: ``string`` **default**: ``loose``
 
-This option is optional and defines the pattern the email address is validated against.
+This option is optional and defines the pattern against which the email address is validated.
 Valid values are:
 
 * ``loose``
