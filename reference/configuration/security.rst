@@ -50,7 +50,7 @@ access_denied_url
 **type**: ``string`` **default**: ``null``
 
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
-you define a custom access deny handler). Example: ``/no-permission``
+you define a custom access denial handler). Example: ``/no-permission``
 
 always_authenticate_before_granting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -248,7 +248,7 @@ This is the route or path that the user will be redirected to (unless ``use_forw
 is set to ``true``) when they try to access a protected resource but isn't
 fully authenticated.
 
-This path **must** be accessible by a normal, un-authenticated user, else
+This path **must** be accessible by a normal, unauthenticated user, else
 you may create a redirect loop.
 
 check_path

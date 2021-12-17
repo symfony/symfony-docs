@@ -249,7 +249,7 @@ on the request's information.
 
     The Symfony Framework uses the built-in
     :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`
-    class (actually, it uses a sub-class with some extra functionality
+    class (actually, it uses a subclass with some extra functionality
     mentioned below). This class leverages the information that was placed
     on the ``Request`` object's ``attributes`` property during the ``RouterListener``.
 
@@ -358,7 +358,7 @@ of arguments that should be passed when executing that callable.
 5) Calling the Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The next step ``HttpKernel::handle()`` does is executing the controller.
+The next step of ``HttpKernel::handle()`` is executing the controller.
 
 The job of the controller is to build the response for the given resource.
 This could be an HTML page, a JSON string or anything else. Unlike every
@@ -590,7 +590,7 @@ on creating and attaching event listeners, see :doc:`/components/event_dispatche
 
 The name of each of the "kernel" events is defined as a constant on the
 :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class. Additionally, each
-event listener is passed a single argument, which is some sub-class of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`.
+event listener is passed a single argument, which is some subclass of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`.
 This object contains information about the current state of the system and
 each event has their own event object:
 
@@ -667,7 +667,7 @@ Sub Requests
 ------------
 
 In addition to the "main" request that's sent into ``HttpKernel::handle()``,
-you can also send so-called "sub request". A sub request looks and acts like
+you can also send a so-called "sub request". A sub request looks and acts like
 any other request, but typically serves to render just one small portion of
 a page instead of a full page. You'll most commonly make sub-requests from
 your controller (or perhaps from inside a template, that's being rendered by
@@ -696,9 +696,9 @@ argument as follows::
 This creates another full request-response cycle where this new ``Request`` is
 transformed into a ``Response``. The only difference internally is that some
 listeners (e.g. security) may only act upon the main request. Each listener
-is passed some sub-class of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`,
+is passed some subclass of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`,
 whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMainRequest`
-can be used to check if the current request is a "main" or "sub" request.
+method can be used to check if the current request is a "main" or "sub" request.
 
 For example, a listener that only needs to act on the main request may
 look like this::

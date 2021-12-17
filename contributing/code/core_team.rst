@@ -171,7 +171,7 @@ The **Project Leader** is also the release manager for every Symfony version.
 Symfony Core Rules and Protocol Amendments
 ------------------------------------------
 
-The rules described in this document may be amended at anytime at the
+The rules described in this document may be amended at any time at the
 discretion of the **Project Leader**.
 
 .. [1] Minor changes comprise typos, DocBlock fixes, code standards

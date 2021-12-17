@@ -45,7 +45,7 @@ of:
     An adapter is a *template* that you use to create pools.
 **Provider**
     A provider is a service that some adapters use to connect to the storage.
-    Redis and Memcached are example of such adapters. If a DSN is used as the
+    Redis and Memcached are examples of such adapters. If a DSN is used as the
     provider then a service is automatically created.
 
 There are two pools that are always enabled by default. They are ``cache.app`` and
