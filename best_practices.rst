@@ -435,6 +435,8 @@ Add this test while creating your application because it requires little effort
 and checks that none of your pages returns an error. Later, you'll add more
 specific tests for each page.
 
+.. _hardcode-urls-in-a-functional-test:
+
 Hard-code URLs in a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
