@@ -454,7 +454,7 @@ Your decoration configuration will be as follows:
 
     You might need to use aliases in the ``services`` section of the ``code/services.yaml`` file, if
     you're extending a service from a third-party bundle that uses XML config files. It depends on how
-    the bundle registered its services.
+    the bundle registered its services. 
 
 Congratulations! With both options, the ``App\Mailer\DecoratingMailer`` class is automatically injected
 instead of the ``App\Mailer\Mailer`` class.
