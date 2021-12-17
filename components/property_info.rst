@@ -208,7 +208,7 @@ strings::
         Example Result
         --------------
         string(79):
-            These is the subsequent paragraph in the DocComment.
+            This is the subsequent paragraph in the DocComment.
             It can span multiple lines.
     */
 

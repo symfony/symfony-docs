@@ -28,8 +28,8 @@ constructive, respectful and helpful reviews and replies.
     welcoming place for everyone. **You are free to disagree with
     someone's opinions, but don't be disrespectful.**
 
-First of, accept that many programming decisions are opinions.
-Discuss trade offs, which you prefer, and reach a resolution quickly.
+It’s important to accept that many programming decisions are opinions.
+Discuss trade-offs, which you prefer, and reach a resolution quickly.
 It's not about being right or wrong, but using what works.
 
 Tone of Voice
@@ -118,13 +118,13 @@ If a piece of code is in fact wrong, explain why:
 * "We only provide integration with very popular projects (e.g. we integrate Bootstrap but not your own CSS framework)"
 
 * "This would require adding lots of code and making lots of changes for a feature that doesn't look so important.
-  That could hurt maintaining in the future."
+  That could hurt maintenance in the future."
 
 Asking for Changes
 ------------------
 
 Rarely something is perfect from the start, while the code itself is good.
-It may not be optimal or conform the Symfony coding style.
+It may not be optimal or conform to the Symfony coding style.
 
 Again, understand the author already spent time on the issue and asking
 for (small) changes may be misinterpreted or seen as a personal attack.
@@ -143,7 +143,7 @@ Use words like "Please", "Thank you" and "Could you" instead of making demands;
 
 * "Please use 4 spaces instead of tabs", "This needs be on the previous line";
 
-During a pull request review you can usually leave more then one comment,
+During a pull request review you can usually leave more than one comment,
 you don't have to use "Please" all the time. But it wouldn't hurt.
 
 It may not seem like much, but saying "Thank you" does make others feel
@@ -158,7 +158,7 @@ In that case, it is better to try to approach the discussion in
 a different way, to not escalate further.
 
 If you want someone to mediate, please join the ``#contribs`` channel on `Symfony Slack`_,
-to have a safe environment and keep working together on the common goals.
+to have a safe environment and keep working together on common goals.
 
 Using Humor
 -----------
@@ -172,8 +172,8 @@ to the Symfony community.** And don't marginalize someone's problems;
 
 Even if someone's explanation is "inviting to joke about it", it's a real
 problem to them. Making jokes about this doesn't help with solving their
-problem and only makes them *feel stupid*. Instead try to discover what
-the problem is really about.
+problem and only makes them *feel stupid*. Instead, try to discover the
+actual problem.
 
 Final Words
 -----------

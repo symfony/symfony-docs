@@ -141,8 +141,8 @@ Creating an Event Subscriber
 
 Another way to listen to events is via an **event subscriber**, which is a class
 that defines one or more methods that listen to one or various events. The main
-difference with the event listeners is that subscribers always know which events
-they are listening to.
+difference with the event listeners is that subscribers always know the events
+to which they are listening.
 
 If different event subscriber methods listen to the same event, their order is
 defined by the ``priority`` parameter. This value is a positive or negative

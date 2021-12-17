@@ -223,7 +223,7 @@ are propagated to their related listeners.
 
 It will replace, in cache for generated service factories, the PHP autoload by
 plain inlined ``include_once``. The benefit is a complete bypass of the autoloader
-for services and their class hierarchy. The result is as significant performance improvement.
+for services and their class hierarchy. The result is a significant performance improvement.
 
 Use this tag with great caution, you have to be sure that the tagged service is always used.
 
@@ -410,7 +410,7 @@ kernel.cache_clearer
 process
 
 Cache clearing occurs whenever you call ``cache:clear`` command. If your
-bundle caches files, you should add custom cache clearer for clearing those
+bundle caches files, you should add a custom cache clearer for clearing those
 files during the cache clearing process.
 
 In order to register your custom cache clearer, first you must create a
@@ -1270,7 +1270,7 @@ twig.runtime
 **Purpose**: To register a custom Lazy-Loaded Twig Extension
 
 :ref:`Lazy-Loaded Twig Extensions <lazy-loaded-twig-extensions>` are defined as
-regular services but the need to be tagged with ``twig.runtime``. If you're using the
+regular services but they need to be tagged with ``twig.runtime``. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the service is auto-registered and auto-tagged. But, you can also register it manually:
 

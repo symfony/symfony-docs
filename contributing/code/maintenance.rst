@@ -74,7 +74,7 @@ are never accepted in a patch version:
 .. note::
 
     This policy is designed to enable a continuous upgrade path that allows one
-    to move forward with newest Symfony versions in the safest way. One should
+    to move forward with the newest Symfony versions in the safest way. One should
     be able to move PHP versions, OS or Symfony versions almost independently.
     That's the reason why supporting the latest PHP versions or OS features is
     considered as bug fixes.

@@ -80,7 +80,7 @@ of Symfony to the next one.
 
 When a feature implementation cannot be replaced with a better one without
 breaking backward compatibility, Symfony deprecates the old implementation and
-adds a new preferred one along side. Read the
+adds a new preferred one alongside. Read the
 :ref:`conventions <contributing-code-conventions-deprecations>` document to
 learn more about how deprecations are handled in Symfony.
 

@@ -46,7 +46,7 @@ method will try to acquire the lock::
 
     if ($lock->acquire()) {
         // The resource "pdf-invoice-generation" is locked.
-        // You can compute and generate invoice safely here.
+        // You can compute and generate the invoice safely here.
 
         $lock->release();
     }
@@ -65,7 +65,7 @@ method can be safely called repeatedly, even if the lock is already acquired.
 .. tip::
 
     If you don't release the lock explicitly, it will be released automatically
-    on instance destruction. In some cases, it can be useful to lock a resource
+    upon instance destruction. In some cases, it can be useful to lock a resource
     across several requests. To disable the automatic release behavior, set the
     third argument of the ``createLock()`` method to ``false``.
 
@@ -74,7 +74,7 @@ Serializing Locks
 
 The ``Key`` contains the state of the ``Lock`` and can be serialized. This
 allows the user to begin a long job in a process by acquiring the lock, and
-continue the job in an other process using the same lock::
+continue the job in another process using the same lock::
 
     use Symfony\Component\Lock\Key;
     use Symfony\Component\Lock\Lock;
@@ -210,7 +210,7 @@ as seconds) and ``isExpired()`` (which returns a boolean).
 Automatically Releasing The Lock
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Lock are automatically released when their Lock objects are destructed. This is
+Locks are automatically released when their Lock objects are destructed. This is
 an implementation detail that will be important when sharing Locks between
 processes. In the example below, ``pcntl_fork()`` creates two processes and the
 Lock will be released automatically as soon as one process finishes::
@@ -688,11 +688,11 @@ FlockStore
 ~~~~~~~~~~
 
 By using the file system, this ``Store`` is reliable as long as concurrent
-processes use the same physical directory to stores locks.
+processes use the same physical directory to store locks.
 
 Processes must run on the same machine, virtual machine or container.
-Be careful when updating a Kubernetes or Swarm service because for a short
-period of time, there can be two running containers in parallel.
+Be careful when updating a Kubernetes or Swarm service because, for a short
+period of time, there can be two containers running in parallel.
 
 The absolute path to the directory must remain the same. Be careful of symlinks
 that could change at anytime: Capistrano and blue/green deployment often use
@@ -704,7 +704,7 @@ Some file systems (such as some types of NFS) do not support locking.
 .. caution::
 
     All concurrent processes must use the same physical file system by running
-    on the same machine and using the same absolute path to locks directory.
+    on the same machine and using the same absolute path to the lock directory.
 
     By definition, usage of ``FlockStore`` in an HTTP context is incompatible
     with multiple front servers, unless to ensure that the same resource will
@@ -726,7 +726,7 @@ MemcachedStore
 
 The way Memcached works is to store items in memory. That means that by using
 the :ref:`MemcachedStore <lock-store-memcached>` the locks are not persisted
-and may disappear by mistake at anytime.
+and may disappear by mistake at any time.
 
 If the Memcached service or the machine hosting it restarts, every lock would
 be lost without notifying the running processes.
@@ -803,7 +803,7 @@ The PdoStore relies on the `ACID`_ properties of the SQL engine.
 .. caution::
 
     In a cluster configured with multiple primaries, ensure writes are
-    synchronously propagated to every nodes, or always use the same node.
+    synchronously propagated to every node, or always use the same node.
 
 .. caution::
 
@@ -838,7 +838,7 @@ RedisStore
 
 The way Redis works is to store items in memory. That means that by using
 the :ref:`RedisStore <lock-store-redis>` the locks are not persisted
-and may disappear by mistake at anytime.
+and may disappear by mistake at any time.
 
 If the Redis service or the machine hosting it restarts, every locks would
 be lost without notifying the running processes.
@@ -865,7 +865,7 @@ removed by mistake.
 CombinedStore
 ~~~~~~~~~~~~~
 
-Combined stores allow to store locks across several backends. It's a common
+Combined stores allow the storage of locks across several backends. It's a common
 mistake to think that the lock mechanism will be more reliable. This is wrong.
 The ``CombinedStore`` will be, at best, as reliable as the least reliable of
 all managed stores. As soon as one managed store returns erroneous information,
