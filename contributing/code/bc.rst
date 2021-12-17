@@ -10,7 +10,7 @@ may introduce new features, but must do so without breaking the existing API of
 that release branch (5.x in the previous example).
 
 We also provide deprecation message triggered in the code base to help you with
-the migration process across major release.
+the migration process across major releases.
 
 .. caution::
 

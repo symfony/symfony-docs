@@ -23,7 +23,7 @@ speakers with people who are just taking their first steps in this area:
 
     A good first step might be to give a talk at a local user group to a
     smaller crowd that one knows more intimately. A next step could be to
-    give a talk at conference in your first language.
+    give a talk at a conference in your first language.
 
 The best way to find people that can review your talk idea or slides is
 the `#speaker-mentoring`_ channel on `Symfony Slack`_. There are many

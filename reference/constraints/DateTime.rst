@@ -101,7 +101,7 @@ Options
 
 **type**: ``string`` **default**: ``Y-m-d H:i:s``
 
-This option allows to validate a custom date format. See
+This option allows you to validate a custom date format. See
 :phpmethod:`DateTime::createFromFormat` for formatting options.
 
 .. include:: /reference/constraints/_groups-option.rst.inc

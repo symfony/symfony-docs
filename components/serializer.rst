@@ -603,7 +603,7 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
     You can also implement
     :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
-    to access to the current class name, format and context.
+    to access the current class name, format and context.
 
 .. _using-camelized-method-names-for-underscored-attributes:
 
