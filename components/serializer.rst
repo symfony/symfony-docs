@@ -515,7 +515,7 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
     You can also implement
     :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
-    to access to the current class name, format and context.
+    to access the current class name, format and context.
 
 .. _using-camelized-method-names-for-underscored-attributes:
 
@@ -882,7 +882,7 @@ Option                  Description                                            D
                         and ``$options = ['csv_headers' => ['a', 'b', 'c']]``
                         then ``serialize($data, 'csv', $options)`` returns
                         ``a,b,c\n1,2,3``                                       ``[]``, inferred from input data's keys
-``csv_escape_formulas`` Escapes fields containg formulas by prepending them    ``false``
+``csv_escape_formulas`` Escapes fields containing formulas by prepending them    ``false``
                         with a ``\t`` character
 ``as_collection``       Always returns results as a collection, even if only   ``true``
                         one line is decoded.
