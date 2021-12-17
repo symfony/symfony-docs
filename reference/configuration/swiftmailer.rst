@@ -106,7 +106,7 @@ local_domain
 
     The ``local_domain`` option was introduced in SwiftMailerBundle 2.4.0.
 
-The domain name to use in ``HELO`` command.
+The domain name to use in the ``HELO`` command.
 
 encryption
 ~~~~~~~~~~
@@ -172,7 +172,7 @@ sleep
 **type**: ``integer`` **default**: ``0``
 
 Used with ``Swift_Plugins_AntiFloodPlugin``. This is the number of seconds
-to sleep for during a transport restart.
+to sleep during a transport restart.
 
 .. _delivery-address:
 

@@ -51,7 +51,7 @@ access_denied_url
 **type**: ``string`` **default**: ``null``
 
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
-you define a custom access deny handler). Example: ``/no-permission``
+you define a custom access denial handler). Example: ``/no-permission``
 
 always_authenticate_before_granting
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -297,7 +297,7 @@ password) so you don't have to deal with it.
 Using the "auto" Password Encoder
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It selects automatically the best possible encoder. Currently, it tries to use
+It automatically selects the best possible encoder. Currently, it tries to use
 Sodium by default and falls back to the `bcrypt password hashing function`_ if
 not possible. In the future, when PHP adds new hashing techniques, it may use
 different password hashers.
@@ -452,7 +452,7 @@ This is the route or path that the user will be redirected to (unless ``use_forw
 is set to ``true``) when they try to access a protected resource but isn't
 fully authenticated.
 
-This path **must** be accessible by a normal, un-authenticated user, else
+This path **must** be accessible by a normal, unauthenticated user, else
 you may create a redirect loop.
 
 check_path
