@@ -104,7 +104,7 @@ Using a Custom Query to Load the User
 The entity provider can only query from one *specific* field, specified by
 the ``property`` config key. If you want a bit more control over this - e.g. you
 want to find a user by ``email`` *or* ``username``, you can do that by
-implenting :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`
+implementing :class:`Symfony\\Bridge\\Doctrine\\Security\\User\\UserLoaderInterface`
 in your :ref:`Doctrine repository <doctrine-queries>` (e.g. ``UserRepository``)::
 
     // src/Repository/UserRepository.php

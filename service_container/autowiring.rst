@@ -611,7 +611,7 @@ you can use the ``@required`` annotation instead.
 
     The ``#[Required]`` attribute was introduced in Symfony 5.2.
 
-Despite property injection has some :ref:`drawbacks <property-injection>`,
+Despite property injection having some :ref:`drawbacks <property-injection>`,
 autowiring with ``#[Required]`` or ``@required`` can also be applied to public
 typed properties:
 

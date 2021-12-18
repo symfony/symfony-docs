@@ -39,7 +39,7 @@ The notifier component supports the following channels:
 
 .. tip::
 
-    Use :doc:`secrets </configuration/secrets>` to securily store your
+    Use :doc:`secrets </configuration/secrets>` to securely store your
     API's tokens.
 
 .. _notifier-sms-channel:
@@ -422,10 +422,10 @@ Symfony provides the following recipients:
 :class:`Symfony\\Component\\Notifier\\Recipient\\NoRecipient`
     This is the default and is useful when there is no need to have
     information about the receiver. For example, the browser channel uses
-    the current requests's :ref:`session flashbag <flash-messages>`;
+    the current requests' :ref:`session flashbag <flash-messages>`;
 
 :class:`Symfony\\Component\\Notifier\\Recipient\\Recipient`
-    This can contain both email address and phonenumber of the user. This
+    This can contain both the email address and the phone number of the user. This
     recipient can be used for all channels (depending on whether they are
     actually set).
 

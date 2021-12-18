@@ -295,7 +295,7 @@ Baseline Deprecations
 If your application has some deprecations that you can't fix for some reasons,
 you can tell Symfony to ignore them. The trick is to create a file with the
 allowed deprecations and define it as the "deprecation baseline". Deprecations
-inside that file are ignore but the rest of deprecations are still reported.
+inside that file are ignored but the rest of deprecations are still reported.
 
 First, generate the file with the allowed deprecations (run the same command
 whenever you want to update the existing file):

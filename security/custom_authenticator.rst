@@ -4,7 +4,7 @@ How to Write a Custom Authenticator
 Symfony comes with :ref:`many authenticators <security-authenticators>` and
 third party bundles also implement more complex cases like JWT and oAuth
 2.0. However, sometimes you need to implement a custom authentication
-mechanism that doesn't exists yet or you need to customize one. In such
+mechanism that doesn't exist yet or you need to customize one. In such
 cases, you must create and use your own authenticator.
 
 Authenticators should implement the
@@ -133,7 +133,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
 .. versionadded:: 5.2
 
     Starting with Symfony 5.2, the custom authenticator is automatically
-    registered as entry point if it implements ``AuthenticationEntryPointInterface``.
+    registered as an entry point if it implements ``AuthenticationEntryPointInterface``.
 
     Prior to 5.2, you had to configure the entry point separately using the
     ``entry_point`` option. Read :doc:`/security/entry_point` for more
@@ -171,7 +171,7 @@ can define what happens in these cases:
 
     **Caution**: Never use ``$exception->getMessage()`` for ``AuthenticationException``
     instances. This message might contain sensitive information that you
-    don't want to expose publicly. Instead, use ``$exception->getMessageKey()``
+    don't want to be publicly exposed. Instead, use ``$exception->getMessageKey()``
     and ``$exception->getMessageData()`` like shown in the full example
     above. Use :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`
     if you want to set custom error messages.

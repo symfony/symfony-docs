@@ -210,7 +210,7 @@ as seconds) and ``isExpired()`` (which returns a boolean).
 Automatically Releasing The Lock
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Locks are automatically released when their Lock objects are destructed. This is
+Locks are automatically released when their Lock objects are destroyed. This is
 an implementation detail that will be important when sharing Locks between
 processes. In the example below, ``pcntl_fork()`` creates two processes and the
 Lock will be released automatically as soon as one process finishes::
@@ -508,7 +508,7 @@ locks::
     $store = new PostgreSqlStore($databaseConnectionOrDSN);
 
 In opposite to the ``PdoStore``, the ``PostgreSqlStore`` does not need a table to
-store locks and does not expire.
+store locks and it does not expire.
 
 .. versionadded:: 5.2
 
