@@ -24,6 +24,11 @@ tests, such as Doctrine, Twig and Monolog. To do so,
 
     $ composer update
 
+.. tip::
+
+    Composer uses git to determine the current version so git must be installed
+    on the machine where Composer runs.
+
 .. _running:
 
 Running the Tests
