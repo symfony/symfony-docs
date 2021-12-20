@@ -607,7 +607,7 @@ to a method, you can always explicitly :doc:`configure the method call </service
 If your PHP version doesn't support attributes (they were introduced in PHP 8),
 you can use the ``@required`` annotation instead.
 
-Despite property injection has some :ref:`drawbacks <property-injection>`,
+Despite property injection having some :ref:`drawbacks <property-injection>`,
 autowiring with ``#[Required]`` or ``@required`` can also be applied to public
 typed properties:
 

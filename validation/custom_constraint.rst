@@ -226,8 +226,8 @@ with the necessary ``validator.constraint_validator``. This means you can
 Create a Reusable Set of Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In case you need to apply some common set of constraints in different places
-consistently across your application, you can extend the :doc:`Compound constraint </reference/constraints/Compound>`.
+In case you need to consistently apply a common set of constraints
+across your application, you can extend the :doc:`Compound constraint </reference/constraints/Compound>`.
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

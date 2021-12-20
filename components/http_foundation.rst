@@ -81,7 +81,7 @@ can be accessed via several public properties:
   (``$request->headers->get('User-Agent')``).
 
 Each property is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
-instance (or a sub-class of), which is a data holder class:
+instance (or a subclass of), which is a data holder class:
 
 * ``request``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` or
   :class:`Symfony\\Component\\HttpFoundation\\InputBag` if the data is
@@ -705,7 +705,7 @@ The ``JsonResponse`` class sets the ``Content-Type`` header to
 .. caution::
 
     To avoid XSSI `JSON Hijacking`_, you should pass an associative array
-    as the outer-most array to ``JsonResponse`` and not an indexed array so
+    as the outermost array to ``JsonResponse`` and not an indexed array so
     that the final result is an object (e.g. ``{"object": "not inside an array"}``)
     instead of an array (e.g. ``[{"object": "inside an array"}]``). Read
     the `OWASP guidelines`_ for more information.

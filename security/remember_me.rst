@@ -135,7 +135,7 @@ The ``remember_me`` firewall defines the following configuration options:
 
 ``service`` (default value: ``null``)
     Defines the ID of the service used to handle the Remember Me feature. It's
-    useful if you need to overwrite the current behavior entirely.
+    useful if you need to overwrite the current behavior.
 
 Forcing the User to Opt-Out of the Remember Me Feature
 ------------------------------------------------------
@@ -200,7 +200,7 @@ users to change their password. You can do this by leveraging a few special
 
 .. tip::
 
-    There is also a ``IS_REMEMBERED`` attribute that grants *only* when the
+    There is also a ``IS_REMEMBERED`` attribute that grants access *only* when the
     user is authenticated via the remember me mechanism.
 
 .. _remember-me-token-in-database:

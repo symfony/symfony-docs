@@ -254,7 +254,7 @@ option. Read more about this and other options in
     finished, press ``Esc.`` to hide the box again.
 
     If you want to use your browser search input, press ``Ctrl. + F`` or
-    ``Cmd. + F`` again while having focus on VarDumper's search input.
+    ``Cmd. + F`` again while focusing on VarDumper's search input.
 
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
