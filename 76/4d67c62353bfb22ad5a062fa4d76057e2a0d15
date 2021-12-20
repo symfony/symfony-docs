@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by dunglas at 2021-12-16T14:22:49Z
+
+@azjezz
+
+> I think the JWT section could be extended to mention the jwt.publish, jwt.publish, jwt.algorithm, and using custom JWT provider/factory.
+
+Indeed, done.
