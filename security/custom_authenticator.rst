@@ -11,7 +11,7 @@ Authenticators should implement the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AuthenticatorInterface`.
 You can also extend
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractAuthenticator`,
-which has a default implementation for the ``createAuthenticatedToken()``
+which has a default implementation for the ``createToken()``
 method that fits most use-cases::
 
     // src/Security/ApiKeyAuthenticator.php
@@ -347,7 +347,7 @@ would initialize the passport like this::
     Besides badges, passports can define attributes, which allows the
     ``authenticate()`` method to store arbitrary information in the
     passport to access it from other authenticator methods (e.g.
-    ``createAuthenticatedToken()``)::
+    ``createToken()``)::
 
         // ...
         use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
