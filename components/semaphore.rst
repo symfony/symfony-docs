@@ -45,7 +45,7 @@ class, which in turn requires another class to manage the storage::
 The semaphore is created by calling the
 :method:`Symfony\\Component\\Semaphore\\SemaphoreFactory::createSemaphore`
 method. Its first argument is an arbitrary string that represents the locked
-resource. Its second argument is the maximum number of process allowed. Then, a
+resource. Its second argument is the maximum number of processes allowed. Then, a
 call to the :method:`Symfony\\Component\\Semaphore\\SemaphoreInterface::acquire`
 method will try to acquire the semaphore::
 
@@ -54,7 +54,7 @@ method will try to acquire the semaphore::
 
     if ($semaphore->acquire()) {
         // The resource "pdf-invoice-generation" is locked.
-        // You can compute and generate invoice safely here.
+        // Here you can safely compute and generate the invoice.
 
         $semaphore->release();
     }
