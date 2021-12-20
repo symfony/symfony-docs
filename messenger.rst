@@ -706,9 +706,9 @@ PHP is designed to be stateless, there are no shared resources across different
 requests. In HTTP context PHP cleans everything after sending the response, so
 you can decide to not take care of services that may leak memory.
 
-On the other hand, workers usually run in long-running CLI processes, which don't
-finish after processing a message. That's why you need to be careful about services
-state to not leak information and/or memory from one message to another message.
+On the other hand, workers usually sequentially process messages in long-running CLI processes, which don't
+finish after processing a single message. That's why you must be careful about service
+states to prevent information and/or memory leakage.
 
 However, certain Symfony services, such as the Monolog
 :ref:`fingers crossed handler <logging-handler-fingers_crossed>`, leak by design.
