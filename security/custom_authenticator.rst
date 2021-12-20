@@ -4,14 +4,14 @@ How to Write a Custom Authenticator
 Symfony comes with :ref:`many authenticators <security-authenticators>` and
 third party bundles also implement more complex cases like JWT and oAuth
 2.0. However, sometimes you need to implement a custom authentication
-mechanism that doesn't exists yet or you need to customize one. In such
+mechanism that doesn't exist yet or you need to customize one. In such
 cases, you must create and use your own authenticator.
 
 Authenticators should implement the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AuthenticatorInterface`.
 You can also extend
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractAuthenticator`,
-which has a default implementation for the ``createAuthenticatedToken()``
+which has a default implementation for the ``createToken()``
 method that fits most use-cases::
 
     // src/Security/ApiKeyAuthenticator.php
@@ -169,7 +169,7 @@ can define what happens in these cases:
 
     **Caution**: Never use ``$exception->getMessage()`` for ``AuthenticationException``
     instances. This message might contain sensitive information that you
-    don't want to expose publicly. Instead, use ``$exception->getMessageKey()``
+    don't want to be publicly exposed. Instead, use ``$exception->getMessageKey()``
     and ``$exception->getMessageData()`` like shown in the full example
     above. Use :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`
     if you want to set custom error messages.
@@ -340,7 +340,7 @@ would initialize the passport like this::
     Besides badges, passports can define attributes, which allows the
     ``authenticate()`` method to store arbitrary information in the
     passport to access it from other authenticator methods (e.g.
-    ``createAuthenticatedToken()``)::
+    ``createToken()``)::
 
         // ...
         use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
