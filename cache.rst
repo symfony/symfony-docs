@@ -800,5 +800,5 @@ Then, register the ``SodiumMarshaller`` service using this key:
 
 When configuring multiple keys, the first key will be used for reading and
 writing, and the additional key(s) will only be used for reading. Once all
-cache items encrypted with the old key have expired, you can remove
-``OLD_CACHE_DECRYPTION_KEY`` completely.
+cache items encrypted with the old key have expired, you can completely remove
+``OLD_CACHE_DECRYPTION_KEY``.

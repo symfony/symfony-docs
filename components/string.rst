@@ -36,7 +36,7 @@ However, other languages require thousands of symbols to display their contents.
 They need complex encoding standards such as `Unicode`_ and concepts like
 "character" no longer make sense. Instead, you have to deal with these terms:
 
-* `Code points`_: they are the atomic unit of information. A string is a series
+* `Code points`_: they are the atomic units of information. A string is a series
   of code points. Each code point is a number whose meaning is given by the
   `Unicode`_ standard. For example, the English letter ``A`` is the ``U+0041``
   code point and the Japanese *kana* ``の`` is the ``U+306E`` code point.

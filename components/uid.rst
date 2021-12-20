@@ -331,7 +331,7 @@ type, which converts to/from ULID objects automatically::
         // ...
     }
 
-There's also a Doctrine generator to help autogenerate ULID values for the
+There's also a Doctrine generator to help auto-generate ULID values for the
 entity primary keys::
 
     use Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator;

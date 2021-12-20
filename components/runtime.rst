@@ -383,7 +383,7 @@ application outside of the global state in 6 steps:
    that knows how to "run" the application object.
 #. The ``RunnerInterface::run(object $application)`` is called and it returns the
    exit status code as `int`.
-#. The PHP engine is exited with this status code.
+#. The PHP engine is terminated with this status code.
 
 When creating a new runtime, there are two things to consider: First, what arguments
 will the end user use? Second, what will the user's application look like?

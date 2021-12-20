@@ -185,7 +185,7 @@ Custom Header Handling
 The optional HTTP headers passed to the ``request()`` method follows the FastCGI
 request format (uppercase, underscores instead of dashes and prefixed with ``HTTP_``).
 Before saving those headers to the request, they are lower-cased, with ``HTTP_``
-stripped, and underscores turned to dashes.
+stripped, and underscores converted into dashes.
 
 If you're making a request to an application that has special rules about header
 capitalization or punctuation, override the ``getHeaders()`` method, which must

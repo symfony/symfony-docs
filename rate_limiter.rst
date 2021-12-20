@@ -50,7 +50,7 @@ squares).
 
 Its main drawback is that resource usage is not evenly distributed in time and
 it can overload the server at the window edges. In the previous example,
-there are 6 accepted requests between 11:00 and 12:00.
+there were 6 accepted requests between 11:00 and 12:00.
 
 This is more significant with bigger limits. For instance, with 5,000 requests
 per hour, a user could make the 4,999 requests in the last minute of some
@@ -80,15 +80,15 @@ the previous hour and 500 requests this hour. 15 minutes in to the current hour
 (25% of the window) the hit count would be calculated as: 75% * 4,000 + 500 = 3,500.
 At this point in time the user can only do 1,500 more requests.
 
-The math shows that the closer the last window is, the more will the hit count
-of the last window effect the current limit. This will make sure that a user can
-do 5,000 requests per hour but only if they are spread out evenly.
+The math shows that the closer the last window is, the more the hit count
+of the last window will affect the current limit. This will make sure that a user can
+do 5,000 requests per hour but only if they are evenly spread out.
 
 Token Bucket Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This technique implements the `token bucket algorithm`_, which defines a
-continuously updating budget of resource usage. It roughly works like this:
+This technique implements the `token bucket algorithm`_, which defines
+continuously updating the budget of resource usage. It roughly works like this:
 
 * A bucket is created with an initial set of tokens;
 * A new token is added to the bucket with a predefined frequency (e.g. every second);
@@ -103,7 +103,7 @@ of 1 token per 15 minutes:
 
     <object data="_images/rate_limiter/token_bucket.svg" type="image/svg+xml"></object>
 
-This algorithm handles more complex back-off algorithm to manage bursts.
+This algorithm handles more complex back-off burst management.
 For instance, it can allow a user to try a password 5 times and then only
 allow 1 every 15 minutes (unless the user waits 75 minutes and they will be
 allowed 5 tries again).
