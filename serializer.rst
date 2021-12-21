@@ -147,7 +147,7 @@ properties and setters (``setXxx()``) to change properties:
 Serializer Context
 ------------------
 
-The serializer can define a context to control how the (de)serialization of
+The serializer can define a context to control the (de)serialization of
 resources. This context is passed to all normalizers. For example:
 
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` uses
@@ -156,7 +156,7 @@ resources. This context is passed to all normalizers. For example:
   uses ``empty_iterable_as_object`` to represent empty objects as ``{}`` instead
   of ``[]`` in JSON.
 
-You can pass the context like following::
+You can pass the context as follows::
 
     $serializer->serialize($something, 'json', [
         DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s',
