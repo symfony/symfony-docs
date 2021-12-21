@@ -63,24 +63,24 @@ Strategies
 The following strategies are bundled with the component:
 
 ``AffirmativeStrategy`` (default)
-    grant access as soon as there is one voter granting access;
+    grants access as soon as there is one voter granting access;
 
 ``ConsensusStrategy``
-    grant access if there are more voters granting access than there are denying;
+    grants access if there are more voters granting access than there are denying;
     if there is a draw between votes, the decision is made based on the
     ``$allowIfEqualGrantedDeniedDecisions`` constructor parameter which defaults to ``true``.
 
 ``UnanimousStrategy``
-    only grant access if none of the voters has denied access.
+    only grants access if none of the voters has denied access.
 
 ``PriorityStrategy``
     grants or denies access by the first voter that does not abstain;
 
 If all voters abstained from voting, the decision is based on the ``$allowIfAllAbstainDecisions``
-constructor parameter which is supported by all of the built-in strategies and defaults to ``false``.
+constructor parameter which is supported by all the built-in strategies and defaults to ``false``.
 
 If none of the built-in strategies seem to fit, a custom strategy may be provided. The strategy will
-receive a stream of votes and may return as soon as it has seen enough votes to come to a conclusion.
+receive a stream of votes and may return as soon as it has seen enough votes to reach a conclusion.
 
 ::
 
