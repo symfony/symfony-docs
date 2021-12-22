@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2021-12-22T12:20:43Z
+
+`env` behaves just like `php-symfony` and all other highlighting aliases used in the Symfony docs. The highlighter is run with language `bash`, but for the renderer it's `env`. This means we can customize the label in the configuration blocks (how we use `php-symfony`/`php-standalone`), but also have different styling of the blocks.
+
+That latter is important for `env`/`bash`: we highlight `bash` code blocks with a black background in the light theme (to fit the terminal frame), but we highlight `env` code blocks just like any other code block.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-12-22T12:30:10Z
+
+Thanks for the explanation. About highlighting, please note that we changed this recently and bash blocks no longer look like terminal blocks.
