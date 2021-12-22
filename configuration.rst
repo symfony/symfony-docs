@@ -410,6 +410,102 @@ In reality, each environment differs only somewhat from others. This means that
 all environments share a large base of common configuration, which is put in
 files directly in the ``config/packages/`` directory.
 
+.. tip::
+
+    You can also define options for different environments in a single configuration file.
+
+    .. versionadded:: 5.3
+
+        The ability to defined different environments in a single file was introduced in Symfony 5.3.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/webpack_encore.yaml
+            webpack_encore:
+                # ...
+                output_path: '%kernel.project_dir%/public/build'
+                strict_mode: true
+                cache: false
+
+            when@prod:
+                webpack_encore:
+                    cache: true
+
+            when@test:
+                webpack_encore:
+                    strict_mode: false
+
+        .. code-block:: xml
+
+            <!-- config/packages/webpack_encore.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                <webpack-encore:config>
+                    <!-- ... -->
+                </webpack-encore:config>
+
+                <when env="prod">
+                    <webpack-encore:config>
+                        <!-- ... -->
+                    </webpack-encore:config>
+                </when>
+
+                <when env="test">
+                    <webpack-encore:config>
+                        <!-- ... -->
+                    </webpack-encore:config>
+                </when>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (FrameworkConfig $framework, ContainerConfigurator $container) {
+                // ...
+
+                if ('prod' === $container->env()) {
+                    // ...
+                }
+
+                if ('test' === $container->env()) {
+                    $framework->test(true);
+                    $framework->session()->storageFactoryId('session.storage.mock_file');
+                }
+            };
+    
+    Also, if you are using PHP 8.0 or later, you can use the PHP attribute ``#[When]`` to tell that a class should only be registered as services in some environments :
+    
+    .. configuration-block::
+
+        .. code-block:: php-attributes
+
+            use Symfony\Component\DependencyInjection\Attribute\When;
+
+            #[When(env: 'dev')]
+            class SomeClass
+            {
+                // ...
+            }
+
+            // you can apply more than one attribute to the same class:
+
+            #[When(env: 'dev')]
+            #[When(env: 'test')]
+            class AnotherClass
+            {
+                // ...
+            }
+
 .. seealso::
 
     See the ``configureContainer()`` method of
