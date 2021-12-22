@@ -2199,30 +2199,55 @@ will happen:
 Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
 using annotations:
 
-.. code-block:: diff
+.. configuration-block::
 
-      // src/Controller/AdminController.php
-      // ...
+    .. code-block:: php-annotations
 
-    + use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+        // src/Controller/AdminController.php
+        // ...
 
-    + /**
-    +  * Require ROLE_ADMIN for *every* controller method in this class.
-    +  *
-    +  * @IsGranted("ROLE_ADMIN")
-    +  */
-      class AdminController extends AbstractController
-      {
-    +     /**
-    +      * Require ROLE_ADMIN for only this controller method.
-    +      *
-    +      * @IsGranted("ROLE_ADMIN")
-    +      */
-          public function adminDashboard(): Response
-          {
-              // ...
-          }
-      }
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+        /**
+         * Require ROLE_ADMIN for all the actions of this controller
+         *
+         * @IsGranted("ROLE_ADMIN")
+         */
+        class AdminController extends AbstractController
+        {
+            /**
+             * Require ROLE_SUPER_ADMIN only for this action
+             *
+             * @IsGranted("ROLE_SUPER_ADMIN")
+             */
+            public function adminDashboard(): Response
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/AdminController.php
+        // ...
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+        /**
+         * Require ROLE_ADMIN for all the actions of this controller
+         */
+        #[IsGranted('ROLE_ADMIN')]
+        class AdminController extends AbstractController
+        {
+            /**
+             * Require ROLE_SUPER_ADMIN only for this action
+             */
+            #[IsGranted('ROLE_SUPER_ADMIN')]
+            public function adminDashboard(): Response
+            {
+                // ...
+            }
+        }
 
 For more information, see the `FrameworkExtraBundle documentation`_.
 
