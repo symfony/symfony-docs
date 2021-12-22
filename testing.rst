@@ -222,7 +222,7 @@ If you need to customize some environment variables for your tests (e.g. the
 ``DATABASE_URL`` used by Doctrine), you can do that by overriding anything you
 need in your ``.env.test`` file:
 
-.. code-block:: text
+.. code-block:: env
 
     # .env.test
 
@@ -268,7 +268,7 @@ the container is stored in ``static::getContainer()``::
             $newsletterGenerator = $container->get(NewsletterGenerator::class);
             $newsletter = $newsletterGenerator->generateMonthlyNews(...);
 
-            $this->assertEquals(..., $newsletter->getContent());
+            $this->assertEquals('...', $newsletter->getContent());
         }
     }
 
