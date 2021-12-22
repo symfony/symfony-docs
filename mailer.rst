@@ -1266,6 +1266,57 @@ The following transports only support tags:
 
 * OhMySMTP
 
+Draft Emails
+------------
+
+.. versionadded:: 6.1
+
+    ``Symfony\Component\Mime\DraftEmail`` was introduced in 6.1.
+
+:class:`Symfony\\Component\\Mime\\DraftEmail` is a special instance of
+:class:`Symfony\\Component\\Mime\\Email`. Its purpose is to build up an email
+(with body, attachments, etc) and make available to download as an ``.eml`` with
+the ``X-Unsent`` header. Many email clients can open these files and interpret
+them as *draft emails*. You can use these to create advanced ``mailto:`` links.
+
+Here's an example of making one available to download::
+
+    // src/Controller/DownloadEmailController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+    use Symfony\Component\Mime\DraftEmail;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class DownloadEmailController extends AbstractController
+    {
+        #[Route('/download-email')]
+        public function __invoke(): Response
+        {
+            $message = (new DraftEmail())
+                ->html($this->renderView(/* ... */))
+                ->attach(/* ... */)
+            ;
+
+            $response = new Response($message->toString());
+            $contentDisposition = $response->headers->makeDisposition(
+                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                'download.eml'
+            );
+            $response->headers->set('Content-Type', 'message/rfc822');
+            $response->headers->set('Content-Disposition', $contentDisposition);
+
+            return $response;
+        }
+    }
+
+.. note::
+
+    As it's possible for :class:`Symfony\\Component\\Mime\\DraftEmail`'s to be created
+    without a To/From they cannot be sent with the mailer.
+
 Development & Debugging
 -----------------------
 
