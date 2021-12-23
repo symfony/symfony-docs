@@ -340,18 +340,20 @@ Locks are created and managed in ``Stores``, which are classes that implement
 
 The component includes the following built-in store types:
 
-============================================  ======  ========  ======== =======
-Store                                         Scope   Blocking  Expiring Sharing
-============================================  ======  ========  ======== =======
-:ref:`FlockStore <lock-store-flock>`          local   yes       no       yes
-:ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes      no
-:ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes      no
-:ref:`PdoStore <lock-store-pdo>`              remote  no        yes      no
-:ref:`PostgreSqlStore <lock-store-pgsql>`     remote  yes       no       yes
-:ref:`RedisStore <lock-store-redis>`          remote  no        yes      yes
-:ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no       no
-:ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no       no
-============================================  ======  ========  ======== =======
+=========================================================  ======  ========  ======== =======
+Store                                                      Scope   Blocking  Expiring Sharing
+=========================================================  ======  ========  ======== =======
+:ref:`FlockStore <lock-store-flock>`                       local   yes       no       yes
+:ref:`MemcachedStore <lock-store-memcached>`               remote  no        yes      no
+:ref:`MongoDbStore <lock-store-mongodb>`                   remote  no        yes      no
+:ref:`PdoStore <lock-store-pdo>`                           remote  no        yes      no
+:ref:`DoctrineDbalStore <lock-store-dbal>`                 remote  no        yes      no
+:ref:`PostgreSqlStore <lock-store-pgsql>`                  remote  yes       no       yes
+:ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>` remote  yes       no       yes
+:ref:`RedisStore <lock-store-redis>`                       remote  no        yes      yes
+:ref:`SemaphoreStore <lock-store-semaphore>`               local   yes       no       no
+:ref:`ZookeeperStore <lock-store-zookeeper>`               remote  no        no       no
+=========================================================  ======  ========  ======== =======
 
 .. _lock-store-flock:
 
@@ -457,13 +459,13 @@ MongoDB Connection String:
 PdoStore
 ~~~~~~~~
 
-The PdoStore saves locks in an SQL database. It requires a `PDO`_ connection, a
-`Doctrine DBAL Connection`_, or a `Data Source Name (DSN)`_. This store does not
-support blocking, and expects a TTL to avoid stalled locks::
+The PdoStore saves locks in an SQL database. It is identical to DoctrineDbalStore
+but requires a `PDO`_ connection or a `Data Source Name (DSN)`_. This store does
+not support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\PdoStore;
 
-    // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
+    // a PDO or DSN for lazy connecting through PDO
     $databaseConnectionOrDSN = 'mysql:host=127.0.0.1;dbname=app';
     $store = new PdoStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
 
@@ -477,24 +479,73 @@ You can also create this table explicitly by calling the
 :method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable` method in
 your code.
 
+.. deprecated:: 5.4
+
+    Using ``PdoStore`` with Doctrine DBAL is deprecated in Symfony 5.4.
+    Use ``DoctrineDbalStore`` instead.
+
+.. _lock-store-dbal:
+
+DoctrineDbalStore
+~~~~~~~~~~~~~~~~~
+
+The DoctrineDbalStore saves locks in an SQL database. It is identical to PdoStore
+but requires a `Doctrine DBAL Connection`_, or a `Doctrine DBAL URL`_. This store
+does not support blocking, and expects a TTL to avoid stalled locks::
+
+    use Symfony\Component\Lock\Store\PdoStore;
+
+    // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
+    $connectionOrURL = 'mysql://myuser:mypassword@127.0.0.1/app';
+    $store = new PdoStore($connectionOrURL);
+
+.. note::
+
+    This store does not support TTL lower than 1 second.
+
+The table where values are stored is created automatically on the first call to
+the :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::save` method.
+You can also add this table to your schema by calling
+:method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::configureSchema` method
+in your code or create this table explicitly by calling the
+:method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::createTable` method.
+
 .. _lock-store-pgsql:
 
 PostgreSqlStore
 ~~~~~~~~~~~~~~~
 
-The PostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL. It requires a
-`PDO`_ connection, a `Doctrine DBAL Connection`_, or a
-`Data Source Name (DSN)`_. It supports native blocking, as well as sharing
+The PostgreSqlStore and DoctrineDbalPostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL.
+It is identical to DoctrineDbalPostgreSqlStore but requires `PDO`_ connection or
+a `Data Source Name (DSN)`_. It supports native blocking, as well as sharing
 locks::
 
     use Symfony\Component\Lock\Store\PostgreSqlStore;
 
-    // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
-    $databaseConnectionOrDSN = 'postgresql://myuser:mypassword@localhost:5634/lock';
-    $store = new PostgreSqlStore($databaseConnectionOrDSN);
+    // a PDO instance or DSN for lazy connecting through PDO
+    $databaseConnectionOrDSN = 'pgsql:host=localhost;port=5634;dbname=lock';
+    $store = new PostgreSqlStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
 
 In opposite to the ``PdoStore``, the ``PostgreSqlStore`` does not need a table to
 store locks and it does not expire.
+
+.. _lock-store-dbal-pgsql:
+
+DoctrineDbalPostgreSqlStore
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The DoctrineDbalPostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL.
+It is identical to PostgreSqlStore but requires a `Doctrine DBAL Connection`_ or
+a `Doctrine DBAL URL`_. It supports native blocking, as well as sharing locks::
+
+    use Symfony\Component\Lock\Store\PostgreSqlStore;
+
+    // a PDO instance or DSN for lazy connecting through PDO
+    $databaseConnectionOrDSN = 'pgsql:host=localhost;port=5634;dbname=lock';
+    $store = new PostgreSqlStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
+
+In opposite to the ``DoctrineDbalStore``, the ``DoctrineDbalPostgreSqlStore`` does not need a table to
+store locks and does not expire.
 
 .. _lock-store-redis:
 
@@ -922,6 +973,7 @@ are still running.
 .. _`Advisory Locks`: https://www.postgresql.org/docs/current/explicit-locking.html
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/src/Connection.php
+.. _`Doctrine DBAL URL`: https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 .. _`Expire Data from Collections by Setting TTL`: https://docs.mongodb.com/manual/tutorial/expire-data/
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _`MongoDB Connection String`: https://docs.mongodb.com/manual/reference/connection-string/
