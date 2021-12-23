@@ -304,7 +304,7 @@ using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 
     .. code-block:: twig
 
-       {{ message|trans({'%name%': '...', '%count%': 1}, 'app') }}
+       {{ message|trans({'name': '...', '%count%': 1}, 'app') }}
 
     The ``message`` variable must include all the different versions of this
     message based on the value of the ``count`` parameter. For example:
@@ -403,7 +403,7 @@ The ``trans`` filter can be used to translate *variable texts* and complex expre
 
     {{ message|trans }}
 
-    {{ message|trans({'%name%': 'Fabien'}, 'app') }}
+    {{ message|trans({'name': 'Fabien'}, 'app') }}
 
 .. tip::
 
