@@ -4,7 +4,7 @@
 Security Configuration Reference (SecurityBundle)
 =================================================
 
-The SecurityBundle integrates the :doc:`Security component </components/security>`
+The SecurityBundle integrates the :doc:`Security component </security>`
 in Symfony applications. All these options are configured under the ``security``
 key in your application configuration.
 

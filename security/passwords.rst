@@ -704,10 +704,12 @@ Supported Algorithms
 * :ref:`sodium <reference-security-sodium>`
 * :ref:`PBKDF2 <reference-security-pbkdf2>`
 
+* :ref:`Or create a custom password hasher <custom-password-hasher>`
+
 .. TODO missing:
-    * :ref:`Message Digest <reference-security-message-digest>`
-    * :ref:`Native <reference-security-native>`
-    * :ref:`Plaintext <reference-security-plaintext>`
+..  * :ref:`Message Digest <reference-security-message-digest>`
+..  * :ref:`Native <reference-security-native>`
+..  * :ref:`Plaintext <reference-security-plaintext>`
 
 .. _reference-security-encoder-auto:
 
@@ -772,6 +774,110 @@ Using the `PBKDF2`_ hasher is no longer recommended since PHP added support for
 Sodium and BCrypt. Legacy application still using it are encouraged to upgrade
 to those newer hashing algorithms.
 
+.. _custom-password-hasher:
+
+Creating a custom Password Hasher
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to create your own, it needs to follow these rules:
+
+#. The class must implement :class:`Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface`
+   (you can also extend :class:`Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasher`);
+
+#. The implementations of
+   :method:`Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface::hashPassword`
+   and :method:`Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface::isPasswordValid`
+   **must validate that the password length is no longer than 4096
+   characters.** This is for security reasons (see `CVE-2013-5750`_).
+
+   You can use the :method:`Symfony\\Component\\PasswordHasher\\Hasher\\CheckPasswordLengthTrait::isPasswordTooLong`
+   method for this check.
+
+.. code-block:: php
+
+    // src/Security/CustomVerySecureHasher.php
+    namespace App\Security;
+
+    use Symfony\Component\PasswordHasher\Hasher\CheckPasswordLengthTrait;
+    use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+    use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+
+    class CustomVerySecureHasher extends UserPasswordHasher
+    {
+        use CheckPasswordLengthTrait;
+
+        public function hashPassword(UserInterface $user, string $plainPassword): string
+        {
+            if ($this->isPasswordTooLong($user->getPassword())) {
+                throw new BadCredentialsException('Invalid password.');
+            }
+
+            // ... hash the plain password in a secure way
+
+            return $hashedPassword;
+        }
+
+        public function isPasswordValid(UserInterface $user, string $plainPassword): bool
+        {
+            if ($this->isPasswordTooLong($user->getPassword())) {
+                return false;
+            }
+
+            // ... validate if the password equals the user's password in a secure way
+
+            return $passwordIsValid;
+        }
+    }
+
+Now, define a password hasher using the ``id`` setting:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+            password_hashers:
+                app_hasher:
+                    # the service ID of your custom hasher (the FQCN using the default services.yaml)
+                    id: 'App\Security\Hasher\MyCustomPasswordHasher'
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd"
+        >
+
+            <config>
+                <!-- ... -->
+                <!-- id: the service ID of your custom hasher (the FQCN using the default services.yaml) -->
+                <security:password_hasher class="app_hasher"
+                    id="App\Security\Hasher\MyCustomPasswordHasher"/>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Security\Hasher\MyCustomPasswordHasher;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->passwordHasher('app_hasher')
+                // the service ID of your custom hasher (the FQCN using the default services.yaml)
+                ->id(MyCustomPasswordHasher::class)
+            ;
+        };
+
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`PBKDF2`: https://en.wikipedia.org/wiki/PBKDF2
 .. _`libsodium`: https://pecl.php.net/package/libsodium
@@ -780,3 +886,4 @@ to those newer hashing algorithms.
 .. _`cryptographic salt`: https://en.wikipedia.org/wiki/Salt_(cryptography)
 .. _`the Doctrine docs for information`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/working-with-objects.html#custom-repositories
 .. _`SymfonyCastsResetPasswordBundle`: https://github.com/symfonycasts/reset-password-bundle
+.. _`CVE-2013-5750`: https://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form
