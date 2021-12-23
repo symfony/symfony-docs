@@ -1187,7 +1187,6 @@ The transport has a number of options:
 ``password``                                  Password to use to connect to the AMQP service
 ``persistent``                                                                                   ``'false'``
 ``port``                                      Port of the AMQP service
-``prefetch_count``
 ``read_timeout``                              Timeout in for income activity. Note: 0 or
                                               greater seconds. May be fractional.
 ``retry``
