@@ -473,9 +473,9 @@ MongoDB Connection String:
 PdoStore
 ~~~~~~~~
 
-The PdoStore saves locks in an SQL database. It is identical to DoctrineDbalStore but requires
-a `PDO`_ connection or a `Data Source Name (DSN)`_. This store does not
-support blocking, and expects a TTL to avoid stalled locks::
+The PdoStore saves locks in an SQL database. It is identical to DoctrineDbalStore
+but requires a `PDO`_ connection or a `Data Source Name (DSN)`_. This store does
+not support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\PdoStore;
 
@@ -495,16 +495,17 @@ your code.
 
 .. deprecated:: 5.4
 
-    Using ``PdoStore`` with Doctrine DBAL is deprecated in Symfony 5.4. Use ``DoctrineDbalStore`` instead.
+    Using ``PdoStore`` with Doctrine DBAL is deprecated in Symfony 5.4.
+    Use ``DoctrineDbalStore`` instead.
 
 .. _lock-store-dbal:
 
 DoctrineDbalStore
 ~~~~~~~~~~~~~~~~~
 
-The DoctrineDbalStore saves locks in an SQL database. It is identical to PdoStore but requires a
-`Doctrine DBAL Connection`_, or a `Doctrine DBAL URL`_. This store does not
-support blocking, and expects a TTL to avoid stalled locks::
+The DoctrineDbalStore saves locks in an SQL database. It is identical to PdoStore
+but requires a `Doctrine DBAL Connection`_, or a `Doctrine DBAL URL`_. This store
+does not support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\PdoStore;
 
@@ -525,8 +526,8 @@ in your code or create this table explicitly by calling the
 
 .. versionadded:: 5.4
 
-    The ``DoctrineDbalStore`` was introduced in Symfony 5.4 to replace ``PdoStore`` when
-    used with Doctrine DBAL.
+    The ``DoctrineDbalStore`` was introduced in Symfony 5.4 to replace ``PdoStore``
+    when used with Doctrine DBAL.
 
 .. _lock-store-pgsql:
 
@@ -553,17 +554,17 @@ store locks and it does not expire.
 
 .. deprecated:: 5.4
 
-    Using ``PostgreSqlStore`` with Doctrine DBAL is deprecated in Symfony 5.4. Use ``DoctrineDbalPostgreSqlStore`` instead.
+    Using ``PostgreSqlStore`` with Doctrine DBAL is deprecated in Symfony 5.4.
+    Use ``DoctrineDbalPostgreSqlStore`` instead.
 
 .. _lock-store-dbal-pgsql:
 
 DoctrineDbalPostgreSqlStore
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The DoctrineDbalPostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL. It is identical to PostgreSqlStore
-but requires a `Doctrine DBAL Connection`_ or a `Doctrine DBAL URL`_.
-It supports native blocking, as well as sharing
-locks::
+The DoctrineDbalPostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL.
+It is identical to PostgreSqlStore but requires a `Doctrine DBAL Connection`_ or
+a `Doctrine DBAL URL`_. It supports native blocking, as well as sharing locks::
 
     use Symfony\Component\Lock\Store\PostgreSqlStore;
 
@@ -576,8 +577,8 @@ store locks and does not expire.
 
 .. versionadded:: 5.4
 
-    The ``DoctrineDbalPostgreSqlStore`` was introduced in Symfony 5.4 to replace ``PostgreSqlStore`` when
-    used with Doctrine DBAL.
+    The ``DoctrineDbalPostgreSqlStore`` was introduced in Symfony 5.4 to replace
+    ``PostgreSqlStore`` when used with Doctrine DBAL.
 
 .. _lock-store-redis:
 
