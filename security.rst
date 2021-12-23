@@ -2589,7 +2589,7 @@ Authentication Events
 
 .. raw:: html
 
-    <object data="../_images/security/security_events.svg" type="image/svg+xml"></object>
+    <object data="./_images/security/security_events.svg" type="image/svg+xml"></object>
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\CheckPassportEvent`
     Dispatched after the authenticator created the :ref:`security passport <security-passport>`.
