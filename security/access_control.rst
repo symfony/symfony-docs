@@ -44,8 +44,6 @@ Take the following ``access_control`` entries as an example:
                 - { path: '^/admin', roles: ROLE_USER_IP, ip: 127.0.0.1 }
                 - { path: '^/admin', roles: ROLE_USER_HOST, host: symfony\.com$ }
                 - { path: '^/admin', roles: ROLE_USER_METHOD, methods: [POST, PUT] }
-                # when defining multiple roles, users must have at least one of them (it's like an OR condition)
-                - { path: '^/admin', roles: [ROLE_MANAGER, ROLE_ADMIN] }
 
     .. code-block:: xml
 
@@ -63,8 +61,6 @@ Take the following ``access_control`` entries as an example:
                 <rule path="^/admin" role="ROLE_USER_IP" ip="127.0.0.1"/>
                 <rule path="^/admin" role="ROLE_USER_HOST" host="symfony\.com$"/>
                 <rule path="^/admin" role="ROLE_USER_METHOD" methods="POST, PUT"/>
-                <!-- when defining multiple roles, users must have at least one of them (it's like an OR condition) -->
-                <rule path="^/admin" roles="ROLE_ADMIN, ROLE_MANAGER"/>
             </config>
         </srv:container>
 
@@ -94,11 +90,6 @@ Take the following ``access_control`` entries as an example:
                     'path' => '^/admin',
                     'roles' => 'ROLE_USER_METHOD',
                     'methods' => 'POST, PUT',
-                ],
-                [
-                    'path' => '^/admin',
-                    // when defining multiple roles, users must have at least one of them (it's like an OR condition)
-                    'roles' => ['ROLE_MANAGER', 'ROLE_ADMIN'],
                 ],
             ],
         ]);
@@ -156,8 +147,7 @@ options:
 
 * ``roles`` If the user does not have the given role, then access is denied
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-  is thrown). If this value is an array of multiple roles, the user must have
-  at least one of them.
+  is thrown).
 
 * ``allow_if`` If the expression returns false, then access is denied;
 

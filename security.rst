@@ -513,8 +513,8 @@ start with ``/admin``, you can:
                 # require ROLE_ADMIN for /admin*
                 - { path: '^/admin', roles: ROLE_ADMIN }
 
-                # or require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
-                - { path: '^/admin', roles: [IS_AUTHENTICATED_FULLY, ROLE_ADMIN] }
+                # or provide an expression for /admin* (e.g. to require multiple roles)
+                - { path: '^/admin', roles: 'is_granted("IS_AUTHENTICATED_FULLY") and is_granted("ROLE_ADMIN")' }
 
                 # the 'path' value can be any valid regular expression
                 # (this one will match URLs like /api/post/7298 and /api/comment/528491)
@@ -540,10 +540,9 @@ start with ``/admin``, you can:
                 <!-- require ROLE_ADMIN for /admin* -->
                 <rule path="^/admin" role="ROLE_ADMIN"/>
 
-                <!-- require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin* -->
+                <!-- or provide an expression for /admin* (e.g. to require multiple roles) -->
                 <rule path="^/admin">
-                    <role>ROLE_ADMIN</role>
-                    <role>IS_AUTHENTICATED_FULLY</role>
+                    <role>is_granted("IS_AUTHENTICATED_FULLY") and is_granted("ROLE_ADMIN")</role>
                 </rule>
 
                 <!-- the 'path' value can be any valid regular expression
@@ -568,8 +567,8 @@ start with ``/admin``, you can:
                 // require ROLE_ADMIN for /admin*
                 ['path' => '^/admin', 'roles' => 'ROLE_ADMIN'],
 
-                // require ROLE_ADMIN or IS_AUTHENTICATED_FULLY for /admin*
-                ['path' => '^/admin', 'roles' => ['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY']],
+                // require multiple roles for /admin* (when defining multiple roles, the behavior depends on the strategy used in Access Decission Manager)
+                ['path' => '^/admin', 'roles' => 'is_granted("IS_AUTHENTICATED_FULLY") and is_granted("ROLE_ADMIN")'],
 
                 // the 'path' value can be any valid regular expression
                 // (this one will match URLs like /api/post/7298 and /api/comment/528491)
