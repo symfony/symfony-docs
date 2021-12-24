@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2020-06-10T09:33:10Z
+
+This is security-related, so we'd like to merge this as soon as possible. @wouterj could you please check these proposed changes? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2020-06-10T12:17:57Z
+
+What if we simply do not show the use of multiple attributes here, but use an expression which checks if the user is granted at least one of them to avoid the ambiguity here?
+
+---------------------------------------------------------------------------
+
+by ajgarlag at 2020-06-10T15:08:11Z
+
+> What if we simply do not show the use of multiple attributes here, but use an expression which checks if the user is granted at least one of them to avoid the ambiguity here?
+
+The main problem for me is that in YAML and PHP configuration formats, the key is called `roles` instead of `role` so I prefer to have it properly documented.
+
+Maybe we could add an advice to use an expressión and avoid further problems.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-10-11T15:40:09Z
+
+After #15503 is merged, we'll need to check if this is still relevant and if we need to fix it. Thanks!
+
+---------------------------------------------------------------------------
+
+by ajgarlag at 2021-10-14T10:58:25Z
+
+> After #15503 is merged, we'll need to check if this is still relevant and if we need to fix it. Thanks!
+
+@javiereguiluz #15503 is merged and I think this is still relevant. I've rebased the PR.
