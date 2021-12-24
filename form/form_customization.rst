@@ -74,6 +74,16 @@ control over how each form field is rendered, so you can fully customize them:
         </div>
     </div>
 
+.. caution::
+
+   If you're rendering each field manually, make sure you don't forget the
+   ``_token`` field that is automatically added for CSRF protection.
+
+   You can also use ``{{ form_rest(form) }}`` (recommended) to render any
+   fields that aren't rendered manually. See
+   :ref:`the form_rest() documentation <reference-forms-twig-rest>` below for
+   more information.
+
 .. note::
 
     Later in this article you can find the full reference of these Twig
