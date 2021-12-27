@@ -170,7 +170,7 @@ some environment variable that stores the name of the IDE/editor:
         # config/packages/framework.yaml
         framework:
             # the env var stores the IDE/editor name (e.g. 'phpstorm', 'vscode', etc.)
-            ide: '%env(resolve:CODE_EDITOR)%'
+            ide: '%env(resolve:SYMFONY_IDE)%'
 
     .. code-block:: xml
 
@@ -184,7 +184,7 @@ some environment variable that stores the name of the IDE/editor:
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <!-- the env var stores the IDE/editor name (e.g. 'phpstorm', 'vscode', etc.) -->
-            <framework:config ide="%env(resolve:CODE_EDITOR)%"/>
+            <framework:config ide="%env(resolve:SYMFONY_IDE)%"/>
         </container>
 
     .. code-block:: php
@@ -194,8 +194,13 @@ some environment variable that stores the name of the IDE/editor:
 
         return static function (FrameworkConfig $framework) {
             // the env var stores the IDE/editor name (e.g. 'phpstorm', 'vscode', etc.)
-            $framework->ide('%env(resolve:CODE_EDITOR)%');
+            $framework->ide('%env(resolve:SYMFONY_IDE)%');
         };
+
+.. versionadded:: 6.1
+
+    The environment variable `SYMFONY_IDE` was introduced in Symfony 6.1.
+    It is read by default when `framework.ide` config is not set.
 
 Another alternative is to set the ``xdebug.file_link_format`` option in your
 ``php.ini`` configuration file. The format to use is the same as for the
