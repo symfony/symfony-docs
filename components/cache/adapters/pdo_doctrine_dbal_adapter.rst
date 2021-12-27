@@ -11,16 +11,16 @@ The PDO and Doctrine DBAL adapters store the cache items in a table of an SQL da
 
 .. note::
 
-    Adapters implement :class:`Symfony\\Component\\Cache\\PruneableInterface`,
-    allowing for manual :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>` by
-    calling the ``prune()`` method.
+    These adapters implement :class:`Symfony\\Component\\Cache\\PruneableInterface`,
+    allowing for manual :ref:`pruning of expired cache entries <component-cache-cache-pool-prune>`
+    by calling the ``prune()`` method.
 
-Using :phpclass:`PDO`
----------------------
+Using PHP PDO
+-------------
 
 The :class:`Symfony\\Component\\Cache\\Adapter\\PdoAdapter` requires a :phpclass:`PDO`,
-or `Data Source Name (DSN)`_ as its first parameter, and optionally a namespace,
-default cache lifetime, and options array as its second, third, and forth parameters::
+or `Data Source Name (DSN)`_ as its first parameter. You can pass a namespace,
+default cache lifetime, and options array as the other optional arguments::
 
     use Symfony\Component\Cache\Adapter\PdoAdapter;
 
@@ -61,14 +61,13 @@ your code.
     are lazy-loaded by default; some additional options may be necessary to detect
     the database engine and version without opening the connection.
 
-
 Using Doctrine DBAL
 -------------------
 
 The :class:`Symfony\\Component\\Cache\\Adapter\\DoctrineDbalAdapter` requires a
-`Doctrine DBAL Connection`_, or `Doctrine DBAL URL`_ as its first parameter, and
-optionally a namespace, default cache lifetime, and options array as its second,
-third, and forth parameters::
+`Doctrine DBAL Connection`_, or `Doctrine DBAL URL`_ as its first parameter.
+You can pass a namespace, default cache lifetime, and options array as the other
+optional arguments::
 
     use Symfony\Component\Cache\Adapter\DoctrineDbalAdapter;
 
