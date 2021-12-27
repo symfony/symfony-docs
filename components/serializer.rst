@@ -738,7 +738,8 @@ The Serializer component provides several built-in normalizers:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
     This normalizer directly reads and writes public properties as well as
     **private and protected** properties (from both the class and all of its
-    parent classes). It supports calling the constructor during the denormalization process.
+    parent classes) by using `PHP reflection`_. It supports calling the constructor
+    during the denormalization process.
 
     Objects are normalized to a map of property names to property values.
 
@@ -769,7 +770,7 @@ The Serializer component provides several built-in normalizers:
         The ``DateTimeZoneNormalizer`` was introduced in Symfony 4.3.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
-    This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
+    This normalizer converts :phpclass:`SplFileInfo` objects into a `data URI`_
     string (``data:...``) such that files can be embedded into serialized data.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
@@ -781,8 +782,16 @@ The Serializer component provides several built-in normalizers:
     :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface`
     into a list of errors according to the `RFC 7807`_ standard.
 
+    .. versionadded:: 4.1
+
+        The ``ConstraintViolationListNormalizer`` was introduced in Symfony 4.1.
+
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
     Normalizes errors according to the API Problem spec `RFC 7807`_.
+
+    .. versionadded:: 4.4
+
+        The ``ProblemNormalizer`` was introduced in Symfony 4.4.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer`
     Normalizes a PHP object using an object that implements :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`.
@@ -1601,3 +1610,5 @@ Learn more
 .. _`Value Objects`: https://en.wikipedia.org/wiki/Value_object
 .. _`API Platform`: https://api-platform.com
 .. _`list of PHP timezones`: https://www.php.net/manual/en/timezones.php
+.. _`PHP reflection`: https://php.net/manual/en/book.reflection.php
+.. _`data URI`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
