@@ -51,7 +51,7 @@ In addition, some components and official bundles provide other value resolvers:
     Injects the object that represents the current logged in user if type-hinted
     with ``UserInterface``. Default value can be set to ``null`` in case
     the controller can be accessed by anonymous users. It requires installing
-    the :doc:`Security component </components/security>`.
+    the :doc:`SecurityBundle </security>`.
 
 ``Psr7ServerRequestResolver``
     Injects a `PSR-7`_ compliant version of the current request if type-hinted
