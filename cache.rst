@@ -706,6 +706,28 @@ Clear all caches everywhere:
 
     $ php bin/console cache:pool:clear cache.global_clearer
 
+Invalidate Tags Command
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.1
+
+    The ``cache:pool:invalidate-tags`` command was introduced in 6.1.
+
+If using cache tags, you can invalidate tags via the
+``cache:pool:invalidate-tags`` command.
+
+Invalidate ``tag1`` and ``tag2`` from all pools:
+
+.. code-block:: terminal
+
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2
+
+Invalidate ``tag1`` and ``tag2`` from ``cache.app`` pool:
+
+.. code-block:: terminal
+
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2 --pool=cache.app
+
 Encrypting the Cache
 --------------------
 
