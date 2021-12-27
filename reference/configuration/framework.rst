@@ -160,47 +160,13 @@ doubling them to prevent Symfony from interpreting them as container parameters)
         };
 
 Since every developer uses a different IDE, the recommended way to enable this
-feature is to configure it on a system level. First, you can set its value to
-some environment variable that stores the name of the IDE/editor:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # the env var stores the IDE/editor name (e.g. 'phpstorm', 'vscode', etc.)
-            ide: '%env(resolve:SYMFONY_IDE)%'
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- the env var stores the IDE/editor name (e.g. 'phpstorm', 'vscode', etc.) -->
-            <framework:config ide="%env(resolve:SYMFONY_IDE)%"/>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework) {
-            // the env var stores the IDE/editor name (e.g. 'phpstorm', 'vscode', etc.)
-            $framework->ide('%env(resolve:SYMFONY_IDE)%');
-        };
+feature is to configure it on a system level. First, you can define this option
+in the ``SYMFONY_IDE`` environment variable, which Symfony reads automatically
+when ``framework.ide`` config is not set.
 
 .. versionadded:: 6.1
 
-    The environment variable `SYMFONY_IDE` was introduced in Symfony 6.1.
-    It is read by default when `framework.ide` config is not set.
+    ``SYMFONY_IDE`` environment variable support was introduced in Symfony 6.1.
 
 Another alternative is to set the ``xdebug.file_link_format`` option in your
 ``php.ini`` configuration file. The format to use is the same as for the
