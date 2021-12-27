@@ -229,61 +229,12 @@ this hard work, it's **time to celebrate again!**
 Review your changes
 -------------------
 
-Every GitHub Pull Request is automatically built and deployed by
-`SymfonyCloud`_ on a single environment that you can access on your browser to
-review your changes.
+Symfony repository checks every Pull Request automatically to look for common
+errors, inappropriate words, syntax issues in code blocks, etc.
 
-.. image:: /_images/contributing/docs-pull-request-symfonycloud.png
-   :align: center
-   :alt:   SymfonyCloud Pull Request Deployment
-
-To access the `SymfonyCloud`_ environment URL, go to your Pull Request page on
-GitHub, click on the **Show all checks** link and finally, click on the
-``Details`` link displayed for SymfonyCloud service.
-
-.. note::
-
-    Only Pull Requests to maintained branches are automatically built by
-    SymfonyCloud. Check the `roadmap`_ for maintained branches.
-
-Build the Documentation Locally
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you have Docker installed on your machine, run these commands to build the
-docs:
-
-.. code-block:: terminal
-
-    # build the image...
-    $ docker build . -t symfony-docs
-
-    # ...and start the local web server
-    # (if it's already in use, change the '8080' port by any other port)
-    $ docker run --rm -p 8080:80 symfony-docs
-
-You can now read the docs at ``http://127.0.0.1:8080`` (if you use a virtual
-machine, browse its IP instead of localhost; e.g. ``http://192.168.99.100:8080``).
-
-If you don't use Docker, follow these steps to build the docs locally:
-
-#. Install `pip`_ as explained in the `pip installation`_ article;
-
-#. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
-   (depending on your system, you may need to execute this command as root user):
-
-   .. code-block:: terminal
-
-        $ cd _build/
-        $ pip install -r .requirements.txt
-
-#. Run the following command to build the documentation in HTML format:
-
-   .. code-block:: terminal
-
-       $ cd _build/
-       $ make html
-
-The generated documentation is available in the ``_build/html`` directory.
+Optionally you can also build the docs in your local machine to debug issues or
+to read the documentation offline. To do so, follow the instructions included in
+`the README file of symfony-docs repository`_.
 
 Frequently Asked Questions
 --------------------------
@@ -342,7 +293,4 @@ definitely don't want you to waste your time!
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
 .. _`SymfonyCloud`: https://symfony.com/cloud
 .. _`roadmap`: https://symfony.com/releases
-.. _`pip`: https://pip.pypa.io/en/stable/
-.. _`pip installation`: https://pip.pypa.io/en/stable/installing/
-.. _`Sphinx`: https://www.sphinx-doc.org/
-.. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php
+.. _`the README file of symfony-docs repository`: https://github.com/symfony/symfony-docs#readme
