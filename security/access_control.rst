@@ -177,8 +177,7 @@ options:
 
 * ``roles`` If the user does not have the given role, then access is denied
   (internally, an :class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
-  is thrown). If this value is an array of multiple roles, the user must have
-  at least one of them.
+  is thrown).
 
 * ``allow_if`` If the expression returns false, then access is denied;
 
