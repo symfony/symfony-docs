@@ -291,6 +291,4 @@ definitely don't want you to waste your time!
 .. _`Symfony Documentation Contributors`: https://symfony.com/contributors/doc
 .. _`SymfonyConnect`: https://symfony.com/connect/login
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
-.. _`SymfonyCloud`: https://symfony.com/cloud
-.. _`roadmap`: https://symfony.com/releases
 .. _`the README file of symfony-docs repository`: https://github.com/symfony/symfony-docs#readme
