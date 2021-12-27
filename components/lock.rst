@@ -479,11 +479,6 @@ You can also create this table explicitly by calling the
 :method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable` method in
 your code.
 
-.. deprecated:: 5.4
-
-    Using ``PdoStore`` with Doctrine DBAL is deprecated in Symfony 5.4.
-    Use ``DoctrineDbalStore`` instead.
-
 .. _lock-store-dbal:
 
 DoctrineDbalStore
