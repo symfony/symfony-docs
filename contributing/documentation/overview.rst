@@ -229,25 +229,12 @@ this hard work, it's **time to celebrate again!**
 Review your changes
 -------------------
 
-Every GitHub Pull Request is automatically built and deployed by
-`SymfonyCloud`_ on a single environment that you can access on your browser to
-review your changes.
+Symfony repository checks every Pull Request automatically to look for common
+errors, inappropriate words, syntax issues in code blocks, etc.
 
-.. image:: /_images/contributing/docs-pull-request-symfonycloud.png
-   :align: center
-   :alt:   SymfonyCloud Pull Request Deployment
-
-To access the `SymfonyCloud`_ environment URL, go to your Pull Request page on
-GitHub, click on the **Show all checks** link and finally, click on the
-``Details`` link displayed for SymfonyCloud service.
-
-.. note::
-
-    Only Pull Requests to maintained branches are automatically built by
-    SymfonyCloud. Check the `roadmap`_ for maintained branches.
-
-To build a local copy of the documentation to review your changes, see the
-`Build the Documentation Locally`_ section in the README file.
+Optionally you can also build the docs in your local machine to debug issues or
+to read the documentation offline. To do so, follow the instructions included in
+`the README file of symfony-docs repository`_.
 
 Frequently Asked Questions
 --------------------------
@@ -306,4 +293,4 @@ definitely don't want you to waste your time!
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
 .. _`SymfonyCloud`: https://symfony.com/cloud
 .. _`roadmap`: https://symfony.com/releases
-.. _`Build the Documentation Locally`: https://github.com/symfony/symfony-docs#build-documentation-locally
+.. _`the README file of symfony-docs repository`: https://github.com/symfony/symfony-docs#readme
