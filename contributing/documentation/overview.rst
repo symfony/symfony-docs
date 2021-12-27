@@ -246,44 +246,8 @@ GitHub, click on the **Show all checks** link and finally, click on the
     Only Pull Requests to maintained branches are automatically built by
     SymfonyCloud. Check the `roadmap`_ for maintained branches.
 
-Build the Documentation Locally
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you have Docker installed on your machine, run these commands to build the
-docs:
-
-.. code-block:: terminal
-
-    # build the image...
-    $ docker build . -t symfony-docs
-
-    # ...and start the local web server
-    # (if it's already in use, change the '8080' port by any other port)
-    $ docker run --rm -p 8080:80 symfony-docs
-
-You can now read the docs at ``http://127.0.0.1:8080`` (if you use a virtual
-machine, browse its IP instead of localhost; e.g. ``http://192.168.99.100:8080``).
-
-If you don't use Docker, follow these steps to build the docs locally:
-
-#. Install `pip`_ as explained in the `pip installation`_ article;
-
-#. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
-   (depending on your system, you may need to execute this command as root user):
-
-   .. code-block:: terminal
-
-        $ cd _build/
-        $ pip install -r .requirements.txt
-
-#. Run the following command to build the documentation in HTML format:
-
-   .. code-block:: terminal
-
-       $ cd _build/
-       $ make html
-
-The generated documentation is available in the ``_build/html`` directory.
+To build a local copy of the documentation to review your changes, see the
+`Build the Documentation Locally`_ section in the README file.
 
 Frequently Asked Questions
 --------------------------
@@ -342,7 +306,4 @@ definitely don't want you to waste your time!
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
 .. _`SymfonyCloud`: https://symfony.com/cloud
 .. _`roadmap`: https://symfony.com/releases
-.. _`pip`: https://pip.pypa.io/en/stable/
-.. _`pip installation`: https://pip.pypa.io/en/stable/installing/
-.. _`Sphinx`: https://www.sphinx-doc.org/
-.. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php
+.. _`Build the Documentation Locally`: https://github.com/symfony/symfony-docs#build-documentation-locally
