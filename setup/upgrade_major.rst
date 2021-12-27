@@ -186,3 +186,11 @@ Next, use Composer to download new versions of the libraries:
 In some rare situations, the next major version *may* contain backwards-compatibility
 breaks. Make sure you read the ``UPGRADE-X.0.md`` (where X is the new major version)
 included in the Symfony repository for any BC break that you need to be aware of.
+
+.. caution::
+
+    Upgrading from Symfony 4.x to Symfony 5.x will terminate all active sessions.
+    If you need to keep previous sessions active after the upgrade, you can require
+    the `ajgl/sf4-to-sf5-role-unserialization`_ compoment in your ``composer.json``.
+
+.. _`ajgl/sf4-to-sf5-role-unserialization`: https://packagist.org/packages/ajgl/sf4-to-sf5-role-unserialization
