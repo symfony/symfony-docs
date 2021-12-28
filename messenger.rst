@@ -1730,6 +1730,67 @@ may want to use:
             ],
         ]);
 
+Other Middlewares
+~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 4.1
+
+    The ``validation`` middleware was introduced in Symfony 4.1.
+
+Add the ``validation`` middleware if you need to validate the message
+object using the :doc:`Validator component <validator>` before handling it.
+If validation fails, a ``ValidationFailedException`` will be thrown. The
+:class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp` can be used
+to configure the validation groups.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                buses:
+                    command_bus:
+                        middleware:
+                            - validation
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:bus name="command_bus">
+                        <framework:middleware id="validation"/>
+                    </framework:bus>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        $container->loadFromExtension('framework', [
+            'messenger' => [
+                'buses' => [
+                    'command_bus' => [
+                        'middleware' => [
+                            'validation',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
 Messenger Events
 ~~~~~~~~~~~~~~~~
 
