@@ -205,7 +205,7 @@ Make sure you clear and warm-up your Symfony cache:
 
 .. code-block:: terminal
 
-    $ APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+    $ php bin/console cache:clear --env=prod --no-debug
 
 E) Other Things!
 ~~~~~~~~~~~~~~~~
