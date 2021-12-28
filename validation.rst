@@ -234,6 +234,8 @@ In Symfony, constraints are similar: they are assertions that a condition
 is true. Given a value, a constraint will tell you if that value
 adheres to the rules of the constraint.
 
+.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+
 Supported Constraints
 ~~~~~~~~~~~~~~~~~~~~~
 
