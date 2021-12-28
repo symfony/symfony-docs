@@ -150,9 +150,13 @@ A pull request **can be merged** if:
 
 * Enough time was given for peer reviews;
 
-* At least two **Mergers Team** members voted ``+1`` (only one if the submitter
-  is part of the Mergers team) and no Core member voted ``-1`` (via GitHub
-  reviews or as comments).
+* It is a bug fix and at least two **Mergers Team** members voted ``+1``
+  (only one if the submitter is part of the Mergers team) and no Core
+  member voted ``-1`` (via GitHub reviews or as comments).
+
+* It is a new feature and at least two **Mergers Team** members voted
+  ``+1`` (if the submitter is part of the Mergers team, two *other* members)
+  and no Core member voted ``-1`` (via GitHub reviews or as comments).
 
 Pull Request Merging Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

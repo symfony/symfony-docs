@@ -112,14 +112,14 @@ This secret key must be stored in the ``MERCURE_JWT_SECRET`` environment variabl
 MercureBundle will use it to automatically generate and sign the needed JWTs.
 
 In addition to these environment variables,
-MercureBundle provides a more advanced configuration configuration:
+MercureBundle provides a more advanced configuration:
 
-* ``secret``: the key to use to sign the JWT (all other options, beside `algorithm`, `subscribe`, and `publish` will be ignored)
-* ``publish``: a list of topics to allow publishing to when generating the JWT (only usable when `secret`, or `factory` are provided)
-* ``subscribe``: a list of topics to allow subscribing to when generating the JWT (only usable when `secret`, or `factory` are provided)
-* ``algorithm``: The algorithm to use to sign the JWT (only usable when `secret` is provided)
+* ``secret``: the key to use to sign the JWT (all other options, beside ``algorithm``, ``subscribe``, and ``publish`` will be ignored)
+* ``publish``: a list of topics to allow publishing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
+* ``subscribe``: a list of topics to allow subscribing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
+* ``algorithm``: The algorithm to use to sign the JWT (only usable when ``secret`` is provided)
 * ``provider``: The ID of a service to call to provide the JWT (all other options will be ignored)
-* ``factory``: The ID of a service to call to create the JWT (all other options, beside `subscribe`, and `publish` will be ignored)
+* ``factory``: The ID of a service to call to create the JWT (all other options, beside ``subscribe``, and ``publish`` will be ignored)
 * ``value``: the raw JWT to use (all other options will be ignored)
 
 .. configuration-block::
@@ -186,7 +186,7 @@ MercureBundle provides a more advanced configuration configuration:
 
 .. tip::
 
-    The JWT payload must contain at least the following structure to be allowed to
+    The JWT payload must contain at least the following structure for the client to be allowed to
     publish:
 
     .. code-block:: json
@@ -338,8 +338,8 @@ in a ``Link`` HTTP header.
 
 .. image:: /_images/mercure/discovery.png
 
-You can create ``Link`` headers with the :doc:`WebLink Component </web_link>`,
-by using the ``AbstractController::addLink`` helper method::
+You can create ``Link`` headers with the ``Discovery`` helper class
+(under the hood, it uses the :doc:`WebLink Component </web_link>`)::
 
     // src/Controller/DiscoverController.php
     namespace App\Controller;
@@ -416,10 +416,10 @@ of the ``Update`` constructor to ``true``::
     }
 
 To subscribe to private updates, subscribers must provide to the Hub
-a JWT containing a topic selector matching by the update's topic.
+a JWT containing a topic selector matching by the topic of the update.
 
 To provide this JWT, the subscriber can use a cookie,
-or a ``Authorization`` HTTP header.
+or an ``Authorization`` HTTP header.
 
 Cookies can be set automatically by Symfony by passing the appropriate options
 to the ``mercure()`` Twig function. Cookies set by Symfony are automatically
@@ -470,7 +470,7 @@ Programmatically Setting The Cookie
 
 Sometimes, it can be convenient to set the authorization cookie from your code
 instead of using the Twig function. MercureBundle provides a convenient service,
-:class:`Symfony\\Component\\Mercure\\Authorization`, to do so.
+``Authorization``, to do so.
 
 In the following example controller, the added cookie contains a JWT, itself
 containing the appropriate topic selector.
