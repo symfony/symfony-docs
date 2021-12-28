@@ -31,14 +31,14 @@ to solve the most common Webpack use cases.
     But it can be used in any PHP application and even with other server side
     programming languages!
 
-.. _encore-toc:
-
 Technical Requirements
 ----------------------
 
-* Node.js on your development machine(s)
-* Yarn or npm on your development machine(s)
+* `Node.js`_ on your development machine(s)
+* `Yarn`_ or npm on your development machine(s)
 * No requirements on your production machine(s)
+
+.. _encore-toc:
 
 Encore Documentation
 --------------------
@@ -118,3 +118,5 @@ Other Front-End Articles
 .. _`Symfony`: https://symfony.com/
 .. _`Full API`: https://github.com/symfony/webpack-encore/blob/master/index.js
 .. _`Webpack Encore screencast series`: https://symfonycasts.com/screencast/webpack-encore
+.. _`Node.js`: https://nodejs.org/
+.. _`Yarn`: https://yarnpkg.com/
