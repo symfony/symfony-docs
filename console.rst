@@ -151,6 +151,30 @@ with the ``console.command`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
+On PHP 8, you can use native attribute ``AsCommand`` to configure::
+
+    // src/Command/CreateUserCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+
+    #[AsCommand(
+        name: 'app:create-user',
+        description: 'Creates a new user.',
+        hidden: false,
+        aliases: ['app:add-user']
+    )]
+    class CreateUserCommand extends Command
+    {
+        // ...
+    }
+
+.. versionadded:: 5.3
+
+    The ability to use PHP attributes to configure commands was introduced in
+    Symfony 5.3.
+
 Executing the Command
 ---------------------
 
