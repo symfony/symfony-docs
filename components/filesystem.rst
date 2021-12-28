@@ -313,6 +313,21 @@ contents at the end of some file::
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.
 
+``appendStreamToFile``
+----------------------
+
+:method:``Symfony\Component\Filesystem\Filesystem::appendStreamToFile``
+copies the contents from one file and appends them to the end of another file
+using ``stream_copy_to_stream()``::
+
+    $filesystem->appendStreamToFile('logs-20210101.txt', 'logs-archive.txt');
+    // the third argument tells whether the file should be locked when writing to it
+    $filesystem->appendStreamToFile('logs-20210101.txt', 'logs-archive.txt', true);
+
+If either the file or its containing directory doesn't exist, this method
+creates them before appending the contents.
+
+
 Path Manipulation Utilities
 ---------------------------
 
