@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by kbond at 2021-12-27T16:07:21Z
+
+Also, in the `It is a minor change [1]_;` point, the footer link doesn't render correctly. I'm not sure how to fix this.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2021-12-27T16:09:37Z
+
+> the footer link doesn't render correctly. I'm not sure how to fix this.
+
+This is a known bug with the new rst-parser. It renders ok-ish enough for it not to be a high priority fix :)
