@@ -241,7 +241,7 @@ to cache each of Doctrine ORM elements (queries, results, etc.):
             # ...
 
             # the "metadata_cache_driver" configuration key is deprecated 
-            # from Doctrine Bundle 2.3
+            # since Doctrine Bundle 2.3
             metadata_cache_driver:
                 type: pool
                 pool: doctrine.system_cache_pool
