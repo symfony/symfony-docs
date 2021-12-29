@@ -65,7 +65,7 @@ First, to use ESI, be sure to enable it in your application configuration:
         # config/packages/framework.yaml
         framework:
             # ...
-            esi: { enabled: true }
+            esi: true
 
     .. code-block:: xml
 
