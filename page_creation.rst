@@ -54,7 +54,7 @@ random) number and prints it. To do that, create a "Controller" class and a
     {
         public function number()
         {
-            $number = random_int(0, 100);
+            $number = (string) random_int(0, 100);
 
             return new Response(
                 '<html><body>Lucky number: '.$number.'</body></html>'
