@@ -326,7 +326,7 @@ Doctrine Entities in Messages
 
 If you need to pass a Doctrine entity in a message, it's better to pass the entity's
 primary key (or whatever relevant information the handler actually needs, like ``email``,
-etc) instead of the object othwerwise it will give error regarding EntityManager not found in async handler ::
+etc.) instead of the object (otherwise you might see errors related to the Entity Manager)::
 
     // src/Message/NewUserWelcomeEmail.php
     namespace App\Message;
