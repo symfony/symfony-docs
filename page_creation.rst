@@ -236,7 +236,7 @@ variable so you can use it in Twig::
          */
         public function number(): Response
         {
-            $number = (string) random_int(0, 100);
+            $number = random_int(0, 100);
 
             return $this->render('lucky/number.html.twig', [
                 'number' => $number,
