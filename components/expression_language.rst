@@ -105,7 +105,7 @@ PHP type (including objects)::
     )); // displays "Honeycrisp"
 
 For more information, see the :doc:`/components/expression_language/syntax`
-entry, especially :ref:`component-expression-objects` and :ref:`component-expression-arrays`.
+entry, especially :ref:`Working with Objects <component-expression-objects>` and :ref:`Working with Arrays <component-expression-arrays>`.
 
 .. caution::
 
