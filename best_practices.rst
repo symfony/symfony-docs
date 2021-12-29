@@ -378,7 +378,8 @@ Use Voters to Implement Fine-grained Security Restrictions
 
 If your security logic is complex, you should create custom
 :doc:`security voters </security/voters>` instead of defining long expressions
-inside the ``@Security`` annotation.
+inside the ``#[Security]`` attribute (or in the ``@Security`` annotation if your
+PHP version doesn't support attributes yet).
 
 Web Assets
 ----------
