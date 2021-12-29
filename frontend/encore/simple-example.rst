@@ -43,7 +43,8 @@ of your project. It already holds the basic config you need:
 
         .addEntry('app', './assets/app.js')
 
-        // ...
+        // uncomment this if you want use jQuery in the following example
+        .autoProvidejQuery()
     ;
 
     // ...
