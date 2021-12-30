@@ -28,7 +28,7 @@ PHP code, similar to PHP's :phpfunction:`var_export` function::
 
     $exported = VarExporter::export($someVariable);
     // store the $exported data in some file or cache system for later reuse
-    $data = file_put_contents('exported.php', $exported);
+    $data = file_put_contents('exported.php', '<?php return '.$exported.';');
 
     // later, regenerate the original variable when you need it
     $regeneratedVariable = require 'exported.php';
