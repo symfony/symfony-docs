@@ -55,6 +55,7 @@ with a couple popular SMS services:
 ==============  ====================================  ===========================================================================
 Service         Package                               DSN
 ==============  ====================================  ===========================================================================
+46elks          ``symfony/forty-six-elks-notifier``   ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
 AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@default?from=FROM``
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
@@ -85,6 +86,10 @@ Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@defau
 Vonage          ``symfony/vonage-notifier``           ``vonage://KEY:SECRET@default?from=FROM``
 Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
 ==============  ====================================  ===========================================================================
+
+.. versionadded:: 6.1
+
+    The 46elks integration was introduced in Symfony 6.1.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
