@@ -54,10 +54,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_name --version=5.3 --full
+    $ symfony new my_project_directory --version=5.3 --full
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_name --version=5.3
+    $ symfony new my_project_directory --version=5.3
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--full`` option installs all the packages that you
@@ -69,13 +69,13 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/website-skeleton:"^5.3" my_project_name
+    $ composer create-project symfony/website-skeleton:"^5.3" my_project_directory
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"^5.3" my_project_name
+    $ composer create-project symfony/skeleton:"^5.3" my_project_directory
 
 No matter which command you run to create the Symfony application. All of them
-will create a new ``my_project_name/`` directory, download some dependencies
+will create a new ``my_project_directory/`` directory, download some dependencies
 into it and even generate the basic directories and files you'll need to get
 started. In other words, your new application is ready!
 
@@ -265,20 +265,20 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
 .. code-block:: terminal
 
     # use the most recent LTS version
-    $ symfony new my_project_name --version=lts
+    $ symfony new my_project_directory --version=lts
 
     # use the 'next' Symfony version to be released (still in development)
-    $ symfony new my_project_name --version=next
+    $ symfony new my_project_directory --version=next
 
     # you can also select an exact specific Symfony version
-    $ symfony new my_project_name --version=5.4
+    $ symfony new my_project_directory --version=5.4
 
 The ``lts`` and ``next`` shortcuts are only available when using Symfony to
 create new projects. If you use Composer, you need to tell the exact version:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/skeleton:"^5.4" my_project_name
+    $ composer create-project symfony/skeleton:"^5.4" my_project_directory
 
 The Symfony Demo application
 ----------------------------
@@ -291,7 +291,7 @@ Run this command to create a new project based on the Symfony Demo application:
 
 .. code-block:: terminal
 
-    $ symfony new my_project_name --demo
+    $ symfony new my_project_directory --demo
 
 Start Coding!
 -------------
