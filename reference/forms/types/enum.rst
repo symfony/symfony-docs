@@ -32,7 +32,7 @@ short) defined somewhere in your application. This enum has to be of type
     // src/Config/TextAlign.php
     namespace App\Config;
 
-    enum TextAlign
+    enum TextAlign: string
     {
         case Left = 'Left/Start aligned';
         case Center = 'Center/Middle aligned';
