@@ -135,7 +135,7 @@ Check out the Symfony config reference to learn more about the other available
 Basic Usage
 -----------
 
-The session is available through the Request and the RequestStack.
+The session is available through ``->getSession()`` from the ``Request`` and the ``RequestStack``.
 Symfony provides a request_stack service that is injected in your services and
 controllers if you type-hint an argument with
 :class:`Symfony\\Component\\HttpFoundation\\RequestStack`::
