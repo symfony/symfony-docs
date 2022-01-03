@@ -225,7 +225,7 @@ Checking Security Vulnerabilities
 ---------------------------------
 
 A good and recommended security practice is to check from time to time whether your
-project's dependencies contain any known security vulnerability. You can leverage the
+project's dependencies contain any known security vulnerabilities. You can leverage the
 `Local PHP Security Checker`_ to do so.
 
 You can also execute this process regularly to be able to
