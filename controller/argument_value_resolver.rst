@@ -20,6 +20,10 @@ Built-In Value Resolvers
 Symfony ships with the following value resolvers in the
 :doc:`HttpKernel component </components/http_kernel>`:
 
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\BackedEnumValueResolver`
+    Attempts to resolve a backed enum case from a route path parameter that matches the name of the argument.
+    Leads to a 404 Not Found response if the value isn't a valid backing value for the enum type.
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
 
