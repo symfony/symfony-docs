@@ -224,15 +224,11 @@ require --no-unpack ...`` option to disable unpacking.
 Checking Security Vulnerabilities
 ---------------------------------
 
-The ``symfony`` binary created when you `install Symfony CLI`_ provides a command to
-check whether your project's dependencies contain any known security
-vulnerability:
+A good and recommended security practice is to check from time to time whether your
+project's dependencies contain any known security vulnerability. You can leverage the
+`Local PHP Security Checker`_ to do so.
 
-.. code-block:: terminal
-
-    $ symfony check:security
-
-A good security practice is to execute this command regularly to be able to
+You can also execute this process regularly to be able to
 update or replace compromised dependencies as soon as possible. The security
 check is done locally by fetching the public `PHP security advisories database`_,
 so your ``composer.lock`` file is not sent on the network.
@@ -313,6 +309,7 @@ Learn More
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories
+.. _`Local PHP Security Checker`: https://github.com/fabpot/local-php-security-checker
 .. _`Symfony releases`: https://symfony.com/releases
 .. _`Main recipe repository`: https://github.com/symfony/recipes
 .. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
