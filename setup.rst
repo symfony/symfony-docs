@@ -39,9 +39,8 @@ requirements. Open your console terminal and run this command:
 
 .. note::
 
-    The Symfony binary is developed internally at Symfony. If you want to
-    report a bug or suggest a new feature, please create an issue on
-    `symfony/cli`_.
+    The Symfony CLI is written in Go and you can contribute to it in the
+    `symfony-cli/symfony-cli GitHub repository`_.
 
 .. _creating-symfony-applications:
 
@@ -310,7 +309,7 @@ Learn More
 .. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
 .. _`install Symfony CLI`: https://symfony.com/download
-.. _`symfony/cli`: https://github.com/symfony/cli
+.. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories

@@ -19,9 +19,8 @@ The Symfony server is part of the ``symfony`` binary created when you
 
 .. note::
 
-    The Symfony binary is developed internally at Symfony. If you want to
-    report a bug or suggest a new feature, please create an issue on
-    `symfony/cli`_.
+   You can view and contribute to the Symfony CLI source in the
+   `symfony-cli/symfony-cli GitHub repository`_.
 
 Getting Started
 ---------------
@@ -421,7 +420,7 @@ debug any issues.
 `Read SymfonyCloud technical docs`_.
 
 .. _`install Symfony`: https://symfony.com/download
-.. _`symfony/cli`: https://github.com/symfony/cli
+.. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`SymfonyCloud`: https://symfony.com/cloud/
 .. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html
