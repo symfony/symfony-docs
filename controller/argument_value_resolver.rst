@@ -36,7 +36,7 @@ Symfony ships with the following value resolvers in the
             case Spades = 'S';
         }
 
-    And your controller contains the following:
+    And your controller contains the following::
 
         class CardController
         {
