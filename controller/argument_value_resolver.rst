@@ -24,6 +24,38 @@ Symfony ships with the following value resolvers in the
     Attempts to resolve a backed enum case from a route path parameter that matches the name of the argument.
     Leads to a 404 Not Found response if the value isn't a valid backing value for the enum type.
 
+    For example, if your backed enum is::
+
+        namespace App\Model;
+
+        enum Suit: string
+        {
+            case Hearts = 'H';
+            case Diamonds = 'D';
+            case Clubs = 'C';
+            case Spades = 'S';
+        }
+
+    And your controller contains the following:
+
+        class CardController
+        {
+            #[Route('/cards/{suit}')]
+            public function list(Suit $suit): Response
+            {
+                // ...
+            }
+
+            // ...
+        }
+
+    When requesting the ``/cards/H`` URL, the ``$suit`` variable will store the
+    ``Suit::Hearts`` case.
+
+    .. versionadded:: 6.1
+
+        The ``BackedEnumValueResolver`` was introduced in Symfony 6.1.
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
 
