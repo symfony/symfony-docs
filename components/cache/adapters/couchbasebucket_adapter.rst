@@ -4,7 +4,7 @@
 
 .. _couchbase-adapter:
 
-Couchbase Cache Adapter
+Couchbase Bucket Cache Adapter
 =======================
 
 .. versionadded:: 5.1
