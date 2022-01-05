@@ -30,7 +30,7 @@ to create new Symfony applications:
 
 .. code-block:: terminal
 
-    $ symfony new my_project_name
+    $ symfony new my_project_directory
 
 Under the hood, this Symfony binary command executes the needed `Composer`_
 command to :ref:`create a new Symfony application <creating-symfony-applications>`
