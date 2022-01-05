@@ -693,13 +693,13 @@ When serializing, you can set a callback to format a specific object property::
 Normalizers
 -----------
 
-Normalizers turn **object** into **array** and vice versa. They implement
-:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`
-for normalize (object to array) and
-:class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizableInterface` for denormalize
-(array to object).
+Normalizers turn **objects** into **arrays** and vice versa. They implement
+:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface` for
+normalizing (object to array) and
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface` for
+denormalizing (array to object).
 
-You can add new normalizers to a Serializer instance by using its first constructor argument::
+Normalizers are enabled in the serializer passing them as its first argument::
 
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
