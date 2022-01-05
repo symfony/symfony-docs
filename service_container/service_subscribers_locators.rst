@@ -720,4 +720,4 @@ and compose your services with them::
     as this will include the trait name, not the class name. Instead, use
     ``__CLASS__.'::'.__FUNCTION__`` as the service id.
 
-.. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
+.. _`Command pattern`: https://ducmanhphan.github.io/2020-12-02-command-bus-pattern/
