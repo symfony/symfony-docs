@@ -546,8 +546,8 @@ the ``TemplatedEmail`` class:
 
 .. _mailer-twig-embedding-images:
 
-Embedding Images
-~~~~~~~~~~~~~~~~
+Embedding Images with Twig
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instead of dealing with the ``<img src="cid: ...">`` syntax explained in the
 previous sections, when using Twig to render email contents you can refer to
