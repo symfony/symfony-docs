@@ -513,3 +513,4 @@
 /testing/functional_tests_assertions /testing#testing-application-assertions
 /components https://symfony.com/components
 /components/index https://symfony.com/components
+/serializer/normalizers /components/serializer#normalizers
