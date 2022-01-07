@@ -801,8 +801,55 @@ The Serializer component provides several built-in normalizers:
     You can also create your own Normalizer to use another structure. Read more at
     :doc:`/serializer/custom_normalizer`.
 
-All these normalizers are enabled by default when using the Serializer component
-in a Symfony application.
+Certain normalizers are enabled by default when using the Serializer component
+in a Symfony application, additional ones can be enabled by tagging them with
+:ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>`.
+
+Here is an example of how to enable the built-in
+:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
+faster alternative to the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            get_set_method_normalizer:
+                class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+                tags: [serializer.normalizer]
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer">
+                    <tag name="serializer.normalizer"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
+                ->tag('serializer.normalizer')
+            ;
+        };
 
 .. _component-serializer-encoders:
 
