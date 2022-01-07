@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2021-12-24T01:22:23Z
+
+Failure should be fixed by: https://github.com/symfony-tools/code-block-checker/pull/43
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-01-01T15:41:40Z
+
+FYI - to get the tests to pass, I had to update the CI to grab `@dev` of https://github.com/symfony-tools/code-block-checker. We could do that, or tag that library... but I'm not sure tags are needed on that lib if its only purpose is for the docs' CI.
