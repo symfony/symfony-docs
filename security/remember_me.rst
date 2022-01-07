@@ -354,3 +354,42 @@ service you created before:
                     ->tokenProvider(DoctrineTokenProvider::class)
             ;
         };
+
+Activating Remember Me When Using a Custom Authenticator
+--------------------------------------------------------
+
+When you use a custom authenticator, you must add a ``RememberMeBadge`` to the ``Passport``
+for the remember me function to be activated. Without the badge, remember me will not be
+active, regardless of any other remember me settings. 
+
+For example::
+
+    // src/Service/LoginAuthenticator.php
+    namespace App\Service;
+
+    // ...
+    use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+    use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
+
+    class LoginAuthenticator extends AbstractAuthenticator
+    {
+        public function authenticate(Request $request): PassportInterface
+        {
+            $password = $request->request->get('password');
+            $username = $request->request->get('username');
+            $csrfToken = $request->request->get('csrf_token');
+
+            return new Passport(
+                new UserBadge($username),
+                new PasswordCredentials($password),
+                [
+                    new CsrfTokenBadge('login', $csrfToken),
+                    new RememberMeBadge(),
+                ]
+            );
+        }
+    }
