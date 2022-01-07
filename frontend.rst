@@ -40,7 +40,7 @@ Getting Started
 ...............
 
 * :doc:`Installation </frontend/encore/installation>`
-* :doc:`First Example </frontend/encore/simple-example>`
+* :doc:`Using Webpack Encore </frontend/encore/simple-example>`
 
 Adding more Features
 ....................
@@ -67,7 +67,6 @@ Guides
 ......
 
 * :doc:`Using Bootstrap CSS & JS </frontend/encore/bootstrap>`
-* :doc:`Creating Page-Specific CSS/JS </frontend/encore/page-specific-assets>`
 * :doc:`jQuery and Legacy Applications </frontend/encore/legacy-applications>`
 * :doc:`Passing Information from Twig to JavaScript </frontend/encore/server-data>`
 * :doc:`webpack-dev-server and Hot Module Replacement (HMR) </frontend/encore/dev-server>`
