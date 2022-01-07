@@ -89,53 +89,6 @@ possible to set the priority of the tag in order to decide the matching order.
     ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory
     usage and exposing internal details.
 
-Here is an example on how to load the built-in
-:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
-faster alternative to the `ObjectNormalizer` when data objects always use
-getters (``getXxx()``), issers (``isXxx()``) or hassers (``hasXxx()``) to read
-properties and setters (``setXxx()``) to change properties:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            get_set_method_normalizer:
-                class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
-                tags: [serializer.normalizer]
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer">
-                    <tag name="serializer.normalizer"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
-
-            $services->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
-                ->tag('serializer.normalizer')
-            ;
-        };
-
 Serializer Context
 ------------------
 
@@ -300,7 +253,6 @@ take a look at how this bundle works.
 .. toctree::
     :maxdepth: 1
 
-    serializer/normalizers
     serializer/custom_encoders
     serializer/custom_normalizer
 
