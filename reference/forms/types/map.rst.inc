@@ -43,6 +43,14 @@ Other Fields
 * :doc:`FileType </reference/forms/types/file>`
 * :doc:`RadioType </reference/forms/types/radio>`
 
+Symfony UX Fields
+~~~~~~~~~~~~~~~~~
+
+These types are part of the `Symfony UX initiative`_:
+
+* `CropperType`_ (using Cropper.js)
+* `DropzoneType`_
+
 UID Fields
 ~~~~~~~~~~
 
@@ -71,3 +79,7 @@ Base Fields
 ~~~~~~~~~~~
 
 * :doc:`FormType </reference/forms/types/form>`
+
+.. _`Symfony UX initiative`: https://github.com/symfony/ux#readme
+.. _`CropperType`: https://github.com/symfony/ux/tree/2.x/src/Cropperjs#readme
+.. _`DropzoneType`: https://github.com/symfony/ux/tree/2.x/src/Dropzone#readme
