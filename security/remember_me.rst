@@ -358,9 +358,10 @@ service you created before:
 Activating Remember Me When Using a Custom Authenticator
 --------------------------------------------------------
 
-When you use a custom authenticator, you must add a ``RememberMeBadge`` to the ``Passport``
-for the remember me function to be activated. Without the badge, remember me will not be
-active, regardless of any other remember me settings. 
+When you use a :doc:`custom authenticator </security/custom_authenticator>`, you
+must add a ``RememberMeBadge`` to the ``Passport`` for the "Remember Me" function
+to be activated. Without the badge, "Remember Me" will not be active, regardless
+of any other "Remember Me" settings.
 
 For example::
 
