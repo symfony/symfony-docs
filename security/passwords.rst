@@ -101,7 +101,7 @@ optionally some *algorithm options*:
             User::class => ['algorithm' => 'auto'],
 
             // auto hasher with custom options for all PasswordAuthenticatedUserInterface instances
-            User::class => [
+            PasswordAuthenticatedUserInterface::class => [
                 'algorithm' => 'auto',
                 'cost' => 15,
             ],
