@@ -24,7 +24,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
         public function index(): Response
         {
             $this->denyAccessUnlessGranted(new Expression(
-                '"ROLE_ADMIN" in role_names or (not is_anonymous() and user.isSuperAdmin())'
+                '"ROLE_ADMIN" in role_names or (is_authenticated() and user.isSuperAdmin())'
             ));
 
             // ...
@@ -77,6 +77,11 @@ Additionally, you have access to a number of functions inside the expression:
     second argument with the object where permission is checked on. It's
     equivalent to using the :ref:`isGranted() method <security-isgranted>`
     from the security service.
+
+.. deprecated:: 5.4
+
+   The ``is_anonymous()`` function is
+   deprecated since Symfony 5.4.
 
 .. sidebar:: ``is_remember_me()`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 
