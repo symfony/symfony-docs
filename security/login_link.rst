@@ -108,9 +108,9 @@ intercept requests to this route:
                 throw new \LogicException('This code should never be reached');
             }
         }
-        
+
     .. code-block:: php-attributes
-    
+
         // src/Controller/SecurityController.php
         namespace App\Controller;
 
@@ -804,3 +804,33 @@ features such as the locale used to generate the link::
 
         // ...
     }
+
+
+The ``createLoginLink()`` method accepts a third optional argument to pass an
+``options`` array. There are three keys to consider: route_name, lifetime and parameters.
+$options['route_name'] will override the global route_name value and $options['lifetime'] will override the lifetime global value.
+$options['parameters'] accepts and array of name/values to pass to the internal router and to
+append to the login link query parameters.::
+
+    // ...
+    class SecurityController extends AbstractController
+    {
+        /** @Route("/login", name="login") */
+        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request)
+        {
+              // ...
+              $options['route_name'] = 'another_login_check_url';
+              $options['lifetime'] = 1200;
+              $options['parameters'] = [
+                  'redirection_uri' => 'custom_securized_uri_to_redirect_after_successful_login',
+                  'country' => 'ES'
+                  // ...
+              ];
+
+              $loginLinkDetails = $loginLinkHandler->createLoginLink($user, null, $options);
+              $loginLink = $loginLinkDetails->getUrl();
+              // ...
+        }
+        // ...
+    }
+
