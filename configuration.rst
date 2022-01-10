@@ -602,6 +602,10 @@ You can reference environment variables using the special syntax
 ``%env(ENV_VAR_NAME)%``. The values of these options are resolved at runtime
 (only once per request, to not impact performance).
 
+Note that not all config options are compatible with environment variables. There are
+`cases <https://github.com/symfony/symfony/issues/39902>`_ which may require refactoring
+the config definition in order to work with environment variables.
+
 This example shows how you could configure the database connection using an env var:
 
 .. configuration-block::
