@@ -900,6 +900,11 @@ The Serializer component provides several built-in normalizers:
     Also it can denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
     or :class:`Symfony\\Component\\Uid\\Ulid`. The format does not matter.
 
+.. note::
+
+    You can also create your own Normalizer to use another structure. Read more at
+    :doc:`/serializer/custom_normalizer`.
+
 Certain normalizers are enabled by default when using the Serializer component
 in a Symfony application, additional ones can be enabled by tagging them with
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>`.
