@@ -908,6 +908,11 @@ The Serializer component provides several built-in normalizers:
 
     The ``UidNormalizer`` normalization formats were introduced in Symfony 5.3.
 
+.. note::
+
+    You can also create your own Normalizer to use another structure. Read more at
+    :doc:`/serializer/custom_normalizer`.
+
 Certain normalizers are enabled by default when using the Serializer component
 in a Symfony application, additional ones can be enabled by tagging them with
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>`.
