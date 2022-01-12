@@ -848,7 +848,7 @@ In addition, you can query directly with SQL if you need to::
                 ORDER BY p.price ASC
                 ';
             $stmt = $conn->prepare($sql);
-            $stmt->execute(['price' => $price]);
+            $stmt->executeQuery(['price' => $price]);
 
             // returns an array of arrays (i.e. a raw data set)
             return $stmt->fetchAllAssociative();
