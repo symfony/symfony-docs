@@ -1394,7 +1394,7 @@ The Beanstalkd transport DSN may looks like this:
 The transport has a number of options:
 
 ==================  ===================================  ======================
-Option              Description                          Default
+     Option         Description                          Default
 ==================  ===================================  ======================
 tube_name           Name of the queue                    default
 timeout             Message reservation timeout          0 (will cause the

@@ -86,26 +86,26 @@ The directory structure of a bundle is meant to help to keep code consistent
 between all Symfony bundles. It follows a set of conventions, but is flexible
 to be adjusted if needed:
 
-``Controller/``
+``src/Controller/``
     Contains the controllers of the bundle (e.g. ``RandomController.php``).
 
-``DependencyInjection/``
+``src/DependencyInjection/``
     Holds certain Dependency Injection Extension classes, which may import service
     configuration, register compiler passes or more (this directory is not
     necessary).
 
-``Resources/config/``
+``config/``
     Houses configuration, including routing configuration (e.g. ``routing.yaml``).
 
-``Resources/views/``
+``templates/``
     Holds templates organized by controller name (e.g. ``Random/index.html.twig``).
 
-``Resources/public/``
+``public/``
     Contains web assets (images, stylesheets, etc) and is copied or symbolically
     linked into the project ``public/`` directory via the ``assets:install`` console
     command.
 
-``Tests/``
+``tests/``
     Holds all tests for the bundle.
 
 A bundle can be as small or large as the feature it implements. It contains
