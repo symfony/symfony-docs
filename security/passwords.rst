@@ -781,12 +781,12 @@ Creating a custom Password Hasher
 
 If you need to create your own, it needs to follow these rules:
 
-#. The class must implement :class:`Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface`
-   (you can also extend :class:`Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasher`);
+#. The class must implement :class:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface`
+   (you can also implement :class:`Symfony\\Component\\PasswordHasher\\LegacyPasswordHasherInterface` if your hash algorithm uses a separate salt);
 
 #. The implementations of
-   :method:`Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface::hashPassword`
-   and :method:`Symfony\\Component\\PasswordHasher\\Hasher\\UserPasswordHasherInterface::isPasswordValid`
+   :method:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface::hash`
+   and :method:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface::verify`
    **must validate that the password length is no longer than 4096
    characters.** This is for security reasons (see `CVE-2013-5750`_).
 
@@ -795,21 +795,21 @@ If you need to create your own, it needs to follow these rules:
 
 .. code-block:: php
 
-    // src/Security/CustomVerySecureHasher.php
-    namespace App\Security;
+    // src/Security/Hasher/CustomVerySecureHasher.php
+    namespace App\Security\Hasher;
 
+    use Symfony\Component\PasswordHasher\Exception\InvalidPasswordException;
     use Symfony\Component\PasswordHasher\Hasher\CheckPasswordLengthTrait;
-    use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
-    use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+    use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
-    class CustomVerySecureHasher extends UserPasswordHasher
+    class CustomVerySecureHasher implements PasswordHasherInterface
     {
         use CheckPasswordLengthTrait;
 
-        public function hashPassword(UserInterface $user, string $plainPassword): string
+        public function hash(string $plainPassword): string
         {
-            if ($this->isPasswordTooLong($user->getPassword())) {
-                throw new BadCredentialsException('Invalid password.');
+            if ($this->isPasswordTooLong($plainPassword)) {
+                throw new InvalidPasswordException();
             }
 
             // ... hash the plain password in a secure way
@@ -817,9 +817,9 @@ If you need to create your own, it needs to follow these rules:
             return $hashedPassword;
         }
 
-        public function isPasswordValid(UserInterface $user, string $plainPassword): bool
+        public function verify(string $hashedPassword, string $plainPassword): bool
         {
-            if ($this->isPasswordTooLong($user->getPassword())) {
+            if ('' === $plainPassword || $this->isPasswordTooLong($plainPassword)) {
                 return false;
             }
 
@@ -860,21 +860,21 @@ Now, define a password hasher using the ``id`` setting:
                 <!-- ... -->
                 <!-- id: the service ID of your custom hasher (the FQCN using the default services.yaml) -->
                 <security:password_hasher class="app_hasher"
-                    id="App\Security\Hasher\MyCustomPasswordHasher"/>
+                    id="App\Security\Hasher\CustomVerySecureHasher"/>
             </config>
         </srv:container>
 
     .. code-block:: php
 
         // config/packages/security.php
-        use App\Security\Hasher\MyCustomPasswordHasher;
+        use App\Security\Hasher\CustomVerySecureHasher;
         use Symfony\Config\SecurityConfig;
 
         return static function (SecurityConfig $security) {
             // ...
             $security->passwordHasher('app_hasher')
                 // the service ID of your custom hasher (the FQCN using the default services.yaml)
-                ->id(MyCustomPasswordHasher::class)
+                ->id(CustomVerySecureHasher::class)
             ;
         };
 
