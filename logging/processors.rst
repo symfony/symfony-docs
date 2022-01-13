@@ -280,4 +280,4 @@ the ``monolog.processor`` tag:
             ->addTag('monolog.processor', ['channel' => 'main']);
 
 .. _`Monolog`: https://github.com/Seldaek/monolog
-.. _`built-in Monolog processors`: https://github.com/Seldaek/monolog/tree/master/src/Monolog/Processor
+.. _`built-in Monolog processors`: https://github.com/Seldaek/monolog/tree/main/src/Monolog/Processor
