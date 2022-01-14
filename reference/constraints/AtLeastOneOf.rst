@@ -50,6 +50,31 @@ The following constraints ensure that:
             protected $grades;
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Student.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        // IMPORTANT: nested attributes requires PHP 8.1 or higher
+        class Student
+        {
+            #[Assert\AtLeastOneOf([
+                new Assert\Regex('/#/'),
+                new Assert\Length(min: 10),
+            ])]
+            protected $plainPassword;
+
+            #[Assert\AtLeastOneOf([
+                new Assert\Count(min: 3),
+                new Assert\All(
+                    new Assert\GreaterThanOrEqual(5)
+                ),
+            ])]
+            protected $grades;
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
@@ -138,6 +163,11 @@ The following constraints ensure that:
                 ]));
             }
         }
+
+.. versionadded:: 5.4
+
+    The ``#[AtLeastOneOf]`` PHP attribute was introduced in Symfony 5.4 and
+    requires PHP 8.1 (which added nested attribute support).
 
 Options
 -------
