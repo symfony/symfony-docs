@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-07-20T13:47:30Z
+
+Thanks for this Alexander!
+
+I have two comments:
+
+### Nested attribute code syntax
+
+Is there a commonly used syntax for this? I'm asking because instead of this:
+
+```php
+    #[
+        Assert\All([
+            new Assert\NotBlank,
+            new Assert\Length(min: 5),
+        ])
+    ]
+    protected $favoriteColors = [];
+```
+
+I'd prefer to use this:
+
+```php
+    #[Assert\All([
+        new Assert\NotBlank,
+        new Assert\Length(min: 5),
+    ])]
+    protected $favoriteColors = [];
+```
+
+But this is just a personal preference, so let's ping the @symfony/team-symfony-docs to ask for their opinion.
+
+### Warning message about needing PHP 8.1 to run this code
+
+That's a good question and I don't have a good answer. Maybe we can add a comment just before each class like the following?
+
+```rst
+.. code-block:: php-attributes
+
+    // src/Localization/Place.php
+    namespace App\Localization;
+
+    use App\Validator\Constraints as AcmeAssert;
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    // IMPORTANT: the code of this class requires using PHP 8.1 or higher
+
+    class Place
+    {
+        // ...
+    }
+```
+
+But I'm not sure ... so let's ping @symfony/team-symfony-docs again to ask what do they think. Thanks!
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2021-07-22T06:34:56Z
+
+Thank you for your feedback @javiereguiluz!
+
+About the code syntax, I have to say that I don't particularly have an opinion either. I based myself on code written by @derrabus, where you can find this in some tests of the framework:
+
+```php
+#[
+    Assert\NotNull,
+    Assert\Range(min: 3),
+]
+public $firstName;
+```
+
+About the warning message for PHP 8.1, for now I'll add the comment like you did and we'll see if a better solution appears.
+
+---------------------------------------------------------------------------
+
+by malteschlueter at 2022-01-03T14:07:24Z
+
+I think this can be merged now or not?
