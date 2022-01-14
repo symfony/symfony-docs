@@ -531,7 +531,7 @@ First, add a "delete this tag" link to each tag form:
 
 .. code-block:: javascript
 
-    const tags = document.querySelectorAll('ul.tags')
+    const tags = document.querySelectorAll('ul.tags li')
     tags.forEach((tag) => {
         addTagFormDeleteLink(tag)
     })
