@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-01-13T16:54:42Z
+
+@MarkPedron thanks for this contribution.
+
+Sadly, at this point, I no longer know which is the good interface and/or methods. We have two similar but different things and I find this highly confusing. So, I can't merge this confidence 😐
+
+@chalasr @wouterj do you think we could do something in Symfony code to improve this situation? Thanks!
+
+---------------------------------------------------------------------------
+
+by chalasr at 2022-01-13T17:32:21Z
+
+Regarding this, the situation is quite similar to previous versions (password encoders).
+PasswordHasher is composed of 3 main pieces:
+
+- PasswordHasherInterface: The service that is really about hashing the password, implementations are usually calling a low-level cryptography API like `password_hash()` under the hood. That's what developers register using the `password_hashers` config option.
+- PasswordHasherFactoryInterface: The service to which one can ask for a given PasswordHasherInterface implementation, by passing its name or the user classname it is mapped to when calling `getPasswordHasher()`.
+- UserPasswordHasherInterface: The high-level service that takes a password and a user object and uses the PasswordHasherFactoryInterface service to retrieve the right PasswordHasherInterface from the given user object, then use it to hash or verify the given password.
+
+As a developer, you configure built-in PasswordHasherInterface implementations or register custom ones via the `password_hashers: ~` config option.
+But what you actually end up using in your services/controllers or whatever place you need to hash passwords, is the `UserPasswordHasherInterface`: the high-level service that is able to find the right hasher for the given user behind the scene and hash/verify passwords.
+
+In my humble opinion, there is nothing to do on that part, the design feels right :)
+Creating custom password hashers is quite an advanced need though, hence it might seem complex at first sight.
+I hope this helps clarifying.
+
+---------------------------------------------------------------------------
+
+by gnito-org at 2022-01-14T00:44:50Z
+
+@chalasr Would it make sense to turn your eloquent explanation into a section in the relevant Security documentation?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-01-14T08:24:37Z
+
+Robin, thanks for the explanation. My two main confusion points are:
+
+(1) There are two very similar interfaces with very different names for similar methods:
+
+```
+PasswordHasherInterface
+    hash
+    verify
+    needsRehash
+UserPasswordHasherInterface
+    hashPassword
+    isPasswordValid
+    needsRehash
+```
+
+(2) The second subtle confusion comes from this interface name --> `UserPasswordHasherInterface`
+
+I understand it as --> "hash this user password" ("user password" + "hasher")
+When it really means --> "hash the password stored in this user" ("user" + "password hasher")
+
+It'd be easier to understand if it was called --> `PasswordHasherForUserObjects` <-- of course it's an ugly name; I'm not proposing to rename it like that; I share this to better explain what I try to mean
+
+---------------------------------------------------------------------------
+
+by MarkPedron at 2022-01-14T12:29:12Z
+
+@gnito-org @javiereguiluz
+
+If it helps, I would offer to add an explanation following @chalasr comment to the docs.
+As this pull request is already reviewed, I could prepare a follow-up to this one to separate 'fixing' from 'expanding' the docs
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-01-14T13:25:00Z
+
+I agree with Javier that the name of `UserPasswordHasherInterface` is the most unfortunate, mostly because this is *the* interface you need to use 95% of the time and it's not the one popping up when typing `Pas` in your IDE.
+
+Anyway, if anyone has a suggestion, please open a pull request renaming the interface in symfony/symfony. That way, we can move the issue forwards.
+
+---
+
+@MarkPedron thank you for fixing this section of the docs. The PR is perfect :+1:
