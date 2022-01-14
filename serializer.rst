@@ -120,6 +120,49 @@ You can pass the context as follows::
         DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s',
     ]);
 
+You can also configure the default context through the framework
+configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            serializer:
+                default_context:
+                    enable_max_depth: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <framework:config>
+            <!-- ... -->
+            <framework:serializer>
+                <default-context enable-max-depth="true"/>
+            </framework:serializer>
+        </framework:config>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+        use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->serializer()
+                ->defaultContext([
+                    AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true
+                ])
+            ;
+        };
+
+.. versionadded:: 5.4
+
+    The ability to configure the ``default_context`` option in the
+    Serializer was introduced in Symfony 5.4.
+
 .. _serializer-using-serialization-groups-annotations:
 
 Using Serialization Groups Annotations
