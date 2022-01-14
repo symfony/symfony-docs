@@ -164,11 +164,6 @@ The following constraints ensure that:
             }
         }
 
-.. versionadded:: 5.4
-
-    The ``#[AtLeastOneOf]`` PHP attribute was introduced in Symfony 5.4 and
-    requires PHP 8.1 (which added nested attribute support).
-
 Options
 -------
 

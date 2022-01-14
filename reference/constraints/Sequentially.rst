@@ -142,11 +142,6 @@ You can validate each of these constraints sequentially to solve these issues:
             }
         }
 
-.. versionadded:: 5.4
-
-    The ``#[Sequentially]`` PHP attribute was introduced in Symfony 5.4 and
-    requires PHP 8.1 (which added nested attribute support).
-
 Options
 -------
 

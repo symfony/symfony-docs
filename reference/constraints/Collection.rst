@@ -184,11 +184,6 @@ following:
             }
         }
 
-.. versionadded:: 5.4
-
-    The ``#[Collection]`` PHP attribute was introduced in Symfony 5.4 and
-    requires PHP 8.1 (which added nested attribute support).
-
 Presence and Absence of Fields
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
