@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2021-10-25T08:49:22Z
+
+I disagree with this change ... when you click on that link, this is what you see:
+
+![](https://user-images.githubusercontent.com/73419/138664637-52d425c3-49e3-47a0-9743-62b3f7639b4e.png)
+
+Clicking on "Bootstrap 4 form theme" and seeing "Error Messages" can be very confusing.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2021-10-25T10:41:16Z
+
+First of all: I'm only suggesting to return to the *exact* situation that we had before I changed it 3 days ago in https://github.com/symfony/symfony-docs/pull/15982
+
+When I click the link, I see the "Error Messages" *section* of the Bootstrap 4 Theme page. This isn't confusing at all, since the caution box is exactly about that: error messages of Bootstrap Theme ;-) What would you expect when you click?
+
+Your text "In the error messages of Bootstrap 4 Form Theme" is wrong, cause it's not the error message that is including something. In fact it's exactly the other way round: The *label* is including something.
