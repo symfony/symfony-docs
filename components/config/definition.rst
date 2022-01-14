@@ -820,7 +820,8 @@ character (``.``)::
 
     $node = $treeBuilder->buildTree();
     $children = $node->getChildren();
-    $path = $children['driver']->getPath();
+    $childChildren = $children['connection']->getChildren();
+    $path = $childChildren['driver']->getPath();
     // $path = 'database.connection.driver'
 
 Use the ``setPathSeparator()`` method on the config builder to change the path
@@ -831,7 +832,8 @@ separator::
     $treeBuilder->setPathSeparator('/');
     $node = $treeBuilder->buildTree();
     $children = $node->getChildren();
-    $path = $children['driver']->getPath();
+    $childChildren = $children['connection']->getChildren();
+    $path = $childChildren['driver']->getPath();
     // $path = 'database/connection/driver'
 
 Processing Configuration Values

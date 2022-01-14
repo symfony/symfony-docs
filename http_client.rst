@@ -1675,6 +1675,23 @@ responses dynamically when it's called::
     $client = new MockHttpClient($callback);
     $response = $client->request('...'); // calls $callback to get the response
 
+.. tip::
+
+    Instead of using the first argument, you can also set the (list of)
+    responses or callbacks using the ``setResponseFactory()`` method::
+
+        $responses = [
+            new MockResponse($body1, $info1),
+            new MockResponse($body2, $info2),
+        ];
+
+        $client = new MockHttpClient();
+        $client->setResponseFactory($responses);
+
+    .. versionadded:: 5.4
+
+        The ``setResponseFactory()`` method was introduced in Symfony 5.4.
+
 If you need to test responses with HTTP status codes different than 200,
 define the ``http_code`` option::
 

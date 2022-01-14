@@ -268,8 +268,9 @@ Renders any errors for the given field.
 
 .. caution::
 
-    In the :ref:`error messages of Bootstrap 5 Form Theme <reference-forms-bootstrap5-error-messages>`,
-    ``form_errors()`` is already included in ``form_label()``.
+    In the Bootstrap 4 form theme, ``form_errors()`` is already included in
+    ``form_label()``. Read more about this in the
+    :ref:`Bootstrap 4 theme documentation <reference-forms-bootstrap5-error-messages>`.
 
 .. _reference-forms-twig-widget:
 
