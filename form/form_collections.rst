@@ -239,23 +239,31 @@ it will receive an *unknown* number of tags. Otherwise, you'll see a
 The ``allow_add`` option also makes a ``prototype`` variable available to you.
 This "prototype" is a little "template" that contains all the HTML needed to
 dynamically create any new "tag" forms with JavaScript. To render the prototype, add
-the following ``data-prototype`` attribute to the existing ``<ul>`` in your template:
+the following ``data-prototype`` attribute to the existing ``<ul>`` in your
+template:
 
 .. code-block:: html+twig
 
-    <ul class="tags" data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
-
-Now add a button just next to the ``<ul>`` to dynamically add a new tag:
-
-.. code-block:: html+twig
-
-    <button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
+    {# the data-index attribute is required for the JavaScript code below #}
+    <ul class="tags"
+        data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"
+    ></ul>
 
 On the rendered page, the result will look something like this:
 
 .. code-block:: html
 
-    <ul class="tags" data-index="0" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+    <ul class="tags"
+        data-index="0"
+        data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
+    ></ul>
+
+Now add a button to dynamically add a new tag:
+
+.. code-block:: html+twig
+
+    <button type="button" class="add_item_link" data-collection-holder-class="tags">Add a tag</button>
 
 .. seealso::
 
@@ -265,7 +273,7 @@ On the rendered page, the result will look something like this:
 .. tip::
 
     The ``form.tags.vars.prototype`` is a form element that looks and feels just
-    like the individual ``form_widget(tag)`` elements inside your ``for`` loop.
+    like the individual ``form_widget(tag.*)`` elements inside your ``for`` loop.
     This means that you can call ``form_widget()``, ``form_row()`` or ``form_label()``
     on it. You could even choose to render only one of its fields (e.g. the
     ``name`` field):
@@ -281,16 +289,16 @@ On the rendered page, the result will look something like this:
     and you need to adjust the following JavaScript accordingly.
 
 Now add some JavaScript to read this attribute and dynamically add new tag forms
-when the user clicks the "Add a tag" link.
-
-Add a ``<script>`` tag somewhere on your page to include the required
-functionality with JavaScript:
+when the user clicks the "Add a tag" link. Add a ``<script>`` tag somewhere
+on your page to include the required functionality with JavaScript:
 
 .. code-block:: javascript
 
     document
       .querySelectorAll('.add_item_link')
-      .forEach(btn => btn.addEventListener("click", addFormToCollection));
+      .forEach(btn => {
+          btn.addEventListener("click", addFormToCollection)
+      });
 
 The ``addFormToCollection()`` function's job will be to use the ``data-prototype``
 attribute to dynamically add a new form when this link is clicked. The ``data-prototype``
@@ -529,14 +537,15 @@ First, add a "delete this tag" link to each tag form:
 
 .. code-block:: javascript
 
-    const tags = document.querySelectorAll('ul.tags li')
-    tags.forEach((tag) => {
-        addTagFormDeleteLink(tag)
-    })
+    document
+        .querySelectorAll('ul.tags li')
+        .forEach((tag) => {
+            addTagFormDeleteLink(tag)
+        })
 
     // ... the rest of the block from above
 
-    function addFormToCollection() {
+    const addFormToCollection = (e) => {
         // ...
 
         // add a delete link to the new form
@@ -547,17 +556,16 @@ The ``addTagFormDeleteLink()`` function will look something like this:
 
 .. code-block:: javascript
 
-    const addTagFormDeleteLink = (tagFormLi) => {
-        const removeFormButton = document.createElement('button')
-        removeFormButton.classList
-        removeFormButton.innerText = 'Delete this tag'
+    const addTagFormDeleteLink = (item) => {
+        const removeFormButton = document.createElement('button');
+        removeFormButton.innerText = 'Delete this tag';
 
-        tagFormLi.append(removeFormButton);
+        item.append(removeFormButton);
 
         removeFormButton.addEventListener('click', (e) => {
-            e.preventDefault()
+            e.preventDefault();
             // remove the li for the tag form
-            tagFormLi.remove();
+            item.remove();
         });
     }
 
@@ -652,7 +660,6 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     the `symfony-collection`_ package based on `jQuery`_ for the rest of browsers.
 
 .. _`Owning Side and Inverse Side`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/unitofwork-associations.html
-.. _`jQuery`: http://jquery.com/
 .. _`JSFiddle`: https://jsfiddle.net/ey8ozh6n/
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
