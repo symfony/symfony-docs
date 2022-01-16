@@ -412,11 +412,13 @@ files directly in the ``config/packages/`` directory.
 
 .. tip::
 
-    You can also define options for different environments in a single configuration file.
-
     .. versionadded:: 5.3
 
-        The ability to defined different environments in a single file was introduced in Symfony 5.3.
+        The ability to defined different environments in a single file was
+        introduced in Symfony 5.3.
+
+    You can also define options for different environments in a single
+    configuration file using the special ``when`` keyword:
 
     .. configuration-block::
 
@@ -429,10 +431,12 @@ files directly in the ``config/packages/`` directory.
                 strict_mode: true
                 cache: false
 
+            # cache is enabled only in the "prod" environment
             when@prod:
                 webpack_encore:
                     cache: true
 
+            # disable strict mode only in the "test" environment
             when@test:
                 webpack_encore:
                     strict_mode: false
@@ -447,20 +451,20 @@ files directly in the ``config/packages/`` directory.
                     https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony
                     https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-                <webpack-encore:config>
-                    <!-- ... -->
-                </webpack-encore:config>
+                <webpack-encore:config
+                    output-path="%kernel.project_dir%/public/build"
+                    strict-mode="true"
+                    cache="false"
+                />
 
+                <!-- cache is enabled only in the "test" environment -->
                 <when env="prod">
-                    <webpack-encore:config>
-                        <!-- ... -->
-                    </webpack-encore:config>
+                    <webpack-encore:config cache="true"/>
                 </when>
 
+                <!-- disable strict mode only in the "test" environment -->
                 <when env="test">
-                    <webpack-encore:config>
-                        <!-- ... -->
-                    </webpack-encore:config>
+                    <webpack-encore:config strict-mode="false"/>
                 </when>
             </container>
 
@@ -468,43 +472,25 @@ files directly in the ``config/packages/`` directory.
 
             // config/packages/framework.php
             use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-            use Symfony\Config\FrameworkConfig;
+            use Symfony\Config\WebpackEncoreConfig;
 
-            return static function (FrameworkConfig $framework, ContainerConfigurator $container) {
-                // ...
+            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container) {
+                $webpackEncore
+                    ->outputPath('%kernel.project_dir%/public/build')
+                    ->strictMode(true)
+                    ->cache(false)
+                ;
 
+                // cache is enabled only in the "prod" environment
                 if ('prod' === $container->env()) {
-                    // ...
+                    $webpackEncore->cache(true);
                 }
 
+                // disable strict mode only in the "test" environment
                 if ('test' === $container->env()) {
-                    $framework->test(true);
-                    $framework->session()->storageFactoryId('session.storage.mock_file');
+                    $webpackEncore->strictMode(false);
                 }
             };
-    
-    Also, if you are using PHP 8.0 or later, you can use the PHP attribute ``#[When]`` to tell that a class should only be registered as services in some environments :
-    
-    .. configuration-block::
-
-        .. code-block:: php-attributes
-
-            use Symfony\Component\DependencyInjection\Attribute\When;
-
-            #[When(env: 'dev')]
-            class SomeClass
-            {
-                // ...
-            }
-
-            // you can apply more than one attribute to the same class:
-
-            #[When(env: 'dev')]
-            #[When(env: 'test')]
-            class AnotherClass
-            {
-                // ...
-            }
 
 .. seealso::
 
