@@ -8,7 +8,10 @@ them later in JavaScript. For example:
 
 .. code-block:: html+twig
 
-    <div class="js-user-rating" data-is-authenticated="{{ app.user ? 'true' : 'false' }}">
+    <div class="js-user-rating"
+        data-is-authenticated="{{ app.user ? 'true' : 'false' }}"
+        data-user="{{ app.user|serialize(format = 'json') }}"
+    >
         <!-- ... -->
     </div>
 
@@ -19,6 +22,7 @@ Fetch this in JavaScript:
     document.addEventListener('DOMContentLoaded', function() {
         var userRating = document.querySelector('.js-user-rating');
         var isAuthenticated = userRating.dataset.isAuthenticated;
+        var user = JSON.parse(userRating.dataset.user);
 
         // or with jQuery
         //var isAuthenticated = $('.js-user-rating').data('isAuthenticated');
