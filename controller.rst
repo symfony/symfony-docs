@@ -132,7 +132,7 @@ If you want to redirect the user to another page, use the ``redirectToRoute()``
 and ``redirect()`` methods::
 
     use Symfony\Component\HttpFoundation\RedirectResponse;
-    use Symfony\Component\HttpFoundation\Response
+    use Symfony\Component\HttpFoundation\Response;
 
     // ...
     public function index(): RedirectResponse
@@ -153,6 +153,9 @@ and ``redirect()`` methods::
 
         // redirects to a route and maintains the original query string parameters
         return $this->redirectToRoute('blog_show', $request->query->all());
+        
+        // redirects to the current route (e.g. for Post/Redirect/Get pattern):
+        return $this->redirectToRoute($request->attributes->get('_route'));
 
         // redirects externally
         return $this->redirect('http://symfony.com/doc');
