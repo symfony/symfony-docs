@@ -2130,6 +2130,12 @@ the consumer (e.g. render a template with links). This middleware stores the
 original request context (i.e. the host, the HTTP port, etc.) which is needed
 when building absolute URLs.
 
+Add the ``validation`` middleware if you need to validate the message
+object using the :doc:`Validator component <validator>` before handling it.
+If validation fails, a ``ValidationFailedException`` will be thrown. The
+:class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp` can be used
+to configure the validation groups.
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -2141,6 +2147,7 @@ when building absolute URLs.
                     command_bus:
                         middleware:
                             - router_context
+                            - validation
 
     .. code-block:: xml
 
@@ -2158,6 +2165,7 @@ when building absolute URLs.
                 <framework:messenger>
                     <framework:bus name="command_bus">
                         <framework:middleware id="router_context"/>
+                        <framework:middleware id="validation"/>
                     </framework:bus>
                 </framework:messenger>
             </framework:config>
@@ -2173,8 +2181,8 @@ when building absolute URLs.
 
             $bus = $messenger->bus('command_bus');
             $bus->middleware()->id('router_context');
+            $bus->middleware()->id('validation');
         };
-
 
 Messenger Events
 ~~~~~~~~~~~~~~~~
