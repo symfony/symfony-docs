@@ -1,0 +1,6 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2021-11-25T16:49:00Z
+
+I think we should rewrite the doc and tell about using config instead, see
+https://github.com/symfony/symfony/pull/37351
