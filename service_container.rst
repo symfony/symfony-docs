@@ -222,6 +222,35 @@ each time you ask for it.
     If you'd prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
 
+Limiting Services to a specific Symfony Environment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.3
+
+    The ``#[When]`` attribute was introduced in Symfony 5.3.
+
+If you are using PHP 8.0 or later, you can use the ``#[When]`` PHP
+attribute to only register the class as a service in some environments::
+
+    use Symfony\Component\DependencyInjection\Attribute\When;
+
+    // SomeClass is only registered in the "dev" environment
+
+    #[When(env: 'dev')]
+    class SomeClass
+    {
+        // ...
+    }
+
+    // you can also apply more than one When attribute to the same class
+
+    #[When(env: 'dev')]
+    #[When(env: 'test')]
+    class AnotherClass
+    {
+        // ...
+    }
+
 .. _services-constructor-injection:
 
 Injecting Services/Config into a Service
