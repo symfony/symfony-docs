@@ -238,19 +238,26 @@ it will receive an *unknown* number of tags. Otherwise, you'll see a
 
 The ``allow_add`` option also makes a ``prototype`` variable available to you.
 This "prototype" is a little "template" that contains all the HTML needed to
-dynamically create any new "tag" forms with JavaScript. Now add the following
-``data-index`` (containing the current "form row" number for the following JavaScript)
-and ``data-prototype`` attribute to the existing ``<ul>`` in your template:
+dynamically create any new "tag" forms with JavaScript. To render the prototype, add
+the following ``data-prototype`` attribute to the existing ``<ul>`` in your
+template:
 
 .. code-block:: html+twig
 
-    <ul class="tags" data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"></ul>
+    {# the data-index attribute is required for the JavaScript code below #}
+    <ul class="tags"
+        data-index="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}"
+        data-prototype="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"
+    ></ul>
 
 On the rendered page, the result will look something like this:
 
 .. code-block:: html
 
-    <ul class="tags" data-index="0" data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+    <ul class="tags"
+        data-index="0"
+        data-prototype="&lt;div&gt;&lt;label class=&quot; required&quot;&gt;__name__&lt;/label&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;label for=&quot;task_tags___name___name&quot; class=&quot; required&quot;&gt;Name&lt;/label&gt;&lt;input type=&quot;text&quot; id=&quot;task_tags___name___name&quot; name=&quot;task[tags][__name__][name]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
+    ></ul>
 
 Now add a button to dynamically add a new tag:
 
@@ -282,16 +289,16 @@ Now add a button to dynamically add a new tag:
     and you need to adjust the following JavaScript accordingly.
 
 Now add some JavaScript to read this attribute and dynamically add new tag forms
-when the user clicks the "Add a tag" link.
-
-Add a ``<script>`` tag somewhere on your page to include the required
-functionality with JavaScript:
+when the user clicks the "Add a tag" link. Add a ``<script>`` tag somewhere
+on your page to include the required functionality with JavaScript:
 
 .. code-block:: javascript
 
     document
       .querySelectorAll('.add_item_link')
-      .forEach(btn => btn.addEventListener("click", addFormToCollection));
+      .forEach(btn => {
+          btn.addEventListener("click", addFormToCollection)
+      });
 
 The ``addFormToCollection()`` function's job will be to use the ``data-prototype``
 attribute to dynamically add a new form when this link is clicked. The ``data-prototype``
@@ -304,9 +311,9 @@ you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``)
     const addFormToCollection = (e) => {
       const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
-      const element = document.createElement('li');
+      const item = document.createElement('li');
 
-      element.innerHTML = collectionHolder
+      item.innerHTML = collectionHolder
         .dataset
         .prototype
         .replace(
@@ -314,7 +321,7 @@ you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``)
           collectionHolder.dataset.index
         );
 
-      collectionHolder.appendChild(element);
+      collectionHolder.appendChild(item);
 
       collectionHolder.dataset.index++;
     };
@@ -530,34 +537,35 @@ First, add a "delete this tag" link to each tag form:
 
 .. code-block:: javascript
 
-    const tags = document.querySelectorAll('ul.tags li')
-    tags.forEach((tag) => {
-        addTagFormDeleteLink(tag)
-    })
+    document
+        .querySelectorAll('ul.tags li')
+        .forEach((tag) => {
+            addTagFormDeleteLink(tag)
+        })
 
     // ... the rest of the block from above
 
-    function addFormToCollection() {
+    const addFormToCollection = (e) => {
         // ...
 
         // add a delete link to the new form
-        addTagFormDeleteLink(element);
+        addTagFormDeleteLink(item);
     }
 
 The ``addTagFormDeleteLink()`` function will look something like this:
 
 .. code-block:: javascript
 
-    const addTagFormDeleteLink = (element) => {
+    const addTagFormDeleteLink = (item) => {
         const removeFormButton = document.createElement('button');
         removeFormButton.innerText = 'Delete this tag';
 
-        element.append(removeFormButton);
+        item.append(removeFormButton);
 
         removeFormButton.addEventListener('click', (e) => {
             e.preventDefault();
             // remove the li for the tag form
-            element.remove();
+            item.remove();
         });
     }
 
