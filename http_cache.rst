@@ -98,15 +98,14 @@ caching kernel:
     + use App\CacheKernel;
       use App\Kernel;
 
-      // ...
-      $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
+    // ...
+    $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
     + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
     + if ('prod' === $kernel->getEnvironment()) {
-    +     $kernel = new CacheKernel($kernel);
+    +     return new CacheKernel($kernel);
     + }
+    return $kernel;
 
-      $request = Request::createFromGlobals();
-      // ...
 
 The caching kernel will immediately act as a reverse proxy: caching responses
 from your application and returning them to the client.
