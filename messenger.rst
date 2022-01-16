@@ -2152,59 +2152,6 @@ the consumer (e.g. render a template with links). This middleware stores the
 original request context (i.e. the host, the HTTP port, etc.) which is needed
 when building absolute URLs.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/messenger.yaml
-        framework:
-            messenger:
-                buses:
-                    command_bus:
-                        middleware:
-                            - router_context
-
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:messenger>
-                    <framework:bus name="command_bus">
-                        <framework:middleware id="router_context"/>
-                    </framework:bus>
-                </framework:messenger>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/messenger.php
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework) {
-            $messenger = $framework->messenger();
-
-            $bus = $messenger->bus('command_bus');
-            $bus->middleware()->id('router_context');
-        };
-
-
-Other Middlewares
-~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 4.1
-
-    The ``validation`` middleware was introduced in Symfony 4.1.
-
 Add the ``validation`` middleware if you need to validate the message
 object using the :doc:`Validator component <validator>` before handling it.
 If validation fails, a ``ValidationFailedException`` will be thrown. The
@@ -2221,6 +2168,7 @@ to configure the validation groups.
                 buses:
                     command_bus:
                         middleware:
+                            - router_context
                             - validation
 
     .. code-block:: xml
@@ -2238,6 +2186,7 @@ to configure the validation groups.
             <framework:config>
                 <framework:messenger>
                     <framework:bus name="command_bus">
+                        <framework:middleware id="router_context"/>
                         <framework:middleware id="validation"/>
                     </framework:bus>
                 </framework:messenger>
@@ -2247,17 +2196,15 @@ to configure the validation groups.
     .. code-block:: php
 
         // config/packages/messenger.php
-        $container->loadFromExtension('framework', [
-            'messenger' => [
-                'buses' => [
-                    'command_bus' => [
-                        'middleware' => [
-                            'validation',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            $bus = $messenger->bus('command_bus');
+            $bus->middleware()->id('router_context');
+            $bus->middleware()->id('validation');
+        };
 
 Messenger Events
 ~~~~~~~~~~~~~~~~
