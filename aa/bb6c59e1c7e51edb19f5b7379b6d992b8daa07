@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by ogizanagi at 2021-12-31T13:17:39Z
+
+Thanks for opening this.
+I think we could mention as well the [`ValidationStamp`](https://github.com/symfony/symfony/blob/6.1/src/Symfony/Component/Messenger/Stamp/ValidationStamp.php) to configure validation groups. It's already mentioned in [this part](https://symfony.com/doc/current/components/messenger.html#adding-metadata-to-messages-envelopes), but this possibility would be more discoverable next to the validation middleware samples.
+
+---------------------------------------------------------------------------
+
+by 94noni at 2021-12-31T13:23:04Z
+
+Ok I’ll add a ref link here
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-01-03T12:25:12Z
+
+@ogizanagi done :)
+
+---------------------------------------------------------------------------
+
+by Nek- at 2022-01-14T08:04:38Z
+
+Thanks this is nice @94noni . I hope it will be merged soon!
