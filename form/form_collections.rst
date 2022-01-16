@@ -281,9 +281,7 @@ On the rendered page, the result will look something like this:
     and you need to adjust the following JavaScript accordingly.
 
 Now add some JavaScript to read this attribute and dynamically add new tag forms
-when the user clicks the "Add a tag" link. This example uses `jQuery`_ and
-assumes you have it included somewhere on your page (e.g. using Symfony's
-:doc:`Webpack Encore </frontend>`).
+when the user clicks the "Add a tag" link.
 
 Add a ``<script>`` tag somewhere on your page to include the required
 functionality with JavaScript:
