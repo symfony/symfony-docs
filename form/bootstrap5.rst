@@ -83,6 +83,8 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
     container. If you override the ``row_attr`` class option, the ``mb-3`` will
     be overridden too and you will need to explicitly add it.
 
+.. _reference-forms-bootstrap5-error-messages:
+
 Error Messages
 --------------
 
