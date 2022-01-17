@@ -9,7 +9,7 @@ EnumType Field
    The ``EnumType`` form field was introduced in Symfony 5.4.
 
 A multi-purpose field used to allow the user to "choose" one or more options
-defined in a `PHP enumeration`_. It extends the :doc:`ChoiceType </refernce/forms/types/enum>`
+defined in a `PHP enumeration`_. It extends the :doc:`ChoiceType </reference/forms/types/enum>`
 field and defines the same options.
 
 +---------------------------+----------------------------------------------------------------------+
