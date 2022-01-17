@@ -69,9 +69,9 @@ Components
 .. toctree::
     :hidden:
 
-    components/index
+    components/
 
-Read the :doc:`Components </components/index>` documentation.
+Read the :doc:`Components </components/>` documentation.
 
 Reference Documents
 -------------------
