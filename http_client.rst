@@ -1688,10 +1688,6 @@ responses dynamically when it's called::
         $client = new MockHttpClient();
         $client->setResponseFactory($responses);
 
-    .. versionadded:: 5.4
-
-        The ``setResponseFactory()`` method was introduced in Symfony 5.4.
-
 If you need to test responses with HTTP status codes different than 200,
 define the ``http_code`` option::
 
