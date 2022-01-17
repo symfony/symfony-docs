@@ -225,10 +225,6 @@ each time you ask for it.
 Limiting Services to a specific Symfony Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.3
-
-    The ``#[When]`` attribute was introduced in Symfony 5.3.
-
 If you are using PHP 8.0 or later, you can use the ``#[When]`` PHP
 attribute to only register the class as a service in some environments::
 

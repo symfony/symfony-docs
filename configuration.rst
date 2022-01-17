@@ -412,11 +412,6 @@ files directly in the ``config/packages/`` directory.
 
 .. tip::
 
-    .. versionadded:: 5.3
-
-        The ability to defined different environments in a single file was
-        introduced in Symfony 5.3.
-
     You can also define options for different environments in a single
     configuration file using the special ``when`` keyword:
 
