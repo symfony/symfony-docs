@@ -149,11 +149,6 @@ configuration:
             ;
         };
 
-.. versionadded:: 5.4
-
-    The ability to configure the ``default_context`` option in the
-    Serializer was introduced in Symfony 5.4.
-
 .. _serializer-using-serialization-groups-annotations:
 
 Using Serialization Groups Annotations
