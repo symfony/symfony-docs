@@ -118,7 +118,7 @@ jobs:
 
           - name: Install dependencies
             if: ${{ steps.find-files.outputs.files }}
-            run: composer create-project symfony-tools/code-block-checker _checker
+            run: composer create-project symfony-tools/code-block-checker:@dev _checker
 
           - name: Install test application
             if: ${{ steps.find-files.outputs.files }}
