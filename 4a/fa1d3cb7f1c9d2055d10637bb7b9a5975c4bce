@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by MarkPedron at 2022-01-15T13:24:43Z
+
+CI diagnostics are confusing me. This PR does not change any `versionadded` directive.
+
+```
+Warning: ] Found "2" invalid files!
+
+Error: You are not allowed to use version "5.4". Only major version "6" is allowed.
+Error: Please only provide ".. versionadded::" if the version is greater/equal "6.0"
+Error: You are not allowed to use version "5.4". Only major version "6" is allowed.
+Error: Please only provide ".. versionadded::" if the version is greater/equal "6.0"
+```
+
+If all `versionadded` references prior 6.0 must be removed, shouldn't this be done in a separate PR? Edit: created #16406
