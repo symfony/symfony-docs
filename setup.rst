@@ -242,13 +242,6 @@ update or replace compromised dependencies as soon as possible. The security
 check is done locally by fetching the public `PHP security advisories database`_,
 so your ``composer.lock`` file is not sent on the network.
 
-.. tip::
-
-    The ``check:security`` command terminates with a non-zero exit code if
-    any of your dependencies is affected by a known security vulnerability.
-    This way you can add it to your project build process and your continuous
-    integration workflows to make them fail when there are vulnerabilities.
-
 Symfony LTS Versions
 --------------------
 
