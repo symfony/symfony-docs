@@ -164,14 +164,14 @@ most natural in your hosting environment.
 
     .. code-block:: terminal
 
-        $ composer dump-env prod
+        $ php bin/console dotenv:dump prod
 
-    The generated file will contain all the configuration stored in ``.env``. If you
+    The generated file will contain all the configurations stored in ``.env``. If you
     want to rely only on environment variables, generate one without any values using:
 
     .. code-block:: terminal
 
-        $ composer dump-env prod --empty
+        $ php bin/console dotenv:dump prod --empty
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
