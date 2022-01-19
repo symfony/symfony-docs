@@ -115,9 +115,12 @@ You can configure PHP to use this preload file:
 
     ; php.ini
     opcache.preload=/path/to/project/config/preload.php
-    
+
     ; required for opcache.preload:
     opcache.preload_user=www-data
+
+If this file is missing, run this command to update the Symfony Flex recipe:
+``composer recipes:update symfony/framework-bundle``.
 
 .. _performance-configure-opcache:
 
