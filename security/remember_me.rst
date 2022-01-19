@@ -22,9 +22,8 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 main:
                     # ...
                     remember_me:
-                        secret:   '%kernel.secret%'
+                        secret:   '%kernel.secret%' # required
                         lifetime: 604800 # 1 week in seconds
-                        path:     /
                         # by default, the feature is enabled by checking a
                         # checkbox in the login form (see below), uncomment the
                         # following line to always enable it.
@@ -48,11 +47,12 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
                 <firewall name="main">
                     <!-- ... -->
 
-                    <!-- 604800 is 1 week in seconds -->
+                    <!-- secret: required
+                         lifetime: 604800 is 1 week in seconds -->
                     <remember-me
                         secret="%kernel.secret%"
                         lifetime="604800"
-                        path="/"/>
+                    />
                     <!-- by default, the feature is enabled by checking a checkbox
                          in the login form (see below), add always-remember-me="true"
                          to always enable it. -->
@@ -70,9 +70,8 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
             $security->firewall('main')
                 // ...
                 ->rememberMe()
-                    ->secret('%kernel.secret%')
+                    ->secret('%kernel.secret%') // required
                     ->lifetime(604800) // 1 week in seconds
-                    ->path('/')
 
                     // by default, the feature is enabled by checking a
                     // checkbox in the login form (see below), uncomment
@@ -81,72 +80,39 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
             ;
         };
 
-The ``remember_me`` firewall defines the following configuration options:
+The ``secret`` option is the only required option and it is used to sign
+the remember me cookie. It's common to use the ``kernel.secret`` parameter,
+which is defined using the ``APP_SECRET`` environment variable.
 
-``secret`` (**required**)
-    The value used to encrypt the cookie's content. It's common to use the
-    ``secret`` value defined in the ``APP_SECRET`` environment variable.
+After enabling the ``remember_me`` system in the configuration, there are a
+couple more things to do before remember me works correctly:
 
-``name`` (default value: ``REMEMBERME``)
-    The name of the cookie used to keep the user logged in. If you enable the
-    ``remember_me`` feature in several firewalls of the same application, make sure
-    to choose a different name for the cookie of each firewall. Otherwise, you'll
-    face lots of security related problems.
+#. :ref:`Add an opt-in checkbox to active remember me <security-remember-me-activate>`;
+#. :ref:`Use an authenticator that supports remember me <security-remember-me-authenticator>`;
+#. Optionally, :ref:`configure the how remember me cookies are stored and validated <security-remember-me-storage>`.
 
-``lifetime`` (default value: ``31536000``)
-    The number of seconds during which the user will remain logged in. By default
-    users are logged in for one year.
+After this, the remember me cookie will be created upon successful
+authentication. For some pages/actions, you can
+:ref:`force a user to fully authenticate <security-remember-me-authorization>`
+(i.e. not through a remember me cookie) for better security.
 
-``path`` (default value: ``/``)
-    The path where the cookie associated with this feature is used. By default
-    the cookie will be applied to the entire website but you can restrict to a
-    specific section (e.g. ``/forum``, ``/admin``).
+.. note::
 
-``domain`` (default value: ``null``)
-    The domain where the cookie associated with this feature is used. By default
-    cookies use the current domain obtained from ``$_SERVER``.
+    The ``remember_me`` setting contains many settings to configure the
+    cookie created by this feature. See `Customizing the Remember Me Cookie`_
+    for a full description of these settings.
 
-``secure`` (default value: ``false``)
-    If ``true``, the cookie associated with this feature is sent to the user
-    through an HTTPS secure connection.
+.. _security-remember-me-activate:
 
-``httponly`` (default value: ``true``)
-    If ``true``, the cookie associated with this feature is accessible only
-    through the HTTP protocol. This means that the cookie won't be accessible
-    by scripting languages, such as JavaScript.
+Activating the Remember Me System
+---------------------------------
 
-``samesite`` (default value: ``null``)
-    If set to ``strict``, the cookie associated with this feature will not
-    be sent along with cross-site requests, even when following a regular link.
+Using the remember me cookie is not always appropriate (e.g. you should not
+use it on a shared PC). This is why by default, Symfony requires your users
+to opt-in to the remember me system via a request parameter.
 
-``remember_me_parameter`` (default value: ``_remember_me``)
-    The name of the form field checked to decide if the "Remember Me" feature
-    should be enabled or not. Keep reading this article to know how to enable
-    this feature conditionally.
-
-``always_remember_me`` (default value: ``false``)
-    If ``true``, the value of the ``remember_me_parameter`` is ignored and the
-    "Remember Me" feature is always enabled, regardless of the desire of the
-    end user.
-
-``token_provider`` (default value: ``null``)
-    Defines the service id of a token provider to use. If you want to store tokens
-    in the database, see :ref:`remember-me-token-in-database`.
-
-``service`` (default value: ``null``)
-    Defines the ID of the service used to handle the Remember Me feature. It's
-    useful if you need to overwrite the current behavior.
-
-Forcing the User to Opt-Out of the Remember Me Feature
-------------------------------------------------------
-
-It's a good idea to provide the user with the option to use or not use the
-remember me functionality, as it will not always be appropriate. The usual
-way of doing this is to add a checkbox to the login form. By giving the checkbox
-the name ``_remember_me`` (or the name you configured using ``remember_me_parameter``),
-the cookie will automatically be set when the checkbox is checked and the user
-successfully logs in. So, your specific login form might ultimately look like
-this:
+This request parameter is often set via a checkbox in the login form. This
+checkbox must have a name of ``_remember_me``:
 
 .. code-block:: html+twig
 
@@ -154,14 +120,425 @@ this:
     <form method="post">
         {# ... your form fields #}
 
-        <input type="checkbox" id="remember_me" name="_remember_me" checked/>
-        <label for="remember_me">Keep me logged in</label>
+        <label>
+            <input type="checkbox" name="_remember_me" checked/>
+            Keep me logged in
+        </label>
 
         {# ... #}
     </form>
 
-The user will then automatically be logged in on subsequent visits while
-the cookie remains valid.
+.. note::
+
+    Optionally, you can configure a custom name for this checkbox using the
+    ``remember_me_parameter`` setting under the ``remember_me`` section.
+
+Always activating Remember Me
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes, you may wish to always activate the remember me system and not
+allow users to opt-out. In these cases, you can use the
+``always_remember_me`` setting:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    remember_me:
+                        secret: '%kernel.secret%'
+                        # ...
+                        always_remember_me: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+
+                    <remember-me
+                        secret="%kernel.secret%"
+                        always-remember-me="true"
+                    />
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->rememberMe()
+                    ->secret('%kernel.secret%')
+                    // ...
+                    ->alwaysRememberMe(true)
+            ;
+        };
+
+Now, no request parameter is checked and each successful authentication
+will produce a remember me cookie.
+
+.. _security-remember-me-authenticator:
+
+Add Remember Me Support to the Authenticator
+--------------------------------------------
+
+Not all authentication methods support remember me (e.g. HTTP Basic
+authentication doesn't have support). An authenticator indicates support
+using a ``RememberMeBadge`` on the :ref:`security passport <security-passport>`.
+
+After logging in, you can use the security profiler to see if this badge is
+present:
+
+.. image:: /_images/security/profiler-badges.png
+
+Without this badge, remember me will be not be activated (regardless of all
+other settings).
+
+Add Remember Me Support to Custom Authenticators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When you use a custom authenticator, you must add a ``RememberMeBadge``
+manually::
+
+    // src/Service/LoginAuthenticator.php
+    namespace App\Service;
+
+    // ...
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+
+    class LoginAuthenticator extends AbstractAuthenticator
+    {
+        public function authenticate(Request $request): Passport
+        {
+            // ...
+
+            return new Passport(
+                new UserBadge(...),
+                new PasswordCredentials(...),
+                [
+                    new RememberMeBadge(),
+                ]
+            );
+        }
+    }
+
+.. _security-remember-me-storage:
+
+Customize how Remember Me Tokens are Stored
+-------------------------------------------
+
+Remember me cookies contain a token that is used to verify the user's
+identity. As these tokens are long-lived, it is important to take
+precautions to allow invalidating any generated tokens.
+
+Symfony provides two ways to validate remember me tokens:
+
+Signature based tokens
+    By default, the remember me cookie contains a signature based on
+    properties of the user. If the properties change, the signature changes
+    and already generated tokens are no longer considered valid. See
+    :ref:`security-remember-me-signature` for more information.
+
+Persistent tokens
+    Persistent tokens store any generated token (e.g. in a database). This
+    allows you to invalidate tokens by changing the rows in the database.
+    See :ref:`security-remember-me-persistent` for more information.
+
+.. note::
+
+    You can also write your own custom remember me handler by creating a
+    class that extends
+    :class:`Symfony\\Component\\Security\\Http\\RememberMe\\AbstractRememberMeHandler`
+    (or implements :class:`Symfony\\Component\\Security\\Http\\RememberMe\\RememberMeHandlerInterface`).
+    You can then configure this custom handler by configuring the service
+    ID in the ``service`` option under ``remember_me``.
+
+    .. versionadded:: 5.1
+
+        The ``service`` option was introduced in Symfony 5.1.
+
+
+.. _security-remember-me-signature:
+
+Using Signed Remember Me Tokens
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, remember me cookies contain a *hash* that is used to validate
+the cookie. This hash is computed based on configured
+signature properties.
+
+These properties are always included in the hash:
+
+* The user identifier (returned by
+  :method:`Symfony\\Component\\Security\\Core\\User\\UserInterface::getUserIdentifier`);
+* The expiration timestamp.
+
+On top of these, you can configure custom properties using the
+``signature_properties`` setting (defaults to ``password``). The properties
+are fetched from the user object using the
+:doc:`PropertyAccess component </components/property_access>` (e.g. using
+``getUpdatedAt()`` or a public ``$updatedAt`` property when using
+``updatedAt``).
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    remember_me:
+                        secret: '%kernel.secret%'
+                        # ...
+                        signature_properties: ['password', 'updatedAt']
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+
+                    <remember-me secret="%kernel.secret%">
+                        <signature-property>password</signature-property>
+                        <signature-property>updatedAt</signature-property>
+                    </remember-me>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->rememberMe()
+                    ->secret('%kernel.secret%')
+                    // ...
+                    ->signatureProperties(['password', 'updatedAt'])
+            ;
+        };
+
+In this example, the remember me cookie will no longer be considered valid
+if the ``updatedAt``, password or user identifier for this user changes.
+
+.. tip::
+
+    Signature properties allow for some advanced usages without having to
+    set-up storage for all remember me tokens. For instance, you can add a
+    ``forceReloginAt`` field to your user and to the signature properties.
+    This way, you can invalidate all remember me tokens from a user by
+    changing this timestamp.
+
+.. _security-remember-me-persistent:
+
+Storing Remember Me Tokens in the Database
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As remember me tokens are often long-lived, you might prefer to save them in
+a database to have full control over them. Symfony comes with support for
+persistent remember me tokens.
+
+This implementation uses a *remember me token provider* for storing and
+retrieving the tokens from the database. The DoctrineBridge provides a
+token provider using Doctrine.
+
+You can enable the doctrine token provider using the ``doctrine`` setting:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    remember_me:
+                        secret: '%kernel.secret%'
+                        # ...
+                        token_provider:
+                            doctrine: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+
+                    <remember-me secret="%kernel.secret%">
+                        <token-provider doctrine="true"/>
+                    </remember-me>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->rememberMe()
+                    ->secret('%kernel.secret%')
+                    // ...
+                    ->tokenProvider([
+                        'doctrine' => true,
+                    ])
+            ;
+        };
+
+This also instructs Doctrine to create a table for the remember me tokens.
+If you use the DoctrineMigrationsBundle, you can create a new migration for
+this:
+
+.. code-block:: terminal
+
+    $ php bin/console doctrine:migrations:diff
+
+    # and optionally run the migrations locally
+    $ php bin/console doctrine:migrations:migrate
+
+Otherwise, you can use the ``doctrine:schema:update`` command:
+
+.. code-block:: terminal
+
+    # get the required SQL code
+    $ php bin/console doctrine:schema:update --dump-sql
+
+    # run the SQL in your DB client, or let the command run it for you
+    $ php bin/console doctrine:schema:update --force
+
+Implementing a Custom Token Provider
+....................................
+
+You can also create a custom token provider by creating a class that
+implements :class:`Symfony\\Component\\Security\\Core\\Authentication\\RememberMe\\TokenProviderInterface`.
+
+Then, configure the service ID of your custom token provider as ``service``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    remember_me:
+                        # ...
+                        token_provider:
+                            service: App\Security\RememberMe\CustomTokenProvider
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+
+                    <remember-me>
+                        <token-provider service="App\Security\RememberMe\CustomTokenProvider"/>
+                    </remember-me>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Security\RememberMe\CustomTokenProvider;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->rememberMe()
+                    // ...
+                    ->tokenProvider([
+                        'service' => CustomTokenProvider::class,
+                    ])
+            ;
+        };
+
+.. _security-remember-me-authorization:
 
 Forcing the User to Re-Authenticate before Accessing certain Resources
 ----------------------------------------------------------------------
@@ -200,189 +577,50 @@ users to change their password. You can do this by leveraging a few special
 
 .. tip::
 
-    There is also a ``IS_REMEMBERED`` attribute that grants access *only* when the
-    user is authenticated via the remember me mechanism.
+    There is also a ``IS_REMEMBERED`` attribute that grants access *only*
+    when the user is authenticated via the remember me mechanism.
 
-.. _remember-me-token-in-database:
+.. versionadded:: 5.1
 
-Storing Remember Me Tokens in the Database
-------------------------------------------
+    The ``IS_REMEMBERED`` attribute was introduced in Symfony 5.1.
 
-The token contents, including the hashed version of the user password, are
-stored by default in cookies. If you prefer to store them in a database, use the
-:class:`Symfony\\Bridge\\Doctrine\\Security\\RememberMe\\DoctrineTokenProvider`
-class provided by the Doctrine Bridge.
+Customizing the Remember Me Cookie
+----------------------------------
 
-First, you need to register ``DoctrineTokenProvider`` as a service:
+The ``remember_me`` configuration contains many options to customize the
+cookie created by the system:
 
-.. configuration-block::
+``name`` (default value: ``REMEMBERME``)
+    The name of the cookie used to keep the user logged in. If you enable the
+    ``remember_me`` feature in several firewalls of the same application, make sure
+    to choose a different name for the cookie of each firewall. Otherwise, you'll
+    face lots of security related problems.
 
-    .. code-block:: yaml
+``lifetime`` (default value: ``31536000`` i.e. 1 year in seconds)
+    The number of seconds after which the cookie will be expired. This
+    defines the maximum time between two visits for the user to remain
+    authenticated.
 
-        # config/services.yaml
-        services:
-            # ...
+``path`` (default value: ``/``)
+    The path where the cookie associated with this feature is used. By default
+    the cookie will be applied to the entire website but you can restrict to a
+    specific section (e.g. ``/forum``, ``/admin``).
 
-            Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider: ~
+``domain`` (default value: ``null``)
+    The domain where the cookie associated with this feature is used. By default
+    cookies use the current domain obtained from ``$_SERVER``.
 
-    .. code-block:: xml
+``secure`` (default value: ``false``)
+    If ``true``, the cookie associated with this feature is sent to the user
+    through an HTTPS secure connection.
 
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+``httponly`` (default value: ``true``)
+    If ``true``, the cookie associated with this feature is accessible only
+    through the HTTP protocol. This means that the cookie won't be accessible
+    by scripting languages, such as JavaScript.
 
-            <services>
-                <service id="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"/>
-            </services>
-        </container>
+``samesite`` (default value: ``null``)
+    If set to ``strict``, the cookie associated with this feature will not
+    be sent along with cross-site requests, even when following a regular link.
 
-    .. code-block:: php
-
-        // config/services.php
-        use Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider;
-
-        $container->register(DoctrineTokenProvider::class);
-
-Then you need to create a table with the following structure in your database
-so ``DoctrineTokenProvider`` can store the tokens:
-
-.. code-block:: sql
-
-    CREATE TABLE `rememberme_token` (
-        `series`   char(88)     UNIQUE PRIMARY KEY NOT NULL,
-        `value`    varchar(88)  NOT NULL,
-        `lastUsed` datetime     NOT NULL,
-        `class`    varchar(100) NOT NULL,
-        `username` varchar(200) NOT NULL
-    );
-
-.. note::
-
-    If you use DoctrineMigrationsBundle to manage your database migrations, you
-    will need to tell Doctrine to ignore this new ``rememberme_token`` table:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/packages/doctrine.yaml
-            doctrine:
-                dbal:
-                    schema_filter: ~^(?!rememberme_token)~
-
-        .. code-block:: xml
-
-            <!-- config/packages/doctrine.xml -->
-            <doctrine:dbal schema-filter="~^(?!rememberme_token)~"/>
-
-        .. code-block:: php
-
-            // config/packages/doctrine.php
-            use Symfony\Config\DoctrineConfig;
-
-            return static function (DoctrineConfig $doctrine) {
-                $dbalDefault = $doctrine->dbal()->connection('default');
-                // ...
-                $dbalDefault->schemaFilter('~^(?!rememberme_token)~');
-            };
-
-Finally, set the ``token_provider`` option of the ``remember_me`` config to the
-service you created before:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            firewalls:
-                main:
-                    # ...
-                    remember_me:
-                        # ...
-                        token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-
-                    <remember-me
-                        token-provider="Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider"
-                        />
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        use Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider;
-        use Symfony\Config\SecurityConfig;
-
-        return static function (SecurityConfig $security) {
-            // ...
-            $security->firewall('main')
-                // ...
-                ->rememberMe()
-                    // ...
-                    ->tokenProvider(DoctrineTokenProvider::class)
-            ;
-        };
-
-Activating Remember Me When Using a Custom Authenticator
---------------------------------------------------------
-
-When you use a :doc:`custom authenticator </security/custom_authenticator>`, you
-must add a ``RememberMeBadge`` to the ``Passport`` for the "Remember Me" function
-to be activated. Without the badge, "Remember Me" will not be active, regardless
-of any other "Remember Me" settings.
-
-For example::
-
-    // src/Service/LoginAuthenticator.php
-    namespace App\Service;
-
-    // ...
-    use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
-    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
-    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
-    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-    use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
-    use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
-
-    class LoginAuthenticator extends AbstractAuthenticator
-    {
-        public function authenticate(Request $request): PassportInterface
-        {
-            $password = $request->request->get('password');
-            $username = $request->request->get('username');
-            $csrfToken = $request->request->get('csrf_token');
-
-            return new Passport(
-                new UserBadge($username),
-                new PasswordCredentials($password),
-                [
-                    new CsrfTokenBadge('login', $csrfToken),
-                    new RememberMeBadge(),
-                ]
-            );
-        }
-    }
+.. _`5.2 version of this documentation`: https://symfony.com/doc/5.2/security/remember_me.html
