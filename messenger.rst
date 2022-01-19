@@ -50,24 +50,36 @@ serialized::
 
 .. _messenger-handler:
 
+.. versionadded:: 5.4
+
+    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
+    5.4. PHP attributes require at least PHP 8.0.
+
 A message handler is a PHP callable, the recommended way to create it is to
-create a class that implements :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
-and has an ``__invoke()`` method that's type-hinted with the message class (or a
-message interface)::
+create a class that has the :class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`
+attribute and has an ``__invoke()`` method that's type-hinted with the
+message class (or a message interface)::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
 
     use App\Message\SmsNotification;
-    use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-    class SmsNotificationHandler implements MessageHandlerInterface
+    #[AsMessageHandler]
+    class SmsNotificationHandler
     {
         public function __invoke(SmsNotification $message)
         {
             // ... do some work - like sending an SMS message!
         }
     }
+
+.. note::
+
+    You can also create a class without the attribute (e.g. if you're
+    using PHP 7.4), by implementing :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
+    instead.
 
 Thanks to :ref:`autoconfiguration <services-autoconfigure>` and the ``SmsNotification``
 type-hint, Symfony knows that this handler should be called when an ``SmsNotification``
@@ -349,9 +361,10 @@ Then, in your handler, you can query for a fresh object::
 
     use App\Message\NewUserWelcomeEmail;
     use App\Repository\UserRepository;
-    use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-    class NewUserWelcomeEmailHandler implements MessageHandlerInterface
+    #[AsMessageHandler]
+    class NewUserWelcomeEmailHandler
     {
         private $userRepository;
 
@@ -1783,6 +1796,40 @@ on a case-by-case basis via the :class:`Symfony\\Component\\Messenger\\Stamp\\Se
 
 Customizing Handlers
 --------------------
+
+Configuring Handlers Using Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.4
+
+    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
+    5.4. PHP attributes require at least PHP 8.0.
+
+You can configure your handler by passing options to the attribute::
+
+    // src/MessageHandler/SmsNotificationHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\OtherSmsNotification;
+    use App\Message\SmsNotification;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+    #[AsMessageHandler(fromTransport: 'async', priority: 10)]
+    class SmsNotificationHandler
+    {
+        public function __invoke(SmsNotification $message)
+        {
+            // ...
+        }
+    }
+
+Possible options to configure with the attribute are:
+
+* ``bus``
+* ``fromTransport``
+* ``handles``
+* ``method``
+* ``priority``
 
 .. _messenger-handler-config:
 
