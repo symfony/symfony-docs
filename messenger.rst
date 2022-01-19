@@ -50,11 +50,6 @@ serialized::
 
 .. _messenger-handler:
 
-.. versionadded:: 5.4
-
-    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
-    5.4. PHP attributes require at least PHP 8.0.
-
 A message handler is a PHP callable, the recommended way to create it is to
 create a class that has the :class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`
 attribute and has an ``__invoke()`` method that's type-hinted with the
@@ -1688,11 +1683,6 @@ Customizing Handlers
 
 Configuring Handlers Using Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.4
-
-    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
-    5.4. PHP attributes require at least PHP 8.0.
 
 You can configure your handler by passing options to the attribute::
 
