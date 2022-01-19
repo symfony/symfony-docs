@@ -9,11 +9,17 @@ it's a good idea to keep your files in sync with the recipes.
 Symfony Flex provides several commands to help upgrade your recipes. Be sure to
 commit any unrelated changes you're working on before starting:
 
-.. versionadded:: 1.6
+.. versionadded:: 1.18
 
-    The recipes commands were introduced in Symfony Flex 1.6.
+    The ``recipes:update`` command was introduced in Symfony Flex 1.18.
 
 .. code-block:: terminal
+
+    # choose an outdated recipe to update
+    $ composer recipes:update
+
+    # update a specific recipe
+    $ composer recipes:update symfony/framework-bundle
 
     # see a list of all installed recipes and which have updates available
     $ composer recipes
@@ -21,18 +27,7 @@ commit any unrelated changes you're working on before starting:
     # see detailed information about a specific recipes
     $ composer recipes symfony/framework-bundle
 
-    # update a specific recipes
-    $ composer recipes:install symfony/framework-bundle --force -v
-
-The tricky part of this process is that the recipe "update" does not perform
-any intelligent "upgrading" of your code. Instead, **the updates process re-installs
-the latest version of the recipe** which means that **your custom code will be
-overridden completely**. After updating a recipe, you need to carefully choose
-which changes you want, and undo the rest.
-
-.. admonition:: Screencast
-    :class: screencast
-
-    For a detailed example, see the `SymfonyCasts Symfony 5 Upgrade Tutorial`_.
-
-.. _`SymfonyCasts Symfony 5 Upgrade Tutorial`: https://symfonycasts.com/screencast/symfony5-upgrade
+The ``recipes:update`` command is smart: it looks at the difference between the
+recipe when you installed it and the latest version. It then creates a patch and
+applies it to your app. If there are any conflicts, you can resolve them like a
+normal ``git`` conflict and commit like normal.
