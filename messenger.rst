@@ -50,11 +50,15 @@ serialized::
 
 .. _messenger-handler:
 
+.. versionadded:: 5.4
+
+    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
+    5.4. PHP attributes require at least PHP 8.0.
+
 A message handler is a PHP callable, the recommended way to create it is to
-create a class using :class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`
-attribute which has an ``__invoke()`` method that's type-hinted with the
-message class (or a message interface) or you can create a class without the attribute, by implementing
-:class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`::
+create a class that has the :class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`
+attribute and has an ``__invoke()`` method that's type-hinted with the
+message class (or a message interface)::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
@@ -70,6 +74,12 @@ message class (or a message interface) or you can create a class without the att
             // ... do some work - like sending an SMS message!
         }
     }
+
+.. note::
+
+    You can also create a class without the attribute (e.g. if you're
+    using PHP 7.4), by implementing :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
+    instead.
 
 Thanks to :ref:`autoconfiguration <services-autoconfigure>` and the ``SmsNotification``
 type-hint, Symfony knows that this handler should be called when an ``SmsNotification``
@@ -1770,12 +1780,15 @@ on a case-by-case basis via the :class:`Symfony\\Component\\Messenger\\Stamp\\Se
 Customizing Handlers
 --------------------
 
-.. _messenger-handler-config:
+Configuring Handlers Using Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configuring Handlers Using Attribute
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. versionadded:: 5.4
 
-You can configure your handler easily by passing options to the attribute::
+    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
+    5.4. PHP attributes require at least PHP 8.0.
+
+You can configure your handler by passing options to the attribute::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
@@ -1793,7 +1806,6 @@ You can configure your handler easily by passing options to the attribute::
         }
     }
 
-
 Possible options to configure with the attribute are:
 
 * ``bus``
@@ -1801,6 +1813,8 @@ Possible options to configure with the attribute are:
 * ``handles``
 * ``method``
 * ``priority``
+
+.. _messenger-handler-config:
 
 Manually Configuring Handlers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
