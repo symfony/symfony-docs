@@ -55,6 +55,7 @@ with a couple popular SMS services:
 ==============  ====================================  ===========================================================================
 Service         Package                               DSN
 ==============  ====================================  ===========================================================================
+46elks          ``symfony/forty-six-elks-notifier``   ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
 AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@default?from=FROM``
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
@@ -64,6 +65,7 @@ FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:PASSW
 GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
 Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
+KazInfoTeh      ``symfony/kaz-info-teh-notifier``     ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
 LightSms        ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
 Mailjet         ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?from=FROM``
 MessageBird     ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
@@ -71,6 +73,7 @@ MessageMedia    ``symfony/message-media-notifier``    ``messagemedia://API_KEY:A
 Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
 Nexmo           ``symfony/nexmo-notifier``            ``nexmo://KEY:SECRET@default?from=FROM``
 Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
+OrangeSms       ``symfony/orange-sms-notifier``       ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME``
 OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
 Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
 Sms77           ``symfony/sms77-notifier``            ``sms77://API_KEY@default?from=FROM``
@@ -85,6 +88,10 @@ Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@defau
 Vonage          ``symfony/vonage-notifier``           ``vonage://KEY:SECRET@default?from=FROM``
 Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
 ==============  ====================================  ===========================================================================
+
+.. versionadded:: 6.1
+
+    The 46elks, OrangeSms and KazInfoTeh integrations were introduced in Symfony 6.1.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
