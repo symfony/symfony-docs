@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by alirezamirsepassi at 2021-12-21T13:50:59Z
+
+Any update on this PR ? @nicolas-grekas
+
+---------------------------------------------------------------------------
+
+by 94noni at 2021-12-28T05:00:32Z
+
+Maybe just document that attributes requires php v8 (the feature is on v5.4 thus v8 is not mandatory like v6)
