@@ -119,8 +119,8 @@ Symfony generates a file with the list of classes to preload in the
     ; required for opcache.preload:
     opcache.preload_user=www-data
 
-If this file is missing, run this command to reinstall the Symfony Flex recipe:
-``composer recipes:install symfony/framework-bundle --force -v``.
+If this file is missing, run this command to update the Symfony Flex recipe:
+``composer recipes:update symfony/framework-bundle``.
 
 Use the :ref:`container.preload <dic-tags-container-preload>` and
 :ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
