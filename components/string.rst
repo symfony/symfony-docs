@@ -318,10 +318,6 @@ Methods to Search and Replace
     // checks if the string contents are exactly the same as the given contents
     u('foo')->equalsTo('foo'); // true
 
-    // checks if the string content match the given regular expression
-    u('avatar-73647.png')->match('/avatar-(\d+)\.png/');
-    // result = ['avatar-73647.png', '73647']
-
     // checks if the string contains any of the other given strings
     u('aeiou')->containsAny('a');                 // true
     u('aeiou')->containsAny(['ab', 'efg']);       // false
@@ -357,6 +353,22 @@ Methods to Search and Replace
 .. versionadded:: 5.1
 
     The ``containsAny()`` method was introduced in Symfony 5.1.
+
+::
+
+You can use ``match()`` to search with a Regular Expression::
+
+    u('avatar-73647.png')->match('/avatar-(\d+)\.png/');
+    // result = ['avatar-73647.png', '73647']
+
+By default, PHP's ``preg_match()`` is used, and you can pass search flags as second argument::
+
+    $string->match('/(a)(b)/', \PREG_UNMATCHED_AS_NULL);
+
+When passing ``\PREG_PATTERN_ORDER`` or ``\PREG_SET_ORDER``, PHP's ``preg_match_all()`` is used.
+Multiple flags can be set with the `|` operator::
+
+    $string->match('/(a)(b)/', \PREG_PATTERN_ORDER|\PREG_UNMATCHED_AS_NULL);
 
 Methods to Join, Split, Truncate and Reverse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
