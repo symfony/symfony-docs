@@ -653,7 +653,7 @@ very high and the recipient has a phone number::
             $this->price = $price;
         }
 
-        public function getChannels(RecipientInterface $recipient)
+        public function getChannels(RecipientInterface $recipient): array
         {
             if (
                 $this->price > 10000
