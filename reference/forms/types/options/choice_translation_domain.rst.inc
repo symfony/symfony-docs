@@ -1,7 +1,7 @@
 ``choice_translation_domain``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-DEFAULT_VALUE
+|DEFAULT_VALUE|
 
 This option determines if the choice values should be translated and in which
 translation domain.
