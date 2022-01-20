@@ -693,7 +693,7 @@ success handler behaves, create your own handler as a class that implements
             $user = $token->getUser();
             $userApiToken = $user->getApiToken();
 
-            return new JsonResponse(['apiToken' => 'userApiToken']);
+            return new JsonResponse(['apiToken' => $userApiToken]);
         }
     }
 
