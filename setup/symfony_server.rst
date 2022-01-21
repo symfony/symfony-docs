@@ -370,7 +370,7 @@ check the "Symfony Server" section in the web debug toolbar; you'll see that
 .. note::
 
     If you don't want environment variables to be exposed for a service, set
-    the ``com.symfony.server.service-ignore`` label to ``true``:
+    the ``com.symfony.server.service-ignore`` label to ``"True"``:
 
     .. code-block:: yaml
 
@@ -379,7 +379,7 @@ check the "Symfony Server" section in the web debug toolbar; you'll see that
             db:
                 ports: [3306]
                 labels:
-                    com.symfony.server.service-ignore: true
+                    com.symfony.server.service-ignore: "True"
 
 If your Docker Compose file is not at the root of the project, use the
 ``COMPOSE_FILE`` and ``COMPOSE_PROJECT_NAME`` environment variables to define
