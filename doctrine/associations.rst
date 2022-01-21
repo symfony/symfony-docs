@@ -630,13 +630,15 @@ also generated a ``removeProduct()`` method::
 
         public function removeProduct(Product $product): self
         {
-            if ($this->products->contains($product)) {
-                $this->products->removeElement($product);
+            
+                // Returns true if removed, false if not found in the collection.
+                $removed = $this->products->removeElement($product);
+                
                 // set the owning side to null (unless already changed)
-                if ($product->getCategory() === $this) {
+                if ($removed && $product->getCategory() === $this) {
                     $product->setCategory(null);
                 }
-            }
+            
 
             return $this;
         }
