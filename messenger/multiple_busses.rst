@@ -1,18 +1,18 @@
 .. index::
-    single: Messenger; Multiple buses
+    single: Messenger; Multiple busses
 
-Multiple Buses
-==============
+Multiple Busses
+===============
 
 A common architecture when building applications is to separate commands from
 queries. Commands are actions that do something and queries fetch data. This
 is called CQRS (Command Query Responsibility Segregation). See Martin Fowler's
 `article about CQRS`_ to learn more. This architecture could be used together
-with the Messenger component by defining multiple buses.
+with the Messenger component by defining multiple busses.
 
 A **command bus** is a little different from a **query bus**. For example, command
-buses usually don't provide any results and query buses are rarely asynchronous.
-You can configure these buses and their rules by using middleware.
+busses usually don't provide any results and query busses are rarely asynchronous.
+You can configure these busses and their rules by using middleware.
 
 It might also be a good idea to separate actions from reactions by introducing
 an **event bus**. The event bus could have zero or more subscribers.
@@ -25,7 +25,7 @@ an **event bus**. The event bus could have zero or more subscribers.
             messenger:
                 # The bus that is going to be injected when injecting MessageBusInterface
                 default_bus: command.bus
-                buses:
+                busses:
                     command.bus:
                         middleware:
                             - validation
@@ -107,7 +107,7 @@ Restrict Handlers per Bus
 -------------------------
 
 By default, each handler will be available to handle messages on *all*
-of your buses. To prevent dispatching a message to the wrong bus without an error,
+of your busses. To prevent dispatching a message to the wrong bus without an error,
 you can restrict each handler to a specific bus using the ``messenger.message_handler`` tag:
 
 .. configuration-block::
@@ -223,8 +223,8 @@ you can determine the message bus based on an implemented interface:
                 ->tag('messenger.message_handler', ['bus' => 'query.bus']);
         };
 
-Debugging the Buses
--------------------
+Debugging the Busses
+--------------------
 
 The ``debug:messenger`` command lists available messages & handlers per bus.
 You can also restrict the list to a specific bus by providing its name as an argument.
