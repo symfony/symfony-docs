@@ -235,7 +235,7 @@ reusable configuration value. By convention, parameters are defined under the
 
         use App\Entity\BlogPost;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $configurator) {
             $container->parameters()
                 // the parameter name is an arbitrary string (the 'app.' prefix is recommended
                 // to better differentiate your parameters from Symfony parameters).
