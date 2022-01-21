@@ -170,7 +170,7 @@ retrieved from the token storage::
             $this->security = $security;
         }
 
-        public function supports(Request $request, ArgumentMetadata $argument)
+        public function supports(Request $request, ArgumentMetadata $argument): bool
         {
             if (User::class !== $argument->getType()) {
                 return false;
@@ -179,7 +179,7 @@ retrieved from the token storage::
             return $this->security->getUser() instanceof User;
         }
 
-        public function resolve(Request $request, ArgumentMetadata $argument)
+        public function resolve(Request $request, ArgumentMetadata $argument): iterable
         {
             yield $this->security->getUser();
         }
