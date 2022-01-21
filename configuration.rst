@@ -764,7 +764,7 @@ Configuring Environment Variables in Production
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In production, the ``.env`` files are also parsed and loaded on each request. So
-the easiest way to define env vars is by deploying a ``.env.local`` file to your
+the easiest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
 To improve performance, you can optionally run the ``dump-env`` command (available
