@@ -535,8 +535,8 @@ and headers.
                     sender: 'fabien@example.com'
                     recipients: ['foo@example.com', 'bar@example.com']
                 headers:
-                    from: 'Fabien <fabien@example.com>'
-                    bcc: 'baz@example.com'
+                    From: 'Fabien <fabien@example.com>'
+                    Bcc: 'baz@example.com'
                     X-Custom-Header: 'foobar'
 
     .. code-block:: xml
@@ -558,8 +558,8 @@ and headers.
                         <framework:recipients>foo@example.com</framework:recipients>
                         <framework:recipients>bar@example.com</framework:recipients>
                     </framework:envelope>
-                    <framework:header name="from">Fabien &lt;fabien@example.com&gt;</framework:header>
-                    <framework:header name="bcc">baz@example.com</framework:header>
+                    <framework:header name="From">Fabien &lt;fabien@example.com&gt;</framework:header>
+                    <framework:header name="Bcc">baz@example.com</framework:header>
                     <framework:header name="X-Custom-Header">foobar</framework:header>
                 </framework:mailer>
             </framework:config>
@@ -578,8 +578,8 @@ and headers.
                     ->recipients(['foo@example.com', 'bar@example.com'])
             ;
 
-            $mailer->header('from')->value('Fabien <fabien@example.com>');
-            $mailer->header('bcc')->value('baz@example.com');
+            $mailer->header('From')->value('Fabien <fabien@example.com>');
+            $mailer->header('Bcc')->value('baz@example.com');
             $mailer->header('X-Custom-Header')->value('foobar');
         };
 
