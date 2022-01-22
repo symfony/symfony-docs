@@ -828,6 +828,12 @@ based on PHP conditions)::
         }
     }
 
+
+.. caution::
+
+    Be careful the use of Aliases is mandatory, not passing the alias to the createQueryBuilder method will cause an exception..
+    
+
 Querying with SQL
 ~~~~~~~~~~~~~~~~~
 
