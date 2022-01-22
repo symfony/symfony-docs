@@ -1,0 +1,34 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-01-22T09:36:35Z
+
+Andy, thanks a lot for fixing this. In my opinion, this behavior is extremely fragile and dangerous. Couldn't we instead improve code to make these config values case insensitive (and fix casing, if needed, in code transparently to users)?
+
+---------------------------------------------------------------------------
+
+by andyexeter at 2022-01-22T12:17:57Z
+
+I can take a look at creating a PR to make the values case insensitive, but in my opinion that should be done _as well as_, rather than _instead of_ this PR.
+
+I believe the documentation should show the "correct" way of doing things - and in this case it's correct for the From and Bcc headers to be capitalised as per [RFC 2822](https://datatracker.ietf.org/doc/html/rfc2822#section-3.6.2) and as per Symfony's usage e.g:
+
+https://github.com/symfony/symfony/blob/1ebb5d9605ffecf23124413ea6bde729a223e610/src/Symfony/Component/Mime/Email.php#L121
+https://github.com/symfony/symfony/blob/1ebb5d9605ffecf23124413ea6bde729a223e610/src/Symfony/Component/Mime/Email.php#L217
+
+---------------------------------------------------------------------------
+
+by andyexeter at 2022-01-22T17:02:57Z
+
+I've done some more digging into this and it appears I was incorrect in my initial diagnosis of this issue.
+
+The Mime component does _not_ replace the `From` header with the `Sender` header if the `From` header is not capitalised. This was actually a red herring caused by me using Mailhog SMTP in dev and the Mailgun API transport in production.
+
+There are a couple of different issues at play here:
+
+In the symfony/mailgun-mailer component, the ApiTransport simply _always_ uses the sender as the from address, ignoring any `From` headers set regardless of case:
+
+https://github.com/symfony/mailgun-mailer/blob/0c29398dfc1cc55a89247dd3bc5d63fad4e098e5/Transport/MailgunApiTransport.php#L100
+
+The symfony/mailer component just sends the headers as-is, without capitalising them. This causes Mailhog (and perhaps other clients?) to ignore the `from` header and use the `Sender` header instead.
+
+Whether the behaviour in the mailer should change and capitalise headers is up for debate but the mailgun-mailer ApiTransport disregarding the `From` header is a bug IMO - I will open a PR on this.
