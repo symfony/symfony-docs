@@ -58,6 +58,13 @@ to ``2``, a submitted value of ``20.123`` will be rounded to, for example,
 
 .. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
+If set to ``0`` with ``html5`` set to ``false``, the HTML input will be rendered with ``inputmode=numeric``.
+However, if set to any value greater than ``0``, with ``html5`` set to ``false``, the HTML input will be rendered with ``inputmode=decimal``.
+
+Learn more about the ``inputmode`` attribute on `MDN website`_.
+
+.. include:: https://developer.mozilla.org/fr/docs/Web/HTML/Global_attributes/inputmode
+
 Overridden Options
 ------------------
 
