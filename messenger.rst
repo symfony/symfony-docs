@@ -1168,8 +1168,8 @@ The transport has a number of options:
 ============================================  =================================================  ===================================
      Option                                   Description                                        Default
 ============================================  =================================================  ===================================
-``auto_setup``                                Whether the table should be created                ``true``
-                                              automatically during send / get.
+``auto_setup``                                Whether the exchanges and queues should be         ``true``
+                                              created automatically during send / get.
 ``cacert``                                    Path to the CA cert file in PEM format.
 ``cert``                                      Path to the client certificate in PEM format.
 ``channel_max``                               Specifies highest channel number that the server
