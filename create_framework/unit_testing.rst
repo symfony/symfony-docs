@@ -8,8 +8,13 @@ on it will exhibit the same bugs. The good news is that whenever you fix a
 bug, you are fixing a bunch of applications too.
 
 Today's mission is to write unit tests for the framework we have created by
-using `PHPUnit`_. Create a PHPUnit configuration file in
-``example.com/phpunit.xml.dist``:
+using `PHPUnit`_. At first, install PHPUnit as a development dependency:
+
+.. code-block:: terminal
+
+    $ composer require --dev phpunit/phpunit
+
+Then, create a PHPUnit configuration file in ``example.com/phpunit.xml.dist``:
 
 .. code-block:: xml
 
