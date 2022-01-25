@@ -21,7 +21,7 @@ Members
 
 Here are all the members of the CARE team (in alphabetic order). You can contact
 any of them directly using the contact details below or you can also contact all
-of them at once by emailing **care@symfony.com**:
+of them at once by emailing ** care@symfony.com **.
 
 * **Timo Bakx**
 
