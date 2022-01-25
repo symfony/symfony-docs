@@ -279,11 +279,6 @@ Persistent tokens
     You can then configure this custom handler by configuring the service
     ID in the ``service`` option under ``remember_me``.
 
-    .. versionadded:: 5.1
-
-        The ``service`` option was introduced in Symfony 5.1.
-
-
 .. _security-remember-me-signature:
 
 Using Signed Remember Me Tokens
@@ -580,10 +575,6 @@ users to change their password. You can do this by leveraging a few special
     There is also a ``IS_REMEMBERED`` attribute that grants access *only*
     when the user is authenticated via the remember me mechanism.
 
-.. versionadded:: 5.1
-
-    The ``IS_REMEMBERED`` attribute was introduced in Symfony 5.1.
-
 Customizing the Remember Me Cookie
 ----------------------------------
 
@@ -622,5 +613,3 @@ cookie created by the system:
 ``samesite`` (default value: ``null``)
     If set to ``strict``, the cookie associated with this feature will not
     be sent along with cross-site requests, even when following a regular link.
-
-.. _`5.2 version of this documentation`: https://symfony.com/doc/5.2/security/remember_me.html
