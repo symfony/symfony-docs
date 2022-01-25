@@ -479,6 +479,8 @@ of methods to manipulate the HTTP headers related to the cache:
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleIfError`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleWhileRevalidate`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`
@@ -506,6 +508,8 @@ call::
         'proxy_revalidate' => false,
         'max_age'          => 600,
         's_maxage'         => 600,
+        'stale_if_error'   => 86400,
+        'stale_while_revalidate' => 60,
         'immutable'        => true,
         'last_modified'    => new \DateTime(),
         'etag'             => 'abcdef',
