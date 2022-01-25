@@ -755,12 +755,12 @@ now use the following commands to push (upload) and pull (download) translations
     # push new local translations to the Loco provider for the French locale
     # and the validators domain.
     # it will **not** update existing translations already on the provider.
-    $ php bin/console translation:push loco --locales fr --domain validators
+    $ php bin/console translation:push loco --locales fr --domains validators
 
     # push new local translations and delete provider's translations that not
     # exists anymore in local files for the French locale and the validators domain.
     # it will **not** update existing translations already on the provider.
-    $ php bin/console translation:push loco --delete-missing --locales fr --domain validators
+    $ php bin/console translation:push loco --delete-missing --locales fr --domains validators
 
     # check out the command help to see its options (format, domains, locales, etc.)
     $ php bin/console translation:push --help
@@ -775,7 +775,7 @@ now use the following commands to push (upload) and pull (download) translations
     # pull new translations from the Loco provider to local files for the French
     # locale and the validators domain.
     # it will **not** overwrite your local files, only add new translations.
-    $ php bin/console translation:pull loco --locales fr --domain validators
+    $ php bin/console translation:pull loco --locales fr --domains validators
 
     # check out the command help to see its options (format, domains, locales, intl-icu, etc.)
     $ php bin/console translation:pull --help

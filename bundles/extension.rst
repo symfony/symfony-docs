@@ -34,7 +34,7 @@ This is how the extension of an AcmeHelloBundle should look like::
     namespace Acme\HelloBundle\DependencyInjection;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
-    use Symfony\Component\DependencyInjection\Extension\Extension;
+    use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
     class AcmeHelloExtension extends Extension
     {
