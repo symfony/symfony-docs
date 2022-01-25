@@ -76,10 +76,13 @@ readable. These are the main advantages and disadvantages of each format:
 
 .. note::
 
-    By default Symfony only loads the configuration files defined in YAML
-    format. If you define configuration in XML and/or PHP formats, update the
-    ``src/Kernel.php`` file to add support for the ``.xml`` and ``.php`` file
-    extensions.
+    By default Symfony loads the configuration files defined in YAML and PHP
+    formats. If you define configuration in XML format, update the
+    ``src/Kernel.php`` file to add support for the ``.xml`` file extension.
+
+    .. versionadded:: 6.1
+
+        The automatic loading of PHP configuration files was introduced in Symfony 6.1.
 
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
