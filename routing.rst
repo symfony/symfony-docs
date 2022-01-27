@@ -41,7 +41,10 @@ once in your application to enable them:
     Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
     annotate controller actions with routing configuration.
 
-This command also creates the following configuration file:
+If you are using :ref:`Symfony Flex <symfony-flex>` this command also
+creates the following configuration file and you're done. If you aren't
+using flex or want to use attributes, the file has to be added manually.
+``type: annotation`` applies for attributes, too.
 
 .. code-block:: yaml
 
@@ -54,8 +57,9 @@ This command also creates the following configuration file:
         resource: ../../src/Kernel.php
         type: annotation
 
-This configuration tells Symfony to look for routes defined as annotations in
-any PHP class stored in the ``src/Controller/`` directory.
+This configuration tells Symfony to look for routes defined as
+annotations/attributes in any PHP class stored in the ``src/Controller/``
+directory.
 
 Suppose you want to define a route for the ``/blog`` URL in your application. To
 do so, create a :doc:`controller class </controller>` like the following:
@@ -1384,7 +1388,7 @@ A possible solution is to change the parameter requirements to be more permissiv
 
         // src/Controller/DefaultController.php
         namespace App\Controller;
-        
+
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
@@ -1504,7 +1508,7 @@ when importing the routes.
 
         // src/Controller/BlogController.php
         namespace App\Controller;
-        
+
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
