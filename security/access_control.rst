@@ -236,7 +236,7 @@ pattern so that it is only accessible by requests from the local server itself:
             access_control:
                 #
                 # the 'ips' option supports IP addresses and subnet masks
-                - { path: '^/internal', roles: IS_AUTHENTICATED_ANONYMOUSLY, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
+                - { path: '^/internal', roles: PUBLIC_ACCESS, ips: [127.0.0.1, ::1, 192.168.0.1/24] }
                 - { path: '^/internal', roles: ROLE_NO_ACCESS }
 
     .. code-block:: xml
@@ -255,7 +255,7 @@ pattern so that it is only accessible by requests from the local server itself:
                 <!-- ... -->
 
                 <!-- the 'ips' option supports IP addresses and subnet masks -->
-                <rule path="^/internal" role="IS_AUTHENTICATED_ANONYMOUSLY">
+                <rule path="^/internal" role="PUBLIC_ACCESS">
                     <ip>127.0.0.1</ip>
                     <ip>::1</ip>
                 </rule>
@@ -274,7 +274,7 @@ pattern so that it is only accessible by requests from the local server itself:
 
             $security->accessControl()
                 ->path('^/internal')
-                ->roles(['IS_AUTHENTICATED_ANONYMOUSLY'])
+                ->roles(['PUBLIC_ACCESS'])
                 // the 'ips' option supports IP addresses and subnet masks
                 ->ips(['127.0.0.1', '::1'])
             ;
@@ -302,7 +302,7 @@ address):
 
 * Now, the first access control rule is enabled as both the ``path`` and the
   ``ip`` match: access is allowed as the user always has the
-  ``IS_AUTHENTICATED_ANONYMOUSLY`` role.
+  ``PUBLIC_ACCESS`` role.
 
 * The second access rule is not examined as the first rule matched.
 
@@ -407,7 +407,7 @@ access those URLs via a specific port. This could be useful for example for
         security:
             # ...
             access_control:
-                - { path: ^/cart/checkout, roles: IS_AUTHENTICATED_ANONYMOUSLY, port: 8080 }
+                - { path: ^/cart/checkout, roles: PUBLIC_ACCESS, port: 8080 }
 
     .. code-block:: xml
 
@@ -424,7 +424,7 @@ access those URLs via a specific port. This could be useful for example for
             <config>
                 <!-- ... -->
                 <rule path="^/cart/checkout"
-                    role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    role="PUBLIC_ACCESS"
                     port="8080"
                 />
             </config>
@@ -440,7 +440,7 @@ access those URLs via a specific port. This could be useful for example for
 
             $security->accessControl()
                 ->path('^/cart/checkout')
-                ->roles(['IS_AUTHENTICATED_ANONYMOUSLY'])
+                ->roles(['PUBLIC_ACCESS'])
                 ->port(8080)
             ;
         };
@@ -461,7 +461,7 @@ the user will be redirected to ``https``:
         security:
             # ...
             access_control:
-                - { path: ^/cart/checkout, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+                - { path: ^/cart/checkout, roles: PUBLIC_ACCESS, requires_channel: https }
 
     .. code-block:: xml
 
@@ -478,7 +478,7 @@ the user will be redirected to ``https``:
             <config>
                 <!-- ... -->
                 <rule path="^/cart/checkout"
-                    role="IS_AUTHENTICATED_ANONYMOUSLY"
+                    role="PUBLIC_ACCESS"
                     requires-channel="https"
                 />
             </config>
@@ -494,7 +494,7 @@ the user will be redirected to ``https``:
 
             $security->accessControl()
                 ->path('^/cart/checkout')
-                ->roles(['IS_AUTHENTICATED_ANONYMOUSLY'])
+                ->roles(['PUBLIC_ACCESS'])
                 ->requiresChannel('https')
             ;
         };
