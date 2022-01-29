@@ -2253,6 +2253,35 @@ defined as annotations:
     The Security component provides
     :doc:`another way to enforce HTTP or HTTPS </security/force_https>`
     via the ``requires_channel`` setting.
+    
+
+Excluding a path from lookup
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You might want to prefix some controllers in a specific folder with a uri. To
+do this, you would need a different configuration for your general controllers
+and the controllers in this folder.
+
+In that case, you can use the ``exclude`` keyword to exclude a path from being
+looked up to avoid duplicate routes. To make sure that the exclude parameter is 
+taken into account, you will also need to add a ``*`` character at the end of 
+your resource parameter.
+
+.. code-block:: yaml
+    # config/routes/annotations.yaml
+    controllers:
+        resource: ../../src/Controller/*
+        exclude: ../../src/Controller/Api
+        type: annotation
+        
+    api_controllers:
+        resource: ../../src/Controller/Api/
+        prefix: /api/
+        name_prefix: api_
+        type: annotation
+    kernel:
+        resource: ../../src/Kernel.php
+        type: annotation
 
 Troubleshooting
 ---------------
