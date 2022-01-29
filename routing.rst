@@ -2254,7 +2254,6 @@ defined as annotations:
     :doc:`another way to enforce HTTP or HTTPS </security/force_https>`
     via the ``requires_channel`` setting.
     
-
 Excluding a path from lookup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2268,6 +2267,7 @@ taken into account, you will also need to add a ``*`` character at the end of
 your resource parameter.
 
 .. code-block:: yaml
+
     # config/routes/annotations.yaml
     controllers:
         resource: ../../src/Controller/*
