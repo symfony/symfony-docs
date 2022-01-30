@@ -1504,7 +1504,7 @@ sentinel_master          String, if null or empty Sentinel      null
     There should never be more than one ``messenger:consume`` command running with the same
     combination of ``stream``, ``group`` and ``consumer``, or messages could end up being
     handled more than once. If you run multiple queue workers, ``consumer`` can be set to an
-    environment variable (like ``%env(MESSENGER_CONSUMER_NAME)%``) set by Supervisor
+    environment variable, like ``%env(MESSENGER_CONSUMER_NAME)%``, set by Supervisor
     (example below) or any other service used to manage the worker processes.
     In a container environment, the ``HOSTNAME`` can be used as the consumer name, since
     there is only one worker per container/host. If using Kubernetes to orchestrate the
