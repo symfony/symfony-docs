@@ -41,9 +41,7 @@ Other Fields
 
 * :doc:`CheckboxType </reference/forms/types/checkbox>`
 * :doc:`FileType </reference/forms/types/file>`
-* `DropzoneType`_
 * :doc:`RadioType </reference/forms/types/radio>`
-* `CropperType`_ (to crop images with JavaScript)
 
 Symfony UX Fields
 ~~~~~~~~~~~~~~~~~
@@ -52,12 +50,6 @@ These types are part of the :doc:`Symfony UX initiative </frontend/ux>`:
 
 * `CropperType`_ (using Cropper.js)
 * `DropzoneType`_
-
-UID Fields
-~~~~~~~~~~
-
-* :doc:`UuidType </reference/forms/types/uuid>`
-* :doc:`UlidType </reference/forms/types/ulid>`
 
 Field Groups
 ~~~~~~~~~~~~
