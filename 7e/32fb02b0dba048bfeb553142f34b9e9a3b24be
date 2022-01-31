@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-01-25T19:02:52Z
+
+Ready to go again :)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-01-25T20:19:21Z
+
+Thanks @weaverryan!
+
+Is there a reason to target 5.4 here, instead of 5.3 or 4.4? Afaik, UX is available in all versions :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-01-26T14:34:11Z
+
+Just that we, I think, typically target the "current Symfony version" for new docs, right? To avoid extra pain merging up from old branches? But certainly, I could target something older. WDYT?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-01-26T14:49:45Z
+
+Ryan, I understand what you say ... but we always merge UX things in 4.4 because they are disconnected from Symfony versioning. Note that if, for any reason, it's complicated for us to write these docs for 4.4, we can change this practice. Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-01-26T15:11:09Z
+
+Note that I wanted to merge this in 5.3 yesterday (4.4 gave lots of conflicts) and then discovered that Turbo and "Stimulus & Symfony UX" also wasn't merged in 5.3.
+
+As far as I know, we've only applied the practice to only update the latest version for a very brief time and are updating older versions again.
+
+EDIT: removed the demotivating text as you've updated this PR to target 4.4 already :rocket:  :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-01-26T15:24:32Z
+
+No problem - it seems very pragmatic :).
+
+As you mentioned, some things didn't exist on 4.4. So `simple-example.rst` is now a copy of what I had proposed on 5.4, so it also contains a bunch of unrelated changes.
+
+But, this should be ready I think :)
