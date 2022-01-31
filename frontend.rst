@@ -84,6 +84,11 @@ Full API
 
 * `Full API`_
 
+Symfony UX Components
+---------------------
+
+.. include:: /frontend/_ux-libraries.rst.inc
+
 Other Front-End Articles
 ------------------------
 

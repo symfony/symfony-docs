@@ -260,7 +260,8 @@ via Ajax - those will instantly work: no need to reinitialize anything.
 Ready to learn more about Stimulus?
 
 * Read the `Stimulus Documentation`_
-* Check out the `Symfony UX Packages`_
+* Find out more about how the :doc:`Symfony UX system works </frontend/ux>`
+* See a :ref:`list of all Symfony UX packages <ux-packages-list>`
 * Learn more about the `Symfony Stimulus Bridge`_ - including the superpower of
   making your controllers load lazily!
 
@@ -460,7 +461,7 @@ Keep Going!
 -----------
 
 Encore supports many more features! For a full list of what you can do, see
-`Encore's index.js file`_. Or, go back to :ref:`list of Encore articles <encore-toc>`.
+`Encore's index.js file`_. Or, go back to :ref:`list of Frontend articles <encore-toc>`.
 
 .. _`Encore's index.js file`: https://github.com/symfony/webpack-encore/blob/master/index.js
 .. _`WebpackEncoreBundle Configuration`: https://github.com/symfony/webpack-encore-bundle#configuration
@@ -469,7 +470,7 @@ Encore supports many more features! For a full list of what you can do, see
 .. _`Symfony UX Packages`: https://github.com/symfony/ux
 .. _`Symfony Stimulus Bridge`: https://github.com/symfony/stimulus-bridge
 .. _`Turbo`: https://turbo.hotwired.dev/
-.. _`symfony/ux-turbo`: https://github.com/symfony/ux/tree/2.x/src/Turbo
+.. _`symfony/ux-turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
 .. _`Stimulus Screencast`: https://symfonycasts.com/screencast/stimulus
 .. _`Turbo Screencast`: https://symfonycasts.com/screencast/turbo
 .. _`lazy controllers`: https://github.com/symfony/stimulus-bridge#lazy-controllers

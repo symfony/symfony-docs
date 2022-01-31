@@ -348,11 +348,6 @@ being used and generating the correct paths accordingly.
     :ref:`version_format <reference-assets-version-format>`, and
     :ref:`json_manifest_path <reference-assets-json-manifest-path>` configuration options.
 
-.. tip::
-
-    If you'd like help packaging, versioning and minifying your JavaScript and
-    CSS assets in a modern way, read about :doc:`Symfony's Webpack Encore </frontend>`.
-
 If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
 as follows:
 
@@ -361,6 +356,12 @@ as follows:
     <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!"/>
 
     <link rel="shortcut icon" href="{{ absolute_url('favicon.png') }}">
+
+Build, Versioning & More Advanced CSS, JavaScript and Image Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For help building, versioning and minifying your JavaScript and
+CSS assets in a modern way, read about :doc:`Symfony's Webpack Encore </frontend>`.
 
 .. _twig-app-variable:
 
@@ -407,6 +408,22 @@ gives you access to these variables:
 
 In addition to the global ``app`` variable injected by Symfony, you can also
 :doc:`inject variables automatically to all Twig templates </templating/global_variables>`.
+
+Twig Components
+---------------
+
+Twig components are an alternative way to render templates, where each template
+is bound to a "component class". This makes it easier to render and re-use
+small template "units" - like an alert, markup for a modal, or a category sidebar.
+
+For more information, see `UX Twig Component`_.
+
+Twig components also have one other superpower: they can become "live", where
+they automatically update (via Ajax) as the user interacts with them. For example,
+when your user types into a box, your Twig component will re-render via Ajax to
+show a list of results!
+
+To learn more, see `UX Live Component`_.
 
 .. _templates-rendering:
 
@@ -1212,3 +1229,5 @@ Learn more
 .. _`Twig block tag`: https://twig.symfony.com/doc/2.x/tags/block.html
 .. _`Cross-Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
+.. _`UX Twig Component`: https://symfony.com/bundles/ux-twig-component/current/index.html
+.. _`UX Live Component`: https://symfony.com/bundles/ux-live-component/current/index.html
