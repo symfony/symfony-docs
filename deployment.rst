@@ -7,8 +7,8 @@ How to Deploy a Symfony Application
 ===================================
 
 Deploying a Symfony application can be a complex and varied task depending on
-the setup and the requirements of your application. This article is not a step-
-by-step guide, but is a general list of the most common requirements and ideas
+the setup and the requirements of your application. This article is not a
+step-by-step guide, but is a general list of the most common requirements and ideas
 for deployment.
 
 .. _symfony2-deployment-basics:
@@ -170,11 +170,17 @@ as you normally do:
 D) Clear your Symfony Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Make sure you clear and warm-up your Symfony cache:
+Make sure you clear your Symfony cache:
 
 .. code-block:: terminal
 
     $ APP_ENV=prod APP_DEBUG=0 php bin/console cache:clear
+
+And don't forget to warm-up ypour Symfony cache:
+
+.. code-block:: terminal
+
+    $ APP_ENV=prod APP_DEBUG=0 php bin/console cache:warmup
 
 E) Other Things!
 ~~~~~~~~~~~~~~~~
@@ -187,7 +193,6 @@ setup:
 * Add/edit CRON jobs
 * :ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
 * Pushing assets to a CDN
-* ...
 
 Application Lifecycle: Continuous Integration, QA, etc.
 -------------------------------------------------------
