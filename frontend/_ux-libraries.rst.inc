@@ -10,7 +10,7 @@
 .. _`ux-turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
 .. _`ux-live-component`: https://symfony.com/bundles/ux-live-component/current/index.html
 .. _`ux-twig-component`: https://symfony.com/bundles/ux-twig-component/current/index.html
-.. _`ux-chartjs`: https://symfony.com/bundles/ux-chart-js/current/index.html
+.. _`ux-chartjs`: https://symfony.com/bundles/ux-chartjs/current/index.html
 .. _`ux-lazy-image`: https://symfony.com/bundles/ux-lazy-image/current/index.html
 .. _`ux-cropperjs`: https://symfony.com/bundles/ux-cropperjs/current/index.html
 .. _`ux-dropzone`: https://symfony.com/bundles/ux-dropzone/current/index.html
