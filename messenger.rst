@@ -768,10 +768,7 @@ reset the service container between two messages:
         return static function (FrameworkConfig $framework) {
             $messenger = $framework->messenger();
 
-            $messenger->transport('async')
-                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
-                ->resetOnMessage(true)
-            ;
+            $messenger->resetOnMessage(true);
         };
 
 .. versionadded:: 5.4
