@@ -177,7 +177,7 @@ messages to be translated::
 
     $translator->trans('Symfony is great');
 
-    $translator->trans('symfony.great');
+    $translator->trans('symfony.is.great');
 
 In the first method, messages are written in the language of the default
 locale (English in this case). That message is then used as the "id"
@@ -186,7 +186,7 @@ when creating translations.
 In the second method, messages are actually "keywords" that convey the
 idea of the message. The keyword message is then used as the "id" for
 any translations. In this case, translations must be made for the default
-locale (i.e. to translate ``symfony.great`` to ``Symfony is great``).
+locale (i.e. to translate ``symfony.is.great`` to ``Symfony is great``).
 
 The second method is handy because the message key won't need to be changed
 in every translation file if you decide that the message should actually
