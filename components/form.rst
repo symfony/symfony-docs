@@ -784,4 +784,4 @@ Learn more
     /form/*
 
 .. _Twig: https://twig.symfony.com
-.. _`Twig Configuration`: https://twig.symfony.com/doc/2.x/intro.html
+.. _`Twig Configuration`: https://twig.symfony.com/doc/3.x/intro.html
