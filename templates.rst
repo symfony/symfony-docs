@@ -707,7 +707,7 @@ First, make sure that the VarDumper component is installed in the application:
 
 .. code-block:: terminal
 
-    $ composer require symfony/var-dumper
+    $ composer require --dev symfony/var-dumper
 
 Then, use either the ``{% dump %}`` tag or the ``{{ dump() }}`` function
 depending on your needs:
@@ -1217,16 +1217,16 @@ Learn more
     /templating/*
 
 .. _`Twig`: https://twig.symfony.com
-.. _`tags`: https://twig.symfony.com/doc/2.x/tags/index.html
-.. _`filters`: https://twig.symfony.com/doc/2.x/filters/index.html
-.. _`functions`: https://twig.symfony.com/doc/2.x/functions/index.html
-.. _`with_context`: https://twig.symfony.com/doc/2.x/functions/include.html
-.. _`Twig template loader`: https://twig.symfony.com/doc/2.x/api.html#loaders
-.. _`Twig raw filter`: https://twig.symfony.com/doc/2.x/filters/raw.html
-.. _`Twig output escaping docs`: https://twig.symfony.com/doc/2.x/api.html#escaper-extension
+.. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
+.. _`filters`: https://twig.symfony.com/doc/3.x/filters/index.html
+.. _`functions`: https://twig.symfony.com/doc/3.x/functions/index.html
+.. _`with_context`: https://twig.symfony.com/doc/3.x/functions/include.html
+.. _`Twig template loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
+.. _`Twig raw filter`: https://twig.symfony.com/doc/3.x/filters/raw.html
+.. _`Twig output escaping docs`: https://twig.symfony.com/doc/3.x/api.html#escaper-extension
 .. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
-.. _`Twig template inheritance`: https://twig.symfony.com/doc/2.x/tags/extends.html
-.. _`Twig block tag`: https://twig.symfony.com/doc/2.x/tags/block.html
+.. _`Twig template inheritance`: https://twig.symfony.com/doc/3.x/tags/extends.html
+.. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
 .. _`Cross-Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
 .. _`UX Twig Component`: https://symfony.com/bundles/ux-twig-component/current/index.html

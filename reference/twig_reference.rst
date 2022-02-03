@@ -669,4 +669,4 @@ The ``app`` variable is injected automatically by Symfony in all templates and
 provides access to lots of useful application information. Read more about the
 :ref:`Twig global app variable <twig-app-variable>`.
 
-.. _`default filters and functions defined by Twig`: https://twig.symfony.com/doc/2.x/#reference
+.. _`default filters and functions defined by Twig`: https://twig.symfony.com/doc/3.x/#reference
