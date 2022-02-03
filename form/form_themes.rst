@@ -656,5 +656,5 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
 .. _`Foundation CSS framework`: https://get.foundation/
 .. _`tailwind_2_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/tailwind_2_layout.html.twig
 .. _`Tailwind CSS form plugin`: https://tailwindcss-forms.vercel.app/
-.. _`Twig "use" tag`: https://twig.symfony.com/doc/2.x/tags/use.html
-.. _`Twig parent() function`: https://twig.symfony.com/doc/2.x/functions/parent.html
+.. _`Twig "use" tag`: https://twig.symfony.com/doc/3.x/tags/use.html
+.. _`Twig parent() function`: https://twig.symfony.com/doc/3.x/functions/parent.html
