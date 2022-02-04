@@ -102,7 +102,7 @@ Changing the cache directory can be achieved by overriding the
     {
         // ...
 
-        public function getCacheDir()
+        public function getCacheDir(): string
         {
             return dirname(__DIR__).'/var/'.$this->environment.'/cache';
         }
@@ -140,7 +140,7 @@ your application::
     {
         // ...
 
-        public function getLogDir()
+        public function getLogDir(): string
         {
             return dirname(__DIR__).'/var/'.$this->environment.'/log';
         }
