@@ -75,6 +75,5 @@ Base Fields
 
 * :doc:`FormType </reference/forms/types/form>`
 
-.. _`Symfony UX initiative`: https://github.com/symfony/ux#readme
 .. _`CropperType`: https://github.com/symfony/ux/tree/2.x/src/Cropperjs#readme
 .. _`DropzoneType`: https://github.com/symfony/ux/tree/2.x/src/Dropzone#readme
