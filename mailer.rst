@@ -1266,6 +1266,10 @@ The following transports only support tags:
 
 * OhMySMTP
 
+The following transports only support metadata:
+
+* Amazon SES
+
 Draft Emails
 ------------
 
