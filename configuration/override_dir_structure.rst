@@ -51,7 +51,7 @@ method in the ``Kernel`` class of your application::
     {
         // ...
 
-        public function getCacheDir()
+        public function getCacheDir() : string
         {
             return dirname(__DIR__).'/var/'.$this->environment.'/cache';
         }
@@ -84,7 +84,7 @@ method::
     {
         // ...
 
-        public function getLogDir()
+        public function getLogDir() : string
         {
             return dirname(__DIR__).'/var/'.$this->environment.'/log';
         }
