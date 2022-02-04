@@ -337,6 +337,13 @@ User Input Methods
 Result Methods
 ~~~~~~~~~~~~~~
 
+.. note::
+
+    If you print any URL it won't be broken/cut, it will be clickable - if the terminal provides it. If the "well
+    formatted output" is more important, you can switch it off::
+
+        $io->getOutputWrapper()->setAllowCutUrls(true);
+
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::success`
     It displays the given string or array of strings highlighted as a successful
     message (with a green background and the ``[OK]`` label). It's meant to be
