@@ -188,12 +188,12 @@ a system that you'll learn about soon:
 And finally, create an ``assets/controllers.json`` file, which also fits into
 the Stimulus system:
 
-```json
-{
-    "controllers": [],
-    "entrypoints": []
-}
-```
+.. code-block:: json
+
+    {
+        "controllers": [],
+        "entrypoints": []
+    }
 
 You'll customize and learn more about these files in :doc:`/frontend/encore/simple-example`.
 When you execute Encore, it will ask you to install a few more dependencies based
