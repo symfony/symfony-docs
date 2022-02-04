@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-02-04T12:34:16Z
+
+@IamBeginnerC thanks for improving this!
+
+Before merging, let me ask one of your maintainers (@wouterj) because I'm not sure about the exact branch in which to merge this and Wouter knows it well. Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-02-04T12:47:14Z
+
+4.4 it is :)
+
+For full reference:
+
+| Description | Version |
+| --- | --- |
+| Classes without parent | Parameter and return types in 4.4 (if supported in PHP 7.1+) |
+| Classes extending/implementing Symfony classes/interfaces | Return types in 4.4 (if supported in PHP 7.1+);<br>Parameter types in 5.4 |
