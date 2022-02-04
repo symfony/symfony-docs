@@ -1268,7 +1268,12 @@ The following transports only support tags:
 
 The following transports only support metadata:
 
-* Amazon SES
+* Amazon SES (note that Amazon refers to this feature as "tags", but Symfony
+  calls it "metadata" because it contains a key and a value)
+
+.. versionadded:: 6.1
+
+    Metadata support for Amazon SES was introduced in Symfony 6.1.
 
 Draft Emails
 ------------
