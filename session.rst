@@ -26,6 +26,7 @@ sessions, check their default configuration:
                 # improves the security of the cookies used for sessions
                 cookie_secure: auto
                 cookie_samesite: lax
+                storage_factory_id: session.storage.factory.native
 
     .. code-block:: xml
 
@@ -48,7 +49,8 @@ sessions, check their default configuration:
                 -->
                 <framework:session handler-id="null"
                                    cookie-secure="auto"
-                                   cookie-samesite="lax"/>
+                                   cookie-samesite="lax"
+                                   storage_factory_id="session.storage.factory.native"/>
             </framework:config>
         </container>
 
@@ -68,6 +70,7 @@ sessions, check their default configuration:
                 // improves the security of the cookies used for sessions
                 ->cookieSecure('auto')
                 ->cookieSamesite('lax')
+                ->storage_factory_id('session.storage.factory.native')
             ;
         };
 
