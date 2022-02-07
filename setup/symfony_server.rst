@@ -202,12 +202,15 @@ Now run this command to start the proxy:
 
     $ symfony proxy:start
 
-.. note::
+If the proxy doesn't work as explained in the following sections, check these:
 
-    Some browsers (e.g. Chrome) require to re-apply proxy settings (clicking on
-    ``Re-apply settings`` button on the ``chrome://net-internals/#proxy`` page)
-    or a full restart after starting the proxy. Otherwise, you'll see a
-    *"This webpage is not available"* error (``ERR_NAME_NOT_RESOLVED``).
+* Some browsers (e.g. Chrome) require to re-apply proxy settings (clicking on
+  ``Re-apply settings`` button on the ``chrome://net-internals/#proxy`` page)
+  or a full restart after starting the proxy. Otherwise, you'll see a
+  *"This webpage is not available"* error (``ERR_NAME_NOT_RESOLVED``);
+* Some Operating Systems (e.g. macOS) don't apply by default the proxy settings
+  to local hosts and domains. You may need to remove ``*.local`` and/or other
+  IP addresses from that list.
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
