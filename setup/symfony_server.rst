@@ -202,8 +202,7 @@ Now run this command to start the proxy:
 
     $ symfony proxy:start
 
-If the proxy doesn't work when serving requests as explained in the following
-sections, check these:
+If the proxy doesn't work as explained in the following sections, check these:
 
 * Some browsers (e.g. Chrome) require to re-apply proxy settings (clicking on
   ``Re-apply settings`` button on the ``chrome://net-internals/#proxy`` page)
