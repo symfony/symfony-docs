@@ -464,6 +464,10 @@ going to production:
     It's common for environments to be similar to each other, so you can
     use `symbolic links`_ between ``config/packages/<environment-name>/``
     directories to reuse the same configuration.
+    
+    There are benefits to separating configuration from code. So try to avoid
+    creating new environments and instead set environment variables.
+    This way it is easy to add another environment for staging/qa/review applications.
 
 .. _config-env-vars:
 
