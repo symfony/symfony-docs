@@ -276,7 +276,7 @@ Now that the form has been created, the next step is to render it::
             $form = $this->createForm(TaskType::class, $task);
 
             return $this->renderForm('task/new.html.twig', [
-                'form' => $form,
+                'form' => $form->createView(),
             ]);
         }
     }
