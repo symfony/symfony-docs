@@ -152,11 +152,6 @@ In PHP 8 and newer versions, you can register the command by adding the
         // ...
     }
 
-.. versionadded:: 5.3
-
-    The ability to use PHP attributes to configure commands was introduced in
-    Symfony 5.3.
-
 If you can't use PHP attributes, register the command as a service and
 :doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
