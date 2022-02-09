@@ -37,24 +37,18 @@ You can rely on the logger to use this dependency inside a command::
     namespace Acme\Console\Command;
 
     use Acme\MyDependency;
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Logger\ConsoleLogger;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    #[AsCommand(
+        name: 'my:command',
+        description: 'Use an external dependency requiring a PSR-3 logger'
+    )]
     class MyCommand extends Command
     {
-        protected static $defaultName = 'my:command';
-
-        protected function configure()
-        {
-            $this
-                ->setDescription(
-                    'Use an external dependency requiring a PSR-3 logger'
-                )
-            ;
-        }
-
         protected function execute(InputInterface $input, OutputInterface $output)
         {
             $logger = new ConsoleLogger($output);

@@ -29,13 +29,15 @@ want a command to create a user::
     // src/Command/CreateUserCommand.php
     namespace App\Command;
 
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    // the name of the command is what users type after "php bin/console"
+    #[AsCommand(name: 'app:create-user')]
     class CreateUserCommand extends Command
     {
-        // the name of the command (the part after "bin/console")
         protected static $defaultName = 'app:create-user';
 
         protected function configure(): void

@@ -18,13 +18,14 @@ For example, suppose you want to log something from within your command::
     namespace App\Command;
 
     use Psr\Log\LoggerInterface;
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    #[AsCommand(name: 'app:sunshine')]
     class SunshineCommand extends Command
     {
-        protected static $defaultName = 'app:sunshine';
         private $logger;
 
         public function __construct(LoggerInterface $logger)
@@ -68,12 +69,15 @@ command and start logging.
 Lazy Loading
 ------------
 
-To make your command lazily loaded, either define its ``$defaultName`` static property::
+To make your command lazily loaded, either define its name using the PHP
+``AsCommand`` attribute::
 
+    use Symfony\Component\Console\Attribute\AsCommand;
+    // ...
+
+    #[AsCommand(name: 'app:sunshine')]
     class SunshineCommand extends Command
     {
-        protected static $defaultName = 'app:sunshine';
-
         // ...
     }
 
