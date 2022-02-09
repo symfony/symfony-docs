@@ -77,82 +77,39 @@ but it is a great way to start.
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-To enable the proxy, first create a caching kernel::
+Use the ``framework.http_cache`` option to enable the proxy for the
+:ref:`prod environment <configuration-environments>`:
 
-    // src/CacheKernel.php
-    namespace App;
+.. configuration-block::
 
-    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+    .. code-block:: yaml
 
-    class CacheKernel extends HttpCache
-    {
-    }
+        # config/packages/framework.yaml
+        when@prod:
+            framework:
+                http_cache: true
 
-Modify the code of your front controller to wrap the default kernel into the
-caching kernel:
+    .. code-block:: php
 
-.. code-block:: diff
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
 
-      // public/index.php
+        return static function (FrameworkConfig $framework) use ($env) {
+            if ('prod' === $env) {
+                $framework->httpCache()->enabled(true);
+            }
+        };
 
-    + use App\CacheKernel;
-      use App\Kernel;
-
-    // ...
-    $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
-    + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
-    + if ('prod' === $kernel->getEnvironment()) {
-    +     return new CacheKernel($kernel);
-    + }
-    return $kernel;
-
-
-The caching kernel will immediately act as a reverse proxy: caching responses
+The kernel will immediately act as a reverse proxy: caching responses
 from your application and returning them to the client.
 
-.. caution::
+The proxy has a sensible default configuration, but it can be
+finely tuned via `a set of options <configuration-framework-http_cache>`.
 
-    If you're using the :ref:`framework.http_method_override <configuration-framework-http_method_override>`
-    option to read the HTTP method from a ``_method`` parameter, see the
-    above link for a tweak you need to make.
-
-.. tip::
-
-    The cache kernel has a special ``getLog()`` method that returns a string
-    representation of what happened in the cache layer. In the development
-    environment, use it to debug and validate your cache strategy::
-
-        error_log($kernel->getLog());
-
-The ``CacheKernel`` object has a sensible default configuration, but it can be
-finely tuned via a set of options you can set by overriding the
-:method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache::getOptions`
-method::
-
-    // src/CacheKernel.php
-    namespace App;
-
-    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
-
-    class CacheKernel extends HttpCache
-    {
-        protected function getOptions(): array
-        {
-            return [
-                'default_ttl' => 0,
-                // ...
-            ];
-        }
-    }
-
-For a full list of the options and their meaning, see the
-:method:`HttpCache::__construct() documentation <Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache::__construct>`.
-
-When you're in debug mode (the second argument of ``Kernel`` constructor in the
-front controller is ``true``), Symfony automatically adds an ``X-Symfony-Cache``
-header to the response. You can also use the ``trace_level`` config
-option and set it to either ``none``, ``short`` or ``full`` to
-add this information.
+When in :ref:`debug mode <debug-mode>`, Symfony automatically adds an
+``X-Symfony-Cache`` header to the response. You can also use the ``trace_level``
+config option and set it to either ``none``, ``short`` or ``full`` to add this
+information.
 
 ``short`` will add the information for the main request only.
 It's written in a concise way that makes it easy to record the
