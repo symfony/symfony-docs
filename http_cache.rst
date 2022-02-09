@@ -77,7 +77,8 @@ but it is a great way to start.
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-To enable the proxy for the ``prod`` env, enable the ``framework.http_cache`` setting:
+Use the ``framework.http_cache`` option to enable the proxy for the
+:ref:`prod environment <configuration-environments>`:
 
 .. configuration-block::
 
@@ -103,12 +104,12 @@ The kernel will immediately act as a reverse proxy: caching responses
 from your application and returning them to the client.
 
 The proxy has a sensible default configuration, but it can be
-finely tuned via `a set of options<configuration-framework-http_cache>`.
+finely tuned via `a set of options <configuration-framework-http_cache>`.
 
-When in debug mode, Symfony automatically adds an ``X-Symfony-Cache``
-header to the response. You can also use the ``trace_level`` config
-option and set it to either ``none``, ``short`` or ``full`` to
-add this information.
+When in :ref:`debug mode <debug-mode>`, Symfony automatically adds an
+``X-Symfony-Cache`` header to the response. You can also use the ``trace_level``
+config option and set it to either ``none``, ``short`` or ``full`` to add this
+information.
 
 ``short`` will add the information for the main request only.
 It's written in a concise way that makes it easy to record the
