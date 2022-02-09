@@ -58,10 +58,6 @@ out all the application users.
 http_cache
 ~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The ``http_cache`` option was introduced in Symfony 5.2.
-
 enabled
 .......
 
