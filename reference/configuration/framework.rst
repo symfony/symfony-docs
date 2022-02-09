@@ -53,7 +53,102 @@ will invalidate all signed URIs and Remember Me cookies. That's why, after
 changing this value, you should regenerate the application cache and log
 out all the application users.
 
-.. _configuration-framework-http_method_override:
+.. _configuration-framework-http_cache:
+
+http_cache
+~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``http_cache`` option was introduced in Symfony 5.2.
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+debug
+.....
+
+**type**: ``boolean`` **default**: ``%kernel.debug%``
+
+If true, exceptions are thrown when things go wrong. Otherwise, the cache will
+try to carry on and deliver a meaningful response.
+
+trace_level
+...........
+
+**type**: ``string`` **possible values**: ``'none'``, ``'short'`` or ``'full'``
+
+For 'short', a concise trace of the main request will be added as an HTTP header.
+'full' will add traces for all requests (including ESI subrequests).
+(default: 'full' if in debug; 'none' otherwise)
+
+trace_header
+............
+
+**type**: ``string``
+
+Header name to use for traces. (default: X-Symfony-Cache)
+
+default_ttl
+...........
+
+**type**: ``integer``
+
+The number of seconds that a cache entry should be considered fresh when no
+explicit freshness information is provided in a response. Explicit
+Cache-Control or Expires headers override this value. (default: 0)
+
+private_headers
+...............
+
+**type**: ``array``
+
+Set of request headers that trigger "private" cache-control behavior on responses
+that don't explicitly state whether the response is public or private via a
+Cache-Control directive. (default: Authorization and Cookie)
+
+allow_reload
+............
+
+**type**: ``string``
+
+Specifies whether the client can force a cache reload by including a
+Cache-Control "no-cache" directive in the request. Set it to ``true``
+for compliance with RFC 2616. (default: false)
+
+allow_revalidate
+................
+
+**type**: ``string``
+
+Specifies whether the client can force a cache revalidate by including a
+Cache-Control "max-age=0" directive in the request. Set it to ``true``
+for compliance with RFC 2616. (default: false)
+
+stale_while_revalidate
+......................
+
+**type**: ``integer``
+
+Specifies the default number of seconds (the granularity is the second as the
+Response TTL precision is a second) during which the cache can immediately return
+a stale response while it revalidates it in the background (default: 2).
+This setting is overridden by the stale-while-revalidate HTTP Cache-Control
+extension (see RFC 5861).
+
+stale_if_error
+..............
+
+**type**: ``integer``
+
+Specifies the default number of seconds (the granularity is the second) during
+which the cache can serve a stale response when an error is encountered
+(default: 60). This setting is overridden by the stale-if-error HTTP
+Cache-Control extension (see RFC 5861).
+
+ .. _configuration-framework-http_method_override:
 
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
