@@ -706,6 +706,26 @@ Clear all caches everywhere:
 
     $ php bin/console cache:pool:clear cache.global_clearer
 
+Clear cache by tag(s):
+
+.. versionadded:: 6.1
+
+    The ``cache:pool:invalidate-tags`` command was added in Symfony 6.1.
+
+.. code-block:: terminal
+
+    # invalidate tag1 from all taggable pools
+    $ php bin/console cache:pool:invalidate-tags tag1
+
+    # invalidate tag1 & tag2 from all taggable pools
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2
+
+    # invalidate tag1 & tag2 from cache.app pool
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2 --pool=cache.app
+
+    # invalidate tag1 & tag2 from cache1 & cache2 pools
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2 -p cache1 -p cache2
+
 Encrypting the Cache
 --------------------
 
