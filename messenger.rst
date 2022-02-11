@@ -536,8 +536,8 @@ different messages to them. For example:
                             queue_name: low
 
                 routing:
-                    'App\Message\SmsNotification':  async_priority_low
-                    'App\Message\NewUserWelcomeEmail':  async_priority_high
+                    'App\Message\SmsNotification': async_priority_low
+                    'App\Message\NewUserWelcomeEmail': async_priority_high
 
     .. code-block:: xml
 
