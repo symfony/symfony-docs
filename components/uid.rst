@@ -172,7 +172,6 @@ entity primary keys::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
-    use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
     use Symfony\Component\Uid\Uuid;
 
     class User implements UserInterface
@@ -181,7 +180,7 @@ entity primary keys::
          * @ORM\Id
          * @ORM\Column(type="uuid", unique=true)
          * @ORM\GeneratedValue(strategy="CUSTOM")
-         * @ORM\CustomIdGenerator(class=UuidGenerator::class)
+         * @ORM\CustomIdGenerator(class="doctrine.uuid_generator")
          */
         private $id;
 
@@ -345,7 +344,6 @@ entity primary keys::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
-    use Symfony\Bridge\Doctrine\IdGenerator\UlidGenerator;
     use Symfony\Component\Uid\Ulid;
 
     class Product
@@ -354,7 +352,7 @@ entity primary keys::
          * @ORM\Id
          * @ORM\Column(type="ulid", unique=true)
          * @ORM\GeneratedValue(strategy="CUSTOM")
-         * @ORM\CustomIdGenerator(class=UlidGenerator::class)
+         * @ORM\CustomIdGenerator(class="doctrine.ulid_generator")
          */
         private $id;
 
