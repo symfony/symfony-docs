@@ -710,7 +710,7 @@ Clear cache by tag(s):
 
 .. versionadded:: 6.1
 
-    The ``cache:pool:invalidate-tags`` command was added in Symfony 6.1.
+    The ``cache:pool:invalidate-tags`` command was introduced in Symfony 6.1.
 
 .. code-block:: terminal
 
