@@ -507,11 +507,11 @@ The DoctrineDbalStore saves locks in an SQL database. It is identical to PdoStor
 but requires a `Doctrine DBAL Connection`_, or a `Doctrine DBAL URL`_. This store
 does not support blocking, and expects a TTL to avoid stalled locks::
 
-    use Symfony\Component\Lock\Store\PdoStore;
+    use Symfony\Component\Lock\Store\DoctrineDbalStore;
 
-    // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
+    // a Doctrine DBAL connection or DSN
     $connectionOrURL = 'mysql://myuser:mypassword@127.0.0.1/app';
-    $store = new PdoStore($connectionOrURL);
+    $store = new DoctrineDbalStore($connectionOrURL);
 
 .. note::
 
@@ -566,11 +566,11 @@ The DoctrineDbalPostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL.
 It is identical to PostgreSqlStore but requires a `Doctrine DBAL Connection`_ or
 a `Doctrine DBAL URL`_. It supports native blocking, as well as sharing locks::
 
-    use Symfony\Component\Lock\Store\PostgreSqlStore;
+    use Symfony\Component\Lock\Store\DoctrineDbalPostgreSqlStore;
 
-    // a PDO instance or DSN for lazy connecting through PDO
-    $databaseConnectionOrDSN = 'pgsql:host=localhost;port=5634;dbname=lock';
-    $store = new PostgreSqlStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
+    // a Doctrine Connection or DSN
+    $databaseConnectionOrDSN = 'postgresql+advisory://myuser:mypassword@127.0.0.1:5634/lock';
+    $store = new DoctrineDbalPostgreSqlStore($databaseConnectionOrDSN);
 
 In opposite to the ``DoctrineDbalStore``, the ``DoctrineDbalPostgreSqlStore`` does not need a table to
 store locks and does not expire.
