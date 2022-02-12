@@ -354,7 +354,7 @@ array).
 
 .. code-block:: html+twig
 
-    <option {% if choice is selectedchoice(value) %}selected="selected"{% endif %}>
+    <option {% if choice == selectedchoice(value) %}selected="selected"{% endif %}>
 
 .. _form-twig-rootform:
 
@@ -374,7 +374,7 @@ This test will check if the current ``form`` does not have a parent form view.
 
    {# DO THIS: this check is always reliable, even if the form defines a field called 'parent' #}
 
-    {% if form is rootform %}
+    {% if form == rootform %}
         {{ form_errors(form) }}
     {% endif %}
 
@@ -394,7 +394,7 @@ reference the variables on the ``name`` field, accessing the variables is
 done by using a public ``vars`` property on the
 :class:`Symfony\\Component\\Form\\FormView` object:
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     <label for="{{ form.name.vars.id }}"
         class="{{ form.name.vars.required ? 'required' }}">

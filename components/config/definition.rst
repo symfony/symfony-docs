@@ -672,10 +672,12 @@ and in XML:
 
 .. code-block:: xml
 
-    <twig:config>
-        <twig:extension>twig.extension.foo</twig:extension>
-        <twig:extension>twig.extension.bar</twig:extension>
-    </twig:config>
+    <container xmlns="http://symfony.com/schema/dic/services" xmlns:twig="http://symfony.com/schema/dic/twig" >
+        <twig:config>
+            <twig:extension>twig.extension.foo</twig:extension>
+            <twig:extension>twig.extension.bar</twig:extension>
+        </twig:config>
+    </container>
 
 This difference can be removed in normalization by pluralizing the key used
 in XML. You can specify that you want a key to be pluralized in this way

@@ -41,7 +41,7 @@ In this case, you'll need a ``Category`` class, and a way to relate a
 
 Start by creating a ``Category`` entity with a ``name`` field:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console make:entity Category
 
@@ -101,7 +101,7 @@ the ``ManyToOne`` annotation. You can do this by hand, or by using the ``make:en
 command, which will ask you several questions about your relationship. If you're
 not sure of the answer, don't worry! You can always change the settings later:
 
-.. code-block:: bash
+.. code-block:: terminal
 
     $ php bin/console make:entity
 
