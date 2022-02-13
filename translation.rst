@@ -437,16 +437,6 @@ The ``trans`` filter can be used to translate *variable texts* and complex expre
     Note that this only influences the current template, not any "included"
     template (in order to avoid side effects).
 
-PHP Templates
-~~~~~~~~~~~~~
-
-The translator service is accessible in PHP templates through the
-``translator`` helper:
-
-.. code-block:: html+php
-
-    <?= $view['translator']->trans('Symfony is great') ?>
-
 Forcing the Translator Locale
 -----------------------------
 
