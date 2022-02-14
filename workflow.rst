@@ -509,6 +509,16 @@ missing a title::
 
     The optional second argument of ``setBlocked()`` was introduced in Symfony 5.1.
 
+.. note::
+
+    When using guard listeners which imply intensive workloads (CPU, Database
+    or longer-running code blocks), if you only want them to be fired when strictly
+    necessary (only when ``Workflow::can()`` or ``Workflow::apply()`` is executed),
+    be sure to disable ``Workflow::DISABLE_ANNOUNCE_EVENT`` as indicated in
+    :ref:`Choosing which Events to Dispatch <workflow-chosing-events-to-dispatch>`
+
+.. _workflow-chosing-events-to-dispatch:
+
 Choosing which Events to Dispatch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
