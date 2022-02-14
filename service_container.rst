@@ -1197,6 +1197,12 @@ If you want to pass the second, you'll need to :ref:`manually wire the service <
     and the automatically loaded service will be passed - by default - when you type-hint
     ``SiteUpdateManager``. That's why creating the alias is a good idea.
 
+Caveats
+-------
+
+The service ``annotations.reader`` is available only if you have installed the
+``doctrine/annotations`` package with Composer.
+
 Learn more
 ----------
 
