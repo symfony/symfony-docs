@@ -73,12 +73,14 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
 
 To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
 
-In this context, you have access to 2 functions:
+In this context, you have access to 3 functions:
 
 ``service``
     Returns a given service (see the example above).
 ``parameter``
     Returns a specific parameter value (syntax is like ``service``).
+``env``
+    Returns the value of an env variable.
 
 You also have access to the :class:`Symfony\\Component\\DependencyInjection\\Container`
 via a ``container`` variable. Here's another example:
