@@ -125,3 +125,54 @@ via a ``container`` variable. Here's another example:
 
 Expressions can be used in ``arguments``, ``properties``, as arguments with
 ``configurator`` and as arguments to ``calls`` (method calls).
+
+You can also use expressions as service factories:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Mailer:
+                factory: "@=parameter('some_param') ? service('some_service') : arg(0)"
+                arguments:
+                    - '@some_other_service'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Mailer">
+                    <factory expression="parameter('some_param') ? service('some_service') : arg(0)"/>
+                    <argument type="service" id="some_other_service"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Mailer;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(Mailer::class)
+                ->factory(expr("parameter('some_param') ? service('some_service') : arg(0)"))
+                ->args([service('some_other_service')]);
+        };
+
+In this context, you have access to the ``arg`` function that allows getting the value of arguments passed to the factory.
+
+.. versionadded:: 6.1
+
+    Using expressions as factories was introduced in Symfony 6.1.
