@@ -62,7 +62,7 @@ The following block shows all possible configuration keys:
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option
                 wrapper_class:        App\DBAL\MyConnectionWrapper
-                charset:              UTF8
+                charset:              utf8mb4
                 logging:              '%kernel.debug%'
                 platform_service:     App\DBAL\MyDatabasePlatformService
                 server_version:       '5.7'
@@ -96,7 +96,7 @@ The following block shows all possible configuration keys:
                     memory="true"
                     unix-socket="/tmp/mysql.sock"
                     wrapper-class="App\DBAL\MyConnectionWrapper"
-                    charset="UTF8"
+                    charset="utf8mb4"
                     logging="%kernel.debug%"
                     platform-service="App\DBAL\MyDatabasePlatformService"
                     server-version="5.7">
