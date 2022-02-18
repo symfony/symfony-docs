@@ -112,7 +112,8 @@ the dev-server. To fix this, set the ``allowedHosts`` option:
 
 .. caution::
 
-    Beware that `it's not recommended to set allowedHosts to all`_. Read the dedicated doc to select the value for your environment.
+    Beware that `it's not recommended to set allowedHosts to all`_ in general, but
+    here it's required to solve the issue when using Encore in a virtual machine.
 
 .. _`VirtualBox`: https://www.virtualbox.org/
 .. _`VMWare`: https://www.vmware.com
