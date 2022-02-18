@@ -430,9 +430,7 @@ To send a notification, autowire the
 
     class InvoiceController extends AbstractController
     {
-        /**
-         * @Route("/invoice/create")
-         */
+        #[Route('/invoice/create')]
         public function create(NotifierInterface $notifier)
         {
             // ...
@@ -559,9 +557,7 @@ sent using the Slack transport::
     // ...
     class InvoiceController extends AbstractController
     {
-        /**
-         * @Route("/invoice/create")
-         */
+        #[Route('/invoice/create')]
         public function invoice(NotifierInterface $notifier)
         {
             // ...

@@ -341,15 +341,14 @@ syntax to parse them as proper PHP constants::
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can dump binary data by using the ``DUMP_BASE64_BINARY_DATA`` flag::
+Non UTF-8 encoded strings are dumped as base64 encoded data::
 
     $imageContents = file_get_contents(__DIR__.'/images/logo.png');
 
-    $dumped = Yaml::dump(['logo' => $imageContents], 2, 4, Yaml::DUMP_BASE64_BINARY_DATA);
+    $dumped = Yaml::dump(['logo' => $imageContents]);
     // logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...
 
-Binary data is automatically parsed if they include the ``!!binary`` YAML tag
-(there's no need to pass any flag to the Yaml parser)::
+Binary data is automatically parsed if they include the ``!!binary`` YAML tag::
 
     $dumped = 'logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...';
     $parsed = Yaml::parse($dumped);
