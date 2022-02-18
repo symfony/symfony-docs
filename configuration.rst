@@ -550,6 +550,12 @@ going to production:
     use `symbolic links`_ between ``config/packages/<environment-name>/``
     directories to reuse the same configuration.
 
+Instead of creating new environments, you can use environment variables as
+explained in the following section. This way you can use the same application
+and environment (e.g. ``prod``) but change its behavior thanks to the
+configuration based on environment variables (e.g. to run the application in
+different scenarios: staging, quality assurance, client review, etc.)
+
 .. _config-env-vars:
 
 Configuration Based on Environment Variables
