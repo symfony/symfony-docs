@@ -113,7 +113,6 @@ filesystem
 filesystems
 formatter
 formatters
-fortrabbit
 frontend
 getter
 getters
