@@ -345,9 +345,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
 
     class MailerController extends AbstractController
     {
-        /**
-         * @Route("/email")
-         */
+        #[Route('/email')]
         public function sendEmail(MailerInterface $mailer): Response
         {
             $email = (new Email())
