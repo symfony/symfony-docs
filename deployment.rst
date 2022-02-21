@@ -73,9 +73,6 @@ Using Build Scripts and other Tools
 There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
-`EasyDeployBundle`_
-    A Symfony bundle that adds deploy tools to your application.
-
 `Deployer`_
     This is another native PHP rewrite of Capistrano, with some ready recipes for
     Symfony.
@@ -269,6 +266,4 @@ Learn More
 .. _`Deployer`: https://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`Platform.sh`: https://symfony.com/cloud
-.. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle
-.. _`Symfony Cloud`: https://symfony.com/doc/master/cloud/intro.html
 .. _`Symfony CLI`: https://symfony.com/download
