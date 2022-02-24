@@ -14,7 +14,7 @@ Supported Literals
 The component supports:
 
 * **strings** - single and double quotes (e.g. ``'hello'``)
-* **numbers** - e.g. ``103``
+* **numbers** - e.g. ``103``, ``0.787``, ``.1234``, ``188_165.1_178``, ``-.7_189e+10```
 * **arrays** - using JSON-like notation (e.g. ``[1, 2]``)
 * **hashes** - using JSON-like notation (e.g. ``{ foo: 'bar' }``)
 * **booleans** - ``true`` and ``false``
