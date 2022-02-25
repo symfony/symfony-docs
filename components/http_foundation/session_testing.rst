@@ -74,7 +74,7 @@ However, PHPUnit sends output to the console when the test run is starts, and PH
 this as sending headers, and so the ``RuntimeException`` is thrown.
 
 In order to tell Symfony to use
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockFileSessionStorage`::
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockFileSessionStorage`
 in tests, the following changes are needed::
 
 .. configuration-block::
@@ -95,5 +95,3 @@ in tests, the following changes are needed::
             services:
                 mock_file_session_storage:
                     class: Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorageFactory
-
-
