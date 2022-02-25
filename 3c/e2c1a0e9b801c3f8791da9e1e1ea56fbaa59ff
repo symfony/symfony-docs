@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2022-02-23T10:58:52Z
+
+Works for me. I would add that attributes should be in an `Attribute` namespace.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-02-23T11:20:29Z
+
+> I would add that attributes should be in an `Attribute` namespace.
+
+In that case, let's move `Route` from `Annotations` to `Attribute` :)
+
+---------------------------------------------------------------------------
+
+by derrabus at 2022-02-23T12:21:07Z
+
+> > I would add that attributes should be in an `Attribute` namespace.
+>
+> In that case, let's move `Route` from `Annotations` to `Attribute` :)
+
+Yeah, and then there are validation constraints that also violate the rule. We need to document a couple of exceptions to that rule which is why I'd like to separate attribute namespacing from this discussion, if that's okay for you.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2022-02-23T17:29:44Z
+
+> Yeah, and then there are validation constraints that also violate the rule. We need to document a couple of exceptions to that rule which is why I'd like to separate attribute namespacing from this discussion, if that's okay for you.
+
+Works for me also :)
+A fallback convention would then be that attributes should be in a dedicated namespace. That would fit `Constraints` and `Annotation(s)` namespaces.
+
+---------------------------------------------------------------------------
+
+by stof at 2022-02-24T14:40:23Z
+
+The case of Constraints is special, because they are not **only** attributes. They are the API of the component directly.
