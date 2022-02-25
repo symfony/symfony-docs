@@ -206,8 +206,12 @@ Naming Conventions
 * Use `snake_case`_ for configuration parameters and Twig template variables
   (e.g. ``framework.csrf_protection``, ``http_status_code``);
 
-* Use namespaces for all PHP classes and `UpperCamelCase`_ for their names (e.g.
-  ``ConsoleLogger``);
+* Use `SCREAMING_SNAKE_CASE`_ for constants (e.g. ``InputArgument::IS_ARRAY``);
+
+* Use `UpperCamelCase`_ for enumeration cases (e.g. ``InputArgumentMode::IsArray``);
+
+* Use namespaces for all PHP classes, interfaces, traits and enums and
+  `UpperCamelCase`_ for their names (e.g. ``ConsoleLogger``);
 
 * Prefix all abstract classes with ``Abstract`` except PHPUnit ``*TestCase``.
   Please note some early Symfony classes do not follow this convention and
@@ -217,6 +221,9 @@ Naming Conventions
 * Suffix interfaces with ``Interface``;
 
 * Suffix traits with ``Trait``;
+
+* Don't use a dedicated suffix for classes or enumerations (e.g. like ``Class``
+  or ``Enum``), except for the cases listed below.
 
 * Suffix exceptions with ``Exception``;
 
