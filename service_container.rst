@@ -247,6 +247,14 @@ attribute to only register the class as a service in some environments::
         // ...
     }
 
+    // you are also able to pass more than one environment in the When attribute
+
+    #[When(env: ['dev', 'test'])]
+    class YetAnotherClass
+    {
+        // ...
+    }
+
 .. _services-constructor-injection:
 
 Injecting Services/Config into a Service
