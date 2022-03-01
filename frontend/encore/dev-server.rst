@@ -54,6 +54,7 @@ method in your ``webpack.config.js`` file:
         // ...
 
         .configureDevServerOptions(options => {
+            options.http2 = true;
             options.https = {
                 key: '/path/to/server.key',
                 cert: '/path/to/server.crt',
@@ -77,13 +78,15 @@ server SSL certificate:
       // webpack.config.js
       // ...
     + const path = require('path');
+    + const fs = require('fs');
 
       Encore
           // ...
 
     +     .configureDevServerOptions(options => {
+    +         options.http2 = true;
     +         options.https = {
-    +             pfx: path.join(process.env.HOME, '.symfony/certs/default.p12'),
+    +             pfx: fs.readFileSync(path.join(process.env.HOME, '.symfony/certs/default.p12')),
     +         }
     +     })
 
