@@ -195,9 +195,9 @@ each time you ask for it.
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return function(ContainerConfigurator $configurator) {
+            return function(ContainerConfigurator $container) {
                 // default configuration for services in *this* file
-                $services = $configurator->services()
+                $services = $container->services()
                     ->defaults()
                         ->autowire()      // Automatically injects dependencies in your services.
                         ->autoconfigure() // Automatically registers your services as commands, event subscribers, etc.
@@ -481,7 +481,7 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
         use App\Service\SiteUpdateManager;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container) {
             // ...
 
             // same as before
@@ -556,8 +556,8 @@ parameter and in PHP config use the ``service()`` function:
 
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(MessageGenerator::class)
                 ->args([service('logger')])
@@ -662,7 +662,7 @@ But, you can control this and pass in a different logger:
 
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container) {
             // ... same code as before
 
             // explicitly configure the service
@@ -763,8 +763,8 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
         use Symfony\Component\DependencyInjection\Definition;
         use Symfony\Component\DependencyInjection\Reference;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services()
+        return function(ContainerConfigurator $container) {
+            $services = $container->services()
                 ->defaults()
                     // pass this value to any $adminEmail argument for any service
                     // that's defined in this file (including controller arguments)
@@ -898,7 +898,7 @@ setting:
 
         use App\Service\PublicService;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container) {
             // ... same as code before
 
             // explicitly configure the service
@@ -950,7 +950,7 @@ key. For example, the default Symfony configuration contains this:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container) {
             // ...
 
             // makes classes in src/ available to be used as services
@@ -1132,7 +1132,7 @@ admin email. In this case, each needs to have a unique service id:
         use App\Service\MessageGenerator;
         use App\Service\SiteUpdateManager;
 
-        return function(ContainerConfigurator $configurator) {
+        return function(ContainerConfigurator $container) {
             // ...
 
             // site_update_manager.superadmin is the service's id
