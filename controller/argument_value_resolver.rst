@@ -59,6 +59,15 @@ Symfony ships with the following value resolvers in the
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
 
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\DateTimeValueResolver`
+    Attempts to find a request attribute that matches the name of the argument
+    and injects a ``DateTimeInterface`` object if type-hinted with a class
+    extending ``DateTimeInterface``.
+
+    By default any input that can be parsed as a date string by PHP is accepted.
+    You can restrict how the input can be formatted with the
+    :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapDateTime` attribute.
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestValueResolver`
     Injects the current ``Request`` if type-hinted with ``Request`` or a class
     extending ``Request``.
