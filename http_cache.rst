@@ -104,7 +104,7 @@ The kernel will immediately act as a reverse proxy: caching responses
 from your application and returning them to the client.
 
 The proxy has a sensible default configuration, but it can be
-finely tuned via `a set of options <configuration-framework-http_cache>`.
+finely tuned via :ref:`a set of options <configuration-framework-http_cache>`.
 
 When in :ref:`debug mode <debug-mode>`, Symfony automatically adds an
 ``X-Symfony-Cache`` header to the response. You can also use the ``trace_level``
