@@ -42,4 +42,10 @@ $ composer install
 $ php build.php
 ```
 
-Now you can browse the docs at `_build/output/index.html`
+After generating docs, serve them with the internal PHP server:
+
+```bash
+$ php -S localhost:8000 -t output/
+```
+
+Browse `http://localhost:8000` to read the docs.
