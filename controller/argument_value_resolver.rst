@@ -89,11 +89,6 @@ In addition, some components and official bundles provide other value resolvers:
     the controller can be accessed by anonymous users. It requires installing
     the :doc:`SecurityBundle </security>`.
 
-``Psr7ServerRequestResolver``
-    Injects a `PSR-7`_ compliant version of the current request if type-hinted
-    with ``RequestInterface``, ``MessageInterface`` or ``ServerRequestInterface``.
-    It requires installing the `SensioFrameworkExtraBundle`_.
-
 Adding a Custom Value Resolver
 ------------------------------
 
@@ -296,5 +291,4 @@ passing the user along sub-requests).
 
 .. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`yield`: https://www.php.net/manual/en/language.generators.syntax.php
-.. _`PSR-7`: https://www.php-fig.org/psr/psr-7/
-.. _`SensioFrameworkExtraBundle`: https://github.com/sensiolabs/SensioFrameworkExtraBundle
+.. _`SecurityBundle`: https://github.com/symfony/security-bundle
