@@ -50,14 +50,6 @@ Any hex color is supported for foreground and background colors. Besides that, t
 ``gray``, ``bright-red``, ``bright-green``, ``bright-yellow``, ``bright-blue``,
 ``bright-magenta``, ``bright-cyan`` and ``bright-white``.
 
-.. versionadded:: 5.2
-
-    True (hex) color support was introduced in Symfony 5.2
-
-.. versionadded:: 5.3
-
-    Support for bright colors was introduced in Symfony 5.3.
-
 .. note::
 
     If the terminal doesn't support true colors, the nearest named color is used.

@@ -4,10 +4,6 @@
 Creating and Sending Notifications
 ==================================
 
-.. versionadded:: 5.0
-
-    The Notifier component was introduced in Symfony 5.0.
-
 Installation
 ------------
 
@@ -59,6 +55,7 @@ with a couple popular SMS services:
 ==============  ====================================  ===========================================================================
 Service         Package                               DSN
 ==============  ====================================  ===========================================================================
+46elks          ``symfony/forty-six-elks-notifier``   ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
 AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@default?from=FROM``
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
@@ -68,6 +65,7 @@ FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:PASSW
 GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
 Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
+KazInfoTeh      ``symfony/kaz-info-teh-notifier``     ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
 LightSms        ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
 Mailjet         ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?from=FROM``
 MessageBird     ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
@@ -75,6 +73,7 @@ MessageMedia    ``symfony/message-media-notifier``    ``messagemedia://API_KEY:A
 Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
 Nexmo           ``symfony/nexmo-notifier``            ``nexmo://KEY:SECRET@default?from=FROM``
 Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
+OrangeSms       ``symfony/orange-sms-notifier``       ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME``
 OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
 Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
 Sms77           ``symfony/sms77-notifier``            ``sms77://API_KEY@default?from=FROM``
@@ -90,27 +89,9 @@ Vonage          ``symfony/vonage-notifier``           ``vonage://KEY:SECRET@defa
 Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
 ==============  ====================================  ===========================================================================
 
-.. versionadded:: 5.1
+.. versionadded:: 6.1
 
-    The OvhCloud, Sinch and FreeMobile integrations were introduced in Symfony 5.1.
-
-.. versionadded:: 5.2
-
-    The Smsapi, Infobip, Mobyt, Esendex and Sendinblue integrations were introduced in Symfony 5.2.
-
-.. versionadded:: 5.3
-
-    The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms (email), LightSms, SmsBiuras
-    and MessageBird integrations were introduced in Symfony 5.3.
-
-.. deprecated:: 5.4
-
-    The Nexmo integration was deprecated in Symfony 5.4, use the Vonage integration instead.
-
-.. versionadded:: 5.4
-
-    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms, Mailjet, FakeSms (logger),
-    Sms77 and Vonage integrations were introduced in Symfony 5.4.
+    The 46elks, OrangeSms and KazInfoTeh integrations were introduced in Symfony 6.1.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -190,25 +171,6 @@ Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?ch
 Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
 Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ==============  ====================================  =============================================================================
-
-.. versionadded:: 5.1
-
-    The Firebase, Mattermost and RocketChat integrations were introduced in Symfony
-    5.1. The Slack DSN changed in Symfony 5.1 to use Slack Incoming
-    Webhooks instead of legacy tokens.
-
-.. versionadded:: 5.2
-
-    The GoogleChat, LinkedIn, Zulip and Discord integrations were introduced in Symfony 5.2.
-    The Slack DSN changed in Symfony 5.2 to use Slack Web API again same as in 5.0.
-
-.. versionadded:: 5.3
-
-    The Gitter, Mercure, FakeChat (email) and Microsoft Teams integrations were introduced in Symfony 5.3.
-
-.. versionadded:: 5.4
-
-    The AmazonSns and FakeChat (logger) integrations were introduced in Symfony 5.4.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
@@ -340,10 +302,6 @@ Engagespot      ``symfony/engagespot-notifier``        ``engagespot://API_KEY@de
 Expo            ``symfony/expo-notifier``              ``expo://Token@default``
 OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID''``
 ==============  ====================================  =================================================================================
-
-.. versionadded:: 5.4
-
-    The Expo, OneSignal and Engagespot integrations were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -522,11 +480,6 @@ Symfony provides the following recipients:
     This can contain both the email address and the phone number of the user. This
     recipient can be used for all channels (depending on whether they are
     actually set).
-
-.. versionadded:: 5.2
-
-    The ``AdminRecipient`` class was removed in Symfony 5.2, you should use
-    ``Recipient`` instead.
 
 Configuring Channel Policies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

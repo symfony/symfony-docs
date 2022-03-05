@@ -27,13 +27,8 @@ The following example shows a typical usage of the cache::
     // ... and to remove the cache key
     $pool->delete('my_cache_key');
 
-Symfony supports Cache Contracts, PSR-6/16 and Doctrine Cache interfaces.
+Symfony supports Cache Contracts and PSR-6/16 interfaces.
 You can read more about these at the :doc:`component documentation </components/cache>`.
-
-.. deprecated:: 5.4
-
-    Support for Doctrine Cache was deprecated in Symfony 5.4
-    and it will be removed in Symfony 6.0.
 
 .. _cache-configuration-with-frameworkbundle:
 
@@ -104,17 +99,12 @@ The Cache component comes with a series of adapters pre-configured:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
 * :doc:`cache.adapter.array </components/cache/adapters/array_cache_adapter>`
-* :doc:`cache.adapter.doctrine </components/cache/adapters/doctrine_adapter>`
 * :doc:`cache.adapter.filesystem </components/cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </components/cache/adapters/memcached_adapter>`
 * :doc:`cache.adapter.pdo </components/cache/adapters/pdo_doctrine_dbal_adapter>`
 * :doc:`cache.adapter.psr6 </components/cache/adapters/proxy_adapter>`
 * :doc:`cache.adapter.redis </components/cache/adapters/redis_adapter>`
 * :ref:`cache.adapter.redis_tag_aware <redis-tag-aware-adapter>` (Redis adapter optimized to work with tags)
-
-.. versionadded:: 5.2
-
-    ``cache.adapter.redis_tag_aware`` has been introduced in Symfony 5.2.
 
 Some of these adapters could be configured via shortcuts. Using these shortcuts
 will create pools with service IDs that follow the pattern ``cache.[type]``.
@@ -128,8 +118,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             cache:
                 directory: '%kernel.cache_dir%/pools' # Only used with cache.adapter.filesystem
 
-                # service: cache.doctrine
-                default_doctrine_provider: 'app.doctrine_cache'
                 # service: cache.psr6
                 default_psr6_provider: 'app.my_psr6_service'
                 # service: cache.redis
@@ -153,7 +141,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
 
             <framework:config>
                 <!--
-                default_doctrine_provider: Service: cache.doctrine
                 default_psr6_provider: Service: cache.psr6
                 default_redis_provider: Service: cache.redis
                 default_memcached_provider: Service: cache.memcached
@@ -161,7 +148,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 -->
                 <!-- "directory" attribute is only used with cache.adapter.filesystem -->
                 <framework:cache directory="%kernel.cache_dir%/pools"
-                    default_doctrine_provider="app.doctrine_cache"
                     default_psr6_provider="app.my_psr6_service"
                     default_redis_provider="redis://localhost"
                     default_memcached_provider="memcached://localhost"
@@ -179,8 +165,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             $framework->cache()
                 // Only used with cache.adapter.filesystem
                 ->directory('%kernel.cache_dir%/pools')
-                // Service: cache.doctrine
-                ->defaultDoctrineProvider('app.doctrine_cache')
                 // Service: cache.psr6
                 ->defaultPsr6Provider('app.my_psr6_service')
                 // Service: cache.redis
@@ -191,11 +175,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 ->defaultPdoProvider('doctrine.dbal.default_connection')
             ;
         };
-
-.. deprecated:: 5.4
-
-    The ``default_doctrine_provider`` option was deprecated in Symfony 5.4 and
-    it will be removed in Symfony 6.0.
 
 .. _cache-create-pools:
 
@@ -727,13 +706,28 @@ Clear all caches everywhere:
 
     $ php bin/console cache:pool:clear cache.global_clearer
 
+Clear cache by tag(s):
+
+.. versionadded:: 6.1
+
+    The ``cache:pool:invalidate-tags`` command was introduced in Symfony 6.1.
+
+.. code-block:: terminal
+
+    # invalidate tag1 from all taggable pools
+    $ php bin/console cache:pool:invalidate-tags tag1
+
+    # invalidate tag1 & tag2 from all taggable pools
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2
+
+    # invalidate tag1 & tag2 from cache.app pool
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2 --pool=cache.app
+
+    # invalidate tag1 & tag2 from cache1 & cache2 pools
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2 -p cache1 -p cache2
+
 Encrypting the Cache
 --------------------
-
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`
-    class was introduced in Symfony 5.1.
 
 To encrypt the cache using ``libsodium``, you can use the
 :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`.

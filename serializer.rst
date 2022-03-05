@@ -50,10 +50,6 @@ Or you can use the ``serialize`` Twig filter in a template:
 See the :doc:`twig reference </reference/twig_reference>` for
 more information.
 
-.. versionadded:: 5.3
-
-    A ``serialize`` filter was introduced in Symfony 5.3 that uses the Serializer component.
-
 Adding Normalizers and Encoders
 -------------------------------
 
@@ -105,11 +101,6 @@ resources. This context is passed to all normalizers. For example:
   uses ``empty_iterable_as_object`` to represent empty objects as ``{}`` instead
   of ``[]`` in JSON.
 
-.. versionadded:: 5.4
-
-    The usage of the ``empty_array_as_object`` option by default in the
-    Serializer was introduced in Symfony 5.4.
-
 You can pass the context as follows::
 
     $serializer->serialize($something, 'json', [
@@ -157,11 +148,6 @@ configuration:
                 ])
             ;
         };
-
-.. versionadded:: 5.4
-
-    The ability to configure the ``default_context`` option in the
-    Serializer was introduced in Symfony 5.4.
 
 .. _serializer-using-serialization-groups-annotations:
 

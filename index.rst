@@ -37,7 +37,6 @@ Topics
     console
     doctrine
     deployment
-    email
     event_dispatcher
     forms
     frontend

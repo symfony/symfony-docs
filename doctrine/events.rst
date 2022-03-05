@@ -234,11 +234,6 @@ with the ``doctrine.event_listener`` tag:
     The value of the ``connection`` option can also be a
     :ref:`configuration parameter <configuration-parameters>`.
 
-    .. versionadded:: 5.4
-
-        The feature to allow using configuration parameters in ``connection``
-        was introduced in Symfony 5.4.
-
 Doctrine Entity Listeners
 -------------------------
 
@@ -492,10 +487,6 @@ Doctrine connection to use) you must do that in the manual service configuration
                 ])
             ;
         };
-
-.. versionadded:: 5.3
-
-    Subscriber priority was introduced in Symfony 5.3.
 
 .. tip::
 

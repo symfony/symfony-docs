@@ -318,10 +318,6 @@ using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 Translatable Objects
 --------------------
 
-.. versionadded:: 5.2
-
-    Translatable objects were introduced in Symfony 5.2.
-
 Sometimes translating contents in templates is cumbersome because you need the
 original message, the translation parameters and the translation domain for
 each content. Making the translation in the controller or services simplifies
@@ -470,12 +466,6 @@ with these tasks:
     # check out the command help to see its options (prefix, output format, domain, sorting, etc.)
     $ php bin/console translation:extract --help
 
-.. deprecated:: 5.4
-
-    In previous Symfony versions, the ``translation:extract`` command was called
-    ``translation:update``, but that name was deprecated in Symfony 5.4
-    and it will be removed in Symfony 6.0.
-
 The ``translation:extract`` command looks for missing translations in:
 
 * Templates stored in the ``templates/`` directory (or any other directory
@@ -486,11 +476,6 @@ The ``translation:extract`` command looks for missing translations in:
 * Any PHP file/class stored in the ``src/`` directory that creates
   :ref:`translatable-objects` using the constructor or the ``t()`` method or calls
   the ``trans()`` method.
-
-.. versionadded:: 5.3
-
-    Support for extracting Translatable objects has been introduced in
-    Symfony 5.3.
 
 .. _translation-resource-locations:
 
@@ -607,10 +592,6 @@ if you're generating translations with specialized programs or teams.
 
 Translation Providers
 ---------------------
-
-.. versionadded:: 5.3
-
-    Translation providers were introduced in Symfony 5.3.
 
 When using external translators to translate your application, you must send
 them the new contents to translate frequently and merge the results back in the

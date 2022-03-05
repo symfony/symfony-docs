@@ -163,7 +163,6 @@ Configuration of the service container then looks like this:
             // second, use the factory service as the first argument of the 'factory'
             // method and the factory method as the second argument
             $services->set(NewsletterManager::class)
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->factory([service(NewsletterManagerFactory::class), 'createNewsletterManager']);
         };
 

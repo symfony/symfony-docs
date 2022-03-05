@@ -50,11 +50,6 @@ serialized::
 
 .. _messenger-handler:
 
-.. versionadded:: 5.4
-
-    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
-    5.4. PHP attributes require at least PHP 8.0.
-
 A message handler is a PHP callable, the recommended way to create it is to
 create a class that has the :class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`
 attribute and has an ``__invoke()`` method that's type-hinted with the
@@ -476,11 +471,6 @@ on your transport and handling them. This command is called your "worker".
     To properly stop a worker, throw an instance of
     :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`.
 
-    .. versionadded:: 5.4
-
-        The :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`
-        class was introduced in Symfony 5.4.
-
 Deploying to Production
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -636,10 +626,6 @@ You can limit the worker to only process messages from specific queue(s):
 To allow using the ``queues`` option, the receiver must implement the
 :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\QueueReceiverInterface`.
 
-.. versionadded:: 5.3
-
-    Limiting the worker to specific queues was introduced in Symfony 5.3.
-
 .. _messenger-supervisor:
 
 Supervisor Configuration
@@ -771,10 +757,6 @@ reset the service container between two messages:
             $messenger->resetOnMessage(true);
         };
 
-.. versionadded:: 5.4
-
-    The ``reset_on_message`` option was introduced in Symfony 5.4.
-
 .. _messenger-retries-failures:
 
 Retries & Failures
@@ -862,10 +844,6 @@ this is configurable for each transport:
     Symfony triggers a :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageRetriedEvent`
     when a message is retried so you can run your own logic.
 
-    .. versionadded:: 5.2
-
-        The ``WorkerMessageRetriedEvent`` class was introduced in Symfony 5.2.
-
 Avoiding Retrying
 ~~~~~~~~~~~~~~~~~
 
@@ -876,10 +854,6 @@ the message will not be retried.
 
 Forcing Retrying
 ~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.1
-
-    The ``RecoverableMessageHandlingException`` was introduced in Symfony 5.1.
 
 Sometimes handling a message must fail in a way that you *know* is temporary
 and must be retried. If you throw
@@ -974,20 +948,12 @@ to retry them:
     # remove messages without retrying them and show each message before removing it
     $ php bin/console messenger:failed:remove 20 30 --show-messages
 
-.. versionadded:: 5.1
-
-    The ``--show-messages`` option was introduced in Symfony 5.1.
-
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
 retry has been hit, the message will be discarded permanently.
 
 Multiple Failed Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.3
-
-    The possibility to use multiple failed transports was introduced in Symfony 5.3.
 
 Sometimes it is not enough to have a single, global ``failed transport`` configured
 because some messages are more important than others. In those cases, you can
@@ -1155,16 +1121,11 @@ AMQP Transport
 ~~~~~~~~~~~~~~
 
 The AMQP transport uses the AMQP PHP extension to send messages to queues like
-RabbitMQ.
+RabbitMQ. Install it by running:
 
-.. versionadded:: 5.1
+.. code-block:: terminal
 
-    Starting from Symfony 5.1, the AMQP transport has moved to a separate package.
-    Install it by running:
-
-    .. code-block:: terminal
-
-        $ composer require symfony/amqp-messenger
+    $ composer require symfony/amqp-messenger
 
 The AMQP transport DSN may looks like this:
 
@@ -1175,10 +1136,6 @@ The AMQP transport DSN may looks like this:
 
     # or use the AMQPS protocol
     MESSENGER_TRANSPORT_DSN=amqps://guest:guest@localhost/%2f/messages
-
-.. versionadded:: 5.2
-
-    The AMQPS protocol support was introduced in Symfony 5.2.
 
 If you want to use TLS/SSL encrypted AMQP, you must also provide a CA certificate.
 Define the certificate path in the ``amqp.cacert`` PHP.ini setting
@@ -1196,8 +1153,8 @@ it in the ``port`` parameter of the DSN (e.g. ``amqps://localhost?cacert=/etc/ss
 
 .. note::
 
-    With Symfony 5.3 or newer, you can limit the consumer of an AMQP transport to only
-    process messages from some queues of an exchange. See :ref:`messenger-limit-queues`.
+    You can limit the consumer of an AMQP transport to only process messages
+    from some queues of an exchange. See :ref:`messenger-limit-queues`.
 
 The transport has a number of other options, including ways to configure
 the exchange, queues binding keys and more. See the documentation on
@@ -1235,7 +1192,6 @@ The transport has a number of options:
 ``password``                                  Password to use to connect to the AMQP service
 ``persistent``                                                                                   ``'false'``
 ``port``                                      Port of the AMQP service
-``prefetch_count``
 ``read_timeout``                              Timeout in for income activity. Note: 0 or
                                               greater seconds. May be fractional.
 ``retry``
@@ -1264,15 +1220,6 @@ The transport has a number of options:
 ``exchange[type]``                            Type of exchange                                   ``fanout``
 ============================================  =================================================  ===================================
 
-.. versionadded:: 5.2
-
-    The ``confirm_timeout`` option was introduced in Symfony 5.2.
-
-.. deprecated:: 5.3
-
-    The ``prefetch_count`` option was deprecated in Symfony 5.3 because it has
-    no effect on the AMQP Messenger transport.
-
 You can also configure AMQP-specific settings on your message by adding
 :class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\AmqpStamp` to
 your Envelope::
@@ -1300,15 +1247,11 @@ Doctrine Transport
 ~~~~~~~~~~~~~~~~~~
 
 The Doctrine transport can be used to store messages in a database table.
+Install it by running:
 
-.. versionadded:: 5.1
+.. code-block:: terminal
 
-    Starting from Symfony 5.1, the Doctrine transport has moved to a separate package.
-    Install it by running:
-
-    .. code-block:: terminal
-
-        $ composer require symfony/doctrine-messenger
+    $ composer require symfony/doctrine-messenger
 
 The Doctrine transport DSN may looks like this:
 
@@ -1320,11 +1263,6 @@ The Doctrine transport DSN may looks like this:
 The format is ``doctrine://<connection_name>``, in case you have multiple connections
 and want to use one other than the "default". The transport will automatically create
 a table named ``messenger_messages``.
-
-.. versionadded:: 5.1
-
-    The ability to automatically generate a migration for the ``messenger_messages``
-    table was introduced in Symfony 5.1 and DoctrineBundle 2.1.
 
 Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 :ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
@@ -1354,11 +1292,6 @@ auto_setup          Whether the table should be created
                     automatically during send / get.       true
 ==================  =====================================  ======================
 
-.. versionadded:: 5.1
-
-    The ability to leverage PostgreSQL's LISTEN/NOTIFY was introduced
-    in Symfony 5.1.
-
 When using PostgreSQL, you have access to the following options to leverage
 the `LISTEN/NOTIFY`_ feature. This allow for a more performant approach
 than the default polling behavior of the Doctrine transport because
@@ -1379,10 +1312,6 @@ get_notify_timeout       The length of time to wait for a            0
 
 Beanstalkd Transport
 ~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The Beanstalkd transport was introduced in Symfony 5.2.
 
 The Beanstalkd transport sends messages directly to a Beanstalkd work queue. Install
 it by running:
@@ -1422,16 +1351,12 @@ Redis Transport
 ~~~~~~~~~~~~~~~
 
 The Redis transport uses `streams`_ to queue messages. This transport requires
-the Redis PHP extension (>=4.3) and a running Redis server (^5.0).
+the Redis PHP extension (>=4.3) and a running Redis server (^5.0). Install it by
+running:
 
-.. versionadded:: 5.1
+.. code-block:: terminal
 
-    Starting from Symfony 5.1, the Redis transport has moved to a separate package.
-    Install it by running:
-
-    .. code-block:: terminal
-
-        $ composer require symfony/redis-messenger
+    $ composer require symfony/redis-messenger
 
 The Redis transport DSN may looks like this:
 
@@ -1440,19 +1365,14 @@ The Redis transport DSN may looks like this:
     # .env
     MESSENGER_TRANSPORT_DSN=redis://localhost:6379/messages
     # Full DSN Example
-    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0&dbindex=0&delete_after_ack=true
+    MESSENGER_TRANSPORT_DSN=redis://password@localhost:6379/messages/symfony/consumer?auto_setup=true&serializer=1&stream_max_entries=0&dbindex=0
     # Redis Cluster Example
     MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
 
-.. versionadded:: 5.1
-
-    The Unix socket DSN was introduced in Symfony 5.1.
-
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
-
 
 =======================  =====================================  =================================
 Option                   Description                            Default
@@ -1462,7 +1382,7 @@ group                    The Redis consumer group name          symfony
 consumer                 Consumer name used in Redis            consumer
 auto_setup               Create the Redis group automatically?  true
 auth                     The Redis password
-delete_after_ack         If ``true``, messages are deleted      false
+delete_after_ack         If ``true``, messages are deleted      true
                          automatically after processing them
 delete_after_reject      If ``true``, messages are deleted      true
                          automatically if they are rejected
@@ -1513,26 +1433,6 @@ sentinel_master          String, if null or empty Sentinel      null
     ``stream_max_entries`` (if you can estimate how many max entries is acceptable
     in your case) to avoid memory leaks. Otherwise, all messages will remain
     forever in Redis.
-
-.. versionadded:: 5.1
-
-    The ``delete_after_ack``, ``redeliver_timeout`` and ``claim_interval``
-    options were introduced in Symfony 5.1.
-
-.. versionadded:: 5.2
-
-    The ``delete_after_reject`` and ``lazy`` options were introduced in Symfony 5.2.
-
-.. versionadded:: 5.4
-
-    The ``sentinel_persistent_id``, ``sentinel_retry_interval``, ``sentinel_read_timeout``,
-    ``sentinel_timeout``, and ``sentinel_master`` options were introduced in Symfony 5.4.
-
-.. deprecated:: 5.4
-
-    Not setting a explicit value for the ``delete_after_ack`` option is
-    deprecated since Symfony 5.4. In Symfony 6.0, the default value of this
-    option changes from ``false`` to ``true``.
 
 In Memory Transport
 ~~~~~~~~~~~~~~~~~~~
@@ -1614,23 +1514,15 @@ The transport has a number of options:
     Whether to serialize messages or not. This is useful to test an additional
     layer, especially when you use your own message serializer.
 
-.. versionadded:: 5.3
-
-    The ``serialize`` option was introduced in Symfony 5.3.
-
 .. note::
 
-        All ``in-memory`` transports will be reset automatically after each test **in**
-        test classes extending
-        :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
-        or :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`.
+    All ``in-memory`` transports will be reset automatically after each test **in**
+    test classes extending
+    :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`
+    or :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`.
 
 Amazon SQS
 ~~~~~~~~~~
-
-.. versionadded:: 5.1
-
-    The Amazon SQS transport was introduced in Symfony 5.1.
 
 The Amazon SQS transport is perfect for application hosted on AWS. Install it by
 running:
@@ -1658,10 +1550,6 @@ The SQS transport DSN may looks like this:
     name into an AWS queue URL by calling the ``GetQueueUrl`` API in AWS. This
     extra API call can be avoided by providing a DSN which is the queue URL.
 
-    .. versionadded:: 5.2
-
-        The feature to provide the queue URL in the DSN was introduced in Symfony 5.2.
-
 The transport has a number of options:
 
 ======================  ======================================  ===================================
@@ -1684,10 +1572,6 @@ The transport has a number of options:
                         not be visible (`Visibility Timeout`_)
 ``wait_time``           `Long polling`_ duration in seconds     20
 ======================  ======================================  ===================================
-
-.. versionadded:: 5.3
-
-    The ``debug`` option was introduced in Symfony 5.3.
 
 .. note::
 
@@ -1796,11 +1680,6 @@ Customizing Handlers
 
 Configuring Handlers Using Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.4
-
-    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
-    5.4. PHP attributes require at least PHP 8.0.
 
 You can configure your handler by passing options to the attribute::
 
@@ -2279,10 +2158,6 @@ may want to use:
 
 Other Middlewares
 ~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.3
-
-    The ``router_context`` middleware was introduced in Symfony 5.3.
 
 Add the ``router_context`` middleware if you need to generate absolute URLs in
 the consumer (e.g. render a template with links). This middleware stores the

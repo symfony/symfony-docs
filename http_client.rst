@@ -146,10 +146,6 @@ method to retrieve a new instance of the client with new default options::
         'headers' => ['header-name' => 'header-value']
     ]);
 
-.. versionadded:: 5.3
-
-    The ``withOptions()`` method was introduced in Symfony 5.3.
-
 Some options are described in this guide:
 
 * `Authentication`_
@@ -659,10 +655,6 @@ according to the ``multipart/form-data`` content-type. The
         $formData->getParts(); // Returns two instances of TextPart both
                                // with the name "array_field"
 
-    .. versionadded:: 5.2
-
-        The alternative array structure was introduced in Symfony 5.2.
-
 By default, HttpClient streams the body contents when uploading them. This might
 not work with all servers, resulting in HTTP status code 411 ("Length Required")
 because there is no ``Content-Length`` header. The solution is to turn the body
@@ -706,10 +698,6 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
 
 Retry Failed Requests
 ~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The feature to retry failed HTTP requests was introduced in Symfony 5.2.
 
 Sometimes, requests fail because of network issues or temporary server errors.
 Symfony's HttpClient allows to retry failed requests automatically using the
@@ -787,10 +775,6 @@ recommended in production.
 SSRF (Server-side request forgery) Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.1
-
-    The SSRF protection was introduced in Symfony 5.1.
-
 `SSRF`_ allows an attacker to induce the backend application to make HTTP
 requests to an arbitrary domain. These attacks can also target the internal
 hosts and IPs of the attacked server.
@@ -851,10 +835,6 @@ is installed and enabled. Otherwise, the native PHP streams will be used.
 Configuring CurlHttpClient Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    The feature to configure extra cURL options was introduced in Symfony 5.2.
-
 PHP allows to configure lots of `cURL options`_ via the :phpfunction:`curl_setopt`
 function. In order to make the component more portable when not using cURL, the
 ``CurlHttpClient`` only uses some of those options (and they are ignored in the
@@ -888,12 +868,6 @@ following tools is installed:
 
 * The `libcurl`_ package version 7.36 or higher;
 * The `amphp/http-client`_ Packagist package version 4.2 or higher.
-
-.. versionadded:: 5.1
-
-    Integration with ``amphp/http-client`` was introduced in Symfony 5.1.
-    Prior to this version, HTTP/2 was only supported when ``libcurl`` was
-    installed.
 
 To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
 ``http_version`` option:
@@ -1288,10 +1262,6 @@ installed in your application::
 Consuming Server-Sent Events
 ----------------------------
 
-.. versionadded:: 5.2
-
-    The feature to consume server-sent events was introduced in Symfony 5.2.
-
 `Server-sent events`_ is an Internet standard used to push data to web pages.
 Its JavaScript API is built around an `EventSource`_ object, which listens to
 the events sent from some URL. The events are a stream of data (served with the
@@ -1597,10 +1567,6 @@ The solution is to also decorate the response object itself.
 :class:`Symfony\\Component\\HttpClient\\Response\\TraceableResponse` are good
 examples as a starting point.
 
-.. versionadded:: 5.2
-
-    ``AsyncDecoratorTrait`` was introduced in Symfony 5.2.
-
 In order to help writing more advanced response processors, the component provides
 an :class:`Symfony\\Component\\HttpClient\\AsyncDecoratorTrait`. This trait allows
 processing the stream of chunks as they come back from the network::
@@ -1722,10 +1688,6 @@ responses dynamically when it's called::
         $client = new MockHttpClient();
         $client->setResponseFactory($responses);
 
-    .. versionadded:: 5.4
-
-        The ``setResponseFactory()`` method was introduced in Symfony 5.4.
-
 If you need to test responses with HTTP status codes different than 200,
 define the ``http_code`` option::
 
@@ -1753,10 +1715,6 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
     };
 
     $mockResponse = new MockResponse($body());
-
-.. versionadded:: 5.2
-
-    The feature explained below was introduced in Symfony 5.2.
 
 Finally, you can also create an invokable or iterable class that generates the
 responses and use it as a callback in functional tests::

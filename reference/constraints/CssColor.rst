@@ -1,10 +1,6 @@
 CssColor
 ========
 
-.. versionadded:: 5.4
-
-    The ``CssColor`` constraint was introduced in Symfony 5.4.
-
 Validates that a value is a valid CSS color. The underlying value is
 casted to a string before being validated.
 

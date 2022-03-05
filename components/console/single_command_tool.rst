@@ -28,11 +28,6 @@ it is possible to remove this need by declaring a single command application::
         })
         ->run();
 
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Console\\SingleCommandApplication` class was
-    introduced in Symfony 5.1.
-
 You can still register a command as usual::
 
     #!/usr/bin/env php

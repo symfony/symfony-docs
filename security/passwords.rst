@@ -11,12 +11,6 @@ Make sure it is installed by running:
 
    $ composer require symfony/password-hasher
 
-.. versionadded:: 5.3
-
-   The PasswordHasher component was introduced in 5.3. Prior to this
-   version, password hashing functionality was provided by the Security
-   component.
-
 Configuring a Password Hasher
 -----------------------------
 
@@ -106,11 +100,6 @@ optionally some *algorithm options*:
                 'cost' => 15,
             ],
         ]);
-
-.. versionadded:: 5.3
-
-    The ``password_hashers`` option was introduced in Symfony 5.3. In previous
-    versions it was called ``encoders``.
 
 In this example, the "auto" algorithm is used. This hasher automatically
 selects the most secure algorithm available on your system. Combined with
@@ -716,9 +705,9 @@ Supported Algorithms
 The "auto"  Hasher
 ~~~~~~~~~~~~~~~~~~
 
-It automatically selects the best available hasher. Starting from Symfony 5.3,
-it uses the Bcrypt hasher. If PHP or Symfony adds new password hashers in the
-future, it might select a different hasher.
+It automatically selects the best available hasher (currently Bcrypt). If
+PHP or Symfony adds new password hashers in the future, it might select a
+different hasher.
 
 Because of this, the length of the hashed passwords may change in the future, so
 make sure to allocate enough space for them to be persisted (``varchar(255)``

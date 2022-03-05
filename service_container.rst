@@ -225,10 +225,6 @@ each time you ask for it.
 Limiting Services to a specific Symfony Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.3
-
-    The ``#[When]`` attribute was introduced in Symfony 5.3.
-
 If you are using PHP 8.0 or later, you can use the ``#[When]`` PHP
 attribute to only register the class as a service in some environments::
 
@@ -564,7 +560,6 @@ parameter and in PHP config use the ``service()`` function:
             $services = $configurator->services();
 
             $services->set(MessageGenerator::class)
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args([service('logger')])
             ;
         };
@@ -911,11 +906,6 @@ setting:
                 ->public()
             ;
         };
-
-.. deprecated:: 5.1
-
-    As of Symfony 5.1, it is no longer possible to autowire the service
-    container by type-hinting ``Psr\Container\ContainerInterface``.
 
 .. _service-psr4-loader:
 

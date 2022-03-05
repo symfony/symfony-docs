@@ -215,10 +215,10 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
 
     var_dump($propertyAccessor->getValue($person, 'Wouter')); // [...]
 
-.. versionadded:: 5.2
+.. note::
 
-    The magic ``__get()`` method can be disabled since in Symfony 5.2.
-    see `Enable other Features`_.
+    The ``__get()`` method support is enabled by default.
+    See `Enable other Features`_ if you want to disable it.
 
 .. _components-property-access-magic-call:
 
@@ -356,10 +356,10 @@ see `Enable other Features`_::
 
     var_dump($person->getWouter()); // [...]
 
-.. versionadded:: 5.2
+.. note::
 
-    The magic ``__set()`` method can be disabled since in Symfony 5.2.
-    see `Enable other Features`_.
+    The ``__set()`` method support is enabled by default.
+    See `Enable other Features`_ if you want to disable it.
 
 Writing to Array Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -400,7 +400,7 @@ The PropertyAccess component checks for methods called ``add<SingularOfTheProper
 and ``remove<SingularOfThePropertyName>()``. Both methods must be defined.
 For instance, in the previous example, the component looks for the ``addChild()``
 and ``removeChild()`` methods to access the ``children`` property.
-`The Inflector component`_ is used to find the singular of a property name.
+`The String component`_ inflector is used to find the singular of a property name.
 
 If available, *adder* and *remover* methods have priority over a *setter* method.
 
@@ -538,4 +538,4 @@ Or you can pass parameters directly to the constructor (not the recommended way)
     // enable handling of magic __call, __set but not __get:
     $propertyAccessor = new PropertyAccessor(PropertyAccessor::MAGIC_CALL | PropertyAccessor::MAGIC_SET);
 
-.. _The Inflector component: https://github.com/symfony/inflector
+.. _`The String component`: https://github.com/symfony/string

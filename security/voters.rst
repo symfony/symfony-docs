@@ -61,10 +61,6 @@ which makes creating a voter even easier::
     This allows the access decision manager to remember the attribute and type
     of subject supported by the voter, to only call the needed voters each time.
 
-    .. versionadded:: 5.4
-
-        The ``CacheableVoterInterface`` interface was introduced in Symfony 5.4.
-
 Setup: Checking for Access in a Controller
 ------------------------------------------
 
@@ -292,10 +288,6 @@ There are three strategies available:
     This grants or denies access by the first voter that does not abstain,
     based on their service priority;
 
-    .. versionadded:: 5.1
-
-        The ``priority`` version strategy was introduced in Symfony 5.1.
-
 Regardless the chosen strategy, if all voters abstained from voting, the
 decision is based on the ``allow_if_all_abstain`` config option (which
 defaults to ``false``).
@@ -347,10 +339,6 @@ security configuration:
 
 Custom Access Decision Strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.4
-
-    The ``strategy_service`` option was introduced in Symfony 5.4.
 
 If none of the built-in strategies fits your use case, define the ``strategy_service``
 option to use a custom service (your service must implement the

@@ -1,10 +1,6 @@
 ULID
 ====
 
-.. versionadded:: 5.2
-
-    The ULID validator was introduced in Symfony 5.2.
-
 Validates that a value is a valid `Universally Unique Lexicographically Sortable Identifier (ULID)`_.
 
 ==========  ===================================================================

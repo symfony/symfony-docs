@@ -56,10 +56,6 @@ displayed to the user::
         }
     }
 
-.. versionadded:: 5.1
-
-    The ``CustomUserMessageAccountStatusException`` class was introduced in Symfony 5.1.
-
 Enabling the Custom User Checker
 --------------------------------
 

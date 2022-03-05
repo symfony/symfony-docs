@@ -28,7 +28,6 @@ Configuration
 **Basic Options**:
 
 * `access_denied_url`_
-* `always_authenticate_before_granting`_
 * `erase_credentials`_
 * `hide_user_not_found`_
 * `session_fixation_strategy`_
@@ -51,20 +50,6 @@ access_denied_url
 
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access denial handler). Example: ``/no-permission``
-
-always_authenticate_before_granting
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-.. deprecated:: 5.4
-
-    The ``always_authenticate_before_granting`` option was deprecated in
-    Symfony 5.4 and it will be removed in Symfony 6.0.
-
-If ``true``, the user is asked to authenticate before each call to the
-``isGranted()`` method in services and controllers or ``is_granted()`` from
-templates.
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
@@ -230,11 +215,6 @@ the ``debug:firewall`` command:
     # about the event listeners for the firewall
     $ php bin/console debug:firewall main --events
 
-.. versionadded:: 5.3
-
-    The ``debug:firewall`` command was introduced in Symfony 5.3.
-
-
 .. _reference-security-firewall-form-login:
 
 ``form_login`` Authentication
@@ -367,8 +347,6 @@ The ``invalidate_session`` option allows to redefine this behavior. Set this
 option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
-.. _reference-security-logout-success-handler:
-
 ``path``
 ~~~~~~~~
 
@@ -385,23 +363,6 @@ target
 The relative path (if the value starts with ``/``), or absolute URL (if it
 starts with ``http://`` or ``https://``) or the route name (otherwise) to
 redirect after logout.
-
-success_handler
-~~~~~~~~~~~~~~~
-
-.. deprecated:: 5.1
-
-    This option is deprecated since Symfony 5.1. Register an
-    :doc:`event listener </event_dispatcher>` on the
-    :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
-    instead.
-
-**type**: ``string`` **default**: ``'security.logout.success_handler'``
-
-The service ID used for handling a successful logout. The service must implement
-:class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
-
-If it is set, the logout ``target`` option will be ignored.
 
 .. _reference-security-logout-csrf:
 

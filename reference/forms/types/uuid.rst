@@ -4,10 +4,6 @@
 UuidType Field
 ==============
 
-.. versionadded:: 5.3
-
-    The ``UuidType`` field was introduced in Symfony 5.3.
-
 Renders an input text field with the UUID string value and transforms it back to
 a proper :ref:`Uuid object <uuid>` when submitting the form.
 

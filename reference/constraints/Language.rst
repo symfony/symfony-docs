@@ -90,10 +90,6 @@ Options
 alpha3
 ~~~~~~
 
-.. versionadded:: 5.1
-
-    The ``alpha3`` option was introduced in Symfony 5.1.
-
 **type**: ``boolean`` **default**: ``false``
 
 If this option is ``true``, the constraint checks that the value is a
@@ -117,10 +113,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

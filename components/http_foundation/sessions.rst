@@ -166,14 +166,6 @@ and "Remember Me" login settings or other user based state information.
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
     This is the standard default implementation.
 
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
-    This implementation allows for attributes to be stored in a structured namespace.
-
-    .. deprecated:: 5.3
-
-        The ``NamespacedAttributeBag`` class is deprecated since Symfony 5.3.
-        If you need this feature, you will have to implement the class yourself.
-
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
 has the API
 
@@ -241,20 +233,6 @@ So any processing of this might quickly get ugly, even adding a token to the arr
     $tokens = $session->get('tokens');
     $tokens['c'] = $value;
     $session->set('tokens', $tokens);
-
-.. deprecated:: 5.3
-
-    The ``NamespacedAttributeBag`` class is deprecated since Symfony 5.3.
-    If you need this feature, you will have to implement the class yourself.
-
-With structured namespacing, the key can be translated to the array
-structure like this using a namespace character (which defaults to ``/``)::
-
-    // ...
-    use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
-
-    $session = new Session(new NativeSessionStorage(), new NamespacedAttributeBag());
-    $session->set('tokens/c', $value);
 
 Flash Messages
 ~~~~~~~~~~~~~~

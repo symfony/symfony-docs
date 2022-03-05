@@ -30,7 +30,3 @@ method::
         // is reached, cache follows the LRU model (least recently used items are deleted)
         $maxItems = 0
     );
-
-.. versionadded:: 5.1
-
-    The ``maxLifetime`` and ``maxItems`` options were introduced in Symfony 5.1.

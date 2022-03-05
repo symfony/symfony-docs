@@ -4,10 +4,6 @@
 How to send SMS Messages
 ========================
 
-.. versionadded:: 5.0
-
-    The Notifier component was introduced in Symfony 5.0.
-
 The :class:`Symfony\\Component\\Notifier\\TexterInterface` class allows
 you to send SMS messages::
 
@@ -41,10 +37,6 @@ you to send SMS messages::
 The ``send()`` method returns a variable of type
 :class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
 information such as the message ID and the original message contents.
-
-.. versionadded:: 5.2
-
-    The ``SentMessage`` class was introduced in Symfony 5.2.
 
 .. seealso::
 

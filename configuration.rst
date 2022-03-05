@@ -60,13 +60,6 @@ configure your applications. Symfony lets you choose between YAML, XML and PHP
 and throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
-.. versionadded:: 5.1
-
-    Starting from Symfony 5.1, by default Symfony only loads the configuration
-    files defined in YAML format. If you define configuration in XML and/or PHP
-    formats, update the ``src/Kernel.php`` file to add support for the ``.xml``
-    and ``.php`` file extensions.
-
 There isn't any practical difference between formats. In fact, Symfony
 transforms and caches all of them into PHP before running the application, so
 there's not even any performance difference between them.
@@ -80,6 +73,16 @@ readable. These are the main advantages and disadvantages of each format:
   but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
 * **PHP**: very powerful and it allows you to create dynamic configuration with
   arrays or a :ref:`ConfigBuilder <config-config-builder>`.
+
+.. note::
+
+    By default Symfony loads the configuration files defined in YAML and PHP
+    formats. If you define configuration in XML format, update the
+    ``src/Kernel.php`` file to add support for the ``.xml`` file extension.
+
+    .. versionadded:: 6.1
+
+        The automatic loading of PHP configuration files was introduced in Symfony 6.1.
 
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -411,11 +414,6 @@ all environments share a large base of common configuration, which is put in
 files directly in the ``config/packages/`` directory.
 
 .. tip::
-
-    .. versionadded:: 5.3
-
-        The ability to defined different environments in a single file was
-        introduced in Symfony 5.3.
 
     You can also define options for different environments in a single
     configuration file using the special ``when`` keyword:
@@ -835,10 +833,6 @@ Use the ``debug:dotenv`` command to understand how Symfony parses the different
      ALICE      BOB     BOB        bob
     ---------- ------- ---------- ------
 
-.. versionadded:: 5.4
-
-    The ``debug:dotenv`` command was introduced in Symfony 5.4.
-
 Additionally, and regardless of how you set environment variables, you can see all
 environment variables, with their values, referenced in Symfony's container configuration:
 
@@ -1046,10 +1040,6 @@ parameters at once by type-hinting any of its constructor arguments with the
 
 Using PHP ConfigBuilders
 ------------------------
-
-.. versionadded:: 5.3
-
-    The "ConfigBuilders" feature was introduced in Symfony 5.3.
 
 Writing PHP config is sometimes difficult because you end up with large nested
 arrays and you have no autocompletion help from your favorite IDE. A way to

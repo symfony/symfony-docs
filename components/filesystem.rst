@@ -287,10 +287,6 @@ exception on failure::
     // returns a path like : /tmp/prefix_wyjgtF.png
     $filesystem->tempnam('/tmp', 'prefix_', '.png');
 
-.. versionadded:: 5.1
-
-    The option to set a suffix in  ``tempnam()`` was introduced in Symfony 5.1.
-
 ``dumpFile``
 ~~~~~~~~~~~~
 
@@ -317,16 +313,8 @@ contents at the end of some file::
 If either the file or its containing directory doesn't exist, this method
 creates them before appending the contents.
 
-.. versionadded:: 5.4
-
-    The third argument of ``appendToFile()`` was introduced in Symfony 5.4.
-
 Path Manipulation Utilities
 ---------------------------
-
-.. versionadded:: 5.4
-
-    The :class:`Symfony\\Component\\Filesystem\\Path` class was introduced in Symfony 5.4.
 
 Dealing with file paths usually involves some difficulties:
 

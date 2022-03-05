@@ -8,10 +8,6 @@ The String Component
     The String component provides a single object-oriented API to work with
     three "unit systems" of strings: bytes, code points and grapheme clusters.
 
-.. versionadded:: 5.0
-
-    The String component was introduced in Symfony 5.0.
-
 Installation
 ------------
 
@@ -129,10 +125,6 @@ to make your code more concise::
     // creates a UnicodeString object
     $foo = s('अनुच्छेद');
 
-.. versionadded:: 5.1
-
-    The ``s()`` function was introduced in Symfony 5.1.
-
 There are also some specialized constructors::
 
     // ByteString can create a random string of the given length
@@ -145,10 +137,6 @@ There are also some specialized constructors::
     // CodePointString and UnicodeString can create a string from code points
     $foo = UnicodeString::fromCodePoints(0x928, 0x92E, 0x938, 0x94D, 0x924, 0x947);
     // equivalent to: $foo = new UnicodeString('नमस्ते');
-
-.. versionadded:: 5.1
-
-    The second argument of ``ByteString::fromRandom()`` was introduced in Symfony 5.1.
 
 Methods to Transform String Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -317,10 +305,6 @@ Methods to Pad and Trim
     u('file-image-0001.png')->trimPrefix(['file-', 'image-']); // 'image-0001.png'
     u('template.html.twig')->trimSuffix(['.twig', '.html']);   // 'template.html'
 
-.. versionadded:: 5.4
-
-    The ``trimPrefix()`` and ``trimSuffix()`` methods were introduced in Symfony 5.4.
-
 Methods to Search and Replace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -374,10 +358,6 @@ Methods to Search and Replace
         return '['.$match[0].']';
     }); // result = '[1][2][3]'
 
-.. versionadded:: 5.1
-
-    The ``containsAny()`` method was introduced in Symfony 5.1.
-
 Methods to Join, Split, Truncate and Reverse
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -408,10 +388,6 @@ Methods to Join, Split, Truncate and Reverse
     // even if that generates a string longer than the desired length
     u('Lorem Ipsum')->truncate(8, '…', false); // 'Lorem Ipsum'
 
-.. versionadded:: 5.1
-
-    The third argument of ``truncate()`` was introduced in Symfony 5.1.
-
 ::
 
     // breaks the string into lines of the given length
@@ -433,10 +409,6 @@ Methods to Join, Split, Truncate and Reverse
     // reverses the order of the string contents
     u('foo bar')->reverse(); // 'rab oof'
     u('さよなら')->reverse(); // 'らなよさ'
-
-.. versionadded:: 5.1
-
-    The ``reverse()`` method was introduced in Symfony 5.1.
 
 Methods Added by ByteString
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -508,18 +480,6 @@ that only includes safe ASCII characters::
         return str_replace('❤️', 'love', $string);
     });
 
-.. versionadded:: 5.1
-
-    The feature to define additional substitutions was introduced in Symfony 5.1.
-
-.. versionadded:: 5.2
-
-    The feature to use a PHP closure to define substitutions was introduced in Symfony 5.2.
-
-.. versionadded:: 5.3
-
-    The feature to fallback to the parent locale's symbols map was introduced in Symfony 5.3.
-
 The separator between words is a dash (``-``) by default, but you can define
 another separator as the second argument::
 
@@ -563,10 +523,6 @@ the injected slugger is the same as the request locale::
 
 Inflector
 ---------
-
-.. versionadded:: 5.1
-
-    The inflector feature was introduced in Symfony 5.1.
 
 In some scenarios such as code generation and code introspection, you need to
 convert words from/to singular/plural. For example, to know the property

@@ -47,14 +47,6 @@ in a single Twig template and they are enabled in the
   element with the absolute minimum styles to make them usable. It is based on the
   `Tailwind CSS form plugin`_.
 
-.. versionadded:: 5.1
-
-    The ``foundation_6_layout.html.twig`` was introduced in Symfony 5.1.
-
-.. versionadded:: 5.3
-
-    The ``bootstrap_5_layout.html.twig``, ``bootstrap_5_horizontal_layout.html.twig`` and ``tailwind_2_layout.html.twig`` were introduced in Symfony 5.3.
-
 .. tip::
 
     Read the articles about :doc:`Bootstrap 4 Symfony form theme </form/bootstrap4>` and :doc:`Bootstrap 5 Symfony form theme </form/bootstrap5>`
@@ -347,10 +339,6 @@ You can also customize each entry of all collections with the following blocks:
     {% block collection_entry_widget %} ... {% endblock %}
     {% block collection_entry_help %} ... {% endblock %}
     {% block collection_entry_errors %} ... {% endblock %}
-
-.. versionadded:: 5.1
-
-    The ``collection_entry_*`` blocks were introduced in Symfony 5.1.
 
 Finally, you can customize specific form collections instead of all of them.
 For example, consider the following complex example where a ``TaskManagerType``

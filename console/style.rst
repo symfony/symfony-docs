@@ -170,10 +170,6 @@ Content Methods
     styled according to the Symfony Style Guide, which allows you to use
     features such as dynamically appending rows.
 
-.. versionadded:: 5.4
-
-    The ``createTable()`` method was introduced in Symfony 5.4.
-
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
     most of the times you won't need it at all. The reason is that every helper
@@ -261,10 +257,6 @@ Progress Bar Methods
         foreach ($io->progressIterate($iterable) as $value) {
             // ... do some work
         }
-
-.. versionadded:: 5.4
-
-    The ``progressIterate`` method was introduced in Symfony 5.4.
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createProgressBar`
     Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
@@ -368,10 +360,6 @@ Result Methods
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
         ]);
-
-.. versionadded:: 5.2
-
-    The ``info()`` method was introduced in Symfony 5.2.
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::warning`
     It displays the given string or array of strings highlighted as a warning

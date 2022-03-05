@@ -158,12 +158,6 @@ This means that when using the container directly, you can access the
 Deprecating Service Aliases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.1
-
-    The ``package`` and ``version`` options were introduced in Symfony 5.1.
-    Prior to 5.1, you had to use ``deprecated: true`` or
-    ``deprecated: 'Custom message'``.
-
 If you decide to deprecate the use of a service alias (because it is outdated
 or you decided not to maintain it anymore), you can deprecate its definition:
 
@@ -282,7 +276,6 @@ The following example shows how to inject an anonymous service into another serv
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                // In versions earlier to Symfony 5.1 the inline_service() function was called inline()
                 ->args([inline_service(AnonymousBar::class)]);
         };
 

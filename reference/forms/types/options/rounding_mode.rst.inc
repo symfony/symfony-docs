@@ -30,9 +30,3 @@ on the :phpclass:`NumberFormatter` class:
 * ``\NumberFormatter::ROUND_HALFUP`` Round towards the
   "nearest neighbor". If both neighbors are equidistant, round up. It rounds
   ``2.5`` to ``3``, ``1.6`` and ``1.5`` to ``2`` and ``1.4`` to ``1``.
-
-.. deprecated:: 5.1
-
-    In Symfony versions prior to 5.1, these constants were also defined as aliases
-    in the :class:`Symfony\\Component\\Form\\Extension\\Core\\DataTransformer\\NumberToLocalizedStringTransformer`
-    class, but they are now deprecated in favor of the :phpclass:`NumberFormatter` constants.

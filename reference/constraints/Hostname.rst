@@ -5,10 +5,6 @@ This constraint ensures that the given value is a valid host name (internally it
 uses the ``FILTER_VALIDATE_DOMAIN`` option of the :phpfunction:`filter_var` PHP
 function).
 
-.. versionadded:: 5.1
-
-    The ``Hostname`` constraint was introduced in Symfony 5.1.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Hostname`
@@ -121,10 +117,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

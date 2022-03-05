@@ -157,10 +157,6 @@ The rules of a directory always override the rules of its parent directories.
     starting from the directory used to search files/directories. To be consistent
     with Git behavior, you should explicitly search from the Git repository root.
 
-.. versionadded:: 5.4
-
-    Recursive support for ``.gitignore`` files was introduced in Symfony 5.4.
-
 File Name
 ~~~~~~~~~
 

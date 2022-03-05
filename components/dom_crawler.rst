@@ -192,10 +192,6 @@ Get all the child or ancestor nodes::
     $crawler->filter('body')->children();
     $crawler->filter('body > p')->ancestors();
 
-.. versionadded:: 5.3
-
-    The ``ancestors()`` method was introduced in Symfony 5.3.
-
 Get all the direct child nodes matching a CSS selector::
 
     $crawler->filter('body')->children('p.lorem');
@@ -235,10 +231,6 @@ Access the value of the first node of the current selection::
     $text = $crawler->filterXPath('//body/p')->innerText();
     // if content is <p>Foo <span>Bar</span></p>
     // innerText() returns 'Foo' and text() returns 'Foo Bar'
-
-.. versionadded:: 5.4
-
-    The ``innerText()`` method was introduced in Symfony 5.4.
 
 Access the attribute value of the first node of the current selection::
 
@@ -642,10 +634,6 @@ the whole form or specific field(s)::
 
 Resolving a URI
 ~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\DomCrawler\\UriResolver` helper class was added in Symfony 5.1.
 
 The :class:`Symfony\\Component\\DomCrawler\\UriResolver` class takes an URI
 (relative, absolute, fragment, etc.) and turns it into an absolute URI against

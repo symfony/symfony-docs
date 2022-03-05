@@ -164,88 +164,10 @@ controllers if you type-hint an argument with
         }
     }
 
-.. deprecated:: 5.3
-
-    The ``SessionInterface`` and ``session`` service were deprecated in
-    Symfony 5.3. Instead, inject the ``RequestStack`` service to get the session
-    object of the current request.
-
 Stored attributes remain in the session for the remainder of that user's session.
 By default, session attributes are key-value pairs managed with the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
 class.
-
-.. deprecated:: 5.3
-
-    The ``NamespacedAttributeBag`` class is deprecated since Symfony 5.3.
-    If you need this feature, you will have to implement the class yourself.
-
-If your application needs are complex, you may prefer to use
-:ref:`namespaced session attributes <namespaced-attributes>` which are managed with the
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
-class. Before using them, override the ``session_listener`` service definition to build
-your ``Session`` object with the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        session.factory:
-            autoconfigure: true
-            class: App\Session\SessionFactory
-            arguments:
-            - '@request_stack'
-            - '@session.storage.factory'
-            - ['@session_listener', 'onSessionUsage']
-            - '@session.namespacedattributebag'
-
-        session.namespacedattributebag:
-            class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="session" class="Symfony\Component\HttpFoundation\Session\Session" public="true">
-                    <argument type="service" id="session.storage"/>
-                    <argument type="service" id="session.namespacedattributebag"/>
-                    <argument type="service" id="session.flash_bag"/>
-                </service>
-
-                <service id="session.namespacedattributebag"
-                    class="Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag"
-                />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
-        use Symfony\Component\HttpFoundation\Session\Session;
-
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
-
-            $services->set('session', Session::class)
-                ->public()
-                ->args([
-                    ref('session.storage'),
-                    ref('session.namespacedattributebag'),
-                    ref('session.flash_bag'),
-                ])
-            ;
-
-            $services->set('session.namespacedattributebag', NamespacedAttributeBag::class);
-        };
 
 .. _session-avoid-start:
 

@@ -107,11 +107,6 @@ entry in that array:
             }
         }
 
-.. versionadded:: 5.4
-
-    The ``#[All]`` PHP attribute was introduced in Symfony 5.4 and requires
-    PHP 8.1 (which added nested attribute support).
-
 Now, each entry in the ``favoriteColors`` array will be validated to not
 be blank and to be at least 5 characters long.
 

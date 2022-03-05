@@ -48,12 +48,6 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
 Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
 use it as an annotation/attribute in other classes.
 
-.. versionadded:: 5.2
-
-    The ability to use PHP attributes to configure constraints was introduced in
-    Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
-    annotate constraints.
-
 Creating the Validator itself
 -----------------------------
 
@@ -234,10 +228,6 @@ Create a Reusable Set of Constraints
 
 In case you need to consistently apply a common set of constraints
 across your application, you can extend the :doc:`Compound constraint </reference/constraints/Compound>`.
-
-.. versionadded:: 5.1
-
-    The ``Compound`` constraint was introduced in Symfony 5.1.
 
 Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~

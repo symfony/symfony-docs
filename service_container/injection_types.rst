@@ -78,7 +78,6 @@ service container configuration:
             $services = $configurator->services();
 
             $services->set(NewsletterManager::class)
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args(service('mailer'));
         };
 

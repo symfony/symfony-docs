@@ -376,10 +376,6 @@ Options
 
 **type**: ``string`` **default**: ``This value should be a valid number.``
 
-.. versionadded:: 5.2
-
-    The ``invalidDateTimeMessage`` option was introduced in Symfony 5.2.
-
 The message displayed when the ``min`` and ``max`` values are PHP datetimes but
 the given value is not.
 
@@ -407,10 +403,6 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
-
-.. versionadded:: 5.2
-
-    The ``{{ label }}`` parameter was introduced in Symfony 5.2.
 
 ``max``
 ~~~~~~~

@@ -135,10 +135,6 @@ files so they don't collide with the files from ``src/Kernel.php``::
         }
     }
 
-.. versionadded:: 5.4
-
-    The ``getBundlesPath()`` method was introduced in Symfony 5.4.
-
 Step 3) Define the Kernel Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

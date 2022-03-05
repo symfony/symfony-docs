@@ -117,10 +117,6 @@ from a predefined list::
         // ... do something with the color
     }
 
-.. versionadded:: 5.2
-
-    Support for using PHP objects as choice values was introduced in Symfony 5.2.
-
 The option which should be selected by default is provided with the third
 argument of the constructor. The default is ``null``, which means that no
 option is the default one.
@@ -241,11 +237,6 @@ You can also specify if you want to not trim the answer by setting it directly w
 
 Accept Multiline Answers
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The ``setMultiline()`` and ``isMultiline()`` methods were introduced in
-    Symfony 5.2.
 
 By default, the question helper stops reading user input when it receives a newline
 character (i.e., when the user hits ``ENTER`` once). However, you may specify that

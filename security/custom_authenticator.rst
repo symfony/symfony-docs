@@ -130,14 +130,12 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
             ;
         };
 
-.. versionadded:: 5.2
+.. tip::
 
-    Starting with Symfony 5.2, the custom authenticator is automatically
-    registered as an entry point if it implements ``AuthenticationEntryPointInterface``.
-
-    Prior to 5.2, you had to configure the entry point separately using the
-    ``entry_point`` option. Read :doc:`/security/entry_point` for more
-    information.
+    You may want your authenticator to implement
+    ``AuthenticationEntryPointInterface``. This defines the response sent
+    to users to start authentication (e.g. when they visit a protected
+    page). Read more about it in :doc:`/security/entry_point`.
 
 The ``authenticate()`` method is the most important method of the
 authenticator. Its job is to extract credentials (e.g. username &
@@ -180,11 +178,6 @@ can define what happens in these cases:
 
 Security Passports
 ------------------
-
-.. versionadded:: 5.2
-
-    The ``UserBadge`` was introduced in Symfony 5.2. Prior to 5.2, the user
-    instance was provided directly to the passport.
 
 A passport is an object that contains the user that will be authenticated as
 well as other pieces of information, like whether a password should be checked
@@ -306,10 +299,10 @@ the following badges are supported:
     initiated). This skips the
     :doc:`pre-authentication user checker </security/user_checkers>`.
 
-.. versionadded:: 5.2
+.. note::
 
-    Since 5.2, the ``PasswordUpgradeBadge`` is automatically added to
-    the passport if the passport has ``PasswordCredentials``.
+    The ``PasswordUpgradeBadge`` is automatically added to the passport if the
+    passport has ``PasswordCredentials``.
 
 For instance, if you want to add CSRF to your custom authenticator, you
 would initialize the passport like this::
@@ -343,10 +336,6 @@ would initialize the passport like this::
 
 Passport Attributes
 -------------------
-
-.. versionadded:: 5.2
-
-    Passport attributes were introduced in Symfony 5.2.
 
 Besides badges, passports can define attributes, which allows the ``authenticate()``
 method to store arbitrary information in the passport to access it from other

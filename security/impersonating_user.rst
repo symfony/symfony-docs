@@ -101,11 +101,6 @@ instance, to show a link to exit impersonation in a template:
         <a href="{{ impersonation_exit_path(path('homepage') ) }}">Exit impersonation</a>
     {% endif %}
 
-.. versionadded:: 5.1
-
-    The ``IS_IMPERSONATOR`` was introduced in Symfony 5.1. Use
-    ``ROLE_PREVIOUS_ADMIN`` prior to Symfony 5.1.
-
 Finding the Original User
 -------------------------
 

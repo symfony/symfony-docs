@@ -316,11 +316,6 @@ Additionally, most cache-related HTTP headers can be set via the single
         'etag'             => 'abcdef'
     ]);
 
-.. versionadded:: 5.1
-
-    The ``must_revalidate``, ``no_cache``, ``no_store``, ``no_transform`` and
-    ``proxy_revalidate`` directives were introduced in Symfony 5.1.
-
 Cache Invalidation
 ------------------
 

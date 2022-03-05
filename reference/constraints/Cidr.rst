@@ -1,10 +1,6 @@
 Cidr
 ====
 
-.. versionadded:: 5.4
-
-    The ``Cidr`` constraint was introduced in Symfony 5.4.
-
 Validates that a value is a valid `CIDR`_ (Classless Inter-Domain Routing) notation.
 By default, this will validate the CIDR's IP and netmask both for version 4 and 6,
 with the option of allowing only one type of IP version to be valid. It also supports

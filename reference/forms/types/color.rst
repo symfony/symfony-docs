@@ -36,10 +36,6 @@ html5
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 5.1
-
-    This option was introduced in Symfony 5.1.
-
 When this option is set to ``true``, the form type checks that its value matches
 the `HTML5 color format`_ (``/^#[0-9a-f]{6}$/i``). If it doesn't match it,
 you'll see the following error message: *"This value is not a valid HTML5 color"*.

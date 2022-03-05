@@ -29,13 +29,15 @@ want a command to create a user::
     // src/Command/CreateUserCommand.php
     namespace App\Command;
 
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    // the name of the command is what users type after "php bin/console"
+    #[AsCommand(name: 'app:create-user')]
     class CreateUserCommand extends Command
     {
-        // the name of the command (the part after "bin/console")
         protected static $defaultName = 'app:create-user';
 
         protected function configure(): void
@@ -63,15 +65,6 @@ want a command to create a user::
             // return Command::INVALID
         }
     }
-
-.. versionadded:: 5.1
-
-    The ``Command::SUCCESS`` and ``Command::FAILURE`` constants were introduced
-    in Symfony 5.1.
-
-.. versionadded:: 5.3
-
-    The ``Command::INVALID`` constant was introduced in Symfony 5.3
 
 Configuring the Command
 -----------------------
@@ -105,11 +98,6 @@ If you want to always run the ``list`` command fast, add the ``--short`` option
 to it (``php bin/console list --short``). This will avoid instantiating command
 classes, but it won't show any description for commands that use the
 ``setDescription()`` method instead of the static property.
-
-.. versionadded:: 5.3
-
-    The ``$defaultDescription`` static property and the ``--short`` option
-    were introduced in Symfony 5.3.
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
@@ -165,11 +153,6 @@ In PHP 8 and newer versions, you can register the command by adding the
     {
         // ...
     }
-
-.. versionadded:: 5.3
-
-    The ability to use PHP attributes to configure commands was introduced in
-    Symfony 5.3.
 
 If you can't use PHP attributes, register the command as a service and
 :doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
@@ -440,15 +423,6 @@ console::
 
 If you are using a :doc:`single-command application </components/console/single_command_tool>`,
 call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``.
-
-.. versionadded:: 5.2
-
-    The ``setAutoExit()`` method for single-command applications was introduced
-    in Symfony 5.2.
-
-.. versionadded:: 5.4
-
-    The ``assertCommandIsSuccessful()`` method was introduced in Symfony 5.4.
 
 .. tip::
 

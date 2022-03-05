@@ -58,6 +58,15 @@ to ``2``, a submitted value of ``20.123`` will be rounded to, for example,
 
 .. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
+When the ``html5`` option is set to ``false``, the ``<input>`` element will
+include an `inputmode HTML attribute`_ which depends on the value of this option.
+If the ``scale`` value is ``0``, ``inputmode`` will be ``numeric``; if ``scale``
+is set to any value greater than ``0``, ``inputmode`` will be ``decimal``.
+
+.. versionadded:: 6.1
+
+   The automatic addition of the ``inputmode`` attribute was introduced in Symfony 6.1.
+
 Overridden Options
 ------------------
 
@@ -105,3 +114,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. _`inputmode HTML attribute`: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode

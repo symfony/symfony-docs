@@ -72,17 +72,8 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
     encode them. See `RFC 3986`_ for the full list of reserved characters or use the
     :phpfunction:`urlencode` function to encode them.
 
-.. caution::
-
-    If you are migrating from Swiftmailer (and the Swiftmailer bundle), be
-    warned that the DSN format is different.
-
 Using Built-in Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.2
-
-    The native protocol was introduced in Symfony 5.2.
 
 ============  ========================================  ==============================================================
 DSN protocol  Example                                   Description
@@ -121,14 +112,6 @@ SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
 OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
 ==================  ==============================================
-
-.. versionadded:: 5.2
-
-    The Sendinblue integration was introduced in Symfony 5.2.
-
-.. versionadded:: 5.4
-
-    The OhMySMTP integration was introduced in Symfony 5.4.
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -194,19 +177,10 @@ OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a   
     you need to add the ``ping_threshold`` parameter to your ``MAILER_DSN`` with
     a value lower than ``10``: ``ses+smtp://USERNAME:PASSWORD@default?ping_threshold=9``
 
-    .. versionadded:: 5.4
-
-        The ``ping_threshold`` option for ``ses-smtp`` was introduced in Symfony 5.4.
-
 .. note::
 
     When using SMTP, the default timeout for sending a message before throwing an
     exception is the value defined in the `default_socket_timeout`_ PHP.ini option.
-
-    .. versionadded:: 5.1
-
-        The usage of ``default_socket_timeout`` as the default timeout was
-        introduced in Symfony 5.1.
 
 .. tip::
 
@@ -258,11 +232,6 @@ As with the failover transport, round-robin retries deliveries until
 a transport succeeds (or all fail). In contrast to the failover transport,
 it *spreads* the load across all its transports.
 
-.. versionadded:: 5.1
-
-    The random selection of the first transport was introduced in Symfony 5.1.
-    In previous Symfony versions the first transport was always selected first.
-
 TLS Peer Verification
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -273,10 +242,6 @@ the application or when using a self-signed certificate::
 
     $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=0';
 
-.. versionadded:: 5.1
-
-    The ``verify_peer`` option was introduced in Symfony 5.1.
-
 Other Options
 ~~~~~~~~~~~~~
 
@@ -285,19 +250,10 @@ Other Options
 
         $dsn = 'sendmail://default?command=/usr/sbin/sendmail%20-oi%20-t'
 
-    .. versionadded:: 5.2
-
-        This option was introduced in Symfony 5.2.
-
-
 ``local_domain``
     The domain name to use in ``HELO`` command::
 
         $dsn = 'smtps://smtp.example.com?local_domain=example.org'
-
-    .. versionadded:: 5.2
-
-        This option was introduced in Symfony 5.2.
 
 ``restart_threshold``
     The maximum number of messages to send before re-starting the transport. It
@@ -305,28 +261,16 @@ Other Options
 
         $dsn = 'smtps://smtp.example.com?restart_threshold=10&restart_threshold_sleep=1'
 
-    .. versionadded:: 5.2
-
-        This option was introduced in Symfony 5.2.
-
 ``restart_threshold_sleep``
     The number of seconds to sleep between stopping and re-starting the transport.
     It's common to combine it with ``restart_threshold``::
 
         $dsn = 'smtps://smtp.example.com?restart_threshold=10&restart_threshold_sleep=1'
 
-    .. versionadded:: 5.2
-
-        This option was introduced in Symfony 5.2.
-
 ``ping_threshold``
     The minimum number of seconds between two messages required to ping the server::
 
         $dsn = 'smtps://smtp.example.com?ping_threshold=200'
-
-    .. versionadded:: 5.2
-
-        This option was introduced in Symfony 5.2.
 
 Creating & Sending Messages
 ---------------------------
@@ -405,10 +349,6 @@ both strings or address objects::
     The local part of the address (what goes before the ``@``) can include UTF-8
     characters, except for the sender address (to avoid issues with bounced emails).
     For example: ``föóbàr@example.com``, ``用户@example.com``, ``θσερ@example.com``, etc.
-
-    .. versionadded:: 5.2
-
-        Support for UTF-8 characters in email addresses was introduced in Symfony 5.2.
 
 Use ``addTo()``, ``addCc()``, or ``addBcc()`` methods to add more addresses::
 
@@ -597,10 +537,6 @@ and headers.
             $mailer->header('Bcc')->value('baz@example.com');
             $mailer->header('X-Custom-Header')->value('foobar');
         };
-
-.. versionadded:: 5.2
-
-    The ``headers`` option was introduced in Symfony 5.2.
 
 Handling Sending Failures
 -------------------------
@@ -1077,10 +1013,6 @@ key but not a certificate::
         ->toArray()
     );
 
-.. versionadded:: 5.2
-
-    The DKIM signer was introduced in Symfony 5.2.
-
 Encrypting Messages
 ~~~~~~~~~~~~~~~~~~~
 
@@ -1296,18 +1228,8 @@ disable asynchronous delivery.
                 ->messageBus('app.another_bus');
         };
 
-.. versionadded:: 5.1
-
-    The ``message_bus`` option was introduced in Symfony 5.1.
-
 Adding Tags and Metadata to Emails
 ----------------------------------
-
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Mailer\\Header\\TagHeader` and
-    :class:`Symfony\\Component\\Mailer\\Header\\MetadataHeader` classes were
-    introduced in Symfony 5.1.
 
 Certain 3rd party transports support email *tags* and *metadata*, which can be used
 for grouping, tracking and workflows. You can add those by using the
@@ -1338,13 +1260,69 @@ The following transports currently support tags and metadata:
 * Sendgrid
 * Sendinblue
 
-.. versionadded:: 5.4
-
-    The tag and metadata support for Sendgrid was introduced in Symfony 5.4.
-
 The following transports only support tags:
 
 * OhMySMTP
+
+The following transports only support metadata:
+
+* Amazon SES (note that Amazon refers to this feature as "tags", but Symfony
+  calls it "metadata" because it contains a key and a value)
+
+.. versionadded:: 6.1
+
+    Metadata support for Amazon SES was introduced in Symfony 6.1.
+
+Draft Emails
+------------
+
+.. versionadded:: 6.1
+
+    ``Symfony\Component\Mime\DraftEmail`` was introduced in 6.1.
+
+:class:`Symfony\\Component\\Mime\\DraftEmail` is a special instance of
+:class:`Symfony\\Component\\Mime\\Email`. Its purpose is to build up an email
+(with body, attachments, etc) and make available to download as an ``.eml`` with
+the ``X-Unsent`` header. Many email clients can open these files and interpret
+them as *draft emails*. You can use these to create advanced ``mailto:`` links.
+
+Here's an example of making one available to download::
+
+    // src/Controller/DownloadEmailController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+    use Symfony\Component\Mime\DraftEmail;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class DownloadEmailController extends AbstractController
+    {
+        #[Route('/download-email')]
+        public function __invoke(): Response
+        {
+            $message = (new DraftEmail())
+                ->html($this->renderView(/* ... */))
+                ->attach(/* ... */)
+            ;
+
+            $response = new Response($message->toString());
+            $contentDisposition = $response->headers->makeDisposition(
+                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                'download.eml'
+            );
+            $response->headers->set('Content-Type', 'message/rfc822');
+            $response->headers->set('Content-Disposition', $contentDisposition);
+
+            return $response;
+        }
+    }
+
+.. note::
+
+    As it's possible for :class:`Symfony\\Component\\Mime\\DraftEmail`'s to be created
+    without a To/From they cannot be sent with the mailer.
 
 Development & Debugging
 -----------------------

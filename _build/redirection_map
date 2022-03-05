@@ -515,6 +515,7 @@
 /serializer/normalizers /components/serializer#normalizers
 /logging/monolog_regex_based_excludes /logging/monolog_exclude_http_codes
 /security/named_encoders /security/named_hashers
+/components/inflector /components/string#inflector
 /security/experimental_authenticators /security
 /security/user_provider /security/user_providers
 /security/reset_password /security/passwords#reset-password
@@ -534,3 +535,6 @@
 /components/security/firewall /security#the-firewall
 /components/security/secure_tools /security/passwords
 /components/security /security
+/email /mailer
+/frontend/assetic /frontend
+/frontend/assetic/index /frontend

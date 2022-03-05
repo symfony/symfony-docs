@@ -4,11 +4,6 @@
 Cursor Helper
 =============
 
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Console\\Cursor` class was introduced
-    in Symfony 5.1.
-
 The :class:`Symfony\\Component\\Console\\Cursor` allows you to change the
 cursor position in a console command. This allows you to write on any position
 of the output:

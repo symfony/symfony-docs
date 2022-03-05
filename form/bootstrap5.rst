@@ -1,10 +1,6 @@
 Bootstrap 5 Form Theme
 ======================
 
-.. versionadded:: 5.3
-
-    The Bootstrap 5 Form Theme was introduced in Symfony 5.3.
-
 Symfony provides several ways of integrating Bootstrap into your application.
 The most straightforward way is to add the required ``<link>`` and ``<script>``
 elements in your templates (usually you only include them in the main layout
@@ -86,6 +82,8 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
     By default, all inputs are rendered with the ``mb-3`` class on their
     container. If you override the ``row_attr`` class option, the ``mb-3`` will
     be overridden too and you will need to explicitly add it.
+
+.. _reference-forms-bootstrap5-error-messages:
 
 Error Messages
 --------------

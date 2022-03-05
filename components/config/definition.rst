@@ -435,13 +435,6 @@ The following example shows these methods in practice::
 Deprecating the Option
 ----------------------
 
-.. versionadded:: 5.1
-
-    The signature of the ``setDeprecated()`` method changed from
-    ``setDeprecated(?string $message)`` to
-    ``setDeprecated(string $package, string $version, ?string $message)``
-    in Symfony 5.1.
-
 You can deprecate options using the
 :method:`Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::setDeprecated`
 method::

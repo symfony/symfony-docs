@@ -123,14 +123,9 @@ they can be decorated with the ``RetryTillSaveStore`` class::
 When the provided store does not implement the
 :class:`Symfony\\Component\\Lock\\BlockingStoreInterface` interface, the
 ``Lock`` class will retry to acquire the lock in a non-blocking way until the
-lock is acquired.
-
-.. deprecated:: 5.2
-
-    As of Symfony 5.2, you don't need to use the ``RetryTillSaveStore`` class
-    anymore. The ``Lock`` class now provides the default logic to acquire locks
-    in blocking mode when the store does not implement the
-    ``BlockingStoreInterface`` interface.
+lock is acquired. However, the ``Lock`` class also provides the default logic to
+acquire locks in blocking mode when the store does not implement the
+``BlockingStoreInterface`` interface.
 
 Expiring Locks
 --------------
@@ -241,11 +236,6 @@ or until ``Lock::release()`` is called.
 
 Shared Locks
 ------------
-
-.. versionadded:: 5.2
-
-    Shared locks (and the associated ``acquireRead()`` method and
-    ``SharedLockStoreInterface``) were introduced in Symfony 5.2.
 
 A shared or `readers–writer lock`_ is a synchronization primitive that allows
 concurrent access for read-only operations, while write operations require
@@ -412,10 +402,6 @@ support blocking, and expects a TTL to avoid stalled locks::
 MongoDbStore
 ~~~~~~~~~~~~
 
-.. versionadded:: 5.1
-
-    The ``MongoDbStore`` was introduced in Symfony 5.1.
-
 The MongoDbStore saves locks on a MongoDB server ``>=2.2``, it requires a
 ``\MongoDB\Collection`` or ``\MongoDB\Client`` from `mongodb/mongodb`_ or a
 `MongoDB Connection String`_.
@@ -493,11 +479,6 @@ You can also create this table explicitly by calling the
 :method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable` method in
 your code.
 
-.. deprecated:: 5.4
-
-    Using ``PdoStore`` with Doctrine DBAL is deprecated in Symfony 5.4.
-    Use ``DoctrineDbalStore`` instead.
-
 .. _lock-store-dbal:
 
 DoctrineDbalStore
@@ -524,11 +505,6 @@ You can also add this table to your schema by calling
 in your code or create this table explicitly by calling the
 :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::createTable` method.
 
-.. versionadded:: 5.4
-
-    The ``DoctrineDbalStore`` was introduced in Symfony 5.4 to replace ``PdoStore``
-    when used with Doctrine DBAL.
-
 .. _lock-store-pgsql:
 
 PostgreSqlStore
@@ -548,15 +524,6 @@ locks::
 In opposite to the ``PdoStore``, the ``PostgreSqlStore`` does not need a table to
 store locks and it does not expire.
 
-.. versionadded:: 5.2
-
-    The ``PostgreSqlStore`` was introduced in Symfony 5.2.
-
-.. deprecated:: 5.4
-
-    Using ``PostgreSqlStore`` with Doctrine DBAL is deprecated in Symfony 5.4.
-    Use ``DoctrineDbalPostgreSqlStore`` instead.
-
 .. _lock-store-dbal-pgsql:
 
 DoctrineDbalPostgreSqlStore
@@ -574,11 +541,6 @@ a `Doctrine DBAL URL`_. It supports native blocking, as well as sharing locks::
 
 In opposite to the ``DoctrineDbalStore``, the ``DoctrineDbalPostgreSqlStore`` does not need a table to
 store locks and does not expire.
-
-.. versionadded:: 5.4
-
-    The ``DoctrineDbalPostgreSqlStore`` was introduced in Symfony 5.4 to replace
-    ``PostgreSqlStore`` when used with Doctrine DBAL.
 
 .. _lock-store-redis:
 

@@ -27,7 +27,6 @@ creates a ``security.yaml`` configuration file for you:
 
     # config/packages/security.yaml
     security:
-        enable_authenticator_manager: true
         # https://symfony.com/doc/current/security.html#c-hashing-passwords
         password_hashers:
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
@@ -72,15 +71,6 @@ discussed:
     Using access control and the authorization checker, you control the
     required permissions to perform a specific action or visit a specific
     URL.
-
-.. caution::
-
-    Symfony Security has received major changes in 5.3. This article
-    explains the *new authenticator-based* system (identified by the
-    ``enable_authenticator_manager: true`` config option).
-
-    Refer to the `5.2 version of this documentation`_ if you're still using
-    the legacy security system.
 
 .. _create-user-class:
 .. _a-create-your-user-class:
@@ -185,14 +175,6 @@ from the `MakerBundle`_:
         }
 
         /**
-         * @deprecated since Symfony 5.3
-         */
-        public function getUsername(): string
-        {
-            return (string) $this->email;
-        }
-
-        /**
          * @see UserInterface
          */
         public function getRoles(): array
@@ -246,11 +228,6 @@ from the `MakerBundle`_:
             // $this->plainPassword = null;
         }
     }
-
-.. versionadded:: 5.3
-
-    The :class:`Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface`
-    interface and ``getUserIdentifier()`` method were introduced in Symfony 5.3.
 
 If your user is a Doctrine entity, like in the example above, don't forget
 to create the tables by :ref:`creating and running a migration <doctrine-creating-the-database-tables-schema>`:
@@ -409,7 +386,7 @@ have done this for you:
             # ...
             password_hashers:
                 # Use native password hasher, which auto-selects and migrates the best
-                # possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+                # possible hashing algorithm (which currently is "bcrypt")
                 Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
     .. code-block:: xml
@@ -427,7 +404,7 @@ have done this for you:
             <config>
                 <!-- ... -->
                 <!-- Use native password hasher, which auto-selects and migrates the best
-                     possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt") -->
+                     possible hashing algorithm (currently this is "bcrypt") -->
                 <password-hasher class="Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface" algorithm="auto"/>
             </config>
         </srv:container>
@@ -442,16 +419,11 @@ have done this for you:
             // ...
 
             // Use native password hasher, which auto-selects and migrates the best
-            // possible hashing algorithm (starting from Symfony 5.3 this is "bcrypt")
+            // possible hashing algorithm (currently this is "bcrypt")
             $security->passwordHasher(PasswordAuthenticatedUserInterface::class)
                 ->algorithm('auto')
             ;
         };
-
-.. versionadded:: 5.3
-
-    The ``password_hashers`` option was introduced in Symfony 5.3. In previous
-    versions it was called ``encoders``.
 
 Now that Symfony knows *how* you want to hash the passwords, you can use the
 ``UserPasswordHasherInterface`` service to do this before saving your users to
@@ -1372,10 +1344,6 @@ Enable remote user authentication using the ``remote_user`` key:
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.2
-
-    Login throttling was introduced in Symfony 5.2.
-
 Symfony provides basic protection against `brute force login attacks`_.
 You must enable this using the ``login_throttling`` setting:
 
@@ -1466,10 +1434,6 @@ You must enable this using the ``login_throttling`` setting:
                 ->interval('15 minutes')
             ;
         };
-
-.. versionadded:: 5.3
-
-    The ``login_throttling.interval`` option was introduced in Symfony 5.3.
 
 By default, login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
@@ -1762,13 +1726,6 @@ Symfony will un-authenticate the current user and redirect them.
 
 Customizing Logout
 ~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.1
-
-    The ``LogoutEvent`` was introduced in Symfony 5.1. Prior to this
-    version, you had to use a
-    :ref:`logout success handler <reference-security-logout-success-handler>`
-    to customize the logout.
 
 In some cases you need to run extra logic upon logout (e.g. invalidate
 some tokens) or want to customize what happens after a logout. During
@@ -2472,16 +2429,6 @@ like this:
   :doc:`impersonating </security/impersonating_user>` another user in this
   session, this attribute will match.
 
-.. versionadded:: 5.1
-
-    The ``IS_REMEMBERED`` and ``IS_IMPERSONATOR`` attributes were
-    introduced in Symfony 5.1.
-
-.. deprecated:: 5.3
-
-   The ``IS_ANONYMOUS`` and ``IS_AUTHENTICATED_ANONYMOUSLY`` attributes are
-   deprecated since Symfony 5.3.
-
 .. _user_session_refresh:
 
 Understanding how Users are Refreshed from the Session
@@ -2697,7 +2644,6 @@ Authorization (Denying Access)
     security/access_denied_handler
     security/force_https
 
-.. _`5.2 version of this documentation`: https://symfony.com/doc/5.2/security.html
 .. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`OWASP Brute Force Attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks

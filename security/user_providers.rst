@@ -131,18 +131,7 @@ in your :ref:`Doctrine repository <doctrine-queries>` (e.g. ``UserRepository``):
                 ->setParameter('query', $usernameOrEmail)
                 ->getOneOrNullResult();
         }
-
-        /** @deprecated since Symfony 5.3 */
-        public function loadUserByUsername(string $usernameOrEmail): ?User
-        {
-            return $this->loadUserByIdentifier($usernameOrEmail);
-        }
     }
-
-.. versionadded:: 5.3
-
-    The method ``loadUserByIdentifier()`` was introduced to the
-    ``UserLoaderInterface`` in Symfony 5.3.
 
 To finish this, remove the ``property`` key from the user provider in
 ``security.yaml``:
@@ -297,9 +286,6 @@ command will generate a nice skeleton to get you started::
     class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     {
         /**
-         * The loadUserByIdentifier() method was introduced in Symfony 5.3.
-         * In previous versions it was called loadUserByUsername()
-         *
          * Symfony calls this method if you use features like switch_user
          * or remember_me. If you're not using these features, you do not
          * need to implement this method.

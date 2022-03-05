@@ -128,7 +128,6 @@ avoid duplicated service definitions:
             $services->set(BaseDoctrineRepository::class)
                 ->abstract()
                 ->args([service('doctrine.orm.entity_manager')])
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->call('setLogger', [service('logger')])
             ;
 

@@ -737,10 +737,6 @@ In same way, parent options can access to the nested options as normal arrays::
 Prototype Options
 ~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.3
-
-    Prototype options were introduced in Symfony 5.3.
-
 There are situations where you will have to resolve and validate a set of
 options that may repeat many times within another option. Let's imagine a
 ``connections`` option that will accept an array of database connections
@@ -785,13 +781,6 @@ connections.
 
 Deprecating the Option
 ~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 5.1
-
-    The signature of the ``setDeprecated()`` method changed from
-    ``setDeprecated(string $option, ?string $message)`` to
-    ``setDeprecated(string $option, string $package, string $version, $message)``
-    in Symfony 5.1.
 
 Once an option is outdated or you decided not to maintain it anymore, you can
 deprecate it using the :method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::setDeprecated`
@@ -886,10 +875,6 @@ method::
                 ->allowedValues('sendmail', 'mail', 'smtp');
         }
     }
-
-.. versionadded:: 5.1
-
-    The ``define()`` and ``info()`` methods were introduced in Symfony 5.1.
 
 Performance Tweaks
 ~~~~~~~~~~~~~~~~~~

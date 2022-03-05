@@ -4,10 +4,6 @@ AtLeastOneOf
 This constraint checks that the value satisfies at least one of the given
 constraints. The validation stops as soon as one constraint is satisfied.
 
-.. versionadded:: 5.1
-
-    The ``AtLeastOneOf`` constraint was introduced in Symfony 5.1.
-
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\AtLeastOneOf`
@@ -167,11 +163,6 @@ The following constraints ensure that:
                 ]));
             }
         }
-
-.. versionadded:: 5.4
-
-    The ``#[AtLeastOneOf]`` PHP attribute was introduced in Symfony 5.4 and
-    requires PHP 8.1 (which added nested attribute support).
 
 Options
 -------

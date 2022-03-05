@@ -1,10 +1,6 @@
 Rate Limiter
 ============
 
-.. versionadded:: 5.2
-
-    The RateLimiter component was introduced in Symfony 5.2.
-
 A "rate limiter" controls how frequently some event (e.g. an HTTP request or a
 login attempt) is allowed to happen. Rate limiting is commonly used as a
 defensive measure to protect services from excessive use (intended or not) and
@@ -513,10 +509,6 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
                     ->lockFactory(null)
                 ;
         };
-
-.. versionadded:: 5.3
-
-    The login throttling doesn't use any lock since Symfony 5.3 to avoid extra load.
 
 .. _`DoS attacks`: https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html
 .. _`Apache mod_ratelimit`: https://httpd.apache.org/docs/current/mod/mod_ratelimit.html

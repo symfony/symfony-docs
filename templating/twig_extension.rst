@@ -42,7 +42,7 @@ Create a class that extends ``AbstractExtension`` and fill in the logic::
             ];
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
@@ -69,7 +69,7 @@ If you want to create a function instead of a filter, define the
             ];
         }
 
-        public function calculateArea(int $width, int $length)
+        public function calculateArea(int $width, int $length): int
         {
             return $width * $length;
         }
@@ -157,7 +157,7 @@ previous ``formatPrice()`` method::
             // extensions, you'll need to inject services using this constructor
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;

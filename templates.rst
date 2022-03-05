@@ -609,14 +609,6 @@ provided by Symfony:
             ;
         };
 
-.. versionadded:: 5.1
-
-    The ``context`` option was introduced in Symfony 5.1.
-
-.. versionadded:: 5.4
-
-    The ``statusCode`` option was introduced in Symfony 5.4.
-
 Checking if a Template Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -672,10 +664,6 @@ adapted to the format required by GitHub, but you can force that format too:
 .. code-block:: terminal
 
     $ php bin/console lint:twig --format=github
-
-.. versionadded:: 5.4
-
-    The ``github`` output format was introduced in Symfony 5.4.
 
 Inspecting Twig Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

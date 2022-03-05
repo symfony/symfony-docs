@@ -373,7 +373,6 @@ other services. To do so, create a new service definition using the
             $services = $configurator->services();
 
             $services->set('app.command_handler_locator', ServiceLocator::class)
-                // In versions earlier to Symfony 5.1 the service() function was called ref()
                 ->args([[
                     'App\FooCommand' => service('app.command_handler.foo'),
                     'App\BarCommand' => service('app.command_handler.bar'),
@@ -721,13 +720,5 @@ and compose your services with them::
     When creating these helper traits, the service id cannot be ``__METHOD__``
     as this will include the trait name, not the class name. Instead, use
     ``__CLASS__.'::'.__FUNCTION__`` as the service id.
-
-.. deprecated:: 5.4
-
-    Defining your *subscribed service* methods with the
-    :class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` attribute
-    was added in Symfony 5.4. Previously, any methods with no arguments and a
-    return type were *subscribed*. This still works in 5.4 but is deprecated (only
-    when using PHP 8) and will be removed in 6.0.
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern

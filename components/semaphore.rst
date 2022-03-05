@@ -8,10 +8,6 @@ The Semaphore Component
     The Semaphore Component manages `semaphores`_, a mechanism to provide
     exclusive access to a shared resource.
 
-.. versionadded:: 5.2
-
-    The Semaphore Component was introduced in Symfony 5.2.
-
 Installation
 ------------
 

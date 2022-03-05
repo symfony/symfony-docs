@@ -104,10 +104,6 @@ Build Directory
 
 **type**: ``string`` **default**: ``$this->getCacheDir()``
 
-.. versionadded:: 5.2
-
-    The build directory feature was introduced in Symfony 5.2.
-
 This returns the absolute path of a build directory of your Symfony project. This
 directory can be used to separate read-only cache (i.e. the compiled container)
 from read-write cache (i.e. :doc:`cache pools </cache>`). Specify a non-default

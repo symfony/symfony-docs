@@ -226,7 +226,7 @@ contents, create a new Normalizer that supports the ``FlattenException`` input::
             ];
         }
 
-        public function supportsNormalization($data, string $format = null)
+        public function supportsNormalization($data, string $format = null, array $context = [])
         {
             return $data instanceof FlattenException;
         }

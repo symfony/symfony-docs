@@ -220,8 +220,6 @@ a "main" request or a "sub request"::
     {
         public function onKernelRequest(RequestEvent $event)
         {
-            // The isMainRequest() method was introduced in Symfony 5.3.
-            // In previous versions it was called isMasterRequest()
             if (!$event->isMainRequest()) {
                 // don't do anything if it's not the main request
                 return;
@@ -331,10 +329,6 @@ or can get everything which partial matches the event name:
     $ php bin/console debug:event-dispatcher kernel // matches "kernel.exception", "kernel.response" etc.
     $ php bin/console debug:event-dispatcher Security // matches "Symfony\Component\Security\Http\Event\CheckPassportEvent"
 
-.. versionadded:: 5.3
-
-    The ability to match partial event names was introduced in Symfony 5.3.
-
 The :doc:`security </security>` system uses an event dispatcher per
 firewall. Use the ``--dispatcher`` option to get the registered listeners
 for a particular event dispatcher:
@@ -342,10 +336,6 @@ for a particular event dispatcher:
 .. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher --dispatcher=security.event_dispatcher.main
-
-.. versionadded:: 5.3
-
-    The ``dispatcher`` option was introduced in Symfony 5.3.
 
 Learn more
 ----------

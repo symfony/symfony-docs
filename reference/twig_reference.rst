@@ -281,10 +281,6 @@ impersonation_exit_path
 ``exitTo`` *(optional)*
     **type**: ``string``
 
-.. versionadded:: 5.2
-
-    The ``impersonation_exit_path()`` function was introduced in Symfony 5.2.
-
 Generates a URL that you can visit to exit :doc:`user impersonation </security/impersonating_user>`.
 After exiting impersonation, the user is redirected to the current URI. If you
 prefer to redirect to a different URI, define its value in the ``exitTo`` argument.
@@ -300,10 +296,6 @@ impersonation_exit_url
 
 ``exitTo`` *(optional)*
     **type**: ``string``
-
-.. versionadded:: 5.2
-
-    The ``impersonation_exit_url()`` function was introduced in Symfony 5.2.
 
 It's similar to the `impersonation_exit_path`_ function, but it generates
 absolute URLs instead of relative URLs.
@@ -323,10 +315,6 @@ t
     **type**: ``array`` **default**: ``[]``
 ``domain`` *(optional)*
     **type**: ``string`` **default**: ``messages``
-
-.. versionadded:: 5.2
-
-    The ``t()`` function was introduced in Symfony 5.2.
 
 Creates a ``Translatable`` object that can be passed to the
 :ref:`trans filter <reference-twig-filter-trans>`.
@@ -385,10 +373,6 @@ trans
     **type**: ``string`` **default**: ``null``
 ``locale`` *(optional)*
     **type**: ``string`` **default**: ``null``
-
-.. versionadded:: 5.2
-
-    ``message`` accepting ``Translatable`` as a valid type was introduced in Symfony 5.2.
 
 Translates the text into the current language. More information in
 :ref:`Translation Filters <translation-filters>`.
@@ -577,10 +561,6 @@ serialize
 
 ``context`` *(optional)*
     **type**: ``array``
-
-.. versionadded:: 5.3
-
-    The ``serialize`` filter was introduced in Symfony 5.3.
 
 Accepts any data that can be serialized by the :doc:`Serializer component </serializer>`
 and returns a serialized string in the specified ``format``.

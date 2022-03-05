@@ -178,10 +178,6 @@ doesn't support returning arrays, so you need to use the following code::
     $request->query->all()['foo']['bar'];
     // returns 'baz'
 
-.. deprecated:: 5.1
-
-    The array support in ``get()`` method was deprecated in Symfony 5.1.
-
 .. _component-foundation-attributes:
 
 Thanks to the public ``attributes`` property, you can store additional data
@@ -202,10 +198,6 @@ If the request body is a JSON string, it can be accessed using
 :method:`Symfony\\Component\\HttpFoundation\\Request::toArray`::
 
     $data = $request->toArray();
-
-.. versionadded:: 5.2
-
-    The ``toArray()`` method was introduced in Symfony 5.2.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -291,10 +283,6 @@ this complexity and defines some methods for the most common tasks::
     // Parses a query string but maintains dots (PHP parse_str() replaces '.' by '_')
     HeaderUtils::parseQuery('foo[bar.baz]=qux');
     // => ['foo' => ['bar.baz' => 'qux']]
-
-.. versionadded:: 5.2
-
-    The ``parseQuery()`` method was introduced in Symfony 5.2.
 
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -479,10 +467,6 @@ a new object with the modified property::
         ->withDomain('.example.com')
         ->withSecure(true);
 
-.. versionadded:: 5.1
-
-    The ``with*()`` methods were introduced in Symfony 5.1.
-
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -526,11 +510,6 @@ call::
         'last_modified'    => new \DateTime(),
         'etag'             => 'abcdef',
     ]);
-
-.. versionadded:: 5.1
-
-    The ``must_revalidate``, ``no_cache``, ``no_store``, ``no_transform`` and
-    ``proxy_revalidate`` directives were introduced in Symfony 5.1.
 
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
@@ -770,11 +749,6 @@ Symfony offers two methods to interact with this preference:
 * :method:`Symfony\\Component\\HttpFoundation\\Request::preferSafeContent`;
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setContentSafe`;
 
-.. versionadded:: 5.1
-
-    The ``preferSafeContent()`` and ``setContentSafe()`` methods were introduced
-    in Symfony 5.1.
-
 The following example shows how to detect if the user agent prefers "safe" content::
 
     if ($request->preferSafeContent()) {
@@ -786,10 +760,6 @@ The following example shows how to detect if the user agent prefers "safe" conte
 
 Generating Relative and Absolute URLs
 -------------------------------------
-
-.. versionadded:: 5.4
-
-    The feature to generate relative and absolute URLs was introduced in Symfony 5.4.
 
 Generating absolute and relative URLs for a given path is a common need
 in some applications. In Twig templates you can use the
