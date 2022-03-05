@@ -33,9 +33,9 @@ it will be removed/changed in the future and that you should stop using it.
 When the major version is released (e.g. 6.0.0), all deprecated features and
 functionality are removed. So, as long as you've updated your code to stop
 using these deprecated features in the last version before the major (e.g.
-``4.4.*``), you should be able to upgrade without a problem. That means that
+``5.4.*``), you should be able to upgrade without a problem. That means that
 you should first :doc:`upgrade to the last minor version </setup/upgrade_minor>`
-(e.g. 4.4) so that you can see *all* the deprecations.
+(e.g. 5.4) so that you can see *all* the deprecations.
 
 To help you find deprecations, notices are triggered whenever you end up
 using a deprecated feature. When visiting your application in the
@@ -104,7 +104,7 @@ done!
 .. sidebar:: Using the Weak Deprecations Mode
 
     Sometimes, you can't fix all deprecations (e.g. something was deprecated
-    in 4.4 and you still need to support 4.3). In these cases, you can still
+    in 5.4 and you still need to support 5.3). In these cases, you can still
     use the bridge to fix as many deprecations as possible and then allow
     more of them to make your tests pass again. You can do this by using the
     ``SYMFONY_DEPRECATIONS_HELPER`` env variable:
@@ -167,7 +167,7 @@ this one. For instance, update it to ``6.0.*`` to upgrade to Symfony 6.0:
       "extra": {
           "symfony": {
               "allow-contrib": false,
-    -       "require": "4.4.*"
+    -       "require": "5.4.*"
     +       "require": "6.0.*"
           }
       }

@@ -8,7 +8,7 @@ following error message by default: "This value is not a valid timezone."
 
 These messages are translated into tens of languages thanks to the Symfony
 community. Symfony adds new messages on a regular basis, so this is an ongoing
-translation process and you can help us providing the missing translations.
+translation process and you can help us by providing the missing translations.
 
 How to Contribute a Translation
 -------------------------------

@@ -24,24 +24,15 @@ this could look like, if you want to make a route accessible to the "owner" only
 In that sense, the following example used throughout this page is a minimal
 example for voters.
 
-.. tip::
-
-    Take a look at the
-    :doc:`authorization </components/security/authorization>`
-    article for an even deeper understanding on voters.
-
-Here's how Symfony works with voters:
-All voters are called each time you use the ``isGranted()`` method on Symfony's
-authorization checker or call ``denyAccessUnlessGranted()`` in a controller (which
-uses the authorization checker), or by
-:ref:`access controls <security-access-control-enforcement-options>`.
+Here's how Symfony works with voters: All voters are called each time you
+use the ``isGranted()`` method on Symfony's authorization checker or call
+``denyAccessUnlessGranted()`` in a controller (which uses the authorization
+checker), or by :ref:`access controls <security-access-control-enforcement-options>`.
 
 Ultimately, Symfony takes the responses from all voters and makes the final
-decision (to allow or deny access to the resource) according to the strategy defined
-in the application, which can be: affirmative, consensus, unanimous or priority.
-
-For more information take a look at
-:ref:`the section about access decision managers <components-security-access-decision-manager>`.
+decision (to allow or deny access to the resource) according to
+:ref:`the strategy defined in the application <security-voters-change-strategy>`,
+which can be: affirmative, consensus, unanimous or priority.
 
 The Voter Interface
 -------------------

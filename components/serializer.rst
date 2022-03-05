@@ -603,7 +603,7 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 
     You can also implement
     :class:`Symfony\\Component\\Serializer\\NameConverter\\AdvancedNameConverterInterface`
-    to access to the current class name, format and context.
+    to access the current class name, format and context.
 
 .. _using-camelized-method-names-for-underscored-attributes:
 
@@ -789,13 +789,13 @@ When serializing, you can set a callback to format a specific object property::
 Normalizers
 -----------
 
-Normalizers turn **object** into **array** and vice versa. They implement
-:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`
-for normalize (object to array) and
-:class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizableInterface` for denormalize
-(array to object).
+Normalizers turn **objects** into **arrays** and vice versa. They implement
+:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface` for
+normalizing (object to array) and
+:class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface` for
+denormalizing (array to object).
 
-You can add new normalizers to a Serializer instance by using its first constructor argument::
+Normalizers are enabled in the serializer passing them as its first argument::
 
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
@@ -834,7 +834,8 @@ The Serializer component provides several built-in normalizers:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`
     This normalizer directly reads and writes public properties as well as
     **private and protected** properties (from both the class and all of its
-    parent classes). It supports calling the constructor during the denormalization process.
+    parent classes) by using `PHP reflection`_. It supports calling the constructor
+    during the denormalization process.
 
     Objects are normalized to a map of property names to property values.
 
@@ -861,7 +862,7 @@ The Serializer component provides several built-in normalizers:
     represent the name of the timezone according to the `list of PHP timezones`_.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
-    This normalizer converts :phpclass:`SplFileInfo` objects into a data URI
+    This normalizer converts :phpclass:`SplFileInfo` objects into a `data URI`_
     string (``data:...``) such that files can be embedded into serialized data.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
@@ -906,6 +907,61 @@ The Serializer component provides several built-in normalizers:
 .. versionadded:: 5.3
 
     The ``UidNormalizer`` normalization formats were introduced in Symfony 5.3.
+
+.. note::
+
+    You can also create your own Normalizer to use another structure. Read more at
+    :doc:`/serializer/custom_normalizer`.
+
+Certain normalizers are enabled by default when using the Serializer component
+in a Symfony application, additional ones can be enabled by tagging them with
+:ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>`.
+
+Here is an example of how to enable the built-in
+:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
+faster alternative to the
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            get_set_method_normalizer:
+                class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
+                tags: [serializer.normalizer]
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer">
+                    <tag name="serializer.normalizer"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
+                ->tag('serializer.normalizer')
+            ;
+        };
 
 .. _component-serializer-encoders:
 
@@ -1762,3 +1818,5 @@ Learn more
 .. _`API Platform`: https://api-platform.com
 .. _`list of PHP timezones`: https://www.php.net/manual/en/timezones.php
 .. _`RFC 4122`: https://tools.ietf.org/html/rfc4122
+.. _`PHP reflection`: https://php.net/manual/en/book.reflection.php
+.. _`data URI`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs

@@ -103,7 +103,7 @@ The validator class only has one required method ``validate()``::
                 // separate multiple types using pipes
                 // throw new UnexpectedValueException($value, 'string|int');
             }
-            
+
             // access your configuration options like this:
             if ('strict' === $constraint->mode) {
                 // ...
@@ -232,8 +232,8 @@ with the necessary ``validator.constraint_validator``. This means you can
 Create a Reusable Set of Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In case you need to apply some common set of constraints in different places
-consistently across your application, you can extend the :doc:`Compound constraint </reference/constraints/Compound>`.
+In case you need to consistently apply a common set of constraints
+across your application, you can extend the :doc:`Compound constraint </reference/constraints/Compound>`.
 
 .. versionadded:: 5.1
 
@@ -266,8 +266,8 @@ With this, the validator's ``validate()`` method gets an object as its first arg
 
 .. tip::
 
-    The ``atPath()`` method defines the property which the validation error is
-    associated to. Use any :doc:`valid PropertyAccess syntax </components/property_access>`
+    The ``atPath()`` method defines the property with which the validation error is
+    associated. Use any :doc:`valid PropertyAccess syntax </components/property_access>`
     to define that property.
 
 A class constraint validator is applied to the class itself, and

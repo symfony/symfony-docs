@@ -348,11 +348,6 @@ being used and generating the correct paths accordingly.
     :ref:`version_format <reference-assets-version-format>`, and
     :ref:`json_manifest_path <reference-assets-json-manifest-path>` configuration options.
 
-.. tip::
-
-    If you'd like help packaging, versioning and minifying your JavaScript and
-    CSS assets in a modern way, read about :doc:`Symfony's Webpack Encore </frontend>`.
-
 If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
 as follows:
 
@@ -361,6 +356,12 @@ as follows:
     <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!"/>
 
     <link rel="shortcut icon" href="{{ absolute_url('favicon.png') }}">
+
+Build, Versioning & More Advanced CSS, JavaScript and Image Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For help building, versioning and minifying your JavaScript and
+CSS assets in a modern way, read about :doc:`Symfony's Webpack Encore </frontend>`.
 
 .. _twig-app-variable:
 
@@ -407,6 +408,22 @@ gives you access to these variables:
 
 In addition to the global ``app`` variable injected by Symfony, you can also
 :doc:`inject variables automatically to all Twig templates </templating/global_variables>`.
+
+Twig Components
+---------------
+
+Twig components are an alternative way to render templates, where each template
+is bound to a "component class". This makes it easier to render and re-use
+small template "units" - like an alert, markup for a modal, or a category sidebar.
+
+For more information, see `UX Twig Component`_.
+
+Twig components also have one other superpower: they can become "live", where
+they automatically update (via Ajax) as the user interacts with them. For example,
+when your user types into a box, your Twig component will re-render via Ajax to
+show a list of results!
+
+To learn more, see `UX Live Component`_.
 
 .. _templates-rendering:
 
@@ -513,6 +530,9 @@ provided by Symfony:
                 # the path of the template to render
                 template:  'static/privacy.html.twig'
 
+                # the response status code (default: 200)
+                statusCode: 200
+
                 # special options defined by Symfony to set the page cache
                 maxAge:    86400
                 sharedAge: 86400
@@ -538,6 +558,9 @@ provided by Symfony:
                 controller="Symfony\Bundle\FrameworkBundle\Controller\TemplateController">
                 <!-- the path of the template to render -->
                 <default key="template">static/privacy.html.twig</default>
+
+                <!-- the response status code (default: 200) -->
+                <default key="statusCode">200</default>
 
                 <!-- special options defined by Symfony to set the page cache -->
                 <default key="maxAge">86400</default>
@@ -567,6 +590,9 @@ provided by Symfony:
                     // the path of the template to render
                     'template'  => 'static/privacy.html.twig',
 
+                    // the response status code (default: 200)
+                    'statusCode' => 200,
+
                     // special options defined by Symfony to set the page cache
                     'maxAge'    => 86400,
                     'sharedAge' => 86400,
@@ -586,6 +612,10 @@ provided by Symfony:
 .. versionadded:: 5.1
 
     The ``context`` option was introduced in Symfony 5.1.
+
+.. versionadded:: 5.4
+
+    The ``statusCode`` option was introduced in Symfony 5.4.
 
 Checking if a Template Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -677,7 +707,7 @@ First, make sure that the VarDumper component is installed in the application:
 
 .. code-block:: terminal
 
-    $ composer require symfony/var-dumper
+    $ composer require --dev symfony/var-dumper
 
 Then, use either the ``{% dump %}`` tag or the ``{{ dump() }}`` function
 depending on your needs:
@@ -1187,15 +1217,17 @@ Learn more
     /templating/*
 
 .. _`Twig`: https://twig.symfony.com
-.. _`tags`: https://twig.symfony.com/doc/2.x/tags/index.html
-.. _`filters`: https://twig.symfony.com/doc/2.x/filters/index.html
-.. _`functions`: https://twig.symfony.com/doc/2.x/functions/index.html
-.. _`with_context`: https://twig.symfony.com/doc/2.x/functions/include.html
-.. _`Twig template loader`: https://twig.symfony.com/doc/2.x/api.html#loaders
-.. _`Twig raw filter`: https://twig.symfony.com/doc/2.x/filters/raw.html
-.. _`Twig output escaping docs`: https://twig.symfony.com/doc/2.x/api.html#escaper-extension
+.. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
+.. _`filters`: https://twig.symfony.com/doc/3.x/filters/index.html
+.. _`functions`: https://twig.symfony.com/doc/3.x/functions/index.html
+.. _`with_context`: https://twig.symfony.com/doc/3.x/functions/include.html
+.. _`Twig template loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
+.. _`Twig raw filter`: https://twig.symfony.com/doc/3.x/filters/raw.html
+.. _`Twig output escaping docs`: https://twig.symfony.com/doc/3.x/api.html#escaper-extension
 .. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
-.. _`Twig template inheritance`: https://twig.symfony.com/doc/2.x/tags/extends.html
-.. _`Twig block tag`: https://twig.symfony.com/doc/2.x/tags/block.html
+.. _`Twig template inheritance`: https://twig.symfony.com/doc/3.x/tags/extends.html
+.. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
 .. _`Cross-Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
+.. _`UX Twig Component`: https://symfony.com/bundles/ux-twig-component/current/index.html
+.. _`UX Live Component`: https://symfony.com/bundles/ux-live-component/current/index.html

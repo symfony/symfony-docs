@@ -129,7 +129,7 @@ format
 **type**: ``string`` **default**: ``F j, Y H:i``
 
 The format used by the ``date`` filter to display values when no specific format
-is passed as argument.
+is passed as an argument.
 
 interval_format
 ...............
@@ -145,7 +145,7 @@ timezone
 **type**: ``string`` **default**: (the value returned by ``date_default_timezone_get()``)
 
 The timezone used when formatting date values with the ``date`` filter and no
-specific timezone is passed as argument.
+specific timezone is passed as an argument.
 
 debug
 ~~~~~
@@ -182,7 +182,7 @@ all the forms of the application:
 
         # config/packages/twig.yaml
         twig:
-            form_themes: ['bootstrap_4_layout.html.twig', 'form/my_theme.html.twig']
+            form_themes: ['bootstrap_5_layout.html.twig', 'form/my_theme.html.twig']
             # ...
 
     .. code-block:: xml
@@ -197,7 +197,7 @@ all the forms of the application:
                 http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form-theme>bootstrap_4_layout.html.twig</twig:form-theme>
+                <twig:form-theme>bootstrap_5_layout.html.twig</twig:form-theme>
                 <twig:form-theme>form/my_theme.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
@@ -210,7 +210,7 @@ all the forms of the application:
 
         return static function (TwigConfig $twig) {
             $twig->formThemes([
-                'bootstrap_4_layout.html.twig',
+                'bootstrap_5_layout.html.twig',
                 'form/my_theme.html.twig',
             ]);
 
@@ -344,5 +344,5 @@ If set to ``true``, Symfony shows an exception whenever a Twig variable,
 attribute or method doesn't exist. If set to ``false`` these errors are ignored
 and the non-existing values are replaced by ``null``.
 
-.. _`the optimizer extension`: https://twig.symfony.com/doc/2.x/api.html#optimizer-extension
+.. _`the optimizer extension`: https://twig.symfony.com/doc/3.x/api.html#optimizer-extension
 .. _`XSS attacks`: https://en.wikipedia.org/wiki/Cross-site_scripting

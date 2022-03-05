@@ -36,7 +36,7 @@ However, other languages require thousands of symbols to display their contents.
 They need complex encoding standards such as `Unicode`_ and concepts like
 "character" no longer make sense. Instead, you have to deal with these terms:
 
-* `Code points`_: they are the atomic unit of information. A string is a series
+* `Code points`_: they are the atomic units of information. A string is a series
   of code points. Each code point is a number whose meaning is given by the
   `Unicode`_ standard. For example, the English letter ``A`` is the ``U+0041``
   code point and the Japanese *kana* ``の`` is the ``U+306E`` code point.
@@ -333,9 +333,14 @@ Methods to Search and Replace
     // checks if the string contents are exactly the same as the given contents
     u('foo')->equalsTo('foo'); // true
 
-    // checks if the string content match the given regular expression
+    // checks if the string content match the given regular expression.
     u('avatar-73647.png')->match('/avatar-(\d+)\.png/');
-    // result = ['avatar-73647.png', '73647']
+    // result = ['avatar-73647.png', '73647', null]
+
+    // You can pass flags for preg_match() as second argument. If PREG_PATTERN_ORDER
+    // or PREG_SET_ORDER are passed, preg_match_all() will be used.
+    u('206-555-0100 and 800-555-1212')->match('/\d{3}-\d{3}-\d{4}/', \PREG_PATTERN_ORDER);
+    // result = [['206-555-0100', '800-555-1212']]
 
     // checks if the string contains any of the other given strings
     u('aeiou')->containsAny('a');                 // true

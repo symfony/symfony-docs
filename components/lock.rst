@@ -46,7 +46,7 @@ method will try to acquire the lock::
 
     if ($lock->acquire()) {
         // The resource "pdf-invoice-generation" is locked.
-        // You can compute and generate invoice safely here.
+        // You can compute and generate the invoice safely here.
 
         $lock->release();
     }
@@ -65,7 +65,7 @@ method can be safely called repeatedly, even if the lock is already acquired.
 .. tip::
 
     If you don't release the lock explicitly, it will be released automatically
-    on instance destruction. In some cases, it can be useful to lock a resource
+    upon instance destruction. In some cases, it can be useful to lock a resource
     across several requests. To disable the automatic release behavior, set the
     third argument of the ``createLock()`` method to ``false``.
 
@@ -74,7 +74,7 @@ Serializing Locks
 
 The ``Key`` contains the state of the ``Lock`` and can be serialized. This
 allows the user to begin a long job in a process by acquiring the lock, and
-continue the job in an other process using the same lock::
+continue the job in another process using the same lock::
 
     use Symfony\Component\Lock\Key;
     use Symfony\Component\Lock\Lock;
@@ -210,7 +210,7 @@ as seconds) and ``isExpired()`` (which returns a boolean).
 Automatically Releasing The Lock
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Lock are automatically released when their Lock objects are destructed. This is
+Locks are automatically released when their Lock objects are destroyed. This is
 an implementation detail that will be important when sharing Locks between
 processes. In the example below, ``pcntl_fork()`` creates two processes and the
 Lock will be released automatically as soon as one process finishes::
@@ -350,18 +350,20 @@ Locks are created and managed in ``Stores``, which are classes that implement
 
 The component includes the following built-in store types:
 
-============================================  ======  ========  ======== =======
-Store                                         Scope   Blocking  Expiring Sharing
-============================================  ======  ========  ======== =======
-:ref:`FlockStore <lock-store-flock>`          local   yes       no       yes
-:ref:`MemcachedStore <lock-store-memcached>`  remote  no        yes      no
-:ref:`MongoDbStore <lock-store-mongodb>`      remote  no        yes      no
-:ref:`PdoStore <lock-store-pdo>`              remote  no        yes      no
-:ref:`PostgreSqlStore <lock-store-pgsql>`     remote  yes       no       yes
-:ref:`RedisStore <lock-store-redis>`          remote  no        yes      yes
-:ref:`SemaphoreStore <lock-store-semaphore>`  local   yes       no       no
-:ref:`ZookeeperStore <lock-store-zookeeper>`  remote  no        no       no
-============================================  ======  ========  ======== =======
+==========================================================  ======  ========  ======== =======
+Store                                                       Scope   Blocking  Expiring Sharing
+==========================================================  ======  ========  ======== =======
+:ref:`FlockStore <lock-store-flock>`                        local   yes       no       yes
+:ref:`MemcachedStore <lock-store-memcached>`                remote  no        yes      no
+:ref:`MongoDbStore <lock-store-mongodb>`                    remote  no        yes      no
+:ref:`PdoStore <lock-store-pdo>`                            remote  no        yes      no
+:ref:`DoctrineDbalStore <lock-store-dbal>`                  remote  no        yes      no
+:ref:`PostgreSqlStore <lock-store-pgsql>`                   remote  yes       no       yes
+:ref:`DoctrineDbalPostgreSqlStore <lock-store-dbal-pgsql>`  remote  yes       no       yes
+:ref:`RedisStore <lock-store-redis>`                        remote  no        yes      yes
+:ref:`SemaphoreStore <lock-store-semaphore>`                local   yes       no       no
+:ref:`ZookeeperStore <lock-store-zookeeper>`                remote  no        no       no
+==========================================================  ======  ========  ======== =======
 
 .. _lock-store-flock:
 
@@ -471,13 +473,13 @@ MongoDB Connection String:
 PdoStore
 ~~~~~~~~
 
-The PdoStore saves locks in an SQL database. It requires a `PDO`_ connection, a
-`Doctrine DBAL Connection`_, or a `Data Source Name (DSN)`_. This store does not
-support blocking, and expects a TTL to avoid stalled locks::
+The PdoStore saves locks in an SQL database. It is identical to DoctrineDbalStore
+but requires a `PDO`_ connection or a `Data Source Name (DSN)`_. This store does
+not support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\PdoStore;
 
-    // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
+    // a PDO or DSN for lazy connecting through PDO
     $databaseConnectionOrDSN = 'mysql:host=127.0.0.1;dbname=app';
     $store = new PdoStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
 
@@ -491,28 +493,92 @@ You can also create this table explicitly by calling the
 :method:`Symfony\\Component\\Lock\\Store\\PdoStore::createTable` method in
 your code.
 
+.. deprecated:: 5.4
+
+    Using ``PdoStore`` with Doctrine DBAL is deprecated in Symfony 5.4.
+    Use ``DoctrineDbalStore`` instead.
+
+.. _lock-store-dbal:
+
+DoctrineDbalStore
+~~~~~~~~~~~~~~~~~
+
+The DoctrineDbalStore saves locks in an SQL database. It is identical to PdoStore
+but requires a `Doctrine DBAL Connection`_, or a `Doctrine DBAL URL`_. This store
+does not support blocking, and expects a TTL to avoid stalled locks::
+
+    use Symfony\Component\Lock\Store\DoctrineDbalStore;
+
+    // a Doctrine DBAL connection or DSN
+    $connectionOrURL = 'mysql://myuser:mypassword@127.0.0.1/app';
+    $store = new DoctrineDbalStore($connectionOrURL);
+
+.. note::
+
+    This store does not support TTL lower than 1 second.
+
+The table where values are stored is created automatically on the first call to
+the :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::save` method.
+You can also add this table to your schema by calling
+:method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::configureSchema` method
+in your code or create this table explicitly by calling the
+:method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::createTable` method.
+
+.. versionadded:: 5.4
+
+    The ``DoctrineDbalStore`` was introduced in Symfony 5.4 to replace ``PdoStore``
+    when used with Doctrine DBAL.
+
 .. _lock-store-pgsql:
 
 PostgreSqlStore
 ~~~~~~~~~~~~~~~
 
-The PostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL. It requires a
-`PDO`_ connection, a `Doctrine DBAL Connection`_, or a
-`Data Source Name (DSN)`_. It supports native blocking, as well as sharing
+The PostgreSqlStore and DoctrineDbalPostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL.
+It is identical to DoctrineDbalPostgreSqlStore but requires `PDO`_ connection or
+a `Data Source Name (DSN)`_. It supports native blocking, as well as sharing
 locks::
 
     use Symfony\Component\Lock\Store\PostgreSqlStore;
 
-    // a PDO, a Doctrine DBAL connection or DSN for lazy connecting through PDO
-    $databaseConnectionOrDSN = 'postgresql://myuser:mypassword@localhost:5634/lock';
-    $store = new PostgreSqlStore($databaseConnectionOrDSN);
+    // a PDO instance or DSN for lazy connecting through PDO
+    $databaseConnectionOrDSN = 'pgsql:host=localhost;port=5634;dbname=lock';
+    $store = new PostgreSqlStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
 
 In opposite to the ``PdoStore``, the ``PostgreSqlStore`` does not need a table to
-store locks and does not expire.
+store locks and it does not expire.
 
 .. versionadded:: 5.2
 
     The ``PostgreSqlStore`` was introduced in Symfony 5.2.
+
+.. deprecated:: 5.4
+
+    Using ``PostgreSqlStore`` with Doctrine DBAL is deprecated in Symfony 5.4.
+    Use ``DoctrineDbalPostgreSqlStore`` instead.
+
+.. _lock-store-dbal-pgsql:
+
+DoctrineDbalPostgreSqlStore
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The DoctrineDbalPostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL.
+It is identical to PostgreSqlStore but requires a `Doctrine DBAL Connection`_ or
+a `Doctrine DBAL URL`_. It supports native blocking, as well as sharing locks::
+
+    use Symfony\Component\Lock\Store\DoctrineDbalPostgreSqlStore;
+
+    // a Doctrine Connection or DSN
+    $databaseConnectionOrDSN = 'postgresql+advisory://myuser:mypassword@127.0.0.1:5634/lock';
+    $store = new DoctrineDbalPostgreSqlStore($databaseConnectionOrDSN);
+
+In opposite to the ``DoctrineDbalStore``, the ``DoctrineDbalPostgreSqlStore`` does not need a table to
+store locks and does not expire.
+
+.. versionadded:: 5.4
+
+    The ``DoctrineDbalPostgreSqlStore`` was introduced in Symfony 5.4 to replace
+    ``PostgreSqlStore`` when used with Doctrine DBAL.
 
 .. _lock-store-redis:
 
@@ -688,11 +754,11 @@ FlockStore
 ~~~~~~~~~~
 
 By using the file system, this ``Store`` is reliable as long as concurrent
-processes use the same physical directory to stores locks.
+processes use the same physical directory to store locks.
 
 Processes must run on the same machine, virtual machine or container.
-Be careful when updating a Kubernetes or Swarm service because for a short
-period of time, there can be two running containers in parallel.
+Be careful when updating a Kubernetes or Swarm service because, for a short
+period of time, there can be two containers running in parallel.
 
 The absolute path to the directory must remain the same. Be careful of symlinks
 that could change at anytime: Capistrano and blue/green deployment often use
@@ -704,7 +770,7 @@ Some file systems (such as some types of NFS) do not support locking.
 .. caution::
 
     All concurrent processes must use the same physical file system by running
-    on the same machine and using the same absolute path to locks directory.
+    on the same machine and using the same absolute path to the lock directory.
 
     By definition, usage of ``FlockStore`` in an HTTP context is incompatible
     with multiple front servers, unless to ensure that the same resource will
@@ -726,7 +792,7 @@ MemcachedStore
 
 The way Memcached works is to store items in memory. That means that by using
 the :ref:`MemcachedStore <lock-store-memcached>` the locks are not persisted
-and may disappear by mistake at anytime.
+and may disappear by mistake at any time.
 
 If the Memcached service or the machine hosting it restarts, every lock would
 be lost without notifying the running processes.
@@ -803,7 +869,7 @@ The PdoStore relies on the `ACID`_ properties of the SQL engine.
 .. caution::
 
     In a cluster configured with multiple primaries, ensure writes are
-    synchronously propagated to every nodes, or always use the same node.
+    synchronously propagated to every node, or always use the same node.
 
 .. caution::
 
@@ -838,7 +904,7 @@ RedisStore
 
 The way Redis works is to store items in memory. That means that by using
 the :ref:`RedisStore <lock-store-redis>` the locks are not persisted
-and may disappear by mistake at anytime.
+and may disappear by mistake at any time.
 
 If the Redis service or the machine hosting it restarts, every locks would
 be lost without notifying the running processes.
@@ -865,7 +931,7 @@ removed by mistake.
 CombinedStore
 ~~~~~~~~~~~~~
 
-Combined stores allow to store locks across several backends. It's a common
+Combined stores allow the storage of locks across several backends. It's a common
 mistake to think that the lock mechanism will be more reliable. This is wrong.
 The ``CombinedStore`` will be, at best, as reliable as the least reliable of
 all managed stores. As soon as one managed store returns erroneous information,
@@ -940,6 +1006,7 @@ are still running.
 .. _`Advisory Locks`: https://www.postgresql.org/docs/current/explicit-locking.html
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/src/Connection.php
+.. _`Doctrine DBAL URL`: https://www.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html#connecting-using-a-url
 .. _`Expire Data from Collections by Setting TTL`: https://docs.mongodb.com/manual/tutorial/expire-data/
 .. _`locks`: https://en.wikipedia.org/wiki/Lock_(computer_science)
 .. _`MongoDB Connection String`: https://docs.mongodb.com/manual/reference/connection-string/

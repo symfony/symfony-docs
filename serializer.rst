@@ -70,27 +70,19 @@ Encoders supporting the following formats are enabled:
 
 As well as the following normalizers:
 
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer` to
-  handle typical data objects
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` for
-  objects implementing the :phpclass:`DateTimeInterface` interface
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer` for
-  :phpclass:`DateTimeZone` objects
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ObjectNormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateIntervalNormalizer`
-  for :phpclass:`DateInterval` objects
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer` to
-  transform :phpclass:`SplFileInfo` objects in `Data URIs`_
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer` for
-  objects implementing the :class:`Symfony\\Component\\Form\\FormInterface` to
-  normalize form errors.
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\DataUriNormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
-  to deal with objects implementing the :phpclass:`JsonSerializable` interface
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer` to
-  denormalize arrays of objects using a notation like ``MyObject[]`` (note the ``[]`` suffix)
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer` for objects implementing the :class:`Symfony\\Component\\Validator\\ConstraintViolationListInterface` interface
-* :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer` for :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException` objects
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
 
-Custom normalizers and/or encoders can also be loaded by tagging them as
+Other :ref:`built-in normalizers <component-serializer-normalizers>` and
+custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
 :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
@@ -101,57 +93,10 @@ possible to set the priority of the tag in order to decide the matching order.
     ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory
     usage and exposing internal details.
 
-Here is an example on how to load the
-:class:`Symfony\\Component\\Serializer\\Normalizer\\GetSetMethodNormalizer`, a
-faster alternative to the `ObjectNormalizer` when data objects always use
-getters (``getXxx()``), issers (``isXxx()``) or hassers (``hasXxx()``) to read
-properties and setters (``setXxx()``) to change properties:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            get_set_method_normalizer:
-                class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
-                tags: [serializer.normalizer]
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer">
-                    <tag name="serializer.normalizer"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
-
-            $services->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
-                ->tag('serializer.normalizer')
-            ;
-        };
-
 Serializer Context
 ------------------
 
-The serializer can define a context to control how the (de)serialization of
+The serializer can define a context to control the (de)serialization of
 resources. This context is passed to all normalizers. For example:
 
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` uses
@@ -165,7 +110,7 @@ resources. This context is passed to all normalizers. For example:
     The usage of the ``empty_array_as_object`` option by default in the
     Serializer was introduced in Symfony 5.4.
 
-You can pass the context like following::
+You can pass the context as follows::
 
     $serializer->serialize($something, 'json', [
         DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s',
@@ -174,6 +119,49 @@ You can pass the context like following::
     $serializer->deserialize($someJson, Something::class, 'json', [
         DateTimeNormalizer::FORMAT_KEY => 'Y-m-d H:i:s',
     ]);
+
+You can also configure the default context through the framework
+configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            serializer:
+                default_context:
+                    enable_max_depth: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <framework:config>
+            <!-- ... -->
+            <framework:serializer>
+                <default-context enable-max-depth="true"/>
+            </framework:serializer>
+        </framework:config>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+        use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->serializer()
+                ->defaultContext([
+                    AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true
+                ])
+            ;
+        };
+
+.. versionadded:: 5.4
+
+    The ability to configure the ``default_context`` option in the
+    Serializer was introduced in Symfony 5.4.
 
 .. _serializer-using-serialization-groups-annotations:
 
@@ -317,7 +305,6 @@ take a look at how this bundle works.
 .. toctree::
     :maxdepth: 1
 
-    serializer/normalizers
     serializer/custom_encoders
     serializer/custom_normalizer
 
@@ -328,4 +315,3 @@ take a look at how this bundle works.
 .. _`GraphQL`: https://graphql.org
 .. _`JSON:API`: https://jsonapi.org
 .. _`HAL`: http://stateless.co/hal_specification.html
-.. _`Data URIs`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs

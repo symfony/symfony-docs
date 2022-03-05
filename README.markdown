@@ -23,7 +23,7 @@ We love contributors! For more information on how you can contribute, please rea
 the [Symfony Docs Contributing Guide](https://symfony.com/doc/current/contributing/documentation/overview.html)
 
 **Important**: use `4.4` branch as the base of your pull requests, unless you are
-documenting a feature that was introduced *after* Symfony 4.4 (e.g. in Symfony 5.2).
+documenting a feature that was introduced *after* Symfony 4.4 (e.g. in Symfony 5.4).
 
 Build Documentation Locally
 ---------------------------
@@ -42,4 +42,10 @@ $ composer install
 $ php build.php
 ```
 
-Now you can browse the docs at `_build/output/index.html`
+After generating docs, serve them with the internal PHP server:
+
+```bash
+$ php -S localhost:8000 -t output/
+```
+
+Browse `http://localhost:8000` to read the docs.

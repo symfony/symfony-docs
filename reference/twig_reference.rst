@@ -225,6 +225,8 @@ Returns the absolute URL (with scheme and host) for the given route. If
     Read more about :doc:`Symfony routing </routing>` and about
     :ref:`creating links in Twig templates <templates-link-to-pages>`.
 
+.. _reference-twig-function-absolute-url:
+
 absolute_url
 ~~~~~~~~~~~~
 
@@ -238,6 +240,8 @@ absolute_url
 Returns the absolute URL (with scheme and host) from the passed relative path. Combine it with the
 :ref:`asset() function <reference-twig-function-asset>` to generate absolute URLs
 for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Assets <templates-link-to-assets>`.
+
+.. _reference-twig-function-relative-path:
 
 relative_path
 ~~~~~~~~~~~~~
@@ -665,4 +669,4 @@ The ``app`` variable is injected automatically by Symfony in all templates and
 provides access to lots of useful application information. Read more about the
 :ref:`Twig global app variable <twig-app-variable>`.
 
-.. _`default filters and functions defined by Twig`: https://twig.symfony.com/doc/2.x/#reference
+.. _`default filters and functions defined by Twig`: https://twig.symfony.com/doc/3.x/#reference

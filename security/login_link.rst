@@ -219,7 +219,7 @@ this interface::
     </form>
     {% endblock %}
 
-In this controller, the user is submitting their e-mail address to the
+In this controller, the user is submitting their email address to the
 controller. Based on this property, the correct user is loaded and a login
 link is created using
 :method:`Symfony\\Component\\Security\\Http\\LoginLink\\LoginLinkHandlerInterface::createLoginLink`.
@@ -235,7 +235,7 @@ link is created using
 3) Send the Login Link to the User
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now the link is created, it needs to be send to the user. Anyone with the
+Now the link is created, it needs to be sent to the user. Anyone with the
 link is able to login as this user, so you need to make sure to send it to
 a known device of them (e.g. using e-mail or SMS).
 
@@ -693,7 +693,7 @@ success handler behaves, create your own handler as a class that implements
             $user = $token->getUser();
             $userApiToken = $user->getApiToken();
 
-            return new JsonResponse(['apiToken' => 'userApiToken']);
+            return new JsonResponse(['apiToken' => $userApiToken]);
         }
     }
 

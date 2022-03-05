@@ -118,7 +118,7 @@ listener class:
 #. If the ``kernel.event_listener`` tag defines the ``method`` attribute, that's
    the name of the method to be called;
 #. If no ``method`` attribute is defined, try to call the method whose name
-   is ``on`` + "camel-cased event name" (e.g. ``onKernelException()`` method for
+   is ``on`` + "PascalCased event name" (e.g. ``onKernelException()`` method for
    the ``kernel.exception`` event);
 #. If that method is not defined either, try to call the ``__invoke()`` magic
    method (which makes event listeners invokable);
@@ -141,8 +141,8 @@ Creating an Event Subscriber
 
 Another way to listen to events is via an **event subscriber**, which is a class
 that defines one or more methods that listen to one or various events. The main
-difference with the event listeners is that subscribers always know which events
-they are listening to.
+difference with the event listeners is that subscribers always know the events
+to which they are listening.
 
 If different event subscriber methods listen to the same event, their order is
 defined by the ``priority`` parameter. This value is a positive or negative

@@ -76,7 +76,7 @@ members will not be included in any communication on the incidents as well as re
 created related to the incidents.
 
 CARE team members are expected to inform the CARE team and the reporters
-in case of conflicts on interest and recuse themselves if this is deemed a problem.
+in case of a conflict of interest, and recuse themselves if this is deemed to be a problem.
 
 Appealing the response
 ----------------------

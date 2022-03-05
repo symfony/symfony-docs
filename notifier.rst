@@ -42,7 +42,7 @@ The notifier component supports the following channels:
 
 .. tip::
 
-    Use :doc:`secrets </configuration/secrets>` to securily store your
+    Use :doc:`secrets </configuration/secrets>` to securely store your
     API's tokens.
 
 .. _notifier-sms-channel:
@@ -86,6 +86,7 @@ SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?
 Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
+Vonage          ``symfony/vonage-notifier``           ``vonage://KEY:SECRET@default?from=FROM``
 Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
 ==============  ====================================  ===========================================================================
 
@@ -102,10 +103,14 @@ Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default
     The Iqsms, GatewayApi, Octopush, AllMySms, Clickatell, SpotHit, FakeSms (email), LightSms, SmsBiuras
     and MessageBird integrations were introduced in Symfony 5.3.
 
+.. deprecated:: 5.4
+
+    The Nexmo integration was deprecated in Symfony 5.4, use the Vonage integration instead.
+
 .. versionadded:: 5.4
 
-    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms, Mailjet, FakeSms (logger)
-    and Sms77 integrations were introduced in Symfony 5.4.
+    The MessageMedia, Smsc, Yunpian, AmazonSns, Telnyx, TurboSms, Mailjet, FakeSms (logger),
+    Sms77 and Vonage integrations were introduced in Symfony 5.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -475,9 +480,7 @@ To send a notification, autowire the
 
     class InvoiceController extends AbstractController
     {
-        /**
-         * @Route("/invoice/create")
-         */
+        #[Route('/invoice/create')]
         public function create(NotifierInterface $notifier)
         {
             // ...
@@ -513,10 +516,10 @@ Symfony provides the following recipients:
 :class:`Symfony\\Component\\Notifier\\Recipient\\NoRecipient`
     This is the default and is useful when there is no need to have
     information about the receiver. For example, the browser channel uses
-    the current requests's :ref:`session flashbag <flash-messages>`;
+    the current requests' :ref:`session flashbag <flash-messages>`;
 
 :class:`Symfony\\Component\\Notifier\\Recipient\\Recipient`
-    This can contain both email address and phonenumber of the user. This
+    This can contain both the email address and the phone number of the user. This
     recipient can be used for all channels (depending on whether they are
     actually set).
 
@@ -609,9 +612,7 @@ sent using the Slack transport::
     // ...
     class InvoiceController extends AbstractController
     {
-        /**
-         * @Route("/invoice/create")
-         */
+        #[Route('/invoice/create')]
         public function invoice(NotifierInterface $notifier)
         {
             // ...

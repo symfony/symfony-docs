@@ -95,6 +95,13 @@ native        ``native://default``                      Mailer uses the sendmail
                                                         ``php.ini`` settings when ``sendmail_path`` is not configured.
 ============  ========================================  ==============================================================
 
+.. caution::
+
+    When using ``native://default``, if ``php.ini`` uses the ``sendmail -t``
+    command, you won't have error reporting and ``Bcc`` headers won't be removed.
+    It's highly recommended to NOT use ``native://default`` as you cannot control
+    how sendmail is configured (prefer using ``sendmail://default`` if possible).
+
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -182,7 +189,7 @@ OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a   
 
 .. caution::
 
-    If you want to use ``ses+smtp`` transport together with :doc:`Messenger </messenger>`
+    If you want to use the ``ses+smtp`` transport together with :doc:`Messenger </messenger>`
     to :ref:`send messages in background <mailer-sending-messages-async>`,
     you need to add the ``ping_threshold`` parameter to your ``MAILER_DSN`` with
     a value lower than ``10``: ``ses+smtp://USERNAME:PASSWORD@default?ping_threshold=9``
@@ -338,9 +345,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
 
     class MailerController extends AbstractController
     {
-        /**
-         * @Route("/email")
-         */
+        #[Route('/email')]
         public function sendEmail(MailerInterface $mailer): Response
         {
             $email = (new Email())
@@ -545,8 +550,8 @@ and headers.
                     sender: 'fabien@example.com'
                     recipients: ['foo@example.com', 'bar@example.com']
                 headers:
-                    from: 'Fabien <fabien@example.com>'
-                    bcc: 'baz@example.com'
+                    From: 'Fabien <fabien@example.com>'
+                    Bcc: 'baz@example.com'
                     X-Custom-Header: 'foobar'
 
     .. code-block:: xml
@@ -568,8 +573,8 @@ and headers.
                         <framework:recipients>foo@example.com</framework:recipients>
                         <framework:recipients>bar@example.com</framework:recipients>
                     </framework:envelope>
-                    <framework:header name="from">Fabien &lt;fabien@example.com&gt;</framework:header>
-                    <framework:header name="bcc">baz@example.com</framework:header>
+                    <framework:header name="From">Fabien &lt;fabien@example.com&gt;</framework:header>
+                    <framework:header name="Bcc">baz@example.com</framework:header>
                     <framework:header name="X-Custom-Header">foobar</framework:header>
                 </framework:mailer>
             </framework:config>
@@ -588,8 +593,8 @@ and headers.
                     ->recipients(['foo@example.com', 'bar@example.com'])
             ;
 
-            $mailer->header('from')->value('Fabien <fabien@example.com>');
-            $mailer->header('bcc')->value('baz@example.com');
+            $mailer->header('From')->value('Fabien <fabien@example.com>');
+            $mailer->header('Bcc')->value('baz@example.com');
             $mailer->header('X-Custom-Header')->value('foobar');
         };
 
@@ -1443,6 +1448,37 @@ a specific address, instead of the *real* address:
                     ->recipients(['youremail@example.com'])
             ;
         };
+
+Write a Functional Test
+~~~~~~~~~~~~~~~~~~~~~~~
+
+To functionally test that an email was sent, and even assert the email content or headers,
+you can use the built in assertions::
+
+    // tests/Controller/MailControllerTest.php
+    namespace App\Tests\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    class MailControllerTest extends WebTestCase
+    {
+        use MailerAssertionsTrait;
+
+        public function testMailIsSentAndContentIsOk()
+        {
+            $client = $this->createClient();
+            $client->request('GET', '/mail/send');
+            $this->assertResponseIsSuccessful();
+
+            $this->assertEmailCount(1);
+
+            $email = $this->getMailerMessage();
+
+            $this->assertEmailHtmlBodyContains($email, 'Welcome');
+            $this->assertEmailTextBodyContains($email, 'Welcome');
+        }
+    }
 
 .. _`high availability`: https://en.wikipedia.org/wiki/High_availability
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)

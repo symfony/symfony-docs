@@ -186,7 +186,7 @@ If there is *not* a service whose id exactly matches the type, a clear exception
 will be thrown.
 
 Autowiring is a great way to automate configuration, and Symfony tries to be as
-*predictable* and clear as possible.
+*predictable* and as clear as possible.
 
 .. _service-autowiring-alias:
 
@@ -611,7 +611,7 @@ you can use the ``@required`` annotation instead.
 
     The ``#[Required]`` attribute was introduced in Symfony 5.2.
 
-Despite property injection has some :ref:`drawbacks <property-injection>`,
+Despite property injection having some :ref:`drawbacks <property-injection>`,
 autowiring with ``#[Required]`` or ``@required`` can also be applied to public
 typed properties:
 

@@ -256,9 +256,10 @@ argument of type ``service_locator``:
         # config/services.yaml
         services:
             App\CommandBus:
-                arguments: !service_locator
-                    App\FooCommand: '@app.command_handler.foo'
-                    App\BarCommand: '@app.command_handler.bar'
+                arguments: 
+                  - !service_locator
+                      App\FooCommand: '@app.command_handler.foo'
+                      App\BarCommand: '@app.command_handler.bar'
 
     .. code-block:: xml
 

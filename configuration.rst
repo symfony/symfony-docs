@@ -410,6 +410,88 @@ In reality, each environment differs only somewhat from others. This means that
 all environments share a large base of common configuration, which is put in
 files directly in the ``config/packages/`` directory.
 
+.. tip::
+
+    .. versionadded:: 5.3
+
+        The ability to defined different environments in a single file was
+        introduced in Symfony 5.3.
+
+    You can also define options for different environments in a single
+    configuration file using the special ``when`` keyword:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/webpack_encore.yaml
+            webpack_encore:
+                # ...
+                output_path: '%kernel.project_dir%/public/build'
+                strict_mode: true
+                cache: false
+
+            # cache is enabled only in the "prod" environment
+            when@prod:
+                webpack_encore:
+                    cache: true
+
+            # disable strict mode only in the "test" environment
+            when@test:
+                webpack_encore:
+                    strict_mode: false
+
+        .. code-block:: xml
+
+            <!-- config/packages/webpack_encore.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                <webpack-encore:config
+                    output-path="%kernel.project_dir%/public/build"
+                    strict-mode="true"
+                    cache="false"
+                />
+
+                <!-- cache is enabled only in the "test" environment -->
+                <when env="prod">
+                    <webpack-encore:config cache="true"/>
+                </when>
+
+                <!-- disable strict mode only in the "test" environment -->
+                <when env="test">
+                    <webpack-encore:config strict-mode="false"/>
+                </when>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+            use Symfony\Config\WebpackEncoreConfig;
+
+            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container) {
+                $webpackEncore
+                    ->outputPath('%kernel.project_dir%/public/build')
+                    ->strictMode(true)
+                    ->cache(false)
+                ;
+
+                // cache is enabled only in the "prod" environment
+                if ('prod' === $container->env()) {
+                    $webpackEncore->cache(true);
+                }
+
+                // disable strict mode only in the "test" environment
+                if ('test' === $container->env()) {
+                    $webpackEncore->strictMode(false);
+                }
+            };
+
 .. seealso::
 
     See the ``configureContainer()`` method of
@@ -467,6 +549,12 @@ going to production:
     It's common for environments to be similar to each other, so you can
     use `symbolic links`_ between ``config/packages/<environment-name>/``
     directories to reuse the same configuration.
+
+Instead of creating new environments, you can use environment variables as
+explained in the following section. This way you can use the same application
+and environment (e.g. ``prod``) but change its behavior thanks to the
+configuration based on environment variables (e.g. to run the application in
+different scenarios: staging, quality assurance, client review, etc.)
 
 .. _config-env-vars:
 
@@ -687,7 +775,7 @@ Configuring Environment Variables in Production
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In production, the ``.env`` files are also parsed and loaded on each request. So
-the easiest way to define env vars is by deploying a ``.env.local`` file to your
+the easiest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
 To improve performance, you can optionally run the ``dump-env`` command (available

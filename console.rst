@@ -146,8 +146,33 @@ available in the ``configure()`` method::
 Registering the Command
 -----------------------
 
-Symfony commands must be registered as services and :doc:`tagged </service_container/tags>`
-with the ``console.command`` tag. If you're using the
+In PHP 8 and newer versions, you can register the command by adding the
+``AsCommand`` attribute to it::
+
+    // src/Command/CreateUserCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+
+    #[AsCommand(
+        name: 'app:create-user',
+        description: 'Creates a new user.',
+        hidden: false,
+        aliases: ['app:add-user']
+    )]
+    class CreateUserCommand extends Command
+    {
+        // ...
+    }
+
+.. versionadded:: 5.3
+
+    The ability to use PHP attributes to configure commands was introduced in
+    Symfony 5.3.
+
+If you can't use PHP attributes, register the command as a service and
+:doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 

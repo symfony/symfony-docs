@@ -29,7 +29,7 @@ After the library is installed, try running PHPUnit:
 
     $ php ./vendor/bin/phpunit
 
-This commands automatically runs your application's tests. Each test is a
+This command automatically runs your application tests. Each test is a
 PHP class ending with "Test" (e.g. ``BlogControllerTest``) that lives in
 the ``tests/`` directory of your application.
 
@@ -147,7 +147,7 @@ usually defined in the ``KERNEL_CLASS`` environment variable
 
     If your use case is more complex, you can also override the
     ``getKernelClass()`` or ``createKernel()`` methods of your functional
-    test, which take precedence over the ``KERNEL_CLASS`` env var.
+    test, which takes precedence over the ``KERNEL_CLASS`` env var.
 
 Set-up your Test Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -222,7 +222,7 @@ If you need to customize some environment variables for your tests (e.g. the
 ``DATABASE_URL`` used by Doctrine), you can do that by overriding anything you
 need in your ``.env.test`` file:
 
-.. code-block:: text
+.. code-block:: env
 
     # .env.test
 
@@ -268,7 +268,7 @@ the container is stored in ``static::getContainer()``::
             $newsletterGenerator = $container->get(NewsletterGenerator::class);
             $newsletter = $newsletterGenerator->generateMonthlyNews(...);
 
-            $this->assertEquals(..., $newsletter->getContent());
+            $this->assertEquals('...', $newsletter->getContent());
         }
     }
 
@@ -378,7 +378,7 @@ generate an empty fixture class:
     The class name of the fixtures to create (e.g. AppFixtures):
     > ProductFixture
 
-Then you modify use this class to load new entities in the database. For
+Then you modify and use this class to load new entities in the database. For
 instance, to load ``Product`` objects into Doctrine, use::
 
     // src/DataFixtures/ProductFixture.php
@@ -583,7 +583,7 @@ Logging in Users (Authentication)
 
 When you want to add application tests for protected pages, you have to
 first "login" as a user. Reproducing the actual steps - such as
-submitting a login form - make a test very slow. For this reason, Symfony
+submitting a login form - makes a test very slow. For this reason, Symfony
 provides a ``loginUser()`` method to simulate logging in in your functional
 tests.
 
@@ -633,7 +633,7 @@ stores in the session of the test client.
 Making AJAX Requests
 ....................
 
-The client provides a
+The client provides an
 :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest`
 method, which has the same arguments as the ``request()`` method and is
 a shortcut to make AJAX requests::
@@ -917,7 +917,7 @@ Request Assertions
     Asserts the given :ref:`request attribute <component-foundation-attributes>`
     is set to the expected value.
 ``assertRouteSame($expectedRoute, array $parameters = [], string $message = '')``
-    Asserts the request matched the given route and optionally route parameters.
+    Asserts the request matches the given route and optionally route parameters.
 
 Browser Assertions
 ..................
@@ -929,8 +929,8 @@ Browser Assertions
     Asserts the given cookie in the test Client is set to the expected
     value.
 ``assertThatForClient(Constraint $constraint, string $message = '')``
-    Asserts the given Constraint in the Client. Useful to use your custom asserts
-    in the same way of built-in asserts (i.e. without passing the Client as argument)::
+    Asserts the given Constraint in the Client. Useful for using your custom asserts
+    in the same way as built-in asserts (i.e. without passing the Client as argument)::
 
         // add this method in some custom class imported in your tests
         protected static function assertMyOwnCustomAssert(): void
@@ -993,7 +993,7 @@ Mailer Assertions
 ``assertEmailAttachmentCount(RawMessage $email, int $count, string $message = '')``
     Asserts that the given email has the expected number of attachments. Use
     ``getMailerMessage(int $index = 0, string $transport = null)`` to
-    retrievea specific email by index.
+    retrieve a specific email by index.
 ``assertEmailTextBodyContains(RawMessage $email, string $text, string $message = '')``/``assertEmailTextBodyNotContains(RawMessage $email, string $text, string $message = '')``
     Asserts that the text body of the given email does (not) contain the
     expected text.

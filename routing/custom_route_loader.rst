@@ -82,7 +82,7 @@ Symfony provides several route loaders for the most common needs:
 
 .. note::
 
-    When importing resources, the key (e.g. ``app_file``) is the name of collection.
+    When importing resources, the key (e.g. ``app_file``) is the name of the collection.
     Just be sure that it's unique per file so no other lines override it.
 
 If your application needs are different, you can create your own custom route

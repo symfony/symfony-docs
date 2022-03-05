@@ -596,7 +596,7 @@ don't accidentally block Symfony's dev tools - which live under URLs like
 
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
 it matches *all* URLs). A firewall can have many modes of authentication,
-in other words many ways to ask the question "Who are you?".
+in other words, it enables many ways to ask the question "Who are you?".
 
 Often, the user is unknown (i.e. not logged in) when they first visit your
 website. If you visit your homepage right now, you *will* have access and
@@ -2199,30 +2199,55 @@ will happen:
 Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
 using annotations:
 
-.. code-block:: diff
+.. configuration-block::
 
-      // src/Controller/AdminController.php
-      // ...
+    .. code-block:: php-annotations
 
-    + use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+        // src/Controller/AdminController.php
+        // ...
 
-    + /**
-    +  * Require ROLE_ADMIN for *every* controller method in this class.
-    +  *
-    +  * @IsGranted("ROLE_ADMIN")
-    +  */
-      class AdminController extends AbstractController
-      {
-    +     /**
-    +      * Require ROLE_ADMIN for only this controller method.
-    +      *
-    +      * @IsGranted("ROLE_ADMIN")
-    +      */
-          public function adminDashboard(): Response
-          {
-              // ...
-          }
-      }
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+        /**
+         * Require ROLE_ADMIN for all the actions of this controller
+         *
+         * @IsGranted("ROLE_ADMIN")
+         */
+        class AdminController extends AbstractController
+        {
+            /**
+             * Require ROLE_SUPER_ADMIN only for this action
+             *
+             * @IsGranted("ROLE_SUPER_ADMIN")
+             */
+            public function adminDashboard(): Response
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Controller/AdminController.php
+        // ...
+
+        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+        /**
+         * Require ROLE_ADMIN for all the actions of this controller
+         */
+        #[IsGranted('ROLE_ADMIN')]
+        class AdminController extends AbstractController
+        {
+            /**
+             * Require ROLE_SUPER_ADMIN only for this action
+             */
+            #[IsGranted('ROLE_SUPER_ADMIN')]
+            public function adminDashboard(): Response
+            {
+                // ...
+            }
+        }
 
 For more information, see the `FrameworkExtraBundle documentation`_.
 
@@ -2408,9 +2433,11 @@ Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you *only* want to check if a user is logged in (you don't care about roles),
-you have two options. First, if you've given *every* user ``ROLE_USER``, you can
-check for that role. Otherwise, you can use a special "attribute" in place of a
-role::
+you have the following two options.
+
+Firstly, if you've given *every* user ``ROLE_USER``, you can check for that role.
+
+Secondly, you can use a special "attribute" in place of a role::
 
     // ...
 
@@ -2562,7 +2589,7 @@ Authentication Events
 
 .. raw:: html
 
-    <object data="../_images/security/security_events.svg" type="image/svg+xml"></object>
+    <object data="./_images/security/security_events.svg" type="image/svg+xml"></object>
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\CheckPassportEvent`
     Dispatched after the authenticator created the :ref:`security passport <security-passport>`.
@@ -2575,7 +2602,7 @@ Authentication Events
     where you need to modify the created token (e.g. for multi factor
     authentication).
 
-:class:`Symfony\\Component\\Security\\Http\\Event\\AuthenticationSuccessEvent`
+:class:`Symfony\\Component\\Security\\Core\\Event\\AuthenticationSuccessEvent`
     Dispatched when authentication is nearing success. This is the last
     event that can make an authentication fail by throwing an
     ``AuthenticationException``.
@@ -2618,8 +2645,8 @@ Frequently Asked Questions
     you authenticate against one firewall, you will *not* be authenticated against
     any other firewalls automatically. Different firewalls are like different security
     systems. To do this you have to explicitly specify the same
-    :ref:`reference-security-firewall-context` for different firewalls. But usually
-    for most applications, having one main firewall is enough.
+    :ref:`reference-security-firewall-context` for different firewalls. However,
+    one main firewall is usually sufficient for the needs of most applications.
 
 **Security doesn't seem to work on my Error Pages**
     As routing is done *before* security, 404 error pages are not covered by

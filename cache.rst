@@ -50,7 +50,7 @@ of:
     An adapter is a *template* that you use to create pools.
 **Provider**
     A provider is a service that some adapters use to connect to the storage.
-    Redis and Memcached are example of such adapters. If a DSN is used as the
+    Redis and Memcached are examples of such adapters. If a DSN is used as the
     provider then a service is automatically created.
 
 There are two pools that are always enabled by default. They are ``cache.app`` and
@@ -810,5 +810,5 @@ Then, register the ``SodiumMarshaller`` service using this key:
 
 When configuring multiple keys, the first key will be used for reading and
 writing, and the additional key(s) will only be used for reading. Once all
-cache items encrypted with the old key have expired, you can remove
-``OLD_CACHE_DECRYPTION_KEY`` completely.
+cache items encrypted with the old key have expired, you can completely remove
+``OLD_CACHE_DECRYPTION_KEY``.

@@ -30,7 +30,7 @@ to create new Symfony applications:
 
 .. code-block:: terminal
 
-    $ symfony new my_project_name
+    $ symfony new my_project_directory
 
 Under the hood, this Symfony binary command executes the needed `Composer`_
 command to :ref:`create a new Symfony application <creating-symfony-applications>`
@@ -269,7 +269,7 @@ Templates
 Use Snake Case for Template Names and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use lowercased snake_case for template names, directories and variables (e.g.
+Use lowercase snake_case for template names, directories and variables (e.g.
 ``user_profile`` instead of ``userProfile`` and ``product/edit_form.html.twig``
 instead of ``Product/EditForm.html.twig``).
 
@@ -378,7 +378,8 @@ Use Voters to Implement Fine-grained Security Restrictions
 
 If your security logic is complex, you should create custom
 :doc:`security voters </security/voters>` instead of defining long expressions
-inside the ``@Security`` annotation.
+inside the ``#[Security]`` attribute (or in the ``@Security`` annotation if your
+PHP version doesn't support attributes yet).
 
 Web Assets
 ----------
@@ -387,7 +388,7 @@ Use Webpack Encore to Process Web Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Web assets are things like CSS, JavaScript and image files that make the
-frontend of your site look and work great. `Webpack`_ is the leading JavaScript
+frontend of your site looks and works great. `Webpack`_ is the leading JavaScript
 module bundler that compiles, transforms and packages assets for usage in a browser.
 
 :doc:`Webpack Encore </frontend>` is a JavaScript library that gets rid of most
@@ -439,7 +440,9 @@ Add this test while creating your application because it requires little effort
 and checks that none of your pages returns an error. Later, you'll add more
 specific tests for each page.
 
-Hardcode URLs in a Functional Test
+.. _hardcode-urls-in-a-functional-test:
+
+Hard-code URLs in a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Symfony applications, it's recommended to :ref:`generate URLs <routing-generating-urls>`

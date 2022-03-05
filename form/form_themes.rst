@@ -76,7 +76,7 @@ want to use another theme for all the forms of your app, configure it in the
 
         # config/packages/twig.yaml
         twig:
-            form_themes: ['bootstrap_4_horizontal_layout.html.twig']
+            form_themes: ['bootstrap_5_horizontal_layout.html.twig']
             # ...
 
     .. code-block:: xml
@@ -91,7 +91,7 @@ want to use another theme for all the forms of your app, configure it in the
                 http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form-theme>bootstrap_4_horizontal_layout.html.twig</twig:form-theme>
+                <twig:form-theme>bootstrap_5_horizontal_layout.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
         </container>
@@ -103,7 +103,7 @@ want to use another theme for all the forms of your app, configure it in the
 
         return static function (TwigConfig $twig) {
             $twig->formThemes([
-                'bootstrap_4_horizontal_layout.html.twig',
+                'bootstrap_5_horizontal_layout.html.twig',
             ]);
 
             // ...
@@ -164,7 +164,7 @@ You can also apply a form theme to a specific child of your form:
     {% form_theme form.a_child_form 'form/my_custom_theme.html.twig' %}
 
 This is useful when you want to have a custom theme for a nested form that's
-different than the one of your main form. Specify both your themes:
+different from the one of your main form. Specify both your themes:
 
 .. code-block:: twig
 
@@ -656,5 +656,5 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
 .. _`Foundation CSS framework`: https://get.foundation/
 .. _`tailwind_2_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/tailwind_2_layout.html.twig
 .. _`Tailwind CSS form plugin`: https://tailwindcss-forms.vercel.app/
-.. _`Twig "use" tag`: https://twig.symfony.com/doc/2.x/tags/use.html
-.. _`Twig parent() function`: https://twig.symfony.com/doc/2.x/functions/parent.html
+.. _`Twig "use" tag`: https://twig.symfony.com/doc/3.x/tags/use.html
+.. _`Twig parent() function`: https://twig.symfony.com/doc/3.x/functions/parent.html

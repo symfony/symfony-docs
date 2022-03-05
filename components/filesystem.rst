@@ -438,15 +438,13 @@ Especially when storing many paths, the amount of duplicated information is
 noticeable. You can use :method:`Symfony\\Component\\Filesystem\\Path::getLongestCommonBasePath`
 to check a list of paths for a common base path::
 
-    $paths = [
+    Path::getLongestCommonBasePath(
         '/var/www/vhosts/project/httpdocs/config/config.yaml',
         '/var/www/vhosts/project/httpdocs/config/routing.yaml',
         '/var/www/vhosts/project/httpdocs/config/services.yaml',
         '/var/www/vhosts/project/httpdocs/images/banana.gif',
-        '/var/www/vhosts/project/httpdocs/uploads/images/nicer-banana.gif',
-    ];
-
-    Path::getLongestCommonBasePath($paths);
+        '/var/www/vhosts/project/httpdocs/uploads/images/nicer-banana.gif'
+    );
     // => /var/www/vhosts/project/httpdocs
 
 Use this path together with :method:`Symfony\\Component\\Filesystem\\Path::makeRelative`

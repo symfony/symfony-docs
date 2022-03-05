@@ -4,14 +4,14 @@ How to Write a Custom Authenticator
 Symfony comes with :ref:`many authenticators <security-authenticators>` and
 third party bundles also implement more complex cases like JWT and oAuth
 2.0. However, sometimes you need to implement a custom authentication
-mechanism that doesn't exists yet or you need to customize one. In such
+mechanism that doesn't exist yet or you need to customize one. In such
 cases, you must create and use your own authenticator.
 
 Authenticators should implement the
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AuthenticatorInterface`.
 You can also extend
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\AbstractAuthenticator`,
-which has a default implementation for the ``createAuthenticatedToken()``
+which has a default implementation for the ``createToken()``
 method that fits most use-cases::
 
     // src/Security/ApiKeyAuthenticator.php
@@ -133,7 +133,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
 .. versionadded:: 5.2
 
     Starting with Symfony 5.2, the custom authenticator is automatically
-    registered as entry point if it implements ``AuthenticationEntryPointInterface``.
+    registered as an entry point if it implements ``AuthenticationEntryPointInterface``.
 
     Prior to 5.2, you had to configure the entry point separately using the
     ``entry_point`` option. Read :doc:`/security/entry_point` for more
@@ -171,7 +171,7 @@ can define what happens in these cases:
 
     **Caution**: Never use ``$exception->getMessage()`` for ``AuthenticationException``
     instances. This message might contain sensitive information that you
-    don't want to expose publicly. Instead, use ``$exception->getMessageKey()``
+    don't want to be publicly exposed. Instead, use ``$exception->getMessageKey()``
     and ``$exception->getMessageData()`` like shown in the full example
     above. Use :class:`Symfony\\Component\\Security\\Core\\Exception\\CustomUserMessageAuthenticationException`
     if you want to set custom error messages.
@@ -322,7 +322,6 @@ would initialize the passport like this::
     use Symfony\Component\Security\Http\Authenticator\Passport\Badge\CsrfTokenBadge;
     use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
     use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
-    use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
     class LoginAuthenticator extends AbstractAuthenticator
     {
@@ -342,39 +341,39 @@ would initialize the passport like this::
         }
     }
 
-.. tip::
-
-    Besides badges, passports can define attributes, which allows the
-    ``authenticate()`` method to store arbitrary information in the
-    passport to access it from other authenticator methods (e.g.
-    ``createAuthenticatedToken()``)::
-
-        // ...
-        use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-
-        class LoginAuthenticator extends AbstractAuthenticator
-        {
-            // ...
-
-            public function authenticate(Request $request): Passport
-            {
-                // ... process the request
-
-                $passport = new SelfValidatingPassport(new UserBadge($username), []);
-
-                // set a custom attribute (e.g. scope)
-                $passport->setAttribute('scope', $oauthScope);
-
-                return $passport;
-            }
-
-            public function createToken(Passport $passport, string $firewallName): TokenInterface
-            {
-                // read the attribute value
-                return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
-            }
-        }
+Passport Attributes
+-------------------
 
 .. versionadded:: 5.2
 
     Passport attributes were introduced in Symfony 5.2.
+
+Besides badges, passports can define attributes, which allows the ``authenticate()``
+method to store arbitrary information in the passport to access it from other
+authenticator methods (e.g. ``createAuthenticatedToken()``)::
+
+    // ...
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+
+    class LoginAuthenticator extends AbstractAuthenticator
+    {
+        // ...
+
+        public function authenticate(Request $request): PassportInterface
+        {
+            // ... process the request
+
+            $passport = new SelfValidatingPassport(new UserBadge($username), []);
+
+            // set a custom attribute (e.g. scope)
+            $passport->setAttribute('scope', $oauthScope);
+
+            return $passport;
+        }
+
+        public function createAuthenticatedToken(PassportInterface $passport, string $firewallName): TokenInterface
+        {
+            // read the attribute value
+            return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
+        }
+    }

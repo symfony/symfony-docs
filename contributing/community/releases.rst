@@ -80,7 +80,7 @@ of Symfony to the next one.
 
 When a feature implementation cannot be replaced with a better one without
 breaking backward compatibility, Symfony deprecates the old implementation and
-adds a new preferred one along side. Read the
+adds a new preferred one alongside. Read the
 :ref:`conventions <contributing-code-conventions-deprecations>` document to
 learn more about how deprecations are handled in Symfony.
 
@@ -104,7 +104,7 @@ deprecated features, which your project no longer uses).
 PHP Compatibility
 -----------------
 
-The **minimum** PHP version is decided for each major Symfony version by consensus
+The **minimum** PHP version is decided for each **major** Symfony version by consensus
 amongst the :doc:`core team </contributing/code/core_team>` and documented as
 part of the :ref:`technical requirements for running Symfony applications
 <symfony-tech-requirements>`.
@@ -116,6 +116,12 @@ one that is publicly available.
 
 For out-of-support releases of Symfony, the latest PHP version at time of EOL is the last
 supported PHP version. Newer versions of PHP may or may not function.
+
+.. note::
+
+    By exception to the rule, bumping the minimum **minor** version of PHP is
+    possible for a **minor** Symfony version when this helps fix important
+    issues.
 
 Rationale
 ---------

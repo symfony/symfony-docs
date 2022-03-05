@@ -53,7 +53,102 @@ will invalidate all signed URIs and Remember Me cookies. That's why, after
 changing this value, you should regenerate the application cache and log
 out all the application users.
 
-.. _configuration-framework-http_method_override:
+.. _configuration-framework-http_cache:
+
+http_cache
+~~~~~~~~~~
+
+.. versionadded:: 5.2
+
+    The ``http_cache`` option was introduced in Symfony 5.2.
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+debug
+.....
+
+**type**: ``boolean`` **default**: ``%kernel.debug%``
+
+If true, exceptions are thrown when things go wrong. Otherwise, the cache will
+try to carry on and deliver a meaningful response.
+
+trace_level
+...........
+
+**type**: ``string`` **possible values**: ``'none'``, ``'short'`` or ``'full'``
+
+For 'short', a concise trace of the main request will be added as an HTTP header.
+'full' will add traces for all requests (including ESI subrequests).
+(default: 'full' if in debug; 'none' otherwise)
+
+trace_header
+............
+
+**type**: ``string``
+
+Header name to use for traces. (default: X-Symfony-Cache)
+
+default_ttl
+...........
+
+**type**: ``integer``
+
+The number of seconds that a cache entry should be considered fresh when no
+explicit freshness information is provided in a response. Explicit
+Cache-Control or Expires headers override this value. (default: 0)
+
+private_headers
+...............
+
+**type**: ``array``
+
+Set of request headers that trigger "private" cache-control behavior on responses
+that don't explicitly state whether the response is public or private via a
+Cache-Control directive. (default: Authorization and Cookie)
+
+allow_reload
+............
+
+**type**: ``string``
+
+Specifies whether the client can force a cache reload by including a
+Cache-Control "no-cache" directive in the request. Set it to ``true``
+for compliance with RFC 2616. (default: false)
+
+allow_revalidate
+................
+
+**type**: ``string``
+
+Specifies whether the client can force a cache revalidate by including a
+Cache-Control "max-age=0" directive in the request. Set it to ``true``
+for compliance with RFC 2616. (default: false)
+
+stale_while_revalidate
+......................
+
+**type**: ``integer``
+
+Specifies the default number of seconds (the granularity is the second as the
+Response TTL precision is a second) during which the cache can immediately return
+a stale response while it revalidates it in the background (default: 2).
+This setting is overridden by the stale-while-revalidate HTTP Cache-Control
+extension (see RFC 5861).
+
+stale_if_error
+..............
+
+**type**: ``integer``
+
+Specifies the default number of seconds (the granularity is the second) during
+which the cache can serve a stale response when an error is encountered
+(default: 60). This setting is overridden by the stale-if-error HTTP
+Cache-Control extension (see RFC 5861).
+
+ .. _configuration-framework-http_method_override:
 
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
@@ -1112,7 +1207,7 @@ timeout
 
 **type**: ``float`` **default**: depends on your PHP config
 
-Time, in seconds, to wait for a response. If the response stales for longer, a
+Time, in seconds, to wait for a response. If the response takes longer, a
 :class:`Symfony\\Component\\HttpClient\\Exception\\TransportException` is thrown.
 Its default value is the same as the value of PHP's `default_socket_timeout`_
 config option.
@@ -1379,7 +1474,7 @@ when using ``.``, instead of matching only a single byte.
 
 If the charset of your application is UTF-8 (as defined in the
 :ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it's
-recommended to set it to ``true``. This will make non-UTF8 URLs to generate 404
+recommended setting it to ``true``. This will make non-UTF8 URLs to generate 404
 errors.
 
 .. _config-framework-session:
@@ -1507,8 +1602,8 @@ cookie_samesite
 
 **type**: ``string`` or ``null`` **default**: ``'lax'``
 
-It controls the way cookies are sent when the HTTP request was not originated
-from the same domain the cookies are associated to. Setting this option is
+It controls the way cookies are sent when the HTTP request did not originate
+from the same domain that is associated with the cookies. Setting this option is
 recommended to mitigate `CSRF security attacks`_.
 
 By default, browsers send all cookies related to the domain of the HTTP request.
@@ -1526,7 +1621,7 @@ The possible values for this option are:
   (previously this was the default behavior of null, but in newer browsers ``'lax'``
   would be applied when the header has not been set)
 * ``'strict'`` (or the ``Cookie::SAMESITE_STRICT`` constant), use it to never
-  send any cookie when the HTTP request is not originated from the same domain.
+  send any cookie when the HTTP request did not originate from the same domain.
 * ``'lax'`` (or the ``Cookie::SAMESITE_LAX`` constant), use it to allow sending
   cookies when the request originated from a different domain, but only when the
   user consciously made the request (by clicking a link or submitting a form
@@ -1598,7 +1693,7 @@ sid_bits_per_character
 
 **type**: ``integer`` **default**: ``4``
 
-This determines the number of bits in encoded session ID character. The possible
+This determines the number of bits in the encoded session ID character. The possible
 values are ``4`` (0-9, a-f), ``5`` (0-9, a-v), and ``6`` (0-9, a-z, A-Z, "-", ",").
 The more bits results in stronger session ID. ``5`` is recommended value for
 most environments.
@@ -1879,6 +1974,7 @@ Each package can configure the following options:
 * :ref:`version <reference-framework-assets-version>`
 * :ref:`version_format <reference-assets-version-format>`
 * :ref:`json_manifest_path <reference-assets-json-manifest-path>`
+* :ref:`strict_mode <reference-assets-strict-mode>`
 
 .. _reference-framework-assets-version:
 .. _ref-framework-assets-version:
@@ -2122,6 +2218,8 @@ package:
                     foo_package:
                         # this package uses its own manifest (the default file is ignored)
                         json_manifest_path: "%kernel.project_dir%/public/build/a_different_manifest.json"
+                        # Throws an exception when an asset is not found in the manifest
+                        strict_mode: %kernel.debug%
                     bar_package:
                         # this package uses the global manifest (the default file is used)
                         base_path: '/images'
@@ -2142,9 +2240,10 @@ package:
                 <!-- you can use absolute URLs too and Symfony will download them automatically -->
                 <!-- <framework:assets json-manifest-path="https://cdn.example.com/manifest.json"> -->
                     <!-- this package uses its own manifest (the default file is ignored) -->
+                    <!-- Throws an exception when an asset is not found in the manifest -->
                     <framework:package
                         name="foo_package"
-                        json-manifest-path="%kernel.project_dir%/public/build/a_different_manifest.json"/>
+                        json-manifest-path="%kernel.project_dir%/public/build/a_different_manifest.json" strict-mode="%kernel.debug%"/>
                     <!-- this package uses the global manifest (the default file is used) -->
                     <framework:package
                         name="bar_package"
@@ -2168,7 +2267,9 @@ package:
             // 'json_manifest_path' => 'https://cdn.example.com/manifest.json',
             $framework->assets()->package('foo_package')
                 // this package uses its own manifest (the default file is ignored)
-                ->jsonManifestPath('%kernel.project_dir%/public/build/a_different_manifest.json');
+                ->jsonManifestPath('%kernel.project_dir%/public/build/a_different_manifest.json')
+                // Throws an exception when an asset is not found in the manifest
+                ->setStrictMode('%kernel.debug%');
 
             $framework->assets()->package('bar_package')
                 // this package uses the global manifest (the default file is used)
@@ -2190,10 +2291,26 @@ package:
 
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
+    Since Symfony 5.4, you can set ``strict_mode`` to ``true`` to get an exception when an asset is *not found*.
 
 .. note::
 
     If an URL is set, the JSON manifest is downloaded on each request using the `http_client`_.
+
+.. _reference-assets-strict-mode:
+
+strict_mode
+...........
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 5.4
+
+    The ``strict_mode`` option was introduced in Symfony 5.4.
+
+When enabled, the strict mode asserts that all requested assets are in the
+manifest file. This option is useful to detect typos or missing assets, the
+recommended value is ``%kernel.debug%``.
 
 translator
 ~~~~~~~~~~
@@ -2396,7 +2513,7 @@ The service that is used to persist class metadata in a cache. The service
 has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
 
 Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
-cache provide from the Doctrine project.
+cache provided by the Doctrine project.
 
 .. _reference-validation-enable_annotations:
 
@@ -2445,7 +2562,7 @@ By default, the :doc:`NotCompromisedPassword </reference/constraints/NotCompromi
 constraint uses the public API provided by `haveibeenpwned.com`_. This option
 allows to define a different, but compatible, API endpoint to make the password
 checks. It's useful for example when the Symfony application is run in an
-intranet without public access to Internet.
+intranet without public access to the internet.
 
 static_method
 .............
@@ -2847,7 +2964,7 @@ A list of cache pools to be created by the framework extension.
 
 .. seealso::
 
-    For more information about how pools works, see :ref:`cache pools <component-cache-cache-pools>`.
+    For more information about how pools work, see :ref:`cache pools <component-cache-cache-pools>`.
 
 To configure a Redis cache pool with a default lifetime of 1 hour, do the following:
 
@@ -2959,8 +3076,8 @@ provider
 
 Overwrite the default service name or DSN respectively, if you do not want to
 use what is configured as ``default_X_provider`` under ``cache``. See the
-description of the default provider setting above for the type of adapter
-you use for information on how to specify the provider.
+description of the default provider setting above for information on how to
+specify your specific provider.
 
 clearer
 """""""
@@ -3357,6 +3474,84 @@ type
 Defines the kind of workflow that is going to be created, which can be either
 a normal workflow or a state machine. Read :doc:`this article </workflow/workflow-and-state-machine>`
 to know their differences.
+
+exceptions
+""""""""""
+
+**type**: ``array``
+
+.. versionadded:: 5.4
+
+    The ``exceptions`` option was introduced in Symfony 5.4.
+
+Defines the :ref:`log level </logging>` and HTTP status code applied to the
+exceptions that match the given exception class:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/exceptions.yaml
+        framework:
+            exceptions:
+                Symfony\Component\HttpKernel\Exception\BadRequestHttpException:
+                    log_level: 'debug'
+                    status_code: 422
+
+    .. code-block:: xml
+
+        <!-- config/packages/exceptions.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:exceptions>
+                    <exception id="Symfony\Component\HttpKernel\Exception\BadRequestHttpException">
+                        <framework:log_level>debug</framework:log_level>
+                        <framework:status_code>422</framework:status_code>
+                    </exception>
+                </framework:exceptions>
+                <!-- ... -->
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/exceptions.php
+        use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework
+                ->exceptions(BadRequestHttpException::class)
+                ->log_level('debug');
+
+            $framework
+                ->exceptions(BadRequestHttpException::class)
+                ->status_code(422);
+            ;
+        };
+
+The order in which you configure exceptions is important because Symfony will
+use the configuration of the first exception that matches ``instanceof``:
+
+.. code-block:: yaml
+
+        # config/packages/exceptions.yaml
+        framework:
+            exceptions:
+                Exception:
+                    log_level: 'debug'
+                    status_code: 404
+                # The following configuration will never be used because \RuntimeException extends \Exception
+                RuntimeException:
+                    log_level: 'debug'
+                    status_code: 422
 
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning

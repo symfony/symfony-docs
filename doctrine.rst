@@ -361,7 +361,7 @@ and save it::
 
     // ...
     use App\Entity\Product;
-    use Doctrine\ORM\EntityManagerInterface;
+    use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Component\HttpFoundation\Response;
 
     class ProductController extends AbstractController
@@ -397,10 +397,10 @@ you can query the database directly:
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:query:sql 'SELECT * FROM product'
+    $ php bin/console dbal:run-sql 'SELECT * FROM product'
 
     # on Windows systems not using Powershell, run this command instead:
-    # php bin/console doctrine:query:sql "SELECT * FROM product"
+    # php bin/console dbal:run-sql "SELECT * FROM product"
 
 Take a look at the previous example in more detail:
 
@@ -848,10 +848,10 @@ In addition, you can query directly with SQL if you need to::
                 ORDER BY p.price ASC
                 ';
             $stmt = $conn->prepare($sql);
-            $stmt->execute(['price' => $price]);
+            $resultSet = $stmt->executeQuery(['price' => $price]);
 
             // returns an array of arrays (i.e. a raw data set)
-            return $stmt->fetchAllAssociative();
+            return $resultSet->fetchAllAssociative();
         }
     }
 

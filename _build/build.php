@@ -46,6 +46,12 @@ use SymfonyDocsBuilder\DocBuilder;
         $result = (new DocBuilder())->build($buildConfig);
 
         if ($result->isSuccessful()) {
+            // fix assets URLs to make them absolute (otherwise, they don't work in subdirectories)
+            foreach (glob($outputDir.'/**/*.html') as $htmlFilePath) {
+                $htmlContents = file_get_contents($htmlFilePath);
+                file_put_contents($htmlFilePath, str_replace('href="assets/', 'href="/assets/', $htmlContents));
+            }
+
             $io->success(sprintf("The Symfony Docs were successfully built at %s", realpath($outputDir)));
         } else {
             $io->error(sprintf("There were some errors while building the docs:\n\n%s\n", $result->getErrorTrace()));

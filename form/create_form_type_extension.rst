@@ -192,7 +192,7 @@ Specifically, you need to override the ``file_widget`` block:
 
     {% block file_widget %}
         {{ block('form_widget') }}
-        {% if image_url is not null %}
+        {% if image_url is defined and image_url is not null %}
             <img src="{{ asset(image_url) }}"/>
         {% endif %}
     {% endblock %}

@@ -49,7 +49,7 @@ After installing the package, rebuild your containers by running:
 Symfony Binary Web Server and Docker Support
 --------------------------------------------
 
-If you're using the :ref:`symfony binary web server` (e.g. ``symfony server:start``),
+If you're using the :ref:`symfony binary web server <symfony-local-web-server>` (e.g. ``symfony server:start``),
 then it can automatically detect your Docker services and expose them as environment
 variables. See :ref:`symfony-server-docker`.
 

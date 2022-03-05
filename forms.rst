@@ -158,7 +158,7 @@ added a submit button with a custom label for submitting the form to the server.
 Creating Form Classes
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony recommends to put as little logic as possible in controllers. That's why
+Symfony recommends putting as little logic as possible in controllers. That's why
 it's better to move complex forms to dedicated classes instead of defining them
 in controller actions. Besides, forms defined in classes can be reused in
 multiple actions and services.
@@ -320,8 +320,8 @@ suitable for being rendered in an HTML form.
 
 As short as this rendering is, it's not very flexible. Usually, you'll need more
 control about how the entire form or some of its fields look. For example, thanks
-to the :doc:`Bootstrap 4 integration with Symfony forms </form/bootstrap4>` you
-can set this option to generate forms compatible with the Bootstrap 4 CSS framework:
+to the :doc:`Bootstrap 5 integration with Symfony forms </form/bootstrap5>` you
+can set this option to generate forms compatible with the Bootstrap 5 CSS framework:
 
 .. configuration-block::
 
@@ -329,7 +329,7 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
 
         # config/packages/twig.yaml
         twig:
-            form_themes: ['bootstrap_4_layout.html.twig']
+            form_themes: ['bootstrap_5_layout.html.twig']
 
     .. code-block:: xml
 
@@ -344,7 +344,7 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
                 https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form-theme>bootstrap_4_layout.html.twig</twig:form-theme>
+                <twig:form-theme>bootstrap_5_layout.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
         </container>
@@ -355,13 +355,13 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
         use Symfony\Config\TwigConfig;
 
         return static function (TwigConfig $twig) {
-            $twig->formThemes(['bootstrap_4_layout.html.twig']);
+            $twig->formThemes(['bootstrap_5_layout.html.twig']);
 
             // ...
         };
 
 The :ref:`built-in Symfony form themes <symfony-builtin-forms>` include
-Bootstrap 3 and 4 as well as Foundation 5 and 6. You can also
+Bootstrap 3, 4 and 5, Foundation 5 and 6, as well as Tailwind 2. You can also
 :ref:`create your own Symfony form theme <create-your-own-form-theme>`.
 
 In addition to form themes, Symfony allows you to
@@ -392,7 +392,7 @@ written into the form object::
     {
         public function new(Request $request): Response
         {
-            // just setup a fresh $task object (remove the example data)
+            // just set up a fresh $task object (remove the example data)
             $task = new Task();
 
             $form = $this->createForm(TaskType::class, $task);
@@ -725,7 +725,7 @@ The ``required`` Option
 
 The most common option is the ``required`` option, which can be applied to any
 field. By default, this option is set to ``true``, meaning that HTML5-ready
-browsers will require to fill in all fields before submitting the form.
+browsers will require you to fill in all fields before submitting the form.
 
 If you don't want this behavior, either
 :ref:`disable client-side validation <forms-html5-validation-disable>` for the

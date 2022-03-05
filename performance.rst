@@ -119,8 +119,8 @@ Symfony generates a file with the list of classes to preload in the
     ; required for opcache.preload:
     opcache.preload_user=www-data
 
-If this file is missing, run this command to reinstall the Symfony Flex recipe:
-``composer recipes:install symfony/framework-bundle --force -v``.
+If this file is missing, run this command to update the Symfony Flex recipe:
+``composer recipes:update symfony/framework-bundle``.
 
 Use the :ref:`container.preload <dic-tags-container-preload>` and
 :ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
@@ -158,7 +158,7 @@ overhead that can be avoided as follows:
     ; php.ini
     opcache.validate_timestamps=0
 
-After each deploy, you must empty and regenerate the cache of OPcache. Otherwise
+After each deployment, you must empty and regenerate the cache of OPcache. Otherwise
 you won't see the updates made in the application. Given that in PHP, the CLI
 and the web processes don't share the same OPcache, you cannot clear the web
 server OPcache by executing some command in your terminal. These are some of the

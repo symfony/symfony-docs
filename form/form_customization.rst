@@ -75,6 +75,16 @@ control over how each form field is rendered, so you can fully customize them:
         </div>
     </div>
 
+.. caution::
+
+   If you're rendering each field manually, make sure you don't forget the
+   ``_token`` field that is automatically added for CSRF protection.
+
+   You can also use ``{{ form_rest(form) }}`` (recommended) to render any
+   fields that aren't rendered manually. See
+   :ref:`the form_rest() documentation <reference-forms-twig-rest>` below for
+   more information.
+
 .. note::
 
     Later in this article you can find the full reference of these Twig
@@ -258,8 +268,9 @@ Renders any errors for the given field.
 
 .. caution::
 
-    In the :ref:`error messages of Bootstrap 4 Form Theme <reference-forms-bootstrap4-error-messages>`,
-    ``form_errors()`` is already included in ``form_label()``.
+    In the Bootstrap 4 form theme, ``form_errors()`` is already included in
+    ``form_label()``. Read more about this in the
+    :ref:`Bootstrap 4 theme documentation <reference-forms-bootstrap5-error-messages>`.
 
 .. _reference-forms-twig-widget:
 
@@ -432,4 +443,4 @@ Variable                Usage
     variables a particular field has, find the source code for the form
     field (and its parent fields) and look at the above two functions.
 
-.. _`the Twig documentation`: https://twig.symfony.com/doc/2.x/templates.html#test-operator
+.. _`the Twig documentation`: https://twig.symfony.com/doc/3.x/templates.html#test-operator

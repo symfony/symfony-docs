@@ -22,7 +22,7 @@ The SSI instructions are done via HTML comments:
             <!-- ... some content -->
 
             <!-- Embed the content of another page here -->
-            <!--#include virtual="http://..." -->
+            <!--#include virtual="/..." -->
 
             <!-- ... more content -->
         </body>
@@ -33,7 +33,7 @@ Symfony manages only the ``#include virtual`` one.
 
 .. caution::
 
-    Be careful with SSI, your website may be victim of injections.
+    Be careful with SSI, your website may fall victim to injections.
     Please read this `OWASP article`_ first!
 
 When the web server reads an SSI directive, it requests the given URI or gives
@@ -121,8 +121,8 @@ The profile index page has not public caching, but the GDPR block has
     {# you can use a controller reference #}
     {{ render_ssi(controller('App\\Controller\\ProfileController::gdpr')) }}
 
-    {# ... or a URL #}
-    {{ render_ssi(url('profile_gdpr')) }}
+    {# ... or a path (in server's SSI configuration is common to use relative paths instead of absolute URLs) #}
+    {{ render_ssi(path('profile_gdpr')) }}
 
 The ``render_ssi`` twig helper will generate something like:
 

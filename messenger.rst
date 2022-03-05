@@ -25,7 +25,7 @@ Creating a Message & Handler
 Messenger centers around two different classes that you'll create: (1) a message
 class that holds data and (2) a handler(s) class that will be called when that
 message is dispatched. The handler class will read the message class and perform
-some task.
+one or more tasks.
 
 There are no specific requirements for a message class, except that it can be
 serialized::
@@ -50,24 +50,36 @@ serialized::
 
 .. _messenger-handler:
 
+.. versionadded:: 5.4
+
+    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
+    5.4. PHP attributes require at least PHP 8.0.
+
 A message handler is a PHP callable, the recommended way to create it is to
-create a class that implements :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
-and has an ``__invoke()`` method that's type-hinted with the message class (or a
-message interface)::
+create a class that has the :class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`
+attribute and has an ``__invoke()`` method that's type-hinted with the
+message class (or a message interface)::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
 
     use App\Message\SmsNotification;
-    use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-    class SmsNotificationHandler implements MessageHandlerInterface
+    #[AsMessageHandler]
+    class SmsNotificationHandler
     {
         public function __invoke(SmsNotification $message)
         {
             // ... do some work - like sending an SMS message!
         }
     }
+
+.. note::
+
+    You can also create a class without the attribute (e.g. if you're
+    using PHP 7.4), by implementing :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
+    instead.
 
 Thanks to :ref:`autoconfiguration <services-autoconfigure>` and the ``SmsNotification``
 type-hint, Symfony knows that this handler should be called when an ``SmsNotification``
@@ -322,7 +334,7 @@ Doctrine Entities in Messages
 
 If you need to pass a Doctrine entity in a message, it's better to pass the entity's
 primary key (or whatever relevant information the handler actually needs, like ``email``,
-etc) instead of the object::
+etc.) instead of the object (otherwise you might see errors related to the Entity Manager)::
 
     // src/Message/NewUserWelcomeEmail.php
     namespace App\Message;
@@ -349,9 +361,10 @@ Then, in your handler, you can query for a fresh object::
 
     use App\Message\NewUserWelcomeEmail;
     use App\Repository\UserRepository;
-    use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-    class NewUserWelcomeEmailHandler implements MessageHandlerInterface
+    #[AsMessageHandler]
+    class NewUserWelcomeEmailHandler
     {
         private $userRepository;
 
@@ -487,8 +500,8 @@ On production, there are a few important things to think about:
 **Restart Workers on Deploy**
     Each time you deploy, you'll need to restart all your worker processes so
     that they see the newly deployed code. To do this, run ``messenger:stop-workers``
-    on deploy. This will signal to each worker that it should finish the message
-    it's currently handling and shut down gracefully. Then, Supervisor will create
+    on deployment. This will signal to each worker that it should finish the message
+    it's currently handling and should shut down gracefully. Then, Supervisor will create
     new worker processes. The command uses the :ref:`app <cache-configuration-with-frameworkbundle>`
     cache internally - so make sure this is configured to use an adapter you like.
 
@@ -533,8 +546,8 @@ different messages to them. For example:
                             queue_name: low
 
                 routing:
-                    'App\Message\SmsNotification':  async_priority_low
-                    'App\Message\NewUserWelcomeEmail':  async_priority_high
+                    'App\Message\SmsNotification': async_priority_low
+                    'App\Message\NewUserWelcomeEmail': async_priority_high
 
     .. code-block:: xml
 
@@ -611,11 +624,14 @@ transport is always bound to an exchange. By default, the worker consumes from a
 queues attached to the exchange of the specified transport. However, there are use
 cases to want a worker to only consume from specific queues.
 
-You can limit the worker to only process messages from specific queues:
+You can limit the worker to only process messages from specific queue(s):
 
 .. code-block:: terminal
 
     $ php bin/console messenger:consume my_transport --queues=fasttrack
+
+    # you can pass the --queues option more than once to process multiple queues
+    $ php bin/console messenger:consume my_transport --queues=fasttrack1 --queues=fasttrack2
 
 To allow using the ``queues`` option, the receiver must implement the
 :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\QueueReceiverInterface`.
@@ -684,7 +700,7 @@ Graceful Shutdown
 
 If you install the `PCNTL`_ PHP extension in your project, workers will handle
 the ``SIGTERM`` POSIX signal to finish processing their current message before
-exiting.
+terminating.
 
 In some cases the ``SIGTERM`` signal is sent by Supervisor itself (e.g. stopping
 a Docker container having Supervisor as its entrypoint). In these cases you
@@ -703,9 +719,9 @@ PHP is designed to be stateless, there are no shared resources across different
 requests. In HTTP context PHP cleans everything after sending the response, so
 you can decide to not take care of services that may leak memory.
 
-On the other hand, workers usually run in long-running CLI processes, which don't
-finish after processing a message. That's why you need to be careful about services
-state to not leak information and/or memory from one message to another message.
+On the other hand, workers usually sequentially process messages in long-running CLI processes, which don't
+finish after processing a single message. That's why you must be careful about service
+states to prevent information and/or memory leakage.
 
 However, certain Symfony services, such as the Monolog
 :ref:`fingers crossed handler <logging-handler-fingers_crossed>`, leak by design.
@@ -719,10 +735,10 @@ reset the service container between two messages:
         # config/packages/messenger.yaml
         framework:
             messenger:
+                reset_on_message: true
                 transports:
                     async:
                         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                        reset_on_message: true
 
     .. code-block:: xml
 
@@ -752,10 +768,7 @@ reset the service container between two messages:
         return static function (FrameworkConfig $framework) {
             $messenger = $framework->messenger();
 
-            $messenger->transport('async')
-                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
-                ->resetOnMessage(true)
-            ;
+            $messenger->resetOnMessage(true);
         };
 
 .. versionadded:: 5.4
@@ -1195,8 +1208,8 @@ The transport has a number of options:
 ============================================  =================================================  ===================================
      Option                                   Description                                        Default
 ============================================  =================================================  ===================================
-``auto_setup``                                Whether the table should be created                ``true``
-                                              automatically during send / get.
+``auto_setup``                                Whether the exchanges and queues should be         ``true``
+                                              created automatically during send / get.
 ``cacert``                                    Path to the CA cert file in PEM format.
 ``cert``                                      Path to the client certificate in PEM format.
 ``channel_max``                               Specifies highest channel number that the server
@@ -1488,7 +1501,7 @@ sentinel_master          String, if null or empty Sentinel      null
     There should never be more than one ``messenger:consume`` command running with the same
     combination of ``stream``, ``group`` and ``consumer``, or messages could end up being
     handled more than once. If you run multiple queue workers, ``consumer`` can be set to an
-    environment variable (like ``%env(MESSENGER_CONSUMER_NAME)%``) set by Supervisor
+    environment variable, like ``%env(MESSENGER_CONSUMER_NAME)%``, set by Supervisor
     (example below) or any other service used to manage the worker processes.
     In a container environment, the ``HOSTNAME`` can be used as the consumer name, since
     there is only one worker per container/host. If using Kubernetes to orchestrate the
@@ -1780,6 +1793,40 @@ on a case-by-case basis via the :class:`Symfony\\Component\\Messenger\\Stamp\\Se
 
 Customizing Handlers
 --------------------
+
+Configuring Handlers Using Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.4
+
+    The ``#[AsMessageHandler]`` PHP attribute was introduced in Symfony
+    5.4. PHP attributes require at least PHP 8.0.
+
+You can configure your handler by passing options to the attribute::
+
+    // src/MessageHandler/SmsNotificationHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\OtherSmsNotification;
+    use App\Message\SmsNotification;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+
+    #[AsMessageHandler(fromTransport: 'async', priority: 10)]
+    class SmsNotificationHandler
+    {
+        public function __invoke(SmsNotification $message)
+        {
+            // ...
+        }
+    }
+
+Possible options to configure with the attribute are:
+
+* ``bus``
+* ``fromTransport``
+* ``handles``
+* ``method``
+* ``priority``
 
 .. _messenger-handler-config:
 
@@ -2149,7 +2196,7 @@ Middleware for Doctrine
 
 .. versionadded:: 1.11
 
-    The following Doctrine middleware were introduced in DoctrineBundle 1.11.
+    The following Doctrine middleware was introduced in DoctrineBundle 1.11.
 
 If you use Doctrine in your app, a number of optional middleware exist that you
 may want to use:
@@ -2242,6 +2289,12 @@ the consumer (e.g. render a template with links). This middleware stores the
 original request context (i.e. the host, the HTTP port, etc.) which is needed
 when building absolute URLs.
 
+Add the ``validation`` middleware if you need to validate the message
+object using the :doc:`Validator component <validator>` before handling it.
+If validation fails, a ``ValidationFailedException`` will be thrown. The
+:class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp` can be used
+to configure the validation groups.
+
 .. configuration-block::
 
     .. code-block:: yaml
@@ -2253,6 +2306,7 @@ when building absolute URLs.
                     command_bus:
                         middleware:
                             - router_context
+                            - validation
 
     .. code-block:: xml
 
@@ -2270,6 +2324,7 @@ when building absolute URLs.
                 <framework:messenger>
                     <framework:bus name="command_bus">
                         <framework:middleware id="router_context"/>
+                        <framework:middleware id="validation"/>
                     </framework:bus>
                 </framework:messenger>
             </framework:config>
@@ -2285,8 +2340,8 @@ when building absolute URLs.
 
             $bus = $messenger->bus('command_bus');
             $bus->middleware()->id('router_context');
+            $bus->middleware()->id('validation');
         };
-
 
 Messenger Events
 ~~~~~~~~~~~~~~~~

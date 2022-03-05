@@ -1020,7 +1020,7 @@ response sequentially instead of waiting for the entire response::
     ``php://temp`` stream. You can control this behavior by using the ``buffer``
     option: set it to ``true``/``false`` to enable/disable buffering, or to a
     closure that should return the same based on the response headers it receives
-    as argument.
+    as an argument.
 
 Canceling Responses
 ~~~~~~~~~~~~~~~~~~~
@@ -1190,7 +1190,7 @@ method will yield a special chunk whose ``isTimeout()`` will return ``true``::
 
     foreach ($client->stream($responses, 1.5) as $response => $chunk) {
         if ($chunk->isTimeout()) {
-            // $response staled for more than 1.5 seconds
+            // $response stale for more than 1.5 seconds
         }
     }
 
@@ -1708,6 +1708,23 @@ responses dynamically when it's called::
 
     $client = new MockHttpClient($callback);
     $response = $client->request('...'); // calls $callback to get the response
+
+.. tip::
+
+    Instead of using the first argument, you can also set the (list of)
+    responses or callbacks using the ``setResponseFactory()`` method::
+
+        $responses = [
+            new MockResponse($body1, $info1),
+            new MockResponse($body2, $info2),
+        ];
+
+        $client = new MockHttpClient();
+        $client->setResponseFactory($responses);
+
+    .. versionadded:: 5.4
+
+        The ``setResponseFactory()`` method was introduced in Symfony 5.4.
 
 If you need to test responses with HTTP status codes different than 200,
 define the ``http_code`` option::

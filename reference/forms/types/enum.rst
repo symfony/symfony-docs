@@ -9,7 +9,7 @@ EnumType Field
    The ``EnumType`` form field was introduced in Symfony 5.4.
 
 A multi-purpose field used to allow the user to "choose" one or more options
-defined in a `PHP enumeration`_. It extends the :doc:`ChoiceType </refernce/forms/types/enum>`
+defined in a `PHP enumeration`_. It extends the :doc:`ChoiceType </reference/forms/types/enum>`
 field and defines the same options.
 
 +---------------------------+----------------------------------------------------------------------+
@@ -36,7 +36,7 @@ short) defined somewhere in your application. This enum has to be of type
     // src/Config/TextAlign.php
     namespace App\Config;
 
-    enum TextAlign
+    enum TextAlign: string
     {
         case Left = 'Left/Start aligned';
         case Center = 'Center/Middle aligned';
@@ -116,4 +116,4 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
 
-.. _`PHP enumeration`: https://wiki.php.net/rfc/enumerations
+.. _`PHP enumeration`: https://www.php.net/manual/language.enumerations.php

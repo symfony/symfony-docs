@@ -21,9 +21,6 @@ Before creating your first Symfony application you must:
   enabled by default in most PHP 7 installations): `Ctype`_, `iconv`_, `JSON`_,
   `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
 
-  * Note that all newer, released versions of PHP will be supported during the
-    lifetime of each Symfony release (including new major versions).
-    For example, PHP 8.0 is supported.
 * `Install Composer`_, which is used to install PHP packages.
 
 Optionally, you can also `install Symfony CLI`_. This creates a binary called
@@ -39,9 +36,8 @@ requirements. Open your console terminal and run this command:
 
 .. note::
 
-    The Symfony binary is developed internally at Symfony. If you want to
-    report a bug or suggest a new feature, please create an issue on
-    `symfony/cli`_.
+    The Symfony CLI is written in Go and you can contribute to it in the
+    `symfony-cli/symfony-cli GitHub repository`_.
 
 .. _creating-symfony-applications:
 
@@ -54,13 +50,13 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_name --version="5.4.x@dev" --full
+    $ symfony new my_project_directory --version=5.4 --webapp
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_name --version="5.4.x@dev"
+    $ symfony new my_project_directory --version=5.4
 
 The only difference between these two commands is the number of packages
-installed by default. The ``--full`` option installs all the packages that you
+installed by default. The ``--webapp`` option installs all the packages that you
 usually need to build web applications, so the installation size will be bigger.
 
 If you're not using the Symfony binary, run these commands to create the new
@@ -69,13 +65,15 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/website-skeleton:"5.4.x@dev" my_project_name
+    $ composer create-project symfony/skeleton:"^5.4" my_project_directory
+    $ cd my_project_directory
+    $ composer require webapp
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"5.4.x@dev" my_project_name
+    $ composer create-project symfony/skeleton:"^5.4" my_project_directory
 
 No matter which command you run to create the Symfony application. All of them
-will create a new ``my_project_name/`` directory, download some dependencies
+will create a new ``my_project_directory/`` directory, download some dependencies
 into it and even generate the basic directories and files you'll need to get
 started. In other words, your new application is ready!
 
@@ -117,7 +115,7 @@ to run this command which displays information about the project:
 Running Symfony Applications
 ----------------------------
 
-In production, you should install a webserver like Nginx or Apache and
+In production, you should install a web server like Nginx or Apache and
 :doc:`configure it to run Symfony </setup/web_server_configuration>`. This
 method can also be used if you're not using the Symfony local web server for
 development.
@@ -190,7 +188,7 @@ and enables all the packages needed to use the official Symfony logger.
 
 This is possible because lots of Symfony packages/bundles define **"recipes"**,
 which are a set of automated instructions to install and enable packages into
-Symfony applications. Flex keeps tracks of the recipes it installed in a
+Symfony applications. Flex keeps track of the recipes it installed in a
 ``symfony.lock`` file, which must be committed to your code repository.
 
 Symfony Flex recipes are contributed by the community and they are stored in
@@ -232,8 +230,8 @@ require --no-unpack ...`` option to disable unpacking.
 Checking Security Vulnerabilities
 ---------------------------------
 
-The ``symfony`` binary created when you `install Symfony CLI`_ provides a command to
-check whether your project's dependencies contain any known security
+The ``symfony`` binary created when you `install Symfony CLI`_ provides a command
+to check whether your project's dependencies contain any known security
 vulnerability:
 
 .. code-block:: terminal
@@ -245,12 +243,17 @@ update or replace compromised dependencies as soon as possible. The security
 check is done locally by fetching the public `PHP security advisories database`_,
 so your ``composer.lock`` file is not sent on the network.
 
+The ``check:security`` command terminates with a non-zero exit code if any of
+your dependencies is affected by a known security vulnerability. This way you
+can add it to your project build process and your continuous integration
+workflows to make them fail when there are vulnerabilities.
+
 .. tip::
 
-    The ``check:security`` command terminates with a non-zero exit code if
-    any of your dependencies is affected by a known security vulnerability.
-    This way you can add it to your project build process and your continuous
-    integration workflows to make them fail when there are vulnerabilities.
+    In continuous integration services you can check security vulnerabilities
+    using a different stand-alone project called `Local PHP Security Checker`_.
+    This is the same project used internally by ``check:security`` but much
+    smaller in size than the entire Symfony CLI.
 
 Symfony LTS Versions
 --------------------
@@ -265,20 +268,20 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
 .. code-block:: terminal
 
     # use the most recent LTS version
-    $ symfony new my_project_name --version=lts
+    $ symfony new my_project_directory --version=lts
 
     # use the 'next' Symfony version to be released (still in development)
-    $ symfony new my_project_name --version=next
+    $ symfony new my_project_directory --version=next
 
     # you can also select an exact specific Symfony version
-    $ symfony new my_project_name --version=4.4
+    $ symfony new my_project_directory --version=5.4
 
 The ``lts`` and ``next`` shortcuts are only available when using Symfony to
 create new projects. If you use Composer, you need to tell the exact version:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/website-skeleton:"^4.4" my_project_name
+    $ composer create-project symfony/skeleton:"^5.4" my_project_directory
 
 The Symfony Demo application
 ----------------------------
@@ -291,7 +294,7 @@ Run this command to create a new project based on the Symfony Demo application:
 
 .. code-block:: terminal
 
-    $ symfony new my_project_name --demo
+    $ symfony new my_project_directory --demo
 
 Start Coding!
 -------------
@@ -318,10 +321,11 @@ Learn More
 .. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
 .. _`install Symfony CLI`: https://symfony.com/download
-.. _`symfony/cli`: https://github.com/symfony/cli
+.. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
 .. _`PHP security advisories database`: https://github.com/FriendsOfPHP/security-advisories
+.. _`Local PHP Security Checker`: https://github.com/fabpot/local-php-security-checker
 .. _`Symfony releases`: https://symfony.com/releases
 .. _`Main recipe repository`: https://github.com/symfony/recipes
 .. _`Contrib recipe repository`: https://github.com/symfony/recipes-contrib
