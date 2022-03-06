@@ -64,7 +64,7 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/skeleton my_project_directory
+    $ composer create-project symfony/website-skeleton my_project_directory
     $ cd my_project_directory
     $ composer require webapp
 
