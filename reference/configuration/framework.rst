@@ -3301,7 +3301,7 @@ a normal workflow or a state machine. Read :doc:`this article </workflow/workflo
 to know their differences.
 
 exceptions
-""""""""""
+~~~~~~~~~~
 
 **type**: ``array``
 
