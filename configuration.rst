@@ -495,7 +495,7 @@ This example shows how you could configure the database connection using an env 
         doctrine:
             dbal:
                 # by convention the env var names are always uppercase
-                url: '%env(resolve:DATABASE_URL)%'
+                url: '%env(DATABASE_URL)%'
             # ...
 
     .. code-block:: xml
