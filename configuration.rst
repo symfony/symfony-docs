@@ -669,6 +669,11 @@ In addition to your own env vars, this ``.env`` file also contains the env vars
 defined by the third-party packages installed in your application (they are
 added automatically by :ref:`Symfony Flex <symfony-flex>` when installing packages).
 
+.. tip::
+
+    Since the ``.env`` file is read and parsed on every request, you don't need to
+    clear the Symfony cache or restart the PHP container if you're using Docker.
+
 .env File Syntax
 ................
 
