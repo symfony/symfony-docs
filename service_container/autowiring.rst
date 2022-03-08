@@ -459,6 +459,7 @@ the injection::
 
                 # If you wanted to choose the non-default service and do not
                 # want to use a named autowiring alias, wire it manually:
+                # arguments:
                 #     $transformer: '@App\Util\UppercaseTransformer'
                 # ...
 
