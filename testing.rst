@@ -406,7 +406,7 @@ Empty the database and reload *all* the fixture classes with:
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:fixtures:load
+    $ php bin/console --env=test doctrine:fixtures:load
 
 For more information, read the `DoctrineFixturesBundle documentation`_.
 
