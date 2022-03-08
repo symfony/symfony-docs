@@ -255,4 +255,3 @@ passing the user along sub-requests).
 
 .. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`yield`: https://www.php.net/manual/en/language.generators.syntax.php
-.. _`SecurityBundle`: https://github.com/symfony/security-bundle
