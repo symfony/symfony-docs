@@ -2,8 +2,12 @@ Profiler
 ========
 
 The profiler is a powerful **development tool** that gives detailed information
-about the execution of any request. **Never** enable the profiler in production
-environments as it will lead to major security vulnerabilities in your project.
+about the execution of any request. 
+
+.. caution::
+
+    **Never** enable the profiler in production environments
+    as it will lead to major security vulnerabilities in your project.
 
 Installation
 ------------
