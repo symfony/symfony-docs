@@ -55,7 +55,7 @@ which makes creating a voter even easier::
 
 .. tip::
 
-    Checking each voter several times can be time consumming for applications
+    Checking each voter several times can be time consuming for applications
     that perform a lot of permission checks. To improve performance in those cases,
     you can make your voters implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\CacheableVoterInterface`.
     This allows the access decision manager to remember the attribute and type
