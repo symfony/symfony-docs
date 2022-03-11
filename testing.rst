@@ -15,13 +15,12 @@ Symfony integrates with an independent library called `PHPUnit`_ to give
 you a rich testing framework. This article won't cover PHPUnit itself,
 which has its own excellent `documentation`_.
 
-Before creating your first test, install ``phpunit/phpunit`` and the
-``symfony/test-pack``, which installs some other packages providing useful
-Symfony test utilities:
+Before creating your first test, install ``symfony/test-pack``, which installs
+some other packages needed for testing (such as ``phpunit/phpunit``):
 
 .. code-block:: terminal
 
-    $ composer require --dev phpunit/phpunit symfony/test-pack
+    $ composer require --dev symfony/test-pack
 
 After the library is installed, try running PHPUnit:
 
