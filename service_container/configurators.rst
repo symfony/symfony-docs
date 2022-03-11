@@ -180,10 +180,10 @@ all the classes are already loaded as services. All you need to do is specify th
 
             // override the services to set the configurator
             $services->set(NewsletterManager::class)
-                ->configurator(service(EmailConfigurator::class), 'configure');
+                ->configurator([service(EmailConfigurator::class), 'configure']);
 
             $services->set(GreetingCardManager::class)
-                ->configurator(service(EmailConfigurator::class), 'configure');
+                ->configurator([service(EmailConfigurator::class), 'configure']);
         };
 
 .. _configurators-invokable:
