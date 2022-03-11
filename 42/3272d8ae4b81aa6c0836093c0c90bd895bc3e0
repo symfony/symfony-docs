@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-03-11T14:24:20Z
+
+For reference purposes, here's the code showing that the constructor in 6.0 only accepts one argument instead of several as in previous versions: https://github.com/symfony/symfony/blob/6.0/src/Symfony/Component/EventDispatcher/DependencyInjection/AddEventAliasesPass.php
