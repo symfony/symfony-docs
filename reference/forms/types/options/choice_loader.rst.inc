@@ -42,9 +42,9 @@ better performance::
 
     class ConstantsType extends AbstractType
     {
-        public static function getExtendedTypes(): iterable
+        public function getParent(): string
         {
-            return [ChoiceType::class];
+            return ChoiceType::class;
         }
 
         public function configureOptions(OptionsResolver $resolver)
