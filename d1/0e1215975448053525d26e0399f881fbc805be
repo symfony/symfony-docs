@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-02-18T16:27:01Z
+
+Thanks for your contribution. Sadly I don't know if it's correct or not, so I'd need the help from someone who understands Symfony Forms well. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-03-03T09:06:23Z
+
+We should change the method instead. So instead of having a `getExtendedTypes()` method we would implement `getParent()`:
+
+```php
+public function getParent(): string
+{
+    return ChoiceType::class;
+}
+```
+
+---------------------------------------------------------------------------
+
+by issamkhadiri1989 at 2022-03-03T10:44:15Z
+
+> We should change the method instead. So instead of having a `getExtendedTypes()` method we would implement `getParent()`:
+>
+> ```
+> public function getParent(): string
+> {
+>     return ChoiceType::class;
+> }
+> ```
+
+Thank you very much @xabbuh  for your reply. Yes, i totally agree with this suggestion too.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-03-08T14:22:32Z
+
+@issamkhadiri1989 do you want to update this PR with the changes proposed by @xabbuh? Thanks!
+
+---------------------------------------------------------------------------
+
+by issamkhadiri1989 at 2022-03-08T20:52:20Z
+
+> @issamkhadiri1989 do you want to update this PR with the changes proposed by @xabbuh? Thanks!
+
+Hello @javiereguiluz
+
+I appreciate your feedback. Of course, i've just updated the PR. Can you check please ?
+
+Thanks !
