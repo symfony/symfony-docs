@@ -254,13 +254,11 @@ determine which instance is passed.
 
         Note that ``AddEventAliasesPass`` has to be processed before ``RegisterListenersPass``.
 
-    By default, the listeners pass assumes that the event dispatcher's service
+    The listeners pass assumes that the event dispatcher's service
     id is ``event_dispatcher``, that event listeners are tagged with the
     ``kernel.event_listener`` tag, that event subscribers are tagged
     with the ``kernel.event_subscriber`` tag and that the alias mapping is
-    stored as parameter ``event_dispatcher.event_aliases``. You can change these
-    default values by passing custom values to the constructors of
-    ``RegisterListenersPass`` and ``AddEventAliasesPass``.
+    stored as parameter ``event_dispatcher.event_aliases``.
 
 .. _event_dispatcher-closures-as-listeners:
 
