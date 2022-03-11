@@ -17,15 +17,15 @@ sessions, check their default configuration:
 
         # config/packages/framework.yaml
         framework:
+            # Enables session support. Note that the session will ONLY be started if you read or write from it.
+            # Remove or comment this section to explicitly disable session support.
             session:
-                # enables the support of sessions in the app
-                enabled: true
-                # ID of the service used for session storage.
+                # ID of the service used for session storage
                 # NULL means that Symfony uses PHP default session mechanism
                 handler_id: null
                 # improves the security of the cookies used for sessions
-                cookie_secure: 'auto'
-                cookie_samesite: 'lax'
+                cookie_secure: auto
+                cookie_samesite: lax
 
     .. code-block:: xml
 
@@ -40,13 +40,13 @@ sessions, check their default configuration:
 
             <framework:config>
                 <!--
-                    enabled: enables the support of sessions in the app
+                    Enables session support. Note that the session will ONLY be started if you read or write from it.
+                    Remove or comment this section to explicitly disable session support.
                     handler-id: ID of the service used for session storage
                                 NULL means that Symfony uses PHP default session mechanism
                     cookie-secure and cookie-samesite: improves the security of the cookies used for sessions
                 -->
-                <framework:session enabled="true"
-                                   handler-id="null"
+                <framework:session handler-id="null"
                                    cookie-secure="auto"
                                    cookie-samesite="lax"/>
             </framework:config>
@@ -56,9 +56,9 @@ sessions, check their default configuration:
 
         // config/packages/framework.php
         $container->loadFromExtension('framework', [
+            // Enables session support. Note that the session will ONLY be started if you read or write from it.
+            // Remove or comment this section to explicitly disable session support.
             'session' => [
-                // enables the support of sessions in the app
-                'enabled' => true,
                 // ID of the service used for session storage
                 // NULL means that Symfony uses PHP default session mechanism
                 'handler_id' => null,
