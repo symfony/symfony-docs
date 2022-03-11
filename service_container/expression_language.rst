@@ -82,6 +82,10 @@ In this context, you have access to 3 functions:
 ``env``
     Returns the value of an env variable.
 
+.. versionadded:: 6.1
+
+    The ``env()`` function was introduced in Symfony 6.1.
+
 You also have access to the :class:`Symfony\\Component\\DependencyInjection\\Container`
 via a ``container`` variable. Here's another example:
 
