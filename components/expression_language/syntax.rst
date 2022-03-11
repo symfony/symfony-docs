@@ -14,12 +14,20 @@ Supported Literals
 The component supports:
 
 * **strings** - single and double quotes (e.g. ``'hello'``)
-* **numbers** - e.g. ``103``
+* **numbers** - integers (e.g. ``103``), decimals (e.g. ``9.95``), decimals
+  without leading zeros (e.g. ``.99``, equivalent to ``0.99``); all numbers
+  support optional underscores as separators to improve readability (e.g.
+  ``1_000_000``, ``3.14159_26535``)
 * **arrays** - using JSON-like notation (e.g. ``[1, 2]``)
 * **hashes** - using JSON-like notation (e.g. ``{ foo: 'bar' }``)
 * **booleans** - ``true`` and ``false``
 * **null** - ``null``
 * **exponential** - also known as scientific (e.g. ``1.99E+3`` or ``1e-2``)
+
+.. versionadded:: 6.1
+
+    Support for decimals without leading zeros and underscore separators were
+    introduced in Symfony 6.1.
 
 .. caution::
 
