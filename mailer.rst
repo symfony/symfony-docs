@@ -308,7 +308,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
             // Pop a message out to say an email was sent
             return new Response(
                 '<html><body><h1>An email has been sent! (or queued for sending by a worker &#x263A)</h1>'
-               .'<p>Random number to show page refreshes: '.random_int(100, 999).'</p></body></html>'
+                    .'<p>Random number to show page refreshes: '.random_int(100, 999).'</p></body></html>'
             );
         }
     }
