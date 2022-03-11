@@ -5,7 +5,7 @@ EnumType Field
 ==============
 
 A multi-purpose field used to allow the user to "choose" one or more options
-defined in a `PHP enumeration`_. It extends the :doc:`ChoiceType </reference/forms/types/enum>`
+defined in a `PHP enumeration`_. It extends the :doc:`ChoiceType </reference/forms/types/choice>`
 field and defines the same options.
 
 +---------------------------+----------------------------------------------------------------------+
