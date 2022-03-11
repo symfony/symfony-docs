@@ -336,7 +336,7 @@ following rules iteratively until no further processing can be done:
 
 - "." segments are removed;
 - ".." segments are resolved;
-- backslashes ("\") are converted into forward slashes ("/");
+- backslashes ("\\") are converted into forward slashes ("/");
 - root paths ("/" and "C:/") always terminate with a slash;
 - non-root paths never terminate with a slash;
 - schemes (such as "phar://") are kept;
