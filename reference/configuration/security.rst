@@ -268,6 +268,14 @@ URL and process the submitted login credentials.
 Be sure that this URL is covered by your main firewall (i.e. don't create
 a separate firewall just for ``check_path`` URL).
 
+failure_path
+............
+
+**type**: ``string`` **default**: ``/login``
+
+This is the route or path that the user is redirected to after a failed login attempt.
+It can be a relative/absolute URL or a Symfony route name.
+
 use_forward
 ...........
 
