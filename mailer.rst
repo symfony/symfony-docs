@@ -314,9 +314,13 @@ That's it! The message will be sent via the transport you configured.
 .. tip::
     
     If the transport is configured to send emails asynchronously, then no email will
-    be sent until a worker consumes it.  To send queued emails run console commands as
+    be sent until a worker consumes it.  To send queued emails, run console commands as
     specified in :doc:`Consuming Messages (Running the Worker) <messenger-worker>`.
-    Also ensure the PHP timezone in php.ini is set correctly for your region.
+    Also ensure the PHP timezone in php.ini is set correctly for your region for both
+    the CLI php.ini and webserver php.ini, this ensures the timestamp that the worker
+    sees aligns to the timestamp recorded on the email in the message queue. (Sometimes
+    the CLI and webserver will read different php.ini files, depending on environment 
+    setup).
 
 Email Addresses
 ~~~~~~~~~~~~~~~
