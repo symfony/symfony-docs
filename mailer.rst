@@ -311,6 +311,13 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
 
 That's it! The message will be sent via the transport you configured.
 
+.. tip::
+    
+    If the transport is configured to send emails asynchronously, then no email will
+    be sent until a worker consumes it.  To send queued emails run console commands as
+    specified in :doc:`Consuming Messages (Running the Worker) <messenger-worker>`.
+    Also ensure the PHP timezone in php.ini is set correctly for your region.
+
 Email Addresses
 ~~~~~~~~~~~~~~~
 
