@@ -468,7 +468,7 @@ Be sure that this URL is covered by your main firewall (i.e. don't create
 a separate firewall just for ``check_path`` URL).
 
 failure_path
-..........
+............
 
 **type**: ``string`` **default**: ``/login``
 
