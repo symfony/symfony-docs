@@ -43,7 +43,7 @@ entry in that array:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
+        // IMPORTANT: nested attributes require PHP 8.1 or higher
         class User
         {
             #[Assert\All([
