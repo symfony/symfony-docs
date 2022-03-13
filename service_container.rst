@@ -32,10 +32,11 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
     namespace App\Controller;
 
     use Psr\Log\LoggerInterface;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class ProductController
+    class ProductController extends AbstractController
     {
         /**
          * @Route("/products")
