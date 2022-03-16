@@ -414,6 +414,11 @@ and can use any of these variables created by Symfony:
     The :ref:`Symfony Request <component-http-foundation-request>` object that
     represents the current request.
 
+Additionnal functions are provided:
+
+``env(string $name)``
+    Read a variable using :doc:`Environment Variable Processors <configuration/env_var_processors>`
+
 Behind the scenes, expressions are compiled down to raw PHP. Because of this,
 using the ``condition`` key causes no extra overhead beyond the time it takes
 for the underlying PHP to execute.
