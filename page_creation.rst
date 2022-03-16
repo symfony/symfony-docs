@@ -75,7 +75,7 @@ is defined by creating a **route** in the ``config/routes.yaml`` file:
         path: /lucky/number
         controller: App\Controller\LuckyController::number
 
-That's it! If you are using Symfony web server, try it out by going to: http://localhost:8000/lucky/number
+That's it! If you are using Symfony web server, try it out by going to: http://localhost:8000/[_locale]/lucky/number (hint: instead of [_locale choose your locale shortcode for example en or de]
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works. Remember the two steps
