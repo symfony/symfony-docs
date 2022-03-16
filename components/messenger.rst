@@ -162,6 +162,8 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
    to configure the serialization groups used by the transport.
 #. :class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp`,
    to configure the validation groups used when the validation middleware is enabled.
+#. :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`,
+   an internal stamp when a messages fails due to an exception in the handler.
 
 Instead of dealing directly with the messages in the middleware you receive the envelope.
 Hence you can inspect the envelope content and its stamps, or add any::
