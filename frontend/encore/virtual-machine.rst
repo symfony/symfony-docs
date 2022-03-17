@@ -100,7 +100,8 @@ Docker support
 ~~~~~~~~~~~~~~
 
 If you are using ``docker``, to set up a ``nodejs`` ``docker-compose`` setup
-that works with the ``localhost:8080`` domain, add:
+that works with the ``localhost:8080`` domain, add this to your
+``docker-compose-yml`` file:
 
 .. code-block:: yaml
 
