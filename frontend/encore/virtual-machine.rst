@@ -58,6 +58,10 @@ If your Symfony application is running on a custom domain (e.g.
           }
       }
 
+.. versionadded:: 1.9.0
+
+    The ``--public`` option was added in Encore 1.9.0
+
 After restarting Encore and reloading your web page, you will probably see
 different issues in the web console:
 
@@ -91,6 +95,22 @@ connections:
 
     Make sure to run the development server inside your virtual machine only;
     otherwise other computers can have access to it.
+
+Docker support
+~~~~~~~~~~~~~~
+
+If you are using ``docker``, to set up a ``nodejs`` ``docker-compose`` setup
+that works with the ``localhost:8080`` domain, add:
+
+.. code-block:: yml
+
+    nodejs:
+        image: node:16
+        working_dir: /var/www
+        volumes:
+          - ./:/var/www:rw,cached
+          - ~/.symfony/certs/default.p12:/root/.symfony/certs/default.p12
+        command: bash -c "yarn && yarn run dev-server --public https://localhost:8080 --host 0.0.0.0"
 
 Fix "Invalid Host header" Issue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
