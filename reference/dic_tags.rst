@@ -1004,7 +1004,7 @@ has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
 help to find and extract translation keys from Twig templates and PHP files.
 
 You can create your own extractor by creating a class that implements
-:class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface`
+:class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface` or :class:`Symfony\\Component\\Translation\\Extractor\\BlankableExtractorInterface`
 and tagging the service with ``translation.extractor``. The tag has one
 required option: ``alias``, which defines the name of the extractor::
 
@@ -1014,9 +1014,11 @@ required option: ``alias``, which defines the name of the extractor::
     use Symfony\Component\Translation\Extractor\ExtractorInterface;
     use Symfony\Component\Translation\MessageCatalogue;
 
-    class FooExtractor implements ExtractorInterface
+    class FooExtractor implements ExtractorInterface, BlankableExtractorInterface
     {
         protected $prefix;
+
+        protected $blank;
 
         /**
          * Extracts translation messages from a template directory to the catalog.
@@ -1032,6 +1034,14 @@ required option: ``alias``, which defines the name of the extractor::
         public function setPrefix(string $prefix)
         {
             $this->prefix = $prefix;
+        }
+
+        /**
+         * Extract new-found messages as blank strings.
+         */
+        public function blank(bool $blank);
+        {
+            $this->blank = $blank;
         }
     }
 

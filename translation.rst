@@ -463,6 +463,9 @@ with these tasks:
     # updates the French translation files with the missing strings for that locale
     $ php bin/console translation:extract --force fr
 
+    # updates the French translation files with the missing strings for that locale with blank strings
+    $ php bin/console translation:extract --force --blank fr
+
     # check out the command help to see its options (prefix, output format, domain, sorting, etc.)
     $ php bin/console translation:extract --help
 
@@ -709,6 +712,12 @@ configure the ``providers`` option:
     you have to set the `Custom Language Name setting`_ in Lokalise for each of your locales,
     in order to override the default value (which follow the `ISO 639-1`_ succeeded by a sub-code
     in capital letters that specifies the national variety (e.g., "GB" or "US" according to `ISO 3166-1 alpha-2`_)).
+
+.. tip::
+
+    Use the `--blank` option with the `translation:extract` command to extract **blank strings**.
+    These are considered *untranslated* by most providers, while the default output of the command,
+    a prefixed exact copy of the translation key, is considered *translated*.
 
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
