@@ -117,7 +117,7 @@ Stopping a Program
 ------------------
 
 When a program is stopped, you can use
-:method:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper::run` to
+:method:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper::stop` to
 notify this to the users::
 
     // ...
