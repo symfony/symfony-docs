@@ -104,13 +104,19 @@ that works with the ``localhost:8080`` domain, add:
 
 .. code-block:: yml
 
-    nodejs:
-        image: node:16
-        working_dir: /var/www
-        volumes:
-          - ./:/var/www:rw,cached
-          - ~/.symfony/certs/default.p12:/root/.symfony/certs/default.p12
-        command: bash -c "yarn && yarn run dev-server --public https://localhost:8080 --host 0.0.0.0"
+    services:
+        nodejs:
+            image: node:16
+            working_dir: /var/www
+            ports:
+                - '8080:8080'
+            volumes:
+                - ./:/var/www:rw,cached
+                - ~/.symfony/certs/default.p12:/root/.symfony/certs/default.p12
+            command: bash -c "yarn && yarn run dev-server --public https://localhost:8080 --host 0.0.0.0 --https"
+
+You may need to load the ``https://localhost:8080`` url once with your browser
+and accept the security exception before our assets can be loaded correctly.
 
 Fix "Invalid Host header" Issue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
