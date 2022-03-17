@@ -49,9 +49,10 @@ In addition, some components and official bundles provide other value resolvers:
 
 :class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`
     Injects the object that represents the current logged in user if type-hinted
-    with ``UserInterface``. Default value can be set to ``null`` in case
-    the controller can be accessed by anonymous users. It requires installing
-    the :doc:`SecurityBundle </security>`.
+    with ``UserInterface``. You can also type-hint your own ``User`` class but you
+    must then add the ``#[CurrentUser]`` attribute to the argument. Default value
+    can be set to ``null`` in case  the controller can be accessed by anonymous
+    users. It requires installing the :doc:`SecurityBundle </security>`.
 
 Adding a Custom Value Resolver
 ------------------------------
