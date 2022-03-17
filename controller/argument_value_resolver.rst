@@ -88,6 +88,10 @@ In addition, some components and official bundles provide other value resolvers:
     with ``UserInterface``. Default value can be set to ``null`` in case
     the controller can be accessed by anonymous users. It requires installing
     the :doc:`SecurityBundle </security>`.
+    
+    If the argument is not nullable and there is no logged in user or the logged in
+    user has a user class not matching the type-hinted class, an ``AccessDeniedException``
+    is thrown by the resolver to prevent access to the controller.
 
 Adding a Custom Value Resolver
 ------------------------------
