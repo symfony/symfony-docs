@@ -129,7 +129,7 @@ work:
   </contributing/code/maintenance>` (you may have to choose a higher branch if
   the feature you are fixing was introduced in a later version);
 
-* ``5.x``, if you are adding a new feature.
+* ``6.1``, if you are adding a new feature.
 
   The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
   (5.0, 6.0, etc.) comes out every two years. Because of the
@@ -152,7 +152,7 @@ topic branch:
 
 .. code-block:: terminal
 
-    $ git checkout -b BRANCH_NAME 5.x
+    $ git checkout -b BRANCH_NAME 6.1
 
 Or, if you want to provide a bug fix for the ``4.4`` branch, first track the remote
 ``4.4`` branch locally:
@@ -281,15 +281,15 @@ while to finish your changes):
 
 .. code-block:: terminal
 
-    $ git checkout 5.x
+    $ git checkout 6.1
     $ git fetch upstream
-    $ git merge upstream/5.x
+    $ git merge upstream/6.1
     $ git checkout BRANCH_NAME
-    $ git rebase 5.x
+    $ git rebase 6.1
 
 .. tip::
 
-    Replace ``5.x`` with the branch you selected previously (e.g. ``4.4``)
+    Replace ``6.1`` with the branch you selected previously (e.g. ``4.4``)
     if you are working on a bug fix.
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
@@ -502,7 +502,7 @@ PR. Before re-submitting the PR, rebase with ``upstream/5.x`` or
 
 .. code-block:: terminal
 
-    $ git rebase -f upstream/5.x
+    $ git rebase -f upstream/6.1
     $ git push --force origin BRANCH_NAME
 
 .. note::
