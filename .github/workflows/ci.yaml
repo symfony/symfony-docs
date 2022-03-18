@@ -23,7 +23,7 @@ jobs:
             -   name: "Set-up PHP"
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.0
+                    php-version: 8.1
                     coverage: none
                     tools: "composer:v2"
 
@@ -91,7 +91,7 @@ jobs:
           - name: Set-up PHP
             uses: shivammathur/setup-php@v2
             with:
-                php-version: 8.0
+                php-version: 8.1
                 coverage: none
 
           - name: Fetch branch from where the PR started
