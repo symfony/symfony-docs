@@ -153,7 +153,7 @@ and ``redirect()`` methods::
 
         // redirects to a route and maintains the original query string parameters
         return $this->redirectToRoute('blog_show', $request->query->all());
-        
+
         // redirects to the current route (e.g. for Post/Redirect/Get pattern):
         return $this->redirectToRoute($request->attributes->get('_route'));
 
@@ -285,6 +285,45 @@ Like with all services, you can also use regular :ref:`constructor injection <se
 in your controllers.
 
 For more information about services, see the :doc:`/service_container` article.
+
+Autowire Parameter Attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.1
+
+    The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
+
+Services that cannot be autowired, :ref:`parameters <service-parameters>` and even
+:doc:`complex expressions </service_container/expression_language>` can be bound
+to a controller argument with the ``#[Autowire]`` attribute::
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+    use Symfony\Component\HttpFoundation\Response;
+    // ...
+
+    /**
+     * @Route("/lucky/number/{max}")
+     */
+    public function number(
+        int $max,
+
+        #[Autowire('@monolog.logger.request')]
+        LoggerInterface $logger,
+
+        #[Autowire('%kernel.project_dir%/data')]
+        string $dataDir,
+
+        #[Autowire('%kernel.debug%')]
+        bool $debugMode,
+
+        #[Autowire("@=service("App\\Mail\\MailerConfiguration").getMailerMethod()")]
+        string $mailerMethod,
+    ): Response
+    {
+        $logger->info('We are logging!');
+        // ...
+    }
 
 Generating Controllers
 ----------------------
