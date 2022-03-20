@@ -134,7 +134,7 @@ variable exists and will be available in your form themes::
     the ``KernelTestCase`` instead and use the ``form.factory`` service to
     create the form.
 
-Testings Types Registered as Services
+Testing Types Registered as Services
 -------------------------------------
 
 Your form may be used as a service, as it depends on other services (e.g. the
