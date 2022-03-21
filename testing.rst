@@ -26,7 +26,7 @@ After the library is installed, try running PHPUnit:
 
 .. code-block:: terminal
 
-    $ php ./vendor/bin/phpunit
+    $ php bin/phpunit
 
 This command automatically runs your application tests. Each test is a
 PHP class ending with "Test" (e.g. ``BlogControllerTest``) that lives in
@@ -82,18 +82,18 @@ of your application for unit tests. So, if you're testing a class in the
 Autoloading is automatically enabled via the ``vendor/autoload.php`` file
 (as configured by default in the ``phpunit.xml.dist`` file).
 
-You can run tests using the ``./vendor/bin/phpunit`` command:
+You can run tests using the ``bin/phpunit`` command:
 
 .. code-block:: terminal
 
     # run all tests of the application
-    $ php ./vendor/bin/phpunit
+    $ php bin/phpunit
 
     # run all tests in the Form/ directory
-    $ php ./vendor/bin/phpunit tests/Form
+    $ php bin/phpunit tests/Form
 
     # run tests for the UserType class
-    $ php ./vendor/bin/phpunit tests/Form/UserTypeTest.php
+    $ php bin/phpunit tests/Form/UserTypeTest.php
 
 .. tip::
 
