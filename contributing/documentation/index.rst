@@ -20,12 +20,3 @@ documentation:
 :doc:`License </contributing/documentation/license>`
     Explains the details of the Creative Commons BY-SA 3.0 license used for the
     Symfony Documentation.
-
-.. toctree::
-    :hidden:
-
-    format
-    license
-    overview
-    standards
-    translations
