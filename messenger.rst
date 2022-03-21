@@ -1369,7 +1369,7 @@ in the table.
 Option                   Description                                 Default
 =======================  ==========================================  ======================
 use_notify               Whether to use LISTEN/NOTIFY.               true
-check_delayed_interval   The interval to check for delayed           1000
+check_delayed_interval   The interval to check for delayed           60000
                          messages, in milliseconds.
                          Set to 0 to disable checks.
 get_notify_timeout       The length of time to wait for a            0
