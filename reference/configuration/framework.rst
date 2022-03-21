@@ -534,6 +534,41 @@ enabled
 This option can be used to disable CSRF protection on *all* forms. But you
 can also :ref:`disable CSRF protection on individual forms <form-csrf-customization>`.
 
+.. configuration-block::
+
+    .. code-block:: yaml
+    
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            csrf_protection: true
+            
+    .. code-block:: xml
+    
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <framework:csrf-protection enabled="true"/>
+            </framework:config>
+        </container>
+        
+    .. code-block:: php
+    
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+        return static function (FrameworkConfig $framework) {
+            $framework->csrfProtection()
+                ->enabled(true)
+            ;
+        };
+
 If you're using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
 ``false``.
