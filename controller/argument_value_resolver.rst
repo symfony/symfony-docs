@@ -242,6 +242,13 @@ Otherwise, set a priority lower than ``100`` to make sure the argument resolver
 is not triggered when the ``Request`` attribute is present (for example, when
 passing the user along sub-requests).
 
+To ensure your resolvers are added in the right position you can run the following
+command to see which argument resolvers are present and in which order they run.
+
+.. code-block:: terminal
+    
+    $ php bin/console debug:container debug.argument_resolver.inner --show-arguments
+
 .. tip::
 
     As you can see in the ``UserValueResolver::supports()`` method, the user
