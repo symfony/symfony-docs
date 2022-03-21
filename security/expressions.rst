@@ -80,8 +80,7 @@ Additionally, you have access to a number of functions inside the expression:
 
 .. deprecated:: 5.4
 
-   The ``is_anonymous()`` function is
-   deprecated since Symfony 5.4.
+   The ``is_anonymous()`` function is deprecated since Symfony 5.4.
 
 .. sidebar:: ``is_remember_me()`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 
