@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by arcanisgk at 2021-12-28T17:38:16Z
+
+can someone help me i don't understand the last error i received.
+
+---------------------------------------------------------------------------
+
+by RosemaryOrchard at 2022-01-04T01:30:28Z
+
+> can someone help me i don't understand the last error i received.
+
+You're trying to merge all the docs from 6.0 into 4.4 for starters. I'd suggest cherry-picking the changes you intended over to a new branch from 4.4.
+
+---------------------------------------------------------------------------
+
+by arcanisgk at 2022-01-04T02:49:19Z
+
+@RosemaryOrchard no idea how to do that ... if someone is interested in doing it ... I'm not going to add more things ...
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-01-05T07:57:41Z
+
+@arcanisgk FYI, I have changed the target branch to `6.0`. We can do the switch while merging. :)
+
+---------------------------------------------------------------------------
+
+by arcanisgk at 2022-02-02T16:08:00Z
+
+> @arcanisgk FYI, I have changed the target branch to `6.0`. We can do the switch while merging. :)
+
+let's hope they do the merge
