@@ -76,7 +76,54 @@ as the value to the current URL:
 .. tip::
 
     Instead of adding a ``_switch_user`` query string parameter, you can pass
-    the username in a ``HTTP_X_SWITCH_USER`` header.
+    the username in a custom HTTP header by adjusting the ``parameter`` setting.
+    For example, to use ``X-Switch-User`` header (available in PHP as
+    ``HTTP_X_SWITCH_USER``) add this configuration:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/security.yaml
+            security:
+                # ...
+                firewalls:
+                    main:
+                        # ...
+                        switch_user: { parameter: X-Switch-User }
+
+        .. code-block:: xml
+
+            <!-- config/packages/security.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/security
+                    https://symfony.com/schema/dic/security/security-1.0.xsd">
+                <config>
+                    <!-- ... -->
+                    <firewall name="main">
+                        <!-- ... -->
+                        <switch-user parameter="X-Switch-User"/>
+                    </firewall>
+                </config>
+            </srv:container>
+
+        .. code-block:: php
+
+            // config/packages/security.php
+            use Symfony\Config\SecurityConfig;
+            return static function (SecurityConfig $security) {
+                // ...
+                $security->firewall('main')
+                    // ...
+                    ->switchUser()
+                        ->parameter('X-Switch-User')
+                ;
+            };
 
 To switch back to the original user, use the special ``_exit`` username:
 
