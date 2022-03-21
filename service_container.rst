@@ -120,21 +120,23 @@ inside your controller::
 
     // src/Controller/ProductController.php
     use App\Service\MessageGenerator;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    /**
-     * @Route("/products/new")
-     */
-    public function new(MessageGenerator $messageGenerator): Response
+    class ProductController extends AbstractController
     {
-        // thanks to the type-hint, the container will instantiate a
-        // new MessageGenerator and pass it to you!
-        // ...
+        #[Route('/products/new')]
+        public function new(MessageGenerator $messageGenerator): Response
+        {
+            // thanks to the type-hint, the container will instantiate a
+            // new MessageGenerator and pass it to you!
+            // ...
 
-        $message = $messageGenerator->getHappyMessage();
-        $this->addFlash('success', $message);
-        // ...
+            $message = $messageGenerator->getHappyMessage();
+            $this->addFlash('success', $message);
+            // ...
+        }
     }
 
 When you ask for the ``MessageGenerator`` service, the container constructs a new
