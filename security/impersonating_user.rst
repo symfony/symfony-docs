@@ -75,7 +75,9 @@ as the value to the current URL:
 .. tip::
 
     Instead of adding a ``_switch_user`` query string parameter, you can pass
-    the username in a ``HTTP_X_SWITCH_USER`` header. You can use this feature by adjusting the ``parameter`` setting:
+    the username in a custom HTTP header by adjusting the ``parameter`` setting.
+    For example, to use ``X-Switch-User`` header (available in PHP as
+    ``HTTP_X_SWITCH_USER``) add this configuration:
 
     .. configuration-block::
 
@@ -87,7 +89,7 @@ as the value to the current URL:
                 firewalls:
                     main:
                         # ...
-                        switch_user: { parameter: HTTP_X_SWITCH_USER }
+                        switch_user: { parameter: X-Switch-User }
 
         .. code-block:: xml
 
@@ -104,7 +106,7 @@ as the value to the current URL:
                     <!-- ... -->
                     <firewall name="main">
                         <!-- ... -->
-                        <switch-user parameter="HTTP_X_SWITCH_USER"/>
+                        <switch-user parameter="X-Switch-User"/>
                     </firewall>
                 </config>
             </srv:container>
@@ -118,7 +120,7 @@ as the value to the current URL:
                 $security->firewall('main')
                     // ...
                     ->switchUser()
-                        ->parameter('HTTP_X_SWITCH_USER')
+                        ->parameter('X-Switch-User')
                 ;
             };
 
