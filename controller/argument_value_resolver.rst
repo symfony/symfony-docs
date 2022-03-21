@@ -85,10 +85,11 @@ In addition, some components and official bundles provide other value resolvers:
 
 :class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`
     Injects the object that represents the current logged in user if type-hinted
-    with ``UserInterface``. Default value can be set to ``null`` in case
-    the controller can be accessed by anonymous users. It requires installing
-    the :doc:`SecurityBundle </security>`.
-    
+    with ``UserInterface``. You can also type-hint your own ``User`` class but you
+    must then add the ``#[CurrentUser]`` attribute to the argument. Default value
+    can be set to ``null`` in case  the controller can be accessed by anonymous
+    users. It requires installing the :doc:`SecurityBundle </security>`.
+
     If the argument is not nullable and there is no logged in user or the logged in
     user has a user class not matching the type-hinted class, an ``AccessDeniedException``
     is thrown by the resolver to prevent access to the controller.
@@ -281,6 +282,13 @@ resolver also fetches ``Request`` attributes, set a priority of ``100`` or more.
 Otherwise, set a priority lower than ``100`` to make sure the argument resolver
 is not triggered when the ``Request`` attribute is present (for example, when
 passing the user along sub-requests).
+
+To ensure your resolvers are added in the right position you can run the following
+command to see which argument resolvers are present and in which order they run.
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container debug.argument_resolver.inner --show-arguments
 
 .. tip::
 
