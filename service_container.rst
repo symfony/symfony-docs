@@ -122,10 +122,11 @@ inside your controller::
 
     // src/Controller/ProductController.php
     use App\Service\MessageGenerator;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
-    class ProductController
+    class ProductController extends AbstractController
     {
         /**
          * @Route("/products/new")
