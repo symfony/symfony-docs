@@ -354,12 +354,6 @@ enabled
 This option can be used to disable CSRF protection on *all* forms. But you
 can also :ref:`disable CSRF protection on individual forms <form-csrf-customization>`.
 
-If you're using forms, but want to avoid starting your session (e.g. using
-forms in an API-only website), ``csrf_protection`` will need to be set to
-``false``.
-
-example:
-
 .. configuration-block::
 
     .. code-block:: yaml
@@ -367,7 +361,7 @@ example:
         # config/packages/framework.yaml
         framework:
             # ...
-            csrf_protection: true #can be true or false
+            csrf_protection: true
             
     .. code-block:: xml
     
@@ -391,9 +385,13 @@ example:
         use Symfony\Config\FrameworkConfig;
         return static function (FrameworkConfig $framework) {
             $framework->csrfProtection()
-                ->enabled(true) #can be true or false
+                ->enabled(true)
             ;
         };
+
+If you're using forms, but want to avoid starting your session (e.g. using
+forms in an API-only website), ``csrf_protection`` will need to be set to
+``false``.
 
 .. _config-framework-error_controller:
 
