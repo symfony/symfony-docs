@@ -64,10 +64,6 @@ Additionally, you have access to a number of functions inside the expression:
 ``is_authenticated()``
     Returns ``true`` if the user is authenticated via "remember-me" or authenticated
     "fully" - i.e. returns true if the user is "logged in".
-``is_anonymous()``
-    Returns ``true`` if the user is anonymous. That is, the firewall confirms that it
-    does not know this user's identity. This is different from ``IS_AUTHENTICATED_ANONYMOUSLY``,
-    which is granted to *all* users, including authenticated ones.
 ``is_remember_me()``
     Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``, see below.
 ``is_fully_authenticated()``
@@ -77,10 +73,6 @@ Additionally, you have access to a number of functions inside the expression:
     second argument with the object where permission is checked on. It's
     equivalent to using the :ref:`isGranted() method <security-isgranted>`
     from the security service.
-
-.. deprecated:: 5.4
-
-   The ``is_anonymous()`` function is deprecated since Symfony 5.4.
 
 .. sidebar:: ``is_remember_me()`` is different than checking ``IS_AUTHENTICATED_REMEMBERED``
 
