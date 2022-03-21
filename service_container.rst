@@ -126,9 +126,7 @@ inside your controller::
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/products/new")
-         */
+        #[Route('/products/new')]
         public function new(MessageGenerator $messageGenerator): Response
         {
             // thanks to the type-hint, the container will instantiate a
