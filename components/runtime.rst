@@ -49,6 +49,9 @@ the component. This file runs the following logic:
 
 .. caution::
 
+    If you use the Composer ``--no-plugins`` option, the ``autoload_runtime.php``
+    file won't be created.
+
     If you use the Composer ``--no-scripts`` option, make sure your Composer version
     is ``>=2.1.3``; otherwise the ``autoload_runtime.php`` file won't be created.
 
