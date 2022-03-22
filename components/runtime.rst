@@ -53,12 +53,9 @@ the component. This file runs the following logic:
 
 .. caution::
 
-<<<<<<< HEAD
-=======
-    If you use the Composer ``--no-plugins`` option the ``autoload_runtime.php``
+    If you use the Composer ``--no-plugins`` option, the ``autoload_runtime.php``
     file won't be created.
 
->>>>>>> af698f2b2 (Add a note on "--no-plugins" Composer option effects)
     If you use the Composer ``--no-scripts`` option, make sure your Composer version
     is ``>=2.1.3``; otherwise the ``autoload_runtime.php`` file won't be created.
 
