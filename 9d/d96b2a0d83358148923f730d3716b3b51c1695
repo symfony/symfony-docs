@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by IonBazan at 2021-09-17T04:52:18Z
+
+I think you should rebase your commit onto `4.4` and target that branch too. Currently your PR contains changes from `5.4` and targets `5.3` which is incorrect.
+
+```
+git checkout 4.4
+git cherry-pick 8bc6ed9
+git push origin 4.4:patch-1 -f
+```
+
+---------------------------------------------------------------------------
+
+by andrea-cristaudo at 2021-09-17T06:27:08Z
+
+> I think you should rebase your commit onto `4.4` and target that branch too. Currently your PR contains changes from `5.4` and targets `5.3` which is incorrect.
+>
+> ```
+> git checkout 4.4
+> git cherry-pick 8bc6ed9
+> git push origin 4.4:patch-1 -f
+> ```
+
+Thanks.
+Since symfony/runtime is a 5.3 new component I thought 5.3 was the right target branch.
+
+---------------------------------------------------------------------------
+
+by IonBazan at 2021-09-17T06:30:21Z
+
+Sorry, you're right, should be 5.3!
