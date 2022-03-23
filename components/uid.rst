@@ -120,7 +120,10 @@ UUID objects created with the ``Uuid`` class can use the following methods
 
     // getting the UUID datetime (it's only available in certain UUID types)
     $uuid = Uuid::v1();
-    $uuid->getDateTime();  // returns a \DateTimeImmutable instance
+    $uuid->getDateTime(); // returns a \DateTimeImmutable instance
+
+    // checking if a given value is valid as UUID
+    $isValid = Uuid::isValid($uuid); // true or false
 
     // comparing UUIDs and checking for equality
     $uuid1 = Uuid::v1();
