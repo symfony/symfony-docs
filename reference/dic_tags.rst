@@ -453,6 +453,77 @@ To add a new rendering strategy - in addition to the core strategies like
 :class:`Symfony\\Component\\HttpKernel\\Fragment\\FragmentRendererInterface`,
 register it as a service, then tag it with ``kernel.fragment_renderer``.
 
+kernel.locale_aware
+-------------------
+
+.. versionadded:: 4.3
+
+    The ``kernel.locale_aware`` tag was introduced in Symfony 4.3.
+
+**Purpose**: To access and use the current :doc:`locale </translation/locale>`
+
+Setting and retrieving the locale can be done via configuration or using
+container parameters, listeners, route parameters or the current request.
+
+Thanks to the ``Translation`` contract, the locale can be set via services.
+
+To register your own locale aware service, first create a service that implements
+the :class:`Symfony\\Contracts\\Translation\\LocaleAwareInterface` interface::
+
+    // src/Locale/MyCustomLocaleHandler.php
+    namespace App\Locale;
+
+    use Symfony\Contracts\Translation\LocaleAwareInterface;
+
+    class MyCustomLocaleHandler implements LocaleAwareInterface
+    {
+        public function setLocale($locale)
+        {
+            $this->locale = $locale;
+        }
+
+        public function getLocale()
+        {
+            return $this->locale;
+        }
+    }
+
+If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+your service will be automatically tagged with ``kernel.locale_aware``. But, you
+can also register it manually:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\Locale\MyCustomLocaleHandler:
+                tags: [kernel.locale_aware]
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Locale\MyCustomLocaleHandler">
+                    <tag name="kernel.locale_aware"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\Locale\MyCustomLocaleHandler;
+
+        $container
+            ->register(LocaleHandler::class)
+            ->addTag('kernel.locale_aware')
+        ;
+
 kernel.reset
 ------------
 
