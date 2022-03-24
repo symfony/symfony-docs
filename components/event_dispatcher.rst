@@ -489,9 +489,9 @@ is dispatched, are passed as arguments to the listener::
     use Symfony\Contracts\EventDispatcher\Event;
     use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-    class Foo
+    class MyListener
     {
-        public function myEventListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
+        public function myEventListener(Event $event, string $eventName, EventDispatcherInterface $dispatcher)
         {
             // ... do something with the event name
         }
