@@ -70,7 +70,10 @@ Symfony provides several route loaders for the most common needs:
             // loads routes from the given routing file stored in some bundle
             $routes->import('@AcmeBundle/Resources/config/routing.yaml');
 
-            // loads routes from the PHP annotations of the controllers found in that directory
+            // loads routes from the PHP attributes (#[Route(...)]) of the controllers found in that directory
+            $routes->import('../src/Controller/', 'attribute');
+
+            // loads routes from the PHP annotations (@Route(...)) of the controllers found in that directory
             $routes->import('../src/Controller/', 'annotation');
 
             // loads routes from the YAML or XML files found in that directory
@@ -79,6 +82,11 @@ Symfony provides several route loaders for the most common needs:
             // loads routes from the YAML or XML files found in some bundle directory
             $routes->import('@AcmeOtherBundle/Resources/config/routing/', 'directory');
         };
+
+.. versionadded:: 6.1
+
+    The ``attribute`` value of the second argument of ``import()`` was introduced
+    in Symfony 6.1.
 
 .. note::
 
