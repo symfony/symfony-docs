@@ -467,9 +467,17 @@ images inside the HTML contents::
         // ...
         ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo')
         ->embedFromPath('/path/to/images/signature.gif', 'footer-signature')
+
         // reference images using the syntax 'cid:' + "image embed name"
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
+
+        // use the same syntax for images included as CSS background images
+        ->html('... <div style="background-image: url(cid:footer-signature)"> ... </div> ...')
     ;
+
+.. versionadded:: 6.1
+
+    The support of embedded images as CSS backgrounds was introduced in Symfony 6.1.
 
 .. _mailer-configure-email-globally:
 
