@@ -711,51 +711,15 @@ states to prevent information and/or memory leakage.
 
 However, certain Symfony services, such as the Monolog
 :ref:`fingers crossed handler <logging-handler-fingers_crossed>`, leak by design.
-In those cases, use the ``reset_on_message`` transport option to automatically
-reset the service container between two messages:
+That's why Symfony automatically resets the service container between two messages.
+If you don't want to reset the container, add the ``--no-reset`` option when
+running the ``messenger:consume`` command.
 
-.. configuration-block::
+.. deprecated:: 6.1
 
-    .. code-block:: yaml
-
-        # config/packages/messenger.yaml
-        framework:
-            messenger:
-                reset_on_message: true
-                transports:
-                    async:
-                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:messenger>
-                    <framework:transport name="async" dsn="%env(MESSENGER_TRANSPORT_DSN)%" reset-on-message="true">
-                    </framework:transport>
-                </framework:messenger>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/messenger.php
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework) {
-            $messenger = $framework->messenger();
-
-            $messenger->resetOnMessage(true);
-        };
+    In Symfony versions previous to 6.1, the service container didn't reset
+    automatically between messages and you had to set the
+    ``framework.messenger.reset_on_message`` option to ``true``.
 
 .. _messenger-retries-failures:
 
