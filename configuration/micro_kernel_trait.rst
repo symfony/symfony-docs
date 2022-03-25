@@ -181,8 +181,9 @@ hold the kernel. Now it looks like this::
                 $routes->import('@WebProfilerBundle/Resources/config/routing/profiler.xml')->prefix('/_profiler');
             }
 
-            // load the annotation routes
-            $routes->import(__DIR__.'/Controller/', 'annotation');
+            // load the routes defined as PHP attributes
+            // (use 'annotation' as the second argument if you define routes as annotations)
+            $routes->import(__DIR__.'/Controller/', 'attribute');
         }
 
         // optional, to use the standard Symfony cache directory
