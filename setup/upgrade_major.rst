@@ -241,7 +241,7 @@ method:
 
 The behavior of this script can be modified using the ``SYMFONY_PATCH_TYPE_DECLARATIONS``
 env var. The value of this env var is url-encoded (e.g.
-``param1=value2&param2=value2``), the following parameters are available:
+``param1=value1&param2=value2``), the following parameters are available:
 
 ``force``
     Enables fixing return types, the value must be one of:
