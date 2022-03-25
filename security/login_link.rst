@@ -61,7 +61,9 @@ under the firewall. You must configure a ``check_route`` and
 
             <config>
                 <firewall name="main">
-                    <login-link check-route="login_check"/>
+                    <login-link check-route="login_check">
+                        <signature-property>id</signature-property>
+                    </login-link>
                 </firewall>
             </config>
         </srv:container>
@@ -75,6 +77,7 @@ under the firewall. You must configure a ``check_route`` and
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
+                    ->signatureProperties(['id'])
             ;
         };
 
