@@ -370,6 +370,8 @@ arbitrary matching logic:
             condition:  "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
             # expressions can also include configuration parameters:
             # condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
+            # expressions can even use environment variables:
+            # condition: "context.getHost() == env('APP_MAIN_HOST')"
 
     .. code-block:: xml
 
@@ -384,6 +386,8 @@ arbitrary matching logic:
                 <condition>context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'</condition>
                 <!-- expressions can also include configuration parameters: -->
                 <!-- <condition>request.headers.get('User-Agent') matches '%app.allowed_browsers%'</condition> -->
+                <!-- expressions can even use environment variables: -->
+                <!-- <condition>context.getHost() == env('APP_MAIN_HOST')</condition> -->
             </route>
         </routes>
 
@@ -398,7 +402,9 @@ arbitrary matching logic:
                 ->controller([DefaultController::class, 'contact'])
                 ->condition('context.getMethod() in ["GET", "HEAD"] and request.headers.get("User-Agent") matches "/firefox/i"')
                 // expressions can also include configuration parameters:
-                // 'request.headers.get("User-Agent") matches "%app.allowed_browsers%"'
+                // ->condition('request.headers.get("User-Agent") matches "%app.allowed_browsers%"')
+                // expressions can even use environment variables:
+                // ->condition('context.getHost() == env("APP_MAIN_HOST")')
             ;
         };
 
@@ -414,10 +420,10 @@ and can use any of these variables created by Symfony:
     The :ref:`Symfony Request <component-http-foundation-request>` object that
     represents the current request.
 
-Additionnal functions are provided:
+You can also use this function:
 
 ``env(string $name)``
-    Read a variable using :doc:`Environment Variable Processors <configuration/env_var_processors>`
+    Returns the value of a variable using :doc:`Environment Variable Processors <configuration/env_var_processors>`
 
 Behind the scenes, expressions are compiled down to raw PHP. Because of this,
 using the ``condition`` key causes no extra overhead beyond the time it takes
