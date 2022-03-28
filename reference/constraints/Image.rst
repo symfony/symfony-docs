@@ -442,7 +442,7 @@ You can find a list of existing image mime types on the `IANA website`_.
 ``mimeTypesMessage``
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This file is not a valid image.``
+**type**: ``string`` **default**: ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.``
 
 ``minHeight``
 ~~~~~~~~~~~~~
