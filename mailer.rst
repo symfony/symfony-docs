@@ -472,7 +472,7 @@ images inside the HTML contents::
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
 
         // use the same syntax for images included as CSS background images
-        ->html('... <div style="background-image: url(cid:footer-signature)"> ... </div> ...')
+        ->html('... <div style="background: url(cid:footer-signature)"> ... </div> ...')
     ;
 
 .. versionadded:: 6.1
