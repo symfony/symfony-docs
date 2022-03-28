@@ -350,7 +350,7 @@ Passport Attributes
 
 Besides badges, passports can define attributes, which allows the ``authenticate()``
 method to store arbitrary information in the passport to access it from other
-authenticator methods (e.g. ``createAuthenticatedToken()``)::
+authenticator methods (e.g. ``createToken()``)::
 
     // ...
     use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
@@ -371,7 +371,7 @@ authenticator methods (e.g. ``createAuthenticatedToken()``)::
             return $passport;
         }
 
-        public function createAuthenticatedToken(PassportInterface $passport, string $firewallName): TokenInterface
+        public function createToken(PassportInterface $passport, string $firewallName): TokenInterface
         {
             // read the attribute value
             return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
