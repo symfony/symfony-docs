@@ -166,6 +166,64 @@ The path to the directory where Symfony will look for the application Twig
 templates by default. If you store the templates in more than one directory, use
 the :ref:`paths <config-twig-paths>`  option too.
 
+.. _config-twig-file-name-pattern:
+
+file_name_pattern
+~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` or ``array`` of ``string`` **default**: ``[]``
+
+Name pattern of the Twig files in the template directories. The value can be a regexp,
+a glob, or a string. This is used by the commands ``lint:twig`` and ``cache:warmup``
+to find template files in all the configured paths.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/twig.yaml
+        twig:
+            file_name_pattern: ['*.twig', 'specific_file.html']
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <twig:file-name-pattern>*.twig</twig:file-name-pattern>
+                <twig:file-name-pattern>specific_file.html</twig:file-name-pattern>
+                <!-- ... -->
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->fileNamePattern([
+                '*.twig',
+                'specific_file.html',
+            ]);
+
+            // ...
+        };
+
+.. note::
+
+    By default, if the option is not set, the lint command filters on ``*.twig`` files.
+    The cache warmer does not filter on file names and tries to compile all the
+    files in the template directories; ignoring compilation errors.
+
 .. _config-twig-form-themes:
 
 form_themes
