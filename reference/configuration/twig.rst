@@ -34,6 +34,8 @@ If ``true``, whenever a template is rendered, Symfony checks first if its source
 code has changed since it was compiled. If it has changed, the template is
 compiled again automatically.
 
+The freshness checks rely on the timestamp of the files. Make sure to have the appropriate PHP settings in your development environment to allow this. ``opcache.validate_timestamps`` needs to be set to ``1``. You can also set ``opcache.revalidate_freq`` to ``0``, if you want to check for updates on every request, which can be more reliable. More details are available at ``https://www.php.net/manual/en/opcache.configuration.php``.
+
 .. _config-twig-autoescape:
 
 autoescape
