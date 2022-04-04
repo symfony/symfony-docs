@@ -173,9 +173,21 @@ file_name_pattern
 
 **type**: ``string`` or ``array`` of ``string`` **default**: ``[]``
 
-Name pattern of the Twig files in the template directories. The value can be a regexp,
-a glob, or a string. This is used by the commands ``lint:twig`` and ``cache:warmup``
-to find template files in all the configured paths.
+.. versionadded:: 6.1
+
+    The ``file_name_pattern`` option was introduced in Symfony 6.1.
+
+Some applications store their front-end assets in the same directory as Twig
+templates. The ``lint:twig`` command filters those files to only lint the ones
+that match the ``*.twig`` filename pattern.
+
+However, the ``cache:warmup`` command tries to compile all files, including
+non-Twig templates (and it ignores compilation errors). The result is an
+unnecessary consumption of CPU and disk resources.
+
+In those cases, use this option to define the filename pattern(s) of the files
+that are Twig templates (the rest of files will be ignored by ``cache:warmup``).
+The value of this option can be a regular expression, a glob, or a string:
 
 .. configuration-block::
 
@@ -217,12 +229,6 @@ to find template files in all the configured paths.
 
             // ...
         };
-
-.. note::
-
-    By default, if the option is not set, the lint command filters on ``*.twig`` files.
-    The cache warmer does not filter on file names and tries to compile all the
-    files in the template directories; ignoring compilation errors.
 
 .. _config-twig-form-themes:
 
