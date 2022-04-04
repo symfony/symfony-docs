@@ -102,6 +102,42 @@ JavaScript::
 
 This will print out ``Hi Hi Hi!``.
 
+Nullsafe operator
+~~~~~~~~~~~~~~~~~
+
+Working with mutable objects can be, sometimes, error prone.
+The ``?.`` syntax can help avoid unnecessary and redundant checks
+when trying to access properties or methods on an object with dynamic structure::
+
+    class Apple
+    {
+        public $variety;
+    }
+
+    $apple = new Apple();
+    $apple->variety = 'Honeycrisp';
+
+    var_dump($expressionLanguage->evaluate(
+        'fruit?.color',
+        [
+            'fruit' => $apple,
+        ]
+    ));
+
+This will print out ``null`` instead of throwing an ``Exception``.
+
+Similarly::
+
+    var_dump($expressionLanguage->evaluate(
+        'fruit?.eatMe()',
+        [
+            'fruit' => $apple,
+        ]
+    ));
+
+Will print out ``null`` since the method ``eatMe()`` we trying to access
+on the same ``Apple`` object does not exist.
+
 .. _component-expression-functions:
 
 Working with Functions
