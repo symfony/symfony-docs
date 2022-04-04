@@ -1,0 +1,6 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2022-04-04T13:18:03Z
+
+Actually, the nullsafe operator only guards against null. It does not guard against undefined properties/keys.
+This PR should be updated accordingly.
