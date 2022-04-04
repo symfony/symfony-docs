@@ -259,16 +259,7 @@ You can find a list of existing mime types on the `IANA website`_.
 The message displayed if the mime type of the file is not a valid mime type
 per the `mimeTypes`_ option.
 
-You can use the following parameters in this message:
-
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ file }}``   Absolute file path
-``{{ name }}``   Base file name
-``{{ type }}``   The MIME type of the given file
-``{{ types }}``  The list of allowed MIME types
-===============  ==============================================================
+.. include:: /reference/constraints/_parameters-mime-types-message-option.rst.inc
 
 ``notFoundMessage``
 ~~~~~~~~~~~~~~~~~~~
