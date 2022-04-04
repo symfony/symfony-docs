@@ -1248,7 +1248,7 @@ collect all exceptions at once, and to get the object partially denormalized::
         ]);
     } catch (PartialDenormalizationException $e) {
         $violations = new ConstraintViolationList();
-        /** @var NotNormalizableValueException */
+        /** @var NotNormalizableValueException $exception */
         foreach ($e->getErrors() as $exception) {
             $message = sprintf('The type must be one of "%s" ("%s" given).', implode(', ', $exception->getExpectedTypes()), $exception->getCurrentType());
             $parameters = [];
@@ -1256,7 +1256,7 @@ collect all exceptions at once, and to get the object partially denormalized::
                 $parameters['hint'] = $exception->getMessage();
             }
             $violations->add(new ConstraintViolation($message, '', $parameters, null, $exception->getPath(), null));
-        };
+        }
 
         return $this->json($violations, 400);
     }
