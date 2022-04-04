@@ -102,41 +102,24 @@ JavaScript::
 
 This will print out ``Hi Hi Hi!``.
 
-Nullsafe operator
-~~~~~~~~~~~~~~~~~
+Null-safe Operator
+~~~~~~~~~~~~~~~~~~
 
-Working with mutable objects can be, sometimes, error prone.
-The ``?.`` syntax can help avoid unnecessary and redundant checks
-when trying to access properties or methods on an object with dynamic structure::
+Use the ``?.`` syntax to access properties and methods of objects that can be
+``null`` (this is equivalent to the ``$object?->propertyOrMethod`` PHP null-safe
+operator)::
 
-    class Apple
-    {
-        public $variety;
-    }
+    // these will throw an exception when `fruit` is `null`
+    $expressionLanguage->evaluate('fruit.color', ['fruit' => '...'])
+    $expressionLanguage->evaluate('fruit.getStock()', ['fruit' => '...'])
 
-    $apple = new Apple();
-    $apple->variety = 'Honeycrisp';
+    // these will return `null` if `fruit` is `null`
+    $expressionLanguage->evaluate('fruit?.color', ['fruit' => '...'])
+    $expressionLanguage->evaluate('fruit?.getStock()', ['fruit' => '...'])
 
-    var_dump($expressionLanguage->evaluate(
-        'fruit?.color',
-        [
-            'fruit' => $apple,
-        ]
-    ));
+.. versionadded:: 6.1
 
-This will print out ``null`` instead of throwing an ``Exception``.
-
-Similarly::
-
-    var_dump($expressionLanguage->evaluate(
-        'fruit?.eatMe()',
-        [
-            'fruit' => $apple,
-        ]
-    ));
-
-Will print out ``null`` since the method ``eatMe()`` we trying to access
-on the same ``Apple`` object does not exist.
+    The null safe operator was introduced in Symfony 6.1.
 
 .. _component-expression-functions:
 
