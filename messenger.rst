@@ -1193,6 +1193,7 @@ it in the ``port`` parameter of the DSN (e.g. ``amqps://localhost?cacert=/etc/ss
     By default, the transport will automatically create any exchanges, queues and
     binding keys that are needed. That can be disabled, but some functionality
     may not work correctly (like delayed queues).
+    To not autocreate any queues, you can configure a transport with `queues: []`.
 
 .. note::
 
