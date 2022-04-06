@@ -1369,7 +1369,21 @@ redeliver_timeout        Timeout before retrying a pending      ``3600``
 claim_interval           Interval on which pending/abandoned    ``60000`` (1 Minute)
                          messages should be checked for to
                          claim - in milliseconds
+sentinel_persistent_id   String, if null connection is          null
+                         non-persistent.
+sentinel_retry_interval  Int, value in milliseconds             ``0``
+sentinel_read_timeout    Float, value in seconds                ``0``
+                         default indicates unlimited
+sentinel_timeout         Float, value in seconds                ``0``
+                         default indicates unlimited
+sentinel_master          String, if null or empty Sentinel      null
+                         support is disabled
 =======================  =====================================  =================================
+
+.. versionadded:: 5.4
+
+    The ``sentinel_persistent_id``, ``sentinel_retry_interval``, ``sentinel_read_timeout``,
+    ``sentinel_timeout``, and ``sentinel_master`` options were introduced in Symfony 6.1.
 
 .. caution::
 
