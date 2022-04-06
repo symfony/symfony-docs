@@ -509,18 +509,22 @@ must be named according to the following path: ``domain.locale.loader``:
   ``php``, ``yaml``, etc).
 
 The loader can be the name of any registered loader. By default, Symfony
-provides many loaders:
+provides many loaders which are selected based on the following file extensions:
 
-* ``.yaml``: YAML file
-* ``.xlf``: XLIFF file;
-* ``.php``: Returning a PHP array;
+* ``.yaml``: YAML file (you can also use the ``.yml`` file extension);
+* ``.xlf``: XLIFF file (you can also use the ``.xliff`` file extension);
+* ``.php``: a PHP file that returns an array with the translations;
 * ``.csv``: CSV file;
 * ``.json``: JSON file;
 * ``.ini``: INI file;
-* ``.dat``, ``.res``: ICU resource bundle;
-* ``.mo``: Machine object format;
-* ``.po``: Portable object format;
-* ``.qt``: QT Translations XML file;
+* ``.dat``, ``.res``: `ICU resource bundle`_;
+* ``.mo``: `Machine object format`_;
+* ``.po``: `Portable object format`_;
+* ``.qt``: `QT Translations TS XML`_ file;
+
+.. versionadded:: 6.1
+
+    The ``.xliff`` file extension support was introduced in Symfony 6.1.
 
 The choice of which loader to use is entirely up to you and is a matter of
 taste. The recommended option is to use YAML for simple projects and use XLIFF
@@ -877,3 +881,7 @@ Learn more
 .. _`Translatable Extension`: https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/translatable.md
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
 .. _`Custom Language Name setting`: https://docs.lokalise.com/en/articles/1400492-uploading-files#custom-language-codes
+.. _`ICU resource bundle`: https://github.com/unicode-org/icu-docs/blob/main/design/bnf_rb.txt
+.. _`Portable object format`: https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html
+.. _`Machine object format`: https://www.gnu.org/software/gettext/manual/html_node/MO-Files.html
+.. _`QT Translations TS XML`: https://doc.qt.io/qt-5/linguist-ts-file-format.html
