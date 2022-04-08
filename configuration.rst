@@ -65,7 +65,26 @@ shown in these three formats.
     Starting from Symfony 5.1, by default Symfony only loads the configuration
     files defined in YAML format. If you define configuration in XML and/or PHP
     formats, update the ``src/Kernel.php`` file to add support for the ``.xml``
-    and ``.php`` file extensions.
+    and ``.php`` file extensions by overriding the
+    :method:`Symfony\\Component\\HttpKernel\\Kernel::configureContainer` method::
+
+        // src/Kernel.php
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+        private function configureContainer(ContainerConfigurator $container): void
+        {
+            $configDir = $this->getConfigDir();
+
+            $container->import($configDir.'/{packages}/*.{yaml,php}');
+            $container->import($configDir.'/{packages}/'.$this->environment.'/*.{yaml,php}');
+
+            if (is_file($configDir.'/services.yaml')) {
+                $container->import($configDir.'/services.yaml');
+                $container->import($configDir.'/{services}_'.$this->environment.'.yaml');
+            } else {
+                $container->import($configDir.'/{services}.php');
+            }
+        }
 
 There isn't any practical difference between formats. In fact, Symfony
 transforms and caches all of them into PHP before running the application, so
