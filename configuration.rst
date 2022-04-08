@@ -79,7 +79,32 @@ readable. These are the main advantages and disadvantages of each format:
     By default Symfony only loads the configuration files defined in YAML
     format. If you define configuration in XML and/or PHP formats, update the
     ``src/Kernel.php`` file to add support for the ``.xml`` and ``.php`` file
-    extensions.
+    extensions by overriding the
+    :method:`Symfony\\Component\\HttpKernel\\Kernel::configureContainer` method::
+
+        // src/Kernel.php
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+
+        class Kernel extends BaseKernel
+        {
+            // ...
+
+            private function configureContainer(ContainerConfigurator $container): void
+            {
+                $configDir = $this->getConfigDir();
+
+                $container->import($configDir.'/{packages}/*.{yaml,php}');
+                $container->import($configDir.'/{packages}/'.$this->environment.'/*.{yaml,php}');
+
+                if (is_file($configDir.'/services.yaml')) {
+                    $container->import($configDir.'/services.yaml');
+                    $container->import($configDir.'/{services}_'.$this->environment.'.yaml');
+                } else {
+                    $container->import($configDir.'/{services}.php');
+                }
+            }
+        }
 
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
