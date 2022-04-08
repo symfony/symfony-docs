@@ -70,19 +70,25 @@ shown in these three formats.
 
         // src/Kernel.php
         use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
-        private function configureContainer(ContainerConfigurator $container): void
+        class Kernel extends BaseKernel
         {
-            $configDir = $this->getConfigDir();
+            // ...
 
-            $container->import($configDir.'/{packages}/*.{yaml,php}');
-            $container->import($configDir.'/{packages}/'.$this->environment.'/*.{yaml,php}');
+            private function configureContainer(ContainerConfigurator $container): void
+            {
+                $configDir = $this->getConfigDir();
 
-            if (is_file($configDir.'/services.yaml')) {
-                $container->import($configDir.'/services.yaml');
-                $container->import($configDir.'/{services}_'.$this->environment.'.yaml');
-            } else {
-                $container->import($configDir.'/{services}.php');
+                $container->import($configDir.'/{packages}/*.{yaml,php}');
+                $container->import($configDir.'/{packages}/'.$this->environment.'/*.{yaml,php}');
+
+                if (is_file($configDir.'/services.yaml')) {
+                    $container->import($configDir.'/services.yaml');
+                    $container->import($configDir.'/{services}_'.$this->environment.'.yaml');
+                } else {
+                    $container->import($configDir.'/{services}.php');
+                }
             }
         }
 
