@@ -707,11 +707,16 @@ you can decide to not take care of services that may leak memory.
 
 On the other hand, workers usually sequentially process messages in long-running CLI processes, which don't
 finish after processing a single message. That's why you must be careful about service
-states to prevent information and/or memory leakage.
+states to prevent information and/or memory leakage as Symfony will inject the same instance of a
+service, preserving the internal state of the service between messages.
 
 However, certain Symfony services, such as the Monolog
 :ref:`fingers crossed handler <logging-handler-fingers_crossed>`, leak by design.
 That's why Symfony automatically resets the service container between two messages.
+If a service is not stateless and you want to reset its properties after each message, then
+the service must implement :class:`Symfony\\Contracts\\Service\\ResetInterface` where you can reset the
+properties in the ``reset()`` method.
+
 If you don't want to reset the container, add the ``--no-reset`` option when
 running the ``messenger:consume`` command.
 
