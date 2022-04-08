@@ -515,6 +515,11 @@ call::
         'etag'             => 'abcdef',
     ]);
 
+.. versionadded:: 6.1
+
+    The ``stale_if_error`` and ``stale_while_revalidate`` options were
+    introduced in Symfony 6.1.
+
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
 :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
