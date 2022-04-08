@@ -214,6 +214,11 @@ Comparison Operators
 * ``starts with``
 * ``ends with``
 
+.. versionadded:: 6.1
+
+    The ``contains``, ``starts with`` and ``ends with`` operators were introduced
+    in Symfony 6.1.
+
 .. tip::
 
     To test if a string does *not* match a regex, use the logical ``not``
