@@ -705,14 +705,19 @@ PHP is designed to be stateless, there are no shared resources across different
 requests. In HTTP context PHP cleans everything after sending the response, so
 you can decide to not take care of services that may leak memory.
 
-On the other hand, workers usually sequentially process messages in long-running CLI processes, which don't
-finish after processing a single message. That's why you must be careful about service
-states to prevent information and/or memory leakage as Symfony will inject the same instance of a
-service, preserving the internal state of the service between messages.
+On the other hand, it's common for workers to process messages sequentially in
+long-running CLI processes which don't finish after processing a single message.
+Beware about service states to prevent information and/or memory leakage as
+Symfony will inject the same instance of a service in all messages, preserving
+the internal state of the services.
 
 However, certain Symfony services, such as the Monolog
 :ref:`fingers crossed handler <logging-handler-fingers_crossed>`, leak by design.
-That's why Symfony automatically resets the service container between two messages.
+Symfony provides a **service reset** feature to solve this problem. When resetting
+the container automatically between two messages, Symfony looks for any services
+implementing :class:`Symfony\\Contracts\\Service\\ResetInterface` (including your
+own services) and calls their ``reset()`` method so they can clean their internal state.
+
 If a service is not stateless and you want to reset its properties after each message, then
 the service must implement :class:`Symfony\\Contracts\\Service\\ResetInterface` where you can reset the
 properties in the ``reset()`` method.
