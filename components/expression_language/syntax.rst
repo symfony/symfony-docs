@@ -210,6 +210,9 @@ Comparison Operators
 * ``<=`` (less than or equal to)
 * ``>=`` (greater than or equal to)
 * ``matches`` (regex match)
+* ``contains``
+* ``starts with``
+* ``ends with``
 
 .. tip::
 
