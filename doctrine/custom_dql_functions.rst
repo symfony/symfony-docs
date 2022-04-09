@@ -5,7 +5,7 @@ How to Register custom DQL Functions
 ====================================
 
 Doctrine allows you to specify custom DQL functions. For more information
-on this topic, read Doctrine's cookbook article "`DQL User Defined Functions`_".
+on this topic, read Doctrine's cookbook article `DQL User Defined Functions`_.
 
 In Symfony, you can register your custom DQL functions as follows:
 
