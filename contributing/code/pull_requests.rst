@@ -99,7 +99,7 @@ Get the Symfony source code:
 .. code-block:: terminal
 
       $ cd symfony
-      $ git remote add upstream git://github.com/symfony/symfony.git
+      $ git remote add upstream https://github.com/symfony/symfony.git
 
 Check that the current Tests Pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
