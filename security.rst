@@ -2503,9 +2503,9 @@ However, in some cases, this process can cause unexpected authentication problem
 If you're having problems authenticating, it could be that you *are* authenticating
 successfully, but you immediately lose authentication after the first redirect.
 
-In that case, review the serialization logic (e.g. ``SerializableInterface``) on
+In that case, review the serialization logic (e.g. ``\Serializable`` interface) on
 you user class (if you have any) to make sure that all the fields necessary are
-serialized.
+serialized and also exclude all the fields not necessary to be serialized (relations).
 
 Comparing Users Manually with EquatableInterface
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
