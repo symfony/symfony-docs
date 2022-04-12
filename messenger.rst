@@ -1391,7 +1391,7 @@ sentinel_master          String, if null or empty Sentinel      null
                          support is disabled
 =======================  =====================================  =================================
 
-.. versionadded:: 5.4
+.. versionadded:: 6.1
 
     The ``persistent_id``, ``retry_interval``, ``read_timeout``, ``timeout``, and
     ``sentinel_master`` options were introduced in Symfony 6.1.
