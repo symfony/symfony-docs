@@ -180,6 +180,19 @@ named ``kernel.http_method_override``.
         $request = Request::createFromGlobals();
         // ...
 
+
+ .. _configuration-framework-http_method_override:
+
+trust_x_sendfile_type_header
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+This determines whether to trust ``x-sendfile`` header for BinaryFileResponse. If enabled, the
+:method:`BinaryFileResponse::trustXSendfileTypeHeader <Symfony\\Component\\HttpFoundation\\BinaryFileResponse::trustXSendfileTypeHeader>`
+method gets called automatically. It becomes the service container parameter
+named ``kernel.trust_x_sendfile_type_header``.
+
 .. _reference-framework-trusted-headers:
 
 trusted_headers
