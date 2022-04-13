@@ -386,17 +386,17 @@ order:
 
         The ``Workflow::DISABLE_ANNOUNCE_EVENT`` constant was introduced in Symfony 5.1.
 
-    .. versionadded:: 5.2
+.. versionadded:: 5.2
 
-        In Symfony 5.2, the context is customizable for all events except for
-        ``workflow.guard`` events, which will not receive the custom ``$context``::
+    In Symfony 5.2, the context is customizable for all events except for
+    ``workflow.guard`` events, which will not receive the custom ``$context``::
 
-            // $context must be an array
-            $context = ['context_key' => 'context_value'];
-            $workflow->apply($subject, $transitionName, $context);
+        // $context must be an array
+        $context = ['context_key' => 'context_value'];
+        $workflow->apply($subject, $transitionName, $context);
 
-            // in an event listener
-            $context = $event->getContext(); // returns ['context']
+        // in an event listener
+        $context = $event->getContext(); // returns ['context']
 
 .. note::
 
