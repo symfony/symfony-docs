@@ -382,14 +382,14 @@ order:
 
         $workflow->apply($subject, $transitionName, [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
 
-    The context is accessible in all events::
+The context is accessible in all events except for the ``workflow.guard`` events::
 
-        // $context must be an array
-        $context = ['context_key' => 'context_value'];
-        $workflow->apply($subject, $transitionName, $context);
+    // $context must be an array
+    $context = ['context_key' => 'context_value'];
+    $workflow->apply($subject, $transitionName, $context);
 
-        // in an event listener (workflow.guard events)
-        $context = $event->getContext(); // returns ['context']
+    // in an event listener (workflow.guard events)
+    $context = $event->getContext(); // returns ['context']
 
 .. note::
 
