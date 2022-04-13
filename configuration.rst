@@ -465,8 +465,9 @@ files directly in the ``config/packages/`` directory.
             when@test:
                 webpack_encore:
                     strict_mode: false
-                    
-            # you can use "Yaml anchors" to share config between multiple environments (make "test" config identical to "prod")
+
+            # YAML syntax allows to reuse contents using "anchors" (&some_name) and "aliases" (*some_name).
+            # In this example, 'test' configuration uses the exact same configuration as in 'prod'
             when@prod: &webpack_prod
                 webpack_encore:
                     # ...
