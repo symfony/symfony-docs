@@ -465,6 +465,12 @@ files directly in the ``config/packages/`` directory.
             when@test:
                 webpack_encore:
                     strict_mode: false
+                    
+            # you can use "Yaml anchors" to share config between multiple environments (make "test" config identical to "prod")
+            when@prod: &webpack_prod
+                webpack_encore:
+                    # ...
+            when@test: *webpack_prod
 
         .. code-block:: xml
 
