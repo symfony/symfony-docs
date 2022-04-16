@@ -59,6 +59,10 @@ command, for instance:
 Console Completion
 ~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 6.1
+
+    Console completion for Fish was introduced in Symfony 6.1.
+
 If you are using the Bash shell, you can install Symfony's completion
 script to get auto completion when typing commands in the terminal. All
 commands support name and option completion, and some can even complete
