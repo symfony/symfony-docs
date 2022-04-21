@@ -601,7 +601,7 @@ specify what channels should be used for specific levels (using
                 ->channelPolicy('high', ['chat/slack'])
                 // Use browser for medium and low notifications
                 ->channelPolicy('medium', ['browser'])
-                ->channelPolicy('medium', ['browser'])
+                ->channelPolicy('low', ['browser'])
             ;
         };
 
