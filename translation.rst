@@ -850,7 +850,7 @@ of:
 
     use Symfony\Component\Translation\LocaleSwitcher;
 
-    class SomeClass
+    class SomeService
     {
         private LocaleSwitcher $localeSwitcher;
 
@@ -885,10 +885,10 @@ of:
         }
     }
 
-.. note::
-
-    The class :class:`Symfony\\Component\\Translation\\LocaleSwitcher` is
-    autowired to the ``translation.locale_switcher`` service.
+When using :ref:`autowiring <services-autowire>`, type-hint any controller or
+service argument with the :class:`Symfony\\Component\\Translation\\LocaleSwitcher`
+class to inject the locale switcher service. Otherwise, configure your services
+manually and inject the ``translation.locale_switcher`` service.
 
 Translating Database Content
 ----------------------------
