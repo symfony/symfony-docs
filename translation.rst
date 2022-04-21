@@ -827,6 +827,69 @@ checks translation resources for several locales:
     add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
 
+Switch Locale Programmatically
+------------------------------
+
+.. versionadded:: 6.1
+
+    The ``LocaleSwitcher`` was introduced in Symfony 6.1.
+
+Sometimes you need to change the locale of the application dynamically
+just to run some code. Imagine a console command that renders Twig templates
+of emails in different languages. You need to change the locale only to
+render those templates.
+
+The ``LocaleSwitcher`` class allows you to change at once the locale
+of:
+
+* All the services that are tagged with ``kernel.locale_aware``;
+* ``\Locale::setDefault()``;
+* If a request is available, the ``_locale`` request attribute.
+
+.. code-block:: php
+
+    use Symfony\Component\Translation\LocaleSwitcher;
+
+    class SomeClass
+    {
+        private LocaleSwitcher $localeSwitcher;
+
+        public function __construct(LocaleSwitcher $localeSwitcher)
+        {
+            $this->localeSwitcher = $localeSwitcher;
+        }
+
+        public function someMethod()
+        {
+            // you can get the current application locale like this:
+            $currentLocale = $this->localeSwitcher->getLocale();
+
+            // you can set the locale for the entire application like this:
+            // (from now on, the application will use 'fr' (French) as the
+            // locale; including the default locale used to translate Twig templates)
+            $this->localeSwitcher->setLocale('fr');
+
+            // reset the current locale of your application to the configured default locale
+            // in config/packages/translation.yaml, by option 'default_locale'
+            $this->localeSwitcher->reset();
+
+            // you can also run some code with a certain locale, without
+            // changing the locale for the rest of the application
+            $this->localeSwitcher->runWithLocale('es', function() {
+
+                // e.g. render here some Twig templates using 'es' (Spanish) locale
+
+            });
+
+            // ...
+        }
+    }
+
+.. note::
+
+    The class :class:`Symfony\\Component\\Translation\\LocaleSwitcher` is
+    autowired to the ``translation.locale_switcher`` service.
+
 Translating Database Content
 ----------------------------
 
