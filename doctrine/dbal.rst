@@ -55,7 +55,7 @@ object::
     {
         public function index(Connection $connection): Response
         {
-            $users = $connection->fetchAll('SELECT * FROM users');
+            $users = $connection->fetchAllAssociative('SELECT * FROM users');
 
             // ...
         }
