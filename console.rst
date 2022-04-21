@@ -9,15 +9,90 @@ The Symfony framework provides lots of commands through the ``bin/console`` scri
 created with the :doc:`Console component </components/console>`. You can also
 use it to create your own commands.
 
-The Console: APP_ENV & APP_DEBUG
----------------------------------
+Running Commands
+----------------
+
+Each Symfony application comes with a large set of commands. You can use
+the ``list`` command to view all available commands in the application:
+
+.. code-block:: terminal
+
+    $ php bin/console list
+    ...
+
+    Available commands:
+      about                                      Display information about the current project
+      completion                                 Dump the shell completion script
+      help                                       Display help for a command
+      list                                       List commands
+     assets
+      assets:install                             Install bundle's web assets under a public directory
+     cache
+      cache:clear                                Clear the cache
+    ...
+
+If you find the command you need, you can run it with the ``--help`` option
+to view the command's documentation:
+
+.. code-block:: terminal
+
+    $ php bin/console assets:install --help
+
+APP_ENV & APP_DEBUG
+~~~~~~~~~~~~~~~~~~~
 
 Console commands run in the :ref:`environment <config-dot-env>` defined in the ``APP_ENV``
 variable of the ``.env`` file, which is ``dev`` by default. It also reads the ``APP_DEBUG``
 value to turn "debug" mode on or off (it defaults to ``1``, which is on).
 
 To run the command in another environment or debug mode, edit the value of ``APP_ENV``
-and ``APP_DEBUG``.
+and ``APP_DEBUG``. You can also define this env vars when running the
+command, for instance:
+
+.. code-block:: terminal
+
+    # clears the cache for the prod environment
+    $ APP_ENV=prod php bin/console cache:clear
+
+.. _console-completion-setup:
+
+Console Completion
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 5.4
+
+    Console completion for Bash was introduced in Symfony 5.4.
+
+If you are using the Bash shell, you can install Symfony's completion
+script to get auto completion when typing commands in the terminal. All
+commands support name and option completion, and some can even complete
+values.
+
+.. image:: /_images/components/console/completion.gif
+
+First, make sure you installed and setup the "bash completion" package for
+your OS (typically named ``bash-completion``). Then, install the Symfony
+completion bash script *once* by running the ``completion`` command in a
+Symfony app installed on your computer:
+
+.. code-block:: terminal
+
+    $ php bin/console completion bash | sudo tee /etc/bash_completion.d/console-events-terminate
+    # after the installation, restart the shell
+
+Now you are all set to use the auto completion for all Symfony Console
+applications on your computer. By default, you can get a list of complete
+options by pressing the Tab key.
+
+.. tip::
+
+    Many PHP tools are built using the Symfony Console component (e.g.
+    Composer, PHPstan and Behat). If they are using version 5.4 or higher,
+    you can also install their completion script to enable console completion:
+
+    .. code-block:: terminal
+
+        $ php vendor/bin/phpstan completion bash | sudo tee /etc/bash_completion.d/phpstan
 
 Creating a Command
 ------------------
@@ -37,11 +112,6 @@ want a command to create a user::
     {
         // the name of the command (the part after "bin/console")
         protected static $defaultName = 'app:create-user';
-
-        protected function configure(): void
-        {
-            // ...
-        }
 
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
@@ -65,37 +135,41 @@ want a command to create a user::
     }
 
 Configuring the Command
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 You can optionally define a description, help message and the
-:doc:`input options and arguments </console/input>`::
+:doc:`input options and arguments </console/input>` by overriding the
+``configure()`` method::
+
+    // src/Command/CreateUserCommand.php
 
     // ...
-    // the command description shown when running "php bin/console list"
-    protected static $defaultDescription = 'Creates a new user.';
-
-    // ...
-    protected function configure(): void
+    class CreateUserCommand extends Command
     {
-        $this
-            // If you don't like using the $defaultDescription static property,
-            // you can also define the short description using this method:
-            // ->setDescription('...')
+        // the command description shown when running "php bin/console list"
+        protected static $defaultDescription = 'Creates a new user.';
 
-            // the command help shown when running the command with the "--help" option
-            ->setHelp('This command allows you to create a user...')
-        ;
+        // ...
+        protected function configure(): void
+        {
+            $this
+                // the command help shown when running the command with the "--help" option
+                ->setHelp('This command allows you to create a user...')
+            ;
+        }
     }
 
-Defining the ``$defaultDescription`` static property instead of using the
-``setDescription()`` method allows to get the command description without
-instantiating its class. This makes the ``php bin/console list`` command run
-much faster.
+.. tip::
 
-If you want to always run the ``list`` command fast, add the ``--short`` option
-to it (``php bin/console list --short``). This will avoid instantiating command
-classes, but it won't show any description for commands that use the
-``setDescription()`` method instead of the static property.
+    Defining the ``$defaultDescription`` static property instead of using the
+    ``setDescription()`` method allows to get the command description without
+    instantiating its class. This makes the ``php bin/console list`` command run
+    much faster.
+
+    If you want to always run the ``list`` command fast, add the ``--short`` option
+    to it (``php bin/console list --short``). This will avoid instantiating command
+    classes, but it won't show any description for commands that use the
+    ``setDescription()`` method instead of the static property.
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
@@ -130,7 +204,7 @@ available in the ``configure()`` method::
     }
 
 Registering the Command
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 In PHP 8 and newer versions, you can register the command by adding the
 ``AsCommand`` attribute to it::
@@ -141,6 +215,8 @@ In PHP 8 and newer versions, you can register the command by adding the
     use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
 
+    // the "name" and "description" arguments of AsCommand replace the
+    // static $defaultName and $defaultDescription properties
     #[AsCommand(
         name: 'app:create-user',
         description: 'Creates a new user.',
@@ -157,8 +233,8 @@ If you can't use PHP attributes, register the command as a service and
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
-Executing the Command
----------------------
+Running the Command
+~~~~~~~~~~~~~~~~~~~
 
 After configuring and registering the command, you can run it in the terminal:
 
@@ -440,7 +516,7 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
 
         $application = new Application();
         $application->setAutoExit(false);
-        
+
         $tester = new ApplicationTester($application);
 
 .. note::
