@@ -76,7 +76,7 @@ this value accordingly):
 .. code-block:: terminal
 
     $ cd projects/
-    $ git clone git://github.com/YOUR-GITHUB-USERNAME/symfony-docs.git
+    $ git clone git@github.com:YOUR-GITHUB-USERNAME/symfony-docs.git
 
 **Step 3.** Add the original Symfony docs repository as a "Git remote" executing
 this command:
