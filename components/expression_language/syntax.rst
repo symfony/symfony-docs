@@ -343,6 +343,18 @@ Ternary Operators
 * ``foo ?: 'no'`` (equal to ``foo ? foo : 'no'``)
 * ``foo ? 'yes'`` (equal to ``foo ? 'yes' : ''``)
 
+Null-coalescing Operator
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is the same as the PHP's null-coalescing operator ``??`` which is a syntactic sugar for the use of a ternary 
+in conjunction with isset(). It returns the left hand-side if it exist and not ``null`` otherwise it returns the right hand-side.
+Note that coalescing can be chained.
+
+* ``foo ?? 'no'``
+* ``foo.baz ?? 'no'``
+* ``foo[3] ?? 'no'``
+* ``foo.baz ?? foo['baz'] ?? 'no'``
+
 Built-in Objects and Variables
 ------------------------------
 
