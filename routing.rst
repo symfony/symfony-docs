@@ -323,11 +323,24 @@ arbitrary matching logic:
              * )
              *
              * expressions can also include configuration parameters:
-             * condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
+             * condition="request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
              */
             public function contact(): Response
             {
                 // ...
+            }
+
+            /**
+             * expressions can retrieve route parameter values using the "params" variable
+             * @Route(
+             *     "/posts/{id}",
+             *     name="post_show",
+             *     condition="params['id'] < 1000"
+             * )
+             */
+            public function showPost(int $id): Response
+            {
+                // ... return a JSON response with the post
             }
         }
 
@@ -346,12 +359,23 @@ arbitrary matching logic:
                 '/contact',
                 name: 'contact',
                 condition: "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'",
+                // expressions can also include config parameters:
+                // condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
             )]
-            // expressions can also include config parameters:
-            // condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
             public function contact(): Response
             {
                 // ...
+            }
+
+            #[Route(
+                '/posts/{id}',
+                name: 'post_show',
+                // expressions can retrieve route parameter values using the "params" variable
+                condition: "params['id'] < 1000"
+            )]
+            public function showPost(int $id): Response
+            {
+                // ... return a JSON response with the post
             }
         }
 
@@ -366,6 +390,12 @@ arbitrary matching logic:
             # condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
             # expressions can even use environment variables:
             # condition: "context.getHost() == env('APP_MAIN_HOST')"
+
+        post_show:
+            path:       /posts/{id}
+            controller: 'App\Controller\DefaultController::showPost'
+            # expressions can retrieve route parameter values using the "params" variable
+            condition:  "params['id'] < 1000"
 
     .. code-block:: xml
 
@@ -382,6 +412,11 @@ arbitrary matching logic:
                 <!-- <condition>request.headers.get('User-Agent') matches '%app.allowed_browsers%'</condition> -->
                 <!-- expressions can even use environment variables: -->
                 <!-- <condition>context.getHost() == env('APP_MAIN_HOST')</condition> -->
+            </route>
+
+            <route id="post_show" path="/posts/{id}" controller="App\Controller\DefaultController::showPost">
+                <!-- expressions can retrieve route parameter values using the "params" variable -->
+                <condition>params['id'] &lt; 1000</condition>
             </route>
         </routes>
 
@@ -400,6 +435,11 @@ arbitrary matching logic:
                 // expressions can even use environment variables:
                 // ->condition('context.getHost() == env("APP_MAIN_HOST")')
             ;
+            $routes->add('post_show', '/posts/{id}')
+                ->controller([DefaultController::class, 'showPost'])
+                // expressions can retrieve route parameter values using the "params" variable
+                ->condition('params["id"] < 1000')
+            ;
         };
 
 The value of the ``condition`` option is any valid
@@ -413,6 +453,14 @@ and can use any of these variables created by Symfony:
 ``request``
     The :ref:`Symfony Request <component-http-foundation-request>` object that
     represents the current request.
+
+``params``
+    An array of matched :ref:`route parameters <routing-route-parameters>` for
+    the current route.
+
+.. versionadded:: 6.1
+
+    The ``params`` variable was introduced in Symfony 6.1.
 
 You can also use this function:
 
@@ -477,6 +525,8 @@ controller action that you expect:
     $ php bin/console router:match /lucky/number/8
 
       [OK] Route "app_lucky_number" matches
+
+.. _routing-route-parameters:
 
 Route Parameters
 ----------------
@@ -1385,7 +1435,7 @@ A possible solution is to change the parameter requirements to be more permissiv
 
         // src/Controller/DefaultController.php
         namespace App\Controller;
-        
+
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
@@ -1505,7 +1555,7 @@ when importing the routes.
 
         // src/Controller/BlogController.php
         namespace App\Controller;
-        
+
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
