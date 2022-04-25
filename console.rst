@@ -59,10 +59,6 @@ command, for instance:
 Console Completion
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 5.4
-
-    Console completion for Bash was introduced in Symfony 5.4.
-
 If you are using the Bash shell, you can install Symfony's completion
 script to get auto completion when typing commands in the terminal. All
 commands support name and option completion, and some can even complete

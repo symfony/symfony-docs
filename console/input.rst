@@ -307,10 +307,6 @@ The above code can be simplified as follows because ``false !== null``::
 Adding Argument/Option Value Completion
 ---------------------------------------
 
-.. versionadded:: 5.4
-
-    Console completion was introduced in Symfony 5.4.
-
 If :ref:`Console completion is installed <console-completion-setup>`,
 command and option names will be auto completed by the shell. However, you
 can also implement value completion for the input in your commands. For
