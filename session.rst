@@ -169,7 +169,7 @@ if you type-hint an argument with :class:`Symfony\\Component\\HttpFoundation\\Re
 
 .. deprecated:: 5.3
 
-    The ``SessionInterface`` and ``session`` service were deprecated in
+    The ``SessionInterface`` and ``session`` service were deprecated since
     Symfony 5.3. Instead, inject the ``RequestStack`` service to get the session
     object of the current request.
 
