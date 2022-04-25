@@ -2561,7 +2561,7 @@ for these events.
 
                     <service id="App\EventListener\CustomLogoutSubscriber">
                         <tag name="kernel.event_subscriber"
-                             dispacher="security.event_dispatcher.main"
+                             dispatcher="security.event_dispatcher.main"
                          />
                     </service>
                 </services>
