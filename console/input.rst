@@ -304,4 +304,87 @@ The above code can be simplified as follows because ``false !== null``::
     $yell = ($optionValue !== false);
     $yellLouder = ($optionValue === 'louder');
 
+Adding Argument/Option Value Completion
+---------------------------------------
+
+If :ref:`Console completion is installed <console-completion-setup>`,
+command and option names will be auto completed by the shell. However, you
+can also implement value completion for the input in your commands. For
+instance, you may want to complete all usernames from the database in the
+``name`` argument of your greet command.
+
+To achieve this, override the ``complete()`` method in the command::
+
+    // ...
+    use Symfony\Component\Console\Completion\CompletionInput;
+    use Symfony\Component\Console\Completion\CompletionSuggestions;
+
+    class GreetCommand extends Command
+    {
+        // ...
+
+        public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
+        {
+            if ($input->mustSuggestArgumentValuesFor('names')) {
+                // the user asks for completion input for the "names" option
+
+                // the value the user already typed, e.g. when typing "app:greet Fa" before
+                // pressing Tab, this will contain "Fa"
+                $currentValue = $input->getCompletionValue();
+
+                // get the list of username names from somewhere (e.g. the database)
+                // you may use $currentValue to filter down the names
+                $availableUsernames = ...;
+
+                // then add the retrieved names as suggested values
+                $suggestions->suggestValues($availableUsernames);
+            }
+        }
+    }
+
+That's all you need! Assuming users "Fabien" and "Fabrice" exist, pressing
+tab after typing ``app:greet Fa`` will give you these names as a suggestion.
+
+.. tip::
+
+    The bash shell is able to handle huge amounts of suggestions and will
+    automatically filter the suggested values based on the existing input
+    from the user. You do not have to implement any filter logic in the
+    command.
+
+    You may use ``CompletionInput::getCompletionValue()`` to get the
+    current input if that helps improving performance (e.g. by reducing the
+    number of rows fetched from the database).
+
+Testing the Completion script
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Console component comes with a special
+:class:`Symfony\\Component\\Console\\Test\\CommandCompletionTester`` class
+to help you unit test the completion logic::
+
+    // ...
+    use Symfony\Component\Console\Application;
+
+    class GreetCommandTest extends TestCase
+    {
+        public function testComplete()
+        {
+            $application = new Application();
+            $application->add(new GreetCommand());
+
+            // create a new tester with the greet command
+            $tester = new CommandCompletionTester($application->get('app:greet'));
+
+            // complete the input without any existing input (the empty string represents
+            // the position of the cursor)
+            $suggestions = $tester->complete(['']);
+            $this->assertSame(['Fabien', 'Fabrice', 'Wouter'], $suggestions);
+
+            // complete the input with "Fa" as input
+            $suggestions = $tester->complete(['Fa']);
+            $this->assertSame(['Fabien', 'Fabrice'], $suggestions);
+        }
+    }
+
 .. _`docopt standard`: http://docopt.org/
