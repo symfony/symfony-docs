@@ -62,6 +62,20 @@ but keeps a reference of the old one as ``.inner``:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/DecoratingMailer.php
+        namespace App;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+
+        #[AsDecorator(decorates: Mailer::class)]
+        class DecoratingMailer
+        {
+            // ...
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -124,6 +138,28 @@ inject the decorated service explicitly (the ID of the decorated service is
 automatically changed to ``'.inner'``):
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/DecoratingMailer.php
+        namespace App;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+        use Symfony\Component\DependencyInjection\Attribute\MapDecorated;
+
+        #[AsDecorator(decorates: Mailer::class)]
+        class DecoratingMailer
+        {
+            private $inner;
+
+            public function __construct(#[MapDecorated] $inner)
+            {
+                $this->inner = $inner;
+            }
+
+            // ...
+        }
 
     .. code-block:: yaml
 
@@ -249,6 +285,37 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
 
 .. configuration-block::
 
+        .. code-block:: php-attributes
+
+            // ...
+            use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+            use Symfony\Component\DependencyInjection\Attribute\MapDecorated;
+
+            #[AsDecorator(decorates: Foo::class, priority: 5)]
+            class Bar
+            {
+                private $inner;
+
+                public function __construct(#[MapDecorated] $inner)
+                {
+                    $this->inner = $inner;
+                }
+                // ...
+            }
+
+            #[AsDecorator(decorates: Foo::class, priority: 1)]
+            class Baz
+            {
+                private $inner;
+
+                public function __construct(#[MapDecorated] $inner)
+                {
+                    $this->inner = $inner;
+                }
+
+                // ...
+            }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -323,6 +390,26 @@ Three different behaviors are available:
 * ``null``: The container will keep the decorator service and will set the decorated one to ``null``.
 
 .. configuration-block::
+
+        .. code-block:: php-attributes
+
+            // ...
+            use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+            use Symfony\Component\DependencyInjection\Attribute\MapDecorated;
+            use Symfony\Component\DependencyInjection\ContainerInterface;
+
+            #[AsDecorator(decorates: Mailer::class, onInvalid: ContainerInterface::IGNORE_ON_INVALID_REFERENCE)]
+            class Bar
+            {
+                private $inner;
+
+                public function __construct(#[MapDecorated] $inner)
+                {
+                    $this->inner = $inner;
+                }
+
+                // ...
+            }
 
     .. code-block:: yaml
 
