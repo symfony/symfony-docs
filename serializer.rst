@@ -185,7 +185,7 @@ To create a more complex (de)serialization context, you can chain them using the
         ->withGroups(['group1', 'group2']);
 
     $contextBuilder = (new CsvEncoderContextBuilder())
-        ->withContext($contextBuilder->toArray())
+        ->withContext($contextBuilder)
         ->withDelimiter(';');
 
     $serializer->serialize($something, 'csv', $contextBuilder->toArray());

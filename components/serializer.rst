@@ -1222,7 +1222,7 @@ you can use "context builders" to define the context using a fluent interface::
         ->withGroups(['group1', 'group2']);
 
     $contextBuilder = (new CsvEncoderContextBuilder())
-        ->withContext($contextBuilder->toArray())
+        ->withContext($contextBuilder)
         ->withDelimiter(';');
 
     $serializer->serialize($something, 'csv', $contextBuilder->toArray());
