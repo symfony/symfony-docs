@@ -442,7 +442,12 @@ You can find a list of existing image mime types on the `IANA website`_.
 ``mimeTypesMessage``
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.``
+**type**: ``string`` **default**: ``This file is not a valid image.``
+
+The message ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.`` will be displayed 
+if the allowed `mimeTypes`_ are only a subset of ``image/*``.
+
+.. include:: /reference/constraints/_parameters-mime-types-message-option.rst.inc
 
 ``minHeight``
 ~~~~~~~~~~~~~
