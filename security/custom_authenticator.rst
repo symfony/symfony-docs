@@ -178,7 +178,8 @@ can define what happens in these cases:
 
 .. tip::
 
-    If your login method is interactive, which means that the user actively logged into your application, you may want your authenticator to implement the 
+    If your login method is interactive, which means that the user actively
+    logged into your application, you may want your authenticator to implement the
     :class:`Symfony\\Component\\Security\\Http\\Authenticator\\InteractiveAuthenticatorInterface`
     so that it dispatches an 
     :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
