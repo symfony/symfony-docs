@@ -156,20 +156,22 @@ configuration:
 Using Context Builders
 ----------------------
 
-To define a proper (de)serialization context, you can leverage context builders.
-Those are objects that help you to create that context by providing
-auto-completion, validation, and documentation::
+.. versionadded:: 6.1
+
+    Context builders were introduced in Symfony 6.1.
+
+To define the (de)serialization context, you can use "context builders", which
+are objects that help you to create that context by providing autocompletion,
+validation, and documentation::
 
     use Symfony\Component\Serializer\Context\Normalizer\DateTimeNormalizerContextBuilder;
 
     $contextBuilder = (new DateTimeNormalizerContextBuilder())->withFormat('Y-m-d H:i:s');
-
     $serializer->serialize($something, 'json', $contextBuilder->toArray());
 
 Each normalizer/encoder has its related :ref:`context builder <component-serializer-context-builders>`.
-To create a full (de)serialization context, you will be able to chain them using the
-``withContext`` method. As the ``withContext`` method takes an array as an argument, it is
-also possible to pass custom values to that context::
+To create a more complex (de)serialization context, you can chain them using the
+``withContext()`` method::
 
     use Symfony\Component\Serializer\Context\Encoder\CsvEncoderContextBuilder;
     use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
@@ -188,8 +190,8 @@ also possible to pass custom values to that context::
 
     $serializer->serialize($something, 'csv', $contextBuilder->toArray());
 
-If you want auto-completion, validation, and documentation for your custom context values,
-you can :doc:`create your context builders </serializer/custom_context_builders>`.
+You can also :doc:`create your context builders </serializer/custom_context_builders>`
+to have autocompletion, validation, and documentation for your custom context values.
 
 .. _serializer-using-serialization-groups-annotations:
 

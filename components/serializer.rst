@@ -1207,9 +1207,8 @@ Option          Description                                               Defaul
 Context Builders
 ----------------
 
-Context builders are objects that help creating the :ref:`serialization context <serializer-context>`.
-
-You can easily use context builders by instantiating them::
+Instead of passing plain PHP arrays to the :ref:`serialization context <serializer-context>`,
+you can use "context builders" to define the context using a fluent interface::
 
     use Symfony\Component\Serializer\Context\Encoder\CsvEncoderContextBuilder;
     use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
@@ -1228,14 +1227,18 @@ You can easily use context builders by instantiating them::
 
     $serializer->serialize($something, 'csv', $contextBuilder->toArray());
 
+.. versionadded:: 6.1
+
+    Context builders were introduced in Symfony 6.1.
+
 .. note::
 
     The Serializer component provides a context builder
     for each :ref:`normalizer <component-serializer-normalizers>`
     and :ref:`encoder <component-serializer-encoders>`.
 
-    You can also create custom context builders to deal with your
-    context values. Read more at :doc:`/serializer/custom_context_builders`.
+    You can also :doc:`create custom context builders </serializer/custom_context_builders>`
+    to deal with your context values.
 
 Skipping ``null`` Values
 ------------------------
