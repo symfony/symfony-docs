@@ -1202,6 +1202,41 @@ Option          Description                                               Defaul
                 to customize the encoding / decoding YAML string
 =============== ========================================================  ==========================
 
+.. _component-serializer-context-builders:
+
+Context Builders
+----------------
+
+Context builders are objects that help creating the :ref:`serialization context <serializer-context>`.
+
+You can easily use context builders by instantiating them::
+
+    use Symfony\Component\Serializer\Context\Encoder\CsvEncoderContextBuilder;
+    use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
+
+    $initialContext = [
+        'custom_key' => 'custom_value',
+    ];
+
+    $contextBuilder = (new ObjectNormalizerContextBuilder())
+        ->withContext($initialContext)
+        ->withGroups(['group1', 'group2']);
+
+    $contextBuilder = (new CsvEncoderContextBuilder())
+        ->withContext($contextBuilder->toArray())
+        ->withDelimiter(';');
+
+    $serializer->serialize($something, 'csv', $contextBuilder->toArray());
+
+.. note::
+
+    The Serializer component provides a context builder
+    for each :ref:`normalizer <component-serializer-normalizers>`
+    and :ref:`encoder <component-serializer-encoders>`.
+
+    You can also create custom context builders to deal with your
+    context values. Read more at :doc:`/serializer/custom_context_builders`.
+
 Skipping ``null`` Values
 ------------------------
 

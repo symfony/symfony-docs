@@ -89,6 +89,8 @@ possible to set the priority of the tag in order to decide the matching order.
     ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory
     usage and exposing internal details.
 
+.. _serializer-context:
+
 Serializer Context
 ------------------
 
@@ -149,6 +151,46 @@ configuration:
             ;
         };
 
+.. _serializer-using-context-builders:
+
+Using Context Builders
+----------------------
+
+To define a proper (de)serialization context, you can leverage context builders.
+Those are objects that help you to create that context by providing
+auto-completion, validation, and documentation::
+
+    use Symfony\Component\Serializer\Context\Normalizer\DateTimeNormalizerContextBuilder;
+
+    $contextBuilder = (new DateTimeNormalizerContextBuilder())->withFormat('Y-m-d H:i:s');
+
+    $serializer->serialize($something, 'json', $contextBuilder->toArray());
+
+Each normalizer/encoder has its related :ref:`context builder <component-serializer-context-builders>`.
+To create a full (de)serialization context, you will be able to chain them using the
+``withContext`` method. As the ``withContext`` method takes an array as an argument, it is
+also possible to pass custom values to that context::
+
+    use Symfony\Component\Serializer\Context\Encoder\CsvEncoderContextBuilder;
+    use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
+
+    $initialContext = [
+        'custom_key' => 'custom_value',
+    ];
+
+    $contextBuilder = (new ObjectNormalizerContextBuilder())
+        ->withContext($initialContext)
+        ->withGroups(['group1', 'group2']);
+
+    $contextBuilder = (new CsvEncoderContextBuilder())
+        ->withContext($contextBuilder->toArray())
+        ->withDelimiter(';');
+
+    $serializer->serialize($something, 'csv', $contextBuilder->toArray());
+
+If you want auto-completion, validation, and documentation for your custom context values,
+you can :doc:`create your context builders </serializer/custom_context_builders>`.
+
 .. _serializer-using-serialization-groups-annotations:
 
 Using Serialization Groups Annotations
@@ -197,11 +239,13 @@ to your class::
 
 You can now choose which groups to use when serializing::
 
-    $json = $serializer->serialize(
-        $product,
-        'json',
-        ['groups' => 'show_product']
-    );
+    use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
+
+    $context = (new ObjectNormalizerContextBuilder())
+        ->withGroups('show_product')
+        ->toArray();
+
+    $json = $serializer->serialize($product, 'json', $context);
 
 .. tip::
 
@@ -293,6 +337,7 @@ take a look at how this bundle works.
 
     serializer/custom_encoders
     serializer/custom_normalizer
+    serializer/custom_context_builders
 
 .. _`API Platform`: https://api-platform.com
 .. _`JSON-LD`: https://json-ld.org
