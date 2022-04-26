@@ -11,7 +11,7 @@ rules:
     ensure_link_definition_contains_valid_url: ~
     ensure_order_of_code_blocks_in_configuration_block: ~
     extend_abstract_controller: ~
-    extension_xlf_instead_of_xliff: ~
+    # extension_xlf_instead_of_xliff: ~
     indention: ~
     lowercase_as_in_use_statements: ~
     max_blank_lines:
