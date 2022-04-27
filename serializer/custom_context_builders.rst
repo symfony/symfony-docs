@@ -65,9 +65,10 @@ context key, you can create a dedicated context builder::
     // src/Serializer/LegacyContextBuilder
     namespace App\Serializer;
 
+    use Symfony\Component\Serializer\Context\ContextBuilderInterface;
     use Symfony\Component\Serializer\Context\ContextBuilderTrait;
 
-    final class LegacyContextBuilder
+    final class LegacyContextBuilder implements ContextBuilderInterface
     {
         use ContextBuilderTrait;
 
