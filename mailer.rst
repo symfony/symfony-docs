@@ -1316,7 +1316,7 @@ Here's an example of making one available to download::
                 ->attach(/* ... */)
             ;
 
-            $response = new BinaryFileResponse($this->toString(), headers: ['Content-Type' => 'message/rfc822']);
+            $response = new BinaryFileResponse($message->toString(), headers: ['Content-Type' => 'message/rfc822']);
             $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
 
             return $response;
