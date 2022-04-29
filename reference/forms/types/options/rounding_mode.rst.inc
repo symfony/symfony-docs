@@ -1,7 +1,8 @@
 rounding_mode
 ~~~~~~~~~~~~~
 
-**type**: ``integer``
+**type**: ``integer`` **default**: ``\NumberFormatter::ROUND_DOWN`` for ``IntegerType``
+and ``\NumberFormatter::ROUND_HALF_UP`` for ``MoneyType`` and ``NumberType``
 
 * IntegerType
 **default**: ``\NumberFormatter::ROUND_DOWN``
