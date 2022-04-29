@@ -61,12 +61,12 @@ Symfony ships with the following value resolvers in the
 
         class CardController
         {
-            #[Route(
-                '/cards/{suit}',
-                requirements: [
-                    'suit' => new EnumRequirement(Suit::class, Suit::Diamonds, Suit::Spades),
-                ],
-            )]
+            #[Route('/cards/{suit}', requirements: [
+                // this allows all values defined in the Enum
+                'suit' => new EnumRequirement(Suit::class),
+                // this restricts the possible values to the Enum values listed here
+                'suit' => new EnumRequirement([Suit::class, Suit::Diamonds, Suit::Spades]),
+            ])]
             public function list(Suit $suit): Response
             {
                 // ...
