@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-04-29T09:54:30Z
+
+I think we need to find another solution as the `rounding_mode` option does exist in more than one form type, namely these, and they have different default values:
+
+- `IntegerType` (`ROUND_DOWN`)
+- `MoneyType` (`ROUND_HALF_UP`)
+- `NumberType` (`ROUND_HALF_UP`)
+
+---------------------------------------------------------------------------
+
+by sebastienfuchs at 2022-04-29T12:11:29Z
+
+Yes sure, can you prefer like this ? @xabbuh
