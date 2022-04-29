@@ -1301,7 +1301,7 @@ Here's an example of making one available to download::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
     use Symfony\Component\Mime\DraftEmail;
     use Symfony\Component\Routing\Annotation\Route;
@@ -1309,20 +1309,15 @@ Here's an example of making one available to download::
     class DownloadEmailController extends AbstractController
     {
         #[Route('/download-email')]
-        public function __invoke(): Response
+        public function __invoke(): BinaryFileResponse
         {
             $message = (new DraftEmail())
                 ->html($this->renderView(/* ... */))
                 ->attach(/* ... */)
             ;
 
-            $response = new Response($message->toString());
-            $contentDisposition = $response->headers->makeDisposition(
-                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
-                'download.eml'
-            );
-            $response->headers->set('Content-Type', 'message/rfc822');
-            $response->headers->set('Content-Disposition', $contentDisposition);
+            $response = new BinaryFileResponse($this->toString(), headers: ['Content-Type' => 'message/rfc822']);
+            $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
 
             return $response;
         }
