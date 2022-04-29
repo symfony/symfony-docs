@@ -113,7 +113,7 @@ and ``50``, you might add the following:
             }
         }
 
-.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+.. include:: /reference/constraints/_null-values-are-valid.rst.inc
 
 Options
 -------
@@ -199,9 +199,9 @@ the given value's length is **less** than this min value.
 
 This option is required when the ``max`` option is not defined.
 
-It is important to notice that NULL values and empty strings are considered
-valid no matter if the constraint required a minimum length. Validators
-are triggered only if the value is not blank.
+It is important to notice that ``null`` values are considered
+valid no matter if the constraint requires a minimum length. Validators
+are triggered only if the value is not ``null``.
 
 ``minMessage``
 ~~~~~~~~~~~~~~
