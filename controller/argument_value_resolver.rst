@@ -52,9 +52,35 @@ Symfony ships with the following value resolvers in the
     When requesting the ``/cards/H`` URL, the ``$suit`` variable will store the
     ``Suit::Hearts`` case.
 
+    Furthermore, you can limit route parameter's allowed values to
+    only one (or more) with ``EnumRequirement``::
+
+        use Symfony\Component\Routing\Requirement\EnumRequirement;
+
+        // ...
+
+        class CardController
+        {
+            #[Route(
+                '/cards/{suit}',
+                requirements: [
+                    'suit' => new EnumRequirement(Suit::class, Suit::Diamonds, Suit::Spades),
+                ],
+            )]
+            public function list(Suit $suit): Response
+            {
+                // ...
+            }
+
+            // ...
+        }
+
+    The example above allows requesting only ``/cards/D`` and ``/cards/S``
+    URLs and leads to 404 Not Found response in two other cases.
+
     .. versionadded:: 6.1
 
-        The ``BackedEnumValueResolver`` was introduced in Symfony 6.1.
+        The ``BackedEnumValueResolver`` and ``EnumRequirement`` were introduced in Symfony 6.1.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
