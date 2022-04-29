@@ -601,10 +601,10 @@ Returning JSON Response
 To return JSON from a controller, use the ``json()`` helper method. This returns a
 ``JsonResponse`` object that encodes the data automatically::
 
-    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     // ...
 
-    public function index(): Response
+    public function index(): JsonResponse
     {
         // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
         return $this->json(['username' => 'jane.doe']);
@@ -623,10 +623,10 @@ Streaming File Responses
 You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::file`
 helper to serve a file from inside a controller::
 
-    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
     // ...
 
-    public function download(): Response
+    public function download(): BinaryFileResponse
     {
         // send the file contents and force the browser to download it
         return $this->file('/path/to/some_file.pdf');
@@ -638,7 +638,7 @@ The ``file()`` helper provides some arguments to configure its behavior::
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
     // ...
 
-    public function download(): Response
+    public function download(): BinaryFileResponse
     {
         // load the file from the filesystem
         $file = new File('/path/to/some_file.pdf');
