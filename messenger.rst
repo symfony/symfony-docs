@@ -1171,6 +1171,8 @@ The transport has a number of options:
                                               greater seconds. May be fractional.
 ``retry``
 ``sasl_method``
+``connection_name``                           For custom connection names (requires at least
+                                              version 1.10 of the PHP AMQP extension)
 ``user``                                      Username to use to connect the AMQP service
 ``verify``                                    Enable or disable peer verification. If peer
                                               verification is enabled then the common name in
@@ -1194,6 +1196,10 @@ The transport has a number of options:
 ``exchange[name]``                            Name of the exchange
 ``exchange[type]``                            Type of exchange                                   ``fanout``
 ============================================  =================================================  ===================================
+
+.. versionadded:: 6.1
+
+    The ``connection_name`` option was introduced in Symfony 6.1.
 
 You can also configure AMQP-specific settings on your message by adding
 :class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\AmqpStamp` to
