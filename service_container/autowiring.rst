@@ -532,6 +532,8 @@ If the argument is named ``$shoutyTransformer``,
 But, you can also manually wire any *other* service by specifying the argument
 under the arguments key.
 
+.. _autowire-attribute:
+
 Fixing Non-Autowireable Arguments
 ---------------------------------
 
@@ -539,8 +541,58 @@ Autowiring only works when your argument is an *object*. But if you have a scala
 argument (e.g. a string), this cannot be autowired: Symfony will throw a clear
 exception.
 
-To fix this, you can :ref:`manually wire the problematic argument <services-manually-wire-args>`.
-You wire up the difficult arguments, Symfony takes care of the rest.
+To fix this, you can :ref:`manually wire the problematic argument <services-manually-wire-args>`
+in the service configuration. You wire up only the difficult arguments,
+Symfony takes care of the rest.
+
+You can also use the ``#[Autowire]`` parameter attribute to configure the
+problematic arguments:
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[Autowire('@monolog.logger.request')] LoggerInterface $logger
+        ) {
+            // ...
+        }
+    }
+
+.. versionadded:: 6.1
+
+    The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
+
+The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-parameters>`
+and even :doc:`complex expressions </service_container/expression_language>`::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            // use the %...% syntax for parameters
+            #[Autowire('%kernel.project_dir%/data')]
+            string $dataDir,
+
+            #[Autowire('%kernel.debug%')]
+            bool $debugMode,
+
+            // and @=... for expressions
+            #[Autowire("@=service("App\\Mail\\MailerConfiguration").getMailerMethod()")]
+            string $mailerMethod
+        ) {
+        }
+        // ...
+    }
 
 .. _autowiring-calls:
 

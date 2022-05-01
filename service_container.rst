@@ -687,56 +687,6 @@ For a full list of *all* possible services in the container, run:
 
 .. _services-binding:
 
-Autowire Parameter Attribute
-----------------------------
-
-.. versionadded:: 6.1
-
-    The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
-
-For services that cannot be autowired, you can use the ``#[Autowire]`` parameter
-attribute to explicitly configure the service::
-
-    // src/Service/MessageGenerator.php
-    namespace App\Service;
-
-    use Psr\Log\LoggerInterface;
-    use Symfony\Component\DependencyInjection\Attribute\Autowire;
-
-    class MessageGenerator
-    {
-        public function __construct(
-            #[Autowire('@monolog.logger.request')] private LoggerInterface $logger
-        ) {
-        }
-        // ...
-    }
-
-The ``#[Autowire]`` can also be used for :ref:`parameters <service-parameters>` and even
-:doc:`complex expressions </service_container/expression_language>`::
-
-    // src/Service/MessageGenerator.php
-    namespace App\Service;
-
-    use Psr\Log\LoggerInterface;
-    use Symfony\Component\DependencyInjection\Attribute\Autowire;
-
-    class MessageGenerator
-    {
-        public function __construct(
-            #[Autowire('%kernel.project_dir%/data')]
-            private string $dataDir,
-
-            #[Autowire('%kernel.debug%')]
-            private bool $debugMode,
-
-            #[Autowire("@=service("App\\Mail\\MailerConfiguration").getMailerMethod()")]
-            private string $mailerMethod,
-        ) {
-        }
-        // ...
-    }
-
 Binding Arguments by Name or Type
 ---------------------------------
 

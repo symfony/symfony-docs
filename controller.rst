@@ -223,107 +223,46 @@ command:
 
     $ php bin/console debug:autowiring
 
-If you need control over the *exact* value of an argument, you can :ref:`bind <services-binding>`
-the argument by its name:
+.. tip::
 
-.. configuration-block::
+    If you need control over the *exact* value of an argument, you can use the
+    ``#[Autowire]`` attribute::
 
-    .. code-block:: yaml
+        // ...
+        use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Attribute\Autowire;
+        use Symfony\Component\HttpFoundation\Response;
 
-        # config/services.yaml
-        services:
-            # ...
+        class LuckyController extends AbstractController
+        {
+            public function number(
+                int $max,
 
-            # explicitly configure the service
-            App\Controller\LuckyController:
-                tags: [controller.service_arguments]
-                bind:
-                    # for any $logger argument, pass this specific service
-                    $logger: '@monolog.logger.doctrine'
-                    # for any $projectDir argument, pass this parameter value
-                    $projectDir: '%kernel.project_dir%'
+                // inject a specific logger service
+                #[Autowire('@monolog.logger.request')]
+                LoggerInterface $logger,
 
-    .. code-block:: xml
+                // or inject parameter values
+                #[Autowire('%kernel.project_dir%')]
+                string $projectDir
+            ): Response
+            {
+                $logger->info('We are logging!');
+                // ...
+            }
+        }
 
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+    You can read more about this attribute in :ref:`autowire-attribute`.
 
-            <services>
-                <!-- ... -->
+    .. versionadded:: 6.1
 
-                <!-- Explicitly configure the service -->
-                <service id="App\Controller\LuckyController">
-                    <tag name="controller.service_arguments"/>
-                    <bind key="$logger"
-                        type="service"
-                        id="monolog.logger.doctrine"
-                    />
-                    <bind key="$projectDir">%kernel.project_dir%</bind>
-                </service>
-            </services>
-        </container>
+        The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
 
-    .. code-block:: php
-
-        // config/services.php
-        use App\Controller\LuckyController;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register(LuckyController::class)
-            ->addTag('controller.service_arguments')
-            ->setBindings([
-                '$logger' => new Reference('monolog.logger.doctrine'),
-                '$projectDir' => '%kernel.project_dir%',
-            ])
-        ;
-
-Like with all services, you can also use regular :ref:`constructor injection <services-constructor-injection>`
-in your controllers.
+Like with all services, you can also use regular
+:ref:`constructor injection <services-constructor-injection>` in your
+controllers.
 
 For more information about services, see the :doc:`/service_container` article.
-
-Autowire Parameter Attribute
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.1
-
-    The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
-
-Services that cannot be autowired, :ref:`parameters <service-parameters>` and even
-:doc:`complex expressions </service_container/expression_language>` can be bound
-to a controller argument with the ``#[Autowire]`` attribute::
-
-    use Psr\Log\LoggerInterface;
-    use Symfony\Component\DependencyInjection\Attribute\Autowire;
-    use Symfony\Component\HttpFoundation\Response;
-    // ...
-
-    /**
-     * @Route("/lucky/number/{max}")
-     */
-    public function number(
-        int $max,
-
-        #[Autowire('@monolog.logger.request')]
-        LoggerInterface $logger,
-
-        #[Autowire('%kernel.project_dir%/data')]
-        string $dataDir,
-
-        #[Autowire('%kernel.debug%')]
-        bool $debugMode,
-
-        #[Autowire("@=service("App\\Mail\\MailerConfiguration").getMailerMethod()")]
-        string $mailerMethod,
-    ): Response
-    {
-        $logger->info('We are logging!');
-        // ...
-    }
 
 Generating Controllers
 ----------------------
