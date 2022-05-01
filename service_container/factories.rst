@@ -239,6 +239,82 @@ method name:
                 ->factory(service(InvokableNewsletterManagerFactory::class));
         };
 
+Using Expressions in Email Factories
+--------------------------------------
+
+.. versionadded:: 6.1
+
+    Using expressions as factories was introduced in Symfony 6.1.
+
+Instead of using PHP classes as a factory, you can also use
+:doc:`expressions </service_container/expressions>`. This allows you to
+e.g. change the service based on a parameter:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Email\NewsletterManagerInterface:
+                # use the "tracable_newsletter" service when debug is enabled, "newsletter" otherwise.
+                # "@=" indicates that this is an expression
+                factory: '@=parameter("kernel.debug") ? service("tracable_newsletter") : service("newsletter")'
+
+            # you can use the arg() function to retrieve an argument from the definition
+            App\Email\NewsletterManagerInterface:
+                factory: "@=arg(0).createNewsletterManager() ?: service("default_newsletter_manager")"
+                arguments:
+                    - '@App\Email\NewsletterManagerFactory'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Email\NewsletterManagerInterface">
+                    <!-- use the "tracable_newsletter" service when debug is enabled, "newsletter" otherwise -->
+                    <factory expression="parameter('kernel.debug') ? service('tracable_newsletter') : service('newsletter')"/>
+                </service>
+
+                <!-- you can use the arg() function to retrieve an argument from the definition -->
+                <service id="App\Email\NewsletterManagerInterface">
+                    <factory expression="arg(0).createNewsletterManager() ?: service("default_newsletter_manager")"/>
+                    <argument type="service" id="App\Email\NewsletterManagerFactory"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Email\NewsletterManagerInterface;
+        use App\Email\NewsletterManagerFactory;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(NewsletterManagerInterface::class)
+                // use the "tracable_newsletter" service when debug is enabled, "newsletter" otherwise.
+                ->factory(expr("parameter('kernel.debug') ? service('tracable_newsletter') : service('newsletter')"))
+            ;
+
+            // you can use the arg() function to retrieve an argument from the definition
+            $services->set(NewsletterManagerInterface::class)
+                ->factory(expr("arg(0).createNewsletterManager() ?: service('default_newsletter_manager')"))
+                ->args([
+                    service(NewsletterManagerFactory::class),
+                ])
+            ;
+        };
+
 .. _factories-passing-arguments-factory-method:
 
 Passing Arguments to the Factory Method
