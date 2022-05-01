@@ -313,7 +313,7 @@ can also implement value completion for the input in your commands. For
 instance, you may want to complete all usernames from the database in the
 ``name`` argument of your greet command.
 
-To achieve this, override the ``complete()`` method in the command::
+To achieve this, use the 5th argument of ``addArgument()``/``addOption``::
 
     // ...
     use Symfony\Component\Console\Completion\CompletionInput;
@@ -322,32 +322,43 @@ To achieve this, override the ``complete()`` method in the command::
     class GreetCommand extends Command
     {
         // ...
-
-        public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
+        protected function configure(): void
         {
-            if ($input->mustSuggestArgumentValuesFor('names')) {
-                // the user asks for completion input for the "names" option
+            $this
+                ->addArgument(
+                    'names',
+                    InputArgument::IS_ARRAY,
+                    'Who do you want to greet (separate multiple names with a space)?',
+                    null,
+                    function (CompletionInput $input) {
+                        // the value the user already typed, e.g. when typing "app:greet Fa" before
+                        // pressing Tab, this will contain "Fa"
+                        $currentValue = $input->getCompletionValue();
 
-                // the value the user already typed, e.g. when typing "app:greet Fa" before
-                // pressing Tab, this will contain "Fa"
-                $currentValue = $input->getCompletionValue();
+                        // get the list of username names from somewhere (e.g. the database)
+                        // you may use $currentValue to filter down the names
+                        $availableUsernames = ...;
 
-                // get the list of username names from somewhere (e.g. the database)
-                // you may use $currentValue to filter down the names
-                $availableUsernames = ...;
-
-                // then add the retrieved names as suggested values
-                $suggestions->suggestValues($availableUsernames);
-            }
+                        // then suggested the usernames as values
+                        return $availableUsernames;
+                    }
+                )
+            ;
         }
     }
+
+.. versionadded:: 6.1
+
+    The argument to ``addOption()``/``addArgument()`` was introduced in
+    Symfony 6.1. Prior to this version, you had to override the
+    ``complete()`` method of the command.
 
 That's all you need! Assuming users "Fabien" and "Fabrice" exist, pressing
 tab after typing ``app:greet Fa`` will give you these names as a suggestion.
 
 .. tip::
 
-    The bash shell is able to handle huge amounts of suggestions and will
+    The shell script is able to handle huge amounts of suggestions and will
     automatically filter the suggested values based on the existing input
     from the user. You do not have to implement any filter logic in the
     command.
