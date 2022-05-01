@@ -524,10 +524,6 @@ The full signature of the ``request()`` method is::
 
 This allows you to create all types of requests you can think of:
 
-.. contents::
-    :local:
-    :depth: 1
-
 .. tip::
 
     The test client is available as the ``test.client`` service in the
@@ -730,10 +726,6 @@ Interacting with the Response
 Like a real browser, the Client and Crawler objects can be used to interact
 with the page you're served:
 
-.. contents::
-    :local:
-    :depth: 1
-
 .. _testing-links:
 
 Clicking on Links
@@ -869,10 +861,6 @@ your tests. Combined with test Client and the Crawler, this allows you to
 check anything you want.
 
 However, Symfony provides useful shortcut methods for the most common cases:
-
-.. contents::
-    :local:
-    :depth: 1
 
 Response Assertions
 ...................

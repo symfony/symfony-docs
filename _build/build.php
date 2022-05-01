@@ -57,7 +57,11 @@ use SymfonyDocsBuilder\DocBuilder;
             $io->error(sprintf("There were some errors while building the docs:\n\n%s\n", $result->getErrorTrace()));
             $io->newLine();
             $io->comment('Tip: you can add the -v, -vv or -vvv flags to this command to get debug information.');
+
+            return 1;
         }
+
+        return 0;
     })
     ->getApplication()
     ->setDefaultCommand('build-docs', true)
