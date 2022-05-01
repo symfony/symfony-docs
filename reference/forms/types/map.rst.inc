@@ -52,6 +52,12 @@ These types are part of the :doc:`Symfony UX initiative </frontend/ux>`:
 * `CropperType`_ (using Cropper.js)
 * `DropzoneType`_
 
+UID Fields
+~~~~~~~~~~
+
+* UuidType
+* UlidType
+
 Field Groups
 ~~~~~~~~~~~~
 
