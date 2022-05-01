@@ -1554,10 +1554,15 @@ The transport has a number of options:
 ``queue_name``          Name of the queue                       messages
 ``region``              Name of the AWS region                  eu-west-1
 ``secret_key``          AWS secret key                          must be urlencoded
+``session_token``       AWS session token
 ``visibility_timeout``  Amount of seconds the message will      Queue's configuration
                         not be visible (`Visibility Timeout`_)
 ``wait_time``           `Long polling`_ duration in seconds     20
 ======================  ======================================  ===================================
+
+.. versionadded:: 6.1
+
+    The ``session_token`` option was introduced in Symfony 6.1.
 
 .. note::
 
