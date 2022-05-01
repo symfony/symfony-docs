@@ -214,7 +214,7 @@ As simple as the above example is, instead of building your application inside o
 ``app.js``, we recommend `Stimulus`_: a small JavaScript framework that makes it
 easy to attach behavior to HTML. It's powerful, and you will love it! Symfony
 even provides packages to add more features to Stimulus. These are called the
-`Symfony UX Packages`_.
+Symfony UX Packages.
 
 If you followed the setup instructions, you should already have Stimulus installed
 and ready to go! In fact, that's the purpose of the ``assets/bootstrap.js`` file:
