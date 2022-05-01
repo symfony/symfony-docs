@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by carsonbot at 2022-04-13T21:23:38Z
+
+It looks like you unchecked the "Allow edits from maintainer" box. That is fine, but please note that if you have multiple commits, you'll need to squash your commits into one before this can be merged. Or, you can check the "Allow edits from maintainers" box and the maintainer can squash for you.
+
+Cheers!
+
+Carsonbot
+
+---------------------------------------------------------------------------
+
+by wkania at 2022-04-14T20:04:02Z
+
+The feature was merged.
+I could add an example like this (in all variants) or is it not needed? What do you think?
+
+```php
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @Assert\Unique(fields={"latitude", "longitude"}),
+ * @Assert\Collection(
+ *         fields = {
+ *             "latitude" = {
+ *                  @Assert\NotBlank
+ *             },
+ *             "longitude" = {
+ *                  @Assert\NotBlank
+ *             },
+ *             "poi" = {
+ *                  @Assert\Length(max = 255)
+ *             }
+ *         }
+ * )
+ */
+public array $coordinates = [];
+```
