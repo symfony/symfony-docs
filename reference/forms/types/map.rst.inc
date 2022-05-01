@@ -56,8 +56,8 @@ These types are part of the :doc:`Symfony UX initiative </frontend/ux>`:
 UID Fields
 ~~~~~~~~~~
 
-* :doc:`UuidType </reference/forms/types/uuid>`
-* :doc:`UlidType </reference/forms/types/ulid>`
+* UuidType
+* UlidType
 
 Field Groups
 ~~~~~~~~~~~~
