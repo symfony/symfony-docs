@@ -103,6 +103,100 @@ strings:
 Options
 -------
 
+``fields``
+~~~~~~~~~~
+
+**type**: ``array`` | ``string``
+
+
+.. versionadded:: 6.1
+
+    The ``fields`` option was introduced in Symfony 6.1.
+
+This is defines the key or keys in a collection that should be checked for
+uniqueness. By default, all collection keys are checked for uniqueness.
+
+For instance, assume you have a collection of items that contain a
+``latitude``, ``longitude`` and ``label`` fields. By default, you can have
+duplicate coordinates as long as the label is different. By setting the
+``fields`` option, you can force latitude+longitude to be unique in the
+collection::
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Entity/Poi.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Poi
+        {
+            /**
+             * @Assert\Unique(fields={"latitude", "longitude"})
+             */
+            protected $coordinates;
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Entity/Poi.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Poi
+        {
+            #[Assert\Unique(fields=['latitude', 'longitude'])]
+            protected $coordinates;
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\Poi:
+            properties:
+                contactEmails:
+                    - Unique:
+                          fields: [latitude, longitude]
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\Poi">
+                <property name="coordinates">
+                    <constraint name="Unique">
+                        <field>latitude</field>
+                        <field>longitude</field>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/Poi.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class Poi
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('contactEmails', new Assert\Unique([
+                    'fields' => ['latitude', 'longitude'],
+                ]));
+            }
+        }
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
