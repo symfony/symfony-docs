@@ -48,6 +48,59 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
 Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
 use it as an annotation/attribute in other classes.
 
+.. versionadded:: 6.1
+
+    The ``#[HasNamedArguments]`` attribute was introduced in Symfony 6.1.
+
+You can use ``#[HasNamedArguments]`` or ``getRequiredOptions()`` to make some constraint options required:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Validator/ContainsAlphanumeric.php
+        namespace App\Validator;
+
+        use Symfony\Component\Validator\Constraint;
+
+        /**
+         * @Annotation
+         */
+        class ContainsAlphanumeric extends Constraint
+        {
+            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+            public $mode;
+
+            public function getRequiredOptions(): array
+            {
+                return ['mode'];
+            }
+        }
+
+    .. code-block:: php-attributes
+
+        // src/Validator/ContainsAlphanumeric.php
+        namespace App\Validator;
+
+        use Symfony\Component\Validator\Attribute\HasNamedArguments;
+        use Symfony\Component\Validator\Constraint;
+
+        #[\Attribute]
+        class ContainsAlphanumeric extends Constraint
+        {
+            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+
+            public string $mode;
+
+            #[HasNamedArguments]
+            public function __construct(string $mode, array $groups = null, mixed $payload = null)
+            {
+                parent::__construct([], $groups, $payload);
+
+                $this->mode = $mode;
+            }
+        }
+
 Creating the Validator itself
 -----------------------------
 
@@ -271,7 +324,7 @@ not to the property:
         namespace App\Entity;
 
         use App\Validator as AcmeAssert;
-        
+
         /**
          * @AcmeAssert\ProtocolClass
          */
