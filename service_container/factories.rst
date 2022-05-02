@@ -239,7 +239,7 @@ method name:
                 ->factory(service(InvokableNewsletterManagerFactory::class));
         };
 
-Using Expressions in Email Factories
+Using Expressions in Service Factories
 --------------------------------------
 
 .. versionadded:: 6.1
