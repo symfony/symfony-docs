@@ -289,13 +289,43 @@ Here is a summary that should help you pick the right configuration:
 |                        | cannot afford to use one of the modes above.        |
 +------------------------+-----------------------------------------------------+
 
+Ignore Deprecations
+...................
+
+.. versionadded:: 6.1
+
+    The ``ignoreFile`` feature was introduced in Symfony 6.1.
+
+If your application has some deprecations that you can't fix for some reasons,
+you can tell Symfony to ignore them.
+
+You need first to create a simple text file with a list of ignore patterns. Each
+pattern is a regular expression.
+
+Lines beginning with an hash (#) will be considered comments:
+
+.. code-block:: terminal
+
+    # This file contains patterns to be ignored while testing for use of
+    # deprecated code.
+
+    %The "Symfony\\Component\\Validator\\Context\\ExecutionContextInterface::.*\(\)" method is considered internal Used by the validator engine\. (Should not be called by user\W+code\. )?It may change without further notice\. You should not extend it from "[^"]+"\.%
+    %The "PHPUnit\\Framework\\TestCase::addWarning\(\)" method is considered internal%
+
+Then, you can run the following command to use that file and ignore those deprecations:
+
+.. code-block:: terminal
+
+    $ SYMFONY_DEPRECATIONS_HELPER='ignoreFile=./tests/baseline-ignore' ./vendor/bin/simple-phpunit
+
 Baseline Deprecations
 .....................
 
-If your application has some deprecations that you can't fix for some reasons,
-you can tell Symfony to ignore them. The trick is to create a file with the
-allowed deprecations and define it as the "deprecation baseline". Deprecations
-inside that file are ignored but the rest of deprecations are still reported.
+You can also take a snapshot of deprecations currently triggered by your application
+code, and ignore those during your test runs, still reporting newly added ones.
+The trick is to create a file with the allowed deprecations and define it as the
+"deprecation baseline". Deprecations inside that file are ignored but the rest of
+deprecations are still reported.
 
 First, generate the file with the allowed deprecations (run the same command
 whenever you want to update the existing file):
