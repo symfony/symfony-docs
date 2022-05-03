@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by Chamaeleon- at 2022-05-03T14:13:17Z
+
+Please merge this small change (even symfony 4.4 is quite old), it's very frustrating to discover faulty documentation while trying to work with it.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-05-03T14:40:53Z
+
+Here's the proof that they were added in Symfony 5.2: https://symfony.com/blog/symfony-5-2-0-beta1-released
+
+@Chamaeleon- I'm going to merge it now. Next time, please try to review the proposed change (e.g. adding links to the proof that validates the change). That helps us a lot with the reviews. Thanks!
