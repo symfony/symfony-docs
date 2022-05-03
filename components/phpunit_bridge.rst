@@ -289,8 +289,8 @@ Here is a summary that should help you pick the right configuration:
 |                        | cannot afford to use one of the modes above.        |
 +------------------------+-----------------------------------------------------+
 
-Ignore Deprecations
-...................
+Ignoring Deprecations
+.....................
 
 .. versionadded:: 6.1
 
@@ -299,10 +299,9 @@ Ignore Deprecations
 If your application has some deprecations that you can't fix for some reasons,
 you can tell Symfony to ignore them.
 
-You need first to create a simple text file with a list of ignore patterns. Each
-pattern is a regular expression.
-
-Lines beginning with an hash (#) will be considered comments:
+You need first to create a text file where each line is a deprecation to ignore
+defined as a regular expression. Lines beginning with a hash (``#``) are
+considered comments:
 
 .. code-block:: terminal
 
