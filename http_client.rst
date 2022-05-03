@@ -1800,6 +1800,11 @@ The ``MockResponse`` class comes with some helper methods to test the request:
 * ``getRequestOptions()`` - returns an array containing other information about
   the request such as headers, query parameters, body content etc.
 
+.. versionadded:: 5.2
+
+    The ``getRequestMethod()`` and ``getRequestUrl()`` methods were introduced
+    in Symfony 5.2.
+
 Usage example::
 
     $mockResponse = new MockResponse('', ['http_code' => 204]);
