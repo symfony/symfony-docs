@@ -247,7 +247,7 @@ Using Expressions in Service Factories
     Using expressions as factories was introduced in Symfony 6.1.
 
 Instead of using PHP classes as a factory, you can also use
-:doc:`expressions </service_container/expressions>`. This allows you to
+:doc:`expressions </service_container/expression_language>`. This allows you to
 e.g. change the service based on a parameter:
 
 .. configuration-block::
