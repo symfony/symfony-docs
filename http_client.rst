@@ -1472,8 +1472,6 @@ Testing Request Data
 
 The ``MockResponse`` class comes with some helper methods to test the request:
 
-* ``getRequestMethod()`` - returns the HTTP method;
-* ``getRequestUrl()`` - returns the URL the request would be sent to;
 * ``getRequestOptions()`` - returns an array containing other information about
   the request such as headers, query parameters, body content etc.
 
@@ -1488,12 +1486,6 @@ Usage example::
             'Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l',
         ],
     ]);
-
-    $mockResponse->getRequestMethod();
-    // returns "DELETE"
-
-    $mockResponse->getRequestUrl();
-    // returns "https://example.com/api/article/1337"
 
     $mockResponse->getRequestOptions()['headers'];
     // returns ["Accept: */*", "Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l"]
@@ -1568,8 +1560,6 @@ test it in a real application::
             $responseData = $service->createArticle($requestData);
 
             // Assert
-            self::assertSame('POST', $mockResponse->getRequestMethod());
-            self::assertSame('https://example.com/api/article', $mockResponse->getRequestUrl());
             self::assertContains(
                 'Content-Type: application/json',
                 $mockResponse->getRequestOptions()['headers']
