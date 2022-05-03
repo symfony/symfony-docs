@@ -4,8 +4,8 @@
 How to Write a custom Twig Extension
 ====================================
 
-`Twig Extensions`_ allow to create custom functions, filters and more to use
-them in your Twig templates. Before writing your own Twig extension, check if
+`Twig Extensions`_ allow the creation of custom functions, filters, and more to use
+in your Twig templates. Before writing your own Twig extension, check if
 the filter/function that you need is already implemented in:
 
 * The `default Twig filters and functions`_;
@@ -16,7 +16,7 @@ Create the Extension Class
 --------------------------
 
 Suppose you want to create a new filter called ``price`` that formats a number
-into money:
+as currency:
 
 .. code-block:: twig
 
@@ -117,7 +117,7 @@ them) performance is not affected. However, if extensions define lots of complex
 dependencies (e.g. those making database connections), the performance loss can
 be significant.
 
-That's why Twig allows to decouple the extension definition from its
+That's why Twig allows decoupling the extension definition from its
 implementation. Following the same example as before, the first change would be
 to remove the ``formatPrice()`` method from the extension and update the PHP
 callable defined in ``getFilters()``::
