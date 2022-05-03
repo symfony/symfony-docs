@@ -157,7 +157,7 @@ collection::
         # config/validator/validation.yaml
         App\Entity\Poi:
             properties:
-                contactEmails:
+                coordinates:
                     - Unique:
                           fields: [latitude, longitude]
 
@@ -172,8 +172,10 @@ collection::
             <class name="App\Entity\Poi">
                 <property name="coordinates">
                     <constraint name="Unique">
-                        <field>latitude</field>
-                        <field>longitude</field>
+                        <option name="fields">
+                            <value>latitude</value>
+                            <value>longitude</value>
+                        </option>
                     </constraint>
                 </property>
             </class>
@@ -191,7 +193,7 @@ collection::
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('contactEmails', new Assert\Unique([
+                $metadata->addPropertyConstraint('coordinates', new Assert\Unique([
                     'fields' => ['latitude', 'longitude'],
                 ]));
             }
