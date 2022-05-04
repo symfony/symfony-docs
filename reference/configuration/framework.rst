@@ -560,14 +560,14 @@ can also :ref:`disable CSRF protection on individual forms <form-csrf-customizat
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         # config/packages/framework.yaml
         framework:
             # ...
             csrf_protection: true
-            
+
     .. code-block:: xml
-    
+
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -581,9 +581,9 @@ can also :ref:`disable CSRF protection on individual forms <form-csrf-customizat
                 <framework:csrf-protection enabled="true"/>
             </framework:config>
         </container>
-        
+
     .. code-block:: php
-    
+
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
         return static function (FrameworkConfig $framework) {
@@ -3031,7 +3031,8 @@ resources
 
 **type**: ``array``
 
-A list of lock stores to be created by the framework extension.
+A map of lock stores to be created by the framework extension, with
+the name as key and DSN as value:
 
 .. configuration-block::
 
@@ -3054,7 +3055,7 @@ A list of lock stores to be created by the framework extension.
 
             <framework:config>
                 <framework:lock>
-                    <framework:resource>%env(LOCK_DSN)%</framework:resource>
+                    <framework:resource name="default">%env(LOCK_DSN)%</framework:resource>
                 </framework:lock>
             </framework:config>
         </container>
@@ -3081,6 +3082,82 @@ name
 **type**: ``prototype``
 
 Name of the lock you want to create.
+
+semaphore
+~~~~~~~~~
+
+.. versionadded:: 6.1
+
+    The ``semaphore`` option was introduced in Symfony 6.1.
+
+**type**: ``string`` | ``array``
+
+The default semaphore adapter. Store's DSN are also allowed.
+
+.. _reference-semaphore-enabled:
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true``
+
+Whether to enable the support for semaphore or not. This setting is
+automatically set to ``true`` when one of the child settings is configured.
+
+.. _reference-semaphore-resources:
+
+resources
+.........
+
+**type**: ``array``
+
+A map of semaphore stores to be created by the framework extension, with
+the name as key and DSN as value:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/semaphore.yaml
+        framework:
+            semaphore: '%env(SEMAPHORE_DSN)%'
+
+    .. code-block:: xml
+
+        <!-- config/packages/semaphore.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:semaphore>
+                    <framework:resource name="default">%env(SEMAPHORE_DSN)%</framework:resource>
+                </framework:semaphore>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/semaphore.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->semaphore()
+                ->resource('default', ['%env(SEMAPHORE_DSN)%']);
+        };
+
+.. _reference-semaphore-resources-name:
+
+name
+""""
+
+**type**: ``prototype``
+
+Name of the semaphore you want to create.
 
 mailer
 ~~~~~~
