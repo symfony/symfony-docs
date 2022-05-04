@@ -545,8 +545,8 @@ To fix this, you can :ref:`manually wire the problematic argument <services-manu
 in the service configuration. You wire up only the difficult arguments,
 Symfony takes care of the rest.
 
-You can also use the ``#[Autowire]`` parameter attribute to configure the
-problematic arguments:
+You can also use the ``#[Autowire]`` parameter attribute to instruct the autowiring
+logic about those arguments:
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
@@ -557,7 +557,7 @@ problematic arguments:
     class MessageGenerator
     {
         public function __construct(
-            #[Autowire('@monolog.logger.request')] LoggerInterface $logger
+            #[Autowire(service: 'monolog.logger.request')] LoggerInterface $logger
         ) {
             // ...
         }
@@ -586,8 +586,8 @@ and even :doc:`complex expressions </service_container/expression_language>`::
             #[Autowire('%kernel.debug%')]
             bool $debugMode,
 
-            // and @=... for expressions
-            #[Autowire("@=service("App\\Mail\\MailerConfiguration").getMailerMethod()")]
+            // and expressions
+            #[Autowire(expression: "service("App\\Mail\\MailerConfiguration").getMailerMethod()")]
             string $mailerMethod
         ) {
         }
