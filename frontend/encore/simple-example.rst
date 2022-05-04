@@ -467,7 +467,6 @@ Encore supports many more features! For a full list of what you can do, see
 .. _`WebpackEncoreBundle Configuration`: https://github.com/symfony/webpack-encore-bundle#configuration
 .. _`Stimulus`: https://stimulus.hotwired.dev/
 .. _`Stimulus Documentation`: https://stimulus.hotwired.dev/handbook/introduction
-.. _`Symfony UX Packages`: https://github.com/symfony/ux
 .. _`Symfony Stimulus Bridge`: https://github.com/symfony/stimulus-bridge
 .. _`Turbo`: https://turbo.hotwired.dev/
 .. _`symfony/ux-turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
