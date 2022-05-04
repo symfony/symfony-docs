@@ -739,8 +739,8 @@ reset the service container between two messages:
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:messenger>
-                    <framework:transport name="async" dsn="%env(MESSENGER_TRANSPORT_DSN)%" reset-on-message="true">
+                <framework:messenger reset-on-message="true">
+                    <framework:transport name="async" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
                     </framework:transport>
                 </framework:messenger>
             </framework:config>
