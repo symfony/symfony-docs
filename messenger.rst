@@ -777,8 +777,8 @@ reset the service container between two messages:
 
 .. note::
 
-    ``reset_on_message`` will default to true (with no other allowed value) in
-    Symfony 6. To disable this behavior, execute the ``messenger:consume``
+    ``reset_on_message`` will default to ``true`` (with no other allowed value)
+    in Symfony 6. To disable this behavior, execute the ``messenger:consume``
     command with the ``--no-reset`` option.
 
 .. _messenger-retries-failures:
