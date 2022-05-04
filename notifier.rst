@@ -662,6 +662,62 @@ and
 :class:`Symfony\\Component\\Notifier\\Notification\\EmailNotificationInterface`
 also exists to modify messages sent to those channels.
 
+Customize Browser Notifications (Flash Messages)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.1
+
+    Support for customizing importance levels was introduced in Symfony 6.1.
+
+The default behavior for Browser channel notifications is to add a flash
+message with a key of "notification".
+
+However, it may be desirable to map the importance level of the notification
+to the type of flash message, so that you can style the different flash
+messages according to their importance.
+
+This can be done by overriding the default
+``notifier.flash_message_importance_mapper`` service with your own implementation of
+:class:`Symfony\\Component\\Notifier\\FlashMessage\\FlashMessageImportanceMapperInterface`
+where you can provide your own "importance" to "alert level" mapping.
+
+Symfony currently provides an implementation for the Bootstrap CSS framework's
+typical alert levels, which you can implement immediately using:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            notifier.flash_message_importance_mapper: Symfony\Component\Notifier\FlashMessage\BootstrapFlashMessageImportanceMapper
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="notifier.flash_message_importance_mapper" class="Symfony\Component\Notifier\FlashMessage\BootstrapFlashMessageImportanceMapper"/>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\Notifier\FlashMessage\BootstrapFlashMessageImportanceMapper;
+
+        return function(ContainerConfigurator $configurator) {
+            $configurator->services()
+                ->set('notifier.flash_message_importance_mapper', BootstrapFlashMessageImportanceMapper::class)
+            ;
+        };
+
 Disabling Delivery
 ------------------
 
