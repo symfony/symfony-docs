@@ -753,8 +753,8 @@ reset the service container between two messages:
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:messenger>
-                    <framework:transport name="async" dsn="%env(MESSENGER_TRANSPORT_DSN)%" reset-on-message="true">
+                <framework:messenger reset-on-message="true">
+                    <framework:transport name="async" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
                     </framework:transport>
                 </framework:messenger>
             </framework:config>
@@ -774,6 +774,12 @@ reset the service container between two messages:
 .. versionadded:: 5.4
 
     The ``reset_on_message`` option was introduced in Symfony 5.4.
+
+.. note::
+
+    ``reset_on_message`` will default to true (with no other allowed value) in
+    Symfony 6. To disable this behavior, execute the ``messenger:consume``
+    command with the ``--no-reset`` option.
 
 .. _messenger-retries-failures:
 
