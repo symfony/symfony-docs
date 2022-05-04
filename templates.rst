@@ -1035,7 +1035,7 @@ to perform malicious actions.
 To prevent this attack, use *"output escaping"* to transform the characters
 which have special meaning (e.g. replace ``<`` by the ``&lt;`` HTML entity).
 Symfony applications are safe by default because they perform automatic output
-escaping thanks to the :ref:`Twig autoescape option <config-twig-autoescape>`:
+escaping:
 
 .. code-block:: html+twig
 
