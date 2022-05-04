@@ -225,8 +225,8 @@ command:
 
 .. tip::
 
-    If you need control over the *exact* value of an argument, you can use the
-    ``#[Autowire]`` attribute::
+    If you need control over the *exact* value of an argument, or require a parameter,
+    you can use the ``#[Autowire]`` attribute::
 
         // ...
         use Psr\Log\LoggerInterface;
@@ -239,7 +239,7 @@ command:
                 int $max,
 
                 // inject a specific logger service
-                #[Autowire('@monolog.logger.request')]
+                #[Autowire(service: 'monolog.logger.request')]
                 LoggerInterface $logger,
 
                 // or inject parameter values
