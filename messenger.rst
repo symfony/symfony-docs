@@ -711,51 +711,9 @@ states to prevent information and/or memory leakage.
 
 However, certain Symfony services, such as the Monolog
 :ref:`fingers crossed handler <logging-handler-fingers_crossed>`, leak by design.
-In those cases, use the ``reset_on_message`` transport option to automatically
-reset the service container between two messages:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/messenger.yaml
-        framework:
-            messenger:
-                reset_on_message: true
-                transports:
-                    async:
-                        dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-
-    .. code-block:: xml
-
-        <!-- config/packages/messenger.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:messenger reset-on-message="true">
-                    <framework:transport name="async" dsn="%env(MESSENGER_TRANSPORT_DSN)%">
-                    </framework:transport>
-                </framework:messenger>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/messenger.php
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework) {
-            $messenger = $framework->messenger();
-
-            $messenger->resetOnMessage(true);
-        };
+That's why, by default, the service container is reset between consuming messages.
+To disable this behavior, execute the ``messenger:consume`` command with the
+``--no-reset`` option.
 
 .. _messenger-retries-failures:
 
