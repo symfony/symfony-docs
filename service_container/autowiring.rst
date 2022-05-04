@@ -587,7 +587,7 @@ and even :doc:`complex expressions </service_container/expression_language>`::
             bool $debugMode,
 
             // and expressions
-            #[Autowire(expression: "service("App\\Mail\\MailerConfiguration").getMailerMethod()")]
+            #[Autowire(expression: 'service("App\\Mail\\MailerConfiguration").getMailerMethod()')]
             string $mailerMethod
         ) {
         }
