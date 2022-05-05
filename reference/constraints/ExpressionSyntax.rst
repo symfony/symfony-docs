@@ -1,18 +1,18 @@
-ExpressionLanguageSyntax
-========================
-
-.. deprecated:: 6.1
-
-    This constraint is deprecated since Symfony 6.1.
-    Use the``ExpressionSyntax`` constraint instead.
+ExpressionSyntax
+================
 
 This constraint checks that the value is valid as an `ExpressionLanguage`_
 expression.
 
+.. info:: 6.1
+
+    This constraint is deprecated since Symfony 6.1.
+    Use the``ExpressionSyntax`` constraint instead.
+
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Class       :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionLanguageSyntax`
-Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionLanguageSyntaxValidator`
+Class       :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionSyntax`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionSyntaxValidator`
 ==========  ===================================================================
 
 Basic Usage
@@ -37,12 +37,12 @@ The following constraints ensure that:
         class Order
         {
             /**
-             * @Assert\ExpressionLanguageSyntax
+             * @Assert\ExpressionSyntax
              */
             protected $promotion;
 
             /**
-             * @Assert\ExpressionLanguageSyntax(
+             * @Assert\ExpressionSyntax(
              *     allowedVariables={"user", "shipping_centers"}
              * )
              */
@@ -58,10 +58,10 @@ The following constraints ensure that:
 
         class Order
         {
-            #[Assert\ExpressionLanguageSyntax]
+            #[Assert\ExpressionSyntax]
             protected $promotion;
 
-            #[Assert\ExpressionLanguageSyntax(
+            #[Assert\ExpressionSyntax(
                 allowedVariables: ['user', 'shipping_centers'],
             )]
             protected $shippingOptions;
@@ -73,9 +73,9 @@ The following constraints ensure that:
         App\Entity\Order:
             properties:
                 promotion:
-                    - ExpressionLanguageSyntax: ~
+                    - ExpressionSyntax: ~
                 shippingOptions:
-                    - ExpressionLanguageSyntax:
+                    - ExpressionSyntax:
                         allowedVariables: ['user', 'shipping_centers']
 
     .. code-block:: xml
@@ -88,10 +88,10 @@ The following constraints ensure that:
 
             <class name="App\Entity\Order">
                 <property name="promotion">
-                    <constraint name="ExpressionLanguageSyntax"/>
+                    <constraint name="ExpressionSyntax"/>
                 </property>
                 <property name="shippingOptions">
-                    <constraint name="ExpressionLanguageSyntax">
+                    <constraint name="ExpressionSyntax">
                         <option name="allowedVariables">
                             <value>user</value>
                             <value>shipping_centers</value>
@@ -113,9 +113,9 @@ The following constraints ensure that:
         {
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('promotion', new Assert\ExpressionLanguageSyntax());
+                $metadata->addPropertyConstraint('promotion', new Assert\ExpressionSyntax());
 
-                $metadata->addPropertyConstraint('shippingOptions', new Assert\ExpressionLanguageSyntax([
+                $metadata->addPropertyConstraint('shippingOptions', new Assert\ExpressionSyntax([
                     'allowedVariables' => ['user', 'shipping_centers'],
                 ]));
             }
