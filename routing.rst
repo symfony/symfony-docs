@@ -462,10 +462,20 @@ and can use any of these variables created by Symfony:
 
     The ``params`` variable was introduced in Symfony 6.1.
 
-You can also use this function:
+You can also use these functions:
 
 ``env(string $name)``
     Returns the value of a variable using :doc:`Environment Variable Processors <configuration/env_var_processors>`
+
+``service(string $alias)``
+    Returns a routing condition service.
+    You'll have to add the ``#[AsRoutingConditionService]`` attribute or ``routing.condition_service``
+    tag to your service if you want to use it in the condition.
+
+.. versionadded:: 6.1
+
+    The ``service(string $alias)`` function and ``#[AsRoutingConditionService]`` attribute
+    was introduced in Symfony 6.1.
 
 Behind the scenes, expressions are compiled down to raw PHP. Because of this,
 using the ``condition`` key causes no extra overhead beyond the time it takes
