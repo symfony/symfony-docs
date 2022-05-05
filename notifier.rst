@@ -669,15 +669,14 @@ Customize Browser Notifications (Flash Messages)
 
     Support for customizing importance levels was introduced in Symfony 6.1.
 
-The default behavior for Browser channel notifications is to add a flash
-message with a key of "notification".
+The default behavior for browser channel notifications is to add a
+:ref:`flash message <flash-messages>` with ``notification`` as its key.
 
-However, it may be desirable to map the importance level of the notification
-to the type of flash message, so that you can style the different flash
-messages according to their importance.
+However, you might prefer to map the importance level of the notification to the
+type of flash message, so you can tweak their style.
 
-This can be done by overriding the default
-``notifier.flash_message_importance_mapper`` service with your own implementation of
+you can do that by overriding the default ``notifier.flash_message_importance_mapper``
+service with your own implementation of
 :class:`Symfony\\Component\\Notifier\\FlashMessage\\FlashMessageImportanceMapperInterface`
 where you can provide your own "importance" to "alert level" mapping.
 
