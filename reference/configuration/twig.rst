@@ -39,6 +39,11 @@ compiled again automatically.
 autoescape
 ~~~~~~~~~~
 
+.. deprecated:: 6.1
+
+    This option is deprecated since Symfony 6.1. If required, use the
+    ``autoescape_service`` or ``autoescape_service_method`` option instead.
+
 **type**: ``boolean`` or ``string`` **default**: ``'name'``
 
 If set to ``false``, automatic escaping is disabled (you can still escape each content
