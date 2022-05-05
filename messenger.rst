@@ -76,12 +76,15 @@ message class (or a message interface)::
     using PHP 7.4), by implementing :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
     instead.
 
-.. note::
+.. tip::
 
-    As of Symfony 6.1, the ``AsMessageHandler`` attribute can be used on individual 
-    class methods as well. You may use the attribute on as many methods in a single
-    class as you like, allowing you to group the handling of multiple related types 
-    of messages.
+    You can also use the ``#[AsMessageHandler]`` attribute on individual class
+    methods. You may use the attribute on as many methods in a single class as you
+    like, allowing you to group the handling of multiple related types of messages.
+
+.. versionadded:: 6.1
+
+    Support for ``#[AsMessageHandler]`` on methods was introduced in Symfony 6.1.
 
 Thanks to :ref:`autoconfiguration <services-autoconfigure>` and the ``SmsNotification``
 type-hint, Symfony knows that this handler should be called when an ``SmsNotification``
