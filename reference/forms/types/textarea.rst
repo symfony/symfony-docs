@@ -22,6 +22,13 @@ Renders a ``textarea`` HTML element.
     ``<textarea>``, consider using the FOSCKEditorBundle community bundle. Read
     `its documentation`_ to learn how to integrate it in your Symfony application.
 
+.. caution::
+
+    When allowing users to type HTML code in the textarea (or using a
+    WYSIWYG) editor, the application is vulnerable to XSS injection,
+    clickjacking or CSS injection. Use the `sanitize_html`_ option to
+    protect against these types of attacks.
+
 Inherited Options
 -----------------
 
@@ -60,6 +67,10 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. include:: /reference/forms/types/options/sanitize_html.rst.inc
+
+.. include:: /reference/forms/types/options/sanitizer.rst.inc
 
 .. include:: /reference/forms/types/options/trim.rst.inc
 

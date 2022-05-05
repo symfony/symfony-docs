@@ -377,6 +377,25 @@ trans
 Translates the text into the current language. More information in
 :ref:`Translation Filters <translation-filters>`.
 
+sanitize_html
+~~~~~~~~~~~~~
+
+.. versionadded:: 6.1
+
+    The ``sanitize_html()`` filter was introduced in Symfony 6.1.
+
+.. code-block:: twig
+
+    {{ body|sanitize_html(sanitizer = "default") }}
+
+``body``
+    **type**: ``string``
+``sanitizer`` *(optional)*
+    **type**: ``string`` **default**: ``"default"``
+
+Sanitizes the text using the HTML Sanitizer component. More information in
+:ref:`HTML Sanitizer <html-sanitizer-twig>`.
+
 yaml_encode
 ~~~~~~~~~~~
 

@@ -40,6 +40,7 @@ Topics
     event_dispatcher
     forms
     frontend
+    html_sanitizer
     http_cache
     http_client
     lock
