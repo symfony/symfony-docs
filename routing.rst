@@ -474,8 +474,8 @@ You can also use these functions:
 
 .. versionadded:: 6.1
 
-    The ``service(string $alias)`` function and ``#[AsRoutingConditionService]`` attribute
-    was introduced in Symfony 6.1.
+    The ``service(string $alias)`` function and ``#[AsRoutingConditionService]``
+    attribute were introduced in Symfony 6.1.
 
 Behind the scenes, expressions are compiled down to raw PHP. Because of this,
 using the ``condition`` key causes no extra overhead beyond the time it takes
