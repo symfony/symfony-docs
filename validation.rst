@@ -23,8 +23,14 @@ install the validator before using it:
 
 .. code-block:: terminal
 
-    $ composer require symfony/validator doctrine/annotations
+    $ composer require symfony/validator
+    
+If your project still use annotations, ``doctrine/annotations`` is also needed:  
 
+.. code-block:: terminal
+
+    $ composer require doctrine/annotations
+    
 .. note::
 
     If your application doesn't use Symfony Flex, you might need to do some
