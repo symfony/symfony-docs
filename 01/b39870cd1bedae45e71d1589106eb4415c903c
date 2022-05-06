@@ -1,0 +1,16 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2022-05-06T10:19:53Z
+
+I don't think this is a typo and "php-fpm" was meant to be used here (which is the most common way to run Symfony).
+
+---------------------------------------------------------------------------
+
+by wadjeroudi at 2022-05-06T10:50:51Z
+
+@wouterj php-fpm doesn't need the runtime autoloader, even if it should work.
+why would you use autoload_runtime on php fpm ?
+
+From my understanding it was meant for PHP "servers" using ReactPHP technology.
+
+Maybe @nicolas-grekas can clarify the first purpose of this component.
