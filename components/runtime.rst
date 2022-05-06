@@ -6,7 +6,7 @@ The Runtime Component
 ======================
 
     The Runtime Component decouples the bootstrapping logic from any global state
-    to make sure the application can run with runtimes like PHP-FPM, ReactPHP,
+    to make sure the application can run with runtimes like PHP-PM, ReactPHP,
     Swoole, etc. without any changes.
 
 .. versionadded:: 5.3
