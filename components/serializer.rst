@@ -1145,6 +1145,8 @@ Option                          Description                                     
 ``load_options``                XML loading `options with libxml`_                 ``\LIBXML_NONET | \LIBXML_NOBLANKS``
 ``remove_empty_tags``           If set to true, removes all empty tags in the      ``false``
                                 generated XML
+``nullify_empty_tags``          If set to true, decodes empty tags into null       ``false``
+                                instead of empty string
 ==============================  =================================================  ==========================
 
 Example with custom ``context``::
