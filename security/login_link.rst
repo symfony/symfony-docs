@@ -14,13 +14,6 @@ This authentication method can help you eliminate most of the customer support
 related to authentication (e.g. I forgot my password, how can I change or reset
 my password, etc.)
 
-.. note::
-
-    Login links are only supported by Symfony when using the
-    :doc:`authenticator system </security>`. Before using this
-    authenticator, make sure you have enabled it with
-    ``enable_authenticator_manager: true`` in your ``security.yaml`` file.
-
 Using the Login Link Authenticator
 ----------------------------------
 
