@@ -182,6 +182,7 @@ that the ORM resolves to:
             metadata_cache_driver: array
             query_cache_driver: array
             result_cache_driver: array
+            naming_strategy: doctrine.orm.naming_strategy.default
 
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only.
@@ -207,6 +208,7 @@ can be placed directly under ``doctrine.orm`` config level.
             class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
             default_repository_class:  Doctrine\ORM\EntityRepository
             auto_mapping: false
+            naming_strategy: doctrine.orm.naming_strategy.default
             hydrators:
                 # ...
             mappings:
