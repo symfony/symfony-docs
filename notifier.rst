@@ -74,7 +74,7 @@ Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_
 Nexmo           ``symfony/nexmo-notifier``            ``nexmo://KEY:SECRET@default?from=FROM``
 Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
 OrangeSms       ``symfony/orange-sms-notifier``       ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME``
-OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
+OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME&no_stop_clause=true``
 Sendberry       ``symfony/sendberry-notifier``        ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
 Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
 Sms77           ``symfony/sms77-notifier``            ``sms77://API_KEY@default?from=FROM``
