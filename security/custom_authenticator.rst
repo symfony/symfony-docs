@@ -86,7 +86,6 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
 
         # config/packages/security.yaml
         security:
-            enable_authenticator_manager: true
 
             # ...
             firewalls:
@@ -179,7 +178,7 @@ can define what happens in these cases:
     If your login method is interactive, which means that the user actively
     logged into your application, you may want your authenticator to implement the
     :class:`Symfony\\Component\\Security\\Http\\Authenticator\\InteractiveAuthenticatorInterface`
-    so that it dispatches an 
+    so that it dispatches an
     :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
 
 .. _security-passport:

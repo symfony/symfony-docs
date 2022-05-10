@@ -18,7 +18,6 @@ You can configure this using the ``entry_point`` setting:
 
         # config/packages/security.yaml
         security:
-            enable_authenticator_manager: true
 
             # ...
             firewalls:
