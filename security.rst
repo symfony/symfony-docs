@@ -27,7 +27,6 @@ creates a ``security.yaml`` configuration file for you:
 
     # config/packages/security.yaml
     security:
-        enable_authenticator_manager: true
         # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
         password_hashers:
             Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
@@ -1354,8 +1353,6 @@ You must enable this using the ``login_throttling`` setting:
 
         # config/packages/security.yaml
         security:
-            # you must use the authenticator manager
-            enable_authenticator_manager: true
 
             firewalls:
                 # ...
@@ -2289,7 +2286,6 @@ the login page):
 
         # config/packages/security.yaml
         security:
-            enable_authenticator_manager: true
 
             # ...
             access_control:
