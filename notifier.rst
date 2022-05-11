@@ -93,6 +93,7 @@ Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default
 .. versionadded:: 6.1
 
     The 46elks, OrangeSms, KazInfoTeh and Sendberry integrations were introduced in Symfony 6.1.
+    The ``no_stop_clause`` option in ``OvhCloud`` DSN was introduced in Symfony 6.1.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
