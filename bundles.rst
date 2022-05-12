@@ -48,17 +48,23 @@ The new bundle is called AcmeTestBundle, where the ``Acme`` portion is an exampl
 name that should be replaced by some "vendor" name that represents you or your
 organization (e.g. ABCTestBundle for some company named ``ABC``).
 
-Start by creating a ``src/Acme/TestBundle/`` directory and adding a new file
+Start by creating a ``Acme/TestBundle/src/`` directory and adding a new file
 called ``AcmeTestBundle.php``::
 
-    // src/Acme/TestBundle/AcmeTestBundle.php
-    namespace App\Acme\TestBundle;
+    // Acme/TestBundle/src/AcmeTestBundle.php
+    namespace Acme\TestBundle;
 
-    use Symfony\Component\HttpKernel\Bundle\Bundle;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-    class AcmeTestBundle extends Bundle
+    class AcmeTestBundle extends AbstractBundle
     {
     }
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` was introduced in Symfony 6.1. If your bundle must be compatible
+    with previous Symfony versions you have to extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle`
+    instead.
 
 .. tip::
 
@@ -67,14 +73,27 @@ called ``AcmeTestBundle.php``::
     also choose to shorten the name of the bundle to simply TestBundle by naming
     this class TestBundle (and naming the file ``TestBundle.php``).
 
-This empty class is the only piece you need to create the new bundle. Though
+It's recommended to place your bundle class in the ``src/`` directory and keep out all the
+configuration files, templates, translations, etc. By default, Symfony determines the bundle path from the
+directory where the bundle class is placed, so you have to define the :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::getPath`
+method to tell Symfony what is the root directory of your bundle path::
+
+    class AcmeTestBundle extends AbstractBundle
+    {
+        public function getPath(): string
+        {
+            return \dirname(__DIR__);
+        }
+    }
+
+This almost empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
 of the bundle. Now that you've created the bundle, enable it::
 
     // config/bundles.php
     return [
         // ...
-        App\Acme\TestBundle\AcmeTestBundle::class => ['all' => true],
+        Acme\TestBundle\AcmeTestBundle::class => ['all' => true],
     ];
 
 And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.
@@ -86,26 +105,24 @@ The directory structure of a bundle is meant to help to keep code consistent
 between all Symfony bundles. It follows a set of conventions, but is flexible
 to be adjusted if needed:
 
-``Controller/``
+``src/Controller/``
     Contains the controllers of the bundle (e.g. ``RandomController.php``).
 
-``DependencyInjection/``
-    Holds certain Dependency Injection Extension classes, which may import service
-    configuration, register compiler passes or more (this directory is not
-    necessary).
-
-``Resources/config/``
+``config/``
     Houses configuration, including routing configuration (e.g. ``routing.yaml``).
 
-``Resources/views/``
-    Holds templates organized by controller name (e.g. ``Random/index.html.twig``).
+``templates/``
+    Holds templates organized by controller name (e.g. ``random/index.html.twig``).
 
-``Resources/public/``
+``translations/``
+    Holds translations organized by domain and locale (e.g. ``AcmeTestBundle.en.xlf``).
+
+``public/``
     Contains web assets (images, stylesheets, etc) and is copied or symbolically
     linked into the project ``public/`` directory via the ``assets:install`` console
     command.
 
-``Tests/``
+``tests/``
     Holds all tests for the bundle.
 
 A bundle can be as small or large as the feature it implements. It contains

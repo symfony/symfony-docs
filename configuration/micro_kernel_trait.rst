@@ -99,8 +99,8 @@ that define your bundles, your services and your routes:
     ``RoutingConfigurator`` has methods that make adding routes in PHP more
     fun. You can also load external routing files (shown below).
 
-Advanced Example: Twig, Annotations and the Web Debug Toolbar
--------------------------------------------------------------
+Advanced Example: Configuration, Twig, Annotations and the Web Debug Toolbar
+----------------------------------------------------------------------------
 
 The purpose of the ``MicroKernelTrait`` is *not* to have a single-file application.
 Instead, its goal to give you the power to choose your bundles and structure.
@@ -123,13 +123,15 @@ your ``composer.json`` file to load from there:
 
 Then, run ``composer dump-autoload`` to dump your new autoload config.
 
-Now, suppose you want to use Twig and load routes via annotations. Instead of
-putting *everything* in ``index.php``, create a new ``src/Kernel.php`` to
-hold the kernel. Now it looks like this::
+Now, suppose you want to define a custom configuration for your app,
+use Twig and load routes via annotations. Instead of putting *everything*
+in ``index.php``, create a new ``src/Kernel.php`` to hold the kernel.
+Now it looks like this::
 
     // src/Kernel.php
     namespace App;
 
+    use App\DependencyInjection\AppExtension;
     use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
     use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -146,16 +148,22 @@ hold the kernel. Now it looks like this::
                 new \Symfony\Bundle\TwigBundle\TwigBundle(),
             ];
 
-            if ($this->getEnvironment() == 'dev') {
+            if ('dev' === $this->getEnvironment()) {
                 $bundles[] = new \Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             }
 
             return $bundles;
         }
 
+        protected function build(ContainerBuilder $container)
+        {
+            $container->registerExtension(new AppExtension());
+        }
+
         protected function configureContainer(ContainerConfigurator $c): void
         {
             $c->import(__DIR__.'/../config/framework.yaml');
+            $c->import(__DIR__.'/../config/web_profiler.yaml');
 
             // register all classes in /src/ as service
             $c->services()
@@ -163,14 +171,6 @@ hold the kernel. Now it looks like this::
                 ->autowire()
                 ->autoconfigure()
             ;
-
-            // configure WebProfilerBundle only if the bundle is enabled
-            if (isset($this->bundles['WebProfilerBundle'])) {
-                $c->extension('web_profiler', [
-                    'toolbar' => true,
-                    'intercept_redirects' => false,
-                ]);
-            }
         }
 
         protected function configureRoutes(RoutingConfigurator $routes): void
@@ -204,6 +204,35 @@ Before continuing, run this command to add support for the new dependencies:
 .. code-block:: terminal
 
     $ composer require symfony/yaml symfony/twig-bundle symfony/web-profiler-bundle doctrine/annotations
+
+Next, create a new extension class that defines your app configuration and
+add a service conditionally based on the ``foo`` value::
+
+    // src/DependencyInjection/AppExtension.php
+    namespace App\DependencyInjection;
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Extension\AbstractExtension;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+    class AppExtension extends AbstractExtension
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            $definition->rootNode()
+                ->children()
+                    ->booleanNode('foo')->defaultTrue()->end()
+                ->end();
+        }
+
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            if ($config['foo']) {
+                $container->set('foo_service', new stdClass());
+            }
+        }
+    }
 
 Unlike the previous kernel, this loads an external ``config/framework.yaml`` file,
 because the configuration started to get bigger:
@@ -245,6 +274,46 @@ because the configuration started to get bigger:
             ;
         };
 
+As well as the ``config/web_profiler.yaml`` file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/web_profiler.yaml
+        when@dev:
+            web_profiler:
+                toolbar: true
+                intercept_redirects: false
+
+    .. code-block:: xml
+
+        <!-- config/web_profiler.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- WebProfilerBundle is enabled only in the "dev" environment -->
+            <when env="dev">
+                <web-profiler:config toolbar="true" intercept-redirects="false"/>
+            </when>
+        </container>
+
+    .. code-block:: php
+
+        // config/web_profiler.php
+        use Symfony\Config\WebProfilerConfig;
+
+        return static function (WebProfilerConfig $webProfiler) {
+            $webProfiler
+                ->toolbar(true)
+                ->interceptRedirects(false)
+            ;
+        };
+
 This also loads annotation routes from an ``src/Controller/`` directory, which
 has one file in it::
 
@@ -257,9 +326,7 @@ has one file in it::
 
     class MicroController extends AbstractController
     {
-        /**
-         * @Route("/random/{limit}")
-         */
+        #[Route('/random/{limit}')]
         public function randomNumber(int $limit): Response
         {
             $number = random_int(0, $limit);

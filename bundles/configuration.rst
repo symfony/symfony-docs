@@ -431,6 +431,57 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
         <!-- ... -->
     </container>
 
+Defining Configuration directly in your Bundle class
+----------------------------------------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class is introduced in Symfony 6.1.
+
+As another option, you can define the extension configuration directly in your Bundle
+class by implementing :class:`Symfony\\Component\\Config\\Definition\\ConfigurableInterface`,
+which is already supported when your bundle extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`::
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class AcmeFooBundle extends AbstractBundle
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            // loads config definition from a file
+            $definition->import('../config/definition.php');
+
+            // loads config definition from multiple files (when it's too long you can split it)
+            $definition->import('../config/definition/*.php');
+
+            // if the configuration is short, consider adding it in this class
+            $definition->rootNode()
+                ->children()
+                    ->scalarNode('foo')->defaultValue('bar')->end()
+                ->end()
+            ;
+        }
+    }
+
+This method is a shortcut of the previous "Extension", "Configuration" and "TreeBuilder" convention,
+where you also have the possibility to import configuration definition from an external file::
+
+    // Acme/FooBundle/config/definition.php
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+
+    return static function (DefinitionConfigurator $definition) {
+        $definition->rootNode()
+            ->children()
+                ->scalarNode('foo')->defaultValue('bar')->end()
+            ->end()
+        ;
+    };
+
+.. note::
+
+    The "configure()" method is called only at compiler time.
+
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php
 .. _`XML namespace`: https://en.wikipedia.org/wiki/XML_namespace

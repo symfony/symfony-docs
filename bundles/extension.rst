@@ -147,3 +147,44 @@ the full classmap executing the ``dump-autoload`` command of Composer.
     This technique can't be used when the classes to compile use the ``__DIR__``
     or ``__FILE__`` constants, because their values will change when loading
     these classes from the ``classes.php`` file.
+
+Loading Services directly in your Bundle class
+----------------------------------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class is introduced in Symfony 6.1.
+
+Alternatively, you can define and load services configuration directly in a bundle class
+by extending from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::loadExtension` method::
+
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+    class AcmeFooBundle extends AbstractBundle
+    {
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            $container->parameters()
+                ->set('foo', $config['foo']);
+
+            $container->import('../config/services.php');
+
+            if ('bar' === $config['foo']) {
+                $container->services()
+                    ->set(Parser::class);
+            }
+        }
+    }
+
+This method is a shortcut of the previous "load()" method, but with more options
+to define and import the service configuration with less effort. The ``$config``
+argument is the previous ``$configs`` array but already merged and processed. And
+through the ``$container`` configurator you can import the services configuration
+from an external file in any supported format (php, yaml, xml) or simply define
+them in place using the fluent interfaces.
+
+.. note::
+
+    The "loadExtension()" like "load()" method is called only at compiler time.

@@ -157,3 +157,44 @@ More than one Bundle using PrependExtensionInterface
 If there is more than one bundle that prepends the same extension and defines
 the same key, the bundle that is registered **first** will take priority:
 next bundles won't override this specific config setting.
+
+Prepending Extension directly in your Bundle class
+--------------------------------------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class is introduced in Symfony 6.1.
+
+By preference, you can append or prepend extension configuration directly in your Bundle
+class for any bundle by extending from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::prependExtension` method::
+
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+    class FooBundle extends AbstractBundle
+    {
+        public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // prepend
+            $builder->prependExtensionConfig('framework', [
+                'cache' => ['prefix_seed' => 'foo/bar'],
+            ]);
+
+            // append
+            $container->extension('framework', [
+                'cache' => ['prefix_seed' => 'foo/bar'],
+            ])
+
+            // append from file
+            $container->import('../config/packages/cache.php');
+        }
+    }
+
+This method is a shortcut of the previous "PrependExtensionInterface::prepend" method,
+allowing you also to import and append extension config from an external file in one of
+the supported formats (php, yaml, xml).
+
+.. note::
+
+    The "prependExtension()" like "prepend()" method is called only at compiler time.
