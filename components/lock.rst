@@ -106,15 +106,12 @@ can be created, pass ``true`` as the argument of the ``acquire()`` method. This
 is called a **blocking lock** because the execution of your application stops
 until the lock is acquired.
 
-Some of the built-in ``Store`` classes support this feature. When they don't,
-they can be decorated with the ``RetryTillSaveStore`` class::
+Some of the built-in ``Store`` classes support this feature.
 
     use Symfony\Component\Lock\LockFactory;
     use Symfony\Component\Lock\Store\RedisStore;
-    use Symfony\Component\Lock\Store\RetryTillSaveStore;
 
     $store = new RedisStore(new \Predis\Client('tcp://localhost:6379'));
-    $store = new RetryTillSaveStore($store);
     $factory = new LockFactory($store);
 
     $lock = $factory->createLock('notification-flush');
