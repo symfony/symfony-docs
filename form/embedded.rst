@@ -15,7 +15,7 @@ Embedding a Single Object
 -------------------------
 
 Suppose that each ``Task`` belongs to a ``Category`` object. Start by
-creating the ``Category`` object::
+creating the ``Category`` class::
 
     // src/Entity/Category.php
     namespace App\Entity;
