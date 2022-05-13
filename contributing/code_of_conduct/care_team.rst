@@ -37,11 +37,6 @@ of them at once by emailing ** care@symfony.com **.
   * *SymfonyConnect*: `zanbaldwin <https://connect.symfony.com/profile/zanbaldwin>`_
   * *SymfonySlack*: `@Zan <https://symfony-devs.slack.com/team/UBHGRU3NW>`_
 
-* **Valentine Boineau**
-
-  * *E-mail*: valentine.boineau [at] gmail.com
-  * *Twitter*: `@BoineauV <https://twitter.com/BoineauV>`_
-
 * **Magali Milbergue**
 
   * *E-mail*: magali.milbergue [at] gmail.com
