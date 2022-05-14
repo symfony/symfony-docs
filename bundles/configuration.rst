@@ -465,7 +465,7 @@ which is already supported when your bundle extend from the :class:`Symfony\\Com
     }
 
 This method is a shortcut of the previous "Extension", "Configuration" and "TreeBuilder" convention,
-where you also have the possibility to import configuration definition from an external file::
+now you also have the possibility to import configuration definition from an external file::
 
     // Acme/FooBundle/config/definition.php
     use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
@@ -480,7 +480,7 @@ where you also have the possibility to import configuration definition from an e
 
 .. note::
 
-    The "configure()" method is called only at compiler time.
+    The "configure()" method is called only at compile time.
 
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php

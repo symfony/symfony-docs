@@ -187,4 +187,4 @@ them in place using the fluent interfaces.
 
 .. note::
 
-    The "loadExtension()" like "load()" method is called only at compiler time.
+    The "loadExtension()", as the "load()" method, are called only at compile time.

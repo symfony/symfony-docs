@@ -197,4 +197,4 @@ the supported formats (php, yaml, xml).
 
 .. note::
 
-    The "prependExtension()" like "prepend()" method is called only at compiler time.
+    The "prependExtension()" like "prepend()" method is called only at compile time.

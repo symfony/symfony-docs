@@ -163,7 +163,6 @@ Now it looks like this::
         protected function configureContainer(ContainerConfigurator $c): void
         {
             $c->import(__DIR__.'/../config/framework.yaml');
-            $c->import(__DIR__.'/../config/web_profiler.yaml');
 
             // register all classes in /src/ as service
             $c->services()
@@ -171,6 +170,14 @@ Now it looks like this::
                 ->autowire()
                 ->autoconfigure()
             ;
+
+            // configure WebProfilerBundle only if the bundle is enabled
+            if (isset($this->bundles['WebProfilerBundle'])) {
+                $c->extension('web_profiler', [
+                    'toolbar' => true,
+                    'intercept_redirects' => false,
+                ]);
+            }
         }
 
         protected function configureRoutes(RoutingConfigurator $routes): void
@@ -229,10 +236,14 @@ add a service conditionally based on the ``foo`` value::
         public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
         {
             if ($config['foo']) {
-                $container->set('foo_service', new stdClass());
+                $container->set('foo_service', new \stdClass());
             }
         }
     }
+
+.. versionadded:: 6.1
+
+    The ``AbstractExtension`` class is introduced in Symfony 6.1.
 
 Unlike the previous kernel, this loads an external ``config/framework.yaml`` file,
 because the configuration started to get bigger:
@@ -271,46 +282,6 @@ because the configuration started to get bigger:
                 ->secret('SOME_SECRET')
                 ->profiler()
                     ->onlyExceptions(false)
-            ;
-        };
-
-As well as the ``config/web_profiler.yaml`` file:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/web_profiler.yaml
-        when@dev:
-            web_profiler:
-                toolbar: true
-                intercept_redirects: false
-
-    .. code-block:: xml
-
-        <!-- config/web_profiler.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <!-- WebProfilerBundle is enabled only in the "dev" environment -->
-            <when env="dev">
-                <web-profiler:config toolbar="true" intercept-redirects="false"/>
-            </when>
-        </container>
-
-    .. code-block:: php
-
-        // config/web_profiler.php
-        use Symfony\Config\WebProfilerConfig;
-
-        return static function (WebProfilerConfig $webProfiler) {
-            $webProfiler
-                ->toolbar(true)
-                ->interceptRedirects(false)
             ;
         };
 
