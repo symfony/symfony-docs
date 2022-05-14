@@ -149,7 +149,7 @@ this behavior by using the ``lock`` key like:
                 ->resource('default', ['sqlsrv:server=127.0.0.1;Database=app'])
                 ->resource('default', ['oci:host=127.0.0.1;dbname=app'])
                 ->resource('default', ['mongodb://127.0.0.1/app?collection=lock'])
-                ->resource('default', ['%env(LOCK_DSN)%'])
+                ->resource('default', [env('LOCK_DSN')])
 
                 // named locks
                 ->resource('invoice', ['semaphore', 'redis://r2.docker'])

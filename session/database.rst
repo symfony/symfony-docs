@@ -229,7 +229,7 @@ first register a new handler service with your database credentials:
 
             $services->set(PdoSessionHandler::class)
                 ->args([
-                    '%env(DATABASE_URL)%',
+                    env('DATABASE_URL'),
                     // you can also use PDO configuration, but requires passing two arguments:
                     // 'mysql:dbname=mydatabase; host=myhost; port=myport',
                     // ['db_username' => 'myuser', 'db_password' => 'mypassword'],
@@ -334,7 +334,7 @@ passed to the ``PdoSessionHandler`` service:
 
             $services->set(PdoSessionHandler::class)
                 ->args([
-                    '%env(DATABASE_URL)%',
+                    env('DATABASE_URL'),
                     ['db_table' => 'customer_session', 'db_id_col' => 'guid'],
                 ])
             ;

@@ -120,12 +120,12 @@ Take the following ``access_control`` entries as an example:
             $security->accessControl()
                 ->path('^/admin')
                 ->roles(['ROLE_USER_IP'])
-                ->ips(['%env(TRUSTED_IPS)%'])
+                ->ips([env('TRUSTED_IPS')])
             ;
             $security->accessControl()
                 ->path('^/admin')
                 ->roles(['ROLE_USER_IP'])
-                ->ips(['127.0.0.1', '::1', '%env(TRUSTED_IPS)%'])
+                ->ips(['127.0.0.1', '::1', env('TRUSTED_IPS')])
             ;
         };
 
