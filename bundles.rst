@@ -82,7 +82,7 @@ method to tell Symfony what is the root directory of your bundle path::
     {
         public function getPath(): string
         {
-            return \dirname(__DIR__);
+            return \dirname(__DIR__); // returns /path/to/Acme/TestBundle/
         }
     }
 
@@ -105,8 +105,8 @@ The directory structure of a bundle is meant to help to keep code consistent
 between all Symfony bundles. It follows a set of conventions, but is flexible
 to be adjusted if needed:
 
-``src/Controller/``
-    Contains the controllers of the bundle (e.g. ``RandomController.php``).
+``src/``
+    Contains mainly PHP classes related to the bundle logic (e.g. ``Controller/RandomController.php``).
 
 ``config/``
     Houses configuration, including routing configuration (e.g. ``routing.yaml``).
@@ -124,6 +124,25 @@ to be adjusted if needed:
 
 ``tests/``
     Holds all tests for the bundle.
+
+It's recommended to use the `PSR-4`_ autoload standard: use the namespace as key,
+and the location of the bundle's main class (relative to ``composer.json``)
+as value. As the main class is located in the ``src/`` directory of the bundle:
+
+.. code-block:: json
+
+    {
+        "autoload": {
+            "psr-4": {
+                "Acme\\TestBundle\\": "src/"
+            }
+        },
+        "autoload-dev": {
+            "psr-4": {
+                "Acme\\TestBundle\\Tests\\": "tests/"
+            }
+        }
+    }
 
 A bundle can be as small or large as the feature it implements. It contains
 only the files you need and nothing else.
@@ -143,3 +162,4 @@ Learn more
 * :doc:`/bundles/prepend_extension`
 
 .. _`third-party bundles`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
+.. _`PSR-4`: https://www.php-fig.org/psr/psr-4/
