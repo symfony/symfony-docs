@@ -158,7 +158,7 @@ configure the ``texter_transports``:
 
         return static function (FrameworkConfig $framework) {
             $framework->notifier()
-                ->texterTransport('twilio', '%env(TWILIO_DSN)%')
+                ->texterTransport('twilio', env('TWILIO_DSN'))
             ;
         };
 
@@ -255,7 +255,7 @@ Chatters are configured using the ``chatter_transports`` setting:
 
         return static function (FrameworkConfig $framework) {
             $framework->notifier()
-                ->chatterTransport('slack', '%env(SLACK_DSN)%')
+                ->chatterTransport('slack', env('SLACK_DSN'))
             ;
         };
 
@@ -319,7 +319,7 @@ notification emails:
 
         return static function (FrameworkConfig $framework) {
             $framework->mailer()
-                ->dsn('%env(MAILER_DSN)%')
+                ->dsn(env('MAILER_DSN'))
                 ->envelope()
                     ->sender('notifications@example.com')
             ;
@@ -390,7 +390,7 @@ configure the ``texter_transports``:
 
         return static function (FrameworkConfig $framework) {
             $framework->notifier()
-                ->texterTransport('expo', '%env(EXPO_DSN)%')
+                ->texterTransport('expo', env('EXPO_DSN'))
             ;
         };
 
@@ -454,10 +454,10 @@ transport:
             $framework->notifier()
                 // Send notifications to Slack and use Telegram if
                 // Slack errored
-                ->chatterTransport('main', '%env(SLACK_DSN)% || %env(TELEGRAM_DSN)%')
+                ->chatterTransport('main', env('SLACK_DSN').' || '.env('TELEGRAM_DSN'))
 
                 // Send notifications to the next scheduled transport calculated by round robin
-                ->chatterTransport('roundrobin', '%env(SLACK_DSN)% && %env(TELEGRAM_DSN)%')
+                ->chatterTransport('roundrobin', env('SLACK_DSN').' && '.env('TELEGRAM_DSN'))
             ;
         };
 

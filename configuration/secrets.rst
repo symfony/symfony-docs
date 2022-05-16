@@ -148,7 +148,7 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
         return static function (DoctrineConfig $doctrine) {
             $doctrine->dbal()
                 ->connection('default')
-                    ->password('%env(DATABASE_PASSWORD)%')
+                    ->password(env('DATABASE_PASSWORD'))
             ;
         };
 
