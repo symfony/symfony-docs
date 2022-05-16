@@ -3067,7 +3067,7 @@ the name as key and DSN as value:
 
         return static function (FrameworkConfig $framework) {
             $framework->lock()
-                ->resource('default', ['%env(LOCK_DSN)%']);
+                ->resource('default', [env('LOCK_DSN')]);
         };
 
 .. seealso::

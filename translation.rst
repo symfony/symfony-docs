@@ -699,7 +699,7 @@ configure the ``providers`` option:
             'translator' => [
                 'providers' => [
                     'loco' => [
-                        'dsn' => '%env(LOCO_DSN)%',
+                        'dsn' => env('LOCO_DSN'),
                         'domains' => ['messages'],
                         'locales' => ['en', 'fr'],
                     ],

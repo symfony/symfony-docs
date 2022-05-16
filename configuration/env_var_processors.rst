@@ -50,6 +50,8 @@ processor to turn the value of the ``HTTP_PORT`` env var into an integer:
 
         return static function (FrameworkConfig $framework) {
             $framework->router()
+                ->httpPort('%env(int:HTTP_PORT)%')
+                // or
                 ->httpPort(env('HTTP_PORT')->int())
             ;
         };
@@ -236,7 +238,7 @@ Symfony provides the following env var processors:
                 $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
                 $security->accessControl()
                     ->path('^/health-check$')
-                    ->methods(['%env(const:HEALTH_CHECK_METHOD)%']);
+                    ->methods([env('HEALTH_CHECK_METHOD')->const()]);
             };
 
 ``env(base64:FOO)``

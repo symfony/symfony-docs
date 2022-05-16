@@ -136,7 +136,7 @@ The following configuration code shows how you can configure two entity managers
             // configure these for your database server
             $doctrine->dbal()
                 ->connection('default')
-                ->url('%env(resolve:DATABASE_URL)%')
+                ->url(env('DATABASE_URL')->resolve())
                 ->driver('pdo_mysql')
                 ->serverVersion('5.7')
                 ->charset('utf8mb4');
@@ -144,7 +144,7 @@ The following configuration code shows how you can configure two entity managers
             // configure these for your database server
             $doctrine->dbal()
                 ->connection('customer')
-                ->url('%env(resolve:DATABASE_CUSTOMER_URL)%')
+                ->url(env('DATABASE_CUSTOMER_URL')->resolve())
                 ->driver('pdo_mysql')
                 ->serverVersion('5.7')
                 ->charset('utf8mb4');

@@ -198,12 +198,12 @@ that uses this configuration:
         return static function (FrameworkConfig $framework) {
             $framework->messenger()
                 ->transport('async')
-                    ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                    ->dsn(env('MESSENGER_TRANSPORT_DSN'))
             ;
 
             $framework->messenger()
                 ->transport('async')
-                    ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                    ->dsn(env('MESSENGER_TRANSPORT_DSN'))
                     ->options([])
             ;
         };
@@ -593,11 +593,11 @@ different messages to them. For example:
             $messenger = $framework->messenger();
 
             $messenger->transport('async_priority_high')
-                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->dsn(env('MESSENGER_TRANSPORT_DSN'))
                 ->options(['queue_name' => 'high']);
 
             $messenger->transport('async_priority_low')
-                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->dsn(env('MESSENGER_TRANSPORT_DSN'))
                 ->options(['queue_name' => 'low']);
 
             $messenger->routing('App\Message\SmsNotification')->senders(['async_priority_low']);
@@ -807,7 +807,7 @@ this is configurable for each transport:
             $messenger = $framework->messenger();
 
             $messenger->transport('async_priority_high')
-                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->dsn(env('MESSENGER_TRANSPORT_DSN'))
                 // default configuration
                 ->retryStrategy()
                     ->maxRetries(3)
@@ -1007,7 +1007,7 @@ override the failure transport for only specific transports:
             $messenger->failureTransport('failed_default');
 
             $messenger->transport('async_priority_high')
-                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->dsn(env('MESSENGER_TRANSPORT_DSN'))
                 ->failureTransport('failed_high_priority');
 
             // since no failed transport is configured, the one used will be
@@ -1095,7 +1095,7 @@ options. Options can be passed to the transport via a DSN string or configuratio
             $messenger = $framework->messenger();
 
             $messenger->transport('my_transport')
-                ->dsn('%env(MESSENGER_TRANSPORT_DSN)%')
+                ->dsn(env('MESSENGER_TRANSPORT_DSN'))
                 ->options(['auto_setup' => false]);
         };
 
