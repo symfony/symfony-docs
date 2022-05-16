@@ -56,12 +56,6 @@ processor to turn the value of the ``HTTP_PORT`` env var into an integer:
             ;
         };
 
-.. versionadded:: 5.3
-
-    The ``env()`` configurator syntax was introduced in 5.3.
-    In ``PHP`` configuration files, it will allow to autocomplete methods based
-    on processors name (i.e. ``env('SOME_VAR')->default('foo')``).
-
 Built-In Environment Variable Processors
 ----------------------------------------
 

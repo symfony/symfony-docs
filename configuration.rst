@@ -645,12 +645,6 @@ This example shows how you could configure the database connection using an env 
             ]);
         };
 
-.. versionadded:: 5.3
-
-    The ``env()`` configurator syntax was introduced in 5.3.
-    In ``PHP`` configuration files, it will allow to autocomplete methods based
-    on processors name (i.e. ``env('SOME_VAR')->default('foo')``).
-
 .. seealso::
 
     The values of env vars can only be strings, but Symfony includes some
