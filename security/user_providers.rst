@@ -290,6 +290,7 @@ command will generate a nice skeleton to get you started::
 
     use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
     use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+    use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
     use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
     use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -347,13 +348,13 @@ command will generate a nice skeleton to get you started::
         }
 
         /**
-         * Upgrades the encoded password of a user, typically for using a better hash algorithm.
+         * Upgrades the hashed password of a user, typically for using a better hash algorithm.
          */
-        public function upgradePassword(UserInterface $user, string $newEncodedPassword): void
+        public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
         {
-            // TODO: when encoded passwords are in use, this method should:
+            // TODO: when hashed passwords are in use, this method should:
             // 1. persist the new password in the user storage
-            // 2. update the $user object with $user->setPassword($newEncodedPassword);
+            // 2. update the $user object with $user->setPassword($newHashedPassword);
         }
     }
 
