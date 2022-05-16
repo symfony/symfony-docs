@@ -60,7 +60,7 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
         return static function (ContainerConfigurator $containerConfigurator): void {
             $containerConfigurator->extension('framework', [
                 'mailer' => [
-                    'dsn' => '%env(MAILER_DSN)%',
+                    'dsn' => env('MAILER_DSN'),
                 ],
             ]);
         };
@@ -1102,8 +1102,8 @@ This can be configured by replacing the ``dsn`` configuration entry with a
 
         return static function (FrameworkConfig $framework) {
             $framework->mailer()
-                ->transport('main', '%env(MAILER_DSN)%')
-                ->transport('alternative', '%env(MAILER_DSN_IMPORTANT)%')
+                ->transport('main', env('MAILER_DSN'))
+                ->transport('alternative', env('MAILER_DSN_IMPORTANT'))
             ;
         };
 
@@ -1175,7 +1175,7 @@ you have a transport called ``async``, you can route the message there:
 
         return static function (FrameworkConfig $framework) {
             $framework->messenger()
-                ->transport('async')->dsn('%env(MESSENGER_TRANSPORT_DSN)%');
+                ->transport('async')->dsn(env('MESSENGER_TRANSPORT_DSN'));
 
             $framework->messenger()
                 ->routing('Symfony\Component\Mailer\Messenger\SendEmailMessage')

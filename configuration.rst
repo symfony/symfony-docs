@@ -639,9 +639,17 @@ This example shows how you could configure the database connection using an env 
                 'dbal' => [
                     // by convention the env var names are always uppercase
                     'url' => '%env(resolve:DATABASE_URL)%',
+                    // or
+                    'url' => env('DATABASE_URL')->resolve(),
                 ],
             ]);
         };
+
+.. versionadded:: 5.3
+
+    The ``env()`` configurator syntax was introduced in 5.3.
+    In ``PHP`` configuration files, it will allow to autocomplete methods based
+    on processors name (i.e. ``env('SOME_VAR')->default('foo')``).
 
 .. seealso::
 

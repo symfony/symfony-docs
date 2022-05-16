@@ -285,7 +285,7 @@ some environment variable that stores the name of the IDE/editor:
 
         return static function (FrameworkConfig $framework) {
             // the env var stores the IDE/editor name (e.g. 'phpstorm', 'vscode', etc.)
-            $framework->ide('%env(resolve:CODE_EDITOR)%');
+            $framework->ide(env('CODE_EDITOR')->resolve());
         };
 
 Another alternative is to set the ``xdebug.file_link_format`` option in your
@@ -566,14 +566,14 @@ can also :ref:`disable CSRF protection on individual forms <form-csrf-customizat
 .. configuration-block::
 
     .. code-block:: yaml
-    
+
         # config/packages/framework.yaml
         framework:
             # ...
             csrf_protection: true
-            
+
     .. code-block:: xml
-    
+
         <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
@@ -587,9 +587,9 @@ can also :ref:`disable CSRF protection on individual forms <form-csrf-customizat
                 <framework:csrf-protection enabled="true"/>
             </framework:config>
         </container>
-        
+
     .. code-block:: php
-    
+
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
         return static function (FrameworkConfig $framework) {
@@ -3072,7 +3072,7 @@ A list of lock stores to be created by the framework extension.
 
         return static function (FrameworkConfig $framework) {
             $framework->lock()
-                ->resource('default', ['%env(LOCK_DSN)%']);
+                ->resource('default', [env('LOCK_DSN')]);
         };
 
 .. seealso::
