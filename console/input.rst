@@ -221,7 +221,7 @@ There are five option variants you can use:
     Accept either the flag (e.g. ``--yell``) or its negation (e.g.
     ``--no-yell``).
 
-You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
+``VALUE_IS_ARRAY`` works only combined with ``VALUE_REQUIRED`` or
 ``VALUE_OPTIONAL`` like this::
 
     $this
