@@ -216,7 +216,7 @@ activated), the ``loadUserByUsername()`` method on ``UserRepository`` will be ca
     which, by default, won't use that custom query. If you want to use a custom query
     to refresh the user too, you will need to implement the ``Symfony\Component\Security\Core\User\UserProviderInterface``
     instead of the ``Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface``.
-    More informations can be found in the :ref:`custom user provider <custom-user-provider>`
+    More information can be found in the :ref:`custom user provider <custom-user-provider>`
     section.
 
 
