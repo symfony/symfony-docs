@@ -209,6 +209,17 @@ needed (e.g. because :doc:`user impersonation </security/impersonating_user>`,
 :doc:`Remember Me </security/remember_me>`, or some other security feature is
 activated), the ``loadUserByUsername()`` method on ``UserRepository`` will be called.
 
+.. caution::
+
+    This custom query will only be used when authenticating the user. When reloading
+    the user from session, it will internally relay on the ``refreshUser()`` method
+    which, by default, won't use that custom query. If you want to use a custom query
+    to refresh the user too, you will need to implement the ``Symfony\Component\Security\Core\User\UserProviderInterface``
+    instead of the ``Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface``.
+    More informations can be found in the :ref:`custom user provider <custom-user-provider>`
+    section.
+
+
 .. _security-memory-user-provider:
 
 Memory User Provider
