@@ -80,22 +80,18 @@ in case a specific other bundle is not registered::
             }
         }
 
-        // process the configuration of AcmeHelloExtension
+        // get the configuration of AcmeHelloExtension (it's a list of configuration)
         $configs = $container->getExtensionConfig($this->getAlias());
 
-        // resolve config parameters e.g. %kernel.debug% to its boolean value
-        $resolvingBag = $container->getParameterBag();
-        $configs = $resolvingBag->resolveValue($configs);
-        
-        // use the Configuration class to generate a config array with
-        // the settings "acme_hello"
-        $config = $this->processConfiguration(new Configuration(), $configs);
-
-        // check if entity_manager_name is set in the "acme_hello" configuration
-        if (isset($config['entity_manager_name'])) {
-            // prepend the acme_something settings with the entity_manager_name
-            $config = ['entity_manager_name' => $config['entity_manager_name']];
-            $container->prependExtensionConfig('acme_something', $config);
+        // iterate in reverse to preserve the original order after prepending the config
+        foreach (array_reverse($configs) as $config) {
+            // check if entity_manager_name is set in the "acme_hello" configuration
+            if (isset($config['entity_manager_name'])) {
+                // prepend the acme_something settings with the entity_manager_name
+                $container->prependExtensionConfig('acme_something', [
+                    'entity_manager_name' => $config['entity_manager_name'],
+                ]);
+            }
         }
     }
 
