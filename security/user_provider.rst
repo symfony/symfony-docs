@@ -211,8 +211,8 @@ activated), the ``loadUserByUsername()`` method on ``UserRepository`` will be ca
 
 .. caution::
 
-    This custom query will only be used when authenticating the user. When reloading
-    the user from session, it will internally relay on the ``refreshUser()`` method
+    This custom query will only be used when authenticating the user. Reloading
+    the user from the session will internally relay on the ``refreshUser()`` method
     which, by default, won't use that custom query. If you want to use a custom query
     to refresh the user too, you will need to implement the ``Symfony\Component\Security\Core\User\UserProviderInterface``
     instead of the ``Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface``.
