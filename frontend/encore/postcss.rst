@@ -2,7 +2,7 @@ PostCSS and autoprefixing (postcss-loader)
 ==========================================
 
 `PostCSS`_ is a CSS post-processing tool that can transform your CSS in a lot
-of cool ways, like `autoprefixing`_, `linting`_ and more!
+of cool ways, like `autoprefixing`_ or using `online version`_, `linting`_ and more!
 
 First enable it in ``webpack.config.js``:
 
@@ -99,3 +99,4 @@ See `browserslist`_ for more details on the syntax.
 .. _`linting`: https://stylelint.io/
 .. _`browserslist`: https://github.com/browserslist/browserslist
 .. _`postcss-loader`: https://github.com/postcss/postcss-loader
+.. _`online version`: https://goonlinetools.com/autoprefixer/
