@@ -317,6 +317,11 @@ split to *separate* files by Encore. Then, those files won't be downloaded until
 the moment a matching element (e.g. ``<div data-controller="lazy-example">``)
 appears on the page!
 
+.. note::
+
+    If you write your controllers using TypeScript, make sure
+    ``removeComments`` is not set to ``true`` in your TypeScript config.
+
 .. _multiple-javascript-entries:
 
 Multiple Entries
