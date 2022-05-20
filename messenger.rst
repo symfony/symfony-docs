@@ -1643,7 +1643,7 @@ The SQS transport DSN may looks like this:
 .. note::
 
     The transport will automatically create queues that are needed. This
-    can be disabled setting the ``auto_setup`` option to ``false``.
+    can be disabled by setting the ``auto_setup`` option to ``false``.
 
 .. tip::
 
