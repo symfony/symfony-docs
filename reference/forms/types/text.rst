@@ -57,6 +57,10 @@ an empty string, explicitly set the ``empty_data`` option to an empty string.
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
 
+.. include:: /reference/forms/types/options/sanitize_html.rst.inc
+
+.. include:: /reference/forms/types/options/sanitizer.rst.inc
+
 .. include:: /reference/forms/types/options/trim.rst.inc
 
 Overridden Options

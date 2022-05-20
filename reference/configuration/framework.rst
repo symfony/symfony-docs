@@ -1198,6 +1198,17 @@ connection is verified for authenticity. Authenticating the certificate is not
 enough to be sure about the server, so you should combine this with the
 ``verify_host`` option.
 
+html_sanitizer
+~~~~~~~~~~~~~~
+
+.. versionadded:: 6.1
+
+    The HTML sanitizer configuration was introduced in Symfony 6.1.
+
+The ``html_sanitizer`` option (and its children) are used to configure
+custom HTML sanitizers. Read more about the options in the
+:ref:`HTML sanitizer documentation <html-sanitizer-configuration>`.
+
 profiler
 ~~~~~~~~
 
