@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2022-05-07T12:23:41Z
+
+Thanks Javier. I've fixed the syntax errors and finished the configuration sections (lots of copy past :sweat:).
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-05-10T18:24:06Z
+
+Thanks @tgalopin!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2022-05-14T17:17:01Z
+
+There is also https://github.com/symfony/symfony/pull/46335 to account for now (would close #16804)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-05-16T19:44:29Z
+
+PR updated to include #16804
