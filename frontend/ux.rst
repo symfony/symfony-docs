@@ -131,6 +131,11 @@ To make one of your custom controllers lazy, add a special comment on top:
 To make a third-party controller lazy, in ``assets/controllers.json``, set
 ``fetch`` to ``lazy``.
 
+.. note::
+
+    If you write your controllers using TypeScript, make sure
+    ``removeComments`` is not set to ``true`` in your TypeScript config.
+
 More Advanced Setup
 -------------------
 
