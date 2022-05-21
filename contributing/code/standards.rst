@@ -180,10 +180,9 @@ Structure
   to increase readability;
 
 * Declare all the arguments on the same line as the method/function name, no
-  matter how many arguments there are (with exception of `constructor property promotion`_);
-
-* When using `constructor property promotion`_ put each parameter on a new line with
-  `trailing comma`_;
+  matter how many arguments there are. The only exception are constructor methods
+  using `constructor property promotion`_, where each parameter must be on a new
+  line with `trailing comma`_;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
