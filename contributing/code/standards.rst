@@ -180,7 +180,9 @@ Structure
   to increase readability;
 
 * Declare all the arguments on the same line as the method/function name, no
-  matter how many arguments there are;
+  matter how many arguments there are. The only exception are constructor methods
+  using `constructor property promotion`_, where each parameter must be on a new
+  line with `trailing comma`_;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
@@ -299,3 +301,5 @@ License
 .. _`camelCase`: https://en.wikipedia.org/wiki/Camel_case
 .. _`UpperCamelCase`: https://en.wikipedia.org/wiki/Camel_case
 .. _`snake_case`: https://en.wikipedia.org/wiki/Snake_case
+.. _`constructor property promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion
+.. _`trailing comma`: https://wiki.php.net/rfc/trailing_comma_in_parameter_list
