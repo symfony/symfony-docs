@@ -62,9 +62,12 @@ called ``AcmeTestBundle.php``::
 
 .. versionadded:: 6.1
 
-    The ``AbstractBundle`` was introduced in Symfony 6.1. If your bundle must be compatible
-    with previous Symfony versions you have to extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle`
-    instead.
+    The ``AbstractBundle`` was introduced in Symfony 6.1.
+
+.. warning::
+
+    If your bundle must be compatible with previous Symfony versions you have to
+    extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle` instead.
 
 .. tip::
 
