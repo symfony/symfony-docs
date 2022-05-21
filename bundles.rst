@@ -73,20 +73,7 @@ called ``AcmeTestBundle.php``::
     also choose to shorten the name of the bundle to simply TestBundle by naming
     this class TestBundle (and naming the file ``TestBundle.php``).
 
-It's recommended to place your bundle class in the ``src/`` directory and keep out all the
-configuration files, templates, translations, etc. By default, Symfony determines the bundle path from the
-directory where the bundle class is placed, so you have to define the :method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::getPath`
-method to tell Symfony what is the root directory of your bundle path::
-
-    class AcmeTestBundle extends AbstractBundle
-    {
-        public function getPath(): string
-        {
-            return \dirname(__DIR__); // returns /path/to/Acme/TestBundle/
-        }
-    }
-
-This almost empty class is the only piece you need to create the new bundle. Though
+This empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
 of the bundle. Now that you've created the bundle, enable it::
 
