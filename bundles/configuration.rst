@@ -315,6 +315,88 @@ In your extension, you can load this and dynamically set its arguments::
             // ... now use the flat $config array
         }
 
+Using the Bundle Class
+----------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class is introduced in Symfony 6.1.
+
+Instead of creating an extension and configuration class, you can also
+extend :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to
+add this logic to the bundle class directly::
+
+    // src/AcmeSocialBundle.php
+    namespace Acme\SocialBundle;
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class AcmeSocialBundle extends AbstractBundle
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            $definition->rootNode()
+                ->children()
+                    ->arrayNode('twitter')
+                        ->children()
+                            ->integerNode('client_id')->end()
+                            ->scalarNode('client_secret')->end()
+                        ->end()
+                    ->end() // twitter
+                ->end()
+            ;
+        }
+
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // Contrary to the Extension class, the "$config" variable is already merged
+            // and processed. You can use it directly to configure the service container.
+            $container->services()
+                ->get('acme.social.twitter_client')
+                ->arg(0, $config['twitter']['client_id'])
+                ->arg(1, $config['twitter']['client_secret'])
+            ;
+        }
+    }
+
+.. note::
+
+    The ``configure()`` and ``loadExtension()`` methods are called only at compile time.
+
+.. tip::
+
+    The ``AbstractBundle::configure()`` method also allows to import the
+    configuration definitino from one or more files::
+
+        // src/AcmeSocialBundle.php
+
+        // ...
+        class AcmeSocialBundle extends AbstractBundle
+        {
+            public function configure(DefinitionConfigurator $definition): void
+            {
+                $definition->import('../config/definition.php');
+                // you can also use glob patterns
+                //$definition->import('../config/definition/*.php');
+            }
+
+            // ...
+        }
+
+    .. code-block:: php
+
+        // config/definition.php
+        use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+
+        return static function (DefinitionConfigurator $definition) {
+            $definition->rootNode()
+                ->children()
+                    ->scalarNode('foo')->defaultValue('bar')->end()
+                ->end()
+            ;
+        };
+
 Modifying the Configuration of Another Bundle
 ---------------------------------------------
 
@@ -430,57 +512,6 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
 
         <!-- ... -->
     </container>
-
-Defining Configuration directly in your Bundle class
-----------------------------------------------------
-
-.. versionadded:: 6.1
-
-    The ``AbstractBundle`` class is introduced in Symfony 6.1.
-
-As another option, you can define the extension configuration directly in your Bundle
-class by implementing :class:`Symfony\\Component\\Config\\Definition\\ConfigurableInterface`,
-which is already supported when your bundle extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`::
-
-    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-
-    class AcmeFooBundle extends AbstractBundle
-    {
-        public function configure(DefinitionConfigurator $definition): void
-        {
-            // loads config definition from a file
-            $definition->import('../config/definition.php');
-
-            // loads config definition from multiple files (when it's too long you can split it)
-            $definition->import('../config/definition/*.php');
-
-            // if the configuration is short, consider adding it in this class
-            $definition->rootNode()
-                ->children()
-                    ->scalarNode('foo')->defaultValue('bar')->end()
-                ->end()
-            ;
-        }
-    }
-
-This method is a shortcut of the previous "Extension", "Configuration" and "TreeBuilder" convention,
-now you also have the possibility to import configuration definition from an external file::
-
-    // Acme/FooBundle/config/definition.php
-    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-
-    return static function (DefinitionConfigurator $definition) {
-        $definition->rootNode()
-            ->children()
-                ->scalarNode('foo')->defaultValue('bar')->end()
-            ->end()
-        ;
-    };
-
-.. note::
-
-    The "configure()" method is called only at compile time.
 
 .. _`FrameworkBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php
 .. _`TwigBundle Configuration`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php

@@ -97,7 +97,7 @@ For instance, assume you have a file called ``services.xml`` in the
     {
         $loader = new XmlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../Resources/config')
+            new FileLocator(__DIR__.'/../config')
         );
         $loader->load('services.xml');
     }
@@ -110,6 +110,57 @@ Using Configuration to Change the Services
 The Extension is also the class that handles the configuration for that
 particular bundle (e.g. the configuration in ``config/packages/<bundle_alias>.yaml``).
 To read more about it, see the ":doc:`/bundles/configuration`" article.
+
+Loading Services directly in your Bundle class
+----------------------------------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class is introduced in Symfony 6.1.
+
+Alternatively, you can define and load services configuration directly in a
+bundle class instead of creating a specific ``Extension`` class. You can do
+this by extending from :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::loadExtension`
+method::
+
+    // ...
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+    class AcmeHelloBundle extends AbstractBundle
+    {
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // load an XML, PHP or Yaml file
+            $container->import('../config/services.xml');
+
+            // you can also add or replace parameters and services
+            $container->parameters()
+                ->set('acme_hello.phrase', $config['phrase'])
+            ;
+
+            if ($config['scream']) {
+                $container->services()
+                    ->get('acme_hello.printer')
+                        ->class(ScreamingPrinter::class)
+                ;
+            }
+        }
+    }
+
+This method works similar to the ``Extension::load()`` method, but it uses
+a new API to define and import service configuration.
+
+.. note::
+
+    Contrary to the ``$configs`` parameter in ``Extension::load()``, the
+    ``$config`` parameter is already merged and processed by the
+    ``AbstractBundle``.
+
+.. note::
+
+    The ``loadExtension()`` is called only at compile time.
 
 Adding Classes to Compile
 -------------------------
@@ -147,44 +198,3 @@ the full classmap executing the ``dump-autoload`` command of Composer.
     This technique can't be used when the classes to compile use the ``__DIR__``
     or ``__FILE__`` constants, because their values will change when loading
     these classes from the ``classes.php`` file.
-
-Loading Services directly in your Bundle class
-----------------------------------------------
-
-.. versionadded:: 6.1
-
-    The ``AbstractBundle`` class is introduced in Symfony 6.1.
-
-Alternatively, you can define and load services configuration directly in a bundle class
-by extending from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
-and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::loadExtension` method::
-
-    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
-    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-
-    class AcmeFooBundle extends AbstractBundle
-    {
-        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
-        {
-            $container->parameters()
-                ->set('foo', $config['foo']);
-
-            $container->import('../config/services.php');
-
-            if ('bar' === $config['foo']) {
-                $container->services()
-                    ->set(Parser::class);
-            }
-        }
-    }
-
-This method is a shortcut of the previous "load()" method, but with more options
-to define and import the service configuration with less effort. The ``$config``
-argument is the previous ``$configs`` array but already merged and processed. And
-through the ``$container`` configurator you can import the services configuration
-from an external file in any supported format (php, yaml, xml) or simply define
-them in place using the fluent interfaces.
-
-.. note::
-
-    The "loadExtension()", as the "load()" method, are called only at compile time.

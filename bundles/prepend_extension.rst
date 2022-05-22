@@ -151,25 +151,20 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
             'use_acme_goodbye' => false,
         ]);
 
-More than one Bundle using PrependExtensionInterface
-----------------------------------------------------
-
-If there is more than one bundle that prepends the same extension and defines
-the same key, the bundle that is registered **first** will take priority:
-next bundles won't override this specific config setting.
-
-Prepending Extension directly in your Bundle class
---------------------------------------------------
+Prepending Extension in the Bundle Class
+----------------------------------------
 
 .. versionadded:: 6.1
 
     The ``AbstractBundle`` class is introduced in Symfony 6.1.
 
-By preference, you can append or prepend extension configuration directly in your Bundle
-class for any bundle by extending from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
-and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::prependExtension` method::
+You can also append or prepend extension configuration directly in your
+Bundle class if you extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+class and define the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::prependExtension`
+method::
 
     use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
     class FooBundle extends AbstractBundle
@@ -191,10 +186,13 @@ and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle
         }
     }
 
-This method is a shortcut of the previous "PrependExtensionInterface::prepend" method,
-allowing you also to import and append extension config from an external file in one of
-the supported formats (php, yaml, xml).
-
 .. note::
 
-    The "prependExtension()" like "prepend()" method is called only at compile time.
+    The ``prependExtension()`` method, like ``prepend()``, is called only at compile time.
+
+More than one Bundle using PrependExtensionInterface
+----------------------------------------------------
+
+If there is more than one bundle that prepends the same extension and defines
+the same key, the bundle that is registered **first** will take priority:
+next bundles won't override this specific config setting.

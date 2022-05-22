@@ -46,12 +46,11 @@ Creating a Bundle
 This section creates and enables a new bundle to show there are only a few steps required.
 The new bundle is called AcmeTestBundle, where the ``Acme`` portion is an example
 name that should be replaced by some "vendor" name that represents you or your
-organization (e.g. ABCTestBundle for some company named ``ABC``).
+organization (e.g. AbcTestBundle for some company named ``Abc``).
 
-Start by creating a ``Acme/TestBundle/src/`` directory and adding a new file
-called ``AcmeTestBundle.php``::
+Start by adding creating a new class called ``AcmeTestBundle``::
 
-    // Acme/TestBundle/src/AcmeTestBundle.php
+    // src/AcmeTestBundle.php
     namespace Acme\TestBundle;
 
     use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
@@ -62,9 +61,10 @@ called ``AcmeTestBundle.php``::
 
 .. versionadded:: 6.1
 
-    The ``AbstractBundle`` was introduced in Symfony 6.1.
+    The :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` was
+    introduced in Symfony 6.1.
 
-.. warning::
+.. caution::
 
     If your bundle must be compatible with previous Symfony versions you have to
     extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle` instead.
@@ -96,7 +96,7 @@ between all Symfony bundles. It follows a set of conventions, but is flexible
 to be adjusted if needed:
 
 ``src/``
-    Contains mainly PHP classes related to the bundle logic (e.g. ``Controller/RandomController.php``).
+    Contains all PHP classes related to the bundle logic (e.g. ``Controller/RandomController.php``).
 
 ``config/``
     Houses configuration, including routing configuration (e.g. ``routing.yaml``).
@@ -115,32 +115,44 @@ to be adjusted if needed:
 ``tests/``
     Holds all tests for the bundle.
 
-It's recommended to use the `PSR-4`_ autoload standard: use the namespace as key,
-and the location of the bundle's main class (relative to ``composer.json``)
-as value. As the main class is located in the ``src/`` directory of the bundle:
+.. caution::
 
-.. code-block:: json
+    The recommended bundle structure was changed in Symfony 5, read the
+    `Symfony 4.4 bundle documentation`_ for information about the old
+    structure.
 
-    {
-        "autoload": {
-            "psr-4": {
-                "Acme\\TestBundle\\": "src/"
-            }
-        },
-        "autoload-dev": {
-            "psr-4": {
-                "Acme\\TestBundle\\Tests\\": "tests/"
+    When using the new ``AbstractBundle`` class, the bundle defaults to the
+    new structure. Override the ``Bundle::getPath()`` method to change to
+    the old structure::
+
+        class AcmeTestBundle extends AbstractBundle
+        {
+            public function getPath(): string
+            {
+                return __DIR__;
             }
         }
-    }
 
-A bundle can be as small or large as the feature it implements. It contains
-only the files you need and nothing else.
+.. tip::
 
-As you move through the guides, you'll learn how to persist objects to a
-database, create and validate forms, create translations for your application,
-write tests and much more. Each of these has their own place and role within
-the bundle.
+    It's recommended to use the `PSR-4`_ autoload standard: use the namespace as key,
+    and the location of the bundle's main class (relative to ``composer.json``)
+    as value. As the main class is located in the ``src/`` directory of the bundle:
+
+    .. code-block:: json
+
+        {
+            "autoload": {
+                "psr-4": {
+                    "Acme\\TestBundle\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Acme\\TestBundle\\Tests\\": "tests/"
+                }
+            }
+        }
 
 Learn more
 ----------
@@ -152,4 +164,5 @@ Learn more
 * :doc:`/bundles/prepend_extension`
 
 .. _`third-party bundles`: https://github.com/search?q=topic%3Asymfony-bundle&type=Repositories
+.. _`Symfony 4.4 bundle documentation`: https://symfony.com/doc/4.4/bundles.html#bundle-directory-structure
 .. _`PSR-4`: https://www.php-fig.org/psr/psr-4/

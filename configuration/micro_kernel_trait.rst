@@ -99,8 +99,8 @@ that define your bundles, your services and your routes:
     ``RoutingConfigurator`` has methods that make adding routes in PHP more
     fun. You can also load external routing files (shown below).
 
-Advanced Example: Configuration, Twig, Annotations and the Web Debug Toolbar
-----------------------------------------------------------------------------
+Advanced Example: Twig, Annotations and the Web Debug Toolbar
+-------------------------------------------------------------
 
 The purpose of the ``MicroKernelTrait`` is *not* to have a single-file application.
 Instead, its goal to give you the power to choose your bundles and structure.
