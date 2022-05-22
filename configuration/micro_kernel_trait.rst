@@ -297,7 +297,9 @@ has one file in it::
 
     class MicroController extends AbstractController
     {
-        #[Route('/random/{limit}')]
+        /**
+         * @Route("/random/{limit}")
+         */
         public function randomNumber(int $limit): Response
         {
             $number = random_int(0, $limit);
