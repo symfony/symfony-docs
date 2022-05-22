@@ -30,7 +30,7 @@ follow these conventions (but later you'll learn how to skip them if needed):
 
 This is how the extension of an AcmeHelloBundle should look like::
 
-    // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+    // src/DependencyInjection/AcmeHelloExtension.php
     namespace Acme\HelloBundle\DependencyInjection;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -87,7 +87,7 @@ but it is more common if you put these definitions in a configuration file
 (using the YAML, XML or PHP format).
 
 For instance, assume you have a file called ``services.xml`` in the
-``Resources/config/`` directory of your bundle, your ``load()`` method looks like::
+``config/`` directory of your bundle, your ``load()`` method looks like::
 
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -97,7 +97,7 @@ For instance, assume you have a file called ``services.xml`` in the
     {
         $loader = new XmlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../config')
+            new FileLocator(__DIR__.'/../../config')
         );
         $loader->load('services.xml');
     }
