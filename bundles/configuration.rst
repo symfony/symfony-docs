@@ -367,7 +367,7 @@ add this logic to the bundle class directly::
 .. tip::
 
     The ``AbstractBundle::configure()`` method also allows to import the
-    configuration definitino from one or more files::
+    configuration definition from one or more files::
 
         // src/AcmeSocialBundle.php
 
