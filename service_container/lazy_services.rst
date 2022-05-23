@@ -27,6 +27,9 @@ until you interact with the proxy in some way.
 
     Lazy services do not support `final`_ classes.
 
+    In PHP versions prior to 8.0 lazy services do not support parameters with
+    default values for built-in PHP classes (e.g. ``PDO``).
+
 Installation
 ------------
 
