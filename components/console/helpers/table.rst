@@ -150,6 +150,31 @@ The output of this command will be:
     |                (the rest of the rows...)            |
     +-------+------------+--------------------------------+
 
+Console tables content is displayed horizontally by default.
+You can change this behavior via the :method:`Symfony\\Component\\Console\\Helper\\Table::setVertical` method::
+
+    // ...
+    $table->setVertical();
+    $table->render();
+
+The output of this command will be:
+
+.. code-block:: terminal
+
+    +------------------------------+
+    |   ISBN: 99921-58-10-7        |
+    |  Title: Divine Comedy        |
+    | Author: Dante Alighieri      |
+    |------------------------------|
+    |   ISBN: 9971-5-0210-0        |
+    |  Title: A Tale of Two Cities |
+    | Author: Charles Dickens      |
+    +------------------------------+
+
+.. versionadded:: 6.1
+
+    Support for vertical rendering was introduced in Symfony 6.1.
+
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
 
