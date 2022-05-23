@@ -828,6 +828,15 @@ this is configurable for each transport:
     Symfony triggers a :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageRetriedEvent`
     when a message is retried so you can run your own logic.
 
+.. note::
+
+    Thanks to :class:`Symfony\\Component\\Messenger\\Stamp\\SerializedMessageStamp` the serialized form of the message
+    is saved, which prevents to serialize it again if the message is retried.
+
+    .. versionadded:: 6.1
+
+        The ``SerializedMessageStamp`` class was introduced in Symfony 6.1.
+
 Avoiding Retrying
 ~~~~~~~~~~~~~~~~~
 
