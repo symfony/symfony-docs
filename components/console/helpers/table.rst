@@ -150,8 +150,8 @@ The output of this command will be:
     |                (the rest of the rows...)            |
     +-------+------------+--------------------------------+
 
-Console tables content is displayed horizontally by default.
-You can change this behavior via the :method:`Symfony\\Component\\Console\\Helper\\Table::setVertical` method::
+By default, table contents are displayed horizontally. You can change this behavior
+via the :method:`Symfony\\Component\\Console\\Helper\\Table::setVertical` method::
 
     // ...
     $table->setVertical();
