@@ -830,8 +830,9 @@ this is configurable for each transport:
 
 .. note::
 
-    Thanks to :class:`Symfony\\Component\\Messenger\\Stamp\\SerializedMessageStamp` the serialized form of the message
-    is saved, which prevents to serialize it again if the message is retried.
+    Thanks to :class:`Symfony\\Component\\Messenger\\Stamp\\SerializedMessageStamp`,
+    the serialized form of the message is saved, which prevents to serialize it
+    again if the message is later retried.
 
     .. versionadded:: 6.1
 
