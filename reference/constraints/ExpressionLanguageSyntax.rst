@@ -3,8 +3,8 @@ ExpressionLanguageSyntax
 
 .. deprecated:: 6.1
 
-    This constraint is deprecated since Symfony 6.1.
-    Use the``ExpressionSyntax`` constraint instead.
+    This constraint is deprecated since Symfony 6.1. Instead, use the
+    :doc:`ExpressionSyntax </reference/constraints/ExpressionSyntax>` constraint.
 
 This constraint checks that the value is valid as an `ExpressionLanguage`_
 expression.

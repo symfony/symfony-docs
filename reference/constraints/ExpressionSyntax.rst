@@ -4,10 +4,11 @@ ExpressionSyntax
 This constraint checks that the value is valid as an `ExpressionLanguage`_
 expression.
 
-.. info:: 6.1
+.. versionadded:: 6.1
 
-    This constraint is deprecated since Symfony 6.1.
-    Use the``ExpressionSyntax`` constraint instead.
+    This constraint was introduced in Symfony 6.1 and deprecates the previous
+    :doc:`ExpressionLanguageSyntax </reference/constraints/ExpressionLanguageSyntax>`
+    constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
