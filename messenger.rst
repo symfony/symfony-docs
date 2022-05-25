@@ -1184,6 +1184,7 @@ The transport has a number of options:
                                               calls.
 ``host``                                      Hostname of the AMQP service
 ``key``                                       Path to the client key in PEM format.
+``login``                                     Username to use to connect the AMQP service
 ``password``                                  Password to use to connect to the AMQP service
 ``persistent``                                                                                   ``'false'``
 ``port``                                      Port of the AMQP service
@@ -1193,7 +1194,6 @@ The transport has a number of options:
 ``sasl_method``
 ``connection_name``                           For custom connection names (requires at least
                                               version 1.10 of the PHP AMQP extension)
-``user``                                      Username to use to connect the AMQP service
 ``verify``                                    Enable or disable peer verification. If peer
                                               verification is enabled then the common name in
                                               the server certificate must match the server
