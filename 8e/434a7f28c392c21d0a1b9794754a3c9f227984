@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-05-25T15:30:18Z
+
+@maartendekeizer thanks for updating the docs. For reference purposes, here's the updated recipe related to this change: https://github.com/symfony/recipes/blob/main/symfony/framework-bundle/5.4/config/routes/framework.yaml
