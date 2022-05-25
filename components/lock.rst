@@ -106,7 +106,7 @@ can be created, pass ``true`` as the argument of the ``acquire()`` method. This
 is called a **blocking lock** because the execution of your application stops
 until the lock is acquired.
 
-Some of the built-in ``Store`` classes support this feature.
+Some of the built-in ``Store`` classes support this feature::
 
     use Symfony\Component\Lock\LockFactory;
     use Symfony\Component\Lock\Store\RedisStore;
