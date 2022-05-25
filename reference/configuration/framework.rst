@@ -538,6 +538,15 @@ settings is configured.
 
     For more details, see :doc:`/forms`.
 
+.. _reference-form-field-name:
+
+field_name
+..........
+
+**type**: ``string`` **default**: ``_token``
+
+This is the field name that you should give to the CSRF token field of your forms.
+
 .. _reference-framework-csrf-protection:
 
 csrf_protection
