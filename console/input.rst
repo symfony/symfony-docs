@@ -217,7 +217,7 @@ There are four option variants you can use:
     This option may or may not have a value (e.g. ``--yell`` or
     ``--yell=loud``).
 
-You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
+You need to combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 ``VALUE_OPTIONAL`` like this::
 
     $this
