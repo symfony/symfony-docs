@@ -517,9 +517,7 @@ Option 1: Using ``@Ignore`` Annotation
                 https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
         >
             <class name="App\Model\MyClass">
-                <attribute name="bar">
-                    <ignore>true</ignore>
-                </attribute>
+                <attribute name="bar" ignore="true"/>
             </class>
         </serializer>
 
