@@ -225,7 +225,7 @@ There are five option variants you can use:
 
     The ``InputOption::VALUE_NEGATABLE`` constant was introduced in Symfony 5.3.
 
-You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
+You need to combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 ``VALUE_OPTIONAL`` like this::
 
     $this
