@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2022-05-03T14:03:43Z
+
+Hi! Thank you for your quick response.
+
+I think it's best to create a new example (directly after the first one), e.g. "You can use `#[HasNamedArguments]` or `getRequiredOptions()` to make some constraint options required". This also allows us to add a "versionadded" box:
+
+```rst
+.. versionadded:: 6.1
+
+    The ``#[HasNamedArguments]`` attribute was introduced in Symfony 6.1.
+```
+
+If you agree, are you able to make the changes? :)
+
+---------------------------------------------------------------------------
+
+by norkunas at 2022-05-03T15:08:32Z
+
+Hi, will update tomorrow :)
