@@ -243,7 +243,7 @@ add a service conditionally based on the ``foo`` value::
 
 .. versionadded:: 6.1
 
-    The ``AbstractExtension`` class is introduced in Symfony 6.1.
+    The ``AbstractExtension`` class was introduced in Symfony 6.1.
 
 Unlike the previous kernel, this loads an external ``config/framework.yaml`` file,
 because the configuration started to get bigger:

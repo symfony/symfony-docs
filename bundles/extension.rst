@@ -116,7 +116,7 @@ Loading Services directly in your Bundle class
 
 .. versionadded:: 6.1
 
-    The ``AbstractBundle`` class is introduced in Symfony 6.1.
+    The ``AbstractBundle`` class was introduced in Symfony 6.1.
 
 Alternatively, you can define and load services configuration directly in a
 bundle class instead of creating a specific ``Extension`` class. You can do
@@ -125,8 +125,8 @@ and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle
 method::
 
     // ...
-    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
     use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
     class AcmeHelloBundle extends AbstractBundle
     {

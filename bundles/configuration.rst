@@ -320,7 +320,7 @@ Using the Bundle Class
 
 .. versionadded:: 6.1
 
-    The ``AbstractBundle`` class is introduced in Symfony 6.1.
+    The ``AbstractBundle`` class was introduced in Symfony 6.1.
 
 Instead of creating an extension and configuration class, you can also
 extend :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to
