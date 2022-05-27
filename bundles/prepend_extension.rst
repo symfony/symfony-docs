@@ -151,6 +151,45 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
             'use_acme_goodbye' => false,
         ]);
 
+Prepending Extension in the Bundle Class
+----------------------------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class is introduced in Symfony 6.1.
+
+You can also append or prepend extension configuration directly in your
+Bundle class if you extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+class and define the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::prependExtension`
+method::
+
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+    class FooBundle extends AbstractBundle
+    {
+        public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // prepend
+            $builder->prependExtensionConfig('framework', [
+                'cache' => ['prefix_seed' => 'foo/bar'],
+            ]);
+
+            // append
+            $container->extension('framework', [
+                'cache' => ['prefix_seed' => 'foo/bar'],
+            ])
+
+            // append from file
+            $container->import('../config/packages/cache.php');
+        }
+    }
+
+.. note::
+
+    The ``prependExtension()`` method, like ``prepend()``, is called only at compile time.
+
 More than one Bundle using PrependExtensionInterface
 ----------------------------------------------------
 

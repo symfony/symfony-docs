@@ -30,7 +30,7 @@ follow these conventions (but later you'll learn how to skip them if needed):
 
 This is how the extension of an AcmeHelloBundle should look like::
 
-    // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+    // src/DependencyInjection/AcmeHelloExtension.php
     namespace Acme\HelloBundle\DependencyInjection;
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -87,7 +87,7 @@ but it is more common if you put these definitions in a configuration file
 (using the YAML, XML or PHP format).
 
 For instance, assume you have a file called ``services.xml`` in the
-``Resources/config/`` directory of your bundle, your ``load()`` method looks like::
+``config/`` directory of your bundle, your ``load()`` method looks like::
 
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -97,7 +97,7 @@ For instance, assume you have a file called ``services.xml`` in the
     {
         $loader = new XmlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../Resources/config')
+            new FileLocator(__DIR__.'/../../config')
         );
         $loader->load('services.xml');
     }
@@ -110,6 +110,57 @@ Using Configuration to Change the Services
 The Extension is also the class that handles the configuration for that
 particular bundle (e.g. the configuration in ``config/packages/<bundle_alias>.yaml``).
 To read more about it, see the ":doc:`/bundles/configuration`" article.
+
+Loading Services directly in your Bundle class
+----------------------------------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class is introduced in Symfony 6.1.
+
+Alternatively, you can define and load services configuration directly in a
+bundle class instead of creating a specific ``Extension`` class. You can do
+this by extending from :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::loadExtension`
+method::
+
+    // ...
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+    class AcmeHelloBundle extends AbstractBundle
+    {
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // load an XML, PHP or Yaml file
+            $container->import('../config/services.xml');
+
+            // you can also add or replace parameters and services
+            $container->parameters()
+                ->set('acme_hello.phrase', $config['phrase'])
+            ;
+
+            if ($config['scream']) {
+                $container->services()
+                    ->get('acme_hello.printer')
+                        ->class(ScreamingPrinter::class)
+                ;
+            }
+        }
+    }
+
+This method works similar to the ``Extension::load()`` method, but it uses
+a new API to define and import service configuration.
+
+.. note::
+
+    Contrary to the ``$configs`` parameter in ``Extension::load()``, the
+    ``$config`` parameter is already merged and processed by the
+    ``AbstractBundle``.
+
+.. note::
+
+    The ``loadExtension()`` is called only at compile time.
 
 Adding Classes to Compile
 -------------------------
