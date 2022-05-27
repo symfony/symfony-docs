@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by yceruto at 2022-05-12T03:44:00Z
+
+About CI jobs, Is there any way to know which code block is failing? and how these failures can be fixed?:
+```
+bundles/prepend_extension.rst ✘
+  174: Please reorder the use statements alphabetically
+   ->  and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::prependExtension` method::
+
+bundles/extension.rst ✘
+  160: Please reorder the use statements alphabetically
+   ->  and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::loadExtension` method::
+
+Warning: ] Found "2" invalid files!
+
+Error: Please reorder the use statements alphabetically
+Error: Please reorder the use statements alphabetically
+```
+
+---------------------------------------------------------------------------
+
+by yceruto at 2022-05-22T16:31:44Z
+
+@wouterj thanks a lot for your improvements, it looks better now 🙏
