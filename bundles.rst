@@ -98,6 +98,9 @@ to be adjusted if needed:
 ``src/``
     Contains all PHP classes related to the bundle logic (e.g. ``Controller/RandomController.php``).
 
+``assets/``
+    Contains javascript, css, images and other assets related to the bundle that are not in ``/public`` (e.g. stimulus controllers)
+    
 ``config/``
     Houses configuration, including routing configuration (e.g. ``routing.yaml``).
 
