@@ -1621,11 +1621,7 @@ The transport has a number of options:
 Amazon SQS
 ~~~~~~~~~~
 
-.. versionadded:: 5.1
-
-    The Amazon SQS transport was introduced in Symfony 5.1.
-
-The Amazon SQS transport is perfect for application hosted on AWS. Install it by
+The Amazon SQS transport is perfect for applications hosted on AWS. Install it by
 running:
 
 .. code-block:: terminal
