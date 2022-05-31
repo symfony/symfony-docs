@@ -25,12 +25,6 @@ you're done: the paths in your templates will automatically point to the dev ser
 dev-server Options
 ------------------
 
-.. caution::
-
-    Encore uses ``webpack-dev-server`` version 4, which at the time of Encore's
-    1.0 release was still in beta and was not documented. See the `4.0 CHANGELOG`_
-    for changes.
-
 The ``dev-server`` command supports all the options defined by `webpack-dev-server`_.
 You can set these options via command line options:
 
@@ -54,16 +48,16 @@ method in your ``webpack.config.js`` file:
         // ...
 
         .configureDevServerOptions(options => {
-            options.https = {
-                key: '/path/to/server.key',
-                cert: '/path/to/server.crt',
+            options.server = {
+                type: 'https',
+                options: {
+                    key: '/path/to/server.key',
+                    cert: '/path/to/server.crt',
+                }
             }
         })
     ;
 
-.. versionadded:: 0.28.4
-
-    The ``Encore.configureDevServerOptions()`` method was introduced in Encore 0.28.4.
 
 Enabling HTTPS using the Symfony Web Server
 -------------------------------------------
@@ -82,17 +76,13 @@ server SSL certificate:
           // ...
 
     +     .configureDevServerOptions(options => {
-    +         options.https = {
-    +             pfx: path.join(process.env.HOME, '.symfony/certs/default.p12'),
+    +         options.server = {
+    +             type: 'https',
+    +             options: {
+    +                 pfx: path.join(process.env.HOME, '.symfony/certs/default.p12'),
+    +             }
     +         }
     +     })
-
-
-.. caution::
-
-    Make sure to **not** pass the ``--https`` flag at the command line when
-    running ``encore dev-server``. This flag was required before 1.0, but now
-    will cause your config to be overridden.
 
 CORS Issues
 -----------
