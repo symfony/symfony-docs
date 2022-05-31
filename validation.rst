@@ -453,8 +453,8 @@ of the form fields::
 Constraint Targets
 ------------------
 
-Constraints can be applied to a class property (e.g. ``name``), a public
-getter method (e.g. ``getFullName()``) or an entire class. Property constraints
+Constraints can be applied to a class property (e.g. ``name``),
+a getter method (e.g. ``getFullName()``) or an entire class. Property constraints
 are the most common and easy to use. Getter constraints allow you to specify
 more complex validation rules. Finally, class constraints are intended
 for scenarios where you want to validate a class as a whole.
@@ -555,7 +555,7 @@ Getters
 ~~~~~~~
 
 Constraints can also be applied to the return value of a method. Symfony
-allows you to add a constraint to any public method whose name starts with
+allows you to add a constraint to any private, protected or public method whose name starts with
 "get", "is" or "has". In this guide, these types of methods are referred to
 as "getters".
 
