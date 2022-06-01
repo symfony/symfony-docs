@@ -273,14 +273,14 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
     $ symfony new my_project_directory --version=next
 
     # you can also select an exact specific Symfony version
-    $ symfony new my_project_directory --version=6.0
+    $ symfony new my_project_directory --version=5.4.*
 
 The ``lts`` and ``next`` shortcuts are only available when using Symfony to
 create new projects. If you use Composer, you need to tell the exact version:
 
 .. code-block:: terminal
 
-    $ composer create-project symfony/skeleton:"^6.0" my_project_directory
+    $ composer create-project symfony/skeleton:"5.4.*" my_project_directory
 
 The Symfony Demo application
 ----------------------------
