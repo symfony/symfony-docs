@@ -1474,7 +1474,7 @@ The transport has a number of options:
 Amazon SQS
 ~~~~~~~~~~
 
-The Amazon SQS transport is perfect for application hosted on AWS. Install it by
+The Amazon SQS transport is perfect for applications hosted on AWS. Install it by
 running:
 
 .. code-block:: terminal
