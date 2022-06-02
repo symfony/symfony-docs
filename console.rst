@@ -113,7 +113,7 @@ want a command to create a user::
     #[AsCommand(name: 'app:create-user')]
     class CreateUserCommand extends Command
     {
-        protected static $defaultName = 'app:create-user';
+        protected static $defaultName = 'app:create-user'; // Only needed for PHP <8 (see below)
 
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
