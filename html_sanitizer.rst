@@ -242,7 +242,7 @@ Safe elements
                     app.post_sanitizer:
                         # enable either of these
                         allow_safe_elements: true
-                        allow_all_static_elements: true
+                        allow_static_elements: true
 
     .. code-block:: xml
 
@@ -257,12 +257,12 @@ Safe elements
 
             <framework:config>
                 <framework:html-sanitizer>
-                    <!-- allow-safe-elements/allow-all-static-elements:
+                    <!-- allow-safe-elements/allow-static-elements:
                          enable either of these -->
                     <framework:sanitizer
                         name="app.post_sanitizer"
                         allow-safe-elements="true"
-                        allow-all-static-elements="true"
+                        allow-static-elements="true"
                     />
                 </framework:html-sanitizer>
             </framework:config>
@@ -278,7 +278,7 @@ Safe elements
                 ->sanitizer('app.post_sanitizer')
                     // enable either of these
                     ->allowSafeElements(true)
-                    ->allowAllStaticElements(true)
+                    ->allowStaticElements(true)
             ;
         };
 
@@ -291,7 +291,7 @@ Safe elements
             (new HtmlSanitizerConfig())
                 // enable either of these
                 ->allowSafeElements()
-                ->allowAllStaticElements()
+                ->allowStaticElements()
         );
 
 Allow Elements
@@ -332,7 +332,7 @@ attributes from the `W3C Standard Proposal`_ are allowed.
 
             <framework:config>
                 <framework:html-sanitizer>
-                    <!-- allow-safe-elements/allow-all-static-elements:
+                    <!-- allow-safe-elements/allow-static-elements:
                          enable either of these -->
                     <framework:sanitizer name="app.post_sanitizer">
                         <!-- allow the <article> element and 2 attributes -->
