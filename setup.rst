@@ -64,12 +64,12 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/skeleton:"6.0.*" my_project_directory
+    $ composer create-project symfony/skeleton:"6.2.*@dev" my_project_directory
     $ cd my_project_directory
     $ composer require webapp
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"6.0.*" my_project_directory
+    $ composer create-project symfony/skeleton:"6.2.*@dev" my_project_directory
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_directory/`` directory, download some dependencies
