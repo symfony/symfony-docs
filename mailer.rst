@@ -272,6 +272,15 @@ Other Options
 
         $dsn = 'smtps://smtp.example.com?ping_threshold=200'
 
+``max_per_second``
+    The number of messages to send per second (0 to disable this limitation)::
+
+        $dsn = 'smtps://smtp.example.com?max_per_second=2'
+
+    .. versionadded:: 6.2
+
+        The ``max_per_second`` option was introduced in Symfony 6.2.
+
 Creating & Sending Messages
 ---------------------------
 
