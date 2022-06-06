@@ -911,7 +911,7 @@ be ``authenticate``:
 
 .. code-block:: html+twig
 
-    {# templates/security/login.html.twig #}
+    {# templates/login/index.html.twig #}
 
     {# ... #}
     <form action="{{ path('login') }}" method="post">
