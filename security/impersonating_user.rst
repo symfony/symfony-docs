@@ -160,8 +160,8 @@ the impersonator user::
     // src/Service/SomeService.php
     namespace App\Service;
 
+    use Symfony\Bundle\SecurityBundle\Security\Security;
     use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
-    use Symfony\Component\Security\Core\Security;
     // ...
 
     class SomeService
@@ -306,9 +306,9 @@ logic you want::
     // src/Security/Voter/SwitchToCustomerVoter.php
     namespace App\Security\Voter;
 
+    use Symfony\Bundle\SecurityBundle\Security\Security;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-    use Symfony\Component\Security\Core\Security;
     use Symfony\Component\Security\Core\User\UserInterface;
 
     class SwitchToCustomerVoter extends Voter

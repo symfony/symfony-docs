@@ -229,7 +229,7 @@ with ``ROLE_SUPER_ADMIN``::
     // src/Security/PostVoter.php
 
     // ...
-    use Symfony\Component\Security\Core\Security;
+    use Symfony\Bundle\SecurityBundle\Security\Security;
 
     class PostVoter extends Voter
     {

@@ -220,10 +220,10 @@ retrieved from the token storage::
     namespace App\ArgumentResolver;
 
     use App\Entity\User;
+    use Symfony\Bundle\SecurityBundle\Security\Security;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
     use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
-    use Symfony\Component\Security\Core\Security;
 
     class UserValueResolver implements ArgumentValueResolverInterface
     {
