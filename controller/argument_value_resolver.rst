@@ -94,6 +94,10 @@ Symfony ships with the following value resolvers in the
     You can restrict how the input can be formatted with the
     :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapDateTime` attribute.
 
+    .. versionadded:: 6.1
+
+        The ``DateTimeValueResolver`` was introduced in Symfony 6.1.
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestValueResolver`
     Injects the current ``Request`` if type-hinted with ``Request`` or a class
     extending ``Request``.
