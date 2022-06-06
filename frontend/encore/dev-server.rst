@@ -123,4 +123,3 @@ your page. HMR works automatically with CSS (as long as you're using the
     CSS. That is no longer needed.
 
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
-.. _`4.0 CHANGELOG`: https://github.com/webpack/webpack-dev-server/blob/master/CHANGELOG.md#400-beta0-2020-11-27
