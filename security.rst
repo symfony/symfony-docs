@@ -1775,12 +1775,12 @@ Fetching the User from a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to get the logged in user from a service, use the
-:class:`Symfony\\Component\\Security\\Core\\Security` service::
+:class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` service::
 
     // src/Service/ExampleService.php
     // ...
 
-    use Symfony\Component\Security\Core\Security;
+    use Symfony\Bundle\SecurityBundle\Security\Security;
 
     class ExampleService
     {
@@ -1801,6 +1801,12 @@ If you need to get the logged in user from a service, use the
             // ...
         }
     }
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` class
+    was introduced in Symfony 6.2. In previous Symfony versions this class was
+    defined in ``Symfony\Component\Security\Core\Security``.
 
 Fetch the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2235,7 +2241,7 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
 
       // ...
       use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-    + use Symfony\Component\Security\Core\Security;
+    + use Symfony\Bundle\SecurityBundle\Security\Security;
 
       class SalesReportManager
       {
