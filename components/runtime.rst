@@ -310,7 +310,7 @@ can be set using the ``APP_RUNTIME_OPTIONS`` environment variable::
 
     // ...
 
-You can also configure ``extra.runtime.options`` in ``composer.json``:
+You can also configure ``extra.runtime`` in ``composer.json``:
 
 .. code-block:: json
 
