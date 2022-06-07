@@ -5,15 +5,15 @@ HTML Sanitizer
 
     The HTML Sanitizer component was introduced in Symfony 6.1.
 
-The HTML Sanitizer components aims at sanitizing/cleaning untrusted HTML
+The HTML Sanitizer component aims at sanitizing/cleaning untrusted HTML
 code (e.g. created by a WYSIWYG editor in the browser) into HTML that can
 be trusted. It is based on the `HTML Sanitizer W3C Standard Proposal`_.
 
 The HTML sanitizer creates a new HTML structure from scratch, taking only
 the elements and attributes that are allowed by configuration. This means
-that the returned HTML is very predicatable (it only contains allowed
+that the returned HTML is very predictable (it only contains allowed
 elements), but it does not work well with badly formatted input (e.g.
-invalid HTML). The sanitizer is targetted for two use-cases:
+invalid HTML). The sanitizer is targeted for two use cases:
 
 * Preventing security attacks based on XSS or other technologies relying on
   execution of malicious code on the visitors browsers;
