@@ -487,32 +487,6 @@ PHPUnit to remove the return type (introduced in PHPUnit 8) from ``setUp()``,
 ``tearDown()``, ``setUpBeforeClass()`` and ``tearDownAfterClass()`` methods.
 This allows you to write a test compatible with both PHP 5 and PHPUnit 8.
 
-Alternatively, you can use the trait :class:`Symfony\\Bridge\\PhpUnit\\SetUpTearDownTrait`,
-which provides the right signature for the ``setUp()``, ``tearDown()``,
-``setUpBeforeClass()`` and ``tearDownAfterClass()`` methods and delegates the
-call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
-``doTearDownAfterClass()`` methods::
-
-    use PHPUnit\Framework\TestCase;
-    use Symfony\Bridge\PhpUnit\SetUpTearDownTrait;
-
-    class MyTest extends TestCase
-    {
-        // when using the SetUpTearDownTrait, methods like doSetUp() can
-        // be defined with and without the 'void' return type, as you wish
-        use SetUpTearDownTrait;
-
-        private function doSetUp()
-        {
-            // ...
-        }
-
-        protected function doSetUp(): void
-        {
-            // ...
-        }
-    }
-
 Using Namespaced PHPUnit Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
