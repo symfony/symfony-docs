@@ -2,13 +2,13 @@ rounding_mode
 ~~~~~~~~~~~~~
 
 **type**: ``integer`` **default**: ``\NumberFormatter::ROUND_DOWN`` for ``IntegerType``
-and ``\NumberFormatter::ROUND_HALF_UP`` for ``MoneyType`` and ``NumberType``
+and ``\NumberFormatter::ROUND_HALFUP`` for ``MoneyType`` and ``NumberType``
 
 * IntegerType
 **default**: ``\NumberFormatter::ROUND_DOWN``
 
 * MoneyType and NumberType
-**default**: ``\NumberFormatter::ROUND_HALF_UP``
+**default**: ``\NumberFormatter::ROUND_HALFUP``
 
 
 If a submitted number needs to be rounded (based on the `scale`_ option), you
