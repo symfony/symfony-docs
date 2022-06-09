@@ -506,6 +506,10 @@ call to the ``doSetUp()``, ``doTearDown()``, ``doSetUpBeforeClass()`` and
         }
     }
 
+.. deprecated:: 5.3
+
+    The ``SetUpTearDownTrait`` was deprecated in Symfony 5.3.
+
 Using Namespaced PHPUnit Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
