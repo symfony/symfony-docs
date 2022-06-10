@@ -24,18 +24,22 @@ because it's convenient to put the route and controller in the same place.
 Creating Routes as Attributes or Annotations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On PHP 8, you can use native attributes to configure routes right away. On
-PHP 7, where attributes are not available, you can use annotations instead,
-provided by the Doctrine Annotations library.
+PHP attributes and annotations allow to define routes next to the code of the
+:doc:`controllers </controller>` associated to those routes. Attributes are
+native in PHP 8 and higher versions, so you can use them right away.
 
-In case you want to use annotations instead of attributes, run this command
-once in your application to enable them:
+In PHP 7 and earlier versions you can use annotations (via the Doctrine Annotations
+library), but first you'll need to install the following dependency in your project:
 
 .. code-block:: terminal
 
     $ composer require doctrine/annotations
 
-This command also creates the following configuration file:
+Regardless of what you use (attributes or annotations) you need to add a bit of
+configuration to your project before using them. If your project uses
+:ref:`Symfony Flex <symfony-flex>`, this file is already created for you.
+Otherwise, create the following file manually (the ``type: annotation`` option
+also applies to attributes, so you can keep it):
 
 .. code-block:: yaml
 
@@ -48,8 +52,9 @@ This command also creates the following configuration file:
         resource: ../../src/Kernel.php
         type: annotation
 
-This configuration tells Symfony to look for routes defined as annotations in
-any PHP class stored in the ``src/Controller/`` directory.
+This configuration tells Symfony to look for routes defined as
+annotations/attributes in any PHP class stored in the ``src/Controller/``
+directory.
 
 Suppose you want to define a route for the ``/blog`` URL in your application. To
 do so, create a :doc:`controller class </controller>` like the following:
@@ -1385,7 +1390,7 @@ A possible solution is to change the parameter requirements to be more permissiv
 
         // src/Controller/DefaultController.php
         namespace App\Controller;
-        
+
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
@@ -1505,7 +1510,7 @@ when importing the routes.
 
         // src/Controller/BlogController.php
         namespace App\Controller;
-        
+
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
