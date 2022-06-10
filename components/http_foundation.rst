@@ -169,7 +169,7 @@ doesn't support returning arrays, so you need to use the following code::
     // the query string is '?foo[bar]=baz'
 
     // don't use $request->query->get('foo'); use the following instead:
-    $request->query->all()['foo'];
+    $request->query->all('foo');
     // returns ['bar' => 'baz']
 
     $request->query->get('foo[bar]');
