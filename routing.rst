@@ -24,12 +24,12 @@ because it's convenient to put the route and controller in the same place.
 Creating Routes as Attributes or Annotations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On PHP 8, you can use native attributes to configure routes right away. On
-PHP 7, where attributes are not available, you can use annotations instead,
-provided by the Doctrine Annotations library.
+PHP attributes and annotations allow to define routes next to the code of the
+:doc:`controllers </controller>` associated to those routes. Attributes are
+native in PHP 8 and higher versions, so you can use them right away.
 
-In case you want to use annotations instead of attributes, run this command
-once in your application to enable them:
+In PHP 7 and earlier versions you can use annotations (via the Doctrine Annotations
+library), but first you'll need to install the following dependency in your project:
 
 .. code-block:: terminal
 
@@ -41,10 +41,11 @@ once in your application to enable them:
     Symfony 5.2. Prior to this, Doctrine Annotations were the only way to
     annotate controller actions with routing configuration.
 
-If you are using :ref:`Symfony Flex <symfony-flex>` this command also
-creates the following configuration file and you're done. If you aren't
-using flex or want to use attributes, the file has to be added manually.
-``type: annotation`` applies for attributes, too.
+Regardless of what you use (attributes or annotations) you need to add a bit of
+configuration to your project before using them. If you installed the annotations
+dependency and your project uses :ref:`Symfony Flex <symfony-flex>`, this file
+is already created for you. Otherwise, create the following file manually
+(the ``type: annotation`` option also applies to attributes, so you can keep it):
 
 .. code-block:: yaml
 
