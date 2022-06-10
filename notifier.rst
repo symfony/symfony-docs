@@ -51,6 +51,13 @@ The notifier component supports the following channels:
 SMS Channel
 ~~~~~~~~~~~
 
+.. caution::
+
+    If any of the DSN values contains any character considered special in a
+    URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``), you must
+    encode them. See `RFC 3986`_ for the full list of reserved characters or use the
+    :phpfunction:`urlencode` function to encode them.
+
 The SMS channel uses :class:`Symfony\\Component\\Notifier\\Texter` classes
 to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
@@ -167,6 +174,13 @@ configure the ``texter_transports``:
 
 Chat Channel
 ~~~~~~~~~~~~
+
+.. caution::
+
+    If any of the DSN values contains any character considered special in a
+    URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``), you must
+    encode them. See `RFC 3986`_ for the full list of reserved characters or use the
+    :phpfunction:`urlencode` function to encode them.
 
 The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
@@ -327,6 +341,13 @@ notification emails:
 
 Push Channel
 ~~~~~~~~~~~~
+
+.. caution::
+
+    If any of the DSN values contains any character considered special in a
+    URI (such as ``+``, ``@``, ``$``, ``#``, ``/``, ``:``, ``*``, ``!``), you must
+    encode them. See `RFC 3986`_ for the full list of reserved characters or use the
+    :phpfunction:`urlencode` function to encode them.
 
 The push channel is used to send notifications to users by using
 :class:`Symfony\\Component\\Notifier\\Texter` classes. Symfony provides
@@ -739,3 +760,5 @@ Learn more
     :glob:
 
     notifier/*
+
+.. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
