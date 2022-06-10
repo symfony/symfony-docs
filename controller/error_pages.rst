@@ -170,7 +170,7 @@ automatically when installing ``symfony/framework-bundle``):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <when env="prod">
+            <when env="dev">
                 <import resource="@FrameworkBundle/Resources/config/routing/errors.xml" prefix="/_error"/>
             </when>
         </routes>
@@ -181,7 +181,7 @@ automatically when installing ``symfony/framework-bundle``):
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            if ('dev' === $container->env()) {
+            if ('dev' === $routes->env()) {
                 $routes->import('@FrameworkBundle/Resources/config/routing/errors.xml')
                     ->prefix('/_error')
                 ;
