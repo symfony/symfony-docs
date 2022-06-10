@@ -1277,6 +1277,17 @@ dsn
 
 The DSN where to store the profiling information.
 
+.. _collect_serializer_data:
+
+collect_serializer_data
+.......................
+
+**type**: ``boolean`` **default**: ``false``
+
+This option enables the serializer data collector and profiler panel. If set
+to ``true``, all normalizers and encoders are decorated by traceable implementations
+that are meant to collect profiling information about them.
+
 rate_limiter
 ~~~~~~~~~~~~
 
