@@ -37,7 +37,7 @@ be used to move the ``attachment`` file to a permanent location::
         // ...
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $someNewFilename = ...
+            $someNewFilename = ...;
 
             $file = $form['attachment']->getData();
             $file->move($directory, $someNewFilename);

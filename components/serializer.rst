@@ -1122,6 +1122,7 @@ to ``true``::
     $result = $normalizer->normalize($dummy, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
     // ['bar' => 'notNull']
 
+
 .. _component-serializer-handling-circular-references:
 
 Handling Circular References

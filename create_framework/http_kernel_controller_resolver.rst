@@ -103,29 +103,29 @@ The ``index()`` method needs the Request object as an argument.
 ``getArguments()`` knows when to inject it properly if it is type-hinted
 correctly::
 
-    public function index(Request $request)
+    public function index(Request $request) { ... }
 
     // won't work
-    public function index($request)
+    public function index($request) { ... }
 
 More interesting, ``getArguments()`` is also able to inject any Request
 attribute; if the argument has the same name as the corresponding
 attribute::
 
-    public function index($year)
+    public function index($year) { ... }
 
 You can also inject the Request and some attributes at the same time (as the
 matching is done on the argument name or a type hint, the arguments order does
 not matter)::
 
-    public function index(Request $request, $year)
+    public function index(Request $request, $year) { ... }
 
-    public function index($year, Request $request)
+    public function index($year, Request $request) { ... }
 
 Finally, you can also define default values for any argument that matches an
 optional attribute of the Request::
 
-    public function index($year = 2012)
+    public function index($year = 2012) { ... }
 
 Let's inject the ``$year`` request attribute for our controller::
 
