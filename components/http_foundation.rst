@@ -172,6 +172,10 @@ doesn't support returning arrays, so you need to use the following code::
     $request->query->all('foo');
     // returns ['bar' => 'baz']
 
+    // if the requested parameter does not exist, an empty array is returned:
+    $request->query->all('qux');
+    // returns []
+
     $request->query->get('foo[bar]');
     // returns null
 
