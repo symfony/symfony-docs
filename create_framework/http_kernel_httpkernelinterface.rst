@@ -161,7 +161,7 @@ rest of the content? Edge Side Includes (`ESI`_) to the rescue! Instead of
 generating the whole content in one go, ESI allows you to mark a region of a
 page as being the content of a sub-request call:
 
-.. code-block:: text
+.. code-block:: html
 
     This is the content of your page
 
