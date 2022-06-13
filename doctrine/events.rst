@@ -80,6 +80,29 @@ define a callback for the ``prePersist`` Doctrine event:
             }
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Product.php
+        namespace App\Entity;
+
+        use Doctrine\ORM\Mapping as ORM;
+
+        // When using attributes, don't forget to add #[ORM\HasLifecycleCallbacks]
+        // to the class of the entity where you define the callback
+
+        #[ORM\Entity]
+        #[ORM\HasLifecycleCallbacks]
+        class Product
+        {
+            // ...
+
+            #[ORM\PrePersist]
+            public function setCreatedAtValue(): void
+            {
+                $this->createdAt = new \DateTimeImmutable();
+            }
+        }
+
     .. code-block:: yaml
 
         # config/doctrine/Product.orm.yml
