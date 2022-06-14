@@ -74,20 +74,20 @@ exists in your project::
 
     class Person
     {
-        private $age;
-        private $name;
-        private $sportsperson;
-        private $createdAt;
+        private int $age;
+        private string $name;
+        private bool $sportsperson;
+        private ?\DateTime $createdAt;
 
         // Getters
-        public function getName()
-        {
-            return $this->name;
-        }
-
-        public function getAge()
+        public function getAge(): int
         {
             return $this->age;
+        }
+
+        public function getName(): string
+        {
+            return $this->name;
         }
 
         public function getCreatedAt()
@@ -96,28 +96,28 @@ exists in your project::
         }
 
         // Issers
-        public function isSportsperson()
+        public function isSportsperson(): bool
         {
             return $this->sportsperson;
         }
 
         // Setters
-        public function setName($name)
+        public function setName(string $name): void
         {
             $this->name = $name;
         }
 
-        public function setAge($age)
+        public function setAge(int $age): void
         {
             $this->age = $age;
         }
 
-        public function setSportsperson($sportsperson)
+        public function setSportsperson(bool $sportsperson): void
         {
             $this->sportsperson = $sportsperson;
         }
 
-        public function setCreatedAt($createdAt)
+        public function setCreatedAt(\DateTime $createdAt = null): void
         {
             $this->createdAt = $createdAt;
         }
