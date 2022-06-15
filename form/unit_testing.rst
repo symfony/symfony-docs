@@ -59,7 +59,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             $form = $this->factory->create(TestedType::class, $model);
 
             $expected = new TestObject();
-            // ...populate $object properties with the data stored in $formData
+            // ...populate $expected properties with the data stored in $formData
 
             // submit the data to the form directly
             $form->submit($formData);
