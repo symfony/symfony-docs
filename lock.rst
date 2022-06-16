@@ -286,16 +286,3 @@ each lock using the camel case version of its name suffixed by ``LockFactory``
 - e.g. ``invoice`` can be injected automatically by naming the argument
 ``$invoiceLockFactory`` and type-hinting it with
 :class:`Symfony\\Component\\Lock\\LockFactory`.
-
-Blocking Store
---------------
-
-If you want to use the ``RetryTillSaveStore`` for :ref:`non-blocking locks <lock-blocking-locks>`,
-you can do it by :doc:`decorating the store </service_container/service_decoration>` service:
-
-.. code-block:: yaml
-
-    lock.default.retry_till_save.store:
-        class: Symfony\Component\Lock\Store\RetryTillSaveStore
-        decorates: lock.default.store
-        arguments: ['@.inner', 100, 50]
