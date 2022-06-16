@@ -129,7 +129,7 @@ work:
   </contributing/code/maintenance>` (you may have to choose a higher branch if
   the feature you are fixing was introduced in a later version);
 
-* ``5.x``, if you are adding a new feature.
+* ``6.x``, if you are adding a new feature.
 
   The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
   (5.0, 6.0, etc.) comes out every two years. Because of the
@@ -142,7 +142,7 @@ work:
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a PR
     for the ``4.4`` branch, the PR will also be applied by the core team on
-    the ``5.x`` branch.
+    the ``5.x`` and ``6.x`` branches.
 
 Create a Topic Branch
 ~~~~~~~~~~~~~~~~~~~~~
