@@ -142,7 +142,7 @@ work:
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a PR
     for the ``4.4`` branch, the PR will also be applied by the core team on
-    the ``5.x`` branch.
+    the ``5.x`` and ``6.x`` branches.
 
 Create a Topic Branch
 ~~~~~~~~~~~~~~~~~~~~~
