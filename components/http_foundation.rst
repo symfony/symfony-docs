@@ -169,8 +169,12 @@ doesn't support returning arrays, so you need to use the following code::
     // the query string is '?foo[bar]=baz'
 
     // don't use $request->query->get('foo'); use the following instead:
-    $request->query->all()['foo'];
+    $request->query->all('foo');
     // returns ['bar' => 'baz']
+
+    // if the requested parameter does not exist, an empty array is returned:
+    $request->query->all('qux');
+    // returns []
 
     $request->query->get('foo[bar]');
     // returns null
