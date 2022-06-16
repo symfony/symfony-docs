@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by jontjs at 2022-06-12T14:27:10Z
+
+>> return null when `foo` doesn't exist.
+>
+> Return empty array to be more precise.
+
+Thank you for that pointing that out. Given that it's a different to what `->get('bar')` returns if `bar` does not exist (that returns `null`), I thought it would be a good idea to update my PR to explicitly state that an empty array is returned.
