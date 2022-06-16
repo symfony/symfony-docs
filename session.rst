@@ -192,5 +192,6 @@ More about Sessions
     session/locale_sticky_session
     session/php_bridge
     session/proxy_examples
+    session/configuring_ttl
 
 .. _`HttpFoundation component`: https://symfony.com/components/HttpFoundation
