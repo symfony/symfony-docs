@@ -11,26 +11,30 @@ acceptable changes.
 * New unit tests cover the bug fix;
 * The current buggy behavior is not widely used as a "feature".
 
+While working on a bug fix, don't refactor the code or introduce new classes.
+
 .. note::
 
     When documentation (or PHPDoc) is not in sync with the code, code behavior
     should always be considered as being the correct one.
 
-Besides bug fixes, other minor changes can be accepted in a patch version:
+To avoid backward compatibility breaks, we tend to be very strict about changes
+accepted for patch versions.
 
-* **Performance improvement**: Performance improvement should only be accepted
-  if the changes are local (located in one class) and only for algorithmic
-  issues (any such patches must come with numbers that show a significant
-  improvement on real-world code);
+Besides bug fixes, other minor changes might be accepted in a patch version on
+a case by case basis:
 
-* **Newer versions of PHP**: Fixes that add support for newer versions of
-  PHP are acceptable if they don't break the unit test suite;
+* **Newer versions of PHP**: Fixes that add support for newer versions of PHP
+  are acceptable if they don't break the unit test suite, but we never add
+  support for newer PHP features;
 
 * **Newer versions of popular OSes**: Fixes that add support for newer versions
   of popular OSes (Linux, MacOS and Windows) are acceptable if they don't break
-  the unit test suite;
+  the unit test suite, but we never add support for newer PHP features or newer
+  versions of OSes;
 
-* **Translations**: Translation updates and additions are accepted;
+* **Translations**: Translation updates and additions are always merged in the
+  oldest maintained branch;
 
 * **External data**: Updates for external data included in Symfony can be
   updated (like ICU for instance);
@@ -39,12 +43,20 @@ Besides bug fixes, other minor changes can be accepted in a patch version:
   of a dependency is possible, bumping to a major one or increasing PHP
   minimal version is not;
 
+* **Tests**: Tests that increase the code coverage can be added.
+
+The following changes are **generally not accepted** in a patch version, except
+on a case by case basis:
+
+* **Performance improvement**: Performance improvement should only be accepted
+  if the changes are local (located in one class) and only for algorithmic
+  issues (any such patches must come with numbers that show a significant
+  improvement on real-world code);
+
 * **Coding standard and refactoring**: Coding standard fixes or code
-  refactoring are not recommended but can be accepted for consistency with the
+  refactoring are almost never accepted except for consistency with the
   existing code base, if they are not too invasive, and if merging them into
   higher branches would not lead to complex branch merging;
-
-* **Tests**: Tests that increase the code coverage can be added.
 
 Anything not explicitly listed above should be done on the next minor or major
 version instead. For instance, the following changes are never accepted in a
