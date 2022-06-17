@@ -800,7 +800,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
 .. caution::
 
     This will encrypt the values of the cache items, but not the cache keys. Be
-    careful not the leak sensitive data in the keys.
+    careful not to leak sensitive data in the keys.
 
 When configuring multiple keys, the first key will be used for reading and
 writing, and the additional key(s) will only be used for reading. Once all
