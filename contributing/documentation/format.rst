@@ -201,12 +201,12 @@ For a deprecation use the ``.. deprecated:: 5.x`` directive:
 
         ... ... ... was deprecated in Symfony 5.2.
 
-Whenever a new major version of Symfony is released (e.g. 6.0, 7.0, etc),
-a new branch of the documentation is created from the ``master`` branch.
-At this point, all the ``versionadded`` and ``deprecated`` tags for Symfony
-versions that have a lower major version will be removed. For example, if
-Symfony 6.0 were released today, 5.0 to 5.4 ``versionadded`` and ``deprecated``
-tags would be removed from the new ``6.0`` branch.
+Whenever a new major version of Symfony is released (e.g. 6.0, 7.0, etc), a new
+branch of the documentation is created from the ``x.4`` branch of the previous
+major version. At this point, all the ``versionadded`` and ``deprecated`` tags
+for Symfony versions that have a lower major version will be removed. For
+example, if Symfony 6.0 were released today, 5.0 to 5.4 ``versionadded`` and
+``deprecated`` tags would be removed from the new ``6.0`` branch.
 
 .. _reStructuredText: https://docutils.sourceforge.io/rst.html
 .. _Sphinx: https://www.sphinx-doc.org/

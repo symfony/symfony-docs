@@ -41,14 +41,14 @@ Besides bug fixes, other minor changes can be accepted in a patch version:
 
 * **Coding standard and refactoring**: Coding standard fixes or code
   refactoring are not recommended but can be accepted for consistency with the
-  existing code base, if they are not too invasive, and if merging them on
-  master would not lead to complex branch merging;
+  existing code base, if they are not too invasive, and if merging them into
+  higher branches would not lead to complex branch merging;
 
 * **Tests**: Tests that increase the code coverage can be added.
 
 Anything not explicitly listed above should be done on the next minor or major
-version instead (aka the *master* branch). For instance, the following changes
-are never accepted in a patch version:
+version instead. For instance, the following changes are never accepted in a
+patch version:
 
 * **New features**;
 
