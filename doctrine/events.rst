@@ -181,7 +181,7 @@ with the ``doctrine.event_listener`` tag:
         # config/services.yaml
         services:
             # ...
-
+            # It is very important that this definition goes after 'App\:' or it will get overwritten
             App\EventListener\SearchIndexer:
                 tags:
                     -
@@ -206,6 +206,8 @@ with the ``doctrine.event_listener`` tag:
                 <!-- ... -->
 
                 <!--
+                    It is very important that this definition goes after 'App\' or it will get overwritten
+                    
                     * 'event' is the only required option that defines the lifecycle listener
                     * 'priority': used when multiple subscribers or listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
@@ -293,6 +295,7 @@ with the ``doctrine.orm.entity_listener`` tag:
         services:
             # ...
 
+            # It is very important that this definition goes after 'App\:' or it will get overwritten
             App\EventListener\UserChangedNotifier:
                 tags:
                     -
@@ -321,10 +324,11 @@ with the ``doctrine.orm.entity_listener`` tag:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
             <services>
-                <!-- ... -->
+                <!-- It is very important that this definition goes after 'App\' or it will get overwritten -->
 
                 <service id="App\EventListener\UserChangedNotifier">
                     <!--
+                    
                         * These are the options required to define the entity listener:
                         *   * name
                         *   * event
@@ -458,6 +462,7 @@ Doctrine connection to use) you must do that in the manual service configuration
         services:
             # ...
 
+            # It is very important that this definition goes after 'App\:' or it will get overwritten
             App\EventListener\DatabaseActivitySubscriber:
                 tags:
                     - name: 'doctrine.event_subscriber'
@@ -479,6 +484,8 @@ Doctrine connection to use) you must do that in the manual service configuration
                 <!-- ... -->
 
                 <!--
+                    It is very important that this definition goes after 'App\' or it will get overwritten
+                    
                     * 'priority': used when multiple subscribers or listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
