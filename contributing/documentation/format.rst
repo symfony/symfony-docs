@@ -201,9 +201,9 @@ For a deprecation use the ``.. deprecated:: 4.x`` directive:
         Not passing the root node name to ``TreeBuilder`` was deprecated in Symfony 4.2.
 
 Whenever a new major version of Symfony is released (e.g. 5.0, 6.0, etc),
-a new branch of the documentation is created from the ``master`` branch.
-At this point, all the ``versionadded`` and ``deprecated`` tags for Symfony
-versions that have a lower major version will be removed. For example, if
+a new branch of the documentation is created from the x.4 branch of the previous
+major version. At this point, all the ``versionadded`` and ``deprecated`` tags for
+Symfony versions that have a lower major version will be removed. For example, if
 Symfony 5.0 were released today, 4.0 to 4.4 ``versionadded`` and ``deprecated``
 tags would be removed from the new ``5.0`` branch.
 
