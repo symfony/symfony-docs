@@ -56,7 +56,7 @@ on a case by case basis:
 * **Coding standard and refactoring**: Coding standard fixes or code
   refactoring are almost never accepted except for consistency with the
   existing code base, if they are not too invasive, and if merging them into
-  higher branches would not lead to complex branch merging;
+  higher branches would not lead to complex branch merging.
 
 Anything not explicitly listed above should be done on the next minor or major
 version instead. For instance, the following changes are never accepted in a
