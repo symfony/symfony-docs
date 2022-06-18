@@ -29,6 +29,11 @@ more control::
         },
     ]);
 
+.. versionadded:: 5.2
+
+    The support for ``TranslatableMessage`` objects in ``choice_label`` was
+    introduced in Symfony 5.2.
+
 This method is called for *each* choice, passing you the ``$choice`` and
 ``$key`` from the choices array (additional ``$value`` is related to `choice_value`_).
 This will give you:

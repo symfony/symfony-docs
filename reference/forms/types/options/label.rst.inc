@@ -11,14 +11,14 @@ will suppress the label.
     $builder
         ->add('zipCode', null, [
             'label' => 'The ZIP/Postal code',
-        ])
-
-    // ...
-
-    ->add('zipCode', null, [
+            // optionally, you can use TranslatableMessage objects as the label content
             'label' => new TranslatableMessage('address.zipCode', ['%country%' => $country], 'address'),
         ])
-    ;
+
+.. versionadded:: 5.2
+
+    The support for ``TranslatableMessage`` objects in ``label`` was
+    introduced in Symfony 5.2.
 
 The label can also be set in the template:
 
