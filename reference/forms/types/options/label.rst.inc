@@ -15,11 +15,6 @@ will suppress the label.
             'label' => new TranslatableMessage('address.zipCode', ['%country%' => $country], 'address'),
         ])
 
-.. versionadded:: 5.2
-
-    The support for ``TranslatableMessage`` objects in ``label`` was
-    introduced in Symfony 5.2.
-
 The label can also be set in the template:
 
 .. configuration-block::
