@@ -25,8 +25,14 @@ more control::
 
             // or if you want to translate some key
             //return 'form.choice.'.$key;
+            //return new TranslatableMessage($key, false === $choice ? [] : ['%status%' => $value], 'store');
         },
     ]);
+
+.. versionadded:: 5.2
+
+    The support for ``TranslatableMessage`` objects in ``choice_label`` was
+    introduced in Symfony 5.2.
 
 This method is called for *each* choice, passing you the ``$choice`` and
 ``$key`` from the choices array (additional ``$value`` is related to `choice_value`_).
