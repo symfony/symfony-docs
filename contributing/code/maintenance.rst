@@ -64,6 +64,8 @@ patch version:
 
 * **New features**;
 
+* **Security hardening**;
+
 * **Backward compatibility breaks**: Note that backward compatibility breaks
   can be done when fixing a security issue if it would not be possible to fix
   it otherwise;
