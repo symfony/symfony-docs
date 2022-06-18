@@ -13,6 +13,28 @@ bug tracker and don't publish it publicly. Instead, all security issues must
 be sent to **security [at] symfony.com**. Emails sent to this address are
 forwarded to the Symfony core team private mailing-list.
 
+The following issues are not considered security issues and should be handled
+as regular bug fixes (if you have any doubts, don't hesitate to send us an
+email for confirmation):
+
+* Any security issues found in debug tools that must never be enabled in
+  production (including the web profiler or anything enabled when ``APP_DEBUG``
+  is set to ``true`` or ``APP_ENV`` set to anything but ``prod``);
+
+* Any fix that can be classified as **security hardening** like route
+  enumeration, login throttling bypasses, denial of service attacks, or timing
+  attacks.
+
+In any case, the core team has the final decision on which issues are
+considered security vulnerabilities.
+
+Security Bug Bounties
+---------------------
+
+Symfony is an Open-Source project where most of the work is done by volunteers.
+We appreciate that developers are trying to find security issues in Symfony and
+report them responsibly, but we are currently unable to pay bug bounties.
+
 Resolving Process
 -----------------
 
