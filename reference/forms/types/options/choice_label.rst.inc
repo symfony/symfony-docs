@@ -25,6 +25,7 @@ more control::
 
             // or if you want to translate some key
             //return 'form.choice.'.$key;
+            //return new TranslatableMessage($key, false === $choice ? [] : ['%status%' => $value], 'store');
         },
     ]);
 
