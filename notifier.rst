@@ -80,7 +80,7 @@ Mailjet         ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?
 MessageBird     ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
 MessageMedia    ``symfony/message-media-notifier``    ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
 Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
-Nexmo           ``symfony/nexmo-notifier``            ``nexmo://KEY:SECRET@default?from=FROM``
+Nexmo           ``symfony/nexmo-notifier``            Abandoned: see symfony/vonage-notifier.
 Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
 OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
 Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
