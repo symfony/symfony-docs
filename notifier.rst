@@ -59,13 +59,13 @@ with a couple popular SMS services:
 ==============  ====================================  ===========================================================================
 Service         Package                               DSN
 ==============  ====================================  ===========================================================================
-AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@default?from=FROM``
+AllMySms        ``symfony/all-my-sms-notifier``       ``allmysms://LOGIN:APIKEY@default?from=FROM``
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
 Esendex         ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
 FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
 FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
-GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
+GatewayApi      ``symfony/gateway-api-notifier``      ``gatewayapi://TOKEN@default?from=FROM``
 Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
 LightSms        ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
@@ -82,7 +82,7 @@ Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_
 Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
 SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
 Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
-SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
+SpotHit         ``symfony/spot-hit-notifier``         ``spothit://TOKEN@default?from=FROM``
 Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
