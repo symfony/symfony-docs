@@ -21,7 +21,7 @@ two-step process:
 .. admonition:: Screencast
     :class: screencast
 
-    Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
+    Do you prefer video tutorials? Check out the `Harmonious Development with Symfony`_
     screencast series.
 
 .. seealso::
