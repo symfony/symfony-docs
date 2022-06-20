@@ -367,5 +367,5 @@ Go Deeper with HTTP & Framework Fundamentals
 
 .. _`Twig`: https://twig.symfony.com
 .. _`Composer`: https://getcomposer.org
-.. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony/setup
+.. _`Harmonious Development with Symfony`: https://symfonycasts.com/screencast/symfony/setup
 .. _`Flex recipes`: https://github.com/symfony/recipes/blob/flex/main/RECIPES.md
