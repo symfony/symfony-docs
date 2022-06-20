@@ -21,7 +21,7 @@ two-step process:
 .. admonition:: Screencast
     :class: screencast
 
-    Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
+    Do you prefer video tutorials? Check out the `Harmonious Development with Symfony`_
     screencast series.
 
 .. seealso::
@@ -367,5 +367,5 @@ Go Deeper with HTTP & Framework Fundamentals
 
 .. _`Twig`: https://twig.symfony.com
 .. _`Composer`: https://getcomposer.org
-.. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony/setup
+.. _`Harmonious Development with Symfony`: https://symfonycasts.com/screencast/symfony/setup
 .. _`Flex recipes`: https://github.com/symfony/recipes/blob/flex/main/RECIPES.md
