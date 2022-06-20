@@ -63,13 +63,13 @@ with a couple popular SMS services:
 Service         Package                               DSN
 ==============  ====================================  ===========================================================================
 46elks          ``symfony/forty-six-elks-notifier``   ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
-AllMySms        ``symfony/allmysms-notifier``         ``allmysms://LOGIN:APIKEY@default?from=FROM``
+AllMySms        ``symfony/all-my-sms-notifier``       ``allmysms://LOGIN:APIKEY@default?from=FROM``
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
 Esendex         ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
 FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
 FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
-GatewayApi      ``symfony/gatewayapi-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
+GatewayApi      ``symfony/gateway-api-notifier``      ``gatewayapi://TOKEN@default?from=FROM``
 Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
 KazInfoTeh      ``symfony/kaz-info-teh-notifier``     ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
@@ -78,7 +78,7 @@ Mailjet         ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?
 MessageBird     ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
 MessageMedia    ``symfony/message-media-notifier``    ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
 Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
-Nexmo           ``symfony/nexmo-notifier``            ``nexmo://KEY:SECRET@default?from=FROM``
+Nexmo           ``symfony/nexmo-notifier``            Abandoned in favor of Vonage (symfony/vonage-notifier).
 Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
 OrangeSms       ``symfony/orange-sms-notifier``       ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME``
 OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME&no_stop_clause=true``
@@ -89,7 +89,7 @@ Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_
 Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
 SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
 Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
-SpotHit         ``symfony/spothit-notifier``          ``spothit://TOKEN@default?from=FROM``
+SpotHit         ``symfony/spot-hit-notifier``         ``spothit://TOKEN@default?from=FROM``
 Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
 Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
