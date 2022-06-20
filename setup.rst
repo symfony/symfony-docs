@@ -7,7 +7,7 @@ Installing & Setting up the Symfony Framework
 .. admonition:: Screencast
     :class: screencast
 
-    Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
+    Do you prefer video tutorials? Check out the `Harmonious Development with Symfony`_
     screencast series.
 
 .. _symfony-tech-requirements:
@@ -317,7 +317,7 @@ Learn More
     setup/web_server_configuration
     setup/*
 
-.. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
+.. _`Harmonious Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
 .. _`install Symfony CLI`: https://symfony.com/download
 .. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
