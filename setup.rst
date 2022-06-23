@@ -49,10 +49,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_directory --version=6.0.* --webapp
+    $ symfony new my_project_directory --version="6.0.*" --webapp
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_directory --version=6.0.*
+    $ symfony new my_project_directory --version="6.0.*"
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--webapp`` option installs all the packages that you
@@ -273,7 +273,7 @@ stable version. If you want to use an LTS version, add the ``--version`` option:
     $ symfony new my_project_directory --version=next
 
     # you can also select an exact specific Symfony version
-    $ symfony new my_project_directory --version=5.4.*
+    $ symfony new my_project_directory --version="5.4.*"
 
 The ``lts`` and ``next`` shortcuts are only available when using Symfony to
 create new projects. If you use Composer, you need to tell the exact version:
