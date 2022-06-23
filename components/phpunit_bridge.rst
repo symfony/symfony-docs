@@ -48,7 +48,7 @@ Installation
     always use its very latest stable major version to get the most accurate
     deprecation report.
 
-If you plan to :ref:`write-assertions-about-deprecations` and use the regular
+If you plan to :ref:`write assertions about deprecations <write-assertions-about-deprecations>` and use the regular
 PHPUnit script (not the modified PHPUnit script provided by Symfony), you have
 to register a new `test listener`_ called ``SymfonyTestsListener``:
 
