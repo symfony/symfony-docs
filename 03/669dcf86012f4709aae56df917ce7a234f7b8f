@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-06-20T14:24:01Z
+
+Thanks for reporting this. I can reproduce this error on my MBP + zsh, so we need to fix it.
