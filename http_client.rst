@@ -798,6 +798,25 @@ ensure local networks are made inaccessible to the HTTP client::
     // but all the other requests, including other internal networks, will be allowed
     $client = new NoPrivateNetworkHttpClient(HttpClient::create(), ['104.26.14.0/23']);
 
+Profiling
+~~~~~~~~~
+
+When you are using the :class:`Symfony\\Component\\HttpClient\\TraceableHttpClient`,
+responses content will be kept in memory and may exhaust it.
+
+You can disable this behavior by setting the ``extra.trace_content`` option to ``false``
+in your requests::
+
+    $response = $client->request('GET', 'https://...', [
+        'extra' => ['trace_content' => false],
+    ]);
+
+This setting won’t affect other clients.
+
+.. versionadded:: 5.2
+
+    The ``extra.trace_content`` option was introduced in Symfony 5.2.
+
 Performance
 -----------
 
