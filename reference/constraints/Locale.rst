@@ -117,6 +117,6 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`ICU format locale IDs`: http://userguide.icu-project.org/locale
+.. _`ICU format locale IDs`: https://unicode-org.github.io/icu/userguide/locale/
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes
