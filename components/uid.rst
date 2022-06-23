@@ -185,11 +185,11 @@ entity primary keys::
          * @ORM\GeneratedValue(strategy="CUSTOM")
          * @ORM\CustomIdGenerator(class="doctrine.uuid_generator")
          */
-        private $id;
+        private $uuid;
 
-        public function getId(): ?Uuid
+        public function getUuid(): ?Uuid
         {
-            return $this->id;
+            return $this->uuid;
         }
 
         // ...
@@ -357,11 +357,11 @@ entity primary keys::
          * @ORM\GeneratedValue(strategy="CUSTOM")
          * @ORM\CustomIdGenerator(class="doctrine.ulid_generator")
          */
-        private $id;
+        private $ulid;
 
-        public function getId(): ?Ulid
+        public function getUlid(): ?Ulid
         {
-            return $this->id;
+            return $this->ulid;
         }
 
         // ...
