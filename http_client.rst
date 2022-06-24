@@ -813,10 +813,6 @@ in your requests::
 
 This setting won’t affect other clients.
 
-.. versionadded:: 5.2
-
-    The ``extra.trace_content`` option was introduced in Symfony 5.2.
-
 Performance
 -----------
 
