@@ -549,6 +549,19 @@ This is the field name that you should give to the CSRF token field of your form
 
 .. _reference-framework-csrf-protection:
 
+catch_all_throwables
+~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+.. versionadded:: 6.2
+
+    Symfony 7.0 will catch all Throwables by default. Use ``framework.catch_all_throwables``
+    to opt-in to this behaviour now.
+
+Make `:class:`Symfony\\Component\\HttpKernel\\HttpKernel`` catch every kind of
+``\Throwable``. Leaving this option to false is deprecated.
+
 csrf_protection
 ~~~~~~~~~~~~~~~
 
