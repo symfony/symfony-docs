@@ -11,8 +11,6 @@ acceptable changes.
 * New unit tests cover the bug fix;
 * The current buggy behavior is not widely used as a "feature".
 
-While working on a bug fix, don't refactor the code or introduce new classes.
-
 .. note::
 
     When documentation (or PHPDoc) is not in sync with the code, code behavior
@@ -46,7 +44,8 @@ a case by case basis:
 * **Tests**: Tests that increase the code coverage can be added.
 
 The following changes are **generally not accepted** in a patch version, except
-on a case by case basis:
+on a case by case basis (mostly when this is related to fixing a security
+issue):
 
 * **Performance improvement**: Performance improvement should only be accepted
   if the changes are local (located in one class) and only for algorithmic
@@ -57,6 +56,16 @@ on a case by case basis:
   refactoring are almost never accepted except for consistency with the
   existing code base, if they are not too invasive, and if merging them into
   higher branches would not lead to complex branch merging.
+
+* **Adding new classes or non private methods**: While working on a bug fix,
+  never introduce new classes or public/protected methods (or global
+  functions).
+
+* **Adding configuration options**: Introducing new configuration options is
+  never allowed.
+
+* **Adding new deprecations**: After a version reaches stability, new
+  deprecations cannot be added anymore.
 
 Anything not explicitly listed above should be done on the next minor or major
 version instead. For instance, the following changes are never accepted in a
