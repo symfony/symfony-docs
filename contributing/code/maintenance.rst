@@ -61,7 +61,7 @@ issue):
   never introduce new classes or public/protected methods (or global
   functions).
 
-* **Adding configuration options**: Introducing new configuration options must
+* **Adding configuration options**: Introducing new configuration options is
   never allowed.
 
 * **Adding new deprecations**: After a version reaches stability, new
