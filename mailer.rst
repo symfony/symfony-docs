@@ -113,6 +113,11 @@ Sendinblue          ``composer require symfony/sendinblue-mailer``
 MailPace            ``composer require symfony/mailpace-mailer``
 ==================  ==============================================
 
+.. versionadded:: 6.2
+
+    The ``MailPace`` integration was introduced in Symfony 6.2 (in previous
+    Symfony versions it was called ``OhMySMTP``).
+
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
 use SendGrid. First, install it:
