@@ -420,8 +420,11 @@ You can also use a validator with a hidden question::
         $helper = $this->getHelper('question');
 
         $question = new Question('Please enter your password');
+        $question->setNormalizer(function ($value) {
+            return $value ?? '';
+        });
         $question->setValidator(function ($value) {
-            if (trim($value) == '') {
+            if ('' === trim($value)) {
                 throw new \Exception('The password cannot be empty');
             }
 
