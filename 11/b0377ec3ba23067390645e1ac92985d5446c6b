@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by derrabus at 2021-12-16T17:48:20Z
+
+Please target 6.1 here as well.
+
+---------------------------------------------------------------------------
+
+by derrabus at 2022-01-31T16:40:38Z
+
+I think, the documentation should show an actual code example of a configured request matcher instead of just mentioning that it is somehow possible to provide your own matcher.
+
+---------------------------------------------------------------------------
+
+by TristanPouliquen at 2022-01-31T17:20:16Z
+
+I tried adding one copying from other similar configuration code blocks, is it ok/enough?
+
+---------------------------------------------------------------------------
+
+by derrabus at 2022-01-31T17:24:23Z
+
+We usually don't write whole documentation blocks inside a `versionadded` block. Just document the feature as if it has always existed and add a small `versionadded` block blow that new piece of documentation where you tell the reader that this feature has actually been added in 6.1. Once we work on the documentation for Symfony 7, a maintainer can simply drop that `versionadded` block without touching the rest of your documentation.
+
+---------------------------------------------------------------------------
+
+by TristanPouliquen at 2022-02-16T08:44:13Z
+
+@derrabus Is it ok for you to merge now? :)
+
+---------------------------------------------------------------------------
+
+by TristanPouliquen at 2022-02-16T09:43:07Z
+
+> LGTM, but I'm powerless on this repository. Someone from the docs team will need to review and merge your PR. upside_down_face
+
+Ok, sorry for the ping then, who should I notify to see it merged? :)
