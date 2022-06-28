@@ -110,7 +110,7 @@ Mailjet             ``composer require symfony/mailjet-mailer``
 Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
-OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
+MailPace            ``composer require symfony/mailpace-mailer``
 ==================  ==============================================
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
@@ -158,10 +158,10 @@ Google Gmail         gmail+smtp://USERNAME:PASSWORD@default               n/a   
 Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
 Mailgun              mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
 Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
+MailPace             mailpace+api://API_TOKEN@default                     n/a                                         mailpace+api://API_TOKEN@default
 Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
 Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
 Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
-OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a                                         ohmysmtp+api://API_TOKEN@default
 ==================== ==================================================== =========================================== ========================================
 
 .. caution::
@@ -1271,7 +1271,7 @@ The following transports currently support tags and metadata:
 
 The following transports only support tags:
 
-* OhMySMTP
+* MailPace
 
 The following transports only support metadata:
 
