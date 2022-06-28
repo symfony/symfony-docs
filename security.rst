@@ -2123,6 +2123,8 @@ would match ``/admin/foo`` but would also match URLs like ``/foo/admin``.
 
 Each ``access_control`` can also match on IP address, hostname and HTTP methods.
 It can also be used to redirect a user to the ``https`` version of a URL pattern.
+For more complex needs, you can also use a service implementing ``RequestMatcherInterface``.
+
 See :doc:`/security/access_control`.
 
 .. _security-securing-controller:

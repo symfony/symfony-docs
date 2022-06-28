@@ -28,7 +28,12 @@ options are used for matching:
 * ``ip`` or ``ips``: netmasks are also supported (can be a comma-separated string)
 * ``port``: an integer
 * ``host``: a regular expression
-* ``methods``: one or many methods
+* ``methods``: one or many HTTP methods
+* ``request_matcher``: a service implementing ``RequestMatcherInterface``
+
+.. versionadded:: 6.1
+
+    The ``request_matcher`` option was introduced in Symfony 6.1.
 
 Take the following ``access_control`` entries as an example:
 
@@ -51,6 +56,9 @@ Take the following ``access_control`` entries as an example:
                 # ips can be comma-separated, which is especially useful when using env variables
                 - { path: '^/admin', roles: ROLE_USER_IP, ips: '%env(TRUSTED_IPS)%' }
                 - { path: '^/admin', roles: ROLE_USER_IP, ips: [127.0.0.1, ::1, '%env(TRUSTED_IPS)%'] }
+
+                # for custom matching needs, use a request matcher service
+                - { roles: ROLE_USER, request_matcher: App\Security\RequestMatcher\MyRequestMatcher }
 
     .. code-block:: xml
 
@@ -82,6 +90,9 @@ Take the following ``access_control`` entries as an example:
                     <ip>::1</ip>
                     <ip>%env(TRUSTED_IPS)%</ip>
                 </rule>
+
+                <!-- for custom matching needs, use a request matcher service -->
+                <rule role="ROLE_USER" request-matcher="App\Security\RequestMatcher\MyRequestMatcher"/>
             </config>
         </srv:container>
 
@@ -126,6 +137,12 @@ Take the following ``access_control`` entries as an example:
                 ->path('^/admin')
                 ->roles(['ROLE_USER_IP'])
                 ->ips(['127.0.0.1', '::1', env('TRUSTED_IPS')])
+            ;
+
+            // for custom matching needs, use a request matcher service
+            $security->accessControl()
+                ->roles(['ROLE_USER'])
+                ->requestMatcher('App\Security\RequestMatcher\MyRequestMatcher')
             ;
         };
 
