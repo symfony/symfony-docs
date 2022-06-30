@@ -180,11 +180,13 @@ With something along the lines of
     Uncaught PHP Exception Twig\Error\RuntimeError: "An exception has been thrown during the rendering of a template ("Could not find the entrypoints file from Webpack: the file "/var/www/html/public/build/entrypoints.json" does not exist.
 
 .. 
+
 This is happening because you did not build your encore assets, hence no ``entrypoints.json`` file. Plus encore is working in strict mode by default, which causes  twig functions ``encore_entry_*`` to panic.
 
 To solve that you can add this to your ``config/packages/test/webpack_encore.yaml``
 
 .. code-block:: yaml
+
     webpack_encore:
         strict_mode: false
 ..
