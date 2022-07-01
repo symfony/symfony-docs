@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by mpdude at 2022-06-28T21:42:22Z
+
+Feature was added in 5.2 – should the PR be based on that branch even if it is no longer maintained?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-06-29T07:19:30Z
+
+@mpdude 5.4 is correct as we do not backport documentation updates into unmaintained branches even if features were introduced back then
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-06-29T08:00:26Z
+
+I agree to merge this in `5.4` but adding a `versionadded:: 5.2` directive could be helpful. WDYT?
