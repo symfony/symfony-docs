@@ -163,6 +163,11 @@ if you type-hint an argument with :class:`Symfony\\Component\\HttpFoundation\\Re
             // the second argument is the value returned when the attribute doesn't exist
             $filters = $session->get('filters', []);
 
+            // when the session is flashBag aware, you can add a flash message
+            if ($session instanceof FlashBagAwareSessionInterface) {
+                $session->getFlashBag()->add('note', 'This is a flash message.');
+            }
+
             // ...
         }
     }
