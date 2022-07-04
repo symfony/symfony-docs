@@ -166,16 +166,15 @@ most natural in your hosting environment.
 
         $ composer dump-env prod --empty
 
-    Sometimes ``composer`` may not be installed on your hosting environment. Thus you
-    have to install and package Composer related code logic way before deploying.
-    Another way to generate this optimized file is to manually register the built in
-    command `Symfony\\Component\\Dotenv\\Command\\DotenvDumpCommand`
-    and use it:
+    If ``composer`` is not installed on your server, you can generate this optimized
+    file with a command provided by Symfony itself, which you must register in
+    your application before using it:
 
     .. code-block:: yaml
 
-    services:
-        Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
+        # config/services.yaml
+        services:
+            Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
 
     .. code-block:: terminal
 
