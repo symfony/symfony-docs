@@ -774,6 +774,16 @@ URL                       Route          Parameters
 
 .. tip::
 
+    The :class:`Symfony\\Component\\Routing\\Requirement\\Requirement` enum
+    contains a collection of commonly used regular-expression constants such as
+    digits, dates and UUIDs which can be used as route parameter requirements.
+
+    .. versionadded:: 6.1
+
+        The ``Requirement`` enum was introduced in Symfony 6.1.
+
+.. tip::
+
     Route requirements (and route paths too) can include
     :ref:`configuration parameters <configuration-parameters>`, which is useful to
     define complex regular expressions once and reuse them in multiple routes.
