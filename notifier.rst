@@ -327,7 +327,6 @@ Service         Package                               DSN
 ==============  ====================================  =================================================================================
 Engagespot      ``symfony/engagespot-notifier``        ``engagespot://API_KEY@default?campaign_name=CAMPAIGN_NAME``
 Expo            ``symfony/expo-notifier``              ``expo://Token@default``
-Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
 OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID''``
 ==============  ====================================  =================================================================================
 
