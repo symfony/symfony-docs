@@ -89,7 +89,7 @@ Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_
 Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
 SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
 Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
-SMSFactor       ``symfony/sms-factor-notifier``        ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
+SMSFactor       ``symfony/sms-factor-notifier``       ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
 SpotHit         ``symfony/spot-hit-notifier``         ``spothit://TOKEN@default?from=FROM``
 Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
