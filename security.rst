@@ -655,7 +655,7 @@ First, create a controller for the login form:
 
     class LoginController extends AbstractController
     {
-        #[Route('/login', name: 'login')]
+        #[Route('/login', name: 'app_login')]
         public function index(): Response
         {
             return $this->render('login/index.html.twig', [
@@ -678,9 +678,9 @@ Then, enable the form login authenticator using the ``form_login`` setting:
                 main:
                     # ...
                     form_login:
-                        # "login" is the name of the route created previously
-                        login_path: login
-                        check_path: login
+                        # "app_login" is the name of the route created previously
+                        login_path: app_login
+                        check_path: app_login
 
     .. code-block:: xml
 
@@ -697,8 +697,8 @@ Then, enable the form login authenticator using the ``form_login`` setting:
             <config>
                 <!-- ... -->
                 <firewall name="main">
-                    <!-- "login" is the name of the route created previously -->
-                    <form-login login-path="login" check-path="login"/>
+                    <!-- "app_login" is the name of the route created previously -->
+                    <form-login login-path="app_login" check-path="app_login"/>
                 </firewall>
             </config>
         </srv:container>
@@ -713,10 +713,10 @@ Then, enable the form login authenticator using the ``form_login`` setting:
 
             $mainFirewall = $security->firewall('main');
 
-            // "login" is the name of the route created previously
+            // "app_login" is the name of the route created previously
             $mainFirewall->formLogin()
-                ->loginPath('login')
-                ->checkPath('login')
+                ->loginPath('app_login')
+                ->checkPath('app_login')
             ;
         };
 
@@ -739,7 +739,7 @@ Edit the login controller to render the login form:
 
       class LoginController extends AbstractController
       {
-          #[Route('/login', name: 'login')]
+          #[Route('/login', name: 'app_login')]
     -     public function index(): Response
     +     public function index(AuthenticationUtils $authenticationUtils): Response
           {
@@ -777,7 +777,7 @@ Finally, create or update the template:
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        <form action="{{ path('login') }}" method="post">
+        <form action="{{ path('app_login') }}" method="post">
             <label for="username">Email:</label>
             <input type="text" id="username" name="_username" value="{{ last_username }}"/>
 
@@ -801,7 +801,7 @@ Finally, create or update the template:
 
 The form can look like anything, but it usually follows some conventions:
 
-* The ``<form>`` element sends a ``POST`` request to the ``login`` route, since
+* The ``<form>`` element sends a ``POST`` request to the ``app_login`` route, since
   that's what you configured as the ``check_path`` under the ``form_login`` key in
   ``security.yaml``;
 * The username (or whatever your user's "identifier" is, like an email) field has
@@ -914,7 +914,7 @@ be ``authenticate``:
     {# templates/login/index.html.twig #}
 
     {# ... #}
-    <form action="{{ path('login') }}" method="post">
+    <form action="{{ path('app_login') }}" method="post">
         {# ... the login fields #}
 
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
