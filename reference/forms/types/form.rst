@@ -76,6 +76,20 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/form_attr.rst.inc
 
+``getter``
+~~~~~~~~~~
+
+**type**: ``callable`` **default**: ``null``
+
+When provided, this callable will be invoked to read the value from
+the underlying object that will be used to populate the form field.
+
+More details are available in the section on :doc:`/form/data_mappers`.
+
+.. versionadded:: 5.2
+
+    Form mapping callbacks were added in Symfony 5.2.
+
 .. include:: /reference/forms/types/options/help.rst.inc
 
 .. include:: /reference/forms/types/options/help_attr.rst.inc
@@ -111,6 +125,20 @@ The actual default value of this option depends on other field options:
 .. _reference-form-option-required:
 
 .. include:: /reference/forms/types/options/required.rst.inc
+
+``setter``
+~~~~~~~~~~
+
+**type**: ``callable`` **default**: ``null``
+
+When provided, this callable will be invoked to map the form value
+back to the underlying object.
+
+More details are available in the section on :doc:`/form/data_mappers`.
+
+.. versionadded:: 5.2
+
+    Form mapping callbacks were added in Symfony 5.2.
 
 .. include:: /reference/forms/types/options/trim.rst.inc
 
