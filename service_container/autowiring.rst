@@ -546,7 +546,7 @@ in the service configuration. You wire up only the difficult arguments,
 Symfony takes care of the rest.
 
 You can also use the ``#[Autowire]`` parameter attribute to instruct the autowiring
-logic about those arguments:
+logic about those arguments::
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
