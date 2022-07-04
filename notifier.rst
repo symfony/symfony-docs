@@ -311,7 +311,6 @@ integration with these push services:
 ==============  ====================================  =================================================================================
 Service         Package                               DSN
 ==============  ====================================  =================================================================================
-Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
 Expo            ``symfony/expo-notifier``              ``expo://Token@default``
 OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID''``
 ==============  ====================================  =================================================================================
