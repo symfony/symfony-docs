@@ -166,6 +166,21 @@ most natural in your hosting environment.
 
         $ composer dump-env prod --empty
 
+    Sometimes ``composer`` may not be installed on your hosting environment. Thus you
+    have to install and package Composer related code logic way before deploying.
+    Another way to generate this optimized file is to manually register the built in
+    command `Symfony\\Component\\Dotenv\\Command\\DotenvDumpCommand`
+    and use it:
+
+    .. code-block:: yaml
+
+    services:
+        Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
+
+    .. code-block:: terminal
+
+        $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
+
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
