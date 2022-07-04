@@ -2508,6 +2508,11 @@ email_validation_mode
 
 **type**: ``string`` **default**: ``loose``
 
+.. deprecated:: 6.2
+
+    The ``loose`` default value is deprecated since Symfony 6.2. Starting from
+    Symfony 7.0, the default value of this option will be ``html5``.
+
 Sets the default value for the
 :ref:`"mode" option of the Email validator <reference-constraint-email-mode>`.
 
