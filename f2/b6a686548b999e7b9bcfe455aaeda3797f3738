@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by althaus at 2022-05-13T13:34:47Z
+
+Just came here to fix the same issue. https://github.com/symfony/symfony-docs/pull/16481 also holds the minimal fix.
+
+Merge would be highly appreciated @xabbuh
