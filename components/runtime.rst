@@ -337,6 +337,8 @@ The following options are supported by the ``SymfonyRuntime``:
     To disable looking for ``.env`` files.
 ``dotenv_path`` (default: ``.env``)
     To define the path of dot-env files.
+``dotenv_overload`` (default: ``false``)
+    To tell Dotenv whether to override ``.env`` vars with ``.env.local`` (or other ``.env.*``)
 ``use_putenv``
     To tell Dotenv to set env vars using ``putenv()`` (NOT RECOMMENDED).
 ``prod_envs`` (default: ``["prod"]``)
