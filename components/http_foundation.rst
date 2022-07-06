@@ -206,6 +206,15 @@ If the request body is a JSON string, it can be accessed using
 .. versionadded:: 5.2
 
     The ``toArray()`` method was introduced in Symfony 5.2.
+    
+If the request body is a JSON string, can be accessed as Object using
+:method:`Symfony\\Component\\HttpFoundation\\Request::toObject`::
+
+    $data = $request->toObject();
+
+.. versionadded:: 6.1
+
+    The ``toObject()`` method was introduced in Symfony 6.1.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
