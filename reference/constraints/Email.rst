@@ -135,6 +135,11 @@ The default value used by this option is set in the
 :ref:`framework.validation.email_validation_mode <reference-validation-email_validation_mode>`
 configuration option.
 
+.. deprecated:: 6.2
+
+    The ``loose`` value is deprecated since Symfony 6.2. Starting from
+    Symfony 7.0, the default value of this option will be ``html5``.
+
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc
