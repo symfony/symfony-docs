@@ -9,12 +9,13 @@ published through a *time-based model*:
 
 * A new **Symfony patch version** (e.g. 4.4.12, 5.1.9) comes out roughly every
   month. It only contains bug fixes, so you can safely upgrade your applications;
-* A new **Symfony minor version** (e.g. 4.4, 5.1) comes out every *six months*:
-  one in *May* and one in *November*. It contains bug fixes and new features, but
-  it doesn't include any breaking change, so you can safely upgrade your applications;
-* A new **Symfony major version** (e.g. 4.0, 5.0, 6.0) comes out every *two years*.
-  It can contain breaking changes, so you may need to do some changes in your
-  applications before upgrading.
+* A new **Symfony minor version** (e.g. 4.4, 5.0, 5.1) comes out every *six months*:
+  one in *May* and one in *November*. It contains bug fixes and new features,
+  can contain new deprecations but it doesn't include any breaking change,
+  so you can safely upgrade your applications;
+* A new **Symfony major version** (e.g. 5.0, 6.0, 7.0) comes out every *two years*
+  in November of odd years (e.g. 2019, 2021, 2023). It can contain breaking changes,
+  so you may need to do some changes in your applications before upgrading.
 
 .. tip::
 
