@@ -52,50 +52,6 @@ of:
     Redis and Memcached are examples of such adapters. If a DSN is used as the
     provider then a service is automatically created.
 
-There are two pools that are always enabled by default. They are ``cache.app`` and
-``cache.system``. The system cache is used for things like annotations, serializer,
-and validation. The ``cache.app`` can be used in your code. You can configure which
-adapter (template) they use by using the ``app`` and ``system`` key like:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/cache.yaml
-        framework:
-            cache:
-                app: cache.adapter.filesystem
-                system: cache.adapter.system
-
-    .. code-block:: xml
-
-        <!-- config/packages/cache.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:cache app="cache.adapter.filesystem"
-                    system="cache.adapter.system"
-                />
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'app' => 'cache.adapter.filesystem',
-                'system' => 'cache.adapter.system',
-            ],
-        ]);
-
 The Cache component comes with a series of adapters pre-configured:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
@@ -179,6 +135,81 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 'default_memcached_provider' => 'memcached://localhost',
                 // Service: cache.pdo
                 'default_pdo_provider' => 'doctrine.dbal.default_connection',
+            ],
+        ]);
+
+System Cache and Application Cache
+----------------------------------
+
+There are two pools that are always enabled by default. They are
+``cache.system`` and ``cache.app``.
+
+The system cache ``cache.system`` is mainly used by Symfony components for
+things like annotations, serializer, and validation. For advanced use-cases it
+is also available for application code under the following constraints:
+
+- Entries are derived from source code and can be generated during cache warmup
+  by a CacheWarmer
+- Cached content only needs to change if the source code also changes (i.e.
+  only on deployment on non-development machines); it should be regarded as
+  read-only after deployment
+
+By default the system cache uses the special ``cache.adapter.system`` adapter
+which writes to the file system and chains the APCu adapter if APCu is
+available. In most cases the default adapter should be the right choice for
+your application.
+
+The application cache ``cache.app`` can be used as a multi-purpose data cache
+in your application and bundle code. In general, data in this pool does not
+need to be flushed on deployment. It defaults to ``cache.adapter.filesystem``
+but it is recommended to configure another adapter like Redis if available, so
+that data both "survives" deployments and is available on multiple instances in
+a multi-server setup.
+Custom pools (see section below) will default to ``cache.app`` as adapter if
+not specified explicitly.
+When using autowiring in your service definitions, ``cache.app`` will by
+default be injected if a service argument declares ``CacheItemPoolInterface``,
+``AdapterInterface``, or ``CacheInterface`` as its type.
+
+You can configure which adapter (template) these predefined pools use by using
+the ``app`` and ``system`` key like:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+        framework:
+            cache:
+                app: cache.adapter.filesystem
+                system: cache.adapter.system
+
+    .. code-block:: xml
+
+        <!-- config/packages/cache.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:cache app="cache.adapter.filesystem"
+                    system="cache.adapter.system"
+                />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        $container->loadFromExtension('framework', [
+            'cache' => [
+                'app' => 'cache.adapter.filesystem',
+                'system' => 'cache.adapter.system',
             ],
         ]);
 
