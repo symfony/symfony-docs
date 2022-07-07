@@ -20,8 +20,8 @@ enough to render an entire form, including all its fields and error messages:
 
 .. code-block:: twig
 
-    {# form is a variable passed from the controller via either
-      $this->renderForm('...', ['form' => $form])
+    {# form is a variable passed from the controller via
+      $this->render('...', ['form' => $form])
       or $this->render('...', ['form' => $form->createView()]) #}
     {{ form(form) }}
 

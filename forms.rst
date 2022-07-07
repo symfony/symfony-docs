@@ -275,16 +275,21 @@ Now that the form has been created, the next step is to render it::
 
             $form = $this->createForm(TaskType::class, $task);
 
-            return $this->renderForm('task/new.html.twig', [
+            return $this->render('task/new.html.twig', [
                 'form' => $form,
             ]);
         }
     }
 
-In versions prior to Symfony 5.3, controllers used the method
-``$this->render('...', ['form' => $form->createView()])`` to render the form.
-The ``renderForm()`` method abstracts this logic and it also sets the 422 HTTP
-status code in the response automatically when the submitted form is not valid.
+Internally, the ``render()`` method calls ``$form->createView()`` to
+transform the form into a *form view* instance.
+
+.. deprecated:: 6.2
+
+    Prior to Symfony 6.2, you had to use ``$this->render(..., ['form' => $form->createView()])``
+    or the ``renderForm()`` method to render to form. The ``renderForm()``
+    method is deprecated in favor of directly passing the ``FormInterface``
+    instance to ``render()``.
 
 Then, use some :ref:`form helper functions <reference-form-twig-functions>` to
 render the form contents:
@@ -404,7 +409,7 @@ written into the form object::
                 return $this->redirectToRoute('task_success');
             }
 
-            return $this->renderForm('task/new.html.twig', [
+            return $this->render('task/new.html.twig', [
                 'form' => $form,
             ]);
         }
@@ -422,7 +427,12 @@ possible paths:
    ``task`` and ``dueDate`` properties of the ``$task`` object. Then this object
    is validated (validation is explained in the next section). If it is invalid,
    :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns
-   ``false`` and the form is rendered again, but now with validation errors;
+   ``false`` and the form is rendered again, but now with validation errors.
+
+   By passing ``$form`` to the ``render()`` method (instead of
+   ``$form->createView()``), the response code is automatically set to
+   `HTTP 422 Unprocessable Content`_. This ensures compatibility with tools
+   relying on the HTTP specification, like `Symfony UX Turbo`_;
 
 #. When the user submits the form with valid data, the submitted data is again
    written into the form, but this time :method:`Symfony\\Component\\Form\\FormInterface::isValid`
@@ -1070,3 +1080,5 @@ Misc.:
 
 .. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony-forms
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
+.. _`HTTP 422 Unprocessable Content`: https://www.rfc-editor.org/rfc/rfc9110.html#name-422-unprocessable-content
+.. _`Symfony UX Turbo`: https://ux.symfony.com/turbo
