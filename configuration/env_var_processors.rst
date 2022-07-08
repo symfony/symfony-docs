@@ -699,8 +699,8 @@ Symfony provides the following env var processors:
             ]);
 
 ``env(enum:FooEnum:BAR)``
-    Tries to convert an environment variable to an actual ``\BackedEnum`` value. This processor takes the fully qualified
-    name of the ``\BackedEnum`` as an argument.
+    Tries to convert an environment variable to an actual ``\BackedEnum`` value.
+    This processor takes the fully qualified name of the ``\BackedEnum`` as an argument.
 
     .. code-block:: php
 
@@ -740,6 +740,10 @@ Symfony provides the following env var processors:
 
             // config/services.php
             $container->setParameter('typed_env', '%env(enum:App\Enum\Environment:APP_ENV)%');
+
+.. versionadded:: 6.2
+
+    The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.
 
 It is also possible to combine any number of processors:
 
