@@ -342,7 +342,10 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
         # config/services.yaml
         App\Service\OldService:
-            deprecated: The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.
+            deprecated:
+                package: 'vendor-name/package-name'
+                version: '2.8'
+                message: The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.
 
     .. code-block:: xml
 
@@ -354,7 +357,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
             <services>
                 <service id="App\Service\OldService">
-                    <deprecated>The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.</deprecated>
+                    <deprecated package="vendor-name/package-name" version="2.8">The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.</deprecated>
                 </service>
             </services>
         </container>
@@ -370,7 +373,11 @@ or you decided not to maintain it anymore), you can deprecate its definition:
             $services = $configurator->services();
 
             $services->set(OldService::class)
-                ->deprecate('The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.');
+                ->deprecate(
+                    'vendor-name/package-name',
+                    '2.8',
+                    'The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.'
+                );
         };
 
 Now, every time this service is used, a deprecation warning is triggered,
