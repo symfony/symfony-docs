@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-07-08T14:34:26Z
+
+Thanks Alexandre for this proposal. However, this formatting was used explicitly. The reason is that some of the list items are very long, so it requires to add some indenting to all contents. The current syntax makes things easier to maintain.
+
+Also, we switched recently to a custom PHP-based RST parser, so using the indenting format could create issues (supporting RST elements such as admonitions, sublists, images, etc. as subelements of a list item is not trivial at all. we might be missing some parsing logic and it's very difficult to fix it).
+
+That's why we're closing this without merging, but we hope you understand the reasons. Thanks!
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2022-07-08T14:57:49Z
+
+Thank you for your comment @javiereguiluz! Totally understand the reasons. Fortunately, I could only find the display problem of multiple "1." at these spots in the documentation, which is very limited. Good luck for the fix in the parser!
