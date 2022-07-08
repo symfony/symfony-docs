@@ -700,7 +700,7 @@ associated to a valid host::
         }
     }
 
-In order to avoid making a real network connection, add the ``@dns-sensitive``
+In order to avoid making a real network connection, add the ``@group dns-sensitive``
 annotation to the class and use the ``DnsMock::withMockedHosts()`` to configure
 the data you expect to get for the given hosts::
 
