@@ -338,6 +338,30 @@ syntax to parse them as proper PHP constants::
     $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
     // $parameters = ['foo' => 'PHP_INT_SIZE', 'bar' => 8];
 
+Parsing Unit and Backed Enumerations
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Unit and backed enumerations can be parsed by the YAML parser thanks to the
+special ``!php/enum`` syntax and the ``PARSE_CONSTANT`` flag. Depending if
+you need the concrete enumeration case or the actual value of the case when
+dealing with backed enumerations, both syntax are available::
+
+    enum FooEnum: string
+    {
+        case Foo = 'foo';
+        case Bar = 'bar';
+    }
+
+    // ...
+
+    $yaml = '{ foo: FooEnum::Foo, bar: !php/enum FooEnum::Foo }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => FooEnum::Foo];
+
+    $yaml = '{ foo: FooEnum::Foo, bar: !php/enum FooEnum::Foo->value }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => 'foo'];
+
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
