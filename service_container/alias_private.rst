@@ -380,12 +380,6 @@ or you decided not to maintain it anymore), you can deprecate its definition:
                 );
         };
 
-.. versionadded:: 5.1
-
-    Starting from Symfony 5.1, the ``deprecated`` YAML option, the ``<deprecated>``
-    XML tag and the ``deprecate()`` PHP function require three arguments (the
-    package name, the version and the deprecation message).
-
 Now, every time this service is used, a deprecation warning is triggered,
 advising you to stop or to change your uses of that service.
 
