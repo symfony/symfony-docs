@@ -29,10 +29,10 @@ Development
 
 .. note::
 
-    The Symfony project is an open-source community driven development framework.
+    The Symfony project is an open-source community-driven development framework.
     There is no roadmap written or defined in advance. Every feature request
-    may or may not be developed in future version based on the community.
-    Symfony core team members can help move things forward if the intereset is here.
+    may or may not be developed in future versions based on the community.
+    Symfony Core Team members can help move things forward if there's enough interest.
 
 The full development period for any major or minor version lasts six months and
 is divided into two phases:
