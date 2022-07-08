@@ -698,6 +698,49 @@ Symfony provides the following env var processors:
                 ],
             ]);
 
+``env(enum:FooEnum:BAR)``
+    Tries to convert an environment variable to an actual ``\BackedEnum`` value. This processor takes the fully qualified
+    name of the ``\BackedEnum`` as an argument.
+
+    .. code-block:: php
+
+        # App\Enum\Environment
+        enum Environment: string
+        {
+            case Development = 'dev';
+            case Production = 'prod';
+        }
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                typed_env: '%env(enum:App\Enum\Environment:APP_ENV)%'
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="typed_env">%env(enum:App\Enum\Environment:APP_ENV)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('typed_env', '%env(enum:App\Enum\Environment:APP_ENV)%');
+
 It is also possible to combine any number of processors:
 
 .. configuration-block::
