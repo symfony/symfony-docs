@@ -338,13 +338,12 @@ syntax to parse them as proper PHP constants::
     $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
     // $parameters = ['foo' => 'PHP_INT_SIZE', 'bar' => 8];
 
-Parsing Unit and Backed Enumerations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Parsing PHP Enumerations
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-Unit and backed enumerations can be parsed by the YAML parser thanks to the
-special ``!php/enum`` syntax and the ``PARSE_CONSTANT`` flag. Depending if
-you need the concrete enumeration case or the actual value of the case when
-dealing with backed enumerations, both syntax are available::
+The YAML parser supports `PHP enumerations`_, both unit and backed enums.
+By default, they are parsed as regular strings. Use the ``PARSE_CONSTANT`` flag
+and the special ``!php/enum`` syntax to parse them as proper PHP enums::
 
     enum FooEnum: string
     {
@@ -356,11 +355,17 @@ dealing with backed enumerations, both syntax are available::
 
     $yaml = '{ foo: FooEnum::Foo, bar: !php/enum FooEnum::Foo }';
     $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // the value of the 'foo' key is a string because it missed the `!php/enum` syntax
     // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => FooEnum::Foo];
 
     $yaml = '{ foo: FooEnum::Foo, bar: !php/enum FooEnum::Foo->value }';
     $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // the value of the 'foo' key is a string because it missed the `!php/enum` syntax
     // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => 'foo'];
+
+.. versionadded:: 6.2
+
+    The support for PHP enumerations was introduced in Symfony 6.2.
 
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -484,3 +489,4 @@ Learn More
 .. _`YAML`: https://yaml.org/
 .. _`YAML 1.2 version specification`: https://yaml.org/spec/1.2/spec.html
 .. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html
+.. _`PHP enumerations`: https://www.php.net/manual/en/language.types.enumerations.php
