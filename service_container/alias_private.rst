@@ -349,7 +349,10 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
         # config/services.yaml
         App\Service\OldService:
-            deprecated: The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.
+            deprecated:
+                package: 'vendor-name/package-name'
+                version: '2.8'
+                message: The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.
 
     .. code-block:: xml
 
