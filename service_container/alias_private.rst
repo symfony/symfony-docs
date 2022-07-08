@@ -364,7 +364,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
             <services>
                 <service id="App\Service\OldService">
-                    <deprecated>The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.</deprecated>
+                    <deprecated package="vendor-name/package-name" version="2.8">The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.</deprecated>
                 </service>
             </services>
         </container>
@@ -380,8 +380,18 @@ or you decided not to maintain it anymore), you can deprecate its definition:
             $services = $configurator->services();
 
             $services->set(OldService::class)
-                ->deprecate('The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.');
+                ->deprecate(
+                    'vendor-name/package-name',
+                    '2.8',
+                    'The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.'
+                );
         };
+
+.. versionadded:: 5.1
+
+    Starting from Symfony 5.1, the ``deprecated`` YAML option, the ``<deprecated>``
+    XML tag and the ``deprecate()`` PHP function require three arguments (the
+    package name, the version and the deprecation message).
 
 Now, every time this service is used, a deprecation warning is triggered,
 advising you to stop or to change your uses of that service.
