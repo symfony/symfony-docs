@@ -100,9 +100,10 @@ typical usage of this is gender:
         # the 'other' key is required, and is selected if no other case matches
         invitation_title: >-
             {organizer_gender, select,
-                female {{organizer_name} has invited you to her party!}
-                male   {{organizer_name} has invited you to his party!}
-                other  {{organizer_name} have invited you to their party!}
+                female   {{organizer_name} has invited you to her party!}
+                male     {{organizer_name} has invited you to his party!}
+                multiple {{organizer_name} have invited you to their party!}
+                other    {{organizer_name} has invited you to their party!}
             }
 
     .. code-block:: xml
@@ -116,9 +117,10 @@ typical usage of this is gender:
                         <source>invitation_title</source>
                         <!-- the 'other' key is required, and is selected if no other case matches -->
                         <target>{organizer_gender, select,
-                            female {{organizer_name} has invited you to her party!}
-                            male {{organizer_name} has invited you to his party!}
-                            other {{organizer_name} have invited you to their party!}
+                            female   {{organizer_name} has invited you to her party!}
+                            male     {{organizer_name} has invited you to his party!}
+                            multiple {{organizer_name} have invited you to their party!}
+                            other    {{organizer_name} has invited you to their party!}
                         }</target>
                     </trans-unit>
                 </body>
@@ -131,9 +133,10 @@ typical usage of this is gender:
         return [
             // the 'other' key is required, and is selected if no other case matches
             'invitation_title' => '{organizer_gender, select,
-                female {{organizer_name} has invited you to her party!}
-                male   {{organizer_name} has invited you to his party!}
-                other  {{organizer_name} have invited you to their party!}
+                female   {{organizer_name} has invited you to her party!}
+                male     {{organizer_name} has invited you to his party!}
+                multiple {{organizer_name} have invited you to their party!}
+                other    {{organizer_name} has invited you to their party!}
             }',
         ];
 
@@ -152,6 +155,12 @@ select. This function is applied over the ``organizer_gender`` variable::
     // prints "John & Jane have invited you to their party!"
     echo $translator->trans('invitation_title', [
         'organizer_name' => 'John & Jane',
+        'organizer_gender' => 'multiple',
+    ]);
+
+    // prints "ACME Company has invited you to their party!"
+    echo $translator->trans('invitation_title', [
+        'organizer_name' => 'ACME Company',
         'organizer_gender' => 'not_applicable',
     ]);
 
@@ -170,7 +179,7 @@ you to use literal text in the select statements:
     While it might seem more logical to only put ``her``, ``his`` or ``their``
     in the switch statement, it is better to use "complex arguments" at the
     outermost structure of the message. The strings are in this way better
-    readable for translators and, as you can see in the ``other`` case, other
+    readable for translators and, as you can see in the ``multiple`` case, other
     parts of the sentence might be influenced by the variables.
 
 .. tip::
@@ -179,12 +188,13 @@ you to use literal text in the select statements:
     without having to define them in any file::
 
         $invitation = '{organizer_gender, select,
-            female {{organizer_name} has invited you for her party!}
-            male   {{organizer_name} has invited you for his party!}
-            other  {{organizer_name} have invited you for their party!}
+            female   {{organizer_name} has invited you to her party!}
+            male     {{organizer_name} has invited you to his party!}
+            multiple {{organizer_name} have invited you to their party!}
+            other    {{organizer_name} has invited you to their party!}
         }';
 
-        // prints "Ryan has invited you for his party!"
+        // prints "Ryan has invited you to his party!"
         echo $translator->trans($invitation, [
             'organizer_name' => 'Ryan',
             'organizer_gender' => 'male',
