@@ -38,7 +38,7 @@ Step 1: The Client Sends a Request
 
 Every conversation on the web starts with a *request*. The request is a text
 message created by a client (e.g. a browser, a smartphone app, etc) in a
-special format known as HTTP. The client sends that request to a server,
+special format known as HTTP request. The client sends that request to a server,
 and then waits for the response.
 
 Take a look at the first part of the interaction (the request) between a
