@@ -378,6 +378,59 @@ Symfony provides the following env var processors:
                 $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
                 $framework->trustedHosts(env('TRUSTED_HOSTS')->csv());
             };
+``env(shuffle:FOO)``
+    Randomly shuffles values of ``FOO``, which is an array.
+    Usable when combining with other processors, as array is a prerequisite.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(REDIS_NODES): "127.0.0.1:6380,127.0.0.1:6381"
+            services:
+                RedisCluster:
+                    class: RedisCluster
+                    arguments: [null, "%env(shuffle:csv:REDIS_NODES)%"]
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(REDIS_NODES)">redis://127.0.0.1:6380,redis://127.0.0.1:6381</parameter>
+                </parameters>
+
+                <services>
+                    <service id="RedisCluster" class="RedisCluster">
+                        <argument>null</argument>
+                        <argument>%env(shuffle:csv:REDIS_NODES)%</argument>
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+            return static function (ContainerConfigurator $configurator): void {
+                $container = $configurator->services()
+                    ->set(\RedisCluster::class, \RedisCluster::class)->args([null, '%env(shuffle:csv:REDIS_NODES)%']);
+            };
+
+.. versionadded:: 6.2
+
+    The ``env(shuffle:...)`` env var processor was introduced in Symfony 6.2.
 
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:
