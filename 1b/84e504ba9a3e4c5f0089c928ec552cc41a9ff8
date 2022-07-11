@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2022-07-08T16:31:08Z
+
+I think this PR should target the 5.4, the typo was added with that version: https://github.com/symfony/symfony-docs/blame/5.4/workflow/workflow-and-state-machine.rst#L247
