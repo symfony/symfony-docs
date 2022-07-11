@@ -643,7 +643,7 @@ and its ``asChatMessage()`` method::
     use Symfony\Component\Notifier\Message\ChatMessage;
     use Symfony\Component\Notifier\Notification\ChatNotificationInterface;
     use Symfony\Component\Notifier\Notification\Notification;
-    use Symfony\Component\Notifier\Recipient\SmsRecipientInterface;
+    use Symfony\Component\Notifier\Recipient\RecipientInterface;
 
     class InvoiceNotification extends Notification implements ChatNotificationInterface
     {
@@ -656,10 +656,11 @@ and its ``asChatMessage()`` method::
 
         public function asChatMessage(RecipientInterface $recipient, string $transport = null): ?ChatMessage
         {
-            // Add a custom emoji if the message is sent to Slack
+            // Add a custom subject and emoji if the message is sent to Slack
             if ('slack' === $transport) {
-                return (new ChatMessage('You\'re invoiced '.$this->price.' EUR.'))
-                    ->emoji('money');
+                $this->subject('You\'re invoiced '.strval($this->price).' EUR.');
+                $this->emoji("money");
+                return ChatMessage::fromNotification($this);
             }
 
             // If you return null, the Notifier will create the ChatMessage
