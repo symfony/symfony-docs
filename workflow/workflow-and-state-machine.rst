@@ -244,7 +244,7 @@ Below is the configuration for the pull request state machine.
                     ->to(['closed']);
 
             $pullRequest->transition()
-                ->name('accept')
+                ->name('reopen')
                     ->from(['closed'])
                     ->to(['review']);
         };
