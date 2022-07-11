@@ -411,6 +411,37 @@ library is present::
     $phpDocExtractor->getShortDescription($class, $property);
     $phpDocExtractor->getLongDescription($class, $property);
 
+PhpStanExtractor
+~~~~~~~~~~~~~~~
+
+.. note::
+
+    This extractor depends on the `phpstan/phpdoc-parser`_ and
+    `phpdocumentor/reflection-docblock`_ libraries.
+
+This extractor fetches information thanks to the PHPStan parser. It gathers
+information from annotations of properties and methods, such as ``@var``,
+``@param`` or ``@return``::
+
+    // src/Domain/Foo.php
+    class Foo
+    {
+        private $bar;
+
+        /**
+         * @param string $bar
+         */
+        public function __construct($bar) {
+            $this->bar = $bar;
+        }
+    }
+
+    // Extraction.php
+    use Symfony\Component\PropertyInfo\Extractor\PhpStanExtractor;
+
+    $phpStanExtractor = new PhpStanExtractor();
+    $phpStanExtractor->getTypesFromConstructor(Foo::class, 'bar');
+
 SerializerExtractor
 ~~~~~~~~~~~~~~~~~~~
 
@@ -436,7 +467,7 @@ with the ``property_info`` service in the Symfony Framework::
 
     // the `serializer_groups` option must be configured (may be set to null)
     $serializerExtractor->getProperties($class, ['serializer_groups' => ['mygroup']]);
-   
+
 If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
 checked but you will get only the properties considered by the Serializer
 Component (notably the ``@Ignore`` annotation is taken into account).
@@ -497,6 +528,7 @@ service by defining it as a service with one or more of the following
 
 .. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
 .. _`phpdocumentor/reflection-docblock`: https://packagist.org/packages/phpdocumentor/reflection-docblock
+.. _`phpstan/phpdoc-parser`: https://packagist.org/packages/phpstan/phpdoc-parser
 .. _`Doctrine ORM`: https://www.doctrine-project.org/projects/orm.html
 .. _`symfony/serializer`: https://packagist.org/packages/symfony/serializer
 .. _`symfony/doctrine-bridge`: https://packagist.org/packages/symfony/doctrine-bridge
