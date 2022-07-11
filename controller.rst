@@ -33,9 +33,7 @@ class::
 
     class LuckyController
     {
-        /**
-         * @Route("/lucky/number/{max}", name="app_lucky_number")
-         */
+        #[Route('/lucky/number/{max}', name: 'app_lucky_number')]
         public function number(int $max): Response
         {
             $number = random_int(0, $max);
@@ -73,8 +71,8 @@ Mapping a URL to a Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to *view* the result of this controller, you need to map a URL to it via
-a route. This was done above with the ``@Route("/lucky/number/{max}")``
-:ref:`route annotation <annotation-routes>`.
+a route. This was done above with the ``#[Route('/lucky/number/{max}')]``
+:ref:`route attribute <annotation-routes>`.
 
 To see your page, go to this URL in your browser: http://localhost:8000/lucky/number/100
 
@@ -205,9 +203,7 @@ If you need a service in a controller, type-hint an argument with its class
     use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    /**
-     * @Route("/lucky/number/{max}")
-     */
+    #[Route('/lucky/number/{max}')]
     public function number(int $max, LoggerInterface $logger): Response
     {
         $logger->info('We are logging!');

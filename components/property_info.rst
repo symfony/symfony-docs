@@ -418,7 +418,7 @@ SerializerExtractor
 
     This extractor depends on the `symfony/serializer`_ library.
 
-Using :ref:`groups metadata <serializer-using-serialization-groups-annotations>`
+Using :ref:`groups metadata <serializer-using-serialization-groups-attributes>`
 from the :doc:`Serializer component </components/serializer>`,
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\SerializerExtractor`
 provides list information. This extractor is *not* registered automatically
@@ -436,7 +436,7 @@ with the ``property_info`` service in the Symfony Framework::
 
     // the `serializer_groups` option must be configured (may be set to null)
     $serializerExtractor->getProperties($class, ['serializer_groups' => ['mygroup']]);
-   
+
 If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
 checked but you will get only the properties considered by the Serializer
 Component (notably the ``@Ignore`` annotation is taken into account).
