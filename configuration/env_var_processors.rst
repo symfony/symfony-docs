@@ -378,9 +378,9 @@ Symfony provides the following env var processors:
                 $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
                 $framework->trustedHosts(env('TRUSTED_HOSTS')->csv());
             };
+
 ``env(shuffle:FOO)``
-    Randomly shuffles values of ``FOO``, which is an array.
-    Usable when combining with other processors, as array is a prerequisite.
+    Randomly shuffles values of the ``FOO`` env var, which must be an array.
 
     .. configuration-block::
 
@@ -428,9 +428,9 @@ Symfony provides the following env var processors:
                     ->set(\RedisCluster::class, \RedisCluster::class)->args([null, '%env(shuffle:csv:REDIS_NODES)%']);
             };
 
-.. versionadded:: 6.2
+    .. versionadded:: 6.2
 
-    The ``env(shuffle:...)`` env var processor was introduced in Symfony 6.2.
+        The ``env(shuffle:...)`` env var processor was introduced in Symfony 6.2.
 
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:
@@ -794,9 +794,9 @@ Symfony provides the following env var processors:
             // config/services.php
             $container->setParameter('typed_env', '%env(enum:App\Enum\Environment:APP_ENV)%');
 
-.. versionadded:: 6.2
+    .. versionadded:: 6.2
 
-    The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.
+        The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.
 
 It is also possible to combine any number of processors:
 
