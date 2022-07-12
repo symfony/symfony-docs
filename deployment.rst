@@ -73,10 +73,6 @@ Using Build Scripts and other Tools
 There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
 
-`Deployer`_
-    This is another native PHP rewrite of Capistrano, with some ready recipes for
-    Symfony.
-
 `Ansistrano`_
     An Ansible role that allows you to configure a powerful deploy via YAML files.
 
@@ -263,7 +259,6 @@ Learn More
 .. _`Memcached`: http://memcached.org/
 .. _`Redis`: https://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
-.. _`Deployer`: https://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`Platform.sh`: https://symfony.com/cloud
 .. _`Symfony CLI`: https://symfony.com/download
