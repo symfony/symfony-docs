@@ -214,9 +214,7 @@ systems (unlike PHP's :phpfunction:`readlink` function)::
 
 Its behavior is the following::
 
-    public function readlink($path, $canonicalize = false)
-
-* When ``$canonicalize`` is ``false``:
+* When ``$canonicalize`` is ``false`` (the default value):
     * if ``$path`` does not exist or is not a link, it returns ``null``.
     * if ``$path`` is a link, it returns the next direct target of the link without considering the existence of the target.
 
