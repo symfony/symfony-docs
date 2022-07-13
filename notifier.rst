@@ -190,8 +190,13 @@ MicrosoftTeams  ``symfony/microsoft-teams-notifier``  ``microsoftteams://default
 RocketChat      ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
 Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
+Zendesk         ``symfony/zendesk-notifier``          ``ZENDESK_DSN=zendesk://EMAIL:TOKEN@SUBDOMAIN``
 Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ==============  ====================================  =============================================================================
+
+.. versionadded:: 6.2
+
+    The Zendesk integration was introduced in Symfony 6.2.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
