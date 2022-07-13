@@ -324,11 +324,15 @@ User Input Methods
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], 'queue1');
 
-    Finally, you can specify that user can select multiple choices. User must
+    Finally, you can allow users to select multiple choices. To do so, users must
     separate each choice with a comma (e.g. typing ``1, 2`` will select choice 1
     and 2)::
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], multiSelect: true);
+
+.. versionadded:: 6.2
+
+    The ``multiSelect`` option of ``choice()`` was introduced in Symfony 6.2.
 
 Result Methods
 ~~~~~~~~~~~~~~
