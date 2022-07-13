@@ -324,6 +324,12 @@ User Input Methods
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], 'queue1');
 
+    Finally, you can specify that user can select multiple choices. User must
+    separate each choice with a comma (e.g. typing ``1, 2`` will select choice 1
+    and 2)::
+
+        $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], multiSelect: true);
+
 Result Methods
 ~~~~~~~~~~~~~~
 
