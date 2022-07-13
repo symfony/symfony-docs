@@ -57,6 +57,7 @@ sessions, check their default configuration:
     .. code-block:: php
 
         // config/packages/framework.php
+        use Symfony\Component\HttpFoundation\Cookie;
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework) {
@@ -69,7 +70,7 @@ sessions, check their default configuration:
                 ->handlerId(null)
                 // improves the security of the cookies used for sessions
                 ->cookieSecure('auto')
-                ->cookieSamesite('lax')
+                ->cookieSamesite(Cookie::SAMESITE_LAX)
                 ->storage_factory_id('session.storage.factory.native')
             ;
         };
