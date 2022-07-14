@@ -170,7 +170,7 @@ To access request parameters like ``foo[bar]=baz``, you can use the following co
     // returns ['bar' => 'baz']
 
     $request->query->get('foo')['bar'];
-    // retuns "baz"
+    // returns "baz"
 
     // if the requested parameter does not exist, an empty array is returned:
     $request->query->all('qux');
