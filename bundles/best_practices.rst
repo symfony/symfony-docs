@@ -227,7 +227,7 @@ Require a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use the special ``SYMFONY_REQUIRE`` environment variable together
-with Symfony Flex to install a specific Symfony version:
+with Symfony to install a specific Symfony version:
 
 .. code-block:: bash
 
@@ -235,6 +235,7 @@ with Symfony Flex to install a specific Symfony version:
     export SYMFONY_REQUIRE=5.*
 
     # install Symfony Flex in the CI environment
+    composer global config --no-plugins allow-plugins.symfony/flex true
     composer global require --no-progress --no-scripts --no-plugins symfony/flex
 
     # install the dependencies (using --prefer-dist and --no-progress is
