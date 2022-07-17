@@ -135,6 +135,9 @@ This option defines the pattern used to validate the email address. Valid values
 * ``strict`` uses the `egulias/email-validator`_ library (which you must
   install separately) for validation according to `RFC 5322`_.
 
+You can also use the class constants of :class:`Symfony\\Component\\Validator\\Constraints\\Email`,
+e.g. ``Email::VALIDATION_MODE_STRICT``.
+
 The default value used by this option is set in the
 :ref:`framework.validation.email_validation_mode <reference-validation-email_validation_mode>`
 configuration option.
