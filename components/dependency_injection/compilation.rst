@@ -200,13 +200,16 @@ The XML version of the config would then look like this:
     <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:acme_demo="http://www.example.com/symfony/schema/"
-        xsi:schemaLocation="http://www.example.com/symfony/schema/ https://www.example.com/symfony/schema/hello-1.0.xsd">
-
-        <acme_demo:config>
+        xmlns:acme-demo="http://www.example.com/schema/dic/acme_demo"
+        xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://www.example.com/schema/dic/acme_demo
+            https://www.example.com/schema/dic/acme_demo/acme_demo-1.0.xsd"
+    >
+        <acme-demo:config>
             <acme_demo:foo>fooValue</acme_demo:foo>
             <acme_demo:bar>barValue</acme_demo:bar>
-        </acme_demo:config>
+        </acme-demo:config>
     </container>
 
 .. note::

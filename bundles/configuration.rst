@@ -20,19 +20,22 @@ as integration of other related components:
 
     .. code-block:: yaml
 
+        # config/packages/framework.yaml
         framework:
             form: true
 
     .. code-block:: xml
 
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:form/>
             </framework:config>
@@ -40,9 +43,14 @@ as integration of other related components:
 
     .. code-block:: php
 
-        $container->loadFromExtension('framework', [
-            'form' => true,
-        ]);
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('framework', [
+                'form' => true,
+            ]);
+        };
 
 Using the Bundle Extension
 --------------------------
@@ -69,24 +77,28 @@ can add some configuration that looks like this:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:acme-social="http://example.org/schema/dic/acme_social"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <acme-social:config>
-                <acme-social:twitter client-id="123" client-secret="your_secret"/>
+                <acme-social:twitter client-id="123"
+                    client-secret="your_secret"
+                />
             </acme-social:config>
-
-            <!-- ... -->
         </container>
 
     .. code-block:: php
 
         // config/packages/acme_social.php
-        $container->loadFromExtension('acme_social', [
-            'twitter' => [
-                'client_id'     => 123,
-                'client_secret' => 'your_secret',
-            ],
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('acme_social', [
+                'twitter' => [
+                    'client_id'     => 123,
+                    'client_secret' => 'your_secret',
+                ],
+            ]);
+        };
 
 The basic idea is that instead of having the user override individual
 parameters, you let the user configure just a few, specifically created,
@@ -242,8 +254,8 @@ For example, imagine your bundle has the following example config:
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            https://symfony.com/schema/dic/services/services-1.0.xsd"
+    >
         <services>
             <service id="acme.social.twitter_client" class="Acme\SocialBundle\TwitterClient">
                 <argument></argument> <!-- will be filled in with client_id dynamically -->
@@ -423,8 +435,8 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
         xsi:schemaLocation="http://symfony.com/schema/dic/services
             https://symfony.com/schema/dic/services/services-1.0.xsd
             http://acme_company.com/schema/dic/hello
-            https://acme_company.com/schema/dic/hello/hello-1.0.xsd">
-
+            https://acme_company.com/schema/dic/hello/hello-1.0.xsd"
+    >
         <acme-hello:config>
             <!-- ... -->
         </acme-hello:config>
