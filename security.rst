@@ -599,8 +599,42 @@ anything else within your firewall in the :ref:`access control
 
         $ composer require --dev symfony/profiler-pack
 
-Now that we understand our firewall, the next step is to create a way for your
-users to authenticate!
+Fetching the Firewall Configuration for a Request
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to get the configuration of the firewall that matched a given request,
+use the :class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` service::
+
+    // src/Service/ExampleService.php
+    // ...
+
+    use Symfony\Bundle\SecurityBundle\Security\Security;
+    use Symfony\Component\HttpFoundation\RequestStack;
+
+    class ExampleService
+    {
+        private Security $security;
+
+        public function __construct(Security $security, RequestStack $requestStack)
+        {
+            $this->requestStack = $requestStack;
+            // Avoid calling getFirewallConfig() in the constructor: auth may not
+            // be complete yet. Instead, store the entire Security object.
+            $this->security = $security;
+        }
+
+        public function someMethod()
+        {
+            $request = $this->requestStack->getCurrentRequest();
+            $firewallName = $this->security->getFirewallConfig($request)?->getName();
+
+            // ...
+        }
+    }
+
+.. versionadded:: 6.2
+
+    The ``getFirewallConfig()`` method was introduced in Symfony 6.2.
 
 .. _security-authenticators:
 
