@@ -71,7 +71,7 @@ sessions, check their default configuration:
                 // improves the security of the cookies used for sessions
                 ->cookieSecure('auto')
                 ->cookieSamesite(Cookie::SAMESITE_LAX)
-                ->storage_factory_id('session.storage.factory.native')
+                ->storageFactoryId('session.storage.factory.native')
             ;
         };
 
