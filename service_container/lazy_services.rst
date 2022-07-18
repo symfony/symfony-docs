@@ -30,15 +30,10 @@ until you interact with the proxy in some way.
     In PHP versions prior to 8.0 lazy services do not support parameters with
     default values for built-in PHP classes (e.g. ``PDO``).
 
-Installation
-------------
+.. versionadded:: 6.2
 
-In order to use the lazy service instantiation, you will need to install the
-``symfony/proxy-manager-bridge`` package:
-
-.. code-block:: terminal
-
-    $ composer require symfony/proxy-manager-bridge
+    Starting from Symfony 6.2, you don't have to install any package (e.g.
+    ``symfony/proxy-manager-bridge``) in order to use the lazy service instantiation.
 
 Configuration
 -------------
@@ -81,32 +76,16 @@ You can mark the service as ``lazy`` by manipulating its definition:
             $services->set(AppExtension::class)->lazy();
         };
 
+Once you inject the service into another service, a lazy ghost object with the
+same signature of the class representing the service should be injected. A lazy
+`ghost object`_ is an object that is created empty and that is able to initialize
+itself when being accessed for the first time). The same happens when calling
+``Container::get()`` directly.
 
-Once you inject the service into another service, a virtual `proxy`_ with the
-same signature of the class representing the service should be injected. The
-same happens when calling ``Container::get()`` directly.
-
-The actual class will be instantiated as soon as you try to interact with the
-service (e.g. call one of its methods).
-
-To check if your proxy works you can check the interface of the received object::
+To check if your lazy service works you can check the interface of the received object::
 
     dump(class_implements($service));
-    // the output should include "ProxyManager\Proxy\LazyLoadingInterface"
+    // the output should include "Symfony\Component\VarExporter\LazyGhostObjectInterface"
 
-.. note::
-
-    If you don't install the `ProxyManager bridge`_ , the container will skip
-    over the ``lazy`` flag and directly instantiate the service as it would
-    normally do.
-
-Additional Resources
---------------------
-
-You can read more about how proxies are instantiated, generated and initialized
-in the `documentation of ProxyManager`_.
-
-.. _`ProxyManager bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/ProxyManager
-.. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern
-.. _`documentation of ProxyManager`: https://github.com/Ocramius/ProxyManager/blob/master/docs/lazy-loading-value-holder.md
+.. _`ghost object`: https://en.wikipedia.org/wiki/Lazy_loading#Ghost
 .. _`final`: https://www.php.net/manual/en/language.oop5.final.php
