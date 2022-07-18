@@ -271,7 +271,7 @@ checks if the user is a member of the site and a second one that checks if the u
 is older than 18.
 
 To handle these cases, the access decision manager uses a "strategy" which you can configure.
-There are three strategies available:
+There are four strategies available:
 
 ``affirmative`` (default)
     This grants access as soon as there is *one* voter granting access;
