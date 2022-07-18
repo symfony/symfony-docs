@@ -371,7 +371,7 @@ Testing the Completion script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Console component comes with a special
-:class:`Symfony\\Component\\Console\\Test\\CommandCompletionTester`` class
+:class:`Symfony\\Component\\Console\\Tester\\CommandCompletionTester`` class
 to help you unit test the completion logic::
 
     // ...
