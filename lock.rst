@@ -55,6 +55,7 @@ this behavior by using the ``lock`` key like:
             lock: ['redis://r1.docker', 'redis://r2.docker']
             lock: 'zookeeper://z1.docker'
             lock: 'zookeeper://z1.docker,z2.docker'
+            lock: 'zookeeper://localhost01,localhost02:2181'
             lock: 'sqlite:///%kernel.project_dir%/var/lock.db'
             lock: 'mysql:host=127.0.0.1;dbname=app'
             lock: 'pgsql:host=127.0.0.1;dbname=app'
@@ -102,6 +103,8 @@ this behavior by using the ``lock`` key like:
 
                     <framework:resource>zookeeper://z1.docker,z2.docker</framework:resource>
 
+                    <framework:resource>zookeeper://localhost01,localhost02:2181</framework:resource>
+
                     <framework:resource>sqlite:///%kernel.project_dir%/var/lock.db</framework:resource>
 
                     <framework:resource>mysql:host=127.0.0.1;dbname=app</framework:resource>
@@ -142,6 +145,7 @@ this behavior by using the ``lock`` key like:
                 ->resource('default', ['redis://r1.docker', 'redis://r2.docker'])
                 ->resource('default', ['zookeeper://z1.docker'])
                 ->resource('default', ['zookeeper://z1.docker,z2.docker'])
+                ->resource('default', ['zookeeper://localhost01,localhost02:2181'])
                 ->resource('default', ['sqlite:///%kernel.project_dir%/var/lock.db'])
                 ->resource('default', ['mysql:host=127.0.0.1;dbname=app'])
                 ->resource('default', ['pgsql:host=127.0.0.1;dbname=app'])
@@ -156,6 +160,11 @@ this behavior by using the ``lock`` key like:
                 ->resource('report', ['semaphore'])
             ;
         };
+
+.. versionadded:: 6.1
+
+    The CSV support (e.g. ``zookeeper://localhost01,localhost02:2181``) in
+    ZookeeperStore DSN was introduced in Symfony 6.1.
 
 Locking a Resource
 ------------------
