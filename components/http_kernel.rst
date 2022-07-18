@@ -409,12 +409,12 @@ return a ``Response``.
 
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
-    There is no default listener inside the Symfony Framework for the ``kernel.view``
-    event. However, `SensioFrameworkExtraBundle`_ *does* add a listener to this
-    event. If your controller returns an array, and you place the `@Template`_
-    annotation above the controller, then this listener renders a template,
-    passes the array you returned from your controller to that template, and
-    creates a ``Response`` containing the returned content from that template.
+    There is a default listener inside the Symfony Framework for the ``kernel.view``
+    event. If your controller action returns an array, and you apply the
+    :ref:`#[Template()] attribute <templates-template-attribute>` to that
+    controller action, then this listener renders a template, passes the array
+    you returned from your controller to that template, and creates a ``Response``
+    containing the returned content from that template.
 
     Additionally, a popular community bundle `FOSRestBundle`_ implements
     a listener on this event which aims to give you a robust view layer
@@ -751,5 +751,4 @@ Learn more
 .. _`PHP FPM`: https://www.php.net/manual/en/install.fpm.php
 .. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
 .. _variadic: https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list

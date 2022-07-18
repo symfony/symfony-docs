@@ -234,14 +234,6 @@ configuration. You don't need to browse several files created with different
 formats (YAML, XML, PHP): all the configuration is just where you need it and
 it only uses one format.
 
-Don't Use Annotations to Configure the Controller Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The ``@Template`` annotation is useful, but also involves some *magic*.
-Moreover, most of the time ``@Template`` is used without any parameters, which
-makes it more difficult to know which template is being rendered. It also hides
-the fact that a controller should always return a ``Response`` object.
-
 Use Dependency Injection to Get Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
