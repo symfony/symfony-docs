@@ -474,6 +474,12 @@ You can also manually hash a password by running:
 Read more about all available hashers and password migration in
 :doc:`security/passwords`.
 
+.. versionadded:: 6.2
+
+    In applications using Symfony 6.2 and PHP 8.2 or newer, the
+    `SensitiveParameter PHP attribute`_ is applied to all plain passwords and
+    sensitive tokens so they don't appear in stack traces.
+
 .. _firewalls-authentication:
 .. _a-authentication-firewalls:
 
@@ -2658,3 +2664,4 @@ Authorization (Denying Access)
 .. _`SymfonyCastsVerifyEmailBundle`: https://github.com/symfonycasts/verify-email-bundle
 .. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication
 .. _`Login CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
+.. _`SensitiveParameter PHP attribute`: https://wiki.php.net/rfc/redact_parameters_in_back_traces
