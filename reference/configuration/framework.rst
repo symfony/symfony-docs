@@ -144,6 +144,22 @@ which the cache can serve a stale response when an error is encountered
 (default: 60). This setting is overridden by the stale-if-error HTTP
 Cache-Control extension (see RFC 5861).
 
+terminate_on_cache_hit
+......................
+
+**type**: ``boolean`` **default**: ``true``
+
+If ``true``, the :ref:`kernel.terminate <component-http-kernel-kernel-terminate>`
+event is dispatched even when the cache is hit.
+
+Unless your application needs to process events on cache hits, it's recommended
+to set this to ``false`` to improve performance, because it avoids having to
+bootstrap the Symfony framework on a cache hit.
+
+.. versionadded:: 6.2
+
+    The ``terminate_on_cache_hit`` option was introduced in Symfony 6.2.
+
  .. _configuration-framework-http_method_override:
 
 http_method_override
