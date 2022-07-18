@@ -227,7 +227,7 @@ Require a Specific Symfony Version
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 You can use the special ``SYMFONY_REQUIRE`` environment variable together
-with Symfony to install a specific Symfony version:
+with Symfony Flex to install a specific Symfony version:
 
 .. code-block:: bash
 
