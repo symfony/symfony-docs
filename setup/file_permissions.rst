@@ -44,7 +44,8 @@ server user and grant the needed permissions:
 .. code-block:: terminal
 
     $ HTTPDUSER=$(ps axo user,comm | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1)
-    # if this doesn't work, try adding `-n` option
+
+    # if the following commands don't work, try adding `-n` option to `setfacl`
 
     # set permissions for future files and folders
     $ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:$(whoami):rwX var
