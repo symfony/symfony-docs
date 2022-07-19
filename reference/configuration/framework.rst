@@ -53,6 +53,20 @@ will invalidate all signed URIs and Remember Me cookies. That's why, after
 changing this value, you should regenerate the application cache and log
 out all the application users.
 
+catch_all_throwables
+~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
+thrown by the application and will turn them into HTTP reponses.
+
+Starting from Symfony 7.0, the default value of this option will be ``true``.
+
+.. versionadded:: 6.2
+
+    The ``catch_all_throwables`` option was introduced in Symfony 6.2.
+
 .. _configuration-framework-http_cache:
 
 http_cache
