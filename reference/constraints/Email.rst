@@ -146,4 +146,4 @@ configuration option.
 
 .. _egulias/email-validator: https://packagist.org/packages/egulias/email-validator
 .. _HTML5 email input element: https://www.w3.org/TR/html5/sec-forms.html#valid-e-mail-address
-.. _RFC 5322: https://tools.ietf.org/html/rfc5322
+.. _RFC 5322: https://datatracker.ietf.org/doc/html/rfc5322
