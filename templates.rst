@@ -470,6 +470,38 @@ If your controller does not extend from ``AbstractController``, you'll need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
 use the ``render()`` method of the ``twig`` service.
 
+.. _templates-template-attribute:
+
+Another option is to use the ``#[Template()]`` attribute on the controller method
+to define the template to render::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class ProductController extends AbstractController
+    {
+        #[Template('product/index.html.twig')]
+        public function index()
+        {
+            // ...
+
+            // when using the #[Template()] attribute, you only need to return
+            // an array with the parameters to pass to the template (the attribute
+            // is the one which will create and return the Response object).
+            return [
+                'category' => '...',
+                'promotions' => ['...', '...'],
+            ];
+        }
+    }
+
+.. versionadded:: 6.2
+
+    The ``#[Template()]`` attribute was introduced in Symfony 6.2.
+
 Rendering a Template in Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
