@@ -87,7 +87,7 @@ Sendberry        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:P
 Sendinblue       ``symfony/sendinblue-notifier``        ``sendinblue://API_KEY@default?sender=PHONE``
 Sms77            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
 Sinch            ``symfony/sinch-notifier``             ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-Smsapi           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default?from=FROM``
+Smsapi           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default?from=FROM&test=0``
 SmsBiuras        ``symfony/sms-biuras-notifier``        ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
 Smsc             ``symfony/smsc-notifier``              ``smsc://LOGIN:PASSWORD@default?from=FROM``
 SMSFactor        ``symfony/sms-factor-notifier``        ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
@@ -99,14 +99,15 @@ Vonage           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@de
 Yunpian          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@default``
 ===============  =====================================  ===========================================================================
 
-.. versionadded:: 6.2
-
-    The ContactEveryone and SMSFactor integrations were introduced in Symfony 6.2.
-
 .. versionadded:: 6.1
 
     The 46elks, OrangeSms, KazInfoTeh and Sendberry integrations were introduced in Symfony 6.1.
     The ``no_stop_clause`` option in ``OvhCloud`` DSN was introduced in Symfony 6.1.
+    The ``test`` option in ``Smsapi`` DSN was introduced in Symfony 6.1.
+
+.. versionadded:: 6.2
+
+    The ContactEveryone and SMSFactor integrations were introduced in Symfony 6.2.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
