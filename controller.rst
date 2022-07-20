@@ -153,7 +153,7 @@ and ``redirect()`` methods::
 
         // redirects to a route and maintains the original query string parameters
         return $this->redirectToRoute('blog_show', $request->query->all());
-        
+
         // redirects to the current route (e.g. for Post/Redirect/Get pattern):
         return $this->redirectToRoute($request->attributes->get('_route'));
 
@@ -314,10 +314,6 @@ use:
     created: templates/product/index.html.twig
     created: templates/product/new.html.twig
     created: templates/product/show.html.twig
-
-.. versionadded:: 1.2
-
-    The ``make:crud`` command was introduced in MakerBundle 1.2.
 
 .. index::
    single: Controller; Managing errors
