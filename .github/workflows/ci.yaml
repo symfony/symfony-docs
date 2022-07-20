@@ -116,6 +116,11 @@ jobs:
             if: ${{ steps.find-files.outputs.files }}
             run: composer create-project symfony-tools/code-block-checker:@dev _checker
 
+          - name: Allow Flex
+            if: ${{ steps.find-files.outputs.files }}
+            run: |
+              composer config --no-plugins allow-plugins.symfony/flex true
+
           - name: Install test application
             if: ${{ steps.find-files.outputs.files }}
             run: |
