@@ -236,6 +236,25 @@ with Symfony Flex to install a specific Symfony version:
     # recommended to have a better output and faster download time)
     composer update --prefer-dist --no-progress
 
+Alternatively, you can also install Flex as a dev dependency of the project:
+
+.. code-block:: bash
+
+    # in your local environment, allow symfony/flex and install it to run tasks
+    composer config --no-plugins allow-plugins.symfony/flex true
+    composer require --dev symfony/flex
+
+    # commit the updated composer.json file
+
+Then you can require a specific Symfony version:
+
+.. code-block:: bash
+
+    # in the CI environment, this requires Symfony 5.x for all Symfony packages
+    composer config extra.symfony.require "5.*"
+
+    composer update --prefer-dist --no-progress
+
 .. caution::
 
     If you want to cache your Composer dependencies, **do not** cache the
