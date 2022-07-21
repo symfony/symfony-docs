@@ -2437,7 +2437,7 @@ cache
 **type**: ``string``
 
 The service that is used to persist class metadata in a cache. The service
-has to implement the :class:`Symfony\\Component\\Validator\\Mapping\\Cache\\CacheInterface`.
+has to implement the :class:`Symfony\\Contracts\\Cache\\CacheInterface`.
 
 Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
 cache provided by the Doctrine project.
