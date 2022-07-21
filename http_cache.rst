@@ -191,24 +191,44 @@ Expiration Caching
 
 The *easiest* way to cache a response is by caching it for a specific amount of time::
 
-    // src/Controller/BlogController.php
-    use Symfony\Component\HttpFoundation\Response;
-    // ...
+.. configuration-block::
 
-    public function index()
-    {
-        // somehow create a Response object, like by rendering a template
-        $response = $this->render('blog/index.html.twig', []);
+    .. code-block:: php-attributes
 
-        // cache publicly for 3600 seconds
-        $response->setPublic();
-        $response->setMaxAge(3600);
+        // src/Controller/BlogController.php
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
 
-        // (optional) set a custom Cache-Control directive
-        $response->headers->addCacheControlDirective('must-revalidate', true);
+        #[Cache(public: true, maxage: 3600, mustRevalidate: true)]
+        public function index()
+        {
+            return $this->render('blog/index.html.twig', []);
+        }
 
-        return $response;
-    }
+    .. code-block:: php
+
+        // src/Controller/BlogController.php
+        use Symfony\Component\HttpFoundation\Response;
+        // ...
+
+        public function index()
+        {
+            // somehow create a Response object, like by rendering a template
+            $response = $this->render('blog/index.html.twig', []);
+
+            // cache publicly for 3600 seconds
+            $response->setPublic();
+            $response->setMaxAge(3600);
+
+            // (optional) set a custom Cache-Control directive
+            $response->headers->addCacheControlDirective('must-revalidate', true);
+
+            return $response;
+        }
+
+.. versionadded:: 6.2
+
+    The ``#[Cache()]`` attribute was introduced in Symfony 6.2.
 
 Thanks to this new code, your HTTP response will have the following header:
 
@@ -315,6 +335,10 @@ Additionally, most cache-related HTTP headers can be set via the single
         'last_modified'    => new \DateTime(),
         'etag'             => 'abcdef'
     ]);
+
+.. tip::
+
+    All these options are also available when using the ``#[Cache()]`` attribute.
 
 Cache Invalidation
 ------------------

@@ -32,14 +32,28 @@ trigger a different representation of the requested resource:
     resource based on the URI and the value of the ``Accept-Encoding`` and
     ``User-Agent`` request header.
 
-The ``Response`` object offers a clean interface for managing the ``Vary``
-header::
+Set the ``Vary`` header via the ``Response`` object methods or the ``#[Cache()]``
+attribute::
 
-    // sets one vary header
-    $response->setVary('Accept-Encoding');
+.. configuration-block::
 
-    // sets multiple vary headers
-    $response->setVary(['Accept-Encoding', 'User-Agent']);
+    .. code-block:: php-attributes
 
-The ``setVary()`` method takes a header name or an array of header names for
-which the response varies.
+        // this attribute takes an array with the name of the header(s)
+        // names for which the response varies
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        #[Cache(vary: ['Accept-Encoding'])]
+        #[Cache(vary: ['Accept-Encoding', 'User-Agent'])]
+        public function index()
+        {
+            // ...
+        }
+
+    .. code-block:: php
+
+        // this method takes a header name or an array of header names for
+        // which the response varies
+        $response->setVary('Accept-Encoding');
+        $response->setVary(['Accept-Encoding', 'User-Agent']);
