@@ -84,6 +84,7 @@ Use these methods to transform the UUID object into different bases::
     $uuid->toBase32();  // string(26) "6SWYGR8QAV27NACAHMK5RG0RPG"
     $uuid->toBase58();  // string(22) "TuetYWNHhmuSQ3xPoVLv9M"
     $uuid->toRfc4122(); // string(36) "d9e7a184-5d5b-11ea-a62a-3499710062d0"
+    $uuid->toHex(); // string(34) "0xd9e7a1845d5b11eaa62a3499710062d0"
 
 Working with UUIDs
 ~~~~~~~~~~~~~~~~~~
@@ -258,6 +259,7 @@ Use these methods to transform the ULID object into different bases::
     $ulid->toBase32();  // string(26) "01E439TP9XJZ9RPFH3T1PYBCR8"
     $ulid->toBase58();  // string(22) "1BKocMc5BnrVcuq2ti4Eqm"
     $ulid->toRfc4122(); // string(36) "0171069d-593d-97d3-8b3e-23d06de5b308"
+    $ulid->toHex(); // string(34) "0x0171069d593d97d38b3e23d06de5b308"
 
 Working with ULIDs
 ~~~~~~~~~~~~~~~~~~
