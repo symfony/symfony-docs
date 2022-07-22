@@ -1092,6 +1092,7 @@ Authorization (Denying Access)
 .. toctree::
     :maxdepth: 1
 
+    security/expressions
     security/voters
     security/securing_services
     security/access_control

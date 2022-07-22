@@ -1,7 +1,7 @@
 .. index::
    single: Expressions in the Framework
 
-Security: Complex Access Controls with Expressions
+Complex Access Controls with Expressions
 ==================================================
 
 .. seealso::
@@ -14,7 +14,7 @@ accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
 
     // src/Controller/MyController.php
     namespace App\Controller;
-    
+
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\ExpressionLanguage\Expression;
     use Symfony\Component\HttpFoundation\Response;
