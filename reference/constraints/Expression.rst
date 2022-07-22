@@ -145,9 +145,9 @@ more about the expression language syntax, see
 
 .. versionadded:: 6.2
 
-   The `negate` option was introduced in Symfony 6.2.
+   The ``negate`` option was introduced in Symfony 6.2.
 
-Alternatively, you can set the `negate` option to ``false`` in order to
+Alternatively, you can set the ``negate`` option to ``false`` in order to
 assert that the expression must return ``true`` for validation to fail.
 
 .. sidebar:: Mapping the Error to a Specific Field
@@ -310,7 +310,7 @@ If ``false``, the validation fails when expression returns ``true``.
 
 .. versionadded:: 6.2
 
-   The `negate` option was introduced in Symfony 6.2.
+   The ``negate`` option was introduced in Symfony 6.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
