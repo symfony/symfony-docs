@@ -143,6 +143,13 @@ expression that must return true in order for validation to pass. To learn
 more about the expression language syntax, see
 :doc:`/components/expression_language/syntax`.
 
+.. versionadded:: 6.2
+
+   The `negate` option was introduced in Symfony 6.2.
+
+Alternatively, you can set the `negate` option to ``false`` in order to
+assert that the expression must return ``true`` for validation to fail.
+
 .. sidebar:: Mapping the Error to a Specific Field
 
     You can also attach the constraint to a specific property and still validate
@@ -293,6 +300,17 @@ Parameter        Description
 ``{{ value }}``  The current (invalid) value
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
+
+``negate``
+~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+If ``false``, the validation fails when expression returns ``true``.
+
+.. versionadded:: 6.2
+
+   The `negate` option was introduced in Symfony 6.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
