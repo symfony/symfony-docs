@@ -103,7 +103,7 @@ Advanced Example: Twig, Annotations and the Web Debug Toolbar
 -------------------------------------------------------------
 
 The purpose of the ``MicroKernelTrait`` is *not* to have a single-file application.
-Instead, its goal to give you the power to choose your bundles and structure.
+Instead, its goal is to give you the power to choose your bundles and structure.
 
 First, you'll probably want to put your PHP classes in an ``src/`` directory. Configure
 your ``composer.json`` file to load from there:

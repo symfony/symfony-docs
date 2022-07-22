@@ -130,7 +130,7 @@ It is quite common for an existing application to either not have a test suite
 at all or have low code coverage. Introducing unit tests for this code is
 likely not cost effective as the old code might be replaced with functionality
 from Symfony components or might be adapted to the new application.
-Additionally legacy code tends to be hard to write tests for making the process
+Additionally legacy code tends to be hard to write tests for, making the process
 slow and cumbersome.
 
 Instead of providing low level tests, that ensure each class works as expected, it
