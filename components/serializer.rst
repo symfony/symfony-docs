@@ -413,10 +413,6 @@ You are now able to serialize only attributes in the groups you want::
     );
     // $obj2 = MyObj(foo: 'foo', anotherProperty: 'anotherProperty', bar: 'bar')
 
-.. versionadded:: 5.2
-
-    The ``*`` special value for ``groups`` was introduced in Symfony 5.2.
-
 .. _ignoring-attributes-when-serializing:
 
 Selecting Specific Attributes
