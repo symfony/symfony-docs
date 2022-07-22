@@ -8,6 +8,18 @@ services that require special processing, like console commands or Twig extensio
 This article shows the most common tags provided by Symfony components, but in
 your application there could be more tags available provided by third-party bundles.
 
+Run this command to display tagged services in your application:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --tags
+
+To search for a specific tag, re-run this command with a search term:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --tag=form.type
+
 assets.package
 --------------
 
