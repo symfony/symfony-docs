@@ -162,9 +162,9 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
         // ... getter and setter methods
     }
 
-.. caution::
+.. note::
 
-    Starting in v1.44.0 - MakerBundle only supports entities using Attributes.
+    Starting in v1.44.0 - MakerBundle only supports entities using PHP attributes.
 
 .. note::
 
@@ -440,8 +440,8 @@ some basic validation tasks::
 
     use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Validator\Validator\ValidatorInterface;
     use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\Validator\Validator\ValidatorInterface;
     // ...
 
     class ProductController extends AbstractController
