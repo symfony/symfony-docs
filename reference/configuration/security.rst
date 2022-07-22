@@ -29,6 +29,7 @@ Configuration
 
 * `access_denied_url`_
 * `always_authenticate_before_granting`_
+* `delete_cookies`_
 * `erase_credentials`_
 * `hide_user_not_found`_
 * `session_fixation_strategy`_
@@ -65,6 +66,81 @@ always_authenticate_before_granting
 If ``true``, the user is asked to authenticate before each call to the
 ``isGranted()`` method in services and controllers or ``is_granted()`` from
 templates.
+
+delete_cookies
+~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``[]``
+
+Lists the names (and other optional features) of the cookies to delete when the
+user logs out::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        delete_cookies:
+                            cookie1-name: null
+                            cookie2-name:
+                                path: '/'
+                            cookie3-name:
+                                path: null
+                                domain: example.com
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <logout path="...">
+                        <delete-cookie name="cookie1-name"/>
+                        <delete-cookie name="cookie2-name" path="/"/>
+                        <delete-cookie name="cookie3-name" domain="example.com"/>
+                    </logout>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            // ...
+            'firewalls' => [
+                'main' => [
+                    'logout' => [
+                        'delete_cookies' => [
+                            'cookie1-name' => null,
+                            'cookie2-name' => [
+                                'path' => '/',
+                            ],
+                            'cookie3-name' => [
+                                'path' => null,
+                                'domain' => 'example.com',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
