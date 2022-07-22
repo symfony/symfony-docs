@@ -1,8 +1,8 @@
 .. index::
    single: Expressions in the Framework
 
-Complex Access Controls with Expressions
-==================================================
+Using Expressions in Security Access Controls
+=============================================
 
 .. seealso::
 

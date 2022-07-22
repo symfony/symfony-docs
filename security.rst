@@ -1092,10 +1092,10 @@ Authorization (Denying Access)
 .. toctree::
     :maxdepth: 1
 
-    security/expressions
     security/voters
     security/securing_services
     security/access_control
+    security/expressions
     security/access_denied_handler
     security/acl
     security/force_https
