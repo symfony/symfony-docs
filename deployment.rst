@@ -65,7 +65,7 @@ Using Platforms as a Service
 
 Using a Platform as a Service (PaaS) can be a great way to deploy your Symfony
 app quickly. There are many PaaS, but we recommend `Platform.sh`_ as it
-provides a dedicated Symfony integration and help fund the Symfony development.
+provides a dedicated Symfony integration and helps fund the Symfony development.
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

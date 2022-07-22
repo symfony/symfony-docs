@@ -78,7 +78,7 @@ sessions, check their default configuration:
 Setting the ``handler_id`` config option to ``null`` means that Symfony will
 use the native PHP session mechanism. The session metadata files will be stored
 outside of the Symfony application, in a directory controlled by PHP. Although
-this usually simplify things, some session expiration related options may not
+this usually simplifies things, some session expiration related options may not
 work as expected if other applications that write to the same directory have
 short max lifetime settings.
 
