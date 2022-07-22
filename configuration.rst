@@ -847,6 +847,13 @@ Use the ``debug:dotenv`` command to understand how Symfony parses the different
      ALICE      BOB     BOB        bob
     ---------- ------- ---------- ------
 
+    # look for a specific variable passing its full or partial name as an argument
+    $ php bin/console debug:dotenv foo
+
+.. versionadded:: 6.2
+
+    The option to pass variable names to ``debug:dotenv`` was introduced in Symfony 6.2.
+
 Additionally, and regardless of how you set environment variables, you can see all
 environment variables, with their values, referenced in Symfony's container configuration:
 
