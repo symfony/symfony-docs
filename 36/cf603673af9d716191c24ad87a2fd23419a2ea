@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-07-21T08:11:00Z
+
+Flex is already allowed in the application (see https://github.com/symfony-tools/code-block-checker/blob/main/composer.json#L48). That should be enough, shouldn't it?
+
+---------------------------------------------------------------------------
+
+by jrushlow at 2022-07-21T19:10:54Z
+
+It is allowed for that package `symfony-tools/code-block-checker` _but_ that wont automatically allow it in packages that use `code-block-checker`. So you have to explicitly allow that in `symfony-docs` CI as well to my understanding. Ref - https://github.com/symfony/maker-bundle/pull/1145#issuecomment-1175495734
+
+https://github.com/symfony/symfony-docs/runs/7438798967?check_suite_focus=true shows CI failing due to the plugin not explicitly being allowed.
+
+_EDIT_ a better example w/ CI failing because of `allow_plugins` https://github.com/symfony/symfony-docs/pull/17023
