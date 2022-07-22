@@ -1035,7 +1035,7 @@ Enable the authenticator using the ``json_login`` setting:
     mandatory wildcards - e.g. ``/login/{foo}`` where ``foo`` has no
     default value).
 
-The authenticator runs when a client request the ``check_path``. First,
+The authenticator runs when a client requests the ``check_path``. First,
 create a controller for this path:
 
 .. code-block:: terminal
@@ -1118,7 +1118,7 @@ That's it! To summarize the process:
             "password": "MyPassword"
         }
 #. The security system intercepts the request, checks the user's submitted
-   credentials and authenticates the user. If the credentials is incorrect,
+   credentials and authenticates the user. If the credentials are incorrect,
    an HTTP 401 Unauthorized JSON response is returned, otherwise your
    controller is run;
 #. Your controller creates the correct response:

@@ -174,7 +174,7 @@ provides access to the form properties (e.g. ``$form->getUri()``,
 Custom Header Handling
 ~~~~~~~~~~~~~~~~~~~~~~
 
-The optional HTTP headers passed to the ``request()`` method follows the FastCGI
+The optional HTTP headers passed to the ``request()`` method follow the FastCGI
 request format (uppercase, underscores instead of dashes and prefixed with ``HTTP_``).
 Before saving those headers to the request, they are lower-cased, with ``HTTP_``
 stripped, and underscores converted into dashes.

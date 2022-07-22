@@ -19,7 +19,7 @@ Static Factories
 Suppose you have a factory that configures and returns a new ``NewsletterManager``
 object by calling the static ``createNewsletterManager()`` method::
 
-    // src/Email\NewsletterManagerStaticFactory.php
+    // src/Email/NewsletterManagerStaticFactory.php
     namespace App\Email;
 
     // ...

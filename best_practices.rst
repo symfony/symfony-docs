@@ -237,7 +237,7 @@ it only uses one format.
 Use Dependency Injection to Get Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you extend the base ``AbstractController``, you can only access to the most
+If you extend the base ``AbstractController``, you can only get access to the most
 common services (e.g ``twig``, ``router``, ``doctrine``, etc.), directly from the
 container via ``$this->container->get()``.
 Instead, you must use dependency injection to fetch services by
@@ -281,7 +281,7 @@ Define your Forms as PHP Classes
 
 Creating :ref:`forms in classes <creating-forms-in-classes>` allows to reuse
 them in different parts of the application. Besides, not creating forms in
-controllers simplify the code and maintenance of the controllers.
+controllers simplifies the code and maintenance of the controllers.
 
 Add Form Buttons in Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -380,7 +380,7 @@ Use Webpack Encore to Process Web Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Web assets are things like CSS, JavaScript and image files that make the
-frontend of your site looks and works great. `Webpack`_ is the leading JavaScript
+frontend of your site look and work great. `Webpack`_ is the leading JavaScript
 module bundler that compiles, transforms and packages assets for usage in a browser.
 
 :doc:`Webpack Encore </frontend>` is a JavaScript library that gets rid of most

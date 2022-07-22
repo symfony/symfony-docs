@@ -366,7 +366,7 @@ value.
 ``maxPixelsMessage``
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image has to many pixels ({{ pixels }} pixels).
+**type**: ``string`` **default**: ``The image has too many pixels ({{ pixels }} pixels).
 Maximum amount expected is {{ max_pixels }} pixels.``
 
 The error message if the amount of pixels of the image exceeds `maxPixels`_.

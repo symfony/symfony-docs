@@ -87,9 +87,9 @@ which is defined using the ``APP_SECRET`` environment variable.
 After enabling the ``remember_me`` system in the configuration, there are a
 couple more things to do before remember me works correctly:
 
-#. :ref:`Add an opt-in checkbox to active remember me <security-remember-me-activate>`;
+#. :ref:`Add an opt-in checkbox to activate remember me <security-remember-me-activate>`;
 #. :ref:`Use an authenticator that supports remember me <security-remember-me-authenticator>`;
-#. Optionally, :ref:`configure the how remember me cookies are stored and validated <security-remember-me-storage>`.
+#. Optionally, :ref:`configure how remember me cookies are stored and validated <security-remember-me-storage>`.
 
 After this, the remember me cookie will be created upon successful
 authentication. For some pages/actions, you can
@@ -131,7 +131,7 @@ checkbox must have a name of ``_remember_me``:
 .. note::
 
     Optionally, you can configure a custom name for this checkbox using the
-    ``remember_me_parameter`` setting under the ``remember_me`` section.
+    ``name`` setting under the ``remember_me`` section.
 
 Always activating Remember Me
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
