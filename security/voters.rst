@@ -47,8 +47,8 @@ which makes creating a voter even easier::
 
     abstract class Voter implements VoterInterface
     {
-        abstract protected function supports(string $attribute, $subject);
-        abstract protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token);
+        abstract protected function supports(string $attribute, mixed $subject);
+        abstract protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token);
     }
 
 .. _how-to-use-the-voter-in-a-controller:
@@ -129,7 +129,7 @@ would look like this::
         const VIEW = 'view';
         const EDIT = 'edit';
 
-        protected function supports(string $attribute, $subject): bool
+        protected function supports(string $attribute, mixed $subject): bool
         {
             // if the attribute isn't one we support, return false
             if (!in_array($attribute, [self::VIEW, self::EDIT])) {
@@ -144,7 +144,7 @@ would look like this::
             return true;
         }
 
-        protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
+        protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
         {
             $user = $token->getUser();
 
@@ -189,7 +189,7 @@ That's it! The voter is done! Next, :ref:`configure it <declaring-the-voter-as-a
 
 To recap, here's what's expected from the two abstract methods:
 
-``Voter::supports(string $attribute, $subject)``
+``Voter::supports(string $attribute, mixed $subject)``
     When ``isGranted()`` (or ``denyAccessUnlessGranted()``) is called, the first
     argument is passed here as ``$attribute`` (e.g. ``ROLE_USER``, ``edit``) and
     the second argument (if any) is passed as ``$subject`` (e.g. ``null``, a ``Post``
@@ -199,7 +199,7 @@ To recap, here's what's expected from the two abstract methods:
     return ``true`` if the attribute is ``view`` or ``edit`` and if the object is
     a ``Post`` instance.
 
-``voteOnAttribute(string $attribute, $subject, TokenInterface $token)``
+``voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token)``
     If you return ``true`` from ``supports()``, then this method is called. Your
     job is to return ``true`` to allow access and ``false`` to deny access.
     The ``$token`` can be used to find the current user object (if any). In this
@@ -242,7 +242,7 @@ with ``ROLE_SUPER_ADMIN``::
             $this->security = $security;
         }
 
-        protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
+        protected function voteOnAttribute($attribute, mixed $subject, TokenInterface $token): bool
         {
             // ...
 
