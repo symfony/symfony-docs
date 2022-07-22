@@ -388,10 +388,13 @@ header, etc.) but most of the times you'll set text headers::
 
     $email = (new Email())
         ->getHeaders()
-            // this header tells auto-repliers ("email holiday mode") to not
+            // this non-standard header tells compliant autoresponders ("email holiday mode") to not
             // reply to this message because it's an automated email
             ->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply')
 
+            // use an array if you want to add a header with multiple values
+            // (for example in the "References" or "In-Reply-To" header)
+            ->addIdHeader('References', ['123@example.com', '456@example.com']);
         // ...
     ;
 
