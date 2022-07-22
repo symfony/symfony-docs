@@ -134,10 +134,17 @@ how many times in a row the message should be printed::
     $this
         // ...
         ->addOption(
+            // this is the name that users must type to pass this option (e.g. --iterations=5)
             'iterations',
+            // this is the optional shortcut of the option name, which usually is just a letter
+            // (e.g. `i`, so users pass it as `-i`); use it for commonly used options
+            // or options with long names
             null,
+            // this is the type of option (e.g. requires a value, can be passed more than once, etc.)
             InputOption::VALUE_REQUIRED,
+            // the option description displayed when showing the command help
             'How many times should the message be printed?',
+            // the default value of the option (for those which allow to pass values)
             1
         )
     ;
