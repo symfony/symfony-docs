@@ -2639,6 +2639,7 @@ Authorization (Denying Access)
 
     security/voters
     security/access_control
+    security/expressions
     security/access_denied_handler
     security/force_https
 
