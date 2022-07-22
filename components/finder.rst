@@ -336,11 +336,16 @@ instance. The file is excluded from the result set if the Closure returns
 Sorting Results
 ---------------
 
-Sort the results by name or by type (directories first, then files)::
+Sort the results by name, extension, size or type (directories first, then files)::
 
     $finder->sortByName();
-
+    $finder->sortByExtension();
+    $finder->sortBySize();
     $finder->sortByType();
+
+.. versionadded:: 6.2
+
+    The ``sortByExtension()`` and ``sortBySize()`` methods were introduced in Symfony 6.2.
 
 .. tip::
 
