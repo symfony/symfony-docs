@@ -176,20 +176,20 @@ fingertips thanks to a nice and simple API::
     // the URI being requested (e.g. /about) minus any query parameters
     $request->getPathInfo();
 
-    // retrieve GET and POST variables respectively
+    // retrieves GET and POST variables respectively
     $request->query->get('foo');
     $request->request->get('bar', 'default value if bar does not exist');
 
-    // retrieve SERVER variables
+    // retrieves SERVER variables
     $request->server->get('HTTP_HOST');
 
     // retrieves an instance of UploadedFile identified by foo
     $request->files->get('foo');
 
-    // retrieve a COOKIE value
+    // retrieves a COOKIE value
     $request->cookies->get('PHPSESSID');
 
-    // retrieve an HTTP request header, with normalized, lowercase keys
+    // retrieves a HTTP request header, with normalized, lowercase keys
     $request->headers->get('host');
     $request->headers->get('content-type');
 

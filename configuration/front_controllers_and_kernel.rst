@@ -247,7 +247,7 @@ the directory of the environment you're using (most commonly ``dev/`` while
 developing and debugging). While it can vary, the ``var/cache/dev/`` directory
 includes the following:
 
-``srcApp_KernelDevDebugContainer.php``
+``App_KernelDevDebugContainer.php``
     The cached "service container" that represents the cached application
     configuration.
 

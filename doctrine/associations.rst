@@ -592,7 +592,7 @@ To update a relationship in the database, you *must* set the relationship on the
 *owning* side. The owning side is always where the ``ManyToOne`` mapping is set
 (for a ``ManyToMany`` relation, you can choose which side is the owning side).
 
-Does this means it's not possible to call ``$category->addProduct()`` or
+Does this mean it's not possible to call ``$category->addProduct()`` or
 ``$category->removeProduct()`` to update the database? Actually, it *is* possible,
 thanks to some clever code that the ``make:entity`` command generated::
 
