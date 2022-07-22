@@ -291,7 +291,7 @@ order. Start by creating this custom event class and documenting it::
     use Symfony\Contracts\EventDispatcher\Event;
 
     /**
-     * The order.placed event is dispatched each time an order is created
+     * The order.placed event is dispatched each time an order is placed
      * in the system.
      */
     class OrderPlacedEvent extends Event
@@ -340,6 +340,9 @@ of the event to dispatch::
     // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
     $dispatcher->dispatch($event, OrderPlacedEvent::NAME);
+    
+    // alternatively, you can also dispatch the event like this
+    $dispatcher->dispatch($event);
 
 Notice that the special ``OrderPlacedEvent`` object is created and passed to
 the ``dispatch()`` method. Now, any listener to the ``order.placed``
@@ -382,7 +385,9 @@ Take the following example of a subscriber that subscribes to the
                     ['onKernelResponsePre', 10],
                     ['onKernelResponsePost', -10],
                 ],
-                OrderPlacedEvent::NAME => 'onStoreOrder',
+                OrderPlacedEvent::NAME => 'onOrderPlaced',
+                // alternatively, you can also subscribe to the event like this
+                OrderPlacedEvent::class => 'onOrderPlaced',
             ];
         }
 
@@ -396,7 +401,7 @@ Take the following example of a subscriber that subscribes to the
             // ...
         }
 
-        public function onStoreOrder(OrderPlacedEvent $event)
+        public function onOrderPlaced(OrderPlacedEvent $event)
         {
             // ...
         }
