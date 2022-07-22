@@ -293,10 +293,6 @@ use:
     created: templates/product/new.html.twig
     created: templates/product/show.html.twig
 
-.. versionadded:: 1.2
-
-    The ``make:crud`` command was introduced in MakerBundle 1.2.
-
 .. index::
    single: Controller; Managing errors
    single: Controller; 404 pages
