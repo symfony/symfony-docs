@@ -404,8 +404,7 @@ You are now able to serialize only attributes in the groups you want::
     );
     // $obj2 = MyObj(foo: 'foo', bar: 'bar')
 
-    // You can use `groups` with value `*` to get all groups:
-
+    // To get all groups, use the special value `*` in `groups`
     $obj3 = $serializer->denormalize(
         ['foo' => 'foo', 'anotherProperty' => 'anotherProperty', 'bar' => 'bar'],
         'MyObj',
@@ -413,6 +412,10 @@ You are now able to serialize only attributes in the groups you want::
         ['groups' => ['*']]
     );
     // $obj2 = MyObj(foo: 'foo', anotherProperty: 'anotherProperty', bar: 'bar')
+
+.. versionadded:: 5.2
+
+    The ``*`` special value for ``groups`` was introduced in Symfony 5.2.
 
 .. _ignoring-attributes-when-serializing:
 
