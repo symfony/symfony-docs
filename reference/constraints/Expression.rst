@@ -143,12 +143,12 @@ expression that must return true in order for validation to pass. To learn
 more about the expression language syntax, see
 :doc:`/components/expression_language/syntax`.
 
+Alternatively, you can set the ``negate`` option to ``false`` in order to
+assert that the expression must return ``true`` for validation to fail.
+
 .. versionadded:: 6.2
 
    The ``negate`` option was introduced in Symfony 6.2.
-
-Alternatively, you can set the ``negate`` option to ``false`` in order to
-assert that the expression must return ``true`` for validation to fail.
 
 .. sidebar:: Mapping the Error to a Specific Field
 
