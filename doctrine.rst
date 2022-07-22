@@ -140,27 +140,19 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
     use App\Repository\ProductRepository;
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @ORM\Entity(repositoryClass=ProductRepository::class)
-     */
+     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
-        /**
-         * @ORM\Id()
-         * @ORM\GeneratedValue()
-         * @ORM\Column(type="integer")
-         */
-        private $id;
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column]
+        private int $id;
 
-        /**
-         * @ORM\Column(type="string", length=255)
-         */
-        private $name;
+        #[ORM\Column(length: 255)]
+        private string $name;
 
-        /**
-         * @ORM\Column(type="integer")
-         */
-        private $price;
+        #[ORM\Column]
+        private int $price;
 
         public function getId(): ?int
         {
@@ -169,6 +161,10 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
 
         // ... getter and setter methods
     }
+
+.. caution::
+
+    Starting in v1.44.0 - MakerBundle only supports entities using Attributes.
 
 .. note::
 
@@ -194,8 +190,8 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
 
 This class is called an "entity". And soon, you'll be able to save and query Product
 objects to a ``product`` table in your database. Each property in the ``Product``
-entity can be mapped to a column in that table. This is usually done with annotations:
-the ``@ORM\...`` comments that you see above each property:
+entity can be mapped to a column in that table. This is usually done with attributes:
+the ``#[ORM\Column(...)]`` comments that you see above each property:
 
 .. image:: /_images/doctrine/mapping_single_entity.png
    :align: center
@@ -214,8 +210,8 @@ If you want to use XML instead of annotations, add ``type: xml`` and
     Be careful not to use reserved SQL keywords as your table or column names
     (e.g. ``GROUP`` or ``USER``). See Doctrine's `Reserved SQL keywords documentation`_
     for details on how to escape these. Or, change the table name with
-    ``@ORM\Table(name="groups")`` above the class or configure the column name with
-    the ``name="group_name"`` option.
+    ``#[ORM\Table(name: "groups")]`` above the class or configure the column name with
+    the ``name: "group_name"`` option.
 
 .. _doctrine-creating-the-database-tables-schema:
 
@@ -292,9 +288,7 @@ methods:
       {
           // ...
 
-    +     /**
-    +      * @ORM\Column(type="text")
-    +      */
+    +     #[ORM\Column(type: 'text')]
     +     private $description;
 
           // getDescription() & setDescription() were also added
@@ -363,12 +357,11 @@ and save it::
     use App\Entity\Product;
     use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product", name="create_product")
-         */
+        #[Route('/product', name: 'create_product')]
         public function createProduct(ManagerRegistry $doctrine): Response
         {
             $entityManager = $doctrine->getManager();
@@ -448,13 +441,12 @@ some basic validation tasks::
     use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Validator\Validator\ValidatorInterface;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product", name="create_product")
-         */
+        #[Route('/product', name: 'create_product')]
         public function createProduct(ValidatorInterface $validator): Response
         {
             $product = new Product();
@@ -513,13 +505,12 @@ be able to go to ``/product/1`` to see your new product::
 
     use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/{id}", name="product_show")
-         */
+        #[Route('/product/{id}', name: 'product_show')]
         public function show(ManagerRegistry $doctrine, int $id): Response
         {
             $product = $doctrine->getRepository(Product::class)->find($id);
@@ -547,13 +538,12 @@ and injected by the dependency injection container::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/{id}", name="product_show")
-         */
+        #[Route('/product/{id}', name: 'product_show')]
         public function show(int $id, ProductRepository $productRepository): Response
         {
             $product = $productRepository
@@ -631,13 +621,12 @@ Now, simplify your controller::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/{id}", name="product_show")
-         */
+        #[Route('/product/{id}', name: 'product_show')]
         public function show(Product $product): Response
         {
             // use the Product!
@@ -662,13 +651,12 @@ with any PHP model::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/edit/{id}")
-         */
+        #[Route('/product/edit/{id}', name: 'product_edit')]
         public function update(ManagerRegistry $doctrine, int $id): Response
         {
             $entityManager = $doctrine->getManager();
