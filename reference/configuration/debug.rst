@@ -18,6 +18,12 @@ key in your application configuration.
 
 .. note::
 
+    The ``--resolve-env`` option is available with the ``debug:config``
+    command, which will resolved environment variables when
+    displaying the configuration values.
+
+.. note::
+
     When using XML, you must use the ``http://symfony.com/schema/dic/debug``
     namespace and the related XSD schema is available at:
     ``https://symfony.com/schema/dic/debug/debug-1.0.xsd``
