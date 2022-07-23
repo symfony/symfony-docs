@@ -1193,6 +1193,109 @@ In this case, *two* services are registered: ``site_update_manager.superadmin``
 and ``site_update_manager.normal_users``. Thanks to the alias, if you type-hint
 ``SiteUpdateManager`` the first (``site_update_manager.superadmin``) will be passed.
 If you want to pass the second, you'll need to :ref:`manually wire the service <services-wire-specific-service>`.
+Another solution is to add another id ``site_update_manager.superadmin`` followed by
+a variable name matching the one you use when doing the injection::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            # this is the service's id
+            site_update_manager.superadmin:
+                class: App\Service\SiteUpdateManager
+                autowire: false
+                arguments:
+                    - '@App\Service\MessageGenerator'
+                    - '@mailer'
+                    - 'superadmin@example.com'
+
+            site_update_manager.normal_users:
+                class: App\Service\SiteUpdateManager
+                autowire: false
+                arguments:
+                    - '@App\Service\MessageGenerator'
+                    - '@mailer'
+                    - 'contact@example.com'
+
+            # Create an alias, so that - by default - if you type-hint SiteUpdateManager,
+            # the site_update_manager.superadmin will be used
+            App\Service\SiteUpdateManager: '@site_update_manager.superadmin'
+
+            # If you type-hint SiteUpdateManager
+            # for a ``$normalUsers`` argument is detected.
+            App\Service\SiteUpdateManager $normalUsers: '@site_update_manager.normal_users'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="site_update_manager.superadmin" class="App\Service\SiteUpdateManager" autowire="false">
+                    <argument type="service" id="App\Service\MessageGenerator"/>
+                    <argument type="service" id="mailer"/>
+                    <argument>superadmin@example.com</argument>
+                </service>
+
+                <service id="site_update_manager.normal_users" class="App\Service\SiteUpdateManager" autowire="false">
+                    <argument type="service" id="App\Service\MessageGenerator"/>
+                    <argument type="service" id="mailer"/>
+                    <argument>contact@example.com</argument>
+                </service>
+
+                <service id="App\Service\SiteUpdateManager" alias="site_update_manager.superadmin"/>
+                <service
+                    id="App\Service\SiteUpdateManager $normalUsers"
+                    alias="site_update_manager.normal_users"/>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\MessageGenerator;
+        use App\Service\SiteUpdateManager;
+
+        return function(ContainerConfigurator $configurator) {
+            // ...
+
+            // site_update_manager.superadmin is the service's id
+            $services->set('site_update_manager.superadmin', SiteUpdateManager::class)
+                ->autowire(false)
+                ->args([
+                    ref(MessageGenerator::class),
+                    ref('mailer'),
+                    'superadmin@example.com',
+                ]);
+
+            $services->set('site_update_manager.normal_users', SiteUpdateManager::class)
+                ->autowire(false)
+                ->args([
+                    ref(MessageGenerator::class),
+                    ref('mailer'),
+                    'contact@example.com',
+                ]);
+
+            // Create an alias, so that - by default - if you type-hint SiteUpdateManager,
+            // the site_update_manager.superadmin will be used
+            $services->alias(SiteUpdateManager::class, 'site_update_manager.superadmin');
+
+            // If you type-hint SiteUpdateManager
+            // for a ``$normalUsers`` argument is detected.
+            $services->alias(SiteUpdateManager::class.' $normalUsers', 'site_update_manager.normal_users');
+        };
 
 .. caution::
 
