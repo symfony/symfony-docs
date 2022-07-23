@@ -111,12 +111,17 @@ Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
 MailPace            ``composer require symfony/mailpace-mailer``
+Infobip             ``composer require symfony/infobip-mailer``
 ==================  ==============================================
 
 .. versionadded:: 6.2
 
     The ``MailPace`` integration was introduced in Symfony 6.2 (in previous
     Symfony versions it was called ``OhMySMTP``).
+
+.. versionadded:: 6.2
+
+    The Infobip integration was introduced in Symfony 6.2.
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -167,6 +172,7 @@ MailPace             mailpace+api://API_TOKEN@default                     n/a   
 Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
 Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
 Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
+Infobip              infobip+smtp://KEY@default                           n/a                                         infobip+api://KEY@BASE_URL
 ==================== ==================================================== =========================================== ========================================
 
 .. caution::
