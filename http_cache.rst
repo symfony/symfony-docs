@@ -356,7 +356,7 @@ Additionally, most cache-related HTTP headers can be set via the single
         's_maxage'      => 10,
         'public'        => true,
         // 'private'    => true,
-        'immutable'      => true,
+        'immutable'     => true,
     ]);
 
 Cache Invalidation
