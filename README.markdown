@@ -11,6 +11,10 @@
     Online version
   </a>
   <span> | </span>
+  <a href="https://symfony.com/components">
+    Components
+  </a>
+  <span> | </span>
   <a href="https://symfonycasts.com">
     Screencasts
   </a>
