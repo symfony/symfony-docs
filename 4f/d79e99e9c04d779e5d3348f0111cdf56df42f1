@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by mdoutreluingne at 2022-07-24T07:39:08Z
+
+Thanks for this contribution. However, we're still discussing how to solve the problem of broken links to PHPUnit docs. See #16899.
+
+@javiereguiluz I think we would have to make a decision otherwise we will have more and more PR like #16931
