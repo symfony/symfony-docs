@@ -448,6 +448,19 @@ redirect after logout.
 
 .. _reference-security-logout-csrf:
 
+enable_csrf
+~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``null``
+
+Set this option to ``true`` to enable CSRF protection in the logout process
+using Symfony's default CSRF token generator. Set also the ``csrf_token_generator``
+option if you need to use a custom CSRF token generator.
+
+.. versionadded:: 6.2
+
+    The ``enable_csrf`` option was introduced in Symfony 6.2.
+
 csrf_parameter
 ~~~~~~~~~~~~~~
 
