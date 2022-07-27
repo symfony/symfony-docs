@@ -1204,9 +1204,38 @@ you have a transport called ``async``, you can route the message there:
                 ->senders(['async']);
         };
 
+Thanks to this, instead of being delivered immediately, messages will be sent
+to the transport to be handled later (see :ref:`messenger-worker`). Note that
+the "rendering" of the email (computed headers, body rendering, ...) is also
+deferred and will only happen just before the email is sent by the Messenger
+handler.
 
-Thanks to this, instead of being delivered immediately, messages will be sent to
-the transport to be handled later (see :ref:`messenger-worker`).
+.. versionadded:: 6.2
+
+    The following example about rendering the email before calling
+    ``$mailer->send($email)`` works as of Symfony 6.2.
+
+When sending an email asynchronously, its instance must be serializable.
+This is always the case for :class:`Symfony\\Bridge\\Twig\\Mime\\Email`
+instances, but when sending a
+:class:`Symfony\\Bridge\\Twig\\Mime\\TemplatedEmail`, you must ensure that
+the ``context`` is serializable. If you have non-serializable variables,
+like Doctrine entities, either replace them with more specific variables or
+render the email before calling ``$mailer->send($email)``::
+
+    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Mime\BodyRendererInterface;
+
+    public function action(MailerInterface $mailer, BodyRendererInterface $bodyRenderer)
+    {
+        $email = (new TemplatedEmail())
+            ->htmlTemplate($template)
+            ->context($context)
+        ;
+        $bodyRenderer->render($email);
+
+        $mailer->send($email);
+    }
 
 You can configure which bus is used to dispatch the message using the ``message_bus`` option.
 You can also set this to ``false`` to call the Mailer transport directly and
