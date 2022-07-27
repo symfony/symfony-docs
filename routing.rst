@@ -1207,11 +1207,12 @@ Special Parameters
 In addition to your own parameters, routes can include any of the following
 special parameters created by Symfony:
 
+.. _routing-format-parameter:
+.. _routing-locale-parameter:
+
 ``_controller``
     This parameter is used to determine which controller and action is executed
     when the route is matched.
-
-.. _routing-format-parameter:
 
 ``_format``
     The matched value is used to set the "request format" of the ``Request`` object.
@@ -1221,8 +1222,6 @@ special parameters created by Symfony:
 ``_fragment``
     Used to set the fragment identifier, which is the optional last part of a URL that
     starts with a ``#`` character and is used to identify a portion of a document.
-
-.. _routing-locale-parameter:
 
 ``_locale``
     Used to set the :ref:`locale <translation-locale-url>` on the request.
