@@ -4,6 +4,10 @@
 The Symfony UX Initiative & Packages
 ====================================
 
+.. tip::
+
+    Check out live demos of Symfony UX at `https://ux.symfony.com`_!
+
 Symfony UX is an initiative and set of libraries to seamlessly
 integrate JavaScript tools into your application. For example,
 want to render a chart with `Chart.js`_? Use `UX Chart.js`_ to build the
@@ -148,3 +152,4 @@ the Node package that is responsible for a lot of the magic.
 .. _`@symfony/stimulus-bridge`: https://github.com/symfony/stimulus-bridge
 .. _`stimulus-use`: https://stimulus-use.github.io/stimulus-use
 .. _`stimulus-components`: https://stimulus-components.netlify.app/
+.. _`https://ux.symfony.com`: https://ux.symfony.com
