@@ -1738,7 +1738,7 @@ Other Middlewares
     The ``validation`` middleware was introduced in Symfony 4.1.
 
 Add the ``validation`` middleware if you need to validate the message
-object using the :doc:`Validator component <validator>` before handling it.
+object using the :doc:`Validator component </components/validator>` before handling it.
 If validation fails, a ``ValidationFailedException`` will be thrown. The
 :class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp` can be used
 to configure the validation groups.
