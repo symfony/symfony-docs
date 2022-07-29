@@ -148,7 +148,7 @@ These are the most important methods that a form type class can define:
 ``finishView()``
     When creating a form type that consists of many fields, this method allows
     to modify the "view" of any of those fields. For any other use case, it's
-    recommended to use instead the ``buildView()`` method.
+    recommended to use ``buildView()`` instead.
 
 ``getParent()``
     If your custom type is based on another type (i.e. they share some
@@ -471,6 +471,8 @@ defined by the form or be completely independent::
     namespace App\Form\Type;
 
     use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\Form\FormView;
     // ...
 
     class PostalAddressType extends AbstractType
