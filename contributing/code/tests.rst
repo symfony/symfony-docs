@@ -111,6 +111,13 @@ what's going on and if the tests are broken because of the new code.
 
         $ composer docker-tests src/Symfony/Component/Finder/
 
+    If you want to pass some options to PHPUnit, you have to prepend them with ``--``,
+    e.g.:
+
+    .. code-block:: terminal
+
+        $ composer docker-tests -- --debug src/Symfony/Component/Finder/
+
 .. tip::
 
     On Windows, install the `Cmder`_, `ConEmu`_, `ANSICON`_ or `Mintty`_ free applications
