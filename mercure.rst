@@ -107,7 +107,7 @@ the publicly available URL (e.g. ``https://example.com/.well-known/mercure``).
 The clients must also bear a `JSON Web Token`_ (JWT)
 to the Mercure Hub to be authorized to publish updates and, sometimes, to subscribe.
 
-This token must be signed with the same secret key as the one used by the Hub to verify the JWT (``!ChangeMe!`` in you use the Docker integration).
+This token must be signed with the same secret key as the one used by the Hub to verify the JWT (``!ChangeMe!`` if you use the Docker integration).
 This secret key must be stored in the ``MERCURE_JWT_SECRET`` environment variable.
 MercureBundle will use it to automatically generate and sign the needed JWTs.
 
