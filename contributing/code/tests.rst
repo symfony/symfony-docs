@@ -65,7 +65,7 @@ what's going on and if the tests are broken because of the new code.
 Through Docker
 --------------
 
-You must have installed ``docker``.
+You must `install Composer`_ and ``docker``.
 
 .. tip::
 
