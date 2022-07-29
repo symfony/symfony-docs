@@ -343,6 +343,23 @@ Ternary Operators
 * ``foo ?: 'no'`` (equal to ``foo ? foo : 'no'``)
 * ``foo ? 'yes'`` (equal to ``foo ? 'yes' : ''``)
 
+Null Coalescing Operator
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is the same as the PHP `null-coalescing operator`_, which combines
+the ternary operator and ``isset()``. It returns the left hand-side if it exists
+and it's not ``null``; otherwise it returns the right hand-side. Note that you
+can chain multiple coalescing operators.
+
+* ``foo ?? 'no'``
+* ``foo.baz ?? 'no'``
+* ``foo[3] ?? 'no'``
+* ``foo.baz ?? foo['baz'] ?? 'no'``
+
+.. versionadded:: 6.2
+
+    The null-coalescing operator was introduced in Symfony 6.2.
+
 Built-in Objects and Variables
 ------------------------------
 
