@@ -13,8 +13,11 @@ In any case, it's a good practice to run tests locally before submitting a
 .. _phpunit:
 .. _dependencies_optional:
 
+On local environment
+--------------------
+
 Before Running the Tests
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 To run the Symfony test suite, install the external dependencies used during the
 tests, such as Doctrine, Twig and Monolog. To do so,
@@ -37,7 +40,7 @@ tests, such as Doctrine, Twig and Monolog. To do so,
 .. _running:
 
 Running the Tests
------------------
+~~~~~~~~~~~~~~~~~
 
 Then, run the test suite from the Symfony root directory with the following
 command:
@@ -58,6 +61,55 @@ what's going on and if the tests are broken because of the new code.
     .. code-block:: terminal
 
         $ php ./phpunit src/Symfony/Component/Finder/
+
+Through Docker
+--------------
+
+You must have installed ``docker``.
+
+.. tip::
+
+    This method hasn't been tested on Windows.
+
+Before Running the Tests
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Firstly, you have to build the test image with the following command:
+
+.. code-block:: terminal
+
+    $ composer docker-build
+
+To run the Symfony test suite, you have to install the external dependencies
+used during the tests, such as Doctrine, Twig and Monolog.
+To do so, execute the following:
+
+.. code-block:: terminal
+
+    $ composer docker-composer
+
+Running the Tests
+~~~~~~~~~~~~~~~~~
+
+Then, run the test suite from the Symfony root directory with the following
+command:
+
+.. code-block:: terminal
+
+    $ composer docker-tests
+
+The output should display ``OK``. If not, read the reported errors to figure out
+what's going on and if the tests are broken because of the new code.
+
+.. tip::
+
+    The entire Symfony suite can take up to several minutes to complete. If you
+    want to test a single component, type its path after the ``docker-tests`` command,
+    e.g.:
+
+    .. code-block:: terminal
+
+        $ composer docker-tests src/Symfony/Component/Finder/
 
 .. tip::
 
