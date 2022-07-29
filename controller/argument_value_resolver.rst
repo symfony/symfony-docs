@@ -115,6 +115,32 @@ Symfony ships with the following value resolvers in the
     Will set the default value of the argument if present and the argument
     is optional.
 
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\UidValueResolver`
+    Attempts to convert any UID values from a route path parameter into UID objects.
+    Leads to a 404 Not Found response if the value isn't a valid UID.
+
+    For example, the following will convert the token parameter into a ``UuidV4`` object::
+
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
+
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Uid\UuidV4;
+
+        class DefaultController
+        {
+            #[Route('/share/{token}')]
+            public function share(UuidV4 $token): Response
+            {
+                // ...
+            }
+        }
+
+    .. versionadded:: 6.1
+
+        The ``UidValueResolver`` was introduced in Symfony 6.1.
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\VariadicValueResolver`
     Verifies if the request data is an array and will add all of them to the
     argument list. When the action is called, the last (variadic) argument will
@@ -137,7 +163,7 @@ PSR-7 Objects Resolver:
     Injects a Symfony HttpFoundation ``Request`` object created from a PSR-7 object
     of type :class:`Psr\\Http\\Message\\ServerRequestInterface`,
     :class:`Psr\\Http\\Message\\RequestInterface` or :class:`Psr\\Http\\Message\\MessageInterface`.
-    It requires installing :doc:`the PSR-7 Bridge </components/psr7>`_ component.
+    It requires installing :doc:`the PSR-7 Bridge </components/psr7>` component.
 
 Adding a Custom Value Resolver
 ------------------------------
