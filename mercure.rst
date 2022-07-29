@@ -109,7 +109,7 @@ to the Mercure Hub to be authorized to publish updates and, sometimes, to subscr
 This JWT should be stored in the ``MERCURE_JWT_SECRET`` environment variable.
 
 The JWT must be signed with the same secret key as the one used by
-the Hub to verify the JWT (``!ChangeMe!`` in you use the Local Web Server or
+the Hub to verify the JWT (``!ChangeMe!`` if you use the Local Web Server or
 Symfony Docker).
 Its payload must contain at least the following structure to be allowed to
 publish:
