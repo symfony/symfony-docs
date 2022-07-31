@@ -49,10 +49,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_directory --version="6.1.*" --webapp
+    $ symfony new my_project_directory --version="6.2.*@dev" --webapp
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_directory --version="6.1.*"
+    $ symfony new my_project_directory --version="6.2.*@dev"
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--webapp`` option installs all the packages that you
