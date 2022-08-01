@@ -67,7 +67,7 @@ Through Docker
 
 You must `install Composer`_ and ``docker``.
 
-.. tip::
+.. note::
 
     This method hasn't been tested on Windows.
 
