@@ -68,19 +68,16 @@ This will generate your new entity class::
 
     // ...
 
+    #[ORM\Entity(repositoryClass: CategoryRepository::class)]
     class Category
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
-         * @ORM\Column(type="integer")
-         */
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column]
         private $id;
 
-        /**
-         * @ORM\Column(type="string")
-         */
-        private $name;
+        #[ORM\Column]
+        private string $name;
 
         // ... getters and setters
     }
@@ -380,12 +377,11 @@ Now you can see this new code in action! Imagine you're inside a controller::
     use App\Entity\Product;
     use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product", name="product")
-         */
+        #[Route('/product', name: 'product')]
         public function index(ManagerRegistry $doctrine): Response
         {
             $category = new Category();
