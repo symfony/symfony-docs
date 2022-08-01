@@ -67,7 +67,7 @@ that system::
             Request $request,
             int $type = self::MAIN_REQUEST,
             bool $catch = true
-        );
+        ): Response;
     }
 
 Internally, :method:`HttpKernel::handle() <Symfony\\Component\\HttpKernel\\HttpKernel::handle>` -
