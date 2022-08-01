@@ -129,7 +129,7 @@ work:
   </contributing/code/maintenance>` (you may have to choose a higher branch if
   the feature you are fixing was introduced in a later version);
 
-* ``6.1``, if you are adding a new feature.
+* ``6.2``, if you are adding a new feature.
 
   The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
   (5.0, 6.0, etc.) comes out every two years. Because of the
