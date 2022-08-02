@@ -287,10 +287,10 @@ Classes in the ``vendor/`` directory are always ignored.
 
            # Add type declarations to all internal, final, tests and private methods.
            # Update the "php" parameter to match your minimum required PHP version
-           $ SYMFONY_DEPRECATIONS_HELPER="force=1&php=7.4" ./vendor/bin/patch-type-declarations
+           $ SYMFONY_PATCH_TYPE_DECLARATIONS="force=1&php=7.4" ./vendor/bin/patch-type-declarations
 
            # Add PHPDoc to the leftover public and protected methods
-           $ SYMFONY_DEPRECATIONS_HELPER="force=phpdoc&php=7.4" ./vendor/bin/patch-type-declarations
+           $ SYMFONY_PATCH_TYPE_DECLARATIONS="force=phpdoc&php=7.4" ./vendor/bin/patch-type-declarations
 
        After running the scripts, check your classes and add more ``@return``
        PHPDoc where they are missing. The deprecations and patch script
@@ -308,7 +308,7 @@ Classes in the ``vendor/`` directory are always ignored.
        .. code-block:: terminal
 
            # Update the "php" parameter to match your minimum required PHP version
-           $ SYMFONY_DEPRECATIONS_HELPER="force=2&php=7.4" ./vendor/bin/patch-type-declarations
+           $ SYMFONY_PATCH_TYPE_DECLARATIONS="force=2&php=7.4" ./vendor/bin/patch-type-declarations
 
        Now, you can safely allow ``^6.0`` for the Symfony dependencies.
 
