@@ -897,6 +897,14 @@ The Serializer component provides several built-in normalizers:
     This normalizer converts :phpclass:`DateInterval` objects into strings.
     By default, it uses the ``P%yY%mM%dDT%hH%iM%sS`` format.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\BackedEnumNormalizer`
+    This normalizer converts a \BackedEnum objects into strings or integers.
+
+.. versionadded:: 5.4
+
+    The ``BackedEnumNormalizer`` was introduced in Symfony 
+    5.4. PHP BackedEnum require at least PHP 8.1.
+
 :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer`
     This normalizer works with classes that implement
     :class:`Symfony\\Component\\Form\\FormInterface`.
