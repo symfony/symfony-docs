@@ -1,6 +1,3 @@
-``choice_translation_domain``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 This option determines if the choice values should be translated and in which
 translation domain.
 
