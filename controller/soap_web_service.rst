@@ -27,22 +27,27 @@ In this case, the SOAP service will allow the client to call a method called
     // src/Service/HelloService.php
     namespace App\Service;
 
+    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Mime\Email;
+
     class HelloService
     {
-        private $mailer;
+        private MailerInterface $mailer;
 
-        public function __construct(\Swift_Mailer $mailer)
+        public function __construct(MailerInterface $mailer)
         {
             $this->mailer = $mailer;
         }
 
-        public function hello($name)
+        public function hello(string $name): string
         {
-            $message = (new \Swift_Message('Hello Service'))
-                ->setTo('me@example.com')
-                ->setBody($name.' says hi!');
+            $email = (new Email())
+                ->from('admin@example.com')
+                ->to('me@example.com')
+                ->subject('Hello Service')
+                ->text($name.' says hi!');
 
-            $this->mailer->send($message);
+            $this->mailer->send($email);
 
             return 'Hello, '.$name;
         }
