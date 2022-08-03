@@ -610,9 +610,9 @@ This is the name of your configured LDAP client.
 dn_string
 .........
 
-**type**: ``string`` **default**: ``{username}``
+**type**: ``string`` **default**: ``{user_identifier}``
 
-This is the string which will be used as the bind DN. The ``{username}``
+This is the string which will be used as the bind DN. The ``{user_identifier}``
 placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
@@ -622,7 +622,7 @@ query_string
 
 **type**: ``string`` **default**: ``null``
 
-This is the string which will be used to query for the DN. The ``{username}``
+This is the string which will be used to query for the DN. The ``{user_identifier}``
 placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you will need to override
 this value. This setting is only necessary if the user's DN cannot be derived
