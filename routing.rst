@@ -1768,6 +1768,8 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
                 # * for temporary redirects, it uses the 307 status code instead of 302
                 # * for permanent redirects, it uses the 308 status code instead of 301
                 keepRequestMethod: true
+                # add this to remove the original route attributes when redirecting
+                ignoreAttributes: true
 
         legacy_doc:
             path: /legacy/doc
