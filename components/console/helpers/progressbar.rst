@@ -46,6 +46,22 @@ Instead of advancing the bar by a number of steps (with the
 you can also set the current progress by calling the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
 
+If you are resuming long-standing tasks, it's useful to start drawing the progress
+bar at a certain point. Use the second optional argument of ``start()`` to set
+that starting point::
+
+    use Symfony\Component\Console\Helper\ProgressBar;
+
+    // creates a new progress bar (100 units)
+    $progressBar = new ProgressBar($output, 100);
+
+    // displays the progress bar starting at 25 completed units
+    $progressBar->start(null, 25);
+
+.. versionadded:: 6.2
+
+    The option to start a progress bar at a certain point was introduced in Symfony 6.2.
+
 .. tip::
 
     If your platform doesn't support ANSI codes, updates to the progress
