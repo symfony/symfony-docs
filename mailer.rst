@@ -1250,7 +1250,7 @@ disable asynchronous delivery.
 
 .. versionadded:: 6.1
 
-    The :method:`Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport::stop()`
+    The :method:`Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport::stop`
     method was made public in Symfony 6.1.
 
 Adding Tags and Metadata to Emails
