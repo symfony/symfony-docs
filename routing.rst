@@ -1470,110 +1470,111 @@ A possible solution is to change the parameter requirements to be more permissiv
 
 .. _routing-alias:
 
-Aliasing
---------
+Route Aliasing
+--------------
 
 .. versionadded:: 5.4
 
     Support for route aliases was introduced in Symfony 5.4.
 
-You may sometimes want to have multiple names for the same route. You can do so by
-aliasing them.
+Route alias allow you to have multiple name for the same route:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-      # config/routes.yaml
-      alias_name:
-          alias: target_route_name
+        # config/routes.yaml
+        new_route_name:
+            alias: original_route_name
 
     .. code-block:: xml
 
-      <!-- config/routes.xml -->
-      <?xml version="1.0" encoding="UTF-8" ?>
-      <routes xmlns="http://symfony.com/schema/routing"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://symfony.com/schema/routing
-              https://symfony.com/schema/routing/routing-1.0.xsd">
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
-          <route id="alias_name" alias="target_route_name"/>
-      </routes>
+            <route id="new_route_name" alias="original_route_name"/>
+        </routes>
 
     .. code-block:: php
 
-      // config/routes.php
-      use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        // config/routes.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-      return function (RoutingConfigurator $routes) {
-          $routes->alias('alias_name', 'target_route_name');
-      };
+        return function (RoutingConfigurator $routes) {
+            $routes->alias('new_route_name', 'original_route_name');
+        };
+
+In this example, both ``original_route_name`` and ``new_route_name`` routes can
+be used in the application and will produce the same result.
 
 .. _routing-alias-deprecation:
 
 Deprecating Route Aliases
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you decide to deprecate the use of a route alias (because it is outdated or
+If some route alias should no longer be used (because it is outdated or
 you decided not to maintain it anymore), you can deprecate its definition:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-      alias_name:
-          alias: target_route_name
+        new_route_name:
+            alias: original_route_name
 
-          # this outputs the following generic deprecation message:
-          # Since acme/package 1.2: The "alias_name" route alias is deprecated. You should stop using it, as it will be removed in the future.
-          deprecated:
-              package: 'acme/package'
-              version: '1.2'
+            # this outputs the following generic deprecation message:
+            # Since acme/package 1.2: The "new_route_name" route alias is deprecated. You should stop using it, as it will be removed in the future.
+            deprecated:
+                package: 'acme/package'
+                version: '1.2'
 
-          # you can also define a custom deprecation message (%alias_id% placeholder is available)
-          deprecated:
-              package: 'acme/package'
-              version: '1.2'
-              message: 'The "%alias_id%" route alias is deprecated. Do not use it anymore.'
+            # you can also define a custom deprecation message (%alias_id% placeholder is available)
+            deprecated:
+                package: 'acme/package'
+                version: '1.2'
+                message: 'The "%alias_id%" route alias is deprecated. Do not use it anymore.'
 
     .. code-block:: xml
 
-      <?xml version="1.0" encoding="UTF-8" ?>
-      <routes xmlns="http://symfony.com/schema/routing"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://symfony.com/schema/routing
-              https://symfony.com/schema/routing/routing-1.0.xsd">
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
 
-          <route id="alias_name" alias="target_route_name">
-              <!-- this outputs the following generic deprecation message:
-                   Since acme/package 1.2: The "alias_name" route alias is deprecated. You should stop using it, as it will be removed in the future. -->
-              <deprecated package="acme/package" version="1.2"/>
+            <route id="new_route_name" alias="original_route_name">
+                <!-- this outputs the following generic deprecation message:
+                     Since acme/package 1.2: The "new_route_name" route alias is deprecated. You should stop using it, as it will be removed in the future. -->
+                <deprecated package="acme/package" version="1.2"/>
 
-              <!-- you can also define a custom deprecation message (%alias_id% placeholder is available) -->
-              <deprecated package="acme/package" version="1.2">
-                  The "%alias_id%" route alias is deprecated. Do not use it anymore.
-              </deprecated>
-          </route>
-      </routes>
+                <!-- you can also define a custom deprecation message (%alias_id% placeholder is available) -->
+                <deprecated package="acme/package" version="1.2">
+                    The "%alias_id%" route alias is deprecated. Do not use it anymore.
+                </deprecated>
+            </route>
+        </routes>
 
     .. code-block:: php
 
-      $routes->alias('alias_name', 'target_route_name')
+        $routes->alias('new_route_name', 'original_route_name')
+            // this outputs the following generic deprecation message:
+            // Since acme/package 1.2: The "new_route_name" route alias is deprecated. You should stop using it, as it will be removed in the future.
+            ->deprecate('acme/package', '1.2', '')
 
-          // this outputs the following generic deprecation message:
-          // Since acme/package 1.2: The "alias_name" route alias is deprecated. You should stop using it, as it will be removed in the future.
-          ->deprecate('acme/package', '1.2', '')
+            // you can also define a custom deprecation message (%alias_id% placeholder is available)
+            ->deprecate(
+                'acme/package',
+                '1.2',
+                'The "%alias_id%" route alias is deprecated. Do not use it anymore.'
+            )
+        ;
 
-          // you can also define a custom deprecation message (%alias_id% placeholder is available)
-          ->deprecate(
-              'acme/package',
-              '1.2',
-              'The "%alias_id%" route alias is deprecated. Do not use it anymore.'
-          )
-      ;
-
-Now, every time this route alias is used, a deprecation warning is triggered,
-advising you to stop or to change your uses of that alias.
+In this example, every time the ``new_route_name`` alias is used, a deprecation
+warning is triggered, advising you to stop using that alias.
 
 The message is actually a message template, which replaces occurrences of the
 ``%alias_id%`` placeholder by the route alias name. You **must** have
