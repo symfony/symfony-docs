@@ -451,6 +451,8 @@ letter A with ring above"*) or a sequence of two code points (``U+0061`` =
     u('å')->normalize(UnicodeString::NFD);
     u('å')->normalize(UnicodeString::NFKD);
 
+.. _string-slugger:
+
 Slugger
 -------
 
@@ -485,6 +487,11 @@ another separator as the second argument::
 
     $slug = $slugger->slug('Wôrķšƥáçè ~~sèťtïñğš~~', '/');
     // $slug = 'Workspace/settings'
+
+.. tip::
+
+    Combine this slugger with the :ref:`Symfony emoji transliterator <component-intl-emoji-transliteration>`
+    to improve the slugs of contents that include emojis (e.g. for URLs).
 
 The slugger transliterates the original string into the Latin script before
 applying the other transformations. The locale of the original string is
