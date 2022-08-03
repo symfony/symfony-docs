@@ -1240,6 +1240,19 @@ disable asynchronous delivery.
                 ->messageBus('app.another_bus');
         };
 
+.. note::
+
+    In cases of long-running scripts, and when Mailer uses the
+    :class:`Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport`
+    you may manually disconnect from the SMTP server to avoid keeping
+    an open connection to the SMTP server in between sending emails.
+    You can do so by using the ``stop()`` method.
+
+.. versionadded:: 6.1
+
+    The :method:`Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport::stop()`
+    method was made public in Symfony 6.1.
+
 Adding Tags and Metadata to Emails
 ----------------------------------
 
