@@ -46,13 +46,21 @@ First, you need to create a PHP script to define the console application::
 
     $application->run();
 
-Then, you can register the commands using
+Then, you can create and register the commands using
 :method:`Symfony\\Component\\Console\\Application::add`::
 
     // ...
-    $application->add(new GenerateAdminCommand());
+    // command file created in src/Command/CreateUserCommand.php
+    use App\Command\CreateUserCommand;
+    // ...
+    $application->add(new CreateUserCommand());
 
 See the :doc:`/console` article for information about how to create commands.
+
+.. note::
+
+    Do not forget to leverage Composer's `autoload`_ feature
+    so that your Command can be used.
 
 Learn more
 ----------
@@ -64,3 +72,5 @@ Learn more
     /console
     /components/console/*
     /console/*
+
+.. _`autoload`: https://getcomposer.org/doc/04-schema.md#autoload
