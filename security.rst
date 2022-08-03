@@ -4,7 +4,6 @@
 Security
 ========
 
-
 Symfony provides many tools to secure your application. Some HTTP-related
 security tools, like :doc:`secure session cookies </session>` and
 :doc:`CSRF protection </security/csrf>` are provided by default. The
