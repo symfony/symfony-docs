@@ -1463,10 +1463,6 @@ A possible solution is to change the parameter requirements to be more permissiv
 Route Aliasing
 --------------
 
-.. versionadded:: 5.4
-
-    Support for route aliases was introduced in Symfony 5.4.
-
 Route alias allow you to have multiple name for the same route:
 
 .. configuration-block::
