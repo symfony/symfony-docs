@@ -352,6 +352,11 @@ Store                                                       Scope   Blocking  Ex
 :ref:`ZookeeperStore <lock-store-zookeeper>`                remote  no        no       no
 ==========================================================  ======  ========  ======== =======
 
+.. tip::
+
+    A special ``InMemoryStore`` is available for saving locks in memory during
+    a process, and can be useful for testing.
+
 .. _lock-store-flock:
 
 FlockStore
