@@ -25,8 +25,8 @@ until you interact with the proxy in some way.
 
 .. caution::
 
-    Lazy services do not support `final`_ classes. You can use `Interface
-    Proxifying`_ to work around this limitation.
+    Lazy services do not support `final`_ classes, but you can use
+    `Interface Proxifying`_ to work around this limitation.
 
     In PHP versions prior to 8.0 lazy services do not support parameters with
     default values for built-in PHP classes (e.g. ``PDO``).
@@ -105,10 +105,10 @@ Interface Proxifying
 --------------------
 
 Under the hood, proxies generated to lazily load services inherit from the class
-used by the service. But sometimes this is not possible at all (`final`_ classes
-can not be extended for example) or not convenient.
+used by the service. However, sometimes this is not possible at all (e.g. because
+the class is `final`_ and can not be extended) or not convenient.
 
-To workaround this limitation, you can configure a proxy to only implements
+To workaround this limitation, you can configure a proxy to only implement
 specific interfaces.
 
 .. versionadded:: 4.2
@@ -164,17 +164,17 @@ specific interfaces.
         };
 
 The virtual `proxy`_ injected into other services will only implement the
-specified interfaces and will not extend the original service class allowing to
-lazy load service using `final`_ classes. You can configure the proxy to
-implement multiple interfaces by repeating the "proxy" tag.
+specified interfaces and will not extend the original service class, allowing to
+lazy load services using `final`_ classes. You can configure the proxy to
+implement multiple interfaces by adding new "proxy" tags.
 
 .. tip::
 
-    This features can also act as a "safe guard". Because the proxy does not
-    extends the original class, only the methods defined by the interfaces can
-    be called, preventing to call implementation specific one. It also prevents
-    injecting the dependency at all if you type hinted a concrete implementation
-    instead of the interface.
+    This feature can also act as a safe guard: given that the proxy does not
+    extend the original class, only the methods defined by the interface can
+    be called, preventing to call implementation specific methods. It also
+    prevents injecting the dependency at all if you type-hinted a concrete
+    implementation instead of the interface.
 
 Additional Resources
 --------------------
