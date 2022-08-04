@@ -76,6 +76,11 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\BackedEnumNormalizer`
+
+.. note::
+
+    The PHP BackedEnum used by ``BackedEnumNormalizer`` requires at least PHP 8.1.
 
 Other :ref:`built-in normalizers <component-serializer-normalizers>` and
 custom normalizers and/or encoders can also be loaded by tagging them as
