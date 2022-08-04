@@ -111,10 +111,6 @@ the class is `final`_ and can not be extended) or not convenient.
 To workaround this limitation, you can configure a proxy to only implement
 specific interfaces.
 
-.. versionadded:: 4.2
-
-    Proxyfying interfaces was introduced in Symfony 4.2.
-
 .. configuration-block::
 
     .. code-block:: yaml
