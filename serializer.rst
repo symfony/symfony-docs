@@ -85,7 +85,7 @@ As well as the following normalizers:
 .. versionadded:: 5.4
 
     :class:`Symfony\\Component\\Serializer\\Normalizer\\BackedEnumNormalizer`
-    was introduced in Symfony 5.4. PHP BackedEnum require at least PHP 8.1.
+    was introduced in Symfony 5.4. PHP BackedEnum requires at least PHP 8.1.
 
 Other :ref:`built-in normalizers <component-serializer-normalizers>` and
 custom normalizers and/or encoders can also be loaded by tagging them as

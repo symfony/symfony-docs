@@ -900,10 +900,10 @@ The Serializer component provides several built-in normalizers:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\BackedEnumNormalizer`
     This normalizer converts a \BackedEnum objects into strings or integers.
 
-.. versionadded:: 5.4
+    .. versionadded:: 5.4
 
-    The ``BackedEnumNormalizer`` was introduced in Symfony 
-    5.4. PHP BackedEnum require at least PHP 8.1.
+        The ``BackedEnumNormalizer`` was introduced in Symfony 5.4.
+        PHP BackedEnum requires at least PHP 8.1.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer`
     This normalizer works with classes that implement
