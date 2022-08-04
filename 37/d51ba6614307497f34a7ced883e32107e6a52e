@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2022-08-03T13:26:40Z
+
+See this example which mention that PHP 8.0 is required:
+
+https://github.com/symfony/symfony-docs/blob/49bbf15a61af9a4f843f316f9649a8a9377311de/messenger.rst?plain=1#L53-L56
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-08-03T13:57:46Z
+
+status: needs work
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-08-03T19:15:05Z
+
+friendly ping @alexislefebvre as reviewer :)
+status: needs review
