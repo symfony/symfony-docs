@@ -97,7 +97,7 @@ you can click on the *"Symfony Homepage"* text to open its URL in your default
 browser. Otherwise, you'll see *"Symfony Homepage"* as regular text and the URL
 will be lost.
 
-.. _Cmder: https://cmder.net/
+.. _Cmder: https://github.com/cmderdev/cmder
 .. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/
