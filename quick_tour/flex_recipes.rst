@@ -23,10 +23,10 @@ are included in your ``composer.json`` file:
 
     "require": {
         "...",
-        "symfony/console": "^4.1",
-        "symfony/flex": "^1.0",
-        "symfony/framework-bundle": "^4.1",
-        "symfony/yaml": "^4.1"
+        "symfony/console": "^6.1",
+        "symfony/flex": "^2.0",
+        "symfony/framework-bundle": "^6.1",
+        "symfony/yaml": "^6.1"
     }
 
 This makes Symfony different from any other PHP framework! Instead of starting with
@@ -86,10 +86,8 @@ Thanks to Flex, after one command, you can start using Twig immediately:
     - class DefaultController
     + class DefaultController extends AbstractController
       {
-           /**
-            * @Route("/hello/{name}")
-            */
-           public function index($name)
+           #[Route('/hello/{name}', methods: ['GET'])]
+           public function index(string $name): Response
            {
     -        return new Response("Hello $name!");
     +        return $this->render('default/index.html.twig', [
@@ -159,16 +157,15 @@ Are you building an API? You can already return JSON from any controller::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends AbstractController
     {
         // ...
 
-        /**
-         * @Route("/api/hello/{name}")
-         */
-        public function apiExample($name)
+        #[Route('/api/hello/{name}', methods: ['GET'])]
+        public function apiHello(string$name): JsonResponse
         {
             return $this->json([
                 'name' => $name,
