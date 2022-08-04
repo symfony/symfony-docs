@@ -291,14 +291,14 @@ order. Start by creating this custom event class and documenting it::
     use Symfony\Contracts\EventDispatcher\Event;
 
     /**
-     * The order.placed event is dispatched each time an order is placed
-     * in the system.
+     * The order.placed event is dispatched each time
+     * an order is placed in the system.
      */
     class OrderPlacedEvent extends Event
     {
         public const NAME = 'order.placed';
 
-        protected $order;
+        protected Order $order;
 
         public function __construct(Order $order)
         {
@@ -328,19 +328,20 @@ Dispatch the Event
 The :method:`Symfony\\Component\\EventDispatcher\\EventDispatcher::dispatch`
 method notifies all listeners of the given event. It takes two arguments:
 the ``Event`` instance to pass to each listener of that event and the name
-of the event to dispatch::
+of the event to dispatch. Alternatively, it can takes only one argument: the
+``Event`` instance itself::
 
     use Acme\Store\Event\OrderPlacedEvent;
     use Acme\Store\Order;
 
-    // the order is somehow created or retrieved
+    // the order is somehow created
     $order = new Order();
     // ...
 
     // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
-    $dispatcher->dispatch($event, OrderPlacedEvent::NAME);
-    
+
+    $dispatcher->dispatch($event, OrderPlacedEvent::NAME);    
     // alternatively, you can also dispatch the event like this
     $dispatcher->dispatch($event);
 
@@ -378,7 +379,7 @@ Take the following example of a subscriber that subscribes to the
 
     class StoreSubscriber implements EventSubscriberInterface
     {
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 KernelEvents::RESPONSE => [
@@ -391,17 +392,17 @@ Take the following example of a subscriber that subscribes to the
             ];
         }
 
-        public function onKernelResponsePre(ResponseEvent $event)
+        public function onKernelResponsePre(ResponseEvent $event): void
         {
             // ...
         }
 
-        public function onKernelResponsePost(ResponseEvent $event)
+        public function onKernelResponsePost(ResponseEvent $event): void
         {
             // ...
         }
 
-        public function onOrderPlaced(OrderPlacedEvent $event)
+        public function onOrderPlaced(OrderPlacedEvent $event): void
         {
             // ...
         }
