@@ -27,14 +27,13 @@ use the logger in a controller, add a new argument type-hinted with ``LoggerInte
 
     use Psr\Log\LoggerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends AbstractController
     {
-        /**
-         * @Route("/hello/{name}")
-         */
-        public function index($name, LoggerInterface $logger)
+        #[Route('/hello/{name}', methods: ['GET'])]
+        public function index(string $name, LoggerInterface $logger): Response
         {
             $logger->info("Saying hello to $name!");
 
@@ -93,7 +92,7 @@ this code directly in your controller, create a new class::
 
     class GreetingGenerator
     {
-        public function getRandomGreeting()
+        public function getRandomGreeting(): string
         {
             $greetings = ['Hey', 'Yo', 'Aloha'];
             $greeting = $greetings[array_rand($greetings)];
@@ -102,7 +101,7 @@ this code directly in your controller, create a new class::
         }
     }
 
-Great! You can use this immediately in your controller::
+Great! You can use it immediately in your controller::
 
     <?php
     // src/Controller/DefaultController.php
@@ -111,14 +110,13 @@ Great! You can use this immediately in your controller::
     use App\GreetingGenerator;
     use Psr\Log\LoggerInterface;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends AbstractController
     {
-        /**
-         * @Route("/hello/{name}")
-         */
-        public function index($name, LoggerInterface $logger, GreetingGenerator $generator)
+        #[Route('/hello/{name}', methods: ['GET'])]
+        public function index(string $name, LoggerInterface $logger, GreetingGenerator $generator): Response
         {
             $greeting = $generator->getRandomGreeting();
 
@@ -141,14 +139,11 @@ difference is that it's done in the constructor:
 
       class GreetingGenerator
       {
-    +     private $logger;
-    +
-    +     public function __construct(LoggerInterface $logger)
+    +     public function __construct(private readonly LoggerInterface $logger)
     +     {
-    +         $this->logger = $logger;
     +     }
 
-          public function getRandomGreeting()
+          public function getRandomGreeting(): string
           {
               // ...
 
@@ -178,11 +173,8 @@ that extends ``AbstractExtension``::
 
     class GreetExtension extends AbstractExtension
     {
-        private $greetingGenerator;
-
-        public function __construct(GreetingGenerator $greetingGenerator)
+        public function __construct(private readonly GreetingGenerator $greetingGenerator)
         {
-            $this->greetingGenerator = $greetingGenerator;
         }
 
         public function getFilters()
@@ -192,7 +184,7 @@ that extends ``AbstractExtension``::
             ];
         }
 
-        public function greetUser($name)
+        public function greetUser(string $name): string
         {
             $greeting =  $this->greetingGenerator->getRandomGreeting();
 
