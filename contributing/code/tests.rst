@@ -96,7 +96,7 @@ command:
 
 .. code-block:: terminal
 
-    $ composer docker-tests
+    $ composer docker-tests src/Symfony/
 
 The output should display ``OK``. If not, read the reported errors to figure out
 what's going on and if the tests are broken because of the new code.
@@ -116,7 +116,7 @@ what's going on and if the tests are broken because of the new code.
 
     .. code-block:: terminal
 
-        $ composer docker-tests -- --debug src/Symfony/Component/Finder/
+        $ composer docker-tests -- --verbose --debug src/Symfony/Component/Finder/
 
 .. tip::
 
