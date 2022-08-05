@@ -161,3 +161,4 @@ implement multiple interfaces by adding new "proxy" tags.
 
 .. _`ghost object`: https://en.wikipedia.org/wiki/Lazy_loading#Ghost
 .. _`final`: https://www.php.net/manual/en/language.oop5.final.php
+.. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern
