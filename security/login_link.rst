@@ -341,6 +341,8 @@ configuration decisions are discussed:
 * `Invalidate Login Links`_
 * `Allow a Link to only be Used Once`_
 
+.. _login-link-lifetime:
+
 Limit Login Link Lifetime
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -397,6 +399,10 @@ seconds). You can customize this using the ``lifetime`` option:
                     ->lifetime(300)
             ;
         };
+
+.. tip::
+
+    You can also :ref:`customize the lifetime per link <customizing-link-lifetime>`.
 
 .. _security-login-link-signature:
 
@@ -796,3 +802,17 @@ features such as the locale used to generate the link::
 
         // ...
     }
+
+.. _customizing-link-lifetime:
+
+By default, generated links use :ref:`the lifetime configured globally <login-link-lifetime>`
+but you can change the lifetime per link using the third argument of the
+``createLoginLink()`` method::
+
+    // the third optional argument is the lifetime in seconds
+    $loginLinkDetails = $loginLinkHandler->createLoginLink($user, null, 60);
+    $loginLink = $loginLinkDetails->getUrl();
+
+.. versionadded:: 6.2
+
+    The option to customize the link lifetime was introduced in Symfony 6.2.
