@@ -300,6 +300,12 @@ complete new file (but never a partially-written file)::
 
 The ``file.txt`` file contains ``Hello World`` now.
 
+If either the file or its containing directory doesn't exist, this method
+creates them.
+
+After writing the temporary file, this method use :method:`Symfony\\Component\\Filesystem\\Filesystem::rename`
+and set the third argument to true, so if the file exists, it will be overridden and the old content inside will be lost.
+
 ``appendToFile``
 ~~~~~~~~~~~~~~~~
 
