@@ -411,8 +411,8 @@ as necessary::
     echo Path::makeRelative('/var/www/project/config/config.yaml', '/var/www/project/uploads');
     // => ../config/config.yaml
 
-Use :method:`Symfony\\Component\\Filesystem\\Path::makeAbsolute` and
-:method:`Symfony\\Component\\Filesystem\\Path::makeRelative` to check whether a
+Use :method:`Symfony\\Component\\Filesystem\\Path::isAbsolute` and
+:method:`Symfony\\Component\\Filesystem\\Path::isRelative` to check whether a
 path is absolute or relative::
 
     Path::isAbsolute('C:\Programs\PHP\php.ini')
