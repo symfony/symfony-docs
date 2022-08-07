@@ -228,6 +228,8 @@ with Symfony Flex to install a specific Symfony version:
 
     # this requires Symfony 5.x for all Symfony packages
     export SYMFONY_REQUIRE=5.*
+    # alternative method: write to the composer.json file
+    # composer config extra.symfony.require "5.*"
 
     # install Symfony Flex in the CI environment
     composer global require --no-progress --no-scripts --no-plugins symfony/flex
