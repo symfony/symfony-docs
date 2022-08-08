@@ -360,7 +360,7 @@ authenticator methods (e.g. ``createToken()``)::
     {
         // ...
 
-        public function authenticate(Request $request): PassportInterface
+        public function authenticate(Request $request): Passport
         {
             // ... process the request
 
@@ -372,7 +372,7 @@ authenticator methods (e.g. ``createToken()``)::
             return $passport;
         }
 
-        public function createToken(PassportInterface $passport, string $firewallName): TokenInterface
+        public function createToken(Passport $passport, string $firewallName): TokenInterface
         {
             // read the attribute value
             return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
