@@ -331,13 +331,12 @@ Sections are a way to split the profile timeline into groups. Example::
     $this->stopwatch->stopSection('parsing');
 
 All events that don't belong to any named section are added to the special section
-``__root__``. This way you can get all stopwatch events, even if you don't know
-their names::
+called ``__root__``. This way you can get all stopwatch events, even if you don't
+know their names, as follows::
 
     foreach($this->stopwatch->getSectionEvents('__root__') as $event) {
         echo (string) $event;
     }
-
 
 Learn more
 ----------
