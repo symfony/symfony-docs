@@ -815,4 +815,4 @@ but you can change the lifetime per link using the third argument of the
 
 .. versionadded:: 6.2
 
-    The option to customize the link lifetime was introduced in Symfony 6.2.
+    The argument to customize the link lifetime was introduced in Symfony 6.2.
