@@ -608,8 +608,9 @@ and headers.
     
 .. caution::
 
-    The usage of keywords like ``from`` in the ``headers`` is not supported for every 3rd party provider (e.g. `Mailjet API V3`_). 
-    Please consult your provider's documentation before setting the ``headers`` globally.
+    Some third-party providers don't support the usage of keywords like ``from``
+    in the ``headers``. Check out your provider's documentation before setting
+    any global header.
 
 Handling Sending Failures
 -------------------------
