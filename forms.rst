@@ -455,6 +455,9 @@ possible paths:
     .. code-block:: twig
 
         {{ render(controller('App\\Controller\\TaskController::new')) }}
+        
+    But be careful becaues this might cause some extra work when it comes to submit and error handling.
+    Symfony Validation will get more complex when you render the same form in different routes.
 
 .. _validating-forms:
 
