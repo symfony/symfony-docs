@@ -468,6 +468,14 @@ serves at dumping the compiled container::
         file_put_contents($file, $dumper->dump());
     }
 
+.. tip::
+
+    The ``file_put_contents()`` function is not atomic. That could cause issues
+    in a production environment with multiple concurrent requests. Instead, use
+    the :ref:`dumpFile() method <filesystem-dumpfile>` from Symfony Filesystem
+    component or other methods provided by Symfony (e.g. ``$containerConfigCache->write()``)
+    which are atomic.
+    
 ``ProjectServiceContainer`` is the default name given to the dumped container
 class. However, you can change this with the ``class`` option when you
 dump it::
