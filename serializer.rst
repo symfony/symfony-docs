@@ -103,7 +103,10 @@ resources. This context is passed to all normalizers. For example:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer` uses
   ``datetime_format`` key as date time format;
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\AbstractObjectNormalizer`
-  uses ``empty_iterable_as_object`` to represent empty objects as ``{}`` instead
+  uses ``preserve_empty_objects`` to represent empty objects as ``{}`` instead
+  of ``[]`` in JSON.
+* :class:`Symfony\\Component\\Serializer\\Serializer`
+  uses ``empty_array_as_object`` to represent empty arrays as ``{}`` instead
   of ``[]`` in JSON.
 
 You can pass the context as follows::
