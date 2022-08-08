@@ -2198,8 +2198,10 @@ will happen:
 
 .. _security-securing-controller-annotations:
 
-Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
-using annotations:
+Another way to secure one or more controller actions is to use an attribute or
+annotation. In the following example, all controller actions will require the
+``ROLE_ADMIN`` permission, except for ``adminDashboard()``, which will require
+the ``ROLE_SUPER_ADMIN`` permission:
 
 .. configuration-block::
 
@@ -2211,15 +2213,11 @@ using annotations:
         use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
         /**
-         * Require ROLE_ADMIN for all the actions of this controller
-         *
          * @IsGranted("ROLE_ADMIN")
          */
         class AdminController extends AbstractController
         {
             /**
-             * Require ROLE_SUPER_ADMIN only for this action
-             *
              * @IsGranted("ROLE_SUPER_ADMIN")
              */
             public function adminDashboard(): Response
@@ -2233,17 +2231,11 @@ using annotations:
         // src/Controller/AdminController.php
         // ...
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+        use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-        /**
-         * Require ROLE_ADMIN for all the actions of this controller
-         */
         #[IsGranted('ROLE_ADMIN')]
         class AdminController extends AbstractController
         {
-            /**
-             * Require ROLE_SUPER_ADMIN only for this action
-             */
             #[IsGranted('ROLE_SUPER_ADMIN')]
             public function adminDashboard(): Response
             {
@@ -2251,7 +2243,13 @@ using annotations:
             }
         }
 
-For more information, see the `FrameworkExtraBundle documentation`_.
+The ``#[IsGranted()]`` attribute is built-in in Symfony and it's recommended for
+modern applications. Using the ``@IsGranted()`` annotation requires to install
+an external bundle called `FrameworkExtraBundle`_.
+
+.. versionadded:: 6.2
+
+    The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
 
 .. _security-template:
 
@@ -2690,7 +2688,7 @@ Authorization (Denying Access)
     security/access_denied_handler
     security/force_https
 
-.. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
+.. _`FrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`OWASP Brute Force Attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
 .. _`brute force login attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
