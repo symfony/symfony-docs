@@ -550,6 +550,12 @@ and headers.
             $mailer->header('X-Custom-Header')->value('foobar');
         };
 
+.. caution::
+
+    Some third-party providers don't support the usage of keywords like ``from``
+    in the ``headers``. Check out your provider's documentation before setting
+    any global header.
+
 Handling Sending Failures
 -------------------------
 
@@ -1495,3 +1501,4 @@ you can use the built in assertions::
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
+.. _`Mailjet API V3`: https://dev.mailjet.com/email/guides/send-api-v31/#add-email-headers
