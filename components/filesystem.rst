@@ -287,6 +287,8 @@ exception on failure::
     // returns a path like : /tmp/prefix_wyjgtF.png
     $filesystem->tempnam('/tmp', 'prefix_', '.png');
 
+.. _filesystem-dumpfile:
+
 ``dumpFile``
 ~~~~~~~~~~~~
 
