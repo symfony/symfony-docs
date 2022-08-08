@@ -446,19 +446,6 @@ possible paths:
     data is passed to it, you can
     :doc:`use the submit() method to handle form submissions </form/direct_submit>`.
 
-.. tip::
-
-    If you need to render and process the same form in different templates,
-    use the ``render()`` function to :ref:`embed the controller <templates-embed-controllers>`
-    that processes the form:
-
-    .. code-block:: twig
-
-        {{ render(controller('App\\Controller\\TaskController::new')) }}
-        
-    But be careful becaues this might cause some extra work when it comes to submit and error handling.
-    Symfony Validation will get more complex when you render the same form in different routes.
-
 .. _validating-forms:
 
 Validating Forms
