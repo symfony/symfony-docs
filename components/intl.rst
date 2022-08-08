@@ -43,7 +43,7 @@ This component provides the following ICU data:
 Language and Script Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``Languages`` class provides access to the name of all languages
+The :class:`Symfony\\Component\\Intl\\Languages` class provides access to the name of all languages
 according to the `ISO 639-1 alpha-2`_ list and the `ISO 639-2 alpha-3 (2T)`_ list::
 
     use Symfony\Component\Intl\Languages;
@@ -95,7 +95,7 @@ You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 
     $alpha2Code = Languages::getAlpha2Code($alpha3Code);
 
-The ``Scripts`` class provides access to the optional four-letter script code
+The :class:`Symfony\\Component\\Intl\\Scripts` class provides access to the optional four-letter script code
 that can follow the language code according to the `Unicode ISO 15924 Registry`_
 (e.g. ``HANS`` in ``zh_HANS`` for simplified Chinese and ``HANT`` in ``zh_HANT``
 for traditional Chinese)::
