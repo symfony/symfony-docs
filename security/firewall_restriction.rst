@@ -232,7 +232,7 @@ If the above options don't fit your needs you can configure any service implemen
 
             <config>
                 <!-- ... -->
-                <firewall name="secured_area" request-matcher="app.firewall.secured_area.request_matcher">
+                <firewall name="secured_area" request-matcher="App\Security\CustomRequestMatcher">
                     <!-- ... -->
                 </firewall>
             </config>
@@ -241,13 +241,14 @@ If the above options don't fit your needs you can configure any service implemen
     .. code-block:: php
 
         // config/packages/security.php
+        use App\Security\CustomRequestMatcher;
         use Symfony\Config\SecurityConfig;
 
         return static function (SecurityConfig $security) {
             // ....
 
             $security->firewall('secured_area')
-                ->requestMatcher('app.firewall.secured_area.request_matcher')
+                ->requestMatcher(CustomRequestMatcher::class)
                 // ...
             ;
         };
