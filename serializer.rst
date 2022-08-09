@@ -159,16 +159,10 @@ configuration:
 
 .. _serializer-using-serialization-groups-annotations:
 
-Using Serialization Groups Annotations
---------------------------------------
+Using Serialization Groups Attributes
+-------------------------------------
 
-To use annotations, first add support for them via the SensioFrameworkExtraBundle:
-
-.. code-block:: terminal
-
-    $ composer require sensio/framework-extra-bundle
-
-Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
+You can add :ref:`#[Groups] attributes <component-serializer-attributes-groups-annotations>`
 to your class::
 
     // src/Entity/Product.php
@@ -177,29 +171,21 @@ to your class::
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Serializer\Annotation\Groups;
 
-    /**
-     * @ORM\Entity()
-     */
+    #[ORM\Entity]
     class Product
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
-         * @ORM\Column(type="integer")
-         * @Groups({"show_product", "list_product"})
-         */
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column(type: 'integer')]
+        #[Groups(['show_product', 'list_product'])]
         private $id;
 
-        /**
-         * @ORM\Column(type="string", length=255)
-         * @Groups({"show_product", "list_product"})
-         */
+        #[ORM\Column(type: 'string', length: 255)]
+        #[Groups(['show_product', 'list_product'])]
         private $name;
 
-        /**
-         * @ORM\Column(type="integer")
-         * @Groups({"show_product"})
-         */
+        #[ORM\Column(type: 'integer')]
+        #[Groups(['show_product'])]
         private $description;
     }
 
@@ -215,7 +201,7 @@ You can now choose which groups to use when serializing::
 
     The value of the ``groups`` key can be a single string, or an array of strings.
 
-In addition to the ``@Groups`` annotation, the Serializer component also
+In addition to the ``#[Groups]`` attribute, the Serializer component also
 supports YAML or XML files. These files are automatically loaded when being
 stored in one of the following locations:
 
