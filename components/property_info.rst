@@ -453,7 +453,7 @@ SerializerExtractor
 
     This extractor depends on the `symfony/serializer`_ library.
 
-Using :ref:`groups metadata <serializer-using-serialization-groups-annotations>`
+Using :ref:`groups metadata <serializer-using-serialization-groups-attributes>`
 from the :doc:`Serializer component </components/serializer>`,
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\SerializerExtractor`
 provides list information. This extractor is *not* registered automatically
