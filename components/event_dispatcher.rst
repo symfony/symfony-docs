@@ -402,6 +402,49 @@ Take the following example of a subscriber that subscribes to the
         }
     }
 
+You can also leverage the :class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener`
+attribute to configure your class as a listener on event::
+
+    namespace App\EventListener;
+
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+
+    #[AsEventListener]
+    final class MyListener
+    {
+        public function __invoke(CustomEvent $event): void
+        {
+            // ...
+        }
+    }
+
+or any of a class methods like so::
+
+    namespace App\EventListener;
+
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+
+    #[AsEventListener(event: CustomEvent::class, method: 'onCustomEvent')]
+    #[AsEventListener(event: 'foo', priority: 42)]
+    #[AsEventListener(event: 'bar', method: 'onBarEvent')]
+    final class MyMultiListener
+    {
+        public function onCustomEvent(CustomEvent $event): void
+        {
+            // ...
+        }
+
+        public function onFoo(): void
+        {
+            // ...
+        }
+
+        public function onBarEvent(): void
+        {
+            // ...
+        }
+    }
+
 This is very similar to a listener class, except that the class itself can
 tell the dispatcher which events it should listen to. To register a subscriber
 with the dispatcher, use the
