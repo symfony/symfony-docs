@@ -134,6 +134,54 @@ listener class:
     internal Symfony listeners usually range from ``-256`` to ``256`` but your
     own listeners can use any positive or negative integer.
 
+Defining Event Listeners with PHP Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An alternative way to define an event listener is to use the
+:class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener`
+PHP attribute. This allows to configure the listener inside its class, without
+having to add any configuration in external files::
+
+    namespace App\EventListener;
+
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+
+    #[AsEventListener]
+    final class MyListener
+    {
+        public function __invoke(CustomEvent $event): void
+        {
+            // ...
+        }
+    }
+
+You can add multiple ``#[AsEventListener()]`` attributes to configure different methods::
+
+    namespace App\EventListener;
+
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+
+    #[AsEventListener(event: CustomEvent::class, method: 'onCustomEvent')]
+    #[AsEventListener(event: 'foo', priority: 42)]
+    #[AsEventListener(event: 'bar', method: 'onBarEvent')]
+    final class MyMultiListener
+    {
+        public function onCustomEvent(CustomEvent $event): void
+        {
+            // ...
+        }
+
+        public function onFoo(): void
+        {
+            // ...
+        }
+
+        public function onBarEvent(): void
+        {
+            // ...
+        }
+    }
+
 .. _events-subscriber:
 
 Creating an Event Subscriber
