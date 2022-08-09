@@ -219,17 +219,17 @@ systems (unlike PHP's :phpfunction:`readlink` function)::
     // returns its absolute fully resolved final version of the target (if there are nested links, they are resolved)
     $filesystem->readlink('/path/to/link', true);
 
-Its behavior is the following::
-
-    public function readlink(string $path, bool $canonicalize = false): ?string
+Its behavior is the following:
 
 * When ``$canonicalize`` is ``false``:
-    * if ``$path`` does not exist or is not a link, it returns ``null``.
-    * if ``$path`` is a link, it returns the next direct target of the link without considering the existence of the target.
+
+  * if ``$path`` does not exist or is not a link, it returns ``null``.
+  * if ``$path`` is a link, it returns the next direct target of the link without considering the existence of the target.
 
 * When ``$canonicalize`` is ``true``:
-    * if ``$path`` does not exist, it returns null.
-    * if ``$path`` exists, it returns its absolute fully resolved final version.
+
+  * if ``$path`` does not exist, it returns null.
+  * if ``$path`` exists, it returns its absolute fully resolved final version.
 
 .. note::
 
