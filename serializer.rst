@@ -158,6 +158,7 @@ configuration:
         };
 
 .. _serializer-using-serialization-groups-annotations:
+.. _serializer-using-serialization-groups-attributes:
 
 Using Serialization Groups Attributes
 -------------------------------------
