@@ -328,3 +328,46 @@ not to the property:
                 $metadata->addConstraint(new ProtocolClass());
             }
         }
+
+Testing Custom Constraints
+--------------------------
+
+Use the ``ConstraintValidatorTestCase`` utility to simplify the creation of
+unit tests for your custom constraints::
+
+    // ...
+    use App\Validator\ContainsAlphanumeric;
+    use App\Validator\ContainsAlphanumericValidator;
+
+    class ContainsAlphanumericValidatorTest extends ConstraintValidatorTestCase
+    {
+        protected function createValidator()
+        {
+            return new ContainsAlphanumericValidator();
+        }
+
+        public function testNullIsValid()
+        {
+            $this->validator->validate(null, new ContainsAlphanumeric());
+
+            $this->assertNoViolation();
+        }
+
+        /**
+         * @dataProvider provideInvalidConstraints
+         */
+        public function testTrueIsInvalid(ContainsAlphanumeric $constraint)
+        {
+            $this->validator->validate('...', $constraint);
+
+            $this->buildViolation('myMessage')
+                ->setParameter('{{ string }}', '...')
+                ->assertRaised();
+        }
+
+        public function provideInvalidConstraints(): iterable
+        {
+            yield [new ContainsAlphanumeric(message: 'myMessage')];
+            // ...
+        }
+    }
