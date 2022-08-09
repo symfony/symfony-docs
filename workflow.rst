@@ -368,7 +368,6 @@ order:
     * ``workflow.[workflow name].completed``
     * ``workflow.[workflow name].completed.[transition name]``
 
-
 ``workflow.announce``
     Triggered for each transition that now is accessible for the subject.
 
@@ -378,7 +377,12 @@ order:
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
 
-    You can avoid triggering those events by using the context::
+    After a transition is applied, the announce event tests for all available
+    transitions. That will trigger all :ref:`guard events <workflow-usage-guard-events>`
+    once more, which could impact performance if they include intensive CPU or
+    database workloads.
+
+    If you don't need the announce event, disable it using the context::
 
         $workflow->apply($subject, $transitionName, [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
 
@@ -493,6 +497,8 @@ missing a title::
             ];
         }
     }
+
+.. _workflow-chosing-events-to-dispatch:
 
 Choosing which Events to Dispatch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
