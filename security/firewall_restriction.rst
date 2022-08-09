@@ -215,7 +215,7 @@ If the above options don't fit your needs you can configure any service implemen
         security:
             firewalls:
                 secured_area:
-                    request_matcher: app.firewall.secured_area.request_matcher
+                    request_matcher: App\Security\CustomRequestMatcher
                     # ...
 
     .. code-block:: xml
