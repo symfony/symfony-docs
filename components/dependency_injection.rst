@@ -259,15 +259,16 @@ config files:
             newsletter_manager:
                 class:     NewsletterManager
                 calls:
-                    - setMailer: ['@mailer']
+                    - [setMailer, ['@mailer']]
 
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <parameters>
                 <!-- ... -->
                 <parameter key="mailer.transport">sendmail</parameter>
@@ -290,23 +291,20 @@ config files:
 
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
-            $configurator->parameters()
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
                 // ...
                 ->set('mailer.transport', 'sendmail')
             ;
 
-            $services = $configurator->services();
+            $container->services()
+                ->set('mailer', 'Mailer')
+                    ->args(['%mailer.transport%'])
 
-            $services->set('mailer', 'Mailer')
-                ->args(['%mailer.transport%'])
-            ;
-
-            $services->set('newsletter_manager', 'NewsletterManager')
-                ->call('setMailer', [ref('mailer')])
+                ->set('newsletter_manager', 'NewsletterManager')
+                    ->call('setMailer', [ref('mailer')])
             ;
         };
-
 
 Learn More
 ----------
