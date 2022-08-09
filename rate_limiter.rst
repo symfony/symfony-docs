@@ -178,7 +178,7 @@ enforce different levels of service (free or paid):
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $frameworkConfig) {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // use 'sliding_window' if you prefer that policy
