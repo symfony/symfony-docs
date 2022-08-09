@@ -1312,18 +1312,20 @@ collect_parameter
 
 **type**: ``string`` **default**: ``null``
 
-This specifies name of query parameter, body parameter or a request attribute
-that can be used to enable or disable collection of data by the profiler
-individually for each request. If ``collect`` flag is set to ``true``,
-but the parameter exists in a request and has any value other than ``true``,
-``yes``, ``on`` or ``1``, the request data will not be collected.
-If ``collect`` flag is set to ``false``, but the parameter exists in a request
-and has value of ``true``, ``yes``, ``on`` or ``1``,
-the request data will be collected.
+This specifies name of a query parameter, a body parameter or a request attribute
+used to enable or disable collection of data by the profiler for each request.
+Combine it with the ``collect`` option to enable/disable the profiler on demand:
+
+* If the ``collect`` option is set to ``true`` but this parameter exists in a
+  request and has any value other than ``true``, ``yes``, ``on`` or ``1``, the
+  request data will not be collected;
+* If the ``collect`` option is set to ``false``, but this parameter exists in a
+  request and has value of ``true``, ``yes``, ``on`` or ``1``, the request data
+  will be collected.
 
 .. versionadded:: 5.4
 
-    The `collect_parameter` was introduced in Symfony 5.4.
+    The ``collect_parameter`` option was introduced in Symfony 5.4.
 
 only_exceptions
 ...............
