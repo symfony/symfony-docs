@@ -801,6 +801,49 @@ You can also validate all the classes stored in a given directory:
 
     $ php bin/console debug:validator src/Entity
 
+Testing Custom Constraints
+-------------------------
+
+Since custom constraints contain meaningful logic for your application, writing tests is crucial. You can use the ``ConstraintValidatorTestCase`` to write unit tests for custom constraints:
+
+.. code-block:: php
+    class IsFalseValidatorTest extends ConstraintValidatorTestCase
+    {
+        protected function createValidator()
+        {
+            return new IsFalseValidator();
+        }
+        
+        public function testNullIsValid()
+        {
+            $this->validator->validate(null, new IsFalse());
+
+            $this->assertNoViolation();
+        }
+
+        /**
+         * @dataProvider provideInvalidConstraints
+         */
+        public function testTrueIsInvalid(IsFalse $constraint)
+        {
+            $this->validator->validate(true, $constraint);
+
+            $this->buildViolation('myMessage')
+                ->setParameter('{{ value }}', 'true')
+                ->setCode(IsFalse::NOT_FALSE_ERROR)
+                ->assertRaised();
+        }
+
+        public function provideInvalidConstraints(): iterable
+        {
+            yield 'Doctrine style' => [new IsFalse([
+                'message' => 'myMessage',
+            ])];
+            yield 'named parameters' => [new IsFalse(message: 'myMessage')];
+        }
+        
+    }
+
 Final Thoughts
 --------------
 
