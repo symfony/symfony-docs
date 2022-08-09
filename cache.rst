@@ -382,8 +382,8 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return function(ContainerConfigurator $container) {
-                $container->services()
+            return function(ContainerConfigurator $configurator) {
+                $configurator->services()
                     // ...
 
                     ->set('app.cache.adapter.redis')
