@@ -293,20 +293,15 @@ exception on failure::
 ~~~~~~~~~~~~
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` saves the given
-contents into a file. It does this in an atomic manner: it writes a temporary
-file first and then moves it to the new file location when it's finished.
-This means that the user will always see either the complete old file or
-complete new file (but never a partially-written file)::
+contents into a file (creating the file and its directory if they don't exist).
+It does this in an atomic manner: it writes a temporary file first and then moves
+it to the new file location when it's finished. This means that the user will
+always see either the complete old file or complete new file (but never a
+partially-written file)::
 
     $filesystem->dumpFile('file.txt', 'Hello World');
 
 The ``file.txt`` file contains ``Hello World`` now.
-
-If either the file or its containing directory doesn't exist, this method
-creates them.
-
-After writing the temporary file, this method use :method:`Symfony\\Component\\Filesystem\\Filesystem::rename`
-and set the third argument to true, so if the file exists, it will be overridden and the old content inside will be lost.
 
 ``appendToFile``
 ~~~~~~~~~~~~~~~~
