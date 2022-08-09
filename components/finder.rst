@@ -346,7 +346,8 @@ Sort the results by name, extension, size or type (directories first, then files
 
 .. versionadded:: 6.2
 
-    The ``sortByCaseInsensitiveName()``, ``sortByExtension()`` and ``sortBySize()`` methods were introduced in Symfony 6.2.
+    The ``sortByCaseInsensitiveName()``, ``sortByExtension()`` and ``sortBySize()``
+    methods were introduced in Symfony 6.2.
 
 .. tip::
 
@@ -355,8 +356,10 @@ Sort the results by name, extension, size or type (directories first, then files
     as its argument to use PHP's `natural sort order`_ algorithm instead (e.g.
     ``file1.txt``, ``file2.txt``, ``file10.txt``).
     
-    The ``sortByCaseInsensitiveName()`` method uses the case insensitive :phpfunction:`strcasecmp` PHP function.
-    Pass ``true`` as its argument to use PHP's case insensitive `natural sort order`_ algorithm instead (the :phpfunction:`strnatcasecmp` PHP function)
+    The ``sortByCaseInsensitiveName()`` method uses the case insensitive
+    :phpfunction:`strcasecmp` PHP function. Pass ``true`` as its argument to use
+    PHP's case insensitive `natural sort order`_ algorithm instead (i.e. the
+    :phpfunction:`strnatcasecmp` PHP function)
 
 Sort the files and directories by the last accessed, changed or modified time::
 
