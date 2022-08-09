@@ -28,8 +28,8 @@ PHP attributes and annotations allow to define routes next to the code of the
 :doc:`controllers </controller>` associated to those routes. Attributes are
 native in PHP 8 and higher versions, so you can use them right away.
 
-In PHP 7 and earlier versions you can use annotations (via the Doctrine Annotations
-library), but first you'll need to install the following dependency in your project:
+You can use annotations via the Doctrine Annotations library,
+but first you'll need to install the following dependency in your project:
 
 .. code-block:: terminal
 
