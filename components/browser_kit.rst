@@ -319,9 +319,9 @@ dedicated web crawler or scraper such as `Goutte`_::
 
 .. tip::
 
-    You can also use HTTP client options like 'ciphers', 'auth_basic' and 'query'.
-    They have to be passed as the default options argument to the client, 
-    which is used by the HTTP browser.
+    You can also use HTTP client options like ``ciphers``, ``auth_basic`` and
+    ``query``. They have to be passed as the default options argument to the
+    client which is used by the HTTP browser.
 
 .. versionadded:: 4.3
 
