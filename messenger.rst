@@ -1361,10 +1361,11 @@ auto_setup          Whether the table should be created
                     automatically during send / get.       true
 ==================  =====================================  ======================
 
-
 .. note::
 
-    ``redeliver_timeout`` must be set to a greater value than your slowest message duration. Failing to do so will result in messages being started a second time while the first one is still running.
+    Set ``redeliver_timeout`` to a greater value than your slowest message
+    duration. Otherwise, some messages will start a second time while the
+    first one is still being handled.
 
 .. versionadded:: 5.1
 
