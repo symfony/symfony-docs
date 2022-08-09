@@ -357,6 +357,18 @@ dedicated web crawler or scraper such as `Goutte`_::
     ``query``. They have to be passed as the default options argument to the
     client which is used by the HTTP browser.
 
+Dealing with HTTP responses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using the BrowserKit component, you may need to deal with responses of
+the requests you made. To do so, call the ``getResponse()`` method of the
+``HttpBrowser`` object. This method returns the last response the browser received::
+
+    $browser = new HttpBrowser(HttpClient::create());
+
+    $browser->request('GET', 'https://foo.com');
+    $response = $browser->getResponse();
+
 Learn more
 ----------
 
