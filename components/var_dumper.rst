@@ -131,22 +131,27 @@ the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
 
         <!-- config/packages/debug.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/debug"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:debug="http://symfony.com/schema/dic/debug"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/debug https://symfony.com/schema/dic/debug/debug-1.0.xsd">
-
+                http://symfony.com/schema/dic/debug
+                https://symfony.com/schema/dic/debug/debug-1.0.xsd"
+        >
             <debug:config dump-destination="tcp://%env(VAR_DUMPER_SERVER)%"/>
         </container>
 
     .. code-block:: php
 
         // config/packages/debug.php
-        $container->loadFromExtension('debug', [
-           'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('debug', [
+                'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
+            ]);
+        };
 
 Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper` class::
 

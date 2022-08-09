@@ -19,8 +19,8 @@
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
                 <imports>
                     <import resource="%kernel.project_dir%/somefile.yaml"/>
                 </imports>
@@ -29,4 +29,8 @@
         .. code-block:: php
 
             // config/services.php
-            $loader->import('%kernel.project_dir%/somefile.yaml');
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->import('%kernel.project_dir%/somefile.yaml');
+            };
