@@ -59,8 +59,16 @@ See the :doc:`/console` article for information about how to create commands.
 
 .. note::
 
-    Do not forget to leverage Composer's `autoload`_ feature
-    so that your Command can be used.
+    You have to register your command(s) path for autoloading
+    in the `composer.json` file::
+
+    {
+        "autoload": {
+            "psr-4": {
+                "App\\": "src/"
+            }
+        }
+    }
 
 Learn more
 ----------
@@ -73,4 +81,3 @@ Learn more
     /components/console/*
     /console/*
 
-.. _`autoload`: https://getcomposer.org/doc/04-schema.md#autoload
