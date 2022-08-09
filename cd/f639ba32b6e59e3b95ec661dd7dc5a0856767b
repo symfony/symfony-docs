@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2022-07-08T16:29:03Z
+
+5.4 is still used in the description of this issue and the milestone.
+
+---
+
+Update: this is a known issue of the Carson bot: https://github.com/symfony-tools/carsonbot/issues/176
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2022-07-08T16:34:50Z
+
+Not able to edit milestone and so on but updated the description, thank you!
