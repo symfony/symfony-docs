@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-07-11T15:05:47Z
+
+I think it's too early to remove annotations ... but we should add attributes in addition to annotations to all examples. See for example https://symfony.com/doc/current/routing.html#matching-http-methods
+
+But, before doing any change, let's ask to @symfony/team-symfony-docs
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2022-07-11T16:57:44Z
+
+I am 👍 on your comment @javiereguiluz! Indeed, annotations are being replaced by attributes but I didn't see some "official" deprecation about annotations for the moment (and we won't see any before PHP 8 becomes the lowest supported version I guess!). In any case I'll be happy to make the change if needed!
