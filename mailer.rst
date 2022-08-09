@@ -1501,4 +1501,3 @@ you can use the built in assertions::
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
-.. _`Mailjet API V3`: https://dev.mailjet.com/email/guides/send-api-v31/#add-email-headers
