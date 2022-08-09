@@ -1261,10 +1261,6 @@ Combine it with the ``collect`` option to enable/disable the profiler on demand:
   request and has value of ``true``, ``yes``, ``on`` or ``1``, the request data
   will be collected.
 
-.. versionadded:: 5.4
-
-    The ``collect_parameter`` option was introduced in Symfony 5.4.
-
 only_exceptions
 ...............
 
