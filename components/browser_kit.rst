@@ -343,12 +343,15 @@ dedicated web crawler or scraper such as `Goutte`_::
         '.table-list-header-toggle a:nth-child(1)'
     )->text());
 
+<<<<<<< HEAD
 .. tip::
 
     You can also use HTTP client options like ``ciphers``, ``auth_basic`` and
     ``query``. They have to be passed as the default options argument to the
     client which is used by the HTTP browser.
 
+=======
+>>>>>>> 4f790b856 ([BrowserKit] Add response management to BrowserKit documentation)
 Dealing with HTTP responses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -360,6 +363,20 @@ the requests you made. To do so, call the ``getResponse()`` method of the
 
     $browser->request('GET', 'https://foo.com');
     $response = $browser->getResponse();
+
+If you're making requests that result in a JSON response, you may use the
+``toArray()`` method to turn the JSON document into a PHP array without having
+to call ``json_decode()`` explicitly::
+
+    $browser = new HttpBrowser(HttpClient::create());
+
+    $browser->request('GET', 'https://api.foo.com');
+    $response = $browser->getResponse()->toArray();
+    // $response is a PHP array of the decoded JSON contents
+
+.. versionadded:: 6.1
+
+    The ``toArray()`` method was introduced in Symfony 6.1.
 
 Learn more
 ----------
