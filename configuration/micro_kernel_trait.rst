@@ -331,3 +331,24 @@ As before you can use the :doc:`Symfony Local Web Server
     $ symfony server:start
 
 Then visit the page in your browser: http://localhost:8000/random/10
+
+Define routes in the Kernel with annotations
+--------------------------------------------
+
+You first have to enable annotations (see :ref:`routing-creating-routes-as-annotations`).
+
+Then you have to declare that Symfony must read the annotations in the Kernel
+by updating the configuration:
+
+.. code-block:: diff
+
+      # config/routes/annotations.yaml
+      controllers:
+          resource: ../../src/Controller/
+          type: annotation
+
+    +kernel:
+    +    resource: ../../src/Kernel.php
+    +    type: annotation
+
+You'll be able to declare routes with annotations in your ``Kernel``.

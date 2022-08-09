@@ -20,6 +20,8 @@ provide the same features and performance, so choose your favorite.
 :ref:`Symfony recommends annotations <best-practice-controller-annotations>`
 because it's convenient to put the route and controller in the same place.
 
+.. _routing-creating-routes-as-annotations:
+
 Creating Routes as Annotations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
