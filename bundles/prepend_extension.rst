@@ -127,29 +127,35 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
                 http://example.org/schema/dic/acme_something
                 https://example.org/schema/dic/acme_something/acme_something-1.0.xsd
                 http://example.org/schema/dic/acme_other
-                https://example.org/schema/dic/acme_something/acme_other-1.0.xsd">
-
+                https://example.org/schema/dic/acme_something/acme_other-1.0.xsd"
+        >
             <acme-something:config use-acme-goodbye="false">
                 <!-- ... -->
                 <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
             </acme-something:config>
 
-            <acme-other:config use-acme-goodbye="false"/>
+            <acme-other:config use-acme-goodbye="false">
+                <!-- ... -->
+            </acme-other:config>
 
         </container>
 
     .. code-block:: php
 
         // config/packages/acme_something.php
-        $container->loadFromExtension('acme_something', [
-            // ...
-            'use_acme_goodbye' => false,
-            'entity_manager_name' => 'non_default',
-        ]);
-        $container->loadFromExtension('acme_other', [
-            // ...
-            'use_acme_goodbye' => false,
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('acme_something', [
+                // ...
+                'use_acme_goodbye' => false,
+                'entity_manager_name' => 'non_default',
+            ]);
+            $container->extension('acme_other', [
+                // ...
+                'use_acme_goodbye' => false,
+            ]);
+        };
 
 Prepending Extension in the Bundle Class
 ----------------------------------------

@@ -427,8 +427,8 @@ The end user can provide values in any configuration file:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <parameters>
                 <parameter key="acme_blog.author.email">fabien@example.com</parameter>
             </parameters>
@@ -438,7 +438,13 @@ The end user can provide values in any configuration file:
     .. code-block:: php
 
         // config/services.php
-        $container->setParameter('acme_blog.author.email', 'fabien@example.com');
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
+                ->set('acme_blog.author.email', 'fabien@example.com')
+            ;
+        };
 
 Retrieve the configuration parameters in your code from the container::
 

@@ -951,6 +951,8 @@ faster alternative to the
 
         # config/services.yaml
         services:
+            # ...
+
             get_set_method_normalizer:
                 class: Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer
                 tags: [serializer.normalizer]
@@ -962,9 +964,11 @@ faster alternative to the
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <services>
+                <!-- ... -->
+
                 <service id="get_set_method_normalizer" class="Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer">
                     <tag name="serializer.normalizer"/>
                 </service>
@@ -978,11 +982,11 @@ faster alternative to the
 
         use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
-
-            $services->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
-                ->tag('serializer.normalizer')
+        return static function (ContainerConfigurator $container) {
+            $container->services()
+                // ...
+                ->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
+                    ->tag('serializer.normalizer')
             ;
         };
 
