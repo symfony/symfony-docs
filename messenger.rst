@@ -1251,6 +1251,12 @@ auto_setup          Whether the table should be created
                     automatically during send / get.       true
 ==================  =====================================  ======================
 
+.. note::
+
+    Set ``redeliver_timeout`` to a greater value than your slowest message
+    duration. Otherwise, some messages will start a second time while the
+    first one is still being handled.
+
 When using PostgreSQL, you have access to the following options to leverage
 the `LISTEN/NOTIFY`_ feature. This allow for a more performant approach
 than the default polling behavior of the Doctrine transport because
