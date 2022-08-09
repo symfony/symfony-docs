@@ -2672,7 +2672,7 @@ If this option is enabled, serialization groups can be defined using annotations
 
 .. seealso::
 
-    For more information, see :ref:`serializer-using-serialization-groups-annotations`.
+    For more information, see :ref:`serializer-using-serialization-groups-attributes`.
 
 .. _reference-serializer-name_converter:
 
