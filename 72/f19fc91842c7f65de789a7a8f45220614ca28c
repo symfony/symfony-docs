@@ -1,0 +1,32 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-05-17T05:57:10Z
+
+>  was introduces in 5.1 but wan not configurable by dsn
+
+Please target `5.4` branch then an add `versionadded:: 5.1`, thanks
+
+---------------------------------------------------------------------------
+
+by gassan at 2022-05-17T07:20:07Z
+
+According to https://github.com/symfony/symfony/pull/46315#issuecomment-1123524371 the patch should be merged into 6.1 branch.
+P.S. Whereby I think that the patch could also be merged into 5.4.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-05-17T12:12:19Z
+
+Sorry I misread the PR header, you introduce the ability to set it via DSN in 6.1, but as its freezes, it should target 6.2 👍
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-06-01T12:24:05Z
+
+Please rebase on `6.2`, thanks
+
+---------------------------------------------------------------------------
+
+by gassan at 2022-06-03T10:16:46Z
+
+Rebased onto 6.2
