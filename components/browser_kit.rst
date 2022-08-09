@@ -327,6 +327,19 @@ dedicated web crawler or scraper such as `Goutte`_::
 
     The feature to make external HTTP requests was introduced in Symfony 4.3.
 
+Dealing with HTTP responses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using the BrowserKit component, you may need to deal with responses of
+the requests you made. To do so, you need to call the ``getResponse()``
+method of the ``HttpBrowser`` object. This method retrieves the last response
+the browser received::
+
+    $browser = new HttpBrowser(HttpClient::create());
+
+    $browser->request('GET', 'https://foo.com');
+    $response = $browser->getResponse();
+
 Learn more
 ----------
 
