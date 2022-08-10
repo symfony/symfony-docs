@@ -106,24 +106,6 @@ You can now add your route directly *above* the controller:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Controller/LuckyController.php
-
-        // ...
-        + use Symfony\Component\Routing\Annotation\Route;
-
-        class LuckyController
-        {
-        +   /**
-        +    * @Route("/lucky/number")
-        +    */
-            public function number(): Response
-            {
-                // this looks exactly the same
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Controller/LuckyController.php
@@ -257,9 +239,7 @@ variable so you can use it in Twig::
 
     class LuckyController extends AbstractController
     {
-        /**
-         * @Route("/lucky/number")
-         */
+        #[Route('/lucky/number')]
         public function number(): Response
         {
             $number = random_int(0, 100);

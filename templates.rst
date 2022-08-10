@@ -188,34 +188,6 @@ Consider the following routing configuration:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Controller/BlogController.php
-        namespace App\Controller;
-
-        // ...
-        use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class BlogController extends AbstractController
-        {
-            /**
-             * @Route("/", name="blog_index")
-             */
-            public function index(): Response
-            {
-                // ...
-            }
-
-            /**
-             * @Route("/article/{slug}", name="blog_post")
-             */
-            public function show(string $slug): Response
-            {
-                // ...
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Controller/BlogController.php

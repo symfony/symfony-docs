@@ -38,9 +38,7 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/products")
-         */
+        #[Route('/products')]
         public function list(LoggerInterface $logger): Response
         {
             $logger->info('Look, I just used a service!');

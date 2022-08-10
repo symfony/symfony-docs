@@ -31,9 +31,7 @@ use the logger in a controller, add a new argument type-hinted with ``LoggerInte
 
     class DefaultController extends AbstractController
     {
-        /**
-         * @Route("/hello/{name}")
-         */
+        #[Route('/hello/{name}')]
         public function index($name, LoggerInterface $logger)
         {
             $logger->info("Saying hello to $name!");
@@ -115,9 +113,7 @@ Great! You can use this immediately in your controller::
 
     class DefaultController extends AbstractController
     {
-        /**
-         * @Route("/hello/{name}")
-         */
+        #[Route('/hello/{name}')]
         public function index($name, LoggerInterface $logger, GreetingGenerator $generator)
         {
             $greeting = $generator->getRandomGreeting();

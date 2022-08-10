@@ -86,27 +86,8 @@ intercept requests to this route:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Controller/SecurityController.php
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class SecurityController extends AbstractController
-        {
-            /**
-             * @Route("/login_check", name="login_check")
-             */
-            public function check()
-            {
-                throw new \LogicException('This code should never be reached');
-            }
-        }
-        
     .. code-block:: php-attributes
-    
+
         // src/Controller/SecurityController.php
         namespace App\Controller;
 
@@ -177,9 +158,7 @@ this interface::
 
     class SecurityController extends AbstractController
     {
-        /**
-         * @Route("/login", name="login")
-         */
+        #[Route('/login', name: 'login')]
         public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
         {
             // check if login form is submitted
@@ -250,9 +229,7 @@ number::
 
     class SecurityController extends AbstractController
     {
-        /**
-         * @Route("/login", name="login")
-         */
+        #[Route('/login', name: 'login')]
         public function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
         {
             if ($request->isMethod('POST')) {
@@ -628,9 +605,7 @@ user create this POST request (e.g. by clicking a button)::
 
     class SecurityController extends AbstractController
     {
-        /**
-         * @Route("/login_check", name="login_check")
-         */
+        #[Route('/login_check', name: 'login_check')]
         public function check(Request $request)
         {
             // get the login link query parameters
@@ -771,9 +746,7 @@ features such as the locale used to generate the link::
 
     class SecurityController extends AbstractController
     {
-        /**
-         * @Route("/login", name="login")
-         */
+        #[Route('/login', name: 'login')]
         public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request)
         {
             // check if login form is submitted

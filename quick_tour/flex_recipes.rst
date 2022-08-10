@@ -86,9 +86,7 @@ Thanks to Flex, after one command, you can start using Twig immediately:
     - class DefaultController
     + class DefaultController extends AbstractController
       {
-           /**
-            * @Route("/hello/{name}")
-            */
+           #[Route('/hello/{name}')]
            public function index($name)
            {
     -        return new Response("Hello $name!");
@@ -165,9 +163,7 @@ Are you building an API? You can already return JSON from any controller::
     {
         // ...
 
-        /**
-         * @Route("/api/hello/{name}")
-         */
+        #[Route('/api/hello/{name}')]
         public function apiExample($name)
         {
             return $this->json([
