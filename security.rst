@@ -2346,14 +2346,15 @@ Granting Anonymous Users Access in a Custom Voter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you're using a :doc:`custom voter </security/voters>`, you can allow
-anonymous users access by checking if there is no user set on the token::
+anonymous users access by checking if the token is an instance of
+:class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\NullToken`::
 
     // src/Security/PostVoter.php
     namespace App\Security;
 
     // ...
+    use Symfony\Component\Security\Core\Authentication\Token\NullToken;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-    use Symfony\Component\Security\Core\Authentication\User\UserInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
     class PostVoter extends Voter
@@ -2364,13 +2365,20 @@ anonymous users access by checking if there is no user set on the token::
         {
             // ...
 
-            if (!$token->getUser() instanceof UserInterface) {
+            if ($token instanceof NullToken) {
                 // the user is not authenticated, e.g. only allow them to
                 // see public posts
                 return $subject->isPublic();
             }
         }
     }
+
+.. caution::
+
+    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\NullToken` is only available in voters
+    (because the :method:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface::vote` can't receive a null token). Outside of voters (controllers, other services...) there is no token in the
+    :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\Storage\\TokenStorageInterface`
+    implementation when the user is not logged.
 
 Setting Individual User Permissions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
