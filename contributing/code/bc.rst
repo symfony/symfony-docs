@@ -75,7 +75,7 @@ backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Type hint against the interface               | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Call a method                                 | Yes [10]_                   |
+| Call a method                                 | Yes :ref:`[10] <note-10>`   |
 +-----------------------------------------------+-----------------------------+
 | **If you implement the interface and...**     | **Then we guarantee BC...** |
 +-----------------------------------------------+-----------------------------+
@@ -117,13 +117,13 @@ covered by our backward compatibility promise:
 +-----------------------------------------------+-----------------------------+
 | Access a public property                      | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Call a public method                          | Yes [10]_                   |
+| Call a public method                          | Yes :ref:`[10] <note-10>`   |
 +-----------------------------------------------+-----------------------------+
 | **If you extend the class and...**            | **Then we guarantee BC...** |
 +-----------------------------------------------+-----------------------------+
 | Access a protected property                   | Yes                         |
 +-----------------------------------------------+-----------------------------+
-| Call a protected method                       | Yes [10]_                   |
+| Call a protected method                       | Yes :ref:`[10] <note-10>`   |
 +-----------------------------------------------+-----------------------------+
 | Override a public property                    | Yes                         |
 +-----------------------------------------------+-----------------------------+
@@ -193,12 +193,12 @@ Changing Interfaces
 This table tells you which changes you are allowed to do when working on
 Symfony's interfaces:
 
-==============================================  ==============
-Type of Change                                  Change Allowed
-==============================================  ==============
+==============================================  ==============  ===============
+Type of Change                                  Change Allowed  Notes
+==============================================  ==============  ===============
 Remove entirely                                 No
 Change name or namespace                        No
-Add parent interface                            Yes [2]_
+Add parent interface                            Yes             :ref:`[2] <note-2>`
 Remove parent interface                         No
 **Methods**
 Add method                                      No
@@ -207,14 +207,14 @@ Change name                                     No
 Move to parent interface                        Yes
 Add argument without a default value            No
 Add argument with a default value               No
-Remove argument                                 No [3]_
+Remove argument                                 No              :ref:`[3] <note-3>`
 Add default value to an argument                No
 Remove default value of an argument             No
 Add type hint to an argument                    No
 Remove type hint of an argument                 No
 Change argument type                            No
 Add return type                                 No
-Remove return type                              No [9]_
+Remove return type                              No              :ref:`[9] <note-9>`
 Change return type                              No
 **Static Methods**
 Turn non static into static                     No
@@ -222,8 +222,8 @@ Turn static into non static                     No
 **Constants**
 Add constant                                    Yes
 Remove constant                                 No
-Change value of a constant                      Yes [1]_ [5]_
-==============================================  ==============
+Change value of a constant                      Yes             :ref:`[1] <note-1>` :ref:`[5] <note-5>`
+==============================================  ==============  ===============
 
 Changing Classes
 ~~~~~~~~~~~~~~~~
@@ -231,14 +231,14 @@ Changing Classes
 This table tells you which changes you are allowed to do when working on
 Symfony's classes:
 
-==================================================  ==============
-Type of Change                                      Change Allowed
-==================================================  ==============
+==================================================  ==============  ===============
+Type of Change                                      Change Allowed  Notes
+==================================================  ==============  ===============
 Remove entirely                                     No
-Make final                                          No [6]_
+Make final                                          No              :ref:`[6] <note-6>`
 Make abstract                                       No
 Change name or namespace                            No
-Change parent class                                 Yes [4]_
+Change parent class                                 Yes             :ref:`[4] <note-4>`
 Add interface                                       Yes
 Remove interface                                    No
 **Public Properties**
@@ -248,19 +248,19 @@ Reduce visibility                                   No
 Move to parent class                                Yes
 **Protected Properties**
 Add protected property                              Yes
-Remove protected property                           No [7]_
-Reduce visibility                                   No [7]_
-Make public                                         No [7]_
+Remove protected property                           No              :ref:`[7] <note-7>`
+Reduce visibility                                   No              :ref:`[7] <note-7>`
+Make public                                         No              :ref:`[7] <note-7>`
 Move to parent class                                Yes
 **Private Properties**
 Add private property                                Yes
 Make public or protected                            Yes
 Remove private property                             Yes
 **Constructors**
-Add constructor without mandatory arguments         Yes [1]_
+Add constructor without mandatory arguments         Yes             :ref:`[1] <note-1>`
 Remove constructor                                  No
 Reduce visibility of a public constructor           No
-Reduce visibility of a protected constructor        No [7]_
+Reduce visibility of a protected constructor        No              :ref:`[7] <note-7>`
 Move to parent class                                Yes
 **Destructors**
 Add destructor                                      Yes
@@ -271,38 +271,38 @@ Add public method                                   Yes
 Remove public method                                No
 Change name                                         No
 Reduce visibility                                   No
-Make final                                          No [6]_
+Make final                                          No              :ref:`[6] <note-6>`
 Move to parent class                                Yes
 Add argument without a default value                No
-Add argument with a default value                   No [7]_ [8]_
-Remove argument                                     No [3]_
-Add default value to an argument                    No [7]_ [8]_
+Add argument with a default value                   No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove argument                                     No              :ref:`[3] <note-3>`
+Add default value to an argument                    No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 Remove default value of an argument                 No
-Add type hint to an argument                        No [7]_ [8]_
-Remove type hint of an argument                     No [7]_ [8]_
-Change argument type                                No [7]_ [8]_
-Add return type                                     No [7]_ [8]_
-Remove return type                                  No [7]_ [8]_ [9]_
-Change return type                                  No [7]_ [8]_
+Add type hint to an argument                        No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove type hint of an argument                     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Change argument type                                No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Add return type                                     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove return type                                  No              :ref:`[7] <note-7>` :ref:`[8] <note-8>` :ref:`[9] <note-9>`
+Change return type                                  No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 **Protected Methods**
 Add protected method                                Yes
-Remove protected method                             No [7]_
-Change name                                         No [7]_
-Reduce visibility                                   No [7]_
-Make final                                          No [6]_
-Make public                                         No [7]_ [8]_
+Remove protected method                             No              :ref:`[7] <note-7>`
+Change name                                         No              :ref:`[7] <note-7>`
+Reduce visibility                                   No              :ref:`[7] <note-7>`
+Make final                                          No              :ref:`[6] <note-6>`
+Make public                                         No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 Move to parent class                                Yes
-Add argument without a default value                No [7]_
-Add argument with a default value                   No [7]_ [8]_
-Remove argument                                     No [3]_
-Add default value to an argument                    No [7]_ [8]_
-Remove default value of an argument                 No [7]_
-Add type hint to an argument                        No [7]_ [8]_
-Remove type hint of an argument                     No [7]_ [8]_
-Change argument type                                No [7]_ [8]_
-Add return type                                     No [7]_ [8]_
-Remove return type                                  No [7]_ [8]_ [9]_
-Change return type                                  No [7]_ [8]_
+Add argument without a default value                No              :ref:`[7] <note-7>`
+Add argument with a default value                   No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove argument                                     No              :ref:`[3] <note-3>`
+Add default value to an argument                    No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove default value of an argument                 No              :ref:`[7] <note-7>`
+Add type hint to an argument                        No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove type hint of an argument                     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Change argument type                                No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Add return type                                     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove return type                                  No              :ref:`[7] <note-7>` :ref:`[8] <note-8>` :ref:`[9] <note-9>`
+Change return type                                  No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 **Private Methods**
 Add private method                                  Yes
 Remove private method                               Yes
@@ -320,13 +320,13 @@ Add return type                                     Yes
 Remove return type                                  Yes
 Change return type                                  Yes
 **Static Methods and Properties**
-Turn non static into static                         No [7]_ [8]_
+Turn non static into static                         No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 Turn static into non static                         No
 **Constants**
 Add constant                                        Yes
 Remove constant                                     No
-Change value of a constant                          Yes [1]_ [5]_
-==================================================  ==============
+Change value of a constant                          Yes             :ref:`[1] <note-1>` :ref:`[5] <note-5>`
+==================================================  ==============  ===============
 
 Changing Traits
 ~~~~~~~~~~~~~~~
@@ -334,9 +334,9 @@ Changing Traits
 This table tells you which changes you are allowed to do when working on
 Symfony's traits:
 
-==================================================  ==============
-Type of Change                                      Change Allowed
-==================================================  ==============
+==================================================  ==============  ===============
+Type of Change                                      Change Allowed  Notes
+==================================================  ==============  ===============
 Remove entirely                                     No
 Change name or namespace                            No
 Use another trait                                   Yes
@@ -363,7 +363,7 @@ Add public method                                   Yes
 Remove public method                                No
 Change name                                         No
 Reduce visibility                                   No
-Make final                                          No [6]_
+Make final                                          No              :ref:`[6] <note-6>`
 Move to used trait                                  Yes
 Add argument without a default value                No
 Add argument with a default value                   No
@@ -379,8 +379,8 @@ Add protected method                                Yes
 Remove protected method                             No
 Change name                                         No
 Reduce visibility                                   No
-Make final                                          No [6]_
-Make public                                         No [8]_
+Make final                                          No              :ref:`[6] <note-6>`
+Make public                                         No              :ref:`[8] <note-8>`
 Move to used trait                                  Yes
 Add argument without a default value                No
 Add argument with a default value                   No
@@ -411,45 +411,66 @@ Change return type                                  No
 **Static Methods and Properties**
 Turn non static into static                         No
 Turn static into non static                         No
-==================================================  ==============
+==================================================  ==============  ===============
 
-.. [1] Should be avoided. When done, this change must be documented in the
-       UPGRADE file.
+Notes
+~~~~~
 
-.. [2] The added parent interface must not introduce any new methods that don't
-       exist in the interface already.
+.. _note-1:
 
-.. [3] Only the last optional argument(s) of a method may be removed, as PHP
-       does not care about additional arguments that you pass to a method.
+**[1]** Should be avoided. When done, this change must be documented in the
+UPGRADE file.
 
-.. [4] When changing the parent class, the original parent class must remain an
-       ancestor of the class.
+.. _note-2:
 
-.. [5] The value of a constant may only be changed when the constants aren't
-       used in configuration (e.g. Yaml and XML files), as these do not support
-       constants and have to hardcode the value. For instance, event name
-       constants can't change the value without introducing a BC break.
-       Additionally, if a constant will likely be used in objects that are
-       serialized, the value of a constant should not be changed.
+**[2]** The added parent interface must not introduce any new methods that don't
+exist in the interface already.
 
-.. [6] Allowed using the ``@final`` annotation.
+.. _note-3:
 
-.. [7] Allowed if the class is final. Classes that received the ``@final``
-       annotation after their first release are considered final in their
-       next major version.
-       Changing an argument type is only possible with a parent type.
-       Changing a return type is only possible with a child type.
+**[3]** Only the last optional argument(s) of a method may be removed, as PHP
+does not care about additional arguments that you pass to a method.
 
-.. [8] Allowed if the method is final. Methods that received the ``@final``
-       annotation after their first release are considered final in their
-       next major version.
-       Changing an argument type is only possible with a parent type.
-       Changing a return type is only possible with a child type.
+.. _note-4:
 
-.. [9] Allowed for the ``void`` return type.
+**[4]** When changing the parent class, the original parent class must remain an
+ancestor of the class.
 
-.. [10] Parameter names are only covered by the compatibility promise for
-        constructors of Attribute classes. Using PHP named arguments might
-        break your code when upgrading to newer Symfony versions.
+.. _note-5:
+
+**[5]** The value of a constant may only be changed when the constants aren't
+used in configuration (e.g. Yaml and XML files), as these do not support
+constants and have to hardcode the value. For instance, event name constants
+can't change the value without introducing a BC break. Additionally, if a
+constant will likely be used in objects that are serialized, the value of a
+constant should not be changed.
+
+.. _note-6:
+
+**[6]** Allowed using the ``@final`` annotation.
+
+.. _note-7:
+
+**[7]** Allowed if the class is final. Classes that received the ``@final``
+annotation after their first release are considered final in their next major
+version. Changing an argument type is only possible with a parent type. Changing
+a return type is only possible with a child type.
+
+.. _note-8:
+
+**[8]** Allowed if the method is final. Methods that received the ``@final``
+annotation after their first release are considered final in their next major
+version. Changing an argument type is only possible with a parent type. Changing
+a return type is only possible with a child type.
+
+.. _note-9:
+
+**[9]** Allowed for the ``void`` return type.
+
+.. _note-10:
+
+**[10]** Parameter names are only covered by the compatibility promise for
+constructors of Attribute classes. Using PHP named arguments might break your
+code when upgrading to newer Symfony versions.
 
 .. _`Semantic Versioning`: https://semver.org/
