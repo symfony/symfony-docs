@@ -343,15 +343,12 @@ dedicated web crawler or scraper such as `Goutte`_::
         '.table-list-header-toggle a:nth-child(1)'
     )->text());
 
-<<<<<<< HEAD
 .. tip::
 
     You can also use HTTP client options like ``ciphers``, ``auth_basic`` and
     ``query``. They have to be passed as the default options argument to the
     client which is used by the HTTP browser.
 
-=======
->>>>>>> 4f790b856 ([BrowserKit] Add response management to BrowserKit documentation)
 Dealing with HTTP responses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
