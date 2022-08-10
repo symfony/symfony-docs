@@ -171,7 +171,7 @@ Instead, add the route *right above* the controller method:
            }
       }
 
-This works just like before! But by using annotations, the route and controller
+This works just like before! But by using attributes, the route and controller
 live right next to each other. Need another page? Add another route and method
 in ``DefaultController``::
 

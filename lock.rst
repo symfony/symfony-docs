@@ -180,9 +180,7 @@ To lock the default resource, autowire the lock factory using
 
     class PdfController extends AbstractController
     {
-        /**
-         * @Route("/download/terms-of-use.pdf")
-         */
+        #[Route('/download/terms-of-use.pdf')]
         public function downloadPdf(LockFactory $factory, MyPdfGeneratorService $pdf)
         {
             $lock = $factory->createLock('pdf-creation');
@@ -221,9 +219,7 @@ processes asking for the same ``$version``::
 
     class PdfController extends AbstractController
     {
-        /**
-         * @Route("/download/{version}/terms-of-use.pdf")
-         */
+        #[Route('/download/{version}/terms-of-use.pdf')]
         public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf)
         {
             $lock = $lockFactory->createLock($version);
