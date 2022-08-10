@@ -144,7 +144,7 @@ authenticator. Its job is to extract credentials (e.g. username &
 password, or API tokens) from the ``Request`` object and transform these
 into a security
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`
-(see below).
+(security passports are explained later in this article).
 
 After the authentication process finished, the user is either authenticated
 or there was something wrong (e.g. incorrect password). The authenticator
