@@ -228,7 +228,7 @@ with Symfony Flex to install a specific Symfony version:
 
     # this requires Symfony 5.x for all Symfony packages
     export SYMFONY_REQUIRE=5.*
-    # alternative method: write to the composer.json file
+    # alternatively you can run this command to update composer.json config
     # composer config extra.symfony.require "5.*"
 
     # install Symfony Flex in the CI environment
