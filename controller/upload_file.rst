@@ -133,9 +133,7 @@ Finally, you need to update the code of the controller that handles the form::
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/new", name="app_product_new")
-         */
+        #[Route('/product/new', name: 'app_product_new')]
         public function new(Request $request, SluggerInterface $slugger)
         {
             $product = new Product();

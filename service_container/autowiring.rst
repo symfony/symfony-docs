@@ -136,9 +136,7 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
 
     class DefaultController extends AbstractController
     {
-        /**
-         * @Route("/tweet", methods={"POST"})
-         */
+        #[Route('/tweet')]
         public function tweet(TwitterClient $twitterClient, Request $request): Response
         {
             // fetch $user, $key, $status from the POST'ed data

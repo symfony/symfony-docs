@@ -17,9 +17,7 @@ you to send messages to chat services like Slack or Telegram::
 
     class CheckoutController extends AbstractController
     {
-        /**
-         * @Route("/checkout/thankyou")
-         */
+        #[Route('/checkout/thankyou')]
         public function thankyou(ChatterInterface $chatter)
         {
             $message = (new ChatMessage('You got a new invoice for 15 EUR.'))
