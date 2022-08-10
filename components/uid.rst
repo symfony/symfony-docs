@@ -133,14 +133,10 @@ type, which converts to/from UUID objects automatically::
 
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
-     */
+    #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
-        /**
-         * @ORM\Column(type="uuid")
-         */
+        #[ORM\Column(type: 'uuid')]
         private $someProperty;
 
         // ...
@@ -156,12 +152,10 @@ entity primary keys::
 
     class User implements UserInterface
     {
-        /**
-         * @ORM\Id
-         * @ORM\Column(type="uuid", unique=true)
-         * @ORM\GeneratedValue(strategy="CUSTOM")
-         * @ORM\CustomIdGenerator(class="doctrine.uuid_generator")
-         */
+        #[ORM\Id]
+        #[ORM\Column(type: 'uuid', unique: true)]
+        #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+        #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
         private $id;
 
         public function getId(): ?Uuid
@@ -291,14 +285,10 @@ type, which converts to/from ULID objects automatically::
 
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
-     */
+    #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
-        /**
-         * @ORM\Column(type="ulid")
-         */
+        #[ORM\Column(type: 'ulid')]
         private $someProperty;
 
         // ...
@@ -314,12 +304,10 @@ entity primary keys::
 
     class Product
     {
-        /**
-         * @ORM\Id
-         * @ORM\Column(type="ulid", unique=true)
-         * @ORM\GeneratedValue(strategy="CUSTOM")
-         * @ORM\CustomIdGenerator(class="doctrine.ulid_generator")
-         */
+        #[ORM\Id]
+        #[ORM\Column(type: 'ulid', unique: true)]
+        #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+        #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
         private $id;
 
         public function getId(): ?Ulid
