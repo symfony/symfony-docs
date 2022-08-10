@@ -9,27 +9,56 @@ Using Expressions in Security Access Controls
     The best solution for handling complex authorization rules is to use
     the :doc:`Voter System </security/voters>`.
 
-In addition to a role like ``ROLE_ADMIN``, the ``isGranted()`` method also
-accepts an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` object::
+In addition to security roles like ``ROLE_ADMIN``, the ``isGranted()`` method
+and ``#[IsGranted()]`` attribute also accept an
+:class:`Symfony\\Component\\ExpressionLanguage\\Expression` object:
 
-    // src/Controller/MyController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\ExpressionLanguage\Expression;
-    use Symfony\Component\HttpFoundation\Response;
+    .. code-block:: php-attributes
 
-    class MyController extends AbstractController
-    {
-        public function index(): Response
+        // src/Controller/MyController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\ExpressionLanguage\Expression;
+        use Symfony\Component\HttpFoundation\Response;
+
+        class MyController extends AbstractController
         {
-            $this->denyAccessUnlessGranted(new Expression(
+            #[IsGranted(new Expression(
                 '"ROLE_ADMIN" in role_names or (is_authenticated() and user.isSuperAdmin())'
-            ));
-
-            // ...
+            ))]
+            public function index(): Response
+            {
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php
+
+        // src/Controller/MyController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\ExpressionLanguage\Expression;
+        use Symfony\Component\HttpFoundation\Response;
+
+        class MyController extends AbstractController
+        {
+            public function index(): Response
+            {
+                $this->denyAccessUnlessGranted(new Expression(
+                    '"ROLE_ADMIN" in role_names or (is_authenticated() and user.isSuperAdmin())'
+                ));
+
+                // ...
+            }
+        }
+
+.. versionadded:: 6.2
+
+    The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
 
 In this example, if the current user has ``ROLE_ADMIN`` or if the current
 user object's ``isSuperAdmin()`` method returns ``true``, then access will
