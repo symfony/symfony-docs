@@ -1677,7 +1677,7 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
             $mainFirewall = $security->firewall('main');
             // ...
             $mainFirewall->logout()
-                ->path('app_logout')
+                ->path('app_logout') // pass either the *name* or the *path* of the route
 
                 // where to redirect after logout
                 // ->target('app_any_route')
