@@ -66,9 +66,7 @@ can be retrieved via ``/soap?wsdl``::
 
     class HelloServiceController extends AbstractController
     {
-        /**
-         * @Route("/soap")
-         */
+        #[Route('/soap')]
         public function index(HelloService $helloService)
         {
             $soapServer = new \SoapServer('/path/to/hello.wsdl');

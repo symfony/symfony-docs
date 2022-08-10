@@ -164,15 +164,13 @@ Instead, add the route *right above* the controller method:
 
       class DefaultController
       {
-    +    /**
-    +     * @Route("/hello/{name}")
-    +     */
+    +      #[Route('/hello/{name}')]
            public function index($name) {
                // ...
            }
       }
 
-This works just like before! But by using annotations, the route and controller
+This works just like before! But by using attributes, the route and controller
 live right next to each other. Need another page? Add another route and method
 in ``DefaultController``::
 
@@ -187,9 +185,7 @@ in ``DefaultController``::
     {
         // ...
 
-        /**
-         * @Route("/simplicity")
-         */
+        #[Route('/simplicity')]
         public function simple()
         {
             return new Response('Simple! Easy! Great!');
