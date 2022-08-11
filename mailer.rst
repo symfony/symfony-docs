@@ -1024,6 +1024,39 @@ you have a transport called ``async``, you can route the message there:
 Thanks to this, instead of being delivered immediately, messages will be sent to
 the transport to be handled later (see :ref:`messenger-worker`).
 
+Events
+------
+
+MessageEvent
+~~~~~~~~~~~~
+
+The MessageEvent allows the transformation of a Message and the Envelope before the email is sent::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Mailer\Event\MessageEvent;
+    use Symfony\Component\Mime\Email;
+
+    class MailerSubscriber implements EventSubscriberInterface
+    {
+        public static function getSubscribedEvents()
+        {
+            return [
+                MessageEvent::class => 'onMessage',
+            ];
+        }
+
+        public function onMessage(MessageEvent $event): void
+        {
+            $message = $event->getMessage();
+            if (!$message instanceof Email) {
+                return;
+            }
+
+            // do something with the message
+        }
+    }
+
+
 Development & Debugging
 -----------------------
 
