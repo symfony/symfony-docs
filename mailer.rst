@@ -1024,13 +1024,14 @@ you have a transport called ``async``, you can route the message there:
 Thanks to this, instead of being delivered immediately, messages will be sent to
 the transport to be handled later (see :ref:`messenger-worker`).
 
-Events
-------
+Mailer Events
+-------------
 
 MessageEvent
 ~~~~~~~~~~~~
 
-The MessageEvent allows the transformation of a Message and the Envelope before the email is sent::
+``MessageEvent`` allows to change the Message and the Envelope before the email
+is sent::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Mailer\Event\MessageEvent;
@@ -1055,7 +1056,6 @@ The MessageEvent allows the transformation of a Message and the Envelope before 
             // do something with the message
         }
     }
-
 
 Development & Debugging
 -----------------------
