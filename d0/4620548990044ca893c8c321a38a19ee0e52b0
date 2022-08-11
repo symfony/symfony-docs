@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2022-08-10T17:06:09Z
+
+What about redirecting the users to the previous version if they click on a old link? Like this:
+
+> This page has been archived, you are probably looking for https://symfony.com/doc/4.4/configuration/dot-env-changes.html
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-08-10T17:30:34Z
+
+@alexislefebvre I didn't explain myself well. What you ask is the current behavior for "Not Found" pages. We list the Symfony versions for which that page existed before. See for example: https://symfony.com/doc/2.2/frontend.html
+
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2022-08-10T17:31:49Z
+
+@javiereguiluz thanks for the explanation, that's great.
