@@ -775,12 +775,6 @@ the env files ending in ``.local`` (``.env.local`` and ``.env.<environment>.loca
 **should not be committed** because only you will use them. In fact, the
 ``.gitignore`` file that comes with Symfony prevents them from being committed.
 
-.. caution::
-
-    Applications created before November 2018 had a slightly different system,
-    involving a ``.env.dist`` file. For information about upgrading, see:
-    :doc:`configuration/dot-env-changes`.
-
 .. _configuration-env-var-in-prod:
 
 Configuring Environment Variables in Production
