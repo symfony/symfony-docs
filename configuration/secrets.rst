@@ -134,24 +134,30 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
+                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"
+        >
             <doctrine:config>
                 <doctrine:dbal
                     password="%env(DATABASE_PASSWORD)%"
                 />
+                <!-- ... -->
             </doctrine:config>
-
         </container>
 
     .. code-block:: php
 
         // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                'password' => '%env(DATABASE_PASSWORD)%',
-            ],
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('framework', [
+                'dbal' => [
+                    'password' => '%env(DATABASE_PASSWORD)%',
+                    // ...
+                ],
+                // ...
+            ]);
+        };
 
 The actual value will be resolved at runtime: container compilation and cache
 warmup don't need the **decryption key**.
@@ -288,9 +294,9 @@ The secrets system is enabled by default and some of its behavior can be configu
         # config/packages/framework.yaml
         framework:
             secrets:
-                #vault_directory: '%kernel.project_dir%/config/secrets/%kernel.environment%'
-                #local_dotenv_file: '%kernel.project_dir%/.env.%kernel.environment%.local'
-                #decryption_env_var: 'base64:default::SYMFONY_DECRYPTION_SECRET'
+                vault_directory: '%kernel.project_dir%/config/secrets/%kernel.environment%'
+                local_dotenv_file: '%kernel.project_dir%/.env.%kernel.environment%.local'
+                decryption_env_var: 'base64:default::SYMFONY_DECRYPTION_SECRET'
 
     .. code-block:: xml
 
@@ -299,10 +305,12 @@ The secrets system is enabled by default and some of its behavior can be configu
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:framework="http://symfony.com/schema/dic/framework"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/framework https://symfony.com/schema/dic/framework/framework-1.0.xsd"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/framework
+                    https://symfony.com/schema/dic/framework/framework-1.0.xsd"
             >
-                <framework:config secret="%env(APP_SECRET)%">
+                <framework:config>
                     <framework:secrets
                         vault_directory="%kernel.project_dir%/config/secrets/%kernel.environment%"
                         local_dotenv_file="%kernel.project_dir%/.env.%kernel.environment%.local"
@@ -314,14 +322,17 @@ The secrets system is enabled by default and some of its behavior can be configu
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'secrets' => [
-                // 'vault_directory' => '%kernel.project_dir%/config/secrets/%kernel.environment%',
-                // 'local_dotenv_file' => '%kernel.project_dir%/.env.%kernel.environment%.local',
-                // 'decryption_env_var' => 'base64:default::SYMFONY_DECRYPTION_SECRET',
-            ],
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
+        return static function (ContainerConfigurator $container) {
+            $container->extension('framework', [
+                'secrets' => [
+                    'vault_directory' => '%kernel.project_dir%/config/secrets/%kernel.environment%',
+                    'local_dotenv_file' => '%kernel.project_dir%/.env.%kernel.environment%.local',
+                    'decryption_env_var' => 'base64:default::SYMFONY_DECRYPTION_SECRET',
+                ],
+            ]);
+        };
 
 .. _`libsodium`: https://pecl.php.net/package/libsodium
 .. _`paragonie/sodium_compat`: https://github.com/paragonie/sodium_compat

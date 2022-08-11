@@ -55,8 +55,8 @@ Now, examine the results to see this closely:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://example.org/schema/dic/my_bundle
-                https://example.org/schema/dic/my_bundle/my_bundle-1.0.xsd">
-
+                https://example.org/schema/dic/my_bundle/my_bundle-1.0.xsd"
+        >
             <my-bundle:config logging="true"/>
             <!-- true, as expected -->
 
@@ -74,25 +74,29 @@ Now, examine the results to see this closely:
 
     .. code-block:: php
 
-        $container->loadFromExtension('my_bundle', [
-                'logging' => true,
-                // true, as expected
-            ]
-        );
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        $container->loadFromExtension('my_bundle', [
-                'logging' => "%kernel.debug%",
-                // true/false (depends on 2nd parameter of Kernel),
-                // as expected, because %kernel.debug% inside configuration
-                // gets evaluated before being passed to the extension
-            ]
-        );
+        return static function (ContainerConfigurator $container) {
+            $container->extension('my_bundle', [
+                    'logging' => true,
+                    // true, as expected
+                ]
+            );
 
-        $container->loadFromExtension('my_bundle');
-        // passes the string "%kernel.debug%".
-        // Which is always considered as true.
-        // The Configurator does not know anything about
-        // "%kernel.debug%" being a parameter.
+            $container->extension('my_bundle', [
+                    'logging' => "%kernel.debug%",
+                    // true/false (depends on 2nd parameter of Kernel),
+                    // as expected, because %kernel.debug% inside configuration
+                    // gets evaluated before being passed to the extension
+                ]
+            );
+
+            $container->extension('my_bundle');
+            // passes the string "%kernel.debug%".
+            // Which is always considered as true.
+            // The Configurator does not know anything about
+            // "%kernel.debug%" being a parameter.
+        };
 
 In order to support this use case, the ``Configuration`` class has to
 be injected with this parameter via the extension as follows::

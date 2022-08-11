@@ -34,8 +34,8 @@ processor to turn the value of the ``HTTP_PORT`` env var into an integer:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:router http-port="%env(int:HTTP_PORT)%"/>
             </framework:config>
@@ -44,11 +44,15 @@ processor to turn the value of the ``HTTP_PORT`` env var into an integer:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'router' => [
-                'http_port' => '%env(int:HTTP_PORT)%',
-            ],
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('framework', [
+                'router' => [
+                    'http_port' => '%env(int:HTTP_PORT)%',
+                ],
+            ]);
+        };
 
 Built-In Environment Variable Processors
 ----------------------------------------
@@ -78,8 +82,8 @@ Symfony provides the following env var processors:
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+            >
                 <parameters>
                     <parameter key="env(SECRET)">some_secret</parameter>
                 </parameters>
@@ -90,10 +94,17 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(SECRET)', 'some_secret');
-            $container->loadFromExtension('framework', [
-                'secret' => '%env(string:SECRET)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('env(SECRET)', 'some_secret')
+                ;
+
+                $container->extension('framework', [
+                    'secret' => '%env(string:SECRET)%',
+                ]);
+            };
 
 ``env(bool:FOO)``
     Casts ``FOO`` to a bool (``true`` values are ``'true'``, ``'on'``, ``'yes'``
@@ -119,8 +130,8 @@ Symfony provides the following env var processors:
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+            >
                 <parameters>
                     <parameter key="env(HTTP_METHOD_OVERRIDE)">true</parameter>
                 </parameters>
@@ -131,10 +142,17 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
-            $container->loadFromExtension('framework', [
-                'http_method_override' => '%env(bool:HTTP_METHOD_OVERRIDE)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('env(HTTP_METHOD_OVERRIDE)', 'true')
+                ;
+
+                $container->extension('framework', [
+                    'http_method_override' => '%env(bool:HTTP_METHOD_OVERRIDE)%',
+                ]);
+            };
 
 ``env(int:FOO)``
     Casts ``FOO`` to an int.
@@ -160,33 +178,42 @@ Symfony provides the following env var processors:
 
             <!-- config/packages/security.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
+            <srv:container xmlns="http://symfony.com/schema/dic/security"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:security="http://symfony.com/schema/dic/security"
+                xmlns:srv="http://symfony.com/schema/dic/services"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
+                <srv:parameters>
+                    <srv:parameter key="env(HEALTH_CHECK_METHOD)">Symfony\Component\HttpFoundation\Request::METHOD_HEAD</srv:parameter>
+                </srv:parameters>
 
-                <parameters>
-                    <parameter key="env(HEALTH_CHECK_METHOD)">Symfony\Component\HttpFoundation\Request::METHOD_HEAD</parameter>
-                </parameters>
-
-                <security:config>
+                <config>
                     <rule path="^/health-check$" methods="%env(const:HEALTH_CHECK_METHOD)%"/>
-                </security:config>
-            </container>
+                </config>
+            </srv:container>
 
         .. code-block:: php
 
             // config/packages/security.php
-            $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
-            $container->loadFromExtension('security', [
-                'access_control' => [
-                    [
-                        'path' => '^/health-check$',
-                        'methods' => '%env(const:HEALTH_CHECK_METHOD)%',
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\HttpFoundation\Request;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('env(HEALTH_CHECK_METHOD)', Request::METHOD_HEAD)
+                ;
+
+                $container->extension('security', [
+                    'access_control' => [
+                        [
+                            'path' => '^/health-check$',
+                            'methods' => '%env(const:HEALTH_CHECK_METHOD)%',
+                        ],
                     ],
-                ],
-            ]);
+                ]);
+            };
 
 ``env(base64:FOO)``
     Decodes the content of ``FOO``, which is a base64 encoded string.
@@ -215,8 +242,8 @@ Symfony provides the following env var processors:
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+            >
                 <parameters>
                     <parameter key="env(TRUSTED_HOSTS)">["10.0.0.1", "10.0.0.2"]</parameter>
                 </parameters>
@@ -227,10 +254,17 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
-            $container->loadFromExtension('framework', [
-                'trusted_hosts' => '%env(json:TRUSTED_HOSTS)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]')
+                ;
+
+                $container->extension('framework', [
+                    'trusted_hosts' => '%env(json:TRUSTED_HOSTS)%',
+                ]);
+            };
 
 ``env(resolve:FOO)``
     If the content of ``FOO`` includes container parameters (with the syntax
@@ -252,29 +286,37 @@ Symfony provides the following env var processors:
 
             <!-- config/packages/sentry.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
+            <srv:container xmlns="sentry"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:srv="http://symfony.com/schema/dic/services"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
+                <srv:parameters>
+                    <srv:parameter key="env(HOST)">10.0.0.1</srv:parameter>
+                    <srv:parameter key="sentry_host">%env(HOST)%</srv:parameter>
+                    <srv:parameter key="env(SENTRY_DSN)">http://%sentry_host%/project</srv:parameter>
+                </srv:parameters>
 
-                <parameters>
-                    <parameter key="env(HOST)">10.0.0.1</parameter>
-                    <parameter key="sentry_host">%env(HOST)%</parameter>
-                    <parameter key="env(SENTRY_DSN)">http://%sentry_host%/project</parameter>
-                </parameters>
-
-                <sentry:config dsn="%env(resolve:SENTRY_DSN)%"/>
-            </container>
+                <config dsn="%env(resolve:SENTRY_DSN)%"/>
+            </srv:container>
 
         .. code-block:: php
 
             // config/packages/sentry.php
-            $container->setParameter('env(HOST)', '10.0.0.1');
-            $container->setParameter('sentry_host', '%env(HOST)%');
-            $container->setParameter('env(SENTRY_DSN)', 'http://%sentry_host%/project');
-            $container->loadFromExtension('sentry', [
-                'dsn' => '%env(resolve:SENTRY_DSN)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('env(HOST)', '10.0.0.1')
+                    ->set('sentry_host', '%env(HOST)%')
+                    ->set('env(SENTRY_DSN)', 'http://%sentry_host%/project')
+                ;
+
+                $container->extension('sentry', [
+                    'dsn' => '%env(resolve:SENTRY_DSN)%',
+                ]);
+            };
 
 ``env(csv:FOO)``
     Decodes the content of ``FOO``, which is a CSV-encoded string:
@@ -299,8 +341,8 @@ Symfony provides the following env var processors:
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
                     http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+            >
                 <parameters>
                     <parameter key="env(TRUSTED_HOSTS)">10.0.0.1,10.0.0.2</parameter>
                 </parameters>
@@ -323,38 +365,49 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/framework.yaml
+            # config/services.yaml
             parameters:
                 env(AUTH_FILE): '../config/auth.json'
-            google:
-                auth: '%env(file:AUTH_FILE)%'
+
+            services:
+                some_client:
+                    $auth: '%env(file:AUTH_FILE)%'
 
         .. code-block:: xml
 
-            <!-- config/packages/framework.xml -->
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
                 <parameters>
                     <parameter key="env(AUTH_FILE)">../config/auth.json</parameter>
                 </parameters>
 
-                <google auth="%env(file:AUTH_FILE)%"/>
+                <services>
+                    <service id="some_client">
+                        <argument key="$auth">%env(file:AUTH_FILE)%</argument>
+                    </service>
+                </services>
             </container>
 
         .. code-block:: php
 
-            // config/packages/framework.php
-            $container->setParameter('env(AUTH_FILE)', '../config/auth.json');
-            $container->loadFromExtension('google', [
-                'auth' => '%env(file:AUTH_FILE)%',
-            ]);
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('env(AUTH_FILE)', '../config/auth.json')
+                ;
+
+                $container->services()
+                    ->set('some_client')
+                        ->arg('$auth', '%env(file:AUTH_FILE)%')
+                ;
+            };
 
 ``env(require:FOO)``
     ``require()`` the PHP file whose path is the value of the ``FOO``
@@ -364,38 +417,49 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/framework.yaml
+            # config/services.yaml
             parameters:
                 env(PHP_FILE): '../config/.runtime-evaluated.php'
-            app:
-                auth: '%env(require:PHP_FILE)%'
+
+            services:
+                some_client:
+                    $auth: '%env(require:PHP_FILE)%'
 
         .. code-block:: xml
 
-            <!-- config/packages/framework.xml -->
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
                 <parameters>
                     <parameter key="env(PHP_FILE)">../config/.runtime-evaluated.php</parameter>
                 </parameters>
 
-                <app auth="%env(require:PHP_FILE)%"/>
+                <services>
+                    <service id="some_client">
+                        <argument key="$auth">%env(require:PHP_FILE)%</argument>
+                    </service>
+                </services>
             </container>
 
         .. code-block:: php
 
-            // config/packages/framework.php
-            $container->setParameter('env(PHP_FILE)', '../config/.runtime-evaluated.php');
-            $container->loadFromExtension('app', [
-                'auth' => '%env(require:PHP_FILE)%',
-            ]);
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('env(PHP_FILE)', '../config/.runtime-evaluated.php')
+                ;
+
+                $container->services()
+                    ->set('some_client')
+                        ->arg('$auth', '%env(require:PHP_FILE)%')
+                ;
+            };
 
     .. versionadded:: 4.3
 
@@ -410,38 +474,49 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/framework.yaml
+            # config/services.yaml
             parameters:
                 env(AUTH_FILE): '../config/auth.json'
-            google:
-                auth: '%env(trim:file:AUTH_FILE)%'
+
+            services:
+                some_client:
+                    $auth: '%env(trim:file:AUTH_FILE)%'
 
         .. code-block:: xml
 
-            <!-- config/packages/framework.xml -->
+            <!-- config/services.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
                 <parameters>
                     <parameter key="env(AUTH_FILE)">../config/auth.json</parameter>
                 </parameters>
 
-                <google auth="%env(trim:file:AUTH_FILE)%"/>
+                <services>
+                    <service id="some_client">
+                        <argument key="$auth">%env(trim:file:AUTH_FILE)%</argument>
+                    </service>
+                </services>
             </container>
 
         .. code-block:: php
 
-            // config/packages/framework.php
-            $container->setParameter('env(AUTH_FILE)', '../config/auth.json');
-            $container->loadFromExtension('google', [
-                'auth' => '%env(trim:file:AUTH_FILE)%',
-            ]);
+            // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('env(AUTH_FILE)', '../config/auth.json')
+                ;
+
+                $container->services()
+                    ->set('some_client')
+                        ->arg('$auth', '%env(trim:file:AUTH_FILE)%')
+                ;
+            };
 
     .. versionadded:: 4.3
 
@@ -458,8 +533,8 @@ Symfony provides the following env var processors:
             # config/services.yaml
             parameters:
                 env(SECRETS_FILE): '/opt/application/.secrets.json'
-                database_password: '%env(key:database_password:json:file:SECRETS_FILE)%'
                 # if SECRETS_FILE contents are: {"database_password": "secret"} it returns "secret"
+                database_password: '%env(key:database_password:json:file:SECRETS_FILE)%'
 
         .. code-block:: xml
 
@@ -467,14 +542,13 @@ Symfony provides the following env var processors:
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
                 <parameters>
                     <parameter key="env(SECRETS_FILE)">/opt/application/.secrets.json</parameter>
+
+                    <!-- if SECRETS_FILE contents are: {"database_password": "secret"} it returns "secret" -->
                     <parameter key="database_password">%env(key:database_password:json:file:SECRETS_FILE)%</parameter>
                 </parameters>
             </container>
@@ -482,8 +556,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/services.php
-            $container->setParameter('env(SECRETS_FILE)', '/opt/application/.secrets.json');
-            $container->setParameter('database_password', '%env(key:database_password:json:file:SECRETS_FILE)%');
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    ->set('env(SECRETS_FILE)', '/opt/application/.secrets.json')
+                    // if SECRETS_FILE contents are: {"database_password": "secret"} it returns "secret"
+                    ->set('database_password', '%env(key:database_password:json:file:SECRETS_FILE)%')
+                ;
+            };
 
 ``env(default:fallback_param:BAR)``
     Retrieves the value of the parameter ``fallback_param`` when the ``BAR`` env
@@ -505,11 +586,9 @@ Symfony provides the following env var processors:
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:framework="http://symfony.com/schema/dic/symfony"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://symfony.com/schema/dic/symfony
-                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
                 <parameters>
                     <!-- if PRIVATE_KEY is not a valid file path, the content of raw_key is returned -->
                     <parameter key="private_key">%env(default:raw_key:file:PRIVATE_KEY)%</parameter>
@@ -520,10 +599,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/services.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            // if PRIVATE_KEY is not a valid file path, the content of raw_key is returned
-            $container->setParameter('private_key', '%env(default:raw_key:file:PRIVATE_KEY)%');
-            $container->setParameter('raw_key', '%env(PRIVATE_KEY)%');
+            return static function (ContainerConfigurator $container) {
+                $container->parameters()
+                    // if PRIVATE_KEY is not a valid file path, the content of raw_key is returned
+                    ->set('private_key', '%env(default:raw_key:file:PRIVATE_KEY)%')
+                    ->set('raw_key', '%env(PRIVATE_KEY)%')
+                ;
+            };
 
     When the fallback parameter is omitted (e.g. ``env(default::API_KEY)``), then the
     returned value is ``null``.
@@ -544,7 +628,7 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/mongodb.yaml
+            # config/packages/mongo_db_bundle.yaml
             mongo_db_bundle:
                 clients:
                     default:
@@ -558,43 +642,58 @@ Symfony provides the following env var processors:
 
         .. code-block:: xml
 
-            <!-- config/packages/mongodb.xml -->
+            <!-- config/packages/mongo_db_bundle.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:mongo-db="http://example.org/schema/dic/mongo-db-bundle"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-                <mongodb:config>
-                    <mongodb:client name="default" username="%env(string:key:user:url:MONGODB_URL)%" password="%env(string:key:pass:url:MONGODB_URL)%">
-                        <mongodb:host host="%env(string:key:host:url:MONGODB_URL)%" port="%env(int:key:port:url:MONGODB_URL)%"/>
-                    </mongodb:client>
-                    <mongodb:connections name="default" database_name="%env(key:path:url:MONGODB_URL)%"/>
-                </mongodb:config>
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://example.org/schema/dic/mongo-db-bundle
+                    http://example.org/schema/dic/mongo-db-bundle/mongo-db-1.0.xsd"
+            >
+                <mongo-db:config>
+                    <mongo-db:client name="default"
+                        username="%env(string:key:user:url:MONGODB_URL)%"
+                        password="%env(string:key:pass:url:MONGODB_URL)%"
+                    >
+                        <mongo-db:host
+                            host="%env(string:key:host:url:MONGODB_URL)%"
+                            port="%env(int:key:port:url:MONGODB_URL)%"
+                        />
+                    </mongo-db:client>
+                    <mongo-db:connections name="default"
+                        database_name="%env(key:path:url:MONGODB_URL)%"
+                    />
+                </mongo-db:config>
             </container>
 
         .. code-block:: php
 
-            // config/packages/mongodb.php
-            $container->loadFromExtension('mongodb', [
-                'clients' => [
-                    'default' => [
-                        'hosts' => [
-                            [
-                                'host' => '%env(string:key:host:url:MONGODB_URL)%',
-                                'port' => '%env(int:key:port:url:MONGODB_URL)%',
+            // config/packages/mongo_db_bundle.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->extension('mongo_db_bundle', [
+                    'clients' => [
+                        'default' => [
+                            'hosts' => [
+                                [
+                                    'host' => '%env(string:key:host:url:MONGODB_URL)%',
+                                    'port' => '%env(int:key:port:url:MONGODB_URL)%',
+                                ],
                             ],
+                            'username' => '%env(string:key:user:url:MONGODB_URL)%',
+                            'password' => '%env(string:key:pass:url:MONGODB_URL)%',
                         ],
-                        'username' => '%env(string:key:user:url:MONGODB_URL)%',
-                        'password' => '%env(string:key:pass:url:MONGODB_URL)%',
                     ],
-                ],
-                'connections' => [
-                    'default' => [
-                        'database_name' => '%env(key:path:url:MONGODB_URL)%',
+                    'connections' => [
+                        'default' => [
+                            'database_name' => '%env(key:path:url:MONGODB_URL)%',
+                        ],
                     ],
-                ],
-            ]);
+                ]);
+            };
 
     .. caution::
 
@@ -618,38 +717,49 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/mongodb.yaml
+            # config/packages/mongo_db_bundle.yaml
             mongo_db_bundle:
                 clients:
                     default:
                         # ...
-                        connectTimeoutMS: '%env(int:key:timeout:query_string:MONGODB_URL)%'
+                        connect_timeout_ms: '%env(int:key:timeout:query_string:MONGODB_URL)%'
 
         .. code-block:: xml
 
-            <!-- config/packages/mongodb.xml -->
+            <!-- config/packages/mongo_db_bundle.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:mongo-db="http://example.org/schema/dic/mongo-db-bundle"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-                <mongodb:config>
-                    <mongodb:client name="default" connectTimeoutMS="%env(int:key:timeout:query_string:MONGODB_URL)%"/>
-                </mongodb:config>
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://example.org/schema/dic/mongo-db-bundle
+                    http://example.org/schema/dic/mongo-db-bundle/mongo-db-1.0.xsd"
+            >
+                <mongo-db:config>
+                    <mongo-db:client name="default"
+                        connect-timeout-ms="%env(int:key:timeout:query_string:MONGODB_URL)%"
+                    >
+                        <!-- ... -->
+                    </mongo-db:client>
+                </mongo-db:config>
             </container>
 
         .. code-block:: php
 
-            // config/packages/mongodb.php
-            $container->loadFromExtension('mongodb', [
-                'clients' => [
-                    'default' => [
-                        // ...
-                        'connectTimeoutMS' => '%env(int:key:timeout:query_string:MONGODB_URL)%',
+            // config/packages/mongo_db_bundle.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            return static function (ContainerConfigurator $container) {
+                $container->extension('mongo_db_bundle', [
+                    'clients' => [
+                        'default' => [
+                            // ...
+                            'connect_timeout_ms' => '%env(int:key:timeout:query_string:MONGODB_URL)%',
+                        ],
                     ],
-                ],
-            ]);
+                ]);
+            };
 
     .. versionadded:: 4.3
 
@@ -661,50 +771,69 @@ It is also possible to combine any number of processors:
 
     .. code-block:: yaml
 
-        # config/packages/framework.yaml
+        # config/services.yaml
         parameters:
             env(AUTH_FILE): "%kernel.project_dir%/config/auth.json"
-        google:
+
+        services:
+            # ...
+
             # 1. gets the value of the AUTH_FILE env var
             # 2. replaces the values of any config param to get the config path
             # 3. gets the content of the file stored in that path
             # 4. JSON-decodes the content of the file and returns it
-            auth: '%env(json:file:resolve:AUTH_FILE)%'
+            App\SomeAuthenticator:
+                $auth: '%env(json:file:resolve:AUTH_FILE)%'
 
     .. code-block:: xml
 
-        <!-- config/packages/framework.xml -->
+        <!-- config/services.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <parameters>
                 <parameter key="env(AUTH_FILE)">%kernel.project_dir%/config/auth.json</parameter>
             </parameters>
 
-            <!-- 1. gets the value of the AUTH_FILE env var -->
-            <!-- 2. replaces the values of any config param to get the config path -->
-            <!-- 3. gets the content of the file stored in that path -->
-            <!-- 4. JSON-decodes the content of the file and returns it -->
-            <google auth="%env(json:file:resolve:AUTH_FILE)%"/>
+            <services>
+                <!-- ... -->
+
+                <!-- 1. gets the value of the AUTH_FILE env var -->
+                <!-- 2. replaces the values of any config param to get the config path -->
+                <!-- 3. gets the content of the file stored in that path -->
+                <!-- 4. JSON-decodes the content of the file and returns it -->
+                <service id="App\SomeAuthenticator">
+                    <argument index="$auth">%env(json:file:resolve:AUTH_FILE)%</argument>
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
 
-        // config/packages/framework.php
-        $container->setParameter('env(AUTH_FILE)', '%kernel.project_dir%/config/auth.json');
-        // 1. gets the value of the AUTH_FILE env var
-        // 2. replaces the values of any config param to get the config path
-        // 3. gets the content of the file stored in that path
-        // 4. JSON-decodes the content of the file and returns it
-        $container->loadFromExtension('google', [
-            'auth' => '%env(json:file:resolve:AUTH_FILE)%',
-        ]);
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\SomeAuthenticator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
+                ->set('env(AUTH_FILE)', '%kernel.project_dir%/config/auth.json')
+            ;
+
+            $container->services()
+                // ...
+
+                // 1. gets the value of the AUTH_FILE env var
+                // 2. replaces the values of any config param to get the config path
+                // 3. gets the content of the file stored in that path
+                // 4. JSON-decodes the content of the file and returns it
+                ->set(SomeAuthenticator::class)
+                    ->arg('$auth', '%env(json:file:resolve:AUTH_FILE)%')
+            ;
+        };
 
 Custom Environment Variable Processors
 --------------------------------------

@@ -106,10 +106,8 @@ configuration files, even if they use a different format:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <imports>
                 <import resource="legacy_config.php"/>
                 <!-- glob expressions are also supported to load multiple files -->
@@ -140,9 +138,9 @@ configuration files, even if they use a different format:
             $container->import('my_config_file.yaml', null, 'not_found');
             // 'ignore_errors' set to true silently discards all errors (including invalid code and not found)
             $container->import('my_config_file.yaml', null, true);
-        };
 
-        // ...
+            // ...
+        };
 
 .. versionadded:: 4.4
 
@@ -191,12 +189,9 @@ reusable configuration value. By convention, parameters are defined under the
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <parameters>
                 <!-- the parameter name is an arbitrary string (the 'app.' prefix is recommended
                      to better differentiate your parameters from Symfony parameters). -->
@@ -249,10 +244,11 @@ reusable configuration value. By convention, parameters are defined under the
 
                 // PHP constants as parameter values
                 ->set('app.some_constant', GLOBAL_CONSTANT)
-                ->set('app.another_constant', BlogPost::MAX_ITEMS);
-        };
+                ->set('app.another_constant', BlogPost::MAX_ITEMS)
+            ;
 
-        // ...
+            // ...
+        };
 
 .. caution::
 
@@ -287,12 +283,12 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
+            xmlns:some-package="https://example.org/schema/dic/some-package"
+            xsi:schemaLocation="https://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://example.org/schema/dic/some-package
+                https://example.org/schema/dic/some-package/some-package-1.0.xsd"
+        >
             <!-- any string surrounded by two % is replaced by that parameter value -->
             <some-package:config email-address="%app.admin_email%">
                 <!-- ... -->
@@ -313,7 +309,6 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             ]);
         };
 
-
 .. note::
 
     If some parameter value includes the ``%`` character, you need to escape it
@@ -333,18 +328,17 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
 
             <!-- config/services.xml -->
             <parameters>
+                <!-- Parsed as 'https://symfony.com/?foo=%s&amp;bar=%d' -->
                 <parameter key="url_pattern">http://symfony.com/?foo=%%s&amp;bar=%%d</parameter>
             </parameters>
 
         .. code-block:: php
 
             // config/services.php
-            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-            return static function (ContainerConfigurator $container) {
-                $container->parameters()
-                    ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
-            };
+            $container->parameters()
+                // Parsed as 'https://symfony.com/?foo=%s&amp;bar=%d'
+                ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d')
+            ;
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
 
@@ -508,13 +502,14 @@ This example shows how you could configure the database connection using an env 
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
-
+                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd"
+        >
             <doctrine:config>
                 <!-- by convention the env var names are always uppercase -->
                 <doctrine:dbal url="%env(resolve:DATABASE_URL)%"/>
             </doctrine:config>
 
+            <!-- ... -->
         </container>
 
     .. code-block:: php
@@ -528,6 +523,8 @@ This example shows how you could configure the database connection using an env 
                     // by convention the env var names are always uppercase
                     'url' => '%env(resolve:DATABASE_URL)%',
                 ],
+
+                // ...
             ]);
         };
 
@@ -805,6 +802,8 @@ doesn't work for parameters:
             app.contents_dir: '...'
 
         services:
+            # ...
+
             App\Service\MessageGenerator:
                 arguments:
                     $contentsDir: '%app.contents_dir%'
@@ -816,13 +815,15 @@ doesn't work for parameters:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <parameters>
                 <parameter key="app.contents_dir">...</parameter>
             </parameters>
 
             <services>
+                <!-- ... -->
+
                 <service id="App\Service\MessageGenerator">
                     <argument key="$contentsDir">%app.contents_dir%</argument>
                 </service>
@@ -838,11 +839,15 @@ doesn't work for parameters:
 
         return static function (ContainerConfigurator $container) {
             $container->parameters()
-                ->set('app.contents_dir', '...');
+                ->set('app.contents_dir', '...')
+            ;
 
             $container->services()
+                // ...
+
                 ->get(MessageGenerator::class)
-                    ->arg('$contentsDir', '%app.contents_dir%');
+                    ->arg('$contentsDir', '%app.contents_dir%')
+            ;
         };
 
 If you inject the same parameters over and over again, use the
@@ -873,8 +878,8 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <services>
                 <defaults autowire="true" autoconfigure="true" public="false">
                     <!-- pass this value to any $projectDir argument for any service
@@ -891,16 +896,15 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Controller\LuckyController;
-
         return static function (ContainerConfigurator $container) {
             $container->services()
                 ->defaults()
                     // pass this value to any $projectDir argument for any service
                     // that's created in this file (including controller arguments)
-                    ->bind('$projectDir', '%kernel.project_dir%');
+                    ->bind('$projectDir', '%kernel.project_dir%')
 
-            // ...
+                // ...
+            ;
         };
 
 .. seealso::

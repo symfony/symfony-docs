@@ -220,9 +220,11 @@ because the configuration started to get bigger:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config secret="S0ME_SECRET">
                 <framework:profiler only-exceptions="false"/>
             </framework:config>
@@ -231,12 +233,16 @@ because the configuration started to get bigger:
     .. code-block:: php
 
         // config/framework.php
-        $container->loadFromExtension('framework', [
-            'secret' => 'S0ME_SECRET',
-            'profiler' => [
-                'only_exceptions' => false,
-            ],
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('framework', [
+                'secret' => 'S0ME_SECRET',
+                'profiler' => [
+                    'only_exceptions' => false,
+                ],
+            ]);
+        };
 
 This also loads annotation routes from an ``src/Controller/`` directory, which
 has one file in it::

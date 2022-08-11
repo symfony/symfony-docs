@@ -121,20 +121,25 @@ for multiple directories):
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
+                https://symfony.com/schema/dic/twig/twig-1.0.xsd"
+        >
             <twig:config>
+                <!-- ... -->
                 <twig:default-path>%kernel.project_dir%/resources/views</twig:default-path>
             </twig:config>
-
         </container>
 
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'default_path' => '%kernel.project_dir%/resources/views',
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('twig', [
+                // ...
+                'default_path' => '%kernel.project_dir%/resources/views',
+            ]);
+        };
 
 Override the Translations Directory
 -----------------------------------
@@ -159,28 +164,33 @@ configuration option to define your own translations directory (use :ref:`framew
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/twig
-                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
-
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:translator>
+                    <!-- ... -->
                     <framework:default-path>%kernel.project_dir%/i18n</framework:default-path>
                 </framework:translator>
             </framework:config>
-
         </container>
 
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'translator' => [
-                'default_path' => '%kernel.project_dir%/i18n',
-            ],
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('framework', [
+                'translator' => [
+                    // ...
+                    'default_path'=> '%kernel.project_dir%/i18n',
+                ],
+            ]);
+        };
 
 .. _override-web-dir:
 .. _override-the-web-directory:
