@@ -605,7 +605,7 @@ and headers.
 .. versionadded:: 5.2
 
     The ``headers`` option was introduced in Symfony 5.2.
-    
+
 .. caution::
 
     Some third-party providers don't support the usage of keywords like ``from``
@@ -1355,6 +1355,39 @@ The following transports currently support tags and metadata:
 The following transports only support tags:
 
 * OhMySMTP
+
+Mailer Events
+-------------
+
+MessageEvent
+~~~~~~~~~~~~
+
+``MessageEvent`` allows to change the Message and the Envelope before the email
+is sent::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Mailer\Event\MessageEvent;
+    use Symfony\Component\Mime\Email;
+
+    class MailerSubscriber implements EventSubscriberInterface
+    {
+        public static function getSubscribedEvents()
+        {
+            return [
+                MessageEvent::class => 'onMessage',
+            ];
+        }
+
+        public function onMessage(MessageEvent $event): void
+        {
+            $message = $event->getMessage();
+            if (!$message instanceof Email) {
+                return;
+            }
+
+            // do something with the message
+        }
+    }
 
 Development & Debugging
 -----------------------
