@@ -137,11 +137,12 @@ type, which converts to/from UUID objects automatically::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Types\UuidType;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
-        #[ORM\Column(type: 'uuid')]
+        #[ORM\Column(type: UuidType::NAME)]
         private $someProperty;
 
         // ...
@@ -153,12 +154,13 @@ entity primary keys::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Types\UuidType;
     use Symfony\Component\Uid\Uuid;
 
     class User implements UserInterface
     {
         #[ORM\Id]
-        #[ORM\Column(type: 'uuid', unique: true)]
+        #[ORM\Column(type: UuidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
         private $id;
@@ -180,6 +182,8 @@ of the UUID parameters::
     // src/Repository/ProductRepository.php
 
     // ...
+    use Symfony\Bridge\Doctrine\Types\UuidType;
+
     class ProductRepository extends ServiceEntityRepository
     {
         // ...
@@ -188,8 +192,8 @@ of the UUID parameters::
         {
             $qb = $this->createQueryBuilder('p')
                 // ...
-                // add 'uuid' as the third argument to tell Doctrine that this is a UUID
-                ->setParameter('user', $user->getUuid(), 'uuid')
+                // add UuidType::NAME as the third argument to tell Doctrine that this is a UUID
+                ->setParameter('user', $user->getUuid(), UuidType::NAME)
 
                 // alternatively, you can convert it to a value compatible with
                 // the type inferred by Doctrine
@@ -294,11 +298,12 @@ type, which converts to/from ULID objects automatically::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Types\UlidType;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
-        #[ORM\Column(type: 'ulid')]
+        #[ORM\Column(type: UlidType::NAME)]
         private $someProperty;
 
         // ...
@@ -310,12 +315,13 @@ entity primary keys::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Types\UlidType;
     use Symfony\Component\Uid\Ulid;
 
     class Product
     {
         #[ORM\Id]
-        #[ORM\Column(type: 'ulid', unique: true)]
+        #[ORM\Column(type: UlidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
         private $id;
@@ -338,6 +344,8 @@ of the ULID parameters::
     // src/Repository/ProductRepository.php
 
     // ...
+    use Symfony\Bridge\Doctrine\Types\UlidType;
+
     class ProductRepository extends ServiceEntityRepository
     {
         // ...
@@ -346,8 +354,8 @@ of the ULID parameters::
         {
             $qb = $this->createQueryBuilder('p')
                 // ...
-                // add 'ulid' as the third argument to tell Doctrine that this is a ULID
-                ->setParameter('user', $user->getUlid(), 'ulid')
+                // add UlidType::NAME as the third argument to tell Doctrine that this is a ULID
+                ->setParameter('user', $user->getUlid(), UlidType::NAME)
 
                 // alternatively, you can convert it to a value compatible with
                 // the type inferred by Doctrine
