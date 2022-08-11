@@ -185,7 +185,7 @@ Security components, as well as the Doctrine ORM. In fact, Flex installed *5* re
 
 But like usual, we can immediately start using the new library. Want to create a
 rich API for a ``product`` table? Create a ``Product`` entity and give it the
-``@ApiResource()`` annotation::
+``#[ApiResource]`` attribute::
 
     <?php
     // src/Entity/Product.php
@@ -194,27 +194,19 @@ rich API for a ``product`` table? Create a ``Product`` entity and give it the
     use ApiPlatform\Core\Annotation\ApiResource;
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @ORM\Entity()
-     * @ApiResource()
-     */
+    #[ORM\Entity]
+    #[ApiResource]
     class Product
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue(strategy="AUTO")
-         * @ORM\Column(type="integer")
-         */
+        #[ORM\Id]
+        #[ORM\GeneratedValue(strategy: 'AUTO')]
+        #[ORM\Column(type: 'integer')]
         private $id;
 
-        /**
-         * @ORM\Column(type="string")
-         */
+        #[ORM\Column(type: 'string')]
         private $name;
 
-        /**
-         * @ORM\Column(type="int")
-         */
+        #[ORM\Column(type: 'integer')]
         private $price;
 
         // ...
