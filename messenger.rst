@@ -877,7 +877,7 @@ To use Symfony's built-in AMQP transport, you need the AMQP PHP extension.
     By default, the transport will automatically create any exchanges, queues and
     binding keys that are needed. That can be disabled, but some functionality
     may not work correctly (like delayed queues).
-    To not autocreate any queues, you can configure a transport with `queues: []`.
+    To not autocreate any queues, you can configure a transport with ``queues: []``.
 
 The transport has a number of other options, including ways to configure
 the exchange, queues, binding keys and more. See the documentation on
