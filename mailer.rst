@@ -1355,6 +1355,39 @@ Here's an example of making one available to download::
     As it's possible for :class:`Symfony\\Component\\Mime\\DraftEmail`'s to be created
     without a To/From they cannot be sent with the mailer.
 
+Mailer Events
+-------------
+
+MessageEvent
+~~~~~~~~~~~~
+
+``MessageEvent`` allows to change the Message and the Envelope before the email
+is sent::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Mailer\Event\MessageEvent;
+    use Symfony\Component\Mime\Email;
+
+    class MailerSubscriber implements EventSubscriberInterface
+    {
+        public static function getSubscribedEvents()
+        {
+            return [
+                MessageEvent::class => 'onMessage',
+            ];
+        }
+
+        public function onMessage(MessageEvent $event): void
+        {
+            $message = $event->getMessage();
+            if (!$message instanceof Email) {
+                return;
+            }
+
+            // do something with the message
+        }
+    }
+
 Development & Debugging
 -----------------------
 
