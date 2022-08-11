@@ -148,6 +148,10 @@ type, which converts to/from UUID objects automatically::
         // ...
     }
 
+.. versionadded:: 6.2
+
+    The ``UuidType::NAME`` constant was introduced in Symfony 6.2.
+
 There's also a Doctrine generator to help auto-generate UUID values for the
 entity primary keys::
 
@@ -308,6 +312,10 @@ type, which converts to/from ULID objects automatically::
 
         // ...
     }
+
+.. versionadded:: 6.2
+
+    The ``UlidType::NAME`` constant was introduced in Symfony 6.2.
 
 There's also a Doctrine generator to help auto-generate ULID values for the
 entity primary keys::
