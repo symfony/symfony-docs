@@ -30,31 +30,6 @@ between all of the rows in your user table:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Doctrine\ORM\Mapping as ORM;
-
-        // DON'T forget the following use statement!!!
-        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @ORM\Entity
-         * @UniqueEntity("email")
-         */
-        class User
-        {
-            /**
-             * @ORM\Column(name="email", type="string", length=255, unique=true)
-             * @Assert\Email
-             */
-            protected $email;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php
@@ -175,35 +150,6 @@ to map the error message to another field.
 Consider this example:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Service.php
-        namespace App\Entity;
-
-        use Doctrine\ORM\Mapping as ORM;
-        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
-        /**
-         * @ORM\Entity
-         * @UniqueEntity(
-         *     fields={"host", "port"},
-         *     errorPath="port",
-         *     message="This port is already in use on that host."
-         * )
-         */
-        class Service
-        {
-            /**
-             * @ORM\ManyToOne(targetEntity="App\Entity\Host")
-             */
-            public $host;
-
-            /**
-             * @ORM\Column(type="integer")
-             */
-            public $port;
-        }
 
     .. code-block:: php-attributes
 

@@ -140,34 +140,6 @@ the ``Product`` entity (and getter & setter methods):
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Product.php
-        namespace App\Entity;
-
-        // ...
-        class Product
-        {
-            // ...
-
-            /**
-             * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
-             */
-            private $category;
-
-            public function getCategory(): ?Category
-            {
-                return $this->category;
-            }
-
-            public function setCategory(?Category $category): self
-            {
-                $this->category = $category;
-
-                return $this;
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Product.php
@@ -178,7 +150,7 @@ the ``Product`` entity (and getter & setter methods):
         {
             // ...
 
-            #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: "products")]
+            #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
             private $category;
 
             public function getCategory(): ?Category
@@ -237,40 +209,6 @@ class that will hold these objects:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Category.php
-        namespace App\Entity;
-
-        // ...
-        use Doctrine\Common\Collections\ArrayCollection;
-        use Doctrine\Common\Collections\Collection;
-
-        class Category
-        {
-            // ...
-
-            /**
-             * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
-             */
-            private $products;
-
-            public function __construct()
-            {
-                $this->products = new ArrayCollection();
-            }
-
-            /**
-             * @return Collection|Product[]
-             */
-            public function getProducts(): Collection
-            {
-                return $this->products;
-            }
-
-            // addProduct() and removeProduct() were also added
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Category.php
@@ -284,7 +222,7 @@ class that will hold these objects:
         {
             // ...
 
-            #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category")]
+            #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
             private $products;
 
             public function __construct()
@@ -647,24 +585,13 @@ that behavior, use the `orphanRemoval`_ option inside ``Category``:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Category.php
-
-        // ...
-
-        /**
-         * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", orphanRemoval=true)
-         */
-        private $products;
-
     .. code-block:: php-attributes
 
         // src/Entity/Category.php
 
         // ...
 
-        #[ORM\OneToMany(targetEntity: Product::class, mappedBy: "category", orphanRemoval: true)]
+        #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category', orphanRemoval: true)]
         private $products;
 
 
@@ -681,8 +608,8 @@ Doctrine's `Association Mapping Documentation`_.
 
 .. note::
 
-    If you're using annotations, you'll need to prepend all annotations with
-    ``@ORM\`` (e.g. ``@ORM\OneToMany``), which is not reflected in Doctrine's
+    If you're using attributes, you'll need to prepend all attributes with
+    ``#[ORM\]`` (e.g. ``#[ORM\OneToMany]``), which is not reflected in Doctrine's
     documentation.
 
 .. _`Association Mapping Documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/association-mapping.html

@@ -205,8 +205,8 @@ If you want to use XML instead of annotations, add ``type: xml`` and
     Be careful not to use reserved SQL keywords as your table or column names
     (e.g. ``GROUP`` or ``USER``). See Doctrine's `Reserved SQL keywords documentation`_
     for details on how to escape these. Or, change the table name with
-    ``#[ORM\Table(name: "groups")]`` above the class or configure the column name with
-    the ``name: "group_name"`` option.
+    ``#[ORM\Table(name: 'groups')]`` above the class or configure the column name with
+    the ``name: 'group_name'`` option.
 
 .. _doctrine-creating-the-database-tables-schema:
 
