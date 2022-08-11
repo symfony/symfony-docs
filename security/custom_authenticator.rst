@@ -140,9 +140,8 @@ The ``authenticate()`` method is the most important method of the
 authenticator. Its job is to extract credentials (e.g. username &
 password, or API tokens) from the ``Request`` object and transform these
 into a security
-:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`.
-See :ref:`security-passport` below for a detailed look into the
-authentication process.
+:class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Passport`
+(security passports are explained later in this article).
 
 After the authentication process finished, the user is either authenticated
 or there was something wrong (e.g. incorrect password). The authenticator
