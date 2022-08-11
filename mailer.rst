@@ -1407,6 +1407,25 @@ Here's an example of making one available to download::
 Development & Debugging
 -----------------------
 
+Sending Test Emails
+~~~~~~~~~~~~~~~~~~~
+
+Symfony provides a command to send emails, which is useful during development
+to test if sending emails works correctly:
+
+.. code-block:: terminal
+
+    # the only mandatory argument is the recipient address
+    # (check the command help to learn about its options)
+    $ php bin/console mailer:test someone@example.com
+
+This command bypasses the :doc:`Messenger bus </messenger>`, if configured, to
+ease testing emails even when the Messenger consumer is not running.
+
+.. versionadded:: 6.2
+
+    The ``mailer:test`` command was introduced in Symfony 6.2.
+
 Disabling Delivery
 ~~~~~~~~~~~~~~~~~~
 
