@@ -1307,6 +1307,21 @@ dsn
 
 The DSN where to store the profiling information.
 
+.. _collect_serializer_data:
+
+collect_serializer_data
+.......................
+
+**type**: ``boolean`` **default**: ``false``
+
+Set this option to ``true`` to enable the serializer data collector and its
+profiler panel. When this option is ``true``, all normalizers and encoders are
+decorated by traceable implementations that collect profiling information about them.
+
+.. versionadded:: 6.1
+
+    The ``collect_serializer_data`` option was introduced in Symfony 6.1.
+
 rate_limiter
 ~~~~~~~~~~~~
 
