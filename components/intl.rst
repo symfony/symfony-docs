@@ -129,9 +129,9 @@ to catching the exception, you can also check if a given script code is valid::
 Country Names
 ~~~~~~~~~~~~~
 
-The ``Countries`` class provides access to the name of all countries according
-to the `ISO 3166-1 alpha-2`_ list and the `ISO 3166-1 alpha-3`_ list
-of officially recognized countries and territories::
+The :class:`Symfony\\Component\\Intl\\Countries` class provides access to the
+name of all countries according to the `ISO 3166-1 alpha-2`_ list and the
+`ISO 3166-1 alpha-3`_ list of officially recognized countries and territories::
 
     use Symfony\Component\Intl\Countries;
 
@@ -188,8 +188,8 @@ Locales
 A locale is the combination of a language, a region and some parameters that
 define the interface preferences of the user. For example, "Chinese" is the
 language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified"
-(script) + "Macau SAR China" (region). The ``Locales`` class provides access to
-the name of all locales::
+(script) + "Macau SAR China" (region). The :class:`Symfony\\Component\\Intl\\Locales`
+class provides access to the name of all locales::
 
     use Symfony\Component\Intl\Locales;
 
@@ -220,8 +220,8 @@ to catching the exception, you can also check if a given locale code is valid::
 Currencies
 ~~~~~~~~~~
 
-The ``Currencies`` class provides access to the name of all currencies as well
-as some of their information (symbol, fraction digits, etc.)::
+The :class:`Symfony\\Component\\Intl\\Currencies` class provides access to the name
+of all currencies as well as some of their information (symbol, fraction digits, etc.)::
 
     use Symfony\Component\Intl\Currencies;
 
@@ -286,8 +286,9 @@ to catching the exception, you can also check if a given currency code is valid:
 Timezones
 ~~~~~~~~~
 
-The ``Timezones`` class provides several utilities related to timezones. First,
-you can get the name and values of all timezones in all languages::
+The :class:`Symfony\\Component\\Intl\\Timezones` class provides several utilities
+related to timezones. First, you can get the name and values of all timezones in
+all languages::
 
     use Symfony\Component\Intl\Timezones;
 
