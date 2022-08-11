@@ -1202,6 +1202,15 @@ website.
 
 You can learn all about this authenticator in :doc:`/security/login_link`.
 
+Access Tokens
+~~~~~~~~~~~~~
+
+Access Tokens are often used in API contexts.
+The user receives a token from an authorization server
+which authenticates them.
+
+You can learn all about this authenticator in :doc:`/security/access_token`.
+
 X.509 Client Certificates
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
