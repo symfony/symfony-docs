@@ -407,15 +407,13 @@ you will learn about next!).
 
     .. configuration-block::
 
-        .. code-block:: php-annotations
+        .. code-block:: php-attributes
 
             // src/Entity/Task.php
 
             // ...
 
-            /**
-             * @ORM\ManyToMany(targetEntity="App\Entity\Tag", cascade={"persist"})
-             */
+            #[ORM\ManyToMany(targetEntity: Tag::class, cascade: ['persist'])]
             protected $tags;
 
         .. code-block:: yaml

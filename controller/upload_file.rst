@@ -24,9 +24,7 @@ add a PDF brochure for each product. To do so, add a new property called
     {
         // ...
 
-        /**
-         * @ORM\Column(type="string")
-         */
+        #[ORM\Column(type: 'string')]
         private $brochureFilename;
 
         public function getBrochureFilename()
