@@ -65,7 +65,7 @@ Symfony ships with the following value resolvers in the
                 // this allows all values defined in the Enum
                 'suit' => new EnumRequirement(Suit::class),
                 // this restricts the possible values to the Enum values listed here
-                'suit' => new EnumRequirement([Suit::class, Suit::Diamonds, Suit::Spades]),
+                'suit' => new EnumRequirement([Suit::Diamonds, Suit::Spades]),
             ])]
             public function list(Suit $suit): Response
             {
