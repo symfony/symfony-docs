@@ -58,7 +58,7 @@ Any hex color is supported for foreground and background colors. Besides that, t
 
     .. versionadded:: 6.2
 
-        The support of 256-color terminals was introduced in Symfony 6.2.
+        The support for 256-color terminals was introduced in Symfony 6.2.
 
 And available options are: ``bold``, ``underscore``, ``blink``, ``reverse``
 (enables the "reverse video" mode where the background and foreground colors
