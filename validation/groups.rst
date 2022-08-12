@@ -15,33 +15,6 @@ user registers and when a user updates their contact information later:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Security\Core\User\UserInterface;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User implements UserInterface
-        {
-            /**
-             * @Assert\Email(groups={"registration"})
-             */
-            private $email;
-
-            /**
-             * @Assert\NotBlank(groups={"registration"})
-             * @Assert\Length(min=7, groups={"registration"})
-             */
-            private $password;
-
-            /**
-             * @Assert\Length(min=2)
-             */
-            private $city;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php

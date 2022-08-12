@@ -15,21 +15,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\Language
-             */
-            protected $preferredLanguage;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php

@@ -17,26 +17,6 @@ and ``50``, you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Participant.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Participant
-        {
-            /**
-             * @Assert\Length(
-             *      min = 2,
-             *      max = 50,
-             *      minMessage = "Your first name must be at least {{ limit }} characters long",
-             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters"
-             * )
-             */
-            protected $firstName;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Participant.php

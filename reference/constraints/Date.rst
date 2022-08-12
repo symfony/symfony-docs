@@ -15,22 +15,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Date
-             * @var string A "Y-m-d" formatted value
-             */
-            protected $birthday;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php

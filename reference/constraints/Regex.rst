@@ -19,21 +19,6 @@ more word characters at the beginning of your string:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Regex("/^\w+/")
-             */
-            protected $description;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -96,25 +81,6 @@ assert that the ``firstName`` field does not contain any numbers and give
 it a custom message:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Regex(
-             *     pattern="/\d/",
-             *     match=false,
-             *     message="Your name cannot contain a number"
-             * )
-             */
-            protected $firstName;
-        }
 
     .. code-block:: php-attributes
 
@@ -207,24 +173,6 @@ does not support flags. If you have a pattern like ``/^[a-z]+$/i``, you
 need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Regex(
-             *     pattern     = "/^[a-z]+$/i",
-             *     htmlPattern = "[a-zA-Z]+"
-             * )
-             */
-            protected $name;
-        }
 
     .. code-block:: php-attributes
 
