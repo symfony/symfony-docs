@@ -1746,7 +1746,7 @@ Next, you need to create a route for this URL (but not a controller):
             <route id="app_logout" path="/logout" methods="GET"/>
         </routes>
 
-    ..  code-block:: php
+    .. code-block:: php
 
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
