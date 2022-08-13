@@ -649,8 +649,8 @@ Symfony provides the following env var processors:
                 xmlns:mongo-db="http://example.org/schema/dic/mongo-db-bundle"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://example.org/schema/dic/mongo-db-bundle
-                    http://example.org/schema/dic/mongo-db-bundle/mongo-db-1.0.xsd"
+                    https://example.org/schema/dic/mongo-db-bundle
+                    https://example.org/schema/dic/mongo-db-bundle/mongo-db-1.0.xsd"
             >
                 <mongo-db:config>
                     <mongo-db:client name="default"
@@ -733,8 +733,8 @@ Symfony provides the following env var processors:
                 xmlns:mongo-db="http://example.org/schema/dic/mongo-db-bundle"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
                     https://symfony.com/schema/dic/services/services-1.0.xsd
-                    http://example.org/schema/dic/mongo-db-bundle
-                    http://example.org/schema/dic/mongo-db-bundle/mongo-db-1.0.xsd"
+                    https://example.org/schema/dic/mongo-db-bundle
+                    https://example.org/schema/dic/mongo-db-bundle/mongo-db-1.0.xsd"
             >
                 <mongo-db:config>
                     <mongo-db:client name="default"
