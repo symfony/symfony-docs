@@ -190,7 +190,7 @@ Listeners receive a
 
 If you use the Console component inside a Symfony application, commands can
 handle signals themselves. To do so, implement the
-``SignalableCommandInterface`` and subscribe to one or more signals::
+:class:`Symfony\\Component\\Console\\Command\\SignalableCommandInterface` and subscribe to one or more signals::
 
     // src/Command/SomeCommand.php
     namespace App\Command;
@@ -208,7 +208,7 @@ handle signals themselves. To do so, implement the
             return [\SIGINT, \SIGTERM];
         }
 
-        public function handleSignal(int $signal)
+        public function handleSignal(int $signal): void
         {
             if (\SIGINT === $signal) {
                 // ...
