@@ -1466,6 +1466,12 @@ You must enable this using the ``login_throttling`` setting:
             ;
         };
 
+.. note::
+
+    The value of the ``interval`` option must be a number followed by any of the
+    units accepted by the `PHP date relative formats`_ (e.g. ``3 seconds``,
+    ``10 hours``, ``1 day``, etc.)
+
 .. versionadded:: 5.3
 
     The ``login_throttling.interval`` option was introduced in Symfony 5.3.
