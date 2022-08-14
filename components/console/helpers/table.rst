@@ -28,7 +28,7 @@ set the headers, set the rows and then render the table::
 
     class SomeCommand extends Command
     {
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             $table = new Table($output);
             $table
@@ -41,6 +41,8 @@ set the headers, set the rows and then render the table::
                 ])
             ;
             $table->render();
+            
+            return Command::SUCCESS;
         }
     }
 
@@ -406,7 +408,7 @@ The only requirement to append rows is that the table must be rendered inside a
 
     class SomeCommand extends Command
     {
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             $section = $output->section();
             $table = new Table($section);
@@ -415,6 +417,8 @@ The only requirement to append rows is that the table must be rendered inside a
             $table->render();
 
             $table->appendRow(['Symfony']);
+            
+            return Command::SUCCESS;
         }
     }
 
