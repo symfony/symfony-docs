@@ -35,8 +35,7 @@ Fixed Window Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is the simplest technique and it's based on setting a limit for a given
-interval of time (e.g. 5,000 requests per hour or 3 login attempts every 15
-minutes).
+interval of time.
 
 In the diagram below, the limit is set to "5 tokens per hour". Each window
 starts at the first hit (i.e. 10:15, 11:30 and 12:30). As soon as there are
@@ -48,11 +47,11 @@ squares).
     <object data="_images/rate_limiter/fixed_window.svg" type="image/svg+xml"></object>
 
 Its main drawback is that resource usage is not evenly distributed in time and
-it can overload the server at the window edges. In the previous example,
+it can overload the server at the window edges. In this example,
 there were 6 accepted requests between 11:00 and 12:00.
 
 This is more significant with bigger limits. For instance, with 5,000 requests
-per hour, a user could make the 4,999 requests in the last minute of some
+per hour, a user could make 4,999 requests in the last minute of some
 hour and another 5,000 requests during the first minute of the next hour,
 making 9,999 requests in total in two minutes and possibly overloading the
 server. These periods of excessive usage are called "bursts".
