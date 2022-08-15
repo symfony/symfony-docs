@@ -63,7 +63,7 @@ do so, create a :doc:`controller class </controller>` like the following:
         class BlogController extends AbstractController
         {
             #[Route('/blog', name: 'blog_list')]
-            public function list()
+            public function list(): Response
             {
                 // ...
             }
@@ -838,7 +838,7 @@ optional ``priority`` parameter in those routes to control their priority:
              * This route has a greedy pattern and is defined first.
              */
             #[Route('/blog/{slug}', name: 'blog_show')]
-            public function show(string $slug)
+            public function show(string $slug): Response
             {
                 // ...
             }
@@ -847,7 +847,7 @@ optional ``priority`` parameter in those routes to control their priority:
              * This route could not be matched without defining a higher priority than 0.
              */
             #[Route('/blog/list', name: 'blog_list', priority: 2)]
-            public function list()
+            public function list(): Response
             {
                 // ...
             }
@@ -2050,7 +2050,7 @@ session shouldn't be used when matching a request:
         class MainController extends AbstractController
         {
             #[Route('/', name: 'homepage', stateless: true)]
-            public function homepage()
+            public function homepage(): Response
             {
                 // ...
             }
