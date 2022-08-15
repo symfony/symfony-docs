@@ -1369,6 +1369,8 @@ Enable remote user authentication using the ``remote_user`` key:
     :ref:`the configuration reference <reference-security-firewall-remote-user>`
     for more details.
 
+.. _security-login-throttling:
+
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1461,7 +1463,13 @@ You must enable this using the ``login_throttling`` setting:
             ;
         };
 
-By default, login attempts are limited on ``max_attempts`` (default: 5)
+.. note::
+
+    The value of the ``interval`` option must be a number followed by any of the
+    units accepted by the `PHP date relative formats`_ (e.g. ``3 seconds``,
+    ``10 hours``, ``1 day``, etc.)
+
+Login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
 failed requests for ``IP address``. The second limit protects against an
 attacker using multiple usernames from bypassing the first limit, without
@@ -1717,7 +1725,7 @@ Next, you need to create a route for this URL (but not a controller):
             <route id="app_logout" path="/logout" methods="GET"/>
         </routes>
 
-    ..  code-block:: php
+    .. code-block:: php
 
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
@@ -2665,3 +2673,4 @@ Authorization (Denying Access)
 .. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication
 .. _`Login CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
 .. _`SensitiveParameter PHP attribute`: https://wiki.php.net/rfc/redact_parameters_in_back_traces
+.. _`PHP date relative formats`: https://www.php.net/datetime.formats.relative

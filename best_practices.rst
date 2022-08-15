@@ -88,8 +88,10 @@ application behavior.
 :ref:`Use env vars in your project <config-env-vars>` to define these options
 and create multiple ``.env`` files to :ref:`configure env vars per environment <config-dot-env>`.
 
-Use Secret for Sensitive Information
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _use-secret-for-sensitive-information:
+
+Use Secrets for Sensitive Information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When your application has sensitive configuration - like an API key - you should
 store those securely via :doc:`Symfony’s secrets management system </configuration/secrets>`.

@@ -165,6 +165,11 @@ can define what happens in these cases:
     useful for e.g. login forms, where the login controller is run again
     with the login errors.
 
+    If you're using :ref:`login throttling <security-login-throttling>`,
+    you can check if ``$exception`` is an instance of
+    :class:`Symfony\\Component\\Security\\Core\\Exception\\TooManyLoginAttemptsAuthenticationException`
+    (e.g. to display an appropriate message).
+
     **Caution**: Never use ``$exception->getMessage()`` for ``AuthenticationException``
     instances. This message might contain sensitive information that you
     don't want to be publicly exposed. Instead, use ``$exception->getMessageKey()``
@@ -236,7 +241,7 @@ using :ref:`the user provider <security-user-providers>`::
                 // ...
 
                 return new Passport(
-                    new UserBadge($email, function ($userIdentifier) {
+                    new UserBadge($email, function (string $userIdentifier) {
                         return $this->userRepository->findOneBy(['email' => $userIdentifier]);
                     }),
                     $credentials
@@ -258,6 +263,7 @@ The following credential classes are supported by default:
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Credentials\\CustomCredentials`
     Allows a custom closure to check credentials::
 
+        use Symfony\Component\Security\Core\User\UserInterface;
         use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 
         // ...
