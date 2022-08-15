@@ -34,7 +34,7 @@ the following to your command::
     {
         // ...
 
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion('Continue with this action?', false);
@@ -42,6 +42,10 @@ the following to your command::
             if (!$helper->ask($input, $output, $question)) {
                 return Command::SUCCESS;
             }
+
+            // ... do something here
+
+            return Command::SUCCESS;
         }
     }
 
@@ -75,12 +79,16 @@ if you want to know a bundle name, you can add this to your command::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
 
         $bundleName = $helper->ask($input, $output, $question);
+        
+        // ... do something with the bundleName
+        
+        return Commande::SUCCESS;
     }
 
 The user will be asked "Please enter the name of the bundle". They can type
@@ -99,7 +107,7 @@ from a predefined list::
     use Symfony\Component\Console\Question\ChoiceQuestion;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -115,6 +123,8 @@ from a predefined list::
         $output->writeln('You have just selected: '.$color);
 
         // ... do something with the color
+        
+        return Commande::SUCCESS;
     }
 
 The option which should be selected by default is provided with the third
@@ -138,7 +148,7 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
     use Symfony\Component\Console\Question\ChoiceQuestion;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -151,6 +161,8 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
 
         $colors = $helper->ask($input, $output, $question);
         $output->writeln('You have just selected: ' . implode(', ', $colors));
+        
+        return Commande::SUCCESS;
     }
 
 Now, when the user enters ``1,2``, the result will be:
@@ -168,7 +180,7 @@ will be autocompleted as the user types::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -178,6 +190,10 @@ will be autocompleted as the user types::
         $question->setAutocompleterValues($bundles);
 
         $bundleName = $helper->ask($input, $output, $question);
+        
+        // ... do something with the bundleName
+        
+        return Commande::SUCCESS;
     }
 
 In more complex use cases, it may be necessary to generate suggestions on the
@@ -187,7 +203,7 @@ provide a callback function to dynamically generate suggestions::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
 
@@ -213,6 +229,10 @@ provide a callback function to dynamically generate suggestions::
         $question->setAutocompleterCallback($callback);
 
         $filePath = $helper->ask($input, $output, $question);
+        
+        // ... do something with the filePath
+        
+        return Commande::SUCCESS;
     }
 
 Do not Trim the Answer
@@ -224,7 +244,7 @@ You can also specify if you want to not trim the answer by setting it directly w
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -233,6 +253,10 @@ You can also specify if you want to not trim the answer by setting it directly w
         $question->setTrimmable(false);
         // if the users inputs 'elsa ' it will not be trimmed and you will get 'elsa ' as value
         $name = $helper->ask($input, $output, $question);
+        
+        // ... do something with the name
+        
+        return Commande::SUCCESS;
     }
 
 Accept Multiline Answers
@@ -246,7 +270,7 @@ the response to a question should allow multiline answers by passing ``true`` to
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -255,6 +279,10 @@ the response to a question should allow multiline answers by passing ``true`` to
         $question->setMultiline(true);
 
         $answer = $helper->ask($input, $output, $question);
+        
+        // ... do something with the answer
+        
+        return Commande::SUCCESS;
     }
 
 Multiline questions stop reading user input after receiving an end-of-transmission
@@ -269,7 +297,7 @@ convenient for passwords::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -279,6 +307,10 @@ convenient for passwords::
         $question->setHiddenFallback(false);
 
         $password = $helper->ask($input, $output, $question);
+        
+        // ... do something with the password
+        
+        return Commande::SUCCESS;
     }
 
 .. caution::
@@ -302,13 +334,15 @@ convenient for passwords::
         use Symfony\Component\Console\Question\ChoiceQuestion;
 
         // ...
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             // ...
             $helper = $this->getHelper('question');
             QuestionHelper::disableStty();
 
             // ...
+            
+            return Commande::SUCCESS;
         }
 
 Normalizing the Answer
@@ -324,7 +358,7 @@ method::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -336,6 +370,10 @@ method::
         });
 
         $bundleName = $helper->ask($input, $output, $question);
+        
+        // ... do something with the bundleName
+        
+        return Commande::SUCCESS;
     }
 
 .. caution::
@@ -358,7 +396,7 @@ method::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -376,6 +414,10 @@ method::
         $question->setMaxAttempts(2);
 
         $bundleName = $helper->ask($input, $output, $question);
+        
+        // ... do something with the bundleName
+        
+        return Commande::SUCCESS;
     }
 
 The ``$validator`` is a callback which handles the validation. It should
@@ -414,7 +456,7 @@ You can also use a validator with a hidden question::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -434,6 +476,10 @@ You can also use a validator with a hidden question::
         $question->setMaxAttempts(20);
 
         $password = $helper->ask($input, $output, $question);
+        
+        // ... do something with the password
+        
+        return Commande::SUCCESS;
     }
 
 Testing a Command that Expects Input
