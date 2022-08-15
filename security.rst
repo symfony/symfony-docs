@@ -1476,7 +1476,7 @@ You must enable this using the ``login_throttling`` setting:
 
     The ``login_throttling.interval`` option was introduced in Symfony 5.3.
 
-By default, login attempts are limited on ``max_attempts`` (default: 5)
+Login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
 failed requests for ``IP address``. The second limit protects against an
 attacker using multiple usernames from bypassing the first limit, without
