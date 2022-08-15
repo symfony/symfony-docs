@@ -1368,6 +1368,8 @@ Enable remote user authentication using the ``remote_user`` key:
     :ref:`the configuration reference <reference-security-firewall-remote-user>`
     for more details.
 
+.. _security-login-throttling:
+
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
