@@ -128,7 +128,7 @@ configuration (``login``):
             <route id="login" path="/login" controller="App\Controller\SecurityController::login" methods="GET|POST"/>
         </routes>
 
-    ..  code-block:: php
+    .. code-block:: php
 
         // config/routes.php
         use App\Controller\SecurityController;
