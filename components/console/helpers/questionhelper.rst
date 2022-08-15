@@ -42,6 +42,10 @@ the following to your command::
             if (!$helper->ask($input, $output, $question)) {
                 return Command::SUCCESS;
             }
+
+            // ... do something here
+
+            return Command::SUCCESS;
         }
     }
 
