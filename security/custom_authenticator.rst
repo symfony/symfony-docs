@@ -261,6 +261,7 @@ The following credential classes are supported by default:
 :class:`Symfony\\Component\\Security\\Http\\Authenticator\\Passport\\Credentials\\CustomCredentials`
     Allows a custom closure to check credentials::
 
+        use Symfony\Component\Security\Core\User\UserInterface;
         use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 
         // ...
