@@ -239,7 +239,7 @@ using :ref:`the user provider <security-user-providers>`::
                 // ...
 
                 return new Passport(
-                    new UserBadge($email, function ($userIdentifier) {
+                    new UserBadge($email, function (string $userIdentifier) {
                         return $this->userRepository->findOneBy(['email' => $userIdentifier]);
                     }),
                     $credentials
