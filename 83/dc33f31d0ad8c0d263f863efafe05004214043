@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2022-08-16T13:29:02Z
+
+Please rebase on 4.4 or open another PR, the issue is present on 4.4 too: https://symfony.com/doc/4.4/deployment.html#e-other-things
