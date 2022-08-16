@@ -333,7 +333,7 @@ method, which should return an array of groups to use::
     {
         // ...
 
-        public function getGroupSequence()
+        public function getGroupSequence(): array|GroupSequence
         {
             // when returning a simple array, if there's a violation in any group
             // the rest of the groups are not validated. E.g. if 'User' fails,
