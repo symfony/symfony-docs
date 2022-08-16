@@ -60,7 +60,7 @@ to support the ``PURGE`` HTTP method::
 
     class CacheKernel extends HttpCache
     {
-        protected function invalidate(Request $request, bool $catch = false)
+        protected function invalidate(Request $request, bool $catch = false): Response
         {
             if ('PURGE' !== $request->getMethod()) {
                 return parent::invalidate($request, $catch);
