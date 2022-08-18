@@ -551,7 +551,7 @@ and headers.
         framework:
             mailer:
                 envelope:
-                    sender: 'fabien@example.com'
+                    sender: 'Fabien <fabien@example.com>'
                     recipients: ['foo@example.com', 'bar@example.com']
                 headers:
                     From: 'Fabien <fabien@example.com>'
@@ -573,7 +573,7 @@ and headers.
             <framework:config>
                 <framework:mailer>
                     <framework:envelope>
-                        <framework:sender>fabien@example.com</framework:sender>
+                        <framework:sender>Fabien &lt;fabien@example.com&gt;</framework:sender>
                         <framework:recipients>foo@example.com</framework:recipients>
                         <framework:recipients>bar@example.com</framework:recipients>
                     </framework:envelope>
@@ -593,7 +593,7 @@ and headers.
             $mailer = $framework->mailer();
             $mailer
                 ->envelope()
-                    ->sender('fabien@example.com')
+                    ->sender('Fabien <fabien@example.com>')
                     ->recipients(['foo@example.com', 'bar@example.com'])
             ;
 
