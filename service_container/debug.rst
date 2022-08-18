@@ -21,6 +21,33 @@ To see a list of all of the available types that can be used for autowiring, run
 
     $ php bin/console debug:autowiring
 
+How to Debug Service Tags & List Tagged Services
+------------------------------------
+You can find out what services are tagged with a specific tag using the following command:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --tag=kernel.event_listener
+
+Partial search is also available:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --tag=kernel
+    
+    Select one of the following tags to display its information:
+     [0] kernel.event_listener
+     [1] kernel.event_subscriber
+     [2] kernel.reset
+     [3] kernel.cache_warmer
+     [4] kernel.locale_aware
+     [5] kernel.fragment_renderer
+     [6] kernel.cache_clearer
+
+.. versionadded:: 6.2
+
+    The partial search was introduced in Symfony 6.2.
+
 Detailed Info about a Single Service
 ------------------------------------
 
