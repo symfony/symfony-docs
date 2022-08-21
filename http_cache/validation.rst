@@ -56,10 +56,11 @@ content::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class DefaultController extends AbstractController
     {
-        public function homepage(Request $request)
+        public function homepage(Request $request): Response
         {
             $response = $this->render('static/homepage.html.twig');
             $response->setEtag(md5($response->getContent()));
@@ -138,7 +139,7 @@ header value::
 
     class ArticleController extends AbstractController
     {
-        public function show(Article $article, Request $request)
+        public function show(Article $article, Request $request): Response
         {
             $author = $article->getAuthor();
 
@@ -196,7 +197,7 @@ the better. The ``Response::isNotModified()`` method does exactly that::
 
     class ArticleController extends AbstractController
     {
-        public function show($articleSlug, Request $request)
+        public function show(string $articleSlug, Request $request): Response
         {
             // Get the minimum information to compute
             // the ETag or the Last-Modified value
