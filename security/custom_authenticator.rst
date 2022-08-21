@@ -130,6 +130,12 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
             ;
         };
 
+.. deprecated:: 5.4
+
+    If you have registered multiple user providers, you must set the
+    ``provider`` key to one of the configured providers, even if your
+    custom authenticators don't use it. Not doing so is deprecated in Symfony 5.4.
+
 .. versionadded:: 5.2
 
     Starting with Symfony 5.2, the custom authenticator is automatically
@@ -185,7 +191,7 @@ can define what happens in these cases:
     If your login method is interactive, which means that the user actively
     logged into your application, you may want your authenticator to implement the
     :class:`Symfony\\Component\\Security\\Http\\Authenticator\\InteractiveAuthenticatorInterface`
-    so that it dispatches an 
+    so that it dispatches an
     :class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
 
 .. _security-passport:
