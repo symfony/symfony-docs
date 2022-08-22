@@ -88,7 +88,7 @@ if you want to know a bundle name, you can add this to your command::
         
         // ... do something with the bundleName
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 The user will be asked "Please enter the name of the bundle". They can type
@@ -124,7 +124,7 @@ from a predefined list::
 
         // ... do something with the color
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 The option which should be selected by default is provided with the third
@@ -162,7 +162,7 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
         $colors = $helper->ask($input, $output, $question);
         $output->writeln('You have just selected: ' . implode(', ', $colors));
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 Now, when the user enters ``1,2``, the result will be:
@@ -193,7 +193,7 @@ will be autocompleted as the user types::
         
         // ... do something with the bundleName
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 In more complex use cases, it may be necessary to generate suggestions on the
@@ -232,7 +232,7 @@ provide a callback function to dynamically generate suggestions::
         
         // ... do something with the filePath
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 Do not Trim the Answer
@@ -256,7 +256,7 @@ You can also specify if you want to not trim the answer by setting it directly w
         
         // ... do something with the name
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 Accept Multiline Answers
@@ -282,7 +282,7 @@ the response to a question should allow multiline answers by passing ``true`` to
         
         // ... do something with the answer
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 Multiline questions stop reading user input after receiving an end-of-transmission
@@ -310,7 +310,7 @@ convenient for passwords::
         
         // ... do something with the password
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 .. caution::
@@ -342,7 +342,7 @@ convenient for passwords::
 
             // ...
             
-            return Commande::SUCCESS;
+            return Command::SUCCESS;
         }
 
 Normalizing the Answer
@@ -373,7 +373,7 @@ method::
         
         // ... do something with the bundleName
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 .. caution::
@@ -417,7 +417,7 @@ method::
         
         // ... do something with the bundleName
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 The ``$validator`` is a callback which handles the validation. It should
@@ -479,7 +479,7 @@ You can also use a validator with a hidden question::
         
         // ... do something with the password
         
-        return Commande::SUCCESS;
+        return Command::SUCCESS;
     }
 
 Testing a Command that Expects Input

@@ -106,7 +106,7 @@ independently of the rest of the page::
     // ...
     class DefaultController extends AbstractController
     {
-        public function about()
+        public function about(): Response
         {
             $response = $this->render('static/about.html.twig');
             $response->setPublic();
@@ -172,7 +172,7 @@ of the main page::
     // ...
     class NewsController extends AbstractController
     {
-        public function latest($maxPerPage)
+        public function latest(int $maxPerPage): Response
         {
             // sets to public and adds some expiration
             $response->setSharedMaxAge(60);
