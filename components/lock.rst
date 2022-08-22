@@ -144,7 +144,7 @@ job; if it's too long and the process crashes before calling the ``release()``
 method, the resource will stay locked until the timeout::
 
     // ...
-    // create an expiring lock that lasts 30 seconds
+    // create an expiring lock that lasts 30 seconds (default is 300.0)
     $lock = $factory->createLock('charts-generation', 30);
 
     if (!$lock->acquire()) {
