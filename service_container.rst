@@ -374,7 +374,7 @@ you can type-hint the new ``SiteUpdateManager`` class and use it::
 
     class SiteController extends AbstractController
     {
-        public function new(SiteUpdateManager $siteUpdateManager)
+        public function new(SiteUpdateManager $siteUpdateManager): Response
         {
             // ...
 
