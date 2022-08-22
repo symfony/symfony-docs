@@ -227,7 +227,7 @@ setup:
 * Pushing assets to a CDN
 * On a shared hosting platform using the Apache web server, you may need to
   install the :ref:`symfony/apache-pack package <web-server-apache-mod-php>`
-* ...
+* etc.
 
 Application Lifecycle: Continuous Integration, QA, etc.
 -------------------------------------------------------

@@ -47,8 +47,8 @@ which makes creating a voter even easier::
 
     abstract class Voter implements VoterInterface
     {
-        abstract protected function supports(string $attribute, mixed $subject);
-        abstract protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token);
+        abstract protected function supports(string $attribute, mixed $subject): bool;
+        abstract protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool;
     }
 
 .. _how-to-use-the-voter-in-a-controller:

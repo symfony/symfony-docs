@@ -106,7 +106,7 @@ independently of the rest of the page::
     // ...
     class DefaultController extends AbstractController
     {
-        public function about()
+        public function about(): Response
         {
             $response = $this->render('static/about.html.twig');
             $response->setPublic();
@@ -179,7 +179,7 @@ of the main page::
         class NewsController extends AbstractController
         {
             #[Cache(smaxage: 60)]
-            public function latest($maxPerPage)
+            public function latest(int $maxPerPage): Response
             {
                 // ...
             }

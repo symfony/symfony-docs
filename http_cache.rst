@@ -220,7 +220,7 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
         // ...
 
         #[Cache(public: true, maxage: 3600, mustRevalidate: true)]
-        public function index()
+        public function index(): Response
         {
             return $this->render('blog/index.html.twig', []);
         }
