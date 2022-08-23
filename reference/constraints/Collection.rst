@@ -51,36 +51,6 @@ following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Collection(
-             *     fields = {
-             *         "personal_email" = @Assert\Email,
-             *         "short_bio" = {
-             *             @Assert\NotBlank,
-             *             @Assert\Length(
-             *                 max = 100,
-             *                 maxMessage = "Your short bio is too long!"
-             *             )
-             *         }
-             *     },
-             *     allowMissingFields = true
-             * )
-             */
-            protected $profileData = [
-                'personal_email' => '...',
-                'short_bio' => '...',
-            ];
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -214,7 +184,7 @@ you can do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -223,14 +193,17 @@ you can do the following:
 
         class Author
         {
-            /**
-             * @Assert\Collection(
-             *     fields={
-             *         "personal_email"  = @Assert\Required({@Assert\NotBlank, @Assert\Email}),
-             *         "alternate_email" = @Assert\Optional(@Assert\Email)
-             *     }
-             * )
-             */
+            #[Assert\Collection(
+                fields: [
+                    'personal_email' => new Assert\Required([
+                        new Assert\NotBlank,
+                        new Assert\Email,
+                    ]),
+                    'alternate_email' => new Assert\Optional(
+                        new Assert\Email
+                    ),
+                ],
+            )]
             protected $profileData = ['personal_email' => 'email@example.com'];
         }
 

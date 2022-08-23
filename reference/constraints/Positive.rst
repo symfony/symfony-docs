@@ -19,21 +19,6 @@ positive number (greater than zero):
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Employee.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Employee
-        {
-            /**
-             * @Assert\Positive
-             */
-            protected $income;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Employee.php

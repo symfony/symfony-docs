@@ -17,21 +17,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/NetworkSettings.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class NetworkSettings
-        {
-            /**
-             * @Assert\Cidr
-             */
-            protected $cidrNotation;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/NetworkSettings.php

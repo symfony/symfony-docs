@@ -18,24 +18,6 @@ entry in that array:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\All({
-             *     @Assert\NotBlank,
-             *     @Assert\Length(min=5)
-             * })
-             */
-            protected $favoriteColors = [];
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php

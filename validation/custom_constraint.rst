@@ -180,27 +180,6 @@ You can use custom validators like the ones provided by Symfony itself:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/AcmeEntity.php
-        namespace App\Entity;
-
-        use App\Validator as AcmeAssert;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class AcmeEntity
-        {
-            // ...
-
-            /**
-             * @Assert\NotBlank
-             * @AcmeAssert\ContainsAlphanumeric(mode="loose")
-             */
-            protected $name;
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/AcmeEntity.php

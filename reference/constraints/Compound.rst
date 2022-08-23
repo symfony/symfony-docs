@@ -19,30 +19,6 @@ you can create your own named set or requirements to be reused consistently ever
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Validator/Constraints/PasswordRequirements.php
-        namespace App\Validator\Constraints;
-
-        use Symfony\Component\Validator\Constraints\Compound;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @Annotation
-         */
-        class PasswordRequirements extends Compound
-        {
-            protected function getConstraints(array $options): array
-            {
-                return [
-                    new Assert\NotBlank(),
-                    new Assert\Type('string'),
-                    new Assert\Length(['min' => 12]),
-                    new Assert\NotCompromisedPassword(),
-                ];
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Validator/Constraints/PasswordRequirements.php
@@ -65,28 +41,13 @@ you can create your own named set or requirements to be reused consistently ever
             }
         }
 
-Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
-use it as an annotation/attribute in other classes. If the constraint has
+Add ``#[\Attribute]`` to the constraint class if you want to
+use it as an attribute in other classes. If the constraint has
 configuration options, define them as public properties on the constraint class.
 
 You can now use it anywhere you need it:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity\User;
-
-        use App\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\PasswordRequirements()
-             */
-            public $plainPassword;
-        }
 
     .. code-block:: php-attributes
 

@@ -14,21 +14,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Url
-             */
-            protected $bioUrl;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -110,23 +95,6 @@ Parameter        Description
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Url(
-             *    message = "The url '{{ value }}' is not a valid url",
-             * )
-             */
-            protected $bioUrl;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -201,23 +169,6 @@ the ``ftp://`` type URLs to be valid, redefine the ``protocols`` array, listing
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Url(
-             *    protocols = {"http", "https", "ftp"}
-             * )
-             */
-            protected $bioUrl;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -290,23 +241,6 @@ the given URL. This means that both ``http://`` and ``https://`` are valid but
 also relative URLs that contain no protocol (e.g. ``//example.com``).
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Url(
-             *    relativeProtocol = true
-             * )
-             */
-            protected $bioUrl;
-        }
 
     .. code-block:: php-attributes
 

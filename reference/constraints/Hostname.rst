@@ -19,21 +19,6 @@ will contain a host name.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/ServerSettings.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class ServerSettings
-        {
-            /**
-             * @Assert\Hostname(message="The server name must be a valid hostname.")
-             */
-            protected $name;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/ServerSettings.php

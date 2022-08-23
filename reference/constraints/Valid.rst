@@ -42,48 +42,6 @@ stores an ``Address`` instance in the ``$address`` property::
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Address.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Address
-        {
-            /**
-             * @Assert\NotBlank
-             */
-            protected $street;
-
-            /**
-             * @Assert\NotBlank
-             * @Assert\Length(max=5)
-             */
-            protected $zipCode;
-        }
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\NotBlank
-             * @Assert\Length(min=4)
-             */
-            protected $firstName;
-
-            /**
-             * @Assert\NotBlank
-             */
-            protected $lastName;
-
-            protected $address;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Address.php
@@ -211,21 +169,6 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 ``$address`` property.
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Valid
-             */
-            protected $address;
-        }
 
     .. code-block:: php-attributes
 

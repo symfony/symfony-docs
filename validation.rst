@@ -24,13 +24,6 @@ install the validator before using it:
 .. code-block:: terminal
 
     $ composer require symfony/validator
-    
-If your project still uses annotations to define the validation constraints (as
-shown later in this article) you also need to install ``doctrine/annotations``:
-
-.. code-block:: terminal
-
-    $ composer require doctrine/annotations
 
 .. note::
 
@@ -61,29 +54,13 @@ application. The goal of validation is to tell you if the data of an object is
 valid. For this to work, you'll configure a list of rules (called
 :ref:`constraints <validation-constraints>`) that the object must follow in
 order to be valid. These rules are usually defined using PHP code or
-annotations but they can also be defined as ``.yaml`` or ``.xml`` files inside
+attributes but they can also be defined as ``.yaml`` or ``.xml`` files inside
 the ``config/validator/`` directory:
 
 For example, to indicate that the ``$name`` property must not be empty, add the
 following:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\NotBlank
-             */
-            private $name;
-        }
 
     .. code-block:: php-attributes
 
@@ -299,27 +276,6 @@ literature genre mostly associated with the author, which can be set to either
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Choice(
-             *     choices = {"fiction", "non-fiction"},
-             *     message = "Choose a valid genre."
-             * )
-             */
-            private $genre;
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -406,24 +362,6 @@ of the array. In the case of the ``Choice`` constraint, the ``choices``
 options can be specified in this way.
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Choice({"fiction", "non-fiction"})
-             */
-            private $genre;
-
-            // ...
-        }
 
     .. code-block:: php-attributes
 
@@ -547,22 +485,6 @@ class to have at least 3 characters.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\NotBlank
-             * @Assert\Length(min=3)
-             */
-            private $firstName;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -653,25 +575,6 @@ do this by creating an ``isPasswordSafe()`` method, and then asserting that
 this method must return ``true``:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        // ...
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\IsTrue(message="The password cannot match your first name")
-             */
-            public function isPasswordSafe()
-            {
-                // ... return true or false
-            }
-        }
 
     .. code-block:: php-attributes
 
