@@ -1398,14 +1398,10 @@ You must enable this using the ``login_throttling`` setting:
                     # by default, the feature allows 5 login attempts per minute
                     login_throttling: null
 
-                    # configure the maximum login attempts (per minute)
+                    # configure the maximum login attempts
                     login_throttling:
-                        max_attempts: 3
-
-                    # configure the maximum login attempts in a custom period of time
-                    login_throttling:
-                        max_attempts: 3
-                        interval: '15 minutes'
+                        max_attempts: 3          # per minute ...
+                        # interval: '15 minutes' # ... or in a custom period
 
                     # use a custom rate limiter via its service ID
                     login_throttling:
@@ -1428,13 +1424,9 @@ You must enable this using the ``login_throttling`` setting:
                 <!-- ... -->
 
                 <firewall name="main">
-                    <!-- by default, the feature allows 5 login attempts per minute -->
-                    <login-throttling/>
-
-                    <!-- configure the maximum login attempts (per minute) -->
-                    <login-throttling max-attempts="3"/>
-
-                    <!-- configure the maximum login attempts in a custom period of time -->
+                    <!-- by default, the feature allows 5 login attempts per minute
+                         max-attempts: (optional) You can configure the maximum attempts ...
+                         interval:     (optional) ... and the period of time. -->
                     <login-throttling max-attempts="3" interval="15 minutes"/>
 
                     <!-- use a custom rate limiter via its service ID -->
@@ -1454,17 +1446,9 @@ You must enable this using the ``login_throttling`` setting:
             $mainFirewall = $security->firewall('main');
 
             // by default, the feature allows 5 login attempts per minute
-            $mainFirewall->loginThrottling();
-
-            // configure the maximum login attempts (per minute)
             $mainFirewall->loginThrottling()
-                ->maxAttempts(3)
-            ;
-
-            // configure the maximum login attempts in a custom period of time
-            $mainFirewall->loginThrottling()
-                ->maxAttempts(3)
-                ->interval('15 minutes')
+                // ->maxAttempts(3)         // Optional: You can configure the maximum attempts ...
+                // ->interval('15 minutes') // ... and the period of time.
             ;
         };
 
