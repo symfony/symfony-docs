@@ -63,7 +63,11 @@ Console Completion
 
     Console completion for Fish was introduced in Symfony 6.1.
 
-If you are using the Bash or Fish shell, you can install Symfony's
+.. versionadded:: 6.2
+
+    Console completion for Zsh was introduced in Symfony 6.2.
+
+If you are using the Bash, Zsh or Fish shell, you can install Symfony's
 completion script to get auto completion when typing commands in the
 terminal. All commands support name and option completion, and some can
 even complete values.

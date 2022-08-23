@@ -181,7 +181,7 @@ You'll learn about many more commands as you continue!
 
 .. tip::
 
-    If you are using the Bash or Fish shell, you can set up completion support.
+    If your shell is supported, you can also set up console completion support.
     This autocompletes commands and other input when using ``bin/console``.
     See :ref:`the Console document <console-completion-setup>` for more
     information on how to set up completion.
