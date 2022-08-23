@@ -239,6 +239,29 @@ you can do the following:
             protected $profileData = ['personal_email' => 'email@example.com'];
         }
 
+    .. code-block:: php-attributes
+
+        // src/Entity/Author.php
+        namespace App\Entity;
+
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class Author
+        {
+            #[Assert\Collection(
+                fields: [
+                    'personal_email' => new Assert\Required([
+                        new Assert\NotBlank,
+                        new Assert\Email,
+                    ]),
+                    'alternate_email' => new Assert\Optional(
+                        new Assert\Email
+                    ),
+                ],
+            )]
+            protected $profileData = ['personal_email' => 'email@example.com'];
+        }
+
     .. code-block:: yaml
 
         # config/validator/validation.yaml
