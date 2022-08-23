@@ -63,26 +63,24 @@ Console Completion
 
     Console completion for Fish was introduced in Symfony 6.1.
 
-If you are using the Bash shell, you can install Symfony's completion
-script to get auto completion when typing commands in the terminal. All
-commands support name and option completion, and some can even complete
-values.
+If you are using the Bash or Fish shell, you can install Symfony's
+completion script to get auto completion when typing commands in the
+terminal. All commands support name and option completion, and some can
+even complete values.
 
 .. image:: /_images/components/console/completion.gif
 
-First, make sure you installed and setup the "bash completion" package for
-your OS (typically named ``bash-completion``). Then, install the Symfony
-completion bash script *once* by running the ``completion`` command in a
-Symfony app installed on your computer:
+First, you have to install the completion script *once*. Run
+``bin/console completion --help`` for the installation instructions for
+your shell.
 
-.. code-block:: terminal
+.. note::
 
-    $ php bin/console completion bash | sudo tee /etc/bash_completion.d/console-events-terminate
-    # after the installation, restart the shell
+    When using Bash, make sure you installed and setup the "bash completion"
+    package for your OS (typically named ``bash-completion``).
 
-Now you are all set to use the auto completion for all Symfony Console
-applications on your computer. By default, you can get a list of complete
-options by pressing the Tab key.
+After installing and restarting your terminal, you're all set to use
+completion (by default, by pressing the Tab key).
 
 .. tip::
 
@@ -92,7 +90,8 @@ options by pressing the Tab key.
 
     .. code-block:: terminal
 
-        $ php vendor/bin/phpstan completion bash | sudo tee /etc/bash_completion.d/phpstan
+        $ php vendor/bin/phpstan completion --help
+        $ composer completion --help
 
 Creating a Command
 ------------------
