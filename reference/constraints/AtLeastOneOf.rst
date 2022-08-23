@@ -22,34 +22,6 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Student.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Student
-        {
-            /**
-             * @Assert\AtLeastOneOf({
-             *     @Assert\Regex("/#/"),
-             *     @Assert\Length(min=10)
-             * })
-             */
-            protected $password;
-
-            /**
-             * @Assert\AtLeastOneOf({
-             *     @Assert\Count(min=3),
-             *     @Assert\All(
-             *         @Assert\GreaterThanOrEqual(5)
-             *     )
-             * })
-             */
-            protected $grades;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Student.php

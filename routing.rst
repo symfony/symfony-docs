@@ -942,7 +942,7 @@ controller action. Instead of ``string $slug``, add ``BlogPost $post``::
     {
         // ...
 
-        #[Roue('/blog/{slug}', name: 'blog_show')]
+        #[Route('/blog/{slug}', name: 'blog_show')]
         public function show(BlogPost $post): Response
         {
             // $post is the object whose slug matches the routing parameter

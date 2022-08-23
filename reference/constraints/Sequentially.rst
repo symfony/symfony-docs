@@ -36,30 +36,6 @@ You can validate each of these constraints sequentially to solve these issues:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Localization/Place.php
-        namespace App\Localization;
-
-        use App\Validator\Constraints as AcmeAssert;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Place
-        {
-            /**
-             * @var string
-             *
-             * @Assert\Sequentially({
-             *     @Assert\NotNull(),
-             *     @Assert\Type("string"),
-             *     @Assert\Length(min=10),
-             *     @Assert\Regex(Place::ADDRESS_REGEX),
-             *     @AcmeAssert\Geolocalizable(),
-             * })
-             */
-            public $address;
-        }
-
     .. code-block:: php-attributes
 
         // src/Localization/Place.php

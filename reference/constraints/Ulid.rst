@@ -14,21 +14,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/File.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class File
-        {
-            /**
-             * @Assert\Ulid
-             */
-            protected $identifier;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/File.php

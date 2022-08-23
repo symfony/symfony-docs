@@ -27,21 +27,6 @@ of an ``Author`` class were blank, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Blank
-             */
-            protected $firstName;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php

@@ -33,21 +33,6 @@ strings:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\Unique
-             */
-            protected $contactEmails;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php

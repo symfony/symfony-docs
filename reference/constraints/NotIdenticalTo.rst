@@ -27,28 +27,6 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\NotIdenticalTo("Mary")
-             */
-            protected $firstName;
-
-            /**
-             * @Assert\NotIdenticalTo(
-             *     value = 15
-             * )
-             */
-            protected $age;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php

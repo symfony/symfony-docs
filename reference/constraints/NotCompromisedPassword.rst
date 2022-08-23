@@ -18,21 +18,6 @@ The following constraint ensures that the ``rawPassword`` property of the
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\NotCompromisedPassword
-             */
-            protected $rawPassword;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php

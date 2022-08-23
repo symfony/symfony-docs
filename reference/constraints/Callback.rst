@@ -28,25 +28,6 @@ Configuration
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-        use Symfony\Component\Validator\Context\ExecutionContextInterface;
-
-        class Author
-        {
-            /**
-             * @Assert\Callback
-             */
-            public function validate(ExecutionContextInterface $context, $payload)
-            {
-                // ...
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -178,20 +159,6 @@ You can then use the following configuration to invoke this validator:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @Assert\Callback({"Acme\Validator", "validate"})
-         */
-        class Author
-        {
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -280,8 +247,8 @@ constructor of the Callback constraint::
 
 .. warning::
 
-    Using a ``Closure`` together with annotation configuration will disable the
-    annotation cache for that class/property/method because ``Closure`` cannot
+    Using a ``Closure`` together with attribute configuration will disable the
+    attribute cache for that class/property/method because ``Closure`` cannot
     be cached. For best performance, it's recommended to use a static callback method.
 
 Options
