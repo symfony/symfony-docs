@@ -18,26 +18,6 @@ you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Participant.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Participant
-        {
-            /**
-             * @Assert\Count(
-             *      min = 1,
-             *      max = 5,
-             *      minMessage = "You must specify at least one email",
-             *      maxMessage = "You cannot specify more than {{ limit }} emails"
-             * )
-             */
-            protected $emails = [];
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Participant.php

@@ -17,21 +17,6 @@ a valid currency, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\Currency
-             */
-            protected $currency;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Order.php

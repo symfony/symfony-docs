@@ -15,38 +15,6 @@ username and the password are different only if all other validation passes
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Security\Core\User\UserInterface;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @Assert\GroupSequence({"User", "Strict"})
-         */
-        class User implements UserInterface
-        {
-            /**
-             * @Assert\NotBlank
-             */
-            private $username;
-
-            /**
-             * @Assert\NotBlank
-             */
-            private $password;
-
-            /**
-             * @Assert\IsTrue(message="The password cannot match your username", groups={"Strict"})
-             */
-            public function isPasswordSafe()
-            {
-                return ($this->username !== $this->password);
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php
@@ -206,31 +174,6 @@ entity and a new constraint group called ``Premium``:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class User
-        {
-            /**
-             * @Assert\NotBlank
-             */
-            private $name;
-
-            /**
-             * @Assert\CardScheme(
-             *     schemes={"VISA"},
-             *     groups={"Premium"},
-             * )
-             */
-            private $creditCard;
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/User.php
@@ -351,21 +294,6 @@ At last, you have to notify the Validator component that your ``User`` class
 provides a sequence of groups to be validated:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/User.php
-        namespace App\Entity;
-
-        // ...
-
-        /**
-         * @Assert\GroupSequenceProvider
-         */
-        class User implements GroupSequenceProviderInterface
-        {
-            // ...
-        }
 
     .. code-block:: php-attributes
 

@@ -20,21 +20,6 @@ will contain a Business Identifier Code (BIC).
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Transaction.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Transaction
-        {
-            /**
-             * @Assert\Bic
-             */
-            protected $businessIdentifierCode;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Transaction.php

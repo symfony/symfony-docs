@@ -17,25 +17,6 @@ you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Participant.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Participant
-        {
-            /**
-             * @Assert\Range(
-             *      min = 120,
-             *      max = 180,
-             *      notInRangeMessage = "You must be between {{ min }}cm and {{ max }}cm tall to enter",
-             * )
-             */
-            protected $height;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Participant.php
@@ -113,24 +94,6 @@ date must lie within the current year like this:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Event.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Event
-        {
-            /**
-             * @Assert\Range(
-             *      min = "first day of January",
-             *      max = "first day of January next year"
-             * )
-             */
-            protected $startDate;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Event.php
@@ -199,24 +162,6 @@ dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Event.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Event
-        {
-            /**
-             * @Assert\Range(
-             *      min = "first day of January UTC",
-             *      max = "first day of January next year UTC"
-             * )
-             */
-            protected $startDate;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Event.php
@@ -284,24 +229,6 @@ The ``DateTime`` class also accepts relative dates or times. For example, you
 can check that a delivery date starts within the next five hours like this:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\Range(
-             *      min = "now",
-             *      max = "+5 hours"
-             * )
-             */
-            protected $deliveryDate;
-        }
 
     .. code-block:: php-attributes
 

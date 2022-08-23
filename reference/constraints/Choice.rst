@@ -23,30 +23,6 @@ If your valid choice list is simple, you can pass them in directly via the
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            const GENRES = ['fiction', 'non-fiction'];
-
-            /**
-             * @Assert\Choice({"New York", "Berlin", "Tokyo"})
-             */
-            protected $city;
-
-            /**
-             * You can also directly provide an array constant to the "choices" option in the annotation
-             *
-             * @Assert\Choice(choices=Author::GENRES, message="Choose a valid genre.")
-             */
-            protected $genre;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -152,21 +128,6 @@ constraint.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Choice(callback="getGenres")
-             */
-            protected $genre;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
@@ -229,21 +190,6 @@ If the callback is defined in a different class and is static, for example ``App
 you can pass the class name and the method as an array.
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Choice(callback={"App\Entity\Genre", "getGenres"})
-             */
-            protected $genre;
-        }
 
     .. code-block:: php-attributes
 

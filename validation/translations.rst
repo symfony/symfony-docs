@@ -32,21 +32,6 @@ property is not empty, add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\NotBlank(message="author.name.not_blank")
-             */
-            public $name;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php

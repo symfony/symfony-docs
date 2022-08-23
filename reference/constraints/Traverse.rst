@@ -147,21 +147,6 @@ disable validating:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/BookCollection.php
-
-        // ... same as above
-
-        /**
-         * ...
-         * @Assert\Traverse(false)
-         */
-         class BookCollection implements \IteratorAggregate
-         {
-             // ...
-         }
-
     .. code-block:: php-attributes
 
         // src/Entity/BookCollection.php

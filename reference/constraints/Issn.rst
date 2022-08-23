@@ -15,21 +15,6 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Journal.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Journal
-        {
-            /**
-             * @Assert\Issn
-             */
-            protected $issn;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Journal.php

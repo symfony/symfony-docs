@@ -22,28 +22,6 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Person.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Person
-        {
-            /**
-             * @Assert\GreaterThan(5)
-             */
-            protected $siblings;
-
-            /**
-             * @Assert\GreaterThan(
-             *     value = 18
-             * )
-             */
-            protected $age;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Person.php
@@ -124,21 +102,6 @@ that a date must at least be the next day:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\GreaterThan("today")
-             */
-            protected $deliveryDate;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Order.php
@@ -195,21 +158,6 @@ Be aware that PHP will use the server's configured timezone to interpret these
 dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\GreaterThan("today UTC")
-             */
-            protected $deliveryDate;
-        }
 
     .. code-block:: php-attributes
 
@@ -268,21 +216,6 @@ can check that the above delivery date starts at least five hours after the
 current time:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\GreaterThan("+5 hours")
-             */
-            protected $deliveryDate;
-        }
 
     .. code-block:: php-attributes
 

@@ -22,39 +22,6 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Author.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Author
-        {
-            /**
-             * @Assert\Type("Symfony\Component\Mime\Address")
-             */
-            protected $emailAddress;
-
-            /**
-             * @Assert\Type("string")
-             */
-            protected $firstName;
-
-            /**
-             * @Assert\Type(
-             *     type="integer",
-             *     message="The value {{ value }} is not a valid {{ type }}."
-             * )
-             */
-            protected $age;
-
-            /**
-             * @Assert\Type(type={"alpha", "digit"})
-             */
-            protected $accessCode;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Author.php
