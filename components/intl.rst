@@ -368,7 +368,7 @@ Emoji Transliteration
 
 .. versionadded:: 6.2
 
-    The Empoji transliteration feature was introduced in Symfony 6.2.
+    The Emoji transliteration feature was introduced in Symfony 6.2.
 
 The ``EmojiTransliterator`` class provides an utility to translate emojis into
 their textual representation in all languages based on the `Unicode CLDR dataset`_::
