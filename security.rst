@@ -2131,31 +2131,6 @@ using annotations:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Controller/AdminController.php
-        // ...
-
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
-        /**
-         * Require ROLE_ADMIN for all the actions of this controller
-         *
-         * @IsGranted("ROLE_ADMIN")
-         */
-        class AdminController extends AbstractController
-        {
-            /**
-             * Require ROLE_SUPER_ADMIN only for this action
-             *
-             * @IsGranted("ROLE_SUPER_ADMIN")
-             */
-            public function adminDashboard(): Response
-            {
-                // ...
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Controller/AdminController.php

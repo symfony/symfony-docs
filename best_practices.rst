@@ -236,11 +236,11 @@ configuration. You don't need to browse several files created with different
 formats (YAML, XML, PHP): all the configuration is just where you need it and
 it only uses one format.
 
-Don't Use Annotations to Configure the Controller Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Don't Use Attributes to Configure the Controller Template
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``@Template`` annotation is useful, but also involves some *magic*.
-Moreover, most of the time ``@Template`` is used without any parameters, which
+The ``#[Template]`` attribute is useful, but also involves some *magic*.
+Moreover, most of the time ``#[Template]`` is used without any parameters, which
 makes it more difficult to know which template is being rendered. It also hides
 the fact that a controller should always return a ``Response`` object.
 
@@ -380,8 +380,7 @@ Use Voters to Implement Fine-grained Security Restrictions
 
 If your security logic is complex, you should create custom
 :doc:`security voters </security/voters>` instead of defining long expressions
-inside the ``#[Security]`` attribute (or in the ``@Security`` annotation if your
-PHP version doesn't support attributes yet).
+inside the ``#[Security]`` attribute.
 
 Web Assets
 ----------
