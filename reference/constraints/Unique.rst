@@ -109,21 +109,6 @@ collection::
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Poi.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Poi
-        {
-            /**
-             * @Assert\Unique(fields={"latitude", "longitude"})
-             */
-            protected $coordinates;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Poi.php

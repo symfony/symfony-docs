@@ -455,4 +455,4 @@ you must set up a redirection.
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
 .. _`Webpack`: https://webpack.js.org/
-.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html#data-providers
+.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/9.5/writing-tests-for-phpunit.html#data-providers

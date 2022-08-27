@@ -28,28 +28,6 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Entity/Order.php
-        namespace App\Entity;
-
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class Order
-        {
-            /**
-             * @Assert\ExpressionSyntax
-             */
-            protected $promotion;
-
-            /**
-             * @Assert\ExpressionSyntax(
-             *     allowedVariables={"user", "shipping_centers"}
-             * )
-             */
-            protected $shippingOptions;
-        }
-
     .. code-block:: php-attributes
 
         // src/Entity/Order.php

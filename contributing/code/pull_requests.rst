@@ -124,10 +124,11 @@ Choose the right Branch
 Before working on a PR, you must determine on which branch you need to
 work:
 
-* ``4.4``, if you are fixing a bug for an existing feature or want to make a
-  change that falls into the :doc:`list of acceptable changes in patch versions
-  </contributing/code/maintenance>` (you may have to choose a higher branch if
-  the feature you are fixing was introduced in a later version);
+* If you are fixing a bug for an existing feature or want to make a change
+  that falls into the :doc:`list of acceptable changes in patch versions
+  </contributing/code/maintenance>`, pick the oldest concerned maintained
+  branch (you can find them on the `Symfony releases page`_). E.g. if you
+  found a bug introduced in ``v5.1.10``, you need to work on ``5.4``.
 
 * ``6.2``, if you are adding a new feature.
 
@@ -520,6 +521,7 @@ before merging.
 .. _GitHub: https://github.com/join
 .. _`GitHub's documentation`: https://help.github.com/github/using-git/ignoring-files
 .. _Symfony repository: https://github.com/symfony/symfony
+.. _Symfony releases page: https://symfony.com/releases#maintained-symfony-branches
 .. _`documentation repository`: https://github.com/symfony/symfony-docs
 .. _`fabbot`: https://fabbot.io
 .. _`Psalm`: https://psalm.dev/
