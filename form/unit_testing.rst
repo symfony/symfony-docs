@@ -243,4 +243,4 @@ guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestC
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
 
-.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html#data-providers
+.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/9.5/writing-tests-for-phpunit.html#data-providers
