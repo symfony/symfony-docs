@@ -149,6 +149,10 @@ if you type-hint an argument with :class:`Symfony\\Component\\HttpFoundation\\Re
         public function __construct(RequestStack $requestStack)
         {
             $this->requestStack = $requestStack;
+
+            // Accessing the session in the constructor is *NOT* recommended, since
+            // it might not be accessible yet or lead to unwanted side-effects
+            // $this->session = $requestStack->getSession();
         }
 
         public function someMethod()
