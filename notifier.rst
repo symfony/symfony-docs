@@ -180,6 +180,7 @@ integration with these chat services:
 Service         Package                               DSN
 ==============  ====================================  =============================================================================
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+Chatwork        ``symfony/chatwork-notifier``         ``chatwork://API_TOKEN@default?room_id=ID``
 Discord         ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
 FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
@@ -198,7 +199,7 @@ Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST
 
 .. versionadded:: 6.2
 
-    The Zendesk integration was introduced in Symfony 6.2.
+    The Zendesk and Chatwork integration were introduced in Symfony 6.2.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
