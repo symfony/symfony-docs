@@ -59,10 +59,10 @@ This controller is pretty straightforward:
 * *line 7*: The class can technically be called anything, but it's suffixed
   with ``Controller`` by convention.
 
-* *line 12*: The action method is allowed to have a ``$max`` argument thanks to the
+* *line 10*: The action method is allowed to have a ``$max`` argument thanks to the
   ``{max}`` :doc:`wildcard in the route </routing>`.
 
-* *line 16*: The controller creates and returns a ``Response`` object.
+* *line 14*: The controller creates and returns a ``Response`` object.
 
 .. index::
    single: Controller; Routes and controllers
