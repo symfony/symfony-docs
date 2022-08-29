@@ -230,7 +230,7 @@ Using an event listener, your form might look like this::
     }
 
 The problem is now to get the current user and create a choice field that
-contains only this user's friends. This can be done injecting the ``Security``
+contains only this user's friends. This can be done by injecting the ``Security``
 service into the form type so you can get the current user object::
 
     use Symfony\Component\Security\Core\Security;
@@ -490,7 +490,7 @@ The type would now look like::
                     $sport = $event->getForm()->getData();
 
                     // since we've added the listener to the child, we'll have to pass on
-                    // the parent to the callback functions!
+                    // the parent to the callback function!
                     $formModifier($event->getForm()->getParent(), $sport);
                 }
             );
@@ -510,7 +510,7 @@ exactly the same things on a given form.
     the listener is bound to, but it allows modifications to its parent.
 
 One piece that is still missing is the client-side updating of your form after
-the sport is selected. This should be handled by making an AJAX call back to
+the sport is selected. This should be handled by making an AJAX callback to
 your application. Assume that you have a sport meetup creation controller::
 
     // src/Controller/MeetupController.php
