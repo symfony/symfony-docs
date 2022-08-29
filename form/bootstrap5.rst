@@ -99,7 +99,7 @@ For a checkbox/radio field, calling ``form_label()`` doesn't render anything.
 Due to Bootstrap internals, the label is already rendered by ``form_widget()``.
 
 Inline Checkboxes and Radios
-----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to render your checkbox or radio fields `inline`_, you can add
 the ``checkbox-inline`` or ``radio-inline`` class (depending on your Symfony
@@ -136,7 +136,7 @@ Form type or ``ChoiceType`` configuration) to the label class.
         }) }}
 
 Switches
-________
+~~~~~~~~
 
 Bootstrap 5 allows to render checkboxes as `switches`_. You can enable this
 feature on your Symfony Form ``CheckboxType`` by adding the ``checkbox-switch``
@@ -176,7 +176,7 @@ class to the label:
     Switches only work with **checkbox**.
 
 Input group
-___________
+-----------
 
 To create `input group`_ in your Symfony Form, simply add the ``input-group``
 class to the ``row_attr`` option.
