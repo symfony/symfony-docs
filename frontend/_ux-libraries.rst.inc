@@ -18,6 +18,7 @@
 * `ux-twig-component`_: Build Twig Components Backed by a PHP Class
   (`see demo <https://ux.symfony.com/twig-component>`_)
 * `ux-typed`_: Integration with `Typed`_ (`see demo <https://ux.symfony.com/typed>`_)
+* `ux-vue`_: Render `Vue.js`_ (`see demo <https://ux.symfony.com/vue>`_)
 
 .. _`ux-autocomplete`: https://symfony.com/bundles/ux-autocomplete/current/index.html
 .. _`ux-chartjs`: https://symfony.com/bundles/ux-chartjs/current/index.html
@@ -31,8 +32,10 @@
 .. _`ux-turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
 .. _`ux-twig-component`: https://symfony.com/bundles/ux-twig-component/current/index.html
 .. _`ux-typed`: https://symfony.com/bundles/ux-typed/current/index.html
+.. _`ux-vue`: https://symfony.com/bundles/ux-vue/current/index.html
 .. _`Chart.js`: https://www.chartjs.org/
 .. _`Swup`: https://swup.js.org/
 .. _`React`: https://reactjs.org/
 .. _`Turbo Drive`: https://turbo.hotwired.dev/
 .. _`Typed`: https://github.com/mattboldt/typed.js/
+.. _`Vue.js`: https://vuejs.org
