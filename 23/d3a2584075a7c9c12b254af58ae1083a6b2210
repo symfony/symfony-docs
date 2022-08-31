@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-08-29T15:44:56Z
+
+I've just added `ux-vue` to the list of bundles, but we need to wait until the different HTTP caches expire. Docs will be visible at https://symfony.com/bundles/ux-vue/current/index.html
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-08-30T18:18:28Z
+
+Thank you - it is visible now :)
