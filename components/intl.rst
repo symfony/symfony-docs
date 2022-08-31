@@ -386,8 +386,8 @@ their textual representation in all languages based on the `Unicode CLDR dataset
     // => 'Menus with піца or спагеті'
 
 The ``EmojiTransliterator`` class also provides two extra catalogues: ``github``
-and ``slack`` that converts any emojis to the corresponding short code in the
-respective platforms::
+and ``slack`` that converts any emojis to the corresponding short code in those
+platforms::
 
     use Symfony\Component\Intl\Transliterator\EmojiTransliterator;
 

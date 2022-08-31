@@ -528,7 +528,7 @@ Slug Emojis
 
     The Emoji transliteration feature was introduced in Symfony 6.2.
 
-You can transform any emojis into a textual representation::
+You can transform any emojis into their textual representation::
 
     use Symfony\Component\String\Slugger\AsciiSlugger;
 
@@ -541,8 +541,8 @@ You can transform any emojis into a textual representation::
     $slug = $slugger->slug('un 😺, 🐈‍⬛, et un 🦁 vont au 🏞️', '-', 'fr');
     // $slug = 'un-chat-qui-sourit-chat-noir-et-un-tete-de-lion-vont-au-parc-national';
 
-If you want to use a specific locale for the emoji, or to use the shorts code
-from `github` or `slack`, use the first argument of ``withEmoji()`` method::
+If you want to use a specific locale for the emoji, or to use the short codes
+from GitHub or Slack, use the first argument of ``withEmoji()`` method::
 
     use Symfony\Component\String\Slugger\AsciiSlugger;
 
