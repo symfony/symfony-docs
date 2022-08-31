@@ -2402,19 +2402,19 @@ Secondly, you can use a special "attribute" in place of a role::
 
     public function adminDashboard(): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
 
         // ...
     }
 
-You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like
+You can use ``IS_AUTHENTICATED`` anywhere roles are used: like
 ``access_control`` or in Twig.
 
-``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
+``IS_AUTHENTICATED`` isn't a role, but it kind of acts like one, and every
 user that has logged in will have this. Actually, there are some special attributes
 like this:
 
-* ``IS_AUTHENTICATED_REMEMBERED``: *All* logged in users have this, even
+* ``IS_AUTHENTICATED_REMEMBERED``: Just like ``IS_AUTHENTICATED``, *all* logged in users have this, even
   if they are logged in because of a "remember me cookie". Even if you don't
   use the :doc:`remember me functionality </security/remember_me>`,
   you can use this to check if the user is logged in.
