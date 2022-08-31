@@ -2414,7 +2414,7 @@ You can use ``IS_AUTHENTICATED`` anywhere roles are used: like
 user that has logged in will have this. Actually, there are some special attributes
 like this:
 
-* ``IS_AUTHENTICATED_REMEMBERED``: Just like ``IS_AUTHENTICATED``, *all* logged in users have this, even
+* ``IS_AUTHENTICATED_REMEMBERED``: *all* logged in users have this, even
   if they are logged in because of a "remember me cookie". Even if you don't
   use the :doc:`remember me functionality </security/remember_me>`,
   you can use this to check if the user is logged in.
