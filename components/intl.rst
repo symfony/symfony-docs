@@ -385,9 +385,25 @@ their textual representation in all languages based on the `Unicode CLDR dataset
     $transliterator->transliterate('Menus with 🍕 or 🍝');
     // => 'Menus with піца or спагеті'
 
+The ``EmojiTransliterator`` class also provides two extra catalogues: ``github``
+and ``slack`` that converts any emojis to the corresponding short code in the
+respective platforms::
+
+    use Symfony\Component\Intl\Transliterator\EmojiTransliterator;
+
+    // describe emojis in Slack short code
+    $transliterator = EmojiTransliterator::create('slack');
+    $transliterator->transliterate('Menus with 🥗 or 🧆');
+    // => 'Menus with :green_salad: or :falafel:'
+
+    // describe emojis in Github short code
+    $transliterator = EmojiTransliterator::create('github');
+    $transliterator->transliterate('Menus with 🥗 or 🧆');
+    // => 'Menus with :green_salad: or :falafel:'
+
 .. tip::
 
-    Combine this emoji transliterator with the :ref:`Symfony String slugger <string-slugger>`
+    Combine this emoji transliterator with the :ref:`Symfony String slugger <string-slugger-emoji>`
     to improve the slugs of contents that include emojis (e.g. for URLs).
 
 Learn more

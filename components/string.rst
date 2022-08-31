@@ -451,8 +451,6 @@ letter A with ring above"*) or a sequence of two code points (``U+0061`` =
     u('å')->normalize(UnicodeString::NFD);
     u('å')->normalize(UnicodeString::NFKD);
 
-.. _string-slugger:
-
 Slugger
 -------
 
@@ -488,11 +486,6 @@ another separator as the second argument::
     $slug = $slugger->slug('Wôrķšƥáçè ~~sèťtïñğš~~', '/');
     // $slug = 'Workspace/settings'
 
-.. tip::
-
-    Combine this slugger with the :ref:`Symfony emoji transliterator <component-intl-emoji-transliteration>`
-    to improve the slugs of contents that include emojis (e.g. for URLs).
-
 The slugger transliterates the original string into the Latin script before
 applying the other transformations. The locale of the original string is
 detected automatically, but you can define it explicitly::
@@ -525,6 +518,39 @@ the injected slugger is the same as the request locale::
             $slug = $this->slugger->slug('...');
         }
     }
+
+.. _string-slugger-emoji:
+
+Slug Emojis
+~~~~~~~~~~~
+
+.. versionadded:: 6.2
+
+    The Emoji transliteration feature was introduced in Symfony 6.2.
+
+You can transform any emojis into a textual representation::
+
+    use Symfony\Component\String\Slugger\AsciiSlugger;
+
+    $slugger = new AsciiSlugger();
+    $slugger = $slugger->withEmoji();
+
+    $slug = $slugger->slug('a 😺, 🐈‍⬛, and a 🦁 go to 🏞️', '-', 'en');
+    // $slug = 'a-grinning-cat-black-cat-and-a-lion-go-to-national-park';
+
+    $slug = $slugger->slug('un 😺, 🐈‍⬛, et un 🦁 vont au 🏞️', '-', 'fr');
+    // $slug = 'un-chat-qui-sourit-chat-noir-et-un-tete-de-lion-vont-au-parc-national';
+
+If you want to use a specific locale for the emoji, or to use the shorts code
+from `github` or `slack`, use the first argument of ``withEmoji()`` method::
+
+    use Symfony\Component\String\Slugger\AsciiSlugger;
+
+    $slugger = new AsciiSlugger();
+    $slugger = $slugger->withEmoji('github'); // or "en", or "fr", etc.
+
+    $slug = $slugger->slug('a 😺, 🐈‍⬛, and a 🦁');
+    // $slug = 'a-smiley-cat-black-cat-and-a-lion';
 
 .. _string-inflector:
 
