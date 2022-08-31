@@ -137,7 +137,7 @@ You can also configure additional channels without the need to tag your services
 
         # config/packages/prod/monolog.yaml
         monolog:
-            channels: ['foo', 'bar']
+            channels: ['foo', 'bar', 'foo_bar']
 
     .. code-block:: xml
 
@@ -153,6 +153,7 @@ You can also configure additional channels without the need to tag your services
             <monolog:config>
                 <monolog:channel>foo</monolog:channel>
                 <monolog:channel>bar</monolog:channel>
+                <monolog:channel>foo_bar</monolog:channel>
             </monolog:config>
         </container>
 
@@ -162,7 +163,7 @@ You can also configure additional channels without the need to tag your services
         use Symfony\Config\MonologConfig;
 
         return static function (MonologConfig $monolog) {
-            $monolog->channels(['foo', 'bar']);
+            $monolog->channels(['foo', 'bar', 'foo_bar']);
         };
 
 Symfony automatically registers one service per channel (in this example, the
