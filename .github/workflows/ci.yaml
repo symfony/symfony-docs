@@ -8,6 +8,9 @@ on:
         branches-ignore:
             - 'github-comments'
 
+permissions:
+    contents: read
+
 jobs:
     symfony-docs-builder-build:
         name: Build (symfony-tools/docs-builder)
