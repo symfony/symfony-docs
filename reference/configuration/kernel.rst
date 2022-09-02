@@ -39,7 +39,7 @@ charset::
 
     class Kernel extends BaseKernel
     {
-        public function getCharset()
+        public function getCharset(): string
         {
             return 'ISO-8859-1';
         }
