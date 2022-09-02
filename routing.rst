@@ -1621,7 +1621,7 @@ when importing the routes.
             /**
              * @Route("/{_locale}/posts/{slug}", name="show")
              */
-            public function show(Post $post): Response
+            public function show(string $slug): Response
             {
                 // ...
             }

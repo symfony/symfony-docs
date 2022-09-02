@@ -72,7 +72,8 @@ method can be safely called repeatedly, even if the lock is already acquired.
 Serializing Locks
 ------------------
 
-The ``Key`` contains the state of the ``Lock`` and can be serialized. This
+The :class:`Symfony\\Component\\Lock\\Key` contains the state of the
+:class:`Symfony\\Component\\Lock\\Lock` and can be serialized. This
 allows the user to begin a long job in a process by acquiring the lock, and
 continue the job in another process using the same lock::
 
