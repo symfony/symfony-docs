@@ -1613,9 +1613,18 @@ The transport has a number of options:
     Whether to serialize messages or not. This is useful to test an additional
     layer, especially when you use your own message serializer.
 
+``resettable`` (boolean, default: ``true``)
+    Whether to reset automatically during container resetting. This is useful
+    to have an option to check sent messages when running worker in tests with
+    `messenger.listener.reset_services` subscriber.
+
 .. versionadded:: 5.3
 
     The ``serialize`` option was introduced in Symfony 5.3.
+
+.. versionadded:: 5.4
+
+    The ``resettable`` option was introduced in Symfony 5.4.
 
 .. note::
 
