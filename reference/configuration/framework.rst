@@ -1495,6 +1495,18 @@ If the charset of your application is UTF-8 (as defined in the
 recommended setting it to ``true``. This will make non-UTF8 URLs to generate 404
 errors.
 
+cache_dir
+.........
+
+**type**: ``string`` **default**: ``%kernel.cache_dir%``
+
+The directory where routing information will be cached. Can be set to
+``~`` (``null``) to disable route caching.
+
+.. versionadded:: 6.2
+
+    The ``cache_dir`` setting was introduced in Symfony 6.2.
+
 .. _config-framework-session:
 
 session
