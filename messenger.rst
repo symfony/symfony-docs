@@ -676,10 +676,24 @@ times:
     startsecs=0
     autostart=true
     autorestart=true
+    startretries=10
     process_name=%(program_name)s_%(process_num)02d
 
 Change the ``async`` argument to use the name of your transport (or transports)
 and ``user`` to the Unix user on your server.
+
+.. caution::
+
+    During a deployment, something might be unavailable (e.g. the
+    database) causing the consumer to fail to start. In this situation,
+    Supervisor will try ``startretries`` number of times to restart the
+    command. Make sure to change this setting to avoid getting the command
+    in a FATAL state, which will never restart again.
+
+    Each restart, Supervisor increases the delay by 1 second. For instance, if
+    the value is ``10``, it will wait 1 sec, 2 sec, 3 sec, etc. This gives the
+    service a total of 55 seconds to become available again. Increase the
+    ``startretries`` setting to cover the maximum expected downtime.
 
 If you use the Redis Transport, note that each worker needs a unique consumer
 name to avoid the same message being handled by multiple workers. One way to
@@ -701,47 +715,6 @@ Next, tell Supervisor to read your config and start your workers:
     $ sudo supervisorctl start messenger-consume:*
 
 See the `Supervisor docs`_ for more details.
-
-It is possible to end up in a situation where the supervisor job gets into a
-FATAL (too many start retries) state when trying to restart when something is
-not yet available. You can prevent this by wrapping the Symfony script with a
-shell script and sleep when the script fails:
-
-.. code-block:: bash
-
-    #!/usr/bin/env bash
-
-    # Supervisor sends TERM to services when stopped.
-    # This wrapper has to pass the signal to it's child.
-    # Note that we send TERM (graceful) instead of KILL (immediate).
-    _term() {
-        echo "[GOT TERM, SIGNALING CHILD]"
-        kill -TERM "$child" 2>/dev/null
-        exit 1
-    }
-
-    trap _term SIGTERM
-
-    # Execute console.php with whatever arguments were specified to this script
-    "$@" &
-    child=$!
-    wait "$child"
-    rc=$?
-
-    # Delay to prevent supervisor from restarting too fast on failure
-    sleep 30
-
-    # Return with the exit code of the wrapped process
-    exit $rc
-
-The supervisor job would then look like this:
-
-.. code-block:: ini
-
-    ;/etc/supervisor/conf.d/messenger-worker.conf
-    [program:messenger-consume]
-    command=/path/to/your/app/bin/console_wrapper php /path/to/your/app/bin/console messenger:consume async --time-limit=3600"
-    ...
 
 Graceful Shutdown
 .................
