@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by tvlooy at 2020-05-18T16:46:23Z
+
+did some polishing. This PR is ready
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2020-12-07T11:59:41Z
+
+@tvlooy can you please retarget to `5.1`? Thanks
+
+---------------------------------------------------------------------------
+
+by tvlooy at 2020-12-10T07:55:53Z
+
+> FI, [Unit] section of service allow "Requires=" which could be set to prevent failure from dependency not meet a startup
+
+What would you suggest as a Requires? ``After=network.target rabbitmq.service`` something like that? I don't do that for my services atm
+
+---------------------------------------------------------------------------
+
+by tvlooy at 2020-12-10T07:56:35Z
+
+@OskarStark thanks for the review!
+
+---------------------------------------------------------------------------
+
+by tvlooy at 2021-06-25T09:35:02Z
+
+No interest in merging this?
+
+---------------------------------------------------------------------------
+
+by icanhazstring at 2021-11-04T13:14:49Z
+
+Please merge this, as I was looking days for a solution on supervisor. Thanks to @tvlooy we managed to implement the wrapper script which added the needed delay between restarts. As the PR for supervisor does not provide this.
+https://github.com/Supervisor/supervisor/issues/487
+
+So a merge would be nice for the world to know :)
