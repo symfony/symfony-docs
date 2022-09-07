@@ -1542,7 +1542,7 @@ The transport has a number of options:
 ``resettable`` (boolean, default: ``true``)
      Whether to reset automatically during container resetting. This is useful
      to have an option to check sent messages when running worker in tests with
-     `messenger.listener.reset_services` subscriber.
+     ``messenger.listener.reset_services`` subscriber.
 
 .. versionadded:: 6.1
 
