@@ -56,16 +56,21 @@ What other services are available? Find out by running:
 
       # this is just a *small* sample of the output...
 
-      Describes a logger instance.
-      Psr\Log\LoggerInterface (monolog.logger)
+      Autowirable Types
+      =================
 
-      Request stack that controls the lifecycle of requests.
-      Symfony\Component\HttpFoundation\RequestStack (request_stack)
+       The following classes & interfaces can be used as type-hints when autowiring:
 
-      RouterInterface is the interface that all Router classes must implement.
-      Symfony\Component\Routing\RouterInterface (router.default)
+       Describes a logger instance.
+       Psr\Log\LoggerInterface (logger)
 
-      [...]
+       Request stack that controls the lifecycle of requests.
+       Symfony\Component\HttpFoundation\RequestStack (request_stack)
+
+       RouterInterface is the interface that all Router classes must implement.
+       Symfony\Component\Routing\RouterInterface (router.default)
+
+       [...]
 
 When you use these type-hints in your controller methods or inside your
 :ref:`own services <service-container-creating-service>`, Symfony will automatically
