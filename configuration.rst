@@ -1149,4 +1149,4 @@ And all the other topics related to configuration:
 .. _`Learn the XML syntax`: https://en.wikipedia.org/wiki/XML
 .. _`environment variables`: https://en.wikipedia.org/wiki/Environment_variable
 .. _`symbolic links`: https://en.wikipedia.org/wiki/Symbolic_link
-.. _`utilities to manage env vars`: https://symfony.com/doc/master/cloud/cookbooks/env.html
+.. _`utilities to manage env vars`: https://symfony.com/doc/current/cloud/env.html
