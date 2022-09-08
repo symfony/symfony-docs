@@ -30,8 +30,8 @@ as well as the MakerBundle, which will help generate some code:
 
 .. code-block:: terminal
 
-    $ composer require symfony/orm-pack
     $ composer require --dev symfony/maker-bundle
+    $ composer require symfony/orm-pack
 
 Configuring the Database
 ~~~~~~~~~~~~~~~~~~~~~~~~
