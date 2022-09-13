@@ -128,7 +128,7 @@ order is important, because each theme overrides all the previous ones):
     {# apply multiple form themes but only to the form of this template #}
     {% form_theme form with [
         'foundation_5_layout.html.twig',
-        'forms/my_custom_theme.html.twig'
+        'form/my_custom_theme.html.twig'
     ] %}
 
     {# ... #}
