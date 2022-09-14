@@ -186,8 +186,8 @@ with the ``User`` class::
         }
     }
 
-Beware that this feature is already provided by the `@ParamConverter`_
-annotation from the SensioFrameworkExtraBundle. If you have that bundle
+Beware that this feature is already provided by the `#[ParamConverter]`_
+attribute from the SensioFrameworkExtraBundle. If you have that bundle
 installed in your project, add this config to disable the auto-conversion of
 type-hinted method arguments:
 
@@ -372,5 +372,5 @@ command to see which argument resolvers are present and in which order they run.
     $user = null``). The ``DefaultValueResolver`` is executed as the last
     resolver and will use the default value if no value was already resolved.
 
-.. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`#[ParamConverter]`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`yield`: https://www.php.net/manual/en/language.generators.syntax.php

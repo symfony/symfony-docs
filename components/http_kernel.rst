@@ -302,7 +302,7 @@ on the event object that's passed to listeners on this event.
     the profiler is enabled.
 
     One interesting listener comes from the `SensioFrameworkExtraBundle`_. This
-    listener's `@ParamConverter`_ functionality allows you to pass a full object
+    listener's `#[ParamConverter]`_ functionality allows you to pass a full object
     (e.g. a ``Post`` object) to your controller instead of a scalar value (e.g.
     an ``id`` parameter that was on your route). The listener -
     ``ParamConverterListener`` - uses reflection to look at each of the
@@ -750,5 +750,5 @@ Learn more
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
 .. _`PHP FPM`: https://www.php.net/manual/en/install.fpm.php
 .. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
+.. _`#[ParamConverter]`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _variadic: https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list

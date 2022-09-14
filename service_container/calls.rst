@@ -6,7 +6,7 @@ Service Method Calls and Setter Injection
 
 .. tip::
 
-    If you're using autowiring, you can use ``#[Required]`` or ``@required`` to
+    If you're using autowiring, you can use ``#[Required]`` to
     :ref:`automatically configure method calls <autowiring-calls>`.
 
 Usually, you'll want to inject your dependencies via the constructor. But sometimes,
@@ -145,13 +145,13 @@ The configuration to tell the container it should do so would be like:
 
 .. tip::
 
-    If autowire is enabled, you can also use annotations; with the previous
+    If autowire is enabled, you can also use attributes; with the previous
     example it would be::
 
         /**
-         * @required
          * @return static
          */
+        #[Required]
         public function withLogger(LoggerInterface $logger)
         {
             $new = clone $this;
@@ -162,6 +162,6 @@ The configuration to tell the container it should do so would be like:
 
     You can also leverage the PHP 8 ``static`` return type instead of the
     ``@return static`` annotation. If you don't want a method with a
-    PHP 8 ``static`` return type and a ``@required`` annotation to behave as
+    PHP 8 ``static`` return type and a ``#[Required]`` attribute to behave as
     a wither, you can add a ``@return $this`` annotation to disable the
     *returns clone* feature.

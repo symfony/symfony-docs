@@ -310,7 +310,7 @@ to organize the application code.
 Custom Mapping Entities in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Doctrine's ``auto_mapping`` feature loads annotation configuration from
+Doctrine's ``auto_mapping`` feature loads attribute configuration from
 the ``Entity/`` directory of each bundle *and* looks for other formats (e.g.
 YAML, XML) in the ``Resources/config/doctrine`` directory.
 

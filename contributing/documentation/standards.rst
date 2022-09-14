@@ -88,9 +88,9 @@ Configuration examples should show all supported formats using
 (and their orders) are:
 
 * **Configuration** (including services): YAML, XML, PHP
-* **Routing**: Annotations, YAML, XML, PHP
-* **Validation**: Annotations, YAML, XML, PHP
-* **Doctrine Mapping**: Annotations, YAML, XML, PHP
+* **Routing**: Attributes, YAML, XML, PHP
+* **Validation**: Attributes, YAML, XML, PHP
+* **Doctrine Mapping**: Attributes, YAML, XML, PHP
 * **Translation**: XML, YAML, PHP
 
 Example

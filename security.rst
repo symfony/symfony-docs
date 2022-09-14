@@ -2158,54 +2158,27 @@ will happen:
 
 .. _security-securing-controller-annotations:
 
-Another way to secure one or more controller actions is to use an attribute or
-annotation. In the following example, all controller actions will require the
+Another way to secure one or more controller actions is to use an attribute.
+In the following example, all controller actions will require the
 ``ROLE_ADMIN`` permission, except for ``adminDashboard()``, which will require
 the ``ROLE_SUPER_ADMIN`` permission:
 
-.. configuration-block::
+.. code-block:: php-attributes
 
-    .. code-block:: php-annotations
+    // src/Controller/AdminController.php
+    // ...
 
-        // src/Controller/AdminController.php
-        // ...
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
-        /**
-         * @IsGranted("ROLE_ADMIN")
-         */
-        class AdminController extends AbstractController
+    #[IsGranted('ROLE_ADMIN')]
+    class AdminController extends AbstractController
+    {
+        #[IsGranted('ROLE_SUPER_ADMIN')]
+        public function adminDashboard(): Response
         {
-            /**
-             * @IsGranted("ROLE_SUPER_ADMIN")
-             */
-            public function adminDashboard(): Response
-            {
-                // ...
-            }
+            // ...
         }
-
-    .. code-block:: php-attributes
-
-        // src/Controller/AdminController.php
-        // ...
-
-        use Symfony\Component\Security\Http\Attribute\IsGranted;
-
-        #[IsGranted('ROLE_ADMIN')]
-        class AdminController extends AbstractController
-        {
-            #[IsGranted('ROLE_SUPER_ADMIN')]
-            public function adminDashboard(): Response
-            {
-                // ...
-            }
-        }
-
-The ``#[IsGranted()]`` attribute is built-in in Symfony and it's recommended for
-modern applications. Using the ``@IsGranted()`` annotation requires to install
-an external bundle called `FrameworkExtraBundle`_.
+    }
 
 .. versionadded:: 6.2
 
