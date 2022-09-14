@@ -293,35 +293,6 @@ Then, create your groups definition:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        namespace Acme;
-
-        use Symfony\Component\Serializer\Annotation\Groups;
-
-        class MyObj
-        {
-            /**
-             * @Groups({"group1", "group2"})
-             */
-            public $foo;
-
-            /**
-             * @Groups({"group4"})
-             */
-            public $anotherProperty;
-
-            /**
-             * @Groups("group3")
-             */
-            public function getBar() // is* methods are also supported
-            {
-                return $this->bar;
-            }
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         namespace Acme;
@@ -466,22 +437,6 @@ Option 1: Using ``@Ignore`` Annotation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App\Model;
-
-        use Symfony\Component\Serializer\Annotation\Ignore;
-
-        class MyClass
-        {
-            public $foo;
-
-            /**
-             * @Ignore()
-             */
-            public $bar;
-        }
 
     .. code-block:: php-attributes
 
@@ -696,27 +651,6 @@ Now configure your name conversion mapping. Consider an application that
 defines a ``Person`` entity with a ``firstName`` property:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App\Entity;
-
-        use Symfony\Component\Serializer\Annotation\SerializedName;
-
-        class Person
-        {
-            /**
-             * @SerializedName("customer_name")
-             */
-            private $firstName;
-
-            public function __construct($firstName)
-            {
-                $this->firstName = $firstName;
-            }
-
-            // ...
-        }
 
     .. code-block:: php-attributes
 
@@ -1450,22 +1384,6 @@ Here, we set it to 2 for the ``$child`` property:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        namespace Acme;
-
-        use Symfony\Component\Serializer\Annotation\MaxDepth;
-
-        class MyObj
-        {
-            /**
-             * @MaxDepth(2)
-             */
-            public $child;
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         namespace Acme;
@@ -1539,9 +1457,7 @@ having unique identifiers::
     {
         public $id;
 
-        /**
-         * @MaxDepth(1)
-         */
+        #[MaxDepth(1)]
         public $child;
     }
 
@@ -1772,23 +1688,6 @@ defines an abstract ``CodeRepository`` class extended by ``GitHubCodeRepository`
 and ``BitBucketCodeRepository`` classes:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App;
-
-        use Symfony\Component\Serializer\Annotation\DiscriminatorMap;
-
-        /**
-         * @DiscriminatorMap(typeProperty="type", mapping={
-         *    "github"="App\GitHubCodeRepository",
-         *    "bitbucket"="App\BitBucketCodeRepository"
-         * })
-         */
-        abstract class CodeRepository
-        {
-            // ...
-        }
 
     .. code-block:: php-attributes
 

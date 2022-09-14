@@ -603,30 +603,6 @@ to inject the ``logger`` service, and decide to use setter-injection:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Util/Rot13Transformer.php
-        namespace App\Util;
-
-        class Rot13Transformer
-        {
-            private $logger;
-
-            /**
-             * @required
-             */
-            public function setLogger(LoggerInterface $logger): void
-            {
-                $this->logger = $logger;
-            }
-
-            public function transform($value): string
-            {
-                $this->logger->info('Transforming '.$value);
-                // ...
-            }
-        }
-
     .. code-block:: php-attributes
 
         // src/Util/Rot13Transformer.php
@@ -663,22 +639,6 @@ autowiring with ``#[Required]`` or ``@required`` can also be applied to public
 typed properties:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App\Util;
-
-        class Rot13Transformer
-        {
-            /** @required */
-            public LoggerInterface $logger;
-
-            public function transform($value)
-            {
-                $this->logger->info('Transforming '.$value);
-                // ...
-            }
-        }
 
     .. code-block:: php-attributes
 

@@ -86,4 +86,4 @@ The default value is ``''`` (the empty string).
 
 .. include:: /reference/forms/types/options/trim.rst.inc
 
-.. _`HTML5 color format`: https://www.w3.org/TR/html52/sec-forms.html#color-state-typecolor
+.. _`HTML5 color format`: https://html.spec.whatwg.org/multipage/input.html#color-state-(type=color)
