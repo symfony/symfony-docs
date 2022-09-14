@@ -16,22 +16,6 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Validator/ContainsAlphanumeric.php
-        namespace App\Validator;
-
-        use Symfony\Component\Validator\Constraint;
-
-        /**
-         * @Annotation
-         */
-        class ContainsAlphanumeric extends Constraint
-        {
-            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-            public $mode = 'strict'; // If the constraint has configuration options, define them as public properties
-        }
-
     .. code-block:: php-attributes
 
         // src/Validator/ContainsAlphanumeric.php
@@ -247,21 +231,6 @@ A class constraint validator is applied to the class itself, and
 not to the property:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/AcmeEntity.php
-        namespace App\Entity;
-
-        use App\Validator as AcmeAssert;
-
-        /**
-         * @AcmeAssert\ProtocolClass
-         */
-        class AcmeEntity
-        {
-            // ...
-        }
 
     .. code-block:: php-attributes
 
