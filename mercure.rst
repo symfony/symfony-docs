@@ -107,14 +107,14 @@ the publicly available URL (e.g. ``https://example.com/.well-known/mercure``).
 The clients must also bear a `JSON Web Token`_ (JWT)
 to the Mercure Hub to be authorized to publish updates and, sometimes, to subscribe.
 
-This token must be signed with the same secret key as the one used by the Hub to verify the JWT (``!ChangeMe!`` if you use the Docker integration).
+This token must be signed with the same secret key as the one used by the Hub to verify the JWT (``!ChangeThisMercureHubJWTSecretKey!`` if you use the Docker integration).
 This secret key must be stored in the ``MERCURE_JWT_SECRET`` environment variable.
 MercureBundle will use it to automatically generate and sign the needed JWTs.
 
 In addition to these environment variables,
 MercureBundle provides a more advanced configuration:
 
-* ``secret``: the key to use to sign the JWT (all other options, beside ``algorithm``, ``subscribe``, and ``publish`` will be ignored)
+* ``secret``: the key to use to sign the JWT - A key of the same size as the hash output (for instance, 256 bits for "HS256") or larger MUST be used. (all other options, beside ``algorithm``, ``subscribe``, and ``publish`` will be ignored)
 * ``publish``: a list of topics to allow publishing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
 * ``subscribe``: a list of topics to allow subscribing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
 * ``algorithm``: The algorithm to use to sign the JWT (only usable when ``secret`` is provided)
@@ -132,7 +132,7 @@ MercureBundle provides a more advanced configuration:
                 default:
                     url: https://mercure-hub.example.com/.well-known/mercure
                     jwt:
-                        secret: '!ChangeMe!'
+                        secret: '!ChangeThisMercureHubJWTSecretKey!'
                         publish: ['foo', 'https://example.com/foo']
                         subscribe: ['bar', 'https://example.com/bar']
                         algorithm: 'hmac.sha256'
@@ -150,7 +150,7 @@ MercureBundle provides a more advanced configuration:
                 url="https://mercure-hub.example.com/.well-known/mercure"
             >
                 <jwt
-                    secret="!ChangeMe!"
+                    secret="!ChangeThisMercureHubJWTSecretKey!"
                     algorithm="hmac.sha256"
                     provider="My\Provider"
                     factory="My\Factory"
@@ -172,7 +172,7 @@ MercureBundle provides a more advanced configuration:
                 'default' => [
                     'url' => 'https://mercure-hub.example.com/.well-known/mercure',
                     'jwt' => [
-                        'secret' => '!ChangeMe!',
+                        'secret' => '!ChangeThisMercureHubJWTSecretKey!',
                         'publish' => ['foo', 'https://example.com/foo'],
                         'subscribe' => ['bar', 'https://example.com/bar'],
                         'algorithm' => 'hmac.sha256',
