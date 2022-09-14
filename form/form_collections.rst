@@ -539,8 +539,6 @@ Now, you need to put some code into the ``removeTag()`` method of ``Task``::
         }
     }
 
-Template Modifications
-~~~~~~~~~~~~~~~~~~~~~~
 
 The ``allow_delete`` option means that if an item of a collection
 isn't sent on submission, the related data is removed from the collection
