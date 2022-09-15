@@ -128,7 +128,9 @@ but keeps a reference of the old one as ``.inner``:
     The ``#[AsDecorator]`` attribute was introduced in Symfony 6.1.
 
 The ``decorates`` option tells the container that the ``App\DecoratingMailer``
-service replaces the ``App\Mailer`` service. If you're using the
+service replaces the ``App\Mailer`` service. 
+:ref:`Service tags<How to Work with Service Tags> are moved as well. 
+If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the decorated service is automatically injected when the constructor of the
 decorating service has one argument type-hinted with the decorated service class.
