@@ -54,8 +54,8 @@ their priorities:
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent`
 
-This event is dispatched after the controller to be executed has been resolved
-but before executing it. It's useful to initialize things later needed by the
+This event is dispatched after the controller has been resolved but before executing
+it. It's useful to initialize things later needed by the
 controller, such as `param converters`_, and even to change the controller
 entirely::
 
