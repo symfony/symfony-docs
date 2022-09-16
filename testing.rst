@@ -501,7 +501,7 @@ into your Symfony application::
 
     $crawler = $client->request('GET', '/post/hello-world');
 
-The ``request()`` method takes the HTTP method and a URL as arguments and
+The :method:`request() <Symfony\\Component\\BrowserKit\\AbstractBrowser::request>` method takes the HTTP method and a URL as arguments and
 returns a ``Crawler`` instance.
 
 .. tip::
@@ -513,14 +513,14 @@ returns a ``Crawler`` instance.
 The full signature of the ``request()`` method is::
 
     request(
-        $method,
-        $uri,
+        string $method,
+        string $uri,
         array $parameters = [],
         array $files = [],
         array $server = [],
-        $content = null,
-        $changeHistory = true
-    )
+        string $content = null,
+        bool $changeHistory = true
+    ): Crawler
 
 This allows you to create all types of requests you can think of:
 
