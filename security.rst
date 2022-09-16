@@ -2621,7 +2621,6 @@ Authorization (Denying Access)
     security/access_denied_handler
     security/force_https
 
-.. _`FrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`OWASP Brute Force Attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
 .. _`brute force login attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
