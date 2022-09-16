@@ -68,22 +68,26 @@ To build the assets, run the following if you use the Yarn package manager:
 
     # compile assets and automatically re-compile when files change
     $ yarn watch
-
-    # if using npm, use "npm run" and then any of these commands
+    # or
     $ npm run watch
 
     # or, run a dev-server that can sometimes update your code without refreshing the page
     $ yarn dev-server
-
+    # or
+    $ npm run dev-server
+    
     # compile assets once
     $ yarn dev
+    # or
+    $ npm run dev
 
     # on deploy, create a production build
     $ yarn build
+    # or
+    $ npm run build
 
 All of these commands - e.g. ``dev`` or ``watch`` - are shortcuts that are defined
-in your ``package.json`` file. If you use the npm package manager, replace ``yarn``
-with ``npm run``.
+in your ``package.json`` file.
 
 .. note::
 
