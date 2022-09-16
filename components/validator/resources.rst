@@ -106,15 +106,15 @@ prefixed classes included in doc block comments (``/** ... */``). For example::
     }
 
 To enable the annotation loader, call the
-:method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping` method
-and then call ``addDefaultDoctrineAnnotationReader()`` to use Doctrine's
-annotation reader::
+:method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping` method.
+If you use annotations instead of attributes, it's also required to call
+``addDefaultDoctrineAnnotationReader()`` to use Doctrine's annotation reader::
 
     use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidatorBuilder()
-        ->enableAnnotationMapping(true)
-        ->addDefaultDoctrineAnnotationReader()
+        ->enableAnnotationMapping()
+        ->addDefaultDoctrineAnnotationReader() // add this only when using annotations
         ->getValidator();
 
 To disable the annotation loader after it was enabled, call
