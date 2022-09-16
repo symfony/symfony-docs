@@ -114,7 +114,7 @@ If you use annotations instead of attributes, it's also required to call
 
     $validator = Validation::createValidatorBuilder()
         ->enableAnnotationMapping()
-        ->addDefaultDoctrineAnnotationReader()  // Only if annotations are used
+        ->addDefaultDoctrineAnnotationReader() // add this only when using annotations
         ->getValidator();
 
 To disable the annotation loader after it was enabled, call
