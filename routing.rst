@@ -1545,15 +1545,19 @@ information in a controller via the ``Request`` object::
 You can get this information in services too injecting the ``request_stack``
 service to :doc:`get the Request object in a service </service_container/request>`.
 In templates, use the :ref:`Twig global app variable <twig-app-variable>` to get
-the request and its attributes:
+the current route and its attributes:
 
 .. code-block:: twig
 
-    {% set route_name = app.request.attributes.get('_route') %}
-    {% set route_parameters = app.request.attributes.get('_route_params') %}
+    {% set route_name = app.current_route %}
+    {% set route_parameters = app.current_route_parameters %}
 
-    {# use this to get all the available attributes (not only routing ones) #}
-    {% set all_attributes = app.request.attributes.all %}
+.. versionadded:: 6.2
+
+    The ``app.current_route`` and ``app.current_route_parameters`` variables
+    were introduced in Symfony 6.2.
+    Before you had to access ``_route`` and ``_route_params`` request
+    attributes using ``app.request.attributes.get()``.
 
 Special Routes
 --------------
