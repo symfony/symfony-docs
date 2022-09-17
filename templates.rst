@@ -378,7 +378,7 @@ gives you access to these variables:
     A :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
     object representing the security token.
 ``app.current_route``
-    The name of the route associated to the current request or ``null`` if no
+    The name of the route associated with the current request or ``null`` if no
     request is available (equivalent to ``app.request.attributes.get('_route')``)
 ``app.current_route_parameters``
     An array with the parameters passed to the route of the current request or an
