@@ -124,7 +124,7 @@ this by extending from :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractB
 and defining the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::loadExtension`
 method::
 
-    // ...
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
     use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
