@@ -109,7 +109,6 @@ want a command to create a user::
     use Symfony\Component\Console\Output\OutputInterface;
 
     // the name of the command is what users type after "php bin/console"
-    // and it replaces the static $defaultName
     #[AsCommand(name: 'app:create-user')]
     class CreateUserCommand extends Command
     {
