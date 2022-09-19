@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-09-17T10:33:34Z
+
+Thanks for contributing this improvement and thanks for the effort you put on it. I like the overall consistency and also that we have the sources of the recordings as editable text.
+
+About the missing one, do you want to wait until you find a solution for it or do you think we could merge this now and try to fix the missing recording in a later PR? Thanks.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-09-17T14:23:54Z
+
+Thanks Javier.
+
+I've just finished this PR:
+* Added JetBrains Mono font
+* Added the progressbar example (a bit simplified)
