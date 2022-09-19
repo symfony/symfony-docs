@@ -116,8 +116,6 @@ want a command to create a user::
     #[AsCommand(name: 'app:create-user')]
     class CreateUserCommand extends Command
     {
-        protected static $defaultName = 'app:create-user';
-
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // ... put here the code to create the user
