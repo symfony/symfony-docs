@@ -121,8 +121,8 @@ to be adjusted if needed:
 
 .. caution::
 
-    The recommended bundle structure was changed in Symfony 5, by using
-    the new ``AbstractBundle`` class.
+    The recommended bundle structure was changed in Symfony 5; since Symfony 6.1
+    you can use the new ``AbstractBundle`` class for it.
     If you need to use the old directory structure, read the `Symfony 4.4 bundle documentation`_ 
     and override the ``Bundle::getPath()`` method::
 
