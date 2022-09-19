@@ -123,7 +123,7 @@ to be adjusted if needed:
 
     The recommended bundle structure was changed in Symfony 5, by using
     the new ``AbstractBundle`` class.
-    If you need to use the the old directory structure, read the `Symfony 4.4 bundle documentation`_ 
+    If you need to use the old directory structure, read the `Symfony 4.4 bundle documentation`_ 
     and override the ``Bundle::getPath()`` method::
 
         class AcmeTestBundle extends AbstractBundle
