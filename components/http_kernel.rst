@@ -289,7 +289,15 @@ After the controller callable has been determined, ``HttpKernel::handle()``
 dispatches the ``kernel.controller`` event. Listeners to this event might initialize
 some part of the system that needs to be initialized after certain things
 have been determined (e.g. the controller, routing information) but before
-the controller is executed. For some examples, see the Symfony section below.
+the controller is executed.
+
+Another typical use-case for this event is to retrieve the attributes from
+the controller using the :method:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::getAttributes`
+method. See the Symfony section below for some examples.
+
+.. versionadded:: 6.2
+
+    The ``ControllerEvent::getAttributes()`` method was introduced in Symfony 6.2.
 
 Listeners to this event can also change the controller callable completely
 by calling :method:`ControllerEvent::setController <Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::setController>`
@@ -297,18 +305,15 @@ on the event object that's passed to listeners on this event.
 
 .. sidebar:: ``kernel.controller`` in the Symfony Framework
 
-    There are a few minor listeners to the ``kernel.controller`` event in
-    the Symfony Framework, and many deal with collecting profiler data when
-    the profiler is enabled.
+    An interesting listener to ``kernel.controller`` in the Symfony
+    Framework is :class:`Symfony\\Component\\HttpKernel\\EventListener\\CacheAttributeListener`.
+    This class fetches ``#[Cache]`` attribute configuration from the
+    controller and uses it to configure :doc:`HTTP caching </http_cache>`
+    on the response.
 
-    One interesting listener comes from the `SensioFrameworkExtraBundle`_. This
-    listener's `#[ParamConverter]`_ functionality allows you to pass a full object
-    (e.g. a ``Post`` object) to your controller instead of a scalar value (e.g.
-    an ``id`` parameter that was on your route). The listener -
-    ``ParamConverterListener`` - uses reflection to look at each of the
-    arguments of the controller and tries to use different methods to convert
-    those to objects, which are then stored in the ``attributes`` property of
-    the ``Request`` object. Read the next section to see why this is important.
+    There are a few other minor listeners to the ``kernel.controller`` event in
+    the Symfony Framework that deal with collecting profiler data when the
+    profiler is enabled.
 
 4) Getting the Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -749,6 +754,4 @@ Learn more
 .. _reflection: https://www.php.net/manual/en/book.reflection.php
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
 .. _`PHP FPM`: https://www.php.net/manual/en/install.fpm.php
-.. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`#[ParamConverter]`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _variadic: https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list
