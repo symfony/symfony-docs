@@ -1,0 +1,50 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-07-21T10:42:26Z
+
+looking at the example configuration I wonder if being able to configure a route name wouldn't be more sensible in most cases than having to configure the URL (path)
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-07-22T09:33:45Z
+
+> looking at the example configuration I wonder if being able to configure a route name wouldn't be more sensible in most cases than having to configure the URL (path)
+
+I see, I've inspired myself with the [login default_target_path](https://symfony.com/doc/current/reference/configuration/security.html#default-target-path) iirc
+
+swapping to a route name, what changes will be necessary on the code side? injecting the router that's all?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-07-22T13:37:46Z
+
+> swapping to a route name, what changes will be necessary on the code side? injecting the router that's all?
+
+injecting a `UrlGeneratorInterface` should be enough, yes
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-08-16T09:19:43Z
+
+@xabbuh got it
+
+I’ll try to handle the code change in the next days, and then rewrite this doc entry
+
+Status: needs work
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-09-13T07:10:06Z
+
+> I’ll try to handle the code change in the next days, and then rewrite this doc entry
+
+its finally done @xabbuh :)
+status: needs review
+
+many thanks
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-09-18T13:45:39Z
+
+I am afk so easier to accept suggested changes than using phone editor
