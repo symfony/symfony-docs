@@ -1410,6 +1410,8 @@ Mailer Events
 MessageEvent
 ~~~~~~~~~~~~
 
+**Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\MessageEvent`
+
 ``MessageEvent`` allows to change the Message and the Envelope before the email
 is sent::
 
@@ -1417,25 +1419,80 @@ is sent::
     use Symfony\Component\Mailer\Event\MessageEvent;
     use Symfony\Component\Mime\Email;
 
-    class MailerSubscriber implements EventSubscriberInterface
+    public function onMessage(MessageEvent $event): void
     {
-        public static function getSubscribedEvents()
-        {
-            return [
-                MessageEvent::class => 'onMessage',
-            ];
+        $message = $event->getMessage();
+        if (!$message instanceof Email) {
+            return;
         }
-
-        public function onMessage(MessageEvent $event): void
-        {
-            $message = $event->getMessage();
-            if (!$message instanceof Email) {
-                return;
-            }
-
-            // do something with the message
-        }
+        // do something with the message
     }
+
+Execute this command to find out which listeners are registered for this event and
+their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\MessageEvent"
+
+SentMessageEvent
+~~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\SentMessageEvent`
+
+``SentMessageEvent`` it allows you to act on the :class:`Symfony\\Component\\\Mailer\\\SentMessage` to access the original 
+message (getOriginalMessage()) and some debugging information (getDebug()) such as 
+the HTTP calls made by the HTTP transports, which is useful for debugging errors::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Mailer\Event\SentMessageEvent;
+    use Symfony\Component\Mailer\SentMessage;
+
+    public function onMessage(SentMessageEvent $event): void
+    {
+        $message = $event->getMessage();
+        if (!$message instanceof SentMessage) {
+            return;
+        }
+
+        // do something with the message
+    }
+
+Execute this command to find out which listeners are registered for this event and
+their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\SentMessageEvent"
+
+FailedMessageEvent
+~~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\FailedMessageEvent`
+
+``FailedMessageEvent`` it allows acting on the the initial message in case of a failure::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Mailer\Event\FailedMessageEvent;
+
+    public function onMessage(FailedMessageEvent $event): void
+    {
+        // e.g you can get more information on this error when sending an email.
+        $event->getError();
+        
+        // do something with the message
+    }
+
+Execute this command to find out which listeners are registered for this event and
+their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\FailedMessageEvent"
+
+.. versionadded:: 6.2
+
+    ``SentMessageEvent`` and ``FailedMessageEvent`` were introduced in Symfony 6.2.
 
 Development & Debugging
 -----------------------
