@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by kbond at 2022-08-19T15:39:03Z
+
+One potential problem with this feature is it will require the latest version of `symfony/service-contracts` (3.2+) but `symfony/dependency-injection` currently allows older versions.
+
+Basically, a user could have `symfony/dependency-injection` 6.2 but `symfony/service-contracts` 3.1. This feature will not work in this case.
+
+---------------------------------------------------------------------------
+
+by mdoutreluingne at 2022-08-20T07:06:39Z
+
+I think it would be interesting here to mention that this feature requires  `symfony/service-contracts` (3.2+), because in your example there may be a case where this feature would not work depending on the version of `symfony/service-contracts`.
