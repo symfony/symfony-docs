@@ -292,6 +292,10 @@ This is done by having ``getSubscribedServices()`` return an array of
         ];
     }
 
+.. note::
+
+    The above example requires using ``3.2`` version or newer of ``symfony/service-contracts``.
+
 Defining a Service Locator
 --------------------------
 
@@ -770,8 +774,8 @@ and compose your services with them::
     as this will include the trait name, not the class name. Instead, use
     ``__CLASS__.'::'.__FUNCTION__`` as the service id.
 
-SubscribedService Attributes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``SubscribedService`` Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 6.2
 
@@ -828,5 +832,9 @@ Here's an example::
             return $this->container->get(__METHOD__);
         }
     }
+
+.. note::
+
+    The above example requires using ``3.2`` version or newer of ``symfony/service-contracts``.
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
