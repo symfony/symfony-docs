@@ -1599,6 +1599,52 @@ and set the ``limiter`` option to its service ID:
             ;
         };
 
+Login Programmatically
+----------------------
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\Bundle\SecurityBundle\Security\Security <Symfony\\Bundle\\SecurityBundle\\Security\\Security>`
+    class was introduced in Symfony 6.2. Prior to 6.2, it was called
+    ``Symfony\Component\Security\Core\Security``.
+
+.. versionadded:: 6.2
+
+    The :method:`Symfony\\Bundle\\SecurityBundle\\Security\\Security::login`
+    method was introduced in Symfony 6.2.
+
+You can log in a user programmatically using the `login()` method of the
+:class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` helper::
+
+    // src/Controller/SecurityController.php
+    namespace App\Controller\SecurityController;
+
+    use App\Security\Authenticator\ExampleAuthenticator;
+    use Symfony\Bundle\SecurityBundle\Security\Security;
+
+    class SecurityController
+    {
+        public function someAction(Security $security): Response
+        {
+            // get the user to be authenticated
+            $user = ...;
+
+            // log the user in on the current firewall
+            $this->security->login($user);
+
+            // if the firewall has more than one authenticator, you must pass it explicitly
+            // by using the name of built-in authenticators...
+            $this->security->login($user, 'form_login');
+            // ...or the service id of custom authenticators
+            $this->security->login($user, ExampleAuthenticator::class);
+
+            // you can also log in on a different firewall
+            $this->security->login($user, 'form_login', 'other_firewall');
+
+            // ... redirect the user to its account page for instance
+        }
+    }
+
 .. _security-logging-out:
 
 Logging Out
