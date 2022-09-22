@@ -369,8 +369,7 @@ dealing with the ``TransformerInterface``.
 .. tip::
 
     When using a `service definition prototype`_, if only one service is
-    discovered that implements an interface, and that interface is also
-    discovered in the same file, configuring the alias is not mandatory
+    discovered that implements an interface, configuring the alias is not mandatory
     and Symfony will automatically create one.
 
 Dealing with Multiple Implementations of the Same Type

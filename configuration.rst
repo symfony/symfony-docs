@@ -593,9 +593,10 @@ configure options that depend on where the application is run (e.g. the database
 credentials are usually different in production versus your local machine). If
 the values are sensitive, you can even :doc:`encrypt them as secrets </configuration/secrets>`.
 
-You can reference environment variables using the special syntax
-``%env(ENV_VAR_NAME)%``. The values of these options are resolved at runtime
-(only once per request, to not impact performance).
+Use the special syntax ``%env(ENV_VAR_NAME)%`` to reference environment variables.
+The values of these options are resolved at runtime (only once per request, to
+not impact performance) so you can change the application behavior without having
+to clear the cache.
 
 This example shows how you could configure the database connection using an env var:
 
@@ -661,6 +662,14 @@ To define the value of an env var, you have several options:
 
     Some hosts - like SymfonyCloud - offer easy `utilities to manage env vars`_
     in production.
+
+.. note::
+
+    Some configuration features are not compatible with env vars. For example,
+    defining some container parameters conditionally based on the existence of
+    another configuration option. When using an env var, the configuration option
+    always exists, because its value will be ``null`` when the related env var
+    is not defined.
 
 .. caution::
 

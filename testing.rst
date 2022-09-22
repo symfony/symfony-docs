@@ -621,6 +621,11 @@ You can pass any
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\TestBrowserToken` object and
 stores in the session of the test client.
 
+.. note::
+
+    By design, the ``loginUser()`` method doesn't work when using stateless firewalls.
+    Instead, add the appropriate token/header in each ``request()`` call.
+
 Making AJAX Requests
 ....................
 
