@@ -15,6 +15,10 @@ them later in JavaScript. For example:
         <!-- ... -->
     </div>
 
+.. versionadded:: 5.3
+
+    The ``serialize()`` Twig filter was introduced in Symfony 5.3.
+
 Fetch this in JavaScript:
 
 .. code-block:: javascript
