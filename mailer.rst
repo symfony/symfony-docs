@@ -494,6 +494,7 @@ and headers.
             mailer:
                 envelope:
                     sender: 'fabien@example.com'
+                    # sender: 'Fabien <fabien@example.com>' (use this to add a display name)
                     recipients: ['foo@example.com', 'bar@example.com']
                 headers:
                     From: 'Fabien <fabien@example.com>'
@@ -516,6 +517,8 @@ and headers.
                 <framework:mailer>
                     <framework:envelope>
                         <framework:sender>fabien@example.com</framework:sender>
+                        <!-- use this to add a display name:
+                        <framework:sender>Fabien &lt;fabien@example.com&gt;</framework:sender> -->
                         <framework:recipients>foo@example.com</framework:recipients>
                         <framework:recipients>bar@example.com</framework:recipients>
                     </framework:envelope>
@@ -536,6 +539,7 @@ and headers.
             $mailer
                 ->envelope()
                     ->sender('fabien@example.com')
+                    // ->sender('Fabien <fabien@example.com>') (use this to add a display name)
                     ->recipients(['foo@example.com', 'bar@example.com'])
             ;
 
