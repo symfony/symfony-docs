@@ -370,10 +370,6 @@ you need to. If your application uses global or static variables (not usually a
 good idea), then you can store the object on some static class or do something
 similar.
 
-Regardless of how you architect your application, remember that you
-should only have one form factory and that you'll need to be able to access
-it throughout your application.
-
 .. _component-form-intro-create-simple-form:
 
 Creating a simple Form
@@ -382,7 +378,8 @@ Creating a simple Form
 .. tip::
 
     If you're using the Symfony Framework, then the form factory is available
-    automatically as a service called ``form.factory``. Also, the default
+    automatically as a service called ``form.factory``, you can inject it as
+    ``Symfony\Component\Form\FormFactoryInterface``. Also, the default
     base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createFormBuilder`
     method, which is a shortcut to fetch the form factory and call ``createBuilder()``
     on it.
