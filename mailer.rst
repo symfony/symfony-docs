@@ -330,7 +330,9 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
         }
     }
 
-That's it! The message will be sent via the transport you configured.
+That's it! The message will be sent via the transport you configured. If the
+transport is configured to :ref:`send emails asynchronously <mailer-sending-messages-async>`,
+the message won't be actually sent until :doc:`a worker consumes it <messenger-worker>`.
 
 Email Addresses
 ~~~~~~~~~~~~~~~
