@@ -172,8 +172,11 @@ each time you ask for it.
                 # makes classes in src/ available to be used as services
                 # this creates a service per class whose id is the fully-qualified class name
                 App\:
-                    resource: '../src/*'
-                    exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+                    resource: '../src/'
+                    exclude:
+                        - '../src/DependencyInjection/'
+                        - '../src/Entity/'
+                        - '../src/Kernel.php'
 
                 # ...
 
@@ -192,7 +195,7 @@ each time you ask for it.
 
                     <!-- makes classes in src/ available to be used as services -->
                     <!-- this creates a service per class whose id is the fully-qualified class name -->
-                    <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
+                    <prototype namespace="App\" resource="../src/" exclude="../src/{DependencyInjection,Entity,Kernel.php}"/>
 
                     <!-- ... -->
 
@@ -214,8 +217,8 @@ each time you ask for it.
 
                 // makes classes in src/ available to be used as services
                 // this creates a service per class whose id is the fully-qualified class name
-                $services->load('App\\', '../src/*')
-                    ->exclude('../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
+                $services->load('App\\', '../src/')
+                    ->exclude('../src/{DependencyInjection,Entity,Kernel.php}');
             };
 
     .. tip::
@@ -427,8 +430,8 @@ pass here. No problem! In your configuration, you can explicitly set this argume
 
             # same as before
             App\:
-                resource: '../src/*'
-                exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+                resource: '../src/'
+                exclude: '../src/{DependencyInjection,Entity,Kernel.php}'
 
             # explicitly configure the service
             App\Service\SiteUpdateManager:
@@ -450,8 +453,8 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 <!-- Same as before -->
 
                 <prototype namespace="App\"
-                    resource="../src/*"
-                    exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"
+                    resource="../src/"
+                    exclude="../src/{DependencyInjection,Entity,Kernel.php}"
                 />
 
                 <!-- Explicitly configure the service -->
@@ -472,8 +475,8 @@ pass here. No problem! In your configuration, you can explicitly set this argume
             // ...
 
             // same as before
-            $services->load('App\\', '../src/*')
-                ->exclude('../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
+            $services->load('App\\', '../src/')
+                ->exclude('../src/{DependencyInjection,Entity,Kernel.php}');
 
             $services->set(SiteUpdateManager::class)
                 ->arg('$adminEmail', 'manager@example.com')
@@ -958,8 +961,8 @@ key. For example, the default Symfony configuration contains this:
             # makes classes in src/ available to be used as services
             # this creates a service per class whose id is the fully-qualified class name
             App\:
-                resource: '../src/*'
-                exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+                resource: '../src/'
+                exclude: '../src/{DependencyInjection,Entity,Kernel.php}'
 
     .. code-block:: xml
 
@@ -973,7 +976,7 @@ key. For example, the default Symfony configuration contains this:
             <services>
                 <!-- ... same as before -->
 
-                <prototype namespace="App\" resource="../src/*" exclude="../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}"/>
+                <prototype namespace="App\" resource="../src/" exclude="../src/{DependencyInjection,Entity,Kernel.php}"/>
             </services>
         </container>
 
@@ -987,8 +990,8 @@ key. For example, the default Symfony configuration contains this:
 
             // makes classes in src/ available to be used as services
             // this creates a service per class whose id is the fully-qualified class name
-            $services->load('App\\', '../src/*')
-                ->exclude('../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}');
+            $services->load('App\\', '../src/')
+                ->exclude('../src/{DependencyInjection,Entity,Kernel.php}');
         };
 
 .. tip::
