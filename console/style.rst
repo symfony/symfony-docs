@@ -412,6 +412,38 @@ Result Methods
             'Consectetur adipiscing elit',
         ]);
 
+Configuring the Default Styles
+------------------------------
+
+By default, Symfony Styles wrap all contents to avoid having lines of text that
+are too long. The only exception is URLs, which are not wrapped, no matter how
+long they are. This is done to enable clickable URLs in terminals that support them.
+
+If you prefer to wrap all contents, including URLs, use this method::
+
+    // src/Command/GreetCommand.php
+    namespace App\Command;
+
+    // ...
+    use Symfony\Component\Console\Style\SymfonyStyle;
+
+    class GreetCommand extends Command
+    {
+        // ...
+
+        protected function execute(InputInterface $input, OutputInterface $output): int
+        {
+            $io = new SymfonyStyle($input, $output);
+            $io->getOutputWrapper()->setAllowCutUrls(true);
+
+            // ...
+        }
+    }
+
+.. versionadded:: 6.2
+
+    The ``setAllowCutUrls()`` method was introduced in Symfony 6.2.
+
 Defining your Own Styles
 ------------------------
 
