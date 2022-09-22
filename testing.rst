@@ -627,8 +627,8 @@ stores in the session of the test client.
 
 .. note::
 
-    Stateless firewalls cannot use ``loginUser()`` prior to requests by design.
-    Instead you should add the correct token (i.e. header) in each ``request()`` call.
+    By design, the ``loginUser()`` method doesn't work when using stateless firewalls.
+    Instead, add the appropriate token/header in each ``request()`` call.
 
 Making AJAX Requests
 ....................
