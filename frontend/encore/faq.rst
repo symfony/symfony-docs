@@ -170,23 +170,27 @@ running it (e.g. when executing ``yarn encore dev``). Fix this issue calling to
 
 .. _`Webpack integration in PhpStorm`: https://www.jetbrains.com/help/phpstorm/using-webpack.html
 
-My functional tests are failing in CI
--------------------------------------
+My Tests are Failing Because of ``entrypoints.json`` File
+---------------------------------------------------------
 
-With something along the lines of
+After installing Encore, you might see the following error when running tests
+locally or on your Continuous Integration server:
 
 .. code-block:: text
 
-    Uncaught PHP Exception Twig\Error\RuntimeError: "An exception has been thrown during the rendering of a template ("Could not find the entrypoints file from Webpack: the file "/var/www/html/public/build/entrypoints.json" does not exist.
+    Uncaught PHP Exception Twig\Error\RuntimeError:
+    "An exception has been thrown during the rendering of a template
+    ("Could not find the entrypoints file from Webpack:
+    the file "/var/www/html/public/build/entrypoints.json" does not exist.
 
-.. 
-
-This is happening because you did not build your encore assets, hence no ``entrypoints.json`` file. Plus encore is working in strict mode by default, which causes  twig functions ``encore_entry_*`` to panic.
-
-To solve that you can add this to your ``config/packages/test/webpack_encore.yaml``
+This is happening because you did not build your Encore assets, hence no
+``entrypoints.json`` file. To solve this error, either build Encore assets or
+set the ``strict_mode`` option to ``false`` (this prevents Encore's Twig
+functions to trigger exceptions when there's no ``entrypoints.json`` file):
 
 .. code-block:: yaml
 
+    # config/packages/test/webpack_encore.yaml
     webpack_encore:
         strict_mode: false
-..
+        # ...
