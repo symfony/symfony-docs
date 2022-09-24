@@ -96,6 +96,11 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
             ],
         ]);
 
+.. tip::
+
+    While it is possible to reconfigure the system cache, it is not recommended, because
+    the default is really the best possible configuration.
+
 The Cache component comes with a series of adapters pre-configured:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
