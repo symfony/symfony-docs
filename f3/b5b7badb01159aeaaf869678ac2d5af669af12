@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by ker0x at 2022-09-23T15:44:13Z
+
+@javiereguiluz Actually, the only other code example that I found with a switch is [here](https://github.com/symfony/symfony-docs/blame/6.2/bundles/prepend_extension.rst#L68)!
+
+Should I also replace it with:
+
+```php
+ match ($name) {
+    // set use_acme_goodbye to false in the config of
+    // acme_something and acme_other
+    //
+    // note that if the user manually configured
+    // use_acme_goodbye to true in config/services.yaml
+    // then the setting would in the end be true and not false
+    'acme_something', 'acme_other' => $container->prependExtensionConfig($name, $config),
+    default => null
+}
+```
+?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-09-23T16:11:12Z
+
+> Should I also replace it with:
+
+Yes please 💪
+
+---------------------------------------------------------------------------
+
+by ker0x at 2022-09-25T13:00:08Z
+
+@OskarStark Done 😉 !
