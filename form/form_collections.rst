@@ -397,6 +397,8 @@ you will learn about next!).
     call ``$entityManager->persist($tag)`` on each, you'll receive an error from
     Doctrine:
 
+    .. code-block:: text
+
         A new entity was found through the relationship
         ``App\Entity\Task#tags`` that was not configured to
         cascade persist operations for entity...
