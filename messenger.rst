@@ -1439,6 +1439,36 @@ a table named ``messenger_messages``.
 Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 :ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
 
+.. tip::
+
+    To avoid tools like Doctrine Migrations from trying to remove this table because
+    it's not part of your normal schema, you can set the ``schema_filter`` option:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/doctrine.yaml
+            doctrine:
+                dbal:
+                    schema_filter: '~^(?!messenger_messages)~'
+
+        .. code-block:: xml
+
+            # config/packages/doctrine.xml
+            <doctrine:dbal schema-filter="~^(?!messenger_messages)~"/>
+
+        .. code-block:: php
+
+            # config/packages/doctrine.php
+            $container->loadFromExtension('doctrine', [
+                'dbal' => [
+                    'schema_filter'  => '~^(?!messenger_messages)~',
+                    // ...
+                ],
+                // ...
+            ]);
+
 .. caution::
 
     The datetime property of the messages stored in the database uses the
