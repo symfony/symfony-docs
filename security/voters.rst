@@ -153,14 +153,11 @@ would look like this::
             /** @var Post $post */
             $post = $subject;
 
-            switch ($attribute) {
-                case self::VIEW:
-                    return $this->canView($post, $user);
-                case self::EDIT:
-                    return $this->canEdit($post, $user);
-            }
-
-            throw new \LogicException('This code should not be reached!');
+            return match($attribute) {
+                self::VIEW => $this->canView($post, $user),
+                self::EDIT => $this->canEdit($post, $user),
+                default => throw new \LogicException('This code should not be reached!')
+            };
         }
 
         private function canView(Post $post, User $user): bool

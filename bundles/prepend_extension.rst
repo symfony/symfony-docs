@@ -65,18 +65,16 @@ in case a specific other bundle is not registered::
             // disable AcmeGoodbyeBundle in bundles
             $config = ['use_acme_goodbye' => false];
             foreach ($container->getExtensions() as $name => $extension) {
-                switch ($name) {
-                    case 'acme_something':
-                    case 'acme_other':
-                        // set use_acme_goodbye to false in the config of
-                        // acme_something and acme_other
-                        //
-                        // note that if the user manually configured
-                        // use_acme_goodbye to true in config/services.yaml
-                        // then the setting would in the end be true and not false
-                        $container->prependExtensionConfig($name, $config);
-                        break;
-                }
+                match ($name) {
+                    // set use_acme_goodbye to false in the config of
+                    // acme_something and acme_other
+                    //
+                    // note that if the user manually configured
+                    // use_acme_goodbye to true in config/services.yaml
+                    // then the setting would in the end be true and not false
+                    'acme_something', 'acme_other' => $container->prependExtensionConfig($name, $config),
+                    default => null
+                };
             }
         }
 
