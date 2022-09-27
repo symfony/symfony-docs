@@ -293,10 +293,11 @@ argument of type ``service_locator``:
 
             $services->set(CommandBus::class)
                 ->args([service_locator([
-                    'App\FooCommand' => ref('app.command_handler.foo'),
-                    'App\BarCommand' => ref('app.command_handler.bar'),
+                    // In versions earlier to Symfony 5.1 the service() function was called ref()
+                    'App\FooCommand' => service('app.command_handler.foo'),
+                    'App\BarCommand' => service('app.command_handler.bar'),
                     // if the element has no key, the ID of the original service is used
-                    ref('app.command_handler.baz'),
+                    service('app.command_handler.baz'),
                 ])]);
         };
 
