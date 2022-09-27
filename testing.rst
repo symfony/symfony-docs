@@ -273,7 +273,7 @@ the container is stored in ``static::getContainer()``::
 
 The container in ``static::getContainer()`` is actually a special test container.
 It gives you access to both the public services and the non-removed
-:ref:`private services <container-public>` services.
+:ref:`private services <container-public>`.
 
 .. note::
 
