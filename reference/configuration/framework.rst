@@ -2566,19 +2566,6 @@ Whether or not to enable validation support.
 This option will automatically be set to ``true`` when one of the child
 settings is configured.
 
-.. _reference-validation-cache:
-
-cache
-.....
-
-**type**: ``string``
-
-The service that is used to persist class metadata in a cache. The service
-has to implement the :class:`Symfony\\Contracts\\Cache\\CacheInterface`.
-
-Set this option to ``validator.mapping.cache.doctrine.apc`` to use the APC
-cache provided by the Doctrine project.
-
 .. _reference-validation-enable_annotations:
 
 enable_annotations
