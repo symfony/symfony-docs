@@ -726,8 +726,7 @@ and compose your services with them::
 Testing a Service Subscriber
 ----------------------------
 
-When you need to unit test a service subscriber, you can either create a fake
-``ServiceLocator``::
+To unit test a service subscriber, you can create a fake ``ServiceLocator``::
 
     use Symfony\Component\DependencyInjection\ServiceLocator;
 
@@ -758,7 +757,7 @@ When you need to unit test a service subscriber, you can either create a fake
     $serviceSubscriber = new MyService($container);
     // ...
 
-Or mock it when using ``PHPUnit``::
+Another alternative is to mock it using ``PHPUnit``::
 
     use Psr\Container\ContainerInterface;
 
