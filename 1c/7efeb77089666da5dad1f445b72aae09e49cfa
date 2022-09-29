@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-09-28T07:21:59Z
+
+This reverts the changes made in #17202. Display names do not make sense in envelope headers (not sure if they are actually supported by SMTP at all).
+
+/cc @jdelaune FYI
