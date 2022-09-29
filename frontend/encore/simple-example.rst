@@ -85,9 +85,9 @@ All of these commands - e.g. ``dev`` or ``watch`` - are shortcuts that are defin
 in your ``package.json`` file. If you use the npm package manager, replace ``yarn``
 with ``npm run``.
 
-.. note::
+.. caution::
 
-    Stop and restart ``encore`` each time you update your ``webpack.config.js`` file.
+    Whenever you make changes in your ``webpack.config.js`` file, you need to stop and restart ``encore``.
 
 Congrats! You now have three new files:
 
