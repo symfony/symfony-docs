@@ -256,7 +256,7 @@ argument of type ``service_locator``:
         # config/services.yaml
         services:
             App\CommandBus:
-                arguments: 
+                arguments:
                   - !service_locator
                       App\FooCommand: '@app.command_handler.foo'
                       App\BarCommand: '@app.command_handler.bar'
@@ -730,5 +730,55 @@ and compose your services with them::
     was added in Symfony 5.4. Previously, any methods with no arguments and a
     return type were *subscribed*. This still works in 5.4 but is deprecated (only
     when using PHP 8) and will be removed in 6.0.
+
+Testing a Service Subscriber
+----------------------------
+
+To unit test a service subscriber, you can create a fake ``ServiceLocator``::
+
+    use Symfony\Component\DependencyInjection\ServiceLocator;
+
+    $container = new class() extends ServiceLocator {
+        private $services = [];
+
+        public function __construct()
+        {
+            parent::__construct([
+                'foo' => function () {
+                    return $this->services['foo'] = $this->services['foo'] ?? new stdClass();
+                },
+                'bar' => function () {
+                    return $this->services['bar'] = $this->services['bar'] ?? $this->createBar();
+                },
+            ]);
+        }
+
+        private function createBar()
+        {
+            $bar = new stdClass();
+            $bar->foo = $this->get('foo');
+
+            return $bar;
+        }
+    };
+
+    $serviceSubscriber = new MyService($container);
+    // ...
+
+Another alternative is to mock it using ``PHPUnit``::
+
+    use Psr\Container\ContainerInterface;
+
+    $container = $this->createMock(ContainerInterface::class);
+    $container->expects(self::any())
+        ->method('get')
+        ->willReturnMap([
+            ['foo', $this->createStub(Foo::class)],
+            ['bar', $this->createStub(Bar::class)],
+        ])
+    ;
+
+    $serviceSubscriber = new MyService($container);
+    // ...
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
