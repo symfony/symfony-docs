@@ -87,7 +87,8 @@ with ``npm run``.
 
 .. caution::
 
-    Whenever you make changes in your ``webpack.config.js`` file, you need to stop and restart ``encore``.
+    Whenever you make changes in your ``webpack.config.js`` file, you must
+    stop and restart ``encore``.
 
 Congrats! You now have three new files:
 
