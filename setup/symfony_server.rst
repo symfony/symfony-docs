@@ -11,6 +11,13 @@ other features that sooner or later you'll need when developing web projects.
 Moreover, the server is not tied to Symfony and you can also use it with any
 PHP application and even with HTML or single page applications.
 
+.. caution::
+
+    This server will automatically expose all environment variables available
+    in the CLI tool context, **which can lead to security issues**.
+    One should assert that its server is not accessible on local network without
+    consent.
+
 Installation
 ------------
 
