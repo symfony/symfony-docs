@@ -2743,6 +2743,19 @@ paths
 This option allows to define an array of paths with files or directories where
 the component will look for additional serialization files.
 
+default_context
+...............
+
+**type**: ``array`` **default**: ``[]``
+
+A map with default context options that will be used with each ``serialize`` and ``deserialize``
+call. This can be used for example to set the json encoding behavior by setting ``json_encode_options``
+to a `json_encode flags bitmask`_.
+
+.. versionadded:: 5.4
+
+    The ``default_context`` parameter was introduced in Symfony 5.4.
+
 php_errors
 ~~~~~~~~~~
 
@@ -3573,6 +3586,7 @@ use the configuration of the first exception that matches ``instanceof``:
 .. _`blue/green deployment`: https://martinfowler.com/bliki/BlueGreenDeployment.html
 .. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
 .. _`webpack-manifest-plugin`: https://www.npmjs.com/package/webpack-manifest-plugin
+.. _`json_encode flags bitmask`: https://www.php.net/json_encode
 .. _`error_reporting PHP option`: https://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
 .. _`CSRF security attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
 .. _`session.sid_length PHP option`: https://www.php.net/manual/session.configuration.php#ini.session.sid-length
