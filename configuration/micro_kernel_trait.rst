@@ -102,6 +102,44 @@ that define your bundles, your services and your routes:
     ``RouteCollectionBuilder`` has methods that make adding routes in PHP more
     fun. You can also load external routing files (shown below).
 
+Adding Interfaces to "Micro" Kernel
+-----------------------------------
+
+When using the ``MicroKernelTrait``, you can also implement the
+``CompilerPassInterface`` to automatically register the kernel itself as a
+compiler pass as explained in the dedicated
+:ref:`compiler pass section <kernel-as-compiler-pass>`.
+
+It is also possible to implement the ``EventSubscriberInterface`` to handle
+events directly from the kernel, again it will be registered automatically::
+
+    // ...
+    use App\Exception\Danger;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+    use Symfony\Component\HttpKernel\KernelEvents;
+
+    class Kernel extends BaseKernel implements EventSubscriberInterface
+    {
+        use MicroKernelTrait;
+
+        // ...
+
+        public function onKernelException(ExceptionEvent $event): void
+        {
+            if ($event->getException() instanceof Danger) {
+                $event->setResponse(new Response('It\'s dangerous to go alone. Take this ⚔'));
+            }
+        }
+
+        public static function getSubscribedEvents(): array
+        {
+            return [
+                KernelEvents::EXCEPTION => 'onKernelException',
+            ];
+        }
+    }
+
 Advanced Example: Twig, Annotations and the Web Debug Toolbar
 -------------------------------------------------------------
 
