@@ -280,6 +280,92 @@ It gives you access to both the public services and the non-removed
     are not used by any other services), you need to declare those private
     services as public in the ``config/services_test.yaml`` file.
 
+Mocking Dependencies
+--------------------
+
+Sometimes it can be useful to mock a dependency of a tested service.
+
+From the example in the previous section, let's assume the
+``NewsletterGenerator`` has a dependency to a private alias
+``NewsRepositoryInterface`` pointing to a private ``NewsRepository`` service
+and we would like to use a mocked ``NewsRepositoryInterface`` instead of the
+concrete one::
+
+    // ...
+    use App\Contracts\Repository\NewsRepositoryInterface;
+
+    class NewsletterGeneratorTest extends KernelTestCase
+    {
+        public function testSomething()
+        {
+            // ... same bootstrap as the section above
+
+            $newsRepository = $this->createMock(NewsRepositoryInterface::class);
+            $newsRepository->expects(self::once())
+                ->method('findNewsFromLastMonth')
+                ->willReturn([
+                    new News('some news'),
+                    new News('some other news'),
+                ])
+            ;
+
+            // the following line won't work unless the alias is made public
+            $container->set(NewsRepositoryInterface::class, $newsRepository);
+
+            // will be injected the mocked repository
+            $newsletterGenerator = $container->get(NewsletterGenerator::class);
+
+            // ...
+        }
+    }
+
+In order to make the alias public, you will need to update configuration for
+the ``test`` environment as follow:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services_test.yaml
+        services:
+            # redefine the alias as it should be while making it public
+            App\Contracts\Repository\NewsRepositoryInterface:
+                alias: App\Repository\NewsRepository
+                public: true
+
+    .. code-block:: xml
+
+        <!-- config/services_test.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+        ">
+            <services>
+                <!-- redefine the alias as it should be while making it public -->
+                <service id="App\Contracts\Repository\NewsRepositoryInterface"
+                    alias="App\Repository\NewsRepository"
+                />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services_test.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Contracts\Repository\NewsRepositoryInterface;
+        use App\Repository\NewsRepository;
+
+        return static function (ContainerConfigurator $container) {
+            $container->services()
+                // redefine the alias as it should be while making it public
+                ->alias(NewsRepositoryInterface::class, NewsRepository::class)
+                    ->public()
+            ;
+        };
+
 .. _testing-databases:
 
 Configuring a Database for Tests
