@@ -2752,10 +2752,6 @@ A map with default context options that will be used with each ``serialize`` and
 call. This can be used for example to set the json encoding behavior by setting ``json_encode_options``
 to a `json_encode flags bitmask`_.
 
-.. versionadded:: 5.4
-
-    The ``default_context`` parameter was introduced in Symfony 5.4.
-
 php_errors
 ~~~~~~~~~~
 
