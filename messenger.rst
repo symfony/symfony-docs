@@ -640,8 +640,35 @@ You can limit the worker to only process messages from specific queue(s):
     # you can pass the --queues option more than once to process multiple queues
     $ php bin/console messenger:consume my_transport --queues=fasttrack1 --queues=fasttrack2
 
-To allow using the ``queues`` option, the receiver must implement the
-:class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\QueueReceiverInterface`.
+.. note::
+
+    To allow using the ``queues`` option, the receiver must implement the
+    :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\QueueReceiverInterface`.
+
+.. _messenger-message-count:
+
+Knowing the number of messages in the "queue" for transport(s)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to know how many messages are in the "queues",
+you can do so with the ``messenger:stats`` command:
+
+.. code-block:: terminal
+
+    # displays the number of messages in the "queue" for all transports
+    $ php bin/console messenger:stats
+
+    # or specific transport(s) only
+    $ php bin/console messenger:stats my_transport_name other_transport_name
+
+.. note::
+    
+    This command won't work if the configured transport's receiver does not implement
+    :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\MessageCountAwareInterface`.
+
+.. versionadded:: 6.2
+
+    The ``messenger:stats`` command was introduced in Symfony 6.2.
 
 .. _messenger-supervisor:
 
