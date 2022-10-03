@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by dbu at 2022-09-30T09:48:13Z
+
+build should get green when retrying, as the code is now merged to 6.2.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-09-30T18:10:43Z
+
+Please also adjust the title of the PR after rebasing, thanks
+
+---------------------------------------------------------------------------
+
+by dbu at 2022-10-01T08:14:12Z
+
+rebased, cleaned up and adjusted the title.
+
+regarding the linter failure: looks like thats broken in all 6.x versions: https://github.com/symfony/symfony-docs/actions/runs/3160768594/jobs/5145596113
+
+can you fix that in 6.0 and then merge it up to 6.1 and 6.2? or we just merge with the known error...
