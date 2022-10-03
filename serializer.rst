@@ -158,6 +158,10 @@ configuration:
             ;
         };
 
+.. versionadded:: 6.2
+
+    The option to configure YAML indentation was introduced in Symfony 6.2.
+
 .. _serializer-using-context-builders:
 
 Using Context Builders
