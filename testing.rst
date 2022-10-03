@@ -284,11 +284,10 @@ Mocking Dependencies
 --------------------
 
 Sometimes it can be useful to mock a dependency of a tested service.
-
 From the example in the previous section, let's assume the
 ``NewsletterGenerator`` has a dependency to a private alias
 ``NewsRepositoryInterface`` pointing to a private ``NewsRepository`` service
-and we would like to use a mocked ``NewsRepositoryInterface`` instead of the
+and you'd like to use a mocked ``NewsRepositoryInterface`` instead of the
 concrete one::
 
     // ...
@@ -320,7 +319,7 @@ concrete one::
     }
 
 In order to make the alias public, you will need to update configuration for
-the ``test`` environment as follow:
+the ``test`` environment as follows:
 
 .. configuration-block::
 
