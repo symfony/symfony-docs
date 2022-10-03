@@ -71,7 +71,7 @@ to create each type of UUID::
     // UUID version 8 provides an RFC-compatible format for experimental or vendor-specific use cases.
     // The only requirement is that the variant and version bits MUST be set as defined in Section 4:
     // https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-04.html#variant_and_version_fields
-    // UUIDv8's uniqueness will be implementation-specific and SHOULD NOT be assumed.
+    // UUIDv8 uniqueness will be implementation-specific and SHOULD NOT be assumed.
     $uuid = Uuid::v8();
 
 .. versionadded:: 6.2
