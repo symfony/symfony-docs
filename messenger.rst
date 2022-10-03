@@ -647,23 +647,23 @@ You can limit the worker to only process messages from specific queue(s):
 
 .. _messenger-message-count:
 
-Knowing the number of messages in the "queue" for transport(s)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Checking the Number of Queued Messages Per Transport
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to know how many messages are in the "queues",
-you can do so with the ``messenger:stats`` command:
+Run the ``messenger:stats`` command to know how many messages are in the "queues"
+of some or all transports:
 
 .. code-block:: terminal
 
-    # displays the number of messages in the "queue" for all transports
+    # displays the number of queued messages in all transports
     $ php bin/console messenger:stats
 
-    # or specific transport(s) only
+    # shows stats only for some transports
     $ php bin/console messenger:stats my_transport_name other_transport_name
 
 .. note::
     
-    This command won't work if the configured transport's receiver does not implement
+    In order for this command to work, the configured transport's receiver must implement
     :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\MessageCountAwareInterface`.
 
 .. versionadded:: 6.2
