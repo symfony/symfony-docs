@@ -334,7 +334,7 @@ method, which returns an instance of
             $section1->clear(2);
             // Output is now completely empty!
 
-            // Allow limiting the height of a console section
+            // setting the max height of a section will make new lines replace the old ones
             $section1->setMaxHeight(2);
             $section1->writeln('Line1');
             $section1->writeln('Line2');
@@ -350,7 +350,7 @@ method, which returns an instance of
 
 .. versionadded:: 6.2
 
-    Allow limiting the height of a console section was introduced in Symfony 6.2.
+    The feature to limit the height of a console section was introduced in Symfony 6.2.
 
 Output sections let you manipulate the Console output in advanced ways, such as
 :ref:`displaying multiple progress bars <console-multiple-progress-bars>` which
