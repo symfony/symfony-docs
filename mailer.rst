@@ -202,7 +202,6 @@ Infobip              infobip+smtp://KEY@default                           n/a   
 
         # .env
         MAILER_DSN=mailgun+https://KEY:DOMAIN@requestbin.com
-        MAILER_DSN=mailgun+https://KEY:DOMAIN@requestbin.com:99
 
     Note that the protocol is *always* HTTPs and cannot be changed.
 
