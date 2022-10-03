@@ -63,21 +63,20 @@ to create each type of UUID::
     // It's defined in http://gh.peabody.io/uuidv6/
     $uuid = Uuid::v6(); // $uuid is an instance of Symfony\Component\Uid\UuidV6
 
-    // UUID version 7 features a time-ordered value field derived from the widely implemented and well known
-    // Unix Epoch timestamp source, the number of seconds since midnight 1 Jan 1970 UTC, leap seconds excluded.
+    // UUID version 7 features a time-ordered value field derived from the well known
+    // Unix Epoch timestamp source: the number of seconds since midnight 1 Jan 1970 UTC, leap seconds excluded.
     // As well as improved entropy characteristics over versions 1 or 6.
     $uuid = Uuid::v7();
 
     // UUID version 8 provides an RFC-compatible format for experimental or vendor-specific use cases.
-    // The only requirement is that the variant and version bits
-    // MUST be set as defined in Section 4:
+    // The only requirement is that the variant and version bits MUST be set as defined in Section 4:
     // https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-04.html#variant_and_version_fields
     // UUIDv8's uniqueness will be implementation-specific and SHOULD NOT be assumed.
     $uuid = Uuid::v8();
 
 .. versionadded:: 6.2
 
-    Versions 7 and 8 were introduced in Symfony 6.2.
+    UUID versions 7 and 8 were introduced in Symfony 6.2.
 
 If your UUID value is already generated in another format, use any of the
 following methods to create a ``Uuid`` object from it::
