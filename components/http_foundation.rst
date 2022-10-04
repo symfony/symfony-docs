@@ -517,17 +517,12 @@ call::
         'immutable'        => true,
         'last_modified'    => new \DateTime(),
         'etag'             => 'abcdef',
-        'terminate_on_cache_hit' => false,
     ]);
 
 .. versionadded:: 6.1
 
     The ``stale_if_error`` and ``stale_while_revalidate`` options were
     introduced in Symfony 6.1.
-
-.. versionadded:: 6.2
-
-    The ``terminate_on_cache_hit`` option was introduced in Symfony 6.2.
 
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
