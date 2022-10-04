@@ -104,36 +104,6 @@ To read from properties, use the "dot" notation::
 
     var_dump($propertyAccessor->getValue($person, 'children[0].firstName')); // 'Bar'
 
-.. tip::
-
-    You can give an object graph with nullable object.
-
-    Given an object graph ``comment.person.profile``, where ``person`` is optional (can be null),
-    you can call the property accessor with ``comment.person?.profile`` (using the nullsafe
-    operator) to avoid exception.
-
-    For example::
-
-        class Person
-        {
-        }
-        class Comment
-        {
-            public ?Person $person = null;
-            public string $message;
-        }
-
-        $comment = new Comment();
-        $comment->message = 'test';
-
-        // This code throws an exception of type
-        // Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException
-        var_dump($propertyAccessor->getValue($comment, 'person.firstname'));
-
-        // The code now returns null, instead of throwing an exception of type
-        // Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException,
-        var_dump($propertyAccessor->getValue($comment, 'person?.firstname')); // null
-
 .. caution::
 
     Accessing public properties is the last option used by ``PropertyAccessor``.
@@ -223,6 +193,39 @@ method::
     // instead of throwing an exception the following code returns null
     $value = $propertyAccessor->getValue($person, 'birthday');
 
+Accessing Nullable Property Paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider the following PHP code::
+
+    class Person
+    {
+    }
+
+    class Comment
+    {
+        public ?Person $person = null;
+        public string $message;
+    }
+
+    $comment = new Comment();
+    $comment->message = 'test';
+
+Given that ``$person`` is nullable, an object graph like ``comment.person.profile``
+will trigger an exception when the ``$person`` property is ``null``. The solution
+is to mark all nullable properties with the nullsafe operator (``?``)::
+
+    // This code throws an exception of type
+    // Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException
+    var_dump($propertyAccessor->getValue($comment, 'person.firstname'));
+
+    // If a property marked with the nullsafe operator is null, the expression is
+    // no longer evaluated and null is returned immediately without throwing an exception
+    var_dump($propertyAccessor->getValue($comment, 'person?.firstname')); // null
+
+.. versionadded:: 6.2
+
+    The ``?`` nullsafe operator was introduced in Symfony 6.2.
 
 .. _components-property-access-magic-get:
 
