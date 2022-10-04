@@ -124,7 +124,7 @@ These are the most important methods that a form type class can define:
     method of that type (i.e. ``buildForm()``, ``buildView()``, etc.) and all its
     type extensions, before calling the corresponding method of your custom type.
     This is probably a good idea if you're just changing some details of an
-    existing type. To start from scratch, just omit ``getParent()``.
+    existing type. To start from scratch, omit ``getParent()``.
 
 ``buildForm()``
     It adds and configures other types into this type. It's the same method used
