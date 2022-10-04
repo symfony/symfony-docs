@@ -63,6 +63,9 @@ method::
     // Symfony\Component\PropertyAccess\Exception\NoSuchIndexException
     $value = $propertyAccessor->getValue($person, '[age]');
 
+    // You can avoid the exception by adding the nullsafe operator
+    $value = $propertyAccessor->getValue($person, '[age?]');
+
 You can also use multi dimensional arrays::
 
     // ...
@@ -100,6 +103,36 @@ To read from properties, use the "dot" notation::
     $person->children = [$child];
 
     var_dump($propertyAccessor->getValue($person, 'children[0].firstName')); // 'Bar'
+
+.. tip::
+
+    You can give an object graph with nullable object.
+
+    Given an object graph ``comment.person.profile``, where ``person`` is optional (can be null),
+    you can call the property accessor with ``comment.person?.profile`` (using the nullsafe
+    operator) to avoid exception.
+
+    For example::
+
+        class Person
+        {
+        }
+        class Comment
+        {
+            public ?Person $person = null;
+            public string $message;
+        }
+
+        $comment = new Comment();
+        $comment->message = 'test';
+
+        // This code throws an exception of type
+        // Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException
+        var_dump($propertyAccessor->getValue($comment, 'person.firstname'));
+
+        // The code now returns null, instead of throwing an exception of type
+        // Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException,
+        var_dump($propertyAccessor->getValue($comment, 'person?.firstname')); // null
 
 .. caution::
 
