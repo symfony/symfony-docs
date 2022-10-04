@@ -546,6 +546,15 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
         $application->setAutoExit(false);
 
         $tester = new ApplicationTester($application);
+        
+
+.. caution::
+
+    When testing ``InputOption::VALUE_NONE`` command option, be sure to pass an empty
+    value like so::
+    
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['--some-option' => '']);
 
 .. note::
 
