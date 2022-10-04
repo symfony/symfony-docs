@@ -1,0 +1,56 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-07-11T15:44:44Z
+
+In the PropertyInfo component I can find references to `add` and `remove`:
+
+https://github.com/symfony/symfony/blob/4a31363c3c9be2192e757c3a32a7e3a90874a2cb/src/Symfony/Component/PropertyInfo/Extractor/ReflectionExtractor.php#L38-L48
+
+But in the Serializer component I can't find any references to them. This is what I see:
+
+https://github.com/symfony/symfony/blob/4a31363c3c9be2192e757c3a32a7e3a90874a2cb/src/Symfony/Component/Serializer/Normalizer/GetSetMethodNormalizer.php#L128-L148
+
+---------------------------------------------------------------------------
+
+by ostrolucky at 2022-07-11T20:17:00Z
+
+OP probably looks at it from POV of normalization only and is forgetting about denormalization.
+
+---------------------------------------------------------------------------
+
+by ndench at 2022-07-11T22:03:21Z
+
+Object normalization/denoramilzation definitely takes into account adders/removers for array properties. As @javiereguiluz points out, when denormalizing it uses the PropertyInfo component to set the value of an array property. If there is not a `function setFoos(array $foos)` then it'll look for `function addFoo($foo)` and `function removeFoo($foo)`.
+
+However, the section that OP is editing is specifically to do with boolean attributes. I would imagine that adders/removers are not considered for boolean properties, however I am not certain of this.
+
+---------------------------------------------------------------------------
+
+by FabienPapet at 2022-07-12T09:07:49Z
+
+ping @mtarld
+
+---------------------------------------------------------------------------
+
+by mtarld at 2022-07-12T11:49:53Z
+
+Indeed, as @javiereguiluz and @ndench pointed out, the PropertyInfo can find `add` and `remove` methods (therefore the `ObjectNormalizer` can), but the `add` and `remove` methods are related to collections and not boolean.
+
+So I think it doesn't make sense to mention them here.
+Moreover, IMHO, I'm not sure that we must mention the `get` method even if it can return a boolean as it's not specific to booleans only (you can have a look at the [ReflectionExtractor](https://github.com/symfony/symfony/blob/6.2/src/Symfony/Component/PropertyInfo/Extractor/ReflectionExtractor.php#L465))
+
+---------------------------------------------------------------------------
+
+by sfmok at 2022-07-17T16:58:00Z
+
+Thank you all for the clarification.
+
+In fact, I assumed the edited part is talking about booleans attributes based on the first phrase context is about the `is` method.
+
+I think we can adjust it somehow to be more clear like:
+
+The ``ObjectNormalizer`` also takes care of methods starting with :
+- ``has`` and  ``can`` for booleans attributes.
+- ``add`` and ``remove`` for collections
+
+for ``get`` method, I avoided adding it into the list since it's not specific to booleans  as @mtarld mentioned
