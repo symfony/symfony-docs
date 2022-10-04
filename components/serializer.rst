@@ -704,8 +704,8 @@ If you are using isser methods (methods prefixed by ``is``, like
 ``App\Model\Person::isSportsperson()``), the Serializer component will
 automatically detect and use it to serialize related attributes.
 
-The ``ObjectNormalizer`` also takes care of methods starting with ``has``, ``add``
-and ``remove``.
+The ``ObjectNormalizer`` also takes care of methods starting with ``has`` and
+``get``.
 
 Using Callbacks to Serialize Properties with Object Instances
 -------------------------------------------------------------
