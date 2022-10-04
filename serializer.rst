@@ -130,6 +130,7 @@ configuration:
             serializer:
                 default_context:
                     enable_max_depth: true
+                    yaml_indentation: 2
 
     .. code-block:: xml
 
@@ -137,7 +138,7 @@ configuration:
         <framework:config>
             <!-- ... -->
             <framework:serializer>
-                <default-context enable-max-depth="true"/>
+                <default-context enable-max-depth="true" yaml-indentation="2"/>
             </framework:serializer>
         </framework:config>
 
@@ -146,14 +147,20 @@ configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
         use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+        use Symfony\Component\Serializer\Encoder\YamlEncoder;
 
         return static function (FrameworkConfig $framework) {
             $framework->serializer()
                 ->defaultContext([
-                    AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true
+                    AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
+                    YamlEncoder::YAML_INDENTATION => 2,
                 ])
             ;
         };
+
+.. versionadded:: 6.2
+
+    The option to configure YAML indentation was introduced in Symfony 6.2.
 
 .. _serializer-using-context-builders:
 

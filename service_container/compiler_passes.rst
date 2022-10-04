@@ -32,6 +32,8 @@ Compiler passes are registered in the ``build()`` method of the application kern
         }
     }
 
+.. _kernel-as-compiler-pass:
+
 One of the most common use-cases of compiler passes is to work with :doc:`tagged
 services </service_container/tags>`. In those cases, instead of creating a
 compiler pass, you can make the kernel implement

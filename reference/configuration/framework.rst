@@ -2764,6 +2764,9 @@ A map with default context options that will be used with each ``serialize`` and
 call. This can be used for example to set the json encoding behavior by setting ``json_encode_options``
 to a `json_encode flags bitmask`_.
 
+You can inspect the :ref:`serializer context builders <serializer-using-context-builders>`
+to discover the available settings.
+
 php_errors
 ~~~~~~~~~~
 
