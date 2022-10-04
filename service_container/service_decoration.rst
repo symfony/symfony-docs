@@ -598,10 +598,6 @@ The result will be::
 
     The ``Baz`` frame id will now be ``.decorated_foo_stack.second``.
 
-.. versionadded:: 5.1
-
-    The ability to define ``stack`` was introduced in Symfony 5.1.
-
 Control the Behavior When the Decorated Service Does Not Exist
 --------------------------------------------------------------
 
