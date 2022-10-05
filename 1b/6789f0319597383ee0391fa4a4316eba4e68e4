@@ -1,0 +1,53 @@
+---------------------------------------------------------------------------
+
+by 94noni at 2022-08-19T10:11:09Z
+
+Related also to one of my PR
+https://github.com/symfony/symfony-docs/pull/16876
+
+i think docs core members should define what/how/etc can be done regarding sf6/php8 to modernize the example without having much conflict and so on
+
+It could definitely be worth it :)
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-08-19T10:38:05Z
+
+I'm failing to find my previous comments on changes like this (maybe I didn't comment it on GitHub?).
+
+I would say our current stance on using new PHP features is a very conservative in the docs. Our docs is quite "code example heavy" (i.e. we often favor documenting features in code blocks over writing long paragraphs). For this reason, code examples must be as focused on the actual feature as possible.
+New fancy syntax, although amazing to use when writing PHP, can be a distracting factor when reading code examples if you're not up to speed with PHP's new features. This is why we often are a few years behind the latest features, until we "feel" like the feature is common enough in the community to no longer be distracting for the majority of the documentation readers.
+
+At this moment, my opinion would be:
+- DO update code examples to be fully typed (property, parameter and return) - taking into account the minimum required PHP version for the version of the docs (e.g. don't use the `object` type in 4.4 or `mixed` type in <6.0).
+- DO NOT yet use constructor property promotion or arrow functions (the latter one was introduced in PHP 7.4, but I don't feel like it's common knowledge yet?)
+
+---------------------------------------------------------------------------
+
+by githubfromgui at 2022-08-19T11:09:40Z
+
+Thanks @94noni for mentioning your PR!
+
+IMO @wouterj due to the popularity of the framework, I think "modernizing" code examples using PHP new features would be a nice way of educating other developers that may not be aware of these functionalities yet. Plus, the specific case of `Constructor Promotion` reduces code boilerplate, which IMO simplifies the code structure.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-10-05T11:14:06Z
+
+My vote would be to merge this. I agree with @wouterj about "Constructor promotion" not being common, but this is less and less true as time goes. Also, any person using recent Symfony versions and reading its docs, should be using a PHP version compatible with that feature, so readers won't face technical issues.
+
+@xabbuh and @OskarStark what do you think about this? Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-10-05T11:17:05Z
+
+My only concern would be merge conflicts when merging things up. But as we do less changes in lower branches I think we should be able to deal with them.
+
+So 👍  from me.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-10-05T12:31:38Z
+
+👍 for me too
