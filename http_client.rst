@@ -756,16 +756,16 @@ is installed and enabled. Otherwise, the native PHP streams will be used.
 HTTP Compression
 ~~~~~~~~~~~~~~~~
 
-A HTTP header ``Accept-Encoding: gzip`` is added automatically if ...
+The HTTP header ``Accept-Encoding: gzip`` is added automatically if:
 
-* cURL Client: ... cURL was compiled with ZLib support (see ``php --ri curl``)
-* Native Http Client: ... `Zlib PHP extension`_ is installed
+* When using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
+* When using the native HTTP client: `Zlib PHP extension`_ is installed
 
 If the server does respond with a gzipped response, it's decoded transparently.
-
 To disable HTTP compression, send an ``Accept-Encoding: identity`` HTTP header.
 
-Chunked transfer encoding is enabled automatically if both your PHP runtime and the remote server supports it.
+Chunked transfer encoding is enabled automatically if both your PHP runtime and
+the remote server supports it.
 
 HTTP/2 Support
 ~~~~~~~~~~~~~~
