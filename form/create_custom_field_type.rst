@@ -133,16 +133,29 @@ These are the most important methods that a form type class can define:
 ``buildView()``
     It sets any extra variables you'll need when rendering the field in a template.
 
-``finishView()``
-    When creating a form type that consists of many fields, this method allows
-    to modify the "view" of any of those fields. For any other use case, it's
-    recommended to use ``buildView()`` instead.
-
 ``configureOptions()``
     It defines the options configurable when using the form type, which are also
     the options that can be used in ``buildForm()`` and ``buildView()``
     methods. Options are inherited from parent types and parent type
     extensions, but you can create any custom option you need.
+
+``finishView()``
+    This method allows to modify the "view" of any rendered widget. This is useful
+    if your form type consists of many fields, or contains a type that produces
+    many HTML elements (e.g. ``ChoiceType``). For any other use case, it's
+    recommended to use ``buildView()`` instead.
+
+``getParent()``
+    If your custom type is based on another type (i.e. they share some
+    functionality) add this method to return the fully-qualified class name
+    of that original type. Do not use PHP inheritance for this.
+    Symfony will call all the form type methods (``buildForm()``,
+    ``buildView()``, etc.) of the parent type and it will call all its type
+    extensions before calling the ones defined in your custom type.
+
+    By default, the ``AbstractType`` class returns the generic
+    :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`
+    type, which is the root parent for all form types in the Form component.
 
 Defining the Form Type
 ~~~~~~~~~~~~~~~~~~~~~~
