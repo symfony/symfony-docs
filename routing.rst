@@ -2194,7 +2194,8 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
     class SomeService
     {
         public function __construct(private UrlGeneratorInterface $router)
-        {}
+        {
+        }
 
         public function someMethod()
         {
