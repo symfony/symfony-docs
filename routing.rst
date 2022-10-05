@@ -2250,11 +2250,8 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
 
     class SomeService
     {
-        private $router;
-
-        public function __construct(UrlGeneratorInterface $router)
+        public function __construct(private UrlGeneratorInterface $router)
         {
-            $this->router = $router;
         }
 
         public function someMethod()
@@ -2369,13 +2366,9 @@ Now you'll get the expected results when generating URLs in your commands::
 
     class SomeCommand extends Command
     {
-        private $router;
-
-        public function __construct(RouterInterface $router)
+        public function __construct(private RouterInterface $router)
         {
             parent::__construct();
-
-            $this->router = $router;
         }
 
         protected function execute(InputInterface $input, OutputInterface $output): int
