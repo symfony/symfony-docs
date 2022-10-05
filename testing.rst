@@ -537,7 +537,7 @@ This allows you to create all types of requests you can think of:
 
 .. caution::
 
-    Before each request with the client, the client "resets" the container and recreates it from scratch.
+    Before each request, the client reboots the kernel, recreating the container from scratch.
     That gives each request an "isolated" environment because each request will create new service objects.
     But for example, when using the entity manager of Doctrine, all entities loaded with it are "lost"
     when a new request is sent (because the entity manager was "reset"). You have to query again entities if you want
