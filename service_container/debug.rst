@@ -21,9 +21,11 @@ To see a list of all of the available types that can be used for autowiring, run
 
     $ php bin/console debug:autowiring
 
-How to Debug Service Tags & List Tagged Services
-------------------------------------
-You can find out what services are tagged with a specific tag using the following command:
+Debugging Service Tags
+----------------------
+
+Run the following command to find out what services are :doc:`tagged </service_container/tags>`
+with a specific tag:
 
 .. code-block:: terminal
 
