@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-07-19T09:31:36Z
+
+Thanks for your review Christian. I'm very confused, so I don't know how to move forward. Is this an internal thing that shouldn't be documented ... or is there something missing in the docs to make this option more useful? Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-09-20T09:21:56Z
+
+I'm closing this PR because I don't know how to move forward and it's better than others take over this. Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-09-20T14:42:40Z
+
+@javiereguiluz you can reopen this PR and only revert all changes from `components/http_foundation.rst`. All other changes are valid once https://github.com/symfony/symfony/pull/47630 is merged (and I'm certain that it will be merged before 6.2 stable).
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-10-04T15:10:26Z
+
+I've reverted the wrong changes. Thanks for your review!
