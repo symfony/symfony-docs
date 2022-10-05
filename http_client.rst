@@ -379,11 +379,6 @@ immediately instead of waiting to receive the response::
 This component also supports :ref:`streaming responses <http-client-streaming-responses>`
 for full asynchronous applications.
 
-.. note::
-
-    HTTP compression and chunked transfer encoding are automatically enabled when
-    both your PHP runtime and the remote server support them.
-
 Authentication
 ~~~~~~~~~~~~~~
 
@@ -898,6 +893,20 @@ Add an ``extra.curl`` option in your configuration to pass those extra options::
 
     Some cURL options are impossible to override (e.g. because of thread safety)
     and you'll get an exception when trying to override them.
+
+HTTP Compression
+~~~~~~~~~~~~~~~~
+
+The HTTP header ``Accept-Encoding: gzip`` is added automatically if:
+
+* When using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
+* When using the native HTTP client: `Zlib PHP extension`_ is installed
+
+If the server does respond with a gzipped response, it's decoded transparently.
+To disable HTTP compression, send an ``Accept-Encoding: identity`` HTTP header.
+
+Chunked transfer encoding is enabled automatically if both your PHP runtime and
+the remote server supports it.
 
 HTTP/2 Support
 ~~~~~~~~~~~~~~
@@ -1970,6 +1979,7 @@ test it in a real application::
     }
 
 .. _`cURL PHP extension`: https://www.php.net/curl
+.. _`Zlib PHP extension`: https://www.php.net/zlib
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
 .. _`HTTPlug`: https://github.com/php-http/httplug/#readme
