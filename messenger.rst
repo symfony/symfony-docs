@@ -266,7 +266,18 @@ you can configure them to be sent to a transport:
 
 Thanks to this, the ``App\Message\SmsNotification`` will be sent to the ``async``
 transport and its handler(s) will *not* be called immediately. Any messages not
-matched under ``routing`` will still be handled immediately.
+matched under ``routing`` will still be handled immediately, i.e. synchronously.
+
+.. note::
+
+    You may use ``'*'`` as the message class. This will act as a default routing
+    rule for any message not matched under ``routing``. This is useful to ensure
+    no message is handled synchronously by default.
+
+    The only drawback is that ``'*'`` will also apply to the emails sent with the
+    Symfony Mailer (which uses ``SendEmailMessage`` when Messenger is available).
+    This could cause issues if your emails are not serializable (e.g. if they include
+    file attachments as PHP resources/streams).
 
 You can also route classes by their parent class or interface. Or send messages
 to multiple transports:
