@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by artyuum at 2022-07-12T20:05:42Z
+
+I've been doing this in few of our projects and it works well. I think I heard about this on the Symfony slack and not in the documentation, so it's a nice addition.
+
+---------------------------------------------------------------------------
+
+by clemherreman at 2022-07-18T15:58:44Z
+
+Before merging that PR, I'd like to add something.
+
+Using `*` as a default transport means all "system" messages, sent by the framework itself, will use that transport. That include `Symfony\Component\Mailer\Messenger\SendEmailMessage`, as the Mailer component detects that the Messenger component is there, and uses it to send email instead of sending it directly.
+
+This caused issues on my project, because `SendEmailMessage` was not always serializable, if you add an attachment to your email using a PHP resource/stream.
+
+I am not sure how to convey that complex information on the Symfony doc though. Maybe someone with more experience on writing could improve that?
