@@ -301,7 +301,7 @@ Methods to Pad and Trim
     u('template.html.twig')->trimSuffix('.html');            // 'template.html.twig'
     u('template.html.twig')->trimSuffix('.twig');            // 'template.html'
     u('template.html.twig')->trimSuffix('.html.twig');       // 'template'
-    // when passing an array of prefix/sufix, only the first one found is trimmed
+    // when passing an array of prefix/suffix, only the first one found is trimmed
     u('file-image-0001.png')->trimPrefix(['file-', 'image-']); // 'image-0001.png'
     u('template.html.twig')->trimSuffix(['.twig', '.html']);   // 'template.html'
 
