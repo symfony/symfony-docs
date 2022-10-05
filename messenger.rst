@@ -269,6 +269,11 @@ matched under ``routing`` will still be handled immediately, i.e. synchronously.
     rule for any message not matched under ``routing``. This is useful to ensure
     no message is handled synchronously by default.
 
+    The only drawback is that ``'*'`` will also apply to the emails sent with the
+    Symfony Mailer (which uses ``SendEmailMessage`` when Messenger is available).
+    This could cause issues if your emails are not serializable (e.g. if they include
+    file attachments as PHP resources/streams).
+
 You can also route classes by their parent class or interface. Or send messages
 to multiple transports:
 
