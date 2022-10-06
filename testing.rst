@@ -616,6 +616,15 @@ This allows you to create all types of requests you can think of:
     :ref:`framework.test <reference-framework-test>` option is enabled).
     This means you can override the service entirely if you need to.
 
+.. caution::
+
+    Before each request, the client reboots the kernel, recreating
+    the container from scratch.
+    This ensures that every requests are "isolated" using "new" service objects.
+    Also, it means that entities loaded by Doctrine repositories will
+    be "detached", so they will need to be refreshed by the manager or
+    queried again from a repository.
+
 Browsing the Site
 .................
 
@@ -976,16 +985,16 @@ Response Assertions
     Asserts the response format returned by the
     :method:`Symfony\\Component\\HttpFoundation\\Response::getFormat` method
     is the same as the expected value.
-``assertResponseIsUnprocessable(string $message = '')`` 
+``assertResponseIsUnprocessable(string $message = '')``
     Asserts the response is unprocessable (HTTP status is 422)
 
 .. versionadded:: 5.3
 
     The ``assertResponseFormatSame()`` method was introduced in Symfony 5.3.
-    
+
 .. versionadded:: 5.4
 
-    The ``assertResponseIsUnprocessable()`` method was introduced in Symfony 5.4.   
+    The ``assertResponseIsUnprocessable()`` method was introduced in Symfony 5.4.
 
 Request Assertions
 ..................
