@@ -165,7 +165,7 @@ Are you building an API? You can already return JSON from any controller::
         // ...
 
         #[Route('/api/hello/{name}', methods: ['GET'])]
-        public function apiHello(string$name): JsonResponse
+        public function apiHello(string $name): JsonResponse
         {
             return $this->json([
                 'name' => $name,
