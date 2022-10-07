@@ -1370,9 +1370,14 @@ when importing the routes.
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            // use the optional fourth argument of import() to exclude some files
-            // or subdirectories when loading annotations
-            $routes->import('../../src/Controller/', 'annotation')
+            $routes->import(
+                    '../../src/Controller/',
+                    'annotation',
+                    false,
+                    // the optional fourth argument is used to exclude some files
+                    // or subdirectories when loading annotations
+                    '../../src/Controller/{DebugEmailController}.php'
+                )
                 // this is added to the beginning of all imported route URLs
                 ->prefix('/blog')
 
@@ -1385,9 +1390,6 @@ when importing the routes.
 
                 // these requirements are added to all imported routes
                 ->requirements(['_locale' => 'en|es|fr'])
-
-                // you can optionally exclude some files/subdirectories when loading annotations
-                ->exclude('../../src/Controller/{DebugEmailController}.php')
             ;
         };
 
