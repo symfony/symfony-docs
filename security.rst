@@ -492,7 +492,8 @@ will be able to authenticate (e.g. login form, API token, etc).
                     security: false
                 main:
                     lazy: true
-                    provider: users_in_memory
+                    # provider that you set earlier inside providers
+                    provider: app_user_provider
 
                     # activate different ways to authenticate
                     # https://symfony.com/doc/current/security.html#firewalls-authentication
