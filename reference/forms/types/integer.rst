@@ -35,7 +35,7 @@ Field Options
 ``rounding_mode``
 ~~~~~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``\NumberFormatter::ROUND_HALFUP``
+**type**: ``integer`` **default**: ``\NumberFormatter::ROUND_DOWN``
 
 By default, if the user enters a non-integer number, it will be rounded
 down. You have several configurable options for that rounding. Each option
