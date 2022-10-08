@@ -1980,6 +1980,11 @@ A handler class can handle multiple messages or configure itself by implementing
         }
     }
 
+.. deprecated:: 6.2
+
+    :class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface` was deprecated in Symfony 6.2.
+    Use :class:`#[AsMessageHandler] <Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler>` attribute instead.
+
 Binding Handlers to Different Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
