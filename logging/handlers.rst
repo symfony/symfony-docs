@@ -83,10 +83,6 @@ To use it, declare it as a service:
             )
         ;
 
-.. versionadded:: 5.4
-
-    The ``$elasticsearchVersion`` argument was introduced in Symfony 5.4.
-
 Then reference it in the Monolog configuration:
 
 .. configuration-block::
