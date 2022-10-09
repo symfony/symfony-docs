@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by maxhelias at 2021-04-04T11:14:02Z
+
+> I'm extending AbstractController to have access to $this->generateUrl() - is this the easiest/best way?
+
+IMO you don't have to do that but rather inject the url generation service `Symfony\Component\Routing\Generator\UrlGeneratorInterface`
