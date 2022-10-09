@@ -8,6 +8,8 @@ Whenever you write a new line of code, you also potentially add new bugs.
 To build better and more reliable applications, you should test your code
 using both functional and unit tests.
 
+.. _testing-installation:
+
 The PHPUnit Testing Framework
 -----------------------------
 
