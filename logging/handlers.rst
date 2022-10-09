@@ -26,6 +26,16 @@ To use it, declare it as a service:
         services:
             Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler: ~
 
+            # optionally, configure the handler using the constructor arguments (shown values are default)
+            Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler: ~
+                arguments:
+                    $endpoint: "http://127.0.0.1:9200"
+                    $index: "monolog"
+                    $client: null
+                    $level: !php/const Monolog\Logger::DEBUG
+                    $bubble: true
+                    $elasticsearchVersion: '1.0.0'
+
     .. code-block:: xml
 
         <!-- config/services.xml -->
@@ -40,15 +50,42 @@ To use it, declare it as a service:
 
             <services>
                 <service id="Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler"/>
+
+                <!-- optionally, configure the handler using the constructor arguments (shown values are default) -->
+                <service id="Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler">
+                    <argument key="endpoint">http://127.0.0.1:9200</argument>
+                    <argument key="index">monolog</argument>
+                    <argument key="client"/>
+                    <argument key="level" type="constant">Monolog\Logger::DEBUG</argument>
+                    <argument key="bubble">true</argument>
+                    <argument key="elasticsearchVersion">1.0.0</argument>
+                </service>
             </services>
         </container>
 
     .. code-block:: php
 
         // config/services.php
+        use Monolog\Logger;
         use Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler;
 
         $container->register(ElasticsearchLogstashHandler::class);
+
+        // optionally, configure the handler using the constructor arguments (shown values are default)
+        $container->register(ElasticsearchLogstashHandler::class)
+            ->setArguments(
+                '$endpoint' => "http://127.0.0.1:9200",
+                '$index' => "monolog",
+                '$client' => null,
+                '$level' => Logger::DEBUG,
+                '$bubble' => true,
+                '$elasticsearchVersion' => '1.0.0',
+            )
+        ;
+
+.. versionadded:: 5.4
+
+    The ``$elasticsearchVersion`` argument was introduced in Symfony 5.4.
 
 Then reference it in the Monolog configuration:
 
