@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2021-06-17T10:18:46Z
+
+Hi @sudo-barun! Thanks for taking the time to submit a PR.
+
+However, I'm unsure if I can follow why you proposed this change. The existing example is a direct copy from the 5.3 testing recipe: https://github.com/symfony/recipes/blob/master/symfony/phpunit-bridge/5.3/tests/bootstrap.php (this probably changed since 4.4, which explains why 4.4 and 5.3 are different)
+
+---------------------------------------------------------------------------
+
+by sudo-barun at 2021-06-17T10:46:44Z
+
+Hi @wouterj
+
+If you look at https://symfony.com/doc/5.3/testing/bootstrap.html, you can see that the first paragraph talks about "clearing the cache", but the code sample does not show anything about clearing cache.
+
+I hope this clarifies your question. Let me know if there is any modification to be made.
