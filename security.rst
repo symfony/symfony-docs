@@ -1771,13 +1771,18 @@ to execute custom logic::
     // src/EventListener/LogoutSubscriber.php
     namespace App\EventListener;
 
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\RedirectResponse;
+    use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Security\Http\Event\LogoutEvent;
 
-    class LogoutSubscriber extends AbstractController implements EventSubscriberInterface
+    class LogoutSubscriber implements EventSubscriberInterface
     {
+        public function __construct(
+            private UrlGeneratorInterface $urlGenerator
+        ) {
+        }
+
         public static function getSubscribedEvents(): array
         {
             return [LogoutEvent::class => 'onLogout'];
@@ -1794,10 +1799,12 @@ to execute custom logic::
             // get the current response, if it is already set by another listener
             $response = $event->getResponse();
 
-            // configure a custom logout response
-            $event->setResponse(
-                new RedirectResponse($this->generateUrl('homepage', []), RedirectResponse::HTTP_SEE_OTHER)
+            // configure a custom logout response to the homepage
+            $response = new RedirectResponse(
+                $this->urlGenerator->generate('homepage'),
+                RedirectResponse::HTTP_SEE_OTHER
             );
+            $event->setResponse($response);
         }
     }
 
