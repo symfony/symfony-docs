@@ -34,6 +34,7 @@ To use it, declare it as a service:
                     $client: null
                     $level: !php/const Monolog\Logger::DEBUG
                     $bubble: true
+                    $elasticsearchVersion: '1.0.0'
 
     .. code-block:: xml
 
@@ -57,6 +58,7 @@ To use it, declare it as a service:
                     <argument key="client"/>
                     <argument key="level" type="constant">Monolog\Logger::DEBUG</argument>
                     <argument key="bubble">true</argument>
+                    <argument key="elasticsearchVersion">1.0.0</argument>
                 </service>
             </services>
         </container>
@@ -77,8 +79,13 @@ To use it, declare it as a service:
                 '$client' => null,
                 '$level' => Logger::DEBUG,
                 '$bubble' => true,
+                '$elasticsearchVersion' => '1.0.0',
             )
         ;
+
+.. versionadded:: 5.4
+
+    The ``$elasticsearchVersion`` argument was introduced in Symfony 5.4.
 
 Then reference it in the Monolog configuration:
 
