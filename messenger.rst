@@ -70,12 +70,6 @@ message class (or a message interface)::
         }
     }
 
-.. note::
-
-    You can also create a class without the attribute (e.g. if you're
-    using PHP 7.4), by implementing :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
-    instead.
-
 Thanks to :ref:`autoconfiguration <services-autoconfigure>` and the ``SmsNotification``
 type-hint, Symfony knows that this handler should be called when an ``SmsNotification``
 message is dispatched. Most of the time, this is all you need to do. But you can
