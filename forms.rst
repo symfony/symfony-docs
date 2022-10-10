@@ -862,13 +862,13 @@ Form Type Guessing
 ~~~~~~~~~~~~~~~~~~
 
 If the object handled by the form includes validation constraints, Symfony can
-introspect that metadata to guess the type of your field and set it up for you.
-In the above example, Symfony can guess from the validation rules that both the
+introspect that metadata to guess the type of your field.
+In the above example, Symfony can guess from the validation rules that the
 ``task`` field is a normal ``TextType`` field and the ``dueDate`` field is a
 ``DateType`` field.
 
-When building the form, omit the second argument to the ``add()`` method, or
-pass ``null`` to it, to enable Symfony's "guessing mechanism"::
+To enable Symfony's "guessing mechanism", omit the second argument to the ``add()`` method, or
+pass ``null`` to it::
 
     // src/Form/Type/TaskType.php
     namespace App\Form\Type;
@@ -903,23 +903,21 @@ pass ``null`` to it, to enable Symfony's "guessing mechanism"::
 Form Type Options Guessing
 ..........................
 
-When the guessing mechanism is enabled for some field (i.e. you omit or pass
-``null`` as the second argument to ``add()``), in addition to its form type,
-the following options can be guessed too:
+When the guessing mechanism is enabled for some field, in addition to its form type,
+the following options will be guessed too:
 
 ``required``
-    The ``required`` option can be guessed based on the validation rules (i.e. is
+    The ``required`` option is guessed based on the validation rules (i.e. is
     the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (i.e. is the
     field ``nullable``). This is very useful, as your client-side validation will
     automatically match your validation rules.
 
 ``maxlength``
     If the field is some sort of text field, then the ``maxlength`` option attribute
-    can be guessed from the validation constraints (if ``Length`` or ``Range`` is used)
+    is guessed from the validation constraints (if ``Length`` or ``Range`` is used)
     or from the :doc:`Doctrine </doctrine>` metadata (via the field's length).
 
-If you'd like to change one of the guessed values, override it by passing the
-option in the options field array::
+If you'd like to change one of the guessed values, override it in the options field array::
 
     ->add('task', null, ['attr' => ['maxlength' => 4]])
 
