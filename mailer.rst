@@ -478,9 +478,9 @@ file or stream::
     $email = (new Email())
         // ...
         // get the image contents from a PHP resource
-        ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo')
+        ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png')
         // get the image contents from an existing file
-        ->embedFromPath('/path/to/images/signature.gif', 'footer-signature')
+        ->embedFromPath('/path/to/images/signature.gif', 'footer-signature', 'image/gif')
     ;
 
 The second optional argument of both methods is the image name ("Content-ID" in
@@ -489,8 +489,8 @@ images inside the HTML contents::
 
     $email = (new Email())
         // ...
-        ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo')
-        ->embedFromPath('/path/to/images/signature.gif', 'footer-signature')
+        ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png')
+        ->embedFromPath('/path/to/images/signature.gif', 'footer-signature', 'image/gif')
 
         // reference images using the syntax 'cid:' + "image embed name"
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
