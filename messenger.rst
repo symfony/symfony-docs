@@ -70,12 +70,6 @@ message class (or a message interface)::
         }
     }
 
-.. note::
-
-    You can also create a class without the attribute (e.g. if you're
-    using PHP 7.4), by implementing :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
-    instead.
-
 .. tip::
 
     You can also use the ``#[AsMessageHandler]`` attribute on individual class
