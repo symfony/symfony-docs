@@ -44,6 +44,7 @@ output of the command and ``getErrorOutput()`` the content of the error
 output. Alternatively, the :method:`Symfony\\Component\\Process\\Process::getIncrementalOutput`
 and :method:`Symfony\\Component\\Process\\Process::getIncrementalErrorOutput`
 methods return the new output since the last call.
+If you want any output regardless if it origins from stdout or stderr, use ``getAnyOutput()``.
 
 The :method:`Symfony\\Component\\Process\\Process::clearOutput` method clears
 the contents of the output and
@@ -512,7 +513,7 @@ Use :method:`Symfony\\Component\\Process\\Process::disableOutput` and
     You cannot enable or disable the output while the process is running.
 
     If you disable the output, you cannot access ``getOutput()``,
-    ``getIncrementalOutput()``, ``getErrorOutput()``, ``getIncrementalErrorOutput()`` or
+    ``getIncrementalOutput()``, ``getErrorOutput()``, ``getAnyOutput()``, ``getIncrementalErrorOutput()`` or
     ``setIdleTimeout()``.
 
     However, it is possible to pass a callback to the ``start``, ``run`` or ``mustRun``
