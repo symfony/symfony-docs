@@ -6,6 +6,10 @@ Enabling Vue.js (``vue-loader``)
 
     Do you prefer video tutorials? Check out the `Vue screencast series`_.
 
+.. tip::
+
+    Check out live demos of Symfony UX Vue component at `https://ux.symfony.com/vue`_!
+    
 Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
 .. code-block:: diff
@@ -180,3 +184,4 @@ following in your Twig templates:
 .. _`Scoped Styles`: https://vue-loader.vuejs.org/guide/scoped-css.html
 .. _`CSS Modules`: https://github.com/css-modules/css-modules
 .. _`Vue screencast series`: https://symfonycasts.com/screencast/vue
+.. _`https://ux.symfony.com/vue`: https://ux.symfony.com/vue
