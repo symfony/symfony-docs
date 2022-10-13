@@ -23,7 +23,9 @@ you to send SMS messages::
                 // the phone number to send the SMS message to
                 '+1411111111',
                 // the message
-                'A new login was detected!'
+                'A new login was detected!',
+                // optionally, you can override default "from" defined in transports
+                '+1422222222',
             );
 
             $sentMessage = $texter->send($sms);
@@ -31,6 +33,10 @@ you to send SMS messages::
             // ...
         }
     }
+
+.. versionadded:: 6.2
+
+    The 3rd argument of ``SmsMessage`` (``$from``) was introduced in Symfony 6.2.
 
 The ``send()`` method returns a variable of type
 :class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
