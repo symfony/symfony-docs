@@ -12,7 +12,7 @@ This adapter allows combining any number of the other
 fetched from the first adapter containing them and cache items are saved to all the
 given adapters. This exposes a simple and efficient method for creating a layered cache.
 
-The ChainAdapter must be provided an array of adapters and optionally a maximum cache
+The ChainAdapter must be provided an array of adapters and optionally a default cache
 lifetime as its constructor arguments::
 
     use Symfony\Component\Cache\Adapter\ChainAdapter;
@@ -21,8 +21,8 @@ lifetime as its constructor arguments::
         // The ordered list of adapters used to fetch cached items
         array $adapters,
 
-        // The max lifetime of items propagated from lower adapters to upper ones
-        $maxLifetime = 0
+        // The default lifetime of items propagated from lower adapters to upper ones
+        $defaultLifetime = 0
     );
 
 .. note::
