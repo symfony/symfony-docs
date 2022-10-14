@@ -6,6 +6,10 @@ Enabling React.js
 
     Do you prefer video tutorials? Check out the `React.js screencast series`_.
 
+.. tip::
+
+    Check out live demos of Symfony UX React component at `https://ux.symfony.com/react`_!
+    
 Using React? First add some dependencies with Yarn:
 
 .. code-block:: terminal
@@ -36,3 +40,4 @@ Encore, you're done!
 Your ``.js`` and ``.jsx`` files will now be transformed through ``babel-preset-react``.
 
 .. _`React.js screencast series`: https://symfonycasts.com/screencast/reactjs
+.. _`https://ux.symfony.com/react`: https://ux.symfony.com/react
