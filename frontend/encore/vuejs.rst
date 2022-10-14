@@ -8,7 +8,7 @@ Enabling Vue.js (``vue-loader``)
 
 .. tip::
 
-    Check out live demos of Symfony UX Vue component at `https://ux.symfony.com/vue`_!
+    Check out live demos of Symfony UX Vue.js component at `https://ux.symfony.com/vue`_!
     
 Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
