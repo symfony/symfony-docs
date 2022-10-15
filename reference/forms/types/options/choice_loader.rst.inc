@@ -17,7 +17,7 @@ if you want to take advantage of lazy loading::
     // ...
 
     $builder->add('loaded_choices', ChoiceType::class, [
-        'choice_loader' => new CallbackChoiceLoader(function() {
+        'choice_loader' => new CallbackChoiceLoader(function () {
             return StaticClass::getConstants();
         }),
     ]);
