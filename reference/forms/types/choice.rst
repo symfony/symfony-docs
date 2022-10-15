@@ -321,5 +321,5 @@ Field Variables
 
 .. tip::
 
-    It's significantly faster to use the :ref:`form-twig-selectedchoice`
+    It's significantly faster to use the :ref:`selectedchoice <form-twig-selectedchoice>`
     test instead when using Twig.
