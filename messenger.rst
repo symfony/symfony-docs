@@ -667,7 +667,7 @@ of some or all transports:
     $ php bin/console messenger:stats my_transport_name other_transport_name
 
 .. note::
-    
+
     In order for this command to work, the configured transport's receiver must implement
     :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\MessageCountAwareInterface`.
 
@@ -1061,7 +1061,7 @@ to retry them:
 
     # see all messages in the failure transport with a default limit of 50
     $ php bin/console messenger:failed:show
-    
+
     # see the 10 first messages
     $ php bin/console messenger:failed:show --max=10
 
@@ -1935,49 +1935,38 @@ Possible options to configure with tags are:
 * ``method``
 * ``priority``
 
-Handler Subscriber & Options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _handler-subscriber-options:
 
-A handler class can handle multiple messages or configure itself by implementing
-:class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface`::
+Handling Multiple Messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A handler class can handle multiple messages. For that add the ``#AsMessageHandler`` attribute to the handling methods::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
 
     use App\Message\OtherSmsNotification;
     use App\Message\SmsNotification;
-    use Symfony\Component\Messenger\Handler\MessageSubscriberInterface;
 
-    class SmsNotificationHandler implements MessageSubscriberInterface
+    class SmsNotificationHandler
     {
-        public function __invoke(SmsNotification $message)
+        #[AsMessageHandler]
+        public function handleSmsNotification(SmsNotification $message)
         {
             // ...
         }
 
+        #[AsMessageHandler]
         public function handleOtherSmsNotification(OtherSmsNotification $message)
         {
             // ...
-        }
-
-        public static function getHandledMessages(): iterable
-        {
-            // handle this message on __invoke
-            yield SmsNotification::class;
-
-            // also handle this message on handleOtherSmsNotification
-            yield OtherSmsNotification::class => [
-                'method' => 'handleOtherSmsNotification',
-                //'priority' => 0,
-                //'bus' => 'messenger.bus.default',
-            ];
         }
     }
 
 .. deprecated:: 6.2
 
-    :class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface` was deprecated in Symfony 6.2.
-    Use :class:`#[AsMessageHandler] <Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler>` attribute instead.
+    Implementing the :class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface` is another way to
+    handle multiple messages with one handler class. This interface was deprecated in Symfony 6.2.
 
 Binding Handlers to Different Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2002,20 +1991,13 @@ To do this, add the ``from_transport`` option to each handler. For example::
     namespace App\MessageHandler;
 
     use App\Message\UploadedImage;
-    use Symfony\Component\Messenger\Handler\MessageSubscriberInterface;
 
-    class ThumbnailUploadedImageHandler implements MessageSubscriberInterface
+    #[AsMessageHandler(from_transport: 'image_transport')]
+    class ThumbnailUploadedImageHandler
     {
         public function __invoke(UploadedImage $uploadedImage)
         {
             // do some thumbnailing
-        }
-
-        public static function getHandledMessages(): iterable
-        {
-            yield UploadedImage::class => [
-                'from_transport' => 'image_transport',
-            ];
         }
     }
 
@@ -2024,16 +2006,10 @@ And similarly::
     // src/MessageHandler/NotifyAboutNewUploadedImageHandler.php
     // ...
 
-    class NotifyAboutNewUploadedImageHandler implements MessageSubscriberInterface
+    #[AsMessageHandler(from_transport: 'async_priority_normal')]
+    class NotifyAboutNewUploadedImageHandler
     {
         // ...
-
-        public static function getHandledMessages(): iterable
-        {
-            yield UploadedImage::class => [
-                'from_transport' => 'async_priority_normal',
-            ];
-        }
     }
 
 Then, make sure to "route" your message to *both* transports:
