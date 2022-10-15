@@ -1940,7 +1940,8 @@ Possible options to configure with tags are:
 Handling Multiple Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A handler class can handle multiple messages. For that add the ``#AsMessageHandler`` attribute to the handling methods::
+A single handler class can handle multiple messages. For that add the
+``#AsMessageHandler`` attribute to all the handling methods::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
@@ -1965,8 +1966,9 @@ A handler class can handle multiple messages. For that add the ``#AsMessageHandl
 
 .. deprecated:: 6.2
 
-    Implementing the :class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface` is another way to
-    handle multiple messages with one handler class. This interface was deprecated in Symfony 6.2.
+    Implementing the :class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface`
+    is another way to handle multiple messages with one handler class. This
+    interface was deprecated in Symfony 6.2.
 
 Binding Handlers to Different Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
