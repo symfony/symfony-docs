@@ -59,7 +59,7 @@ You can specify the placeholder values as follows::
                 return [];
             }
 
-            return ['%company%' => 'ACME Inc.']
+            return ['%company%' => 'ACME Inc.'];
         },
     ]);
 
