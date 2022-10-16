@@ -170,7 +170,10 @@ Symfony provides the following env var processors:
             # config/packages/security.yaml
             parameters:
                 env(HEALTH_CHECK_METHOD): 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD'
+
             security:
+                # ...
+
                 access_control:
                     - { path: '^/health-check$', methods: '%env(const:HEALTH_CHECK_METHOD)%' }
 
@@ -189,6 +192,8 @@ Symfony provides the following env var processors:
                 </srv:parameters>
 
                 <config>
+                    <!-- ... -->
+
                     <rule path="^/health-check$" methods="%env(const:HEALTH_CHECK_METHOD)%"/>
                 </config>
             </srv:container>
@@ -206,6 +211,8 @@ Symfony provides the following env var processors:
                 ;
 
                 $container->extension('security', [
+                    // ...
+
                     'access_control' => [
                         [
                             'path' => '^/health-check$',
@@ -286,11 +293,13 @@ Symfony provides the following env var processors:
 
             <!-- config/packages/sentry.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
-            <srv:container xmlns="sentry"
+            <srv:container xmlns="https://sentry.io/schema/dic/sentry-symfony"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:srv="http://symfony.com/schema/dic/services"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    https://sentry.io/schema/dic/sentry-symfony
+                    https://sentry.io/schema/dic/sentry-symfony/sentry-1.0.xsd"
             >
                 <srv:parameters>
                     <srv:parameter key="env(HOST)">10.0.0.1</srv:parameter>
