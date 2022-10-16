@@ -1724,7 +1724,7 @@ That's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
 Symfony will un-authenticate the current user and redirect them.
 
 Logout programmatically
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 6.2
 
@@ -1737,14 +1737,12 @@ Logout programmatically
     The :method:`Symfony\\Bundle\\SecurityBundle\\Security\\Security::logout`
     method was introduced in Symfony 6.2.
 
-You can logout user programmatically using the `logout()` method of the
-:class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` helper. The user will be logout from the current firewall
-in the request. If the current request is not behind a firewall a ``\LogicException`` will be thrown. ::
+You can logout user programmatically using the ``logout()`` method of the
+:class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` helper::
 
     // src/Controller/SecurityController.php
     namespace App\Controller\SecurityController;
 
-    use App\Security\Authenticator\ExampleAuthenticator;
     use Symfony\Bundle\SecurityBundle\Security\Security;
 
     class SecurityController
@@ -1752,19 +1750,17 @@ in the request. If the current request is not behind a firewall a ``\LogicExcept
         public function someAction(Security $security): Response
         {
             // logout the user in on the current firewall
-            $response = $this->security->logout();
+            $response = $security->logout();
 
-            // You can also disable the csrf logout
-            $response = $this->security->logout(false);
+            // you can also disable the csrf logout
+            $response = $security->logout(false);
 
-            if ($response !== null) {
-                return $response;
-            }
-
-            // Redirect to the homepage for instance
-            // ...
+            // ... return $response (if set) or e.g. redirect to the homepage
         }
     }
+
+The user will be logout from the firewall of the request. If the request is
+not behind a firewall a ``\LogicException`` will be thrown.
 
 Customizing Logout
 ~~~~~~~~~~~~~~~~~~
