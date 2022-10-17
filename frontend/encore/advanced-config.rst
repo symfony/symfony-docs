@@ -230,6 +230,7 @@ The following loaders are configurable with ``configureLoaderRule()``:
   - ``sass`` (alias ``scss``)
   - ``less``
   - ``stylus``
+  - ``svelte``
   - ``vue``
   - ``eslint``
   - ``typescript`` (alias ``ts``)
