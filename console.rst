@@ -496,6 +496,8 @@ console::
 
                 // prefix the key with two dashes when passing options,
                 // e.g: '--some-option' => 'option_value',
+                // use brackets for testing array value,
+                // e.g: '--some-option' => ['option_value'],
             ]);
 
             $commandTester->assertCommandIsSuccessful();
