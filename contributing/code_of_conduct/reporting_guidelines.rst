@@ -93,6 +93,6 @@ Reporting Guidelines derived from those of the `Stumptown Syndicate`_ and the
 
 Adopted by `Symfony`_ organizers on 21 February 2018.
 
-.. _`Stumptown Syndicate`: http://stumptownsyndicate.org/code-of-conduct/reporting-guidelines/
+.. _`Stumptown Syndicate`: https://github.com/stumpsyn/policies/blob/master/reporting_guidelines.md/
 .. _`Django Software Foundation`: https://www.djangoproject.com/conduct/reporting/
 .. _`Symfony`: https://symfony.com
