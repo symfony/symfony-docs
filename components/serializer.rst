@@ -797,13 +797,17 @@ The Serializer component provides several built-in normalizers:
     parent classes) by using `PHP reflection`_. It supports calling the constructor
     during the denormalization process.
 
-.. versionadded:: 6.2
+    Objects are normalized to a map of property names to property values.
 
-    You can change normalization visibility by setting the serializer context option
-    ``PropertyNormalizer::NORMALIZE_VISIBILITY`` and combine ``PropertyNormalizer::NORMALIZE_PUBLIC``,
+    If you prefer to only normalize certain properties (e.g. only public properties)
+    set the ``PropertyNormalizer::NORMALIZE_VISIBILITY`` context option and
+    combine the following values: ``PropertyNormalizer::NORMALIZE_PUBLIC``,
     ``PropertyNormalizer::NORMALIZE_PROTECTED`` or ``PropertyNormalizer::NORMALIZE_PRIVATE``.
 
-    Objects are normalized to a map of property names to property values.
+    .. versionadded:: 6.2
+
+        The ``PropertyNormalizer::NORMALIZE_VISIBILITY`` context option and its
+        values were introduced in Symfony 6.2.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
     This normalizer works with classes that implement :phpclass:`JsonSerializable`.
