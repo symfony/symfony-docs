@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-10-10T14:28:24Z
+
+Thanks Ryan!
+
+I added `Waiting Code Merge` label because I think we need a new release/tag on Encore repository before merging this.
+
+---------------------------------------------------------------------------
+
+by zairigimad at 2022-10-10T17:40:34Z
+
+Hello Ryan what about a new page like this one to demonstrate the `enableSvelte` ?
+https://symfony.com/doc/current/frontend/encore/reactjs.html
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-10-12T13:42:55Z
+
+@zairigimad Yes, probably - but it should also mention https://github.com/symfony/ux/pull/498 and both React and Vue pages need to be updated to mention to mention their UX components as well. I'd love if someone made a PR to the docs for all of that ;)
+
+---------------------------------------------------------------------------
+
+by zairigimad at 2022-10-12T13:48:44Z
+
+> @zairigimad Yes, probably - but it should also mention [symfony/ux#498](https://github.com/symfony/ux/pull/498) and both React and Vue pages need to be updated to mention to mention their UX components as well. I'd love if someone made a PR to the docs for all of that ;)
+
+I can add a note 🗒️ in React an Vue pages to mentien symfony ux :D
