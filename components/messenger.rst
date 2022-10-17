@@ -347,4 +347,4 @@ Learn more
     /messenger/*
 
 .. _`blog posts about command buses`: https://matthiasnoback.nl/tags/command%20bus/
-.. _`SimpleBus project`: http://docs.simplebus.io/en/latest/
+.. _`SimpleBus project`: https://docs.simplebus.io/en/latest/
