@@ -100,7 +100,7 @@ According to `the Preload specification`_, when an HTTP/2 server detects that
 the original (HTTP 1.x) response contains this HTTP header, it will
 automatically trigger a push for the related file in the same HTTP/2 connection.
 
-Popular proxy services and CDNs including `Cloudflare`_ and `Fastly`_
+Popular proxy services and CDNs including `Cloudflare`_, `Fastly`_ and `Akamai`_
 also leverage this feature. It means that you can push resources to clients and
 improve performance of your applications in production right now.
 
@@ -187,5 +187,6 @@ You can also add links to the HTTP response directly from controllers and servic
 .. _`the Preload specification`: https://www.w3.org/TR/preload/#server-push-http-2
 .. _`Cloudflare`: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
 .. _`Fastly`: https://docs.fastly.com/en/guides/http2-server-push
+.. _`Akamai`: https://http2.akamai.com/
 .. _`link defined in the HTML specification`: https://html.spec.whatwg.org/dev/links.html#linkTypes
 .. _`PSR-13`: https://www.php-fig.org/psr/psr-13/
