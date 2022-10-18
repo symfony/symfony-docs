@@ -177,13 +177,7 @@ configuration:
 Using Serialization Groups Annotations
 --------------------------------------
 
-To use annotations, first add support for them via the SensioFrameworkExtraBundle:
-
-.. code-block:: terminal
-
-    $ composer require sensio/framework-extra-bundle
-
-Next, add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
+You can add the :ref:`@Groups annotations <component-serializer-attributes-groups-annotations>`
 to your class::
 
     // src/Entity/Product.php
