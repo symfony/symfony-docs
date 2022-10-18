@@ -1057,6 +1057,14 @@ is sent::
         }
     }
 
+.. tip::
+
+    The ``MessageEvent`` is also used internally. Depending on your use case
+    you might need to set a lower or higher priority for your own listener.
+    For example, when you want to sign the message, make sure to use ``-1``
+    or lower so the body has already been rendered and will not change after
+    signing.
+
 Development & Debugging
 -----------------------
 
