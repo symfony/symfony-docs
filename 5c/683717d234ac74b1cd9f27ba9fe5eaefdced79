@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2022-08-09T22:57:17Z
+
+Just reading on https://symfony.com/doc/current/security/login_link.html#configure-a-maximum-use-of-a-link that the cache is not cleared:
+> The cache pools are not cleared by the cache:clear command, but removing var/cache/ manually may remove the cache if the cache component is configured to store its cache in that location.
+
+So the solution is maybe to just include the same info on this page too.
+
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2022-08-12T11:26:46Z
+
+Can these cache pools be cleared with `bin/console cache:pool:clear`? See https://symfony.com/doc/current/cache.html#clearing-the-cache
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2022-08-15T16:50:19Z
+
+When I'm doing `cache:clear` (as recommended at https://symfony.com/doc/5.4/deployment.html#d-clear-your-symfony-cache), I'm getting the `login_throttling` counter reset. So at https://symfony.com/doc/5.4/security.html#limiting-login-attempts it should also be explained, that the counter will be reset on every deploy.
+Can somebody confirm this?
