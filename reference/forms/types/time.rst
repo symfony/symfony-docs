@@ -237,4 +237,4 @@ Form Variables
 |              |             | contains the input type to use (``datetime``, ``date`` or ``time``). |
 +--------------+-------------+----------------------------------------------------------------------+
 
-.. _`PHP time format`: https://secure.php.net/manual/en/function.date.php
+.. _`PHP time format`: https://php.net/manual/en/function.date.php
