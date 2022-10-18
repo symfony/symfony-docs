@@ -260,7 +260,7 @@ the console::
             '',
         ]);
 
-        // the value returned by someMethod() can be an iterator (https://secure.php.net/iterator)
+        // the value returned by someMethod() can be an iterator (https://php.net/iterator)
         // that generates and returns the messages with the 'yield' PHP keyword
         $output->writeln($this->someMethod());
 
