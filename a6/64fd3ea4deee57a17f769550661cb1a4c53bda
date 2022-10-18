@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-10-17T08:14:10Z
+
+@rogamoore thanks for helping us improve the docs. However, there's something I don't fully understand yet.
+
+According to Symfony Docs, email signing is done explicitly by developers (e.g. by calling `$signedEmail = $signer->sign($email);`). So, why would the email signing feature use the `MessageEvent` ?
+
+---------------------------------------------------------------------------
+
+by rogamoore at 2022-10-17T09:21:15Z
+
+@javiereguiluz Thanks for your feedback.
+Let's say you want to sign all outgoing emails. If you have more than one place where you create & send emails, it's easier to create a listener, so you do not need to repeat the code for signing the email.
+
+According to the Symfony Docs (https://symfony.com/doc/current/mailer.html#messageevent)
+the `MessageEvent` is perfect for this use case.
+>`MessageEvent` allows to change the Message and the Envelope before the email is sent
+
+So you could do:
+```php
+// ...
+
+class MailerSubscriber implements EventSubscriberInterface
+{
+    // ...
+
+    public function onMessage(MessageEvent $event): void
+    {
+        $message = $event->getMessage();
+        if (!$message instanceof Email) {
+            return;
+        }
+
+        $signedEmail = $this->signer->sign($message);
+        $event->setMessage($signedEmail);
+
+    }
+}
+```
+
+However, when you run this code, you will notice that the signature is invalid.
+The reason is, that at this point the message body (which could be a twig template) hasn't been rendered yet. So the signature will be calculated based on a message without body.
+The body rendering happens in the `MessageListener` here: https://github.com/symfony/symfony/blob/b7ce8f23d3854d5417eacefa99af8e20e0841a52/src/Symfony/Component/Mailer/EventListener/MessageListener.php#L74
+This listener has priority 0, our own listener as well. So to make sure, that `MessageListener` runs before our listener, we need to set a lower priority (-1).
