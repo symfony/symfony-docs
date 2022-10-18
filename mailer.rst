@@ -1,4 +1,4 @@
-Sending Emails with Mailer
+17340Sending Emails with Mailer
 ==========================
 
 .. versionadded:: 4.3
@@ -793,6 +793,8 @@ This makes use of the :ref:`css Twig namespace <mailer-css-namespace>` we create
 earlier. You could, for example, `download the foundation-emails.css file`_
 directly from GitHub and save it in ``assets/css``.
 
+.. _signing-and-encrypting-messages:
+
 Signing and Encrypting Messages
 -------------------------------
 
@@ -1059,11 +1061,10 @@ is sent::
 
 .. tip::
 
-    The ``MessageEvent`` is also used internally. Depending on your use case
-    you might need to set a lower or higher priority for your own listener.
-    For example, when you want to sign the message, make sure to use ``-1``
-    or lower so the body has already been rendered and will not change after
-    signing.
+    When using a ``MessageEvent`` listener to
+    :doc:`sign the email contents <signing-and-encrypting-messages>`, run it as
+    late as possible (e.g. setting a negative priority for it) so the email
+    contents are not set or modified after signing them.
 
 Development & Debugging
 -----------------------
