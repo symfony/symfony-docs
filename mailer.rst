@@ -1,4 +1,4 @@
-17340Sending Emails with Mailer
+Sending Emails with Mailer
 ==========================
 
 .. versionadded:: 4.3
