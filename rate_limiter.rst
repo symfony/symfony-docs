@@ -356,6 +356,8 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
         }
     }
 
+.. _rate-limiter-storage:
+
 Storing Rate Limiter State
 --------------------------
 
