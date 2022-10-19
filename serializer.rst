@@ -157,6 +157,109 @@ configuration:
             ;
         };
 
+You can also specify the context on a per-property basis::
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Annotation\Context;
+        use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+
+        class Person
+        {
+            /**
+             * @Context({ DateTimeNormalizer::FORMAT_KEY = 'Y-m-d' })
+             */
+            public $createdAt;
+
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Annotation\Context;
+        use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+
+        class Person
+        {
+            #[Context([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
+            public $createdAt;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        App\Model\Person:
+            attributes:
+                createdAt:
+                    context:
+                        datetime_format: 'Y-m-d'
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\Model\Person">
+                <attribute name="createdAt">
+                    <context>
+                        <entry name="datetime_format">Y-m-d</entry>
+                    </context>
+                </attribute>
+            </class>
+        </serializer>
+
+Use the options to specify context specific to normalization or denormalization::
+
+    namespace App\Model;
+
+    use Symfony\Component\Serializer\Annotation\Context;
+    use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+
+    class Person
+    {
+        #[Context(
+            normalizationContext: [DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'],
+            denormalizationContext: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339],
+        )]
+        public $createdAt;
+
+        // ...
+    }
+
+You can also restrict the usage of a context to some groups::
+
+    namespace App\Model;
+
+    use Symfony\Component\Serializer\Annotation\Context;
+    use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+
+    class Person
+    {
+        #[Serializer\Groups(['extended'])]
+        #[Serializer\Context([DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339])]
+        #[Serializer\Context(
+            context: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339_EXTENDED],
+            groups: ['extended'],
+        )]
+        public $createdAt;
+
+        // ...
+    }
+
+The attribute/annotation can be repeated as much as needed on a single property.
+Context without group is always applied first. Then context for the matching
+groups are merged in the provided order.
+
 .. _serializer-using-serialization-groups-annotations:
 .. _serializer-using-serialization-groups-attributes:
 
