@@ -1462,6 +1462,10 @@ You must enable this using the ``login_throttling`` setting:
 
     The ``login_throttling.interval`` option was introduced in Symfony 5.3.
 
+Internally, Symfony uses the :doc:`Rate Limiter component </rate_limiter>`
+which by default uses Symfony's cache to store the previous login attempts.
+However, you can implement a :ref:`custom storage <rate-limiter-storage>`.
+
 Login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
 failed requests for ``IP address``. The second limit protects against an
