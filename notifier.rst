@@ -69,7 +69,7 @@ Clickatell       ``symfony/clickatell-notifier``        ``clickatell://ACCESS_TO
 ContactEveryone  ``symfony/contact-everyone-notifier``  ``contact-everyone://TOKEN@default?&diffusionname=DIFFUSION_NAME&category=CATEGORY``
 Esendex          ``symfony/esendex-notifier``           ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
 FakeSms          ``symfony/fake-sms-notifier``          ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
-FreeMobile       ``symfony/free-mobile-notifier``       ``freemobile://LOGIN:PASSWORD@default?phone=PHONE``
+FreeMobile       ``symfony/free-mobile-notifier``       ``freemobile://LOGIN:API_KEY@default?phone=PHONE``
 GatewayApi       ``symfony/gateway-api-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
 Infobip          ``symfony/infobip-notifier``           ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms            ``symfony/iqsms-notifier``             ``iqsms://LOGIN:PASSWORD@default?from=FROM``
