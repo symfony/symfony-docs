@@ -545,7 +545,7 @@ specified.
 Other functions with an optional timestamp parameter that defaults to ``time()``
 will still use the system time instead of the mocked time. This means that you
 may need to change some code in your tests. For example, instead of ``new DateTime()``,
-you should use ``DateTime::createFromFormat('U', time())`` to use the mocked
+you should use ``DateTime::createFromFormat('U', (string) time())`` to use the mocked
 ``time()`` function.
 
 To use the ``ClockMock`` class in your test, add the ``@group time-sensitive``
