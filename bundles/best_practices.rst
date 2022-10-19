@@ -388,8 +388,8 @@ a main layout, except if it provides a full working application.
 Translation Files
 -----------------
 
-If a bundle provides message translations, they must be defined in the XLIFF
-format; the domain should be named after the bundle name (``acme_blog``).
+If a bundle provides message translations, they should be defined in the XLIFF
+or YAML format; the domain should be named after the bundle name (``acme_blog``).
 
 A bundle must not override existing messages from another bundle.
 
