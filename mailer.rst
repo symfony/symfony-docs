@@ -446,23 +446,30 @@ result of rendering some template) or PHP resources::
 File Attachments
 ~~~~~~~~~~~~~~~~
 
-Use the ``attachFromPath()`` method to attach files that exist on your file system::
+Use the ``addPart()`` method with a ``BodyFile`` to add files that exist on your file system::
 
     $email = (new Email())
         // ...
-        ->attachFromPath('/path/to/documents/terms-of-use.pdf')
+        ->addPart(new DataPart(new BodyFile('/path/to/documents/terms-of-use.pdf')))
         // optionally you can tell email clients to display a custom name for the file
-        ->attachFromPath('/path/to/documents/privacy.pdf', 'Privacy Policy')
+        ->addPart(new DataPart(new BodyFile('/path/to/documents/privacy.pdf', 'Privacy Policy')))
         // optionally you can provide an explicit MIME type (otherwise it's guessed)
-        ->attachFromPath('/path/to/documents/contract.doc', 'Contract', 'application/msword')
+        ->addPart(new DataPart(new BodyFile('/path/to/documents/contract.doc', 'Contract', 'application/msword')))
     ;
 
-Alternatively you can use the ``attach()`` method to attach contents from a stream::
+Alternatively you can attach contents from a stream by passing it directly to the ``DataPart`` ::
 
     $email = (new Email())
         // ...
-        ->attach(fopen('/path/to/documents/contract.doc', 'r'))
+        ->addPart(new DataPart(fopen('/path/to/documents/contract.doc', 'r')))
     ;
+
+.. deprecated:: 6.2
+
+    In Symfony versions previous to 6.2, the methods ``attachFromPath`` and ``attach``
+    could be used to add attachments. These methods have been deprecated and replaced with
+    ``addPart``.
+
 
 Embedding Images
 ~~~~~~~~~~~~~~~~
@@ -472,16 +479,18 @@ instead of adding them as attachments. When using Twig to render the email
 contents, as explained :ref:`later in this article <mailer-twig-embedding-images>`,
 the images are embedded automatically. Otherwise, you need to embed them manually.
 
-First, use the ``embed()`` or ``embedFromPath()`` method to add an image from a
+First, use the ``addPart()`` method to add an image from a
 file or stream::
 
     $email = (new Email())
         // ...
         // get the image contents from a PHP resource
-        ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png')
+        ->addPart((new DataPart(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png'))->asInline())
         // get the image contents from an existing file
-        ->embedFromPath('/path/to/images/signature.gif', 'footer-signature', 'image/gif')
+        ->addPart((new DataPart(new BodyFile('/path/to/images/signature.gif', 'footer-signature', 'image/gif')))->asInline())
     ;
+
+Use the ``asInline()`` method to embed the content instead of attaching it.
 
 The second optional argument of both methods is the image name ("Content-ID" in
 the MIME standard). Its value is an arbitrary string used later to reference the
@@ -489,8 +498,8 @@ images inside the HTML contents::
 
     $email = (new Email())
         // ...
-        ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png')
-        ->embedFromPath('/path/to/images/signature.gif', 'footer-signature', 'image/gif')
+        ->addPart((new DataPart(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png'))->asInline())
+        ->addPart((new DataPart(new BodyFile('/path/to/images/signature.gif', 'footer-signature', 'image/gif')))->asInline())
 
         // reference images using the syntax 'cid:' + "image embed name"
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
@@ -502,6 +511,12 @@ images inside the HTML contents::
 .. versionadded:: 6.1
 
     The support of embedded images as HTML backgrounds was introduced in Symfony 6.1.
+
+.. deprecated:: 6.2
+
+    In Symfony versions previous to 6.2, the methods ``embedFromPath`` and ``embed``
+    could be used to embed images. These methods have been deprecated and replaced with
+    ``addPart`` together with inline ``DataPart``s.
 
 .. _mailer-configure-email-globally:
 
@@ -1489,7 +1504,7 @@ FailedMessageEvent
     {
         // e.g you can get more information on this error when sending an email
         $event->getError();
-        
+
         // do something with the message
     }
 
