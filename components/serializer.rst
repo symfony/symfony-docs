@@ -229,6 +229,11 @@ normalized data, instead of the denormalizer re-creating them. Note that
 arrays of objects. Those will still be replaced when present in the normalized
 data.
 
+Context
+-------
+
+Many Serializer features can be configured :doc:`using a context </serializer#serializer-context>`.
+
 .. _component-serializer-attributes-groups:
 
 Attributes Groups
