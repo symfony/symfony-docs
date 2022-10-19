@@ -929,6 +929,8 @@ This makes use of the :ref:`styles Twig namespace <mailer-css-namespace>` we cre
 earlier. You could, for example, `download the foundation-emails.css file`_
 directly from GitHub and save it in ``assets/styles``.
 
+.. _signing-and-encrypting-messages:
+
 Signing and Encrypting Messages
 -------------------------------
 
@@ -1308,6 +1310,13 @@ is sent::
             // do something with the message
         }
     }
+
+.. tip::
+
+    When using a ``MessageEvent`` listener to
+    :doc:`sign the email contents <signing-and-encrypting-messages>`, run it as
+    late as possible (e.g. setting a negative priority for it) so the email
+    contents are not set or modified after signing them.
 
 Development & Debugging
 -----------------------
