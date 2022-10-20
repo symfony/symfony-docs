@@ -200,9 +200,12 @@ and defining a service for it.
 This interface contains a ``resolve()`` method, which is called for each
 argument of the controller. It receives the current ``Request`` object and an
 :class:`Symfony\\Component\\HttpKernel\\ControllerMetadata\\ArgumentMetadata`
-instance, which contains all information from the method signature. The
-method should return either an empty array (if it cannot resolve this
-argument) or an array with the resolved value(s).
+instance, which contains all information from the method signature.
+
+The ``resolve()`` method should return either an empty array (if it cannot resolve
+this argument) or an array with the resolved value(s). Usually arguments are
+resolved as a single value, but variadic arguments require resolving multiple
+values. That's why you must always return an array, even for single values:
 
 .. code-block:: php
 
@@ -214,7 +217,7 @@ argument) or an array with the resolved value(s).
     use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
     use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
-    class UserValueResolver implements ValueResolverInterface
+    class BookingIdValueResolver implements ValueResolverInterface
     {
         public function resolve(Request $request, ArgumentMetadata $argument): array
         {
