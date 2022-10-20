@@ -476,6 +476,8 @@ The ``translation:extract`` command looks for missing translations in:
 * Any PHP file/class stored in the ``src/`` directory that creates
   :ref:`translatable-objects` using the constructor or the ``t()`` method or calls
   the ``trans()`` method.
+* Any PHP file/class stored in the ``src/`` directory that uses
+  :ref:`Constraints Attributes <validation-constraints>`  with ``*message`` named argument(s).
 
 .. _translation-resource-locations:
 
