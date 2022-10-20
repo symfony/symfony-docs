@@ -466,10 +466,9 @@ Alternatively you can attach contents from a stream by passing it directly to th
 
 .. deprecated:: 6.2
 
-    In Symfony versions previous to 6.2, the methods ``attachFromPath`` and ``attach``
-    could be used to add attachments. These methods have been deprecated and replaced with
-    ``addPart``.
-
+    In Symfony versions previous to 6.2, the methods ``attachFromPath()`` and
+    ``attach()`` could be used to add attachments. These methods have been
+    deprecated and replaced with ``addPart()``.
 
 Embedding Images
 ~~~~~~~~~~~~~~~~
@@ -514,9 +513,9 @@ images inside the HTML contents::
 
 .. deprecated:: 6.2
 
-    In Symfony versions previous to 6.2, the methods ``embedFromPath`` and ``embed``
-    could be used to embed images. These methods have been deprecated and replaced with
-    ``addPart`` together with inline ``DataPart``s.
+    In Symfony versions previous to 6.2, the methods ``embedFromPath()`` and
+    ``embed()`` could be used to embed images. These methods have been deprecated
+    and replaced with ``addPart()`` together with inline ``DataPart`` objects.
 
 .. _mailer-configure-email-globally:
 
