@@ -256,13 +256,14 @@ You can also restrict the usage of a context to some groups::
     namespace App\Model;
 
     use Symfony\Component\Serializer\Annotation\Context;
+    use Symfony\Component\Serializer\Annotation\Groups;
     use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 
     class Person
     {
-        #[Serializer\Groups(['extended'])]
-        #[Serializer\Context([DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339])]
-        #[Serializer\Context(
+        #[Groups(['extended'])]
+        #[Context([DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339])]
+        #[Context(
             context: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339_EXTENDED],
             groups: ['extended'],
         )]
