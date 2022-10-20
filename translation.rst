@@ -479,6 +479,11 @@ The ``translation:extract`` command looks for missing translations in:
 * Any PHP file/class stored in the ``src/`` directory that uses
   :ref:`Constraints Attributes <validation-constraints>`  with ``*message`` named argument(s).
 
+.. versionadded:: 6.2
+
+    The support of PHP files/classes that use constraint attributes was
+    introduced in Symfony 6.2.
+
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
