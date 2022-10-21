@@ -1080,8 +1080,9 @@ always as a collection.
     behavior can be changed with the optional context key ``XmlEncoder::DECODER_IGNORED_NODE_TYPES``.
 
     Data with ``#comment`` keys are encoded to XML comments by default. This can be
-    changed by adding the ``\XML_COMMENT_NODE`` option to the ``XmlEncoder::ENCODER_IGNORED_NODE_TYPES`` key of the ``$defaultContext``  of the
-    ``XmlEncoder`` class constructor or directly to the encode() method's $context argument.
+    changed by adding the ``\XML_COMMENT_NODE`` option to the ``XmlEncoder::ENCODER_IGNORED_NODE_TYPES``
+    key of the ``$defaultContext`` of the ``XmlEncoder`` constructor or
+    directly to the ``$context`` argument of the ``encode()`` method::
     
         $xmlEncoder->encode($array, 'xml', [XmlEncoder::ENCODER_IGNORED_NODE_TYPES => [\XML_COMMENT_NODE]]);
 
