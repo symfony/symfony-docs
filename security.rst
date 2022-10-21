@@ -598,12 +598,12 @@ Fetching the Firewall Configuration for a Request
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to get the configuration of the firewall that matched a given request,
-use the :class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` service::
+use the :class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
 
     // src/Service/ExampleService.php
     // ...
 
-    use Symfony\Bundle\SecurityBundle\Security\Security;
+    use Symfony\Bundle\SecurityBundle\Security;
     use Symfony\Component\HttpFoundation\RequestStack;
 
     class ExampleService
@@ -1609,23 +1609,23 @@ Login Programmatically
 
 .. versionadded:: 6.2
 
-    The :class:`Symfony\Bundle\SecurityBundle\Security\Security <Symfony\\Bundle\\SecurityBundle\\Security\\Security>`
+    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
     class was introduced in Symfony 6.2. Prior to 6.2, it was called
     ``Symfony\Component\Security\Core\Security``.
 
 .. versionadded:: 6.2
 
-    The :method:`Symfony\\Bundle\\SecurityBundle\\Security\\Security::login`
+    The :method:`Symfony\\Bundle\\SecurityBundle\\Security::login`
     method was introduced in Symfony 6.2.
 
 You can log in a user programmatically using the `login()` method of the
-:class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` helper::
+:class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
 
     // src/Controller/SecurityController.php
     namespace App\Controller\SecurityController;
 
     use App\Security\Authenticator\ExampleAuthenticator;
-    use Symfony\Bundle\SecurityBundle\Security\Security;
+    use Symfony\Bundle\SecurityBundle\Security;
 
     class SecurityController
     {
@@ -1779,22 +1779,22 @@ Logout programmatically
 
 .. versionadded:: 6.2
 
-    The :class:`Symfony\Bundle\SecurityBundle\Security\Security <Symfony\\Bundle\\SecurityBundle\\Security\\Security>`
+    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
     class was introduced in Symfony 6.2. Prior to 6.2, it was called
     ``Symfony\Component\Security\Core\Security``.
 
 .. versionadded:: 6.2
 
-    The :method:`Symfony\\Bundle\\SecurityBundle\\Security\\Security::logout`
+    The :method:`Symfony\\Bundle\\SecurityBundle\\Security::logout`
     method was introduced in Symfony 6.2.
 
 You can logout user programmatically using the ``logout()`` method of the
-:class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` helper::
+:class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
 
     // src/Controller/SecurityController.php
     namespace App\Controller\SecurityController;
 
-    use Symfony\Bundle\SecurityBundle\Security\Security;
+    use Symfony\Bundle\SecurityBundle\Security;
 
     class SecurityController
     {
@@ -1896,12 +1896,12 @@ Fetching the User from a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to get the logged in user from a service, use the
-:class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` service::
+:class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
 
     // src/Service/ExampleService.php
     // ...
 
-    use Symfony\Bundle\SecurityBundle\Security\Security;
+    use Symfony\Bundle\SecurityBundle\Security;
 
     class ExampleService
     {
@@ -1925,7 +1925,7 @@ If you need to get the logged in user from a service, use the
 
 .. versionadded:: 6.2
 
-    The :class:`Symfony\\Bundle\\SecurityBundle\\Security\\Security` class
+    The :class:`Symfony\\Bundle\\SecurityBundle\\Security` class
     was introduced in Symfony 6.2. In previous Symfony versions this class was
     defined in ``Symfony\Component\Security\Core\Security``.
 
@@ -2333,7 +2333,7 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
 
       // ...
       use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-    + use Symfony\Bundle\SecurityBundle\Security\Security;
+    + use Symfony\Bundle\SecurityBundle\Security;
 
       class SalesReportManager
       {
