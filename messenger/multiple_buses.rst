@@ -36,7 +36,12 @@ an **event bus**. The event bus could have zero or more subscribers.
                     event.bus:
                         # the 'allow_no_handlers' middleware allows to have no handler
                         # configured for this bus without throwing an exception
-                        default_middleware: allow_no_handlers
+                        # the 'allow_no_senders' middleware allows to have no sender
+                        # configured for this bus without throwing an exception
+                        default_middleware:
+                            enabled: true
+                            allow_no_handlers: false
+                            allow_no_senders: true
                         middleware:
                             - validation
 
@@ -64,7 +69,10 @@ an **event bus**. The event bus could have zero or more subscribers.
                     </framework:bus>
                     <!-- the 'allow_no_handlers' middleware allows to have no handler
                          configured for this bus without throwing an exception -->
-                    <framework:bus name="event.bus" default-middleware="allow_no_handlers">
+                    <!-- the 'allow_no_senders' middleware allows to have no sender
+                         configured for this bus without throwing an exception -->
+                    <framework:bus name="event.bus">
+                        <framework:default-middleware enabled="true" allow_no_handlers="false" allow_no_senders="true"/>
                         <framework:middleware id="validation"/>
                     </framework:bus>
                 </framework:messenger>
@@ -88,9 +96,15 @@ an **event bus**. The event bus could have zero or more subscribers.
             $queryBus->middleware()->id('validation');
 
             $eventBus = $framework->messenger()->bus('event.bus');
-            // the 'allow_no_handlers' middleware allows to have no handler
+            // the 'allowNoHandlers' middleware allows to have no handler
             // configured for this bus without throwing an exception
-            $eventBus->defaultMiddleware('allow_no_handlers');
+            // the 'allowNoSenders' middleware allows to have no sender
+            // configured for this bus without throwing an exception
+            $eventBus->defaultMiddleware()
+                ->enabled(true)
+                ->allowNoHandlers(false)
+                ->allowNoSenders(true)
+            ;
             $eventBus->middleware()->id('validation');
         };
 
