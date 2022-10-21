@@ -323,3 +323,42 @@ Field Variables
 
     It's significantly faster to use the :ref:`selectedchoice <form-twig-selectedchoice>`
     test instead when using Twig.
+
+
+Access data in a Form Choice
+.............................
+
+When you use an expanded ``ChoiceType`` and need to customize the children ``entry`` blocks,
+the ``form.vars`` of entries (radio button or checkbox) may not be enough since each holds a
+boolean value meaning whether a choice is selected or not.
+To get the full list of choices data and values, you will need to access the ``choices`` variable
+from their parent form (the ``ChoiceType`` itself) with ``form.parent.vars.choices``::
+
+Given the advanced object example, each entry would have access to the following variables:
+
+.. code-block:: html+twig
+
+    {# `true` or `false`, whether the current choice is selected as radio or checkbox #}
+    {{ form.vars.data }}
+
+    {# the current choice value (i.e a category name when `'choice_value' => 'name'` #}
+    {{ form.vars.value }}
+
+    {# a map of `ChoiceView` or `ChoiceGroupView` instances indexed by choice values or group names #}
+    {{ form.parent.vars.choices }}
+
+So the Category's entity is inside ``form.parent.vars.choices[key].data``, because the parent knows all the choices.
+
+.. code-block:: html+twig
+
+    {% block _form_categories_entry_widget %}
+        {% set entity = form.parent.vars.choices[form.vars.value].data %}
+
+        <tr>
+            <td>{{ form_widget(form) }}</td>
+            <td>{{ form.vars.label }}</td>
+            <td>
+                {{ entity.name }} | {{ entity.group }}
+            </td>
+        </tr>
+    {% endblock %}
