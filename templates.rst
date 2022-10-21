@@ -188,7 +188,7 @@ Consider the following routing configuration:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/BlogController.php
         namespace App\Controller;
@@ -199,17 +199,13 @@ Consider the following routing configuration:
 
         class BlogController extends AbstractController
         {
-            /**
-             * @Route("/", name="blog_index")
-             */
+            #[Route('/', name: 'blog_index')]
             public function index(): Response
             {
                 // ...
             }
 
-            /**
-             * @Route("/article/{slug}", name="blog_post")
-             */
+            #[Route('/article/{slug}', name: 'blog_post')]
             public function show(string $slug): Response
             {
                 // ...
@@ -324,11 +320,6 @@ being used and generating the correct paths accordingly.
     :ref:`version_format <reference-assets-version-format>`, and
     :ref:`json_manifest_path <reference-assets-json-manifest-path>` configuration options.
 
-.. tip::
-
-    If you'd like help packaging, versioning and minifying your JavaScript and
-    CSS assets in a modern way, read about :doc:`Symfony's Webpack Encore </frontend>`.
-
 If you need absolute URLs for assets, use the ``absolute_url()`` Twig function
 as follows:
 
@@ -337,6 +328,12 @@ as follows:
     <img src="{{ absolute_url(asset('images/logo.png')) }}" alt="Symfony!"/>
 
     <link rel="shortcut icon" href="{{ absolute_url('favicon.png') }}">
+
+Build, Versioning & More Advanced CSS, JavaScript and Image Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+For help building, versioning and minifying your JavaScript and
+CSS assets in a modern way, read about :doc:`Symfony's Webpack Encore </frontend>`.
 
 .. _twig-app-variable:
 
@@ -380,9 +377,36 @@ gives you access to these variables:
 ``app.token``
     A :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
     object representing the security token.
+``app.current_route``
+    The name of the route associated with the current request or ``null`` if no
+    request is available (equivalent to ``app.request.attributes.get('_route')``)
+``app.current_route_parameters``
+    An array with the parameters passed to the route of the current request or an
+    empty array if no request is available (equivalent to ``app.request.attributes.get('_route_params')``)
+
+.. versionadded:: 6.2
+
+    The ``app.current_route`` and ``app.current_route_parameters`` variables
+    were introduced in Symfony 6.2.
 
 In addition to the global ``app`` variable injected by Symfony, you can also
 :doc:`inject variables automatically to all Twig templates </templating/global_variables>`.
+
+Twig Components
+---------------
+
+Twig components are an alternative way to render templates, where each template
+is bound to a "component class". This makes it easier to render and re-use
+small template "units" - like an alert, markup for a modal, or a category sidebar.
+
+For more information, see `UX Twig Component`_.
+
+Twig components also have one other superpower: they can become "live", where
+they automatically update (via Ajax) as the user interacts with them. For example,
+when your user types into a box, your Twig component will re-render via Ajax to
+show a list of results!
+
+To learn more, see `UX Live Component`_.
 
 .. _templates-rendering:
 
@@ -428,6 +452,38 @@ use the ``render()`` helper::
 If your controller does not extend from ``AbstractController``, you'll need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
 use the ``render()`` method of the ``twig`` service.
+
+.. _templates-template-attribute:
+
+Another option is to use the ``#[Template()]`` attribute on the controller method
+to define the template to render::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class ProductController extends AbstractController
+    {
+        #[Template('product/index.html.twig')]
+        public function index()
+        {
+            // ...
+
+            // when using the #[Template()] attribute, you only need to return
+            // an array with the parameters to pass to the template (the attribute
+            // is the one which will create and return the Response object).
+            return [
+                'category' => '...',
+                'promotions' => ['...', '...'],
+            ];
+        }
+    }
+
+.. versionadded:: 6.2
+
+    The ``#[Template()]`` attribute was introduced in Symfony 6.2.
 
 Rendering a Template in Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -489,12 +545,20 @@ provided by Symfony:
                 # the path of the template to render
                 template:  'static/privacy.html.twig'
 
+                # the response status code (default: 200)
+                statusCode: 200
+
                 # special options defined by Symfony to set the page cache
                 maxAge:    86400
                 sharedAge: 86400
 
                 # whether or not caching should apply for client caches only
                 private: true
+
+                # optionally you can define some arguments passed to the template
+                context:
+                    site_name: 'ACME'
+                    theme: 'dark'
 
     .. code-block:: xml
 
@@ -510,11 +574,21 @@ provided by Symfony:
                 <!-- the path of the template to render -->
                 <default key="template">static/privacy.html.twig</default>
 
+                <!-- the response status code (default: 200) -->
+                <default key="statusCode">200</default>
+
                 <!-- special options defined by Symfony to set the page cache -->
                 <default key="maxAge">86400</default>
                 <default key="sharedAge">86400</default>
-                 <!-- whether or not caching should apply for client caches only -->
+
+                <!-- whether or not caching should apply for client caches only -->
                 <default key="private">true</default>
+
+                <!-- optionally you can define some arguments passed to the template -->
+                <default key="context">
+                    <default key="site_name">ACME</default>
+                    <default key="theme">dark</default>
+                </default>
             </route>
         </routes>
 
@@ -531,12 +605,21 @@ provided by Symfony:
                     // the path of the template to render
                     'template'  => 'static/privacy.html.twig',
 
+                    // the response status code (default: 200)
+                    'statusCode' => 200,
+
                     // special options defined by Symfony to set the page cache
                     'maxAge'    => 86400,
                     'sharedAge' => 86400,
 
                     // whether or not caching should apply for client caches only
                     'private' => true,
+
+                    // optionally you can define some arguments passed to the template
+                    'context' => [
+                        'site_name' => 'ACME',
+                        'theme' => 'dark',
+                    ]
                 ])
             ;
         };
@@ -547,14 +630,12 @@ Checking if a Template Exists
 Templates are loaded in the application using a `Twig template loader`_, which
 also provides a method to check for template existence. First, get the loader::
 
-    // in a controller extending from AbstractController
-    $loader = $this->get('twig')->getLoader();
-
-    // in a service using autowiring
     use Twig\Environment;
 
     class YourService
     {
+        // this code assumes that your service uses autowiring to inject dependencies
+        // otherwise, inject the service called 'twig' manually
         public function __construct(Environment $twig)
         {
             $loader = $twig->getLoader();
@@ -592,11 +673,12 @@ errors. It's useful to run it before deploying your application to production
     # you can also show the deprecated features used in your templates
     $ php bin/console lint:twig --show-deprecations templates/email/
 
-.. versionadded:: 4.4
+When running the linter inside `GitHub Actions`_, the output is automatically
+adapted to the format required by GitHub, but you can force that format too:
 
-    The feature that checks all the application templates when not passing any
-    arguments to ``lint:twig`` and the ``--show-deprecations`` option were
-    introduced in Symfony 4.4.
+.. code-block:: terminal
+
+    $ php bin/console lint:twig --format=github
 
 Inspecting Twig Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -628,7 +710,7 @@ First, make sure that the VarDumper component is installed in the application:
 
 .. code-block:: terminal
 
-    $ composer require symfony/var-dumper
+    $ composer require --dev symfony/var-dumper
 
 Then, use either the ``{% dump %}`` tag or the ``{{ dump() }}`` function
 depending on your needs:
@@ -813,10 +895,12 @@ template fragments. Configure that special URL in the ``fragments`` option:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'fragments' => ['path' => '/_fragment'],
-        ]);
+            $framework->fragments()->path('/_fragment');
+        };
 
 .. caution::
 
@@ -966,7 +1050,7 @@ to perform malicious actions.
 To prevent this attack, use *"output escaping"* to transform the characters
 which have special meaning (e.g. replace ``<`` by the ``&lt;`` HTML entity).
 Symfony applications are safe by default because they perform automatic output
-escaping thanks to the :ref:`Twig autoescape option <config-twig-autoescape>`:
+escaping:
 
 .. code-block:: html+twig
 
@@ -1032,25 +1116,20 @@ the ``value`` is the Twig namespace, which is explained later:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'paths' => [
-                // directories are relative to the project root dir (but you
-                // can also use absolute directories)
-                'email/default/templates' => null,
-                'backend/templates' => null,
-            ],
-        ]);
+
+            // directories are relative to the project root dir (but you
+            // can also use absolute directories)
+            $twig->path('email/default/templates', null);
+            $twig->path('backend/templates', null);
+        };
 
 When rendering a template, Symfony looks for it first in the ``twig.paths``
 directories that don't define a namespace and then falls back to the default
 template directory (usually, ``templates/``).
-
-.. deprecated:: 4.2
-
-    Symfony looks for templates in the ``src/Resources/views/`` too before
-    falling back to the default directory. But that behavior is deprecated since
-    Symfony 4.2 and will be removed in Symfony 5.0.
 
 Using the above configuration, if your application renders for example the
 ``layout.html.twig`` template, Symfony will first look for
@@ -1093,13 +1172,14 @@ configuration to define a namespace for each template directory:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'paths' => [
-                'email/default/templates' => 'email',
-                'backend/templates' => 'admin',
-            ],
-        ]);
+
+            $twig->path('email/default/templates', 'email');
+            $twig->path('backend/templates', 'admin');
+        };
 
 Now, if you render the ``layout.html.twig`` template, Symfony will render the
 ``templates/layout.html.twig`` file. Use the special syntax ``@`` + namespace to
@@ -1140,14 +1220,17 @@ Learn more
     /templating/*
 
 .. _`Twig`: https://twig.symfony.com
-.. _`tags`: https://twig.symfony.com/doc/2.x/tags/index.html
-.. _`filters`: https://twig.symfony.com/doc/2.x/filters/index.html
-.. _`functions`: https://twig.symfony.com/doc/2.x/functions/index.html
-.. _`with_context`: https://twig.symfony.com/doc/2.x/functions/include.html
-.. _`Twig template loader`: https://twig.symfony.com/doc/2.x/api.html#loaders
-.. _`Twig raw filter`: https://twig.symfony.com/doc/2.x/filters/raw.html
-.. _`Twig output escaping docs`: https://twig.symfony.com/doc/2.x/api.html#escaper-extension
+.. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
+.. _`filters`: https://twig.symfony.com/doc/3.x/filters/index.html
+.. _`functions`: https://twig.symfony.com/doc/3.x/functions/index.html
+.. _`with_context`: https://twig.symfony.com/doc/3.x/functions/include.html
+.. _`Twig template loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
+.. _`Twig raw filter`: https://twig.symfony.com/doc/3.x/filters/raw.html
+.. _`Twig output escaping docs`: https://twig.symfony.com/doc/3.x/api.html#escaper-extension
 .. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
-.. _`Twig template inheritance`: https://twig.symfony.com/doc/2.x/tags/extends.html
-.. _`Twig block tag`: https://twig.symfony.com/doc/2.x/tags/block.html
+.. _`Twig template inheritance`: https://twig.symfony.com/doc/3.x/tags/extends.html
+.. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
 .. _`Cross-Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
+.. _`UX Twig Component`: https://symfony.com/bundles/ux-twig-component/current/index.html
+.. _`UX Live Component`: https://symfony.com/bundles/ux-live-component/current/index.html

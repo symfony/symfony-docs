@@ -200,13 +200,16 @@ The XML version of the config would then look like this:
     <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:acme_demo="http://www.example.com/symfony/schema/"
-        xsi:schemaLocation="http://www.example.com/symfony/schema/ https://www.example.com/symfony/schema/hello-1.0.xsd">
-
-        <acme_demo:config>
+        xmlns:acme-demo="http://www.example.com/schema/dic/acme_demo"
+        xsi:schemaLocation="http://symfony.com/schema/dic/services
+            https://symfony.com/schema/dic/services/services-1.0.xsd
+            http://www.example.com/schema/dic/acme_demo
+            https://www.example.com/schema/dic/acme_demo/acme_demo-1.0.xsd"
+    >
+        <acme-demo:config>
             <acme_demo:foo>fooValue</acme_demo:foo>
             <acme_demo:bar>barValue</acme_demo:bar>
-        </acme_demo:config>
+        </acme-demo:config>
     </container>
 
 .. note::
@@ -358,8 +361,8 @@ methods described in :doc:`/service_container/definitions`.
     method call if some required service is not available.
 
 A common use-case of compiler passes is to search for all service definitions
-that have a certain tag in order to process dynamically plug each into some
-other service. See the section on :ref:`service tags <service-container-compiler-pass-tags>`
+that have a certain tag, in order to dynamically plug each one into other services.
+See the section on :ref:`service tags <service-container-compiler-pass-tags>`
 for an example.
 
 .. _components-di-separate-compiler-passes:
@@ -468,6 +471,14 @@ serves at dumping the compiled container::
         file_put_contents($file, $dumper->dump());
     }
 
+.. tip::
+
+    The ``file_put_contents()`` function is not atomic. That could cause issues
+    in a production environment with multiple concurrent requests. Instead, use
+    the :ref:`dumpFile() method <filesystem-dumpfile>` from Symfony Filesystem
+    component or other methods provided by Symfony (e.g. ``$containerConfigCache->write()``)
+    which are atomic.
+    
 ``ProjectServiceContainer`` is the default name given to the dumped container
 class. However, you can change this with the ``class`` option when you
 dump it::

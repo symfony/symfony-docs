@@ -28,7 +28,7 @@ set the headers, set the rows and then render the table::
 
     class SomeCommand extends Command
     {
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             $table = new Table($output);
             $table
@@ -41,6 +41,8 @@ set the headers, set the rows and then render the table::
                 ])
             ;
             $table->render();
+            
+            return Command::SUCCESS;
         }
     }
 
@@ -147,8 +149,33 @@ The output of this command will be:
     | 99921 | Divine Com | Dante Alighieri                |
     | -58-1 | edy        |                                |
     | 0-7   |            |                                |
-    |                (the rest of rows...)                |
+    |                (the rest of the rows...)            |
     +-------+------------+--------------------------------+
+
+By default, table contents are displayed horizontally. You can change this behavior
+via the :method:`Symfony\\Component\\Console\\Helper\\Table::setVertical` method::
+
+    // ...
+    $table->setVertical();
+    $table->render();
+
+The output of this command will be:
+
+.. code-block:: terminal
+
+    +------------------------------+
+    |   ISBN: 99921-58-10-7        |
+    |  Title: Divine Comedy        |
+    | Author: Dante Alighieri      |
+    |------------------------------|
+    |   ISBN: 9971-5-0210-0        |
+    |  Title: A Tale of Two Cities |
+    | Author: Charles Dickens      |
+    +------------------------------+
+
+.. versionadded:: 6.1
+
+    Support for vertical rendering was introduced in Symfony 6.1.
 
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
@@ -265,6 +292,35 @@ Here is a full list of things you can customize:
 
     This method can also be used to override a built-in style.
 
+In addition to the built-in table styles, you can also apply different styles
+to each table cell via :class:`Symfony\\Component\\Console\\Helper\\TableCellStyle`::
+
+    use Symfony\Component\Console\Helper\Table;
+    use Symfony\Component\Console\Helper\TableCellStyle;
+
+    $table = new Table($output);
+
+    $table->setRows([
+        [
+            '978-0804169127',
+            new TableCell(
+                'Divine Comedy',
+                [
+                    'style' => new TableCellStyle([
+                        'align' => 'center',
+                        'fg' => 'red',
+                        'bg' => 'green',
+
+                        // or
+                        'cellFormat' => '<info>%s</info>',
+                    ])
+                ]
+            )
+        ],
+    ]);
+
+    $table->render();
+
 Spanning Multiple Columns and Rows
 ----------------------------------
 
@@ -350,7 +406,7 @@ This outputs:
     | 978-0804169127 | Divine Comedy | spans multiple rows |
     +----------------+---------------+---------------------+
 
-You can use the ``colspan`` and ``rowspan`` options at the same time which allows
+You can use the ``colspan`` and ``rowspan`` options at the same time, which allows
 you to create any table layout you may wish.
 
 .. _console-modify-rendered-tables:
@@ -373,7 +429,7 @@ The only requirement to append rows is that the table must be rendered inside a
 
     class SomeCommand extends Command
     {
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             $section = $output->section();
             $table = new Table($section);
@@ -382,6 +438,8 @@ The only requirement to append rows is that the table must be rendered inside a
             $table->render();
 
             $table->appendRow(['Symfony']);
+            
+            return Command::SUCCESS;
         }
     }
 

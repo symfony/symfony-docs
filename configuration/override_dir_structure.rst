@@ -25,7 +25,58 @@ override it to create your own structure:
     │  ├─ cache/
     │  ├─ log/
     │  └─ ...
-    └─ vendor/
+    ├─ vendor/
+    └─ .env
+
+.. _override-env-dir:
+
+Override the Environment (DotEnv) Files Directory
+-------------------------------------------------
+
+By default, the :ref:`.env configuration file <config-dot-env>` is located at
+the root directory of the project. If you store it in a different location,
+define the ``runtime.dotenv_path`` option in the ``composer.json`` file:
+
+.. code-block:: json
+
+    {
+        "...": "...",
+        "extra": {
+            "...": "...",
+            "runtime": {
+                "dotenv_path": "my/custom/path/to/.env"
+            }
+        }
+    }
+
+Then, update your Composer files (running ``composer update``, for instance),
+so that the ``vendor/autoload_runtime.php`` files gets regenerated with the new
+``.env`` path.
+
+You can also set up different ``.env`` paths for your console and web server
+calls. Edit the ``public/index.php`` and/or ``bin/console`` files to define the
+new file path.
+
+Console script::
+
+    // bin/console
+
+    // ...
+    $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'some/custom/path/to/.env';
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+    // ...
+
+Web front-controller::
+
+    // public/index.php
+    
+    // ...
+    $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'another/custom/path/to/.env';
+
+    require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
+    // ...
+
 
 .. _override-config-dir:
 
@@ -41,8 +92,8 @@ at your project root directory.
 Override the Cache Directory
 ----------------------------
 
-You can change the default cache directory by overriding the ``getCacheDir()``
-method in the ``Kernel`` class of your application::
+Changing the cache directory can be achieved by overriding the
+``getCacheDir()`` method in the ``Kernel`` class of your application::
 
     // src/Kernel.php
 
@@ -51,7 +102,7 @@ method in the ``Kernel`` class of your application::
     {
         // ...
 
-        public function getCacheDir()
+        public function getCacheDir(): string
         {
             return dirname(__DIR__).'/var/'.$this->environment.'/cache';
         }
@@ -60,6 +111,9 @@ method in the ``Kernel`` class of your application::
 In this code, ``$this->environment`` is the current environment (i.e. ``dev``).
 In this case you have changed the location of the cache directory to
 ``var/{environment}/cache/``.
+
+You can also change the cache directory defining an environment variable named
+``APP_CACHE_DIR`` whose value is the full path of the cache folder.
 
 .. caution::
 
@@ -73,9 +127,11 @@ In this case you have changed the location of the cache directory to
 Override the Log Directory
 --------------------------
 
-Overriding the ``var/log/`` directory is the same as overriding the ``var/cache/``
-directory. The only difference is that you need to override the ``getLogDir()``
-method::
+Overriding the ``var/log/`` directory is almost the same as overriding the
+``var/cache/`` directory.
+
+You can do it overriding the ``getLogDir()`` method in the ``Kernel`` class of
+your application::
 
     // src/Kernel.php
 
@@ -84,13 +140,16 @@ method::
     {
         // ...
 
-        public function getLogDir()
+        public function getLogDir(): string
         {
             return dirname(__DIR__).'/var/'.$this->environment.'/log';
         }
     }
 
 Here you have changed the location of the directory to ``var/{environment}/log/``.
+
+You can also change the log directory defining an environment variable named
+``APP_LOG_DIR`` whose value is the full path of the log folder.
 
 .. _override-templates-dir:
 
@@ -132,9 +191,11 @@ for multiple directories):
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'default_path' => '%kernel.project_dir%/resources/views',
-        ]);
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->defaultPath('%kernel.project_dir%/resources/views');
+        };
 
 Override the Translations Directory
 -----------------------------------
@@ -176,11 +237,13 @@ configuration option to define your own translations directory (use :ref:`framew
     .. code-block:: php
 
         // config/packages/translation.php
-        $container->loadFromExtension('framework', [
-            'translator' => [
-                'default_path' => '%kernel.project_dir%/i18n',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->translator()
+                ->defaultPath('%kernel.project_dir%/i18n')
+            ;
+        };
 
 .. _override-web-dir:
 .. _override-the-web-directory:

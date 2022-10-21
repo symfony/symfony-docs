@@ -15,7 +15,7 @@ username and the password are different only if all other validation passes
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/User.php
         namespace App\Entity;
@@ -23,24 +23,19 @@ username and the password are different only if all other validation passes
         use Symfony\Component\Security\Core\User\UserInterface;
         use Symfony\Component\Validator\Constraints as Assert;
 
-        /**
-         * @Assert\GroupSequence({"User", "Strict"})
-         */
+        #[Assert\GroupSequence(['User', 'Strict'])]
         class User implements UserInterface
         {
-            /**
-             * @Assert\NotBlank
-             */
+            #[Assert\NotBlank]
             private $username;
 
-            /**
-             * @Assert\NotBlank
-             */
+            #[Assert\NotBlank]
             private $password;
 
-            /**
-             * @Assert\IsTrue(message="The password cannot match your username", groups={"Strict"})
-             */
+            #[Assert\IsTrue(
+                message: 'The password cannot match your username',
+                groups: ['Strict'],
+            )]
             public function isPasswordSafe()
             {
                 return ($this->username !== $this->password);
@@ -151,7 +146,7 @@ You can also define a group sequence in the ``validation_groups`` form option::
 
     // src/Form/MyType.php
     namespace App\Form;
-    
+
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Validator\Constraints\GroupSequence;
@@ -179,7 +174,7 @@ entity and a new constraint group called ``Premium``:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/User.php
         namespace App\Entity;
@@ -188,17 +183,13 @@ entity and a new constraint group called ``Premium``:
 
         class User
         {
-            /**
-             * @Assert\NotBlank
-             */
+            #[Assert\NotBlank]
             private $name;
 
-            /**
-             * @Assert\CardScheme(
-             *     schemes={"VISA"},
-             *     groups={"Premium"},
-             * )
-             */
+            #[Assert\CardScheme(
+                schemes: [Assert\CardScheme::VISA],
+                groups: ['Premium'],
+            )]
             private $creditCard;
 
             // ...
@@ -263,7 +254,7 @@ entity and a new constraint group called ``Premium``:
             {
                 $metadata->addPropertyConstraint('name', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme([
-                    'schemes' => ['VISA'],
+                    'schemes' => [Assert\CardScheme::VISA],
                     'groups'  => ['Premium'],
                 ]));
             }
@@ -285,10 +276,10 @@ method, which should return an array of groups to use::
     {
         // ...
 
-        public function getGroupSequence()
+        public function getGroupSequence(): array|GroupSequence
         {
             // when returning a simple array, if there's a violation in any group
-            // the rest of groups are not validated. E.g. if 'User' fails,
+            // the rest of the groups are not validated. E.g. if 'User' fails,
             // 'Premium' and 'Api' are not validated:
             return ['User', 'Premium', 'Api'];
 
@@ -304,16 +295,14 @@ provides a sequence of groups to be validated:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/User.php
         namespace App\Entity;
 
         // ...
 
-        /**
-         * @Assert\GroupSequenceProvider
-         */
+        #[Assert\GroupSequenceProvider]
         class User implements GroupSequenceProviderInterface
         {
             // ...
@@ -358,3 +347,10 @@ provides a sequence of groups to be validated:
                 // ...
             }
         }
+
+How to Sequentially Apply Constraints on a Single Property
+----------------------------------------------------------
+
+Sometimes, you may want to apply constraints sequentially on a single
+property. The :doc:`Sequentially constraint </reference/constraints/Sequentially>`
+can solve this for you in a more straightforward way than using a ``GroupSequence``.

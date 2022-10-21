@@ -130,7 +130,7 @@ It is quite common for an existing application to either not have a test suite
 at all or have low code coverage. Introducing unit tests for this code is
 likely not cost effective as the old code might be replaced with functionality
 from Symfony components or might be adapted to the new application.
-Additionally legacy code tends to be hard to write tests for making the process
+Additionally legacy code tends to be hard to write tests for, making the process
 slow and cumbersome.
 
 Instead of providing low level tests, that ensure each class works as expected, it
@@ -223,7 +223,7 @@ unique approach for migration. This guide shows two examples of commonly used
 approaches, which you can use as a base for your own approach:
 
 * `Front Controller with Legacy Bridge`_, which leaves the legacy application
-  untouched and allows to migrate it in phases to the Symfony application.
+  untouched and allows migrating it in phases to the Symfony application.
 * `Legacy Route Loader`_, where the legacy application is integrated in phases
   into Symfony, with a fully integrated final result.
 
@@ -238,10 +238,13 @@ could look something like this::
     // public/index.php
     use App\Kernel;
     use App\LegacyBridge;
-    use Symfony\Component\Debug\Debug;
+    use Symfony\Component\Dotenv\Dotenv;
+    use Symfony\Component\ErrorHandler\Debug;
     use Symfony\Component\HttpFoundation\Request;
 
-    require dirname(__DIR__).'/config/bootstrap.php';
+    require dirname(__DIR__).'/vendor/autoload.php';
+
+    (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 
     /*
      * The kernel will always be available globally, allowing you to
@@ -260,7 +263,7 @@ could look something like this::
     if ($trustedProxies = $_SERVER['TRUSTED_PROXIES'] ?? $_ENV['TRUSTED_PROXIES'] ?? false) {
         Request::setTrustedProxies(
           explode(',', $trustedProxies),
-          Request::HEADER_X_FORWARDED_ALL ^ Request::HEADER_X_FORWARDED_HOST
+          Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO
         );
     }
 
@@ -286,7 +289,7 @@ could look something like this::
 
 There are 2 major deviations from the original file:
 
-Line 15
+Line 18
   First of all, ``$kernel`` is made globally available. This allows you to use
   Symfony features inside your existing application and gives access to
   services configured in our Symfony application. This helps you prepare your
@@ -294,7 +297,7 @@ Line 15
   it over. For instance, by replacing outdated or redundant libraries with
   Symfony components.
 
-Line 38 - 47
+Line 41 - 50
   Instead of sending the Symfony response directly, a ``LegacyBridge`` is
   called to decide whether the legacy application should be booted and used to
   create the response instead.

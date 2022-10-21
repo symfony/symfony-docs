@@ -8,7 +8,7 @@ When a program runs concurrently, some part of code which modify shared
 resources should not be accessed by multiple processes at the same time.
 Symfony's :doc:`Lock component </components/lock>` provides a locking mechanism to ensure
 that only one process is running the critical section of code at any point of
-time to prevent race condition from happening.
+time to prevent race conditions from happening.
 
 The following example shows a typical usage of the lock::
 
@@ -55,11 +55,14 @@ this behavior by using the ``lock`` key like:
             lock: ['redis://r1.docker', 'redis://r2.docker']
             lock: 'zookeeper://z1.docker'
             lock: 'zookeeper://z1.docker,z2.docker'
+            lock: 'zookeeper://localhost01,localhost02:2181'
             lock: 'sqlite:///%kernel.project_dir%/var/lock.db'
-            lock: 'mysql:host=127.0.0.1;dbname=lock'
-            lock: 'pgsql:host=127.0.0.1;dbname=lock'
-            lock: 'sqlsrv:server=localhost;Database=test'
-            lock: 'oci:host=localhost;dbname=test'
+            lock: 'mysql:host=127.0.0.1;dbname=app'
+            lock: 'pgsql:host=127.0.0.1;dbname=app'
+            lock: 'pgsql+advisory:host=127.0.0.1;dbname=lock'
+            lock: 'sqlsrv:server=127.0.0.1;Database=app'
+            lock: 'oci:host=127.0.0.1;dbname=app'
+            lock: 'mongodb://127.0.0.1/app?collection=lock'
             lock: '%env(LOCK_DSN)%'
 
             # named locks
@@ -100,15 +103,21 @@ this behavior by using the ``lock`` key like:
 
                     <framework:resource>zookeeper://z1.docker,z2.docker</framework:resource>
 
+                    <framework:resource>zookeeper://localhost01,localhost02:2181</framework:resource>
+
                     <framework:resource>sqlite:///%kernel.project_dir%/var/lock.db</framework:resource>
 
-                    <framework:resource>mysql:host=127.0.0.1;dbname=lock</framework:resource>
+                    <framework:resource>mysql:host=127.0.0.1;dbname=app</framework:resource>
 
-                    <framework:resource>pgsql:host=127.0.0.1;dbname=lock</framework:resource>
+                    <framework:resource>pgsql:host=127.0.0.1;dbname=app</framework:resource>
 
-                    <framework:resource>sqlsrv:server=localhost;Database=test</framework:resource>
+                    <framework:resource>pgsql+advisory:host=127.0.0.1;dbname=lock</framework:resource>
 
-                    <framework:resource>oci:host=localhost;dbname=test</framework:resource>
+                    <framework:resource>sqlsrv:server=127.0.0.1;Database=app</framework:resource>
+
+                    <framework:resource>oci:host=127.0.0.1;dbname=app</framework:resource>
+
+                    <framework:resource>mongodb://127.0.0.1/app?collection=lock</framework:resource>
 
                     <framework:resource>%env(LOCK_DSN)%</framework:resource>
 
@@ -123,50 +132,58 @@ this behavior by using the ``lock`` key like:
     .. code-block:: php
 
         // config/packages/lock.php
-        $container->loadFromExtension('framework', [
-            'lock' => null,
-            'lock' => 'flock',
-            'lock' => 'flock:///path/to/file',
-            'lock' => 'semaphore',
-            'lock' => 'memcached://m1.docker',
-            'lock' => ['memcached://m1.docker', 'memcached://m2.docker'],
-            'lock' => 'redis://r1.docker',
-            'lock' => ['redis://r1.docker', 'redis://r2.docker'],
-            'lock' => 'zookeeper://z1.docker',
-            'lock' => 'zookeeper://z1.docker,z2.docker',
-            'lock' => 'sqlite:///%kernel.project_dir%/var/lock.db',
-            'lock' => 'mysql:host=127.0.0.1;dbname=lock',
-            'lock' => 'pgsql:host=127.0.0.1;dbname=lock',
-            'lock' => 'sqlsrv:server=localhost;Database=test',
-            'lock' => 'oci:host=localhost;dbname=test',
-            'lock' => '%env(LOCK_DSN)%',
+        use Symfony\Config\FrameworkConfig;
 
-            // named locks
-            'lock' => [
-                'invoice' => ['semaphore', 'redis://r2.docker'],
-                'report' => 'semaphore',
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $framework->lock()
+                ->resource('default', ['flock'])
+                ->resource('default', ['flock:///path/to/file'])
+                ->resource('default', ['semaphore'])
+                ->resource('default', ['memcached://m1.docker'])
+                ->resource('default', ['memcached://m1.docker', 'memcached://m2.docker'])
+                ->resource('default', ['redis://r1.docker'])
+                ->resource('default', ['redis://r1.docker', 'redis://r2.docker'])
+                ->resource('default', ['zookeeper://z1.docker'])
+                ->resource('default', ['zookeeper://z1.docker,z2.docker'])
+                ->resource('default', ['zookeeper://localhost01,localhost02:2181'])
+                ->resource('default', ['sqlite:///%kernel.project_dir%/var/lock.db'])
+                ->resource('default', ['mysql:host=127.0.0.1;dbname=app'])
+                ->resource('default', ['pgsql:host=127.0.0.1;dbname=app'])
+                ->resource('default', ['pgsql+advisory:host=127.0.0.1;dbname=lock'])
+                ->resource('default', ['sqlsrv:server=127.0.0.1;Database=app'])
+                ->resource('default', ['oci:host=127.0.0.1;dbname=app'])
+                ->resource('default', ['mongodb://127.0.0.1/app?collection=lock'])
+                ->resource('default', [env('LOCK_DSN')])
+
+                // named locks
+                ->resource('invoice', ['semaphore', 'redis://r2.docker'])
+                ->resource('report', ['semaphore'])
+            ;
+        };
+
+.. versionadded:: 6.1
+
+    The CSV support (e.g. ``zookeeper://localhost01,localhost02:2181``) in
+    ZookeeperStore DSN was introduced in Symfony 6.1.
 
 Locking a Resource
 ------------------
 
-To lock the default resource, autowire the lock using
-:class:`Symfony\\Component\\Lock\\LockInterface` (service id ``lock``)::
+To lock the default resource, autowire the lock factory using
+:class:`Symfony\\Component\\Lock\\LockFactory` (service id ``lock.factory``)::
 
     // src/Controller/PdfController.php
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Lock\LockInterface;
+    use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
-        /**
-         * @Route("/download/terms-of-use.pdf")
-         */
-        public function downloadPdf(LockInterface $lock, MyPdfGeneratorService $pdf)
+        #[Route('/download/terms-of-use.pdf')]
+        public function downloadPdf(LockFactory $factory, MyPdfGeneratorService $pdf)
         {
+            $lock = $factory->createLock('pdf-creation');
             $lock->acquire(true);
 
             // heavy computation
@@ -189,8 +206,8 @@ Locking a Dynamic Resource
 --------------------------
 
 Sometimes the application is able to cut the resource into small pieces in order
-to lock a small subset of process and let other through. In our previous example
-with see how to lock the ``$pdf->getOrCreatePdf('terms-of-use')`` for everybody,
+to lock a small subset of processes and let others through. The previous example
+showed how to lock the ``$pdf->getOrCreatePdf('terms-of-use')`` for everybody,
 now let's see how to lock ``$pdf->getOrCreatePdf($version)`` only for
 processes asking for the same ``$version``::
 
@@ -202,9 +219,7 @@ processes asking for the same ``$version``::
 
     class PdfController extends AbstractController
     {
-        /**
-         * @Route("/download/{version}/terms-of-use.pdf")
-         */
+        #[Route('/download/{version}/terms-of-use.pdf')]
         public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf)
         {
             $lock = $lockFactory->createLock($version);
@@ -218,6 +233,8 @@ processes asking for the same ``$version``::
             // ...
         }
     }
+
+.. _lock-named-locks:
 
 Named Lock
 ----------
@@ -258,35 +275,19 @@ provides :ref:`named lock <reference-lock-resources-name>`:
     .. code-block:: php
 
         // config/packages/lock.php
-        $container->loadFromExtension('framework', [
-            'lock' => [
-                'invoice' => ['semaphore', 'redis://r2.docker'],
-                'report' => 'semaphore',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
 
-Each name becomes a service where the service id suffixed by the name of the
-lock (e.g. ``lock.invoice``). An autowiring alias is also created for each lock
-using the camel case version of its name suffixed by ``Lock`` - e.g. ``invoice``
-can be injected automatically by naming the argument ``$invoiceLock`` and
-type-hinting it with :class:`Symfony\\Component\\Lock\\LockInterface`.
+        return static function (FrameworkConfig $framework) {
+            $framework->lock()
+                ->resource('invoice', ['semaphore', 'redis://r2.docker'])
+                ->resource('report', ['semaphore']);
+            ;
+        };
 
-Symfony also provide a corresponding factory and store following the same rules
-(e.g. ``invoice`` generates a ``lock.invoice.factory`` and
-``lock.invoice.store``, both can be injected automatically by naming
-respectively ``$invoiceLockFactory`` and ``$invoiceLockStore`` and type-hinted
-with :class:`Symfony\\Component\\Lock\\LockFactory` and
-:class:`Symfony\\Component\\Lock\\PersistingStoreInterface`)
 
-Blocking Store
---------------
-
-If you want to use the ``RetryTillSaveStore`` for :ref:`non-blocking locks <lock-blocking-locks>`,
-you can do it by :doc:`decorating the store </service_container/service_decoration>` service:
-
-.. code-block:: yaml
-
-    lock.default.retry_till_save.store:
-        class: Symfony\Component\Lock\Store\RetryTillSaveStore
-        decorates: lock.default.store
-        arguments: ['@lock.default.retry_till_save.store.inner', 100, 50]
+Each name becomes a service where the service id is part of the name of the
+lock (e.g. ``lock.invoice.factory``). An autowiring alias is also created for
+each lock using the camel case version of its name suffixed by ``LockFactory``
+- e.g. ``invoice`` can be injected automatically by naming the argument
+``$invoiceLockFactory`` and type-hinting it with
+:class:`Symfony\\Component\\Lock\\LockFactory`.

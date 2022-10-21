@@ -27,7 +27,7 @@ that adds two convenient methods to lock and release commands::
             if (!$this->lock()) {
                 $output->writeln('The command is already running in another process.');
 
-                return 0;
+                return Command::SUCCESS;
             }
 
             // If you prefer to wait until the lock is released, use this:
@@ -39,7 +39,7 @@ that adds two convenient methods to lock and release commands::
             // automatically when the execution of the command ends
             $this->release();
 
-            return 0;
+            return Command::SUCCESS;
         }
     }
 

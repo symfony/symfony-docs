@@ -102,15 +102,21 @@ with a non-zero code)::
     :method:`Symfony\\Component\\Process\\Process::getLastOutputTime` method.
     This method returns ``null`` if the process wasn't started!
 
-    .. versionadded:: 4.4
+Configuring Process Options
+---------------------------
 
-        The :method:`Symfony\\Component\\Process\\Process::getLastOutputTime`
-        method was introduced in Symfony 4.4.
+Symfony uses the PHP :phpfunction:`proc_open` function to run the processes.
+You can configure the options passed to the ``other_options`` argument of
+``proc_open()`` using the ``setOptions()`` method::
+
+    $process = new Process(['...', '...', '...']);
+    // this option allows a subprocess to continue running after the main script exited
+    $process->setOptions(['create_new_console' => true]);
 
 Using Features From the OS Shell
 --------------------------------
 
-Using array of arguments is the recommended way to define commands. This
+Using an array of arguments is the recommended way to define commands. This
 saves you from any escaping and allows sending signals seamlessly
 (e.g. to stop processes while they run)::
 
@@ -149,10 +155,6 @@ Portable commands require using a syntax that is specific to the component: when
 enclosing a variable name into ``"${:`` and ``}"`` exactly, the process object
 will replace it with its escaped value, or will fail if the variable is not
 found in the list of environment variables attached to the command.
-
-.. versionadded:: 4.4
-
-    Portable command lines were introduced in Symfony 4.4.
 
 Setting Environment Variables for Processes
 -------------------------------------------
@@ -325,7 +327,7 @@ provides the :class:`Symfony\\Component\\Process\\InputStream` class::
     echo $process->getOutput();
 
 The :method:`Symfony\\Component\\Process\\InputStream::write` method accepts scalars,
-stream resources or ``Traversable`` objects as argument. As shown in the above example,
+stream resources or ``Traversable`` objects as arguments. As shown in the above example,
 you need to explicitly call the :method:`Symfony\\Component\\Process\\InputStream::close`
 method when you are done writing to the standard input of the subprocess.
 
@@ -441,6 +443,10 @@ check regularly::
 
         usleep(200000);
     }
+
+.. tip::
+
+    You can get the process start time using the ``getStartTime()`` method.
 
 .. _reference-process-signal:
 

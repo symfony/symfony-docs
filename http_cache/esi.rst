@@ -65,7 +65,7 @@ First, to use ESI, be sure to enable it in your application configuration:
         # config/packages/framework.yaml
         framework:
             # ...
-            esi: { enabled: true }
+            esi: true
 
     .. code-block:: xml
 
@@ -88,10 +88,13 @@ First, to use ESI, be sure to enable it in your application configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            // ...
-            'esi' => ['enabled' => true],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->esi()
+                ->enabled(true)
+            ;
+        };
 
 Now, suppose you have a page that is relatively static, except for a news
 ticker at the bottom of the content. With ESI, you can cache the news ticker
@@ -103,7 +106,7 @@ independently of the rest of the page::
     // ...
     class DefaultController extends AbstractController
     {
-        public function about()
+        public function about(): Response
         {
             $response = $this->render('static/about.html.twig');
             $response->setPublic();
@@ -161,23 +164,43 @@ used ``render()``.
     contains the ``ESI/1.0`` string anywhere.
 
 The embedded action can now specify its own caching rules entirely independently
-of the master page::
+of the main page::
 
-    // src/Controller/NewsController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    // ...
-    class NewsController extends AbstractController
-    {
-        public function latest($maxPerPage)
+    .. code-block:: php-attributes
+
+        // src/Controller/NewsController.php
+        namespace App\Controller;
+
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        class NewsController extends AbstractController
         {
-            // ...
-            $response->setPublic();
-            $response->setMaxAge(60);
-
-            return $response;
+            #[Cache(smaxage: 60)]
+            public function latest(int $maxPerPage): Response
+            {
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php
+
+        // src/Controller/NewsController.php
+        namespace App\Controller;
+
+        // ...
+        class NewsController extends AbstractController
+        {
+            public function latest($maxPerPage)
+            {
+                // sets to public and adds some expiration
+                $response->setSharedMaxAge(60);
+
+                return $response;
+            }
+        }
 
 In this example, the embedded action is cached publicly too because the contents
 are the same for all requests. However, in other cases you may need to make this
@@ -225,10 +248,14 @@ that must be enabled in your configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'fragments' => ['path' => '/_fragment'],
-        ]);
+            $framework->fragments()
+                ->path('/_fragment')
+            ;
+        };
 
 One great advantage of the ESI renderer is that you can make your application
 as dynamic as needed and at the same time, hit the application as little as

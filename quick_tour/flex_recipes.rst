@@ -23,13 +23,13 @@ are included in your ``composer.json`` file:
 
     "require": {
         "...",
-        "symfony/console": "^4.1",
-        "symfony/flex": "^1.0",
-        "symfony/framework-bundle": "^4.1",
-        "symfony/yaml": "^4.1"
+        "symfony/console": "^6.1",
+        "symfony/flex": "^2.0",
+        "symfony/framework-bundle": "^6.1",
+        "symfony/yaml": "^6.1"
     }
 
-This makes Symfony different than any other PHP framework! Instead of starting with
+This makes Symfony different from any other PHP framework! Instead of starting with
 a *bulky* app with *every* possible feature you might ever need, a Symfony app is
 small, simple and *fast*. And you're in total control of what you add.
 
@@ -53,7 +53,7 @@ It's a way for a library to automatically configure itself by adding and modifyi
 files. Thanks to recipes, adding features is seamless and automated: install a package
 and you're done!
 
-You can find a full list of recipes and aliases by going to `https://flex.symfony.com`_.
+You can find a full list of recipes and aliases inside `RECIPES.md on the recipes repository`_.
 
 What did this recipe do? In addition to automatically enabling the feature in
 ``config/bundles.php``, it added 3 things:
@@ -86,10 +86,8 @@ Thanks to Flex, after one command, you can start using Twig immediately:
     - class DefaultController
     + class DefaultController extends AbstractController
       {
-           /**
-            * @Route("/hello/{name}")
-            */
-           public function index($name)
+           #[Route('/hello/{name}', methods: ['GET'])]
+           public function index(string $name): Response
            {
     -        return new Response("Hello $name!");
     +        return $this->render('default/index.html.twig', [
@@ -159,16 +157,15 @@ Are you building an API? You can already return JSON from any controller::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\Routing\Annotation\Route;
 
     class DefaultController extends AbstractController
     {
         // ...
 
-        /**
-         * @Route("/api/hello/{name}")
-         */
-        public function apiExample($name)
+        #[Route('/api/hello/{name}', methods: ['GET'])]
+        public function apiHello(string $name): JsonResponse
         {
             return $this->json([
                 'name' => $name,
@@ -189,7 +186,7 @@ Security components, as well as the Doctrine ORM. In fact, Flex installed *5* re
 
 But like usual, we can immediately start using the new library. Want to create a
 rich API for a ``product`` table? Create a ``Product`` entity and give it the
-``@ApiResource()`` annotation::
+``#[ApiResource]`` attribute::
 
     <?php
     // src/Entity/Product.php
@@ -198,27 +195,19 @@ rich API for a ``product`` table? Create a ``Product`` entity and give it the
     use ApiPlatform\Core\Annotation\ApiResource;
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @ORM\Entity()
-     * @ApiResource()
-     */
+    #[ORM\Entity]
+    #[ApiResource]
     class Product
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue(strategy="AUTO")
-         * @ORM\Column(type="integer")
-         */
+        #[ORM\Id]
+        #[ORM\GeneratedValue(strategy: 'AUTO')]
+        #[ORM\Column(type: 'integer')]
         private $id;
 
-        /**
-         * @ORM\Column(type="string")
-         */
+        #[ORM\Column(type: 'string')]
         private $name;
 
-        /**
-         * @ORM\Column(type="int")
-         */
+        #[ORM\Column(type: 'integer')]
         private $price;
 
         // ...
@@ -253,7 +242,7 @@ Not convinced yet? No problem: remove the library:
 
     $ composer remove api
 
-Flex will *uninstall* the recipes: removing files and un-doing changes to put your
+Flex will *uninstall* the recipes: removing files and undoing changes to put your
 app back in its original state. Experiment without worry.
 
 More Features, Architecture and Speed
@@ -264,6 +253,6 @@ and it's the most important yet. I want to show you how Symfony empowers you to 
 build features *without* sacrificing code quality or performance. It's all about
 the service container, and it's Symfony's super power. Read on: about :doc:`/quick_tour/the_architecture`.
 
-.. _`https://flex.symfony.com`: https://flex.symfony.com
+.. _`RECIPES.md on the recipes repository`: https://github.com/symfony/recipes/blob/flex/main/RECIPES.md
 .. _`API Platform`: https://api-platform.com/
 .. _`Twig`: https://twig.symfony.com/

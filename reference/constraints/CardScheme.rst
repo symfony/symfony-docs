@@ -7,10 +7,6 @@ a payment through a payment gateway.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `schemes`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\CardScheme`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CardSchemeValidator`
 ==========  ===================================================================
@@ -23,7 +19,7 @@ on an object that will contain a credit card number.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Transaction.php
         namespace App\Entity;
@@ -32,12 +28,10 @@ on an object that will contain a credit card number.
 
         class Transaction
         {
-            /**
-             * @Assert\CardScheme(
-             *     schemes={"VISA"},
-             *     message="Your credit card number is invalid."
-             * )
-             */
+            #[Assert\CardScheme(
+                schemes: [Assert\CardScheme::VISA],
+                message: 'Your credit card number is invalid.',
+            )]
             protected $cardNumber;
         }
 
@@ -85,7 +79,7 @@ on an object that will contain a credit card number.
             {
                 $metadata->addPropertyConstraint('cardNumber', new Assert\CardScheme([
                     'schemes' => [
-                        'VISA',
+                        Assert\CardScheme::VISA,
                     ],
                     'message' => 'Your credit card number is invalid.',
                 ]));
@@ -112,6 +106,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
@@ -137,10 +132,6 @@ Valid values are:
 * ``MIR``
 * ``UATP``
 * ``VISA``
-
-.. versionadded:: 4.3
-
-    The ``UATP`` and ``MIR`` number schemes were introduced in Symfony 4.3.
 
 For more information about the used schemes, see
 `Wikipedia: Issuer identification number (IIN)`_.

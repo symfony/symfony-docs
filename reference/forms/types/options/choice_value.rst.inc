@@ -18,3 +18,17 @@ for each choice or ``null`` in a placeholder is used, which you need to handle::
     'choice_value' => function (?MyOptionEntity $entity) {
         return $entity ? $entity->getId() : '';
     },
+
+.. tip::
+
+    When defining a custom type, you should use the
+    :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class helper::
+
+        use Symfony\Component\Form\ChoiceList\ChoiceList;
+
+        // ...
+        $builder->add('choices', ChoiceType::class, [
+            'choice_value' => ChoiceList::value($this, 'uuid'),
+        ]);
+
+    See the :ref:`"choice_loader" option documentation <reference-form-choice-loader>`.

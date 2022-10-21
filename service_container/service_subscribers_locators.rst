@@ -65,7 +65,7 @@ through a **Service Locator**, a separate lazy-loaded container.
 Defining a Service Subscriber
 -----------------------------
 
-First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Component\\DependencyInjection\\ServiceSubscriberInterface`.
+First, turn ``CommandBus`` into an implementation of :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`.
 Use its ``getSubscribedServices()`` method to include as many services as needed
 in the service subscriber and change the type hint of the container to
 a PSR-11 ``ContainerInterface``::
@@ -243,6 +243,59 @@ service type to a service.
     The ``key`` attribute can be omitted if the service name internally is the
     same as in the service container.
 
+Add Dependency Injection Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.2
+
+    The ability to add attributes was introduced in Symfony 6.2.
+
+As an alternate to aliasing services in your configuration, you can also configure
+the following dependency injection attributes in the ``getSubscribedServices()``
+method directly:
+
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autowire`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedLocator`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\MapDecorated`
+
+This is done by having ``getSubscribedServices()`` return an array of
+:class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` objects
+(these can be combined with standard ``string[]`` values)::
+
+    use Psr\Container\ContainerInterface;
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+    use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+    use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
+
+    public static function getSubscribedServices(): array
+    {
+        return [
+            // ...
+            new SubscribedService('logger', LoggerInterface::class, attributes: new Autowire(service: 'monolog.logger.event')),
+
+            // can event use parameters
+            new SubscribedService('env', string, attributes: new Autowire('%kernel.environment%')),
+
+            // Target
+            new SubscribedService('event.logger', LoggerInterface::class, attributes: new Target('eventLogger')),
+
+            // TaggedIterator
+            new SubscribedService('loggers', 'iterable', attributes: new TaggedIterator('logger.tag')),
+
+            // TaggedLocator
+            new SubscribedService('handlers', ContainerInterface::class, attributes: new TaggedLocator('handler.tag')),
+        ];
+    }
+
+.. note::
+
+    The above example requires using ``3.2`` version or newer of ``symfony/service-contracts``.
+
 Defining a Service Locator
 --------------------------
 
@@ -256,9 +309,10 @@ argument of type ``service_locator``:
         # config/services.yaml
         services:
             App\CommandBus:
-                arguments: !service_locator
-                    App\FooCommand: '@app.command_handler.foo'
-                    App\BarCommand: '@app.command_handler.bar'
+                arguments:
+                  - !service_locator
+                      App\FooCommand: '@app.command_handler.foo'
+                      App\BarCommand: '@app.command_handler.bar'
 
     .. code-block:: xml
 
@@ -292,21 +346,12 @@ argument of type ``service_locator``:
 
             $services->set(CommandBus::class)
                 ->args([service_locator([
-                    'App\FooCommand' => ref('app.command_handler.foo'),
-                    'App\BarCommand' => ref('app.command_handler.bar'),
+                    'App\FooCommand' => service('app.command_handler.foo'),
+                    'App\BarCommand' => service('app.command_handler.bar'),
                     // if the element has no key, the ID of the original service is used
-                    ref('app.command_handler.baz'),
+                    service('app.command_handler.baz'),
                 ])]);
         };
-
-.. versionadded:: 4.2
-
-    The ability to add services without specifying an array key was introduced
-    in Symfony 4.2.
-
-.. versionadded:: 4.2
-
-    The ``service_locator`` argument type was introduced in Symfony 4.2.
 
 As shown in the previous sections, the constructor of the ``CommandBus`` class
 must type-hint its argument with ``ContainerInterface``. Then, you can get any of
@@ -382,8 +427,8 @@ other services. To do so, create a new service definition using the
 
             $services->set('app.command_handler_locator', ServiceLocator::class)
                 ->args([[
-                    'App\FooCommand' => ref('app.command_handler.foo'),
-                    'App\BarCommand' => ref('app.command_handler.bar'),
+                    'App\FooCommand' => service('app.command_handler.foo'),
+                    'App\BarCommand' => service('app.command_handler.bar'),
                 ]])
                 // if you are not using the default service autoconfiguration,
                 // add the following tag to the service definition:
@@ -393,16 +438,15 @@ other services. To do so, create a new service definition using the
             // if the element has no key, the ID of the original service is used
             $services->set('app.another_command_handler_locator', ServiceLocator::class)
                 ->args([[
-                    ref('app.command_handler.baz'),
+                    service('app.command_handler.baz'),
                 ]])
             ;
         };
 
-.. versionadded:: 4.1
+.. note::
 
-    The service locator autoconfiguration was introduced in Symfony 4.1. In
-    previous Symfony versions you always needed to add the
-    ``container.service_locator`` tag explicitly.
+    The services defined in the service locator argument must include keys,
+    which later become their unique identifiers inside the locator.
 
 Now you can inject the service locator in any other services:
 
@@ -443,7 +487,7 @@ Now you can inject the service locator in any other services:
             $services = $configurator->services();
 
             $services->set(CommandBus::class)
-                ->args([ref('app.command_handler_locator')]);
+                ->args([service('app.command_handler_locator')]);
         };
 
 Using Service Locators in Compiler Passes
@@ -636,8 +680,9 @@ Service Subscriber Trait
 
 The :class:`Symfony\\Contracts\\Service\\ServiceSubscriberTrait` provides an
 implementation for :class:`Symfony\\Contracts\\Service\\ServiceSubscriberInterface`
-that looks through all methods in your class that have no arguments and a return
-type. It provides a ``ServiceLocator`` for the services of those return types.
+that looks through all methods in your class that are marked with the
+:class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` attribute. It
+provides a ``ServiceLocator`` for the services of each method's return type.
 The service id is ``__METHOD__``. This allows you to add dependencies to your
 services based on type-hinted helper methods::
 
@@ -646,6 +691,7 @@ services based on type-hinted helper methods::
 
     use Psr\Log\LoggerInterface;
     use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
     use Symfony\Contracts\Service\ServiceSubscriberInterface;
     use Symfony\Contracts\Service\ServiceSubscriberTrait;
 
@@ -659,11 +705,13 @@ services based on type-hinted helper methods::
             // $this->logger() ...
         }
 
+        #[SubscribedService]
         private function router(): RouterInterface
         {
             return $this->container->get(__METHOD__);
         }
 
+        #[SubscribedService]
         private function logger(): LoggerInterface
         {
             return $this->container->get(__METHOD__);
@@ -677,9 +725,11 @@ and compose your services with them::
     namespace App\Service;
 
     use Psr\Log\LoggerInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
 
     trait LoggerAware
     {
+        #[SubscribedService]
         private function logger(): LoggerInterface
         {
             return $this->container->get(__CLASS__.'::'.__FUNCTION__);
@@ -690,9 +740,11 @@ and compose your services with them::
     namespace App\Service;
 
     use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
 
     trait RouterAware
     {
+        #[SubscribedService]
         private function router(): RouterInterface
         {
             return $this->container->get(__CLASS__.'::'.__FUNCTION__);
@@ -721,5 +773,118 @@ and compose your services with them::
     When creating these helper traits, the service id cannot be ``__METHOD__``
     as this will include the trait name, not the class name. Instead, use
     ``__CLASS__.'::'.__FUNCTION__`` as the service id.
+
+``SubscribedService`` Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.2
+
+    The ability to add attributes was introduced in Symfony 6.2.
+
+You can use the ``attributes`` argument of ``SubscribedService`` to add any
+of the following dependency injection attributes:
+
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autowire`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedLocator`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\MapDecorated`
+
+Here's an example::
+
+    // src/Service/MyService.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+    use Symfony\Component\Routing\RouterInterface;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
+    use Symfony\Contracts\Service\ServiceSubscriberInterface;
+    use Symfony\Contracts\Service\ServiceSubscriberTrait;
+
+    class MyService implements ServiceSubscriberInterface
+    {
+        use ServiceSubscriberTrait;
+
+        public function doSomething()
+        {
+            // $this->environment() ...
+            // $this->router() ...
+            // $this->logger() ...
+        }
+
+        #[SubscribedService(attributes: new Autowire('%kernel.environment%'))]
+        private function environment(): string
+        {
+            return $this->container->get(__METHOD__);
+        }
+
+        #[SubscribedService(attributes: new Autowire(service: 'router'))]
+        private function router(): RouterInterface
+        {
+            return $this->container->get(__METHOD__);
+        }
+
+        #[SubscribedService(attributes: new Target('requestLogger'))]
+        private function logger(): LoggerInterface
+        {
+            return $this->container->get(__METHOD__);
+        }
+    }
+
+.. note::
+
+    The above example requires using ``3.2`` version or newer of ``symfony/service-contracts``.
+
+Testing a Service Subscriber
+----------------------------
+
+To unit test a service subscriber, you can create a fake ``ServiceLocator``::
+
+    use Symfony\Component\DependencyInjection\ServiceLocator;
+
+    $container = new class() extends ServiceLocator {
+        private $services = [];
+
+        public function __construct()
+        {
+            parent::__construct([
+                'foo' => function () {
+                    return $this->services['foo'] = $this->services['foo'] ?? new stdClass();
+                },
+                'bar' => function () {
+                    return $this->services['bar'] = $this->services['bar'] ?? $this->createBar();
+                },
+            ]);
+        }
+
+        private function createBar()
+        {
+            $bar = new stdClass();
+            $bar->foo = $this->get('foo');
+
+            return $bar;
+        }
+    };
+
+    $serviceSubscriber = new MyService($container);
+    // ...
+
+Another alternative is to mock it using ``PHPUnit``::
+
+    use Psr\Container\ContainerInterface;
+
+    $container = $this->createMock(ContainerInterface::class);
+    $container->expects(self::any())
+        ->method('get')
+        ->willReturnMap([
+            ['foo', $this->createStub(Foo::class)],
+            ['bar', $this->createStub(Bar::class)],
+        ])
+    ;
+
+    $serviceSubscriber = new MyService($container);
+    // ...
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern

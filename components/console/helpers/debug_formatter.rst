@@ -7,8 +7,8 @@ Debug Formatter Helper
 The :class:`Symfony\\Component\\Console\\Helper\\DebugFormatterHelper` provides
 functions to output debug information when running an external program, for
 instance a process or HTTP request. For example, if you used it to output
-the results of running ``ls -la`` on a UNIX system, it might output something
-like this:
+the results of running ``figlet symfony``, it might output something like
+this:
 
 .. image:: /_images/components/console/debug_formatter.png
    :align: center

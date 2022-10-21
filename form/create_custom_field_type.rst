@@ -55,18 +55,10 @@ By convention they are stored in the ``src/Form/Type/`` directory::
         }
     }
 
-The methods of the ``FormTypeInterface`` are explained in detail later in
-this article. Here, ``getParent()`` method defines the base type
-(``ChoiceType``) and ``configureOptions()`` overrides some of its options.
+``getParent()`` tells Symfony to take ``ChoiceType`` as a starting point,
+then ``configureOptions()`` overrides some of its options. (All methods of the
+``FormTypeInterface`` are explained in detail later in this article.)
 The resulting form type is a choice field with predefined choices.
-
-.. note::
-
-    The PHP class extension mechanism and the Symfony form field extension
-    mechanism are not the same. The parent type returned in ``getParent()`` is
-    what Symfony uses to build and manage the field type. Making the PHP class
-    extend from ``AbstractType`` is only a convenient way of implementing the
-    required ``FormTypeInterface``.
 
 Now you can add this form type when :doc:`creating Symfony forms </forms>`::
 
@@ -123,14 +115,16 @@ convenient to extend instead from :class:`Symfony\\Component\\Form\\AbstractType
         // ...
     }
 
-When a form type doesn't extend from another specific type, there's no need to
-implement the ``getParent()`` method (Symfony will make the type extend from the
-generic :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`,
-which is the parent of all the other types).
-
 These are the most important methods that a form type class can define:
 
 .. _form-type-methods-explanation:
+
+``getParent()``
+    When returning a (fully-qualified) class name here, Symfony will call each
+    method of that type (i.e. ``buildForm()``, ``buildView()``, etc.) and all its
+    type extensions, before calling the corresponding method of your custom type.
+    This is probably a good idea if you're just changing some details of an
+    existing type. To start from scratch, omit ``getParent()``.
 
 ``buildForm()``
     It adds and configures other types into this type. It's the same method used
@@ -146,9 +140,10 @@ These are the most important methods that a form type class can define:
     extensions, but you can create any custom option you need.
 
 ``finishView()``
-    When creating a form type that consists of many fields, this method allows
-    to modify the "view" of any of those fields. For any other use case, it's
-    recommended to use instead the ``buildView()`` method.
+    This method allows to modify the "view" of any rendered widget. This is useful
+    if your form type consists of many fields, or contains a type that produces
+    many HTML elements (e.g. ``ChoiceType``). For any other use case, it's
+    recommended to use ``buildView()`` instead.
 
 ``getParent()``
     If your custom type is based on another type (i.e. they share some
@@ -405,12 +400,14 @@ rest of files):
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes([
                 'form/custom_types.html.twig',
                 '...',
-            ],
-        ]);
+            ]);
+        };
 
 The last step is to create the actual Twig template that will render the type.
 The template contents depend on which HTML, CSS and JavaScript frameworks and
@@ -429,12 +426,6 @@ libraries are used in your application:
             </div>
         {% endfor %}
     {% endblock %}
-
-.. note::
-
-    Symfony 4.2 deprecated calling ``FormRenderer::searchAndRenderBlock`` for
-    fields that have already been rendered. That's why the previous example
-    includes the ``... if not child.rendered`` statement.
 
 The first part of the Twig block name (e.g. ``postal_address``) comes from the
 class name (``PostalAddressType`` -> ``postal_address``). This can be controlled
@@ -471,6 +462,8 @@ defined by the form or be completely independent::
     namespace App\Form\Type;
 
     use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Component\Form\FormInterface;
+    use Symfony\Component\Form\FormView;
     // ...
 
     class PostalAddressType extends AbstractType

@@ -6,9 +6,6 @@ Validates that a value is a valid language *Unicode language identifier*
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Language`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LanguageValidator`
 ==========  ===================================================================
@@ -18,7 +15,7 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/User.php
         namespace App\Entity;
@@ -27,9 +24,7 @@ Basic Usage
 
         class User
         {
-            /**
-             * @Assert\Language
-             */
+            #[Assert\Language]
             protected $preferredLanguage;
         }
 
@@ -77,6 +72,15 @@ Basic Usage
 Options
 -------
 
+alpha3
+~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is ``true``, the constraint checks that the value is a
+`ISO 639-2 (2T)`_ three-letter code (e.g. French = ``fra``) instead of the default
+`ISO 639-1`_ two-letter code (e.g. French = ``fr``).
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
@@ -92,6 +96,10 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+.. _`ISO 639-2 (2T)`: https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes

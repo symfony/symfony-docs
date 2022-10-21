@@ -12,7 +12,7 @@ features of a bundle.
 
     The bundle overriding mechanism means that you cannot use physical paths to
     refer to bundle's resources (e.g. ``__DIR__/config/services.xml``). Always
-    use logical paths in your bundles (e.g. ``@FooBundle/Resources/config/services.xml``)
+    use logical paths in your bundles (e.g. ``@FooBundle/config/services.xml``)
     and call the :ref:`locateResource() method <http-kernel-resource-locator>`
     to turn them into physical paths when needed.
 
@@ -23,12 +23,12 @@ Templates
 
 Third-party bundle templates can be overridden in the
 ``<your-project>/templates/bundles/<bundle-name>/`` directory. The new templates
-must use the same name and path (relative to ``<bundle>/Resources/views/``) as
+must use the same name and path (relative to ``<bundle>/templates/``) as
 the original templates.
 
-For example, to override the ``Resources/views/Registration/confirmed.html.twig``
-template from the FOSUserBundle, create this template:
-``<your-project>/templates/bundles/FOSUserBundle/Registration/confirmed.html.twig``
+For example, to override the ``templates/registration/confirmed.html.twig``
+template from the AcmeUserBundle, create this template:
+``<your-project>/templates/bundles/AcmeUserBundle/registration/confirmed.html.twig``
 
 .. caution::
 
@@ -43,9 +43,9 @@ extend from the original template, not from the overridden one:
 
 .. code-block:: twig
 
-    {# templates/bundles/FOSUserBundle/Registration/confirmed.html.twig #}
+    {# templates/bundles/AcmeUserBundle/registration/confirmed.html.twig #}
     {# the special '!' prefix avoids errors when extending from an overridden template #}
-    {% extends "@!FOSUser/Registration/confirmed.html.twig" %}
+    {% extends "@!AcmeUser/registration/confirmed.html.twig" %}
 
     {% block some_block %}
         ...
@@ -139,8 +139,8 @@ to a new validation group:
         <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
-                https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
-
+                https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd"
+        >
             <class name="FOS\UserBundle\Model\User">
                 <property name="plainPassword">
                     <constraint name="NotBlank">
@@ -173,7 +173,7 @@ For this reason, you can override any bundle translation file from the main
 ``translations/`` directory, as long as the new file uses the same domain.
 
 For example, to override the translations defined in the
-``Resources/translations/FOSUserBundle.es.yml`` file of the FOSUserBundle,
-create a ``<your-project>/translations/FOSUserBundle.es.yml`` file.
+``translations/AcmeUserBundle.es.yaml`` file of the AcmeUserBundle,
+create a ``<your-project>/translations/AcmeUserBundle.es.yaml`` file.
 
 .. _`the Doctrine documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/inheritance-mapping.html#overrides

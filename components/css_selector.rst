@@ -40,7 +40,7 @@ long and unwieldy expressions.
 Many developers -- particularly web developers -- are more comfortable
 using CSS selectors to find elements. As well as working in stylesheets,
 CSS selectors are used in JavaScript with the ``querySelectorAll()`` function
-and in popular JavaScript libraries such as jQuery, Prototype and MooTools.
+and in popular JavaScript libraries such as jQuery.
 
 CSS selectors are less powerful than XPath, but far easier to write, read
 and understand. Since they are less powerful, almost all CSS selectors can
@@ -97,10 +97,6 @@ Pseudo-classes are partially supported:
   ``*:nth-last-of-type`` (all these work with an element name (e.g.
   ``li:first-of-type``) but not with the ``*`` selector).
 * Supported: ``*:only-of-type``.
-
-.. versionadded:: 4.4
-
-    The support for ``*:only-of-type`` was introduced in Symfony 4.4.
 
 Learn more
 ----------

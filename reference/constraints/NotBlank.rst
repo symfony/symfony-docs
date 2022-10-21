@@ -8,11 +8,6 @@ that a value is not equal to ``null``, see the
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowNull`_
-            - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotBlank`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotBlankValidator`
 ==========  ===================================================================
@@ -25,7 +20,7 @@ class were not blank, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -34,9 +29,7 @@ class were not blank, you could do the following:
 
         class Author
         {
-            /**
-             * @Assert\NotBlank
-             */
+            #[Assert\NotBlank]
             protected $firstName;
         }
 
@@ -90,10 +83,6 @@ Options
 If set to ``true``, ``null`` values are considered valid and won't trigger a
 constraint violation.
 
-.. versionadded:: 4.3
-
-    The ``allowNull`` option was introduced in Symfony 4.3.
-
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
@@ -109,6 +98,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc

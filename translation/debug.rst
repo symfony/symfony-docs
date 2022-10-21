@@ -19,9 +19,10 @@ command helps you to find these missing or unused translation messages templates
 
 .. caution::
 
-    The extractors can't find messages translated outside templates, like form
-    labels or controllers. Dynamic translations using variables or expressions
-    in templates are not detected either:
+    The extractors can't find messages translated outside templates (like form
+    labels or controllers) unless using :ref:`translatable-objects` or calling
+    the ``trans()`` method on a translator. Dynamic translations using variables
+    or expressions in templates are not detected either:
 
     .. code-block:: twig
 
@@ -180,3 +181,29 @@ unused or only the missing messages, by using the ``--only-unused`` or
 
     $ php bin/console debug:translation en --only-unused
     $ php bin/console debug:translation en --only-missing
+
+Debug Command Exit Codes
+------------------------
+
+The exit code of the ``debug:translation`` command changes depending on the
+status of the translations. Use the following public constants to check it::
+
+    use Symfony\Bundle\FrameworkBundle\Command\TranslationDebugCommand;
+
+    // generic failure (e.g. there are no translations)
+    TranslationDebugCommand::EXIT_CODE_GENERAL_ERROR;
+
+    // there are missing translations
+    TranslationDebugCommand::EXIT_CODE_MISSING;
+
+    // there are unused translations
+    TranslationDebugCommand::EXIT_CODE_UNUSED;
+
+    // some translations are using the fallback translation
+    TranslationDebugCommand::EXIT_CODE_FALLBACK;
+
+These constants are defined as "bit masks", so you can combine them as follows::
+
+    if (TranslationDebugCommand::EXIT_CODE_MISSING | TranslationDebugCommand::EXIT_CODE_UNUSED) {
+        // ... there are missing and/or unused translations
+    }

@@ -187,21 +187,26 @@ configuration:
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
-                <framework:session gc_probability="null"/>
+                <framework:session gc-probability="null"/>
             </framework:config>
         </container>
 
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'session' => [
-                'gc_probability' => null,
-            ],
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('framework', [
+                'session' => [
+                    'gc_probability' => null,
+                ],
+            ]);
+        };
 
 You can configure these settings by passing ``gc_probability``, ``gc_divisor``
 and ``gc_maxlifetime`` in an array to the constructor of

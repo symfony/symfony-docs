@@ -275,7 +275,8 @@ For example, you may add the following transports as services:
             $services = $configurator->services();
 
             $services->set(\Swift_SmtpTransport::class)
-                ->args(['%mailer_host%'])
+                // the param() method was introduced in Symfony 5.2.
+                ->args([param('mailer_host')])
                 ->tag('app.mail_transport')
             ;
 
@@ -441,7 +442,8 @@ To answer this, change the service declaration:
             $services = $configurator->services();
 
             $services->set(\Swift_SmtpTransport::class)
-                ->args(['%mailer_host%'])
+                // the param() method was introduced in Symfony 5.2.
+                ->args([param('mailer_host')])
                 ->tag('app.mail_transport', ['alias' => 'smtp'])
             ;
 
@@ -596,13 +598,9 @@ application handlers::
 Tagged Services with Priority
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.4
-
-    The ability to prioritize tagged services was introduced in Symfony 4.4.
-
-The tagged services can be prioritized using the ``priority`` attribute.
-The priority is a positive or negative integer. The higher the number,
-the earlier the tagged service will be located in the collection:
+The tagged services can be prioritized using the ``priority`` attribute. The
+priority is a positive or negative integer that defaults to ``0``. The higher
+the number, the earlier the tagged service will be located in the collection:
 
 .. configuration-block::
 

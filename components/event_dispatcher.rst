@@ -254,21 +254,11 @@ determine which instance is passed.
 
         Note that ``AddEventAliasesPass`` has to be processed before ``RegisterListenersPass``.
 
-    By default, the listeners pass assumes that the event dispatcher's service
+    The listeners pass assumes that the event dispatcher's service
     id is ``event_dispatcher``, that event listeners are tagged with the
     ``kernel.event_listener`` tag, that event subscribers are tagged
     with the ``kernel.event_subscriber`` tag and that the alias mapping is
-    stored as parameter ``event_dispatcher.event_aliases``. You can change these
-    default values by passing custom values to the constructors of
-    ``RegisterListenersPass`` and ``AddEventAliasesPass``.
-
-.. versionadded:: 4.3
-
-    Aliasing event names is possible since Symfony 4.3.
-
-.. versionadded:: 4.4
-
-    The ``AddEventAliasesPass`` class was introduced in Symfony 4.4.
+    stored as parameter ``event_dispatcher.event_aliases``.
 
 .. _event_dispatcher-closures-as-listeners:
 
@@ -499,9 +489,9 @@ is dispatched, are passed as arguments to the listener::
     use Symfony\Contracts\EventDispatcher\Event;
     use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-    class Foo
+    class MyListener
     {
-        public function myEventListener(Event $event, $eventName, EventDispatcherInterface $dispatcher)
+        public function myEventListener(Event $event, string $eventName, EventDispatcherInterface $dispatcher)
         {
             // ... do something with the event name
         }

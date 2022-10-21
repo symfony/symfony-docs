@@ -53,7 +53,7 @@ You now have access to a ``last_name`` argument in your command::
 
             $output->writeln($text.'!');
 
-            return 0;
+            return Command::SUCCESS;
         }
     }
 
@@ -134,10 +134,17 @@ how many times in a row the message should be printed::
     $this
         // ...
         ->addOption(
+            // this is the name that users must type to pass this option (e.g. --iterations=5)
             'iterations',
+            // this is the optional shortcut of the option name, which usually is just a letter
+            // (e.g. `i`, so users pass it as `-i`); use it for commonly used options
+            // or options with long names
             null,
+            // this is the type of option (e.g. requires a value, can be passed more than once, etc.)
             InputOption::VALUE_REQUIRED,
+            // the option description displayed when showing the command help
             'How many times should the message be printed?',
+            // the default value of the option (for those which allow to pass values)
             1
         )
     ;
@@ -199,7 +206,7 @@ separation at all (e.g. ``-i 5`` or ``-i5``).
     this situation, always place options after the command name, or avoid using
     a space to separate the option name from its value.
 
-There are four option variants you can use:
+There are five option variants you can use:
 
 ``InputOption::VALUE_IS_ARRAY``
     This option accepts multiple values (e.g. ``--dir=/foo --dir=/bar``);
@@ -217,7 +224,11 @@ There are four option variants you can use:
     This option may or may not have a value (e.g. ``--yell`` or
     ``--yell=loud``).
 
-You can combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
+``InputOption::VALUE_NEGATABLE``
+    Accept either the flag (e.g. ``--yell``) or its negation (e.g.
+    ``--no-yell``).
+
+You need to combine ``VALUE_IS_ARRAY`` with ``VALUE_REQUIRED`` or
 ``VALUE_OPTIONAL`` like this::
 
     $this
@@ -299,5 +310,99 @@ The above code can be simplified as follows because ``false !== null``::
     $optionValue = $input->getOption('yell');
     $yell = ($optionValue !== false);
     $yellLouder = ($optionValue === 'louder');
+
+Adding Argument/Option Value Completion
+---------------------------------------
+
+If :ref:`Console completion is installed <console-completion-setup>`,
+command and option names will be auto completed by the shell. However, you
+can also implement value completion for the input in your commands. For
+instance, you may want to complete all usernames from the database in the
+``name`` argument of your greet command.
+
+To achieve this, use the 5th argument of ``addArgument()``/``addOption``::
+
+    // ...
+    use Symfony\Component\Console\Completion\CompletionInput;
+    use Symfony\Component\Console\Completion\CompletionSuggestions;
+
+    class GreetCommand extends Command
+    {
+        // ...
+        protected function configure(): void
+        {
+            $this
+                ->addArgument(
+                    'names',
+                    InputArgument::IS_ARRAY,
+                    'Who do you want to greet (separate multiple names with a space)?',
+                    null,
+                    function (CompletionInput $input) {
+                        // the value the user already typed, e.g. when typing "app:greet Fa" before
+                        // pressing Tab, this will contain "Fa"
+                        $currentValue = $input->getCompletionValue();
+
+                        // get the list of username names from somewhere (e.g. the database)
+                        // you may use $currentValue to filter down the names
+                        $availableUsernames = ...;
+
+                        // then suggested the usernames as values
+                        return $availableUsernames;
+                    }
+                )
+            ;
+        }
+    }
+
+.. versionadded:: 6.1
+
+    The argument to ``addOption()``/``addArgument()`` was introduced in
+    Symfony 6.1. Prior to this version, you had to override the
+    ``complete()`` method of the command.
+
+That's all you need! Assuming users "Fabien" and "Fabrice" exist, pressing
+tab after typing ``app:greet Fa`` will give you these names as a suggestion.
+
+.. tip::
+
+    The shell script is able to handle huge amounts of suggestions and will
+    automatically filter the suggested values based on the existing input
+    from the user. You do not have to implement any filter logic in the
+    command.
+
+    You may use ``CompletionInput::getCompletionValue()`` to get the
+    current input if that helps improving performance (e.g. by reducing the
+    number of rows fetched from the database).
+
+Testing the Completion script
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Console component comes with a special
+:class:`Symfony\\Component\\Console\\Tester\\CommandCompletionTester`` class
+to help you unit test the completion logic::
+
+    // ...
+    use Symfony\Component\Console\Application;
+
+    class GreetCommandTest extends TestCase
+    {
+        public function testComplete()
+        {
+            $application = new Application();
+            $application->add(new GreetCommand());
+
+            // create a new tester with the greet command
+            $tester = new CommandCompletionTester($application->get('app:greet'));
+
+            // complete the input without any existing input (the empty string represents
+            // the position of the cursor)
+            $suggestions = $tester->complete(['']);
+            $this->assertSame(['Fabien', 'Fabrice', 'Wouter'], $suggestions);
+
+            // complete the input with "Fa" as input
+            $suggestions = $tester->complete(['Fa']);
+            $this->assertSame(['Fabien', 'Fabrice'], $suggestions);
+        }
+    }
 
 .. _`docopt standard`: http://docopt.org/

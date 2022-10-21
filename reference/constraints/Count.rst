@@ -6,13 +6,6 @@ Countable) element count is *between* some minimum and maximum value.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `exactMessage`_
-            - `groups`_
-            - `max`_
-            - `maxMessage`_
-            - `min`_
-            - `minMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Count`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CountValidator`
 ==========  ===================================================================
@@ -25,7 +18,7 @@ you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Participant.php
         namespace App\Entity;
@@ -34,14 +27,12 @@ you might add the following:
 
         class Participant
         {
-            /**
-             * @Assert\Count(
-             *      min = 1,
-             *      max = 5,
-             *      minMessage = "You must specify at least one email",
-             *      maxMessage = "You cannot specify more than {{ limit }} emails"
-             * )
-             */
+            #[Assert\Count(
+                min: 1,
+                max: 5,
+                minMessage: 'You must specify at least one email',
+                maxMessage: 'You cannot specify more than {{ limit }} emails',
+            )]
             protected $emails = [];
         }
 
@@ -100,6 +91,36 @@ you might add the following:
 
 Options
 -------
+
+``divisibleBy``
+~~~~~~~~~~~~~~~
+
+**type**: ``integer`` **default**: null
+
+Validates that the number of elements of the given collection is divisible by
+a certain number.
+
+.. seealso::
+
+    If you need to validate that other types of data different from collections
+    are divisible by a certain number, use the
+    :doc:`DivisibleBy </reference/constraints/DivisibleBy>` constraint.
+
+``divisibleByMessage``
+~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The number of elements in this collection should be a multiple of {{ compared_value }}.``
+
+The message that will be shown if the number of elements of the given collection
+is not divisible by the number defined in the ``divisibleBy`` option.
+
+You can use the following parameters in this message:
+
+========================  ===================================================
+Parameter                 Description
+========================  ===================================================
+``{{ compared_value }}``  The number configured in the ``divisibleBy`` option
+========================  ===================================================
 
 ``exactMessage``
 ~~~~~~~~~~~~~~~~

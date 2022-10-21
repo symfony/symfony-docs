@@ -8,12 +8,6 @@ check that the BIC's country code is the same as a given IBAN's one.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `iban`_
-            - `ibanMessage`_
-            - `ibanPropertyPath`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Bic`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\BicValidator`
 ==========  ===================================================================
@@ -26,7 +20,7 @@ will contain a Business Identifier Code (BIC).
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Transaction.php
         namespace App\Entity;
@@ -35,9 +29,7 @@ will contain a Business Identifier Code (BIC).
 
         class Transaction
         {
-            /**
-             * @Assert\Bic
-             */
+            #[Assert\Bic]
             protected $businessIdentifierCode;
         }
 
@@ -92,10 +84,6 @@ Available Options
 
 **type**: ``string`` **default**: ``null``
 
-.. versionadded:: 4.3
-
-    The ``iban`` option was introduced in Symfony 4.3.
-
 An IBAN value to validate that its country code is the same as the BIC's one.
 
 ``ibanMessage``
@@ -103,20 +91,12 @@ An IBAN value to validate that its country code is the same as the BIC's one.
 
 **type**: ``string`` **default**: ``This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.``
 
-.. versionadded:: 4.3
-
-    The ``ibanMessage`` option was introduced in Symfony 4.3.
-
 The default message supplied when the value does not pass the combined BIC/IBAN check.
 
 ``ibanPropertyPath``
 ~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
-
-.. versionadded:: 4.3
-
-    The ``ibanPropertyPath`` option was introduced in Symfony 4.3.
 
 It defines the object property whose value stores the IBAN used to check the BIC with.
 

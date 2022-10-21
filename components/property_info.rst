@@ -122,7 +122,7 @@ class exposes public methods to extract several types of information:
 
 * :ref:`List of properties <property-info-list>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyListExtractorInterface::getProperties`
 * :ref:`Property type <property-info-type>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyTypeExtractorInterface::getTypes`
-  (including typed properties since PHP 7.4)
+  (including typed properties)
 * :ref:`Property description <property-info-description>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getShortDescription` and :method:`Symfony\\Component\\PropertyInfo\\PropertyDescriptionExtractorInterface::getLongDescription`
 * :ref:`Property access details <property-info-access>`: :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isReadable` and  :method:`Symfony\\Component\\PropertyInfo\\PropertyAccessExtractorInterface::isWritable`
 * :ref:`Property initializable through the constructor <property-info-initializable>`:  :method:`Symfony\\Component\\PropertyInfo\\PropertyInitializableExtractorInterface::isInitializable`
@@ -208,7 +208,7 @@ strings::
         Example Result
         --------------
         string(79):
-            These is the subsequent paragraph in the DocComment.
+            This is the subsequent paragraph in the DocComment.
             It can span multiple lines.
     */
 
@@ -293,10 +293,6 @@ string values: ``array``, ``bool``, ``callable``, ``float``, ``int``,
 Constants inside the :class:`Symfony\\Component\\PropertyInfo\\Type`
 class, in the form ``Type::BUILTIN_TYPE_*``, are provided for convenience.
 
-.. versionadded:: 4.4
-
-    Support for typed properties (added in PHP 7.4) was introduced in Symfony 4.4.
-
 ``Type::isNullable()``
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -326,10 +322,6 @@ this returns ``true`` if:
 * The `phpDocumentor`_ annotation is of type "collection" (e.g.
   ``@var SomeClass<DateTime>``, ``@var SomeClass<integer,string>``,
   ``@var Doctrine\Common\Collections\Collection<App\Entity\SomeEntity>``, etc.)
-
-.. versionadded:: 4.2
-
-    The support of phpDocumentor collection types was introduced in Symfony 4.2.
 
 ``Type::getCollectionKeyType()`` & ``Type::getCollectionValueType()``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -365,7 +357,7 @@ Using PHP reflection, the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\R
 provides list, type and access information from setter and accessor methods.
 It can also give the type of a property (even extracting it from the constructor
 arguments), and if it is initializable through the constructor. It supports
-return and scalar types for PHP 7::
+return and scalar types::
 
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 
@@ -383,11 +375,6 @@ return and scalar types for PHP 7::
 
     // Initializable information
     $reflectionExtractor->isInitializable($class, $property);
-
-.. versionadded:: 4.1
-
-    The feature to extract the property types from constructor arguments was
-    introduced in Symfony 4.1.
 
 .. note::
 
@@ -424,6 +411,41 @@ library is present::
     $phpDocExtractor->getShortDescription($class, $property);
     $phpDocExtractor->getLongDescription($class, $property);
 
+PhpStanExtractor
+~~~~~~~~~~~~~~~~
+
+.. note::
+
+    This extractor depends on the `phpstan/phpdoc-parser`_ and
+    `phpdocumentor/reflection-docblock`_ libraries.
+
+This extractor fetches information thanks to the PHPStan parser. It gathers
+information from annotations of properties and methods, such as ``@var``,
+``@param`` or ``@return``::
+
+    // src/Domain/Foo.php
+    class Foo
+    {
+        private $bar;
+
+        /**
+         * @param string $bar
+         */
+        public function __construct($bar) {
+            $this->bar = $bar;
+        }
+    }
+
+    // Extraction.php
+    use Symfony\Component\PropertyInfo\Extractor\PhpStanExtractor;
+
+    $phpStanExtractor = new PhpStanExtractor();
+    $phpStanExtractor->getTypesFromConstructor(Foo::class, 'bar');
+
+.. versionadded:: 6.1
+
+    The ``PhpStanExtractor`` was introduced in Symfony 6.1.
+
 SerializerExtractor
 ~~~~~~~~~~~~~~~~~~~
 
@@ -431,7 +453,7 @@ SerializerExtractor
 
     This extractor depends on the `symfony/serializer`_ library.
 
-Using :ref:`groups metadata <serializer-using-serialization-groups-annotations>`
+Using :ref:`groups metadata <serializer-using-serialization-groups-attributes>`
 from the :doc:`Serializer component </components/serializer>`,
 the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\SerializerExtractor`
 provides list information. This extractor is *not* registered automatically
@@ -447,8 +469,12 @@ with the ``property_info`` service in the Symfony Framework::
     );
     $serializerExtractor = new SerializerExtractor($serializerClassMetadataFactory);
 
-    // List information.
-    $serializerExtractor->getProperties($class);
+    // the `serializer_groups` option must be configured (may be set to null)
+    $serializerExtractor->getProperties($class, ['serializer_groups' => ['mygroup']]);
+
+If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
+checked but you will get only the properties considered by the Serializer
+Component (notably the ``@Ignore`` annotation is taken into account).
 
 DoctrineExtractor
 ~~~~~~~~~~~~~~~~~
@@ -504,12 +530,9 @@ service by defining it as a service with one or more of the following
 * ``property_info.initializable_extractor`` if it provides initializable information
   (it checks if a property can be initialized through the constructor).
 
-.. versionadded:: 4.2
-
-    The ``property_info.initializable_extractor`` was introduced in Symfony 4.2.
-
 .. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
 .. _`phpdocumentor/reflection-docblock`: https://packagist.org/packages/phpdocumentor/reflection-docblock
+.. _`phpstan/phpdoc-parser`: https://packagist.org/packages/phpstan/phpdoc-parser
 .. _`Doctrine ORM`: https://www.doctrine-project.org/projects/orm.html
 .. _`symfony/serializer`: https://packagist.org/packages/symfony/serializer
 .. _`symfony/doctrine-bridge`: https://packagist.org/packages/symfony/doctrine-bridge

@@ -3,13 +3,14 @@ DivisibleBy
 
 Validates that a value is divisible by another value, defined in the options.
 
+.. seealso::
+
+    If you need to validate that the number of elements in a collection is
+    divisible by a certain number, use the :doc:`Count </reference/constraints/Count>`
+    constraint with the ``divisibleBy`` option.
+
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\DivisibleBy`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\DivisibleByValidator`
 ==========  ===================================================================
@@ -24,7 +25,7 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Item.php
         namespace App\Entity;
@@ -33,16 +34,12 @@ The following constraints ensure that:
 
         class Item
         {
-            /**
-             * @Assert\DivisibleBy(0.25)
-             */
+            #[Assert\DivisibleBy(0.25)]
             protected $weight;
 
-            /**
-             * @Assert\DivisibleBy(
-             *     value = 5
-             * )
-             */
+            #[Assert\DivisibleBy(
+                value: 5,
+            )]
             protected $quantity;
         }
 

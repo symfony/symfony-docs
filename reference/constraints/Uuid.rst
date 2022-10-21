@@ -8,12 +8,6 @@ UUID versions can also be restricted using a list of allowed versions.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
-            - `strict`_
-            - `versions`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Uuid`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\UuidValidator`
 ==========  ===================================================================
@@ -23,7 +17,7 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/File.php
         namespace App\Entity;
@@ -32,9 +26,7 @@ Basic Usage
 
         class File
         {
-            /**
-             * @Assert\Uuid
-             */
+            #[Assert\Uuid]
             protected $identifier;
         }
 
@@ -97,6 +89,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
@@ -119,18 +112,24 @@ will allow alternate input formats like:
 ``versions``
 ~~~~~~~~~~~~
 
-**type**: ``int[]`` **default**: ``[1,2,3,4,5]``
+**type**: ``int[]`` **default**: ``[1,2,3,4,5,6,7,8]``
 
-This option can be used to only allow specific `UUID versions`_.  Valid versions are 1 - 5.
-The following PHP constants can also be used:
+This option can be used to only allow specific `UUID versions`_ (by default, all
+of them are allowed). Valid versions are 1 - 8. Instead of using numeric values,
+you can also use the following PHP constants to refer to each UUID version:
 
 * ``Uuid::V1_MAC``
 * ``Uuid::V2_DCE``
 * ``Uuid::V3_MD5``
 * ``Uuid::V4_RANDOM``
 * ``Uuid::V5_SHA1``
+* ``Uuid::V6_SORTABLE``
+* ``Uuid::V7_MONOTONIC``
+* ``Uuid::V8_CUSTOM``
 
-All five versions are allowed by default.
+.. versionadded:: 6.2
+
+    UUID versions 7 and 8 were introduced in Symfony 6.2.
 
 .. _`Universally unique identifier (UUID)`: https://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`RFC 4122`: https://tools.ietf.org/html/rfc4122

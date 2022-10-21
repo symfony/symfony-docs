@@ -5,7 +5,7 @@
 The PropertyAccess Component
 ============================
 
-    The PropertyAccess component provides function to read and write from/to an
+    The PropertyAccess component provides functions to read and write from/to an
     object or array using a simple string notation.
 
 Installation
@@ -62,6 +62,9 @@ method::
     // instead of returning null, the code now throws an exception of type
     // Symfony\Component\PropertyAccess\Exception\NoSuchIndexException
     $value = $propertyAccessor->getValue($person, '[age]');
+
+    // You can avoid the exception by adding the nullsafe operator
+    $value = $propertyAccessor->getValue($person, '[age?]');
 
 You can also use multi dimensional arrays::
 
@@ -169,11 +172,6 @@ This will produce: ``This person is an author``
 Accessing a non Existing Property Path
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.3
-
-    The ``disableExceptionOnInvalidPropertyPath()`` method was introduced in
-    Symfony 4.3.
-
 By default a :class:`Symfony\\Component\\PropertyAccess\\Exception\\NoSuchPropertyException`
 is thrown if the property path passed to :method:`Symfony\\Component\\PropertyAccess\\PropertyAccessor::getValue`
 does not exist. You can change this behavior using the
@@ -195,6 +193,41 @@ method::
     // instead of throwing an exception the following code returns null
     $value = $propertyAccessor->getValue($person, 'birthday');
 
+Accessing Nullable Property Paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Consider the following PHP code::
+
+    class Person
+    {
+    }
+
+    class Comment
+    {
+        public ?Person $person = null;
+        public string $message;
+    }
+
+    $comment = new Comment();
+    $comment->message = 'test';
+
+Given that ``$person`` is nullable, an object graph like ``comment.person.profile``
+will trigger an exception when the ``$person`` property is ``null``. The solution
+is to mark all nullable properties with the nullsafe operator (``?``)::
+
+    // This code throws an exception of type
+    // Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException
+    var_dump($propertyAccessor->getValue($comment, 'person.firstname'));
+
+    // If a property marked with the nullsafe operator is null, the expression is
+    // no longer evaluated and null is returned immediately without throwing an exception
+    var_dump($propertyAccessor->getValue($comment, 'person?.firstname')); // null
+
+.. versionadded:: 6.2
+
+    The ``?`` nullsafe operator was introduced in Symfony 6.2.
+
+.. _components-property-access-magic-get:
 
 Magic ``__get()`` Method
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -217,6 +250,11 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
     $person = new Person();
 
     var_dump($propertyAccessor->getValue($person, 'Wouter')); // [...]
+
+.. note::
+
+    The ``__get()`` method support is enabled by default.
+    See `Enable other Features`_ if you want to disable it.
 
 .. _components-property-access-magic-call:
 
@@ -275,6 +313,8 @@ also write to an array. This can be achieved using the
     var_dump($propertyAccessor->getValue($person, '[first_name]')); // 'Wouter'
     // or
     // var_dump($person['first_name']); // 'Wouter'
+
+.. _components-property-access-writing-to-objects:
 
 Writing to Objects
 ------------------
@@ -352,6 +392,11 @@ see `Enable other Features`_::
 
     var_dump($person->getWouter()); // [...]
 
+.. note::
+
+    The ``__set()`` method support is enabled by default.
+    See `Enable other Features`_ if you want to disable it.
+
 Writing to Array Properties
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -390,10 +435,49 @@ properties through *adder* and *remover* methods::
 The PropertyAccess component checks for methods called ``add<SingularOfThePropertyName>()``
 and ``remove<SingularOfThePropertyName>()``. Both methods must be defined.
 For instance, in the previous example, the component looks for the ``addChild()``
-and ``removeChild()`` methods to access to the ``children`` property.
-`The Inflector component`_ is used to find the singular of a property name.
+and ``removeChild()`` methods to access the ``children`` property.
+`The String component`_ inflector is used to find the singular of a property name.
 
 If available, *adder* and *remover* methods have priority over a *setter* method.
+
+Using non-standard adder/remover methods
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`` prefix, like in this example::
+
+    // ...
+    class PeopleList
+    {
+        // ...
+
+        public function joinPeople(string $people): void
+        {
+            $this->peoples[] = $people;
+        }
+
+        public function leavePeople(string $people): void
+        {
+            foreach ($this->peoples as $id => $item) {
+                if ($people === $item) {
+                    unset($this->peoples[$id]);
+                    break;
+                }
+            }
+        }
+    }
+
+    use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+    use Symfony\Component\PropertyAccess\PropertyAccessor;
+
+    $list = new PeopleList();
+    $reflectionExtractor = new ReflectionExtractor(null, null, ['join', 'leave']);
+    $propertyAccessor = new PropertyAccessor(PropertyAccessor::DISALLOW_MAGIC_METHODS, PropertyAccessor::THROW_ON_INVALID_PROPERTY_PATH, null, $reflectionExtractor, $reflectionExtractor);
+    $propertyAccessor->setValue($person, 'peoples', ['kevin', 'wouter']);
+
+    var_dump($person->getPeoples()); // ['kevin', 'wouter']
+
+Instead of calling ``add<SingularOfThePropertyName>()`` and ``remove<SingularOfThePropertyName>()``, the PropertyAccess
+component will call ``join<SingularOfThePropertyName>()`` and ``leave<SingularOfThePropertyName>()`` methods.
 
 Checking Property Paths
 -----------------------
@@ -462,14 +546,20 @@ configured to enable extra features. To do that you could use the
     // ...
     $propertyAccessorBuilder = PropertyAccess::createPropertyAccessorBuilder();
 
-    // enables magic __call
-    $propertyAccessorBuilder->enableMagicCall();
+    $propertyAccessorBuilder->enableMagicCall(); // enables magic __call
+    $propertyAccessorBuilder->enableMagicGet(); // enables magic __get
+    $propertyAccessorBuilder->enableMagicSet(); // enables magic __set
+    $propertyAccessorBuilder->enableMagicMethods(); // enables magic __get, __set and __call
 
-    // disables magic __call
-    $propertyAccessorBuilder->disableMagicCall();
+    $propertyAccessorBuilder->disableMagicCall(); // disables magic __call
+    $propertyAccessorBuilder->disableMagicGet(); // disables magic __get
+    $propertyAccessorBuilder->disableMagicSet(); // disables magic __set
+    $propertyAccessorBuilder->disableMagicMethods(); // disables magic __get, __set and __call
 
-    // checks if magic __call handling is enabled
+    // checks if magic __call, __get or __set handling are enabled
     $propertyAccessorBuilder->isMagicCallEnabled(); // true or false
+    $propertyAccessorBuilder->isMagicGetEnabled(); // true or false
+    $propertyAccessorBuilder->isMagicSetEnabled(); // true or false
 
     // At the end get the configured property accessor
     $propertyAccessor = $propertyAccessorBuilder->getPropertyAccessor();
@@ -481,7 +571,7 @@ configured to enable extra features. To do that you could use the
 
 Or you can pass parameters directly to the constructor (not the recommended way)::
 
-    // ...
-    $propertyAccessor = new PropertyAccessor(true); // this enables handling of magic __call
+    // enable handling of magic __call, __set but not __get:
+    $propertyAccessor = new PropertyAccessor(PropertyAccessor::MAGIC_CALL | PropertyAccessor::MAGIC_SET);
 
-.. _The Inflector component: https://github.com/symfony/inflector
+.. _`The String component`: https://github.com/symfony/string

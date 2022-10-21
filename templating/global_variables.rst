@@ -4,7 +4,7 @@
 How to Inject Variables Automatically into all Templates
 ========================================================
 
-Twig allows to inject automatically one or more variables into all templates.
+Twig allows you to automatically inject one or more variables into all templates.
 These global variables are defined in the ``twig.globals`` option inside the
 main Twig configuration file:
 
@@ -39,12 +39,13 @@ main Twig configuration file:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'globals' => [
-                'ga_tracking' => 'UA-xxxxx-x',
-            ],
-        ]);
+
+            $twig->global('ga_tracking')->value('UA-xxxxx-x');
+        };
 
 Now, the variable ``ga_tracking`` is available in all Twig templates, so you
 can use it without having to pass it explicitly from the controller or service
@@ -91,19 +92,21 @@ the ``@`` character, which is the usual syntax to
 
             <twig:config>
                 <!-- ... -->
-                <twig:global key="uuid">@App\Generator\UuidGenerator</twig:global>
+                <twig:global key="uuid" id="App\Generator\UuidGenerator" type="service"/>
             </twig:config>
         </container>
 
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'globals' => [
-                'uuid' => '@App\Generator\UuidGenerator',
-            ],
-        ]);
+
+            $twig->global('uuid')->value(service('App\Generator\UuidGenerator'));
+        };
 
 Now you can use the ``uuid`` variable in any Twig template to access to the
 ``UuidGenerator`` service:

@@ -8,8 +8,6 @@ constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
-Options     - `payload`_
-            - :ref:`traverse <traverse-option>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Traverse`
 ==========  ===================================================================
 
@@ -21,36 +19,32 @@ that all have constraints on their properties.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/BookCollection.php
         namespace App\Entity;
 
-        use Doctrine\Collections\ArrayCollection;
-        use Doctrine\Collections\Collection;
+        use App\Entity\Book;
+        use Doctrine\Common\Collections\ArrayCollection;
+        use Doctrine\Common\Collections\Collection;
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Component\Validator\Constraints as Assert;
 
-        /**
-         * @ORM\Entity
-         * @Assert\Traverse
-         */
+        #[ORM\Entity]
+        #[Assert\Traverse]
         class BookCollection implements \IteratorAggregate
         {
             /**
              * @var string
-             *
-             * @ORM\Column
-             *
-             * @Assert\NotBlank
              */
+            #[ORM\Column]
+            #[Assert\NotBlank]
             protected $name = '';
 
             /**
              * @var Collection|Book[]
-             *
-             * @ORM\ManyToMany(targetEntity="App\Entity\Book")
              */
+            #[ORM\ManyToMany(targetEntity: Book::class)]
             protected $books;
 
             // some other properties
@@ -153,7 +147,7 @@ disable validating:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/BookCollection.php
 
@@ -161,8 +155,8 @@ disable validating:
 
         /**
          * ...
-         * @Assert\Traverse(false)
          */
+         #[Assert\Traverse(false)]
          class BookCollection implements \IteratorAggregate
          {
              // ...

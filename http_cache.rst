@@ -71,91 +71,67 @@ Symfony Reverse Proxy
 
 Symfony comes with a reverse proxy (i.e. gateway cache) written in PHP.
 :ref:`It's not a fully-featured reverse proxy cache like Varnish <http-cache-symfony-versus-varnish>`,
-but is a great way to start.
+but it is a great way to start.
 
 .. tip::
 
     For details on setting up Varnish, see :doc:`/http_cache/varnish`.
 
-To enable the proxy, first create a caching kernel::
+Use the ``framework.http_cache`` option to enable the proxy for the
+:ref:`prod environment <configuration-environments>`:
 
-    // src/CacheKernel.php
-    namespace App;
+.. configuration-block::
 
-    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+    .. code-block:: yaml
 
-    class CacheKernel extends HttpCache
-    {
-    }
+        # config/packages/framework.yaml
+        when@prod:
+            framework:
+                http_cache: true
 
-Modify the code of your front controller to wrap the default kernel into the
-caching kernel:
+    .. code-block:: xml
 
-.. code-block:: diff
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-      // public/index.php
+            <when env="prod">
+              <framework:config>
+                  <!-- ... -->
+                  <framework:http-cache enabled="true"/>
+              </framework:config>
+            </when>
+        </container>
 
-    + use App\CacheKernel;
-      use App\Kernel;
+    .. code-block:: php
 
-      // ...
-      $kernel = new Kernel($_SERVER['APP_ENV'], (bool) $_SERVER['APP_DEBUG']);
-    + // Wrap the default Kernel with the CacheKernel one in 'prod' environment
-    + if ('prod' === $kernel->getEnvironment()) {
-    +     $kernel = new CacheKernel($kernel);
-    + }
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
 
-      $request = Request::createFromGlobals();
-      // ...
+        return static function (FrameworkConfig $framework) use ($env) {
+            if ('prod' === $env) {
+                $framework->httpCache()->enabled(true);
+            }
+        };
 
-The caching kernel will immediately act as a reverse proxy: caching responses
+The kernel will immediately act as a reverse proxy: caching responses
 from your application and returning them to the client.
 
-.. caution::
+The proxy has a sensible default configuration, but it can be
+finely tuned via :ref:`a set of options <configuration-framework-http_cache>`.
 
-    If you're using the :ref:`framework.http_method_override <configuration-framework-http_method_override>`
-    option to read the HTTP method from a ``_method`` parameter, see the
-    above link for a tweak you need to make.
+When in :ref:`debug mode <debug-mode>`, Symfony automatically adds an
+``X-Symfony-Cache`` header to the response. You can also use the ``trace_level``
+config option and set it to either ``none``, ``short`` or ``full`` to add this
+information.
 
-.. tip::
-
-    The cache kernel has a special ``getLog()`` method that returns a string
-    representation of what happened in the cache layer. In the development
-    environment, use it to debug and validate your cache strategy::
-
-        error_log($kernel->getLog());
-
-The ``CacheKernel`` object has a sensible default configuration, but it can be
-finely tuned via a set of options you can set by overriding the
-:method:`Symfony\\Bundle\\FrameworkBundle\\HttpCache\\HttpCache::getOptions`
-method::
-
-    // src/CacheKernel.php
-    namespace App;
-
-    use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
-
-    class CacheKernel extends HttpCache
-    {
-        protected function getOptions(): array
-        {
-            return [
-                'default_ttl' => 0,
-                // ...
-            ];
-        }
-    }
-
-For a full list of the options and their meaning, see the
-:method:`HttpCache::__construct() documentation <Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache::__construct>`.
-
-When you're in debug mode (the second argument of ``Kernel`` constructor in the
-front controller is ``true``), Symfony automatically adds an ``X-Symfony-Cache``
-header to the response. You can also use the ``trace_level`` config
-option and set it to either ``none``, ``short`` or ``full`` to
-add this information.
-
-``short`` will add the information for the master request only.
+``short`` will add the information for the main request only.
 It's written in a concise way that makes it easy to record the
 information in your server log files. For example, in Apache you can
 use ``%{X-Symfony-Cache}o`` in ``LogFormat`` format statements.
@@ -166,11 +142,6 @@ cache efficiency of your routes.
 
     You can change the name of the header used for the trace
     information using the ``trace_header`` config option.
-
-.. versionadded:: 4.3
-
-    The ``trace_level`` and ``trace_header`` configuration options
-    were introduced in Symfony 4.3.
 
 .. _http-cache-symfony-versus-varnish:
 
@@ -240,24 +211,44 @@ Expiration Caching
 
 The *easiest* way to cache a response is by caching it for a specific amount of time::
 
-    // src/Controller/BlogController.php
-    use Symfony\Component\HttpFoundation\Response;
-    // ...
+.. configuration-block::
 
-    public function index()
-    {
-        // somehow create a Response object, like by rendering a template
-        $response = $this->render('blog/index.html.twig', []);
+    .. code-block:: php-attributes
 
-        // cache publicly for 3600 seconds
-        $response->setPublic();
-        $response->setMaxAge(3600);
+        // src/Controller/BlogController.php
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
 
-        // (optional) set a custom Cache-Control directive
-        $response->headers->addCacheControlDirective('must-revalidate', true);
+        #[Cache(public: true, maxage: 3600, mustRevalidate: true)]
+        public function index(): Response
+        {
+            return $this->render('blog/index.html.twig', []);
+        }
 
-        return $response;
-    }
+    .. code-block:: php
+
+        // src/Controller/BlogController.php
+        use Symfony\Component\HttpFoundation\Response;
+        // ...
+
+        public function index()
+        {
+            // somehow create a Response object, like by rendering a template
+            $response = $this->render('blog/index.html.twig', []);
+
+            // cache publicly for 3600 seconds
+            $response->setPublic();
+            $response->setMaxAge(3600);
+
+            // (optional) set a custom Cache-Control directive
+            $response->headers->addCacheControlDirective('must-revalidate', true);
+
+            return $response;
+        }
+
+.. versionadded:: 6.2
+
+    The ``#[Cache()]`` attribute was introduced in Symfony 6.2.
 
 Thanks to this new code, your HTTP response will have the following header:
 
@@ -348,15 +339,26 @@ the most useful ones::
 Additionally, most cache-related HTTP headers can be set via the single
 :method:`Symfony\\Component\\HttpFoundation\\Response::setCache` method::
 
-    // sets cache settings in one call
+    // use this method to set several cache settings in one call
+    // (this example lists all the available cache settings)
     $response->setCache([
-        'etag'          => $etag,
-        'last_modified' => $date,
-        'max_age'       => 10,
-        's_maxage'      => 10,
-        'public'        => true,
-        // 'private'    => true,
+        'must_revalidate'  => false,
+        'no_cache'         => false,
+        'no_store'         => false,
+        'no_transform'     => false,
+        'public'           => true,
+        'private'          => false,
+        'proxy_revalidate' => false,
+        'max_age'          => 600,
+        's_maxage'         => 600,
+        'immutable'        => true,
+        'last_modified'    => new \DateTime(),
+        'etag'             => 'abcdef'
     ]);
+
+.. tip::
+
+    All these options are also available when using the ``#[Cache()]`` attribute.
 
 Cache Invalidation
 ------------------

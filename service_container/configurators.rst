@@ -180,17 +180,13 @@ all the classes are already loaded as services. All you need to do is specify th
 
             // override the services to set the configurator
             $services->set(NewsletterManager::class)
-                ->configurator(ref(EmailConfigurator::class), 'configure');
+                ->configurator([service(EmailConfigurator::class), 'configure']);
 
             $services->set(GreetingCardManager::class)
-                ->configurator(ref(EmailConfigurator::class), 'configure');
+                ->configurator([service(EmailConfigurator::class), 'configure']);
         };
 
 .. _configurators-invokable:
-
-.. versionadded:: 4.3
-
-    Invokable configurators for services were introduced in Symfony 4.3.
 
 Services can be configured via invokable configurators (replacing the
 ``configure()`` method with ``__invoke()``) by omitting the method name:
@@ -253,10 +249,10 @@ Services can be configured via invokable configurators (replacing the
 
             // override the services to set the configurator
             $services->set(NewsletterManager::class)
-                ->configurator(ref(EmailConfigurator::class));
+                ->configurator(service(EmailConfigurator::class));
 
             $services->set(GreetingCardManager::class)
-                ->configurator(ref(EmailConfigurator::class));
+                ->configurator(service(EmailConfigurator::class));
         };
 
 That's it! When requesting the ``App\Mail\NewsletterManager`` or

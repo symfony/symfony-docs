@@ -46,6 +46,22 @@ Instead of advancing the bar by a number of steps (with the
 you can also set the current progress by calling the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setProgress` method.
 
+If you are resuming long-standing tasks, it's useful to start drawing the progress
+bar at a certain point. Use the second optional argument of ``start()`` to set
+that starting point::
+
+    use Symfony\Component\Console\Helper\ProgressBar;
+
+    // creates a new progress bar (100 units)
+    $progressBar = new ProgressBar($output, 100);
+
+    // displays the progress bar starting at 25 completed units
+    $progressBar->start(null, 25);
+
+.. versionadded:: 6.2
+
+    The option to start a progress bar at a certain point was introduced in Symfony 6.2.
+
 .. tip::
 
     If your platform doesn't support ANSI codes, updates to the progress
@@ -55,11 +71,6 @@ you can also set the current progress by calling the
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::setRedrawFrequency` method
     to redraw every N iterations. By default, redraw frequency is
     **100ms** or **10%** of your ``max``.
-
-    .. versionadded:: 4.4
-
-        The ``minSecondsBetweenRedraws()`` and ``maxSecondsBetweenRedraws()``
-        methods were introduced in Symfony 4.4.
 
 If you don't know the exact number of steps in advance, set it to a reasonable
 value and then call the ``setMaxSteps()`` method to update it as needed::
@@ -129,10 +140,6 @@ The previous code will output:
      0/2 [>---------------------------]   0%
      1/2 [==============>-------------]  50%
      2/2 [============================] 100%
-
-.. versionadded:: 4.3
-
-    The ``iterate()`` method was introduced in Symfony 4.3.
 
 Customizing the Progress Bar
 ----------------------------
@@ -301,8 +308,8 @@ to display it can be customized::
 
 .. caution::
 
-    For performance reasons, Symfony redraws screen every 100ms. If this is too
-    fast or to slow for your application, use the methods
+    For performance reasons, Symfony redraws the screen once every 100ms. If this is too
+    fast or too slow for your application, use the methods
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::minSecondsBetweenRedraws` and
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::maxSecondsBetweenRedraws`::
 
@@ -321,11 +328,6 @@ to display it can be customized::
 
             $progressBar->advance();
         }
-
-    .. versionadded:: 4.4
-
-        The ``minSecondsBetweenRedraws`` and ``maxSecondsBetweenRedraws()`` methods
-        were introduced in Symfony 4.4.
 
 Custom Placeholders
 ~~~~~~~~~~~~~~~~~~~
@@ -363,7 +365,7 @@ placeholder before displaying the progress bar::
     // 0/100 -- Start
 
     $progressBar->setMessage('Task is in progress...');
-    $progressBar->advance();    
+    $progressBar->advance();
     // 1/100 -- Task is in progress...
 
 Messages can be combined with custom placeholders too. In this example, the

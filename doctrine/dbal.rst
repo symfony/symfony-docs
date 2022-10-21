@@ -47,7 +47,7 @@ object::
     // src/Controller/UserController.php
     namespace App\Controller;
 
-    use Doctrine\DBAL\Driver\Connection;
+    use Doctrine\DBAL\Connection;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
 
@@ -55,7 +55,7 @@ object::
     {
         public function index(Connection $connection): Response
         {
-            $users = $connection->fetchAll('SELECT * FROM users');
+            $users = $connection->fetchAllAssociative('SELECT * FROM users');
 
             // ...
         }
@@ -105,22 +105,20 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         // config/packages/doctrine.php
         use App\Type\CustomFirst;
         use App\Type\CustomSecond;
+        use Symfony\Config\DoctrineConfig;
 
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                'types' => [
-                    'custom_first'  => CustomFirst::class,
-                    'custom_second' => CustomSecond::class,
-                ],
-            ],
-        ]);
+        return static function (DoctrineConfig $doctrine) {
+            $dbal = $doctrine->dbal();
+            $dbal->type('custom_first')->class(CustomFirst::class);
+            $dbal->type('custom_second')->class(CustomSecond::class);
+        };
 
 Registering custom Mapping Types in the SchemaTool
 --------------------------------------------------
 
 The SchemaTool is used to inspect the database to compare the schema. To
 achieve this task, it needs to know which mapping type needs to be used
-for each database types. Registering new ones can be done through the configuration.
+for each database type. Registering new ones can be done through the configuration.
 
 Now, map the ENUM type (not supported by DBAL by default) to the ``string``
 mapping type:
@@ -156,13 +154,13 @@ mapping type:
     .. code-block:: php
 
         // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                'mapping_types' => [
-                    'enum'  => 'string',
-                ],
-            ],
-        ]);
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine) {
+            $dbalDefault = $doctrine->dbal()
+                ->connection('default');
+            $dbalDefault->mappingType('enum', 'string');
+        };
 
 .. _`PDO`: https://www.php.net/pdo
 .. _`Doctrine`: https://www.doctrine-project.org/

@@ -27,12 +27,8 @@ The following example shows a typical usage of the cache::
     // ... and to remove the cache key
     $pool->delete('my_cache_key');
 
-Symfony supports Cache Contracts, PSR-6/16 and Doctrine Cache interfaces.
+Symfony supports Cache Contracts and PSR-6/16 interfaces.
 You can read more about these at the :doc:`component documentation </components/cache>`.
-
-.. versionadded:: 4.2
-
-    The cache contracts were introduced in Symfony 4.2.
 
 .. _cache-configuration-with-frameworkbundle:
 
@@ -49,7 +45,7 @@ of:
     An adapter is a *template* that you use to create pools.
 **Provider**
     A provider is a service that some adapters use to connect to the storage.
-    Redis and Memcached are example of such adapters. If a DSN is used as the
+    Redis and Memcached are examples of such adapters. If a DSN is used as the
     provider then a service is automatically created.
 
 There are two pools that are always enabled by default. They are ``cache.app`` and
@@ -77,10 +73,11 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
-                <framework:cache app="cache.adapter.filesystem"
+                <framework:cache
+                    app="cache.adapter.filesystem"
                     system="cache.adapter.system"
                 />
             </framework:config>
@@ -89,23 +86,25 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'app' => 'cache.adapter.filesystem',
-                'system' => 'cache.adapter.system',
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                ->app('cache.adapter.filesystem')
+                ->system('cache.adapter.system')
+            ;
+        };
 
 The Cache component comes with a series of adapters pre-configured:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
 * :doc:`cache.adapter.array </components/cache/adapters/array_cache_adapter>`
-* :doc:`cache.adapter.doctrine </components/cache/adapters/doctrine_adapter>`
 * :doc:`cache.adapter.filesystem </components/cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </components/cache/adapters/memcached_adapter>`
 * :doc:`cache.adapter.pdo </components/cache/adapters/pdo_doctrine_dbal_adapter>`
 * :doc:`cache.adapter.psr6 </components/cache/adapters/proxy_adapter>`
 * :doc:`cache.adapter.redis </components/cache/adapters/redis_adapter>`
+* :ref:`cache.adapter.redis_tag_aware <redis-tag-aware-adapter>` (Redis adapter optimized to work with tags)
 
 Some of these adapters could be configured via shortcuts. Using these shortcuts
 will create pools with service IDs that follow the pattern ``cache.[type]``.
@@ -119,8 +118,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             cache:
                 directory: '%kernel.cache_dir%/pools' # Only used with cache.adapter.filesystem
 
-                # service: cache.doctrine
-                default_doctrine_provider: 'app.doctrine_cache'
                 # service: cache.psr6
                 default_psr6_provider: 'app.my_psr6_service'
                 # service: cache.redis
@@ -140,11 +137,10 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <!--
-                default_doctrine_provider: Service: cache.doctrine
                 default_psr6_provider: Service: cache.psr6
                 default_redis_provider: Service: cache.redis
                 default_memcached_provider: Service: cache.memcached
@@ -152,7 +148,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 -->
                 <!-- "directory" attribute is only used with cache.adapter.filesystem -->
                 <framework:cache directory="%kernel.cache_dir%/pools"
-                    default_doctrine_provider="app.doctrine_cache"
                     default_psr6_provider="app.my_psr6_service"
                     default_redis_provider="redis://localhost"
                     default_memcached_provider="memcached://localhost"
@@ -164,23 +159,24 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                // Only used with cache.adapter.filesystem
-                'directory' => '%kernel.cache_dir%/pools',
+        use Symfony\Config\FrameworkConfig;
 
-                // Service: cache.doctrine
-                'default_doctrine_provider' => 'app.doctrine_cache',
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                // Only used with cache.adapter.filesystem
+                ->directory('%kernel.cache_dir%/pools')
                 // Service: cache.psr6
-                'default_psr6_provider' => 'app.my_psr6_service',
+                ->defaultPsr6Provider('app.my_psr6_service')
                 // Service: cache.redis
-                'default_redis_provider' => 'redis://localhost',
+                ->defaultRedisProvider('redis://localhost')
                 // Service: cache.memcached
-                'default_memcached_provider' => 'memcached://localhost',
+                ->defaultMemcachedProvider('memcached://localhost')
                 // Service: cache.pdo
-                'default_pdo_provider' => 'doctrine.dbal.default_connection',
-            ],
-        ]);
+                ->defaultPdoProvider('doctrine.dbal.default_connection')
+            ;
+        };
+
+.. _cache-create-pools:
 
 Creating Custom (Namespaced) Pools
 ----------------------------------
@@ -233,8 +229,8 @@ You can also create more customized pools:
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:cache default-memcached-provider="memcached://localhost">
                     <!-- creates a "custom_thing.cache" service
@@ -264,43 +260,36 @@ You can also create more customized pools:
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'default_memcached_provider' => 'memcached://localhost',
-                'pools' => [
-                    // creates a "custom_thing.cache" service
-                    // autowireable via "CacheInterface $customThingCache"
-                    // uses the "app" cache configuration
-                    'custom_thing.cache' => [
-                        'adapter' => 'cache.app',
-                    ],
+        use Symfony\Config\FrameworkConfig;
 
-                    // creates a "my_cache_pool" service
-                    // autowireable via "CacheInterface $myCachePool"
-                    'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.filesystem',
-                    ],
+        return static function (FrameworkConfig $framework) {
+            $cache = $framework->cache();
+            $cache->defaultMemcachedProvider('memcached://localhost');
 
-                    // uses the default_memcached_provider from above
-                    'acme.cache' => [
-                        'adapter' => 'cache.adapter.memcached',
-                    ],
+            // creates a "custom_thing.cache" service
+            // autowireable via "CacheInterface $customThingCache"
+            // uses the "app" cache configuration
+            $cache->pool('custom_thing.cache')
+                ->adapters(['cache.app']);
 
-                    // control adapter's configuration
-                    'foobar.cache' => [
-                        'adapter' => 'cache.adapter.memcached',
-                        'provider' => 'memcached://user:password@example.com',
-                    ],
+            // creates a "my_cache_pool" service
+            // autowireable via "CacheInterface $myCachePool"
+            $cache->pool('my_cache_pool')
+                ->adapters(['cache.adapter.filesystem']);
 
-                    // uses the "foobar.cache" pool as its backend but controls
-                    // the lifetime and (like all pools) has a separate cache namespace
-                    'short_cache' => [
-                        'adapter' => 'foobar.cache',
-                        'default_lifetime' => 60,
-                    ],
-                ],
-            ],
-        ]);
+            // uses the default_memcached_provider from above
+            $cache->pool('acme.cache')
+                ->adapters(['cache.adapter.memcached']);
+
+             // control adapter's configuration
+            $cache->pool('foobar.cache')
+                ->adapters(['cache.adapter.memcached'])
+                ->provider('memcached://user:password@example.com');
+
+            $cache->pool('short_cache')
+                ->adapters(['foobar.cache'])
+                ->defaultLifetime(60);
+        };
 
 Each pool manages a set of independent cache keys: keys from different pools
 *never* collide, even if they share the same backend. This is achieved by prefixing
@@ -342,6 +331,8 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
 
             # config/services.yaml
             services:
+                # ...
+
                 app.cache.adapter.redis:
                     parent: 'cache.adapter.redis'
                     tags:
@@ -354,9 +345,11 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                    https://symfony.com/schema/dic/services/services-1.0.xsd"
+            >
                 <services>
+                    <!-- ... -->
+
                     <service id="app.cache.adapter.redis" parent="cache.adapter.redis">
                         <tag name="cache.pool" namespace="my_custom_namespace"/>
                     </service>
@@ -369,11 +362,13 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
             return function(ContainerConfigurator $configurator) {
-                $services = $configurator->services();
+                $configurator->services()
+                    // ...
 
-                $services->set('app.cace.adapter.redis')
-                    ->parent('cache.adapter.redis')
-                    ->tag('cache.pool', ['namespace' => 'my_custom_namespace']);
+                    ->set('app.cache.adapter.redis')
+                        ->parent('cache.adapter.redis')
+                        ->tag('cache.pool', ['namespace' => 'my_custom_namespace'])
+                ;
             };
 
 Custom Provider Options
@@ -415,11 +410,14 @@ and use that when configuring the pool.
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:cache>
-                    <framework:pool name="cache.my_redis" adapter="cache.adapter.redis" provider="app.my_custom_redis_provider"/>
+                    <framework:pool name="cache.my_redis"
+                        adapter="cache.adapter.redis"
+                        provider="app.my_custom_redis_provider"
+                    />
                 </framework:cache>
             </framework:config>
 
@@ -438,27 +436,28 @@ and use that when configuring the pool.
     .. code-block:: php
 
         // config/packages/cache.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use Symfony\Component\Cache\Adapter\RedisAdapter;
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+        use Symfony\Config\FrameworkConfig;
 
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'pools' => [
-                    'cache.my_redis' => [
-                        'adapter' => 'cache.adapter.redis',
-                        'provider' => 'app.my_custom_redis_provider',
-                    ],
-                ],
-            ],
-        ]);
+        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            $framework->cache()
+                ->pool('cache.my_redis')
+                    ->adapters(['cache.adapter.redis'])
+                    ->provider('app.my_custom_redis_provider');
 
-        $container->register('app.my_custom_redis_provider', \Redis::class)
-            ->setFactory([RedisAdapter::class, 'createConnection'])
-            ->addArgument('redis://localhost')
-            ->addArgument([
-                'retry_interval' => 2,
-                'timeout' => 10
-            ])
-        ;
+
+            $container->register('app.my_custom_redis_provider', \Redis::class)
+                ->setFactory([RedisAdapter::class, 'createConnection'])
+                ->addArgument('redis://localhost')
+                ->addArgument([
+                    'retry_interval' => 2,
+                    'timeout' => 10
+                ])
+            ;
+        };
 
 Creating a Cache Chain
 ----------------------
@@ -478,10 +477,6 @@ in order from fastest to slowest.
 If an error happens when storing an item in a pool, Symfony stores it in the
 other pools and no exception is thrown. Later, when the item is retrieved,
 Symfony stores the item automatically in all the missing pools.
-
-.. versionadded:: 4.4
-
-    Support for configuring a chain using ``framework.cache.pools`` was introduced in Symfony 4.4.
 
 .. configuration-block::
 
@@ -506,11 +501,14 @@ Symfony stores the item automatically in all the missing pools.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:cache>
-                    <framework:pool name="my_cache_pool" default-lifetime="31536000">
+                    <framework:pool name="my_cache_pool"
+                        default-lifetime="31536000"> <!-- One year -->
                         <framework:adapter name="cache.adapter.array"/>
                         <framework:adapter name="cache.adapter.apcu"/>
                         <framework:adapter name="cache.adapter.redis" provider="redis://user:password@example.com"/>
@@ -522,20 +520,19 @@ Symfony stores the item automatically in all the missing pools.
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'pools' => [
-                    'my_cache_pool' => [
-                        'default_lifetime' => 31536000, // One year
-                        'adapters' => [
-                            'cache.adapter.array',
-                            'cache.adapter.apcu',
-                            ['name' => 'cache.adapter.redis', 'provider' => 'redis://user:password@example.com'],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                ->pool('my_cache_pool')
+                    ->defaultLifetime(31536000) // One year
+                    ->adapters([
+                        'cache.adapter.array',
+                        'cache.adapter.apcu',
+                        ['name' => 'cache.adapter.redis', 'provider' => 'redis://user:password@example.com'],
+                    ])
+            ;
+        };
 
 Using Cache Tags
 ----------------
@@ -602,11 +599,14 @@ to enable this feature. This could be added by using the following configuration
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:cache>
-                  <framework:pool name="my_cache_pool" adapter="cache.adapter.redis" tags="true"/>
+                    <framework:pool name="my_cache_pool"
+                        adapter="cache.adapter.redis"
+                        tags="true"
+                    />
                 </framework:cache>
             </framework:config>
         </container>
@@ -614,16 +614,15 @@ to enable this feature. This could be added by using the following configuration
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'pools' => [
-                    'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.redis',
-                        'tags' => true,
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                ->pool('my_cache_pool')
+                    ->tags(true)
+                    ->adapters(['cache.adapter.redis'])
+            ;
+        };
 
 Tags are stored in the same pool by default. This is good in most scenarios. But
 sometimes it might be better to store the tags in a different pool. That could be
@@ -651,12 +650,17 @@ achieved by specifying the adapter.
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:cache>
-                  <framework:pool name="my_cache_pool" adapter="cache.adapter.redis" tags="tag_pool"/>
-                  <framework:pool name="tag_pool" adapter="cache.adapter.apcu"/>
+                    <framework:pool name="my_cache_pool"
+                        adapter="cache.adapter.redis"
+                        tags="tag_pool"
+                    />
+                    <framework:pool name="tag_pool" adapter="cache.adapter.apcu"/>
                 </framework:cache>
             </framework:config>
         </container>
@@ -664,19 +668,20 @@ achieved by specifying the adapter.
     .. code-block:: php
 
         // config/packages/cache.php
-        $container->loadFromExtension('framework', [
-            'cache' => [
-                'pools' => [
-                    'my_cache_pool' => [
-                        'adapter' => 'cache.adapter.redis',
-                        'tags' => 'tag_pool',
-                    ],
-                    'tag_pool' => [
-                        'adapter' => 'cache.adapter.apcu',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->cache()
+                ->pool('my_cache_pool')
+                    ->tags('tag_pool')
+                    ->adapters(['cache.adapter.redis'])
+            ;
+
+            $framework->cache()
+                ->pool('tag_pool')
+                    ->adapters(['cache.adapter.apcu'])
+            ;
+        };
 
 .. note::
 
@@ -705,10 +710,6 @@ To see all available cache pools:
 
     $ php bin/console cache:pool:list
 
-.. versionadded:: 4.3
-
-    The ``cache:pool:list`` command was introduced in Symfony 4.3.
-
 Clear one pool:
 
 .. code-block:: terminal
@@ -726,3 +727,104 @@ Clear all caches everywhere:
 .. code-block:: terminal
 
     $ php bin/console cache:pool:clear cache.global_clearer
+
+Clear cache by tag(s):
+
+.. versionadded:: 6.1
+
+    The ``cache:pool:invalidate-tags`` command was introduced in Symfony 6.1.
+
+.. code-block:: terminal
+
+    # invalidate tag1 from all taggable pools
+    $ php bin/console cache:pool:invalidate-tags tag1
+
+    # invalidate tag1 & tag2 from all taggable pools
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2
+
+    # invalidate tag1 & tag2 from cache.app pool
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2 --pool=cache.app
+
+    # invalidate tag1 & tag2 from cache1 & cache2 pools
+    $ php bin/console cache:pool:invalidate-tags tag1 tag2 -p cache1 -p cache2
+
+Encrypting the Cache
+--------------------
+
+To encrypt the cache using ``libsodium``, you can use the
+:class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`.
+
+First, you need to generate a secure key and add it to your :doc:`secret
+store </configuration/secrets>` as ``CACHE_DECRYPTION_KEY``:
+
+.. code-block:: terminal
+
+    $ php -r 'echo base64_encode(sodium_crypto_box_keypair());'
+
+Then, register the ``SodiumMarshaller`` service using this key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/cache.yaml
+
+        # ...
+        services:
+            Symfony\Component\Cache\Marshaller\SodiumMarshaller:
+                decorates: cache.default_marshaller
+                arguments:
+                    - ['%env(base64:CACHE_DECRYPTION_KEY)%']
+                    # use multiple keys in order to rotate them
+                    #- ['%env(base64:CACHE_DECRYPTION_KEY)%', '%env(base64:OLD_CACHE_DECRYPTION_KEY)%']
+                    - '@Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner'
+
+    .. code-block:: xml
+
+        <!-- config/packages/cache.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+
+            <services>
+                <service id="Symfony\Component\Cache\Marshaller\SodiumMarshaller" decorates="cache.default_marshaller">
+                    <argument type="collection">
+                        <argument>env(base64:CACHE_DECRYPTION_KEY)</argument>
+                        <!-- use multiple keys in order to rotate them -->
+                        <!-- <argument>env(base64:OLD_CACHE_DECRYPTION_KEY)</argument> -->
+                    </argument>
+                    <argument type="service" id="Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/cache.php
+        use Symfony\Component\Cache\Marshaller\SodiumMarshaller;
+        use Symfony\Component\DependencyInjection\ChildDefinition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        // ...
+        $container->setDefinition(SodiumMarshaller::class, new ChildDefinition('cache.default_marshaller'))
+            ->addArgument(['env(base64:CACHE_DECRYPTION_KEY)'])
+            // use multiple keys in order to rotate them
+            //->addArgument(['env(base64:CACHE_DECRYPTION_KEY)', 'env(base64:OLD_CACHE_DECRYPTION_KEY)'])
+            ->addArgument(new Reference(SodiumMarshaller::class.'.inner'));
+
+.. caution::
+
+    This will encrypt the values of the cache items, but not the cache keys. Be
+    careful not to leak sensitive data in the keys.
+
+When configuring multiple keys, the first key will be used for reading and
+writing, and the additional key(s) will only be used for reading. Once all
+cache items encrypted with the old key have expired, you can completely remove
+``OLD_CACHE_DECRYPTION_KEY``.

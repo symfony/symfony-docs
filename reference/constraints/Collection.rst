@@ -18,13 +18,6 @@ and that extra keys are not present.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowExtraFields`_
-            - `allowMissingFields`_
-            - `extraFieldsMessage`_
-            - `fields`_
-            - `groups`_
-            - `missingFieldsMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Collection`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CollectionValidator`
 ==========  ===================================================================
@@ -58,30 +51,29 @@ following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
+        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Author
         {
-            /**
-             * @Assert\Collection(
-             *     fields = {
-             *         "personal_email" = @Assert\Email,
-             *         "short_bio" = {
-             *             @Assert\NotBlank,
-             *             @Assert\Length(
-             *                 max = 100,
-             *                 maxMessage = "Your short bio is too long!"
-             *             )
-             *         }
-             *     },
-             *     allowMissingFields = true
-             * )
-             */
+            #[Assert\Collection(
+                fields: [
+                    'personal_email' => new Assert\Email,
+                    'short_bio' => [
+                        new Assert\NotBlank,
+                        new Assert\Length(
+                            max: 100,
+                            maxMessage: 'Your short bio is too long!'
+                        )
+                    ]
+                ],
+                allowMissingFields: true,
+            )]
             protected $profileData = [
                 'personal_email' => '...',
                 'short_bio' => '...',
@@ -192,7 +184,7 @@ you can do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -201,14 +193,17 @@ you can do the following:
 
         class Author
         {
-            /**
-             * @Assert\Collection(
-             *     fields={
-             *         "personal_email"  = @Assert\Required({@Assert\NotBlank, @Assert\Email}),
-             *         "alternate_email" = @Assert\Optional(@Assert\Email)
-             *     }
-             * )
-             */
+            #[Assert\Collection(
+                fields: [
+                    'personal_email' => new Assert\Required([
+                        new Assert\NotBlank,
+                        new Assert\Email,
+                    ]),
+                    'alternate_email' => new Assert\Optional(
+                        new Assert\Email
+                    ),
+                ],
+            )]
             protected $profileData = ['personal_email' => 'email@example.com'];
         }
 

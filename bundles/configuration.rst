@@ -20,19 +20,22 @@ as integration of other related components:
 
     .. code-block:: yaml
 
+        # config/packages/framework.yaml
         framework:
             form: true
 
     .. code-block:: xml
 
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
                 http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
             <framework:config>
                 <framework:form/>
             </framework:config>
@@ -40,9 +43,12 @@ as integration of other related components:
 
     .. code-block:: php
 
-        $container->loadFromExtension('framework', [
-            'form' => true,
-        ]);
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->form()->enabled(true);
+        };
 
 Using the Bundle Extension
 --------------------------
@@ -69,24 +75,25 @@ can add some configuration that looks like this:
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:acme-social="http://example.org/schema/dic/acme_social"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <acme-social:config>
-                <acme-social:twitter client-id="123" client-secret="your_secret"/>
+                <acme-social:twitter client-id="123"
+                    client-secret="your_secret"
+                />
             </acme-social:config>
-
-            <!-- ... -->
         </container>
 
     .. code-block:: php
 
         // config/packages/acme_social.php
-        $container->loadFromExtension('acme_social', [
-            'twitter' => [
-                'client_id'     => 123,
-                'client_secret' => 'your_secret',
-            ],
-        ]);
+        use Symfony\Config\AcmeSocialConfig;
+
+        return static function (AcmeSocialConfig $acmeSocial) {
+            $acmeSocial->twitter()
+                ->clientId(123)
+                ->clientSecret('your_secret');
+        };
 
 The basic idea is that instead of having the user override individual
 parameters, you let the user configure just a few, specifically created,
@@ -199,10 +206,6 @@ The ``Configuration`` class to handle the sample configuration looks like::
         }
     }
 
-.. deprecated:: 4.2
-
-    Not passing the root node name to ``TreeBuilder`` was deprecated in Symfony 4.2.
-
 .. seealso::
 
     The ``Configuration`` class can be much more complicated than shown here,
@@ -242,8 +245,8 @@ For example, imagine your bundle has the following example config:
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://symfony.com/schema/dic/services
-            https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+            https://symfony.com/schema/dic/services/services-1.0.xsd"
+    >
         <services>
             <service id="acme.social.twitter_client" class="Acme\SocialBundle\TwitterClient">
                 <argument></argument> <!-- will be filled in with client_id dynamically -->
@@ -316,6 +319,88 @@ In your extension, you can load this and dynamically set its arguments::
             // ... now use the flat $config array
         }
 
+Using the Bundle Class
+----------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class was introduced in Symfony 6.1.
+
+Instead of creating an extension and configuration class, you can also
+extend :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to
+add this logic to the bundle class directly::
+
+    // src/AcmeSocialBundle.php
+    namespace Acme\SocialBundle;
+
+    use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class AcmeSocialBundle extends AbstractBundle
+    {
+        public function configure(DefinitionConfigurator $definition): void
+        {
+            $definition->rootNode()
+                ->children()
+                    ->arrayNode('twitter')
+                        ->children()
+                            ->integerNode('client_id')->end()
+                            ->scalarNode('client_secret')->end()
+                        ->end()
+                    ->end() // twitter
+                ->end()
+            ;
+        }
+
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // Contrary to the Extension class, the "$config" variable is already merged
+            // and processed. You can use it directly to configure the service container.
+            $container->services()
+                ->get('acme.social.twitter_client')
+                ->arg(0, $config['twitter']['client_id'])
+                ->arg(1, $config['twitter']['client_secret'])
+            ;
+        }
+    }
+
+.. note::
+
+    The ``configure()`` and ``loadExtension()`` methods are called only at compile time.
+
+.. tip::
+
+    The ``AbstractBundle::configure()`` method also allows to import the
+    configuration definition from one or more files::
+
+        // src/AcmeSocialBundle.php
+
+        // ...
+        class AcmeSocialBundle extends AbstractBundle
+        {
+            public function configure(DefinitionConfigurator $definition): void
+            {
+                $definition->import('../config/definition.php');
+                // you can also use glob patterns
+                //$definition->import('../config/definition/*.php');
+            }
+
+            // ...
+        }
+
+    .. code-block:: php
+
+        // config/definition.php
+        use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+
+        return static function (DefinitionConfigurator $definition) {
+            $definition->rootNode()
+                ->children()
+                    ->scalarNode('foo')->defaultValue('bar')->end()
+                ->end()
+            ;
+        };
+
 Modifying the Configuration of Another Bundle
 ---------------------------------------------
 
@@ -332,7 +417,7 @@ bundle in the console using the Yaml format.
 
 As long as your bundle's configuration is located in the standard location
 (``YourBundle\DependencyInjection\Configuration``) and does not have
-a constructor it will work automatically. If you
+a constructor, it will work automatically. If you
 have something different, your ``Extension`` class must override the
 :method:`Extension::getConfiguration() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getConfiguration>`
 method and return an instance of your ``Configuration``.
@@ -423,8 +508,8 @@ Assuming the XSD file is called ``hello-1.0.xsd``, the schema location will be
         xsi:schemaLocation="http://symfony.com/schema/dic/services
             https://symfony.com/schema/dic/services/services-1.0.xsd
             http://acme_company.com/schema/dic/hello
-            https://acme_company.com/schema/dic/hello/hello-1.0.xsd">
-
+            https://acme_company.com/schema/dic/hello/hello-1.0.xsd"
+    >
         <acme-hello:config>
             <!-- ... -->
         </acme-hello:config>

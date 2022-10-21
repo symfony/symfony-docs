@@ -32,7 +32,7 @@ property is not empty, add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -41,9 +41,7 @@ property is not empty, add the following:
 
         class Author
         {
-            /**
-             * @Assert\NotBlank(message="author.name.not_blank")
-             */
+            #[Assert\NotBlank(message: 'author.name.not_blank')]
             public $name;
         }
 

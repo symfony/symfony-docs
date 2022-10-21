@@ -56,7 +56,7 @@ things for you beforehand, like routing or access control.
 Symfony being both a framework and library of components, it calls your
 code and then your code might call it. This means you will always have
 at least 2 parts, very often 3 in your stack traces when using Symfony:
-a part that starts in one of the entrypoints of the framework
+a part that starts in one of the entry points of the framework
 (``bin/console`` or ``public/index.php`` in most cases), and ends when
 reaching your code, most times in a command or in a controller found under
 ``src``. Then, either the exception is thrown in your code or in
@@ -75,7 +75,7 @@ Next, you can have a look at what packages are involved. Files under
 library and ``acme/router`` the Composer package. If you plan on
 reporting the bug, make sure to report it to the library throwing the
 exception. ``composer home acme/router`` should lead you to the right
-place for that. As Symfony is a monorepository, use ``composer home
+place for that. As Symfony is a mono-repository, use ``composer home
 symfony/symfony`` when reporting a bug for any component.
 
 Getting Stack Traces with Symfony
@@ -92,7 +92,7 @@ from your development environment through a web browser:
 
 1. Are there several exceptions? If yes, the most interesting one is
    often exception 1/n which, is shown *last* in the example below (it
-   is the one marked as exception [1/2]).
+   is the one marked as an exception [1/2]).
 2. Under the "Stack Traces" tab, you will find exceptions in plain
    text, so that you can easily share them in e.g. bug reports. Make
    sure to **remove any sensitive information** before doing so.
@@ -109,7 +109,7 @@ Since stack traces may contain sensitive data, they should not be
 exposed in production. Getting a stack trace from your production
 environment, although more involving, is still possible with solutions
 that include but are not limited to sending them to an email address
-with monolog.
+with Monolog.
 
 Stack Traces in the CLI
 ~~~~~~~~~~~~~~~~~~~~~~~

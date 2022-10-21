@@ -21,7 +21,7 @@ Members
 
 Here are all the members of the CARE team (in alphabetic order). You can contact
 any of them directly using the contact details below or you can also contact all
-of them at once by emailing **care@symfony.com**:
+of them at once by emailing ** care@symfony.com **.
 
 * **Timo Bakx**
 
@@ -36,11 +36,6 @@ of them at once by emailing **care@symfony.com**:
   * *Twitter*: `@ZanBaldwin <https://twitter.com/ZanBaldwin>`_
   * *SymfonyConnect*: `zanbaldwin <https://connect.symfony.com/profile/zanbaldwin>`_
   * *SymfonySlack*: `@Zan <https://symfony-devs.slack.com/team/UBHGRU3NW>`_
-
-* **Valentine Boineau**
-
-  * *E-mail*: valentine.boineau [at] gmail.com
-  * *Twitter*: `@BoineauV <https://twitter.com/BoineauV>`_
 
 * **Magali Milbergue**
 

@@ -68,10 +68,6 @@ implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInte
         }
     }
 
-.. deprecated:: 4.2
-
-    Not passing the root node name to ``TreeBuilder`` was deprecated in Symfony 4.2.
-
 Adding Node Definitions to the Tree
 -----------------------------------
 
@@ -159,7 +155,7 @@ Array Nodes
 ~~~~~~~~~~~
 
 It is possible to add a deeper level to the hierarchy, by adding an array
-node. The array node itself, may have a pre-defined set of variable nodes::
+node. The array node itself, may have a predefined set of variable nodes::
 
     $rootNode
         ->children()
@@ -197,7 +193,7 @@ above, it is possible to have multiple connection arrays (containing a ``driver`
 ``host``, etc.).
 
 Sometimes, to improve the user experience of your application or bundle, you may
-allow to use a simple string or numeric value where an array value is required.
+allow the use of a simple string or numeric value where an array value is required.
 Use the ``castToArray()`` helper to turn those variables into arrays::
 
     ->arrayNode('hosts')
@@ -447,11 +443,15 @@ method::
         ->children()
             ->integerNode('old_option')
                 // this outputs the following generic deprecation message:
-                // The child node "old_option" at path "..." is deprecated.
-                ->setDeprecated()
+                // Since acme/package 1.2: The child node "old_option" at path "..." is deprecated.
+                ->setDeprecated('acme/package', '1.2')
 
                 // you can also pass a custom deprecation message (%node% and %path% placeholders are available):
-                ->setDeprecated('The "%node%" option is deprecated. Use "new_config_option" instead.')
+                ->setDeprecated(
+                    'acme/package',
+                    '1.2',
+                    'The "%node%" option is deprecated. Use "new_config_option" instead.'
+                )
             ->end()
         ->end()
     ;
@@ -820,7 +820,8 @@ character (``.``)::
 
     $node = $treeBuilder->buildTree();
     $children = $node->getChildren();
-    $path = $children['driver']->getPath();
+    $childChildren = $children['connection']->getChildren();
+    $path = $childChildren['driver']->getPath();
     // $path = 'database.connection.driver'
 
 Use the ``setPathSeparator()`` method on the config builder to change the path
@@ -831,7 +832,8 @@ separator::
     $treeBuilder->setPathSeparator('/');
     $node = $treeBuilder->buildTree();
     $children = $node->getChildren();
-    $path = $children['driver']->getPath();
+    $childChildren = $children['connection']->getChildren();
+    $path = $childChildren['driver']->getPath();
     // $path = 'database/connection/driver'
 
 Processing Configuration Values

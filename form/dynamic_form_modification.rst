@@ -4,21 +4,21 @@
 How to Dynamically Modify Forms Using Form Events
 =================================================
 
-Often times, a form can't be created statically. In this article, you'll learn
+Oftentimes, a form can't be created statically. In this article, you'll learn
 how to customize your form based on three common use-cases:
 
-1) :ref:`form-events-underlying-data`
+1) :ref:`Customizing your Form Based on the Underlying Data <form-events-underlying-data>`
 
    Example: you have a "Product" form and need to modify/add/remove a field
    based on the data on the underlying Product being edited.
 
-2) :ref:`form-events-user-data`
+2) :ref:`How to dynamically Generate Forms Based on user Data <form-events-user-data>`
 
    Example: you create a "Friend Message" form and need to build a drop-down
    that contains only users that are friends with the *current* authenticated
    user.
 
-3) :ref:`form-events-submitted-data`
+3) :ref:`Dynamic Generation for Submitted Forms <form-events-submitted-data>`
 
    Example: on a registration form, you have a "country" field and a "state"
    field which should populate dynamically based on the value in the "country"
@@ -230,10 +230,10 @@ Using an event listener, your form might look like this::
     }
 
 The problem is now to get the current user and create a choice field that
-contains only this user's friends. This can be done injecting the ``Security``
+contains only this user's friends. This can be done by injecting the ``Security``
 service into the form type so you can get the current user object::
 
-    use Symfony\Component\Security\Core\Security;
+    use Symfony\Bundle\SecurityBundle\Security\Security;
     // ...
 
     class FriendMessageFormType extends AbstractType
@@ -260,9 +260,9 @@ security helper to fill in the listener logic::
     use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    use Symfony\Bundle\SecurityBundle\Security\Security;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Security\Core\Security;
     // ...
 
     class FriendMessageFormType extends AbstractType
@@ -490,7 +490,7 @@ The type would now look like::
                     $sport = $event->getForm()->getData();
 
                     // since we've added the listener to the child, we'll have to pass on
-                    // the parent to the callback functions!
+                    // the parent to the callback function!
                     $formModifier($event->getForm()->getParent(), $sport);
                 }
             );
@@ -506,11 +506,11 @@ exactly the same things on a given form.
 
 .. tip::
 
-    The ``FormEvents::POST_SUBMIT`` event does not allow to modify the form
-    the listener is bound to, but it allows to modify its parent.
+    The ``FormEvents::POST_SUBMIT`` event does not allow modifications to the form
+    the listener is bound to, but it allows modifications to its parent.
 
 One piece that is still missing is the client-side updating of your form after
-the sport is selected. This should be handled by making an AJAX call back to
+the sport is selected. This should be handled by making an AJAX callback to
 your application. Assume that you have a sport meetup creation controller::
 
     // src/Controller/MeetupController.php
@@ -534,10 +534,9 @@ your application. Assume that you have a sport meetup creation controller::
                 // ... save the meetup, redirect etc.
             }
 
-            return $this->render(
-                'meetup/create.html.twig',
-                ['form' => $form->createView()]
-            );
+            return $this->renderForm('meetup/create.html.twig', [
+                'form' => $form,
+            ]);
         }
 
         // ...
@@ -569,11 +568,11 @@ field according to the current selection in the ``sport`` field:
         url : $form.attr('action'),
         type: $form.attr('method'),
         data : data,
-        success: function(html) {
+        complete: function(html) {
           // Replace current position field ...
           $('#meetup_position').replaceWith(
             // ... with the returned one from the AJAX response.
-            $(html).find('#meetup_position')
+            $(html.responseText).find('#meetup_position')
           );
           // Position field now displays the appropriate positions.
         }

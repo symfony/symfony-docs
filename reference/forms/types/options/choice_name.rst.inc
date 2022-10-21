@@ -11,6 +11,20 @@ attribute.
 This can be a callable or a property path. See `choice_label`_ for similar usage.
 By default, the choice key or an incrementing integer may be used (starting at ``0``).
 
+.. tip::
+
+    When defining a custom type, you should use the
+    :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class helper::
+
+        use Symfony\Component\Form\ChoiceList\ChoiceList;
+
+        // ...
+        $builder->add('choices', ChoiceType::class, [
+            'choice_name' => ChoiceList::fieldName($this, 'name'),
+        ]);
+
+    See the :ref:`"choice_loader" option documentation <reference-form-choice-loader>`.
+
 .. caution::
 
     The configured value must be a valid form name. Make sure to only return

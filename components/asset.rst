@@ -8,7 +8,7 @@ The Asset Component
     The Asset component manages URL generation and versioning of web assets such
     as CSS stylesheets, JavaScript files and image files.
 
-In the past, it was common for web applications to hardcode URLs of web assets.
+In the past, it was common for web applications to hard-code the URLs of web assets.
 For example:
 
 .. code-block:: html
@@ -50,6 +50,8 @@ Installation
 
 Usage
 -----
+
+.. _asset-packages:
 
 Asset Packages
 ~~~~~~~~~~~~~~
@@ -165,6 +167,34 @@ In those cases, use the
     echo $package->getUrl('css/app.css');
     // result: build/css/app.b916426ea1d10021f3f17ce8031f93c2.css
 
+If you request an asset that is *not found* in the ``rev-manifest.json`` file,
+the original - *unmodified* - asset path will be returned. The ``$strictMode``
+argument helps debug issues because it throws an exception when the asset is not
+listed in the manifest::
+
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
+
+    // The value of $strictMode can be specific per environment "true" for debugging and "false" for stability.
+    $strictMode = true;
+    // assumes the JSON file above is called "rev-manifest.json"
+    $package = new Package(new JsonManifestVersionStrategy(__DIR__.'/rev-manifest.json', null, $strictMode));
+
+    echo $package->getUrl('not-found.css');
+    // error:
+
+If your JSON file is not on your local filesystem but is accessible over HTTP,
+use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
+with the :doc:`HttpClient component </http_client>`::
+
+    use Symfony\Component\Asset\Package;
+    use Symfony\Component\Asset\VersionStrategy\RemoteJsonManifestVersionStrategy;
+    use Symfony\Component\HttpClient\HttpClient;
+
+    $httpClient = HttpClient::create();
+    $manifestUrl = 'https://cdn.example.com/rev-manifest.json';
+    $package = new Package(new RemoteJsonManifestVersionStrategy($manifestUrl, $httpClient));
+
 Custom Version Strategies
 .........................
 
@@ -184,12 +214,12 @@ every day::
             $this->version = date('Ymd');
         }
 
-        public function getVersion($path)
+        public function getVersion(string $path)
         {
             return $this->version;
         }
 
-        public function applyVersion($path)
+        public function applyVersion(string $path)
         {
             return sprintf('%s?v=%s', $path, $this->getVersion($path));
         }
@@ -357,7 +387,7 @@ they all have different base paths::
     $packages = new Packages($defaultPackage, $namedPackages);
 
 The ``Packages`` class allows to define a default package, which will be applied
-to assets that don't define the name of package to use. In addition, this
+to assets that don't define the name of the package to use. In addition, this
 application defines a package named ``img`` to serve images from an external
 domain and a ``doc`` package to avoid repeating long paths when linking to a
 document inside a template::

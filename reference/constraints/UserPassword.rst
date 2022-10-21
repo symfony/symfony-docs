@@ -17,9 +17,6 @@ password, but needs to enter their old password for security.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPassword`
 Validator   :class:`Symfony\\Component\\Security\\Core\\Validator\\Constraints\\UserPasswordValidator`
 ==========  ===================================================================
@@ -34,7 +31,7 @@ the user's current password:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Form/Model/ChangePassword.php
         namespace App\Form\Model;
@@ -43,11 +40,9 @@ the user's current password:
 
         class ChangePassword
         {
-            /**
-             * @SecurityAssert\UserPassword(
-             *     message = "Wrong value for your current password"
-             * )
-             */
+            #[SecurityAssert\UserPassword(
+                message: 'Wrong value for your current password',
+            )]
             protected $oldPassword;
         }
 

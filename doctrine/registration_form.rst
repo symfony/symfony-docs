@@ -14,7 +14,7 @@ form you must:
 #. :doc:`Create a form </forms>` to ask for the registration information (you can
    generate this with the ``make:registration-form`` command provided by the `MakerBundle`_);
 #. Create :doc:`a controller </controller>` to :ref:`process the form <processing-forms>`;
-#. :ref:`Protect some parts of your application <security-authorization>` so
+#. :ref:`Protect some parts of your application <security-access-control>` so that
    only registered users can access to them.
 
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html

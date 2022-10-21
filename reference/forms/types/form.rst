@@ -7,50 +7,15 @@ FormType Field
 The ``FormType`` predefines a couple of options that are then available
 on all types for which ``FormType`` is the parent.
 
-+-----------+--------------------------------------------------------------------+
-| Options   | - `action`_                                                        |
-|           | - `allow_extra_fields`_                                            |
-|           | - `by_reference`_                                                  |
-|           | - `compound`_                                                      |
-|           | - `constraints`_                                                   |
-|           | - `data`_                                                          |
-|           | - `data_class`_                                                    |
-|           | - `empty_data`_                                                    |
-|           | - `error_bubbling`_                                                |
-|           | - `error_mapping`_                                                 |
-|           | - `extra_fields_message`_                                          |
-|           | - `help`_                                                          |
-|           | - `help_attr`_                                                     |
-|           | - `help_html`_                                                     |
-|           | - `help_translation_parameters`_                                   |
-|           | - `inherit_data`_                                                  |
-|           | - `invalid_message`_                                               |
-|           | - `invalid_message_parameters`_                                    |
-|           | - `label_attr`_                                                    |
-|           | - `label_format`_                                                  |
-|           | - `mapped`_                                                        |
-|           | - `method`_                                                        |
-|           | - `post_max_size_message`_                                         |
-|           | - `property_path`_                                                 |
-|           | - `required`_                                                      |
-|           | - `trim`_                                                          |
-|           | - `validation_groups`_                                             |
-+-----------+--------------------------------------------------------------------+
-| Inherited | - `attr`_                                                          |
-| options   | - `auto_initialize`_                                               |
-|           | - `block_name`_                                                    |
-|           | - `block_prefix`_                                                  |
-|           | - `disabled`_                                                      |
-|           | - `label`_                                                         |
-|           | - `row_attr`_                                                      |
-|           | - `translation_domain`_                                            |
-|           | - `label_translation_parameters`_                                  |
-|           | - `attr_translation_parameters`_                                   |
-+-----------+--------------------------------------------------------------------+
-| Parent    | none                                                               |
-+-----------+--------------------------------------------------------------------+
-| Class     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType` |
-+-----------+--------------------------------------------------------------------+
++---------------------------+--------------------------------------------------------------------+
+| Default invalid message   | This value is not valid.                                           |
++---------------------------+--------------------------------------------------------------------+
+| Legacy invalid message    | This value is not valid.                                           |
++---------------------------+--------------------------------------------------------------------+
+| Parent                    | none                                                               |
++---------------------------+--------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType` |
++---------------------------+--------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -88,8 +53,7 @@ option on the form.
 
 .. _reference-form-option-empty-data:
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The actual default value of this option depends on other field options:
 
@@ -100,8 +64,7 @@ The actual default value of this option depends on other field options:
 * If ``data_class`` is not set and ``compound`` is ``false``, then ``''``
   (empty string).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. _reference-form-option-error-bubbling:
 
@@ -110,6 +73,18 @@ The actual default value of this option depends on other field options:
 .. include:: /reference/forms/types/options/error_mapping.rst.inc
 
 .. include:: /reference/forms/types/options/extra_fields_message.rst.inc
+
+.. include:: /reference/forms/types/options/form_attr.rst.inc
+
+``getter``
+~~~~~~~~~~
+
+**type**: ``callable`` **default**: ``null``
+
+When provided, this callable will be invoked to read the value from
+the underlying object that will be used to populate the form field.
+
+More details are available in the section on :doc:`/form/data_mappers`.
 
 .. include:: /reference/forms/types/options/help.rst.inc
 
@@ -147,6 +122,16 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/required.rst.inc
 
+``setter``
+~~~~~~~~~~
+
+**type**: ``callable`` **default**: ``null``
+
+When provided, this callable will be invoked to map the form value
+back to the underlying object.
+
+More details are available in the section on :doc:`/form/data_mappers`.
+
 .. include:: /reference/forms/types/options/trim.rst.inc
 
 .. include:: /reference/forms/types/options/validation_groups.rst.inc
@@ -174,6 +159,10 @@ of the form type tree (i.e. it cannot be used as a form type on its own).
 
 .. include:: /reference/forms/types/options/label.rst.inc
 
+.. _reference-form-option-label-html:
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/row_attr.rst.inc
 
 .. include:: /reference/forms/types/options/translation_domain.rst.inc
@@ -181,3 +170,5 @@ of the form type tree (i.e. it cannot be used as a form type on its own).
 .. include:: /reference/forms/types/options/label_translation_parameters.rst.inc
 
 .. include:: /reference/forms/types/options/attr_translation_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/priority.rst.inc

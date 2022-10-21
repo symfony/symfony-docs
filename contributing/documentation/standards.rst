@@ -88,9 +88,9 @@ Configuration examples should show all supported formats using
 (and their orders) are:
 
 * **Configuration** (including services): YAML, XML, PHP
-* **Routing**: Annotations, YAML, XML, PHP
-* **Validation**: Annotations, YAML, XML, PHP
-* **Doctrine Mapping**: Annotations, YAML, XML, PHP
+* **Routing**: Attributes, YAML, XML, PHP
+* **Validation**: Attributes, YAML, XML, PHP
+* **Doctrine Mapping**: Attributes, YAML, XML, PHP
 * **Translation**: XML, YAML, PHP
 
 Example
@@ -191,7 +191,7 @@ In addition, documentation follows these rules:
   * trivial
 
 .. _`the Sphinx documentation`: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#literal-blocks
-.. _`Twig Coding Standards`: https://twig.symfony.com/doc/2.x/coding_standards.html
+.. _`Twig Coding Standards`: https://twig.symfony.com/doc/3.x/coding_standards.html
 .. _`reserved by the IANA`: https://tools.ietf.org/html/rfc2606#section-3
 .. _`American English`: https://en.wikipedia.org/wiki/American_English
 .. _`American English Oxford Dictionary`: https://www.lexico.com/definition/american_english

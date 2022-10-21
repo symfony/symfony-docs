@@ -158,7 +158,7 @@ added a submit button with a custom label for submitting the form to the server.
 Creating Form Classes
 ~~~~~~~~~~~~~~~~~~~~~
 
-Symfony recommends to put as little logic as possible in controllers. That's why
+Symfony recommends putting as little logic as possible in controllers. That's why
 it's better to move complex forms to dedicated classes instead of defining them
 in controller actions. Besides, forms defined in classes can be reused in
 multiple actions and services.
@@ -255,9 +255,7 @@ the ``data_class`` option by adding the following to your form type class::
 Rendering Forms
 ---------------
 
-Now that the form has been created, the next step is to render it. Instead of
-passing the entire form object to the template, use the ``createView()`` method
-to build another object with the visual representation of the form::
+Now that the form has been created, the next step is to render it::
 
     // src/Controller/TaskController.php
     namespace App\Controller;
@@ -278,10 +276,20 @@ to build another object with the visual representation of the form::
             $form = $this->createForm(TaskType::class, $task);
 
             return $this->render('task/new.html.twig', [
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
     }
+
+Internally, the ``render()`` method calls ``$form->createView()`` to
+transform the form into a *form view* instance.
+
+.. deprecated:: 6.2
+
+    Prior to Symfony 6.2, you had to use ``$this->render(..., ['form' => $form->createView()])``
+    or the ``renderForm()`` method to render to form. The ``renderForm()``
+    method is deprecated in favor of directly passing the ``FormInterface``
+    instance to ``render()``.
 
 Then, use some :ref:`form helper functions <reference-form-twig-functions>` to
 render the form contents:
@@ -313,8 +321,8 @@ suitable for being rendered in an HTML form.
 
 As short as this rendering is, it's not very flexible. Usually, you'll need more
 control about how the entire form or some of its fields look. For example, thanks
-to the :doc:`Bootstrap 4 integration with Symfony forms </form/bootstrap4>` you
-can set this option to generate forms compatible with the Bootstrap 4 CSS framework:
+to the :doc:`Bootstrap 5 integration with Symfony forms </form/bootstrap5>` you
+can set this option to generate forms compatible with the Bootstrap 5 CSS framework:
 
 .. configuration-block::
 
@@ -322,7 +330,7 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
 
         # config/packages/twig.yaml
         twig:
-            form_themes: ['bootstrap_4_layout.html.twig']
+            form_themes: ['bootstrap_5_layout.html.twig']
 
     .. code-block:: xml
 
@@ -337,7 +345,7 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
                 https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form-theme>bootstrap_4_layout.html.twig</twig:form-theme>
+                <twig:form-theme>bootstrap_5_layout.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
         </container>
@@ -345,16 +353,16 @@ can set this option to generate forms compatible with the Bootstrap 4 CSS framew
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'bootstrap_4_layout.html.twig',
-            ],
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes(['bootstrap_5_layout.html.twig']);
 
             // ...
-        ]);
+        };
 
 The :ref:`built-in Symfony form themes <symfony-builtin-forms>` include
-Bootstrap 3 and 4 and Foundation 5. You can also
+Bootstrap 3, 4 and 5, Foundation 5 and 6, as well as Tailwind 2. You can also
 :ref:`create your own Symfony form theme <create-your-own-form-theme>`.
 
 In addition to form themes, Symfony allows you to
@@ -385,7 +393,7 @@ written into the form object::
     {
         public function new(Request $request): Response
         {
-            // just setup a fresh $task object (remove the example data)
+            // just set up a fresh $task object (remove the example data)
             $task = new Task();
 
             $form = $this->createForm(TaskType::class, $task);
@@ -397,16 +405,12 @@ written into the form object::
                 $task = $form->getData();
 
                 // ... perform some action, such as saving the task to the database
-                // for example, if Task is a Doctrine entity, save it!
-                // $entityManager = $this->getDoctrine()->getManager();
-                // $entityManager->persist($task);
-                // $entityManager->flush();
 
                 return $this->redirectToRoute('task_success');
             }
 
             return $this->render('task/new.html.twig', [
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
     }
@@ -423,7 +427,12 @@ possible paths:
    ``task`` and ``dueDate`` properties of the ``$task`` object. Then this object
    is validated (validation is explained in the next section). If it is invalid,
    :method:`Symfony\\Component\\Form\\FormInterface::isValid` returns
-   ``false`` and the form is rendered again, but now with validation errors;
+   ``false`` and the form is rendered again, but now with validation errors.
+
+   By passing ``$form`` to the ``render()`` method (instead of
+   ``$form->createView()``), the response code is automatically set to
+   `HTTP 422 Unprocessable Content`_. This ensures compatibility with tools
+   relying on the HTTP specification, like `Symfony UX Turbo`_;
 
 #. When the user submits the form with valid data, the submitted data is again
    written into the form, but this time :method:`Symfony\\Component\\Form\\FormInterface::isValid`
@@ -437,27 +446,11 @@ possible paths:
     that prevents the user from being able to hit the "Refresh" button of
     their browser and re-post the data.
 
-.. caution::
-
-    The ``createView()`` method should be called *after* ``handleRequest()`` is
-    called. Otherwise, when using :doc:`form events </form/events>`, changes done
-    in the ``*_SUBMIT`` events won't be applied to the view (like validation errors).
-
 .. seealso::
 
     If you need more control over exactly when your form is submitted or which
     data is passed to it, you can
     :doc:`use the submit() method to handle form submissions </form/direct_submit>`.
-
-.. tip::
-
-    If you need to render and process the same form in different templates,
-    use the ``render()`` function to :ref:`embed the controller <templates-embed-controllers>`
-    that processes the form:
-
-    .. code-block:: twig
-
-        {{ render(controller('App\\Controller\\TaskController::new')) }}
 
 .. _validating-forms:
 
@@ -486,7 +479,7 @@ object.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Task.php
         namespace App\Entity;
@@ -495,15 +488,11 @@ object.
 
         class Task
         {
-            /**
-             * @Assert\NotBlank
-             */
+            #[Assert\NotBlank]
             public $task;
 
-            /**
-             * @Assert\NotBlank
-             * @Assert\Type("\DateTime")
-             */
+            #[Assert\NotBlank]
+            #[Assert\Type(\DateTime::class)]
             protected $dueDate;
         }
 
@@ -569,6 +558,48 @@ corresponding errors printed out with the form.
 To see the second approach - adding constraints to the form - and to
 learn more about the validation constraints, please refer to the
 :doc:`Symfony validation documentation </validation>`.
+
+Form Validation Messages
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The form types have default error messages that are more clear and
+user-friendly than the ones provided by the validation constraints. To enable
+these new messages set the ``legacy_error_messages`` option to ``false``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            form:
+                legacy_error_messages: false
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:form legacy-error-messages="false"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->form()->legacyErrorMessages(false);
+        };
 
 Other Common Form Features
 --------------------------
@@ -665,7 +696,7 @@ The ``required`` Option
 
 The most common option is the ``required`` option, which can be applied to any
 field. By default, this option is set to ``true``, meaning that HTML5-ready
-browsers will require to fill in all fields before submitting the form.
+browsers will require you to fill in all fields before submitting the form.
 
 If you don't want this behavior, either
 :ref:`disable client-side validation <forms-html5-validation-disable>` for the
@@ -689,7 +720,7 @@ Set the ``label`` option on fields to define their labels explicitly::
 
     ->add('dueDate', DateType::class, [
         // set it to FALSE to not display the label for this field
-        'label'  => 'To Be Completed Before',
+        'label' => 'To Be Completed Before',
     ])
 
 .. tip::
@@ -794,14 +825,15 @@ method::
 
     use App\Form\TaskType;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Form\FormFactoryInterface;
     // ...
 
     class TaskController extends AbstractController
     {
-        public function new(): Response
+        public function new(FormFactoryInterface $formFactory): Response
         {
             $task = ...;
-            $form = $this->get('form.factory')->createNamed('my_name', TaskType::class, $task);
+            $form = $formFactory->createNamed('my_name', TaskType::class, $task);
 
             // ...
         }
@@ -840,13 +872,13 @@ Form Type Guessing
 ~~~~~~~~~~~~~~~~~~
 
 If the object handled by the form includes validation constraints, Symfony can
-introspect that metadata to guess the type of your field and set it up for you.
-In the above example, Symfony can guess from the validation rules that both the
+introspect that metadata to guess the type of your field.
+In the above example, Symfony can guess from the validation rules that the
 ``task`` field is a normal ``TextType`` field and the ``dueDate`` field is a
 ``DateType`` field.
 
-When building the form, omit the second argument to the ``add()`` method, or
-pass ``null`` to it, to enable Symfony's "guessing mechanism"::
+To enable Symfony's "guessing mechanism", omit the second argument to the ``add()`` method, or
+pass ``null`` to it::
 
     // src/Form/Type/TaskType.php
     namespace App\Form\Type;
@@ -881,30 +913,29 @@ pass ``null`` to it, to enable Symfony's "guessing mechanism"::
 Form Type Options Guessing
 ..........................
 
-When the guessing mechanism is enabled for some field (i.e. you omit or pass
-``null`` as the second argument to ``add()``), in addition to its form type,
-the following options can be guessed too:
+When the guessing mechanism is enabled for some field, in addition to its form type,
+the following options will be guessed too:
 
 ``required``
-    The ``required`` option can be guessed based on the validation rules (i.e. is
+    The ``required`` option is guessed based on the validation rules (i.e. is
     the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata (i.e. is the
     field ``nullable``). This is very useful, as your client-side validation will
     automatically match your validation rules.
 
 ``maxlength``
     If the field is some sort of text field, then the ``maxlength`` option attribute
-    can be guessed from the validation constraints (if ``Length`` or ``Range`` is used)
+    is guessed from the validation constraints (if ``Length`` or ``Range`` is used)
     or from the :doc:`Doctrine </doctrine>` metadata (via the field's length).
 
-If you'd like to change one of the guessed values, override it by passing the
-option in the options field array::
+If you'd like to change one of the guessed values, override it in the options field array::
 
     ->add('task', null, ['attr' => ['maxlength' => 4]])
 
-.. versionadded:: 4.3
+.. seealso::
 
-    Starting from Symfony 4.3, :doc:`Doctrine </doctrine>` metadata is introspected
-    to add :ref:`automatic validation constraints <automatic_object_validation>`.
+    Besides guessing the form type, Symfony also guesses :ref:`validation constraints <validating-forms>`
+    if you're using a Doctrine entity. Read :ref:`automatic_object_validation`
+    guide for more information.
 
 Unmapped Fields
 ~~~~~~~~~~~~~~~
@@ -978,6 +1009,7 @@ Form Themes and Customization:
     :maxdepth: 1
 
     /form/bootstrap4
+    /form/bootstrap5
     /form/form_customization
     /form/form_themes
 
@@ -1015,3 +1047,5 @@ Misc.:
 
 .. _`Symfony Forms screencast series`: https://symfonycasts.com/screencast/symfony-forms
 .. _`MakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
+.. _`HTTP 422 Unprocessable Content`: https://www.rfc-editor.org/rfc/rfc9110.html#name-422-unprocessable-content
+.. _`Symfony UX Turbo`: https://ux.symfony.com/turbo

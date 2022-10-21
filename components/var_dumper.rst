@@ -66,7 +66,7 @@ current PHP SAPI:
 
     You can also select the output format explicitly defining the
     ``VAR_DUMPER_FORMAT`` environment variable and setting its value to either
-    ``html`` or ``cli``.
+    ``html``, ``cli`` or :ref:`server <var-dumper-dump-server-format>`.
 
 .. note::
 
@@ -131,22 +131,27 @@ the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
 
         <!-- config/packages/debug.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/debug"
+        <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:debug="http://symfony.com/schema/dic/debug"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/debug https://symfony.com/schema/dic/debug/debug-1.0.xsd">
-
+                http://symfony.com/schema/dic/debug
+                https://symfony.com/schema/dic/debug/debug-1.0.xsd"
+        >
             <debug:config dump-destination="tcp://%env(VAR_DUMPER_SERVER)%"/>
         </container>
 
     .. code-block:: php
 
         // config/packages/debug.php
-        $container->loadFromExtension('debug', [
-           'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('debug', [
+                'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
+            ]);
+        };
 
 Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Dumper\\ServerDumper` class::
 
@@ -185,6 +190,35 @@ Then you can use the following command to start a server out-of-the-box:
 
      $ ./vendor/bin/var-dump-server
        [OK] Server listening on tcp://127.0.0.1:9912
+
+.. _var-dumper-dump-server-format:
+
+Configuring the Dump Server with Environment Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you prefer to not modify the application configuration (e.g. to quickly debug
+a project given to you) use the ``VAR_DUMPER_FORMAT`` env var.
+
+First, start the server as usual:
+
+.. code-block:: terminal
+
+    $ ./vendor/bin/var-dump-server
+
+Then, run your code with the ``VAR_DUMPER_FORMAT=server`` env var by configuring
+this value in the :ref:`.env file of your application <config-env-vars>`. For
+console commands, you can also define this env var as follows:
+
+.. code-block:: terminal
+
+    $ VAR_DUMPER_FORMAT=server [your-cli-command]
+
+.. note::
+
+    The host used by the ``server`` format is the one configured in the
+    ``VAR_DUMPER_SERVER`` env var or ``127.0.0.1:9912`` if none is defined.
+    If you prefer, you can also configure the host in the ``VAR_DUMPER_FORMAT``
+    env var like this: ``VAR_DUMPER_FORMAT=tcp://127.0.0.1:1234``.
 
 DebugBundle and Twig Integration
 --------------------------------
@@ -225,11 +259,7 @@ option. Read more about this and other options in
     finished, press ``Esc.`` to hide the box again.
 
     If you want to use your browser search input, press ``Ctrl. + F`` or
-    ``Cmd. + F`` again while having focus on VarDumper's search input.
-
-    .. versionadded:: 4.4
-
-        The feature to use the browser search input was introduced in Symfony 4.4.
+    ``Cmd. + F`` again while focusing on VarDumper's search input.
 
 Using the VarDumper Component in your PHPUnit Test Suite
 --------------------------------------------------------
@@ -257,11 +287,6 @@ The ``VarDumperTestTrait`` also includes these other methods:
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::tearDownVarDumper`
     is called automatically after each case to reset the custom configuration
     made in ``setUpVarDumper()``.
-
-.. versionadded:: 4.4
-
-    The ``setUpVarDumper()`` and ``tearDownVarDumper()`` methods were introduced
-    in Symfony 4.4.
 
 Example::
 

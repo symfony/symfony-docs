@@ -19,9 +19,8 @@ The Symfony server is part of the ``symfony`` binary created when you
 
 .. note::
 
-    The Symfony binary is developed internally at Symfony. If you want to
-    report a bug or suggest a new feature, please create an issue on
-    `symfony/cli`_.
+   You can view and contribute to the Symfony CLI source in the
+   `symfony-cli/symfony-cli GitHub repository`_.
 
 Getting Started
 ---------------
@@ -114,10 +113,10 @@ root directory:
     $ cd my-project/
 
     # use a specific PHP version
-    $ echo 7.2 > .php-version
+    $ echo 7.4 > .php-version
 
-    # use any PHP 7.x version available
-    $ echo 7 > .php-version
+    # use any PHP 8.x version available
+    $ echo 8 > .php-version
 
 .. tip::
 
@@ -203,12 +202,15 @@ Now run this command to start the proxy:
 
     $ symfony proxy:start
 
-.. note::
+If the proxy doesn't work as explained in the following sections, check these:
 
-    Some browsers (e.g. Chrome) require to re-apply proxy settings (clicking on
-    ``Re-apply settings`` button on the ``chrome://net-internals/#proxy`` page)
-    or a full restart after starting the proxy. Otherwise, you'll see a
-    *"This webpage is not available"* error (``ERR_NAME_NOT_RESOLVED``).
+* Some browsers (e.g. Chrome) require to re-apply proxy settings (clicking on
+  ``Re-apply settings`` button on the ``chrome://net-internals/#proxy`` page)
+  or a full restart after starting the proxy. Otherwise, you'll see a
+  *"This webpage is not available"* error (``ERR_NAME_NOT_RESOLVED``);
+* Some Operating Systems (e.g. macOS) don't apply by default the proxy settings
+  to local hosts and domains. You may need to remove ``*.local`` and/or other
+  IP addresses from that list.
 
 Defining the Local Domain
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -275,11 +277,13 @@ server provides a ``run`` command to wrap them as follows:
     # stop the web server (and all the associated commands) when you are finished
     $ symfony server:stop
 
+.. _symfony-server-docker:
+
 Docker Integration
 ------------------
 
 The local Symfony server provides full `Docker`_ integration for projects that
-use it.
+use it. To learn more about Docker & Symfony, see :doc:`docker`.
 
 When the web server detects that Docker Compose is running for the project, it
 automatically exposes some environment variables.
@@ -321,22 +325,6 @@ In this example, the service is named ``db``, so environment variables would be
 prefixed with ``DB_``, but as the ``com.symfony.server.service-prefix`` is set
 to ``DATABASE``, the web server creates environment variables starting with
 ``DATABASE_`` instead as expected by the default Symfony configuration.
-
-You don't need to create two containers for the main database and the test
-database. Using ``APP_ENV=test symfony`` will automatically adjust
-``DATABASE_*`` environment variables for the ``test`` environment:
-
-.. code-block:: terminal
-
-    $ symfony var:export --multiline 
-    export DATABASE_DATABASE=app
-    export DATABASE_NAME=app
-    export DATABASE_URL=postgres://app:app@127.0.0.1:49160/app?sslmode=disable&charset=utf8
-
-    $ APP_ENV=test symfony var:export --multiline 
-    export DATABASE_DATABASE=app_test
-    export DATABASE_NAME=app_test
-    export DATABASE_URL=postgres://app:app@127.0.0.1:49160/app_test?sslmode=disable&charset=utf8
 
 Here is the list of supported services with their ports and default Symfony
 prefixes:
@@ -437,7 +425,7 @@ debug any issues.
 `Read SymfonyCloud technical docs`_.
 
 .. _`install Symfony`: https://symfony.com/download
-.. _`symfony/cli`: https://github.com/symfony/cli
+.. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`SymfonyCloud`: https://symfony.com/cloud/
 .. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html

@@ -19,9 +19,6 @@ can do anything, including creating and assigning validation errors.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>` or :ref:`property/method <validation-property-target>`
-Options     - :ref:`callback <callback-option>`
-            - `groups`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Callback`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CallbackValidator`
 ==========  ===================================================================
@@ -31,7 +28,7 @@ Configuration
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -41,9 +38,7 @@ Configuration
 
         class Author
         {
-            /**
-             * @Assert\Callback
-             */
+            #[Assert\Callback]
             public function validate(ExecutionContextInterface $context, $payload)
             {
                 // ...
@@ -164,16 +159,15 @@ You can then use the following configuration to invoke this validator:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use Acme\Validator;
         use Symfony\Component\Validator\Constraints as Assert;
 
-        /**
-         * @Assert\Callback({"Acme\Validator", "validate"})
-         */
+        #[Assert\Callback([Validator::class, 'validate'])]
         class Author
         {
         }
@@ -225,7 +219,7 @@ You can then use the following configuration to invoke this validator:
 
     The Callback constraint does *not* support global callback functions
     nor is it possible to specify a global function or a service method
-    as callback. To validate using a service, you should
+    as a callback. To validate using a service, you should
     :doc:`create a custom validation constraint </validation/custom_constraint>`
     and add that new constraint to your class.
 
@@ -253,8 +247,8 @@ constructor of the Callback constraint::
 
 .. warning::
 
-    Using a ``Closure`` together with annotation configuration will disable the
-    annotation cache for that class/property/method because ``Closure`` cannot
+    Using a ``Closure`` together with attribute configuration will disable the
+    attribute cache for that class/property/method because ``Closure`` cannot
     be cached. For best performance, it's recommended to use a static callback method.
 
 Options

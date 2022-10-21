@@ -33,9 +33,7 @@ class::
 
     class LuckyController
     {
-        /**
-         * @Route("/lucky/number/{max}", name="app_lucky_number")
-         */
+        #[Route('/lucky/number/{max}', name: 'app_lucky_number')]
         public function number(int $max): Response
         {
             $number = random_int(0, $max);
@@ -61,10 +59,10 @@ This controller is pretty straightforward:
 * *line 7*: The class can technically be called anything, but it's suffixed
   with ``Controller`` by convention.
 
-* *line 12*: The action method is allowed to have a ``$max`` argument thanks to the
+* *line 10*: The action method is allowed to have a ``$max`` argument thanks to the
   ``{max}`` :doc:`wildcard in the route </routing>`.
 
-* *line 16*: The controller creates and returns a ``Response`` object.
+* *line 14*: The controller creates and returns a ``Response`` object.
 
 .. index::
    single: Controller; Routes and controllers
@@ -73,8 +71,8 @@ Mapping a URL to a Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to *view* the result of this controller, you need to map a URL to it via
-a route. This was done above with the ``@Route("/lucky/number/{max}")``
-:ref:`route annotation <annotation-routes>`.
+a route. This was done above with the ``#[Route('/lucky/number/{max}')]``
+:ref:`route attribute <annotation-routes>`.
 
 To see your page, go to this URL in your browser: http://localhost:8000/lucky/number/100
 
@@ -132,6 +130,7 @@ If you want to redirect the user to another page, use the ``redirectToRoute()``
 and ``redirect()`` methods::
 
     use Symfony\Component\HttpFoundation\RedirectResponse;
+    use Symfony\Component\HttpFoundation\Response;
 
     // ...
     public function index(): RedirectResponse
@@ -142,14 +141,19 @@ and ``redirect()`` methods::
         // redirectToRoute is a shortcut for:
         // return new RedirectResponse($this->generateUrl('homepage'));
 
-        // does a permanent - 301 redirect
+        // does a permanent HTTP 301 redirect
         return $this->redirectToRoute('homepage', [], 301);
+        // if you prefer, you can use PHP constants instead of hardcoded numbers
+        return $this->redirectToRoute('homepage', [], Response::HTTP_MOVED_PERMANENTLY);
 
         // redirect to a route with parameters
         return $this->redirectToRoute('app_lucky_number', ['max' => 10]);
 
         // redirects to a route and maintains the original query string parameters
         return $this->redirectToRoute('blog_show', $request->query->all());
+
+        // redirects to the current route (e.g. for Post/Redirect/Get pattern):
+        return $this->redirectToRoute($request->attributes->get('_route'));
 
         // redirects externally
         return $this->redirect('http://symfony.com/doc');
@@ -199,9 +203,7 @@ If you need a service in a controller, type-hint an argument with its class
     use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    /**
-     * @Route("/lucky/number/{max}")
-     */
+    #[Route('/lucky/number/{max}')]
     public function number(int $max, LoggerInterface $logger): Response
     {
         $logger->info('We are logging!');
@@ -217,66 +219,44 @@ command:
 
     $ php bin/console debug:autowiring
 
-If you need control over the *exact* value of an argument, you can :ref:`bind <services-binding>`
-the argument by its name:
+.. tip::
 
-.. configuration-block::
+    If you need control over the *exact* value of an argument, or require a parameter,
+    you can use the ``#[Autowire]`` attribute::
 
-    .. code-block:: yaml
+        // ...
+        use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Attribute\Autowire;
+        use Symfony\Component\HttpFoundation\Response;
 
-        # config/services.yaml
-        services:
-            # ...
+        class LuckyController extends AbstractController
+        {
+            public function number(
+                int $max,
 
-            # explicitly configure the service
-            App\Controller\LuckyController:
-                tags: [controller.service_arguments]
-                bind:
-                    # for any $logger argument, pass this specific service
-                    $logger: '@monolog.logger.doctrine'
-                    # for any $projectDir argument, pass this parameter value
-                    $projectDir: '%kernel.project_dir%'
+                // inject a specific logger service
+                #[Autowire(service: 'monolog.logger.request')]
+                LoggerInterface $logger,
 
-    .. code-block:: xml
+                // or inject parameter values
+                #[Autowire('%kernel.project_dir%')]
+                string $projectDir
+            ): Response
+            {
+                $logger->info('We are logging!');
+                // ...
+            }
+        }
 
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+    You can read more about this attribute in :ref:`autowire-attribute`.
 
-            <services>
-                <!-- ... -->
+    .. versionadded:: 6.1
 
-                <!-- Explicitly configure the service -->
-                <service id="App\Controller\LuckyController">
-                    <tag name="controller.service_arguments"/>
-                    <bind key="$logger"
-                        type="service"
-                        id="monolog.logger.doctrine"
-                    />
-                    <bind key="$projectDir">%kernel.project_dir%</bind>
-                </service>
-            </services>
-        </container>
+        The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
 
-    .. code-block:: php
-
-        // config/services.php
-        use App\Controller\LuckyController;
-        use Symfony\Component\DependencyInjection\Reference;
-
-        $container->register(LuckyController::class)
-            ->addTag('controller.service_arguments')
-            ->setBindings([
-                '$logger' => new Reference('monolog.logger.doctrine'),
-                '$projectDir' => '%kernel.project_dir%',
-            ])
-        ;
-
-Like with all services, you can also use regular :ref:`constructor injection <services-constructor-injection>`
-in your controllers.
+Like with all services, you can also use regular
+:ref:`constructor injection <services-constructor-injection>` in your
+controllers.
 
 For more information about services, see the :doc:`/service_container` article.
 
@@ -308,10 +288,6 @@ use:
     created: templates/product/index.html.twig
     created: templates/product/new.html.twig
     created: templates/product/show.html.twig
-
-.. versionadded:: 1.2
-
-    The ``make:crud`` command was introduced in MakerBundle 1.2.
 
 .. index::
    single: Controller; Managing errors
@@ -394,7 +370,7 @@ Request object.
 Managing the Session
 --------------------
 
-Symfony provides a session service that you can use to store information
+Symfony provides a session object that you can use to store information
 about the user between requests. Session is enabled by default, but will only be
 started if you read or write from it.
 
@@ -595,10 +571,10 @@ Returning JSON Response
 To return JSON from a controller, use the ``json()`` helper method. This returns a
 ``JsonResponse`` object that encodes the data automatically::
 
-    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     // ...
 
-    public function index(): Response
+    public function index(): JsonResponse
     {
         // returns '{"username":"jane.doe"}' and sets the proper Content-Type header
         return $this->json(['username' => 'jane.doe']);
@@ -617,10 +593,10 @@ Streaming File Responses
 You can use the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::file`
 helper to serve a file from inside a controller::
 
-    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
     // ...
 
-    public function download(): Response
+    public function download(): BinaryFileResponse
     {
         // send the file contents and force the browser to download it
         return $this->file('/path/to/some_file.pdf');
@@ -632,7 +608,7 @@ The ``file()`` helper provides some arguments to configure its behavior::
     use Symfony\Component\HttpFoundation\ResponseHeaderBag;
     // ...
 
-    public function download(): Response
+    public function download(): BinaryFileResponse
     {
         // load the file from the filesystem
         $file = new File('/path/to/some_file.pdf');

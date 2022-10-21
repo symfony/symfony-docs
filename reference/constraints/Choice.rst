@@ -7,17 +7,6 @@ an array of items is one of those valid choices.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `callback`_
-            - `choices`_
-            - `groups`_
-            - `max`_
-            - `maxMessage`_
-            - `message`_
-            - `min`_
-            - `minMessage`_
-            - `multiple`_
-            - `multipleMessage`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Choice`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ChoiceValidator`
 ==========  ===================================================================
@@ -34,7 +23,7 @@ If your valid choice list is simple, you can pass them in directly via the
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -45,16 +34,10 @@ If your valid choice list is simple, you can pass them in directly via the
         {
             const GENRES = ['fiction', 'non-fiction'];
 
-            /**
-             * @Assert\Choice({"New York", "Berlin", "Tokyo"})
-             */
+            #[Assert\Choice(['New York', 'Berlin', 'Tokyo'])]
             protected $city;
 
-            /**
-             * You can also directly provide an array constant to the "choices" option in the annotation
-             *
-             * @Assert\Choice(choices=Author::GENRES, message="Choose a valid genre.")
-             */
+            #[Assert\Choice(choices: Author::GENRES, message: 'Choose a valid genre.')]
             protected $genre;
         }
 
@@ -145,7 +128,7 @@ constraint.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -154,9 +137,7 @@ constraint.
 
         class Author
         {
-            /**
-             * @Assert\Choice(callback="getGenres")
-             */
+            #[Assert\Choice(callback: 'getGenres')]
             protected $genre;
         }
 
@@ -210,18 +191,17 @@ you can pass the class name and the method as an array.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use App\Entity\Genre
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            /**
-             * @Assert\Choice(callback={"App\Entity\Genre", "getGenres"})
-             */
+            #[Assert\Choice(callback: [Genre::class, 'getGenres'])]
             protected $genre;
         }
 
@@ -322,10 +302,6 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-.. versionadded:: 4.3
-
-    The ``{{ choices }}`` parameter was introduced in Symfony 4.3.
-
 ``message``
 ~~~~~~~~~~~
 
@@ -371,10 +347,6 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-.. versionadded:: 4.3
-
-    The ``{{ choices }}`` parameter was introduced in Symfony 4.3.
-
 ``multiple``
 ~~~~~~~~~~~~
 
@@ -400,6 +372,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

@@ -31,7 +31,7 @@ Before working on Symfony, setup a friendly environment with the following
 software:
 
 * Git;
-* PHP version 7.1.3 or above.
+* PHP version 7.2.5 or above.
 
 Configure Git
 ~~~~~~~~~~~~~
@@ -99,7 +99,7 @@ Get the Symfony source code:
 .. code-block:: terminal
 
       $ cd symfony
-      $ git remote add upstream git://github.com/symfony/symfony.git
+      $ git remote add upstream https://github.com/symfony/symfony.git
 
 Check that the current Tests Pass
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -124,12 +124,13 @@ Choose the right Branch
 Before working on a PR, you must determine on which branch you need to
 work:
 
-* ``4.4``, if you are fixing a bug for an existing feature or want to make a
-  change that falls into the :doc:`list of acceptable changes in patch versions
-  </contributing/code/maintenance>` (you may have to choose a higher branch if
-  the feature you are fixing was introduced in a later version);
+* If you are fixing a bug for an existing feature or want to make a change
+  that falls into the :doc:`list of acceptable changes in patch versions
+  </contributing/code/maintenance>`, pick the oldest concerned maintained
+  branch (you can find them on the `Symfony releases page`_). E.g. if you
+  found a bug introduced in ``v5.1.10``, you need to work on ``5.4``.
 
-* ``5.x``, if you are adding a new feature.
+* ``6.2``, if you are adding a new feature.
 
   The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
   (5.0, 6.0, etc.) comes out every two years. Because of the
@@ -142,7 +143,7 @@ work:
     All bug fixes merged into maintenance branches are also merged into more
     recent branches on a regular basis. For instance, if you submit a PR
     for the ``4.4`` branch, the PR will also be applied by the core team on
-    the ``5.x`` branch.
+    the ``5.x`` and ``6.x`` branches.
 
 Create a Topic Branch
 ~~~~~~~~~~~~~~~~~~~~~
@@ -152,7 +153,7 @@ topic branch:
 
 .. code-block:: terminal
 
-    $ git checkout -b BRANCH_NAME 5.x
+    $ git checkout -b BRANCH_NAME 6.1
 
 Or, if you want to provide a bug fix for the ``4.4`` branch, first track the remote
 ``4.4`` branch locally:
@@ -281,15 +282,15 @@ while to finish your changes):
 
 .. code-block:: terminal
 
-    $ git checkout 5.x
+    $ git checkout 6.1
     $ git fetch upstream
-    $ git merge upstream/5.x
+    $ git merge upstream/6.1
     $ git checkout BRANCH_NAME
-    $ git rebase 5.x
+    $ git rebase 6.1
 
 .. tip::
 
-    Replace ``5.x`` with the branch you selected previously (e.g. ``4.4``)
+    Replace ``6.1`` with the branch you selected previously (e.g. ``4.4``)
     if you are working on a bug fix.
 
 When doing the ``rebase`` command, you might have to fix merge conflicts.
@@ -502,7 +503,7 @@ PR. Before re-submitting the PR, rebase with ``upstream/5.x`` or
 
 .. code-block:: terminal
 
-    $ git rebase -f upstream/5.x
+    $ git rebase -f upstream/6.1
     $ git push --force origin BRANCH_NAME
 
 .. note::
@@ -520,6 +521,7 @@ before merging.
 .. _GitHub: https://github.com/join
 .. _`GitHub's documentation`: https://help.github.com/github/using-git/ignoring-files
 .. _Symfony repository: https://github.com/symfony/symfony
+.. _Symfony releases page: https://symfony.com/releases#maintained-symfony-branches
 .. _`documentation repository`: https://github.com/symfony/symfony-docs
 .. _`fabbot`: https://fabbot.io
 .. _`Psalm`: https://psalm.dev/

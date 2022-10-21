@@ -168,11 +168,17 @@ or you decided not to maintain it anymore), you can deprecate its definition:
         app.mailer:
             alias: 'App\Mail\PhpMailer'
 
-            # this will display a generic deprecation message...
-            deprecated: true
+            # this outputs the following generic deprecation message:
+            # Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future
+            deprecated:
+                package: 'acme/package'
+                version: '1.2'
 
-            # ...but you can also define a custom deprecation message
-            deprecated: 'The "%alias_id%" alias is deprecated. Do not use it anymore.'
+            # you can also define a custom deprecation message (%alias_id% placeholder is available)
+            deprecated:
+                package: 'acme/package'
+                version: '1.2'
+                message: 'The "%alias_id%" alias is deprecated. Do not use it anymore.'
 
     .. code-block:: xml
 
@@ -183,11 +189,14 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
             <services>
                 <service id="app.mailer" alias="App\Mail\PhpMailer">
-                    <!-- this will display a generic deprecation message... -->
-                    <deprecated/>
+                    <!-- this outputs the following generic deprecation message:
+                         Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future -->
+                    <deprecated package="acme/package" version="1.2"/>
 
-                    <!-- ...but you can also define a custom deprecation message -->
-                    <deprecated>The "%alias_id%" service alias is deprecated. Don't use it anymore.</deprecated>
+                    <!-- you can also define a custom deprecation message (%alias_id% placeholder is available) -->
+                    <deprecated package="acme/package" version="1.2">
+                        The "%alias_id%" service alias is deprecated. Don't use it anymore.
+                    </deprecated>
                 </service>
             </services>
         </container>
@@ -197,12 +206,14 @@ or you decided not to maintain it anymore), you can deprecate its definition:
         $container
             ->setAlias('app.mailer', 'App\Mail\PhpMailer')
 
-            // this will display a generic deprecation message...
-            ->setDeprecated(true)
+            // this outputs the following generic deprecation message:
+            // Since acme/package 1.2: The "app.mailer" service alias is deprecated. You should stop using it, as it will be removed in the future
+            ->setDeprecated('acme/package', '1.2')
 
-            // ...but you can also define a custom deprecation message
+            // you can also define a custom deprecation message (%alias_id% placeholder is available)
             ->setDeprecated(
-                true,
+                'acme/package',
+                '1.2',
                 'The "%alias_id%" service alias is deprecated. Don\'t use it anymore.'
             )
         ;
@@ -213,10 +224,6 @@ advising you to stop or to change your uses of that alias.
 The message is actually a message template, which replaces occurrences of the
 ``%alias_id%`` placeholder by the service alias id. You **must** have at least
 one occurrence of the ``%alias_id%`` placeholder in your template.
-
-.. versionadded:: 4.3
-
-    The ``deprecated`` option for service aliases was introduced in Symfony 4.3.
 
 Anonymous Services
 ------------------
@@ -269,7 +276,7 @@ The following example shows how to inject an anonymous service into another serv
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                ->args([inline(AnonymousBar::class)]);
+                ->args([inline_service(AnonymousBar::class)]);
         };
 
 .. note::
@@ -277,7 +284,7 @@ The following example shows how to inject an anonymous service into another serv
     Anonymous services do *NOT* inherit the definitions provided from the
     defaults defined in the configuration. So you'll need to explicitly mark
     service as autowired or autoconfigured when doing an anonymous service
-    e.g.: ``inline(Foo::class)->autowire()->autoconfigure()``.
+    e.g.: ``inline_service(Foo::class)->autowire()->autoconfigure()``.
 
 Using an anonymous service as a factory looks like this:
 
@@ -320,7 +327,7 @@ Using an anonymous service as a factory looks like this:
             $services = $configurator->services();
 
             $services->set(Foo::class)
-                ->factory([inline(AnonymousBar::class), 'constructFoo']);
+                ->factory([inline_service(AnonymousBar::class), 'constructFoo']);
         };
 
 Deprecating Services
@@ -335,7 +342,10 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
         # config/services.yaml
         App\Service\OldService:
-            deprecated: The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.
+            deprecated:
+                package: 'vendor-name/package-name'
+                version: '2.8'
+                message: The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.
 
     .. code-block:: xml
 
@@ -347,7 +357,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
             <services>
                 <service id="App\Service\OldService">
-                    <deprecated>The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.</deprecated>
+                    <deprecated package="vendor-name/package-name" version="2.8">The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.</deprecated>
                 </service>
             </services>
         </container>
@@ -363,7 +373,11 @@ or you decided not to maintain it anymore), you can deprecate its definition:
             $services = $configurator->services();
 
             $services->set(OldService::class)
-                ->deprecate('The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.');
+                ->deprecate(
+                    'vendor-name/package-name',
+                    '2.8',
+                    'The "%service_id%" service is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0.'
+                );
         };
 
 Now, every time this service is used, a deprecation warning is triggered,

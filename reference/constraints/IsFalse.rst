@@ -9,9 +9,6 @@ Also see :doc:`IsTrue <IsTrue>`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\IsFalse`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsFalseValidator`
 ==========  ===================================================================
@@ -38,7 +35,7 @@ method returns **false**:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -47,11 +44,9 @@ method returns **false**:
 
         class Author
         {
-            /**
-             * @Assert\IsFalse(
-             *     message = "You've entered an invalid state."
-             * )
-             */
+            #[Assert\IsFalse(
+                message: "You've entered an invalid state."
+            )]
             public function isStateInvalid()
             {
                 // ...
@@ -127,6 +122,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

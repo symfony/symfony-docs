@@ -8,8 +8,13 @@ on it will exhibit the same bugs. The good news is that whenever you fix a
 bug, you are fixing a bunch of applications too.
 
 Today's mission is to write unit tests for the framework we have created by
-using `PHPUnit`_. Create a PHPUnit configuration file in
-``example.com/phpunit.xml.dist``:
+using `PHPUnit`_. At first, install PHPUnit as a development dependency:
+
+.. code-block:: terminal
+
+    $ composer require --dev phpunit/phpunit
+
+Then, create a PHPUnit configuration file in ``example.com/phpunit.xml.dist``:
 
 .. code-block:: xml
 
@@ -183,7 +188,7 @@ Response::
         $response = $framework->handle(new Request());
 
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertContains('Yep, this is a leap year!', $response->getContent());
+        $this->assertStringContainsString('Yep, this is a leap year!', $response->getContent());
     }
 
 In this test, we simulate a route that matches and returns a simple
@@ -215,6 +220,6 @@ Symfony code.
 Now that we are confident (again) about the code we have written, we can
 safely think about the next batch of features we want to add to our framework.
 
-.. _`PHPUnit`: https://phpunit.readthedocs.io/en/stable/
-.. _`test doubles`: https://phpunit.readthedocs.io/en/stable/test-doubles.html
+.. _`PHPUnit`: https://phpunit.readthedocs.io/en/9.5/
+.. _`test doubles`: https://phpunit.readthedocs.io/en/9.5/test-doubles.html
 .. _`XDebug`: https://xdebug.org/

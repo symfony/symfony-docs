@@ -19,6 +19,7 @@ Choice Fields
 ~~~~~~~~~~~~~
 
 * :doc:`ChoiceType </reference/forms/types/choice>`
+* :doc:`EnumType </reference/forms/types/enum>`
 * :doc:`EntityType </reference/forms/types/entity>`
 * :doc:`CountryType </reference/forms/types/country>`
 * :doc:`LanguageType </reference/forms/types/language>`
@@ -43,6 +44,20 @@ Other Fields
 * :doc:`FileType </reference/forms/types/file>`
 * :doc:`RadioType </reference/forms/types/radio>`
 
+Symfony UX Fields
+~~~~~~~~~~~~~~~~~
+
+These types are part of the :doc:`Symfony UX initiative </frontend/ux>`:
+
+* `CropperType`_ (using Cropper.js)
+* `DropzoneType`_
+
+UID Fields
+~~~~~~~~~~
+
+* :doc:`UuidType </reference/forms/types/uuid>`
+* :doc:`UlidType </reference/forms/types/ulid>`
+
 Field Groups
 ~~~~~~~~~~~~
 
@@ -65,3 +80,6 @@ Base Fields
 ~~~~~~~~~~~
 
 * :doc:`FormType </reference/forms/types/form>`
+
+.. _`CropperType`: https://github.com/symfony/ux/tree/2.x/src/Cropperjs#readme
+.. _`DropzoneType`: https://github.com/symfony/ux/tree/2.x/src/Dropzone#readme

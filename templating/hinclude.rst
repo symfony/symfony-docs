@@ -60,18 +60,14 @@ default content rendering some template:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-            'fragments' => [
-                'hinclude_default_template' => 'hinclude.html.twig',
-            ],
-        ]);
-
-.. versionadded:: 4.3
-
-    The ``framework.fragments.hinclude_default_template`` option was introduced
-    in Symfony 4.3. In previous Symfony versions it was called
-    ``framework.templating.hinclude_default_template``.
+            $framework->fragments()
+                ->hincludeDefaultTemplate('hinclude.html.twig')
+            ;
+        };
 
 You can define default templates per ``render()`` function (which will override
 any global default template that is defined):

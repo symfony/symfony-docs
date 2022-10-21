@@ -11,6 +11,10 @@
     Online version
   </a>
   <span> | </span>
+  <a href="https://symfony.com/components">
+    Components
+  </a>
+  <span> | </span>
   <a href="https://symfonycasts.com">
     Screencasts
   </a>
@@ -19,34 +23,33 @@
 Contributing
 ------------
 
-We love contributors! For more information on how you can contribute to the
-Symfony documentation, please read
-[Contributing to the Documentation](https://symfony.com/doc/current/contributing/documentation/overview.html)
+We love contributors! For more information on how you can contribute, please read
+the [Symfony Docs Contributing Guide](https://symfony.com/doc/current/contributing/documentation/overview.html)
 
-> **Note**
-> All pull requests must be based on the ``4.4`` branch,
-> unless you are documenting a feature that was introduced *after* Symfony 4.4
-> (e.g. in Symfony 5.2), **not** the ``5.x`` or older branches.
+**Important**: use `4.4` branch as the base of your pull requests, unless you are
+documenting a feature that was introduced *after* Symfony 4.4 (e.g. in Symfony 5.4).
 
-SymfonyCloud
-------------
+Build Documentation Locally
+---------------------------
 
-Thanks to [SymfonyCloud](https://symfony.com/cloud) for providing an integration
-server where Pull Requests are built and can be reviewed by contributors.
-
-Docker
-------
-
-You can build the documentation project locally with these commands:
+This is not needed for contributing, but it's useful if you want to debug some
+issue in the docs or if you want to read Symfony Documentation offline.
 
 ```bash
-# build the image...
-$ docker build . -t symfony-docs
+$ git clone git@github.com:symfony/symfony-docs.git
 
-# ...and start the local web server
-# (if it's already in use, change the '8080' port by any other port)
-$ docker run --rm -p 8080:80 symfony-docs
+$ cd symfony-docs/
+$ cd _build/
+
+$ composer install
+
+$ php build.php
 ```
 
-You can now read the docs at http://127.0.0.1:8080 (if you use a virtual
-machine, browse its IP instead of localhost; e.g. `http://192.168.99.100:8080`).
+After generating docs, serve them with the internal PHP server:
+
+```bash
+$ php -S localhost:8000 -t output/
+```
+
+Browse `http://localhost:8000` to read the docs.

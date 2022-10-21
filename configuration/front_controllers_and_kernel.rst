@@ -135,7 +135,7 @@ should run in "debug mode". Regardless of the
 :ref:`configuration environment <configuration-environments>`, a Symfony
 application can be run with debug mode set to ``true`` or ``false``.
 
-This affects many things in the application, such as displaying stacktraces on
+This affects many things in the application, such as displaying stack traces on
 error pages or if cache files are dynamically rebuilt on each request. Though
 not a requirement, debug mode is generally set to ``true`` for the ``dev`` and
 ``test`` environments and ``false`` for the ``prod`` environment.
@@ -190,10 +190,13 @@ parameter used, for example, to turn Twig's debug mode on:
 
     .. code-block:: php
 
-        $container->loadFromExtension('twig', [
-            'debug' => '%kernel.debug%',
+        // config/packages/twig.php
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-        ]);
+            $twig->debug('%kernel.debug%');
+        };
 
 The Environments
 ----------------
@@ -244,17 +247,16 @@ the directory of the environment you're using (most commonly ``dev/`` while
 developing and debugging). While it can vary, the ``var/cache/dev/`` directory
 includes the following:
 
-``srcApp_KernelDevDebugContainer.php``
+``App_KernelDevDebugContainer.php``
     The cached "service container" that represents the cached application
     configuration.
 
-``UrlGenerator.php``
-    The PHP class generated from the routing configuration and used when
-    generating URLs.
+``url_generating_routes.php``
+    The cached routing configuration used when generating URLs.
 
-``UrlMatcher.php``
-    The PHP class used for route matching - look here to see the compiled regular
-    expression logic used to match incoming URLs to different routes.
+``url_matching_routes.php``
+    The cached configuration used for route matching - look here to see the compiled
+    regular expression logic used to match incoming URLs to different routes.
 
 ``twig/``
     This directory contains all the cached Twig templates.

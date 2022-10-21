@@ -4,8 +4,8 @@
 How to Write a custom Twig Extension
 ====================================
 
-`Twig Extensions`_ allow to create custom functions, filters and more to use
-them in your Twig templates. Before writing your own Twig extension, check if
+`Twig Extensions`_ allow the creation of custom functions, filters, and more to use
+in your Twig templates. Before writing your own Twig extension, check if
 the filter/function that you need is already implemented in:
 
 * The `default Twig filters and functions`_;
@@ -16,7 +16,7 @@ Create the Extension Class
 --------------------------
 
 Suppose you want to create a new filter called ``price`` that formats a number
-into money:
+as currency:
 
 .. code-block:: twig
 
@@ -42,7 +42,7 @@ Create a class that extends ``AbstractExtension`` and fill in the logic::
             ];
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
@@ -69,7 +69,7 @@ If you want to create a function instead of a filter, define the
             ];
         }
 
-        public function calculateArea(int $width, int $length)
+        public function calculateArea(int $width, int $length): int
         {
             return $width * $length;
         }
@@ -117,7 +117,7 @@ them) performance is not affected. However, if extensions define lots of complex
 dependencies (e.g. those making database connections), the performance loss can
 be significant.
 
-That's why Twig allows to decouple the extension definition from its
+That's why Twig allows decoupling the extension definition from its
 implementation. Following the same example as before, the first change would be
 to remove the ``formatPrice()`` method from the extension and update the PHP
 callable defined in ``getFilters()``::
@@ -157,7 +157,7 @@ previous ``formatPrice()`` method::
             // extensions, you'll need to inject services using this constructor
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
@@ -170,7 +170,7 @@ If you're using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
 for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
-.. _`Twig Extensions`: https://twig.symfony.com/doc/2.x/advanced.html#creating-an-extension
-.. _`default Twig filters and functions`: https://twig.symfony.com/doc/2.x/#reference
+.. _`Twig Extensions`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
+.. _`default Twig filters and functions`: https://twig.symfony.com/doc/3.x/#reference
 .. _`official Twig extensions`: https://github.com/twigphp?q=extra
-.. _`global variables`: https://twig.symfony.com/doc/2.x/advanced.html#id1
+.. _`global variables`: https://twig.symfony.com/doc/3.x/advanced.html#id1

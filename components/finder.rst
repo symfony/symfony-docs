@@ -141,16 +141,21 @@ default when looking for files and directories, but you can change this with the
 
     $finder->ignoreVCS(false);
 
-If the search directory contains a ``.gitignore`` file, you can reuse those
-rules to exclude files and directories from the results with the
+If the search directory and its subdirectories contain ``.gitignore`` files, you
+can reuse those rules to exclude files and directories from the results with the
 :method:`Symfony\\Component\\Finder\\Finder::ignoreVCSIgnored` method::
 
     // excludes files/directories matching the .gitignore patterns
     $finder->ignoreVCSIgnored(true);
 
-.. versionadded:: 4.3
+The rules of a directory always override the rules of its parent directories.
 
-    The ``ignoreVCSIgnored()`` method was introduced in Symfony 4.3.
+.. note::
+
+    Git looks for ``.gitignore`` files starting from the repository root directory.
+    Symfony's Finder behavior is different and it looks for ``.gitignore`` files
+    starting from the directory used to search files/directories. To be consistent
+    with Git behavior, you should explicitly search from the Git repository root.
 
 File Name
 ~~~~~~~~~
@@ -248,11 +253,6 @@ Multiple paths can be excluded by chaining calls or passing an array::
     // same as above
     $finder->notPath(['first/dir', 'other/dir']);
 
-.. versionadded:: 4.2
-
-    Support for passing arrays to ``notPath()`` was introduced in Symfony
-    4.2
-
 File Size
 ~~~~~~~~~
 
@@ -336,11 +336,18 @@ instance. The file is excluded from the result set if the Closure returns
 Sorting Results
 ---------------
 
-Sort the results by name or by type (directories first, then files)::
+Sort the results by name, extension, size or type (directories first, then files)::
 
     $finder->sortByName();
-
+    $finder->sortByCaseInsensitiveName();
+    $finder->sortByExtension();
+    $finder->sortBySize();
     $finder->sortByType();
+
+.. versionadded:: 6.2
+
+    The ``sortByCaseInsensitiveName()``, ``sortByExtension()`` and ``sortBySize()``
+    methods were introduced in Symfony 6.2.
 
 .. tip::
 
@@ -348,6 +355,11 @@ Sort the results by name or by type (directories first, then files)::
     function (e.g. ``file1.txt``, ``file10.txt``, ``file2.txt``). Pass ``true``
     as its argument to use PHP's `natural sort order`_ algorithm instead (e.g.
     ``file1.txt``, ``file2.txt``, ``file10.txt``).
+    
+    The ``sortByCaseInsensitiveName()`` method uses the case insensitive
+    :phpfunction:`strcasecmp` PHP function. Pass ``true`` as its argument to use
+    PHP's case insensitive `natural sort order`_ algorithm instead (i.e. the
+    :phpfunction:`strnatcasecmp` PHP function)
 
 Sort the files and directories by the last accessed, changed or modified time::
 

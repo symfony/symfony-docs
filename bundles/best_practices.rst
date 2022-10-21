@@ -22,8 +22,9 @@ interoperability standard for PHP namespaces and class names: it starts with a
 vendor segment, followed by zero or more category segments, and it ends with the
 namespace short name, which must end with ``Bundle``.
 
-A namespace becomes a bundle as soon as you add a bundle class to it. The
-bundle class name must follow these rules:
+A namespace becomes a bundle as soon as you add "a bundle class" to it (which is
+a class that extends :class:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle`).
+The bundle class name must follow these rules:
 
 * Use only alphanumeric characters and underscores;
 * Use a StudlyCaps name (i.e. camelCase with an uppercase first letter);
@@ -82,11 +83,6 @@ The following is the recommended directory structure of an AcmeBlogBundle:
     ├── LICENSE
     └── README.md
 
-.. versionadded:: 4.4
-
-    This directory convention was introduced in Symfony 4.4 and can be used only
-    when requiring ``symfony/http-kernel`` 4.4 or superior.
-
 This directory structure requires to configure the bundle path to its root
 directory as follows::
 
@@ -127,8 +123,8 @@ Type                                                 Directory
 Commands                                             ``src/Command/``
 Controllers                                          ``src/Controller/``
 Service Container Extensions                         ``src/DependencyInjection/``
-Doctrine ORM entities (when not using annotations)   ``src/Entity/``
-Doctrine ODM documents (when not using annotations)  ``src/Document/``
+Doctrine ORM entities                                ``src/Entity/``
+Doctrine ODM documents                               ``src/Document/``
 Event Listeners                                      ``src/EventListener/``
 Configuration (routes, services, etc.)               ``config/``
 Web Assets (CSS, JS, images)                         ``public/``
@@ -166,6 +162,15 @@ standard Symfony autoloading instead.
 A bundle should also not embed third-party libraries written in JavaScript,
 CSS or any other language.
 
+Doctrine Entities/Documents
+---------------------------
+
+If the bundle includes Doctrine ORM entities and/or ODM documents, it's
+recommended to define their mapping using XML files stored in
+``Resources/config/doctrine/``. This allows to override that mapping using the
+:doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
+This is not possible when using annotations/attributes to define the mapping.
+
 Tests
 -----
 
@@ -198,15 +203,15 @@ A bundle should at least test:
 * All supported major Symfony versions (e.g. both ``4.x`` and ``5.x`` if
   support is claimed for both).
 
-Thus, a bundle supporting PHP 7.3, 7.4 and 8.0, and Symfony 3.4 and 4.x should
+Thus, a bundle supporting PHP 7.3, 7.4 and 8.0, and Symfony 4.4 and 5.x should
 have at least this test matrix:
 
 ===========  ===============  ===================
 PHP version  Symfony version  Composer flags
 ===========  ===============  ===================
-7.3          ``3.*``          ``--prefer-lowest``
-7.4          ``4.*``
-8.0          ``4.*``
+7.3          ``4.*``          ``--prefer-lowest``
+7.4          ``5.*``
+8.0          ``5.*``
 ===========  ===============  ===================
 
 .. tip::
@@ -228,8 +233,11 @@ with Symfony Flex to install a specific Symfony version:
 
     # this requires Symfony 5.x for all Symfony packages
     export SYMFONY_REQUIRE=5.*
+    # alternatively you can run this command to update composer.json config
+    # composer config extra.symfony.require "5.*"
 
     # install Symfony Flex in the CI environment
+    composer global config --no-plugins allow-plugins.symfony/flex true
     composer global require --no-progress --no-scripts --no-plugins symfony/flex
 
     # install the dependencies (using --prefer-dist and --no-progress is
@@ -421,8 +429,8 @@ The end user can provide values in any configuration file:
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
             <parameters>
                 <parameter key="acme_blog.author.email">fabien@example.com</parameter>
             </parameters>
@@ -432,7 +440,13 @@ The end user can provide values in any configuration file:
     .. code-block:: php
 
         // config/services.php
-        $container->setParameter('acme_blog.author.email', 'fabien@example.com');
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
+                ->set('acme_blog.author.email', 'fabien@example.com')
+            ;
+        };
 
 Retrieve the configuration parameters in your code from the container::
 
@@ -480,7 +494,7 @@ The ``composer.json`` file should include at least the following metadata:
     Consists of the vendor and the short bundle name. If you are releasing the
     bundle on your own instead of on behalf of a company, use your personal name
     (e.g. ``johnsmith/blog-bundle``). Exclude the vendor name from the bundle
-    short name and separate each word with an hyphen. For example: AcmeBlogBundle
+    short name and separate each word with a hyphen. For example: AcmeBlogBundle
     is transformed into ``blog-bundle`` and AcmeSocialConnectBundle is
     transformed into ``social-connect-bundle``.
 

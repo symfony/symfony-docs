@@ -145,7 +145,8 @@ framework does not need to be modified in any way, create a new
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing;
 
-    function is_leap_year($year = null) {
+    function is_leap_year($year = null)
+    {
         if (null === $year) {
             $year = date('Y');
         }
@@ -177,5 +178,5 @@ As always, you can decide to stop here and use the framework as is; it's
 probably all you need to create simple websites like those fancy one-page
 `websites`_ and hopefully a few others.
 
-.. _`callbacks`: https://www.php.net/callback#language.types.callback
+.. _`callbacks`: https://www.php.net/manual/en/language.types.callable.php
 .. _`websites`: https://kottke.org/08/02/single-serving-sites

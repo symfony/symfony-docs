@@ -22,7 +22,7 @@ The SSI instructions are done via HTML comments:
             <!-- ... some content -->
 
             <!-- Embed the content of another page here -->
-            <!--#include virtual="http://..." -->
+            <!--#include virtual="/..." -->
 
             <!-- ... more content -->
         </body>
@@ -33,7 +33,7 @@ Symfony manages only the ``#include virtual`` one.
 
 .. caution::
 
-    Be careful with SSI, your website may be victim of injections.
+    Be careful with SSI, your website may fall victim to injections.
     Please read this `OWASP article`_ first!
 
 When the web server reads an SSI directive, it requests the given URI or gives
@@ -76,36 +76,67 @@ First, to use SSI, be sure to enable it in your application configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'ssi' => ['enabled' => true],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->ssi()
+                ->enabled(true)
+            ;
+        };
 
 Suppose you have a page with private content like a Profile page and you want
 to cache a static GDPR content block. With SSI, you can add some expiration
 on this block and keep the page private::
 
-    // src/Controller/ProfileController.php
-    namespace App\Controller;
-    
-    // ...
-    class ProfileController extends AbstractController
-    {
-        public function index(): Response
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Controller/ProfileController.php
+        namespace App\Controller;
+
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        class ProfileController extends AbstractController
         {
-            // by default, responses are private
-            return $this->render('profile/index.html.twig');
+            public function index(): Response
+            {
+                // by default, responses are private
+                return $this->render('profile/index.html.twig');
+            }
+
+            #[Cache(smaxage: 600)]
+            public function gdpr(): Response
+            {
+                return $this->render('profile/gdpr.html.twig');
+            }
         }
 
-        public function gdpr(): Response
+    .. code-block:: php
+
+        // src/Controller/ProfileController.php
+        namespace App\Controller;
+
+        // ...
+        class ProfileController extends AbstractController
         {
-            $response = $this->render('profile/gdpr.html.twig');
+            public function index(): Response
+            {
+                // by default, responses are private
+                return $this->render('profile/index.html.twig');
+            }
 
-            // sets to public and adds some expiration
-            $response->setSharedMaxAge(600);
+            public function gdpr(): Response
+            {
+                $response = $this->render('profile/gdpr.html.twig');
 
-            return $response;
+                // sets to public and adds some expiration
+                $response->setSharedMaxAge(600);
+
+                return $response;
+            }
         }
-    }
 
 The profile index page has not public caching, but the GDPR block has
 10 minutes of expiration. Let's include this block into the main one:
@@ -117,8 +148,8 @@ The profile index page has not public caching, but the GDPR block has
     {# you can use a controller reference #}
     {{ render_ssi(controller('App\\Controller\\ProfileController::gdpr')) }}
 
-    {# ... or a URL #}
-    {{ render_ssi(url('profile_gdpr')) }}
+    {# ... or a path (in server's SSI configuration is common to use relative paths instead of absolute URLs) #}
+    {{ render_ssi(path('profile_gdpr')) }}
 
 The ``render_ssi`` twig helper will generate something like:
 
@@ -126,7 +157,7 @@ The ``render_ssi`` twig helper will generate something like:
 
     <!--#include virtual="/_fragment?_hash=abcdef1234&_path=_controller=App\Controller\ProfileController::gdpr" -->
 
-``render_ssi`` ensures that SSI directive are generated only if the request
+``render_ssi`` ensures that SSI directive is generated only if the request
 has the header requirement like ``Surrogate-Capability: device="SSI/1.0"``
 (normally given by the web server).
 Otherwise it will embed directly the sub-response.

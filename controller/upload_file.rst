@@ -24,9 +24,7 @@ add a PDF brochure for each product. To do so, add a new property called
     {
         // ...
 
-        /**
-         * @ORM\Column(type="string")
-         */
+        #[ORM\Column(type: 'string')]
         private $brochureFilename;
 
         public function getBrochureFilename()
@@ -129,13 +127,12 @@ Finally, you need to update the code of the controller that handles the form::
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\String\Slugger\SluggerInterface;
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/new", name="app_product_new")
-         */
-        public function new(Request $request)
+        #[Route('/product/new', name: 'app_product_new')]
+        public function new(Request $request, SluggerInterface $slugger)
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
@@ -150,7 +147,7 @@ Finally, you need to update the code of the controller that handles the form::
                 if ($brochureFile) {
                     $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
                     // this is needed to safely include the file name as part of the URL
-                    $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                    $safeFilename = $slugger->slug($originalFilename);
                     $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
 
                     // Move the file to the directory where brochures are stored
@@ -173,8 +170,8 @@ Finally, you need to update the code of the controller that handles the form::
                 return $this->redirectToRoute('app_product_list');
             }
 
-            return $this->render('product/new.html.twig', [
-                'form' => $form->createView(),
+            return $this->renderForm('product/new.html.twig', [
+                'form' => $form,
             ]);
         }
     }
@@ -198,19 +195,13 @@ There are some important things to consider in the code of the above controller:
 #. A well-known security best practice is to never trust the input provided by
    users. This also applies to the files uploaded by your visitors. The ``UploadedFile``
    class provides methods to get the original file extension
-   (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getExtension`),
-   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientSize`)
+   (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalExtension`),
+   the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getSize`)
    and the original file name (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalName`).
    However, they are considered *not safe* because a malicious user could tamper
    that information. That's why it's always better to generate a unique name and
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
    method to let Symfony guess the right extension according to the file MIME type;
-
-.. deprecated:: 4.1
-
-    The :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientSize`
-    method was deprecated in Symfony 4.1 and will be removed in Symfony 5.0.
-    Use ``getSize()`` instead.
 
 You can use the following code to link to the PDF brochure of a product:
 
@@ -244,20 +235,23 @@ logic to a separate service::
 
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
+    use Symfony\Component\String\Slugger\SluggerInterface;
 
     class FileUploader
     {
         private $targetDirectory;
+        private $slugger;
 
-        public function __construct($targetDirectory)
+        public function __construct($targetDirectory, SluggerInterface $slugger)
         {
             $this->targetDirectory = $targetDirectory;
+            $this->slugger = $slugger;
         }
 
         public function upload(UploadedFile $file)
         {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+            $safeFilename = $this->slugger->slug($originalFilename);
             $fileName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
             try {
@@ -319,10 +313,17 @@ Then, define a service for this class:
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\Service\FileUploader;
 
-        $container->autowire(FileUploader::class)
-            ->setArgument('$targetDirectory', '%brochures_directory%');
+        return static function (ContainerConfigurator $container) {
+            $services = $configurator->services();
+
+            $services->set(FileUploader::class)
+                ->arg('$targetDirectory', '%brochures_directory%')
+            ;
+        };
 
 Now you're ready to use this service in the controller::
 

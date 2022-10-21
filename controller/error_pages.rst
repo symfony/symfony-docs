@@ -155,32 +155,37 @@ automatically when installing ``symfony/framework-bundle``):
 
     .. code-block:: yaml
 
-        # config/routes/dev/framework.yaml
-        _errors:
-            resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
-            prefix:   /_error
+        # config/routes/framework.yaml
+        when@dev:
+            _errors:
+                resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
+                prefix:   /_error
 
     .. code-block:: xml
 
-        <!-- config/routes/dev/framework.xml -->
+        <!-- config/routes/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="@FrameworkBundle/Resources/config/routing/errors.xml" prefix="/_error"/>
+            <when env="dev">
+                <import resource="@FrameworkBundle/Resources/config/routing/errors.xml" prefix="/_error"/>
+            </when>
         </routes>
 
     .. code-block:: php
 
-        // config/routes/dev/framework.php
+        // config/routes/framework.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            $routes->import('@FrameworkBundle/Resources/config/routing/errors.xml')
-                ->prefix('/_error')
-            ;
+            if ('dev' === $routes->env()) {
+                $routes->import('@FrameworkBundle/Resources/config/routing/errors.xml')
+                    ->prefix('/_error')
+                ;
+            }
         };
 
 With this route added, you can use URLs like these to preview the *error* page
@@ -215,7 +220,7 @@ contents, create a new Normalizer that supports the ``FlattenException`` input::
 
     class MyCustomProblemNormalizer implements NormalizerInterface
     {
-        public function normalize($exception, string $format = null, array $context = [])
+        public function normalize($exception, string $format = null, array $context = []): array
         {
             return [
                 'content' => 'This is my custom problem normalizer.',
@@ -226,7 +231,7 @@ contents, create a new Normalizer that supports the ``FlattenException`` input::
             ];
         }
 
-        public function supportsNormalization($data, string $format = null)
+        public function supportsNormalization($data, string $format = null, array $context = []): bool
         {
             return $data instanceof FlattenException;
         }
@@ -272,10 +277,12 @@ configuration option to point to it:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'error_controller' => 'App\Controller\ErrorController::show',
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
             // ...
-        ]);
+            $framework->errorController('App\Controller\ErrorController::show');
+        };
 
 The :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`
 class used by the FrameworkBundle as a listener of the ``kernel.exception`` event creates
@@ -316,8 +323,8 @@ error pages.
 
 .. note::
 
-    If your listener calls ``setResponse()`` on the
-    :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`,
+    If your listener calls ``setThrowable()`` on the
+    :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
     event, propagation will be stopped and the response will be sent to
     the client.
 

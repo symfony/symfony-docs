@@ -5,10 +5,6 @@
 HTTP Client
 ===========
 
-.. versionadded:: 4.3
-
-    The HttpClient component was introduced in Symfony 4.3.
-
 Installation
 ------------
 
@@ -127,13 +123,14 @@ You can configure the global options using the ``default_options`` option:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'http_client' => [
-                'default_options' => [
-                    'max_redirects' => 7,
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->httpClient()
+                ->defaultOptions()
+                    ->maxRedirects(7)
+            ;
+        };
 
     .. code-block:: php-standalone
 
@@ -141,12 +138,21 @@ You can configure the global options using the ``default_options`` option:
              'max_redirects' => 7,
         ]);
 
+You can also use the :method:`Symfony\\Contracts\\HttpClient\\HttpClientInterface::withOptions`
+method to retrieve a new instance of the client with new default options::
+
+    $this->client = $client->withOptions([
+        'base_uri' => 'https://...',
+        'headers' => ['header-name' => 'header-value']
+    ]);
+
 Some options are described in this guide:
 
 * `Authentication`_
 * `Query String Parameters`_
 * `Headers`_
 * `Redirects`_
+* `Retry Failed Requests`_
 * `HTTP Proxies`_
 
 Check out the full :ref:`http_client config reference <reference-http-client>`
@@ -186,12 +192,14 @@ The HTTP client also has one configuration option called
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'http_client' => [
-                'max_host_connections' => 10,
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->httpClient()
+                ->maxHostConnections(10)
                 // ...
-            ],
-        ]);
+            ;
+        };
 
     .. code-block:: php-standalone
 
@@ -267,32 +275,26 @@ autoconfigure the HTTP client based on the requested URL:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'http_client' => [
-                'scoped_clients' => [
-                    // only requests matching scope will use these options
-                    'github.client' => [
-                        'scope' => 'https://api\.github\.com',
-                        'headers' => [
-                            'Accept' => 'application/vnd.github.v3+json',
-                            'Authorization' => 'token %env(GITHUB_API_TOKEN)%',
-                        ],
-                        // ...
-                    ],
+        use Symfony\Config\FrameworkConfig;
 
-                    // using base_url, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
-                    // will default to these options
-                    'github.client' => [
-                        'base_uri' => 'https://api.github.com',
-                        'headers' => [
-                            'Accept' => 'application/vnd.github.v3+json',
-                            'Authorization' => 'token %env(GITHUB_API_TOKEN)%',
-                        ],
-                        // ...
-                    ],
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            // only requests matching scope will use these options
+            $framework->httpClient()->scopedClient('github.client')
+                ->scope('https://api\.github\.com')
+                ->header('Accept', 'application/vnd.github.v3+json')
+                ->header('Authorization', 'token %env(GITHUB_API_TOKEN)%')
+                // ...
+            ;
+
+            // using base_url, relative URLs (e.g. request("GET", "/repos/symfony/symfony-docs"))
+            // will default to these options
+            $framework->httpClient()->scopedClient('github.client')
+                ->baseUri('https://api.github.com')
+                ->header('Accept', 'application/vnd.github.v3+json')
+                ->header('Authorization', 'token %env(GITHUB_API_TOKEN)%')
+                // ...
+            ;
+        };
 
     .. code-block:: php-standalone
 
@@ -373,11 +375,6 @@ immediately instead of waiting to receive the response::
 This component also supports :ref:`streaming responses <http-client-streaming-responses>`
 for full asynchronous applications.
 
-.. note::
-
-    HTTP compression and chunked transfer encoding are automatically enabled when
-    both your PHP runtime and the remote server support them.
-
 Authentication
 ~~~~~~~~~~~~~~
 
@@ -435,24 +432,21 @@ each request (which overrides any global authentication):
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'http_client' => [
-                'scoped_clients' => [
-                    'example_api' => [
-                        'base_uri' => 'https://example.com/',
+        use Symfony\Config\FrameworkConfig;
 
-                        // HTTP Basic authentication
-                        'auth_basic' => 'the-username:the-password',
+        return static function (FrameworkConfig $framework) {
+            $framework->httpClient()->scopedClient('example_api')
+                ->baseUri('https://example.com/')
+                // HTTP Basic authentication
+                ->authBasic('the-username:the-password')
 
-                        // HTTP Bearer authentication (also called token authentication)
-                        'auth_bearer' => 'the-bearer-token',
+                // HTTP Bearer authentication (also called token authentication)
+                ->authBearer('the-bearer-token')
 
-                        // Microsoft NTLM authentication
-                        'auth_ntlm' => 'the-username:the-password',
-                    ],
-                ],
-            ],
-        ]);
+                // Microsoft NTLM authentication
+                ->authNtlm('the-username:the-password')
+            ;
+        };
 
     .. code-block:: php-standalone
 
@@ -485,10 +479,6 @@ each request (which overrides any global authentication):
     The NTLM authentication mechanism requires using the cURL transport.
     By using ``HttpClient::createForBaseUri()``, we ensure that the auth credentials
     won't be sent to any other hosts than https://example.com/.
-
-.. versionadded:: 4.4
-
-    The ``auth_ntlm`` option and the ``HttpClient::createForBaseUri()`` method were introduced in Symfony 4.4.
 
 Query String Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -544,15 +534,14 @@ Use the ``headers`` option to define the default headers added to all requests:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'http_client' => [
-                'default_options' => [
-                    'headers' => [
-                        'User-Agent' => 'My Fancy App',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->httpClient()
+                ->defaultOptions()
+                    ->header('User-Agent', 'My Fancy App')
+            ;
+        };
 
     .. code-block:: php-standalone
 
@@ -636,6 +625,31 @@ according to the ``multipart/form-data`` content-type. The
         'body' => $formData->bodyToIterable(),
     ]);
 
+.. tip::
+
+    When using multidimensional arrays the :class:`Symfony\\Component\\Mime\\Part\\Multipart\\FormDataPart`
+    class automatically appends ``[key]`` to the name of the field::
+
+        $formData = new FormDataPart([
+            'array_field' => [
+                'some value',
+                'other value',
+            ],
+        ]);
+
+        $formData->getParts(); // Returns two instances of TextPart
+                               // with the names "array_field[0]" and "array_field[1]"
+
+    This behavior can be bypassed by using the following array structure::
+
+        $formData = new FormDataPart([
+            ['array_field' => 'some value'],
+            ['array_field' => 'other value'],
+        ]);
+
+        $formData->getParts(); // Returns two instances of TextPart both
+                               // with the name "array_field"
+
 By default, HttpClient streams the body contents when uploading them. This might
 not work with all servers, resulting in HTTP status code 411 ("Length Required")
 because there is no ``Content-Length`` header. The solution is to turn the body
@@ -676,6 +690,35 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
         // 0 means to not follow any redirect
         'max_redirects' => 0,
     ]);
+
+Retry Failed Requests
+~~~~~~~~~~~~~~~~~~~~~
+
+Sometimes, requests fail because of network issues or temporary server errors.
+Symfony's HttpClient allows to retry failed requests automatically using the
+:ref:`retry_failed option <reference-http-client-retry-failed>`.
+
+By default, failed requests are retried up to 3 times, with an exponential delay
+between retries (first retry = 1 second; third retry: 4 seconds) and only for
+the following HTTP status codes: ``423``, ``425``, ``429``, ``502`` and ``503``
+when using any HTTP method and ``500``, ``504``, ``507`` and ``510`` when using
+an HTTP `idempotent method`_.
+
+Check out the full list of configurable :ref:`retry_failed options <reference-http-client-retry-failed>`
+to learn how to tweak each of them to fit your application needs.
+
+When using the HttpClient outside of a Symfony application, use the
+:class:`Symfony\\Component\\HttpClient\\RetryableHttpClient` class to wrap your
+original HTTP client::
+
+    use Symfony\Component\HttpClient\RetryableHttpClient;
+
+    $client = new RetryableHttpClient(HttpClient::create());
+
+The ``RetryableHttpClient`` uses a
+:class:`Symfony\\Component\\HttpClient\\Retry\\RetryStrategyInterface` to
+decide if the request should be retried, and to define the waiting time between
+each retry.
 
 HTTP Proxies
 ~~~~~~~~~~~~
@@ -724,6 +767,47 @@ Alternatively, you can also disable ``verify_host`` and ``verify_peer`` (see
 :ref:`http_client config reference <reference-http-client>`), but this is not
 recommended in production.
 
+SSRF (Server-side request forgery) Handling
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`SSRF`_ allows an attacker to induce the backend application to make HTTP
+requests to an arbitrary domain. These attacks can also target the internal
+hosts and IPs of the attacked server.
+
+If you use an ``HttpClient`` together with user-provided URIs, it is probably a
+good idea to decorate it with a ``NoPrivateNetworkHttpClient``. This will
+ensure local networks are made inaccessible to the HTTP client::
+
+    use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\HttpClient\NoPrivateNetworkHttpClient;
+
+    $client = new NoPrivateNetworkHttpClient(HttpClient::create());
+    // nothing changes when requesting public networks
+    $client->request('GET', 'https://example.com/');
+
+    // however, all requests to private networks are now blocked by default
+    $client->request('GET', 'http://localhost/');
+
+    // the second optional argument defines the networks to block
+    // in this example, requests from 104.26.14.0 to 104.26.15.255 will result in an exception
+    // but all the other requests, including other internal networks, will be allowed
+    $client = new NoPrivateNetworkHttpClient(HttpClient::create(), ['104.26.14.0/23']);
+
+Profiling
+~~~~~~~~~
+
+When you are using the :class:`Symfony\\Component\\HttpClient\\TraceableHttpClient`,
+responses content will be kept in memory and may exhaust it.
+
+You can disable this behavior by setting the ``extra.trace_content`` option to ``false``
+in your requests::
+
+    $response = $client->request('GET', 'https://...', [
+        'extra' => ['trace_content' => false],
+    ]);
+
+This setting won’t affect other clients.
+
 Performance
 -----------
 
@@ -758,12 +842,59 @@ When using this component in a full-stack Symfony application, this behavior is
 not configurable and cURL will be used automatically if the cURL PHP extension
 is installed and enabled. Otherwise, the native PHP streams will be used.
 
+Configuring CurlHttpClient Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+PHP allows to configure lots of `cURL options`_ via the :phpfunction:`curl_setopt`
+function. In order to make the component more portable when not using cURL, the
+``CurlHttpClient`` only uses some of those options (and they are ignored in the
+rest of clients).
+
+Add an ``extra.curl`` option in your configuration to pass those extra options::
+
+    use Symfony\Component\HttpClient\CurlHttpClient;
+
+    $client = new CurlHttpClient();
+
+    $client->request('POST', 'https://...', [
+        // ...
+        'extra' => [
+            'curl' => [
+                CURLOPT_IPRESOLVE => CURL_IPRESOLVE_V6,
+            ],
+        ],
+    ]);
+
+.. note::
+
+    Some cURL options are impossible to override (e.g. because of thread safety)
+    and you'll get an exception when trying to override them.
+
+HTTP Compression
+~~~~~~~~~~~~~~~~
+
+The HTTP header ``Accept-Encoding: gzip`` is added automatically if:
+
+* When using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
+* When using the native HTTP client: `Zlib PHP extension`_ is installed
+
+If the server does respond with a gzipped response, it's decoded transparently.
+To disable HTTP compression, send an ``Accept-Encoding: identity`` HTTP header.
+
+Chunked transfer encoding is enabled automatically if both your PHP runtime and
+the remote server supports it.
+
 HTTP/2 Support
 ~~~~~~~~~~~~~~
 
-When requesting an ``https`` URL, HTTP/2 is enabled by default if libcurl >= 7.36
-is used. To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via
-the ``http_version`` option:
+When requesting an ``https`` URL, HTTP/2 is enabled by default if one of the
+following tools is installed:
+
+* The `libcurl`_ package version 7.36 or higher;
+* The `amphp/http-client`_ Packagist package version 4.2 or higher.
+
+To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
+``http_version`` option:
 
 .. configuration-block::
 
@@ -796,13 +927,14 @@ the ``http_version`` option:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'http_client' => [
-                'default_options' => [
-                    'http_version' => '2.0',
-                ],
-            ],
-        ]);
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->httpClient()
+                ->defaultOptions()
+                    ->httpVersion('2.0')
+            ;
+        };
 
     .. code-block:: php-standalone
 
@@ -851,10 +983,6 @@ following methods::
     // returns detailed logs about the requests and responses of the HTTP transaction
     $httpLogs = $response->getInfo('debug');
 
-.. versionadded:: 4.4
-
-    The ``toStream()`` method was introduced in Symfony 4.4.
-
 .. note::
 
     ``$response->getInfo()`` is non-blocking: it returns *live* information
@@ -890,7 +1018,7 @@ response sequentially instead of waiting for the entire response::
     ``php://temp`` stream. You can control this behavior by using the ``buffer``
     option: set it to ``true``/``false`` to enable/disable buffering, or to a
     closure that should return the same based on the response headers it receives
-    as argument.
+    as an argument.
 
 Canceling Responses
 ~~~~~~~~~~~~~~~~~~~
@@ -917,10 +1045,6 @@ and will abort the request.
 In case the response was canceled using ``$response->cancel()``,
 ``$response->getInfo('canceled')`` will return ``true``.
 
-.. versionadded:: 4.4
-
-    The possibility to get information about canceled or not was introduced in Symfony 4.4.
-
 Handling Exceptions
 ~~~~~~~~~~~~~~~~~~~
 
@@ -937,20 +1061,19 @@ There are three types of exceptions, all of which implement the
   are thrown when a content-type cannot be decoded to the expected representation.
 
 When the HTTP status code of the response is in the 300-599 range (i.e. 3xx,
-4xx or 5xx) your code is expected to handle it. If you don't do that, the
-``getHeaders()``, ``getContent()`` and ``toArray()`` methods throw an appropriate exception, which will
-implement the :class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`::
+4xx or 5xx), the ``getHeaders()``, ``getContent()`` and ``toArray()`` methods
+throw an appropriate exception, all of which implement the
+:class:`Symfony\\Contracts\\HttpClient\\Exception\\HttpExceptionInterface`.
 
-    // the response of this request will be a 403 HTTP error
-    $response = $client->request('GET', 'https://httpbin.org/status/403');
+To opt-out from this exception and deal with 300-599 status codes on your own,
+pass ``false`` as the optional argument to every call of those methods,
+e.g. ``$response->getHeaders(false);``.
 
-    // this code results in a Symfony\Component\HttpClient\Exception\ClientException
-    // because it doesn't check the status code of the response
-    $content = $response->getContent();
+If you do not call any of these 3 methods at all, the exception will still be thrown
+when the ``$response`` object is destructed.
 
-    // pass FALSE as the optional argument to not throw an exception and return
-    // instead the original response content (even if it's an error message)
-    $content = $response->getContent(false);
+Calling ``$response->getStatusCode()`` is enough to disable this behavior
+(but then don't miss checking the status code yourself).
 
 While responses are lazy, their destructor will always wait for headers to come
 back. This means that the following request *will* complete; and if e.g. a 404
@@ -978,7 +1101,7 @@ This behavior provided at destruction-time is part of the fail-safe design of th
 component. No errors will be unnoticed: if you don't write the code to handle
 errors, exceptions will notify you when needed. On the other hand, if you write
 the error-handling code (by calling ``$response->getStatusCode()``), you will
-opt-out from these fallback mechanisms as the destructor won't have anything 
+opt-out from these fallback mechanisms as the destructor won't have anything
 remaining to do.
 
 Concurrent Requests
@@ -1065,7 +1188,7 @@ method will yield a special chunk whose ``isTimeout()`` will return ``true``::
 
     foreach ($client->stream($responses, 1.5) as $response => $chunk) {
         if ($chunk->isTimeout()) {
-            // $response staled for more than 1.5 seconds
+            // $response stale for more than 1.5 seconds
         }
     }
 
@@ -1159,6 +1282,54 @@ installed in your application::
     $response = $client->request('GET', 'https://example.com/cacheable-resource');
 
 ``CachingHttpClient`` accepts a third argument to set the options of the ``HttpCache``.
+
+Consuming Server-Sent Events
+----------------------------
+
+`Server-sent events`_ is an Internet standard used to push data to web pages.
+Its JavaScript API is built around an `EventSource`_ object, which listens to
+the events sent from some URL. The events are a stream of data (served with the
+``text/event-stream`` MIME type) with the following format:
+
+.. code-block:: text
+
+    data: This is the first message.
+
+    data: This is the second message, it
+    data: has two lines.
+
+    data: This is the third message.
+
+Symfony's HTTP client provides an EventSource implementation to consume these
+server-sent events. Use the :class:`Symfony\\Component\\HttpClient\\EventSourceHttpClient`
+to wrap your HTTP client, open a connection to a server that responds with a
+``text/event-stream`` content type and consume the stream as follows::
+
+    use Symfony\Component\HttpClient\Chunk\ServerSentEvent;
+    use Symfony\Component\HttpClient\EventSourceHttpClient;
+
+    // the second optional argument is the reconnection time in seconds (default = 10)
+    $client = new EventSourceHttpClient($client, 10);
+    $source = $client->connect('https://localhost:8080/events');
+    while ($source) {
+        foreach ($client->stream($source, 2) as $r => $chunk) {
+            if ($chunk->isTimeout()) {
+                // ...
+                continue;
+            }
+
+            if ($chunk->isLast()) {
+                // ...
+
+                return;
+            }
+
+            // this is a special ServerSentEvent chunk holding the pushed message
+            if ($chunk instanceof ServerSentEvent) {
+                // do something with the server event ...
+            }
+        }
+    }
 
 Interoperability
 ----------------
@@ -1264,16 +1435,8 @@ Now you can make HTTP requests with the PSR-18 client as follows:
 
         $content = json_decode($response->getBody()->getContents(), true);
 
-.. versionadded:: 4.4
-
-    The PSR-17 factory methods of ``Psr18Client`` were introduced in Symfony 4.4.
-
 HTTPlug
 ~~~~~~~
-
-.. versionadded:: 4.4
-
-    Support for HTTPlug was introduced in Symfony 4.4.
 
 The `HTTPlug`_ v1 specification was published before PSR-18 and is superseded by
 it. As such, you should not use it in newly written code. The component is still
@@ -1363,10 +1526,6 @@ Then you're ready to go::
 Native PHP Streams
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.4
-
-    Support for native PHP streams was introduced in Symfony 4.4.
-
 Responses implementing :class:`Symfony\\Contracts\\HttpClient\\ResponseInterface`
 can be cast to native PHP streams with
 :method:`Symfony\\Component\\HttpClient\\Response\\StreamWrapper::createResource`.
@@ -1388,6 +1547,106 @@ This allows using them where native PHP streams are needed::
 
     // later on if you need to, you can access the response from the stream
     $response = stream_get_meta_data($streamResource)['wrapper_data']->getResponse();
+
+Extensibility
+-------------
+
+If you want to extend the behavior of a base HTTP client, you can use
+:doc:`service decoration </service_container/service_decoration>`::
+
+    class MyExtendedHttpClient implements HttpClientInterface
+    {
+        private $decoratedClient;
+
+        public function __construct(HttpClientInterface $decoratedClient = null)
+        {
+            $this->decoratedClient = $decoratedClient ?? HttpClient::create();
+        }
+
+        public function request(string $method, string $url, array $options = []): ResponseInterface
+        {
+            // process and/or change the $method, $url and/or $options as needed
+            $response = $this->decoratedClient->request($method, $url, $options);
+
+            // if you call here any method on $response, the HTTP request
+            // won't be async; see below for a better way
+
+            return $response;
+        }
+
+        public function stream($responses, float $timeout = null): ResponseStreamInterface
+        {
+            return $this->decoratedClient->stream($responses, $timeout);
+        }
+    }
+
+A decorator like this one is useful in cases where processing the requests'
+arguments is enough. By decorating the ``on_progress`` option, you can
+even implement basic monitoring of the response. However, since calling
+responses' methods forces synchronous operations, doing so inside ``request()``
+will break async.
+
+The solution is to also decorate the response object itself.
+:class:`Symfony\\Component\\HttpClient\\TraceableHttpClient` and
+:class:`Symfony\\Component\\HttpClient\\Response\\TraceableResponse` are good
+examples as a starting point.
+
+In order to help writing more advanced response processors, the component provides
+an :class:`Symfony\\Component\\HttpClient\\AsyncDecoratorTrait`. This trait allows
+processing the stream of chunks as they come back from the network::
+
+    class MyExtendedHttpClient implements HttpClientInterface
+    {
+        use AsyncDecoratorTrait;
+
+        public function request(string $method, string $url, array $options = []): ResponseInterface
+        {
+            // process and/or change the $method, $url and/or $options as needed
+
+            $passthru = function (ChunkInterface $chunk, AsyncContext $context) {
+                // do what you want with chunks, e.g. split them
+                // in smaller chunks, group them, skip some, etc.
+
+                yield $chunk;
+            };
+
+            return new AsyncResponse($this->client, $method, $url, $options, $passthru);
+        }
+    }
+
+Because the trait already implements a constructor and the ``stream()`` method,
+you don't need to add them. The ``request()`` method should still be defined;
+it shall return an
+:class:`Symfony\\Component\\HttpClient\\Response\\AsyncResponse`.
+
+The custom processing of chunks should happen in ``$passthru``: this generator
+is where you need to write your logic. It will be called for each chunk yielded
+by the underlying client. A ``$passthru`` that does nothing would just ``yield
+$chunk;``. You could also yield a modified chunk, split the chunk into many
+ones by yielding several times, or even skip a chunk altogether by issuing a
+``return;`` instead of yielding.
+
+In order to control the stream, the chunk passthru receives an
+:class:`Symfony\\Component\\HttpClient\\Response\\AsyncContext` as second
+argument. This context object has methods to read the current state of the
+response. It also allows altering the response stream with methods to create
+new chunks of content, pause the stream, cancel the stream, change the info of
+the response, replace the current request by another one or change the chunk
+passthru itself.
+
+Checking the test cases implemented in
+:class:`Symfony\\Component\\HttpClient\\Tests\\AsyncDecoratorTraitTest`
+might be a good start to get various working examples for a better understanding.
+Here are the use cases that it simulates:
+
+* retry a failed request;
+* send a preflight request, e.g. for authentication needs;
+* issue subrequests and include their content in the main response's body.
+
+The logic in :class:`Symfony\\Component\\HttpClient\\Response\\AsyncResponse`
+has many safety checks that will throw a ``LogicException`` if the chunk
+passthru doesn't behave correctly; e.g. if a chunk is yielded after an ``isLast()``
+one, or if a content chunk is yielded before an ``isFirst()`` one, etc.
 
 Testing
 -------
@@ -1440,6 +1699,19 @@ responses dynamically when it's called::
     $client = new MockHttpClient($callback);
     $response = $client->request('...'); // calls $callback to get the response
 
+.. tip::
+
+    Instead of using the first argument, you can also set the (list of)
+    responses or callbacks using the ``setResponseFactory()`` method::
+
+        $responses = [
+            new MockResponse($body1, $info1),
+            new MockResponse($body2, $info2),
+        ];
+
+        $client = new MockHttpClient();
+        $client->setResponseFactory($responses);
+
 If you need to test responses with HTTP status codes different than 200,
 define the ``http_code`` option::
 
@@ -1467,6 +1739,80 @@ However, using ``MockResponse`` allows simulating chunked responses and timeouts
     };
 
     $mockResponse = new MockResponse($body());
+
+Finally, you can also create an invokable or iterable class that generates the
+responses and use it as a callback in functional tests::
+
+    namespace App\Tests;
+
+    use Symfony\Component\HttpClient\Response\MockResponse;
+    use Symfony\Contracts\HttpClient\ResponseInterface;
+
+    class MockClientCallback
+    {
+        public function __invoke(string $method, string $url, array $options = []): ResponseInterface
+        {
+            // load a fixture file or generate data
+            // ...
+            return new MockResponse($data);
+        }
+    }
+
+Then configure Symfony to use your callback:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services_test.yaml
+        services:
+            # ...
+            App\Tests\MockClientCallback: ~
+
+        # config/packages/test/framework.yaml
+        framework:
+            http_client:
+                mock_response_factory: App\Tests\MockClientCallback
+
+    .. code-block:: xml
+
+        <!-- config/services_test.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema-instance"
+            xsd:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Tests\MockClientCallback"/>
+            </services>
+        </container>
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client mock-response-factory="App\Tests\MockClientCallback">
+                    <!-- ... -->
+                </framework-http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->httpClient()
+                ->mockResponseFactory(MockClientCallback::class)
+            ;
+        };
 
 Testing Request Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -1582,7 +1928,15 @@ test it in a real application::
     }
 
 .. _`cURL PHP extension`: https://www.php.net/curl
+.. _`Zlib PHP extension`: https://www.php.net/zlib
 .. _`PSR-17`: https://www.php-fig.org/psr/psr-17/
 .. _`PSR-18`: https://www.php-fig.org/psr/psr-18/
 .. _`HTTPlug`: https://github.com/php-http/httplug/#readme
 .. _`Symfony Contracts`: https://github.com/symfony/contracts
+.. _`libcurl`: https://curl.haxx.se/libcurl/
+.. _`amphp/http-client`: https://packagist.org/packages/amphp/http-client
+.. _`cURL options`: https://www.php.net/manual/en/function.curl-setopt.php
+.. _`Server-sent events`: https://html.spec.whatwg.org/multipage/server-sent-events.html
+.. _`EventSource`: https://www.w3.org/TR/eventsource/#eventsource
+.. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods
+.. _`SSRF`: https://portswigger.net/web-security/ssrf

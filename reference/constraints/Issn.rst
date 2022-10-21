@@ -6,11 +6,6 @@ Validates that a value is a valid
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `caseSensitive`_
-            - `groups`_
-            - `message`_
-            - `payload`_
-            - `requireHyphen`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Issn`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IssnValidator`
 ==========  ===================================================================
@@ -20,7 +15,7 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Journal.php
         namespace App\Entity;
@@ -29,9 +24,7 @@ Basic Usage
 
         class Journal
         {
-            /**
-             * @Assert\Issn
-             */
+            #[Assert\Issn]
             protected $issn;
         }
 
@@ -102,6 +95,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

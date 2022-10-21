@@ -77,14 +77,8 @@ middleware stack. The component comes with a set of middleware that you can use.
 When using the message bus with Symfony's FrameworkBundle, the following middleware
 are configured for you:
 
-#. :class:`Symfony\\Component\\Messenger\\Middleware\\LoggingMiddleware` (logs the processing of your messages)
-#. :class:`Symfony\\Component\\Messenger\\Middleware\\SendMessageMiddleware` (enables asynchronous processing)
+#. :class:`Symfony\\Component\\Messenger\\Middleware\\SendMessageMiddleware` (enables asynchronous processing, logs the processing of your messages if you provide a logger)
 #. :class:`Symfony\\Component\\Messenger\\Middleware\\HandleMessageMiddleware` (calls the registered handler(s))
-
-.. deprecated:: 4.3
-
-    The ``LoggingMiddleware`` is deprecated since Symfony 4.3 and will be
-    removed in 5.0. Pass a logger to ``SendMessageMiddleware`` instead.
 
 Example::
 
@@ -168,6 +162,8 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
    to configure the serialization groups used by the transport.
 #. :class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp`,
    to configure the validation groups used when the validation middleware is enabled.
+#. :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`,
+   an internal stamp when a message fails due to an exception in the handler.
 
 Instead of dealing directly with the messages in the middleware you receive the envelope.
 Hence you can inspect the envelope content and its stamps, or add any::
@@ -332,12 +328,6 @@ do is to write your own CSV receiver::
         }
     }
 
-.. versionadded:: 4.3
-
-    In Symfony 4.3, the ``ReceiverInterface`` has changed its methods as shown
-    in the example above. You may need to update your code if you used this
-    interface in previous Symfony versions.
-
 Receiver and Sender on the same Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -357,4 +347,4 @@ Learn more
     /messenger/*
 
 .. _`blog posts about command buses`: https://matthiasnoback.nl/tags/command%20bus/
-.. _`SimpleBus project`: http://docs.simplebus.io/en/latest/
+.. _`SimpleBus project`: https://docs.simplebus.io/en/latest/

@@ -6,7 +6,6 @@ The Intl Component
 ==================
 
     This component provides access to the localization data of the `ICU library`_.
-    It also provides a PHP replacement layer for the C `intl extension`_.
 
 .. caution::
 
@@ -30,30 +29,6 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
-If you install the component via Composer, the following classes and functions
-of the intl extension will be automatically provided if the intl extension is
-not loaded:
-
-* :phpclass:`Collator`
-* :phpclass:`IntlDateFormatter`
-* :phpclass:`Locale`
-* :phpclass:`NumberFormatter`
-* :phpfunction:`intl_error_name`
-* :phpfunction:`intl_is_failure`
-* :phpfunction:`intl_get_error_code`
-* :phpfunction:`intl_get_error_message`
-
-When the intl extension is not available, the following classes are used to
-replace the intl classes:
-
-* :class:`Symfony\\Component\\Intl\\Collator\\Collator`
-* :class:`Symfony\\Component\\Intl\\DateFormatter\\IntlDateFormatter`
-* :class:`Symfony\\Component\\Intl\\Locale\\Locale`
-* :class:`Symfony\\Component\\Intl\\NumberFormatter\\NumberFormatter`
-* :class:`Symfony\\Component\\Intl\\Globals\\IntlGlobals`
-
-Composer automatically exposes these classes in the global namespace.
-
 Accessing ICU Data
 ------------------
 
@@ -64,11 +39,12 @@ This component provides the following ICU data:
 * `Locales`_
 * `Currencies`_
 * `Timezones`_
+* `Emoji Transliteration`_
 
 Language and Script Names
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``Languages`` class provides access to the name of all languages
+The :class:`Symfony\\Component\\Intl\\Languages` class provides access to the name of all languages
 according to the `ISO 639-1 alpha-2`_ list and the `ISO 639-2 alpha-3 (2T)`_ list::
 
     use Symfony\Component\Intl\Languages;
@@ -120,15 +96,7 @@ You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 
     $alpha2Code = Languages::getAlpha2Code($alpha3Code);
 
-.. versionadded:: 4.3
-
-    The ``Languages`` class was introduced in Symfony 4.3.
-
-.. versionadded:: 4.4
-
-    The full support for alpha3 codes was introduced in Symfony 4.4.
-
-The ``Scripts`` class provides access to the optional four-letter script code
+The :class:`Symfony\\Component\\Intl\\Scripts` class provides access to the optional four-letter script code
 that can follow the language code according to the `Unicode ISO 15924 Registry`_
 (e.g. ``HANS`` in ``zh_HANS`` for simplified Chinese and ``HANT`` in ``zh_HANT``
 for traditional Chinese)::
@@ -159,16 +127,12 @@ to catching the exception, you can also check if a given script code is valid::
 
     $isValidScript = Scripts::exists($scriptCode);
 
-.. versionadded:: 4.3
-
-    The ``Scripts`` class was introduced in Symfony 4.3.
-
 Country Names
 ~~~~~~~~~~~~~
 
-The ``Countries`` class provides access to the name of all countries according
-to the `ISO 3166-1 alpha-2`_ list and the `ISO 3166-1 alpha-3`_ list
-of officially recognized countries and territories::
+The :class:`Symfony\\Component\\Intl\\Countries` class provides access to the
+name of all countries according to the `ISO 3166-1 alpha-2`_ list and the
+`ISO 3166-1 alpha-3`_ list of officially recognized countries and territories::
 
     use Symfony\Component\Intl\Countries;
 
@@ -219,22 +183,14 @@ You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 
     $alpha2Code = Countries::getAlpha2Code($alpha3Code);
 
-.. versionadded:: 4.3
-
-    The ``Countries`` class was introduced in Symfony 4.3.
-
-.. versionadded:: 4.4
-
-    The support for alpha3 codes was introduced in Symfony 4.4.
-
 Locales
 ~~~~~~~
 
 A locale is the combination of a language, a region and some parameters that
 define the interface preferences of the user. For example, "Chinese" is the
 language and ``zh_Hans_MO`` is the locale for "Chinese" (language) + "Simplified"
-(script) + "Macau SAR China" (region). The ``Locales`` class provides access to
-the name of all locales::
+(script) + "Macau SAR China" (region). The :class:`Symfony\\Component\\Intl\\Locales`
+class provides access to the name of all locales::
 
     use Symfony\Component\Intl\Locales;
 
@@ -262,15 +218,11 @@ to catching the exception, you can also check if a given locale code is valid::
 
     $isValidLocale = Locales::exists($localeCode);
 
-.. versionadded:: 4.3
-
-    The ``Locales`` class was introduced in Symfony 4.3.
-
 Currencies
 ~~~~~~~~~~
 
-The ``Currencies`` class provides access to the name of all currencies as well
-as some of their information (symbol, fraction digits, etc.)::
+The :class:`Symfony\\Component\\Intl\\Currencies` class provides access to the name
+of all currencies as well as some of their information (symbol, fraction digits, etc.)::
 
     use Symfony\Component\Intl\Currencies;
 
@@ -286,15 +238,37 @@ as some of their information (symbol, fraction digits, etc.)::
     $symbol = Currencies::getSymbol('INR');
     // => '₹'
 
-    $fractionDigits = Currencies::getFractionDigits('INR');
-    // => 2
+The fraction digits methods return the number of decimal digits to display when
+formatting numbers with this currency. Depending on the currency, this value
+can change if the number is used in cash transactions or in other scenarios
+(e.g. accounting)::
 
-    $roundingIncrement = Currencies::getRoundingIncrement('INR');
-    // => 0
+    // Indian rupee defines the same value for both
+    $fractionDigits = Currencies::getFractionDigits('INR');         // returns: 2
+    $cashFractionDigits = Currencies::getCashFractionDigits('INR'); // returns: 2
 
-All methods (except for ``getFractionDigits()`` and ``getRoundingIncrement()``)
-accept the translation locale as the last, optional parameter, which defaults to
-the current default locale::
+    // Swedish krona defines different values
+    $fractionDigits = Currencies::getFractionDigits('SEK');         // returns: 2
+    $cashFractionDigits = Currencies::getCashFractionDigits('SEK'); // returns: 0
+
+Some currencies require to round numbers to the nearest increment of some value
+(e.g. 5 cents). This increment might be different if numbers are formatted for
+cash transactions or other scenarios (e.g. accounting)::
+
+    // Indian rupee defines the same value for both
+    $roundingIncrement = Currencies::getRoundingIncrement('INR');         // returns: 0
+    $cashRoundingIncrement = Currencies::getCashRoundingIncrement('INR'); // returns: 0
+
+    // Canadian dollar defines different values because they have eliminated
+    // the smaller coins (1-cent and 2-cent) and prices in cash must be rounded to
+    // 5 cents (e.g. if price is 7.42 you pay 7.40; if price is 7.48 you pay 7.50)
+    $roundingIncrement = Currencies::getRoundingIncrement('CAD');         // returns: 0
+    $cashRoundingIncrement = Currencies::getCashRoundingIncrement('CAD'); // returns: 5
+
+All methods (except for ``getFractionDigits()``, ``getCashFractionDigits()``,
+``getRoundingIncrement()`` and ``getCashRoundingIncrement()``) accept the
+translation locale as the last, optional parameter, which defaults to the
+current default locale::
 
     $currencies = Currencies::getNames('de');
     // => ['AFN' => 'Afghanischer Afghani', 'EGP' => 'Ägyptisches Pfund', ...]
@@ -308,17 +282,14 @@ to catching the exception, you can also check if a given currency code is valid:
 
     $isValidCurrency = Currencies::exists($currencyCode);
 
-.. versionadded:: 4.3
-
-    The ``Currencies`` class was introduced in Symfony 4.3.
-
 .. _component-intl-timezones:
 
 Timezones
 ~~~~~~~~~
 
-The ``Timezones`` class provides several utilities related to timezones. First,
-you can get the name and values of all timezones in all languages::
+The :class:`Symfony\\Component\\Intl\\Timezones` class provides several utilities
+related to timezones. First, you can get the name and values of all timezones in
+all languages::
 
     use Symfony\Component\Intl\Timezones;
 
@@ -390,9 +361,50 @@ to catching the exception, you can also check if a given timezone ID is valid::
 
     $isValidTimezone = Timezones::exists($timezoneId);
 
-.. versionadded:: 4.3
+.. _component-intl-emoji-transliteration:
 
-    The ``Timezones`` class was introduced in Symfony 4.3.
+Emoji Transliteration
+~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.2
+
+    The Emoji transliteration feature was introduced in Symfony 6.2.
+
+The ``EmojiTransliterator`` class provides a utility to translate emojis into
+their textual representation in all languages based on the `Unicode CLDR dataset`_::
+
+    use Symfony\Component\Intl\Transliterator\EmojiTransliterator;
+
+    // describe emojis in English
+    $transliterator = EmojiTransliterator::create('en');
+    $transliterator->transliterate('Menus with 🍕 or 🍝');
+    // => 'Menus with pizza or spaghetti'
+
+    // describe emojis in Ukrainian
+    $transliterator = EmojiTransliterator::create('uk');
+    $transliterator->transliterate('Menus with 🍕 or 🍝');
+    // => 'Menus with піца or спагеті'
+
+The ``EmojiTransliterator`` class also provides two extra catalogues: ``github``
+and ``slack`` that converts any emojis to the corresponding short code in those
+platforms::
+
+    use Symfony\Component\Intl\Transliterator\EmojiTransliterator;
+
+    // describe emojis in Slack short code
+    $transliterator = EmojiTransliterator::create('slack');
+    $transliterator->transliterate('Menus with 🥗 or 🧆');
+    // => 'Menus with :green_salad: or :falafel:'
+
+    // describe emojis in Github short code
+    $transliterator = EmojiTransliterator::create('github');
+    $transliterator->transliterate('Menus with 🥗 or 🧆');
+    // => 'Menus with :green_salad: or :falafel:'
+
+.. tip::
+
+    Combine this emoji transliterator with the :ref:`Symfony String slugger <string-slugger-emoji>`
+    to improve the slugs of contents that include emojis (e.g. for URLs).
 
 Learn more
 ----------
@@ -407,7 +419,6 @@ Learn more
     /reference/forms/types/locale
     /reference/forms/types/timezone
 
-.. _intl extension: https://www.php.net/manual/en/book.intl.php
 .. _install the intl extension: https://www.php.net/manual/en/intl.setup.php
 .. _ICU library: http://site.icu-project.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
@@ -417,3 +428,4 @@ Learn more
 .. _`daylight saving time (DST)`: https://en.wikipedia.org/wiki/Daylight_saving_time
 .. _`ISO 639-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_639-1
 .. _`ISO 639-2 alpha-3 (2T)`: https://en.wikipedia.org/wiki/ISO_639-2
+.. _`Unicode CLDR dataset`: https://github.com/unicode-org/cldr

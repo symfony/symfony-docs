@@ -54,7 +54,7 @@ The database connection information is stored as an environment variable called
 
     # to use postgresql:
     # DATABASE_URL="postgresql://db_user:db_password@127.0.0.1:5432/db_name?serverVersion=11&charset=utf8"
-    
+
     # to use oracle:
     # DATABASE_URL="oci8://db_user:db_password@127.0.0.1:1521/db_name"
 
@@ -127,12 +127,7 @@ need. The command will ask you some questions - answer them like done below:
     >
     (press enter again to finish)
 
-.. versionadded:: 1.3
-
-    The interactive behavior of the ``make:entity`` command was introduced
-    in MakerBundle 1.3.
-
-Woh! You now have a new ``src/Entity/Product.php`` file::
+Whoa! You now have a new ``src/Entity/Product.php`` file::
 
     // src/Entity/Product.php
     namespace App\Entity;
@@ -140,27 +135,19 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
     use App\Repository\ProductRepository;
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @ORM\Entity(repositoryClass=ProductRepository::class)
-     */
+     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
-        /**
-         * @ORM\Id()
-         * @ORM\GeneratedValue()
-         * @ORM\Column(type="integer")
-         */
-        private $id;
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column]
+        private int $id;
 
-        /**
-         * @ORM\Column(type="string", length=255)
-         */
-        private $name;
+        #[ORM\Column(length: 255)]
+        private string $name;
 
-        /**
-         * @ORM\Column(type="integer")
-         */
-        private $price;
+        #[ORM\Column]
+        private int $price;
 
         public function getId(): ?int
         {
@@ -169,6 +156,10 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
 
         // ... getter and setter methods
     }
+
+.. note::
+
+    Starting in v1.44.0 - MakerBundle only supports entities using PHP attributes.
 
 .. note::
 
@@ -194,8 +185,8 @@ Woh! You now have a new ``src/Entity/Product.php`` file::
 
 This class is called an "entity". And soon, you'll be able to save and query Product
 objects to a ``product`` table in your database. Each property in the ``Product``
-entity can be mapped to a column in that table. This is usually done with annotations:
-the ``@ORM\...`` comments that you see above each property:
+entity can be mapped to a column in that table. This is usually done with attributes:
+the ``#[ORM\Column(...)]`` comments that you see above each property:
 
 .. image:: /_images/doctrine/mapping_single_entity.png
    :align: center
@@ -214,8 +205,8 @@ If you want to use XML instead of annotations, add ``type: xml`` and
     Be careful not to use reserved SQL keywords as your table or column names
     (e.g. ``GROUP`` or ``USER``). See Doctrine's `Reserved SQL keywords documentation`_
     for details on how to escape these. Or, change the table name with
-    ``@ORM\Table(name="groups")`` above the class or configure the column name with
-    the ``name="group_name"`` option.
+    ``#[ORM\Table(name: 'groups')]`` above the class or configure the column name with
+    the ``name: 'group_name'`` option.
 
 .. _doctrine-creating-the-database-tables-schema:
 
@@ -233,9 +224,11 @@ already installed:
 
 If everything worked, you should see something like this:
 
+.. code-block:: text
+
     SUCCESS!
 
-    Next: Review the new migration "src/Migrations/Version20180207231217.php"
+    Next: Review the new migration "migrations/Version20211116204726.php"
     Then: Run the migration with php bin/console doctrine:migrations:migrate
 
 If you open this file, it contains the SQL needed to update your database! To run
@@ -290,9 +283,7 @@ methods:
       {
           // ...
 
-    +     /**
-    +      * @ORM\Column(type="text")
-    +      */
+    +     #[ORM\Column(type: 'text')]
     +     private $description;
 
           // getDescription() & setDescription() were also added
@@ -359,19 +350,16 @@ and save it::
 
     // ...
     use App\Entity\Product;
-    use Doctrine\ORM\EntityManagerInterface;
+    use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product", name="create_product")
-         */
-        public function createProduct(): Response
+        #[Route('/product', name: 'create_product')]
+        public function createProduct(ManagerRegistry $doctrine): Response
         {
-            // you can fetch the EntityManager via $this->getDoctrine()
-            // or you can add an argument to the action: createProduct(EntityManagerInterface $entityManager)
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
 
             $product = new Product();
             $product->setName('Keyboard');
@@ -397,26 +385,30 @@ you can query the database directly:
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:query:sql 'SELECT * FROM product'
+    $ php bin/console dbal:run-sql 'SELECT * FROM product'
 
     # on Windows systems not using Powershell, run this command instead:
-    # php bin/console doctrine:query:sql "SELECT * FROM product"
+    # php bin/console dbal:run-sql "SELECT * FROM product"
 
 Take a look at the previous example in more detail:
 
 .. _doctrine-entity-manager:
 
-* **line 18** The ``$this->getDoctrine()->getManager()`` method gets Doctrine's
+* **line 13** The ``ManagerRegistry $doctrine`` argument tells Symfony to
+  :ref:`inject the Doctrine service <services-constructor-injection>` into the
+  controller method.
+
+* **line 15** The ``$doctrine->getManager()`` method gets Doctrine's
   *entity manager* object, which is the most important object in Doctrine. It's
   responsible for saving objects to, and fetching objects from, the database.
 
-* **lines 20-23** In this section, you instantiate and work with the ``$product``
+* **lines 17-20** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
-* **line 26** The ``persist($product)`` call tells Doctrine to "manage" the
+* **line 23** The ``persist($product)`` call tells Doctrine to "manage" the
   ``$product`` object. This does **not** cause a query to be made to the database.
 
-* **line 29** When the ``flush()`` method is called, Doctrine looks through
+* **line 26** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,
@@ -443,14 +435,13 @@ some basic validation tasks::
 
     use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Component\Validator\Validator\ValidatorInterface;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product", name="create_product")
-         */
+        #[Route('/product', name: 'create_product')]
         public function createProduct(ValidatorInterface $validator): Response
         {
             $product = new Product();
@@ -498,10 +489,6 @@ doesn't replace the validation configuration entirely. You still need to add
 some :doc:`validation constraints </reference/constraints>` to ensure that data
 provided by the user is correct.
 
-.. versionadded:: 4.3
-
-    The automatic validation has been added in Symfony 4.3.
-
 Fetching Objects from the Database
 ----------------------------------
 
@@ -513,18 +500,15 @@ be able to go to ``/product/1`` to see your new product::
 
     use App\Entity\Product;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/{id}", name="product_show")
-         */
-        public function show(int $id): Response
+        #[Route('/product/{id}', name: 'product_show')]
+        public function show(ManagerRegistry $doctrine, int $id): Response
         {
-            $product = $this->getDoctrine()
-                ->getRepository(Product::class)
-                ->find($id);
+            $product = $doctrine->getRepository(Product::class)->find($id);
 
             if (!$product) {
                 throw $this->createNotFoundException(
@@ -549,13 +533,12 @@ and injected by the dependency injection container::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/{id}", name="product_show")
-         */
+        #[Route('/product/{id}', name: 'product_show')]
         public function show(int $id, ProductRepository $productRepository): Response
         {
             $product = $productRepository
@@ -575,7 +558,7 @@ job is to help you fetch entities of a certain class.
 
 Once you have a repository object, you have many helper methods::
 
-    $repository = $this->getDoctrine()->getRepository(Product::class);
+    $repository = $doctrine->getRepository(Product::class);
 
     // look for a single Product by its primary key (usually "id")
     $product = $repository->find($id);
@@ -633,13 +616,12 @@ Now, simplify your controller::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/{id}", name="product_show")
-         */
+        #[Route('/product/{id}', name: 'product_show')]
         public function show(Product $product): Response
         {
             // use the Product!
@@ -664,16 +646,15 @@ with any PHP model::
     use App\Entity\Product;
     use App\Repository\ProductRepository;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
     // ...
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product/edit/{id}")
-         */
-        public function update(int $id): Response
+        #[Route('/product/edit/{id}', name: 'product_edit')]
+        public function update(ManagerRegistry $doctrine, int $id): Response
         {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $product = $entityManager->getRepository(Product::class)->find($id);
 
             if (!$product) {
@@ -722,8 +703,7 @@ You've already seen how the repository object allows you to run basic queries
 without any work::
 
     // from inside a controller
-    $repository = $this->getDoctrine()->getRepository(Product::class);
-
+    $repository = $doctrine->getRepository(Product::class);
     $product = $repository->find($id);
 
 But what if you need a more complex query? When you generated your entity with
@@ -790,9 +770,7 @@ Now, you can call this method on the repository::
     // from inside a controller
     $minPrice = 1000;
 
-    $products = $this->getDoctrine()
-        ->getRepository(Product::class)
-        ->findAllGreaterThanPrice($minPrice);
+    $products = $doctrine->getRepository(Product::class)->findAllGreaterThanPrice($minPrice);
 
     // ...
 
@@ -853,10 +831,10 @@ In addition, you can query directly with SQL if you need to::
                 ORDER BY p.price ASC
                 ';
             $stmt = $conn->prepare($sql);
-            $stmt->execute(['price' => $price]);
+            $resultSet = $stmt->executeQuery(['price' => $price]);
 
             // returns an array of arrays (i.e. a raw data set)
-            return $stmt->fetchAllAssociative();
+            return $resultSet->fetchAllAssociative();
         }
     }
 
@@ -923,5 +901,5 @@ Learn more
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
 .. _`PDO`: https://www.php.net/pdo
-.. _`available Doctrine extensions`: https://github.com/Atlantic18/DoctrineExtensions
+.. _`available Doctrine extensions`: https://github.com/doctrine-extensions/DoctrineExtensions
 .. _`StofDoctrineExtensionsBundle`: https://github.com/stof/StofDoctrineExtensionsBundle

@@ -15,9 +15,6 @@ But be careful as ``NotBlank`` is *not* strictly the opposite of ``Blank``.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Blank`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\BlankValidator`
 ==========  ===================================================================
@@ -30,7 +27,7 @@ of an ``Author`` class were blank, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -39,9 +36,7 @@ of an ``Author`` class were blank, you could do the following:
 
         class Author
         {
-            /**
-             * @Assert\Blank
-             */
+            #[Assert\Blank]
             protected $firstName;
         }
 
@@ -102,6 +97,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

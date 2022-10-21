@@ -338,18 +338,46 @@ syntax to parse them as proper PHP constants::
     $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
     // $parameters = ['foo' => 'PHP_INT_SIZE', 'bar' => 8];
 
+Parsing PHP Enumerations
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The YAML parser supports `PHP enumerations`_, both unit and backed enums.
+By default, they are parsed as regular strings. Use the ``PARSE_CONSTANT`` flag
+and the special ``!php/enum`` syntax to parse them as proper PHP enums::
+
+    enum FooEnum: string
+    {
+        case Foo = 'foo';
+        case Bar = 'bar';
+    }
+
+    // ...
+
+    $yaml = '{ foo: FooEnum::Foo, bar: !php/enum FooEnum::Foo }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // the value of the 'foo' key is a string because it missed the `!php/enum` syntax
+    // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => FooEnum::Foo];
+
+    $yaml = '{ foo: FooEnum::Foo, bar: !php/enum FooEnum::Foo->value }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // the value of the 'foo' key is a string because it missed the `!php/enum` syntax
+    // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => 'foo'];
+
+.. versionadded:: 6.2
+
+    The support for PHP enumerations was introduced in Symfony 6.2.
+
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can dump binary data by using the ``DUMP_BASE64_BINARY_DATA`` flag::
+Non UTF-8 encoded strings are dumped as base64 encoded data::
 
     $imageContents = file_get_contents(__DIR__.'/images/logo.png');
 
-    $dumped = Yaml::dump(['logo' => $imageContents], 2, 4, Yaml::DUMP_BASE64_BINARY_DATA);
+    $dumped = Yaml::dump(['logo' => $imageContents]);
     // logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...
 
-Binary data is automatically parsed if they include the ``!!binary`` YAML tag
-(there's no need to pass any flag to the Yaml parser)::
+Binary data is automatically parsed if they include the ``!!binary`` YAML tag::
 
     $dumped = 'logo: !!binary iVBORw0KGgoAAAANSUhEUgAAA6oAAADqCAY...';
     $parsed = Yaml::parse($dumped);
@@ -389,10 +417,6 @@ you can dump them as ``~`` with the ``DUMP_NULL_AS_TILDE`` flag::
 
     $dumped = Yaml::dump(['foo' => null], 2, 4, Yaml::DUMP_NULL_AS_TILDE);
     // foo: ~
-
-.. versionadded:: 4.4
-
-    The flag to dump ``null`` as ``~`` was introduced in Symfony 4.4.
 
 Syntax Validation
 ~~~~~~~~~~~~~~~~~
@@ -437,6 +461,9 @@ Then, execute the script for validating contents:
     # or contents passed to STDIN
     $ cat path/to/file.yaml | php lint.php
 
+    # you can also exclude one or more files from linting
+    $ php lint.php path/to/directory --exclude=path/to/directory/foo.yaml --exclude=path/to/directory/bar.yaml
+
 The result is written to STDOUT and uses a plain text format by default.
 Add the ``--format`` option to get the output in JSON format:
 
@@ -462,3 +489,4 @@ Learn More
 .. _`YAML`: https://yaml.org/
 .. _`YAML 1.2 version specification`: https://yaml.org/spec/1.2/spec.html
 .. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html
+.. _`PHP enumerations`: https://www.php.net/manual/en/language.types.enumerations.php

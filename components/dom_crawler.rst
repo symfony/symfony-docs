@@ -77,10 +77,6 @@ tree.
     The DomCrawler component will use it automatically when the content has
     an HTML5 doctype.
 
-    .. versionadded:: 4.3
-
-        The automatic support of the html5-php library was introduced in Symfony 4.3.
-
 Node Filtering
 ~~~~~~~~~~~~~~
 
@@ -170,10 +166,6 @@ Verify if the current node matches a selector::
 
     $crawler->matches('p.lorem');
 
-.. versionadded:: 4.4
-
-    The ``matches()`` method was introduced in Symfony 4.4.
-
 Node Traversing
 ~~~~~~~~~~~~~~~
 
@@ -195,10 +187,10 @@ Get the same level nodes after or before the current selection::
     $crawler->filter('body > p')->nextAll();
     $crawler->filter('body > p')->previousAll();
 
-Get all the child or parent nodes::
+Get all the child or ancestor nodes::
 
     $crawler->filter('body')->children();
-    $crawler->filter('body > p')->parents();
+    $crawler->filter('body > p')->ancestors();
 
 Get all the direct child nodes matching a CSS selector::
 
@@ -207,10 +199,6 @@ Get all the direct child nodes matching a CSS selector::
 Get the first parent (heading toward the document root) of the element that matches the provided selector::
 
     $crawler->closest('p.lorem');
-
-.. versionadded:: 4.4
-
-    The ``closest()`` method was introduced in Symfony 4.4.
 
 .. note::
 
@@ -233,17 +221,16 @@ Access the value of the first node of the current selection::
     // avoid the exception passing an argument that text() returns when node does not exist
     $message = $crawler->filterXPath('//body/p')->text('Default text content');
 
-    // pass TRUE as the second argument of text() to remove all extra white spaces, including
-    // the internal ones (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
-    $crawler->filterXPath('//body/p')->text('Default text content', true);
+    // by default, text() trims white spaces, including the internal ones
+    // (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
+    // pass FALSE as the second argument to return the original text unchanged
+    $crawler->filterXPath('//body/p')->text('Default text content', false);
 
-.. versionadded:: 4.3
-
-    The default argument of ``text()`` was introduced in Symfony 4.3.
-
-.. versionadded:: 4.4
-
-    The option to trim white spaces in ``text()`` was introduced in Symfony 4.4.
+    // innerText() is similar to text() but only returns the text that is
+    // the direct descendant of the current node, excluding any child nodes
+    $text = $crawler->filterXPath('//body/p')->innerText();
+    // if content is <p>Foo <span>Bar</span></p>
+    // innerText() returns 'Foo' and text() returns 'Foo Bar'
 
 Access the attribute value of the first node of the current selection::
 
@@ -260,10 +247,6 @@ Extract attribute and/or node values from the list of nodes::
 
     Special attribute ``_text`` represents a node value, while ``_name``
     represents the element name (the HTML tag name).
-
-    .. versionadded:: 4.3
-
-        The special attribute ``_name`` was introduced in Symfony 4.3.
 
 Call an anonymous function on each node of the list::
 
@@ -360,18 +343,10 @@ and :phpclass:`DOMNode` objects::
         // avoid the exception passing an argument that html() returns when node does not exist
         $html = $crawler->html('Default <strong>HTML</strong> content');
 
-    .. versionadded:: 4.3
-
-        The default argument of ``html()`` was introduced in Symfony 4.3.
-
     Or you can get the outer HTML of the first node using
     :method:`Symfony\\Component\\DomCrawler\\Crawler::outerHtml`::
 
         $html = $crawler->outerHtml();
-
-    .. versionadded:: 4.4
-
-        The ``outerHtml()`` method was introduced in Symfony 4.4.
 
 Expression Evaluation
 ~~~~~~~~~~~~~~~~~~~~~
@@ -524,10 +499,6 @@ useful methods for working with forms::
     $method = $form->getMethod();
     $name = $form->getName();
 
-.. versionadded:: 4.4
-
-    The ``getName()`` method was introduced in Symfony 4.4.
-
 The :method:`Symfony\\Component\\DomCrawler\\Form::getUri` method does more
 than just return the ``action`` attribute of the form. If the form method
 is GET, then it mimics the browser's behavior and returns the ``action``
@@ -660,6 +631,19 @@ the whole form or specific field(s)::
     // disables validation for the whole form
     $form->disableValidation();
     $form['country']->select('Invalid value');
+
+Resolving a URI
+~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\DomCrawler\\UriResolver` class takes an URI
+(relative, absolute, fragment, etc.) and turns it into an absolute URI against
+another given base URI::
+
+    use Symfony\Component\DomCrawler\UriResolver;
+
+    UriResolver::resolve('/foo', 'http://localhost/bar/foo/'); // http://localhost/foo
+    UriResolver::resolve('?a=b', 'http://localhost/bar#foo'); // http://localhost/bar?a=b
+    UriResolver::resolve('../../', 'http://localhost/'); // http://localhost/
 
 Learn more
 ----------

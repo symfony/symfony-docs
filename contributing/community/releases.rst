@@ -7,24 +7,32 @@ release and maintain its different versions.
 Symfony releases follow the `semantic versioning`_ strategy and they are
 published through a *time-based model*:
 
-* A new **Symfony patch version** (e.g. 4.4.12, 5.1.9) comes out roughly every
+* A new **Symfony patch version** (e.g. 4.4.43, 5.4.10, 6.1.2) comes out roughly every
   month. It only contains bug fixes, so you can safely upgrade your applications;
-* A new **Symfony minor version** (e.g. 4.4, 5.0, 5.1) comes out every *six months*:
-  one in *May* and one in *November*. It contains bug fixes and new features, but
-  it doesn't include any breaking change, so you can safely upgrade your applications;
-* A new **Symfony major version** (e.g. 4.0, 5.0) comes out every *two years*.
-  It can contain breaking changes, so you may need to do some changes in your
-  applications before upgrading.
+* A new **Symfony minor version** (e.g. 4.4, 5.4, 6.1) comes out every *six months*:
+  one in *May* and one in *November*. It contains bug fixes and new features,
+  can contain new deprecations but it doesn't include any breaking change,
+  so you can safely upgrade your applications;
+* A new **Symfony major version** (e.g. 5.0, 6.0, 7.0) comes out every *two years*
+  in November of odd years (e.g. 2019, 2021, 2023). It can contain breaking changes,
+  so you may need to do some changes in your applications before upgrading.
 
 .. tip::
 
-    `Subscribe to Symfony Roadmap notifications`_ to receive an email when a new
+    `Subscribe to Symfony Release notifications`_ to receive an email when a new
     Symfony version is published or when a Symfony version reaches its end of life.
 
 .. _contributing-release-development:
 
 Development
 -----------
+
+.. note::
+
+    The Symfony project is an open-source community-driven development framework.
+    There is no roadmap written or defined in advance. Every feature request
+    may or may not be developed in future versions based on the community.
+    Symfony Core Team members can help move things forward if there's enough interest.
 
 The full development period for any major or minor version lasts six months and
 is divided into two phases:
@@ -42,7 +50,7 @@ final release.
 
 .. tip::
 
-    Check out the `Symfony Roadmap`_ to learn more about any specific version.
+    Check out the `Symfony Release`_ to learn more about any specific version.
 
 .. _contributing-release-maintenance:
 .. _symfony-versions:
@@ -80,7 +88,7 @@ of Symfony to the next one.
 
 When a feature implementation cannot be replaced with a better one without
 breaking backward compatibility, Symfony deprecates the old implementation and
-adds a new preferred one along side. Read the
+adds a new preferred one alongside. Read the
 :ref:`conventions <contributing-code-conventions-deprecations>` document to
 learn more about how deprecations are handled in Symfony.
 
@@ -92,19 +100,19 @@ two versions: the new major one (e.g. 5.0) and the latest version of the
 previous branch (e.g. 4.4).
 
 Both versions have the same new features, but they differ in the deprecated
-features. The oldest version (4.4 in this example) contains all the deprecated
-features whereas the new version (5.0 in this example) removes all of them.
+features. The oldest version (5.4 in this example) contains all the deprecated
+features whereas the new version (6.0 in this example) removes all of them.
 
-This allows you to upgrade your projects to the latest minor version (e.g. 4.4),
+This allows you to upgrade your projects to the latest minor version (e.g. 5.4),
 see all the deprecation messages and fix them. Once you have fixed all those
-deprecations, you can upgrade to the new major version (e.g. 5.0) without
+deprecations, you can upgrade to the new major version (e.g. 6.0) without
 effort, because it contains the same features (the only difference are the
 deprecated features, which your project no longer uses).
 
 PHP Compatibility
 -----------------
 
-The **minimum** PHP version is decided for each major Symfony version by consensus
+The **minimum** PHP version is decided for each **major** Symfony version by consensus
 amongst the :doc:`core team </contributing/code/core_team>` and documented as
 part of the :ref:`technical requirements for running Symfony applications
 <symfony-tech-requirements>`.
@@ -116,6 +124,12 @@ one that is publicly available.
 
 For out-of-support releases of Symfony, the latest PHP version at time of EOL is the last
 supported PHP version. Newer versions of PHP may or may not function.
+
+.. note::
+
+    By exception to the rule, bumping the minimum **minor** version of PHP is
+    possible for a **minor** Symfony version when this helps fix important
+    issues.
 
 Rationale
 ---------
@@ -148,6 +162,6 @@ period to upgrade. Companies wanting more stability use the LTS versions: a new
 version is published every two years and there is a year to upgrade.
 
 .. _`semantic versioning`: https://semver.org/
-.. _`Subscribe to Symfony Roadmap notifications`: https://symfony.com/account/notifications
-.. _`Symfony Roadmap`: https://symfony.com/releases
+.. _`Subscribe to Symfony Release notifications`: https://symfony.com/account/notifications
+.. _`Symfony Release`: https://symfony.com/releases
 .. _`professional Symfony support`: https://sensiolabs.com/

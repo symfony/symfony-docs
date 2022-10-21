@@ -8,7 +8,7 @@ How to Simplify Configuration of Multiple Bundles
 When building reusable and extensible applications, developers are often
 faced with a choice: either create a single large bundle or multiple smaller
 bundles. Creating a single bundle has the drawback that it's impossible for
-users to choose to remove functionality they are not using. Creating multiple
+users to remove unused functionality. Creating multiple
 bundles has the drawback that configuration becomes more tedious and settings
 often need to be repeated for various bundles.
 
@@ -65,37 +65,31 @@ in case a specific other bundle is not registered::
             // disable AcmeGoodbyeBundle in bundles
             $config = ['use_acme_goodbye' => false];
             foreach ($container->getExtensions() as $name => $extension) {
-                switch ($name) {
-                    case 'acme_something':
-                    case 'acme_other':
-                        // set use_acme_goodbye to false in the config of
-                        // acme_something and acme_other
-                        //
-                        // note that if the user manually configured
-                        // use_acme_goodbye to true in config/services.yaml
-                        // then the setting would in the end be true and not false
-                        $container->prependExtensionConfig($name, $config);
-                        break;
-                }
+                match ($name) {
+                    // set use_acme_goodbye to false in the config of
+                    // acme_something and acme_other
+                    //
+                    // note that if the user manually configured
+                    // use_acme_goodbye to true in config/services.yaml
+                    // then the setting would in the end be true and not false
+                    'acme_something', 'acme_other' => $container->prependExtensionConfig($name, $config),
+                    default => null
+                };
             }
         }
 
-        // process the configuration of AcmeHelloExtension
+        // get the configuration of AcmeHelloExtension (it's a list of configuration)
         $configs = $container->getExtensionConfig($this->getAlias());
 
-        // resolve config parameters e.g. %kernel.debug% to its boolean value
-        $resolvingBag = $container->getParameterBag();
-        $configs = $resolvingBag->resolveValue($configs);
-        
-        // use the Configuration class to generate a config array with
-        // the settings "acme_hello"
-        $config = $this->processConfiguration(new Configuration(), $configs);
-
-        // check if entity_manager_name is set in the "acme_hello" configuration
-        if (isset($config['entity_manager_name'])) {
-            // prepend the acme_something settings with the entity_manager_name
-            $config = ['entity_manager_name' => $config['entity_manager_name']];
-            $container->prependExtensionConfig('acme_something', $config);
+        // iterate in reverse to preserve the original order after prepending the config
+        foreach (array_reverse($configs) as $config) {
+            // check if entity_manager_name is set in the "acme_hello" configuration
+            if (isset($config['entity_manager_name'])) {
+                // prepend the acme_something settings with the entity_manager_name
+                $container->prependExtensionConfig('acme_something', [
+                    'entity_manager_name' => $config['entity_manager_name'],
+                ]);
+            }
         }
     }
 
@@ -131,29 +125,74 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
                 http://example.org/schema/dic/acme_something
                 https://example.org/schema/dic/acme_something/acme_something-1.0.xsd
                 http://example.org/schema/dic/acme_other
-                https://example.org/schema/dic/acme_something/acme_other-1.0.xsd">
-
+                https://example.org/schema/dic/acme_something/acme_other-1.0.xsd"
+        >
             <acme-something:config use-acme-goodbye="false">
                 <!-- ... -->
                 <acme-something:entity-manager-name>non_default</acme-something:entity-manager-name>
             </acme-something:config>
 
-            <acme-other:config use-acme-goodbye="false"/>
+            <acme-other:config use-acme-goodbye="false">
+                <!-- ... -->
+            </acme-other:config>
 
         </container>
 
     .. code-block:: php
 
         // config/packages/acme_something.php
-        $container->loadFromExtension('acme_something', [
-            // ...
-            'use_acme_goodbye' => false,
-            'entity_manager_name' => 'non_default',
-        ]);
-        $container->loadFromExtension('acme_other', [
-            // ...
-            'use_acme_goodbye' => false,
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $container) {
+            $container->extension('acme_something', [
+                // ...
+                'use_acme_goodbye' => false,
+                'entity_manager_name' => 'non_default',
+            ]);
+            $container->extension('acme_other', [
+                // ...
+                'use_acme_goodbye' => false,
+            ]);
+        };
+
+Prepending Extension in the Bundle Class
+----------------------------------------
+
+.. versionadded:: 6.1
+
+    The ``AbstractBundle`` class was introduced in Symfony 6.1.
+
+You can also append or prepend extension configuration directly in your
+Bundle class if you extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
+class and define the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::prependExtension`
+method::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
+
+    class FooBundle extends AbstractBundle
+    {
+        public function prependExtension(ContainerConfigurator $container, ContainerBuilder $builder): void
+        {
+            // prepend
+            $builder->prependExtensionConfig('framework', [
+                'cache' => ['prefix_seed' => 'foo/bar'],
+            ]);
+
+            // append
+            $container->extension('framework', [
+                'cache' => ['prefix_seed' => 'foo/bar'],
+            ]);
+
+            // append from file
+            $container->import('../config/packages/cache.php');
+        }
+    }
+
+.. note::
+
+    The ``prependExtension()`` method, like ``prepend()``, is called only at compile time.
 
 More than one Bundle using PrependExtensionInterface
 ----------------------------------------------------

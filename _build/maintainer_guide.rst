@@ -39,14 +39,14 @@ contributes again, it's OK to mention some of the minor issues to educate them.
 
     $ gh merge 11059
 
-      Working on symfony/symfony-docs (branch master)
+      Working on symfony/symfony-docs (branch 6.2)
       Merging Pull Request 11059: dmaicher/patch-3
 
       ...
 
       # This is important!! Say NO to push the changes now
       Push the changes now? (Y/n) n
-      Now, push with: git push gh "master" refs/notes/github-comments
+      Now, push with: git push gh "6.2" refs/notes/github-comments
 
       # Now, open your editor and make the needed changes ...
 
@@ -54,7 +54,7 @@ contributes again, it's OK to mention some of the minor issues to educate them.
       # Use "Minor reword", "Minor tweak", etc. as the commit message
 
       # now run the 'push' command shown above by 'gh' (it's different each time)
-      $ git push gh "master" refs/notes/github-comments
+      $ git push gh "6.2" refs/notes/github-comments
 
 Merging Pull Requests
 ---------------------
@@ -356,7 +356,7 @@ Merging while the target branch changed
 .......................................
 
 Sometimes, someone else merges a PR in ``5.x`` at the same time as you are
-doing it. In these cases, ``gh merge ...`` failes to push. Solve this by
+doing it. In these cases, ``gh merge ...`` fails to push. Solve this by
 resetting your local branch and restarting the merge:
 
 .. code-block:: terminal

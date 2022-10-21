@@ -44,11 +44,17 @@ processor to turn the value of the ``HTTP_PORT`` env var into an integer:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'router' => [
-                'http_port' => '%env(int:HTTP_PORT)%',
-            ],
-        ]);
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->router()
+                ->httpPort('%env(int:HTTP_PORT)%')
+                // or
+                ->httpPort(env('HTTP_PORT')->int())
+            ;
+        };
 
 Built-In Environment Variable Processors
 ----------------------------------------
@@ -90,10 +96,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(SECRET)', 'some_secret');
-            $container->loadFromExtension('framework', [
-                'secret' => '%env(string:SECRET)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(SECRET)', 'some_secret');
+                $framework->secret(env('SECRET')->string());
+            };
 
 ``env(bool:FOO)``
     Casts ``FOO`` to a bool (``true`` values are ``'true'``, ``'on'``, ``'yes'``
@@ -131,10 +142,50 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
-            $container->loadFromExtension('framework', [
-                'http_method_override' => '%env(bool:HTTP_METHOD_OVERRIDE)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
+                $framework->httpMethodOverride(env('HTTP_METHOD_OVERRIDE')->bool());
+            };
+
+``env(not:FOO)``
+    Casts ``FOO`` to a bool (just as ``env(bool:...)`` does) except it returns the inverted value
+    (falsy values are returned as ``true``, truthy values are returned as ``false``):
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                safe_for_production: '%env(not:APP_DEBUG)%'
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="safe_for_production">%env(not:APP_DEBUG)%</parameter>
+                </parameters>
+
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('safe_for_production', '%env(not:APP_DEBUG)%');
 
 ``env(int:FOO)``
     Casts ``FOO`` to an int.
@@ -164,7 +215,9 @@ Symfony provides the following env var processors:
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                 xmlns:security="http://symfony.com/schema/dic/security"
                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/security
+                    https://symfony.com/schema/dic/security/security-1.0.xsd">
 
                 <parameters>
                     <parameter key="env(HEALTH_CHECK_METHOD)">Symfony\Component\HttpFoundation\Request::METHOD_HEAD</parameter>
@@ -178,15 +231,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/security.php
-            $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
-            $container->loadFromExtension('security', [
-                'access_control' => [
-                    [
-                        'path' => '^/health-check$',
-                        'methods' => '%env(const:HEALTH_CHECK_METHOD)%',
-                    ],
-                ],
-            ]);
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\SecurityConfig;
+
+            return static function (ContainerBuilder $container, SecurityConfig $security) {
+                $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
+                $security->accessControl()
+                    ->path('^/health-check$')
+                    ->methods([env('HEALTH_CHECK_METHOD')->const()]);
+            };
 
 ``env(base64:FOO)``
     Decodes the content of ``FOO``, which is a base64 encoded string.
@@ -227,10 +280,15 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
-            $container->loadFromExtension('framework', [
-                'trusted_hosts' => '%env(json:TRUSTED_HOSTS)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
+                $framework->trustedHosts(env('TRUSTED_HOSTS')->json());
+            };
 
 ``env(resolve:FOO)``
     If the content of ``FOO`` includes container parameters (with the syntax
@@ -311,10 +369,68 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/framework.php
-            $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
-            $container->loadFromExtension('framework', [
-                'trusted_hosts' => '%env(csv:TRUSTED_HOSTS)%',
-            ]);
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
+                $framework->trustedHosts(env('TRUSTED_HOSTS')->csv());
+            };
+
+``env(shuffle:FOO)``
+    Randomly shuffles values of the ``FOO`` env var, which must be an array.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(REDIS_NODES): "127.0.0.1:6380,127.0.0.1:6381"
+            services:
+                RedisCluster:
+                    class: RedisCluster
+                    arguments: [null, "%env(shuffle:csv:REDIS_NODES)%"]
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(REDIS_NODES)">redis://127.0.0.1:6380,redis://127.0.0.1:6381</parameter>
+                </parameters>
+
+                <services>
+                    <service id="RedisCluster" class="RedisCluster">
+                        <argument>null</argument>
+                        <argument>%env(shuffle:csv:REDIS_NODES)%</argument>
+                    </service>
+                </services>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
+            return static function (ContainerConfigurator $configurator): void {
+                $container = $configurator->services()
+                    ->set(\RedisCluster::class, \RedisCluster::class)->args([null, '%env(shuffle:csv:REDIS_NODES)%']);
+            };
+
+    .. versionadded:: 6.2
+
+        The ``env(shuffle:...)`` env var processor was introduced in Symfony 6.2.
 
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:
@@ -397,10 +513,6 @@ Symfony provides the following env var processors:
                 'auth' => '%env(require:PHP_FILE)%',
             ]);
 
-    .. versionadded:: 4.3
-
-        The ``require`` processor was introduced in Symfony 4.3.
-
 ``env(trim:FOO)``
     Trims the content of ``FOO`` env var, removing whitespaces from the beginning
     and end of the string. This is especially useful in combination with the
@@ -442,10 +554,6 @@ Symfony provides the following env var processors:
             $container->loadFromExtension('google', [
                 'auth' => '%env(trim:file:AUTH_FILE)%',
             ]);
-
-    .. versionadded:: 4.3
-
-        The ``trim`` processor was introduced in Symfony 4.3.
 
 ``env(key:FOO:BAR)``
     Retrieves the value associated with the key ``FOO`` from the array whose
@@ -525,12 +633,8 @@ Symfony provides the following env var processors:
             $container->setParameter('private_key', '%env(default:raw_key:file:PRIVATE_KEY)%');
             $container->setParameter('raw_key', '%env(PRIVATE_KEY)%');
 
-    When the fallback parameter is omitted (e.g. ``env(default::API_KEY)``), the
-    value returned is ``null``.
-
-    .. versionadded:: 4.3
-
-        The ``default`` processor was introduced in Symfony 4.3.
+    When the fallback parameter is omitted (e.g. ``env(default::API_KEY)``), then the
+    returned value is ``null``.
 
 ``env(url:FOO)``
     Parses an absolute URL and returns its components as an associative array.
@@ -601,10 +705,6 @@ Symfony provides the following env var processors:
         In order to ease extraction of the resource from the URL, the leading
         ``/`` is trimmed from the ``path`` component.
 
-    .. versionadded:: 4.3
-
-        The ``url`` processor was introduced in Symfony 4.3.
-
 ``env(query_string:FOO)``
     Parses the query string part of the given URL and returns its components as
     an associative array.
@@ -651,9 +751,52 @@ Symfony provides the following env var processors:
                 ],
             ]);
 
-    .. versionadded:: 4.3
+``env(enum:FooEnum:BAR)``
+    Tries to convert an environment variable to an actual ``\BackedEnum`` value.
+    This processor takes the fully qualified name of the ``\BackedEnum`` as an argument.
 
-        The ``query_string`` processor was introduced in Symfony 4.3.
+    .. code-block:: php
+
+        # App\Enum\Environment
+        enum Environment: string
+        {
+            case Development = 'dev';
+            case Production = 'prod';
+        }
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                typed_env: '%env(enum:App\Enum\Environment:APP_ENV)%'
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="typed_env">%env(enum:App\Enum\Environment:APP_ENV)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('typed_env', '%env(enum:App\Enum\Environment:APP_ENV)%');
+
+    .. versionadded:: 6.2
+
+        The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.
 
 It is also possible to combine any number of processors:
 
@@ -717,7 +860,7 @@ create a class that implements
 
     class LowercasingEnvVarProcessor implements EnvVarProcessorInterface
     {
-        public function getEnv($prefix, $name, \Closure $getEnv)
+        public function getEnv(string $prefix, string $name, \Closure $getEnv)
         {
             $env = $getEnv($name);
 

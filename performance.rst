@@ -17,6 +17,7 @@ for maximum performance:
 * **Symfony Application Checklist**:
 
   #. :ref:`Install APCu Polyfill if your server uses APC <performance-install-apcu-polyfill>`
+  #. :ref:`Restrict the number of locales enabled in the application <performance-enabled-locales>`
 
 * **Production Server Checklist**:
 
@@ -37,15 +38,18 @@ OPcache, install the `APCu Polyfill component`_ in your application to enable
 compatibility with `APCu PHP functions`_ and unlock support for advanced Symfony
 features, such as the APCu Cache adapter.
 
+.. _performance-enabled-locales:
+
+Restrict the Number of Locales Enabled in the Application
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use the :ref:`framework.enabled_locales <reference-enabled-locales>`
+option to only generate the translation files actually used in your application.
+
 .. _performance-service-container-single-file:
 
 Dump the Service Container into a Single File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 4.4
-
-    The ``container.dumper.inline_factories`` parameter was introduced in
-    Symfony 4.4.
 
 Symfony compiles the :doc:`service container </service_container>` into multiple
 small files by default. Set this parameter to ``true`` to compile the entire
@@ -97,27 +101,30 @@ used byte code cache is `APC`_.
 Use the OPcache class preloading
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.4
-
-    The feature that generates the preloading file was introduced in Symfony 4.4.
-
 Starting from PHP 7.4, OPcache can compile and load classes at start-up and
 make them available to all requests until the server is restarted, improving
 performance significantly.
 
 During container compilation (e.g. when running the ``cache:clear`` command),
-Symfony generates a file called ``preload.php`` in the ``config/`` directory
-with the list of classes to preload.
-
-You can configure PHP to use this preload file:
+Symfony generates a file with the list of classes to preload in the
+``var/cache/`` directory. Rather than use this file directly, use the
+``config/preload.php`` file that is created when
+:doc:`using Symfony Flex in your project </setup/flex>`:
 
 .. code-block:: ini
 
     ; php.ini
     opcache.preload=/path/to/project/config/preload.php
-    
+
     ; required for opcache.preload:
     opcache.preload_user=www-data
+
+If this file is missing, run this command to update the Symfony Flex recipe:
+``composer recipes:update symfony/framework-bundle``.
+
+Use the :ref:`container.preload <dic-tags-container-preload>` and
+:ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
+which classes should or should not be preloaded by PHP.
 
 .. _performance-configure-opcache:
 
@@ -151,7 +158,7 @@ overhead that can be avoided as follows:
     ; php.ini
     opcache.validate_timestamps=0
 
-After each deploy, you must empty and regenerate the cache of OPcache. Otherwise
+After each deployment, you must empty and regenerate the cache of OPcache. Otherwise
 you won't see the updates made in the application. Given that in PHP, the CLI
 and the web processes don't share the same OPcache, you cannot clear the web
 server OPcache by executing some command in your terminal. These are some of the
@@ -326,6 +333,14 @@ Sections are a way to split the profile timeline into groups. Example::
     $this->stopwatch->openSection('parsing');
     $this->stopwatch->start('processing-file');
     $this->stopwatch->stopSection('parsing');
+
+All events that don't belong to any named section are added to the special section
+called ``__root__``. This way you can get all stopwatch events, even if you don't
+know their names, as follows::
+
+    foreach($this->stopwatch->getSectionEvents('__root__') as $event) {
+        echo (string) $event;
+    }
 
 Learn more
 ----------

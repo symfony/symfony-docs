@@ -25,7 +25,7 @@ address. From inside a controller, it looks like this::
             $emailConstraint
         );
 
-        if (0 === count($errors)) {
+        if (!$errors->count()) {
             // ... this IS a valid email address, do something
         } else {
             // this is *not* a valid email address

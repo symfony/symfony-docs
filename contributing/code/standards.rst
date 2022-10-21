@@ -47,47 +47,41 @@ short example containing most features described below::
      */
     class FooBar
     {
-        const SOME_CONST = 42;
+        public const SOME_CONST = 42;
 
         /**
          * @var string
          */
         private $fooBar;
-
         private $qux;
 
         /**
-         * @param string $dummy Some argument description
+         * @param $dummy some argument description
          */
-        public function __construct($dummy, Qux $qux)
+        public function __construct(string $dummy, Qux $qux)
         {
             $this->fooBar = $this->transformText($dummy);
             $this->qux = $qux;
         }
 
         /**
-         * @return string
-         *
          * @deprecated
          */
-        public function someDeprecatedMethod()
+        public function someDeprecatedMethod(): string
         {
-            @trigger_error(sprintf('The %s() method is deprecated since vendor-name/package-name 2.8 and will be removed in 3.0. Use Acme\Baz::someMethod() instead.', __METHOD__), E_USER_DEPRECATED);
+            trigger_deprecation('symfony/package-name', '5.1', 'The %s() method is deprecated, use Acme\Baz::someMethod() instead.', __METHOD__);
 
             return Baz::someMethod();
         }
 
         /**
-         * Transforms the input given as first argument.
+         * Transforms the input given as the first argument.
          *
-         * @param bool|string $dummy   Some argument description
-         * @param array       $options An options collection to be used within the transformation
+         * @param $options an options collection to be used within the transformation
          *
-         * @return string|null The transformed input
-         *
-         * @throws \RuntimeException When an invalid option is provided
+         * @throws \RuntimeException when an invalid option is provided
          */
-        private function transformText($dummy, array $options = [])
+        private function transformText(bool|string $dummy, array $options = []): ?string
         {
             $defaultOptions = [
                 'some_default' => 'values',
@@ -100,16 +94,13 @@ short example containing most features described below::
                 }
             }
 
-            $mergedOptions = array_merge(
-                $defaultOptions,
-                $options
-            );
+            $mergedOptions = array_merge($defaultOptions, $options);
 
             if (true === $dummy) {
                 return 'something';
             }
 
-            if (is_string($dummy)) {
+            if (\is_string($dummy)) {
                 if ('values' === $mergedOptions['some_default']) {
                     return substr($dummy, 0, 5);
                 }
@@ -122,11 +113,8 @@ short example containing most features described below::
 
         /**
          * Performs some basic operations for a given value.
-         *
-         * @param mixed $value     Some value to operate against
-         * @param bool  $theSwitch Some switch to control the method's flow
          */
-        private function performOperations($value = null, $theSwitch = false)
+        private function performOperations(mixed $value = null, bool $theSwitch = false)
         {
             if (!$theSwitch) {
                 return;
@@ -162,6 +150,8 @@ Structure
 * Use ``return null;`` when a function explicitly returns ``null`` values and
   use ``return;`` when the function returns ``void`` values;
 
+* Do not add the ``void`` return type to methods in tests;
+
 * Use braces to indicate control structure body regardless of the number of
   statements it contains;
 
@@ -180,16 +170,14 @@ Structure
   to increase readability;
 
 * Declare all the arguments on the same line as the method/function name, no
-  matter how many arguments there are;
+  matter how many arguments there are. The only exception are constructor methods
+  using `constructor property promotion`_, where each parameter must be on a new
+  line with `trailing comma`_;
 
 * Use parentheses when instantiating classes regardless of the number of
   arguments the constructor has;
 
 * Exception and error message strings must be concatenated using :phpfunction:`sprintf`;
-
-* Calls to :phpfunction:`trigger_error` with type ``E_USER_DEPRECATED`` must be
-  switched to opt-in via ``@`` operator.
-  Read more at :ref:`contributing-code-conventions-deprecations`;
 
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
   which return or throw something;
@@ -210,8 +198,12 @@ Naming Conventions
 * Use `snake_case`_ for configuration parameters and Twig template variables
   (e.g. ``framework.csrf_protection``, ``http_status_code``);
 
-* Use namespaces for all PHP classes and `UpperCamelCase`_ for their names (e.g.
-  ``ConsoleLogger``);
+* Use SCREAMING_SNAKE_CASE for constants (e.g. ``InputArgument::IS_ARRAY``);
+
+* Use `UpperCamelCase`_ for enumeration cases (e.g. ``InputArgumentMode::IsArray``);
+
+* Use namespaces for all PHP classes, interfaces, traits and enums and
+  `UpperCamelCase`_ for their names (e.g. ``ConsoleLogger``);
 
 * Prefix all abstract classes with ``Abstract`` except PHPUnit ``*TestCase``.
   Please note some early Symfony classes do not follow this convention and
@@ -222,7 +214,13 @@ Naming Conventions
 
 * Suffix traits with ``Trait``;
 
+* Don't use a dedicated suffix for classes or enumerations (e.g. like ``Class``
+  or ``Enum``), except for the cases listed below.
+
 * Suffix exceptions with ``Exception``;
+
+* Prefix PHP attributes with ``As`` where applicable (e.g. ``#[AsCommand]``
+  instead of ``#[Command]``, but ``#[When]`` is kept as-is);
 
 * Use UpperCamelCase for naming PHP files (e.g. ``EnvVarProcessor.php``) and
   snake case for naming Twig templates and web assets (``section_layout.html.twig``,
@@ -257,19 +255,28 @@ Service Naming Conventions
 Documentation
 ~~~~~~~~~~~~~
 
-* Add PHPDoc blocks for all classes, methods, and functions (though you may
-  be asked to remove PHPDoc that do not add value);
+* Add PHPDoc blocks for classes, methods, and functions only when they add
+  relevant information that does not duplicate the name, native type
+  declaration or context (e.g. ``instanceof`` checks);
+
+* Only use annotations and types defined in `the PHPDoc reference`_. In
+  order to improve types for static analysis, the following annotations are
+  also allowed:
+
+  * `Generics`_, with the exception of ``@template-covariant``.
+  * `Conditional return types`_ using the vendor-prefixed ``@psalm-return``;
+  * `Class constants`_;
+  * `Callable types`_;
 
 * Group annotations together so that annotations of the same type immediately
   follow each other, and annotations of a different type are separated by a
   single blank line;
 
-* Omit the ``@return`` tag if the method does not return anything;
+* Omit the ``@return`` annotation if the method does not return anything;
 
-* The ``@package`` and ``@subpackage`` annotations are not used;
-
-* Don't inline PHPDoc blocks, even when they contain just one tag (e.g. don't
-  put ``/** {@inheritdoc} */`` in a single line);
+* Don't use one-line PHPDoc blocks on classes, methods and functions, even
+  when they contain just one annotation (e.g. don't put ``/** {@inheritdoc} */``
+  in a single line);
 
 * When adding a new class or when making significant changes to an existing class,
   an ``@author`` tag with personal contact information may be added, or expanded.
@@ -293,3 +300,10 @@ License
 .. _`camelCase`: https://en.wikipedia.org/wiki/Camel_case
 .. _`UpperCamelCase`: https://en.wikipedia.org/wiki/Camel_case
 .. _`snake_case`: https://en.wikipedia.org/wiki/Snake_case
+.. _`constructor property promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion
+.. _`trailing comma`: https://wiki.php.net/rfc/trailing_comma_in_parameter_list
+.. _`the PHPDoc reference`: https://docs.phpdoc.org/3.0/guide/references/phpdoc/index.html
+.. _`Conditional return types`: https://psalm.dev/docs/annotating_code/type_syntax/conditional_types/
+.. _`Class constants`: https://psalm.dev/docs/annotating_code/type_syntax/value_types/#regular-class-constants
+.. _`Callable types`: https://psalm.dev/docs/annotating_code/type_syntax/callable_types/
+.. _`Generics`: https://psalm.dev/docs/annotating_code/templated_annotations/

@@ -18,13 +18,14 @@ For example, suppose you want to log something from within your command::
     namespace App\Command;
 
     use Psr\Log\LoggerInterface;
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    #[AsCommand(name: 'app:sunshine')]
     class SunshineCommand extends Command
     {
-        protected static $defaultName = 'app:sunshine';
         private $logger;
 
         public function __construct(LoggerInterface $logger)
@@ -46,7 +47,7 @@ For example, suppose you want to log something from within your command::
             $this->logger->info('Waking up the sun');
             // ...
 
-            return 0;
+            return Command::SUCCESS;
         }
     }
 
@@ -63,24 +64,20 @@ command and start logging.
     work (e.g. making database queries), as that code will be run, even if you're using
     the console to execute a different command.
 
-.. note::
-
-    In previous Symfony versions, you could make the command class extend from
-    :class:`Symfony\\Bundle\\FrameworkBundle\\Command\\ContainerAwareCommand` to
-    get services via ``$this->getContainer()->get('SERVICE_ID')``. This is
-    deprecated in Symfony 4.2 and it won't work in future Symfony versions.
-
 .. _console-command-service-lazy-loading:
 
 Lazy Loading
 ------------
 
-To make your command lazily loaded, either define its ``$defaultName`` static property::
+To make your command lazily loaded, either define its name using the PHP
+``AsCommand`` attribute::
 
+    use Symfony\Component\Console\Attribute\AsCommand;
+    // ...
+
+    #[AsCommand(name: 'app:sunshine')]
     class SunshineCommand extends Command
     {
-        protected static $defaultName = 'app:sunshine';
-
         // ...
     }
 

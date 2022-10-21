@@ -1,20 +1,11 @@
 NotCompromisedPassword
 ======================
 
-.. versionadded:: 4.3
-
-    The ``NotCompromisedPassword`` constraint was introduced in Symfony 4.3.
-
 Validates that the given password has not been compromised by checking that it is
 not included in any of the public data breaches tracked by `haveibeenpwned.com`_.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `skipOnError`_
-            - `threshold`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotCompromisedPassword`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotCompromisedPasswordValidator`
 ==========  ===================================================================
@@ -27,7 +18,7 @@ The following constraint ensures that the ``rawPassword`` property of the
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/User.php
         namespace App\Entity;
@@ -36,9 +27,7 @@ The following constraint ensures that the ``rawPassword`` property of the
 
         class User
         {
-            /**
-             * @Assert\NotCompromisedPassword
-             */
+            #[Assert\NotCompromisedPassword]
             protected $rawPassword;
         }
 

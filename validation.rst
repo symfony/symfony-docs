@@ -23,7 +23,7 @@ install the validator before using it:
 
 .. code-block:: terminal
 
-    $ composer require symfony/validator doctrine/annotations
+    $ composer require symfony/validator
 
 .. note::
 
@@ -54,7 +54,7 @@ application. The goal of validation is to tell you if the data of an object is
 valid. For this to work, you'll configure a list of rules (called
 :ref:`constraints <validation-constraints>`) that the object must follow in
 order to be valid. These rules are usually defined using PHP code or
-annotations but they can also be defined as ``.yaml`` or ``.xml`` files inside
+attributes but they can also be defined as ``.yaml`` or ``.xml`` files inside
 the ``config/validator/`` directory:
 
 For example, to indicate that the ``$name`` property must not be empty, add the
@@ -62,7 +62,7 @@ following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -72,9 +72,7 @@ following:
 
         class Author
         {
-            /**
-             * @Assert\NotBlank
-             */
+            #[Assert\NotBlank]
             private $name;
         }
 
@@ -179,7 +177,7 @@ message:
 .. code-block:: text
 
     Object(App\Entity\Author).name:
-        This value should not be blank
+        This value should not be blank.
 
 If you insert a value into the ``name`` property, the happy success message
 will appear.
@@ -215,6 +213,23 @@ Inside the template, you can output the list of errors exactly as needed:
 
     Each validation error (called a "constraint violation"), is represented by
     a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object.
+
+.. index::
+   single: Validation; Callables
+
+Validation Callables
+~~~~~~~~~~~~~~~~~~~~
+
+The ``Validation`` also allows you to create a closure to validate values
+against a set of constraints (useful for example when
+:ref:`validating Console command answers <console-validate-question-answer>` or
+when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
+
+:method:`Symfony\\Component\\Validator\\Validation::createCallable`
+    This returns a closure that throws ``ValidationFailedException`` when the
+    constraints aren't matched.
+:method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
+    This returns a closure that returns ``false`` when the constraints aren't matched.
 
 .. index::
    single: Validation; Constraints
@@ -261,7 +276,7 @@ literature genre mostly associated with the author, which can be set to either
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -271,12 +286,10 @@ literature genre mostly associated with the author, which can be set to either
 
         class Author
         {
-            /**
-             * @Assert\Choice(
-             *     choices = {"fiction", "non-fiction"},
-             *     message = "Choose a valid genre."
-             * )
-             */
+            #[Assert\Choice(
+                choices: ['fiction', 'non-fiction'],
+                message: 'Choose a valid genre.',
+            )]
             private $genre;
 
             // ...
@@ -350,7 +363,7 @@ options can be specified in this way.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -360,9 +373,7 @@ options can be specified in this way.
 
         class Author
         {
-            /**
-             * @Assert\Choice({"fiction", "non-fiction"})
-             */
+            #[Assert\Choice(['fiction', 'non-fiction'])]
             private $genre;
 
             // ...
@@ -453,8 +464,8 @@ of the form fields::
 Constraint Targets
 ------------------
 
-Constraints can be applied to a class property (e.g. ``name``), a public
-getter method (e.g. ``getFullName()``) or an entire class. Property constraints
+Constraints can be applied to a class property (e.g. ``name``),
+a getter method (e.g. ``getFullName()``) or an entire class. Property constraints
 are the most common and easy to use. Getter constraints allow you to specify
 more complex validation rules. Finally, class constraints are intended
 for scenarios where you want to validate a class as a whole.
@@ -474,7 +485,7 @@ class to have at least 3 characters.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
 
@@ -483,10 +494,8 @@ class to have at least 3 characters.
 
         class Author
         {
-            /**
-             * @Assert\NotBlank
-             * @Assert\Length(min=3)
-             */
+            #[Assert\NotBlank]
+            #[Assert\Length(min: 3)]
             private $firstName;
         }
 
@@ -555,7 +564,7 @@ Getters
 ~~~~~~~
 
 Constraints can also be applied to the return value of a method. Symfony
-allows you to add a constraint to any public method whose name starts with
+allows you to add a constraint to any private, protected or public method whose name starts with
 "get", "is" or "has". In this guide, these types of methods are referred to
 as "getters".
 
@@ -567,7 +576,7 @@ this method must return ``true``:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -577,9 +586,7 @@ this method must return ``true``:
 
         class Author
         {
-            /**
-             * @Assert\IsTrue(message="The password cannot match your first name")
-             */
+            #[Assert\IsTrue(message: 'The password cannot match your first name')]
             public function isPasswordSafe()
             {
                 // ... return true or false
@@ -655,6 +662,42 @@ the :doc:`Callback </reference/constraints/Callback>` constraint is a generic
 constraint that's applied to the class itself. When that class is validated,
 methods specified by that constraint are simply executed so that each can
 provide more custom validation.
+
+Debugging the Constraints
+-------------------------
+
+Use the ``debug:validator`` command to list the validation constraints of a
+given class:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:validator 'App\Entity\SomeClass'
+
+        App\Entity\SomeClass
+        -----------------------------------------------------
+
+        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
+        | Property      | Name                                             | Groups  | Options                                                    |
+        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
+        | firstArgument | Symfony\Component\Validator\Constraints\NotBlank | Default | [                                                          |
+        |               |                                                  |         |   "message" => "This value should not be blank.",          |
+        |               |                                                  |         |   "allowNull" => false,                                    |
+        |               |                                                  |         |   "normalizer" => null,                                    |
+        |               |                                                  |         |   "payload" => null                                        |
+        |               |                                                  |         | ]                                                          |
+        | firstArgument | Symfony\Component\Validator\Constraints\Email    | Default | [                                                          |
+        |               |                                                  |         |   "message" => "This value is not a valid email address.", |
+        |               |                                                  |         |   "mode" => null,                                          |
+        |               |                                                  |         |   "normalizer" => null,                                    |
+        |               |                                                  |         |   "payload" => null                                        |
+        |               |                                                  |         | ]                                                          |
+        +---------------+--------------------------------------------------+---------+------------------------------------------------------------+
+
+You can also validate all the classes stored in a given directory:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:validator src/Entity
 
 Final Thoughts
 --------------

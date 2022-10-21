@@ -71,13 +71,13 @@ version string::
          * @param string      $manifestPath
          * @param string|null $format
          */
-        public function __construct($manifestPath, $format = null)
+        public function __construct(string $manifestPath, string $format = null)
         {
             $this->manifestPath = $manifestPath;
             $this->format = $format ?: '%s?%s';
         }
 
-        public function getVersion($path)
+        public function getVersion(string $path)
         {
             if (!is_array($this->hashes)) {
                 $this->hashes = $this->loadManifest();
@@ -86,7 +86,7 @@ version string::
             return $this->hashes[$path] ?? '';
         }
 
-        public function applyVersion($path)
+        public function applyVersion(string $path)
         {
             $version = $this->getVersion($path);
 
@@ -190,12 +190,13 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
 
         // config/packages/framework.php
         use App\Asset\VersionStrategy\GulpBusterVersionStrategy;
+        use Symfony\Config\FrameworkConfig;
 
-        $container->loadFromExtension('framework', [
+        return static function (FrameworkConfig $framework) {
             // ...
-            'assets' => [
-                'version_strategy' => GulpBusterVersionStrategy::class,
-            ],
-        ]);
+            $framework->assets()
+                ->versionStrategy(GulpBusterVersionStrategy::class)
+            ;
+        };
 
 .. _`gulp-buster`: https://www.npmjs.com/package/gulp-buster

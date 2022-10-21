@@ -7,9 +7,6 @@ card: before communicating with a payment gateway.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Luhn`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LuhnValidator`
 ==========  ===================================================================
@@ -22,7 +19,7 @@ will contain a credit card number.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Transaction.php
         namespace App\Entity;
@@ -31,9 +28,7 @@ will contain a credit card number.
 
         class Transaction
         {
-            /**
-             * @Assert\Luhn(message="Please check your credit card number.")
-             */
+            #[Assert\Luhn(message: 'Please check your credit card number.')]
             protected $cardNumber;
         }
 
@@ -101,6 +96,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

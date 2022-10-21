@@ -14,16 +14,20 @@ Supported Literals
 The component supports:
 
 * **strings** - single and double quotes (e.g. ``'hello'``)
-* **numbers** - e.g. ``103``
+* **numbers** - integers (e.g. ``103``), decimals (e.g. ``9.95``), decimals
+  without leading zeros (e.g. ``.99``, equivalent to ``0.99``); all numbers
+  support optional underscores as separators to improve readability (e.g.
+  ``1_000_000``, ``3.14159_26535``)
 * **arrays** - using JSON-like notation (e.g. ``[1, 2]``)
 * **hashes** - using JSON-like notation (e.g. ``{ foo: 'bar' }``)
 * **booleans** - ``true`` and ``false``
 * **null** - ``null``
 * **exponential** - also known as scientific (e.g. ``1.99E+3`` or ``1e-2``)
 
-    .. versionadded:: 4.4
-    
-        The ``exponential`` literal was introduced in Symfony 4.4.
+.. versionadded:: 6.1
+
+    Support for decimals without leading zeros and underscore separators were
+    introduced in Symfony 6.1.
 
 .. caution::
 
@@ -97,6 +101,25 @@ JavaScript::
     ));
 
 This will print out ``Hi Hi Hi!``.
+
+Null-safe Operator
+~~~~~~~~~~~~~~~~~~
+
+Use the ``?.`` syntax to access properties and methods of objects that can be
+``null`` (this is equivalent to the ``$object?->propertyOrMethod`` PHP null-safe
+operator)::
+
+    // these will throw an exception when `fruit` is `null`
+    $expressionLanguage->evaluate('fruit.color', ['fruit' => '...'])
+    $expressionLanguage->evaluate('fruit.getStock()', ['fruit' => '...'])
+
+    // these will return `null` if `fruit` is `null`
+    $expressionLanguage->evaluate('fruit?.color', ['fruit' => '...'])
+    $expressionLanguage->evaluate('fruit?.getStock()', ['fruit' => '...'])
+
+.. versionadded:: 6.1
+
+    The null safe operator was introduced in Symfony 6.1.
 
 .. _component-expression-functions:
 
@@ -187,6 +210,14 @@ Comparison Operators
 * ``<=`` (less than or equal to)
 * ``>=`` (greater than or equal to)
 * ``matches`` (regex match)
+* ``contains``
+* ``starts with``
+* ``ends with``
+
+.. versionadded:: 6.1
+
+    The ``contains``, ``starts with`` and ``ends with`` operators were introduced
+    in Symfony 6.1.
 
 .. tip::
 
@@ -195,7 +226,7 @@ Comparison Operators
 
         $expressionLanguage->evaluate('not ("foo" matches "/bar/")'); // returns true
 
-    You must use parenthesis because the unary operator ``not`` has precedence
+    You must use parentheses because the unary operator ``not`` has precedence
     over the binary operator ``matches``.
 
 Examples::
@@ -204,7 +235,6 @@ Examples::
         'life == everything',
         [
             'life' => 10,
-            'universe' => 10,
             'everything' => 22,
         ]
     );
@@ -213,7 +243,6 @@ Examples::
         'life > everything',
         [
             'life' => 10,
-            'universe' => 10,
             'everything' => 22,
         ]
     );
@@ -314,6 +343,23 @@ Ternary Operators
 * ``foo ?: 'no'`` (equal to ``foo ? foo : 'no'``)
 * ``foo ? 'yes'`` (equal to ``foo ? 'yes' : ''``)
 
+Null Coalescing Operator
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+This is the same as the PHP `null-coalescing operator`_, which combines
+the ternary operator and ``isset()``. It returns the left hand-side if it exists
+and it's not ``null``; otherwise it returns the right hand-side. Note that you
+can chain multiple coalescing operators.
+
+* ``foo ?? 'no'``
+* ``foo.baz ?? 'no'``
+* ``foo[3] ?? 'no'``
+* ``foo.baz ?? foo['baz'] ?? 'no'``
+
+.. versionadded:: 6.2
+
+    The null-coalescing operator was introduced in Symfony 6.2.
+
 Built-in Objects and Variables
 ------------------------------
 
@@ -324,3 +370,5 @@ expressions (e.g. the request, the current user, etc.):
 * :doc:`Variables available in security expressions </security/expressions>`;
 * :doc:`Variables available in service container expressions </service_container/expression_language>`;
 * :ref:`Variables available in routing expressions <routing-matching-expressions>`.
+
+.. _`null-coalescing operator`: https://www.php.net/manual/en/language.operators.comparison.php#language.operators.comparison.coalesce

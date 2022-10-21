@@ -402,7 +402,7 @@ have *many* controller functions: one for each page.
 
 By now, the application has evolved from a single PHP file into a structure
 that is organized and allows for code reuse. You should be happier, but far
-from satisfied. For example, the routing system is fickle, and wouldn't
+from being satisfied. For example, the routing system is fickle, and wouldn't
 recognize that the list page - ``/index.php``  - should be accessible also via ``/``
 (if Apache rewrite rules were added). Also, instead of developing the blog,
 a lot of time is being spent working on the "architecture" of the code (e.g.
@@ -540,24 +540,21 @@ them for you. Here's the same sample application, now built in Symfony::
     namespace App\Controller;
 
     use App\Entity\Post;
+    use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     class BlogController extends AbstractController
     {
-        public function list()
+        public function list(ManagerRegistry $doctrine)
         {
-            $posts = $this->getDoctrine()
-                ->getRepository(Post::class)
-                ->findAll();
+            $posts = $doctrine->getRepository(Post::class)->findAll();
 
             return $this->render('blog/list.html.twig', ['posts' => $posts]);
         }
 
-        public function show($id)
+        public function show(ManagerRegistry $doctrine, $id)
         {
-            $post = $this->getDoctrine()
-                ->getRepository(Post::class)
-                ->find($id);
+            $post = $doctrine->getRepository(Post::class)->find($id);
 
             if (!$post) {
                 // cause the 404 page not found to be displayed
@@ -681,11 +678,8 @@ migrating the blog from flat PHP to Symfony has improved your life:
   :doc:`routing </routing>`, or rendering :doc:`controllers </controller>`;
 
 * Symfony gives you **access to open source tools** such as `Doctrine`_ and the
-  `Templating`_,
-  :doc:`Security </components/security>`,
-  :doc:`Form </components/form>`, `Validator`_ and
-  `Translation`_ components (to name
-  a few);
+  `Templating`_, :doc:`Security </security>`, :doc:`Form </components/form>`,
+  `Validator`_ and `Translation`_ components (to name a few);
 
 * The application now enjoys **fully-flexible URLs** thanks to the Routing
   component;

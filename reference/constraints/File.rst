@@ -18,24 +18,6 @@ form field.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `binaryFormat`_
-            - `disallowEmptyMessage`_
-            - `groups`_
-            - `maxSize`_
-            - `maxSizeMessage`_
-            - `mimeTypes`_
-            - `mimeTypesMessage`_
-            - `notFoundMessage`_
-            - `notReadableMessage`_
-            - `payload`_
-            - `uploadCantWriteErrorMessage`_
-            - `uploadErrorMessage`_
-            - `uploadExtensionErrorMessage`_
-            - `uploadFormSizeErrorMessage`_
-            - `uploadIniSizeErrorMessage`_
-            - `uploadNoFileErrorMessage`_
-            - `uploadNoTmpDirErrorMessage`_
-            - `uploadPartialErrorMessage`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\File`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\FileValidator`
 ==========  ===================================================================
@@ -74,7 +56,7 @@ below a certain file size and a valid PDF, add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -83,13 +65,11 @@ below a certain file size and a valid PDF, add the following:
 
         class Author
         {
-            /**
-             * @Assert\File(
-             *     maxSize = "1024k",
-             *     mimeTypes = {"application/pdf", "application/x-pdf"},
-             *     mimeTypesMessage = "Please upload a valid PDF"
-             * )
-             */
+            #[Assert\File(
+                maxSize: '1024k',
+                mimeTypes: ['application/pdf', 'application/x-pdf'],
+                mimeTypesMessage: 'Please upload a valid PDF',
+            )]
             protected $bioFile;
         }
 
@@ -252,10 +232,6 @@ You can find a list of existing mime types on the `IANA website`_.
     (i.e. the form type is not defined explicitly in the ``->add()`` method of
     the form builder) and when the field doesn't define its own ``accept`` value.
 
-    .. versionadded:: 4.4
-
-        This feature was introduced in Symfony 4.4.
-
 ``mimeTypesMessage``
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -264,16 +240,7 @@ You can find a list of existing mime types on the `IANA website`_.
 The message displayed if the mime type of the file is not a valid mime type
 per the `mimeTypes`_ option.
 
-You can use the following parameters in this message:
-
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ file }}``   Absolute file path
-``{{ name }}``   Base file name
-``{{ type }}``   The MIME type of the given file
-``{{ types }}``  The list of allowed MIME types
-===============  ==============================================================
+.. include:: /reference/constraints/_parameters-mime-types-message-option.rst.inc
 
 ``notFoundMessage``
 ~~~~~~~~~~~~~~~~~~~

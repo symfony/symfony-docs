@@ -17,27 +17,23 @@ requiring "push" capabilities.
 Symfony provides a straightforward component, built on top of
 `the Mercure protocol`_, specifically designed for this class of use cases.
 
-Mercure is an open protocol designed from the ground to publish updates from
+Mercure is an open protocol designed from the ground up to publish updates from
 server to clients. It is a modern and efficient alternative to timer-based
 polling and to WebSocket.
 
 Because it is built on top `Server-Sent Events (SSE)`_, Mercure is supported
-out of the box in most modern browsers (old versions of Edge and IE require
+out of the box in modern browsers (old versions of Edge and IE require
 `a polyfill`_) and has `high-level implementations`_ in many programming
 languages.
 
 Mercure comes with an authorization mechanism,
-automatic re-connection in case of network issues
+automatic reconnection in case of network issues
 with retrieving of lost updates, a presence API,
 "connection-less" push for smartphones and auto-discoverability (a supported
 client can automatically discover and subscribe to updates of a given resource
 thanks to a specific HTTP header).
 
 All these features are supported in the Symfony integration.
-
-Unlike WebSocket, which is only compatible with HTTP 1.x,
-Mercure leverages the multiplexing capabilities provided by HTTP/2
-and HTTP/3 (but also supports older versions of HTTP).
 
 `In this recording`_ you can see how a Symfony web API leverages Mercure
 and API Platform to update in live a React app and a mobile app (React Native)
@@ -46,98 +42,168 @@ generated using the API Platform client generator.
 Installation
 ------------
 
-Installing the Symfony Component
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Installing the Symfony Bundle
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
-install the Mercure support before using it:
+Run this command to install the Mercure support:
 
 .. code-block:: terminal
 
     $ composer require mercure
-
-Running a Mercure Hub
-~~~~~~~~~~~~~~~~~~~~~
 
 To manage persistent connections, Mercure relies on a Hub: a dedicated server
 that handles persistent SSE connections with the clients.
 The Symfony app publishes the updates to the hub, that will broadcast them to
 clients.
 
+Thanks to :ref:`the Docker integration of Symfony </setup/docker>`,
+:ref:`Flex <symfony-flex>` proposes to install a Mercure hub.
+Run ``docker-compose up`` to start the hub if you have chosen this option.
+
+If you use the :doc:`Symfony Local Web Server </setup/symfony_server>`,
+you must start it with the ``--no-tls`` option.
+
+.. code-block:: terminal
+
+    $ symfony server:start --no-tls -d
+
+Running a Mercure Hub
+~~~~~~~~~~~~~~~~~~~~~
+
 .. image:: /_images/mercure/schema.png
 
-If you use the :doc:`Symfony Local Web Server </setup/symfony_server>` or `Symfony Docker`_,
-a Mercure Hub is automatically available.
+If you use the Docker integration, a hub is already up and running,
+and you can go straight to the next section.
 
-For production usage, an official and open source (AGPL) Hub based on the Caddy web server
+Otherwise, and in production, you have to install a hub by yourself.
+An official and open source (AGPL) Hub based on the Caddy web server
 can be downloaded as a static binary from `Mercure.rocks`_.
-Alternatively to the binary, a Docker image, a Helm chart for Kubernetes
+A Docker image, a Helm chart for Kubernetes
 and a managed, High Availability Hub are also provided.
-
-.. tip::
-
-    The `API Platform distribution`_ comes with a Docker Compose configuration
-    as well as a Helm chart for Kubernetes that are 100% compatible with Symfony,
-    and contain a build of the Caddy web server including a Mercure hub.
-    You can copy them in your project, even if you don't use API Platform.
 
 Configuration
 -------------
 
-The preferred way to configure the MercureBundle is using
+The preferred way to configure MercureBundle is using
 :doc:`environment variables </configuration>`.
 
 When MercureBundle has been installed, the ``.env`` file of your project
 has been updated by the Flex recipe to include the available env vars.
 
-If you use the Symfony Local Web Server or Symfony Docker,
-the default values are compatible with the provided Hub
-and you can skip straight to the next section.
+Also, if you are using the Docker integration with the Symfony Local Web Server,
+`Symfony Docker`_ or the `API Platform distribution`_,
+the proper environment variables have been automatically set.
+Skip straight to the next section.
 
 Otherwise, set the URL of your hub as the value of the ``MERCURE_URL``
 and ``MERCURE_PUBLIC_URL`` env vars.
 Sometimes a different URL must be called by the Symfony app (usually to publish),
-and the JavaScript client (usually to subscrribe). It's especially common when
+and the JavaScript client (usually to subscribe). It's especially common when
 the Symfony app must use a local URL and the client-side JavaScript code a public one.
-In this case, ``MERCURE_URL`` must contain the local URL that will be used by the
+In this case, ``MERCURE_URL`` must contain the local URL used by the
 Symfony app (e.g. ``https://mercure/.well-known/mercure``), and ``MERCURE_PUBLIC_URL``
 the publicly available URL (e.g. ``https://example.com/.well-known/mercure``).
 
 The clients must also bear a `JSON Web Token`_ (JWT)
 to the Mercure Hub to be authorized to publish updates and, sometimes, to subscribe.
 
-This JWT should be stored in the ``MERCURE_JWT_SECRET`` environment variable.
+This token must be signed with the same secret key as the one used by the Hub to verify the JWT (``!ChangeThisMercureHubJWTSecretKey!`` if you use the Docker integration).
+This secret key must be stored in the ``MERCURE_JWT_SECRET`` environment variable.
+MercureBundle will use it to automatically generate and sign the needed JWTs.
 
-The JWT must be signed with the same secret key as the one used by
-the Hub to verify the JWT (``!ChangeMe!`` in you use the Local Web Server or
-Symfony Docker).
-Its payload must contain at least the following structure to be allowed to
-publish:
+In addition to these environment variables,
+MercureBundle provides a more advanced configuration:
 
-.. code-block:: json
+* ``secret``: the key to use to sign the JWT - A key of the same size as the hash output (for instance, 256 bits for "HS256") or larger MUST be used. (all other options, beside ``algorithm``, ``subscribe``, and ``publish`` will be ignored)
+* ``publish``: a list of topics to allow publishing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
+* ``subscribe``: a list of topics to allow subscribing to when generating the JWT (only usable when ``secret``, or ``factory`` are provided)
+* ``algorithm``: The algorithm to use to sign the JWT (only usable when ``secret`` is provided)
+* ``provider``: The ID of a service to call to provide the JWT (all other options will be ignored)
+* ``factory``: The ID of a service to call to create the JWT (all other options, beside ``subscribe``, and ``publish`` will be ignored)
+* ``value``: the raw JWT to use (all other options will be ignored)
 
-    {
-        "mercure": {
-            "publish": []
-        }
-    }
+.. configuration-block::
 
-Because the array is empty, the Symfony app will only be authorized to publish
-public updates (see the authorization_ section for further information).
+    .. code-block:: yaml
+
+        # config/packages/mercure.yaml
+        mercure:
+            hubs:
+                default:
+                    url: https://mercure-hub.example.com/.well-known/mercure
+                    jwt:
+                        secret: '!ChangeThisMercureHubJWTSecretKey!'
+                        publish: ['foo', 'https://example.com/foo']
+                        subscribe: ['bar', 'https://example.com/bar']
+                        algorithm: 'hmac.sha256'
+                        provider: 'My\Provider'
+                        factory: 'My\Factory'
+                        value: 'my.jwt'
+
+    .. code-block:: xml
+
+        <!-- config/packages/mercure.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <config>
+            <hub
+                name="default"
+                url="https://mercure-hub.example.com/.well-known/mercure"
+            >
+                <jwt
+                    secret="!ChangeThisMercureHubJWTSecretKey!"
+                    algorithm="hmac.sha256"
+                    provider="My\Provider"
+                    factory="My\Factory"
+                    value="my.jwt"
+                >
+                    <publish>foo</publish>
+                    <publish>https://example.com/foo</publish>
+                    <subscribe>bar</subscribe>
+                    <subscribe>https://example.com/bar</subscribe>
+                </jwt>
+            </hub>
+        </config>
+
+    .. code-block:: php
+
+        // config/packages/mercure.php
+        $container->loadFromExtension('mercure', [
+            'hubs' => [
+                'default' => [
+                    'url' => 'https://mercure-hub.example.com/.well-known/mercure',
+                    'jwt' => [
+                        'secret' => '!ChangeThisMercureHubJWTSecretKey!',
+                        'publish' => ['foo', 'https://example.com/foo'],
+                        'subscribe' => ['bar', 'https://example.com/bar'],
+                        'algorithm' => 'hmac.sha256',
+                        'provider' => 'My\Provider',
+                        'factory' => 'My\Factory',
+                        'value' => 'my.jwt',
+                    ],
+                ],
+            ],
+        ]);
 
 .. tip::
+
+    The JWT payload must contain at least the following structure for the client to be allowed to
+    publish:
+
+    .. code-block:: json
+
+        {
+            "mercure": {
+                "publish": []
+            }
+        }
+
+    Because the array is empty, the Symfony app will only be authorized to publish
+    public updates (see the authorization_ section for further information).
 
     The jwt.io website is a convenient way to create and sign JWTs.
     Checkout this `example JWT`_, that grants publishing rights for all *topics*
     (notice the star in the array).
     Don't forget to set your secret key properly in the bottom of the right panel of the form!
-
-.. caution::
-
-    Don't put the secret key in ``MERCURE_JWT_SECRET``, it will not work!
-    This environment variable must contain a JWT, signed with the secret key.
-
-    Also, be sure to keep both the secret key and the JWTs... secrets!
 
 Basic Usage
 -----------
@@ -166,7 +232,7 @@ service, including controllers::
         public function publish(HubInterface $hub): Response
         {
             $update = new Update(
-                'http://example.com/books/1',
+                'https://example.com/books/1',
                 json_encode(['status' => 'OutOfStock'])
             );
 
@@ -193,34 +259,57 @@ Atom, HTML or XML is recommended.
 Subscribing
 ~~~~~~~~~~~
 
-Subscribing to updates in JavaScript is straightforward:
+Subscribing to updates in JavaScript from a Twig template is straightforward:
 
-.. code-block:: javascript
+.. code-block:: twig
 
-    const eventSource = new EventSource('/.well-known/mercure?topic=' + encodeURIComponent('http://example.com/books/1'));
+    <script>
+    const eventSource = new EventSource("{{ mercure('https://example.com/books/1')|escape('js') }}");
     eventSource.onmessage = event => {
         // Will be called every time an update is published by the server
         console.log(JSON.parse(event.data));
     }
+    </script>
 
-Mercure also allows to subscribe to several topics,
-and to use URI Templates or the special value ``*`` (matched by all topics)
-as patterns:
+The ``mercure()`` Twig function generates the URL of the Mercure hub
+according to the configuration. The URL includes the ``topic`` query
+parameters corresponding to the topics passed as first argument.
+
+If you want to access to this URL from an external JavaScript file, generate the
+URL in a dedicated HTML element:
+
+.. code-block:: twig
+
+    <script type="application/json" id="mercure-url">
+    {{ mercure('https://example.com/books/1')|json_encode(constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_HEX_TAG'))|raw }}
+    </script>
+
+Then retrieve it from your JS file:
 
 .. code-block:: javascript
 
-    // URL is a built-in JavaScript class to manipulate URLs
-    const url = new URL('/.well-known/mercure', window.origin);
-    url.searchParams.append('topic', 'http://example.com/books/1');
-    // Subscribe to updates of several Book resources
-    url.searchParams.append('topic', 'http://example.com/books/2');
-    // All Review resources will match this pattern
-    url.searchParams.append('topic', 'http://example.com/reviews/{id}');
-
+    const url = JSON.parse(document.getElementById("mercure-url").textContent);
     const eventSource = new EventSource(url);
+    // ...
+
+Mercure also allows subscribing to several topics,
+and to use URI Templates or the special value ``*`` (matched by all topics)
+as patterns:
+
+.. code-block:: twig
+
+    <script>
+    {# Subscribe to updates of several Book resources and to all Review resources matching the given pattern #}
+    const eventSource = new EventSource("{{ mercure([
+        'https://example.com/books/1',
+        'https://example.com/books/2',
+        'https://example.com/reviews/{id}'
+    ])|escape('js') }}");
+
     eventSource.onmessage = event => {
         console.log(JSON.parse(event.data));
     }
+    </script>
 
 .. tip::
 
@@ -249,8 +338,8 @@ in a ``Link`` HTTP header.
 
 .. image:: /_images/mercure/discovery.png
 
-You can create ``Link`` headers with the :doc:`WebLink Component </web_link>`,
-by using the ``AbstractController::addLink`` helper method::
+You can create ``Link`` headers with the ``Discovery`` helper class
+(under the hood, it uses the :doc:`WebLink Component </web_link>`)::
 
     // src/Controller/DiscoverController.php
     namespace App\Controller;
@@ -262,9 +351,9 @@ by using the ``AbstractController::addLink`` helper method::
 
     class DiscoverController extends AbstractController
     {
-        public function __invoke(Request $request, Discovery $discovery): JsonResponse
+        public function discover(Request $request, Discovery $discovery): JsonResponse
         {
-            // Link: <http://localhost:3000/.well-known/mercure>; rel="mercure"
+            // Link: <https://hub.example.com/.well-known/mercure>; rel="mercure"
             $discovery->addLink($request);
 
             return $this->json([
@@ -280,14 +369,14 @@ and to subscribe to it:
 .. code-block:: javascript
 
     // Fetch the original resource served by the Symfony web API
-    fetch('/books/1') // Has Link: <http://localhost:3000/.well-known/mercure>; rel="mercure"
+    fetch('/books/1') // Has Link: <https://hub.example.com/.well-known/mercure>; rel="mercure"
         .then(response => {
             // Extract the hub URL from the Link header
             const hubUrl = response.headers.get('Link').match(/<([^>]+)>;\s+rel=(?:mercure|"[^"]*mercure[^"]*")/)[1];
 
             // Append the topic(s) to subscribe as query parameter
             const hub = new URL(hubUrl, window.origin);
-            hub.searchParams.append('topic', 'http://example.com/books/{id}');
+            hub.searchParams.append('topic', 'https://example.com/books/{id}');
 
             // Subscribe to updates
             const eventSource = new EventSource(hub);
@@ -297,7 +386,7 @@ and to subscribe to it:
 Authorization
 -------------
 
-Mercure also allows to dispatch updates only to authorized clients.
+Mercure also allows dispatching updates only to authorized clients.
 To do so, mark the update as **private** by setting the third parameter
 of the ``Update`` constructor to ``true``::
 
@@ -313,7 +402,7 @@ of the ``Update`` constructor to ``true``::
         public function publish(HubInterface $hub): Response
         {
             $update = new Update(
-                'http://example.com/books/1',
+                'https://example.com/books/1',
                 json_encode(['status' => 'OutOfStock']),
                 true // private
             );
@@ -327,83 +416,64 @@ of the ``Update`` constructor to ``true``::
     }
 
 To subscribe to private updates, subscribers must provide to the Hub
-a JWT containing a topic selector matching by the update's topic.
+a JWT containing a topic selector matching by the topic of the update.
 
 To provide this JWT, the subscriber can use a cookie,
-or a ``Authorization`` HTTP header.
+or an ``Authorization`` HTTP header.
 
-Cookies are automatically sent by the browsers when opening an ``EventSource``
-connection if the ``withCredentials`` attribute is set to ``true``:
+Cookies can be set automatically by Symfony by passing the appropriate options
+to the ``mercure()`` Twig function. Cookies set by Symfony are automatically
+passed by the browsers to the Mercure hub if the ``withCredentials`` attribute
+of the ``EventSource`` class is set to ``true``. Then, the Hub verifies the
+validity of the provided JWT, and extract the topic selectors from it.
 
-.. code-block:: javascript
+.. code-block:: twig
 
-    const eventSource = new EventSource(hub, {
+    <script>
+    const eventSource = new EventSource("{{ mercure('https://example.com/books/1', { subscribe: 'https://example.com/books/1' })|escape('js') }}", {
         withCredentials: true
     });
+    </script>
+
+The supported options are:
+
+* ``subscribe``: the list of topic selectors to include in the ``mercure.subscribe`` claim of the JWT
+* ``publish``: the list of topic selectors to include in the ``mercure.publish`` claim of the JWT
+* ``additionalClaims``: extra claims to include in the JWT (expiration date, token ID...)
 
 Using cookies is the most secure and preferred way when the client is a web
 browser. If the client is not a web browser, then using an authorization header
 is the way to go.
 
+.. caution::
+
+    To use the cookie authentication method, the Symfony app and the Hub
+    must be served from the same domain (can be different sub-domains).
+
 .. tip::
 
     The native implementation of EventSource doesn't allow specifying headers.
-    For example, authorization using Bearer token. In order to achieve that, use `a polyfill`_
+    For example, authorization using a Bearer token. In order to achieve that, use `a polyfill`_
 
-    .. code-block:: javascript
+    .. code-block:: twig
 
-        const es = new EventSourcePolyfill(url, {
+        <script>
+        const es = new EventSourcePolyfill("{{ mercure('https://example.com/books/1') }}", {
             headers: {
                 'Authorization': 'Bearer ' + token,
             }
         });
+        </script>
 
-In the following example controller,
-the generated cookie contains a JWT, itself containing the appropriate topic selector.
-This cookie will be automatically sent by the web browser when connecting to the Hub.
-Then, the Hub will verify the validity of the provided JWT, and extract the topic selectors
-from it.
+Programmatically Setting The Cookie
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Add your JWT secret to the configuration as follow:
+Sometimes, it can be convenient to set the authorization cookie from your code
+instead of using the Twig function. MercureBundle provides a convenient service,
+``Authorization``, to do so.
 
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/mercure.yaml
-        mercure:
-            hubs:
-                default:
-                    url: https://mercure-hub.example.com/.well-known/mercure
-                    jwt:
-                        secret: '!ChangeMe!'
-
-    .. code-block:: xml
-
-        <!-- config/packages/mercure.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <config>
-            <hub
-                name="default"
-                url="https://mercure-hub.example.com/.well-known/mercure"
-            >
-                <jwt secret="!ChangeMe!"/>
-            </hub>
-        </config>
-
-    .. code-block:: php
-
-        // config/packages/mercure.php
-        $container->loadFromExtension('mercure', [
-            'hubs' => [
-                'default' => [
-                    'url' => 'https://mercure-hub.example.com/.well-known/mercure',
-                    'jwt' => [
-                        'secret' => '!ChangeMe!',
-                    ],
-                ],
-            ],
-        ]);
+In the following example controller, the added cookie contains a JWT, itself
+containing the appropriate topic selector.
 
 And here is the controller::
 
@@ -411,34 +481,32 @@ And here is the controller::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\JsonResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Mercure\Authorization;
     use Symfony\Component\Mercure\Discovery;
 
     class DiscoverController extends AbstractController
     {
-        public function publish(Request $request, Discovery $discovery, Authorization $authorization): Response
+        public function publish(Request $request, Discovery $discovery, Authorization $authorization): JsonResponse
         {
             $discovery->addLink($request);
+            $authorization->setCookie($request, ['https://example.com/books/1']);
 
-            $response = new JsonResponse([
+            return $this->json([
                 '@id' => '/demo/books/1',
                 'availability' => 'https://schema.org/InStock'
             ]);
-
-            $response->headers->setCookie(
-                $authorization->createCookie($request,  ["http://example.com/books/1"])
-            );
-
-            return $response;
         }
     }
 
-.. caution::
 
-    To use the cookie authentication method, the Symfony app and the Hub
-    must be served from the same domain (can be different sub-domains).
+.. tip::
+
+    You cannot use the ``mercure()`` helper and the ``setCookie()``
+    method at the same time (it would set the cookie twice on a single request). Choose
+    either one method or the other.
+
 
 Programmatically Generating The JWT Used to Publish
 ---------------------------------------------------
@@ -531,22 +599,16 @@ hypermedia API, and automatic update broadcasting through the Mercure hub::
     use ApiPlatform\Core\Annotation\ApiResource;
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-    * @ApiResource(mercure=true)
-    * @ORM\Entity
-    */
+    #[ApiResource(mercure: true)]
+    #[ORM\Entity]
     class Book
     {
-        /**
-         * @ORM\Id
-         * @ORM\Column
-         */
-        public $name;
+        #[ORM\Id]
+        #[ORM\Column]
+        public string $name = '';
 
-        /**
-         * @ORM\Column
-         */
-        public $status;
+        #[ORM\Column]
+        public string $status = '';
     }
 
 As showcased `in this recording`_, the API Platform Client Generator also
@@ -559,9 +621,9 @@ its Mercure support.
 Testing
 --------
 
-During unit testing there is not need to send updates to Mercure.
+During unit testing it's usually not needed to send updates to Mercure.
 
-You can instead make use of the `MockHub`::
+You can instead make use of the `MockHub` class::
 
     // tests/FunctionalTest.php
     namespace App\Tests\Unit\Controller;
@@ -588,10 +650,10 @@ You can instead make use of the `MockHub`::
         }
     }
 
-During functional testing you can instead decorate the Hub::
+For functional testing, you can instead create a stub of the Hub::
 
-    // tests/Functional/Fixtures/HubStub.php
-    namespace App\Tests\Functional\Fixtures;
+    // tests/Functional/Stub/HubStub.php
+    namespace App\Tests\Functional\Stub;
 
     use Symfony\Component\Mercure\HubInterface;
     use Symfony\Component\Mercure\Update;
@@ -606,14 +668,17 @@ During functional testing you can instead decorate the Hub::
         // implement rest of HubInterface methods here
     }
 
-HubStub decorates the default hub service so no updates are actually
-sent. Here is the HubStub implementation:
+Use ``HubStub`` to replace the default hub service so no updates are actually
+sent:
 
 .. code-block:: yaml
 
     # config/services_test.yaml
-    App\Tests\Functional\Fixtures\HubStub:
-        decorates: mercure.hub.default
+    mercure.hub.default:
+        class: App\Tests\Functional\Stub\HubStub
+
+As MercureBundle support multiple hubs, you may have to replace
+the other service definitions accordingly.
 
 .. tip::
 
@@ -628,34 +693,12 @@ Debugging
 
 Enable the panel in your configuration, as follows:
 
-.. configuration-block::
+MercureBundle is shipped with a debug panel. Install the Debug pack to
+enable it::
 
-    .. code-block:: yaml
+.. code-block:: terminal
 
-        # config/packages/mercure.yaml
-        mercure:
-            enable_profiler: '%kernel.debug%'
-
-    .. code-block:: xml
-
-        <!-- config/packages/mercure.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <mercure:config enable_profiler="%kernel.debug%"/>
-
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/mercure.php
-        $container->loadFromExtension('mercure', [
-            'enable_profiler' => '%kernel.debug%',
-        ]);
-
+    $ composer require --dev symfony/debug-pack
 
 .. image:: /_images/mercure/panel.png
 
@@ -692,7 +735,7 @@ it will be handled automatically::
         public function publish(MessageBusInterface $bus): Response
         {
             $update = new Update(
-                'http://example.com/books/1',
+                'https://example.com/books/1',
                 json_encode(['status' => 'OutOfStock'])
             );
 
@@ -703,6 +746,13 @@ it will be handled automatically::
         }
     }
 
+Going further
+-------------
+
+* The Mercure protocol is also supported by :doc:`the Notifier component </notifier>`.
+  Use it to send push notifications to web browsers.
+* `Symfony UX Turbo`_ is a library using Mercure to provide the same experience
+  as with Single Page Applications but without having to write a single line of JavaScript!
 
 .. _`the Mercure protocol`: https://mercure.rocks/spec
 .. _`Server-Sent Events (SSE)`: https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events
@@ -719,3 +769,4 @@ it will be handled automatically::
 .. _`the dedicated API Platform documentation`: https://api-platform.com/docs/core/mercure/
 .. _`the online debugger`: https://uri-template-tester.mercure.rocks
 .. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket
+.. _`Symfony UX Turbo`: https://github.com/symfony/ux-turbo

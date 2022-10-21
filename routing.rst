@@ -15,57 +15,59 @@ provides other useful features, like generating SEO-friendly URLs (e.g.
 Creating Routes
 ---------------
 
-Routes can be configured in YAML, XML, PHP or using annotations. All formats
-provide the same features and performance, so choose your favorite.
-:ref:`Symfony recommends annotations <best-practice-controller-annotations>`
+Routes can be configured in YAML, XML, PHP or using attributes.
+All formats provide the same features and performance, so choose
+your favorite.
+:ref:`Symfony recommends attributes <best-practice-controller-annotations>`
 because it's convenient to put the route and controller in the same place.
 
-Creating Routes as Annotations
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating Routes as Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Run this command once in your application to add support for annotations:
+PHP attributes allow to define routes next to the code of the
+:doc:`controllers </controller>` associated to those routes. Attributes are
+native in PHP 8 and higher versions, so you can use them right away.
 
-.. code-block:: terminal
-
-    $ composer require doctrine/annotations
-
-In addition to installing the needed dependencies, this command creates the
-following configuration file:
+You need to add a bit of configuration to your project before using them. If your
+project uses :ref:`Symfony Flex <symfony-flex>`, this file is already created for you.
+Otherwise, create the following file manually:
 
 .. code-block:: yaml
 
-    # config/routes/annotations.yaml
+    # config/routes/attributes.yaml
     controllers:
         resource: ../../src/Controller/
-        type: annotation
+        type: attribute
 
     kernel:
         resource: ../../src/Kernel.php
-        type: annotation
+        type: attribute
 
-This configuration tells Symfony to look for routes defined as annotations in
-any PHP class stored in the ``src/Controller/`` directory.
+This configuration tells Symfony to look for routes defined as
+attributes in any PHP class stored in the ``src/Controller/``
+directory.
 
 Suppose you want to define a route for the ``/blog`` URL in your application. To
-do so, create a :doc:`controller class </controller>` like the following::
+do so, create a :doc:`controller class </controller>` like the following:
 
-    // src/Controller/BlogController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
+    .. code-block:: php-attributes
 
-    class BlogController extends AbstractController
-    {
-        /**
-         * @Route("/blog", name="blog_list")
-         */
-        public function list(): Response
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
         {
-            // ...
+            #[Route('/blog', name: 'blog_list')]
+            public function list(): Response
+            {
+                // ...
+            }
         }
-    }
 
 This configuration defines a route called ``blog_list`` that matches when the
 user requests the ``/blog`` URL. When the match occurs, the application runs
@@ -147,6 +149,12 @@ the ``BlogController``:
             ;
         };
 
+.. note::
+
+    By default Symfony only loads the routes defined in YAML format. If you
+    define routes in XML and/or PHP formats, update the ``src/Kernel.php`` file
+    to add support for the ``.xml`` and ``.php`` file extensions.
+
 .. _routing-matching-http-methods:
 
 Matching HTTP Methods
@@ -157,28 +165,22 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/BlogApiController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
+        // ...
 
         class BlogApiController extends AbstractController
         {
-            /**
-             * @Route("/api/posts/{id}", methods={"GET","HEAD"})
-             */
+            #[Route('/api/posts/{id}', methods: ['GET', 'HEAD'])]
             public function show(int $id): Response
             {
                 // ... return a JSON response with the post
             }
 
-            /**
-             * @Route("/api/posts/{id}", methods={"PUT"})
-             */
+            #[Route('/api/posts/{id}', methods: ['PUT'])]
             public function edit(int $id): Response
             {
                 // ... edit a post
@@ -251,7 +253,7 @@ arbitrary matching logic:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/DefaultController.php
         namespace App\Controller;
@@ -262,19 +264,27 @@ arbitrary matching logic:
 
         class DefaultController extends AbstractController
         {
-            /**
-             * @Route(
-             *     "/contact",
-             *     name="contact",
-             *     condition="context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
-             * )
-             *
-             * expressions can also include configuration parameters:
-             * condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
-             */
+            #[Route(
+                '/contact',
+                name: 'contact',
+                condition: "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'",
+                // expressions can also include config parameters:
+                // condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
+            )]
             public function contact(): Response
             {
                 // ...
+            }
+
+            #[Route(
+                '/posts/{id}',
+                name: 'post_show',
+                // expressions can retrieve route parameter values using the "params" variable
+                condition: "params['id'] < 1000"
+            )]
+            public function showPost(int $id): Response
+            {
+                // ... return a JSON response with the post
             }
         }
 
@@ -287,6 +297,14 @@ arbitrary matching logic:
             condition:  "context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'"
             # expressions can also include configuration parameters:
             # condition: "request.headers.get('User-Agent') matches '%app.allowed_browsers%'"
+            # expressions can even use environment variables:
+            # condition: "context.getHost() == env('APP_MAIN_HOST')"
+
+        post_show:
+            path:       /posts/{id}
+            controller: 'App\Controller\DefaultController::showPost'
+            # expressions can retrieve route parameter values using the "params" variable
+            condition:  "params['id'] < 1000"
 
     .. code-block:: xml
 
@@ -301,6 +319,13 @@ arbitrary matching logic:
                 <condition>context.getMethod() in ['GET', 'HEAD'] and request.headers.get('User-Agent') matches '/firefox/i'</condition>
                 <!-- expressions can also include configuration parameters: -->
                 <!-- <condition>request.headers.get('User-Agent') matches '%app.allowed_browsers%'</condition> -->
+                <!-- expressions can even use environment variables: -->
+                <!-- <condition>context.getHost() == env('APP_MAIN_HOST')</condition> -->
+            </route>
+
+            <route id="post_show" path="/posts/{id}" controller="App\Controller\DefaultController::showPost">
+                <!-- expressions can retrieve route parameter values using the "params" variable -->
+                <condition>params['id'] &lt; 1000</condition>
             </route>
         </routes>
 
@@ -315,7 +340,14 @@ arbitrary matching logic:
                 ->controller([DefaultController::class, 'contact'])
                 ->condition('context.getMethod() in ["GET", "HEAD"] and request.headers.get("User-Agent") matches "/firefox/i"')
                 // expressions can also include configuration parameters:
-                // 'request.headers.get("User-Agent") matches "%app.allowed_browsers%"'
+                // ->condition('request.headers.get("User-Agent") matches "%app.allowed_browsers%"')
+                // expressions can even use environment variables:
+                // ->condition('context.getHost() == env("APP_MAIN_HOST")')
+            ;
+            $routes->add('post_show', '/posts/{id}')
+                ->controller([DefaultController::class, 'showPost'])
+                // expressions can retrieve route parameter values using the "params" variable
+                ->condition('params["id"] < 1000')
             ;
         };
 
@@ -330,6 +362,29 @@ and can use any of these variables created by Symfony:
 ``request``
     The :ref:`Symfony Request <component-http-foundation-request>` object that
     represents the current request.
+
+``params``
+    An array of matched :ref:`route parameters <routing-route-parameters>` for
+    the current route.
+
+.. versionadded:: 6.1
+
+    The ``params`` variable was introduced in Symfony 6.1.
+
+You can also use these functions:
+
+``env(string $name)``
+    Returns the value of a variable using :doc:`Environment Variable Processors <configuration/env_var_processors>`
+
+``service(string $alias)``
+    Returns a routing condition service.
+    You'll have to add the ``#[AsRoutingConditionService]`` attribute or ``routing.condition_service``
+    tag to your service if you want to use it in the condition.
+
+.. versionadded:: 6.1
+
+    The ``service(string $alias)`` function and ``#[AsRoutingConditionService]``
+    attribute were introduced in Symfony 6.1.
 
 Behind the scenes, expressions are compiled down to raw PHP. Because of this,
 using the ``condition`` key causes no extra overhead beyond the time it takes
@@ -390,6 +445,8 @@ controller action that you expect:
 
       [OK] Route "app_lucky_number" matches
 
+.. _routing-route-parameters:
+
 Route Parameters
 ----------------
 
@@ -404,7 +461,7 @@ defined as ``/blog/{slug}``:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/BlogController.php
         namespace App\Controller;
@@ -417,9 +474,7 @@ defined as ``/blog/{slug}``:
         {
             // ...
 
-            /**
-             * @Route("/blog/{slug}", name="blog_show")
-             */
+            #[Route('/blog/{slug}', name: 'blog_show')]
             public function show(string $slug): Response
             {
                 // $slug will equal the dynamic part of the URL
@@ -485,7 +540,7 @@ the ``{page}`` parameter using the ``requirements`` option:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/BlogController.php
         namespace App\Controller;
@@ -496,18 +551,14 @@ the ``{page}`` parameter using the ``requirements`` option:
 
         class BlogController extends AbstractController
         {
-            /**
-             * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
-             */
+            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
             public function list(int $page): Response
             {
                 // ...
             }
 
-            /**
-             * @Route("/blog/{slug}", name="blog_show")
-             */
-            public function show(string $slug): Response
+            #[Route('/blog/{slug}', name: 'blog_show')]
+            public function show($slug): Response
             {
                 // ...
             }
@@ -574,6 +625,16 @@ URL                       Route          Parameters
 
 .. tip::
 
+    The :class:`Symfony\\Component\\Routing\\Requirement\\Requirement` enum
+    contains a collection of commonly used regular-expression constants such as
+    digits, dates and UUIDs which can be used as route parameter requirements.
+
+    .. versionadded:: 6.1
+
+        The ``Requirement`` enum was introduced in Symfony 6.1.
+
+.. tip::
+
     Route requirements (and route paths too) can include
     :ref:`configuration parameters <configuration-parameters>`, which is useful to
     define complex regular expressions once and reuse them in multiple routes.
@@ -583,7 +644,7 @@ URL                       Route          Parameters
     Parameters also support `PCRE Unicode properties`_, which are escape
     sequences that match generic character types. For example, ``\p{Lu}``
     matches any uppercase character in any language, ``\p{Greek}`` matches any
-    Greek character, etc.
+    Greek characters, etc.
 
 .. note::
 
@@ -597,7 +658,7 @@ concise, but it can decrease route readability when requirements are complex:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/BlogController.php
         namespace App\Controller;
@@ -608,9 +669,7 @@ concise, but it can decrease route readability when requirements are complex:
 
         class BlogController extends AbstractController
         {
-            /**
-             * @Route("/blog/{page<\d+>}", name="blog_list")
-             */
+            #[Route('/blog/{page<\d+>}', name: 'blog_list')]
             public function list(int $page): Response
             {
                 // ...
@@ -660,13 +719,13 @@ visit ``/blog/1``, it will match. But if they visit ``/blog``, it will **not**
 match. As soon as you add a parameter to a route, it must have a value.
 
 You can make ``blog_list`` once again match when the user visits ``/blog`` by
-adding a default value for the ``{page}`` parameter. When using annotations,
+adding a default value for the ``{page}`` parameter. When using annotations or attributes,
 default values are defined in the arguments of the controller action. In the
 other configuration formats they are defined with the ``defaults`` option:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/BlogController.php
         namespace App\Controller;
@@ -677,9 +736,7 @@ other configuration formats they are defined with the ``defaults`` option:
 
         class BlogController extends AbstractController
         {
-            /**
-             * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
-             */
+            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
             public function list(int $page = 1): Response
             {
                 // ...
@@ -746,11 +803,6 @@ If you want to always include some default value in the generated URL (for
 example to force the generation of ``/blog/1`` instead of ``/blog`` in the
 previous example) add the ``!`` character before the parameter name: ``/blog/{!page}``
 
-.. versionadded:: 4.3
-
-    The feature to force the inclusion of default values in generated URLs was
-    introduced in Symfony 4.3.
-
 As it happens with requirements, default values can also be inlined in each
 parameter using the syntax ``{parameter_name?default_value}``. This feature
 is compatible with inlined requirements, so you can inline both in a single
@@ -758,7 +810,7 @@ parameter:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/BlogController.php
         namespace App\Controller;
@@ -769,9 +821,7 @@ parameter:
 
         class BlogController extends AbstractController
         {
-            /**
-             * @Route("/blog/{page<\d+>?1}", name="blog_list")
-             */
+            #[Route('/blog/{page<\d+>?1}', name: 'blog_list')]
             public function list(int $page): Response
             {
                 // ...
@@ -819,19 +869,63 @@ parameter:
     update the types of the related controller arguments to allow passing
     ``null`` values (e.g. replace ``int $page`` by ``?int $page``).
 
+Priority Parameter
+~~~~~~~~~~~~~~~~~~
+
+Symfony evaluates routes in the order they are defined. If the path of a route
+matches many different patterns, it might prevent other routes from being
+matched. In YAML and XML you can move the route definitions up or down in the
+configuration file to control their priority. In routes defined as PHP
+annotations or attributes this is much harder to do, so you can set the
+optional ``priority`` parameter in those routes to control their priority:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Controller/BlogController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class BlogController extends AbstractController
+        {
+            /**
+             * This route has a greedy pattern and is defined first.
+             */
+            #[Route('/blog/{slug}', name: 'blog_show')]
+            public function show(string $slug): Response
+            {
+                // ...
+            }
+
+            /**
+             * This route could not be matched without defining a higher priority than 0.
+             */
+            #[Route('/blog/list', name: 'blog_list', priority: 2)]
+            public function list(): Response
+            {
+                // ...
+            }
+        }
+
+The priority parameter expects an integer value. Routes with higher priority
+are sorted before routes with lower priority. The default value when it is not
+defined is ``0``.
+
 Parameter Conversion
 ~~~~~~~~~~~~~~~~~~~~
 
 A common routing need is to convert the value stored in some parameter (e.g. an
 integer acting as the user ID) into another value (e.g. the object that
-represents the user). This feature is called "param converter".
+represents the user). This feature is called a "param converter".
 
-In case you didn't run this command before, run it now to add support for
-annotations and "param converters":
+To add support for "param converters" we need SensioFrameworkExtraBundle:
 
 .. code-block:: terminal
 
-    $ composer require annotations
+    $ composer require sensio/framework-extra-bundle
 
 Now, keep the previous route configuration, but change the arguments of the
 controller action. Instead of ``string $slug``, add ``BlogPost $post``::
@@ -848,9 +942,7 @@ controller action. Instead of ``string $slug``, add ``BlogPost $post``::
     {
         // ...
 
-        /**
-         * @Route("/blog/{slug}", name="blog_show")
-         */
+        #[Route('/blog/{slug}', name: 'blog_show')]
         public function show(BlogPost $post): Response
         {
             // $post is the object whose slug matches the routing parameter
@@ -873,11 +965,12 @@ Special Parameters
 In addition to your own parameters, routes can include any of the following
 special parameters created by Symfony:
 
+.. _routing-format-parameter:
+.. _routing-locale-parameter:
+
 ``_controller``
     This parameter is used to determine which controller and action is executed
     when the route is matched.
-
-.. _routing-format-parameter:
 
 ``_format``
     The matched value is used to set the "request format" of the ``Request`` object.
@@ -888,8 +981,6 @@ special parameters created by Symfony:
     Used to set the fragment identifier, which is the optional last part of a URL that
     starts with a ``#`` character and is used to identify a portion of a document.
 
-.. _routing-locale-parameter:
-
 ``_locale``
     Used to set the :ref:`locale <translation-locale-url>` on the request.
 
@@ -899,28 +990,23 @@ and in route imports. Symfony defines some special attributes with the same name
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/ArticleController.php
         namespace App\Controller;
 
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\HttpFoundation\Response;
-        use Symfony\Component\Routing\Annotation\Route;
-
+        // ...
         class ArticleController extends AbstractController
         {
-            /**
-             * @Route(
-             *     "/articles/{_locale}/search.{_format}",
-             *     locale="en",
-             *     format="html",
-             *     requirements={
-             *         "_locale": "en|fr",
-             *         "_format": "html|xml",
-             *     }
-             * )
-             */
+            #[Route(
+                path: '/articles/{_locale}/search.{_format}',
+                locale: 'en',
+                format: 'html',
+                requirements: [
+                    '_locale' => 'en|fr',
+                    '_format' => 'html|xml',
+                ],
+            )]
             public function search(): Response
             {
             }
@@ -978,10 +1064,6 @@ and in route imports. Symfony defines some special attributes with the same name
             ;
         };
 
-.. versionadded:: 4.3
-
-    The special attributes were introduced in Symfony 4.3.
-
 Extra Parameters
 ~~~~~~~~~~~~~~~~
 
@@ -991,7 +1073,7 @@ the controllers of the routes:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/BlogController.php
         namespace App\Controller;
@@ -1002,9 +1084,7 @@ the controllers of the routes:
 
         class BlogController extends AbstractController
         {
-            /**
-             * @Route("/blog/{page}", name="blog_index", defaults={"page": 1, "title": "Hello world!"})
-             */
+            #[Route('/blog/{page}', name: 'blog_index', defaults: ['page' => 1, 'title' => 'Hello world!'])]
             public function index(int $page, string $title): Response
             {
                 // ...
@@ -1066,7 +1146,7 @@ A possible solution is to change the parameter requirements to be more permissiv
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/DefaultController.php
         namespace App\Controller;
@@ -1077,9 +1157,7 @@ A possible solution is to change the parameter requirements to be more permissiv
 
         class DefaultController extends AbstractController
         {
-            /**
-             * @Route("/share/{token}", name="share", requirements={"token"=".+"})
-             */
+            #[Route('/share/{token}', name: 'share', requirements: ['token' => '.+'])]
             public function share($token): Response
             {
                 // ...
@@ -1141,6 +1219,114 @@ A possible solution is to change the parameter requirements to be more permissiv
     as the token and the format will be empty. This can be solved by replacing
     the ``.+`` requirement by ``[^.]+`` to allow any character except dots.
 
+.. _routing-alias:
+
+Route Aliasing
+--------------
+
+Route alias allow you to have multiple name for the same route:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        new_route_name:
+            alias: original_route_name
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="new_route_name" alias="original_route_name"/>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->alias('new_route_name', 'original_route_name');
+        };
+
+In this example, both ``original_route_name`` and ``new_route_name`` routes can
+be used in the application and will produce the same result.
+
+.. _routing-alias-deprecation:
+
+Deprecating Route Aliases
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If some route alias should no longer be used (because it is outdated or
+you decided not to maintain it anymore), you can deprecate its definition:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        new_route_name:
+            alias: original_route_name
+
+            # this outputs the following generic deprecation message:
+            # Since acme/package 1.2: The "new_route_name" route alias is deprecated. You should stop using it, as it will be removed in the future.
+            deprecated:
+                package: 'acme/package'
+                version: '1.2'
+
+            # you can also define a custom deprecation message (%alias_id% placeholder is available)
+            deprecated:
+                package: 'acme/package'
+                version: '1.2'
+                message: 'The "%alias_id%" route alias is deprecated. Do not use it anymore.'
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="new_route_name" alias="original_route_name">
+                <!-- this outputs the following generic deprecation message:
+                     Since acme/package 1.2: The "new_route_name" route alias is deprecated. You should stop using it, as it will be removed in the future. -->
+                <deprecated package="acme/package" version="1.2"/>
+
+                <!-- you can also define a custom deprecation message (%alias_id% placeholder is available) -->
+                <deprecated package="acme/package" version="1.2">
+                    The "%alias_id%" route alias is deprecated. Do not use it anymore.
+                </deprecated>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        $routes->alias('new_route_name', 'original_route_name')
+            // this outputs the following generic deprecation message:
+            // Since acme/package 1.2: The "new_route_name" route alias is deprecated. You should stop using it, as it will be removed in the future.
+            ->deprecate('acme/package', '1.2', '')
+
+            // you can also define a custom deprecation message (%alias_id% placeholder is available)
+            ->deprecate(
+                'acme/package',
+                '1.2',
+                'The "%alias_id%" route alias is deprecated. Do not use it anymore.'
+            )
+        ;
+
+In this example, every time the ``new_route_name`` alias is used, a deprecation
+warning is triggered, advising you to stop using that alias.
+
+The message is actually a message template, which replaces occurrences of the
+``%alias_id%`` placeholder by the route alias name. You **must** have
+at least one occurrence of the ``%alias_id%`` placeholder in your template.
+
 .. _routing-route-groups:
 
 Route Groups and Prefixes
@@ -1150,13 +1336,14 @@ It's common for a group of routes to share some options (e.g. all routes related
 to the blog start with ``/blog``) That's why Symfony includes a feature to share
 route configuration.
 
-When defining routes as annotations, put the common configuration in the
-``@Route`` annotation of the controller class. In other routing formats, define
-the common configuration using options when importing the routes.
+When defining routes as attributes, put the common configuration
+in the ``#[Route]`` attribute of the controller class.
+In other routing formats, define the common configuration using options
+when importing the routes.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/BlogController.php
         namespace App\Controller;
@@ -1165,23 +1352,17 @@ the common configuration using options when importing the routes.
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
 
-        /**
-         * @Route("/blog", requirements={"_locale": "en|es|fr"}, name="blog_")
-         */
+        #[Route('/blog', requirements: ['_locale' => 'en|es|fr'], name: 'blog_')]
         class BlogController extends AbstractController
         {
-            /**
-             * @Route("/{_locale}", name="index")
-             */
+            #[Route('/{_locale}', name: 'index')]
             public function index(): Response
             {
                 // ...
             }
 
-            /**
-             * @Route("/{_locale}/posts/{slug}", name="show")
-             */
-            public function show(Post $post): Response
+            #[Route('/{_locale}/posts/{slug}', name: 'show')]
+            public function show(string $slug): Response
             {
                 // ...
             }
@@ -1246,9 +1427,14 @@ the common configuration using options when importing the routes.
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return function (RoutingConfigurator $routes) {
-            // use the optional fourth argument of import() to exclude some files
-            // or subdirectories when loading annotations
-            $routes->import('../../src/Controller/', 'annotation')
+            $routes->import(
+                    '../../src/Controller/',
+                    'annotation',
+                    false,
+                    // the optional fourth argument is used to exclude some files
+                    // or subdirectories when loading annotations
+                    '../../src/Controller/{DebugEmailController}.php'
+                )
                 // this is added to the beginning of all imported route URLs
                 ->prefix('/blog')
 
@@ -1261,22 +1447,67 @@ the common configuration using options when importing the routes.
 
                 // these requirements are added to all imported routes
                 ->requirements(['_locale' => 'en|es|fr'])
-
-                // you can optionally exclude some files/subdirectories when loading annotations
-                ->exclude('../../src/Controller/{DebugEmailController}.php')
             ;
         };
-
-.. versionadded:: 4.4
-
-    The option to exclude some files or subdirectories when loading annotations
-    was introduced in Symfony 4.4.
 
 In this example, the route of the ``index()`` action will be called ``blog_index``
 and its URL will be ``/blog/{_locale}``. The route of the ``show()`` action will be called
 ``blog_show`` and its URL will be ``/blog/{_locale}/posts/{slug}``. Both routes
 will also validate that the ``_locale`` parameter matches the regular expression
 defined in the class annotation.
+
+.. note::
+
+    If any of the prefixed routes defines an empty path, Symfony adds a trailing
+    slash to it. In the previous example, an empty path prefixed with ``/blog``
+    will result in the ``/blog/`` URL. If you want to avoid this behavior, set
+    the ``trailing_slash_on_root`` option to ``false`` (this option is not
+    available when using PHP attributes or annotations):
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/routes/annotations.yaml
+            controllers:
+                resource: '../../src/Controller/'
+                type:     annotation
+                prefix:   '/blog'
+                trailing_slash_on_root: false
+                # ...
+
+        .. code-block:: xml
+
+            <!-- config/routes/annotations.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <routes xmlns="http://symfony.com/schema/routing"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/routing
+                    https://symfony.com/schema/routing/routing-1.0.xsd">
+
+                <import resource="../../src/Controller/"
+                    type="annotation"
+                    prefix="/blog"
+                    name-prefix="blog_"
+                    trailing-slash-on-root="false"
+                    exclude="../../src/Controller/{DebugEmailController}.php">
+                    <!-- ... -->
+                </import>
+            </routes>
+
+        .. code-block:: php
+
+            // config/routes/annotations.php
+            use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+            return function (RoutingConfigurator $routes) {
+                $routes->import('../../src/Controller/', 'annotation')
+                    // the second argument is the $trailingSlashOnRoot option
+                    ->prefix('/blog', false)
+
+                    // ...
+                ;
+            };
 
 .. seealso::
 
@@ -1300,9 +1531,7 @@ information in a controller via the ``Request`` object::
 
     class BlogController extends AbstractController
     {
-        /**
-         * @Route("/blog", name="blog_list")
-         */
+        #[Route('/blog', name: 'blog_list')]
         public function list(Request $request): Response
         {
             $routeName = $request->attributes->get('_route');
@@ -1318,15 +1547,19 @@ information in a controller via the ``Request`` object::
 You can get this information in services too injecting the ``request_stack``
 service to :doc:`get the Request object in a service </service_container/request>`.
 In templates, use the :ref:`Twig global app variable <twig-app-variable>` to get
-the request and its attributes:
+the current route and its attributes:
 
 .. code-block:: twig
 
-    {% set route_name = app.request.attributes.get('_route') %}
-    {% set route_parameters = app.request.attributes.get('_route_params') %}
+    {% set route_name = app.current_route %}
+    {% set route_parameters = app.current_route_parameters %}
 
-    {# use this to get all the available attributes (not only routing ones) #}
-    {% set all_attributes = app.request.attributes.all %}
+.. versionadded:: 6.2
+
+    The ``app.current_route`` and ``app.current_route_parameters`` variables
+    were introduced in Symfony 6.2.
+    Before you had to access ``_route`` and ``_route_params`` request
+    attributes using ``app.request.attributes.get()``.
 
 Special Routes
 --------------
@@ -1367,6 +1600,8 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
                 # * for temporary redirects, it uses the 307 status code instead of 302
                 # * for permanent redirects, it uses the 308 status code instead of 301
                 keepRequestMethod: true
+                # add this to remove the original route attributes when redirecting
+                ignoreAttributes: true
 
         legacy_doc:
             path: /legacy/doc
@@ -1452,13 +1687,6 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
     Symfony also provides some utilities to
     :ref:`redirect inside controllers <controller-redirect>`
 
-.. versionadded:: 4.4
-
-    In Symfony versions prior to 4.4, you needed to define the specific
-    ``RedirectController`` method to use (either ``redirectAction`` or
-    ``urlRedirectAction``). Starting from Symfony 4.4 this is no longer needed
-    because Symfony detects if the redirection is to a route or an URL.
-
 .. _routing-trailing-slash-redirection:
 
 Redirecting URLs with Trailing Slashes
@@ -1490,7 +1718,7 @@ host name:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/MainController.php
         namespace App\Controller;
@@ -1501,17 +1729,13 @@ host name:
 
         class MainController extends AbstractController
         {
-            /**
-             * @Route("/", name="mobile_homepage", host="m.example.com")
-             */
+            #[Route('/', name: 'mobile_homepage', host: 'm.example.com')]
             public function mobileHomepage(): Response
             {
                 // ...
             }
 
-            /**
-             * @Route("/", name="homepage")
-             */
+            #[Route('/', name: 'homepage')]
             public function homepage(): Response
             {
                 // ...
@@ -1570,7 +1794,7 @@ multi-tenant applications) and these parameters can be validated too with
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/MainController.php
         namespace App\Controller;
@@ -1581,23 +1805,19 @@ multi-tenant applications) and these parameters can be validated too with
 
         class MainController extends AbstractController
         {
-            /**
-             * @Route(
-             *     "/",
-             *     name="mobile_homepage",
-             *     host="{subdomain}.example.com",
-             *     defaults={"subdomain"="m"},
-             *     requirements={"subdomain"="m|mobile"}
-             * )
-             */
+            #[Route(
+                '/',
+                name: 'mobile_homepage',
+                host: '{subdomain}.example.com',
+                defaults: ['subdomain' => 'm'],
+                requirements: ['subdomain' => 'm|mobile'],
+            )]
             public function mobileHomepage(): Response
             {
                 // ...
             }
 
-            /**
-             * @Route("/", name="homepage")
-             */
+            #[Route('/', name: 'homepage')]
             public function homepage(): Response
             {
                 // ...
@@ -1686,14 +1906,15 @@ these routes.
             // ['HTTP_HOST' => 'm.'.$client->getContainer()->getParameter('domain')]
         );
 
+.. tip::
+
+    You can also use the inline defaults and requirements format in the
+    ``host`` option: ``{subdomain<m|mobile>?m}.example.com``
+
 .. _i18n-routing:
 
 Localized Routes (i18n)
 -----------------------
-
-.. versionadded:: 4.1
-
-    The i18n routing was introduced in Symfony 4.1.
 
 If your application is translated into multiple languages, each route can define
 a different URL per each :doc:`translation locale </translation/locale>`. This
@@ -1701,7 +1922,7 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/CompanyController.php
         namespace App\Controller;
@@ -1712,12 +1933,10 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
 
         class CompanyController extends AbstractController
         {
-            /**
-             * @Route({
-             *     "en": "/about-us",
-             *     "nl": "/over-ons"
-             * }, name="about_us")
-             */
+            #[Route(path: [
+                'en' => '/about-us',
+                'nl' => '/over-ons'
+            ], name: 'about_us')]
             public function about(): Response
             {
                 // ...
@@ -1762,6 +1981,11 @@ avoids the need for duplicating routes, which also reduces the potential bugs:
                 ->controller([CompanyController::class, 'about'])
             ;
         };
+
+.. note::
+
+    When using PHP attributes for localized routes, you have to use the ``path``
+    named parameter to specify the array of paths.
 
 When a localized route is matched, Symfony uses the same locale automatically
 during the entire request.
@@ -1819,6 +2043,122 @@ with a locale. This can be done by defining a different prefix for each locale
             ;
         };
 
+Another common requirement is to host the website on a different domain
+according to the locale. This can be done by defining a different host for each
+locale.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes/annotations.yaml
+        controllers:
+            resource: '../../src/Controller/'
+            type: annotation
+            host:
+                en: 'https://www.example.com'
+                nl: 'https://www.example.nl'
+
+    .. code-block:: xml
+
+        <!-- config/routes/annotations.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+            <import resource="../../src/Controller/" type="annotation">
+                <host locale="en">https://www.example.com</host>
+                <host locale="nl">https://www.example.nl</host>
+            </import>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes/annotations.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        return function (RoutingConfigurator $routes) {
+            $routes->import('../../src/Controller/', 'annotation')
+                ->host([
+                    'en' => 'https://www.example.com',
+                    'nl' => 'https://www.example.nl',
+                ])
+            ;
+        };
+
+.. _stateless-routing:
+
+Stateless Routes
+----------------
+
+Sometimes, when an HTTP response should be cached, it is important to ensure
+that can happen. However, whenever a session is started during a request,
+Symfony turns the response into a private non-cacheable response.
+
+For details, see :doc:`/http_cache`.
+
+Routes can configure a ``stateless`` boolean option in order to declare that the
+session shouldn't be used when matching a request:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Controller/MainController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class MainController extends AbstractController
+        {
+            #[Route('/', name: 'homepage', stateless: true)]
+            public function homepage(): Response
+            {
+                // ...
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        homepage:
+            controller: App\Controller\MainController::homepage
+            path: /
+            stateless: true
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+            <route id="homepage" controller="App\Controller\MainController::homepage" path="/" stateless="true"/>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use App\Controller\MainController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->add('homepage', '/')
+                ->controller([MainController::class, 'homepage'])
+                ->stateless()
+            ;
+        };
+
+Now, if the session is used, the application will report it based on your
+``kernel.debug`` parameter:
+
+* ``enabled``: will throw an :class:`Symfony\\Component\\HttpKernel\\Exception\\UnexpectedSessionUsageException` exception
+* ``disabled``: will log a warning
+
+It will help you understand and hopefully fixing unexpected behavior in your application.
+
 .. _routing-generating-urls:
 
 Generating URLs
@@ -1854,9 +2194,7 @@ use the ``generateUrl()`` helper::
 
     class BlogController extends AbstractController
     {
-        /**
-         * @Route("/blog", name="blog_list")
-         */
+        #[Route('/blog', name: 'blog_list')]
         public function list(): Response
         {
             // generate a URL with no route arguments
@@ -1864,7 +2202,7 @@ use the ``generateUrl()`` helper::
 
             // generate a URL with route arguments
             $userProfilePage = $this->generateUrl('user_profile', [
-                'username' => $user->getUsername(),
+                'username' => $user->getUserIdentifier(),
             ]);
 
             // generated URLs are "absolute paths" by default. Pass a third optional
@@ -1918,11 +2256,8 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
 
     class SomeService
     {
-        private $router;
-
-        public function __construct(UrlGeneratorInterface $router)
+        public function __construct(private UrlGeneratorInterface $router)
         {
-            $this->router = $router;
         }
 
         public function someMethod()
@@ -1934,7 +2269,7 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
 
             // generate a URL with route arguments
             $userProfilePage = $this->router->generate('user_profile', [
-                'username' => $user->getUsername(),
+                'username' => $user->getUserIdentifier(),
             ]);
 
             // generated URLs are "absolute paths" by default. Pass a third optional
@@ -1971,54 +2306,59 @@ If you need to generate URLs dynamically or if you are using pure JavaScript
 code, this solution doesn't work. In those cases, consider using the
 `FOSJsRoutingBundle`_.
 
+.. _router-generate-urls-commands:
+
 Generating URLs in Commands
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Generating URLs in commands works the same as
 :ref:`generating URLs in services <routing-generating-urls-in-services>`. The
-only difference is that commands are not executed in the HTTP context, so they
-don't have access to HTTP requests. In practice, this means that if you generate
-absolute URLs, you'll get ``http://localhost/`` as the host name instead of your
-real host name.
+only difference is that commands are not executed in the HTTP context. Therefore,
+if you generate absolute URLs, you'll get ``http://localhost/`` as the host name
+instead of your real host name.
 
-The solution is to configure the "request context" used by commands when they
-generate URLs. This context can be configured globally for all commands:
+The solution is to configure the ``default_uri`` option to define the
+"request context" used by commands when they generate URLs:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # config/services.yaml
-        parameters:
-            router.request_context.host: 'example.org'
-            router.request_context.base_url: 'my/path'
-            asset.request_context.base_path: '%router.request_context.base_url%'
+        # config/packages/routing.yaml
+        framework:
+            router:
+                # ...
+                default_uri: 'https://example.org/my/path/'
 
     .. code-block:: xml
 
-        <!-- config/services.xml -->
+        <!-- config/packages/routing.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <parameters>
-                <parameter key="router.request_context.host">example.org</parameter>
-                <parameter key="router.request_context.base_url">my/path</parameter>
-                <parameter key="asset.request_context.base_path">%router.request_context.base_url%</parameter>
-            </parameters>
-
+            <framework:config>
+                <framework:router default-uri="https://example.org/my/path/">
+                    <!-- ... -->
+                </framework:router>
+            </framework:config>
         </container>
 
     .. code-block:: php
 
-        // config/services.php
-        $container->setParameter('router.request_context.host', 'example.org');
-        $container->setParameter('router.request_context.base_url', 'my/path');
-        $container->setParameter('asset.request_context.base_path', $container->getParameter('router.request_context.base_url'));
+        // config/packages/routing.php
+        use Symfony\Config\FrameworkConfig;
 
-This information can be configured per command too::
+        return static function (FrameworkConfig $framework) {
+            $framework->router()->defaultUri('https://example.org/my/path/');
+        };
+
+Now you'll get the expected results when generating URLs in your commands::
 
     // src/Command/SomeCommand.php
     namespace App\Command;
@@ -2032,28 +2372,19 @@ This information can be configured per command too::
 
     class SomeCommand extends Command
     {
-        private $router;
-
-        public function __construct(RouterInterface $router)
+        public function __construct(private RouterInterface $router)
         {
             parent::__construct();
-
-            $this->router = $router;
         }
 
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
-            // these values override any global configuration
-            $context = $this->router->getContext();
-            $context->setHost('example.com');
-            $context->setBaseUrl('my/path');
-
             // generate a URL with no route arguments
             $signUpPage = $this->router->generate('sign_up');
 
             // generate a URL with route arguments
             $userProfilePage = $this->router->generate('user_profile', [
-                'username' => $user->getUsername(),
+                'username' => $user->getUserIdentifier(),
             ]);
 
             // generated URLs are "absolute paths" by default. Pass a third optional
@@ -2067,6 +2398,12 @@ This information can be configured per command too::
             // ...
         }
     }
+
+.. note::
+
+    By default, the URLs generated for web assets use the same ``default_uri``
+    value, but you can change it with the ``asset.request_context.base_path``
+    and ``asset.request_context.secure`` container parameters.
 
 Checking if a Route Exists
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2136,7 +2473,7 @@ each route explicitly:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Controller/SecurityController.php
         namespace App\Controller;
@@ -2147,9 +2484,7 @@ each route explicitly:
 
         class SecurityController extends AbstractController
         {
-            /**
-             * @Route("/login", name="login", schemes={"https"})
-             */
+            #[Route('/login', name: 'login', schemes: ['https'])]
             public function login(): Response
             {
                 // ...

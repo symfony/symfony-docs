@@ -8,6 +8,9 @@ on:
         branches-ignore:
             - 'github-comments'
 
+permissions:
+    contents: read
+
 jobs:
     symfony-docs-builder-build:
         name: Build (symfony-tools/docs-builder)
@@ -23,7 +26,7 @@ jobs:
             -   name: "Set-up PHP"
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.0
+                    php-version: 8.1
                     coverage: none
                     tools: "composer:v2"
 
@@ -45,11 +48,7 @@ jobs:
 
             -   name: "Build the docs"
                 working-directory: _build
-                run: php build.php -vvv
-
-            -   name: Show log file
-                if: ${{ always() }}
-                run: cat _build/logs.txt || true
+                run: php build.php --disable-cache
 
     doctor-rst:
         name: Lint (DOCtor-RST)
@@ -91,7 +90,7 @@ jobs:
           - name: Set-up PHP
             uses: shivammathur/setup-php@v2
             with:
-                php-version: 8.0
+                php-version: 8.1
                 coverage: none
 
           - name: Fetch branch from where the PR started
@@ -118,7 +117,7 @@ jobs:
 
           - name: Install dependencies
             if: ${{ steps.find-files.outputs.files }}
-            run: composer create-project symfony-tools/code-block-checker _checker
+            run: composer create-project symfony-tools/code-block-checker:@dev _checker
 
           - name: Install test application
             if: ${{ steps.find-files.outputs.files }}

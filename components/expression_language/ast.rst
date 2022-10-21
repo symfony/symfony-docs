@@ -5,8 +5,8 @@
 Dumping and Manipulating the AST of Expressions
 ===============================================
 
-Manipulating or inspecting the expressions created with the ExpressionLanguage
-component is difficult because they are plain strings. A better approach is to
+It’s difficult to manipulate or inspect the expressions created with the ExpressionLanguage
+component, because the expressions are plain strings. A better approach is to
 turn those expressions into an AST. In computer science, `AST`_ (*Abstract
 Syntax Tree*) is *"a tree representation of the structure of source code written
 in a programming language"*. In Symfony, a ExpressionLanguage AST is a set of

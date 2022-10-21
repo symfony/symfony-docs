@@ -6,6 +6,10 @@ Enabling Vue.js (``vue-loader``)
 
     Do you prefer video tutorials? Check out the `Vue screencast series`_.
 
+.. tip::
+
+    Check out live demos of Symfony UX Vue.js component at `https://ux.symfony.com/vue`_!
+    
 Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
 .. code-block:: diff
@@ -28,20 +32,52 @@ Any ``.vue`` files that you require will be processed correctly. You can also
 configure the `vue-loader options`_ by passing an options callback to
 ``enableVueLoader()``. See the `Encore's index.js file`_ for detailed documentation.
 
+Runtime Compiler Build
+----------------------
+
+By default, Encore uses a Vue "build" that allows you to compile templates at
+runtime. This means that you *can* do either of these:
+
+.. code-block:: javascript
+
+    new Vue({
+        template: '<div>{{ hi }}</div>'
+    })
+
+    new Vue({
+        el: '#app', // where <div id="app"> in your DOM contains the Vue template
+    });
+
+If you do *not* need this functionality (e.g. you use single file components),
+then you can tell Encore to create a *smaller* build following Content Security Policy:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+
+        .enableVueLoader(() => {}, { runtimeCompilerBuild: false })
+    ;
+
+You can also silence the recommendation by passing ``runtimeCompilerBuild: true``.
+
 Hot Module Replacement (HMR)
 ----------------------------
 
 The ``vue-loader`` supports hot module replacement: just update your code and watch
 your Vue.js app update *without* a browser refresh! To activate it, use the
-``dev-server`` with the ``--hot`` option:
+``dev-server``:
 
 .. code-block:: terminal
 
     # if you use the Yarn package manager
-    $ yarn encore dev-server --hot
+    $ yarn encore dev-server
 
     # if you use the npm package manager
-    $ npm run dev-server -- --hot
+    $ npm run dev-server
 
 That's it! Change one of your ``.vue`` files and watch your browser update. But
 note: this does *not* currently work for *style* changes in a ``.vue`` file. Seeing
@@ -180,3 +216,4 @@ following in your Twig templates:
 .. _`Scoped Styles`: https://vue-loader.vuejs.org/guide/scoped-css.html
 .. _`CSS Modules`: https://github.com/css-modules/css-modules
 .. _`Vue screencast series`: https://symfonycasts.com/screencast/vue
+.. _`https://ux.symfony.com/vue`: https://ux.symfony.com/vue

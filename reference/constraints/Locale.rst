@@ -8,12 +8,12 @@ the two letter `ISO 639-1`_ *language* code (e.g. ``fr``), or the language code
 followed by an underscore (``_``) and the `ISO 3166-1 alpha-2`_ *country* code
 (e.g. ``fr_FR`` for French/France).
 
+The given locale values are *canonicalized* before validating them to avoid
+issues with wrong uppercase/lowercase values and to remove unneeded elements
+(e.g. ``FR-fr.utf8`` will be validated as ``fr_FR``).
+
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `canonicalize`_
-            - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Locale`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LocaleValidator`
 ==========  ===================================================================
@@ -23,7 +23,7 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/User.php
         namespace App\Entity;
@@ -32,11 +32,9 @@ Basic Usage
 
         class User
         {
-            /**
-             * @Assert\Locale(
-             *     canonicalize = true
-             * )
-             */
+            #[Assert\Locale(
+                canonicalize: true,
+            )]
             protected $locale;
         }
 
@@ -89,19 +87,6 @@ Basic Usage
 Options
 -------
 
-``canonicalize``
-~~~~~~~~~~~~~~~~
-
-**type**: ``boolean`` **default**: ``false``
-
-.. deprecated:: 4.1
-
-    Using this option with value ``false`` was deprecated in Symfony 4.1 and it
-    will throw an exception in Symfony 5.0. Use ``true`` instead.
-
-If ``true``, the :phpmethod:`Locale::canonicalize` method will be applied before checking
-the validity of the given locale (e.g. ``FR-fr.utf8`` is transformed into ``fr_FR``).
-
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
@@ -117,10 +102,11 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`ICU format locale IDs`: http://userguide.icu-project.org/locale
+.. _`ICU format locale IDs`: https://unicode-org.github.io/icu/userguide/locale/
 .. _`ISO 639-1`: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1#Current_codes

@@ -76,7 +76,7 @@ members will not be included in any communication on the incidents as well as re
 created related to the incidents.
 
 CARE team members are expected to inform the CARE team and the reporters
-in case of conflicts on interest and recuse themselves if this is deemed a problem.
+in case of a conflict of interest, and recuse themselves if this is deemed to be a problem.
 
 Appealing the response
 ----------------------
@@ -93,6 +93,6 @@ Reporting Guidelines derived from those of the `Stumptown Syndicate`_ and the
 
 Adopted by `Symfony`_ organizers on 21 February 2018.
 
-.. _`Stumptown Syndicate`: http://stumptownsyndicate.org/code-of-conduct/reporting-guidelines/
+.. _`Stumptown Syndicate`: https://github.com/stumpsyn/policies/blob/master/reporting_guidelines.md/
 .. _`Django Software Foundation`: https://www.djangoproject.com/conduct/reporting/
 .. _`Symfony`: https://symfony.com

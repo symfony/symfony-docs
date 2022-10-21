@@ -23,7 +23,7 @@ configure your handler to use it:
 
     .. code-block:: xml
 
-        <!-- config/services.xml -->
+        <!-- config/packages/prod/monolog.xml (and/or config/packages/dev/monolog.xml) -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -33,7 +33,6 @@ configure your handler to use it:
                 http://symfony.com/schema/dic/monolog
                 https://symfony.com/schema/dic/monolog/monolog-1.0.xsd">
 
-            <!-- config/packages/prod/monolog.xml (and/or config/packages/dev/monolog.xml) -->
             <monolog:config>
                 <monolog:handler
                     name="file"
@@ -46,16 +45,13 @@ configure your handler to use it:
 
     .. code-block:: php
 
-        // config/services.php
-        use Monolog\Formatter\JsonFormatter;
-
         // config/packages/prod/monolog.php (and/or config/packages/dev/monolog.php)
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'file' => [
-                    'type'      => 'stream',
-                    'level'     => 'debug',
-                    'formatter' => 'monolog.formatter.json',
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('file')
+                ->type('stream')
+                ->level('debug')
+                ->formatter('monolog.formatter.json')
+            ;
+        };

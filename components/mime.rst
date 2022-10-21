@@ -9,10 +9,6 @@ The Mime Component
     The Mime component allows manipulating the MIME messages used to send emails
     and provides utilities related to MIME types.
 
-.. versionadded:: 4.3
-
-    The Mime component was introduced in Symfony 4.3.
-
 Installation
 ------------
 
@@ -38,7 +34,7 @@ complexity to provide two ways of creating MIME messages:
 * A high-level API based on the :class:`Symfony\\Component\\Mime\\Email` class
   to quickly create email messages with all the common features;
 * A low-level API based on the :class:`Symfony\\Component\\Mime\\Message` class
-  to have an absolute control over every single part of the email message.
+  to have absolute control over every single part of the email message.
 
 Usage
 -----
@@ -60,7 +56,7 @@ methods to compose the entire email message::
         ->html('<h1>Lorem ipsum</h1> <p>...</p>')
     ;
 
-This only purpose of this component is to create the email messages. Use the
+The only purpose of this component is to create the email messages. Use the
 :doc:`Mailer component </mailer>` to actually send them.
 
 Twig Integration

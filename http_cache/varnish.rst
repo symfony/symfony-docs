@@ -89,7 +89,7 @@ configuration of PHP, your session cookie has the name ``PHPSESSID``:
                 set req.http.Cookie = regsuball(req.http.Cookie, "^[; ]+|[; ]+$", "");
 
                 if (req.http.Cookie == "") {
-                    // If there are no more cookies, remove the header to get page cached.
+                    // If there are no more cookies, remove the header to get the page cached.
                     unset req.http.Cookie;
                 }
             }
@@ -235,7 +235,7 @@ proxy before it has expired, it adds complexity to your caching setup.
 
 .. _`Varnish`: https://varnish-cache.org/
 .. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
-.. _`clean the cookies header`: https://varnish-cache.org/trac/wiki/VCLExampleRemovingSomeCookies
+.. _`clean the cookies header`: https://varnish-cache.org/docs/7.0/reference/vmod_cookie.html
 .. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: https://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.io/en/latest/features/user-context.html

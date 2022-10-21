@@ -40,13 +40,25 @@ It is possible to define your own styles using the
     use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
     // ...
-    $outputStyle = new OutputFormatterStyle('red', 'yellow', ['bold', 'blink']);
+    $outputStyle = new OutputFormatterStyle('red', '#ff0', ['bold', 'blink']);
     $output->getFormatter()->setStyle('fire', $outputStyle);
 
     $output->writeln('<fire>foo</>');
 
-Available foreground and background colors are: ``black``, ``red``, ``green``,
-``yellow``, ``blue``, ``magenta``, ``cyan`` and ``white``.
+Any hex color is supported for foreground and background colors. Besides that, these named colors are supported:
+``black``, ``red``, ``green``, ``yellow``, ``blue``, ``magenta``, ``cyan``, ``white``,
+``gray``, ``bright-red``, ``bright-green``, ``bright-yellow``, ``bright-blue``,
+``bright-magenta``, ``bright-cyan`` and ``bright-white``.
+
+.. note::
+
+    If the terminal doesn't support true colors, the given color is replaced by
+    the nearest color depending on the terminal capabilities. E.g. ``#c0392b`` is
+    degraded to ``#d75f5f`` in 256-color terminals and to ``red`` in 8-color terminals.
+
+    .. versionadded:: 6.2
+
+        The support for 256-color terminals was introduced in Symfony 6.2.
 
 And available options are: ``bold``, ``underscore``, ``blink``, ``reverse``
 (enables the "reverse video" mode where the background and foreground colors
@@ -56,8 +68,11 @@ commonly used when asking the user to type sensitive information).
 
 You can also set these colors and options directly inside the tag name::
 
-    // green text
+    // using named colors
     $output->writeln('<fg=green>foo</>');
+
+    // using hexadecimal colors
+    $output->writeln('<fg=#c0392b>foo</>');
 
     // black text on a cyan background
     $output->writeln('<fg=black;bg=cyan>foo</>');
@@ -77,10 +92,6 @@ You can also set these colors and options directly inside the tag name::
 Displaying Clickable Links
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 4.3
-
-    The feature to display clickable links was introduced in Symfony 4.3.
-
 Commands can use the special ``<href>`` tag to display links similar to the
 ``<a>`` elements of web pages::
 
@@ -91,7 +102,7 @@ you can click on the *"Symfony Homepage"* text to open its URL in your default
 browser. Otherwise, you'll see *"Symfony Homepage"* as regular text and the URL
 will be lost.
 
-.. _Cmder: https://cmder.net/
+.. _Cmder: https://github.com/cmderdev/cmder
 .. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/

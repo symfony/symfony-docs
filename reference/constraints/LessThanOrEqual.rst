@@ -7,11 +7,6 @@ options. To force that a value is less than another value, see
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\LessThanOrEqual`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LessThanOrEqualValidator`
 ==========  ===================================================================
@@ -26,7 +21,7 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Person.php
         namespace App\Entity;
@@ -35,16 +30,12 @@ The following constraints ensure that:
 
         class Person
         {
-            /**
-             * @Assert\LessThanOrEqual(5)
-             */
+            #[Assert\LessThanOrEqual(5)]
             protected $siblings;
 
-            /**
-             * @Assert\LessThanOrEqual(
-             *     value = 80
-             * )
-             */
+            #[Assert\LessThanOrEqual(
+                value: 80,
+            )]
             protected $age;
         }
 
@@ -110,7 +101,7 @@ that a date must be today or in the past like this:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Person.php
         namespace App\Entity;
@@ -119,9 +110,7 @@ that a date must be today or in the past like this:
 
         class Person
         {
-            /**
-             * @Assert\LessThanOrEqual("today")
-             */
+            #[Assert\LessThanOrEqual('today')]
             protected $dateOfBirth;
         }
 
@@ -169,7 +158,7 @@ dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Person.php
         namespace App\Entity;
@@ -178,9 +167,7 @@ dates. If you want to fix the timezone, append it to the date string:
 
         class Person
         {
-            /**
-             * @Assert\LessThanOrEqual("today UTC")
-             */
+            #[Assert\LessThanOrEqual('today UTC')]
             protected $dateOfBirth;
         }
 
@@ -228,7 +215,7 @@ can check that a person must be at least 18 years old like this:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Person.php
         namespace App\Entity;
@@ -237,9 +224,7 @@ can check that a person must be at least 18 years old like this:
 
         class Person
         {
-            /**
-             * @Assert\LessThanOrEqual("-18 years")
-             */
+            #[Assert\LessThanOrEqual('-18 years')]
             protected $dateOfBirth;
         }
 

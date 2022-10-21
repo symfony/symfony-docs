@@ -20,12 +20,6 @@ form of languages, you can list the most popular on top, like Bork and Pirate::
         'preferred_choices' => ['muppets', 'arr'],
     ]);
 
-.. versionadded:: 4.4
-
-    Starting from Symfony 4.4, the preferred choices are displayed both at the
-    top of the list and at their original locations on the list. In prior
-    Symfony versions, they were only displayed at the top of the list.
-
 This options can also be a callback function to give you more flexibility. This might
 be especially useful if your values are objects::
 
@@ -69,3 +63,17 @@ when rendering the field:
         <?= $view['form']->widget($form['publishAt'], [
             'separator' => '=====',
         ]) ?>
+
+.. tip::
+
+    When defining a custom type, you should use the
+    :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class helper::
+
+        use Symfony\Component\Form\ChoiceList\ChoiceList;
+
+        // ...
+        $builder->add('choices', ChoiceType::class, [
+            'preferred_choices' => ChoiceList::preferred($this, 'taggedAsFavorite'),
+        ]);
+
+    See the :ref:`"choice_loader" option documentation <reference-form-choice-loader>`.

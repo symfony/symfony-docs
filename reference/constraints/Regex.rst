@@ -5,13 +5,6 @@ Validates that a value matches a regular expression.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `htmlPattern`_
-            - `match`_
-            - `message`_
-            - `pattern`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Regex`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\RegexValidator`
 ==========  ===================================================================
@@ -26,7 +19,7 @@ more word characters at the beginning of your string:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -35,9 +28,7 @@ more word characters at the beginning of your string:
 
         class Author
         {
-            /**
-             * @Assert\Regex("/^\w+/")
-             */
+            #[Assert\Regex('/^\w+/')]
             protected $description;
         }
 
@@ -91,7 +82,7 @@ it a custom message:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -100,13 +91,11 @@ it a custom message:
 
         class Author
         {
-            /**
-             * @Assert\Regex(
-             *     pattern="/\d/",
-             *     match=false,
-             *     message="Your name cannot contain a number"
-             * )
-             */
+            #[Assert\Regex(
+                pattern: '/\d/',
+                match: false,
+                message: 'Your name cannot contain a number',
+            )]
             protected $firstName;
         }
 
@@ -185,7 +174,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -194,12 +183,10 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
         class Author
         {
-            /**
-             * @Assert\Regex(
-             *     pattern     = "/^[a-z]+$/i",
-             *     htmlPattern = "[a-zA-Z]+"
-             * )
-             */
+            #[Assert\Regex(
+                pattern: '/^[a-z]+$/i',
+                htmlPattern: '^[a-zA-Z]+$'
+            )]
             protected $name;
         }
 
@@ -275,6 +262,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 ``pattern``

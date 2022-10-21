@@ -7,11 +7,6 @@ IPv6 and many other combinations.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `normalizer`_
-            - `payload`_
-            - `version`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Ip`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IpValidator`
 ==========  ===================================================================
@@ -21,7 +16,7 @@ Basic Usage
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -30,9 +25,7 @@ Basic Usage
 
         class Author
         {
-            /**
-             * @Assert\Ip
-             */
+            #[Assert\Ip]
             protected $ipAddress;
         }
 
@@ -95,6 +88,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc

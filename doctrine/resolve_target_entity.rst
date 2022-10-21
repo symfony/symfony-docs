@@ -5,7 +5,7 @@
 How to Define Relationships with Abstract Classes and Interfaces
 ================================================================
 
-One of the goals of bundles is to create discreet bundles of functionality
+One of the goals of bundles is to create discrete bundles of functionality
 that do not have many (if any) dependencies, allowing you to use that
 functionality in other applications without including unnecessary items.
 
@@ -46,10 +46,8 @@ A Customer entity::
     use App\Model\InvoiceSubjectInterface;
     use Doctrine\ORM\Mapping as ORM;
 
-    /**
-     * @ORM\Entity
-     * @ORM\Table(name="customer")
-     */
+    #[ORM\Entity]
+    #[ORM\Table(name: 'customer')]
     class Customer extends BaseCustomer implements InvoiceSubjectInterface
     {
         // In this example, any methods defined in the InvoiceSubjectInterface
@@ -66,16 +64,15 @@ An Invoice entity::
 
     /**
      * Represents an Invoice.
-     *
-     * @ORM\Entity
-     * @ORM\Table(name="invoice")
      */
+    #[ORM\Entity]
+    #[ORM\Table(name: 'invoice')]
     class Invoice
     {
         /**
-         * @ORM\ManyToOne(targetEntity="App\Model\InvoiceSubjectInterface")
          * @var InvoiceSubjectInterface
          */
+        #[ORM\ManyToOne(targetEntity: InvoiceSubjectInterface::class)]
         protected $subject;
     }
 
@@ -139,15 +136,13 @@ about the replacement:
         // config/packages/doctrine.php
         use App\Entity\Customer;
         use App\Model\InvoiceSubjectInterface;
+        use Symfony\Config\DoctrineConfig;
 
-        $container->loadFromExtension('doctrine', [
-            'orm' => [
-                // ...
-                'resolve_target_entities' => [
-                    InvoiceSubjectInterface::class => Customer::class,
-                ],
-            ],
-        ]);
+        return static function (DoctrineConfig $doctrine) {
+            $orm = $doctrine->orm();
+            // ...
+            $orm->resolveTargetEntity(InvoiceSubjectInterface::class, Customer::class);
+        };
 
 Final Thoughts
 --------------

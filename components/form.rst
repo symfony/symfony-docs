@@ -121,16 +121,17 @@ The following snippet adds CSRF protection to the form factory::
 
     use Symfony\Component\Form\Extension\Csrf\CsrfExtension;
     use Symfony\Component\Form\Forms;
-    use Symfony\Component\HttpFoundation\Session\Session;
+    use Symfony\Component\HttpFoundation\RequestStack;
     use Symfony\Component\Security\Csrf\CsrfTokenManager;
     use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
     use Symfony\Component\Security\Csrf\TokenStorage\SessionTokenStorage;
 
-    // creates a Session object from the HttpFoundation component
-    $session = new Session();
+    // creates a RequestStack object using the current request
+    $requestStack = new RequestStack();
+    $requestStack->push($request);
 
     $csrfGenerator = new UriSafeTokenGenerator();
-    $csrfStorage = new SessionTokenStorage($session);
+    $csrfStorage = new SessionTokenStorage($requestStack);
     $csrfManager = new CsrfTokenManager($csrfGenerator, $csrfStorage);
 
     $formFactory = Forms::createFormFactoryBuilder()
@@ -370,10 +371,6 @@ you need to. If your application uses global or static variables (not usually a
 good idea), then you can store the object on some static class or do something
 similar.
 
-Regardless of how you architect your application, remember that you
-should only have one form factory and that you'll need to be able to access
-it throughout your application.
-
 .. _component-form-intro-create-simple-form:
 
 Creating a simple Form
@@ -382,7 +379,8 @@ Creating a simple Form
 .. tip::
 
     If you're using the Symfony Framework, then the form factory is available
-    automatically as a service called ``form.factory``. Also, the default
+    automatically as a service called ``form.factory``, you can inject it as
+    ``Symfony\Component\Form\FormFactoryInterface``. Also, the default
     base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createFormBuilder`
     method, which is a shortcut to fetch the form factory and call ``createBuilder()``
     on it.
@@ -646,16 +644,23 @@ method:
             }
         }
 
+.. caution::
+
+    The form's ``createView()`` method should be called *after* ``handleRequest()`` is
+    called. Otherwise, when using :doc:`form events </form/events>`, changes done
+    in the ``*_SUBMIT`` events won't be applied to the view (like validation errors).
+
 This defines a common form "workflow", which contains 3 different possibilities:
 
-1) On the initial GET request (i.e. when the user "surfs" to your page),
+#. On the initial GET request (i.e. when the user "surfs" to your page),
    build your form and render it;
 
-If the request is a POST, process the submitted data (via :method:`Symfony\\Component\\Form\\Form::handleRequest`).
-Then:
+   If the request is a POST, process the submitted data (via :method:`Symfony\\Component\\Form\\Form::handleRequest`).
 
-2) if the form is invalid, re-render the form (which will now contain errors);
-3) if the form is valid, perform some action and redirect.
+   Then:
+
+#. if the form is invalid, re-render the form (which will now contain errors);
+#. if the form is valid, perform some action and redirect.
 
 Luckily, you don't need to decide whether or not a form has been submitted.
 Just pass the current request to the :method:`Symfony\\Component\\Form\\Form::handleRequest`
@@ -777,4 +782,4 @@ Learn more
     /form/*
 
 .. _Twig: https://twig.symfony.com
-.. _`Twig Configuration`: https://twig.symfony.com/doc/2.x/intro.html
+.. _`Twig Configuration`: https://twig.symfony.com/doc/3.x/intro.html

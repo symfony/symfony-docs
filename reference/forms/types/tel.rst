@@ -13,32 +13,24 @@ Nevertheless, it may be useful to use this type in web applications because some
 browsers (e.g. smartphone browsers) adapt the input keyboard to make it easier
 to input phone numbers.
 
-+-------------+---------------------------------------------------------------------+
-| Rendered as | ``input`` ``tel`` field (a text box)                                |
-+-------------+---------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                           |
-| options     | - `data`_                                                           |
-|             | - `disabled`_                                                       |
-|             | - `empty_data`_                                                     |
-|             | - `error_bubbling`_                                                 |
-|             | - `error_mapping`_                                                  |
-|             | - `help`_                                                           |
-|             | - `help_attr`_                                                      |
-|             | - `help_html`_                                                      |
-|             | - `label`_                                                          |
-|             | - `label_attr`_                                                     |
-|             | - `label_format`_                                                   |
-|             | - `mapped`_                                                         |
-|             | - `required`_                                                       |
-|             | - `row_attr`_                                                       |
-|             | - `trim`_                                                           |
-+-------------+---------------------------------------------------------------------+
-| Parent type | :doc:`TextType </reference/forms/types/text>`                       |
-+-------------+---------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TelType`   |
-+-------------+---------------------------------------------------------------------+
++---------------------------+-------------------------------------------------------------------+
+| Rendered as               | ``input`` ``tel`` field (a text box)                              |
++---------------------------+-------------------------------------------------------------------+
+| Default invalid message   | Please provide a valid phone number.                              |
++---------------------------+-------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                               |
++---------------------------+-------------------------------------------------------------------+
+| Parent type               | :doc:`TextType </reference/forms/types/text>`                     |
++---------------------------+-------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\TelType` |
++---------------------------+-------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
+
+Overridden Options
+------------------
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------
@@ -51,13 +43,11 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The default value is ``''`` (the empty string).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 

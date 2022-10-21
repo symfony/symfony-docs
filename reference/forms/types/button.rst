@@ -9,14 +9,6 @@ A simple, non-responsive button.
 +----------------------+----------------------------------------------------------------------+
 | Rendered as          | ``button`` tag                                                       |
 +----------------------+----------------------------------------------------------------------+
-| Inherited            | - `attr`_                                                            |
-| options              | - `attr_translation_parameters`_                                     |
-|                      | - `disabled`_                                                        |
-|                      | - `label`_                                                           |
-|                      | - `label_translation_parameters`_                                    |
-|                      | - `row_attr`_                                                        |
-|                      | - `translation_domain`_                                              |
-+----------------------+----------------------------------------------------------------------+
 | Parent type          | none                                                                 |
 +----------------------+----------------------------------------------------------------------+
 | Class                | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\ButtonType` |
@@ -53,16 +45,14 @@ as a key. This can be useful when you need to set a custom class for the button:
 
 .. include:: /reference/forms/types/options/button_label.rst.inc
 
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/button_translation_domain.rst.inc
 
 label_translation_parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``array`` **default**: ``[]``
-
-.. versionadded:: 4.3
-
-    The ``label_translation_parameters`` option was introduced in Symfony 4.3.
 
 The content of the `label`_ option is translated before displaying it, so it
 can contain :ref:`translation placeholders <component-translation-placeholders>`.

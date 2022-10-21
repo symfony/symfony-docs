@@ -25,7 +25,7 @@ they can also be unquoted:
 
     A string in YAML
 
-    'A singled-quoted string in YAML'
+    'A single-quoted string in YAML'
 
     "A double-quoted string in YAML"
 
@@ -122,7 +122,7 @@ Numbers
 .. code-block:: yaml
 
     # an octal
-    014
+    0o14
 
 .. code-block:: yaml
 

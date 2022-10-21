@@ -5,17 +5,6 @@ Validates that a given string length is *between* some minimum and maximum value
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowEmptyString`_
-            - `charset`_
-            - `charsetMessage`_
-            - `exactMessage`_
-            - `groups`_
-            - `max`_
-            - `maxMessage`_
-            - `min`_
-            - `minMessage`_
-            - `normalizer`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Length`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LengthValidator`
 ==========  ===================================================================
@@ -28,7 +17,7 @@ and ``50``, you might add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Participant.php
         namespace App\Entity;
@@ -37,17 +26,15 @@ and ``50``, you might add the following:
 
         class Participant
         {
-            /**
-             * @Assert\Length(
-             *      min = 2,
-             *      max = 50,
-             *      minMessage = "Your first name must be at least {{ limit }} characters long",
-             *      maxMessage = "Your first name cannot be longer than {{ limit }} characters",
-             *      allowEmptyString = false
-             * )
-             */
+            #[Assert\Length(
+                min: 2,
+                max: 50,
+                minMessage: 'Your first name must be at least {{ limit }} characters long',
+                maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
+            )]
             protected $firstName;
         }
+
 
     .. code-block:: yaml
 
@@ -60,7 +47,6 @@ and ``50``, you might add the following:
                         max: 50
                         minMessage: 'Your first name must be at least {{ limit }} characters long'
                         maxMessage: 'Your first name cannot be longer than {{ limit }} characters'
-                        allowEmptyString: false
 
     .. code-block:: xml
 
@@ -81,7 +67,6 @@ and ``50``, you might add the following:
                         <option name="maxMessage">
                             Your first name cannot be longer than {{ limit }} characters
                         </option>
-                        <option name="allowEmptyString">false</option>
                     </constraint>
                 </property>
             </class>
@@ -104,33 +89,14 @@ and ``50``, you might add the following:
                     'max' => 50,
                     'minMessage' => 'Your first name must be at least {{ limit }} characters long',
                     'maxMessage' => 'Your first name cannot be longer than {{ limit }} characters',
-                    'allowEmptyString' => false,
                 ]));
             }
         }
 
-.. include:: /reference/constraints/_empty-values-are-valid.rst.inc
+.. include:: /reference/constraints/_null-values-are-valid.rst.inc
 
 Options
 -------
-
-``allowEmptyString``
-~~~~~~~~~~~~~~~~~~~~
-
-**type**: ``boolean``  **default**: ``true``
-
-.. versionadded:: 4.4
-
-    The ``allowEmptyString`` option was introduced in Symfony 4.4.
-
-When using the ``min`` option, it's mandatory to also define this option. If
-set to ``true``, empty strings are considered valid (which is the same behavior
-as previous Symfony versions). Set it to ``false`` to consider empty strings not
-valid.
-
-.. caution::
-
-    This option does not have any effect when no minimum length is given.
 
 ``charset``
 ~~~~~~~~~~~
@@ -213,9 +179,9 @@ the given value's length is **less** than this min value.
 
 This option is required when the ``max`` option is not defined.
 
-It is important to notice that NULL values and empty strings are considered
-valid no matter if the constraint required a minimum length. Validators
-are triggered only if the value is not blank.
+It is important to notice that ``null`` values are considered
+valid no matter if the constraint requires a minimum length. Validators
+are triggered only if the value is not ``null``.
 
 ``minMessage``
 ~~~~~~~~~~~~~~

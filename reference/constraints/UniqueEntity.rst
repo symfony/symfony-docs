@@ -17,15 +17,6 @@ using an email address that already exists in the system.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
-Options     - `em`_
-            - `entityClass`_
-            - `errorPath`_
-            - `fields`_
-            - `groups`_
-            - `ignoreNull`_
-            - `message`_
-            - `payload`_
-            - `repositoryMethod`_
 Class       :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntity`
 Validator   :class:`Symfony\\Bridge\\Doctrine\\Validator\\Constraints\\UniqueEntityValidator`
 ==========  ===================================================================
@@ -39,7 +30,7 @@ between all of the rows in your user table:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/User.php
         namespace App\Entity;
@@ -51,16 +42,12 @@ between all of the rows in your user table:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        /**
-         * @ORM\Entity
-         * @UniqueEntity("email")
-         */
+        #[ORM\Entity]
+        #[UniqueEntity('email')]
         class User
         {
-            /**
-             * @ORM\Column(name="email", type="string", length=255, unique=true)
-             * @Assert\Email
-             */
+            #[ORM\Column(name: 'email', type: 'string', length: 255, unique: true)]
+            #[Assert\Email]
             protected $email;
         }
 
@@ -164,32 +151,27 @@ Consider this example:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Service.php
         namespace App\Entity;
 
+        use App\Entity\Host;
         use Doctrine\ORM\Mapping as ORM;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-        /**
-         * @ORM\Entity
-         * @UniqueEntity(
-         *     fields={"host", "port"},
-         *     errorPath="port",
-         *     message="This port is already in use on that host."
-         * )
-         */
+        #[ORM\Entity]
+        #[UniqueEntity(
+            fields: ['host', 'port'],
+            errorPath: 'port',
+            message: 'This port is already in use on that host.',
+        )]
         class Service
         {
-            /**
-             * @ORM\ManyToOne(targetEntity="App\Entity\Host")
-             */
+            #[ORM\ManyToOne(targetEntity: Host::class)]
             public $host;
 
-            /**
-             * @ORM\Column(type="integer")
-             */
+            #[ORM\Column(type: 'integer')]
             public $port;
         }
 
@@ -296,6 +278,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

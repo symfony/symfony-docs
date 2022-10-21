@@ -7,9 +7,6 @@ constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotNull`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotNullValidator`
 ==========  ===================================================================
@@ -22,7 +19,7 @@ class were not strictly equal to ``null``, you would:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -31,9 +28,7 @@ class were not strictly equal to ``null``, you would:
 
         class Author
         {
-            /**
-             * @Assert\NotNull
-             */
+            #[Assert\NotNull]
             protected $firstName;
         }
 
@@ -94,6 +89,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

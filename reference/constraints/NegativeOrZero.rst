@@ -1,18 +1,11 @@
 NegativeOrZero
 ==============
 
-.. versionadded:: 4.3
-
-    The ``NegativeOrZero`` constraint was introduced in Symfony 4.3.
-
 Validates that a value is a negative number or equal to zero. If you don't
 want to allow zero as value, use :doc:`/reference/constraints/Negative` instead.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NegativeOrZero`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LesserThanOrEqualValidator`
 ==========  ===================================================================
@@ -25,7 +18,7 @@ is a negative number or equal to zero:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/TransferItem.php
         namespace App\Entity;
@@ -34,9 +27,7 @@ is a negative number or equal to zero:
 
         class UnderGroundGarage
         {
-            /**
-             * @Assert\NegativeOrZero
-             */
+            #[Assert\NegativeOrZero]
             protected $level;
         }
 

@@ -68,19 +68,16 @@ This will generate your new entity class::
 
     // ...
 
+    #[ORM\Entity(repositoryClass: CategoryRepository::class)]
     class Category
     {
-        /**
-         * @ORM\Id
-         * @ORM\GeneratedValue
-         * @ORM\Column(type="integer")
-         */
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column]
         private $id;
 
-        /**
-         * @ORM\Column(type="string")
-         */
-        private $name;
+        #[ORM\Column]
+        private string $name;
 
         // ... getters and setters
     }
@@ -143,7 +140,7 @@ the ``Product`` entity (and getter & setter methods):
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Product.php
         namespace App\Entity;
@@ -153,9 +150,7 @@ the ``Product`` entity (and getter & setter methods):
         {
             // ...
 
-            /**
-             * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="products")
-             */
+            #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
             private $category;
 
             public function getCategory(): ?Category
@@ -214,7 +209,7 @@ class that will hold these objects:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Category.php
         namespace App\Entity;
@@ -227,9 +222,7 @@ class that will hold these objects:
         {
             // ...
 
-            /**
-             * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category")
-             */
+            #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
             private $products;
 
             public function __construct()
@@ -299,7 +292,7 @@ config.
     *exactly* like an array, but has some added flexibility. Just imagine that
     it is an ``array`` and you'll be in good shape.
 
-Your database is setup! Now, run the migrations like normal:
+Your database is set up! Now, run the migrations like normal:
 
 .. code-block:: terminal
 
@@ -320,14 +313,14 @@ Now you can see this new code in action! Imagine you're inside a controller::
     // ...
     use App\Entity\Category;
     use App\Entity\Product;
+    use Doctrine\Persistence\ManagerRegistry;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController extends AbstractController
     {
-        /**
-         * @Route("/product", name="product")
-         */
-        public function index(): Response
+        #[Route('/product', name: 'product')]
+        public function index(ManagerRegistry $doctrine): Response
         {
             $category = new Category();
             $category->setName('Computer Peripherals');
@@ -340,7 +333,7 @@ Now you can see this new code in action! Imagine you're inside a controller::
             // relates this product to the category
             $product->setCategory($category);
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($category);
             $entityManager->persist($product);
             $entityManager->flush();
@@ -386,12 +379,9 @@ before. First, fetch a ``$product`` object and then access its related
 
     class ProductController extends AbstractController
     {
-        public function show(int $id): Response
+        public function show(ManagerRegistry $doctrine, int $id): Response
         {
-            $product = $this->getDoctrine()
-                ->getRepository(Product::class)
-                ->find($id);
-
+            $product = $doctrine->getRepository(Product::class)->find($id);
             // ...
 
             $categoryName = $product->getCategory()->getName();
@@ -422,11 +412,9 @@ direction::
     // ...
     class ProductController extends AbstractController
     {
-        public function showProducts(int $id): Response
+        public function showProducts(ManagerRegistry $doctrine, int $id): Response
         {
-            $category = $this->getDoctrine()
-                ->getRepository(Category::class)
-                ->find($id);
+            $category = $doctrine->getRepository(Category::class)->find($id);
 
             $products = $category->getProducts();
 
@@ -445,9 +433,7 @@ by adding JOINs.
     a "proxy" object in place of the true object. Look again at the above
     example::
 
-        $product = $this->getDoctrine()
-            ->getRepository(Product::class)
-            ->find($id);
+        $product = $doctrine->getRepository(Product::class)->find($id);
 
         $category = $product->getCategory();
 
@@ -517,11 +503,9 @@ object and its related ``Category`` in one query::
     // ...
     class ProductController extends AbstractController
     {
-        public function show(int $id): Response
+        public function show(ManagerRegistry $doctrine, int $id): Response
         {
-            $product = $this->getDoctrine()
-                ->getRepository(Product::class)
-                ->findOneByIdJoinedToCategory($id);
+            $product = $doctrine->getRepository(Product::class)->findOneByIdJoinedToCategory($id);
 
             $category = $product->getCategory();
 
@@ -542,7 +526,7 @@ To update a relationship in the database, you *must* set the relationship on the
 *owning* side. The owning side is always where the ``ManyToOne`` mapping is set
 (for a ``ManyToMany`` relation, you can choose which side is the owning side).
 
-Does this means it's not possible to call ``$category->addProduct()`` or
+Does this mean it's not possible to call ``$category->addProduct()`` or
 ``$category->removeProduct()`` to update the database? Actually, it *is* possible,
 thanks to some clever code that the ``make:entity`` command generated::
 
@@ -597,16 +581,19 @@ on that ``Product`` will be set to ``null`` in the database.
 
 But, instead of setting the ``category_id`` to null, what if you want the ``Product``
 to be *deleted* if it becomes "orphaned" (i.e. without a ``Category``)? To choose
-that behavior, use the `orphanRemoval`_ option inside ``Category``::
+that behavior, use the `orphanRemoval`_ option inside ``Category``:
 
-    // src/Entity/Category.php
+.. configuration-block::
 
-    // ...
+    .. code-block:: php-attributes
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="category", orphanRemoval=true)
-     */
-    private $products;
+        // src/Entity/Category.php
+
+        // ...
+
+        #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category', orphanRemoval: true)]
+        private $products;
+
 
 Thanks to this, if the ``Product`` is removed from the ``Category``, it will be
 removed from the database entirely.
@@ -621,8 +608,8 @@ Doctrine's `Association Mapping Documentation`_.
 
 .. note::
 
-    If you're using annotations, you'll need to prepend all annotations with
-    ``@ORM\`` (e.g. ``@ORM\OneToMany``), which is not reflected in Doctrine's
+    If you're using attributes, you'll need to prepend all attributes with
+    ``#[ORM\]`` (e.g. ``#[ORM\OneToMany]``), which is not reflected in Doctrine's
     documentation.
 
 .. _`Association Mapping Documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/association-mapping.html

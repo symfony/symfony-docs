@@ -8,11 +8,6 @@ than another value, see :doc:`/reference/constraints/LessThan`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThan`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\GreaterThanValidator`
 ==========  ===================================================================
@@ -27,7 +22,7 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Person.php
         namespace App\Entity;
@@ -36,16 +31,12 @@ The following constraints ensure that:
 
         class Person
         {
-            /**
-             * @Assert\GreaterThan(5)
-             */
+            #[Assert\GreaterThan(5)]
             protected $siblings;
 
-            /**
-             * @Assert\GreaterThan(
-             *     value = 18
-             * )
-             */
+            #[Assert\GreaterThan(
+                value: 18,
+            )]
             protected $age;
         }
 
@@ -111,7 +102,7 @@ that a date must at least be the next day:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Order.php
         namespace App\Entity;
@@ -120,9 +111,7 @@ that a date must at least be the next day:
 
         class Order
         {
-            /**
-             * @Assert\GreaterThan("today")
-             */
+            #[Assert\GreaterThan('today')]
             protected $deliveryDate;
         }
 
@@ -170,7 +159,7 @@ dates. If you want to fix the timezone, append it to the date string:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Order.php
         namespace App\Entity;
@@ -179,9 +168,7 @@ dates. If you want to fix the timezone, append it to the date string:
 
         class Order
         {
-            /**
-             * @Assert\GreaterThan("today UTC")
-             */
+            #[Assert\GreaterThan('today UTC')]
             protected $deliveryDate;
         }
 
@@ -230,7 +217,7 @@ current time:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Order.php
         namespace App\Entity;
@@ -239,9 +226,7 @@ current time:
 
         class Order
         {
-            /**
-             * @Assert\GreaterThan("+5 hours")
-             */
+            #[Assert\GreaterThan('+5 hours')]
             protected $deliveryDate;
         }
 

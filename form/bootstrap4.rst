@@ -55,13 +55,13 @@ configuration:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'bootstrap_4_layout.html.twig',
-            ],
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes(['bootstrap_4_layout.html.twig']);
 
             // ...
-        ]);
+        };
 
 If you prefer to apply the Bootstrap styles on a form to form basis, include the
 ``form_theme`` tag in the templates where those forms are used:
@@ -77,7 +77,7 @@ If you prefer to apply the Bootstrap styles on a form to form basis, include the
         {{ form(form) }}
     {% endblock %}
 
-.. _reference-forms-bootstrap-error-messages:
+.. _reference-forms-bootstrap4-error-messages:
 
 Error Messages
 --------------
@@ -93,7 +93,7 @@ you'll get the error messages displayed *twice*.
     Since form errors are rendered *inside* the ``<label>``, you cannot use CSS
     ``:after`` to append an asterisk to the label, because it would be displayed
     after the error message. Use the :ref:`label <reference-form-option-label>`
-    option instead.
+    or :ref:`label_html <reference-form-option-label-html>` options instead.
 
 Checkboxes and Radios
 ---------------------
@@ -121,10 +121,6 @@ for **all** users.
 
 Custom Forms
 ------------
-
-.. versionadded:: 4.4
-
-    Support for the ``switch-custom`` class was introduced in Symfony 4.4.
 
 Bootstrap 4 has a feature called "`custom forms`_". You can enable that on your
 Symfony Form ``RadioType`` and ``CheckboxType`` by adding some classes to the label:

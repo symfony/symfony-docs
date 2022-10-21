@@ -128,57 +128,47 @@ The following configuration code shows how you can configure two entity managers
     .. code-block:: php
 
         // config/packages/doctrine.php
-        $container->loadFromExtension('doctrine', [
-            'dbal' => [
-                'default_connection' => 'default',
-                'connections' => [
-                    // configure these for your database server
-                    'default' => [
-                        'url'            => '%env(resolve:DATABASE_URL)%',
-                        'driver'         => 'pdo_mysql',
-                        'server_version' => '5.7',
-                        'charset'        => 'utf8mb4',
-                    ],
-                    // configure these for your database server
-                    'customer' => [
-                        'url'            => '%env(resolve:DATABASE_CUSTOMER_URL)%',
-                        'driver'         => 'pdo_mysql',
-                        'server_version' => '5.7',
-                        'charset'        => 'utf8mb4',
-                    ],
-                ],
-            ],
+        use Symfony\Config\DoctrineConfig;
 
-            'orm' => [
-                'default_entity_manager' => 'default',
-                'entity_managers' => [
-                    'default' => [
-                        'connection' => 'default',
-                        'mappings'   => [
-                            'Main'  => [
-                                'is_bundle' => false,
-                                'type' => 'annotation',
-                                'dir' => '%kernel.project_dir%/src/Entity/Main',
-                                'prefix' => 'App\Entity\Main',
-                                'alias' => 'Main',
-                            ],
-                        ],
-                    ],
-                    'customer' => [
-                        'connection' => 'customer',
-                        'mappings'   => [
-                            'Customer'  => [
-                                'is_bundle' => false,
-                                'type' => 'annotation',
-                                'dir' => '%kernel.project_dir%/src/Entity/Customer',
-                                'prefix' => 'App\Entity\Customer',
-                                'alias' => 'Customer',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        return static function (DoctrineConfig $doctrine) {
+            $doctrine->dbal()->defaultConnection('default');
+
+            // configure these for your database server
+            $doctrine->dbal()
+                ->connection('default')
+                ->url(env('DATABASE_URL')->resolve())
+                ->driver('pdo_mysql')
+                ->serverVersion('5.7')
+                ->charset('utf8mb4');
+
+            // configure these for your database server
+            $doctrine->dbal()
+                ->connection('customer')
+                ->url(env('DATABASE_CUSTOMER_URL')->resolve())
+                ->driver('pdo_mysql')
+                ->serverVersion('5.7')
+                ->charset('utf8mb4');
+
+            $doctrine->orm()->defaultEntityManager('default');
+            $emDefault = $doctrine->orm()->entityManager('default');
+            $emDefault->connection('default');
+            $emDefault->mapping('Main')
+                ->isBundle(false)
+                ->type('annotation')
+                ->dir('%kernel.project_dir%/src/Entity/Main')
+                ->prefix('App\Entity\Main')
+                ->alias('Main');
+
+            $emCustomer = $doctrine->orm()->entityManager('customer');
+            $emCustomer->connection('customer');
+            $emCustomer->mapping('Customer')
+                ->isBundle(false)
+                ->type('annotation')
+                ->dir('%kernel.project_dir%/src/Entity/Customer')
+                ->prefix('App\Entity\Customer')
+                ->alias('Customer')
+            ;
+        };
 
 In this case, you've defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
@@ -193,8 +183,8 @@ for each entity manager, but you are free to define the same connection for both
     the connection or entity manager, the default (i.e. ``default``) is used.
 
     If you use a different name than ``default`` for the default entity manager,
-    you will need to redefine the default entity manager in ``prod`` environment
-    configuration too:
+    you will need to redefine the default entity manager in the ``prod`` environment
+    configuration and in the Doctrine migrations configuration (if you use that):
 
     .. code-block:: yaml
 
@@ -204,6 +194,13 @@ for each entity manager, but you are free to define the same connection for both
                 default_entity_manager: 'your default entity manager name'
 
         # ...
+
+    .. code-block:: yaml
+
+        # config/packages/doctrine_migrations.yaml
+        doctrine_migrations:
+            # ...
+            em: 'your default entity manager name'
 
 When working with multiple connections to create your databases:
 
@@ -235,20 +232,18 @@ the default entity manager (i.e. ``default``) is returned::
 
     // ...
     use Doctrine\ORM\EntityManagerInterface;
+    use Doctrine\Persistence\ManagerRegistry;
 
     class UserController extends AbstractController
     {
-        public function index(EntityManagerInterface $entityManager): Response
+        public function index(ManagerRegistry $doctrine): Response
         {
-            // These methods also return the default entity manager, but it's preferred
-            // to get it by injecting EntityManagerInterface in the action method
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager = $this->getDoctrine()->getManager('default');
-            $entityManager = $this->get('doctrine.orm.default_entity_manager');
+            // Both methods return the default entity manager
+            $entityManager = $doctrine->getManager();
+            $entityManager = $doctrine->getManager('default');
 
-            // Both of these return the "customer" entity manager
-            $customerEntityManager = $this->getDoctrine()->getManager('customer');
-            $customerEntityManager = $this->get('doctrine.orm.customer_entity_manager');
+            // This method returns instead the "customer" entity manager
+            $customerEntityManager = $doctrine->getManager('customer');
 
             // ...
         }
@@ -270,29 +265,21 @@ The same applies to repository calls::
 
     use AcmeStoreBundle\Entity\Customer;
     use AcmeStoreBundle\Entity\Product;
+    use Doctrine\Persistence\ManagerRegistry;
     // ...
 
     class UserController extends AbstractController
     {
-        public function index(): Response
+        public function index(ManagerRegistry $doctrine): Response
         {
-            // Retrieves a repository managed by the "default" em
-            $products = $this->getDoctrine()
-                ->getRepository(Product::class)
-                ->findAll()
-            ;
+            // Retrieves a repository managed by the "default" entity manager
+            $products = $doctrine->getRepository(Product::class)->findAll();
 
-            // Explicit way to deal with the "default" em
-            $products = $this->getDoctrine()
-                ->getRepository(Product::class, 'default')
-                ->findAll()
-            ;
+            // Explicit way to deal with the "default" entity manager
+            $products = $doctrine->getRepository(Product::class, 'default')->findAll();
 
-            // Retrieves a repository managed by the "customer" em
-            $customers = $this->getDoctrine()
-                ->getRepository(Customer::class, 'customer')
-                ->findAll()
-            ;
+            // Retrieves a repository managed by the "customer" entity manager
+            $customers = $doctrine->getRepository(Customer::class, 'customer')->findAll();
 
             // ...
         }

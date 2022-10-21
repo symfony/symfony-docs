@@ -62,7 +62,7 @@ The following block shows all possible configuration keys:
                 unix_socket:          /tmp/mysql.sock
                 # the DBAL wrapperClass option
                 wrapper_class:        App\DBAL\MyConnectionWrapper
-                charset:              UTF8
+                charset:              utf8mb4
                 logging:              '%kernel.debug%'
                 platform_service:     App\DBAL\MyDatabasePlatformService
                 server_version:       '5.7'
@@ -96,7 +96,7 @@ The following block shows all possible configuration keys:
                     memory="true"
                     unix-socket="/tmp/mysql.sock"
                     wrapper-class="App\DBAL\MyConnectionWrapper"
-                    charset="UTF8"
+                    charset="utf8mb4"
                     logging="%kernel.debug%"
                     platform-service="App\DBAL\MyDatabasePlatformService"
                     server-version="5.7">
@@ -155,13 +155,22 @@ which is the first one defined or the one configured via the
 ``default_connection`` parameter.
 
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
-service where ``[name]`` is the name of the connection. In a controller
-extending ``AbstractController``, you can access it directly using the
-``getConnection()`` method and the name of the connection::
+service where ``[name]`` is the name of the connection. In a :doc:`controller </controller>`
+you can access it using the ``getConnection()`` method and the name of the connection::
 
-    $connection = $this->getDoctrine()->getConnection('customer');
+    // src/Controller/SomeController.php
+    use Doctrine\Persistence\ManagerRegistry;
 
-    $result = $connection->fetchAll('SELECT name FROM customer');
+    class SomeController
+    {
+        public function someMethod(ManagerRegistry $doctrine)
+        {
+            $connection = $doctrine->getConnection('customer');
+            $result = $connection->fetchAll('SELECT name FROM customer');
+
+            // ...
+        }
+    }
 
 Doctrine ORM Configuration
 --------------------------
@@ -182,6 +191,7 @@ that the ORM resolves to:
             metadata_cache_driver: array
             query_cache_driver: array
             result_cache_driver: array
+            naming_strategy: doctrine.orm.naming_strategy.default
 
 There are lots of other configuration options that you can use to overwrite
 certain classes, but those are for very advanced use-cases only.
@@ -207,6 +217,7 @@ can be placed directly under ``doctrine.orm`` config level.
             class_metadata_factory_name:  Doctrine\ORM\Mapping\ClassMetadataFactory
             default_repository_class:  Doctrine\ORM\EntityRepository
             auto_mapping: false
+            naming_strategy: doctrine.orm.naming_strategy.default
             hydrators:
                 # ...
             mappings:
@@ -222,33 +233,35 @@ Keep in mind that you can't use both syntaxes at the same time.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-.. deprecated:: 4.4
-
-    All the Doctrine caching types are deprecated since Symfony 4.4 and won't
-    be available in Symfony 5.0 and higher. Replace them with either ``type: service``
-    or ``type: pool`` and use any of the cache pools/services defined with
-    :doc:`Symfony Cache </cache>`.
-
-The built-in types of caching drivers are: ``array``, ``apc``, ``apcu``,
-``memcache``, ``memcached``, ``redis``, ``wincache``, ``zenddata`` and ``xcache``.
-There is a special type called ``service`` which lets you define the ID of your
-own caching service.
-
-The following example shows an overview of the caching configurations:
+Use any of the existing :doc:`Symfony Cache </cache>` pools or define new pools
+to cache each of Doctrine ORM elements (queries, results, etc.):
 
 .. code-block:: yaml
 
+    # config/packages/prod/doctrine.yaml
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system
+
     doctrine:
         orm:
-            auto_mapping: true
-            # each caching driver type defines its own config options
-            metadata_cache_driver: apc
+            # ...
+            metadata_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
             result_cache_driver:
-                type: memcache
-                host: localhost
-                port: 11211
-                instance_class: Memcache
-            # the 'service' type requires to define the 'id' option too
+                type: pool
+                pool: doctrine.result_cache_pool
+
+            # in addition to Symfony Cache pools, you can also use the
+            # 'type: service' option to use any service as the cache
             query_cache_driver:
                 type: service
                 id: App\ORM\MyCacheService
@@ -263,8 +276,11 @@ you can control. The following configuration options exist for a mapping:
 ``type``
 ........
 
-One of ``annotation`` (the default value), ``xml``, ``yml``, ``php`` or
+One of ``annotation`` (for PHP annotations; it's the default value),
+``attribute`` (for PHP attributes), ``xml``, ``yml``, ``php`` or
 ``staticphp``. This specifies which type of metadata type your mapping uses.
+
+See `Doctrine Metadata Drivers`_ for more information about this option.
 
 ``dir``
 .......
@@ -294,7 +310,7 @@ to organize the application code.
 Custom Mapping Entities in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Doctrine's ``auto_mapping`` feature loads annotation configuration from
+Doctrine's ``auto_mapping`` feature loads attribute configuration from
 the ``Entity/`` directory of each bundle *and* looks for other formats (e.g.
 YAML, XML) in the ``Resources/config/doctrine`` directory.
 
@@ -343,14 +359,17 @@ directory instead:
 
     .. code-block:: php
 
-        $container->loadFromExtension('doctrine', [
-            'orm' => [
-                'auto_mapping' => true,
-                'mappings' => [
-                    'AppBundle' => ['dir' => 'SomeResources/config/doctrine', 'type' => 'xml'],
-                ],
-            ],
-        ]);
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine) {
+            $emDefault = $doctrine->orm()->entityManager('default');
+
+            $emDefault->autoMapping(true);
+            $emDefault->mapping('AppBundle')
+                ->type('xml')
+                ->dir('SomeResources/config/doctrine')
+            ;
+        };
 
 Mapping Entities Outside of a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -400,20 +419,20 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
     .. code-block:: php
 
-        $container->loadFromExtension('doctrine', [
-            'orm' => [
-                'auto_mapping' => true,
-                'mappings' => [
-                    'SomeEntityNamespace' => [
-                        'type'      => 'annotation',
-                        'dir'       => '%kernel.project_dir%/src/Entity',
-                        'is_bundle' => false,
-                        'prefix'    => 'App\Entity',
-                        'alias'     => 'App',
-                    ],
-                ],
-            ],
-        ]);
+        use Symfony\Config\DoctrineConfig;
+
+        return static function (DoctrineConfig $doctrine) {
+            $emDefault = $doctrine->orm()->entityManager('default');
+
+            $emDefault->autoMapping(true);
+            $emDefault->mapping('SomeEntityNamespace')
+                ->type('annotation')
+                ->dir('%kernel.project_dir%/src/Entity')
+                ->isBundle(false)
+                ->prefix('App\Entity')
+                ->alias('App')
+            ;
+        };
 
 Detecting a Mapping Configuration Format
 ........................................
@@ -448,3 +467,4 @@ is ``true``, the DoctrineBundle will prefix the ``dir`` configuration with
 the path of the bundle.
 
 .. _DBAL documentation: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html
+.. _`Doctrine Metadata Drivers`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/metadata-drivers.html

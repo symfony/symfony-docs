@@ -46,7 +46,7 @@ Basic File Transfer
 The most basic way of deploying an application is copying the files manually
 via FTP/SCP (or similar method). This has its disadvantages as you lack control
 over the system as the upgrade progresses. This method also requires you
-to take some manual steps after transferring the files (see `Common Deployment Tasks`_)
+to take some manual steps after transferring the files (see `Common Deployment Tasks`_).
 
 Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
@@ -64,24 +64,14 @@ Using Platforms as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using a Platform as a Service (PaaS) can be a great way to deploy your Symfony
-app quickly. There are many PaaS - below are a few that work well with Symfony:
-
-* `Symfony Cloud`_
-* `Heroku`_
-* `Platform.sh`_
-* `Azure`_
-* `fortrabbit`_
-* `Clever Cloud`_
-* `Scalingo`_
+app quickly. There are many PaaS, but we recommend `Platform.sh`_ as it
+provides a dedicated Symfony integration and helps fund the Symfony development.
 
 Using Build Scripts and other Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There are also tools to help ease the pain of deployment. Some of them have been
 specifically tailored to the requirements of Symfony.
-
-`EasyDeployBundle`_
-    A Symfony bundle that adds deploy tools to your application.
 
 `Deployer`_
     This is another native PHP rewrite of Capistrano, with some ready recipes for
@@ -176,6 +166,20 @@ most natural in your hosting environment.
 
         $ composer dump-env prod --empty
 
+    If ``composer`` is not installed on your server, you can generate this optimized
+    file with a command provided by Symfony itself, which you must register in
+    your application before using it:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
+
+    .. code-block:: terminal
+
+        $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
+
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -223,7 +227,7 @@ setup:
 * Pushing assets to a CDN
 * On a shared hosting platform using the Apache web server, you may need to
   install the :ref:`symfony/apache-pack package <web-server-apache-mod-php>`
-* ...
+* etc.
 
 Application Lifecycle: Continuous Integration, QA, etc.
 -------------------------------------------------------
@@ -275,12 +279,5 @@ Learn More
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: https://deployer.org/
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
-.. _`Heroku`: https://devcenter.heroku.com/articles/deploying-symfony4
-.. _`Platform.sh`: https://docs.platform.sh/frameworks/symfony.html
-.. _`Azure`: https://azure.microsoft.com/en-us/develop/php/
-.. _`fortrabbit`: https://help.fortrabbit.com/install-symfony-4-uni
-.. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle
-.. _`Clever Cloud`: https://www.clever-cloud.com/doc/php/tutorial-symfony/
-.. _`Symfony Cloud`: https://symfony.com/doc/master/cloud/intro.html
-.. _`Scalingo`: https://doc.scalingo.com/languages/php/symfony
+.. _`Platform.sh`: https://symfony.com/cloud
 .. _`Symfony CLI`: https://symfony.com/download

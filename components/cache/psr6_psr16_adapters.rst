@@ -46,10 +46,6 @@ this use-case::
     // now use this wherever you want
     $githubApiClient = new GitHubApiClient($psr6Cache);
 
-.. versionadded:: 4.3
-
-    The ``Psr16Adapter`` class was introduced in Symfony 4.3.
-
 Using a PSR-6 Cache Object as a PSR-16 Cache
 --------------------------------------------
 
@@ -86,9 +82,5 @@ this use-case::
 
     // now use this wherever you want
     $githubApiClient = new GitHubApiClient($psr16Cache);
-
-.. versionadded:: 4.3
-
-    The ``Psr16Cache`` class was introduced in Symfony 4.3.
 
 .. _`PSR-16`: https://www.php-fig.org/psr/psr-16/

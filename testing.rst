@@ -8,6 +8,8 @@ Whenever you write a new line of code, you also potentially add new bugs.
 To build better and more reliable applications, you should test your code
 using both functional and unit tests.
 
+.. _testing-installation:
+
 The PHPUnit Testing Framework
 -----------------------------
 
@@ -15,21 +17,20 @@ Symfony integrates with an independent library called `PHPUnit`_ to give
 you a rich testing framework. This article won't cover PHPUnit itself,
 which has its own excellent `documentation`_.
 
-Before creating your first test, install ``phpunit/phpunit`` and the
-``symfony/test-pack``, which installs some other packages providing useful
-Symfony test utilities:
+Before creating your first test, install ``symfony/test-pack``, which installs
+some other packages needed for testing (such as ``phpunit/phpunit``):
 
 .. code-block:: terminal
 
-    $ composer require --dev phpunit/phpunit symfony/test-pack
+    $ composer require --dev symfony/test-pack
 
 After the library is installed, try running PHPUnit:
 
 .. code-block:: terminal
 
-    $ php ./vendor/bin/phpunit
+    $ php bin/phpunit
 
-This commands automatically runs your application's tests. Each test is a
+This command automatically runs your application tests. Each test is a
 PHP class ending with "Test" (e.g. ``BlogControllerTest``) that lives in
 the ``tests/`` directory of your application.
 
@@ -83,23 +84,23 @@ of your application for unit tests. So, if you're testing a class in the
 Autoloading is automatically enabled via the ``vendor/autoload.php`` file
 (as configured by default in the ``phpunit.xml.dist`` file).
 
-You can run tests using the ``./vendor/bin/phpunit`` command:
+You can run tests using the ``bin/phpunit`` command:
 
 .. code-block:: terminal
 
     # run all tests of the application
-    $ php ./vendor/bin/phpunit
+    $ php bin/phpunit
 
     # run all tests in the Form/ directory
-    $ php ./vendor/bin/phpunit tests/Form
+    $ php bin/phpunit tests/Form
 
     # run tests for the UserType class
-    $ php ./vendor/bin/phpunit tests/Form/UserTypeTest.php
+    $ php bin/phpunit tests/Form/UserTypeTest.php
 
 .. tip::
 
     In large test suites, it can make sense to create subdirectories for
-    each type of tests (e.g. ``tests/Unit/`` and ``test/Functional/``).
+    each type of tests (e.g. ``tests/Unit/`` and ``tests/Functional/``).
 
 .. _integration-tests:
 
@@ -147,7 +148,7 @@ usually defined in the ``KERNEL_CLASS`` environment variable
 
     If your use case is more complex, you can also override the
     ``getKernelClass()`` or ``createKernel()`` methods of your functional
-    test, which take precedence over the ``KERNEL_CLASS`` env var.
+    test, which takes precedence over the ``KERNEL_CLASS`` env var.
 
 Set-up your Test Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -187,9 +188,11 @@ code to production:
     .. code-block:: php
 
         // config/packages/test/twig.php
-        $container->loadFromExtension('twig', [
-            'strict_variables' => true,
-        ]);
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->strictVariables(true);
+        };
 
 You can also use a different environment entirely, or override the default
 debug mode (``true``) by passing each as options to the ``bootKernel()``
@@ -220,7 +223,7 @@ If you need to customize some environment variables for your tests (e.g. the
 ``DATABASE_URL`` used by Doctrine), you can do that by overriding anything you
 need in your ``.env.test`` file:
 
-.. code-block:: text
+.. code-block:: env
 
     # .env.test
 
@@ -244,7 +247,7 @@ Retrieving Services in the Test
 
 In your integration tests, you often need to fetch the service from the
 service container to call a specific method. After booting the kernel,
-the container is stored in ``self::$container``::
+the container is stored in ``static::getContainer()``::
 
     // tests/Service/NewsletterGeneratorTest.php
     namespace App\Tests\Service;
@@ -259,26 +262,111 @@ the container is stored in ``self::$container``::
             // (1) boot the Symfony kernel
             self::bootKernel();
 
-            // (2) use self::$container to access the service container
-            $container = self::$container;
+            // (2) use static::getContainer() to access the service container
+            $container = static::getContainer();
 
             // (3) run some service & test the result
             $newsletterGenerator = $container->get(NewsletterGenerator::class);
             $newsletter = $newsletterGenerator->generateMonthlyNews(...);
 
-            $this->assertEquals(..., $newsletter->getContent());
+            $this->assertEquals('...', $newsletter->getContent());
         }
     }
 
-The container in ``self::$container`` is actually a special test container.
+The container in ``static::getContainer()`` is actually a special test container.
 It gives you access to both the public services and the non-removed
-:ref:`private services <container-public>` services.
+:ref:`private services <container-public>`.
 
 .. note::
 
     If you need to test private services that have been removed (those who
     are not used by any other services), you need to declare those private
     services as public in the ``config/services_test.yaml`` file.
+
+Mocking Dependencies
+--------------------
+
+Sometimes it can be useful to mock a dependency of a tested service.
+From the example in the previous section, let's assume the
+``NewsletterGenerator`` has a dependency to a private alias
+``NewsRepositoryInterface`` pointing to a private ``NewsRepository`` service
+and you'd like to use a mocked ``NewsRepositoryInterface`` instead of the
+concrete one::
+
+    // ...
+    use App\Contracts\Repository\NewsRepositoryInterface;
+
+    class NewsletterGeneratorTest extends KernelTestCase
+    {
+        public function testSomething()
+        {
+            // ... same bootstrap as the section above
+
+            $newsRepository = $this->createMock(NewsRepositoryInterface::class);
+            $newsRepository->expects(self::once())
+                ->method('findNewsFromLastMonth')
+                ->willReturn([
+                    new News('some news'),
+                    new News('some other news'),
+                ])
+            ;
+
+            // the following line won't work unless the alias is made public
+            $container->set(NewsRepositoryInterface::class, $newsRepository);
+
+            // will be injected the mocked repository
+            $newsletterGenerator = $container->get(NewsletterGenerator::class);
+
+            // ...
+        }
+    }
+
+In order to make the alias public, you will need to update configuration for
+the ``test`` environment as follows:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services_test.yaml
+        services:
+            # redefine the alias as it should be while making it public
+            App\Contracts\Repository\NewsRepositoryInterface:
+                alias: App\Repository\NewsRepository
+                public: true
+
+    .. code-block:: xml
+
+        <!-- config/services_test.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+        ">
+            <services>
+                <!-- redefine the alias as it should be while making it public -->
+                <service id="App\Contracts\Repository\NewsRepositoryInterface"
+                    alias="App\Repository\NewsRepository"
+                />
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services_test.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Contracts\Repository\NewsRepositoryInterface;
+        use App\Repository\NewsRepository;
+
+        return static function (ContainerConfigurator $container) {
+            $container->services()
+                // redefine the alias as it should be while making it public
+                ->alias(NewsRepositoryInterface::class, NewsRepository::class)
+                    ->public()
+            ;
+        };
 
 .. _testing-databases:
 
@@ -376,7 +464,7 @@ generate an empty fixture class:
     The class name of the fixtures to create (e.g. AppFixtures):
     > ProductFixture
 
-Then you modify use this class to load new entities in the database. For
+Then you modify and use this class to load new entities in the database. For
 instance, to load ``Product`` objects into Doctrine, use::
 
     // src/DataFixtures/ProductFixture.php
@@ -406,7 +494,7 @@ Empty the database and reload *all* the fixture classes with:
 
 .. code-block:: terminal
 
-    $ php bin/console doctrine:fixtures:load
+    $ php bin/console --env=test doctrine:fixtures:load
 
 For more information, read the `DoctrineFixturesBundle documentation`_.
 
@@ -500,7 +588,7 @@ into your Symfony application::
 
     $crawler = $client->request('GET', '/post/hello-world');
 
-The ``request()`` method takes the HTTP method and a URL as arguments and
+The :method:`request() <Symfony\\Component\\BrowserKit\\AbstractBrowser::request>` method takes the HTTP method and a URL as arguments and
 returns a ``Crawler`` instance.
 
 .. tip::
@@ -512,20 +600,16 @@ returns a ``Crawler`` instance.
 The full signature of the ``request()`` method is::
 
     request(
-        $method,
-        $uri,
+        string $method,
+        string $uri,
         array $parameters = [],
         array $files = [],
         array $server = [],
-        $content = null,
-        $changeHistory = true
-    )
+        string $content = null,
+        bool $changeHistory = true
+    ): Crawler
 
 This allows you to create all types of requests you can think of:
-
-.. contents::
-    :local:
-    :depth: 1
 
 .. tip::
 
@@ -533,6 +617,15 @@ This allows you to create all types of requests you can think of:
     container in the ``test`` environment (or wherever the
     :ref:`framework.test <reference-framework-test>` option is enabled).
     This means you can override the service entirely if you need to.
+
+.. caution::
+
+    Before each request, the client reboots the kernel, recreating
+    the container from scratch.
+    This ensures that every requests are "isolated" using "new" service objects.
+    Also, it means that entities loaded by Doctrine repositories will
+    be "detached", so they will need to be refreshed by the manager or
+    queried again from a repository.
 
 Browsing the Site
 .................
@@ -570,10 +663,69 @@ will no longer be followed::
 
     $client->followRedirects(false);
 
+.. _testing_logging_in_users:
+
+Logging in Users (Authentication)
+.................................
+
+When you want to add application tests for protected pages, you have to
+first "login" as a user. Reproducing the actual steps - such as
+submitting a login form - makes a test very slow. For this reason, Symfony
+provides a ``loginUser()`` method to simulate logging in in your functional
+tests.
+
+Instead of logging in with real users, it's recommended to create a user
+only for tests. You can do that with `Doctrine data fixtures`_ to load the
+testing users only in the test database.
+
+After loading users in your database, use your user repository to fetch
+this user and use
+:method:`$client->loginUser() <Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser>`
+to simulate a login request::
+
+    // tests/Controller/ProfileControllerTest.php
+    namespace App\Tests\Controller;
+
+    use App\Repository\UserRepository;
+    use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
+    class ProfileControllerTest extends WebTestCase
+    {
+        // ...
+
+        public function testVisitingWhileLoggedIn()
+        {
+            $client = static::createClient();
+            $userRepository = static::getContainer()->get(UserRepository::class);
+
+            // retrieve the test user
+            $testUser = $userRepository->findOneByEmail('john.doe@example.com');
+
+            // simulate $testUser being logged in
+            $client->loginUser($testUser);
+
+            // test e.g. the profile page
+            $client->request('GET', '/profile');
+            $this->assertResponseIsSuccessful();
+            $this->assertSelectorTextContains('h1', 'Hello John!');
+        }
+    }
+
+You can pass any
+:class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` instance to
+``loginUser()``. This method creates a special
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\TestBrowserToken` object and
+stores in the session of the test client.
+
+.. note::
+
+    By design, the ``loginUser()`` method doesn't work when using stateless firewalls.
+    Instead, add the appropriate token/header in each ``request()`` call.
+
 Making AJAX Requests
 ....................
 
-The client provides a
+The client provides an
 :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest`
 method, which has the same arguments as the ``request()`` method and is
 a shortcut to make AJAX requests::
@@ -670,10 +822,6 @@ Interacting with the Response
 
 Like a real browser, the Client and Crawler objects can be used to interact
 with the page you're served:
-
-.. contents::
-    :local:
-    :depth: 1
 
 .. _testing-links:
 
@@ -775,10 +923,6 @@ input::
     :method:`Symfony\\Component\\DomCrawler\\Form::getName` method to get the
     form name.
 
-    .. versionadded:: 4.4
-
-        The ``getName()`` method was introduced in Symfony 4.4.
-
 .. tip::
 
     If you purposefully want to select "invalid" select/radio values, see
@@ -815,21 +959,6 @@ check anything you want.
 
 However, Symfony provides useful shortcut methods for the most common cases:
 
-.. contents::
-    :local:
-    :depth: 1
-
-.. versionadded:: 4.3
-
-    The shortcut methods for assertions using ``WebTestCase`` were introduced
-    in Symfony 4.3.
-
-.. versionadded:: 4.4
-
-    Starting from Symfony 4.4, when using `symfony/panther`_ for end-to-end
-    testing, you can use all the following assertions except the ones related to
-    the :doc:`Crawler </components/dom_crawler>`.
-
 Response Assertions
 ...................
 
@@ -850,6 +979,12 @@ Response Assertions
     checking for a specific cookie path or domain).
 ``assertResponseCookieValueSame(string $name, string $expectedValue, string $path = '/', string $domain = null, string $message = '')``
     Asserts the given cookie is present and set to the expected value.
+``assertResponseFormatSame(?string $expectedFormat, string $message = '')``
+    Asserts the response format returned by the
+    :method:`Symfony\\Component\\HttpFoundation\\Response::getFormat` method
+    is the same as the expected value.
+``assertResponseIsUnprocessable(string $message = '')``
+    Asserts the response is unprocessable (HTTP status is 422)
 
 Request Assertions
 ..................
@@ -858,7 +993,7 @@ Request Assertions
     Asserts the given :ref:`request attribute <component-foundation-attributes>`
     is set to the expected value.
 ``assertRouteSame($expectedRoute, array $parameters = [], string $message = '')``
-    Asserts the request matched the given route and optionally route parameters.
+    Asserts the request matches the given route and optionally route parameters.
 
 Browser Assertions
 ..................
@@ -869,6 +1004,15 @@ Browser Assertions
 ``assertBrowserCookieValueSame(string $name, string $expectedValue, string $path = '/', string $domain = null, string $message = '')``
     Asserts the given cookie in the test Client is set to the expected
     value.
+``assertThatForClient(Constraint $constraint, string $message = '')``
+    Asserts the given Constraint in the Client. Useful for using your custom asserts
+    in the same way as built-in asserts (i.e. without passing the Client as argument)::
+
+        // add this method in some custom class imported in your tests
+        protected static function assertMyOwnCustomAssert(): void
+        {
+            self::assertThatForClient(new SomeCustomConstraint());
+        }
 
 Crawler Assertions
 ..................
@@ -889,13 +1033,14 @@ Crawler Assertions
 ``assertInputValueSame(string $fieldName, string $expectedValue, string $message = '')``/``assertInputValueNotSame(string $fieldName, string $expectedValue, string $message = '')``
     Asserts that value of the form input with the given name does (not)
     equal the expected value.
+``assertCheckboxChecked(string $fieldName, string $message = '')``/``assertCheckboxNotChecked(string $fieldName, string $message = '')``
+    Asserts that the checkbox with the given name is (not) checked.
+``assertFormValue(string $formSelector, string $fieldName, string $value, string $message = '')``/``assertNoFormValue(string $formSelector, string $fieldName, string $message = '')``
+    Asserts that value of the field of the first form matching the given
+    selector does (not) equal the expected value.
 
 Mailer Assertions
 .................
-
-.. versionadded:: 4.4
-
-    The mailer assert methods were introduced in Symfony 4.4.
 
 ``assertEmailCount(int $count, string $transport = null, string $message = '')``
     Asserts that the expected number of emails was sent.
@@ -909,7 +1054,7 @@ Mailer Assertions
 ``assertEmailAttachmentCount(RawMessage $email, int $count, string $message = '')``
     Asserts that the given email has the expected number of attachments. Use
     ``getMailerMessage(int $index = 0, string $transport = null)`` to
-    retrievea specific email by index.
+    retrieve a specific email by index.
 ``assertEmailTextBodyContains(RawMessage $email, string $text, string $message = '')``/``assertEmailTextBodyNotContains(RawMessage $email, string $text, string $message = '')``
     Asserts that the text body of the given email does (not) contain the
     expected text.
@@ -926,13 +1071,42 @@ Mailer Assertions
     address. This assertion normalizes addresses like ``Jane Smith
     <jane@example.com>`` into ``jane@example.com``.
 
-.. TODO
-    End to End Tests (E2E)
-    ----------------------
+Notifier Assertions
+...................
 
-    * panther
-    * testing javascript
-    * UX or form collections as example?
+``assertNotificationCount(int $count, string $transportName = null, string $message = '')``
+    Asserts that the given number of notifications has been created
+    (in total or for the given transport).
+``assertQueuedNotificationCount(int $count, string $transportName = null, string $message = '')``
+    Asserts that the given number of notifications are queued
+    (in total or for the given transport).
+``assertNotificationIsQueued(MessageEvent $event, string $message = '')``
+    Asserts that the given notification is queued.
+``assertNotificationIsNotQueued(MessageEvent $event, string $message = '')``
+    Asserts that the given notification is not queued.
+``assertNotificationSubjectContains(MessageInterface $notification, string $text, string $message = '')``
+    Asserts that the given text is included in the subject of
+    the given notification.
+``assertNotificationSubjectNotContains(MessageInterface $notification, string $text, string $message = '')``
+    Asserts that the given text is not included in the subject of
+    the given notification.
+``assertNotificationTransportIsEqual(MessageInterface $notification, string $transportName, string $message = '')``
+    Asserts that the name of the transport for the given notification
+    is the same as the given text.
+``assertNotificationTransportIsNotEqual(MessageInterface $notification, string $transportName, string $message = '')``
+    Asserts that the name of the transport for the given notification
+    is not the same as the given text.
+
+.. versionadded:: 6.2
+
+    The Notifier assertions were introduced in Symfony 6.2.
+
+.. TODO
+..  End to End Tests (E2E)
+..  ----------------------
+..  * panther
+..  * testing javascript
+..  * UX or form collections as example?
 
 Learn more
 ----------
@@ -947,12 +1121,12 @@ Learn more
 
 .. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://phpunit.readthedocs.io/
-.. _`Writing Tests for PHPUnit`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html
-.. _`PHPUnit documentation`: https://phpunit.readthedocs.io/en/stable/configuration.html
+.. _`Writing Tests for PHPUnit`: https://phpunit.readthedocs.io/en/9.5/writing-tests-for-phpunit.html
+.. _`PHPUnit documentation`: https://phpunit.readthedocs.io/en/9.5/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
+.. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`symfony/panther`: https://github.com/symfony/panther
-.. _`PHPUnit Assertion`: https://phpunit.readthedocs.io/en/stable/assertions.html
+.. _`PHPUnit Assertion`: https://phpunit.readthedocs.io/en/9.5/assertions.html
 .. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18

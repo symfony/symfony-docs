@@ -33,14 +33,24 @@ in a single Twig template and they are enabled in the
   updated for `Bootstrap 4 CSS framework`_ styles.
 * `bootstrap_4_horizontal_layout.html.twig`_, same as
   ``bootstrap_3_horizontal_layout.html.twig`` but updated for Bootstrap 4 styles.
+* `bootstrap_5_layout.html.twig`_, same as ``bootstrap_4_layout.html.twig``, but
+  updated for `Bootstrap 5 CSS framework`_ styles.
+* `bootstrap_5_horizontal_layout.html.twig`_, same as
+  ``bootstrap_4_horizontal_layout.html.twig`` but updated for Bootstrap 5 styles.
 * `foundation_5_layout.html.twig`_, wraps each form field inside a ``<div>``
   element with the appropriate CSS classes to apply the default styles of the
-  `Foundation CSS framework`_.
+  version 5 of `Foundation CSS framework`_.
+* `foundation_6_layout.html.twig`_, wraps each form field inside a ``<div>``
+  element with the appropriate CSS classes to apply the default styles of the
+  version 6 of `Foundation CSS framework`_.
+* `tailwind_2_layout.html.twig`_, wraps each form field inside a ``<div>``
+  element with the absolute minimum styles to make them usable. It is based on the
+  `Tailwind CSS form plugin`_.
 
 .. tip::
 
-    Read the article about the :doc:`Bootstrap 4 Symfony form theme </form/bootstrap4>`
-    to learn more about it.
+    Read the articles about :doc:`Bootstrap 4 Symfony form theme </form/bootstrap4>` and :doc:`Bootstrap 5 Symfony form theme </form/bootstrap5>`
+    to learn more about them.
 
 .. _forms-theming-global:
 .. _forms-theming-twig:
@@ -58,7 +68,7 @@ want to use another theme for all the forms of your app, configure it in the
 
         # config/packages/twig.yaml
         twig:
-            form_themes: ['bootstrap_4_horizontal_layout.html.twig']
+            form_themes: ['bootstrap_5_horizontal_layout.html.twig']
             # ...
 
     .. code-block:: xml
@@ -73,7 +83,7 @@ want to use another theme for all the forms of your app, configure it in the
                 http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form-theme>bootstrap_4_horizontal_layout.html.twig</twig:form-theme>
+                <twig:form-theme>bootstrap_5_horizontal_layout.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
         </container>
@@ -81,12 +91,15 @@ want to use another theme for all the forms of your app, configure it in the
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'bootstrap_4_horizontal_layout.html.twig',
-            ],
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes([
+                'bootstrap_5_horizontal_layout.html.twig',
+            ]);
+
             // ...
-        ]);
+        };
 
 You can pass multiple themes to this option because sometimes form themes only
 redefine a few elements. This way, if some theme doesn't override some element,
@@ -128,7 +141,7 @@ order is important, because each theme overrides all the previous ones):
     {# apply multiple form themes but only to the form of this template #}
     {% form_theme form with [
         'foundation_5_layout.html.twig',
-        'forms/my_custom_theme.html.twig'
+        'form/my_custom_theme.html.twig'
     ] %}
 
     {# ... #}
@@ -143,7 +156,7 @@ You can also apply a form theme to a specific child of your form:
     {% form_theme form.a_child_form 'form/my_custom_theme.html.twig' %}
 
 This is useful when you want to have a custom theme for a nested form that's
-different than the one of your main form. Specify both your themes:
+different from the one of your main form. Specify both your themes:
 
 .. code-block:: twig
 
@@ -297,10 +310,6 @@ field without having to :doc:`create a custom form type </form/create_custom_fie
         ]);
     }
 
-.. versionadded:: 4.3
-
-    The ``block_prefix`` option was introduced in Symfony 4.3.
-
 Now you can use ``wrapped_text_row``, ``wrapped_text_widget``, etc. as the block
 names.
 
@@ -309,10 +318,32 @@ names.
 Fragment Naming for Collections
 ...............................
 
-When using a :doc:`collection of forms </form/form_collections>`, the fragment
-of each collection item follows a predefined pattern. For example, consider the
-following complex example where a ``TaskManagerType`` has a collection of
-``TaskListType`` which in turn has a collection of ``TaskType``::
+When using a :doc:`collection of forms </form/form_collections>`, you have
+several ways of customizing the collection and each of its entries. First,
+use the following blocks to customize each part of all form collections:
+
+.. code-block:: twig
+
+    {% block collection_row %} ... {% endblock %}
+    {% block collection_label %} ... {% endblock %}
+    {% block collection_widget %} ... {% endblock %}
+    {% block collection_help %} ... {% endblock %}
+    {% block collection_errors %} ... {% endblock %}
+
+You can also customize each entry of all collections with the following blocks:
+
+.. code-block:: twig
+
+    {% block collection_entry_row %} ... {% endblock %}
+    {% block collection_entry_label %} ... {% endblock %}
+    {% block collection_entry_widget %} ... {% endblock %}
+    {% block collection_entry_help %} ... {% endblock %}
+    {% block collection_entry_errors %} ... {% endblock %}
+
+Finally, you can customize specific form collections instead of all of them.
+For example, consider the following complex example where a ``TaskManagerType``
+has a collection of ``TaskListType`` which in turn has a collection of
+``TaskType``::
 
     class TaskManagerType extends AbstractType
     {
@@ -544,12 +575,15 @@ you want to apply the theme globally to all forms, define the
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes([
                 'form/my_theme.html.twig',
-            ],
+            ]);
+
             // ...
-        ]);
+        };
 
 If you only want to apply it to some specific forms, use the ``form_theme`` tag:
 
@@ -659,9 +693,15 @@ is a collection of fields (e.g. a whole form), and not just an individual field:
 .. _`bootstrap_3_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_3_horizontal_layout.html.twig
 .. _`bootstrap_4_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_layout.html.twig
 .. _`bootstrap_4_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_4_horizontal_layout.html.twig
+.. _`bootstrap_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_5_layout.html.twig
+.. _`bootstrap_5_horizontal_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/bootstrap_5_horizontal_layout.html.twig
 .. _`Bootstrap 3 CSS framework`: https://getbootstrap.com/docs/3.4/
-.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.4/
+.. _`Bootstrap 4 CSS framework`: https://getbootstrap.com/docs/4.6/
+.. _`Bootstrap 5 CSS framework`: https://getbootstrap.com/docs/5.0/
 .. _`foundation_5_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_5_layout.html.twig
+.. _`foundation_6_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/foundation_6_layout.html.twig
 .. _`Foundation CSS framework`: https://get.foundation/
-.. _`Twig "use" tag`: https://twig.symfony.com/doc/2.x/tags/use.html
-.. _`Twig parent() function`: https://twig.symfony.com/doc/2.x/functions/parent.html
+.. _`tailwind_2_layout.html.twig`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/tailwind_2_layout.html.twig
+.. _`Tailwind CSS form plugin`: https://tailwindcss-forms.vercel.app/
+.. _`Twig "use" tag`: https://twig.symfony.com/doc/3.x/tags/use.html
+.. _`Twig parent() function`: https://twig.symfony.com/doc/3.x/functions/parent.html

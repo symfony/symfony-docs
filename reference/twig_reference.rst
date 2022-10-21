@@ -144,19 +144,13 @@ is_granted
     {{ is_granted(role, object = null, field = null) }}
 
 ``role``
-    **type**: ``string``, ``string[]``
+    **type**: ``string``
 ``object`` *(optional)*
     **type**: ``object``
 ``field`` *(optional)*
     **type**: ``string``
 
-Returns ``true`` if the current user has the given role. If several roles are
-passed in an array, ``true`` is returned if the user has at least one of
-them.
-
-.. deprecated:: 4.4
-
-    The feature to pass an array of roles to ``is_granted()`` was deprecated in Symfony 4.4.
+Returns ``true`` if the current user has the given role.
 
 Optionally, an object can be passed to be used by the voter. More information
 can be found in :ref:`security-template`.
@@ -231,6 +225,8 @@ Returns the absolute URL (with scheme and host) for the given route. If
     Read more about :doc:`Symfony routing </routing>` and about
     :ref:`creating links in Twig templates <templates-link-to-pages>`.
 
+.. _reference-twig-function-absolute-url:
+
 absolute_url
 ~~~~~~~~~~~~
 
@@ -244,6 +240,8 @@ absolute_url
 Returns the absolute URL (with scheme and host) from the passed relative path. Combine it with the
 :ref:`asset() function <reference-twig-function-asset>` to generate absolute URLs
 for web assets. Read more about :ref:`Linking to CSS, JavaScript and Image Assets <templates-link-to-assets>`.
+
+.. _reference-twig-function-relative-path:
 
 relative_path
 ~~~~~~~~~~~~~
@@ -272,6 +270,54 @@ expression
 
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` related
 to the :doc:`ExpressionLanguage component </components/expression_language>`.
+
+impersonation_exit_path
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_path(exitTo = null) }}
+
+``exitTo`` *(optional)*
+    **type**: ``string``
+
+Generates a URL that you can visit to exit :doc:`user impersonation </security/impersonating_user>`.
+After exiting impersonation, the user is redirected to the current URI. If you
+prefer to redirect to a different URI, define its value in the ``exitTo`` argument.
+
+If no user is being impersonated, the function returns an empty string.
+
+impersonation_exit_url
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_exit_url(exitTo = null) }}
+
+``exitTo`` *(optional)*
+    **type**: ``string``
+
+It's similar to the `impersonation_exit_path`_ function, but it generates
+absolute URLs instead of relative URLs.
+
+.. _reference-twig-function-t:
+
+t
+~
+
+.. code-block:: twig
+
+    {{ t(message, parameters = [], domain = 'messages')|trans }}
+
+``message``
+    **type**: ``string``
+``parameters`` *(optional)*
+    **type**: ``array`` **default**: ``[]``
+``domain`` *(optional)*
+    **type**: ``string`` **default**: ``messages``
+
+Creates a ``Translatable`` object that can be passed to the
+:ref:`trans filter <reference-twig-filter-trans>`.
 
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -310,6 +356,8 @@ Makes a technical name human readable (i.e. replaces underscores by spaces
 or transforms camelCase text like ``helloWorld`` to ``hello world``
 and then capitalizes the string).
 
+.. _reference-twig-filter-trans:
+
 trans
 ~~~~~
 
@@ -318,7 +366,7 @@ trans
     {{ message|trans(arguments = [], domain = null, locale = null) }}
 
 ``message``
-    **type**: ``string``
+    **type**: ``string`` | ``Translatable``
 ``arguments`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 ``domain`` *(optional)*
@@ -329,32 +377,24 @@ trans
 Translates the text into the current language. More information in
 :ref:`Translation Filters <translation-filters>`.
 
-transchoice
-~~~~~~~~~~~
+sanitize_html
+~~~~~~~~~~~~~
 
-.. deprecated:: 4.2
+.. versionadded:: 6.1
 
-   The ``transchoice`` filter is deprecated since Symfony 4.2 and will be
-   removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
-   the ``trans`` filter instead.
+    The ``sanitize_html()`` filter was introduced in Symfony 6.1.
 
 .. code-block:: twig
 
-    {{ message|transchoice(count, arguments = [], domain = null, locale = null) }}
+    {{ body|sanitize_html(sanitizer = "default") }}
 
-``message``
+``body``
     **type**: ``string``
-``count``
-    **type**: ``integer``
-``arguments`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
-``domain`` *(optional)*
-    **type**: ``string`` **default**: ``null``
-``locale`` *(optional)*
-    **type**: ``string`` **default**: ``null``
+``sanitizer`` *(optional)*
+    **type**: ``string`` **default**: ``"default"``
 
-Translates the text with pluralization support. More information in
-:ref:`Translation Filters <translation-filters>`.
+Sanitizes the text using the HTML Sanitizer component. More information in
+:ref:`HTML Sanitizer <html-sanitizer-twig>`.
 
 yaml_encode
 ~~~~~~~~~~~
@@ -525,6 +565,25 @@ project's root directory:
 If the given file path is out of the project directory, a ``null`` value
 will be returned.
 
+serialize
+~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ object|serialize(format = 'json', context = []) }}
+
+``object``
+    **type**: ``mixed``
+
+``format`` *(optional)*
+    **type**: ``string``
+
+``context`` *(optional)*
+    **type**: ``array``
+
+Accepts any data that can be serialized by the :doc:`Serializer component </serializer>`
+and returns a serialized string in the specified ``format``.
+
 .. _reference-twig-tags:
 
 Tags
@@ -563,31 +622,6 @@ trans
     **type**: ``string`` **default**: ``string``
 
 Renders the translation of the content. More information in :ref:`translation-tags`.
-
-transchoice
-~~~~~~~~~~~
-
-.. deprecated:: 4.2
-
-   The ``transchoice`` tag is deprecated since Symfony 4.2 and will be
-   removed in 5.0. Use the :doc:`ICU MessageFormat </translation/message_format>` with
-   the ``trans`` tag instead.
-
-.. code-block:: twig
-
-    {% transchoice count with vars from domain into locale %}{% endtranschoice %}
-
-``count``
-    **type**: ``integer``
-``vars`` *(optional)*
-    **type**: ``array`` **default**: ``[]``
-``domain`` *(optional)*
-    **type**: ``string`` **default**: ``null``
-``locale`` *(optional)*
-    **type**: ``string`` **default**: ``null``
-
-Renders the translation of the content with pluralization support, more
-information in :ref:`translation-tags`.
 
 trans_default_domain
 ~~~~~~~~~~~~~~~~~~~~
@@ -634,4 +668,4 @@ The ``app`` variable is injected automatically by Symfony in all templates and
 provides access to lots of useful application information. Read more about the
 :ref:`Twig global app variable <twig-app-variable>`.
 
-.. _`default filters and functions defined by Twig`: https://twig.symfony.com/doc/2.x/#reference
+.. _`default filters and functions defined by Twig`: https://twig.symfony.com/doc/3.x/#reference

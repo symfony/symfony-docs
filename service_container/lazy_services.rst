@@ -25,17 +25,16 @@ until you interact with the proxy in some way.
 
 .. caution::
 
-    Lazy services do not support `final`_ classes.
+    Lazy services do not support `final`_ classes, but you can use
+    `Interface Proxifying`_ to work around this limitation.
 
-Installation
-------------
+    In PHP versions prior to 8.0 lazy services do not support parameters with
+    default values for built-in PHP classes (e.g. ``PDO``).
 
-In order to use the lazy service instantiation, you will need to install the
-``symfony/proxy-manager-bridge`` package:
+.. versionadded:: 6.2
 
-.. code-block:: terminal
-
-    $ composer require symfony/proxy-manager-bridge
+    Starting from Symfony 6.2, you don't have to install any package (e.g.
+    ``symfony/proxy-manager-bridge``) in order to use the lazy service instantiation.
 
 Configuration
 -------------
@@ -78,32 +77,88 @@ You can mark the service as ``lazy`` by manipulating its definition:
             $services->set(AppExtension::class)->lazy();
         };
 
+Once you inject the service into another service, a lazy ghost object with the
+same signature of the class representing the service should be injected. A lazy
+`ghost object`_ is an object that is created empty and that is able to initialize
+itself when being accessed for the first time). The same happens when calling
+``Container::get()`` directly.
 
-Once you inject the service into another service, a virtual `proxy`_ with the
-same signature of the class representing the service should be injected. The
-same happens when calling ``Container::get()`` directly.
-
-The actual class will be instantiated as soon as you try to interact with the
-service (e.g. call one of its methods).
-
-To check if your proxy works you can check the interface of the received object::
+To check if your lazy service works you can check the interface of the received object::
 
     dump(class_implements($service));
-    // the output should include "ProxyManager\Proxy\LazyLoadingInterface"
+    // the output should include "Symfony\Component\VarExporter\LazyGhostObjectInterface"
 
-.. note::
-
-    If you don't install the `ProxyManager bridge`_ , the container will skip
-    over the ``lazy`` flag and directly instantiate the service as it would
-    normally do.
-
-Additional Resources
+Interface Proxifying
 --------------------
 
-You can read more about how proxies are instantiated, generated and initialized
-in the `documentation of ProxyManager`_.
+Under the hood, proxies generated to lazily load services inherit from the class
+used by the service. However, sometimes this is not possible at all (e.g. because
+the class is `final`_ and can not be extended) or not convenient.
 
-.. _`ProxyManager bridge`: https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/ProxyManager
-.. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern
-.. _`documentation of ProxyManager`: https://github.com/Ocramius/ProxyManager/blob/master/docs/lazy-loading-value-holder.md
+To workaround this limitation, you can configure a proxy to only implement
+specific interfaces.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\Twig\AppExtension:
+                lazy: 'Twig\Extension\ExtensionInterface'
+                # or a complete definition:
+                lazy: true
+                tags:
+                    - { name: 'proxy', interface: 'Twig\Extension\ExtensionInterface' }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Twig\AppExtension" lazy="Twig\Extension\ExtensionInterface"/>
+                <!-- or a complete definition: -->
+                <service id="App\Twig\AppExtension" lazy="true">
+                    <tag name="proxy" interface="Twig\Extension\ExtensionInterface"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Twig\AppExtension;
+        use Twig\Extension\ExtensionInterface;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(AppExtension::class)
+                ->lazy()
+                ->tag('proxy', ['interface' => ExtensionInterface::class])
+            ;
+        };
+
+The virtual `proxy`_ injected into other services will only implement the
+specified interfaces and will not extend the original service class, allowing to
+lazy load services using `final`_ classes. You can configure the proxy to
+implement multiple interfaces by adding new "proxy" tags.
+
+.. tip::
+
+    This feature can also act as a safe guard: given that the proxy does not
+    extend the original class, only the methods defined by the interface can
+    be called, preventing to call implementation specific methods. It also
+    prevents injecting the dependency at all if you type-hinted a concrete
+    implementation instead of the interface.
+
+.. _`ghost object`: https://en.wikipedia.org/wiki/Lazy_loading#Ghost
 .. _`final`: https://www.php.net/manual/en/language.oop5.final.php
+.. _`proxy`: https://en.wikipedia.org/wiki/Proxy_pattern

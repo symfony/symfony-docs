@@ -8,40 +8,17 @@ Renders an input text field and specializes in handling number input. This
 type offers different options for the scale, rounding and grouping
 that you want to use for your number.
 
-+-------------+----------------------------------------------------------------------+
-| Rendered as | ``input`` ``text`` field                                             |
-+-------------+----------------------------------------------------------------------+
-| Options     | - `grouping`_                                                        |
-|             | - `html5`_                                                           |
-|             | - `input`_                                                           |
-|             | - `scale`_                                                           |
-|             | - `rounding_mode`_                                                   |
-+-------------+----------------------------------------------------------------------+
-| Overridden  | - `compound`_                                                        |
-| options     |                                                                      |
-+-------------+----------------------------------------------------------------------+
-| Inherited   | - `attr`_                                                            |
-| options     | - `data`_                                                            |
-|             | - `disabled`_                                                        |
-|             | - `empty_data`_                                                      |
-|             | - `error_bubbling`_                                                  |
-|             | - `error_mapping`_                                                   |
-|             | - `help`_                                                            |
-|             | - `help_attr`_                                                       |
-|             | - `help_html`_                                                       |
-|             | - `invalid_message`_                                                 |
-|             | - `invalid_message_parameters`_                                      |
-|             | - `label`_                                                           |
-|             | - `label_attr`_                                                      |
-|             | - `label_format`_                                                    |
-|             | - `mapped`_                                                          |
-|             | - `required`_                                                        |
-|             | - `row_attr`_                                                        |
-+-------------+----------------------------------------------------------------------+
-| Parent type | :doc:`FormType </reference/forms/types/form>`                        |
-+-------------+----------------------------------------------------------------------+
-| Class       | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
-+-------------+----------------------------------------------------------------------+
++---------------------------+----------------------------------------------------------------------+
+| Rendered as               | ``input`` ``text`` field                                             |
++---------------------------+----------------------------------------------------------------------+
+| Default invalid message   | Please enter a number.                                               |
++---------------------------+----------------------------------------------------------------------+
+| Legacy invalid message    | The value {{ value }} is not valid.                                  |
++---------------------------+----------------------------------------------------------------------+
+| Parent type               | :doc:`FormType </reference/forms/types/form>`                        |
++---------------------------+----------------------------------------------------------------------+
+| Class                     | :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\NumberType` |
++---------------------------+----------------------------------------------------------------------+
 
 .. include:: /reference/forms/types/options/_debug_form.rst.inc
 
@@ -55,10 +32,6 @@ html5
 
 **type**: ``boolean`` **default**: ``false``
 
-.. versionadded:: 4.3
-
-    The ``html5`` option was introduced in Symfony 4.3.
-
 If set to ``true``, the HTML input will be rendered as a native HTML5 ``type="number"``
 form.
 
@@ -66,10 +39,6 @@ input
 ~~~~~
 
 **type**: ``string`` **default**: ``number``
-
-.. versionadded:: 4.3
-
-    The ``input`` option was introduced in Symfony 4.3.
 
 The format of the input data - i.e. the format that the number is stored on
 your underlying object. Valid values are ``number`` and ``string``. Setting
@@ -89,10 +58,21 @@ to ``2``, a submitted value of ``20.123`` will be rounded to, for example,
 
 .. include:: /reference/forms/types/options/rounding_mode.rst.inc
 
+When the ``html5`` option is set to ``false``, the ``<input>`` element will
+include an `inputmode HTML attribute`_ which depends on the value of this option.
+If the ``scale`` value is ``0``, ``inputmode`` will be ``numeric``; if ``scale``
+is set to any value greater than ``0``, ``inputmode`` will be ``decimal``.
+
+.. versionadded:: 6.1
+
+   The automatic addition of the ``inputmode`` attribute was introduced in Symfony 6.1.
+
 Overridden Options
 ------------------
 
 .. include:: /reference/forms/types/options/compound_type.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 Inherited Options
 -----------------
@@ -105,13 +85,11 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :end-before: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
 
 The default value is ``''`` (the empty string).
 
-.. include:: /reference/forms/types/options/empty_data.rst.inc
-    :start-after: DEFAULT_PLACEHOLDER
+.. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
@@ -122,8 +100,6 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/help_attr.rst.inc
 
 .. include:: /reference/forms/types/options/help_html.rst.inc
-
-.. include:: /reference/forms/types/options/invalid_message.rst.inc
 
 .. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
 
@@ -138,3 +114,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. _`inputmode HTML attribute`: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inputmode

@@ -6,9 +6,6 @@ you to apply a collection of constraints to each element of the array.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `constraints`_
-            - `groups`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\All`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\AllValidator`
 ==========  ===================================================================
@@ -21,21 +18,20 @@ entry in that array:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/User.php
         namespace App\Entity;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
+        // IMPORTANT: nested attributes require PHP 8.1 or higher
         class User
         {
-            /**
-             * @Assert\All({
-             *     @Assert\NotBlank,
-             *     @Assert\Length(min=5)
-             * })
-             */
+            #[Assert\All([
+                new Assert\NotBlank,
+                new Assert\Length(min: 5),
+            ])]
             protected $favoriteColors = [];
         }
 

@@ -1,7 +1,10 @@
 Installing Encore
 =================
 
-First, make sure you `install Node.js`_ and also the `Yarn package manager`_.
+First, make sure you `install Node.js`_. Optionally you can also install the
+`Yarn package manager`_. In the next sections you will always see the commands
+for both ``npm`` and ``yarn``, but you only need to run one of them.
+
 The following instructions depend on whether you are installing Encore in a
 Symfony application or not.
 
@@ -60,7 +63,7 @@ is the main config file for both Webpack and Webpack Encore:
 
 .. code-block:: javascript
 
-    var Encore = require('@symfony/webpack-encore');
+    const Encore = require('@symfony/webpack-encore');
 
     // Manually configure the runtime environment if not already configured yet by the "encore" command.
     // It's useful when you use tools that rely on webpack.config.js file.
@@ -79,15 +82,13 @@ is the main config file for both Webpack and Webpack Encore:
         /*
          * ENTRY CONFIG
          *
-         * Add 1 entry for each "page" of your app
-         * (including one that's included on every page - e.g. "app")
-         *
          * Each entry will result in one JavaScript file (e.g. app.js)
          * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
          */
-        .addEntry('app', './assets/js/app.js')
-        //.addEntry('page1', './assets/js/page1.js')
-        //.addEntry('page2', './assets/js/page2.js')
+        .addEntry('app', './assets/app.js')
+
+        // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
+        .enableStimulusBridge('./assets/controllers.json')
 
         // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
         .splitEntryChunks()
@@ -109,6 +110,10 @@ is the main config file for both Webpack and Webpack Encore:
         // enables hashed filenames (e.g. app.abc123.css)
         .enableVersioning(Encore.isProduction())
 
+        .configureBabel((config) => {
+            config.plugins.push('@babel/plugin-proposal-class-properties');
+        })
+
         // enables @babel/preset-env polyfills
         .configureBabelPresetEnv((config) => {
             config.useBuiltIns = 'usage';
@@ -121,26 +126,25 @@ is the main config file for both Webpack and Webpack Encore:
         // uncomment if you use TypeScript
         //.enableTypeScriptLoader()
 
+        // uncomment if you use React
+        //.enableReactPreset()
+
         // uncomment to get integrity="..." attributes on your script & link tags
         // requires WebpackEncoreBundle 1.4 or higher
         //.enableIntegrityHashes(Encore.isProduction())
 
         // uncomment if you're having problems with a jQuery plugin
         //.autoProvidejQuery()
-
-        // uncomment if you use API Platform Admin (composer require api-admin)
-        //.enableReactPreset()
-        //.addEntry('admin', './assets/js/admin.js')
     ;
 
     module.exports = Encore.getWebpackConfig();
 
-Next, open the new ``assets/js/app.js`` file which contains some JavaScript code
+Next, open the new ``assets/app.js`` file which contains some JavaScript code
 *and* imports some CSS:
 
 .. code-block:: javascript
 
-    // assets/js/app.js
+    // assets/app.js
     /*
      * Welcome to your app's main JavaScript file!
      *
@@ -149,23 +153,51 @@ Next, open the new ``assets/js/app.js`` file which contains some JavaScript code
      */
 
     // any CSS you import will output into a single css file (app.css in this case)
-    import '../css/app.css';
+    import './styles/app.css';
 
-    // Need jQuery? Install it with "yarn add jquery"(or "npm install jquery"), then uncomment to import it.
-    // import $ from 'jquery';
+    // start the Stimulus application
+    import './bootstrap';
 
-    console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
-
-And the new ``assets/css/app.css`` file:
+And the new ``assets/styles/app.css`` file:
 
 .. code-block:: css
 
-    /* assets/css/app.css */
+    /* assets/styles/app.css */
     body {
         background-color: lightgray;
     }
 
-You'll customize and learn more about these file in :doc:`/frontend/encore/simple-example`.
+You should also add an ``assets/bootstrap.js`` file, which initializes Stimulus:
+a system that you'll learn about soon:
+
+.. code-block:: javascript
+
+    // assets/bootstrap.js
+    import { startStimulusApp } from '@symfony/stimulus-bridge';
+
+    // Registers Stimulus controllers from controllers.json and in the controllers/ directory
+    export const app = startStimulusApp(require.context(
+        '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
+        true,
+        /\.(j|t)sx?$/
+    ));
+
+    // register any custom, 3rd party controllers here
+    // app.register('some_controller_name', SomeImportedController);
+
+And finally, create an ``assets/controllers.json`` file, which also fits into
+the Stimulus system:
+
+.. code-block:: json
+
+    {
+        "controllers": [],
+        "entrypoints": []
+    }
+
+You'll customize and learn more about these files in :doc:`/frontend/encore/simple-example`.
+When you execute Encore, it will ask you to install a few more dependencies based
+on which features of Encore you have enabled.
 
 .. caution::
 

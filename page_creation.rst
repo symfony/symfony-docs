@@ -21,7 +21,7 @@ two-step process:
 .. admonition:: Screencast
     :class: screencast
 
-    Do you prefer video tutorials? Check out the `Stellar Development with Symfony`_
+    Do you prefer video tutorials? Check out the `Harmonious Development with Symfony`_
     screencast series.
 
 .. seealso::
@@ -52,7 +52,7 @@ random) number and prints it. To do that, create a "Controller" class and a
 
     class LuckyController
     {
-        public function number()
+        public function number(): Response
         {
             $number = random_int(0, 100);
 
@@ -79,15 +79,15 @@ That's it! If you are using Symfony web server, try it out by going to: http://l
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works. Remember the two steps
-to creating a page?
+to create a page?
+
+#. *Create a controller and a method*: This is a function where *you* build the page and ultimately
+   return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
+   in their own section, including how to return JSON responses;
 
 #. *Create a route*: In ``config/routes.yaml``, the route defines the URL to your
-    page (``path``) and what ``controller`` to call. You'll learn more about :doc:`routing </routing>`
-    in its own section, including how to make *variable* URLs;
-
-#. *Create a controller*: This is a function where *you* build the page and ultimately
-   return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
-   in their own section, including how to return JSON responses.
+   page (``path``) and what ``controller`` to call. You'll learn more about :doc:`routing </routing>`
+   in its own section, including how to make *variable* URLs.
 
 .. _annotation-routes:
 
@@ -95,7 +95,8 @@ Annotation Routes
 -----------------
 
 Instead of defining your route in YAML, Symfony also allows you to use *annotation*
-routes. To do this, install the annotations package:
+or *attribute* routes. Attributes are built-in in PHP starting from PHP 8. In earlier
+PHP versions you can use annotations. To do this, install the annotations package:
 
 .. code-block:: terminal
 
@@ -103,26 +104,26 @@ routes. To do this, install the annotations package:
 
 You can now add your route directly *above* the controller:
 
-.. code-block:: diff
+.. configuration-block::
 
-      // src/Controller/LuckyController.php
+    .. code-block:: php-attributes
 
-      // ...
-    + use Symfony\Component\Routing\Annotation\Route;
+        // src/Controller/LuckyController.php
 
-      class LuckyController
-      {
-    +     /**
-    +      * @Route("/lucky/number")
-    +      */
-          public function number()
-          {
-              // this looks exactly the same
-          }
-      }
+        // ...
+        + use Symfony\Component\Routing\Annotation\Route;
+
+        class LuckyController
+        {
+        +   #[Route('/lucky/number')]
+            public function number(): Response
+            {
+                // this looks exactly the same
+            }
+        }
 
 That's it! The page - http://localhost:8000/lucky/number will work exactly
-like before! Annotations are the recommended way to configure routes.
+like before! Annotations/attributes are the recommended way to configure routes.
 
 .. _flex-quick-intro:
 
@@ -140,7 +141,7 @@ Second, after this package was downloaded, Flex runs a *recipe*, which is a
 set of automated instructions that tell Symfony how to integrate an external
 package. `Flex recipes`_ exist for many packages and have the ability
 to do a lot, like adding configuration files, creating directories, updating ``.gitignore``
-and adding new config to your ``.env`` file. Flex *automates* the installation of
+and adding a new config to your ``.env`` file. Flex *automates* the installation of
 packages so you can get back to coding.
 
 The bin/console Command
@@ -165,16 +166,25 @@ To get a list of *all* of the routes in your system, use the ``debug:router`` co
 
 You should see your ``app_lucky_number`` route in the list:
 
-================== ======== ======== ====== ===============
- Name               Method   Scheme   Host   Path
-================== ======== ======== ====== ===============
- app_lucky_number   ANY      ANY      ANY    /lucky/number
-================== ======== ======== ====== ===============
+.. code-block:: terminal
+
+    ----------------  -------  -------  -----  --------------
+    Name              Method   Scheme   Host   Path
+    ----------------  -------  -------  -----  --------------
+    app_lucky_number  ANY      ANY      ANY    /lucky/number
+    ----------------  -------  -------  -----  --------------
 
 You will also see debugging routes besides ``app_lucky_number`` -- more on
 the debugging routes in the next section.
 
 You'll learn about many more commands as you continue!
+
+.. tip::
+
+    If your shell is supported, you can also set up console completion support.
+    This autocompletes commands and other input when using ``bin/console``.
+    See :ref:`the Console document <console-completion-setup>` for more
+    information on how to set up completion.
 
 .. _web-debug-toolbar:
 
@@ -231,9 +241,7 @@ variable so you can use it in Twig::
 
     class LuckyController extends AbstractController
     {
-        /**
-         * @Route("/lucky/number")
-         */
+        #[Route('/lucky/number')]
         public function number(): Response
         {
             $number = random_int(0, 100);
@@ -341,5 +349,5 @@ Go Deeper with HTTP & Framework Fundamentals
 
 .. _`Twig`: https://twig.symfony.com
 .. _`Composer`: https://getcomposer.org
-.. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony/setup
-.. _`Flex recipes`: https://flex.symfony.com
+.. _`Harmonious Development with Symfony`: https://symfonycasts.com/screencast/symfony/setup
+.. _`Flex recipes`: https://github.com/symfony/recipes/blob/flex/main/RECIPES.md

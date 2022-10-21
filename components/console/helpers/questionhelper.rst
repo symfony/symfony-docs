@@ -34,14 +34,18 @@ the following to your command::
     {
         // ...
 
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion('Continue with this action?', false);
 
             if (!$helper->ask($input, $output, $question)) {
-                return 0;
+                return Command::SUCCESS;
             }
+
+            // ... do something here
+
+            return Command::SUCCESS;
         }
     }
 
@@ -75,12 +79,16 @@ if you want to know a bundle name, you can add this to your command::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
 
         $bundleName = $helper->ask($input, $output, $question);
+        
+        // ... do something with the bundleName
+        
+        return Command::SUCCESS;
     }
 
 The user will be asked "Please enter the name of the bundle". They can type
@@ -99,12 +107,13 @@ from a predefined list::
     use Symfony\Component\Console\Question\ChoiceQuestion;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Please select your favorite color (defaults to red)',
+            // choices can also be PHP objects that implement __toString() method
             ['red', 'blue', 'yellow'],
             0
         );
@@ -114,6 +123,8 @@ from a predefined list::
         $output->writeln('You have just selected: '.$color);
 
         // ... do something with the color
+        
+        return Command::SUCCESS;
     }
 
 The option which should be selected by default is provided with the third
@@ -123,7 +134,7 @@ option is the default one.
 If the user enters an invalid string, an error message is shown and the user
 is asked to provide the answer another time, until they enter a valid string
 or reach the maximum number of attempts. The default value for the maximum number
-of attempts is ``null``, which means infinite number of attempts. You can define
+of attempts is ``null``, which means an infinite number of attempts. You can define
 your own error message using
 :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setErrorMessage`.
 
@@ -137,7 +148,7 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
     use Symfony\Component\Console\Question\ChoiceQuestion;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -150,6 +161,8 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
 
         $colors = $helper->ask($input, $output, $question);
         $output->writeln('You have just selected: ' . implode(', ', $colors));
+        
+        return Command::SUCCESS;
     }
 
 Now, when the user enters ``1,2``, the result will be:
@@ -167,7 +180,7 @@ will be autocompleted as the user types::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -177,6 +190,10 @@ will be autocompleted as the user types::
         $question->setAutocompleterValues($bundles);
 
         $bundleName = $helper->ask($input, $output, $question);
+        
+        // ... do something with the bundleName
+        
+        return Command::SUCCESS;
     }
 
 In more complex use cases, it may be necessary to generate suggestions on the
@@ -186,7 +203,7 @@ provide a callback function to dynamically generate suggestions::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $helper = $this->getHelper('question');
 
@@ -212,11 +229,11 @@ provide a callback function to dynamically generate suggestions::
         $question->setAutocompleterCallback($callback);
 
         $filePath = $helper->ask($input, $output, $question);
+        
+        // ... do something with the filePath
+        
+        return Command::SUCCESS;
     }
-
-.. versionadded:: 4.3
-
-    The ``setAutocompleterCallback()`` method was introduced in Symfony 4.3.
 
 Do not Trim the Answer
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -227,7 +244,7 @@ You can also specify if you want to not trim the answer by setting it directly w
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -236,11 +253,40 @@ You can also specify if you want to not trim the answer by setting it directly w
         $question->setTrimmable(false);
         // if the users inputs 'elsa ' it will not be trimmed and you will get 'elsa ' as value
         $name = $helper->ask($input, $output, $question);
+        
+        // ... do something with the name
+        
+        return Command::SUCCESS;
     }
 
-.. versionadded:: 4.4
+Accept Multiline Answers
+~~~~~~~~~~~~~~~~~~~~~~~~
 
-    The ``setTrimmable()`` method was introduced in Symfony 4.4.
+By default, the question helper stops reading user input when it receives a newline
+character (i.e., when the user hits ``ENTER`` once). However, you may specify that
+the response to a question should allow multiline answers by passing ``true`` to
+:method:`Symfony\\Component\\Console\\Question\\Question::setMultiline`::
+
+    use Symfony\Component\Console\Question\Question;
+
+    // ...
+    public function execute(InputInterface $input, OutputInterface $output): int
+    {
+        // ...
+        $helper = $this->getHelper('question');
+
+        $question = new Question('How do you solve world peace?');
+        $question->setMultiline(true);
+
+        $answer = $helper->ask($input, $output, $question);
+        
+        // ... do something with the answer
+        
+        return Command::SUCCESS;
+    }
+
+Multiline questions stop reading user input after receiving an end-of-transmission
+control character (``Ctrl-D`` on Unix systems or ``Ctrl-Z`` on Windows).
 
 Hiding the User's Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -251,7 +297,7 @@ convenient for passwords::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -261,6 +307,10 @@ convenient for passwords::
         $question->setHiddenFallback(false);
 
         $password = $helper->ask($input, $output, $question);
+        
+        // ... do something with the password
+        
+        return Command::SUCCESS;
     }
 
 .. caution::
@@ -284,13 +334,15 @@ convenient for passwords::
         use Symfony\Component\Console\Question\ChoiceQuestion;
 
         // ...
-        public function execute(InputInterface $input, OutputInterface $output)
+        public function execute(InputInterface $input, OutputInterface $output): int
         {
             // ...
             $helper = $this->getHelper('question');
             QuestionHelper::disableStty();
 
             // ...
+            
+            return Command::SUCCESS;
         }
 
 Normalizing the Answer
@@ -306,7 +358,7 @@ method::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -318,6 +370,10 @@ method::
         });
 
         $bundleName = $helper->ask($input, $output, $question);
+        
+        // ... do something with the bundleName
+        
+        return Command::SUCCESS;
     }
 
 .. caution::
@@ -325,6 +381,8 @@ method::
     The normalizer is called first and the returned value is used as the input
     of the validator. If the answer is invalid, don't throw exceptions in the
     normalizer and let the validator handle those errors.
+
+.. _console-validate-question-answer:
 
 Validating the Answer
 ---------------------
@@ -338,7 +396,7 @@ method::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
@@ -356,6 +414,10 @@ method::
         $question->setMaxAttempts(2);
 
         $bundleName = $helper->ask($input, $output, $question);
+        
+        // ... do something with the bundleName
+        
+        return Command::SUCCESS;
     }
 
 The ``$validator`` is a callback which handles the validation. It should
@@ -367,8 +429,24 @@ was successful.
 You can set the max number of times to ask with the
 :method:`Symfony\\Component\\Console\\Question\\Question::setMaxAttempts` method.
 If you reach this max number it will use the default value. Using ``null`` means
-the amount of attempts is infinite. The user will be asked as long as they provide an
+the number of attempts is infinite. The user will be asked as long as they provide an
 invalid answer and will only be able to proceed if their input is valid.
+
+.. tip::
+
+    You can even use the :doc:`Validator </validation>` component to
+    validate the input by using the :method:`Symfony\\Component\\Validator\\Validation::createCallable`
+    method::
+
+        use Symfony\Component\Validator\Constraints\Regex;
+        use Symfony\Component\Validator\Validation;
+
+        $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
+        $validation = Validation::createCallable(new Regex([
+            'pattern' => '/^[a-zA-Z]+Bundle$/',
+            'message' => 'The name of the bundle should be suffixed with \'Bundle\'',
+        ]));
+        $question->setValidator($validation);
 
 Validating a Hidden Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -378,14 +456,17 @@ You can also use a validator with a hidden question::
     use Symfony\Component\Console\Question\Question;
 
     // ...
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         // ...
         $helper = $this->getHelper('question');
 
         $question = new Question('Please enter your password');
+        $question->setNormalizer(function ($value) {
+            return $value ?? '';
+        });
         $question->setValidator(function ($value) {
-            if (trim($value) == '') {
+            if ('' === trim($value)) {
                 throw new \Exception('The password cannot be empty');
             }
 
@@ -395,6 +476,10 @@ You can also use a validator with a hidden question::
         $question->setMaxAttempts(20);
 
         $password = $helper->ask($input, $output, $question);
+        
+        // ... do something with the password
+        
+        return Command::SUCCESS;
     }
 
 Testing a Command that Expects Input
@@ -403,8 +488,6 @@ Testing a Command that Expects Input
 If you want to write a unit test for a command which expects some kind of input
 from the command line, you need to set the inputs that the command expects::
 
-    use Symfony\Component\Console\Helper\HelperSet;
-    use Symfony\Component\Console\Helper\QuestionHelper;
     use Symfony\Component\Console\Tester\CommandTester;
 
     // ...

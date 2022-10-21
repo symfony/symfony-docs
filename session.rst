@@ -17,15 +17,16 @@ sessions, check their default configuration:
 
         # config/packages/framework.yaml
         framework:
+            # Enables session support. Note that the session will ONLY be started if you read or write from it.
+            # Remove or comment this section to explicitly disable session support.
             session:
-                # enables the support of sessions in the app
-                enabled: true
-                # ID of the service used for session storage.
+                # ID of the service used for session storage
                 # NULL means that Symfony uses PHP default session mechanism
                 handler_id: null
                 # improves the security of the cookies used for sessions
-                cookie_secure: 'auto'
-                cookie_samesite: 'lax'
+                cookie_secure: auto
+                cookie_samesite: lax
+                storage_factory_id: session.storage.factory.native
 
     .. code-block:: xml
 
@@ -40,38 +41,44 @@ sessions, check their default configuration:
 
             <framework:config>
                 <!--
-                    enabled: enables the support of sessions in the app
+                    Enables session support. Note that the session will ONLY be started if you read or write from it.
+                    Remove or comment this section to explicitly disable session support.
                     handler-id: ID of the service used for session storage
                                 NULL means that Symfony uses PHP default session mechanism
                     cookie-secure and cookie-samesite: improves the security of the cookies used for sessions
                 -->
-                <framework:session enabled="true"
-                                   handler-id="null"
+                <framework:session handler-id="null"
                                    cookie-secure="auto"
-                                   cookie-samesite="lax"/>
+                                   cookie-samesite="lax"
+                                   storage_factory_id="session.storage.factory.native"/>
             </framework:config>
         </container>
 
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'session' => [
-                // enables the support of sessions in the app
-                'enabled' => true,
+        use Symfony\Component\HttpFoundation\Cookie;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->session()
+                // Enables session support. Note that the session will ONLY be started if you read or write from it.
+                // Remove or comment this section to explicitly disable session support.
+                ->enabled(true)
                 // ID of the service used for session storage
                 // NULL means that Symfony uses PHP default session mechanism
-                'handler_id' => null,
+                ->handlerId(null)
                 // improves the security of the cookies used for sessions
-                'cookie_secure' => 'auto',
-                'cookie_samesite' => 'lax',
-            ],
-        ]);
+                ->cookieSecure('auto')
+                ->cookieSamesite(Cookie::SAMESITE_LAX)
+                ->storageFactoryId('session.storage.factory.native')
+            ;
+        };
 
 Setting the ``handler_id`` config option to ``null`` means that Symfony will
 use the native PHP session mechanism. The session metadata files will be stored
 outside of the Symfony application, in a directory controlled by PHP. Although
-this usually simplify things, some session expiration related options may not
+this usually simplifies things, some session expiration related options may not
 work as expected if other applications that write to the same directory have
 short max lifetime settings.
 
@@ -112,13 +119,15 @@ session metadata files:
     .. code-block:: php
 
         // config/packages/framework.php
-        $container->loadFromExtension('framework', [
-            'session' => [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->session()
                 // ...
-                'handler_id' => 'session.handler.native_file',
-                'save_path' => '%kernel.project_dir%/var/sessions/%kernel.environment%',
-            ],
-        ]);
+                ->handlerId('session.handler.native_file')
+                ->savePath('%kernel.project_dir%/var/sessions/%kernel.environment%')
+            ;
+        };
 
 Check out the Symfony config reference to learn more about the other available
 :ref:`Session configuration options <config-framework-session>`. You can also
@@ -127,108 +136,46 @@ Check out the Symfony config reference to learn more about the other available
 Basic Usage
 -----------
 
-Symfony provides a session service that is injected in your services and
-controllers if you type-hint an argument with
-:class:`Symfony\\Component\\HttpFoundation\\Session\\SessionInterface`::
+The session is available through the ``Request`` object and the ``RequestStack``
+service. Symfony injects the ``request_stack`` service in services and controllers
+if you type-hint an argument with :class:`Symfony\\Component\\HttpFoundation\\RequestStack`::
 
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpFoundation\RequestStack;
 
     class SomeService
     {
-        private $session;
+        private $requestStack;
 
-        public function __construct(SessionInterface $session)
+        public function __construct(RequestStack $requestStack)
         {
-            $this->session = $session;
+            $this->requestStack = $requestStack;
+
+            // Accessing the session in the constructor is *NOT* recommended, since
+            // it might not be accessible yet or lead to unwanted side-effects
+            // $this->session = $requestStack->getSession();
         }
 
         public function someMethod()
         {
+            $session = $this->requestStack->getSession();
+
             // stores an attribute in the session for later reuse
-            $this->session->set('attribute-name', 'attribute-value');
+            $session->set('attribute-name', 'attribute-value');
 
             // gets an attribute by name
-            $foo = $this->session->get('foo');
+            $foo = $session->get('foo');
 
             // the second argument is the value returned when the attribute doesn't exist
-            $filters = $this->session->get('filters', []);
+            $filters = $session->get('filters', []);
 
             // ...
         }
     }
 
-.. tip::
-
-    Every ``SessionInterface`` implementation is supported. If you have your
-    own implementation, type-hint this in the argument instead.
-
 Stored attributes remain in the session for the remainder of that user's session.
 By default, session attributes are key-value pairs managed with the
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
 class.
-
-If your application needs are complex, you may prefer to use
-:ref:`namespaced session attributes <namespaced-attributes>` which are managed with the
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
-class. Before using them, override the ``session`` service definition to replace
-the default ``AttributeBag`` by the ``NamespacedAttributeBag``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        session:
-            public: true
-            class: Symfony\Component\HttpFoundation\Session\Session
-            arguments: ['@session.storage', '@session.namespacedattributebag', '@session.flash_bag']
-
-        session.namespacedattributebag:
-            class: Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <services>
-                <service id="session" class="Symfony\Component\HttpFoundation\Session\Session" public="true">
-                    <argument type="service" id="session.storage"/>
-                    <argument type="service" id="session.namespacedattributebag"/>
-                    <argument type="service" id="session.flash_bag"/>
-                </service>
-
-                <service id="session.namespacedattributebag"
-                    class="Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag"
-                />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
-        use Symfony\Component\HttpFoundation\Session\Session;
-
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
-
-            $services->set('session', Session::class)
-                ->public()
-                ->args([
-                    ref('session.storage'),
-                    ref('session.namespacedattributebag'),
-                    ref('session.flash_bag'),
-                ])
-            ;
-
-            $services->set('session.namespacedattributebag', NamespacedAttributeBag::class);
-        };
 
 .. _session-avoid-start:
 
@@ -250,5 +197,6 @@ More about Sessions
     session/locale_sticky_session
     session/php_bridge
     session/proxy_examples
+    session/configuring_ttl
 
 .. _`HttpFoundation component`: https://symfony.com/components/HttpFoundation

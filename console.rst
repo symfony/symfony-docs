@@ -9,15 +9,93 @@ The Symfony framework provides lots of commands through the ``bin/console`` scri
 created with the :doc:`Console component </components/console>`. You can also
 use it to create your own commands.
 
-The Console: APP_ENV & APP_DEBUG
----------------------------------
+Running Commands
+----------------
+
+Each Symfony application comes with a large set of commands. You can use
+the ``list`` command to view all available commands in the application:
+
+.. code-block:: terminal
+
+    $ php bin/console list
+    ...
+
+    Available commands:
+      about                                      Display information about the current project
+      completion                                 Dump the shell completion script
+      help                                       Display help for a command
+      list                                       List commands
+     assets
+      assets:install                             Install bundle's web assets under a public directory
+     cache
+      cache:clear                                Clear the cache
+    ...
+
+If you find the command you need, you can run it with the ``--help`` option
+to view the command's documentation:
+
+.. code-block:: terminal
+
+    $ php bin/console assets:install --help
+
+APP_ENV & APP_DEBUG
+~~~~~~~~~~~~~~~~~~~
 
 Console commands run in the :ref:`environment <config-dot-env>` defined in the ``APP_ENV``
 variable of the ``.env`` file, which is ``dev`` by default. It also reads the ``APP_DEBUG``
 value to turn "debug" mode on or off (it defaults to ``1``, which is on).
 
 To run the command in another environment or debug mode, edit the value of ``APP_ENV``
-and ``APP_DEBUG``.
+and ``APP_DEBUG``. You can also define this env vars when running the
+command, for instance:
+
+.. code-block:: terminal
+
+    # clears the cache for the prod environment
+    $ APP_ENV=prod php bin/console cache:clear
+
+.. _console-completion-setup:
+
+Console Completion
+~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.1
+
+    Console completion for Fish was introduced in Symfony 6.1.
+
+.. versionadded:: 6.2
+
+    Console completion for Zsh was introduced in Symfony 6.2.
+
+If you are using the Bash, Zsh or Fish shell, you can install Symfony's
+completion script to get auto completion when typing commands in the
+terminal. All commands support name and option completion, and some can
+even complete values.
+
+.. image:: /_images/components/console/completion.gif
+
+First, you have to install the completion script *once*. Run
+``bin/console completion --help`` for the installation instructions for
+your shell.
+
+.. note::
+
+    When using Bash, make sure you installed and setup the "bash completion"
+    package for your OS (typically named ``bash-completion``).
+
+After installing and restarting your terminal, you're all set to use
+completion (by default, by pressing the Tab key).
+
+.. tip::
+
+    Many PHP tools are built using the Symfony Console component (e.g.
+    Composer, PHPstan and Behat). If they are using version 5.4 or higher,
+    you can also install their completion script to enable console completion:
+
+    .. code-block:: terminal
+
+        $ php vendor/bin/phpstan completion --help
+        $ composer completion --help
 
 Creating a Command
 ------------------
@@ -29,53 +107,72 @@ want a command to create a user::
     // src/Command/CreateUserCommand.php
     namespace App\Command;
 
+    use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
+    // the name of the command is what users type after "php bin/console"
+    #[AsCommand(name: 'app:create-user')]
     class CreateUserCommand extends Command
     {
-        // the name of the command (the part after "bin/console")
-        protected static $defaultName = 'app:create-user';
-
-        protected function configure(): void
-        {
-            // ...
-        }
-
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // ... put here the code to create the user
 
             // this method must return an integer number with the "exit status code"
-            // of the command.
+            // of the command. You can also use these constants to make code more readable
 
             // return this if there was no problem running the command
-            return 0;
+            // (it's equivalent to returning int(0))
+            return Command::SUCCESS;
 
             // or return this if some error happened during the execution
-            // return 1;
+            // (it's equivalent to returning int(1))
+            // return Command::FAILURE;
+
+            // or return this to indicate incorrect command usage; e.g. invalid options
+            // or missing arguments (it's equivalent to returning int(2))
+            // return Command::INVALID
         }
     }
 
 Configuring the Command
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 You can optionally define a description, help message and the
-:doc:`input options and arguments </console/input>`::
+:doc:`input options and arguments </console/input>` by overriding the
+``configure()`` method::
+
+    // src/Command/CreateUserCommand.php
 
     // ...
-    protected function configure(): void
+    class CreateUserCommand extends Command
     {
-        $this
-            // the short description shown while running "php bin/console list"
-            ->setDescription('Creates a new user.')
+        // the command description shown when running "php bin/console list"
+        protected static $defaultDescription = 'Creates a new user.';
 
-            // the full command description shown when running the command with
-            // the "--help" option
-            ->setHelp('This command allows you to create a user...')
-        ;
+        // ...
+        protected function configure(): void
+        {
+            $this
+                // the command help shown when running the command with the "--help" option
+                ->setHelp('This command allows you to create a user...')
+            ;
+        }
     }
+
+.. tip::
+
+    Defining the ``$defaultDescription`` static property instead of using the
+    ``setDescription()`` method allows to get the command description without
+    instantiating its class. This makes the ``php bin/console list`` command run
+    much faster.
+
+    If you want to always run the ``list`` command fast, add the ``--short`` option
+    to it (``php bin/console list --short``). This will avoid instantiating command
+    classes, but it won't show any description for commands that use the
+    ``setDescription()`` method instead of the static property.
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
@@ -110,15 +207,37 @@ available in the ``configure()`` method::
     }
 
 Registering the Command
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony commands must be registered as services and :doc:`tagged </service_container/tags>`
-with the ``console.command`` tag. If you're using the
+In PHP 8 and newer versions, you can register the command by adding the
+``AsCommand`` attribute to it::
+
+    // src/Command/CreateUserCommand.php
+    namespace App\Command;
+
+    use Symfony\Component\Console\Attribute\AsCommand;
+    use Symfony\Component\Console\Command\Command;
+
+    // the "name" and "description" arguments of AsCommand replace the
+    // static $defaultName and $defaultDescription properties
+    #[AsCommand(
+        name: 'app:create-user',
+        description: 'Creates a new user.',
+        hidden: false,
+        aliases: ['app:add-user']
+    )]
+    class CreateUserCommand extends Command
+    {
+        // ...
+    }
+
+If you can't use PHP attributes, register the command as a service and
+:doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
-Executing the Command
----------------------
+Running the Command
+~~~~~~~~~~~~~~~~~~~
 
 After configuring and registering the command, you can run it in the terminal:
 
@@ -145,7 +264,7 @@ the console::
             '',
         ]);
 
-        // the value returned by someMethod() can be an iterator (https://secure.php.net/iterator)
+        // the value returned by someMethod() can be an iterator (https://php.net/iterator)
         // that generates and returns the messages with the 'yield' PHP keyword
         $output->writeln($this->someMethod());
 
@@ -156,7 +275,7 @@ the console::
         $output->write('You are about to ');
         $output->write('create a user.');
 
-        return 0;
+        return Command::SUCCESS;
     }
 
 Now, try executing the command:
@@ -215,13 +334,23 @@ method, which returns an instance of
             $section1->clear(2);
             // Output is now completely empty!
 
-            return 0;
+            // setting the max height of a section will make new lines replace the old ones
+            $section1->setMaxHeight(2);
+            $section1->writeln('Line1');
+            $section1->writeln('Line2');
+            $section1->writeln('Line3');
+
+            return Command::SUCCESS;
         }
     }
 
 .. note::
 
     A new line is appended automatically when displaying information in a section.
+
+.. versionadded:: 6.2
+
+    The feature to limit the height of a console section was introduced in Symfony 6.2.
 
 Output sections let you manipulate the Console output in advanced ways, such as
 :ref:`displaying multiple progress bars <console-multiple-progress-bars>` which
@@ -257,7 +386,7 @@ Use input options or arguments to pass information to the command::
         // retrieve the argument value using getArgument()
         $output->writeln('Username: '.$input->getArgument('username'));
 
-        return 0;
+        return Command::SUCCESS;
     }
 
 Now, you can pass the username to the command:
@@ -308,7 +437,7 @@ as a service, you can use normal dependency injection. Imagine you have a
 
             $output->writeln('User successfully generated!');
 
-            return 0;
+            return Command::SUCCESS;
         }
     }
 
@@ -332,13 +461,8 @@ command:
 
 :method:`Symfony\\Component\\Console\\Command\\Command::execute` *(required)*
     This method is executed after ``interact()`` and ``initialize()``.
-    It contains the logic you want the command to execute and it should
+    It contains the logic you want the command to execute and it must
     return an integer which will be used as the command `exit status`_.
-
-    .. deprecated:: 4.4
-
-        Not returning an integer with the exit status as the result of
-        ``execute()`` is deprecated since Symfony 4.4.
 
 .. _console-testing-commands:
 
@@ -361,7 +485,7 @@ console::
     {
         public function testExecute()
         {
-            $kernel = static::createKernel();
+            $kernel = self::bootKernel();
             $application = new Application($kernel);
 
             $command = $application->find('app:create-user');
@@ -372,15 +496,22 @@ console::
 
                 // prefix the key with two dashes when passing options,
                 // e.g: '--some-option' => 'option_value',
+                // use brackets for testing array value,
+                // e.g: '--some-option' => ['option_value'],
             ]);
+
+            $commandTester->assertCommandIsSuccessful();
 
             // the output of the command in the console
             $output = $commandTester->getDisplay();
-            $this->assertContains('Username: Wouter', $output);
+            $this->assertStringContainsString('Username: Wouter', $output);
 
             // ...
         }
     }
+
+If you are using a :doc:`single-command application </components/console/single_command_tool>`,
+call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``.
 
 .. tip::
 
@@ -400,13 +531,22 @@ console::
 
         $application = new Application();
         $application->setAutoExit(false);
-        
+
         $tester = new ApplicationTester($application);
+        
+
+.. caution::
+
+    When testing ``InputOption::VALUE_NONE`` command options, you must pass an
+    empty value to them::
+    
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['--some-option' => '']);
 
 .. note::
 
     When using the Console component in a standalone project, use
-    :class:`Symfony\\Component\\Console\\Application <Symfony\\Component\\Console\\Application>`
+    :class:`Symfony\\Component\\Console\\Application`
     and extend the normal ``\PHPUnit\Framework\TestCase``.
 
 Logging Command Errors
@@ -436,5 +576,6 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
 * :doc:`/components/console/helpers/debug_formatter`: provides functions to
   output debug information when running an external program
+* :doc:`/components/console/helpers/cursor`: allows to manipulate the cursor in the terminal
 
 .. _`exit status`: https://en.wikipedia.org/wiki/Exit_status

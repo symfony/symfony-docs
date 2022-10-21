@@ -20,8 +20,9 @@ enough to render an entire form, including all its fields and error messages:
 
 .. code-block:: twig
 
-    {# form is a variable passed from the controller and created
-      by calling to the $form->createView() method #}
+    {# form is a variable passed from the controller via
+      $this->render('...', ['form' => $form])
+      or $this->render('...', ['form' => $form->createView()]) #}
     {{ form(form) }}
 
 The next step is to use the :ref:`form_start() <reference-forms-twig-start>`,
@@ -73,6 +74,16 @@ control over how each form field is rendered, so you can fully customize them:
             {{ form_errors(form.dueDate) }}
         </div>
     </div>
+
+.. caution::
+
+   If you're rendering each field manually, make sure you don't forget the
+   ``_token`` field that is automatically added for CSRF protection.
+
+   You can also use ``{{ form_rest(form) }}`` (recommended) to render any
+   fields that aren't rendered manually. See
+   :ref:`the form_rest() documentation <reference-forms-twig-rest>` below for
+   more information.
 
 .. note::
 
@@ -257,8 +268,9 @@ Renders any errors for the given field.
 
 .. caution::
 
-    In the Bootstrap 4 form theme, ``form_errors()`` is already included
-    in ``form_label()``, see ":ref:`reference-forms-bootstrap-error-messages`"
+    In the Bootstrap 4 form theme, ``form_errors()`` is already included in
+    ``form_label()``. Read more about this in the
+    :ref:`Bootstrap 4 theme documentation <reference-forms-bootstrap4-error-messages>`.
 
 .. _reference-forms-twig-widget:
 
@@ -319,10 +331,6 @@ spot (since it'll render the field for you).
 
 form_parent(form_view)
 ......................
-
-.. versionadded:: 4.3
-
-    The ``form_parent()`` function was introduced in Symfony 4.3.
 
 Returns the parent form view or ``null`` if the form view already is the
 root form. Using this function should be preferred over accessing the parent
@@ -435,4 +443,4 @@ Variable                Usage
     variables a particular field has, find the source code for the form
     field (and its parent fields) and look at the above two functions.
 
-.. _`the Twig documentation`: https://twig.symfony.com/doc/2.x/templates.html#test-operator
+.. _`the Twig documentation`: https://twig.symfony.com/doc/3.x/templates.html#test-operator

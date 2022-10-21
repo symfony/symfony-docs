@@ -7,7 +7,7 @@ Cache Invalidation
 
 Cache invalidation is the process of removing all cached items related to a
 change in the state of your model. The most basic kind of invalidation is direct
-items deletion. But when the state of a primary resource has spread across
+item deletion. But when the state of a primary resource has spread across
 several cached items, keeping them in sync can be difficult.
 
 The Symfony Cache component provides two mechanisms to help solve this problem:
@@ -47,7 +47,7 @@ you can invalidate the cached items by calling
     // if you know the cache key, you can also delete the item directly
     $cache->delete('cache_key');
 
-Using tags invalidation is very useful when tracking cache keys becomes difficult.
+Using tag invalidation is very useful when tracking cache keys becomes difficult.
 
 Tag Aware Adapters
 ~~~~~~~~~~~~~~~~~~

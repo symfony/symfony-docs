@@ -53,7 +53,7 @@ Quick example::
 .. caution::
 
     Symfony sessions are incompatible with ``php.ini`` directive ``session.auto_start = 1``
-    This directive should be turned off in ``php.ini``, in the webserver directives or
+    This directive should be turned off in ``php.ini``, in the web server directives or
     in ``.htaccess``.
 
 Session API
@@ -152,7 +152,7 @@ the following API which is intended mainly for internal purposes:
     Returns the name of the session bag.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\SessionBagInterface::clear`
-    Clears out data from bag.
+    Clears out data from the bag.
 
 .. _attribute-bag-interface:
 
@@ -165,9 +165,6 @@ and "Remember Me" login settings or other user based state information.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBag`
     This is the standard default implementation.
-
-:class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\NamespacedAttributeBag`
-    This implementation allows for attributes to be stored in a structured namespace.
 
 :class:`Symfony\\Component\\HttpFoundation\\Session\\Attribute\\AttributeBagInterface`
 has the API
@@ -237,15 +234,6 @@ So any processing of this might quickly get ugly, even adding a token to the arr
     $tokens['c'] = $value;
     $session->set('tokens', $tokens);
 
-With structured namespacing, the key can be translated to the array
-structure like this using a namespace character (which defaults to ``/``)::
-
-    // ...
-    use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
-
-    $session = new Session(new NativeSessionStorage(), new NamespacedAttributeBag());
-    $session->set('tokens/c', $value);
-
 Flash Messages
 ~~~~~~~~~~~~~~
 
@@ -291,7 +279,7 @@ has the API
     Gets flashes by type (read only).
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peekAll`
-    Gets all flashes (read only) as keyed array of arrays.
+    Gets all flashes (read only) as a keyed array of arrays.
 
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::has`
     Returns true if the type exists, false if not.

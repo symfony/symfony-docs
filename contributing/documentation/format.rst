@@ -104,6 +104,7 @@ Markup Format        Use It to Display
 ``html+php``         PHP code blended with HTML
 ``ini``              INI
 ``php-annotations``  PHP Annotations
+``php-attributes``   PHP Attributes
 ===================  ======================================
 
 Adding Links
@@ -173,39 +174,39 @@ If you are documenting a brand new feature, a change or a deprecation that's
 been made in Symfony, you should precede your description of the change with
 the corresponding directive and a short description:
 
-For a new feature or a behavior change use the ``.. versionadded:: 4.x``
+For a new feature or a behavior change use the ``.. versionadded:: 6.x``
 directive:
 
 .. code-block:: rst
 
-    .. versionadded:: 4.2
+    .. versionadded:: 6.2
 
-        Named autowiring aliases have been introduced in Symfony 4.2.
+        ... ... ... was introduced in Symfony 6.2.
 
 If you are documenting a behavior change, it may be helpful to *briefly*
 describe how the behavior has changed:
 
 .. code-block:: rst
 
-    .. versionadded:: 4.2
+    .. versionadded:: 6.2
 
-       Support for ICU MessageFormat was introduced in Symfony 4.2. Prior to this,
-       pluralization was managed by the ``transChoice`` method.
+       ... ... ... was introduced in Symfony 6.2. Prior to this,
+       ... ... ... ... ... ... ... ... .
 
-For a deprecation use the ``.. deprecated:: 4.x`` directive:
+For a deprecation use the ``.. deprecated:: 6.x`` directive:
 
 .. code-block:: rst
 
-    .. deprecated:: 4.2
+    .. deprecated:: 6.2
 
-        Not passing the root node name to ``TreeBuilder`` was deprecated in Symfony 4.2.
+        ... ... ... was deprecated in Symfony 6.2.
 
-Whenever a new major version of Symfony is released (e.g. 5.0, 6.0, etc),
-a new branch of the documentation is created from the ``master`` branch.
-At this point, all the ``versionadded`` and ``deprecated`` tags for Symfony
-versions that have a lower major version will be removed. For example, if
-Symfony 5.0 were released today, 4.0 to 4.4 ``versionadded`` and ``deprecated``
-tags would be removed from the new ``5.0`` branch.
+Whenever a new major version of Symfony is released (e.g. 6.0, 7.0, etc), a new
+branch of the documentation is created from the ``x.4`` branch of the previous
+major version. At this point, all the ``versionadded`` and ``deprecated`` tags
+for Symfony versions that have a lower major version will be removed. For
+example, if Symfony 6.0 were released today, 5.0 to 5.4 ``versionadded`` and
+``deprecated`` tags would be removed from the new ``6.0`` branch.
 
 .. _reStructuredText: https://docutils.sourceforge.io/rst.html
 .. _Sphinx: https://www.sphinx-doc.org/

@@ -13,35 +13,6 @@ of the documentation on this constraint.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `allowLandscape`_
-            - `allowLandscapeMessage`_
-            - `allowPortrait`_
-            - `allowPortraitMessage`_
-            - `allowSquare`_
-            - `allowSquareMessage`_
-            - `corruptedMessage`_
-            - `detectCorrupted`_
-            - `groups`_
-            - `maxHeight`_
-            - `maxHeightMessage`_
-            - `maxPixels`_
-            - `maxPixelsMessage`_
-            - `maxRatio`_
-            - `maxRatioMessage`_
-            - `maxWidth`_
-            - `maxWidthMessage`_
-            - `mimeTypes`_
-            - `mimeTypesMessage`_
-            - `minHeight`_
-            - `minHeightMessage`_
-            - `minPixels`_
-            - `minPixelsMessage`_
-            - `minRatio`_
-            - `minRatioMessage`_
-            - `minWidth`_
-            - `minWidthMessage`_
-            - `sizeNotDetectedMessage`_
-            - See :doc:`File </reference/constraints/File>` for inherited options
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Image`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ImageValidator`
 ==========  ===================================================================
@@ -80,7 +51,7 @@ that it is between a certain size, add the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -89,14 +60,12 @@ that it is between a certain size, add the following:
 
         class Author
         {
-            /**
-             * @Assert\Image(
-             *     minWidth = 200,
-             *     maxWidth = 400,
-             *     minHeight = 200,
-             *     maxHeight = 400
-             * )
-             */
+            #[Assert\Image(
+                minWidth: 200,
+                maxWidth: 400,
+                minHeight: 200,
+                maxHeight: 400,
+            )]
             protected $headshot;
         }
 
@@ -162,7 +131,7 @@ following code:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -171,12 +140,10 @@ following code:
 
         class Author
         {
-            /**
-             * @Assert\Image(
-             *     allowLandscape = false,
-             *     allowPortrait = false
-             * )
-             */
+            #[Assert\Image(
+                allowLandscape: false,
+                allowPortrait: false,
+            )]
             protected $headshot;
         }
 
@@ -361,7 +328,7 @@ value.
 ``maxPixelsMessage``
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The image has to many pixels ({{ pixels }} pixels).
+**type**: ``string`` **default**: ``The image has too many pixels ({{ pixels }} pixels).
 Maximum amount expected is {{ max_pixels }} pixels.``
 
 The error message if the amount of pixels of the image exceeds `maxPixels`_.
@@ -438,6 +405,11 @@ You can find a list of existing image mime types on the `IANA website`_.
 ~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This file is not a valid image.``
+
+If all the values of the `mimeTypes`_ option are a subset of ``image/*``, the
+error message will be instead: ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.``
+
+.. include:: /reference/constraints/_parameters-mime-types-message-option.rst.inc
 
 ``minHeight``
 ~~~~~~~~~~~~~

@@ -8,9 +8,6 @@ Also see :doc:`IsFalse <IsFalse>`.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\IsTrue`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsTrueValidator`
 ==========  ===================================================================
@@ -40,7 +37,7 @@ Then you can validate this method with ``IsTrue`` as follows:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -51,9 +48,7 @@ Then you can validate this method with ``IsTrue`` as follows:
         {
             protected $token;
 
-            /**
-             * @Assert\IsTrue(message="The token is invalid.")
-             */
+            #[Assert\IsTrue(message: 'The token is invalid.')]
             public function isTokenValid()
             {
                 return $this->token == $this->generateToken();
@@ -131,6 +126,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

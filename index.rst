@@ -37,10 +37,10 @@ Topics
     console
     doctrine
     deployment
-    email
     event_dispatcher
     forms
     frontend
+    html_sanitizer
     http_cache
     http_client
     lock
@@ -49,8 +49,10 @@ Topics
     mercure
     messenger
     migration
+    notifier
     performance
     profiler
+    rate_limiter
     routing
     security
     session
@@ -69,9 +71,9 @@ Components
 .. toctree::
     :hidden:
 
-    components/index
+    components/
 
-Read the :doc:`Components </components/index>` documentation.
+Read the :doc:`Components </components/>` documentation.
 
 Reference Documents
 -------------------

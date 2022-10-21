@@ -5,19 +5,19 @@ Summarized, Encore generates the Webpack configuration that's used in your
 ``webpack.config.js`` file. Encore doesn't support adding all of Webpack's
 `configuration options`_, because many can be added on your own.
 
-For example, suppose you need to resolve automatically a new extension.
+For example, suppose you need to automatically resolve a new extension.
 To do that, modify the config after fetching it from Encore:
 
 .. code-block:: javascript
 
     // webpack.config.js
 
-    var Encore = require('@symfony/webpack-encore');
+    const Encore = require('@symfony/webpack-encore');
 
     // ... all Encore config here
 
     // fetch the config, then modify it!
-    var config = Encore.getWebpackConfig();
+    const config = Encore.getWebpackConfig();
 
     // add an extension
     config.resolve.extensions.push('json');
@@ -65,8 +65,8 @@ state of the current configuration to build a new one:
     Encore
         .setOutputPath('public/build/first_build/')
         .setPublicPath('/build/first_build')
-        .addEntry('app', './assets/js/app.js')
-        .addStyleEntry('global', './assets/css/global.scss')
+        .addEntry('app', './assets/app.js')
+        .addStyleEntry('global', './assets/styles/global.scss')
         .enableSassLoader()
         .autoProvidejQuery()
         .enableSourceMaps(!Encore.isProduction())
@@ -85,8 +85,8 @@ state of the current configuration to build a new one:
     Encore
         .setOutputPath('public/build/second_build/')
         .setPublicPath('/build/second_build')
-        .addEntry('mobile', './assets/js/mobile.js')
-        .addStyleEntry('mobile', './assets/css/mobile.less')
+        .addEntry('mobile', './assets/mobile.js')
+        .addStyleEntry('mobile', './assets/styles/mobile.less')
         .enableLessLoader()
         .enableSourceMaps(!Encore.isProduction())
     ;
@@ -121,6 +121,19 @@ Next, define the output directories of each build:
         builds:
             firstConfig: '%kernel.project_dir%/public/first_build'
             secondConfig: '%kernel.project_dir%/public/second_build'
+
+Also define the asset manifests for each build:
+
+.. code-block:: yaml
+
+    # config/packages/assets.yaml
+    framework:
+        assets:
+            packages:
+                first_build:
+                    json_manifest_path: '%kernel.project_dir%/public/first_build/manifest.json'
+                second_build:
+                    json_manifest_path: '%kernel.project_dir%/public/second_build/manifest.json'
 
 Finally, use the third optional parameter of the ``encore_entry_*_tags()``
 functions to specify which build to use:
@@ -212,11 +225,12 @@ The following code is equivalent:
 The following loaders are configurable with ``configureLoaderRule()``:
   - ``javascript`` (alias ``js``)
   - ``css``
-  - ``images``
-  - ``fonts``
+  - ``images`` (but use ``configureImageRule()`` instead)
+  - ``fonts`` (but use ``configureFontRule()`` instead)
   - ``sass`` (alias ``scss``)
   - ``less``
   - ``stylus``
+  - ``svelte``
   - ``vue``
   - ``eslint``
   - ``typescript`` (alias ``ts``)

@@ -106,14 +106,15 @@ prefixed classes included in doc block comments (``/** ... */``). For example::
     }
 
 To enable the annotation loader, call the
-:method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping`
-method. It takes an optional annotation reader instance, which defaults to
-``Doctrine\Common\Annotations\AnnotationReader``::
+:method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping` method.
+If you use annotations instead of attributes, it's also required to call
+``addDefaultDoctrineAnnotationReader()`` to use Doctrine's annotation reader::
 
     use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidatorBuilder()
         ->enableAnnotationMapping()
+        ->addDefaultDoctrineAnnotationReader() // add this only when using annotations
         ->getValidator();
 
 To disable the annotation loader after it was enabled, call
@@ -134,7 +135,8 @@ multiple mappings::
     use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidatorBuilder()
-        ->enableAnnotationMapping()
+        ->enableAnnotationMapping(true)
+        ->addDefaultDoctrineAnnotationReader()
         ->addMethodMapping('loadValidatorMetadata')
         ->addXmlMapping('validator/validation.xml')
         ->getValidator();
@@ -157,10 +159,6 @@ implement the PSR-6 interface :class:`Psr\\Cache\\CacheItemPoolInterface`)::
         // ... add loaders
         ->setMappingCache(new SomePsr6Cache())
         ->getValidator();
-
-.. versionadded:: 4.4
-
-    Support for PSR-6 compatible mapping caches was introduced in Symfony 4.4.
 
 .. note::
 

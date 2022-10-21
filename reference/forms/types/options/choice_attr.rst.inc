@@ -33,8 +33,25 @@ If an array, the keys of the ``choices`` array must be used as keys::
             'No' => false,
             'Maybe' => null,
         ],
-        'choice_attr' => function($choice, $key, $value) {
+        'choice_attr' => function ($choice, $key, $value) {
             // adds a class like attending_yes, attending_no, etc
             return ['class' => 'attending_'.strtolower($key)];
         },
     ]);
+
+.. tip::
+
+    When defining a custom type, you should use the
+    :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class helper::
+
+        use App\Entity\Category;
+        use Symfony\Component\Form\ChoiceList\ChoiceList;
+
+        // ...
+        $builder->add('choices', ChoiceType::class, [
+            'choice_attr' => ChoiceList::attr($this, function (?Category $category) {
+                return $category ? ['data-uuid' => $category->getUuid()] : [];
+            }),
+        ]);
+
+    See the :ref:`"choice_loader" option documentation <reference-form-choice-loader>`.

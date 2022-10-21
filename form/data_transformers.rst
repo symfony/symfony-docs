@@ -324,10 +324,6 @@ end-user error message in the data transformer using the
         }
     }
 
-.. versionadded:: 4.3
-
-    The ``setInvalidMessage()`` method was introduced in Symfony 4.3.
-
 That's it! If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically know to pass your ``TaskType`` an instance of the

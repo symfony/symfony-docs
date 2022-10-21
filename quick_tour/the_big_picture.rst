@@ -14,7 +14,7 @@ safe & easy!) and offers long-term support.
 Downloading Symfony
 -------------------
 
-First, make sure you've installed `Composer`_ and have PHP 7.1.3 or higher.
+First, make sure you've installed `Composer`_ and have PHP 8.1 or higher.
 
 Ready? In a terminal, run:
 
@@ -88,7 +88,7 @@ method inside::
 
     class DefaultController
     {
-        public function index()
+        public function index(): Response
         {
             return new Response('Hello!');
         }
@@ -125,7 +125,7 @@ like a wildcard that matches anything. And it gets better! Update the controller
       class DefaultController
       {
     -     public function index()
-    +     public function index($name)
+    +     public function index(string $name): Response
           {
     -         return new Response('Hello!');
     +         return new Response("Hello $name!");
@@ -164,15 +164,14 @@ Instead, add the route *right above* the controller method:
 
       class DefaultController
       {
-    +    /**
-    +     * @Route("/hello/{name}")
-    +     */
-           public function index($name) {
+    +      #[Route('/hello/{name}', methods: ['GET'])]
+           public function index(string $name): Response
+           {
                // ...
            }
       }
 
-This works just like before! But by using annotations, the route and controller
+This works just like before! But by using attributes, the route and controller
 live right next to each other. Need another page? Add another route and method
 in ``DefaultController``::
 
@@ -187,10 +186,8 @@ in ``DefaultController``::
     {
         // ...
 
-        /**
-         * @Route("/simplicity")
-         */
-        public function simple()
+        #[Route('/simplicity', methods: ['GET'])]
+        public function simple(): Response
         {
             return new Response('Simple! Easy! Great!');
         }

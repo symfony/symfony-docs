@@ -6,7 +6,7 @@ How to Create your Custom Normalizer
 
 The :doc:`Serializer component </components/serializer>` uses
 normalizers to transform any data into an array. The component provides several
-:doc:`built-in normalizers </serializer/normalizers>` but you may need to create
+:ref:`built-in normalizers <component-serializer-normalizers>` but you may need to create
 your own normalizer to transform an unsupported data structure.
 
 Creating a New Normalizer
@@ -22,10 +22,10 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
 
     use App\Entity\Topic;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-    use Symfony\Component\Serializer\Normalizer\ContextAwareNormalizerInterface;
+    use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-    class TopicNormalizer implements ContextAwareNormalizerInterface
+    class TopicNormalizer implements NormalizerInterface
     {
         private $router;
         private $normalizer;
@@ -36,7 +36,7 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
             $this->normalizer = $normalizer;
         }
 
-        public function normalize($topic, $format = null, array $context = [])
+        public function normalize($topic, string $format = null, array $context = [])
         {
             $data = $this->normalizer->normalize($topic, $format, $context);
 
@@ -48,7 +48,7 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
             return $data;
         }
 
-        public function supportsNormalization($data, $format = null, array $context = [])
+        public function supportsNormalization($data, string $format = null, array $context = [])
         {
             return $data instanceof Topic;
         }

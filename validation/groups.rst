@@ -15,7 +15,7 @@ user registers and when a user updates their contact information later:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/User.php
         namespace App\Entity;
@@ -25,20 +25,14 @@ user registers and when a user updates their contact information later:
 
         class User implements UserInterface
         {
-            /**
-             * @Assert\Email(groups={"registration"})
-             */
+            #[Assert\Email(groups: ['registration'])]
             private $email;
 
-            /**
-             * @Assert\NotBlank(groups={"registration"})
-             * @Assert\Length(min=7, groups={"registration"})
-             */
+            #[Assert\NotBlank(groups: ['registration'])]
+            #[Assert\Length(min: 7, groups: ['registration'])]
             private $password;
 
-            /**
-             * @Assert\Length(min=2)
-             */
+            #[Assert\Length(min: 2)]
             private $city;
         }
 
@@ -142,7 +136,7 @@ With this configuration, there are three validation groups:
 
 ``registration``
     This is a custom validation group, so it only contains the constraints
-    explicitly associated to it. In this example, only the ``email`` and
+    that are explicitly associated with it. In this example, only the ``email`` and
     ``password`` fields.
 
 Constraints in the ``Default`` group of a class are the constraints that have

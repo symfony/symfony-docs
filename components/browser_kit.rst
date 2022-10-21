@@ -40,13 +40,7 @@ The component only provides an abstract client and does not provide any backend
 ready to use for the HTTP layer. To create your own client, you must extend the
 ``AbstractBrowser`` class and implement the
 :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::doRequest` method.
-
-.. deprecated:: 4.3
-
-    In Symfony 4.3 and earlier versions, the ``AbstractBrowser`` class was called
-    ``Client`` (which is now deprecated).
-
-The ``doRequest()`` method accepts a request and should return a response::
+This method accepts a request and should return a response::
 
     namespace Acme;
 
@@ -66,7 +60,7 @@ The ``doRequest()`` method accepts a request and should return a response::
 For a simple implementation of a browser based on the HTTP layer, have a look
 at the :class:`Symfony\\Component\\BrowserKit\\HttpBrowser` provided by
 :ref:`this component <component-browserkit-external-requests>`. For an implementation based
-on ``HttpKernelInterface``, have a look at the :class:`Symfony\\Component\\HttpKernel\\Client`
+on ``HttpKernelInterface``, have a look at the :class:`Symfony\\Component\\HttpKernel\\HttpClientKernel`
 provided by the :doc:`HttpKernel component </components/http_kernel>`.
 
 Making Requests
@@ -85,6 +79,16 @@ The value returned by the ``request()`` method is an instance of the
 :class:`Symfony\\Component\\DomCrawler\\Crawler` class, provided by the
 :doc:`DomCrawler component </components/dom_crawler>`, which allows accessing
 and traversing HTML elements programmatically.
+
+The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::jsonRequest` method,
+which defines the same arguments as the ``request()`` method, is a shortcut to
+convert the request parameters into a JSON string and set the needed HTTP headers::
+
+    use Acme\Client;
+
+    $client = new Client();
+    // this encodes parameters as JSON and sets the required CONTENT_TYPE and HTTP_ACCEPT headers
+    $crawler = $client->jsonRequest('GET', '/', ['some_parameter' => 'some_value']);
 
 The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::xmlHttpRequest` method,
 which defines the same arguments as the ``request()`` method, is a shortcut to
@@ -166,6 +170,28 @@ provides access to the form properties (e.g. ``$form->getUri()``,
 
     // submit that form
     $crawler = $client->submit($form);
+
+Custom Header Handling
+~~~~~~~~~~~~~~~~~~~~~~
+
+The optional HTTP headers passed to the ``request()`` method follow the FastCGI
+request format (uppercase, underscores instead of dashes and prefixed with ``HTTP_``).
+Before saving those headers to the request, they are lower-cased, with ``HTTP_``
+stripped, and underscores converted into dashes.
+
+If you're making a request to an application that has special rules about header
+capitalization or punctuation, override the ``getHeaders()`` method, which must
+return an associative array of headers::
+
+    protected function getHeaders(Request $request): array
+    {
+        $headers = parent::getHeaders($request);
+        if (isset($request->getServer()['api_key'])) {
+            $headers['api_key'] = $request->getServer()['api_key'];
+        }
+
+        return $headers;
+    }
 
 Cookies
 -------
@@ -317,9 +343,37 @@ dedicated web crawler or scraper such as `Goutte`_::
         '.table-list-header-toggle a:nth-child(1)'
     )->text());
 
-.. versionadded:: 4.3
+.. tip::
 
-    The feature to make external HTTP requests was introduced in Symfony 4.3.
+    You can also use HTTP client options like ``ciphers``, ``auth_basic`` and
+    ``query``. They have to be passed as the default options argument to the
+    client which is used by the HTTP browser.
+
+Dealing with HTTP responses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When using the BrowserKit component, you may need to deal with responses of
+the requests you made. To do so, call the ``getResponse()`` method of the
+``HttpBrowser`` object. This method returns the last response the browser received::
+
+    $browser = new HttpBrowser(HttpClient::create());
+
+    $browser->request('GET', 'https://foo.com');
+    $response = $browser->getResponse();
+
+If you're making requests that result in a JSON response, you may use the
+``toArray()`` method to turn the JSON document into a PHP array without having
+to call ``json_decode()`` explicitly::
+
+    $browser = new HttpBrowser(HttpClient::create());
+
+    $browser->request('GET', 'https://api.foo.com');
+    $response = $browser->getResponse()->toArray();
+    // $response is a PHP array of the decoded JSON contents
+
+.. versionadded:: 6.1
+
+    The ``toArray()`` method was introduced in Symfony 6.1.
 
 Learn more
 ----------

@@ -9,11 +9,6 @@ gives you similar flexibility.
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
             or :ref:`property/method <validation-property-target>`
-Options     - :ref:`expression <reference-constraint-expression-option>`
-            - `groups`_
-            - `message`_
-            - `payload`_
-            - `values`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Expression`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\ExpressionValidator`
 ==========  ===================================================================
@@ -60,19 +55,17 @@ One way to accomplish this is with the Expression constraint:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Model/BlogPost.php
         namespace App\Model;
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        /**
-         * @Assert\Expression(
-         *     "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()",
-         *     message="If this is a tech post, the category should be either php or symfony!"
-         * )
-         */
+        #[Assert\Expression(
+            "this.getCategory() in ['php', 'symfony'] or !this.isTechnicalPost()",
+            message: 'If this is a tech post, the category should be either php or symfony!',
+        )]
         class BlogPost
         {
             // ...
@@ -132,6 +125,13 @@ expression that must return true in order for validation to pass. To learn
 more about the expression language syntax, see
 :doc:`/components/expression_language/syntax`.
 
+Alternatively, you can set the ``negate`` option to ``false`` in order to
+assert that the expression must return ``true`` for validation to fail.
+
+.. versionadded:: 6.2
+
+   The ``negate`` option was introduced in Symfony 6.2.
+
 .. sidebar:: Mapping the Error to a Specific Field
 
     You can also attach the constraint to a specific property and still validate
@@ -141,7 +141,7 @@ more about the expression language syntax, see
 
     .. configuration-block::
 
-        .. code-block:: php-annotations
+        .. code-block:: php-attributes
 
             // src/Model/BlogPost.php
             namespace App\Model;
@@ -152,12 +152,10 @@ more about the expression language syntax, see
             {
                 // ...
 
-                /**
-                 * @Assert\Expression(
-                 *     "this.getCategory() in ['php', 'symfony'] or value == false",
-                 *     message="If this is a tech post, the category should be either php or symfony!"
-                 * )
-                 */
+                #[Assert\Expression(
+                    "this.getCategory() in ['php', 'symfony'] or value == false",
+                    message: 'If this is a tech post, the category should be either php or symfony!',
+                )]
                 private $isTechnicalPost;
 
                 // ...
@@ -260,7 +258,19 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
+
+``negate``
+~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+If ``false``, the validation fails when expression returns ``true``.
+
+.. versionadded:: 6.2
+
+   The ``negate`` option was introduced in Symfony 6.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
@@ -274,7 +284,7 @@ type (numeric, boolean, strings, null, etc.)
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Model/Analysis.php
         namespace App\Model;
@@ -283,12 +293,10 @@ type (numeric, boolean, strings, null, etc.)
 
         class Analysis
         {
-            /**
-             * @Assert\Expression(
-             *     "value + error_margin < threshold",
-             *     values = { "error_margin": 0.25, "threshold": 1.5 }
-             * )
-             */
+            #[Assert\Expression(
+                'value + error_margin < threshold',
+                values: ['error_margin' => 0.25, 'threshold' => 1.5],
+            )]
             private $metric;
 
             // ...

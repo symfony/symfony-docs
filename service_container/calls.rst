@@ -6,7 +6,7 @@ Service Method Calls and Setter Injection
 
 .. tip::
 
-    If you're using autowiring, you can use ``@required`` to
+    If you're using autowiring, you can use ``#[Required]`` to
     :ref:`automatically configure method calls <autowiring-calls>`.
 
 Usually, you'll want to inject your dependencies via the constructor. But sometimes,
@@ -73,13 +73,8 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
             // ...
 
             $services->set(MessageGenerator::class)
-                ->call('setLogger', [ref('logger')]);
+                ->call('setLogger', [service('logger')]);
         };
-
-
-.. versionadded:: 4.3
-
-    The ``immutable-setter`` injection was introduced in Symfony 4.3.
 
 To provide immutable services, some classes implement immutable setters.
 Such setters return a new instance of the configured class
@@ -94,9 +89,6 @@ instead of mutating the object they were called on::
     {
         private $logger;
 
-        /**
-         * @return static
-         */
         public function withLogger(LoggerInterface $logger): self
         {
             $new = clone $this;
@@ -150,3 +142,26 @@ The configuration to tell the container it should do so would be like:
 
         $container->register(MessageGenerator::class)
             ->addMethodCall('withLogger', [new Reference('logger')], true);
+
+.. tip::
+
+    If autowire is enabled, you can also use attributes; with the previous
+    example it would be::
+
+        /**
+         * @return static
+         */
+        #[Required]
+        public function withLogger(LoggerInterface $logger)
+        {
+            $new = clone $this;
+            $new->logger = $logger;
+
+            return $new;
+        }
+
+    You can also leverage the PHP 8 ``static`` return type instead of the
+    ``@return static`` annotation. If you don't want a method with a
+    PHP 8 ``static`` return type and a ``#[Required]`` attribute to behave as
+    a wither, you can add a ``@return $this`` annotation to disable the
+    *returns clone* feature.

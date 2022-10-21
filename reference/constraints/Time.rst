@@ -6,9 +6,6 @@ be cast into a string) that follows a valid ``HH:MM:SS`` format.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Time`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\TimeValidator`
 ==========  ===================================================================
@@ -21,7 +18,7 @@ of the day when the event starts:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Event.php
         namespace App\Entity;
@@ -31,9 +28,9 @@ of the day when the event starts:
         class Event
         {
             /**
-             * @Assert\Time
              * @var string A "H:i:s" formatted value
              */
+            #[Assert\Time]
             protected $startsAt;
         }
 
@@ -101,6 +98,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

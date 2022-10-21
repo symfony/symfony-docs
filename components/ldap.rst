@@ -146,6 +146,9 @@ delete existing ones::
 
     $phoneNumber = $entry->getAttribute('phoneNumber');
     $isContractor = $entry->hasAttribute('contractorCompany');
+    // attribute names in getAttribute() and hasAttribute() methods are case-sensitive
+    // pass FALSE as the second method argument to make them case-insensitive
+    $isContractor = $entry->hasAttribute('contractorCompany', false);
 
     $entry->setAttribute('email', ['fabpot@symfony.com']);
     $entryManager->update($entry);

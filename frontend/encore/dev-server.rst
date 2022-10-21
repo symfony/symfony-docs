@@ -22,16 +22,19 @@ As a consequence, the ``link`` and ``script`` tags need to point to the new serv
 :ref:`processing your assets through entrypoints.json <load-manifest-files>` in some other way),
 you're done: the paths in your templates will automatically point to the dev server.
 
+dev-server Options
+------------------
+
 The ``dev-server`` command supports all the options defined by `webpack-dev-server`_.
 You can set these options via command line options:
 
 .. code-block:: terminal
 
     # if you use the Yarn package manager
-    $ yarn encore dev-server --https --port 9000
+    $ yarn encore dev-server --port 9000
 
     # if you use the npm package manager
-    $ npm run dev-server -- --https --port 9000
+    $ npm run dev-server -- --port 9000
 
 You can also set these options using the ``Encore.configureDevServerOptions()``
 method in your ``webpack.config.js`` file:
@@ -45,64 +48,78 @@ method in your ``webpack.config.js`` file:
         // ...
 
         .configureDevServerOptions(options => {
-            options.https = {
-                key: '/path/to/server.key',
-                cert: '/path/to/server.crt',
+            options.server = {
+                type: 'https',
+                options: {
+                    key: '/path/to/server.key',
+                    cert: '/path/to/server.crt',
+                }
             }
         })
     ;
 
-.. versionadded:: 0.28.4
 
-    The ``Encore.configureDevServerOptions()`` method was introduced in Encore 0.28.4.
+Enabling HTTPS using the Symfony Web Server
+-------------------------------------------
+
+If you're using the :doc:`Symfony web server </setup/symfony_server>` locally with HTTPS,
+you'll need to also tell the dev-server to use HTTPS. To do this, you can reuse the Symfony web
+server SSL certificate:
+
+.. code-block:: diff
+
+      // webpack.config.js
+      // ...
+    + const path = require('path');
+
+      Encore
+          // ...
+
+    +     .configureDevServerOptions(options => {
+    +         options.server = {
+    +             type: 'https',
+    +             options: {
+    +                 pfx: path.join(process.env.HOME, '.symfony/certs/default.p12'),
+    +             }
+    +         }
+    +     })
+
+CORS Issues
+-----------
+
+If you experience issues related to CORS (Cross Origin Resource Sharing), set
+the following option:
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+
+        .configureDevServerOptions(options => {
+            options.allowedHosts = 'all';
+            // in older Webpack Dev Server versions, use this option instead:
+            // options.firewall = false;
+        })
+
+Beware that this is not a recommended security practice in general, but here
+it's required to solve the CORS issue.
 
 Hot Module Replacement HMR
 --------------------------
 
-Encore *does* support `HMR`_ for :doc:`Vue.js </frontend/encore/vuejs>`, but
-does *not* work for styles anywhere at this time. To activate it, pass the ``--hot``
-option:
+Hot module replacement is a superpower of the ``dev-server`` where styles and
+(in some cases) JavaScript can automatically update without needing to reload
+your page. HMR works automatically with CSS (as long as you're using the
+``dev-server`` and Encore 1.0 or higher) but only works with some JavaScript
+(like :doc:`Vue.js </frontend/encore/vuejs>`).
 
-.. code-block:: terminal
+.. versionadded:: 1.0.0
 
-    $ ./node_modules/.bin/encore dev-server --hot
-
-If you want to use SSL with self-signed certificates, add the ``--https``,
-``--pfx=``, and  ``--allowed-hosts`` options to the ``dev-server`` command in
-the ``package.json`` file:
-
-.. code-block:: diff
-
-      {
-          ...
-          "scripts": {
-    -        "dev-server": "encore dev-server",
-    +        "dev-server": "encore dev-server --https --pfx=$HOME/.symfony/certs/default.p12 --allowed-hosts=mydomain.wip",
-              ...
-          }
-      }
-
-If you experience issues related to CORS (Cross Origin Resource Sharing), add
-the ``--disable-host-check`` and ``--port`` options to the ``dev-server``
-command in the ``package.json`` file:
-
-.. code-block:: diff
-
-      {
-          ...
-          "scripts": {
-    -        "dev-server": "encore dev-server",
-    +        "dev-server": "encore dev-server --port 8080 --disable-host-check",
-              ...
-          }
-      }
-
-.. caution::
-
-    Beware that `it's not recommended to disable host checking`_ in general, but
-    here it's required to solve the CORS issue.
-
+    Before Encore 1.0, you needed to pass a ``--hot`` flag at the command line
+    to enable HMR. You also needed to disable CSS extraction to enable HMR for
+    CSS. That is no longer needed.
 
 .. _`webpack-dev-server`: https://webpack.js.org/configuration/dev-server/
-.. _`HMR`: https://webpack.js.org/concepts/hot-module-replacement/
-.. _`it's not recommended to disable host checking`: https://webpack.js.org/configuration/dev-server/#devserverdisablehostcheck

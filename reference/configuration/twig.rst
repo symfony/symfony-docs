@@ -39,6 +39,11 @@ compiled again automatically.
 autoescape
 ~~~~~~~~~~
 
+.. deprecated:: 6.1
+
+    This option is deprecated since Symfony 6.1. If required, use the
+    ``autoescape_service`` or ``autoescape_service_method`` option instead.
+
 **type**: ``boolean`` or ``string`` **default**: ``'name'``
 
 If set to ``false``, automatic escaping is disabled (you can still escape each content
@@ -129,7 +134,7 @@ format
 **type**: ``string`` **default**: ``F j, Y H:i``
 
 The format used by the ``date`` filter to display values when no specific format
-is passed as argument.
+is passed as an argument.
 
 interval_format
 ...............
@@ -145,7 +150,7 @@ timezone
 **type**: ``string`` **default**: (the value returned by ``date_default_timezone_get()``)
 
 The timezone used when formatting date values with the ``date`` filter and no
-specific timezone is passed as argument.
+specific timezone is passed as an argument.
 
 debug
 ~~~~~
@@ -166,28 +171,69 @@ The path to the directory where Symfony will look for the application Twig
 templates by default. If you store the templates in more than one directory, use
 the :ref:`paths <config-twig-paths>`  option too.
 
-.. _config-twig-exception-controller:
+.. _config-twig-file-name-pattern:
 
-exception_controller
-~~~~~~~~~~~~~~~~~~~~
+file_name_pattern
+~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``twig.controller.exception:showAction``
+**type**: ``string`` or ``array`` of ``string`` **default**: ``[]``
 
-.. deprecated:: 4.4
+.. versionadded:: 6.1
 
-    The ``exception_controller`` configuration option was deprecated in Symfony 4.4.
-    Set it to ``null`` and use the new ``error_controller`` option under ``framework``
-    configuration instead.
+    The ``file_name_pattern`` option was introduced in Symfony 6.1.
 
-This is the controller that is activated after an exception is thrown anywhere
-in your application. The default controller
-(:class:`Symfony\\Bundle\\TwigBundle\\Controller\\ExceptionController`)
-is what's responsible for rendering specific templates under different error
-conditions (see :doc:`/controller/error_pages`). Modifying this
-option is advanced. If you need to customize an error page you should use
-the previous link. If you need to perform some behavior on an exception,
-you should add an :doc:`event listener </event_dispatcher>` to the
-:ref:`kernel.exception event <kernel-kernel.exception>`.
+Some applications store their front-end assets in the same directory as Twig
+templates. The ``lint:twig`` command filters those files to only lint the ones
+that match the ``*.twig`` filename pattern.
+
+However, the ``cache:warmup`` command tries to compile all files, including
+non-Twig templates (and it ignores compilation errors). The result is an
+unnecessary consumption of CPU and disk resources.
+
+In those cases, use this option to define the filename pattern(s) of the files
+that are Twig templates (the rest of files will be ignored by ``cache:warmup``).
+The value of this option can be a regular expression, a glob, or a string:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/twig.yaml
+        twig:
+            file_name_pattern: ['*.twig', 'specific_file.html']
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <twig:file-name-pattern>*.twig</twig:file-name-pattern>
+                <twig:file-name-pattern>specific_file.html</twig:file-name-pattern>
+                <!-- ... -->
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->fileNamePattern([
+                '*.twig',
+                'specific_file.html',
+            ]);
+
+            // ...
+        };
 
 .. _config-twig-form-themes:
 
@@ -205,7 +251,7 @@ all the forms of the application:
 
         # config/packages/twig.yaml
         twig:
-            form_themes: ['bootstrap_4_layout.html.twig', 'form/my_theme.html.twig']
+            form_themes: ['bootstrap_5_layout.html.twig', 'form/my_theme.html.twig']
             # ...
 
     .. code-block:: xml
@@ -220,7 +266,7 @@ all the forms of the application:
                 http://symfony.com/schema/dic/twig https://symfony.com/schema/dic/twig/twig-1.0.xsd">
 
             <twig:config>
-                <twig:form-theme>bootstrap_4_layout.html.twig</twig:form-theme>
+                <twig:form-theme>bootstrap_5_layout.html.twig</twig:form-theme>
                 <twig:form-theme>form/my_theme.html.twig</twig:form-theme>
                 <!-- ... -->
             </twig:config>
@@ -229,13 +275,16 @@ all the forms of the application:
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
-            'form_themes' => [
-                'bootstrap_4_layout.html.twig',
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            $twig->formThemes([
+                'bootstrap_5_layout.html.twig',
                 'form/my_theme.html.twig',
-            ],
+            ]);
+
             // ...
-        ]);
+        };
 
 The order in which themes are defined is important because each theme overrides
 all the previous one. When rendering a form field whose block is not defined in
@@ -342,13 +391,14 @@ the directory defined in the :ref:`default_path option <config-twig-default-path
     .. code-block:: php
 
         // config/packages/twig.php
-        $container->loadFromExtension('twig', [
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
             // ...
-            'paths' => [
-                'email/default/templates' => null,
-                'backend/templates' => 'admin',
-            ],
-        ]);
+
+            $twig->path('email/default/templates', null);
+            $twig->path('backend/templates', 'admin');
+        };
 
 Read more about :ref:`template directories and namespaces <templates-namespaces>`.
 
@@ -357,11 +407,11 @@ Read more about :ref:`template directories and namespaces <templates-namespaces>
 strict_variables
 ~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``%kernel.debug%``
 
 If set to ``true``, Symfony shows an exception whenever a Twig variable,
 attribute or method doesn't exist. If set to ``false`` these errors are ignored
 and the non-existing values are replaced by ``null``.
 
-.. _`the optimizer extension`: https://twig.symfony.com/doc/2.x/api.html#optimizer-extension
+.. _`the optimizer extension`: https://twig.symfony.com/doc/3.x/api.html#optimizer-extension
 .. _`XSS attacks`: https://en.wikipedia.org/wiki/Cross-site_scripting

@@ -8,12 +8,15 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "require": {
         "php": ">=7.4",
-        "symfony/console": "^5.2",
-        "symfony/process": "^5.2",
-        "symfony-tools/docs-builder": "^0.15.0"
+        "symfony/console": "^5.4",
+        "symfony/process": "^5.4",
+        "symfony-tools/docs-builder": "^0.18"
     }
 }

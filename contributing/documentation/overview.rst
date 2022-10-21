@@ -76,7 +76,7 @@ this value accordingly):
 .. code-block:: terminal
 
     $ cd projects/
-    $ git clone git://github.com/YOUR-GITHUB-USERNAME/symfony-docs.git
+    $ git clone git@github.com:YOUR-GITHUB-USERNAME/symfony-docs.git
 
 **Step 3.** Add the original Symfony docs repository as a "Git remote" executing
 this command:
@@ -121,7 +121,7 @@ branch of the ``upstream`` remote, which is the original Symfony Docs repository
 Fixes should always be based on the **oldest maintained branch** which contains
 the error. Nowadays this is the ``4.4`` branch. If you are instead documenting a
 new feature, switch to the first Symfony version that included it, e.g.
-``upstream/3.1``.
+``upstream/5.4``.
 
 **Step 5.** Now make your changes in the documentation. Add, tweak, reword and
 even remove any content and do your best to comply with the
@@ -194,7 +194,7 @@ Your Next Documentation Contributions
 
 Check you out! You've made your first contribution to the Symfony documentation!
 Somebody throw a party! Your first contribution took a little extra time because
-you needed to learn a few standards and setup your computer. But from now on,
+you had to learn a few standards and set up your computer. But from now on,
 your contributions will be much easier to complete.
 
 Here is a **checklist** of steps that will guide you through your next
@@ -229,66 +229,17 @@ this hard work, it's **time to celebrate again!**
 Review your changes
 -------------------
 
-Every GitHub Pull Request is automatically built and deployed by
-`SymfonyCloud`_ on a single environment that you can access on your browser to
-review your changes.
+Symfony repository checks every Pull Request automatically to look for common
+errors, inappropriate words, syntax issues in code blocks, etc.
 
-.. image:: /_images/contributing/docs-pull-request-symfonycloud.png
-   :align: center
-   :alt:   SymfonyCloud Pull Request Deployment
-
-To access the `SymfonyCloud`_ environment URL, go to your Pull Request page on
-GitHub, click on the **Show all checks** link and finally, click on the
-``Details`` link displayed for SymfonyCloud service.
-
-.. note::
-
-    Only Pull Requests to maintained branches are automatically built by
-    SymfonyCloud. Check the `roadmap`_ for maintained branches.
-
-Build the Documentation Locally
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-If you have Docker installed on your machine, run these commands to build the
-docs:
-
-.. code-block:: terminal
-
-    # build the image...
-    $ docker build . -t symfony-docs
-
-    # ...and start the local web server
-    # (if it's already in use, change the '8080' port by any other port)
-    $ docker run --rm -p 8080:80 symfony-docs
-
-You can now read the docs at ``http://127.0.0.1:8080`` (if you use a virtual
-machine, browse its IP instead of localhost; e.g. ``http://192.168.99.100:8080``).
-
-If you don't use Docker, follow these steps to build the docs locally:
-
-#. Install `pip`_ as explained in the `pip installation`_ article;
-
-#. Install `Sphinx`_ and `Sphinx Extensions for PHP and Symfony`_
-   (depending on your system, you may need to execute this command as root user):
-
-   .. code-block:: terminal
-
-        $ cd _build/
-        $ pip install -r .requirements.txt
-
-#. Run the following command to build the documentation in HTML format:
-
-   .. code-block:: terminal
-
-       $ cd _build/
-       $ make html
-
-The generated documentation is available in the ``_build/html`` directory.
+Optionally you can also build the docs in your local machine to debug issues or
+to read the documentation offline. To do so, follow the instructions included in
+`the README file of symfony-docs repository`_.
 
 Frequently Asked Questions
 --------------------------
 
-Why Do my Changes Take so Long to Be Reviewed and/or Merged?
+Why Do My Changes Take So Long to Be Reviewed and/or Merged?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Please be patient. It can take up to several days before your pull request can
@@ -340,9 +291,4 @@ definitely don't want you to waste your time!
 .. _`Symfony Documentation Contributors`: https://symfony.com/contributors/doc
 .. _`SymfonyConnect`: https://symfony.com/connect/login
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
-.. _`SymfonyCloud`: https://symfony.com/cloud
-.. _`roadmap`: https://symfony.com/releases
-.. _`pip`: https://pip.pypa.io/en/stable/
-.. _`pip installation`: https://pip.pypa.io/en/stable/installing/
-.. _`Sphinx`: https://www.sphinx-doc.org/
-.. _`Sphinx Extensions for PHP and Symfony`: https://github.com/fabpot/sphinx-php
+.. _`the README file of symfony-docs repository`: https://github.com/symfony/symfony-docs#readme

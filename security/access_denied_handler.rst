@@ -10,10 +10,12 @@ to disallow access to the user. Symfony will handle this exception and
 generates a response based on the authentication state:
 
 * **If the user is not authenticated** (or authenticated anonymously), an
-  authentication entry point is used to generated a response (typically
+  authentication entry point is used to generate a response (typically
   a redirect to the login page or an *401 Unauthorized* response);
 * **If the user is authenticated, but does not have the required
   permissions**, a *403 Forbidden* response is generated.
+
+.. _security-entry-point:
 
 Customize the Unauthorized Response
 -----------------------------------
@@ -28,7 +30,6 @@ unauthenticated user tries to access a protected resource::
 
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
@@ -36,18 +37,16 @@ unauthenticated user tries to access a protected resource::
     class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
     {
         private $urlGenerator;
-        private $session;
 
-        public function __construct(UrlGeneratorInterface $urlGenerator, SessionInterface $session)
+        public function __construct(UrlGeneratorInterface $urlGenerator)
         {
             $this->urlGenerator = $urlGenerator;
-            $this->session = $session;
         }
 
         public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
         {
             // add a custom flash message and redirect to the login page
-            $this->session->getFlashBag()->add('note', 'You have to login in order to access this page.');
+            $request->getSession()->getFlashBag()->add('note', 'You have to login in order to access this page.');
 
             return new RedirectResponse($this->urlGenerator->generate('security_login'));
         }
@@ -93,15 +92,14 @@ Now, configure this service ID as the entry point for the firewall:
 
         // config/packages/security.php
         use App\Security\AuthenticationEntryPoint;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    // ...
-                    'entry_point' => AuthenticationEntryPoint::class,
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                // ....
+                ->entryPoint(AuthenticationEntryPoint::class)
+            ;
+        };
 
 Customize the Forbidden Response
 --------------------------------
@@ -170,15 +168,14 @@ configure it under your firewall:
 
         // config/packages/security.php
         use App\Security\AccessDeniedHandler;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'firewalls' => [
-                'main' => [
-                    // ...
-                    'access_denied_handler' => AccessDeniedHandler::class,
-                ],
-            ],
-        ]);
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                // ....
+                ->accessDeniedHandler(AccessDeniedHandler::class)
+            ;
+        };
 
 Customizing All Access Denied Responses
 ---------------------------------------

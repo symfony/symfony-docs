@@ -32,3 +32,22 @@ The linter results can be exported to JSON using the ``--format`` option:
 
     $ php bin/console lint:yaml translations/ --format=json
     $ php bin/console lint:xliff translations/ --format=json
+
+When running these linters inside `GitHub Actions`_, the output is automatically
+adapted to the format required by GitHub, but you can force that format too:
+
+.. code-block:: terminal
+
+    $ php bin/console lint:yaml translations/ --format=github
+    $ php bin/console lint:xliff translations/ --format=github
+
+.. tip::
+
+    The Yaml component provides a stand-alone ``yaml-lint`` binary allowing
+    you to lint YAML files without having to create a console application:
+
+    .. code-block:: terminal
+
+        $ php vendor/bin/yaml-lint translations/
+
+.. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions

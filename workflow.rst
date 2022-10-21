@@ -120,43 +120,40 @@ like this:
 
         // config/packages/workflow.php
         use App\Entity\BlogPost;
+        use Symfony\Config\FrameworkConfig;
 
-        $container->loadFromExtension('framework', [
-            'workflows' => [
-                'blog_publishing' => [
-                    'type' => 'workflow', // or 'state_machine'
-                    'audit_trail' => [
-                        'enabled' => true
-                    ],
-                    'marking_store' => [
-                        'type' => 'method',
-                        'property' => 'currentPlace',
-                    ],
-                    'supports' => [BlogPost::class],
-                    'initial_marking' => 'draft',
-                    'places' => [
-                        'draft',
-                        'reviewed',
-                        'rejected',
-                        'published',
-                    ],
-                    'transitions' => [
-                        'to_review' => [
-                            'from' => 'draft',
-                            'to' => 'reviewed',
-                        ],
-                        'publish' => [
-                            'from' => 'reviewed',
-                            'to' => 'published',
-                        ],
-                        'reject' => [
-                            'from' => 'reviewed',
-                            'to' => 'rejected',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+        return static function (FrameworkConfig $framework) {
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            $blogPublishing
+                ->type('workflow') // or 'state_machine'
+                ->supports([BlogPost::class])
+                ->initialMarking(['draft']);
+
+            $blogPublishing->auditTrail()->enabled(true);
+            $blogPublishing->markingStore()
+                ->type('method')
+                ->property('currentPlace');
+
+            $blogPublishing->place()->name('draft');
+            $blogPublishing->place()->name('reviewed');
+            $blogPublishing->place()->name('rejected');
+            $blogPublishing->place()->name('published');
+
+            $blogPublishing->transition()
+                ->name('to_review')
+                    ->from(['draft'])
+                    ->to(['reviewed']);
+
+            $blogPublishing->transition()
+                ->name('publish')
+                    ->from(['reviewed'])
+                    ->to(['published']);
+
+            $blogPublishing->transition()
+                ->name('reject')
+                    ->from(['reviewed'])
+                    ->to(['rejected']);
+        };
 
 .. tip::
 
@@ -232,6 +229,8 @@ what actions are allowed on a blog post::
 
     // See all the available transitions for the post in the current state
     $transitions = $workflow->getEnabledTransitions($post);
+    // See a specific available transition for the post in the current state
+    $transition = $workflow->getEnabledTransition($post, 'publish');
 
 Accessing the Workflow in a Class
 ---------------------------------
@@ -266,27 +265,19 @@ machine type, use ``camelCased workflow name + StateMachine``::
         }
     }
 
-Alternatively, use the registry::
+.. versionadded:: 6.2
 
-    use App\Entity\BlogPost;
-    use Symfony\Component\Workflow\Registry;
+    All workflows and state machines services are tagged since in Symfony 6.2.
 
-    class MyClass
-    {
-        private $workflowRegistry;
+.. tip::
 
-        public function __construct(Registry $workflowRegistry)
-        {
-            $this->workflowRegistry = $workflowRegistry;
-        }
+    If you want to retrieve all workflows, for documentation purposes for example,
+    you can :doc:`inject all services </service_container/service_subscribers_locators>`
+    with the following tag:
 
-        public function toReview(BlogPost $post)
-        {
-            $blogPublishingWorkflow = $this->workflowRegistry->get($post);
-
-            // ...
-        }
-    }
+    * ``workflow``: all workflows and all state machine;
+    * ``workflow.workflow``: all workflows;
+    * ``workflow.state_machine``: all state machines.
 
 .. tip::
 
@@ -369,7 +360,6 @@ order:
     * ``workflow.[workflow name].completed``
     * ``workflow.[workflow name].completed.[transition name]``
 
-
 ``workflow.announce``
     Triggered for each transition that now is accessible for the subject.
 
@@ -379,15 +369,34 @@ order:
     * ``workflow.[workflow name].announce``
     * ``workflow.[workflow name].announce.[transition name]``
 
+    After a transition is applied, the announce event tests for all available
+    transitions. That will trigger all :ref:`guard events <workflow-usage-guard-events>`
+    once more, which could impact performance if they include intensive CPU or
+    database workloads.
+
+    If you don't need the announce event, disable it using the context::
+
+        $workflow->apply($subject, $transitionName, [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
+
+The context is accessible in all events except for the ``workflow.guard`` events::
+
+    // $context must be an array
+    $context = ['context_key' => 'context_value'];
+    $workflow->apply($subject, $transitionName, $context);
+
+    // in an event listener (workflow.guard events)
+    $context = $event->getContext(); // returns ['context']
+
 .. note::
 
     The leaving and entering events are triggered even for transitions that stay
-    in same place.
+    in the same place.
 
-.. versionadded:: 4.3
+.. note::
 
-    Following events are also dispatched when the subject enters the workflow
-    for the first time: ``workflow.entered`` and ``workflow.[worflow name].entered``.
+    If you initialize the marking by calling ``$workflow->getMarking($object);``,
+    then the ``workflow.[workflow_name].entered.[initial_place_name]`` event will
+    be called with the default context (``Workflow::DEFAULT_INITIAL_CONTEXT``).
 
 Here is an example of how to enable logging for every time a "blog_publishing"
 workflow leaves a place::
@@ -427,12 +436,20 @@ workflow leaves a place::
         }
     }
 
+If some listeners update the context during a transition, you can retrieve
+it via the marking::
+
+    $marking = $workflow->apply($post, 'to_review');
+
+    // contains the new value
+    $marking->getContext();
+
 .. _workflow-usage-guard-events:
 
 Guard Events
 ~~~~~~~~~~~~
 
-There are a special kind of events called "Guard events". Their event listeners
+There are special types of events called "Guard events". Their event listeners
 are invoked every time a call to ``Workflow::can()``, ``Workflow::apply()`` or
 ``Workflow::getEnabledTransitions()`` is executed. With the guard events you may
 add custom logic to decide which transitions should be blocked or not. Here is a
@@ -461,8 +478,7 @@ missing a title::
             $title = $post->title;
 
             if (empty($title)) {
-                // Block the transition "to_review" if the post has no title
-                $event->setBlocked(true);
+                $event->setBlocked(true, 'This blog post cannot be marked as reviewed because it has no title.');
             }
         }
 
@@ -473,6 +489,109 @@ missing a title::
             ];
         }
     }
+
+.. _workflow-chosing-events-to-dispatch:
+
+Choosing which Events to Dispatch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you prefer to control which events are fired when performing each transition,
+use the ``events_to_dispatch`` configuration option. This option does not apply
+to :ref:`Guard events <workflow-usage-guard-events>`, which are always fired:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # you can pass one or more event names
+                    events_to_dispatch: ['workflow.leave', 'workflow.completed']
+
+                    # pass an empty array to not dispatch any event
+                    events_to_dispatch: []
+
+                    # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+            <framework:config>
+                <framework:workflow name="blog_publishing">
+                    <!-- you can pass one or more event names -->
+                    <framework:event-to-dispatch>workflow.leave</framework:event-to-dispatch>
+                    <framework:event-to-dispatch>workflow.completed</framework:event-to-dispatch>
+
+                    <!-- pass an empty array to not dispatch any event -->
+                    <framework:event-to-dispatch></framework:event-to-dispatch>
+
+                    <!-- ... -->
+                </framework:workflow>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            // ...
+
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+
+            // ...
+            // you can pass one or more event names
+            $blogPublishing->eventsToDispatch([
+                'workflow.leave',
+                'workflow.completed',
+            ]);
+
+            // pass an empty array to not dispatch any event
+            $blogPublishing->eventsToDispatch([]);
+
+            // ...
+        };
+
+You can also disable a specific event from being fired when applying a transition::
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\Workflow\Exception\LogicException;
+
+    $post = new BlogPost();
+
+    $workflow = $this->container->get('workflow.blog_publishing');
+
+    try {
+        $workflow->apply($post, 'to_review', [
+            Workflow::DISABLE_ANNOUNCE_EVENT => true,
+            Workflow::DISABLE_LEAVE_EVENT => true,
+        ]);
+    } catch (LogicException $exception) {
+        // ...
+    }
+
+Disabling an event for a specific transition will take precedence over any
+events specified in the workflow configuration. In the above example the
+``workflow.leave`` event will not be fired, even if it has been specified as an
+event to be dispatched for all transitions in the workflow configuration.
+
+These are all the available constants:
+
+    * ``Workflow::DISABLE_LEAVE_EVENT``
+    * ``Workflow::DISABLE_TRANSITION_EVENT``
+    * ``Workflow::DISABLE_ENTER_EVENT``
+    * ``Workflow::DISABLE_ENTERED_EVENT``
+    * ``Workflow::DISABLE_COMPLETED_EVENT``
 
 Event Methods
 ~~~~~~~~~~~~~
@@ -597,36 +716,33 @@ transition. The value of this option is any valid expression created with the
     .. code-block:: php
 
         // config/packages/workflow.php
-        use App\Entity\BlogPost;
+        use Symfony\Config\FrameworkConfig;
 
-        $container->loadFromExtension('framework', [
-            'workflows' => [
-                'blog_publishing' => [
-                    // ... previous configuration
+        return static function (FrameworkConfig $framework) {
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            // ... previous configuration
 
-                    'transitions' => [
-                        'to_review' => [
-                            // the transition is allowed only if the current user has the ROLE_REVIEWER role.
-                            'guard' => 'is_granted("ROLE_REVIEWER")',
-                            'from' => 'draft',
-                            'to' => 'reviewed',
-                        ],
-                        'publish' => [
-                            // or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
-                            'guard' => 'is_authenticated',
-                            'from' => 'reviewed',
-                            'to' => 'published',
-                        ],
-                        'reject' => [
-                            // or any valid expression language with "subject" referring to the post
-                            'guard' => 'is_granted("ROLE_ADMIN") and subject.isStatusReviewed()',
-                            'from' => 'reviewed',
-                            'to' => 'rejected',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+            $blogPublishing->transition()
+                ->name('to_review')
+                    // the transition is allowed only if the current user has the ROLE_REVIEWER role.
+                    ->guard('is_granted("ROLE_REVIEWER")')
+                    ->from(['draft'])
+                    ->to(['reviewed']);
+
+            $blogPublishing->transition()
+                ->name('publish')
+                    // or "is_anonymous", "is_remember_me", "is_fully_authenticated", "is_granted"
+                    ->guard('is_authenticated')
+                    ->from(['reviewed'])
+                    ->to(['published']);
+
+            $blogPublishing->transition()
+                ->name('reject')
+                    // or any valid expression language with "subject" referring to the post
+                    ->guard('is_granted("ROLE_ADMIN") and subject.isStatusReviewed()')
+                    ->from(['reviewed'])
+                    ->to(['rejected']);
+        };
 
 You can also use transition blockers to block and return a user-friendly error
 message when you stop a transition from happening.
@@ -670,10 +786,6 @@ place::
         }
     }
 
-.. versionadded:: 4.1
-
-    The transition blockers were introduced in Symfony 4.1.
-
 Usage in Twig
 -------------
 
@@ -685,6 +797,9 @@ of domain logic in your templates:
 
 ``workflow_transitions()``
     Returns an array with all the transitions enabled for the given object.
+
+``workflow_transition()``
+    Returns a specific transition enabled for the given object and transition name.
 
 ``workflow_marked_places()``
     Returns an array with the place names of the given marking.
@@ -734,10 +849,6 @@ The following example shows these functions in action:
 
 Storing Metadata
 ----------------
-
-.. versionadded:: 4.1
-
-    The feature to store metadata in workflows was introduced in Symfony 4.1.
 
 In case you need it, you can store arbitrary metadata in workflows, their
 places, and their transitions using the ``metadata`` option. This metadata can
@@ -816,42 +927,43 @@ be only the title of the workflow or very complex objects:
     .. code-block:: php
 
         // config/packages/workflow.php
-        $container->loadFromExtension('framework', [
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            // ... previous configuration
+
+            $blogPublishing->metadata([
+                'title' => 'Blog Publishing Workflow'
+            ]);
+
             // ...
-            'workflows' => [
-                'blog_publishing' => [
-                    'metadata' => [
-                        'title' => 'Blog Publishing Workflow',
-                    ],
-                    // ...
-                    'places' => [
-                        'draft' => [
-                            'metadata' => [
-                                'max_num_of_words' => 500,
-                            ],
-                        ],
-                        // ...
-                    ],
-                    'transitions' => [
-                        'to_review' => [
-                            'from' => 'draft',
-                            'to' => 'review',
-                            'metadata' => [
-                                'priority' => 0.5,
-                            ],
-                        ],
-                        'publish' => [
-                            'from' => 'reviewed',
-                            'to' => 'published',
-                            'metadata' => [
-                                'hour_limit' => 20,
-                                'explanation' => 'You can not publish after 8 PM.',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+
+            $blogPublishing->place()
+                ->name('draft')
+                ->metadata([
+                    'max_num_of_words' => 500,
+                ]);
+
+            // ...
+
+            $blogPublishing->transition()
+                ->name('to_review')
+                    ->from(['draft'])
+                    ->to(['reviewed'])
+                    ->metadata([
+                        'priority' => 0.5,
+                    ]);
+
+            $blogPublishing->transition()
+                ->name('publish')
+                    ->from(['reviewed'])
+                    ->to(['published'])
+                    ->metadata([
+                        'hour_limit' => 20,
+                        'explanation' => 'You can not publish after 8 PM.',
+                    ]);
+        };
 
 Then you can access this metadata in your controller as follows::
 
@@ -931,6 +1043,15 @@ In Twig templates, metadata is available via the ``workflow_metadata()`` functio
                     <code>{{ workflow_metadata(blog_post, 'priority', transition) ?: 0 }}</code>
                 </li>
             {% endfor %}
+        </ul>
+    </p>
+    <p>
+        <strong>to_review Priority</strong>
+        <ul>
+            <li>
+                to_review:
+                <code>{{ workflow_metadata(blog_post, 'priority', workflow_transition(blog_post, 'to_review')) }}</code>
+            </li>
         </ul>
     </p>
 

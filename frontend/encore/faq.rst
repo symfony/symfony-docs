@@ -117,7 +117,7 @@ But, instead of working, you see an error:
 
     This dependency was not found:
 
-    * respond.js in ./assets/js/app.js
+    * respond.js in ./assets/app.js
 
 Typically, a package will "advertise" its "main" file by adding a ``main`` key to
 its ``package.json``. But sometimes, old libraries won't have this. Instead, you'll
@@ -169,3 +169,28 @@ running it (e.g. when executing ``yarn encore dev``). Fix this issue calling to
     // ... the rest of the Encore configuration
 
 .. _`Webpack integration in PhpStorm`: https://www.jetbrains.com/help/phpstorm/using-webpack.html
+
+My Tests are Failing Because of ``entrypoints.json`` File
+---------------------------------------------------------
+
+After installing Encore, you might see the following error when running tests
+locally or on your Continuous Integration server:
+
+.. code-block:: text
+
+    Uncaught PHP Exception Twig\Error\RuntimeError:
+    "An exception has been thrown during the rendering of a template
+    ("Could not find the entrypoints file from Webpack:
+    the file "/var/www/html/public/build/entrypoints.json" does not exist.
+
+This is happening because you did not build your Encore assets, hence no
+``entrypoints.json`` file. To solve this error, either build Encore assets or
+set the ``strict_mode`` option to ``false`` (this prevents Encore's Twig
+functions to trigger exceptions when there's no ``entrypoints.json`` file):
+
+.. code-block:: yaml
+
+    # config/packages/test/webpack_encore.yaml
+    webpack_encore:
+        strict_mode: false
+        # ...

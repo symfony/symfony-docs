@@ -15,7 +15,7 @@ Embedding a Single Object
 -------------------------
 
 Suppose that each ``Task`` belongs to a ``Category`` object. Start by
-creating the ``Category`` object::
+creating the ``Category`` class::
 
     // src/Entity/Category.php
     namespace App\Entity;
@@ -24,9 +24,7 @@ creating the ``Category`` object::
 
     class Category
     {
-        /**
-         * @Assert\NotBlank
-         */
+        #[Assert\NotBlank]
         public $name;
     }
 
@@ -38,10 +36,8 @@ Next, add a new ``category`` property to the ``Task`` class::
     {
         // ...
 
-        /**
-         * @Assert\Type(type="App\Entity\Category")
-         * @Assert\Valid
-         */
+        #[Assert\Type(type: Category::class)]
+        #[Assert\Valid]
         protected $category;
 
         // ...

@@ -67,12 +67,6 @@ The most common way to listen to an event is to register an **event listener**::
     Check out the :doc:`Symfony events reference </reference/events>` to see
     what type of object each event provides.
 
-.. versionadded:: 4.3
-
-    The :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent` class was
-    introduced in Symfony 4.3. In previous versions it was called
-    ``Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent``.
-
 Now that the class is created, you need to register it as a service and
 notify Symfony that it is a "listener" on the ``kernel.exception`` event by
 using a special "tag":
@@ -106,11 +100,17 @@ using a special "tag":
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
         use App\EventListener\ExceptionListener;
 
-        $container->register(ExceptionListener::class)
-            ->tag('kernel.event_listener', ['event' => 'kernel.exception'])
-        ;
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            $services->set(ExceptionListener::class)
+                ->tag('kernel.event_listener', ['event' => 'kernel.exception'])
+            ;
+        };
 
 Symfony follows this logic to decide which method to call inside the event
 listener class:
@@ -118,7 +118,7 @@ listener class:
 #. If the ``kernel.event_listener`` tag defines the ``method`` attribute, that's
    the name of the method to be called;
 #. If no ``method`` attribute is defined, try to call the method whose name
-   is ``on`` + "camel-cased event name" (e.g. ``onKernelException()`` method for
+   is ``on`` + "PascalCased event name" (e.g. ``onKernelException()`` method for
    the ``kernel.exception`` event);
 #. If that method is not defined either, try to call the ``__invoke()`` magic
    method (which makes event listeners invokable);
@@ -134,6 +134,54 @@ listener class:
     internal Symfony listeners usually range from ``-256`` to ``256`` but your
     own listeners can use any positive or negative integer.
 
+Defining Event Listeners with PHP Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+An alternative way to define an event listener is to use the
+:class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener`
+PHP attribute. This allows to configure the listener inside its class, without
+having to add any configuration in external files::
+
+    namespace App\EventListener;
+
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+
+    #[AsEventListener]
+    final class MyListener
+    {
+        public function __invoke(CustomEvent $event): void
+        {
+            // ...
+        }
+    }
+
+You can add multiple ``#[AsEventListener()]`` attributes to configure different methods::
+
+    namespace App\EventListener;
+
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+
+    #[AsEventListener(event: CustomEvent::class, method: 'onCustomEvent')]
+    #[AsEventListener(event: 'foo', priority: 42)]
+    #[AsEventListener(event: 'bar', method: 'onBarEvent')]
+    final class MyMultiListener
+    {
+        public function onCustomEvent(CustomEvent $event): void
+        {
+            // ...
+        }
+
+        public function onFoo(): void
+        {
+            // ...
+        }
+
+        public function onBarEvent(): void
+        {
+            // ...
+        }
+    }
+
 .. _events-subscriber:
 
 Creating an Event Subscriber
@@ -141,8 +189,8 @@ Creating an Event Subscriber
 
 Another way to listen to events is via an **event subscriber**, which is a class
 that defines one or more methods that listen to one or various events. The main
-difference with the event listeners is that subscribers always know which events
-they are listening to.
+difference with the event listeners is that subscribers always know the events
+to which they are listening.
 
 If different event subscriber methods listen to the same event, their order is
 defined by the ``priority`` parameter. This value is a positive or negative
@@ -206,10 +254,10 @@ the ``EventSubscriber`` directory. Symfony takes care of the rest.
 Request Events, Checking Types
 ------------------------------
 
-A single page can make several requests (one master request, and then multiple
+A single page can make several requests (one main request, and then multiple
 sub-requests - typically when :ref:`embedding controllers in templates <templates-embed-controllers>`).
 For the core Symfony events, you might need to check to see if the event is for
-a "master" request or a "sub request"::
+a "main" request or a "sub request"::
 
     // src/EventListener/RequestListener.php
     namespace App\EventListener;
@@ -220,8 +268,8 @@ a "master" request or a "sub request"::
     {
         public function onKernelRequest(RequestEvent $event)
         {
-            if (!$event->isMasterRequest()) {
-                // don't do anything if it's not the master request
+            if (!$event->isMainRequest()) {
+                // don't do anything if it's not the main request
                 return;
             }
 
@@ -275,11 +323,6 @@ name (FQCN) of the corresponding event class::
         }
     }
 
-.. versionadded:: 4.3
-
-    Referring Symfony's core events via the FQCN of the event class is possible
-    since Symfony 4.3.
-
 Internally, the event FQCN are treated as aliases for the original event names.
 Since the mapping already happens when compiling the service container, event
 listeners and subscribers using FQCN instead of event names will appear under
@@ -310,10 +353,6 @@ The compiler pass will always extend the existing list of aliases. Because of
 that, it is safe to register multiple instances of the pass with different
 configurations.
 
-.. versionadded:: 4.4
-
-    The ``AddEventAliasesPass`` class was introduced in Symfony 4.4.
-
 Debugging Event Listeners
 -------------------------
 
@@ -330,6 +369,21 @@ its name:
 .. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher kernel.exception
+
+or can get everything which partial matches the event name:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher kernel // matches "kernel.exception", "kernel.response" etc.
+    $ php bin/console debug:event-dispatcher Security // matches "Symfony\Component\Security\Http\Event\CheckPassportEvent"
+
+The :doc:`security </security>` system uses an event dispatcher per
+firewall. Use the ``--dispatcher`` option to get the registered listeners
+for a particular event dispatcher:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher --dispatcher=security.event_dispatcher.main
 
 Learn more
 ----------

@@ -81,19 +81,21 @@ can be accessed via several public properties:
   (``$request->headers->get('User-Agent')``).
 
 Each property is a :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`
-instance (or a sub-class of), which is a data holder class:
+instance (or a subclass of), which is a data holder class:
 
-* ``request``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+* ``request``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag` or
+  :class:`Symfony\\Component\\HttpFoundation\\InputBag` if the data is
+  coming from ``$_POST`` parameters;
 
-* ``query``:   :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+* ``query``: :class:`Symfony\\Component\\HttpFoundation\\InputBag`;
 
-* ``cookies``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
+* ``cookies``: :class:`Symfony\\Component\\HttpFoundation\\InputBag`;
 
 * ``attributes``: :class:`Symfony\\Component\\HttpFoundation\\ParameterBag`;
 
-* ``files``:   :class:`Symfony\\Component\\HttpFoundation\\FileBag`;
+* ``files``: :class:`Symfony\\Component\\HttpFoundation\\FileBag`;
 
-* ``server``:  :class:`Symfony\\Component\\HttpFoundation\\ServerBag`;
+* ``server``: :class:`Symfony\\Component\\HttpFoundation\\ServerBag`;
 
 * ``headers``: :class:`Symfony\\Component\\HttpFoundation\\HeaderBag`.
 
@@ -161,18 +163,23 @@ exist::
     // returns 'baz'
 
 When PHP imports the request query, it handles request parameters like
-``foo[bar]=baz`` in a special way as it creates an array. So you can get the
-``foo`` parameter and you will get back an array with a ``bar`` element::
+``foo[bar]=baz`` in a special way as it creates an array. The ``get()`` method
+doesn't support returning arrays, so you need to use the following code::
 
     // the query string is '?foo[bar]=baz'
 
-    $request->query->get('foo');
+    // don't use $request->query->get('foo'); use the following instead:
+    $request->query->all('foo');
     // returns ['bar' => 'baz']
+
+    // if the requested parameter does not exist, an empty array is returned:
+    $request->query->all('qux');
+    // returns []
 
     $request->query->get('foo[bar]');
     // returns null
 
-    $request->query->get('foo')['bar'];
+    $request->query->all()['foo']['bar'];
     // returns 'baz'
 
 .. _component-foundation-attributes:
@@ -188,8 +195,13 @@ Finally, the raw data sent with the request body can be accessed using
 
     $content = $request->getContent();
 
-For instance, this may be useful to process a JSON string sent to the
+For instance, this may be useful to process an XML string sent to the
 application by a remote service using the HTTP POST method.
+
+If the request body is a JSON string, it can be accessed using
+:method:`Symfony\\Component\\HttpFoundation\\Request::toArray`::
+
+    $data = $request->toArray();
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -236,9 +248,9 @@ Accessing the Session
 ~~~~~~~~~~~~~~~~~~~~~
 
 If you have a session attached to the request, you can access it via the
-:method:`Symfony\\Component\\HttpFoundation\\Request::getSession` method;
-the
-:method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
+``getSession()`` method of the :class:`Symfony\\Component\\HttpFoundation\\Request`
+or :class:`Symfony\\Component\\HttpFoundation\\RequestStack` class;
+the :method:`Symfony\\Component\\HttpFoundation\\Request::hasPreviousSession`
 method tells you if the request contains a session which was started in one of
 the previous requests.
 
@@ -271,6 +283,10 @@ this complexity and defines some methods for the most common tasks::
     // Decodes a quoted string
     HeaderUtils::unquote('"foo \"bar\""');
     // => 'foo "bar"'
+
+    // Parses a query string but maintains dots (PHP parse_str() replaces '.' by '_')
+    HeaderUtils::parseQuery('foo[bar.baz]=qux');
+    // => ['foo' => ['bar.baz' => 'qux']]
 
 Accessing ``Accept-*`` Headers Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -318,10 +334,6 @@ are also supported::
 
 Anonymizing IP Addresses
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 4.4
-
-    The ``anonymize()`` method was introduced in Symfony 4.4.
 
 An increasingly common need for applications to comply with user protection
 regulations is to anonymize IP addresses before logging and storing them for
@@ -447,9 +459,17 @@ method takes an instance of
 You can clear a cookie via the
 :method:`Symfony\\Component\\HttpFoundation\\ResponseHeaderBag::clearCookie` method.
 
-Note you can create a
-:class:`Symfony\\Component\\HttpFoundation\\Cookie` object from a raw header
-value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`.
+In addition to the ``Cookie::create()`` method, you can create a ``Cookie``
+object from a raw header value using :method:`Symfony\\Component\\HttpFoundation\\Cookie::fromString`
+method. You can also use the ``with*()`` methods to change some Cookie property (or
+to build the entire Cookie using a fluent interface). Each ``with*()`` method returns
+a new object with the modified property::
+
+    $cookie = Cookie::create('foo')
+        ->withValue('bar')
+        ->withExpires(strtotime('Fri, 20-May-2011 15:25:52 GMT'))
+        ->withDomain('.example.com')
+        ->withSecure(true);
 
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -463,6 +483,8 @@ of methods to manipulate the HTTP headers related to the cache:
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setExpires`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setMaxAge`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setSharedMaxAge`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleIfError`
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setStaleWhileRevalidate`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setTtl`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setClientTtl`
 * :method:`Symfony\\Component\\HttpFoundation\\Response::setLastModified`
@@ -481,14 +503,26 @@ can be used to set the most commonly used cache information in one method
 call::
 
     $response->setCache([
-        'etag'          => 'abcdef',
-        'last_modified' => new \DateTime(),
-        'max_age'       => 600,
-        's_maxage'      => 600,
-        'private'       => false,
-        'public'        => true,
-        'immutable'     => true,
+        'must_revalidate'  => false,
+        'no_cache'         => false,
+        'no_store'         => false,
+        'no_transform'     => false,
+        'public'           => true,
+        'private'          => false,
+        'proxy_revalidate' => false,
+        'max_age'          => 600,
+        's_maxage'         => 600,
+        'stale_if_error'   => 86400,
+        'stale_while_revalidate' => 60,
+        'immutable'        => true,
+        'last_modified'    => new \DateTime(),
+        'etag'             => 'abcdef',
     ]);
+
+.. versionadded:: 6.1
+
+    The ``stale_if_error`` and ``stale_while_revalidate`` options were
+    introduced in Symfony 6.1.
 
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
@@ -684,7 +718,7 @@ The ``JsonResponse`` class sets the ``Content-Type`` header to
 .. caution::
 
     To avoid XSSI `JSON Hijacking`_, you should pass an associative array
-    as the outer-most array to ``JsonResponse`` and not an indexed array so
+    as the outermost array to ``JsonResponse`` and not an indexed array so
     that the final result is an object (e.g. ``{"object": "not inside an array"}``)
     instead of an array (e.g. ``[{"object": "inside an array"}]``). Read
     the `OWASP guidelines`_ for more information.
@@ -712,6 +746,65 @@ Session
 
 The session information is in its own document: :doc:`/components/http_foundation/sessions`.
 
+Safe Content Preference
+-----------------------
+
+Some web sites have a "safe" mode to assist those who don't want to be exposed
+to content to which they might object. The  `RFC 8674`_ specification defines a
+way for user agents to ask for safe content to a server.
+
+The specification does not define what content might be considered objectionable,
+so the concept of "safe" is not precisely defined. Rather, the term is interpreted
+by the server and within the scope of each web site that chooses to act upon this information.
+
+Symfony offers two methods to interact with this preference:
+
+* :method:`Symfony\\Component\\HttpFoundation\\Request::preferSafeContent`;
+* :method:`Symfony\\Component\\HttpFoundation\\Response::setContentSafe`;
+
+The following example shows how to detect if the user agent prefers "safe" content::
+
+    if ($request->preferSafeContent()) {
+        $response = new Response($alternativeContent);
+        // this informs the user we respected their preferences
+        $response->setContentSafe();
+
+        return $response;
+
+Generating Relative and Absolute URLs
+-------------------------------------
+
+Generating absolute and relative URLs for a given path is a common need
+in some applications. In Twig templates you can use the
+:ref:`absolute_url() <reference-twig-function-absolute-url>` and
+:ref:`relative_path() <reference-twig-function-relative-path>` functions to do that.
+
+The :class:`Symfony\\Component\\HttpFoundation\\UrlHelper` class provides the
+same functionality for PHP code via the ``getAbsoluteUrl()`` and ``getRelativePath()``
+methods. You can inject this as a service anywhere in your application::
+
+    // src/Normalizer/UserApiNormalizer.php
+    namespace App\Normalizer;
+
+    use Symfony\Component\HttpFoundation\UrlHelper;
+
+    class UserApiNormalizer
+    {
+        private UrlHelper $urlHelper;
+
+        public function __construct(UrlHelper $urlHelper)
+        {
+            $this->urlHelper = $urlHelper;
+        }
+
+        public function normalize($user)
+        {
+            return [
+                'avatar' => $this->urlHelper->getAbsoluteUrl($user->avatar()->path()),
+            ];
+        }
+    }
+
 Learn More
 ----------
 
@@ -729,3 +822,4 @@ Learn More
 .. _Apache: https://tn123.org/mod_xsendfile/
 .. _`JSON Hijacking`: https://haacked.com/archive/2009/06/25/json-hijacking.aspx/
 .. _OWASP guidelines: https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html#always-return-json-with-an-object-on-the-outside
+.. _RFC 8674: https://tools.ietf.org/html/rfc8674

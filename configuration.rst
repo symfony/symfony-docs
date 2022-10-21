@@ -69,10 +69,20 @@ readable. These are the main advantages and disadvantages of each format:
 
 * **YAML**: simple, clean and readable, but not all IDEs support autocompletion
   and validation for it. :doc:`Learn the YAML syntax </components/yaml/yaml_format>`;
-* **XML**:autocompleted/validated by most IDEs and is parsed natively by PHP,
+* **XML**: autocompleted/validated by most IDEs and is parsed natively by PHP,
   but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
-* **PHP**: very powerful and it allows you to create dynamic configuration, but the
-  resulting configuration is less readable than the other formats.
+* **PHP**: very powerful and it allows you to create dynamic configuration with
+  arrays or a :ref:`ConfigBuilder <config-config-builder>`.
+
+.. note::
+
+    By default Symfony loads the configuration files defined in YAML and PHP
+    formats. If you define configuration in XML format, update the
+    ``src/Kernel.php`` file to add support for the ``.xml`` file extension.
+
+    .. versionadded:: 6.1
+
+        The automatic loading of PHP configuration files was introduced in Symfony 6.1.
 
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -143,10 +153,6 @@ configuration files, even if they use a different format:
         };
 
         // ...
-
-.. versionadded:: 4.4
-
-    The ``not_found`` option value for ``ignore_errors`` was introduced in Symfony 4.4.
 
 .. _config-parameter-intro:
 .. _config-parameters-yml:
@@ -407,6 +413,90 @@ In reality, each environment differs only somewhat from others. This means that
 all environments share a large base of common configuration, which is put in
 files directly in the ``config/packages/`` directory.
 
+.. tip::
+
+    You can also define options for different environments in a single
+    configuration file using the special ``when`` keyword:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/webpack_encore.yaml
+            webpack_encore:
+                # ...
+                output_path: '%kernel.project_dir%/public/build'
+                strict_mode: true
+                cache: false
+
+            # cache is enabled only in the "prod" environment
+            when@prod:
+                webpack_encore:
+                    cache: true
+
+            # disable strict mode only in the "test" environment
+            when@test:
+                webpack_encore:
+                    strict_mode: false
+
+            # YAML syntax allows to reuse contents using "anchors" (&some_name) and "aliases" (*some_name).
+            # In this example, 'test' configuration uses the exact same configuration as in 'prod'
+            when@prod: &webpack_prod
+                webpack_encore:
+                    # ...
+            when@test: *webpack_prod
+
+        .. code-block:: xml
+
+            <!-- config/packages/webpack_encore.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+                <webpack-encore:config
+                    output-path="%kernel.project_dir%/public/build"
+                    strict-mode="true"
+                    cache="false"
+                />
+
+                <!-- cache is enabled only in the "test" environment -->
+                <when env="prod">
+                    <webpack-encore:config cache="true"/>
+                </when>
+
+                <!-- disable strict mode only in the "test" environment -->
+                <when env="test">
+                    <webpack-encore:config strict-mode="false"/>
+                </when>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+            use Symfony\Config\WebpackEncoreConfig;
+
+            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container) {
+                $webpackEncore
+                    ->outputPath('%kernel.project_dir%/public/build')
+                    ->strictMode(true)
+                    ->cache(false)
+                ;
+
+                // cache is enabled only in the "prod" environment
+                if ('prod' === $container->env()) {
+                    $webpackEncore->cache(true);
+                }
+
+                // disable strict mode only in the "test" environment
+                if ('test' === $container->env()) {
+                    $webpackEncore->strictMode(false);
+                }
+            };
+
 .. seealso::
 
     See the ``configureContainer()`` method of
@@ -465,6 +555,12 @@ going to production:
     use `symbolic links`_ between ``config/packages/<environment-name>/``
     directories to reuse the same configuration.
 
+Instead of creating new environments, you can use environment variables as
+explained in the following section. This way you can use the same application
+and environment (e.g. ``prod``) but change its behavior thanks to the
+configuration based on environment variables (e.g. to run the application in
+different scenarios: staging, quality assurance, client review, etc.)
+
 .. _config-env-vars:
 
 Configuration Based on Environment Variables
@@ -475,9 +571,10 @@ configure options that depend on where the application is run (e.g. the database
 credentials are usually different in production versus your local machine). If
 the values are sensitive, you can even :doc:`encrypt them as secrets </configuration/secrets>`.
 
-You can reference environment variables using the special syntax
-``%env(ENV_VAR_NAME)%``. The values of these options are resolved at runtime
-(only once per request, to not impact performance).
+Use the special syntax ``%env(ENV_VAR_NAME)%`` to reference environment variables.
+The values of these options are resolved at runtime (only once per request, to
+not impact performance) so you can change the application behavior without having
+to clear the cache.
 
 This example shows how you could configure the database connection using an env var:
 
@@ -521,6 +618,8 @@ This example shows how you could configure the database connection using an env 
                 'dbal' => [
                     // by convention the env var names are always uppercase
                     'url' => '%env(resolve:DATABASE_URL)%',
+                    // or
+                    'url' => env('DATABASE_URL')->resolve(),
                 ],
             ]);
         };
@@ -541,6 +640,14 @@ To define the value of an env var, you have several options:
 
     Some hosts - like SymfonyCloud - offer easy `utilities to manage env vars`_
     in production.
+
+.. note::
+
+    Some configuration features are not compatible with env vars. For example,
+    defining some container parameters conditionally based on the existence of
+    another configuration option. When using an env var, the configuration option
+    always exists, because its value will be ``null`` when the related env var
+    is not defined.
 
 .. caution::
 
@@ -583,6 +690,11 @@ In addition to your own env vars, this ``.env`` file also contains the env vars
 defined by the third-party packages installed in your application (they are
 added automatically by :ref:`Symfony Flex <symfony-flex>` when installing packages).
 
+.. tip::
+
+    Since the ``.env`` file is read and parsed on every request, you don't need to
+    clear the Symfony cache or restart the PHP container if you're using Docker.
+
 .env File Syntax
 ................
 
@@ -615,10 +727,6 @@ Define a default value in case the environment variable is not set:
 
     DB_USER=
     DB_PASS=${DB_USER:-root}pass # results in DB_PASS=rootpass
-
-.. versionadded:: 4.4
-
-    The support for default values has been introduced in Symfony 4.4.
 
 Embed commands via ``$()`` (not supported on Windows):
 
@@ -676,19 +784,13 @@ the env files ending in ``.local`` (``.env.local`` and ``.env.<environment>.loca
 **should not be committed** because only you will use them. In fact, the
 ``.gitignore`` file that comes with Symfony prevents them from being committed.
 
-.. caution::
-
-    Applications created before November 2018 had a slightly different system,
-    involving a ``.env.dist`` file. For information about upgrading, see:
-    :doc:`configuration/dot-env-changes`.
-
 .. _configuration-env-var-in-prod:
 
 Configuring Environment Variables in Production
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In production, the ``.env`` files are also parsed and loaded on each request. So
-the easiest way to define env vars is by deploying a ``.env.local`` file to your
+the easiest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
 To improve performance, you can optionally run the ``dump-env`` command (available
@@ -719,8 +821,44 @@ you can encrypt the value using the :doc:`secrets management system </configurat
 Listing Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Regardless of how you set environment variables, you can see a full list with
-their values by running:
+Use the ``debug:dotenv`` command to understand how Symfony parses the different
+``.env`` files to set the value of each environment variable:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:dotenv
+
+    Dotenv Variables & Files
+    ========================
+
+    Scanned Files (in descending priority)
+    --------------------------------------
+
+    * ⨯ .env.local.php
+    * ⨯ .env.dev.local
+    * ✓ .env.dev
+    * ⨯ .env.local
+    * ✓ .env
+
+    Variables
+    ---------
+
+    ---------- ------- ---------- ------
+     Variable   Value   .env.dev   .env
+    ---------- ------- ---------- ------
+     FOO        BAR     n/a        BAR
+     ALICE      BOB     BOB        bob
+    ---------- ------- ---------- ------
+
+    # look for a specific variable passing its full or partial name as an argument
+    $ php bin/console debug:dotenv foo
+
+.. versionadded:: 6.2
+
+    The option to pass variable names to ``debug:dotenv`` was introduced in Symfony 6.2.
+
+Additionally, and regardless of how you set environment variables, you can see all
+environment variables, with their values, referenced in Symfony's container configuration:
 
 .. code-block:: terminal
 
@@ -739,10 +877,6 @@ their values by running:
 
     # run this command to show all the details for a specific env var:
     $ php bin/console debug:container --env-var=FOO
-
-.. versionadded:: 4.3
-
-    The option to debug environment variables was introduced in Symfony 4.3.
 
 .. _configuration-accessing-parameters:
 
@@ -926,6 +1060,46 @@ parameters at once by type-hinting any of its constructor arguments with the
         }
     }
 
+.. _config-config-builder:
+
+Using PHP ConfigBuilders
+------------------------
+
+Writing PHP config is sometimes difficult because you end up with large nested
+arrays and you have no autocompletion help from your favorite IDE. A way to
+address this is to use "ConfigBuilders". They are objects that will help you
+build these arrays.
+
+Symfony generates the ConfigBuilder classes automatically in the
+:ref:`kernel build directory <configuration-kernel-build-directory>` for all the
+bundles installed in your application. By convention they all live in the
+namespace ``Symfony\Config``::
+
+    // config/packages/security.php
+    use Symfony\Config\SecurityConfig;
+
+    return static function (SecurityConfig $security) {
+        $security->firewall('main')
+            ->pattern('^/*')
+            ->lazy(true)
+            ->anonymous();
+
+        $security
+            ->roleHierarchy('ROLE_ADMIN', ['ROLE_USER'])
+            ->roleHierarchy('ROLE_SUPER_ADMIN', ['ROLE_ADMIN', 'ROLE_ALLOWED_TO_SWITCH'])
+            ->accessControl()
+                ->path('^/user')
+                ->role('ROLE_USER');
+
+        $security->accessControl(['path' => '^/admin', 'roles' => 'ROLE_ADMIN']);
+    };
+
+.. note::
+
+    Only root classes in the namespace ``Symfony\Config`` are ConfigBuilders.
+    Nested configs (e.g. ``\Symfony\Config\Framework\CacheConfig``) are regular
+    PHP objects which aren't autowired when using them as an argument type.
+
 Keep Going!
 -----------
 
@@ -950,4 +1124,4 @@ And all the other topics related to configuration:
 .. _`Learn the XML syntax`: https://en.wikipedia.org/wiki/XML
 .. _`environment variables`: https://en.wikipedia.org/wiki/Environment_variable
 .. _`symbolic links`: https://en.wikipedia.org/wiki/Symbolic_link
-.. _`utilities to manage env vars`: https://symfony.com/doc/master/cloud/cookbooks/env.html
+.. _`utilities to manage env vars`: https://symfony.com/doc/current/cloud/env.html

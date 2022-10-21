@@ -27,22 +27,27 @@ In this case, the SOAP service will allow the client to call a method called
     // src/Service/HelloService.php
     namespace App\Service;
 
+    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Mime\Email;
+
     class HelloService
     {
-        private $mailer;
+        private MailerInterface $mailer;
 
-        public function __construct(\Swift_Mailer $mailer)
+        public function __construct(MailerInterface $mailer)
         {
             $this->mailer = $mailer;
         }
 
-        public function hello($name)
+        public function hello(string $name): string
         {
-            $message = (new \Swift_Message('Hello Service'))
-                ->setTo('me@example.com')
-                ->setBody($name.' says hi!');
+            $email = (new Email())
+                ->from('admin@example.com')
+                ->to('me@example.com')
+                ->subject('Hello Service')
+                ->text($name.' says hi!');
 
-            $this->mailer->send($message);
+            $this->mailer->send($email);
 
             return 'Hello, '.$name;
         }
@@ -66,9 +71,7 @@ can be retrieved via ``/soap?wsdl``::
 
     class HelloServiceController extends AbstractController
     {
-        /**
-         * @Route("/soap")
-         */
+        #[Route('/soap')]
         public function index(HelloService $helloService)
         {
             $soapServer = new \SoapServer('/path/to/hello.wsdl');
@@ -95,7 +98,7 @@ buffering the STDOUT and use ``ob_get_clean()`` to dump the echoed output
 into the content of the Response and clear the output buffer. Finally, you're
 ready to return the ``Response``.
 
-Below is an example calling the service using a native `SoapClient`_ client. This example
+Below is an example of calling the service using a native `SoapClient`_ client. This example
 assumes that the ``index()`` method in the controller above is accessible via
 the route ``/soap``::
 

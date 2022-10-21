@@ -5,9 +5,6 @@ Validates that a value is a valid `3-letter ISO 4217`_ currency name.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Currency`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CurrencyValidator`
 ==========  ===================================================================
@@ -20,7 +17,7 @@ a valid currency, you could do the following:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Order.php
         namespace App\Entity;
@@ -29,9 +26,7 @@ a valid currency, you could do the following:
 
         class Order
         {
-            /**
-             * @Assert\Currency
-             */
+            #[Assert\Currency]
             protected $currency;
         }
 
@@ -94,6 +89,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

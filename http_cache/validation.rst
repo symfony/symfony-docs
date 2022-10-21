@@ -9,7 +9,7 @@ data, the expiration model falls short. With the `expiration model`_, the
 application won't be asked to return the updated response until the cache
 finally becomes stale.
 
-The validation model addresses this issue. Under this model, the cache continues
+The `validation model`_ addresses this issue. Under this model, the cache continues
 to store responses. The difference is that, for each request, the cache asks the
 application if the cached response is still valid or if it needs to be regenerated.
 If the cache *is* still valid, your application should return a 304 status code
@@ -56,10 +56,11 @@ content::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     class DefaultController extends AbstractController
     {
-        public function homepage(Request $request)
+        public function homepage(Request $request): Response
         {
             $response = $this->render('static/homepage.html.twig');
             $response->setEtag(md5($response->getContent()));
@@ -138,7 +139,7 @@ header value::
 
     class ArticleController extends AbstractController
     {
-        public function show(Article $article, Request $request)
+        public function show(Article $article, Request $request): Response
         {
             $author = $article->getAuthor();
 
@@ -196,7 +197,7 @@ the better. The ``Response::isNotModified()`` method does exactly that::
 
     class ArticleController extends AbstractController
     {
-        public function show($articleSlug, Request $request)
+        public function show(string $articleSlug, Request $request): Response
         {
             // Get the minimum information to compute
             // the ETag or the Last-Modified value
@@ -235,6 +236,7 @@ headers that must not be present for ``304`` responses (see
 :method:`Symfony\\Component\\HttpFoundation\\Response::setNotModified`).
 
 .. _`expiration model`: https://tools.ietf.org/html/rfc2616#section-13.2
+.. _`validation model`: https://tools.ietf.org/html/rfc2616#section-13.3
 .. _`HTTP ETag`: https://en.wikipedia.org/wiki/HTTP_ETag
 .. _`DeflateAlterETag`: https://httpd.apache.org/docs/trunk/mod/mod_deflate.html#deflatealteretag
 .. _`BrotliAlterETag`: https://httpd.apache.org/docs/2.4/mod/mod_brotli.html#brotlialteretag

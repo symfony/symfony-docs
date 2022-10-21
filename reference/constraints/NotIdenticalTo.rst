@@ -13,11 +13,6 @@ the options. To force that a value is identical, see
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `message`_
-            - `payload`_
-            - `propertyPath`_
-            - `value`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\NotIdenticalTo`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NotIdenticalToValidator`
 ==========  ===================================================================
@@ -32,7 +27,7 @@ The following constraints ensure that:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Person.php
         namespace App\Entity;
@@ -41,16 +36,12 @@ The following constraints ensure that:
 
         class Person
         {
-            /**
-             * @Assert\NotIdenticalTo("Mary")
-             */
+            #[Assert\NotIdenticalTo('Mary')]
             protected $firstName;
 
-            /**
-             * @Assert\NotIdenticalTo(
-             *     value = 15
-             * )
-             */
+            #[Assert\NotIdenticalTo(
+                value: 15,
+            )]
             protected $age;
         }
 

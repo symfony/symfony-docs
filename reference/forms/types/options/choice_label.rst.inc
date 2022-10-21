@@ -25,8 +25,15 @@ more control::
 
             // or if you want to translate some key
             //return 'form.choice.'.$key;
+            //return new TranslatableMessage($key, false === $choice ? [] : ['%status%' => $value], 'store');
         },
     ]);
+
+.. versionadded:: 6.2
+
+    Starting from Symfony 6.2, you can use any object that implements
+    :class:`Symfony\\Contracts\\Translation\\TranslatableInterface` as the value
+    of the choice label.
 
 This method is called for *each* choice, passing you the ``$choice`` and
 ``$key`` from the choices array (additional ``$value`` is related to `choice_value`_).
@@ -53,3 +60,17 @@ If your choice values are objects, then ``choice_label`` can also be a
 
 If set to ``false``, all the tag labels will be discarded for radio or checkbox
 inputs. You can also return ``false`` from the callable to discard certain labels.
+
+.. tip::
+
+    When defining a custom type, you should use the
+    :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList` class helper::
+
+        use Symfony\Component\Form\ChoiceList\ChoiceList;
+
+        // ...
+        $builder->add('choices', ChoiceType::class, [
+            'choice_label' => ChoiceList::label($this, 'displayName'),
+        ]);
+
+    See the :ref:`"choice_loader" option documentation <reference-form-choice-loader>`.

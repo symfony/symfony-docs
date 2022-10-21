@@ -30,7 +30,7 @@ to create new Symfony applications:
 
 .. code-block:: terminal
 
-    $ symfony new my_project_name
+    $ symfony new my_project_directory
 
 Under the hood, this Symfony binary command executes the needed `Composer`_
 command to :ref:`create a new Symfony application <creating-symfony-applications>`
@@ -88,8 +88,10 @@ application behavior.
 :ref:`Use env vars in your project <config-env-vars>` to define these options
 and create multiple ``.env`` files to :ref:`configure env vars per environment <config-dot-env>`.
 
-Use Secret for Sensitive Information
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _use-secret-for-sensitive-information:
+
+Use Secrets for Sensitive Information
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When your application has sensitive configuration - like an API key - you should
 store those securely via :doc:`Symfony’s secrets management system </configuration/secrets>`.
@@ -194,16 +196,19 @@ you'll need to configure services (or parts of them) manually.
 YAML is the format recommended to configure services because it's friendly to
 newcomers and concise, but Symfony also supports XML and PHP configuration.
 
-Use Annotations to Define the Doctrine Entity Mapping
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use Attributes to Define the Doctrine Entity Mapping
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Doctrine entities are plain PHP objects that you store in some "database".
 Doctrine only knows about your entities through the mapping metadata configured
 for your model classes.
 
-Doctrine supports several metadata formats, but it's recommended to use
-annotations because they are by far the most convenient and agile way of setting
+Doctrine supports several metadata formats, but it's recommended to use PHP
+attributes because they are by far the most convenient and agile way of setting
 up and looking for mapping information.
+
+If your PHP version doesn't support attributes yet, use annotations, which is
+similar but requires installing some extra dependencies in your project.
 
 Controllers
 -----------
@@ -223,27 +228,20 @@ important parts of your application.
 
 .. _best-practice-controller-annotations:
 
-Use Annotations to Configure Routing, Caching and Security
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use Attributes or Annotations to Configure Routing, Caching and Security
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using annotations for routing, caching and security simplifies configuration.
-You don't need to browse several files created with different formats (YAML, XML,
-PHP): all the configuration is just where you need it and it only uses one format.
-
-Don't Use Annotations to Configure the Controller Template
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The ``@Template`` annotation is useful, but also involves some *magic*.
-Moreover, most of the time ``@Template`` is used without any parameters, which
-makes it more difficult to know which template is being rendered. It also hides
-the fact that a controller should always return a ``Response`` object.
+Using attributes or annotations for routing, caching and security simplifies
+configuration. You don't need to browse several files created with different
+formats (YAML, XML, PHP): all the configuration is just where you need it and
+it only uses one format.
 
 Use Dependency Injection to Get Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you extend the base ``AbstractController``, you can only access to the most
+If you extend the base ``AbstractController``, you can only get access to the most
 common services (e.g ``twig``, ``router``, ``doctrine``, etc.), directly from the
-container via ``$this->container->get()`` or ``$this->get()``.
+container via ``$this->container->get()``.
 Instead, you must use dependency injection to fetch services by
 :ref:`type-hinting action method arguments <controller-accessing-services>` or
 constructor arguments.
@@ -265,7 +263,7 @@ Templates
 Use Snake Case for Template Names and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use lowercased snake_case for template names, directories and variables (e.g.
+Use lowercase snake_case for template names, directories and variables (e.g.
 ``user_profile`` instead of ``userProfile`` and ``product/edit_form.html.twig``
 instead of ``Product/EditForm.html.twig``).
 
@@ -285,7 +283,7 @@ Define your Forms as PHP Classes
 
 Creating :ref:`forms in classes <creating-forms-in-classes>` allows to reuse
 them in different parts of the application. Besides, not creating forms in
-controllers simplify the code and maintenance of the controllers.
+controllers simplifies the code and maintenance of the controllers.
 
 Add Form Buttons in Templates
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -367,14 +365,14 @@ Use the ``auto`` Password Hasher
 
 The :ref:`auto password hasher <reference-security-encoder-auto>` automatically
 selects the best possible encoder/hasher depending on your PHP installation.
-Currently, it tries to use ``sodium`` by default and falls back to ``bcrypt``.
+Currently, the default auto hasher is ``bcrypt``.
 
 Use Voters to Implement Fine-grained Security Restrictions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your security logic is complex, you should create custom
 :doc:`security voters </security/voters>` instead of defining long expressions
-inside the ``@Security`` annotation.
+inside the ``#[Security]`` attribute.
 
 Web Assets
 ----------
@@ -435,7 +433,9 @@ Add this test while creating your application because it requires little effort
 and checks that none of your pages returns an error. Later, you'll add more
 specific tests for each page.
 
-Hardcode URLs in a Functional Test
+.. _hardcode-urls-in-a-functional-test:
+
+Hard-code URLs in a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Symfony applications, it's recommended to :ref:`generate URLs <routing-generating-urls>`
@@ -454,4 +454,4 @@ you must set up a redirection.
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
 .. _`Webpack`: https://webpack.js.org/
-.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/stable/writing-tests-for-phpunit.html#data-providers
+.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/9.5/writing-tests-for-phpunit.html#data-providers

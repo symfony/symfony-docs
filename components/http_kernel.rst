@@ -9,7 +9,7 @@ The HttpKernel Component
     The HttpKernel component provides a structured process for converting
     a ``Request`` into a ``Response`` by making use of the EventDispatcher
     component. It's flexible enough to create a full-stack framework (Symfony),
-    a micro-framework (Silex) or an advanced CMS system (Drupal).
+    a micro-framework (Silex) or an advanced CMS (Drupal).
 
 Installation
 ------------
@@ -65,9 +65,9 @@ that system::
          */
         public function handle(
             Request $request,
-            $type = self::MASTER_REQUEST,
-            $catch = true
-        );
+            int $type = self::MAIN_REQUEST,
+            bool $catch = true
+        ): Response;
     }
 
 Internally, :method:`HttpKernel::handle() <Symfony\\Component\\HttpKernel\\HttpKernel::handle>` -
@@ -249,7 +249,7 @@ on the request's information.
 
     The Symfony Framework uses the built-in
     :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolver`
-    class (actually, it uses a sub-class with some extra functionality
+    class (actually, it uses a subclass with some extra functionality
     mentioned below). This class leverages the information that was placed
     on the ``Request`` object's ``attributes`` property during the ``RouterListener``.
 
@@ -289,7 +289,15 @@ After the controller callable has been determined, ``HttpKernel::handle()``
 dispatches the ``kernel.controller`` event. Listeners to this event might initialize
 some part of the system that needs to be initialized after certain things
 have been determined (e.g. the controller, routing information) but before
-the controller is executed. For some examples, see the Symfony section below.
+the controller is executed.
+
+Another typical use-case for this event is to retrieve the attributes from
+the controller using the :method:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::getAttributes`
+method. See the Symfony section below for some examples.
+
+.. versionadded:: 6.2
+
+    The ``ControllerEvent::getAttributes()`` method was introduced in Symfony 6.2.
 
 Listeners to this event can also change the controller callable completely
 by calling :method:`ControllerEvent::setController <Symfony\\Component\\HttpKernel\\Event\\ControllerEvent::setController>`
@@ -297,18 +305,15 @@ on the event object that's passed to listeners on this event.
 
 .. sidebar:: ``kernel.controller`` in the Symfony Framework
 
-    There are a few minor listeners to the ``kernel.controller`` event in
-    the Symfony Framework, and many deal with collecting profiler data when
-    the profiler is enabled.
+    An interesting listener to ``kernel.controller`` in the Symfony
+    Framework is :class:`Symfony\\Component\\HttpKernel\\EventListener\\CacheAttributeListener`.
+    This class fetches ``#[Cache]`` attribute configuration from the
+    controller and uses it to configure :doc:`HTTP caching </http_cache>`
+    on the response.
 
-    One interesting listener comes from the `SensioFrameworkExtraBundle`_. This
-    listener's `@ParamConverter`_ functionality allows you to pass a full object
-    (e.g. a ``Post`` object) to your controller instead of a scalar value (e.g.
-    an ``id`` parameter that was on your route). The listener -
-    ``ParamConverterListener`` - uses reflection to look at each of the
-    arguments of the controller and tries to use different methods to convert
-    those to objects, which are then stored in the ``attributes`` property of
-    the ``Request`` object. Read the next section to see why this is important.
+    There are a few other minor listeners to the ``kernel.controller`` event in
+    the Symfony Framework that deal with collecting profiler data when the
+    profiler is enabled.
 
 4) Getting the Controller Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -358,7 +363,7 @@ of arguments that should be passed when executing that callable.
 5) Calling the Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The next step ``HttpKernel::handle()`` does is executing the controller.
+The next step of ``HttpKernel::handle()`` is executing the controller.
 
 The job of the controller is to build the response for the given resource.
 This could be an HTML page, a JSON string or anything else. Unlike every
@@ -409,12 +414,12 @@ return a ``Response``.
 
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
-    There is no default listener inside the Symfony Framework for the ``kernel.view``
-    event. However, `SensioFrameworkExtraBundle`_ *does* add a listener to this
-    event. If your controller returns an array, and you place the `@Template`_
-    annotation above the controller, then this listener renders a template,
-    passes the array you returned from your controller to that template, and
-    creates a ``Response`` containing the returned content from that template.
+    There is a default listener inside the Symfony Framework for the ``kernel.view``
+    event. If your controller action returns an array, and you apply the
+    :ref:`#[Template()] attribute <templates-template-attribute>` to that
+    controller action, then this listener renders a template, passes the array
+    you returned from your controller to that template, and creates a ``Response``
+    containing the returned content from that template.
 
     Additionally, a popular community bundle `FOSRestBundle`_ implements
     a listener on this event which aims to give you a robust view layer
@@ -524,22 +529,10 @@ object, which you can use to access the original exception via the
 method. A typical listener on this event will check for a certain type of
 exception and create an appropriate error ``Response``.
 
-.. versionadded:: 4.4
-
-    The :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::getThrowable` and
-    :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::setThrowable` methods
-    were introduced in Symfony 4.4.
-
-.. deprecated:: 4.4
-
-    The :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::getException` and
-    :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::setException` methods
-    are deprecated since Symfony 4.4.
-
 For example, to generate a 404 page, you might throw a special type of exception
 and then add a listener on this event that looks for this exception and
 creates and returns a 404 ``Response``. In fact, the HttpKernel component
-comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`,
+comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`,
 which if you choose to use, will do this and more by default (see the sidebar
 below for more details).
 
@@ -553,10 +546,10 @@ below for more details).
     There are two main listeners to ``kernel.exception`` when using the
     Symfony Framework.
 
-    **ExceptionListener in the HttpKernel Component**
+    **ErrorListener in the HttpKernel Component**
 
     The first comes core to the HttpKernel component
-    and is called :class:`Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener`.
+    and is called :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListener`.
     The listener has several goals:
 
     1) The thrown exception is converted into a
@@ -602,7 +595,7 @@ on creating and attaching event listeners, see :doc:`/components/event_dispatche
 
 The name of each of the "kernel" events is defined as a constant on the
 :class:`Symfony\\Component\\HttpKernel\\KernelEvents` class. Additionally, each
-event listener is passed a single argument, which is some sub-class of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`.
+event listener is passed a single argument, which is some subclass of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`.
 This object contains information about the current state of the system and
 each event has their own event object:
 
@@ -620,19 +613,6 @@ kernel.finish_request        ``KernelEvents::FINISH_REQUEST``        :class:`Sym
 kernel.terminate             ``KernelEvents::TERMINATE``             :class:`Symfony\\Component\\HttpKernel\\Event\\TerminateEvent`
 kernel.exception             ``KernelEvents::EXCEPTION``             :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
 ===========================  ======================================  ========================================================================
-
-.. deprecated:: 4.3
-
-    Since Symfony 4.3, most of the event classes were renamed.
-    The following old classes were deprecated:
-
-    * `GetResponseEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\RequestEvent`
-    * `FilterControllerEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent`
-    * `FilterControllerArgumentsEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerArgumentsEvent`
-    * `GetResponseForControllerResultEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ViewEvent`
-    * `FilterResponseEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ResponseEvent`
-    * `PostResponseEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\TerminateEvent`
-    * `GetResponseForExceptionEvent` renamed to :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
 
 .. _http-kernel-working-example:
 
@@ -692,7 +672,7 @@ Sub Requests
 ------------
 
 In addition to the "main" request that's sent into ``HttpKernel::handle()``,
-you can also send so-called "sub request". A sub request looks and acts like
+you can also send a so-called "sub request". A sub request looks and acts like
 any other request, but typically serves to render just one small portion of
 a page instead of a full page. You'll most commonly make sub-requests from
 your controller (or perhaps from inside a template, that's being rendered by
@@ -720,12 +700,12 @@ argument as follows::
 
 This creates another full request-response cycle where this new ``Request`` is
 transformed into a ``Response``. The only difference internally is that some
-listeners (e.g. security) may only act upon the master request. Each listener
-is passed some sub-class of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`,
-whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest`
-can be used to check if the current request is a "master" or "sub" request.
+listeners (e.g. security) may only act upon the main request. Each listener
+is passed some subclass of :class:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent`,
+whose :method:`Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMainRequest`
+method can be used to check if the current request is a "main" or "sub" request.
 
-For example, a listener that only needs to act on the master request may
+For example, a listener that only needs to act on the main request may
 look like this::
 
     use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -733,7 +713,7 @@ look like this::
 
     public function onKernelRequest(RequestEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -774,7 +754,4 @@ Learn more
 .. _reflection: https://www.php.net/manual/en/book.reflection.php
 .. _FOSRestBundle: https://github.com/friendsofsymfony/FOSRestBundle
 .. _`PHP FPM`: https://www.php.net/manual/en/install.fpm.php
-.. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`@ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
-.. _`@Template`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/view.html
 .. _variadic: https://www.php.net/manual/en/functions.arguments.php#functions.variable-arg-list

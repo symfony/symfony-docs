@@ -136,9 +136,7 @@ Now, you can use the ``TwitterClient`` service immediately in a controller::
 
     class DefaultController extends AbstractController
     {
-        /**
-         * @Route("/tweet", methods={"POST"})
-         */
+        #[Route('/tweet')]
         public function tweet(TwitterClient $twitterClient, Request $request): Response
         {
             // fetch $user, $key, $status from the POST'ed data
@@ -186,7 +184,7 @@ If there is *not* a service whose id exactly matches the type, a clear exception
 will be thrown.
 
 Autowiring is a great way to automate configuration, and Symfony tries to be as
-*predictable* and clear as possible.
+*predictable* and as clear as possible.
 
 .. _service-autowiring-alias:
 
@@ -270,11 +268,6 @@ class is type-hinted.
     example, MonologBundle creates a service whose id is ``logger``. But it also
     adds an alias: ``Psr\Log\LoggerInterface`` that points to the ``logger`` service.
     This is why arguments type-hinted with ``Psr\Log\LoggerInterface`` can be autowired.
-
-.. versionadded:: 4.2
-
-    Since Monolog Bundle 3.5 each channel bind into container by type-hinted alias.
-    More info in the part about :ref:`how to autowire monolog channels <monolog-autowire-channels>`.
 
 .. _autowiring-interface-alias:
 
@@ -376,8 +369,7 @@ dealing with the ``TransformerInterface``.
 .. tip::
 
     When using a `service definition prototype`_, if only one service is
-    discovered that implements an interface, and that interface is also
-    discovered in the same file, configuring the alias is not mandatory
+    discovered that implements an interface, configuring the alias is not mandatory
     and Symfony will automatically create one.
 
 Dealing with Multiple Implementations of the Same Type
@@ -464,6 +456,7 @@ the injection::
 
                 # If you wanted to choose the non-default service and do not
                 # want to use a named autowiring alias, wire it manually:
+                # arguments:
                 #     $transformer: '@App\Util\UppercaseTransformer'
                 # ...
 
@@ -524,7 +517,7 @@ the injection::
 
                 // If you wanted to choose the non-default service and do not
                 // want to use a named autowiring alias, wire it manually:
-                //     ->arg('$transformer', ref(UppercaseTransformer::class))
+                //     ->arg('$transformer', service(UppercaseTransformer::class))
                 // ...
             ;
         };
@@ -536,9 +529,7 @@ If the argument is named ``$shoutyTransformer``,
 But, you can also manually wire any *other* service by specifying the argument
 under the arguments key.
 
-.. versionadded:: 4.2
-
-    Named autowiring aliases have been introduced in Symfony 4.2.
+.. _autowire-attribute:
 
 Fixing Non-Autowireable Arguments
 ---------------------------------
@@ -547,43 +538,124 @@ Autowiring only works when your argument is an *object*. But if you have a scala
 argument (e.g. a string), this cannot be autowired: Symfony will throw a clear
 exception.
 
-To fix this, you can :ref:`manually wire the problematic argument <services-manually-wire-args>`.
-You wire up the difficult arguments, Symfony takes care of the rest.
+To fix this, you can :ref:`manually wire the problematic argument <services-manually-wire-args>`
+in the service configuration. You wire up only the difficult arguments,
+Symfony takes care of the rest.
 
-.. _autowiring-calls:
+You can also use the ``#[Autowire]`` parameter attribute to instruct the autowiring
+logic about those arguments::
 
-Autowiring other Methods (e.g. Setters)
----------------------------------------
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
 
-When autowiring is enabled for a service, you can *also* configure the container
-to call methods on your class when it's instantiated. For example, suppose you want
-to inject the ``logger`` service, and decide to use setter-injection::
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
-    // src/Util/Rot13Transformer.php
-    namespace App\Util;
-
-    class Rot13Transformer
+    class MessageGenerator
     {
-        private $logger;
-
-        /**
-         * @required
-         */
-        public function setLogger(LoggerInterface $logger): void
-        {
-            $this->logger = $logger;
-        }
-
-        public function transform(string $value): string
-        {
-            $this->logger->info('Transforming '.$value);
+        public function __construct(
+            #[Autowire(service: 'monolog.logger.request')] LoggerInterface $logger
+        ) {
             // ...
         }
     }
 
-Autowiring will automatically call *any* method with the ``@required`` annotation
+.. versionadded:: 6.1
+
+    The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
+
+The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-parameters>`
+and even :doc:`complex expressions </service_container/expression_language>`::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            // use the %...% syntax for parameters
+            #[Autowire('%kernel.project_dir%/data')]
+            string $dataDir,
+
+            #[Autowire('%kernel.debug%')]
+            bool $debugMode,
+
+            // and expressions
+            #[Autowire(expression: 'service("App\\Mail\\MailerConfiguration").getMailerMethod()')]
+            string $mailerMethod
+        ) {
+        }
+        // ...
+    }
+
+.. _autowiring-calls:
+
+Autowiring other Methods (e.g. Setters and Public Typed Properties)
+-------------------------------------------------------------------
+
+When autowiring is enabled for a service, you can *also* configure the container
+to call methods on your class when it's instantiated. For example, suppose you want
+to inject the ``logger`` service, and decide to use setter-injection:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Util/Rot13Transformer.php
+        namespace App\Util;
+
+        use Symfony\Contracts\Service\Attribute\Required;
+
+        class Rot13Transformer
+        {
+            private $logger;
+
+            #[Required]
+            public function setLogger(LoggerInterface $logger): void
+            {
+                $this->logger = $logger;
+            }
+
+            public function transform($value): string
+            {
+                $this->logger->info('Transforming '.$value);
+                // ...
+            }
+        }
+
+Autowiring will automatically call *any* method with the ``#[Required]`` attribute
 above it, autowiring each argument. If you need to manually wire some of the arguments
 to a method, you can always explicitly :doc:`configure the method call </service_container/calls>`.
+
+If your PHP version doesn't support attributes (they were introduced in PHP 8),
+you can use the ``@required`` annotation instead.
+
+Despite property injection having some :ref:`drawbacks <property-injection>`,
+autowiring with ``#[Required]`` or ``@required`` can also be applied to public
+typed properties:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        namespace App\Util;
+
+        use Symfony\Contracts\Service\Attribute\Required;
+
+        class Rot13Transformer
+        {
+            #[Required]
+            public LoggerInterface $logger;
+
+            public function transform($value)
+            {
+                $this->logger->info('Transforming '.$value);
+                // ...
+            }
+        }
 
 Autowiring Controller Action Methods
 ------------------------------------

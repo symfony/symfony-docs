@@ -11,10 +11,18 @@ key in your application configuration.
 .. code-block:: terminal
 
     # displays the default config values defined by Symfony
-    $ php bin/console config:dump-reference debug
+    $ php bin/console config:dump-reference framework
 
     # displays the actual config values used by your application
-    $ php bin/console debug:config debug
+    $ php bin/console debug:config framework
+
+    # displays the config values used by your application and replaces the
+    # environment variables with their actual values
+    $ php bin/console debug:config --resolve-env framework
+
+.. versionadded:: 6.2
+
+    The ``--resolve-env`` option was introduced in Symfony 6.2.
 
 .. note::
 

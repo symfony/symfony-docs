@@ -7,9 +7,6 @@ an object and all sub-objects associated with it.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `groups`_
-            - `payload`_
-            - `traverse`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Valid`
 ==========  ===================================================================
 
@@ -45,7 +42,7 @@ stores an ``Address`` instance in the ``$address`` property::
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Address.php
         namespace App\Entity;
@@ -54,15 +51,11 @@ stores an ``Address`` instance in the ``$address`` property::
 
         class Address
         {
-            /**
-             * @Assert\NotBlank
-             */
+            #[Assert\NotBlank]
             protected $street;
 
-            /**
-             * @Assert\NotBlank
-             * @Assert\Length(max=5)
-             */
+            #[Assert\NotBlank]
+            #[Assert\Length(max: 5)]
             protected $zipCode;
         }
 
@@ -73,15 +66,11 @@ stores an ``Address`` instance in the ``$address`` property::
 
         class Author
         {
-            /**
-             * @Assert\NotBlank
-             * @Assert\Length(min=4)
-             */
+            #[Assert\NotBlank]
+            #[Assert\Length(min: 4)]
             protected $firstName;
 
-            /**
-             * @Assert\NotBlank
-             */
+            #[Assert\NotBlank]
             protected $lastName;
 
             protected $address;
@@ -181,7 +170,7 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Author.php
         namespace App\Entity;
@@ -190,9 +179,7 @@ an invalid address. To prevent that, add the ``Valid`` constraint to the
 
         class Author
         {
-            /**
-             * @Assert\Valid
-             */
+            #[Assert\Valid]
             protected $address;
         }
 

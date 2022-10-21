@@ -6,13 +6,6 @@ is either a valid ISBN-10 or a valid ISBN-13.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
-Options     - `bothIsbnMessage`_
-            - `groups`_
-            - `isbn10Message`_
-            - `isbn13Message`_
-            - `message`_
-            - `payload`_
-            - `type`_
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Isbn`
 Validator   :class:`Symfony\\Component\\Validator\\Constraints\\IsbnValidator`
 ==========  ===================================================================
@@ -25,7 +18,7 @@ on an object that will contain an ISBN.
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
+    .. code-block:: php-attributes
 
         // src/Entity/Book.php
         namespace App\Entity;
@@ -34,12 +27,10 @@ on an object that will contain an ISBN.
 
         class Book
         {
-            /**
-             * @Assert\Isbn(
-             *     type = "isbn10",
-             *     message = "This value is not valid."
-             * )
-             */
+            #[Assert\Isbn(
+                type: Assert\Isbn::ISBN_10,
+                message: 'This value is not valid.',
+            )]
             protected $isbn;
         }
 
@@ -84,7 +75,7 @@ on an object that will contain an ISBN.
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('isbn', new Assert\Isbn([
-                    'type' => 'isbn10',
+                    'type' => Assert\Isbn::ISBN_10,
                     'message' => 'This value is not valid.',
                 ]));
             }
@@ -109,6 +100,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_groups-option.rst.inc
@@ -127,6 +119,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 ``isbn13Message``
@@ -143,6 +136,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 ``message``
@@ -159,6 +153,7 @@ You can use the following parameters in this message:
 Parameter        Description
 ===============  ==============================================================
 ``{{ value }}``  The current (invalid) value
+``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc

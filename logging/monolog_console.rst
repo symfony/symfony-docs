@@ -61,7 +61,7 @@ The example above could then be rewritten as::
 
 Depending on the verbosity level that the command is run in and the user's
 configuration (see below), these messages may or may not be displayed to
-the console. If they are displayed, they are timestamped and colored appropriately.
+the console. If they are displayed, they are time-stamped and colored appropriately.
 Additionally, error logs are written to the error output (``php://stderr``).
 There is no need to conditionally handle the verbosity settings anymore.
 
@@ -120,15 +120,15 @@ The Monolog console handler is enabled by default:
     .. code-block:: php
 
         // config/packages/dev/monolog.php
-        $container->loadFromExtension('monolog', [
-            'handlers' => [
-                'console' => [
-                   'type' => 'console',
-                   'process_psr_3_messages' => false,
-                   'channels' => ['!event', '!doctrine', '!console'],
-                ],
-            ],
-        ]);
+        use Symfony\Config\MonologConfig;
+
+        return static function (MonologConfig $monolog) {
+            $monolog->handler('console')
+                ->type('console')
+                ->processPsr3Messages(false)
+                ->channels()->elements(['!event', '!doctrine', '!console'])
+            ;
+        };
 
 Now, log messages will be shown on the console based on the log levels and verbosity.
 By default (normal verbosity level), warnings and higher will be shown. But in

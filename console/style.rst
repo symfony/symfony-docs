@@ -152,10 +152,6 @@ Content Methods
             ]
         );
 
-    .. versionadded:: 4.4
-
-        The ``horizontalTable()`` method was introduced in Symfony 4.4.
-
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::definitionList`
     It displays the given ``key => value`` pairs as a compact list of elements::
 
@@ -169,9 +165,10 @@ Content Methods
             ['foo4' => 'bar4']
         );
 
-    .. versionadded:: 4.4
-
-        The ``definitionList()`` method was introduced in Symfony 4.4.
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createTable`
+    Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\Table`
+    styled according to the Symfony Style Guide, which allows you to use
+    features such as dynamically appending rows.
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
@@ -251,6 +248,20 @@ Progress Bar Methods
 
         $io->progressFinish();
 
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::progressIterate`
+    If your progress bar loops over an iterable collection, use the
+    ``progressIterate()`` helper::
+
+        $iterable = [1, 2];
+
+        foreach ($io->progressIterate($iterable) as $value) {
+            // ... do some work
+        }
+
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createProgressBar`
+    Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
+    styled according to the Symfony Style Guide.
+
 User Input Methods
 ~~~~~~~~~~~~~~~~~~
 
@@ -313,8 +324,25 @@ User Input Methods
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], 'queue1');
 
+    Finally, you can allow users to select multiple choices. To do so, users must
+    separate each choice with a comma (e.g. typing ``1, 2`` will select choice 1
+    and 2)::
+
+        $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], multiSelect: true);
+
+.. versionadded:: 6.2
+
+    The ``multiSelect`` option of ``choice()`` was introduced in Symfony 6.2.
+
 Result Methods
 ~~~~~~~~~~~~~~
+
+.. note::
+
+    If you print any URL it won't be broken/cut, it will be clickable - if the terminal provides it. If the "well
+    formatted output" is more important, you can switch it off::
+
+        $io->getOutputWrapper()->setAllowCutUrls(true);
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::success`
     It displays the given string or array of strings highlighted as a successful
@@ -329,6 +357,23 @@ Result Methods
 
         // consider using arrays when displaying long success messages
         $io->success([
+            'Lorem ipsum dolor sit amet',
+            'Consectetur adipiscing elit',
+        ]);
+
+:method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::info`
+    It's similar to the ``success()`` method (the given string or array of strings
+    are displayed with a green background) but the ``[OK]`` label is not prefixed.
+    It's meant to be used once to display the final result of executing the given
+    command, without showing the result as a successful or failed one::
+
+        // use simple strings for short info messages
+        $io->info('Lorem ipsum dolor sit amet');
+
+        // ...
+
+        // consider using arrays when displaying long info messages
+        $io->info([
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
         ]);
@@ -366,6 +411,38 @@ Result Methods
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
         ]);
+
+Configuring the Default Styles
+------------------------------
+
+By default, Symfony Styles wrap all contents to avoid having lines of text that
+are too long. The only exception is URLs, which are not wrapped, no matter how
+long they are. This is done to enable clickable URLs in terminals that support them.
+
+If you prefer to wrap all contents, including URLs, use this method::
+
+    // src/Command/GreetCommand.php
+    namespace App\Command;
+
+    // ...
+    use Symfony\Component\Console\Style\SymfonyStyle;
+
+    class GreetCommand extends Command
+    {
+        // ...
+
+        protected function execute(InputInterface $input, OutputInterface $output): int
+        {
+            $io = new SymfonyStyle($input, $output);
+            $io->getOutputWrapper()->setAllowCutUrls(true);
+
+            // ...
+        }
+    }
+
+.. versionadded:: 6.2
+
+    The ``setAllowCutUrls()`` method was introduced in Symfony 6.2.
 
 Defining your Own Styles
 ------------------------
