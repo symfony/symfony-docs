@@ -108,6 +108,10 @@ an **event bus**. The event bus could have zero or more subscribers.
             $eventBus->middleware()->id('validation');
         };
 
+.. versionadded:: 6.2
+
+    The ``allow_no_senders`` option was introduced in Symfony 6.2.
+
 This will create three new services:
 
 * ``command.bus``: autowireable with the :class:`Symfony\\Component\\Messenger\\MessageBusInterface`
