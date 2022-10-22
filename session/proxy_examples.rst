@@ -110,7 +110,7 @@ can intercept the session before it is written::
     namespace App\Session;
 
     use App\Entity\User;
-    use Symfony\Bundle\SecurityBundle\Security\Security;
+    use Symfony\Bundle\SecurityBundle\Security;
     use Symfony\Component\HttpFoundation\Session\Storage\Proxy\SessionHandlerProxy;
 
     class ReadOnlySessionProxy extends SessionHandlerProxy
