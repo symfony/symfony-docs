@@ -309,6 +309,10 @@ to add `message options`_::
 Updating Telegram Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 6.2
+
+    The ``TelegramOptions::edit()`` method was introduced in Symfony 6.2.
+
 When working with interactive callback buttons, you can use the
 :class:`Symfony\\Component\\Notifier\\Bridge\\Telegram\\TelegramOptions` to reference
 a previous message to edit::
@@ -327,10 +331,6 @@ a previous message to edit::
                 (new InlineKeyboardButton('Absolutely'))->callbackData('yes'),
             ])
         );
-
-.. versionadded:: 6.2
-
-    The ``TelegramOptions::edit()`` method was introduced in Symfony 6.2.
 
 Adding text to a Microsoft Teams Message
 ----------------------------------------
