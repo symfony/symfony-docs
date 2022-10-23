@@ -72,6 +72,7 @@ Validation Constraints Reference
    constraints/Compound
    constraints/Callback
    constraints/Expression
+   constraints/When
    constraints/All
    constraints/UserPassword
    constraints/NotCompromisedPassword
