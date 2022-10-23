@@ -306,6 +306,32 @@ to add `message options`_::
 
     $chatter->send($chatMessage);
 
+Updating Telegram Messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When working with interactive callback buttons, you can use the
+:class:`Symfony\\Component\\Notifier\\Bridge\\Telegram\\TelegramOptions` to reference
+a previous message to edit::
+
+    use Symfony\Component\Notifier\Bridge\Telegram\Reply\Markup\Button\InlineKeyboardButton;
+    use Symfony\Component\Notifier\Bridge\Telegram\Reply\Markup\InlineKeyboardMarkup;
+    use Symfony\Component\Notifier\Bridge\Telegram\TelegramOptions;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('Are you really sure?');
+    $telegramOptions = (new TelegramOptions())
+        ->chatId($chatId)
+        ->edit($messageId) // extracted from callback payload or SentMessage
+        ->replyMarkup((new InlineKeyboardMarkup())
+            ->inlineKeyboard([
+                (new InlineKeyboardButton('Absolutely'))->callbackData('yes'),
+            ])
+        );
+
+.. versionadded:: 6.2
+
+    The ``TelegramOptions::edit()`` method was introduced in Symfony 6.2.
+
 Adding text to a Microsoft Teams Message
 ----------------------------------------
 
