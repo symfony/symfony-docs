@@ -30,10 +30,16 @@ options are used for matching:
 * ``host``: a regular expression
 * ``methods``: one or many HTTP methods
 * ``request_matcher``: a service implementing ``RequestMatcherInterface``
+* ``attributes``: an array, which can be used to specify one or more :ref:`request attributes <accessing-request-data>` that must match exactly
+* ``route``: a route name
 
 .. versionadded:: 6.1
 
     The ``request_matcher`` option was introduced in Symfony 6.1.
+
+.. versionadded:: 6.2
+
+    The ``route`` and ``attributes`` options were introduced in Symfony 6.2.
 
 Take the following ``access_control`` entries as an example:
 
@@ -59,6 +65,10 @@ Take the following ``access_control`` entries as an example:
 
                 # for custom matching needs, use a request matcher service
                 - { roles: ROLE_USER, request_matcher: App\Security\RequestMatcher\MyRequestMatcher }
+
+                # require ROLE_ADMIN for 'admin' route. You can use the shortcut "route: "xxx", instead of "attributes": ["_route": "xxx"]
+                - { attributes: {'_route': 'admin'}, roles: ROLE_ADMIN }
+                - { route: 'admin', roles: ROLE_ADMIN }
 
     .. code-block:: xml
 
@@ -93,6 +103,12 @@ Take the following ``access_control`` entries as an example:
 
                 <!-- for custom matching needs, use a request matcher service -->
                 <rule role="ROLE_USER" request-matcher="App\Security\RequestMatcher\MyRequestMatcher"/>
+
+                <!-- require ROLE_ADMIN for 'admin' route. You can use the shortcut route="xxx" -->
+                <rule role="ROLE_ADMIN">
+                    <attribute key="_route">admin</attribute>
+                </rule>
+                <rule route="admin" role="ROLE_ADMIN"/>
             </config>
         </srv:container>
 
@@ -143,6 +159,17 @@ Take the following ``access_control`` entries as an example:
             $security->accessControl()
                 ->roles(['ROLE_USER'])
                 ->requestMatcher('App\Security\RequestMatcher\MyRequestMatcher')
+            ;
+
+            // require ROLE_ADMIN for 'admin' route. You can use the shortcut route('xxx') mehtod,
+            // instead of attributes(['_route' => 'xxx']) method
+            $security->accessControl()
+                ->roles(['ROLE_ADMIN'])
+                ->attributes(['_route' => 'admin'])
+            ;
+            $security->accessControl()
+                ->roles(['ROLE_ADMIN'])
+                ->route('admin')
             ;
         };
 
