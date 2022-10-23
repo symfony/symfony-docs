@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-04-10T19:12:00Z
+
+These changes look totally unrelated 🙄
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-10-11T15:58:17Z
+
+The related code PR was merged: https://github.com/symfony/symfony/pull/45987 🎉
+
+@alamirault would you have time to finish this PR? If you can't fix the git issues with the unrelated commits, it's OK to delete this PR and create a new one. Thanks.
+
+---------------------------------------------------------------------------
+
+by alamirault at 2022-10-11T18:23:17Z
+
+I'm not sure where I have to do changes.
+
+Is edit SmsMessage example is enough ? https://github.com/symfony/symfony-docs/blame/6.2/notifier/texters.rst#L22 (Like in PR description) ?
+
+---------------------------------------------------------------------------
+
+by alamirault at 2022-10-13T19:39:15Z
+
+@javiereguiluz I rebased and changed documentation
