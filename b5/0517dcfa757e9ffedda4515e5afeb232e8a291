@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-10-23T15:46:45Z
+
+What does WCM in the title means?
+
+---------------------------------------------------------------------------
+
+by mdoutreluingne at 2022-10-23T15:52:03Z
+
+[WCM](https://symfony.com/doc/current/contributing/documentation/overview.html#what-if-i-want-to-submit-my-work-without-fully-finishing-it) means 'Waiting Code Merge', Wouter has created a [PR ](https://github.com/symfony/symfony/pull/47959)to add the XML format
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-10-23T18:31:01Z
+
+Ready to go 🚀
