@@ -1466,7 +1466,7 @@ Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 
         .. code-block:: xml
 
-            # config/packages/doctrine.xml
+            <!-- config/packages/doctrine.xml -->
             <doctrine:dbal schema-filter="~^(?!messenger_messages)~"/>
 
         .. code-block:: php
