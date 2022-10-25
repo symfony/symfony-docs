@@ -17,6 +17,17 @@ Store Sessions in a key-value Database (Redis)
 This section assumes that you have a fully-working Redis server and have also
 installed and configured the `phpredis extension`_.
 
+Via the redis extension it is possible to configure redis as a session handler
+directly in the servers ``php.ini`` file.
+
+.. code-block:: ini
+
+    ; php.ini
+    session.save_handler = redis
+    session.save_path = "tcp://192.168.0.178:6379?auth=REDIS_PASSWORD"
+
+Alternative you can configure it in the Symfony application.
+
 First, define a Symfony service for the connection to the Redis server:
 
 .. configuration-block::
