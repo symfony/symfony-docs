@@ -642,10 +642,6 @@ register it as a service, then tag it with ``kernel.fragment_renderer``.
 kernel.locale_aware
 -------------------
 
-.. versionadded:: 4.3
-
-    The ``kernel.locale_aware`` tag was introduced in Symfony 4.3.
-
 **Purpose**: To access and use the current :doc:`locale </translation/locale>`
 
 Setting and retrieving the locale can be done via configuration or using
