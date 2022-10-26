@@ -459,6 +459,8 @@ will share identical locators among all the services referencing them::
             // ...
             'logger' => new Reference('logger'),
         ];
+        
+        $myService = $container->findDefinition(MyService::class);
 
         $myService->addArgument(ServiceLocatorTagPass::register($container, $locateableServices));
     }
