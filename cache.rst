@@ -100,6 +100,11 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
             ;
         };
 
+.. tip::
+
+    While it is possible to reconfigure the ``system`` cache, it's recommended
+    to keep the default configuration applied to it by Symfony.
+
 The Cache component comes with a series of adapters pre-configured:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
