@@ -187,6 +187,8 @@ you to use literal text in the select statements:
     It's possible to translate ICU MessageFormat messages directly in code,
     without having to define them in any file::
 
+        use Symfony\Component\Translation\MessageCatalogueInterface;
+
         $invitation = '{organizer_gender, select,
             female   {{organizer_name} has invited you to her party!}
             male     {{organizer_name} has invited you to his party!}
@@ -195,10 +197,15 @@ you to use literal text in the select statements:
         }';
 
         // prints "Ryan has invited you to his party!"
-        echo $translator->trans($invitation, [
-            'organizer_name' => 'Ryan',
-            'organizer_gender' => 'male',
-        ]);
+        echo $translator->trans(
+            $invitation,
+            [
+                'organizer_name' => 'Ryan',
+                'organizer_gender' => 'male',
+            ],
+            // Appends the required suffix "+intl-icu" to the domain
+            'messages'.MessageCatalogueInterface::INTL_DOMAIN_SUFFIX
+        );
 
 .. _component-translation-pluralization:
 
