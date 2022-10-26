@@ -28,13 +28,8 @@ in method parameters:
            resource: '../src/Controller/'
            tags: ['controller.service_arguments']
 
-.. versionadded:: 5.3
-
-    The ``#[AsController]`` attribute was introduced in Symfony 5.3.
-
-If you are using PHP 8.0 or later, you can use the ``#[AsController]`` PHP
-attribute to automatically apply the ``controller.service_arguments`` tag to
-your controller services::
+If you prefer, you can use the ``#[AsController]`` PHP attribute to automatically
+apply the ``controller.service_arguments`` tag to your controller services::
 
     // src/Controller/HelloController.php
     namespace App\Controller;
@@ -51,6 +46,10 @@ your controller services::
             // ...
         }
     }
+
+.. versionadded:: 5.3
+
+    The ``#[AsController]`` attribute was introduced in Symfony 5.3.
 
 Registering your controller as a service is the first step, but you also need to
 update your routing config to reference the service properly, so that Symfony
