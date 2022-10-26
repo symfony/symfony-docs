@@ -102,14 +102,14 @@ exists in your project::
         }
 
         // Setters
-        public function setName(string $name): void
-        {
-            $this->name = $name;
-        }
-
         public function setAge(int $age): void
         {
             $this->age = $age;
+        }
+
+        public function setName(string $name): void
+        {
+            $this->name = $name;
         }
 
         public function setSportsperson(bool $sportsperson): void
