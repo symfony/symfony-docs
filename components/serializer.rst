@@ -1273,6 +1273,35 @@ to ``true``::
     $result = $normalizer->normalize($dummy, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
     // ['bar' => 'notNull']
 
+Skipping uninitialized properties
+---------------------------------
+
+PHP 7.4 introduced typed properties, which have a new state - ``uninitialized``.
+This is different from the default ``null`` of untyped properties.
+When you try to access it before giving it an explicit value - you get an error.
+
+By default, to avoid the Serializer throwing an error when serializing or normalizing an object with
+uninitialized properties, object normalizer catches these errors and ignores such properties.
+
+You can disable this behavior by setting the ``AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES`` context option to ``false``::
+
+    class Dummy {
+        public string $foo = 'initialized';
+        public string $bar; // uninitialized
+    }
+
+    $normalizer = new ObjectNormalizer();
+    $result = $normalizer->normalize(new Dummy(), 'json', [AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES => false]);
+    // throws Symfony\Component\PropertyAccess\Exception\UninitializedPropertyException as normalizer cannot read uninitialized properties
+
+.. note::
+
+    Calling ``PropertyNormalizer::normalize`` or ``GetSetMethodNormalizer::normalize`` with ``AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES`` context option set to ``false`` will throw an ``\Error`` instance if the given object has uninitialized properties as the normalizer cannot read them (directly or via getter/isser methods).
+
+.. versionadded:: 5.4
+
+    The ``AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES`` constant was introduced in Symfony 5.4.
+
 .. _component-serializer-handling-circular-references:
 
 Collecting Type Errors While Denormalizing
