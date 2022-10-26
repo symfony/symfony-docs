@@ -37,15 +37,22 @@ Otherwise, create the following file manually:
     # config/routes/attributes.yaml
     controllers:
         resource: ../../src/Controller/
-        type: attribute
+        type: attribute@App\Controller
 
     kernel:
-        resource: ../../src/Kernel.php
+        resource: App\Kernel
         type: attribute
 
-This configuration tells Symfony to look for routes defined as
-attributes in any PHP class stored in the ``src/Controller/``
-directory.
+This configuration tells Symfony to look for routes defined as attributes on
+classes declared in the ``App\Controller`` namespace which are stored in the
+``src/Controller/`` directory which follows the PSR-4 standard. In addition,
+our kernel can act as a controller as well which is especially useful for small
+applications that use Symfony as a microframework.
+
+.. versionadded:: 6.2
+
+    The possibility to suffix the ``attribute`` resource type with a PSR-4
+    namespace root was introduced in Symfony 6.2.
 
 Suppose you want to define a route for the ``/blog`` URL in your application. To
 do so, create a :doc:`controller class </controller>` like the following:
