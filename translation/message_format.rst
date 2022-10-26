@@ -203,8 +203,9 @@ you to use literal text in the select statements:
                 'organizer_name' => 'Ryan',
                 'organizer_gender' => 'male',
             ],
-            // Appends the required suffix "+intl-icu" to the domain
-            'messages'.MessageCatalogueInterface::INTL_DOMAIN_SUFFIX
+            // if you prefer, the required "+intl-icu" suffix is also defined as a constant:
+            // Symfony\Component\Translation\MessageCatalogueInterface::INTL_DOMAIN_SUFFIX
+            'messages+intl-icu'
         );
 
 .. _component-translation-pluralization:
