@@ -321,20 +321,16 @@ Field Variables
 
 .. tip::
 
-    It's significantly faster to use the :ref:`selectedchoice <form-twig-selectedchoice>`
-    test instead when using Twig.
+    In Twig template, instead of using ``is_selected()``, it's significantly
+    faster to use the :ref:`selectedchoice <form-twig-selectedchoice>` test.
 
+Accessing Form Choice Data
+...........................
 
-Access data in a Form Choice
-.............................
-
-When you use an expanded ``ChoiceType`` and need to customize the children ``entry`` blocks,
-the ``form.vars`` of entries (radio button or checkbox) may not be enough since each holds a
-boolean value meaning whether a choice is selected or not.
-To get the full list of choices data and values, you will need to access the ``choices`` variable
-from their parent form (the ``ChoiceType`` itself) with ``form.parent.vars.choices``::
-
-Given the advanced object example, each entry would have access to the following variables:
+The ``form.vars`` variable of each choice entry holds data such as whether the
+choice is selected or not. If you need to get the full list of choices data and
+values, use the ``choices`` variable from the parent form of the choice entry
+(which is the ``ChoiceType`` itself) with ``form.parent.vars.choices``::
 
 .. code-block:: html+twig
 
@@ -347,7 +343,8 @@ Given the advanced object example, each entry would have access to the following
     {# a map of `ChoiceView` or `ChoiceGroupView` instances indexed by choice values or group names #}
     {{ form.parent.vars.choices }}
 
-So the Category's entity is inside ``form.parent.vars.choices[key].data``, because the parent knows all the choices.
+Following the same advanced example as above (where choices values are entities),
+the ``Category`` object is inside ``form.parent.vars.choices[key].data``::
 
 .. code-block:: html+twig
 
