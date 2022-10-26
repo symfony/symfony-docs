@@ -187,8 +187,6 @@ you to use literal text in the select statements:
     It's possible to translate ICU MessageFormat messages directly in code,
     without having to define them in any file::
 
-        use Symfony\Component\Translation\MessageCatalogueInterface;
-
         $invitation = '{organizer_gender, select,
             female   {{organizer_name} has invited you to her party!}
             male     {{organizer_name} has invited you to his party!}
