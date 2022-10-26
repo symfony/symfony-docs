@@ -135,4 +135,10 @@ In Symfony, you can register your custom DQL functions as follows:
                             ->datetimeFunction('test_datetime', DatetimeFunction::class);
             };
 
+.. caution::
+
+    DQL functions are instantiated by Doctrine outside of the Symfony
+    :doc:`service container </service_container>` so you can't inject services
+    or parameters into a custom DQL function.
+
 .. _`DQL User Defined Functions`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/cookbook/dql-user-defined-functions.html
