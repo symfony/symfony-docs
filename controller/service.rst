@@ -28,6 +28,29 @@ in method parameters:
            resource: '../src/Controller/'
            tags: ['controller.service_arguments']
 
+If you prefer, you can use the ``#[AsController]`` PHP attribute to automatically
+apply the ``controller.service_arguments`` tag to your controller services::
+
+    // src/Controller/HelloController.php
+    namespace App\Controller;
+
+    use Symfony\Component\HttpKernel\Attribute\AsController;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    #[AsController]
+    class HelloController
+    {
+        #[Route('/hello', name: 'hello', methods: ['GET'])]
+        public function index()
+        {
+            // ...
+        }
+    }
+
+.. versionadded:: 5.3
+
+    The ``#[AsController]`` attribute was introduced in Symfony 5.3.
+
 Registering your controller as a service is the first step, but you also need to
 update your routing config to reference the service properly, so that Symfony
 knows to use it.
