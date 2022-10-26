@@ -1223,11 +1223,6 @@ context option to ``false``::
     to ``false`` will throw an ``\Error`` instance if the given object has uninitialized
     properties as the normalizer cannot read them (directly or via getter/isser methods).
 
-.. versionadded:: 5.4
-
-    The ``AbstractObjectNormalizer::SKIP_UNINITIALIZED_VALUES`` constant was
-    introduced in Symfony 5.4.
-
 .. _component-serializer-handling-circular-references:
 
 Collecting Type Errors While Denormalizing
