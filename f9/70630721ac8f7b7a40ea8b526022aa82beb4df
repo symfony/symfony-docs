@@ -1,0 +1,21 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-06-14T15:54:19Z
+
+I like this proposal. @wouterj do you agree on adding this in 6.0 branch and up? Thanks!
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-10-06T15:54:51Z
+
+My vote is 👍  ... but please only update this article and not all docs but that would create multiple hard-to-solve merge conflicts. Thanks!
+
+But first, let's wait to read the opinion of @xabbuh and @OskarStark. Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-10-06T19:58:44Z
+
+:+1: for 4.4 and up. This is what we have done in most other cases and will result in the least merge difficulty.
+
+(Javier, if you want me to take care of (up-)merging this let me know)
