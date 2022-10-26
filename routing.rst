@@ -379,7 +379,27 @@ You can also use these functions:
 ``service(string $alias)``
     Returns a routing condition service.
     You'll have to add the ``#[AsRoutingConditionService]`` attribute or ``routing.condition_service``
-    tag to your service if you want to use it in the condition.
+    tag to your service if you want to use it in the condition::
+    
+    
+        // Controller (using an alias):
+        #[Route(condition: "service('route_checker').check(request)")]
+        // Or without alias:
+        #[Route(condition: "service('Ap\\\Service\\\RouteChecker').check(request)")]
+    
+    .. code-block:: php
+
+        use Symfony\Bundle\FrameworkBundle\Routing\Attribute\AsRoutingConditionService;
+        use Symfony\Component\HttpFoundation\Request;
+
+        #[AsRoutingConditionService(alias: 'route_checker')]
+        class RouteChecker
+        {
+            public function check(Request $request): bool
+            {
+                // ...
+            }
+        }
 
 .. versionadded:: 6.1
 
