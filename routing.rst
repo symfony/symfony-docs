@@ -53,8 +53,7 @@ use Symfony as a microframework.
 
 .. versionadded:: 6.2
 
-    The possibility to suffix the ``attribute`` resource type with a PSR-4
-    namespace root was introduced in Symfony 6.2.
+    The feature to import routes from a PSR-4 namespace root was introduced in Symfony 6.2.
 
 Suppose you want to define a route for the ``/blog`` URL in your application. To
 do so, create a :doc:`controller class </controller>` like the following:
