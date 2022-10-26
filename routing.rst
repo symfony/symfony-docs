@@ -36,18 +36,20 @@ Otherwise, create the following file manually:
 
     # config/routes/attributes.yaml
     controllers:
-        resource: ../../src/Controller/
-        type: attribute@App\Controller
+        resource:
+            path: ../../src/Controller/
+            namespace: App\Controller
+        type: attribute
 
     kernel:
         resource: App\Kernel
         type: attribute
 
 This configuration tells Symfony to look for routes defined as attributes on
-classes declared in the ``App\Controller`` namespace which are stored in the
-``src/Controller/`` directory which follows the PSR-4 standard. In addition,
-our kernel can act as a controller as well which is especially useful for small
-applications that use Symfony as a microframework.
+classes declared in the ``App\Controller`` namespace and stored in the
+``src/Controller/`` directory which follows the PSR-4 standard. The kernel can
+act as a controller too, which is especially useful for small applications that
+use Symfony as a microframework.
 
 .. versionadded:: 6.2
 

@@ -26,8 +26,10 @@ Symfony provides several route loaders for the most common needs:
 
         app_psr4:
             # loads routes from the PHP attributes of the controllers found in the given PSR-4 namespace root
-            resource: '../src/Controller/'
-            type:     attribute@App\Controller
+            resource:
+                path: '../src/Controller/'
+                namespace: App\Controller
+            type: attribute
 
         app_attributes:
             # loads routes from the PHP attributes of the controllers found in that directory
@@ -62,7 +64,9 @@ Symfony provides several route loaders for the most common needs:
             <import resource="@AcmeBundle/Resources/config/routing.yaml"/>
 
             <!-- loads routes from the PHP attributes of the controllers found in the given PSR-4 namespace root -->
-            <import resource="../src/Controller/" type="attribute@App\Controller"/>
+            <import type="attribute">
+                <resource path="../src/Controller/" namespace="App\Controller" />
+            </import>
 
             <!-- loads routes from the PHP attributes of the controllers found in that directory -->
             <import resource="../src/Controller/" type="attribute"/>
@@ -111,8 +115,7 @@ Symfony provides several route loaders for the most common needs:
 
 .. versionadded:: 6.2
 
-    The possibility to suffix the ``attribute`` resource type with a PSR-4
-    namespace root was introduced in Symfony 6.2.
+    The feature to import routes from a PSR-4 namespace root was introduced in Symfony 6.2.
 
 .. note::
 
