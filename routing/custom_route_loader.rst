@@ -65,7 +65,7 @@ Symfony provides several route loaders for the most common needs:
 
             <!-- loads routes from the PHP attributes of the controllers found in the given PSR-4 namespace root -->
             <import type="attribute">
-                <resource path="../src/Controller/" namespace="App\Controller" />
+                <resource path="../src/Controller/" namespace="App\Controller"/>
             </import>
 
             <!-- loads routes from the PHP attributes of the controllers found in that directory -->
@@ -92,7 +92,10 @@ Symfony provides several route loaders for the most common needs:
 
             // loads routes from the PHP attributes (#[Route(...)])
             // of the controllers found in the given PSR-4 namespace root
-            $routes->import('../src/Controller/', 'attribute@App\Controller');
+            $routes->import(
+                ['path' => '../src/Controller/', 'namespace' => 'App\Controller'],
+                'attribute',
+            );
 
             // loads routes from the PHP attributes (#[Route(...)])
             // of the controllers found in that directory
