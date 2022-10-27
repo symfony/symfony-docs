@@ -333,7 +333,7 @@ choice is selected or not. If you need to get the full list of choices data and
 values, use the ``choices`` variable from the parent form of the choice entry
 (which is the ``ChoiceType`` itself) with ``form.parent.vars.choices``::
 
-.. code-block:: html+twig
+.. code-block:: twig
 
     {# `true` or `false`, whether the current choice is selected as radio or checkbox #}
     {{ form.vars.data }}
