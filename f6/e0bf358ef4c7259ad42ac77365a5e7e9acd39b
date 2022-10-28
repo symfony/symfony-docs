@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-10-20T13:56:15Z
+
+@neghmurken thanks a lot for this contribution. Before merging it, I looked in the docs and found that our variable naming is very inconsistent in examples like this. That's why I've opened an issue to discuss about this (#17381) and I'm closing this PR so we can later fix all variables starting from 4.4 branch and up. Thanks!
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2022-10-28T10:13:08Z
+
+@javiereguiluz I think we should reopen here nonetheless as the code example as is right now is not runnable (see the mismatch of the argument name and the variable being used inside the method body).
