@@ -227,7 +227,7 @@ with the ``doctrine.event_listener`` tag:
 
         use App\EventListener\SearchIndexer;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
             // listeners are applied by default to all Doctrine connections
