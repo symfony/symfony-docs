@@ -368,6 +368,87 @@ stored in one of the following locations:
 
 .. _serializer-enabling-metadata-cache:
 
+Using nested attributes
+-----------------------
+
+To map nested properties, a ``SerializedPath`` can be defined with annotations, 
+attributes and YAML or XML configurations:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Annotation\SerializedPath;
+
+        class Person
+        {
+            /**
+             * @SerializedPath("[profile][information][birthday]")
+             */
+            private string $birthday;
+
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Annotation\SerializedPath;
+
+        class Person
+        {
+            #[SerializedPath('[profile][information][birthday]')]
+            private string $birthday;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        App\Model\Person:
+            attributes:
+                dob:
+                    serialized_path: '[profile][information][birthday]'
+        
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\Model\Person">
+                <attribute name="dob" serialized-path="[profile][information][birthday]"/>
+            </class>
+        </serializer>
+
+.. versionadded:: 6.2
+
+    The option to configure a ``SerializedPath`` was introduced in Symfony 6.2.
+
+Using the configuration from above, denormalizing with a metadata-aware 
+normalizer will write the ``birthday`` field from ``$data`` onto the ``Person`` 
+object::
+
+    $data = [
+        'profile' => [
+            'information' => [
+                'birthday' => '01-01-1970',
+            ],
+        ],
+    ];
+    $person = $normalizer->denormalize($data, Person::class, 'any'); 
+    $person->getBirthday(); // 01-01-1970
+
+When using annotations or attributes, the ``SerializedPath`` can either 
+be set on the property or the associated getter. The ``SerializedPath`` 
+cannot be used in combination with a ``SerializedName`` for the same propety. 
+The given path must be a string that can be parsed as a ``PropertyPath``.
+
 Configuring the Metadata Cache
 ------------------------------
 
