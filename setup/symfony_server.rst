@@ -280,26 +280,26 @@ server provides a ``run`` command to wrap them as follows:
 Configuring Workers
 -------------------
 
-If you like processes to start automatically, along with the webserver
-(``symfony server:start``), you can add a configuration file to your project:
+If you like some processes to start automatically, along with the webserver
+(``symfony server:start``), add a configuration file to your project:
 
 .. code-block:: yaml
 
     # .symfony.local.yaml
     workers:
-        # pre-defined command to build and watch front-end assets
+        # built-in command that builds and watches front-end assets
         # yarn_encore_watch:
         #     cmd: ['yarn', 'encore', 'dev', '--watch']
         yarn_encore_watch: ~
 
-        # pre-defined command to start messenger consumer
+        # built-in command that starts messenger consumer
         # messenger_consume_async:
         #     cmd: ['symfony', 'console', 'messenger:consume', 'async']
         #     watch: ['config', 'src', 'templates', 'vendor']
         messenger_consume_async: ~
 
-        # additional commands
-        spa:
+        # you can also add your own custom commands
+        build_spa:
             cmd: ['yarn', '--cwd', './spa/', 'dev']
 
 Docker Integration
