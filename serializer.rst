@@ -368,11 +368,11 @@ stored in one of the following locations:
 
 .. _serializer-enabling-metadata-cache:
 
-Using nested attributes
+Using Nested Attributes
 -----------------------
 
-To map nested properties, a ``SerializedPath`` can be defined with annotations, 
-attributes and YAML or XML configurations:
+To map nested properties, use the ``SerializedPath`` configuration to define
+their paths using a :doc:`valid PropertyAccess syntax </components/property_access>`:
 
 .. configuration-block::
 
@@ -445,9 +445,8 @@ object::
     $person->getBirthday(); // 01-01-1970
 
 When using annotations or attributes, the ``SerializedPath`` can either 
-be set on the property or the associated getter. The ``SerializedPath`` 
-cannot be used in combination with a ``SerializedName`` for the same propety. 
-The given path must be a string that can be parsed as a ``PropertyPath``.
+be set on the property or the associated _getter_ method. The ``SerializedPath``
+cannot be used in combination with a ``SerializedName`` for the same property.
 
 Configuring the Metadata Cache
 ------------------------------
