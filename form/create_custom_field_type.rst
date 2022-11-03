@@ -119,13 +119,6 @@ These are the most important methods that a form type class can define:
 
 .. _form-type-methods-explanation:
 
-``getParent()``
-    When returning a (fully-qualified) class name here, Symfony will call each
-    method of that type (i.e. ``buildForm()``, ``buildView()``, etc.) and all its
-    type extensions, before calling the corresponding method of your custom type.
-    This is probably a good idea if you're just changing some details of an
-    existing type. To start from scratch, omit ``getParent()``.
-
 ``buildForm()``
     It adds and configures other types into this type. It's the same method used
     when :ref:`creating Symfony form classes <creating-forms-in-classes>`.
@@ -133,25 +126,27 @@ These are the most important methods that a form type class can define:
 ``buildView()``
     It sets any extra variables you'll need when rendering the field in a template.
 
-``configureOptions()``
-    It defines the options configurable when using the form type, which are also
-    the options that can be used in ``buildForm()`` and ``buildView()``
-    methods. Options are inherited from parent types and parent type
-    extensions, but you can create any custom option you need.
-
 ``finishView()``
     This method allows to modify the "view" of any rendered widget. This is useful
     if your form type consists of many fields, or contains a type that produces
     many HTML elements (e.g. ``ChoiceType``). For any other use case, it's
     recommended to use ``buildView()`` instead.
 
+``configureOptions()``
+    It defines the options configurable when using the form type, which are also
+    the options that can be used in ``buildForm()`` and ``buildView()``
+    methods. Options are inherited from parent types and parent type
+    extensions, but you can create any custom option you need.
+
 ``getParent()``
     If your custom type is based on another type (i.e. they share some
-    functionality) add this method to return the fully-qualified class name
+    functionality), add this method to return the fully-qualified class name
     of that original type. Do not use PHP inheritance for this.
     Symfony will call all the form type methods (``buildForm()``,
-    ``buildView()``, etc.) of the parent type and it will call all its type
-    extensions before calling the ones defined in your custom type.
+    ``buildView()``, etc.) and type extensions of the parent before
+    calling the ones defined in your custom type.
+
+    Otherwise, if your custom type is build from scratch, you can omit ``getParent()``.
 
     By default, the ``AbstractType`` class returns the generic
     :class:`Symfony\\Component\\Form\\Extension\\Core\\Type\\FormType`
