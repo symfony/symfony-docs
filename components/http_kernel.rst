@@ -509,7 +509,7 @@ Handling Exceptions: the ``kernel.exception`` Event
 :ref:`Kernel Events Information Table <component-http-kernel-event-table>`
 
 If an exception is thrown at any point inside ``HttpKernel::handle()``, another
-event - ``kernel.exception`` is thrown. Internally, the body of the ``handle()``
+event - ``kernel.exception`` is dispatched. Internally, the body of the ``handle()``
 method is wrapped in a try-catch block. When any exception is thrown, the
 ``kernel.exception`` event is dispatched so that your system can somehow respond
 to the exception.
