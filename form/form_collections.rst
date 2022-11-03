@@ -238,7 +238,11 @@ it will receive an *unknown* number of tags. Otherwise, you'll see a
 
 The ``allow_add`` option also makes a ``prototype`` variable available to you.
 This "prototype" is a little "template" that contains all the HTML needed to
-dynamically create any new "tag" forms with JavaScript. To render the prototype, add
+dynamically create any new "tag" forms with JavaScript.
+
+Let's start with plain JavaScript (Vanilla JS) – if you're using Stimulus, see below.
+
+To render the prototype, add
 the following ``data-prototype`` attribute to the existing ``<ul>`` in your
 template:
 
@@ -333,6 +337,49 @@ into new ``Tag`` objects and added to the ``tags`` property of the ``Task`` obje
 .. seealso::
 
     You can find a working example in this `JSFiddle`_.
+
+JavaScript with Stimulus
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you're using `Stimulus`_, wrap everything in a ``<div>``:
+
+.. code-block:: html+twig
+
+    <div {{ stimulus_controller('form-collection') }}
+        data-form-collection-index-value="{{ form.tags|length > 0 ? form.tags|last.vars.name + 1 : 0 }}"
+        data-form-collection-prototype-value="{{ form_widget(form.tags.vars.prototype)|e('html_attr') }}"
+    >
+        <ul {{ stimulus_target('form-collection', 'collectionContainer') }}></ul>
+        <button type="button" {{ stimulus_action('form-collection', 'addCollectionElement') }}>Add a tag</button>
+    </div>
+
+Then create the controller:
+
+.. code-block:: javascript
+
+    // assets/controllers/form-collection_controller.js
+    
+    import { Controller } from '@hotwired/stimulus';
+
+    export default class extends Controller {
+        static targets = ["collectionContainer"]
+
+        static values = {
+            index    : Number,
+            prototype: String,
+        }
+
+        addCollectionElement(event)
+        {
+            const item = document.createElement('li');
+            item.innerHTML = this.prototypeValue.replace(/__name__/g, this.indexValue);
+            this.collectionContainerTarget.appendChild(item);
+            this.indexValue++;           
+        }
+    }
+
+Handling the new Tags in PHP
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To make handling these new tags easier, add an "adder" and a "remover" method
 for the tags in the ``Task`` class::
@@ -662,3 +709,4 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
 .. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
+.. _`Stimulus`: https://symfony.com/doc/current/frontend/encore/simple-example.html#stimulus-symfony-ux
