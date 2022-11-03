@@ -1,0 +1,65 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2022-10-18T15:41:14Z
+
+"Remove" links:
+The current approach adds them dynamically with JavaScript. But I'm usually doing it in Twig right away:
+```twig
+{% for tag in form.tags %}
+    <li>
+        {{ form_row(tag.name) }}
+        <button ...> {# <= Here #}
+    </li>
+{% endfor %}
+```
+
+...which lacks the possibility to "re-remove" a "just-added" item. But it makes the JavaScript so much easier ;-)
+
+Bottom line: I haven't thought about how to do something like the current `addTagFormDeleteLink()` in Stimulus ;-)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-10-19T14:51:31Z
+
+> The current approach adds them dynamically with JavaScript. But I'm usually doing it in Twig right away:
+
+I think you could do this with form themes? https://symfony.com/doc/current/form/form_themes.html#fragment-naming-for-collections
+
+So, you'd override, for example, a block called `_task_tags_entry_row` (this needs to be double-checked) where you could render effectively what you have in the `for` loop. Then, this would be used for each existing entry and would also be used for the prototype.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2022-10-19T15:26:38Z
+
+This is starting to get complicated ;-) So I'd say: Please merge this PR as-is, so we can see what it looks like in practice.
+
+And for the "Delete" button, I now see three ways to do it:
+* `for` in Twig: Quick and dirty (cannot re-remove just added entries)
+* existing approach by adding the buttons with JavaScript: Probably better but more complicated JavaScript; plus some delay when opening a long page
+* form themes: Most complicated, but certainly the best outcome.
+
+So the big question is: Do you want to show all three?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-10-20T12:41:40Z
+
+My vote would be just the form theme. That would also work for the “vanilla javascript” example as well.
+
+however, if we want a smaller change for just this PR, I’d vote for adding the delete button via js in the stimulus controller. So, the stimulus version of what’s done in the vanilla js section.
+
+I’d really like to not merge this in a half done state - in practice, sometimes that second PR gets delayed and the docs sit in a half done state for too long :)
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2022-10-20T13:19:49Z
+
+Current PR: Sorry, but I've put too much work into some PR's (even on this very page) that were never merged cause in the end somebody said, it's too large and impossible to review (e.g. https://github.com/symfony/symfony-docs/pull/10180#issuecomment-417313336 or https://github.com/symfony/symfony-docs/pull/11222#issuecomment-583593683). And when we switch this page to form themes, I fear this will happen again, cause it's going to be a major change (see below).
+
+I don't see this PR as incomplete. After all, showing 1 of 2 steps in Stimulus is certainly better than showing 0 of 2 ;-)
+
+If we do want to advise people to use form themes, the current section (about adding tags) needs to be refined again - *at least* this note has to go:
+
+> If you want to customize the HTML code in the prototype, see [How to Work with Form Themes](https://symfony.com/doc/current/form/form_themes.html#form-custom-prototype).
+
+Besides, I would try again to find a way to separate PHP and JavaScript better.
