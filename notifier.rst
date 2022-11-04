@@ -201,6 +201,7 @@ Gitter          ``symfony/gitter-notifier``           ``gitter://TOKEN@default?r
 GoogleChat      ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
 LINE Notify     ``symfony/line-notify-notifier``      ``linenotify://TOKEN@default``
 LinkedIn        ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
+Mastodon        ``symfony/mastodon-notifier``         ``mastodon://ACCESS_TOKEN@HOST``
 Mattermost      ``symfony/mattermost-notifier``       ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
 Mercure         ``symfony/mercure-notifier``          ``mercure://HUB_ID?topic=TOPIC``
 MicrosoftTeams  ``symfony/microsoft-teams-notifier``  ``microsoftteams://default/PATH``
@@ -218,7 +219,7 @@ Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST
 
 .. versionadded:: 6.3
 
-    The LINE Notify and Twitter integrations were introduced in Symfony 6.3.
+    The LINE Notify, Mastodon and Twitter integrations were introduced in Symfony 6.3.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
