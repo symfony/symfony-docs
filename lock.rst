@@ -22,8 +22,8 @@ The following example shows a typical usage of the lock::
 
     $lock->release();
 
-Installation
-------------
+Installing
+----------
 
 In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
 install the Lock component:
@@ -32,8 +32,8 @@ install the Lock component:
 
     $ composer require symfony/lock
 
-Configuring Lock with FrameworkBundle
--------------------------------------
+Configuring
+-----------
 
 By default, Symfony provides a :ref:`Semaphore <lock-store-semaphore>`
 when available, or a :ref:`Flock <lock-store-flock>` otherwise. You can configure
@@ -236,8 +236,8 @@ processes asking for the same ``$version``::
 
 .. _lock-named-locks:
 
-Named Lock
-----------
+Naming Locks
+------------
 
 If the application needs different kind of Stores alongside each other, Symfony
 provides :ref:`named lock <reference-lock-resources-name>`:
