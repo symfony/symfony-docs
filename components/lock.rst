@@ -81,20 +81,21 @@ continue the job in another process using the same lock::
     use Symfony\Component\Lock\Lock;
 
     $key = new Key('article.'.$article->getId());
-    $lock = new Lock($key, $this->store, 300, false);
+    $lock = new Lock($key, $this->store, autoRelease: false);
     $lock->acquire(true);
 
     $this->bus->dispatch(new RefreshTaxonomy($article, $key));
 
 .. note::
 
-    Don't forget to disable the autoRelease to avoid releasing the lock when
-    the destructor is called.
+    Don't forget to disable the ``autoRelease`` flag in the ``Lock``
+    constructor to avoid releasing the lock when the destructor is called.
 
-Not all stores are compatible with serialization and cross-process locking:
-for example, the kernel will automatically release semaphores acquired by the
+Not all stores are compatible with serialization and cross-process locking: for
+example, the kernel will automatically release semaphores acquired by the
 :ref:`SemaphoreStore <lock-store-semaphore>` store. If you use an incompatible
-store, an exception will be thrown when the application tries to serialize the key.
+store (see :ref:`lock stores <_lock-stores>` for supported stores), an
+exception will be thrown when the application tries to serialize the key.
 
 .. _lock-blocking-locks:
 
@@ -102,12 +103,10 @@ Blocking Locks
 --------------
 
 By default, when a lock cannot be acquired, the ``acquire`` method returns
-``false`` immediately. To wait (indefinitely) until the lock
-can be created, pass ``true`` as the argument of the ``acquire()`` method. This
-is called a **blocking lock** because the execution of your application stops
-until the lock is acquired.
-
-Some of the built-in ``Store`` classes support this feature::
+``false`` immediately. To wait (indefinitely) until the lock can be created,
+pass ``true`` as the argument of the ``acquire()`` method. This is called a
+**blocking lock** because the execution of your application stops until the
+lock is acquired::
 
     use Symfony\Component\Lock\LockFactory;
     use Symfony\Component\Lock\Store\RedisStore;
@@ -115,23 +114,23 @@ Some of the built-in ``Store`` classes support this feature::
     $store = new RedisStore(new \Predis\Client('tcp://localhost:6379'));
     $factory = new LockFactory($store);
 
-    $lock = $factory->createLock('notification-flush');
+    $lock = $factory->createLock('pdf-creation');
     $lock->acquire(true);
 
-When the provided store does not implement the
-:class:`Symfony\\Component\\Lock\\BlockingStoreInterface` interface, the
-``Lock`` class will retry to acquire the lock in a non-blocking way until the
-lock is acquired. However, the ``Lock`` class also provides the default logic to
-acquire locks in blocking mode when the store does not implement the
-``BlockingStoreInterface`` interface.
+When the store does not support blocking locks by implementing the
+:class:`Symfony\\Component\\Lock\\BlockingStoreInterface` interface (see
+:ref:`lock stores <_lock-stores>` for supported stores), the ``Lock`` class
+will retry to acquire the lock in a non-blocking way until the lock is
+acquired.
 
 Expiring Locks
 --------------
 
 Locks created remotely are difficult to manage because there is no way for the
 remote ``Store`` to know if the locker process is still alive. Due to bugs,
-fatal errors or segmentation faults, it cannot be guaranteed that ``release()``
-method will be called, which would cause the resource to be locked infinitely.
+fatal errors or segmentation faults, it cannot be guaranteed that the
+``release()`` method will be called, which would cause the resource to be
+locked infinitely.
 
 The best solution in those cases is to create **expiring locks**, which are
 released automatically after some amount of time has passed (called TTL for
@@ -146,7 +145,7 @@ method, the resource will stay locked until the timeout::
 
     // ...
     // create an expiring lock that lasts 30 seconds (default is 300.0)
-    $lock = $factory->createLock('charts-generation', 30);
+    $lock = $factory->createLock('pdf-creation', ttl: 30);
 
     if (!$lock->acquire()) {
         return;
@@ -167,7 +166,7 @@ then use the :method:`Symfony\\Component\\Lock\\LockInterface::refresh` method
 to reset the TTL to its original value::
 
     // ...
-    $lock = $factory->createLock('charts-generation', 30);
+    $lock = $factory->createLock('pdf-creation', ttl: 30);
 
     if (!$lock->acquire()) {
         return;
@@ -188,7 +187,7 @@ to reset the TTL to its original value::
     Another useful technique for long-running tasks is to pass a custom TTL as
     an argument of the ``refresh()`` method to change the default lock TTL::
 
-        $lock = $factory->createLock('charts-generation', 30);
+        $lock = $factory->createLock('pdf-creation', ttl: 30);
         // ...
         // refresh the lock for 30 seconds
         $lock->refresh();
@@ -204,12 +203,12 @@ Automatically Releasing The Lock
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Locks are automatically released when their Lock objects are destroyed. This is
-an implementation detail that will be important when sharing Locks between
+an implementation detail that is important when sharing Locks between
 processes. In the example below, ``pcntl_fork()`` creates two processes and the
 Lock will be released automatically as soon as one process finishes::
 
     // ...
-    $lock = $factory->createLock('report-generation', 3600);
+    $lock = $factory->createLock('pdf-creation', 3600);
     if (!$lock->acquire()) {
         return;
     }
@@ -228,26 +227,28 @@ Lock will be released automatically as soon as one process finishes::
     }
     // ...
 
-To disable this behavior, set to ``false`` the third argument of
-``LockFactory::createLock()``. That will make the lock acquired for 3600 seconds
-or until ``Lock::release()`` is called.
+To disable this behavior, set the ``autoRelease`` argument of
+``LockFactory::createLock()`` to ``false``. That will make the lock acquired
+for 3600 seconds or until ``Lock::release()`` is called::
+
+    $lock = $factory->createLock('pdf-creation', 3600, autoRelease: false);
 
 Shared Locks
 ------------
 
-A shared or `readers–writer lock`_ is a synchronization primitive that allows
+A shared or `readers-writer lock`_ is a synchronization primitive that allows
 concurrent access for read-only operations, while write operations require
 exclusive access. This means that multiple threads can read the data in parallel
 but an exclusive lock is needed for writing or modifying data. They are used for
 example for data structures that cannot be updated atomically and are invalid
 until the update is complete.
 
-Use the :method:`Symfony\\Component\\Lock\\SharedLockInterface::acquireRead` method
-to acquire a read-only lock, and the existing
+Use the :method:`Symfony\\Component\\Lock\\SharedLockInterface::acquireRead`
+method to acquire a read-only lock, and
 :method:`Symfony\\Component\\Lock\\LockInterface::acquire` method to acquire a
 write lock::
 
-    $lock = $factory->createLock('user'.$user->id);
+    $lock = $factory->createLock('user-'.$user->id);
     if (!$lock->acquireRead()) {
         return;
     }
@@ -255,7 +256,7 @@ write lock::
 Similar to the ``acquire()`` method, pass ``true`` as the argument of ``acquireRead()``
 to acquire the lock in a blocking mode::
 
-    $lock = $factory->createLock('user'.$user->id);
+    $lock = $factory->createLock('user-'.$user->id);
     $lock->acquireRead(true);
 
 .. note::
@@ -263,26 +264,27 @@ to acquire the lock in a blocking mode::
     The `priority policy`_ of Symfony's shared locks depends on the underlying
     store (e.g. Redis store prioritizes readers vs writers).
 
-When a read-only lock is acquired with the method ``acquireRead()``, it's
+When a read-only lock is acquired with the ``acquireRead()`` method, it's
 possible to **promote** the lock, and change it to write lock, by calling the
 ``acquire()`` method::
 
-    $lock = $factory->createLock('user'.$userId);
+    $lock = $factory->createLock('user-'.$userId);
     $lock->acquireRead(true);
 
     if (!$this->shouldUpdate($userId)) {
         return;
     }
 
-    $lock->acquire(true); // Promote the lock to write lock
+    $lock->acquire(true); // Promote the lock to a write lock
     $this->update($userId);
 
 In the same way, it's possible to **demote** a write lock, and change it to a
 read-only lock by calling the ``acquireRead()`` method.
 
 When the provided store does not implement the
-:class:`Symfony\\Component\\Lock\\SharedLockStoreInterface` interface, the
-``Lock`` class will fallback to a write lock by calling the ``acquire()`` method.
+:class:`Symfony\\Component\\Lock\\SharedLockStoreInterface` interface (see
+:ref:`lock stores <_lock-stores>` for supported stores), the ``Lock`` class
+will fallback to a write lock by calling the ``acquire()`` method.
 
 The Owner of The Lock
 ---------------------
@@ -295,8 +297,8 @@ a lock, you can use the ``isAcquired()`` method::
         // We (still) own the lock
     }
 
-Because of the fact that some lock stores have expiring locks (as seen and explained
-above), it is possible for an instance to lose the lock it acquired automatically::
+Because some lock stores have expiring locks, it is possible for an instance to
+lose the lock it acquired automatically::
 
     // If we cannot acquire ourselves, it means some other process is already working on it
     if (!$lock->acquire()) {
@@ -322,12 +324,14 @@ above), it is possible for an instance to lose the lock it acquired automaticall
     A common pitfall might be to use the ``isAcquired()`` method to check if
     a lock has already been acquired by any process. As you can see in this example
     you have to use ``acquire()`` for this. The ``isAcquired()`` method is used to check
-    if the lock has been acquired by the **current process** only!
+    if the lock has been acquired by the **current process** only.
 
 .. [1] Technically, the true owners of the lock are the ones that share the same instance of ``Key``,
     not ``Lock``. But from a user perspective, ``Key`` is internal and you will likely only be working
     with the ``Lock`` instance so it's easier to think of the ``Lock`` instance as being the one that
     is the owner of the lock.
+
+.. _lock-stores:
 
 Available Stores
 ----------------
@@ -378,7 +382,7 @@ when the PHP process ends)::
 
     Beware that some file systems (such as some types of NFS) do not support
     locking. In those cases, it's better to use a directory on a local disk
-    drive or a remote store based on PDO, Redis or Memcached.
+    drive or a remote store.
 
 .. _lock-store-memcached:
 
@@ -431,7 +435,7 @@ Option         Description
 gcProbablity   Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
 database       The name of the database
 collection     The name of the collection
-uriOptions     Array of uri options for `MongoDBClient::__construct`_
+uriOptions     Array of URI options for `MongoDBClient::__construct`_
 driverOptions  Array of driver options for `MongoDBClient::__construct`_
 =============  ================================================================================================
 
@@ -521,7 +525,7 @@ locks::
     use Symfony\Component\Lock\Store\PostgreSqlStore;
 
     // a PDO instance or DSN for lazy connecting through PDO
-    $databaseConnectionOrDSN = 'pgsql:host=localhost;port=5634;dbname=lock';
+    $databaseConnectionOrDSN = 'pgsql:host=localhost;port=5634;dbname=app';
     $store = new PostgreSqlStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
 
 In opposite to the ``PdoStore``, the ``PostgreSqlStore`` does not need a table to
@@ -579,10 +583,10 @@ CombinedStore
 ~~~~~~~~~~~~~
 
 The CombinedStore is designed for High Availability applications because it
-manages several stores in sync (for example, several Redis servers). When a lock
-is being acquired, it forwards the call to all the managed stores, and it
-collects their responses. If a simple majority of stores have acquired the lock,
-then the lock is considered as acquired; otherwise as not acquired::
+manages several stores in sync (for example, several Redis servers). When a
+lock is acquired, it forwards the call to all the managed stores, and it
+collects their responses. If a simple majority of stores have acquired the
+lock, then the lock is considered acquired::
 
     use Symfony\Component\Lock\Store\CombinedStore;
     use Symfony\Component\Lock\Store\RedisStore;
@@ -600,14 +604,19 @@ then the lock is considered as acquired; otherwise as not acquired::
 
 Instead of the simple majority strategy (``ConsensusStrategy``) an
 ``UnanimousStrategy`` can be used to require the lock to be acquired in all
-the stores.
+the stores::
+
+    use Symfony\Component\Lock\Store\CombinedStore;
+    use Symfony\Component\Lock\Strategy\UnanimousStrategy;
+
+    $store = new CombinedStore($stores, new UnanimousStrategy());
 
 .. caution::
 
     In order to get high availability when using the ``ConsensusStrategy``, the
     minimum cluster size must be three servers. This allows the cluster to keep
     working when a single server fails (because this strategy requires that the
-    lock is acquired in more than half of the servers).
+    lock is acquired for more than half of the servers).
 
 .. _lock-store-zookeeper:
 
@@ -651,7 +660,7 @@ the true owner of the lock. This token is stored in the
 :class:`Symfony\\Component\\Lock\\Key` object and is used internally by
 the ``Lock``.
 
-Every concurrent process must store the ``Lock`` in the same server. Otherwise two
+Every concurrent process must store the ``Lock`` on the same server. Otherwise two
 different machines may allow two different processes to acquire the same ``Lock``.
 
 .. caution::
@@ -675,10 +684,10 @@ The ``Lock`` provides several methods to check its health. The ``isExpired()``
 method checks whether or not its lifetime is over and the ``getRemainingLifetime()``
 method returns its time to live in seconds.
 
-Using the above methods, a more robust code would be::
+Using the above methods, a robust code would be::
 
     // ...
-    $lock = $factory->createLock('invoice-publication', 30);
+    $lock = $factory->createLock('pdf-creation', 30);
 
     if (!$lock->acquire()) {
         return;
@@ -707,7 +716,7 @@ Using the above methods, a more robust code would be::
     may increase that time a lot (up to a few seconds). Take that into account
     when choosing the right TTL.
 
-By design, locks are stored in servers with a defined lifetime. If the date or
+By design, locks are stored on servers with a defined lifetime. If the date or
 time of the machine changes, a lock could be released sooner than expected.
 
 .. caution::
@@ -737,15 +746,14 @@ Some file systems (such as some types of NFS) do not support locking.
     All concurrent processes must use the same physical file system by running
     on the same machine and using the same absolute path to the lock directory.
 
-    By definition, usage of ``FlockStore`` in an HTTP context is incompatible
-    with multiple front servers, unless to ensure that the same resource will
-    always be locked on the same machine or to use a well configured shared file
-    system.
+    Using a ``FlockStore`` in an HTTP context is incompatible with multiple
+    front servers, unless to ensure that the same resource will always be
+    locked on the same machine or to use a well configured shared file system.
 
-Files on the file system can be removed during a maintenance operation. For instance,
-to clean up the ``/tmp`` directory or after a reboot of the machine when a directory
-uses tmpfs. It's not an issue if the lock is released when the process ended, but
-it is in case of ``Lock`` reused between requests.
+Files on the file system can be removed during a maintenance operation. For
+instance, to clean up the ``/tmp`` directory or after a reboot of the machine
+when a directory uses ``tmpfs``. It's not an issue if the lock is released when
+the process ended, but it is in case of ``Lock`` reused between requests.
 
 .. caution::
 
@@ -791,8 +799,8 @@ MongoDbStore
 .. caution::
 
     The locked resource name is indexed in the ``_id`` field of the lock
-    collection. Beware that in MongoDB an indexed field's value can be
-    `a maximum of 1024 bytes in length`_ inclusive of structural overhead.
+    collection. Beware that an indexed field's value in MongoDB can be
+    `a maximum of 1024 bytes in length`_ including the structural overhead.
 
 A TTL index must be used to automatically clean up expired locks.
 Such an index can be created manually:
@@ -810,8 +818,8 @@ about `Expire Data from Collections by Setting TTL`_ in MongoDB.
 
 .. tip::
 
-    ``MongoDbStore`` will attempt to automatically create a TTL index.
-    It's recommended to set constructor option ``gcProbablity = 0.0`` to
+    ``MongoDbStore`` will attempt to automatically create a TTL index. It's
+    recommended to set constructor option ``gcProbablity`` to ``0.0`` to
     disable this behavior if you have manually dealt with TTL index creation.
 
 .. caution::
@@ -827,7 +835,7 @@ the collection's settings will take effect.
 Read more about `Replica Set Read and Write Semantics`_ in MongoDB.
 
 PdoStore
-~~~~~~~~~~
+~~~~~~~~
 
 The PdoStore relies on the `ACID`_ properties of the SQL engine.
 
@@ -981,5 +989,5 @@ are still running.
 .. _`PHP semaphore functions`: https://www.php.net/manual/en/book.sem.php
 .. _`Replica Set Read and Write Semantics`: https://docs.mongodb.com/manual/applications/replication/
 .. _`ZooKeeper`: https://zookeeper.apache.org/
-.. _`readers–writer lock`: https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock
+.. _`readers-writer lock`: https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock
 .. _`priority policy`: https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock#Priority_policies
