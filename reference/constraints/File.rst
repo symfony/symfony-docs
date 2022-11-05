@@ -67,8 +67,8 @@ below a certain file size and a valid PDF, add the following:
         {
             #[Assert\File(
                 maxSize: '1024k',
-                mimeTypes: ['application/pdf', 'application/x-pdf'],
-                mimeTypesMessage: 'Please upload a valid PDF',
+                extensions: ['pdf'],
+                extensionsMessage: 'Please upload a valid PDF',
             )]
             protected $bioFile;
         }
@@ -81,8 +81,8 @@ below a certain file size and a valid PDF, add the following:
                 bioFile:
                     - File:
                         maxSize: 1024k
-                        mimeTypes: [application/pdf, application/x-pdf]
-                        mimeTypesMessage: Please upload a valid PDF
+                        extensions: [pdf]
+                        extensionsMessage: Please upload a valid PDF
 
     .. code-block:: xml
 
@@ -96,11 +96,10 @@ below a certain file size and a valid PDF, add the following:
                 <property name="bioFile">
                     <constraint name="File">
                         <option name="maxSize">1024k</option>
-                        <option name="mimeTypes">
-                            <value>application/pdf</value>
-                            <value>application/x-pdf</value>
+                        <option name="extensions">
+                            <value>pdf</value>
                         </option>
-                        <option name="mimeTypesMessage">Please upload a valid PDF</option>
+                        <option name="extensionsMessage">Please upload a valid PDF</option>
                     </constraint>
                 </property>
             </class>
@@ -120,11 +119,10 @@ below a certain file size and a valid PDF, add the following:
             {
                 $metadata->addPropertyConstraint('bioFile', new Assert\File([
                     'maxSize' => '1024k',
-                    'mimeTypes' => [
-                        'application/pdf',
-                        'application/x-pdf',
+                    'extensions' => [
+                        'pdf',
                     ],
-                    'mimeTypesMessage' => 'Please upload a valid PDF',
+                    'extensionsMessage' => 'Please upload a valid PDF',
                 ]));
             }
         }
@@ -150,6 +148,36 @@ the value defined in the ``maxSize`` option.
 
 For more information about the difference between binary and SI prefixes,
 see `Wikipedia: Binary prefix`_.
+
+``extensions``
+~~~~~~~~~~~~~~
+
+**type**: ``array`` or ``string``
+
+.. versionadded:: 6.2
+
+    The ``extensions`` option was introduced in Symfony 6.2.
+
+If set, the validator will check that the extension and the media type
+(formerly known as MIME type) of the underlying file are equal to the given
+extension and associated media type (if a string) or exist in the collection
+(if an array).
+
+By default, all media types associated with an extension are allowed.
+The list of supported extensions and associated media types can be found on
+the `IANA website`_.
+
+It's also possible to explicitly configure the authorized media types for
+an extension.
+
+In the following example, allowed media types are explicitly set for the ``xml``
+and ``txt`` extensions, and all associated media types are allowed for ``jpg``::
+
+    [
+        'xml' => ['text/xml', 'application/xml'],
+        'txt' => 'text/plain',
+        'jpg',
+    ]
 
 ``disallowEmptyMessage``
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -216,9 +244,17 @@ Parameter         Description
 
 **type**: ``array`` or ``string``
 
-If set, the validator will check that the mime type of the underlying file
-is equal to the given mime type (if a string) or exists in the collection
-of given mime types (if an array).
+.. seelalso::
+
+    You should always use the ``extensions`` option instead of ``mimeTypes``
+    except if you explicitly don't want to check that the extension of the file
+    is consistent with its content (this can be a security issue).
+
+    By default, the ``extensions`` option also checks the media type of the file.
+
+If set, the validator will check that the media type (formerly known as MIME
+type) of the underlying file is equal to the given mime type (if a string) or
+exists in the collection of given mime types (if an array).
 
 You can find a list of existing mime types on the `IANA website`_.
 
@@ -232,12 +268,26 @@ You can find a list of existing mime types on the `IANA website`_.
     (i.e. the form type is not defined explicitly in the ``->add()`` method of
     the form builder) and when the field doesn't define its own ``accept`` value.
 
+``extensionsMessage``
+~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The extension of the file is invalid ({{ extension }}). Allowed extensions are {{ extensions }}.``
+
+.. versionadded:: 6.2
+
+    The ``extensionsMessage`` option was introduced in Symfony 6.3.
+
+The message displayed if the extension of the file is not a valid extension
+per the `extensions`_ option.
+
+.. include:: /reference/constraints/_parameters-mime-types-message-option.rst.inc
+
 ``mimeTypesMessage``
 ~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.``
 
-The message displayed if the mime type of the file is not a valid mime type
+The message displayed if the media type of the file is not a valid media type
 per the `mimeTypes`_ option.
 
 .. include:: /reference/constraints/_parameters-mime-types-message-option.rst.inc
