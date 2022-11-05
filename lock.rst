@@ -12,7 +12,7 @@ time to prevent race conditions from happening.
 
 The following example shows a typical usage of the lock::
 
-    $lock = $lockFactory->createLock('pdf-invoice-generation');
+    $lock = $lockFactory->createLock('pdf-creation');
     if (!$lock->acquire()) {
         return;
     }
@@ -59,7 +59,7 @@ this behavior by using the ``lock`` key like:
             lock: 'sqlite:///%kernel.project_dir%/var/lock.db'
             lock: 'mysql:host=127.0.0.1;dbname=app'
             lock: 'pgsql:host=127.0.0.1;dbname=app'
-            lock: 'pgsql+advisory:host=127.0.0.1;dbname=lock'
+            lock: 'pgsql+advisory:host=127.0.0.1;dbname=app'
             lock: 'sqlsrv:server=127.0.0.1;Database=app'
             lock: 'oci:host=127.0.0.1;dbname=app'
             lock: 'mongodb://127.0.0.1/app?collection=lock'
@@ -111,7 +111,7 @@ this behavior by using the ``lock`` key like:
 
                     <framework:resource>pgsql:host=127.0.0.1;dbname=app</framework:resource>
 
-                    <framework:resource>pgsql+advisory:host=127.0.0.1;dbname=lock</framework:resource>
+                    <framework:resource>pgsql+advisory:host=127.0.0.1;dbname=app</framework:resource>
 
                     <framework:resource>sqlsrv:server=127.0.0.1;Database=app</framework:resource>
 
@@ -149,7 +149,7 @@ this behavior by using the ``lock`` key like:
                 ->resource('default', ['sqlite:///%kernel.project_dir%/var/lock.db'])
                 ->resource('default', ['mysql:host=127.0.0.1;dbname=app'])
                 ->resource('default', ['pgsql:host=127.0.0.1;dbname=app'])
-                ->resource('default', ['pgsql+advisory:host=127.0.0.1;dbname=lock'])
+                ->resource('default', ['pgsql+advisory:host=127.0.0.1;dbname=app'])
                 ->resource('default', ['sqlsrv:server=127.0.0.1;Database=app'])
                 ->resource('default', ['oci:host=127.0.0.1;dbname=app'])
                 ->resource('default', ['mongodb://127.0.0.1/app?collection=lock'])

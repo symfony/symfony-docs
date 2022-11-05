@@ -42,10 +42,10 @@ resource. Then, a call to the :method:`Symfony\\Component\\Lock\\LockInterface::
 method will try to acquire the lock::
 
     // ...
-    $lock = $factory->createLock('pdf-invoice-generation');
+    $lock = $factory->createLock('pdf-creation');
 
     if ($lock->acquire()) {
-        // The resource "pdf-invoice-generation" is locked.
+        // The resource "pdf-creation" is locked.
         // You can compute and generate the invoice safely here.
 
         $lock->release();
