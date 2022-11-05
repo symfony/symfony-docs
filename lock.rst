@@ -170,7 +170,7 @@ Locking a Resource
 ------------------
 
 To lock the default resource, autowire the lock factory using
-:class:`Symfony\\Component\\Lock\\LockFactory` (service id ``lock.factory``)::
+:class:`Symfony\\Component\\Lock\\LockFactory`::
 
     // src/Controller/PdfController.php
     namespace App\Controller;
@@ -284,10 +284,24 @@ provides :ref:`named lock <reference-lock-resources-name>`:
             ;
         };
 
+An autowiring alias is created for each named lock with a name using the camel
+case version of its name suffixed by ``LockFactory``.
 
-Each name becomes a service where the service id is part of the name of the
-lock (e.g. ``lock.invoice.factory``). An autowiring alias is also created for
-each lock using the camel case version of its name suffixed by ``LockFactory``
-- e.g. ``invoice`` can be injected automatically by naming the argument
+For instance, the ``invoice`` lock can be injected by naming the argument
 ``$invoiceLockFactory`` and type-hinting it with
-:class:`Symfony\\Component\\Lock\\LockFactory`.
+:class:`Symfony\\Component\\Lock\\LockFactory`:
+
+    // src/Controller/PdfController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Lock\LockFactory;
+
+    class PdfController extends AbstractController
+    {
+        #[Route('/download/terms-of-use.pdf')]
+        public function downloadPdf(LockFactory $invoiceLockFactory, MyPdfGeneratorService $pdf)
+        {
+            // ...
+        }
+    }
