@@ -207,8 +207,8 @@ Locking a Dynamic Resource
 
 Sometimes the application is able to cut the resource into small pieces in order
 to lock a small subset of processes and let others through. The previous example
-showed how to lock the ``$pdf->getOrCreatePdf('terms-of-use')`` for everybody,
-now let's see how to lock ``$pdf->getOrCreatePdf($version)`` only for
+showed how to lock the ``$pdf->getOrCreatePdf()`` call for everybody,
+now let's see how to lock a ``$pdf->getOrCreatePdf($version)`` call only for
 processes asking for the same ``$version``::
 
     // src/Controller/PdfController.php
@@ -222,7 +222,7 @@ processes asking for the same ``$version``::
         #[Route('/download/{version}/terms-of-use.pdf')]
         public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf)
         {
-            $lock = $lockFactory->createLock($version);
+            $lock = $lockFactory->createLock('pdf-creation-'.$version);
             $lock->acquire(true);
 
             // heavy computation
