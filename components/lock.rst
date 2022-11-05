@@ -94,7 +94,7 @@ continue the job in another process using the same lock::
 Not all stores are compatible with serialization and cross-process locking: for
 example, the kernel will automatically release semaphores acquired by the
 :ref:`SemaphoreStore <lock-store-semaphore>` store. If you use an incompatible
-store (see :ref:`lock stores <_lock-stores>` for supported stores), an
+store (see :ref:`lock stores <lock-stores>` for supported stores), an
 exception will be thrown when the application tries to serialize the key.
 
 .. _lock-blocking-locks:
@@ -119,7 +119,7 @@ lock is acquired::
 
 When the store does not support blocking locks by implementing the
 :class:`Symfony\\Component\\Lock\\BlockingStoreInterface` interface (see
-:ref:`lock stores <_lock-stores>` for supported stores), the ``Lock`` class
+:ref:`lock stores <lock-stores>` for supported stores), the ``Lock`` class
 will retry to acquire the lock in a non-blocking way until the lock is
 acquired.
 
@@ -283,7 +283,7 @@ read-only lock by calling the ``acquireRead()`` method.
 
 When the provided store does not implement the
 :class:`Symfony\\Component\\Lock\\SharedLockStoreInterface` interface (see
-:ref:`lock stores <_lock-stores>` for supported stores), the ``Lock`` class
+:ref:`lock stores <lock-stores>` for supported stores), the ``Lock`` class
 will fallback to a write lock by calling the ``acquire()`` method.
 
 The Owner of The Lock
