@@ -115,11 +115,11 @@ if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that
 |                 |             |             |             |            |                                | rule (which matches) is used.                               |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | POST       | rule #3 (``ROLE_USER_HOST``)   | The third rule still matches. This would also match the    |
-|                 |             |             |             |            |                                | third rule (``ROLE_USER_METHOD``), but only the **first**   |
+|                 |             |             |             |            |                                | fourth rule (``ROLE_USER_METHOD``), but only the **first**   |
 |                 |             |             |             |            |                                | matched ``access_control`` is used.                         |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | ``/admin/user`` | 168.0.0.1   | 80          | example.com | POST       | rule #4 (``ROLE_USER_METHOD``) | The ``ip`` and ``host`` don't match the first two entries,  |
-|                 |             |             |             |            |                                | but the third - ``ROLE_USER_METHOD`` - matches and is used. |
+|                 |             |             |             |            |                                | but the fourth - ``ROLE_USER_METHOD`` - matches and is used. |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | ``/admin/user`` | 168.0.0.1   | 80          | example.com | GET        | rule #4 (``ROLE_MANAGER``)     | The ``ip``, ``host`` and ``method`` prevent the first       |
 |                 |             |             |             |            |                                | three entries from matching. But since the URI matches the  |
