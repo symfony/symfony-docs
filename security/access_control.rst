@@ -111,10 +111,10 @@ if ``ip``, ``port``, ``host`` or ``method`` are not specified for an entry, that
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
 | ``/admin/user`` | 127.0.0.1   | 8080        | symfony.com | GET        | rule #1 (``ROLE_USER_PORT``)   | The ``path``, ``ip`` and ``port`` match.                    |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | GET        | rule #3 (``ROLE_USER_HOST``)   | The ``ip`` doesn't match the first rule, so the second      |
+| ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | GET        | rule #3 (``ROLE_USER_HOST``)   | The ``ip`` doesn't match the first rule, so the third      |
 |                 |             |             |             |            |                                | rule (which matches) is used.                               |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
-| ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | POST       | rule #3 (``ROLE_USER_HOST``)   | The second rule still matches. This would also match the    |
+| ``/admin/user`` | 168.0.0.1   | 80          | symfony.com | POST       | rule #3 (``ROLE_USER_HOST``)   | The third rule still matches. This would also match the    |
 |                 |             |             |             |            |                                | third rule (``ROLE_USER_METHOD``), but only the **first**   |
 |                 |             |             |             |            |                                | matched ``access_control`` is used.                         |
 +-----------------+-------------+-------------+-------------+------------+--------------------------------+-------------------------------------------------------------+
