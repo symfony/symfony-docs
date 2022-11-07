@@ -88,8 +88,9 @@ continue the job in another process using the same lock::
 
 .. note::
 
-    Don't forget to disable the ``autoRelease`` flag in the ``Lock``
-    constructor to avoid releasing the lock when the destructor is called.
+    Don't forget to set the ``autoRelease`` argument to ``false`` in the
+    ``Lock`` constructor to avoid releasing the lock when the destructor is
+    called.
 
 Not all stores are compatible with serialization and cross-process locking: for
 example, the kernel will automatically release semaphores acquired by the
@@ -208,7 +209,7 @@ processes. In the example below, ``pcntl_fork()`` creates two processes and the
 Lock will be released automatically as soon as one process finishes::
 
     // ...
-    $lock = $factory->createLock('pdf-creation', 3600);
+    $lock = $factory->createLock('pdf-creation');
     if (!$lock->acquire()) {
         return;
     }
@@ -231,7 +232,7 @@ To disable this behavior, set the ``autoRelease`` argument of
 ``LockFactory::createLock()`` to ``false``. That will make the lock acquired
 for 3600 seconds or until ``Lock::release()`` is called::
 
-    $lock = $factory->createLock('pdf-creation', 3600, autoRelease: false);
+    $lock = $factory->createLock('pdf-creation', ttl: 3600, autoRelease: false);
 
 Shared Locks
 ------------
@@ -265,7 +266,7 @@ to acquire the lock in a blocking mode::
     store (e.g. Redis store prioritizes readers vs writers).
 
 When a read-only lock is acquired with the ``acquireRead()`` method, it's
-possible to **promote** the lock, and change it to write lock, by calling the
+possible to **promote** the lock, and change it to a write lock, by calling the
 ``acquire()`` method::
 
     $lock = $factory->createLock('user-'.$userId);
