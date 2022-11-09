@@ -244,7 +244,7 @@ Parameter         Description
 
 **type**: ``array`` or ``string``
 
-.. seelalso::
+.. caution::
 
     You should always use the ``extensions`` option instead of ``mimeTypes``
     except if you explicitly don't want to check that the extension of the file
