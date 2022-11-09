@@ -506,10 +506,7 @@ This example shows how you could configure the application secret using an env v
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd>
 
-            <framework:config>
-                <!-- by convention the env var names are always uppercase -->
-                <framework:secret url="%env(APP_SECRET)%"/>
-            </framework:config>
+            <framework:config secret="%env(APP_SECRET)%"/>
 
         </container>
 
@@ -522,7 +519,7 @@ This example shows how you could configure the application secret using an env v
             $container->extension('framework', [
                 'secret' => [
                     // by convention the env var names are always uppercase
-                    'url' => '%env(APP_SECRET)%',
+                    'secret' => '%env(APP_SECRET)%',
                 ],
             ]);
         };
