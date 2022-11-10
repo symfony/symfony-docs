@@ -1711,11 +1711,12 @@ Next, you need to create a route for this URL (but not a controller):
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\Request;
         use Symfony\Component\Routing\Annotation\Route;
 
         class SecurityController extends AbstractController
         {
-            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
+            #[Route('/logout', name: 'app_logout', methods: [Request::METHOD_GET])]
             public function logout()
             {
                 // controller can be blank: it will never be called!
@@ -1746,10 +1747,11 @@ Next, you need to create a route for this URL (but not a controller):
 
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+        use Symfony\Component\HttpFoundation\Request;
 
         return function (RoutingConfigurator $routes) {
             $routes->add('app_logout', '/logout')
-                ->methods(['GET'])
+                ->methods([Request::METHOD_GET])
             ;
         };
 
