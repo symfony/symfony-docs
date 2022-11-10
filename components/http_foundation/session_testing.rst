@@ -56,3 +56,42 @@ separate PHP processes, change the storage engine to
     use Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorage;
 
     $session = new Session(new MockFileSessionStorage());
+
+Using Symonfy Framework
+-----------------------
+
+If you are using Symfony framework and persisting sessions with
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+the following exception will be thrown when running a test where a user logs in:
+
+    RuntimeException: Failed to start the session because headers have already been sent by "vendor/phpunit/phpunit/src/Util/Printer.php" at line 104.
+
+In :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`'s
+``start()`` function, there is a check to see if headers have already been sent,
+which in a normal browser request they would not have been.
+
+However, PHPUnit sends output to the console when the test run is starts, and PHP understands
+this as sending headers, and so the ``RuntimeException`` is thrown.
+
+In order to tell Symfony to use
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\MockFileSessionStorage`
+in tests, the following changes are needed::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        when@test:
+            framework:
+                test: true
+                session:
+                    # Don't use normal PHP sessions for tests, otherwise PHP freaks out when creating a session with a
+                    # "Headers already sent" error, because PHPUnit sent a response to the console.
+                    storage_factory_id: "mock_file_session_storage"
+
+        # config/packages/services.yaml
+        when@test:
+            services:
+                mock_file_session_storage:
+                    class: Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorageFactory
