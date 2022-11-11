@@ -849,6 +849,15 @@ reads the ``_username`` and ``_password`` POST parameter, loads the user via
 the user provider, checks the user's credentials and either authenticates the
 user or sends them back to the login form where the error can be displayed.
 
+.. caution::
+
+    The page at ``check_path`` must not contain another form, since as soon as
+    any POST data is submitted, the ``FormLoginAuthenticator`` will look for the
+    fields ``_username`` and ``_password``. If they're not present, you'll get
+    this error message:
+
+    > The key "_username" must be a string, "NULL" given.
+
 To review the whole process:
 
 #. The user tries to access a resource that is protected (e.g. ``/admin``);
