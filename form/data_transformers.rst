@@ -8,8 +8,8 @@ Data transformers are used to translate the data for a field into a format that 
 be displayed in a form (and back on submit). They're already used internally for
 many field types. For example, the :doc:`DateType </reference/forms/types/date>` field
 can be rendered as a ``yyyy-MM-dd``-formatted input text box. Internally, a data transformer
-converts the starting ``DateTime`` value of the field into the ``yyyy-MM-dd`` string
-to render the form, and then back into a ``DateTime`` object on submit.
+converts the ``DateTime`` value of the field to the ``yyyy-MM-dd`` string
+to render the form, and then back to a ``DateTime`` object on submit.
 
 .. caution::
 
