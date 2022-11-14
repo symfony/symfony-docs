@@ -306,7 +306,7 @@ login_path
 **type**: ``string`` **default**: ``/login``
 
 This is the route or path that the user will be redirected to (unless ``use_forward``
-is set to ``true``) when they try to access a protected resource but isn't
+is set to ``true``) when they try to access a protected resource but aren't
 fully authenticated.
 
 This path **must** be accessible by a normal, unauthenticated user, else
