@@ -275,7 +275,7 @@ You can find a list of existing mime types on the `IANA website`_.
 
 .. versionadded:: 6.2
 
-    The ``extensionsMessage`` option was introduced in Symfony 6.3.
+    The ``extensionsMessage`` option was introduced in Symfony 6.2.
 
 The message displayed if the extension of the file is not a valid extension
 per the `extensions`_ option.
