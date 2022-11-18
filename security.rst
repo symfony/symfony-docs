@@ -959,6 +959,8 @@ After this, you have protected your login form against CSRF attacks.
     the token ID by setting  ``csrf_token_id`` in your configuration. See
     :ref:`reference-security-firewall-form-login` for more details.
 
+.. _security-json-login:
+
 JSON Login
 ~~~~~~~~~~
 

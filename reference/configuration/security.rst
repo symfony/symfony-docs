@@ -256,6 +256,21 @@ failure_path
 This is the route or path that the user is redirected to after a failed login attempt.
 It can be a relative/absolute URL or a Symfony route name.
 
+form_only
+.........
+
+**type**: ``boolean`` **default**: ``false``
+
+Set this option to ``true`` to require that the login data is sent using a form
+(it checks that the request content-type is ``application/x-www-form-urlencoded``).
+This is useful for example to prevent the :ref:`form login authenticator <security-form-login>`
+from responding to requests that should be handled by the
+:ref:`JSON login authenticator <security-json-login>`.
+
+.. versionadded:: 5.4
+
+    The ``form_only`` option was introduced in Symfony 5.4.
+
 use_forward
 ...........
 
