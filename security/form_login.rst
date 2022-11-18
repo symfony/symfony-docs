@@ -142,26 +142,26 @@ previously requested URL and always redirect to the default page:
 Control the Redirect Using Request Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The URL to redirect after the login can be defined using the ``_target_path``
-parameter of GET and POST requests. Its value must be a relative or absolute
+The URL to redirect to after the login can be dynamically defined using the ``_target_path``
+parameter of the GET or POST request. Its value must be a relative or absolute
 URL, not a Symfony route name.
 
-Defining the redirect URL via GET using a query string parameter:
+For GET, use a query string parameter:
 
 .. code-block:: text
 
     http://example.com/some/path?_target_path=/dashboard
 
-Defining the redirect URL via POST using a hidden form field:
+For POST, use a hidden form field:
 
 .. code-block:: html+twig
 
-    {# templates/security/login.html.twig #}
-    <form action="{{ path('login') }}" method="post">
+    {# templates/login/index.html.twig #}
+    <form action="{{ path('app_login') }}" method="post">
         {# ... #}
 
-        <input type="hidden" name="_target_path" value="{{ path('account') }}"/>
-        <input type="submit" name="login"/>
+        <input type="hidden" name="_target_path" value="{{ path('account') }}">
+        <input type="submit" name="login">
     </form>
 
 Using the Referring URL
@@ -304,8 +304,8 @@ This option can also be set via the ``_failure_path`` request parameter:
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
-        <input type="hidden" name="_failure_path" value="{{ path('forgot_password') }}"/>
-        <input type="submit" name="login"/>
+        <input type="hidden" name="_failure_path" value="{{ path('forgot_password') }}">
+        <input type="submit" name="login">
     </form>
 
 Customizing the Target and Failure Request Parameters
@@ -383,7 +383,7 @@ are now fully customized:
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
-        <input type="hidden" name="go_to" value="{{ path('dashboard') }}"/>
-        <input type="hidden" name="back_to" value="{{ path('forgot_password') }}"/>
-        <input type="submit" name="login"/>
+        <input type="hidden" name="go_to" value="{{ path('dashboard') }}">
+        <input type="hidden" name="back_to" value="{{ path('forgot_password') }}">
+        <input type="submit" name="login">
     </form>
