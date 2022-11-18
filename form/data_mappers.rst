@@ -19,13 +19,11 @@ The Difference between Data Transformers and Mappers
 It is important to know the difference between
 :doc:`data transformers </form/data_transformers>` and mappers.
 
-* **Data transformers** change the representation of a value (e.g. from
-  ``"2016-08-12"`` to a ``DateTime`` instance);
-* **Data mappers** map data (e.g. an object or array) to form fields, and vice versa.
-
-Changing a ``YYYY-mm-dd`` string value to a ``DateTime`` instance is done by a
-data transformer. Populating inner fields (e.g year, hour, etc) of a compound date type using
-a ``DateTime`` instance is done by the data mapper.
+* **Data transformers** change the representation of a single value, e.g. from
+  ``"2016-08-12"`` to a ``DateTime`` instance;
+* **Data mappers** map data (e.g. an object or array) to one or many form fields, and vice versa,
+  e.g. using a single ``DateTime`` instance to populate the inner fields (e.g year, hour, etc.)
+  of a compound date type.
 
 Creating a Data Mapper
 ----------------------
