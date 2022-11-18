@@ -353,13 +353,15 @@ This is the route or path that the user is redirected to after a failed login at
 It can be a relative/absolute URL or a Symfony route name.
 
 form_only
-............
+.........
 
 **type**: ``boolean`` **default**: ``false``
 
-By setting this option to ``true``, a content type check will be performed when the login form is submitted
-(i.e. the login form will be processed if it is the form data, so with a
-content type ``application/x-www-form-urlencoded``.
+Set this option to ``true`` to require that the login data is sent using a form
+(it checks that the request content-type is ``application/x-www-form-urlencoded``).
+This is useful for example to prevent the :ref:`form login authenticator <security-form-login>`
+from responding to requests that should be handled by the
+:ref:`JSON login authenticator <security-json-login>`.
 
 .. versionadded:: 5.4
 
