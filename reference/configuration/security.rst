@@ -380,7 +380,7 @@ username_parameter
 
 **type**: ``string`` **default**: ``_username``
 
-This is the field name that you should give to the username field of your
+This is the name of the username field of your
 login form. When you submit the form to ``check_path``, the security system
 will look for a POST parameter with this name.
 
@@ -389,7 +389,7 @@ password_parameter
 
 **type**: ``string`` **default**: ``_password``
 
-This is the field name that you should give to the password field of your
+This is the name of the password field of your
 login form. When you submit the form to ``check_path``, the security system
 will look for a POST parameter with this name.
 
@@ -400,7 +400,7 @@ post_only
 
 By default, you must submit your login form to the ``check_path`` URL as
 a POST request. By setting this option to ``false``, you can send a GET
-request to the ``check_path`` URL.
+request too.
 
 **Options Related to Redirecting after Login**
 
