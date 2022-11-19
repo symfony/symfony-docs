@@ -397,8 +397,10 @@ to help you unit test the completion logic::
             $this->assertSame(['Fabien', 'Fabrice', 'Wouter'], $suggestions);
 
             // complete the input with "Fa" as input
+            // note that the list does not reduce because the completion tester doesn't run any shell, 
+            // it only tests the PHP part of the completion logic, so it should always include all values
             $suggestions = $tester->complete(['Fa']);
-            $this->assertSame(['Fabien', 'Fabrice'], $suggestions);
+            $this->assertSame(['Fabien', 'Fabrice', 'Wouter'], $suggestions);
         }
     }
 
