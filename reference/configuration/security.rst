@@ -267,10 +267,6 @@ This is useful for example to prevent the :ref:`form login authenticator <securi
 from responding to requests that should be handled by the
 :ref:`JSON login authenticator <security-json-login>`.
 
-.. versionadded:: 5.4
-
-    The ``form_only`` option was introduced in Symfony 5.4.
-
 use_forward
 ...........
 
