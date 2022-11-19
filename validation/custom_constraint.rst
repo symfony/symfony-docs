@@ -214,9 +214,7 @@ email. First, create a constraint and override the ``getTargets()`` method::
 
     use Symfony\Component\Validator\Constraint;
 
-    /**
-     * @Annotation
-     */
+    #[\Attribute]
     class ConfirmedPaymentReceipt extends Constraint
     {
         public string $userDoesNotMatchMessage = 'User\'s e-mail address does not match that of the receipt';
