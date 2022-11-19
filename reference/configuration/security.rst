@@ -28,7 +28,6 @@ Configuration
 **Basic Options**:
 
 * `access_denied_url`_
-* `delete_cookies`_
 * `erase_credentials`_
 * `hide_user_not_found`_
 * `session_fixation_strategy`_
@@ -51,81 +50,6 @@ access_denied_url
 
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access denial handler). Example: ``/no-permission``
-
-delete_cookies
-~~~~~~~~~~~~~~
-
-**type**: ``array`` **default**: ``[]``
-
-Lists the names (and other optional features) of the cookies to delete when the
-user logs out::
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            # ...
-
-            firewalls:
-                main:
-                    # ...
-                    logout:
-                        delete_cookies:
-                            cookie1-name: null
-                            cookie2-name:
-                                path: '/'
-                            cookie3-name:
-                                path: null
-                                domain: example.com
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd">
-
-            <config>
-                <!-- ... -->
-
-                <firewall name="main">
-                    <!-- ... -->
-                    <logout path="...">
-                        <delete-cookie name="cookie1-name"/>
-                        <delete-cookie name="cookie2-name" path="/"/>
-                        <delete-cookie name="cookie3-name" domain="example.com"/>
-                    </logout>
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        $container->loadFromExtension('security', [
-            // ...
-            'firewalls' => [
-                'main' => [
-                    'logout' => [
-                        'delete_cookies' => [
-                            'cookie1-name' => null,
-                            'cookie2-name' => [
-                                'path' => '/',
-                            ],
-                            'cookie3-name' => [
-                                'path' => null,
-                                'domain' => 'example.com',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
 
 erase_credentials
 ~~~~~~~~~~~~~~~~~
@@ -433,6 +357,81 @@ redirected to the ``default_target_path`` to avoid a redirection loop.
 
 **Options Related to Logout Configuration**
 
+delete_cookies
+~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``[]``
+
+Lists the names (and other optional features) of the cookies to delete when the
+user logs out::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        delete_cookies:
+                            cookie1-name: null
+                            cookie2-name:
+                                path: '/'
+                            cookie3-name:
+                                path: null
+                                domain: example.com
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <logout path="...">
+                        <delete-cookie name="cookie1-name"/>
+                        <delete-cookie name="cookie2-name" path="/"/>
+                        <delete-cookie name="cookie3-name" domain="example.com"/>
+                    </logout>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            // ...
+            'firewalls' => [
+                'main' => [
+                    'logout' => [
+                        'delete_cookies' => [
+                            'cookie1-name' => null,
+                            'cookie2-name' => [
+                                'path' => '/',
+                            ],
+                            'cookie3-name' => [
+                                'path' => null,
+                                'domain' => 'example.com',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
 invalidate_session
 ~~~~~~~~~~~~~~~~~~
 
@@ -463,6 +462,19 @@ starts with ``http://`` or ``https://``) or the route name (otherwise) to
 redirect after logout.
 
 .. _reference-security-logout-csrf:
+
+enable_csrf
+~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``null``
+
+Set this option to ``true`` to enable CSRF protection in the logout process
+using Symfony's default CSRF token generator. Set also the ``csrf_token_generator``
+option if you need to use a custom CSRF token generator.
+
+.. versionadded:: 6.2
+
+    The ``enable_csrf`` option was introduced in Symfony 6.2.
 
 csrf_parameter
 ~~~~~~~~~~~~~~
@@ -613,9 +625,9 @@ This is the name of your configured LDAP client.
 dn_string
 .........
 
-**type**: ``string`` **default**: ``{username}``
+**type**: ``string`` **default**: ``{user_identifier}``
 
-This is the string which will be used as the bind DN. The ``{username}``
+This is the string which will be used as the bind DN. The ``{user_identifier}``
 placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you may need to override
 this value.
@@ -625,7 +637,7 @@ query_string
 
 **type**: ``string`` **default**: ``null``
 
-This is the string which will be used to query for the DN. The ``{username}``
+This is the string which will be used to query for the DN. The ``{user_identifier}``
 placeholder will be replaced with the user-provided value (their login).
 Depending on your LDAP server's configuration, you will need to override
 this value. This setting is only necessary if the user's DN cannot be derived

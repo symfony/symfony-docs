@@ -166,20 +166,41 @@ used ``render()``.
 The embedded action can now specify its own caching rules entirely independently
 of the main page::
 
-    // src/Controller/NewsController.php
-    namespace App\Controller;
+.. configuration-block::
 
-    // ...
-    class NewsController extends AbstractController
-    {
-        public function latest(int $maxPerPage): Response
+    .. code-block:: php-attributes
+
+        // src/Controller/NewsController.php
+        namespace App\Controller;
+
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        class NewsController extends AbstractController
         {
-            // sets to public and adds some expiration
-            $response->setSharedMaxAge(60);
-
-            return $response;
+            #[Cache(smaxage: 60)]
+            public function latest(int $maxPerPage): Response
+            {
+                // ...
+            }
         }
-    }
+
+    .. code-block:: php
+
+        // src/Controller/NewsController.php
+        namespace App\Controller;
+
+        // ...
+        class NewsController extends AbstractController
+        {
+            public function latest($maxPerPage)
+            {
+                // sets to public and adds some expiration
+                $response->setSharedMaxAge(60);
+
+                return $response;
+            }
+        }
 
 In this example, the embedded action is cached publicly too because the contents
 are the same for all requests. However, in other cases you may need to make this

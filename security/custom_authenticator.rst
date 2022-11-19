@@ -211,6 +211,11 @@ using :ref:`the user provider <security-user-providers>`::
 
 .. note::
 
+    The maximum length allowed for the user identifier is 4096 characters to
+    prevent `session storage flooding`_ attacks.
+
+.. note::
+
     You can optionally pass a user loader as second argument to the
     ``UserBadge``. This callable receives the ``$userIdentifier``
     and must return a ``UserInterface`` object (otherwise a
@@ -378,3 +383,5 @@ authenticator methods (e.g. ``createToken()``)::
             return new CustomOauthToken($passport->getUser(), $passport->getAttribute('scope'));
         }
     }
+
+.. _`session storage flooding`: https://symfony.com/blog/cve-2016-4423-large-username-storage-in-session

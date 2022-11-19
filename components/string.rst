@@ -519,6 +519,39 @@ the injected slugger is the same as the request locale::
         }
     }
 
+.. _string-slugger-emoji:
+
+Slug Emojis
+~~~~~~~~~~~
+
+.. versionadded:: 6.2
+
+    The Emoji transliteration feature was introduced in Symfony 6.2.
+
+You can transform any emojis into their textual representation::
+
+    use Symfony\Component\String\Slugger\AsciiSlugger;
+
+    $slugger = new AsciiSlugger();
+    $slugger = $slugger->withEmoji();
+
+    $slug = $slugger->slug('a 😺, 🐈‍⬛, and a 🦁 go to 🏞️', '-', 'en');
+    // $slug = 'a-grinning-cat-black-cat-and-a-lion-go-to-national-park';
+
+    $slug = $slugger->slug('un 😺, 🐈‍⬛, et un 🦁 vont au 🏞️', '-', 'fr');
+    // $slug = 'un-chat-qui-sourit-chat-noir-et-un-tete-de-lion-vont-au-parc-national';
+
+If you want to use a specific locale for the emoji, or to use the short codes
+from GitHub or Slack, use the first argument of ``withEmoji()`` method::
+
+    use Symfony\Component\String\Slugger\AsciiSlugger;
+
+    $slugger = new AsciiSlugger();
+    $slugger = $slugger->withEmoji('github'); // or "en", or "fr", etc.
+
+    $slug = $slugger->slug('a 😺, 🐈‍⬛, and a 🦁');
+    // $slug = 'a-smiley-cat-black-cat-and-a-lion';
+
 .. _string-inflector:
 
 Inflector

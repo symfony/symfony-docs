@@ -24,9 +24,21 @@ Symfony provides several route loaders for the most common needs:
             # loads routes from the given routing file stored in some bundle
             resource: '@AcmeBundle/Resources/config/routing.yaml'
 
+        app_psr4:
+            # loads routes from the PHP attributes of the controllers found in the given PSR-4 namespace root
+            resource:
+                path: '../src/Controller/'
+                namespace: App\Controller
+            type: attribute
+
         app_attributes:
             # loads routes from the PHP attributes of the controllers found in that directory
             resource: '../src/Controller/'
+            type:     attribute
+
+        app_class_attributes:
+            # loads routes from the PHP attributes of the given class
+            resource: App\Controller\MyController
             type:     attribute
 
         app_directory:
@@ -51,8 +63,16 @@ Symfony provides several route loaders for the most common needs:
             <!-- loads routes from the given routing file stored in some bundle -->
             <import resource="@AcmeBundle/Resources/config/routing.yaml"/>
 
+            <!-- loads routes from the PHP attributes of the controllers found in the given PSR-4 namespace root -->
+            <import type="attribute">
+                <resource path="../src/Controller/" namespace="App\Controller"/>
+            </import>
+
             <!-- loads routes from the PHP attributes of the controllers found in that directory -->
             <import resource="../src/Controller/" type="attribute"/>
+
+            <!-- loads routes from the PHP attributes of the given class -->
+            <import resource="App\Controller\MyController" type="attribute"/>
 
             <!-- loads routes from the YAML or XML files found in that directory -->
             <import resource="../legacy/routing/" type="directory"/>
@@ -70,8 +90,19 @@ Symfony provides several route loaders for the most common needs:
             // loads routes from the given routing file stored in some bundle
             $routes->import('@AcmeBundle/Resources/config/routing.yaml');
 
-            // loads routes from the PHP attributes (#[Route(...)]) of the controllers found in that directory
+            // loads routes from the PHP attributes (#[Route(...)])
+            // of the controllers found in the given PSR-4 namespace root
+            $routes->import(
+                ['path' => '../src/Controller/', 'namespace' => 'App\Controller'],
+                'attribute',
+            );
+
+            // loads routes from the PHP attributes (#[Route(...)])
+            // of the controllers found in that directory
             $routes->import('../src/Controller/', 'attribute');
+
+            // loads routes from the PHP attributes (#[Route(...)]) of the given class
+            $routes->import('App\Controller\MyController', 'attribute');
 
             // loads routes from the YAML or XML files found in that directory
             $routes->import('../legacy/routing/', 'directory');
@@ -84,6 +115,10 @@ Symfony provides several route loaders for the most common needs:
 
     The ``attribute`` value of the second argument of ``import()`` was introduced
     in Symfony 6.1.
+
+.. versionadded:: 6.2
+
+    The feature to import routes from a PSR-4 namespace root was introduced in Symfony 6.2.
 
 .. note::
 

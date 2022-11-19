@@ -63,6 +63,21 @@ to create each type of UUID::
     // It's defined in http://gh.peabody.io/uuidv6/
     $uuid = Uuid::v6(); // $uuid is an instance of Symfony\Component\Uid\UuidV6
 
+    // UUID version 7 features a time-ordered value field derived from the well known
+    // Unix Epoch timestamp source: the number of seconds since midnight 1 Jan 1970 UTC, leap seconds excluded.
+    // As well as improved entropy characteristics over versions 1 or 6.
+    $uuid = Uuid::v7();
+
+    // UUID version 8 provides an RFC-compatible format for experimental or vendor-specific use cases.
+    // The only requirement is that the variant and version bits MUST be set as defined in Section 4:
+    // https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-04.html#variant_and_version_fields
+    // UUIDv8 uniqueness will be implementation-specific and SHOULD NOT be assumed.
+    $uuid = Uuid::v8();
+
+.. versionadded:: 6.2
+
+    UUID versions 7 and 8 were introduced in Symfony 6.2.
+
 If your UUID value is already generated in another format, use any of the
 following methods to create a ``Uuid`` object from it::
 
@@ -84,6 +99,11 @@ Use these methods to transform the UUID object into different bases::
     $uuid->toBase32();  // string(26) "6SWYGR8QAV27NACAHMK5RG0RPG"
     $uuid->toBase58();  // string(22) "TuetYWNHhmuSQ3xPoVLv9M"
     $uuid->toRfc4122(); // string(36) "d9e7a184-5d5b-11ea-a62a-3499710062d0"
+    $uuid->toHex();     // string(34) "0xd9e7a1845d5b11eaa62a3499710062d0"
+
+.. versionadded:: 6.2
+
+    The ``toHex()`` method was introduced in Symfony 6.2.
 
 Working with UUIDs
 ~~~~~~~~~~~~~~~~~~
@@ -132,15 +152,20 @@ type, which converts to/from UUID objects automatically::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Types\UuidType;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
-        #[ORM\Column(type: 'uuid')]
+        #[ORM\Column(type: UuidType::NAME)]
         private $someProperty;
 
         // ...
     }
+
+.. versionadded:: 6.2
+
+    The ``UuidType::NAME`` constant was introduced in Symfony 6.2.
 
 There's also a Doctrine generator to help auto-generate UUID values for the
 entity primary keys::
@@ -148,12 +173,13 @@ entity primary keys::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Types\UuidType;
     use Symfony\Component\Uid\Uuid;
 
     class User implements UserInterface
     {
         #[ORM\Id]
-        #[ORM\Column(type: 'uuid', unique: true)]
+        #[ORM\Column(type: UuidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
         private $id;
@@ -175,6 +201,8 @@ of the UUID parameters::
     // src/Repository/ProductRepository.php
 
     // ...
+    use Symfony\Bridge\Doctrine\Types\UuidType;
+
     class ProductRepository extends ServiceEntityRepository
     {
         // ...
@@ -183,8 +211,8 @@ of the UUID parameters::
         {
             $qb = $this->createQueryBuilder('p')
                 // ...
-                // add 'uuid' as the third argument to tell Doctrine that this is a UUID
-                ->setParameter('user', $user->getUuid(), 'uuid')
+                // add UuidType::NAME as the third argument to tell Doctrine that this is a UUID
+                ->setParameter('user', $user->getUuid(), UuidType::NAME)
 
                 // alternatively, you can convert it to a value compatible with
                 // the type inferred by Doctrine
@@ -252,6 +280,11 @@ Use these methods to transform the ULID object into different bases::
     $ulid->toBase32();  // string(26) "01E439TP9XJZ9RPFH3T1PYBCR8"
     $ulid->toBase58();  // string(22) "1BKocMc5BnrVcuq2ti4Eqm"
     $ulid->toRfc4122(); // string(36) "0171069d-593d-97d3-8b3e-23d06de5b308"
+    $ulid->toHex();     // string(34) "0x0171069d593d97d38b3e23d06de5b308"
+
+.. versionadded:: 6.2
+
+    The ``toHex()`` method was introduced in Symfony 6.2.
 
 Working with ULIDs
 ~~~~~~~~~~~~~~~~~~
@@ -284,15 +317,20 @@ type, which converts to/from ULID objects automatically::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Types\UlidType;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
-        #[ORM\Column(type: 'ulid')]
+        #[ORM\Column(type: UlidType::NAME)]
         private $someProperty;
 
         // ...
     }
+
+.. versionadded:: 6.2
+
+    The ``UlidType::NAME`` constant was introduced in Symfony 6.2.
 
 There's also a Doctrine generator to help auto-generate ULID values for the
 entity primary keys::
@@ -300,12 +338,13 @@ entity primary keys::
     namespace App\Entity;
 
     use Doctrine\ORM\Mapping as ORM;
+    use Symfony\Bridge\Doctrine\Types\UlidType;
     use Symfony\Component\Uid\Ulid;
 
     class Product
     {
         #[ORM\Id]
-        #[ORM\Column(type: 'ulid', unique: true)]
+        #[ORM\Column(type: UlidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
         private $id;
@@ -328,6 +367,8 @@ of the ULID parameters::
     // src/Repository/ProductRepository.php
 
     // ...
+    use Symfony\Bridge\Doctrine\Types\UlidType;
+
     class ProductRepository extends ServiceEntityRepository
     {
         // ...
@@ -336,8 +377,8 @@ of the ULID parameters::
         {
             $qb = $this->createQueryBuilder('p')
                 // ...
-                // add 'ulid' as the third argument to tell Doctrine that this is a ULID
-                ->setParameter('user', $user->getUlid(), 'ulid')
+                // add UlidType::NAME as the third argument to tell Doctrine that this is a ULID
+                ->setParameter('user', $user->getUlid(), UlidType::NAME)
 
                 // alternatively, you can convert it to a value compatible with
                 // the type inferred by Doctrine

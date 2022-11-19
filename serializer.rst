@@ -130,6 +130,7 @@ configuration:
             serializer:
                 default_context:
                     enable_max_depth: true
+                    yaml_indentation: 2
 
     .. code-block:: xml
 
@@ -137,7 +138,7 @@ configuration:
         <framework:config>
             <!-- ... -->
             <framework:serializer>
-                <default-context enable-max-depth="true"/>
+                <default-context enable-max-depth="true" yaml-indentation="2"/>
             </framework:serializer>
         </framework:config>
 
@@ -146,14 +147,20 @@ configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
         use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+        use Symfony\Component\Serializer\Encoder\YamlEncoder;
 
         return static function (FrameworkConfig $framework) {
             $framework->serializer()
                 ->defaultContext([
-                    AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true
+                    AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
+                    YamlEncoder::YAML_INDENTATION => 2,
                 ])
             ;
         };
+
+.. versionadded:: 6.2
+
+    The option to configure YAML indentation was introduced in Symfony 6.2.
 
 You can also specify the context on a per-property basis::
 
@@ -360,6 +367,86 @@ stored in one of the following locations:
   directory of a bundle.
 
 .. _serializer-enabling-metadata-cache:
+
+Using Nested Attributes
+-----------------------
+
+To map nested properties, use the ``SerializedPath`` configuration to define
+their paths using a :doc:`valid PropertyAccess syntax </components/property_access>`:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Annotation\SerializedPath;
+
+        class Person
+        {
+            /**
+             * @SerializedPath("[profile][information][birthday]")
+             */
+            private string $birthday;
+
+            // ...
+        }
+
+    .. code-block:: php-attributes
+
+        namespace App\Model;
+
+        use Symfony\Component\Serializer\Annotation\SerializedPath;
+
+        class Person
+        {
+            #[SerializedPath('[profile][information][birthday]')]
+            private string $birthday;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        App\Model\Person:
+            attributes:
+                dob:
+                    serialized_path: '[profile][information][birthday]'
+        
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <serializer xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping
+                https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+        >
+            <class name="App\Model\Person">
+                <attribute name="dob" serialized-path="[profile][information][birthday]"/>
+            </class>
+        </serializer>
+
+.. versionadded:: 6.2
+
+    The option to configure a ``SerializedPath`` was introduced in Symfony 6.2.
+
+Using the configuration from above, denormalizing with a metadata-aware 
+normalizer will write the ``birthday`` field from ``$data`` onto the ``Person`` 
+object::
+
+    $data = [
+        'profile' => [
+            'information' => [
+                'birthday' => '01-01-1970',
+            ],
+        ],
+    ];
+    $person = $normalizer->denormalize($data, Person::class, 'any'); 
+    $person->getBirthday(); // 01-01-1970
+
+When using annotations or attributes, the ``SerializedPath`` can either 
+be set on the property or the associated _getter_ method. The ``SerializedPath``
+cannot be used in combination with a ``SerializedName`` for the same property.
 
 Configuring the Metadata Cache
 ------------------------------

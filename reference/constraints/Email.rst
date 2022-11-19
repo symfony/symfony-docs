@@ -109,11 +109,17 @@ This option defines the pattern used to validate the email address. Valid values
 * ``loose`` uses a simple regular expression (just checks that at least one ``@``
   character is present, etc.). This validation is too simple and it's recommended
   to use one of the other modes instead;
-* ``html5`` uses the same regular expression as the `HTML5 email input element`_,
-  making the backend validation consistent with the one provided by browsers;
+* ``html5`` uses the regular expression of the `HTML5 email input element`_,
+  except it enforces a tld to be present.
+* ``html5-allow-no-tld`` uses exactly the same regular expression as the `HTML5 email input element`_,
+  making the backend validation consistent with the one provided by browsers.
 * ``strict`` validates the address according to `RFC 5322`_ using the
   `egulias/email-validator`_ library (which is already installed when using
   :doc:`Symfony Mailer </mailer>`; otherwise, you must install it separately).
+
+.. versionadded:: 6.2
+
+   The ``html5-allow-no-tld`` mode was introduced in 6.2.
 
 .. tip::
 
@@ -121,10 +127,14 @@ This option defines the pattern used to validate the email address. Valid values
     :class:`Symfony\\Component\\Validator\\Constraints\\Email`
     (e.g. ``Email::VALIDATION_MODE_STRICT``).
 
-
 The default value used by this option is set in the
 :ref:`framework.validation.email_validation_mode <reference-validation-email_validation_mode>`
 configuration option.
+
+.. deprecated:: 6.2
+
+    The ``loose`` value is deprecated since Symfony 6.2. Starting from
+    Symfony 7.0, the default value of this option will be ``html5``.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 

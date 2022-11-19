@@ -110,8 +110,18 @@ Mailjet             ``composer require symfony/mailjet-mailer``
 Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
-OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
+MailPace            ``composer require symfony/mailpace-mailer``
+Infobip             ``composer require symfony/infobip-mailer``
 ==================  ==============================================
+
+.. versionadded:: 6.2
+
+    The ``MailPace`` integration was introduced in Symfony 6.2 (in previous
+    Symfony versions it was called ``OhMySMTP``).
+
+.. versionadded:: 6.2
+
+    The Infobip integration was introduced in Symfony 6.2.
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -158,10 +168,11 @@ Google Gmail         gmail+smtp://USERNAME:PASSWORD@default               n/a   
 Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
 Mailgun              mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
 Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
+MailPace             mailpace+api://API_TOKEN@default                     n/a                                         mailpace+api://API_TOKEN@default
 Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
 Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
 Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
-OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a                                         ohmysmtp+api://API_TOKEN@default
+Infobip              infobip+smtp://KEY@default                           n/a                                         infobip+api://KEY@BASE_URL
 ==================== ==================================================== =========================================== ========================================
 
 .. caution::
@@ -270,6 +281,15 @@ Other Options
     The minimum number of seconds between two messages required to ping the server::
 
         $dsn = 'smtps://smtp.example.com?ping_threshold=200'
+
+``max_per_second``
+    The number of messages to send per second (0 to disable this limitation)::
+
+        $dsn = 'smtps://smtp.example.com?max_per_second=2'
+
+    .. versionadded:: 6.2
+
+        The ``max_per_second`` option was introduced in Symfony 6.2.
 
 Creating & Sending Messages
 ---------------------------
@@ -426,23 +446,29 @@ result of rendering some template) or PHP resources::
 File Attachments
 ~~~~~~~~~~~~~~~~
 
-Use the ``attachFromPath()`` method to attach files that exist on your file system::
+Use the ``addPart()`` method with a ``BodyFile`` to add files that exist on your file system::
 
     $email = (new Email())
         // ...
-        ->attachFromPath('/path/to/documents/terms-of-use.pdf')
+        ->addPart(new DataPart(new BodyFile('/path/to/documents/terms-of-use.pdf')))
         // optionally you can tell email clients to display a custom name for the file
-        ->attachFromPath('/path/to/documents/privacy.pdf', 'Privacy Policy')
+        ->addPart(new DataPart(new BodyFile('/path/to/documents/privacy.pdf', 'Privacy Policy')))
         // optionally you can provide an explicit MIME type (otherwise it's guessed)
-        ->attachFromPath('/path/to/documents/contract.doc', 'Contract', 'application/msword')
+        ->addPart(new DataPart(new BodyFile('/path/to/documents/contract.doc', 'Contract', 'application/msword')))
     ;
 
-Alternatively you can use the ``attach()`` method to attach contents from a stream::
+Alternatively you can attach contents from a stream by passing it directly to the ``DataPart`` ::
 
     $email = (new Email())
         // ...
-        ->attach(fopen('/path/to/documents/contract.doc', 'r'))
+        ->addPart(new DataPart(fopen('/path/to/documents/contract.doc', 'r')))
     ;
+
+.. deprecated:: 6.2
+
+    In Symfony versions previous to 6.2, the methods ``attachFromPath()`` and
+    ``attach()`` could be used to add attachments. These methods have been
+    deprecated and replaced with ``addPart()``.
 
 Embedding Images
 ~~~~~~~~~~~~~~~~
@@ -452,16 +478,18 @@ instead of adding them as attachments. When using Twig to render the email
 contents, as explained :ref:`later in this article <mailer-twig-embedding-images>`,
 the images are embedded automatically. Otherwise, you need to embed them manually.
 
-First, use the ``embed()`` or ``embedFromPath()`` method to add an image from a
+First, use the ``addPart()`` method to add an image from a
 file or stream::
 
     $email = (new Email())
         // ...
         // get the image contents from a PHP resource
-        ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png')
+        ->addPart((new DataPart(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png'))->asInline())
         // get the image contents from an existing file
-        ->embedFromPath('/path/to/images/signature.gif', 'footer-signature', 'image/gif')
+        ->addPart((new DataPart(new BodyFile('/path/to/images/signature.gif', 'footer-signature', 'image/gif')))->asInline())
     ;
+
+Use the ``asInline()`` method to embed the content instead of attaching it.
 
 The second optional argument of both methods is the image name ("Content-ID" in
 the MIME standard). Its value is an arbitrary string used later to reference the
@@ -469,8 +497,8 @@ images inside the HTML contents::
 
     $email = (new Email())
         // ...
-        ->embed(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png')
-        ->embedFromPath('/path/to/images/signature.gif', 'footer-signature', 'image/gif')
+        ->addPart((new DataPart(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png'))->asInline())
+        ->addPart((new DataPart(new BodyFile('/path/to/images/signature.gif', 'footer-signature', 'image/gif')))->asInline())
 
         // reference images using the syntax 'cid:' + "image embed name"
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
@@ -482,6 +510,12 @@ images inside the HTML contents::
 .. versionadded:: 6.1
 
     The support of embedded images as HTML backgrounds was introduced in Symfony 6.1.
+
+.. deprecated:: 6.2
+
+    In Symfony versions previous to 6.2, the methods ``embedFromPath()`` and
+    ``embed()`` could be used to embed images. These methods have been deprecated
+    and replaced with ``addPart()`` together with inline ``DataPart`` objects.
 
 .. _mailer-configure-email-globally:
 
@@ -1202,9 +1236,38 @@ you have a transport called ``async``, you can route the message there:
                 ->senders(['async']);
         };
 
+Thanks to this, instead of being delivered immediately, messages will be sent
+to the transport to be handled later (see :ref:`messenger-worker`). Note that
+the "rendering" of the email (computed headers, body rendering, ...) is also
+deferred and will only happen just before the email is sent by the Messenger
+handler.
 
-Thanks to this, instead of being delivered immediately, messages will be sent to
-the transport to be handled later (see :ref:`messenger-worker`).
+.. versionadded:: 6.2
+
+    The following example about rendering the email before calling
+    ``$mailer->send($email)`` works as of Symfony 6.2.
+
+When sending an email asynchronously, its instance must be serializable.
+This is always the case for :class:`Symfony\\Bridge\\Twig\\Mime\\Email`
+instances, but when sending a
+:class:`Symfony\\Bridge\\Twig\\Mime\\TemplatedEmail`, you must ensure that
+the ``context`` is serializable. If you have non-serializable variables,
+like Doctrine entities, either replace them with more specific variables or
+render the email before calling ``$mailer->send($email)``::
+
+    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Mime\BodyRendererInterface;
+
+    public function action(MailerInterface $mailer, BodyRendererInterface $bodyRenderer)
+    {
+        $email = (new TemplatedEmail())
+            ->htmlTemplate($template)
+            ->context($context)
+        ;
+        $bodyRenderer->render($email);
+
+        $mailer->send($email);
+    }
 
 You can configure which bus is used to dispatch the message using the ``message_bus`` option.
 You can also set this to ``false`` to call the Mailer transport directly and
@@ -1296,7 +1359,7 @@ The following transports currently support tags and metadata:
 
 The following transports only support tags:
 
-* OhMySMTP
+* MailPace
 
 The following transports only support metadata:
 
@@ -1364,31 +1427,22 @@ Mailer Events
 MessageEvent
 ~~~~~~~~~~~~
 
-``MessageEvent`` allows to change the Message and the Envelope before the email
-is sent::
+**Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\MessageEvent`
+
+``MessageEvent`` allows to change the Mailer message and the envelope before
+the email is sent::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Mailer\Event\MessageEvent;
     use Symfony\Component\Mime\Email;
 
-    class MailerSubscriber implements EventSubscriberInterface
+    public function onMessage(MessageEvent $event): void
     {
-        public static function getSubscribedEvents()
-        {
-            return [
-                MessageEvent::class => 'onMessage',
-            ];
+        $message = $event->getMessage();
+        if (!$message instanceof Email) {
+            return;
         }
-
-        public function onMessage(MessageEvent $event): void
-        {
-            $message = $event->getMessage();
-            if (!$message instanceof Email) {
-                return;
-            }
-
-            // do something with the message
-        }
+        // do something with the message
     }
 
 .. tip::
@@ -1398,8 +1452,140 @@ is sent::
     late as possible (e.g. setting a negative priority for it) so the email
     contents are not set or modified after signing them.
 
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\MessageEvent"
+
+QueuingMessageEvent
+~~~~~~~~~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\QueuingMessageEvent`
+
+.. versionadded:: 6.2
+
+    The ``QueuingMessageEvent`` class was introduced in Symfony 6.2.
+
+``QueuingMessageEvent`` allows to add some logic before the email is sent to
+the Messenger bus (this event is not dispatched when no bus is configured); it
+extends ``MessageEvent`` to allow adding Messenger stamps to the Messenger
+message sent to the bus::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Mailer\Event\QueuingMessageEvent;
+    use Symfony\Component\Mime\Email;
+
+    public function onMessage(QueuingMessageEvent $event): void
+    {
+        $message = $event->getMessage();
+        if (!$message instanceof Email) {
+            return;
+        }
+        // do something with the message (logging, ...)
+
+        // and/or add some Messenger stamps
+        $event->addStamp(new SomeMessengerStamp());
+    }
+
+This event lets listeners do something before a message is sent to the queue
+(like adding stamps or logging) but any changes to the message or the envelope
+are discarded. To change the message or the envelope, listen to
+``MessageEvent`` instead.
+
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\QueuingMessageEvent"
+
+SentMessageEvent
+~~~~~~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\SentMessageEvent`
+
+.. versionadded:: 6.2
+
+    The ``SentMessageEvent`` event was introduced in Symfony 6.2.
+
+``SentMessageEvent`` allows you to act on the :class:`Symfony\\Component\\\Mailer\\\SentMessage`
+class to access the original message (``getOriginalMessage()``) and some debugging
+information (``getDebug()``) such as the HTTP calls made by the HTTP transports,
+which is useful for debugging errors::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Mailer\Event\SentMessageEvent;
+    use Symfony\Component\Mailer\SentMessage;
+
+    public function onMessage(SentMessageEvent $event): void
+    {
+        $message = $event->getMessage();
+        if (!$message instanceof SentMessage) {
+            return;
+        }
+
+        // do something with the message
+    }
+
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\SentMessageEvent"
+
+FailedMessageEvent
+~~~~~~~~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\FailedMessageEvent`
+
+.. versionadded:: 6.2
+
+    The ``FailedMessageEvent`` event was introduced in Symfony 6.2.
+
+``FailedMessageEvent`` allows acting on the the initial message in case of a failure::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Mailer\Event\FailedMessageEvent;
+
+    public function onMessage(FailedMessageEvent $event): void
+    {
+        // e.g you can get more information on this error when sending an email
+        $event->getError();
+
+        // do something with the message
+    }
+
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\FailedMessageEvent"
+
 Development & Debugging
 -----------------------
+
+Sending Test Emails
+~~~~~~~~~~~~~~~~~~~
+
+Symfony provides a command to send emails, which is useful during development
+to test if sending emails works correctly:
+
+.. code-block:: terminal
+
+    # the only mandatory argument is the recipient address
+    # (check the command help to learn about its options)
+    $ php bin/console mailer:test someone@example.com
+
+This command bypasses the :doc:`Messenger bus </messenger>`, if configured, to
+ease testing emails even when the Messenger consumer is not running.
+
+.. versionadded:: 6.2
+
+    The ``mailer:test`` command was introduced in Symfony 6.2.
 
 Disabling Delivery
 ~~~~~~~~~~~~~~~~~~

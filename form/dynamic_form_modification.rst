@@ -233,7 +233,7 @@ The problem is now to get the current user and create a choice field that
 contains only this user's friends. This can be done by injecting the ``Security``
 service into the form type so you can get the current user object::
 
-    use Symfony\Component\Security\Core\Security;
+    use Symfony\Bundle\SecurityBundle\Security;
     // ...
 
     class FriendMessageFormType extends AbstractType
@@ -260,9 +260,9 @@ security helper to fill in the listener logic::
     use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+    use Symfony\Bundle\SecurityBundle\Security;
     use Symfony\Component\Form\Extension\Core\Type\TextareaType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Security\Core\Security;
     // ...
 
     class FriendMessageFormType extends AbstractType

@@ -160,8 +160,8 @@ the impersonator user::
     // src/Service/SomeService.php
     namespace App\Service;
 
+    use Symfony\Bundle\SecurityBundle\Security;
     use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
-    use Symfony\Component\Security\Core\Security;
     // ...
 
     class SomeService
@@ -244,6 +244,67 @@ also adjust the query parameter name via the ``parameter`` setting:
             ;
         };
 
+Redirecting to a Specific Target Route
+--------------------------------------
+
+.. versionadded:: 6.2
+
+    The ``target_route`` configuration option was introduced in Symfony 6.2.
+
+.. note::
+
+    It works only in a stateful firewall.
+
+This feature allows you to control the redirection target route via ``target_route``.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    switch_user: { target_route: app_user_dashboard }
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <switch-user target-route="app_user_dashboard"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            // ...
+            $security->firewall('main')
+                // ...
+                ->switchUser()
+                    ->targetRoute('app_user_dashboard')
+            ;
+        };
+
 Limiting User Switching
 -----------------------
 
@@ -306,9 +367,9 @@ logic you want::
     // src/Security/Voter/SwitchToCustomerVoter.php
     namespace App\Security\Voter;
 
+    use Symfony\Bundle\SecurityBundle\Security;
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-    use Symfony\Component\Security\Core\Security;
     use Symfony\Component\Security\Core\User\UserInterface;
 
     class SwitchToCustomerVoter extends Voter

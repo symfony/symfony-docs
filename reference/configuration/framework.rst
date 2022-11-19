@@ -53,6 +53,20 @@ will invalidate all signed URIs and Remember Me cookies. That's why, after
 changing this value, you should regenerate the application cache and log
 out all the application users.
 
+catch_all_throwables
+~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
+thrown by the application and will turn them into HTTP reponses.
+
+Starting from Symfony 7.0, the default value of this option will be ``true``.
+
+.. versionadded:: 6.2
+
+    The ``catch_all_throwables`` option was introduced in Symfony 6.2.
+
 .. _configuration-framework-http_cache:
 
 http_cache
@@ -143,6 +157,22 @@ Specifies the default number of seconds (the granularity is the second) during
 which the cache can serve a stale response when an error is encountered
 (default: 60). This setting is overridden by the stale-if-error HTTP
 Cache-Control extension (see RFC 5861).
+
+terminate_on_cache_hit
+......................
+
+**type**: ``boolean`` **default**: ``true``
+
+If ``true``, the :ref:`kernel.terminate <component-http-kernel-kernel-terminate>`
+event is dispatched even when the cache is hit.
+
+Unless your application needs to process events on cache hits, it's recommended
+to set this to ``false`` to improve performance, because it avoids having to
+bootstrap the Symfony framework on a cache hit.
+
+.. versionadded:: 6.2
+
+    The ``terminate_on_cache_hit`` option was introduced in Symfony 6.2.
 
  .. _configuration-framework-http_method_override:
 
@@ -1481,6 +1511,18 @@ If the charset of your application is UTF-8 (as defined in the
 recommended setting it to ``true``. This will make non-UTF8 URLs to generate 404
 errors.
 
+cache_dir
+.........
+
+**type**: ``string`` **default**: ``%kernel.cache_dir%``
+
+The directory where routing information will be cached. Can be set to
+``~`` (``null``) to disable route caching.
+
+.. versionadded:: 6.2
+
+    The ``cache_dir`` setting was introduced in Symfony 6.2.
+
 .. _config-framework-session:
 
 session
@@ -2526,6 +2568,11 @@ email_validation_mode
 
 **type**: ``string`` **default**: ``loose``
 
+.. deprecated:: 6.2
+
+    The ``loose`` default value is deprecated since Symfony 6.2. Starting from
+    Symfony 7.0, the default value of this option will be ``html5``.
+
 Sets the default value for the
 :ref:`"mode" option of the Email validator <reference-constraint-email-mode>`.
 
@@ -2732,6 +2779,9 @@ default_context
 A map with default context options that will be used with each ``serialize`` and ``deserialize``
 call. This can be used for example to set the json encoding behavior by setting ``json_encode_options``
 to a `json_encode flags bitmask`_.
+
+You can inspect the :ref:`serializer context builders <serializer-using-context-builders>`
+to discover the available settings.
 
 php_errors
 ~~~~~~~~~~

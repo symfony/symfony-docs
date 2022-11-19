@@ -462,6 +462,12 @@ You can also manually hash a password by running:
 Read more about all available hashers and password migration in
 :doc:`security/passwords`.
 
+.. versionadded:: 6.2
+
+    In applications using Symfony 6.2 and PHP 8.2 or newer, the
+    `SensitiveParameter PHP attribute`_ is applied to all plain passwords and
+    sensitive tokens so they don't appear in stack traces.
+
 .. _firewalls-authentication:
 .. _a-authentication-firewalls:
 
@@ -588,8 +594,42 @@ anything else within your firewall in the :ref:`access control
 
         $ composer require --dev symfony/profiler-pack
 
-Now that we understand our firewall, the next step is to create a way for your
-users to authenticate!
+Fetching the Firewall Configuration for a Request
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to get the configuration of the firewall that matched a given request,
+use the :class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
+
+    // src/Service/ExampleService.php
+    // ...
+
+    use Symfony\Bundle\SecurityBundle\Security;
+    use Symfony\Component\HttpFoundation\RequestStack;
+
+    class ExampleService
+    {
+        private Security $security;
+
+        public function __construct(Security $security, RequestStack $requestStack)
+        {
+            $this->requestStack = $requestStack;
+            // Avoid calling getFirewallConfig() in the constructor: auth may not
+            // be complete yet. Instead, store the entire Security object.
+            $this->security = $security;
+        }
+
+        public function someMethod()
+        {
+            $request = $this->requestStack->getCurrentRequest();
+            $firewallName = $this->security->getFirewallConfig($request)?->getName();
+
+            // ...
+        }
+    }
+
+.. versionadded:: 6.2
+
+    The ``getFirewallConfig()`` method was introduced in Symfony 6.2.
 
 .. _security-authenticators:
 
@@ -1566,6 +1606,52 @@ and set the ``limiter`` option to its service ID:
             ;
         };
 
+Login Programmatically
+----------------------
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
+    class was introduced in Symfony 6.2. Prior to 6.2, it was called
+    ``Symfony\Component\Security\Core\Security``.
+
+.. versionadded:: 6.2
+
+    The :method:`Symfony\\Bundle\\SecurityBundle\\Security::login`
+    method was introduced in Symfony 6.2.
+
+You can log in a user programmatically using the `login()` method of the
+:class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
+
+    // src/Controller/SecurityController.php
+    namespace App\Controller\SecurityController;
+
+    use App\Security\Authenticator\ExampleAuthenticator;
+    use Symfony\Bundle\SecurityBundle\Security;
+
+    class SecurityController
+    {
+        public function someAction(Security $security): Response
+        {
+            // get the user to be authenticated
+            $user = ...;
+
+            // log the user in on the current firewall
+            $this->security->login($user);
+
+            // if the firewall has more than one authenticator, you must pass it explicitly
+            // by using the name of built-in authenticators...
+            $this->security->login($user, 'form_login');
+            // ...or the service id of custom authenticators
+            $this->security->login($user, ExampleAuthenticator::class);
+
+            // you can also log in on a different firewall
+            $this->security->login($user, 'form_login', 'other_firewall');
+
+            // ... redirect the user to its account page for instance
+        }
+    }
+
 .. _security-logging-out:
 
 Logging Out
@@ -1690,6 +1776,45 @@ Next, you need to create a route for this URL (but not a controller):
 That's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
 Symfony will un-authenticate the current user and redirect them.
 
+Logout programmatically
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
+    class was introduced in Symfony 6.2. Prior to 6.2, it was called
+    ``Symfony\Component\Security\Core\Security``.
+
+.. versionadded:: 6.2
+
+    The :method:`Symfony\\Bundle\\SecurityBundle\\Security::logout`
+    method was introduced in Symfony 6.2.
+
+You can logout user programmatically using the ``logout()`` method of the
+:class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
+
+    // src/Controller/SecurityController.php
+    namespace App\Controller\SecurityController;
+
+    use Symfony\Bundle\SecurityBundle\Security;
+
+    class SecurityController
+    {
+        public function someAction(Security $security): Response
+        {
+            // logout the user in on the current firewall
+            $response = $security->logout();
+
+            // you can also disable the csrf logout
+            $response = $security->logout(false);
+
+            // ... return $response (if set) or e.g. redirect to the homepage
+        }
+    }
+
+The user will be logout from the firewall of the request. If the request is
+not behind a firewall a ``\LogicException`` will be thrown.
+
 Customizing Logout
 ~~~~~~~~~~~~~~~~~~
 
@@ -1773,12 +1898,12 @@ Fetching the User from a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to get the logged in user from a service, use the
-:class:`Symfony\\Component\\Security\\Core\\Security` service::
+:class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
 
     // src/Service/ExampleService.php
     // ...
 
-    use Symfony\Component\Security\Core\Security;
+    use Symfony\Bundle\SecurityBundle\Security;
 
     class ExampleService
     {
@@ -1799,6 +1924,12 @@ If you need to get the logged in user from a service, use the
             // ...
         }
     }
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\\Bundle\\SecurityBundle\\Security` class
+    was introduced in Symfony 6.2. In previous Symfony versions this class was
+    defined in ``Symfony\Component\Security\Core\Security``.
 
 Fetch the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2149,35 +2280,31 @@ will happen:
 
 .. _security-securing-controller-annotations:
 
-Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
-using annotations:
+Another way to secure one or more controller actions is to use an attribute.
+In the following example, all controller actions will require the
+``ROLE_ADMIN`` permission, except for ``adminDashboard()``, which will require
+the ``ROLE_SUPER_ADMIN`` permission:
 
-.. configuration-block::
+.. code-block:: php-attributes
 
-    .. code-block:: php-attributes
+    // src/Controller/AdminController.php
+    // ...
 
-        // src/Controller/AdminController.php
-        // ...
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-        use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-
-        /**
-         * Require ROLE_ADMIN for all the actions of this controller
-         */
-        #[IsGranted('ROLE_ADMIN')]
-        class AdminController extends AbstractController
+    #[IsGranted('ROLE_ADMIN')]
+    class AdminController extends AbstractController
+    {
+        #[IsGranted('ROLE_SUPER_ADMIN')]
+        public function adminDashboard(): Response
         {
-            /**
-             * Require ROLE_SUPER_ADMIN only for this action
-             */
-            #[IsGranted('ROLE_SUPER_ADMIN')]
-            public function adminDashboard(): Response
-            {
-                // ...
-            }
+            // ...
         }
+    }
 
-For more information, see the `FrameworkExtraBundle documentation`_.
+.. versionadded:: 6.2
+
+    The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
 
 .. _security-template:
 
@@ -2208,7 +2335,7 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
 
       // ...
       use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-    + use Symfony\Component\Security\Core\Security;
+    + use Symfony\Bundle\SecurityBundle\Security;
 
       class SalesReportManager
       {
@@ -2370,19 +2497,19 @@ Secondly, you can use a special "attribute" in place of a role::
 
     public function adminDashboard(): Response
     {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
 
         // ...
     }
 
-You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like
+You can use ``IS_AUTHENTICATED`` anywhere roles are used: like
 ``access_control`` or in Twig.
 
-``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
+``IS_AUTHENTICATED`` isn't a role, but it kind of acts like one, and every
 user that has logged in will have this. Actually, there are some special attributes
 like this:
 
-* ``IS_AUTHENTICATED_REMEMBERED``: *All* logged in users have this, even
+* ``IS_AUTHENTICATED_REMEMBERED``: *all* logged in users have this, even
   if they are logged in because of a "remember me cookie". Even if you don't
   use the :doc:`remember me functionality </security/remember_me>`,
   you can use this to check if the user is logged in.
@@ -2614,7 +2741,6 @@ Authorization (Denying Access)
     security/access_denied_handler
     security/force_https
 
-.. _`FrameworkExtraBundle documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`HWIOAuthBundle`: https://github.com/hwi/HWIOAuthBundle
 .. _`OWASP Brute Force Attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
 .. _`brute force login attacks`: https://owasp.org/www-community/controls/Blocking_Brute_Force_Attacks
@@ -2622,4 +2748,5 @@ Authorization (Denying Access)
 .. _`SymfonyCastsVerifyEmailBundle`: https://github.com/symfonycasts/verify-email-bundle
 .. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication
 .. _`Login CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
+.. _`SensitiveParameter PHP attribute`: https://wiki.php.net/rfc/redact_parameters_in_back_traces
 .. _`PHP date relative formats`: https://www.php.net/datetime.formats.relative

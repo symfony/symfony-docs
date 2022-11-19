@@ -1071,6 +1071,36 @@ Mailer Assertions
     address. This assertion normalizes addresses like ``Jane Smith
     <jane@example.com>`` into ``jane@example.com``.
 
+Notifier Assertions
+...................
+
+``assertNotificationCount(int $count, string $transportName = null, string $message = '')``
+    Asserts that the given number of notifications has been created
+    (in total or for the given transport).
+``assertQueuedNotificationCount(int $count, string $transportName = null, string $message = '')``
+    Asserts that the given number of notifications are queued
+    (in total or for the given transport).
+``assertNotificationIsQueued(MessageEvent $event, string $message = '')``
+    Asserts that the given notification is queued.
+``assertNotificationIsNotQueued(MessageEvent $event, string $message = '')``
+    Asserts that the given notification is not queued.
+``assertNotificationSubjectContains(MessageInterface $notification, string $text, string $message = '')``
+    Asserts that the given text is included in the subject of
+    the given notification.
+``assertNotificationSubjectNotContains(MessageInterface $notification, string $text, string $message = '')``
+    Asserts that the given text is not included in the subject of
+    the given notification.
+``assertNotificationTransportIsEqual(MessageInterface $notification, string $transportName, string $message = '')``
+    Asserts that the name of the transport for the given notification
+    is the same as the given text.
+``assertNotificationTransportIsNotEqual(MessageInterface $notification, string $transportName, string $message = '')``
+    Asserts that the name of the transport for the given notification
+    is not the same as the given text.
+
+.. versionadded:: 6.2
+
+    The Notifier assertions were introduced in Symfony 6.2.
+
 .. TODO
 ..  End to End Tests (E2E)
 ..  ----------------------

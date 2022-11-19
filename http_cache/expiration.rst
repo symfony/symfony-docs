@@ -24,10 +24,25 @@ Expiration with the ``Cache-Control`` Header
 Most of the time, you will use the ``Cache-Control`` header, which
 is used to specify many different cache directives::
 
-    // sets the number of seconds after which the response
-    // should no longer be considered fresh by shared caches
-    $response->setPublic();
-    $response->setMaxAge(600);
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        #[Cache(public: true, maxage: 600)]
+        public function index()
+        {
+            // ...
+        }
+
+    .. code-block:: php
+
+        // sets the number of seconds after which the response
+        // should no longer be considered fresh by shared caches
+        $response->setPublic();
+        $response->setMaxAge(600);
 
 The ``Cache-Control`` header would take on the following format (it may have
 additional directives):
@@ -57,13 +72,28 @@ or disadvantage to either.
 
 According to the HTTP specification, "the ``Expires`` header field gives
 the date/time after which the response is considered stale." The ``Expires``
-header can be set with the ``setExpires()`` ``Response`` method. It takes a
-``DateTime`` instance as an argument::
+header can be set with the ``expires`` option of the ``#[Cache()]`` attribute or
+the ``setExpires()`` ``Response`` method::
 
-    $date = new DateTime();
-    $date->modify('+600 seconds');
+.. configuration-block::
 
-    $response->setExpires($date);
+    .. code-block:: php-attributes
+
+        use Symfony\Component\HttpKernel\Attribute\Cache;
+        // ...
+
+        #[Cache(expires: '+600 seconds')]
+        public function index()
+        {
+            // ...
+        }
+
+    .. code-block:: php
+
+        $date = new DateTime();
+        $date->modify('+600 seconds');
+
+        $response->setExpires($date);
 
 The resulting HTTP header will look like this:
 
@@ -73,8 +103,8 @@ The resulting HTTP header will look like this:
 
 .. note::
 
-    The ``setExpires()`` method automatically converts the date to the GMT
-    timezone as required by the specification.
+    The ``expires` option and the ``setExpires()`` method automatically convert
+    the date to the GMT timezone as required by the specification.
 
 Note that in HTTP versions before 1.1 the origin server wasn't required to
 send the ``Date`` header. Consequently, the cache (e.g. the browser) might

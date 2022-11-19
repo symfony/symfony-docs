@@ -59,49 +59,55 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-==============  ====================================  ===========================================================================
-Service         Package                               DSN
-==============  ====================================  ===========================================================================
-46elks          ``symfony/forty-six-elks-notifier``   ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
-AllMySms        ``symfony/all-my-sms-notifier``       ``allmysms://LOGIN:APIKEY@default?from=FROM``
-AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
-Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
-Esendex         ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
-FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
-FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:API_KEY@default?phone=PHONE``
-GatewayApi      ``symfony/gateway-api-notifier``      ``gatewayapi://TOKEN@default?from=FROM``
-Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
-Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
-KazInfoTeh      ``symfony/kaz-info-teh-notifier``     ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
-LightSms        ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
-Mailjet         ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?from=FROM``
-MessageBird     ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
-MessageMedia    ``symfony/message-media-notifier``    ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
-Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
-Nexmo           ``symfony/nexmo-notifier``            Abandoned in favor of Vonage (symfony/vonage-notifier).
-Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
-OrangeSms       ``symfony/orange-sms-notifier``       ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME``
-OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME&no_stop_clause=true``
-Sendberry       ``symfony/sendberry-notifier``        ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
-Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
-Sms77           ``symfony/sms77-notifier``            ``sms77://API_KEY@default?from=FROM``
-Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM&test=0``
-SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
-Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
-SpotHit         ``symfony/spot-hit-notifier``         ``spothit://TOKEN@default?from=FROM``
-Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
-TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
-Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
-Vonage          ``symfony/vonage-notifier``           ``vonage://KEY:SECRET@default?from=FROM``
-Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
-==============  ====================================  ===========================================================================
+===============  =====================================  ===========================================================================
+Service          Package                                DSN
+===============  =====================================  ===========================================================================
+46elks           ``symfony/forty-six-elks-notifier``    ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
+AllMySms         ``symfony/all-my-sms-notifier``        ``allmysms://LOGIN:APIKEY@default?from=FROM``
+AmazonSns        ``symfony/amazon-sns-notifier``        ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+Clickatell       ``symfony/clickatell-notifier``        ``clickatell://ACCESS_TOKEN@default?from=FROM``
+ContactEveryone  ``symfony/contact-everyone-notifier``  ``contact-everyone://TOKEN@default?&diffusionname=DIFFUSION_NAME&category=CATEGORY``
+Esendex          ``symfony/esendex-notifier``           ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
+FakeSms          ``symfony/fake-sms-notifier``          ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
+FreeMobile       ``symfony/free-mobile-notifier``       ``freemobile://LOGIN:API_KEY@default?phone=PHONE``
+GatewayApi       ``symfony/gateway-api-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
+Infobip          ``symfony/infobip-notifier``           ``infobip://AUTH_TOKEN@HOST?from=FROM``
+Iqsms            ``symfony/iqsms-notifier``             ``iqsms://LOGIN:PASSWORD@default?from=FROM``
+KazInfoTeh       ``symfony/kaz-info-teh-notifier``      ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
+LightSms         ``symfony/light-sms-notifier``         ``lightsms://LOGIN:TOKEN@default?from=PHONE``
+Mailjet          ``symfony/mailjet-notifier``           ``mailjet://TOKEN@default?from=FROM``
+MessageBird      ``symfony/message-bird-notifier``      ``messagebird://TOKEN@default?from=FROM``
+MessageMedia     ``symfony/message-media-notifier``     ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
+Mobyt            ``symfony/mobyt-notifier``             ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
+Nexmo            ``symfony/nexmo-notifier``             Abandoned in favor of Vonage (symfony/vonage-notifier).
+Octopush         ``symfony/octopush-notifier``          ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
+OrangeSms        ``symfony/orange-sms-notifier``        ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME``
+OvhCloud         ``symfony/ovh-cloud-notifier``         ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME&no_stop_clause=true``
+Sendberry        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
+Sendinblue       ``symfony/sendinblue-notifier``        ``sendinblue://API_KEY@default?sender=PHONE``
+Sms77            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
+Sinch            ``symfony/sinch-notifier``             ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
+Smsapi           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default?from=FROM&test=0``
+SmsBiuras        ``symfony/sms-biuras-notifier``        ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
+Smsc             ``symfony/smsc-notifier``              ``smsc://LOGIN:PASSWORD@default?from=FROM``
+SMSFactor        ``symfony/sms-factor-notifier``        ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
+SpotHit          ``symfony/spot-hit-notifier``          ``spothit://TOKEN@default?from=FROM``
+Telnyx           ``symfony/telnyx-notifier``            ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
+TurboSms         ``symfony/turbo-sms-notifier``         ``turbosms://AUTH_TOKEN@default?from=FROM``
+Twilio           ``symfony/twilio-notifier``            ``twilio://SID:TOKEN@default?from=FROM``
+Vonage           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@default?from=FROM``
+Yunpian          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@default``
+===============  =====================================  ===========================================================================
 
 .. versionadded:: 6.1
 
     The 46elks, OrangeSms, KazInfoTeh and Sendberry integrations were introduced in Symfony 6.1.
     The ``no_stop_clause`` option in ``OvhCloud`` DSN was introduced in Symfony 6.1.
     The ``test`` option in ``Smsapi`` DSN was introduced in Symfony 6.1.
+
+.. versionadded:: 6.2
+
+    The ContactEveryone and SMSFactor integrations were introduced in Symfony 6.2.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -174,6 +180,7 @@ integration with these chat services:
 Service         Package                               DSN
 ==============  ====================================  =============================================================================
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+Chatwork        ``symfony/chatwork-notifier``         ``chatwork://API_TOKEN@default?room_id=ID``
 Discord         ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
 FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
@@ -186,8 +193,13 @@ MicrosoftTeams  ``symfony/microsoft-teams-notifier``  ``microsoftteams://default
 RocketChat      ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
 Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
+Zendesk         ``symfony/zendesk-notifier``          ``zendesk://EMAIL:TOKEN@SUBDOMAIN``
 Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ==============  ====================================  =============================================================================
+
+.. versionadded:: 6.2
+
+    The Zendesk and Chatwork integration were introduced in Symfony 6.2.
 
 Chatters are configured using the ``chatter_transports`` setting:
 

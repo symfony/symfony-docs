@@ -804,6 +804,16 @@ The Serializer component provides several built-in normalizers:
 
     Objects are normalized to a map of property names to property values.
 
+    If you prefer to only normalize certain properties (e.g. only public properties)
+    set the ``PropertyNormalizer::NORMALIZE_VISIBILITY`` context option and
+    combine the following values: ``PropertyNormalizer::NORMALIZE_PUBLIC``,
+    ``PropertyNormalizer::NORMALIZE_PROTECTED`` or ``PropertyNormalizer::NORMALIZE_PRIVATE``.
+
+    .. versionadded:: 6.2
+
+        The ``PropertyNormalizer::NORMALIZE_VISIBILITY`` context option and its
+        values were introduced in Symfony 6.2.
+
 :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
     This normalizer works with classes that implement :phpclass:`JsonSerializable`.
 

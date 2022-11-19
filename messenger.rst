@@ -645,8 +645,35 @@ You can limit the worker to only process messages from specific queue(s):
     # you can pass the --queues option more than once to process multiple queues
     $ php bin/console messenger:consume my_transport --queues=fasttrack1 --queues=fasttrack2
 
-To allow using the ``queues`` option, the receiver must implement the
-:class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\QueueReceiverInterface`.
+.. note::
+
+    To allow using the ``queues`` option, the receiver must implement the
+    :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\QueueReceiverInterface`.
+
+.. _messenger-message-count:
+
+Checking the Number of Queued Messages Per Transport
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Run the ``messenger:stats`` command to know how many messages are in the "queues"
+of some or all transports:
+
+.. code-block:: terminal
+
+    # displays the number of queued messages in all transports
+    $ php bin/console messenger:stats
+
+    # shows stats only for some transports
+    $ php bin/console messenger:stats my_transport_name other_transport_name
+
+.. note::
+
+    In order for this command to work, the configured transport's receiver must implement
+    :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\MessageCountAwareInterface`.
+
+.. versionadded:: 6.2
+
+    The ``messenger:stats`` command was introduced in Symfony 6.2.
 
 .. _messenger-supervisor:
 
@@ -1032,8 +1059,17 @@ to retry them:
 
 .. code-block:: terminal
 
-    # see all messages in the failure transport
+    # see all messages in the failure transport with a default limit of 50
     $ php bin/console messenger:failed:show
+
+    # see the 10 first messages
+    $ php bin/console messenger:failed:show --max=10
+
+    # see only MyClass messages
+    $ php bin/console messenger:failed:show --class-filter='MyClass'
+
+    # see the number of messages by message class
+    $ php bin/console messenger:failed:show --stats
 
     # see details about a specific failure
     $ php bin/console messenger:failed:show 20 -vv
@@ -1049,6 +1085,10 @@ to retry them:
 
     # remove messages without retrying them and show each message before removing it
     $ php bin/console messenger:failed:remove 20 30 --show-messages
+
+.. versionadded:: 6.2
+
+    The ``--class-filter`` and ``--stats`` options were introduced in Symfony 6.2.
 
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
@@ -1925,44 +1965,40 @@ Possible options to configure with tags are:
 * ``method``
 * ``priority``
 
-Handler Subscriber & Options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _handler-subscriber-options:
 
-A handler class can handle multiple messages or configure itself by implementing
-:class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface`::
+Handling Multiple Messages
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A single handler class can handle multiple messages. For that add the
+``#AsMessageHandler`` attribute to all the handling methods::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
 
     use App\Message\OtherSmsNotification;
     use App\Message\SmsNotification;
-    use Symfony\Component\Messenger\Handler\MessageSubscriberInterface;
 
-    class SmsNotificationHandler implements MessageSubscriberInterface
+    class SmsNotificationHandler
     {
-        public function __invoke(SmsNotification $message)
+        #[AsMessageHandler]
+        public function handleSmsNotification(SmsNotification $message)
         {
             // ...
         }
 
+        #[AsMessageHandler]
         public function handleOtherSmsNotification(OtherSmsNotification $message)
         {
             // ...
         }
-
-        public static function getHandledMessages(): iterable
-        {
-            // handle this message on __invoke
-            yield SmsNotification::class;
-
-            // also handle this message on handleOtherSmsNotification
-            yield OtherSmsNotification::class => [
-                'method' => 'handleOtherSmsNotification',
-                //'priority' => 0,
-                //'bus' => 'messenger.bus.default',
-            ];
-        }
     }
+
+.. deprecated:: 6.2
+
+    Implementing the :class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface`
+    is another way to handle multiple messages with one handler class. This
+    interface was deprecated in Symfony 6.2.
 
 Binding Handlers to Different Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1987,20 +2023,13 @@ To do this, add the ``from_transport`` option to each handler. For example::
     namespace App\MessageHandler;
 
     use App\Message\UploadedImage;
-    use Symfony\Component\Messenger\Handler\MessageSubscriberInterface;
 
-    class ThumbnailUploadedImageHandler implements MessageSubscriberInterface
+    #[AsMessageHandler(from_transport: 'image_transport')]
+    class ThumbnailUploadedImageHandler
     {
         public function __invoke(UploadedImage $uploadedImage)
         {
             // do some thumbnailing
-        }
-
-        public static function getHandledMessages(): iterable
-        {
-            yield UploadedImage::class => [
-                'from_transport' => 'image_transport',
-            ];
         }
     }
 
@@ -2009,16 +2038,10 @@ And similarly::
     // src/MessageHandler/NotifyAboutNewUploadedImageHandler.php
     // ...
 
-    class NotifyAboutNewUploadedImageHandler implements MessageSubscriberInterface
+    #[AsMessageHandler(from_transport: 'async_priority_normal')]
+    class NotifyAboutNewUploadedImageHandler
     {
         // ...
-
-        public static function getHandledMessages(): iterable
-        {
-            yield UploadedImage::class => [
-                'from_transport' => 'async_priority_normal',
-            ];
-        }
     }
 
 Then, make sure to "route" your message to *both* transports:

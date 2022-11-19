@@ -265,27 +265,19 @@ machine type, use ``camelCased workflow name + StateMachine``::
         }
     }
 
-Alternatively, use the registry::
+.. versionadded:: 6.2
 
-    use App\Entity\BlogPost;
-    use Symfony\Component\Workflow\Registry;
+    All workflows and state machines services are tagged since in Symfony 6.2.
 
-    class MyClass
-    {
-        private $workflowRegistry;
+.. tip::
 
-        public function __construct(Registry $workflowRegistry)
-        {
-            $this->workflowRegistry = $workflowRegistry;
-        }
+    If you want to retrieve all workflows, for documentation purposes for example,
+    you can :doc:`inject all services </service_container/service_subscribers_locators>`
+    with the following tag:
 
-        public function toReview(BlogPost $post)
-        {
-            $blogPublishingWorkflow = $this->workflowRegistry->get($post);
-
-            // ...
-        }
-    }
+    * ``workflow``: all workflows and all state machine;
+    * ``workflow.workflow``: all workflows;
+    * ``workflow.state_machine``: all state machines.
 
 .. tip::
 

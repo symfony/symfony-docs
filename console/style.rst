@@ -324,8 +324,25 @@ User Input Methods
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], 'queue1');
 
+    Finally, you can allow users to select multiple choices. To do so, users must
+    separate each choice with a comma (e.g. typing ``1, 2`` will select choice 1
+    and 2)::
+
+        $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], multiSelect: true);
+
+.. versionadded:: 6.2
+
+    The ``multiSelect`` option of ``choice()`` was introduced in Symfony 6.2.
+
 Result Methods
 ~~~~~~~~~~~~~~
+
+.. note::
+
+    If you print any URL it won't be broken/cut, it will be clickable - if the terminal provides it. If the "well
+    formatted output" is more important, you can switch it off::
+
+        $io->getOutputWrapper()->setAllowCutUrls(true);
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::success`
     It displays the given string or array of strings highlighted as a successful
@@ -394,6 +411,38 @@ Result Methods
             'Lorem ipsum dolor sit amet',
             'Consectetur adipiscing elit',
         ]);
+
+Configuring the Default Styles
+------------------------------
+
+By default, Symfony Styles wrap all contents to avoid having lines of text that
+are too long. The only exception is URLs, which are not wrapped, no matter how
+long they are. This is done to enable clickable URLs in terminals that support them.
+
+If you prefer to wrap all contents, including URLs, use this method::
+
+    // src/Command/GreetCommand.php
+    namespace App\Command;
+
+    // ...
+    use Symfony\Component\Console\Style\SymfonyStyle;
+
+    class GreetCommand extends Command
+    {
+        // ...
+
+        protected function execute(InputInterface $input, OutputInterface $output): int
+        {
+            $io = new SymfonyStyle($input, $output);
+            $io->getOutputWrapper()->setAllowCutUrls(true);
+
+            // ...
+        }
+    }
+
+.. versionadded:: 6.2
+
+    The ``setAllowCutUrls()`` method was introduced in Symfony 6.2.
 
 Defining your Own Styles
 ------------------------

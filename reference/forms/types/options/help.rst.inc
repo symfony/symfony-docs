@@ -1,7 +1,7 @@
 help
 ~~~~
 
-**type**: ``string`` or ``TranslatableMessage`` **default**: null
+**type**: ``string`` or ``TranslatableInterface`` **default**: null
 
 Allows you to define a help message for the form field, which by default is
 rendered below the field::
@@ -19,3 +19,8 @@ rendered below the field::
             'help' => new TranslatableMessage('order.status', ['%order_id%' => $order->getId()], 'store'),
         ])
     ;
+
+.. versionadded:: 6.2
+
+    The support for ``TranslatableInterface`` objects as help contents was
+    introduced in Symfony 6.2.

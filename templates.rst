@@ -377,6 +377,17 @@ gives you access to these variables:
 ``app.token``
     A :class:`Symfony\\Component\\Security\\Core\\Authentication\\Token\\TokenInterface`
     object representing the security token.
+``app.current_route``
+    The name of the route associated with the current request or ``null`` if no
+    request is available (equivalent to ``app.request.attributes.get('_route')``)
+``app.current_route_parameters``
+    An array with the parameters passed to the route of the current request or an
+    empty array if no request is available (equivalent to ``app.request.attributes.get('_route_params')``)
+
+.. versionadded:: 6.2
+
+    The ``app.current_route`` and ``app.current_route_parameters`` variables
+    were introduced in Symfony 6.2.
 
 In addition to the global ``app`` variable injected by Symfony, you can also
 :doc:`inject variables automatically to all Twig templates </templating/global_variables>`.
@@ -441,6 +452,38 @@ use the ``render()`` helper::
 If your controller does not extend from ``AbstractController``, you'll need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
 use the ``render()`` method of the ``twig`` service.
+
+.. _templates-template-attribute:
+
+Another option is to use the ``#[Template()]`` attribute on the controller method
+to define the template to render::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class ProductController extends AbstractController
+    {
+        #[Template('product/index.html.twig')]
+        public function index()
+        {
+            // ...
+
+            // when using the #[Template()] attribute, you only need to return
+            // an array with the parameters to pass to the template (the attribute
+            // is the one which will create and return the Response object).
+            return [
+                'category' => '...',
+                'promotions' => ['...', '...'],
+            ];
+        }
+    }
+
+.. versionadded:: 6.2
+
+    The ``#[Template()]`` attribute was introduced in Symfony 6.2.
 
 Rendering a Template in Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
