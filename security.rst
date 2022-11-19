@@ -588,14 +588,12 @@ will be able to authenticate (e.g. login form, API token, etc).
 Only one firewall is active on each request: Symfony uses the ``pattern`` key
 to find the first match (you can also
 :doc:`match by host or other things </security/firewall_restriction>`).
+Here, all "real" URLs are handled by the ``main`` firewall (no ``pattern`` key means
+it matches *all* URLs). 
 
 The ``dev`` firewall is really a fake firewall: it makes sure that you
 don't accidentally block Symfony's dev tools - which live under URLs like
 ``/_profiler`` and ``/_wdt``.
-
-All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
-it matches *all* URLs). A firewall can have many modes of authentication,
-in other words, it enables many ways to ask the question "Who are you?".
 
 Often, the user is unknown (i.e. not logged in) when they first visit your
 website. If you visit your homepage right now, you *will* have access and
@@ -606,7 +604,14 @@ you'll see that you're visiting a page behind the firewall in the toolbar:
 
 Visiting a URL under a firewall doesn't necessarily require you to be authenticated
 (e.g. the login form has to be accessible or some parts of your application
-are public). You'll learn how to restrict access to URLs, controllers or
+are public). On the other hand, all pages that you want to be *aware* of a logged in
+user have to be under the same firewall. So if you want to display a "You are logged in
+as ..." message on every page, they all have to be included in the same firewall.
+
+The same firewall can have many modes of authentication,
+in other words, it enables many ways to ask the question "Who are you?".
+
+You'll learn how to restrict access to URLs, controllers or
 anything else within your firewall in the :ref:`access control
 <security-access-control>` section.
 
