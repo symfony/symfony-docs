@@ -74,6 +74,7 @@ FreeMobile       ``symfony/free-mobile-notifier``       ``freemobile://LOGIN:API
 GatewayApi       ``symfony/gateway-api-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
 Infobip          ``symfony/infobip-notifier``           ``infobip://AUTH_TOKEN@HOST?from=FROM``
 Iqsms            ``symfony/iqsms-notifier``             ``iqsms://LOGIN:PASSWORD@default?from=FROM``
+iSendPro         ``symfony/isendpro-notifier``          ``isendpro://ACCOUNT_KEY_ID@default?from=FROM&no_stop=NO_STOP&sandbox=SANDBOX``
 KazInfoTeh       ``symfony/kaz-info-teh-notifier``      ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
 LightSms         ``symfony/light-sms-notifier``         ``lightsms://LOGIN:TOKEN@default?from=PHONE``
 Mailjet          ``symfony/mailjet-notifier``           ``mailjet://TOKEN@default?from=FROM``
@@ -118,7 +119,8 @@ Yunpian          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@defau
 
 .. versionadded:: 6.3
 
-    The Bandwith, Plivo, RingCentral and Termii integrations were introduced in Symfony 6.3.
+    The Bandwith, iSendPro, Plivo, RingCentral and Termii integrations were introduced
+    in Symfony 6.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
