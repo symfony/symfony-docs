@@ -734,7 +734,8 @@ URLs of ``<a>`` elements:
                         force_https_urls: true
 
                         # specifies the allowed URL schemes. If the URL has a different scheme, the
-                        # attribute will be dropped
+                        # attribute will be dropped. 
+                        # This attribute must be defined, otherwise, href attribute will be removed from links anyway.
                         allowed_link_schemes: ['http', 'https', 'mailto']
 
                         # specifies the allowed hosts, the attribute will be dropped if the
