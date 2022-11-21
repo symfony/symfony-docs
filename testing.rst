@@ -247,7 +247,7 @@ Retrieving Services in the Test
 
 In your integration tests, you often need to fetch the service from the
 service container to call a specific method. After booting the kernel,
-the container is stored in ``static::getContainer()``::
+the container is returned by ``static::getContainer()``::
 
     // tests/Service/NewsletterGeneratorTest.php
     namespace App\Tests\Service;
@@ -273,7 +273,7 @@ the container is stored in ``static::getContainer()``::
         }
     }
 
-The container in ``static::getContainer()`` is actually a special test container.
+The container from ``static::getContainer()`` is actually a special test container.
 It gives you access to both the public services and the non-removed
 :ref:`private services <container-public>`.
 
