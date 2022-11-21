@@ -1934,9 +1934,9 @@ database and every user is *always* given at least one role: ``ROLE_USER``::
     }
 
 This is a nice default, but you can do *whatever* you want to determine which roles
-a user should have. The only rule is that every role **must start with** ``ROLE_`` -
-otherwise, things won't work as expected. Other than that, a role is just a string
-and you can invent whatever you need (e.g. ``ROLE_PRODUCT_ADMIN``).
+a user should have. The only rule is that every role **must start with** the
+``ROLE_`` prefix - otherwise, things won't work as expected. Other than that,
+a role is just a string and you can invent whatever you need (e.g. ``ROLE_PRODUCT_ADMIN``).
 
 You'll use these roles next to grant access to specific sections of your site.
 
