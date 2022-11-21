@@ -381,7 +381,7 @@ object. To access it in your controller, add it as an argument and
     use Symfony\Component\HttpFoundation\Response;
     // ...
 
-    public function index(Request $request, string $firstName, string $lastName): Response
+    public function index(Request $request): Response
     {
         $page = $request->query->get('page', 1);
 
