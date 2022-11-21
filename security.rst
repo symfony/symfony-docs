@@ -2148,7 +2148,7 @@ will happen:
 .. _security-securing-controller-annotations:
 
 Thanks to the SensioFrameworkExtraBundle, you can also secure your controller
-using annotations:
+using attributes:
 
 .. configuration-block::
 
