@@ -390,8 +390,9 @@ header, etc.) but most of the times you'll set text headers::
 
             // use an array if you want to add a header with multiple values
             // (for example in the "References" or "In-Reply-To" header)
-            ->addIdHeader('References', ['123@example.com', '456@example.com']);
-        // ...
+            ->addIdHeader('References', ['123@example.com', '456@example.com'])
+
+            // ...
     ;
 
 .. tip::
