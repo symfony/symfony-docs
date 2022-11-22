@@ -448,13 +448,17 @@ File Attachments
 
 Use the ``addPart()`` method with a ``BodyFile`` to add files that exist on your file system::
 
+    use Symfony\Component\Mime\Part\DataPart;
+    use Symfony\Component\Mime\Part\File;
+    // ...
+
     $email = (new Email())
         // ...
-        ->addPart(new DataPart(new BodyFile('/path/to/documents/terms-of-use.pdf')))
+        ->addPart(new DataPart(new File('/path/to/documents/terms-of-use.pdf')))
         // optionally you can tell email clients to display a custom name for the file
-        ->addPart(new DataPart(new BodyFile('/path/to/documents/privacy.pdf', 'Privacy Policy')))
+        ->addPart(new DataPart(new File('/path/to/documents/privacy.pdf'), 'Privacy Policy'))
         // optionally you can provide an explicit MIME type (otherwise it's guessed)
-        ->addPart(new DataPart(new BodyFile('/path/to/documents/contract.doc', 'Contract', 'application/msword')))
+        ->addPart(new DataPart(new File('/path/to/documents/contract.doc'), 'Contract', 'application/msword'))
     ;
 
 Alternatively you can attach contents from a stream by passing it directly to the ``DataPart`` ::
@@ -486,7 +490,7 @@ file or stream::
         // get the image contents from a PHP resource
         ->addPart((new DataPart(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png'))->asInline())
         // get the image contents from an existing file
-        ->addPart((new DataPart(new BodyFile('/path/to/images/signature.gif', 'footer-signature', 'image/gif')))->asInline())
+        ->addPart((new DataPart(new File('/path/to/images/signature.gif'), 'footer-signature', 'image/gif'))->asInline())
     ;
 
 Use the ``asInline()`` method to embed the content instead of attaching it.
@@ -498,7 +502,7 @@ images inside the HTML contents::
     $email = (new Email())
         // ...
         ->addPart((new DataPart(fopen('/path/to/images/logo.png', 'r'), 'logo', 'image/png'))->asInline())
-        ->addPart((new DataPart(new BodyFile('/path/to/images/signature.gif', 'footer-signature', 'image/gif')))->asInline())
+        ->addPart((new DataPart(new File('/path/to/images/signature.gif'), 'footer-signature', 'image/gif'))->asInline())
 
         // reference images using the syntax 'cid:' + "image embed name"
         ->html('<img src="cid:logo"> ... <img src="cid:footer-signature"> ...')
