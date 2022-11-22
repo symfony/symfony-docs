@@ -50,6 +50,10 @@ First, define a Symfony service for the connection to the Redis server:
                     # uncomment the following if your Redis server requires a password
                     # - auth:
                     #     - '%env(REDIS_PASSWORD)%'
+                    
+                    # uncomment the following if your Redis server requires user and password (When user is not default)
+                    # - auth:
+                    #     - ['%env(REDIS_USER)%','%env(REDIS_PASSWORD)%']
 
     .. code-block:: xml
 
