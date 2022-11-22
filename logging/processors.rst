@@ -32,7 +32,7 @@ using a processor::
         }
 
         // this method is called for each log record; optimize it to not hurt performance
-        public function __invoke(array $record)
+        public function __invoke(LogRecord $record): LogRecord
         {
             try {
                 $session = $this->requestStack->getSession();
@@ -45,7 +45,7 @@ using a processor::
 
             $sessionId = substr($session->getId(), 0, 8) ?: '????????';
 
-            $record['extra']['token'] = $sessionId.'-'.substr(uniqid('', true), -8);
+            $record->extra['token'] = $sessionId.'-'.substr(uniqid('', true), -8);
 
             return $record;
         }
