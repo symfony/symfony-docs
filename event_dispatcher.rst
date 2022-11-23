@@ -161,7 +161,7 @@ You can add multiple ``#[AsEventListener()]`` attributes to configure different 
 
     use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-    #[AsEventListener(event: CustomEvent::class, method: 'onCustomEvent')]
+    #[AsEventListener(event: CustomEvent::NAME, method: 'onCustomEvent')]
     #[AsEventListener(event: 'foo', priority: 42)]
     #[AsEventListener(event: 'bar', method: 'onBarEvent')]
     final class MyMultiListener
