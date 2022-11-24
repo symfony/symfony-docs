@@ -46,7 +46,7 @@ entered into the box, set this to false and submit the form.
 
 If set, the password will be hashed using the
 :doc:`PasswordHasher component </security/passwords>` and stored in the
-specified property.
+property defined by the given :doc:`PropertyAccess expression </components/property_access>`.
 
 Data passed to the form must be a
 :class:`Symfony\\Component\\Security\\Core\\User\\PasswordAuthenticatedUserInterface`
