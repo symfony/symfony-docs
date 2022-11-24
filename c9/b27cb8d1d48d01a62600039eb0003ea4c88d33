@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-11-17T07:51:14Z
+
+The Code-Blocks stuff can be ignored
+
+---------------------------------------------------------------------------
+
+by dbrumann at 2022-11-18T19:00:55Z
+
+No problem. I will work on the changes tomorrow during my train ride. Keep them coming.
+
+---------------------------------------------------------------------------
+
+by dbrumann at 2022-11-19T18:24:30Z
+
+@javiereguiluz I added a new section describing the purpose of the monotonic clock. Unfortunately, I couldn't come up with a relevant code snippet but maybe we don't need one or someone else has a good idea?
+
+---------------------------------------------------------------------------
+
+by dbrumann at 2022-11-19T18:25:00Z
+
+@javiereguiluz I added a new section describing the purpose of the monotonic clock. Unfortunately, I couldn't come up with a relevant code snippet but maybe we don't need one or someone else has a good idea?
