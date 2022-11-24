@@ -84,7 +84,7 @@ is expired or not, by modifying the clock's time::
             static::assertFalse($expirationChecker->isExpired($validUntil));
 
             // Clock sleeps for 10 minutes, so now is '2022-11-16 15:30:00'
-            $clock->sleep(600); // Instantly changes time as if we waited for 10 minutes (600secs)
+            $clock->sleep(600); // Instantly changes time as if we waited for 10 minutes (600 seconds)
 
             // modify the clock, accepts all formats supported by DateTimeImmutable::modify()
             static::assertTrue($expirationChecker->isExpired($validUntil));
@@ -99,7 +99,8 @@ is expired or not, by modifying the clock's time::
 Monotonic Clock
 ---------------
 
-The ``MonotonicClock`` allows you to implement a precise stopwatch, depending on the system up to
-nanosecond precision. It can be used to measure the elapsed time between 2 calls without being
-affected by inconsistencies sometimes introduced by the system clock, e.g. by updating it. Instead,
-it consistently increases time, making it especially useful for measuring performance.
+The ``MonotonicClock`` allows you to implement a precise stopwatch; depending on
+the system up to nanosecond precision. It can be used to measure the elapsed
+time between two calls without being affected by inconsistencies sometimes introduced
+by the system clock, e.g. by updating it. Instead, it consistently increases time,
+making it especially useful for measuring performance.
