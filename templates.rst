@@ -461,9 +461,9 @@ to define the template to render::
     // src/Controller/ProductController.php
     namespace App\Controller;
 
+    use Symfony\Bridge\Twig\Attribute\Template;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Bridge\Twig\Attribute\Template;
 
     class ProductController extends AbstractController
     {
