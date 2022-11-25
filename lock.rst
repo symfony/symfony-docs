@@ -12,7 +12,7 @@ time to prevent race conditions from happening.
 
 The following example shows a typical usage of the lock::
 
-    $lock = $lockFactory->createLock('pdf-invoice-generation');
+    $lock = $lockFactory->createLock('pdf-creation');
     if (!$lock->acquire()) {
         return;
     }
@@ -22,8 +22,8 @@ The following example shows a typical usage of the lock::
 
     $lock->release();
 
-Installation
-------------
+Installing
+----------
 
 In applications using :ref:`Symfony Flex <symfony-flex>`, run this command to
 install the Lock component:
@@ -32,8 +32,8 @@ install the Lock component:
 
     $ composer require symfony/lock
 
-Configuring Lock with FrameworkBundle
--------------------------------------
+Configuring
+-----------
 
 By default, Symfony provides a :ref:`Semaphore <lock-store-semaphore>`
 when available, or a :ref:`Flock <lock-store-flock>` otherwise. You can configure
@@ -58,7 +58,7 @@ this behavior by using the ``lock`` key like:
             lock: 'sqlite:///%kernel.project_dir%/var/lock.db'
             lock: 'mysql:host=127.0.0.1;dbname=app'
             lock: 'pgsql:host=127.0.0.1;dbname=app'
-            lock: 'pgsql+advisory:host=127.0.0.1;dbname=lock'
+            lock: 'pgsql+advisory:host=127.0.0.1;dbname=app'
             lock: 'sqlsrv:server=127.0.0.1;Database=app'
             lock: 'oci:host=127.0.0.1;dbname=app'
             lock: 'mongodb://127.0.0.1/app?collection=lock'
@@ -108,7 +108,7 @@ this behavior by using the ``lock`` key like:
 
                     <framework:resource>pgsql:host=127.0.0.1;dbname=app</framework:resource>
 
-                    <framework:resource>pgsql+advisory:host=127.0.0.1;dbname=lock</framework:resource>
+                    <framework:resource>pgsql+advisory:host=127.0.0.1;dbname=app</framework:resource>
 
                     <framework:resource>sqlsrv:server=127.0.0.1;Database=app</framework:resource>
 
@@ -145,7 +145,7 @@ this behavior by using the ``lock`` key like:
                 ->resource('default', ['sqlite:///%kernel.project_dir%/var/lock.db'])
                 ->resource('default', ['mysql:host=127.0.0.1;dbname=app'])
                 ->resource('default', ['pgsql:host=127.0.0.1;dbname=app'])
-                ->resource('default', ['pgsql+advisory:host=127.0.0.1;dbname=lock'])
+                ->resource('default', ['pgsql+advisory:host=127.0.0.1;dbname=app'])
                 ->resource('default', ['sqlsrv:server=127.0.0.1;Database=app'])
                 ->resource('default', ['oci:host=127.0.0.1;dbname=app'])
                 ->resource('default', ['mongodb://127.0.0.1/app?collection=lock'])
@@ -161,7 +161,7 @@ Locking a Resource
 ------------------
 
 To lock the default resource, autowire the lock factory using
-:class:`Symfony\\Component\\Lock\\LockFactory` (service id ``lock.factory``)::
+:class:`Symfony\\Component\\Lock\\LockFactory`::
 
     // src/Controller/PdfController.php
     namespace App\Controller;
@@ -200,8 +200,8 @@ Locking a Dynamic Resource
 
 Sometimes the application is able to cut the resource into small pieces in order
 to lock a small subset of processes and let others through. The previous example
-showed how to lock the ``$pdf->getOrCreatePdf('terms-of-use')`` for everybody,
-now let's see how to lock ``$pdf->getOrCreatePdf($version)`` only for
+showed how to lock the ``$pdf->getOrCreatePdf()`` call for everybody,
+now let's see how to lock a ``$pdf->getOrCreatePdf($version)`` call only for
 processes asking for the same ``$version``::
 
     // src/Controller/PdfController.php
@@ -217,7 +217,7 @@ processes asking for the same ``$version``::
          */
         public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf)
         {
-            $lock = $lockFactory->createLock($version);
+            $lock = $lockFactory->createLock('pdf-creation-'.$version);
             $lock->acquire(true);
 
             // heavy computation
@@ -231,8 +231,8 @@ processes asking for the same ``$version``::
 
 .. _lock-named-locks:
 
-Named Lock
-----------
+Naming Locks
+------------
 
 If the application needs different kind of Stores alongside each other, Symfony
 provides :ref:`named lock <reference-lock-resources-name>`:
@@ -279,13 +279,27 @@ provides :ref:`named lock <reference-lock-resources-name>`:
             ;
         };
 
+An autowiring alias is created for each named lock with a name using the camel
+case version of its name suffixed by ``LockFactory``.
 
-Each name becomes a service where the service id is part of the name of the
-lock (e.g. ``lock.invoice.factory``). An autowiring alias is also created for
-each lock using the camel case version of its name suffixed by ``LockFactory``
-- e.g. ``invoice`` can be injected automatically by naming the argument
+For instance, the ``invoice`` lock can be injected by naming the argument
 ``$invoiceLockFactory`` and type-hinting it with
-:class:`Symfony\\Component\\Lock\\LockFactory`.
+:class:`Symfony\\Component\\Lock\\LockFactory`:
+
+    // src/Controller/PdfController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Lock\LockFactory;
+
+    class PdfController extends AbstractController
+    {
+        #[Route('/download/terms-of-use.pdf')]
+        public function downloadPdf(LockFactory $invoiceLockFactory, MyPdfGeneratorService $pdf)
+        {
+            // ...
+        }
+    }
 
 Blocking Store
 --------------
