@@ -4,7 +4,7 @@
 * `ux-chartjs`_: Easy charts with `Chart.js`_ (`see demo <https://ux.symfony.com/chartjs>`_)
 * `ux-cropperjs`_: Form Type and tools for cropping images (`see demo <https://ux.symfony.com/cropperjs>`_)
 * `ux-dropzone`_: Form Type for stylized "drop zone" for file uploads
-   (`see demo <https://ux.symfony.com/dropzone>`_)
+  (`see demo <https://ux.symfony.com/dropzone>`_)
 * `ux-lazy-image`_: Optimize Image Loading with BlurHash
   (`see demo <https://ux.symfony.com/lazy-image>`_)
 * `ux-live-component`_: Build Dynamic Interfaces with Zero JavaScript
