@@ -81,7 +81,7 @@ PHPUnit test report:
 
     Twig Function "form_enctype" is deprecated. Use "form_start" instead in ...
 
-    The Symfony\Component\Security\Core\SecurityContext class is deprecated since
+    The Symfony\Bundle\SecurityBundle\SecurityContext class is deprecated since
     version 2.6 and will be removed in 3.0. Use ...
 
 Fix the reported deprecations, run the test suite again and repeat the process
