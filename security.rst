@@ -1613,7 +1613,7 @@ Login Programmatically
 
     The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
     class was introduced in Symfony 6.2. Prior to 6.2, it was called
-    ``Symfony\Component\Security\Core\Security``.
+    ``Symfony\Bundle\SecurityBundle\Security``.
 
 .. versionadded:: 6.2
 
@@ -1783,7 +1783,7 @@ Logout programmatically
 
     The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
     class was introduced in Symfony 6.2. Prior to 6.2, it was called
-    ``Symfony\Component\Security\Core\Security``.
+    ``Symfony\Bundle\SecurityBundle\Security``.
 
 .. versionadded:: 6.2
 
@@ -1929,7 +1929,7 @@ If you need to get the logged in user from a service, use the
 
     The :class:`Symfony\\Bundle\\SecurityBundle\\Security` class
     was introduced in Symfony 6.2. In previous Symfony versions this class was
-    defined in ``Symfony\Component\Security\Core\Security``.
+    defined in ``Symfony\Bundle\SecurityBundle\Security``.
 
 Fetch the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
