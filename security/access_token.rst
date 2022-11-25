@@ -82,6 +82,7 @@ This handler must implement
 
     use App\Repository\AccessTokenRepository;
     use Symfony\Component\Security\Http\AccessToken\AccessTokenHandlerInterface;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 
     class AccessTokenHandler implements AccessTokenHandlerInterface
     {
@@ -90,16 +91,16 @@ This handler must implement
         ) {
         }
 
-        public function getUserIdentifierFrom(string $token): string
+        public function getUserBadgeFrom(string $accessToken): UserBadge
         {
             // e.g. query the "access token" database to search for this token
             $accessToken = $this->repository->findOneByValue($token);
-            if ($accessToken === null || !$accessToken->isValid()) {
+            if (null === $accessToken || !$accessToken->isValid()) {
                 throw new BadCredentialsException('Invalid credentials.');
             }
 
-            // and return the user identifier from the found token
-            return $accessToken->getUserId();
+            // and return a UserBadge object containing the user identifier from the found token
+            return new UserBadge($accessToken->getUserId());
         }
     }
 
