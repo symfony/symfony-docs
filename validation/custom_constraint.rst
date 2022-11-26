@@ -38,54 +38,27 @@ use it as an annotation/attribute in other classes.
 
     The ``#[HasNamedArguments]`` attribute was introduced in Symfony 6.1.
 
-You can use ``#[HasNamedArguments]`` or ``getRequiredOptions()`` to make some constraint options required:
+You can use ``#[HasNamedArguments]`` or ``getRequiredOptions()`` to make some constraint options required::
 
-.. configuration-block::
+    // src/Validator/ContainsAlphanumeric.php
+    namespace App\Validator;
 
-    .. code-block:: php-annotations
+    use Symfony\Component\Validator\Attribute\HasNamedArguments;
+    use Symfony\Component\Validator\Constraint;
 
-        // src/Validator/ContainsAlphanumeric.php
-        namespace App\Validator;
+    #[\Attribute]
+    class ContainsAlphanumeric extends Constraint
+    {
+        public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+        public string $mode;
 
-        use Symfony\Component\Validator\Constraint;
-
-        /**
-         * @Annotation
-         */
-        class ContainsAlphanumeric extends Constraint
+        #[HasNamedArguments]
+        public function __construct(string $mode, array $groups = null, mixed $payload = null)
         {
-            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-            public $mode;
-
-            public function getRequiredOptions(): array
-            {
-                return ['mode'];
-            }
+            parent::__construct([], $groups, $payload);
+            $this->mode = $mode;
         }
-
-    .. code-block:: php-attributes
-
-        // src/Validator/ContainsAlphanumeric.php
-        namespace App\Validator;
-
-        use Symfony\Component\Validator\Attribute\HasNamedArguments;
-        use Symfony\Component\Validator\Constraint;
-
-        #[\Attribute]
-        class ContainsAlphanumeric extends Constraint
-        {
-            public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-
-            public string $mode;
-
-            #[HasNamedArguments]
-            public function __construct(string $mode, array $groups = null, mixed $payload = null)
-            {
-                parent::__construct([], $groups, $payload);
-
-                $this->mode = $mode;
-            }
-        }
+    }
 
 Creating the Validator itself
 -----------------------------
