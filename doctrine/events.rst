@@ -149,6 +149,23 @@ with the ``doctrine.event_listener`` tag:
 
 .. configuration-block::
 
+    .. code-block:: attribute
+
+        // src/App/EventListener/SearchIndexer.php
+        namespace App\EventListener;
+
+        use Doctrine\Bundle\DoctrineBundle\Attribute\AsEventListener;
+        use Doctrine\ORM\Event\LifecycleEventArgs;
+
+        #[AsEventListener('postPersist'/*, 500, 'default'*/)]
+        class SearchIndexer
+        {
+            public function postPersist(LifecycleEventArgs $event): void
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -218,6 +235,12 @@ with the ``doctrine.event_listener`` tag:
                 ])
             ;
         };
+
+
+.. versionadded:: 2.7.2
+
+    The :class:`Doctrine\\Bundle\\DoctrineBundle\\Attribute\\AsEventListener` 
+    attribute was introduced in DoctrineBundle 2.7.2.
 
 .. tip::
 
