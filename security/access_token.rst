@@ -343,6 +343,6 @@ and configure the service ID as the ``success_handler``:
     ``failure_handler`` option and create a class that implements
     :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
 
-.. _`Json Web Tokens (JWT)`: https://datatracker.ietf.org/doc/html/rfc7519
+.. _`JSON Web Tokens (JWT)`: https://datatracker.ietf.org/doc/html/rfc7519
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
