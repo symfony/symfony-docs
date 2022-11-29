@@ -559,48 +559,6 @@ To see the second approach - adding constraints to the form - and to
 learn more about the validation constraints, please refer to the
 :doc:`Symfony validation documentation </validation>`.
 
-Form Validation Messages
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-The form types have default error messages that are more clear and
-user-friendly than the ones provided by the validation constraints. To enable
-these new messages set the ``legacy_error_messages`` option to ``false``:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            form:
-                legacy_error_messages: false
-
-    .. code-block:: xml
-
-        <!-- config/packages/framework.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:framework="http://symfony.com/schema/dic/symfony"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/symfony
-                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
-
-            <framework:config>
-                <framework:form legacy-error-messages="false"/>
-            </framework:config>
-        </container>
-
-    .. code-block:: php
-
-        // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
-
-        return static function (FrameworkConfig $framework) {
-            $framework->form()->legacyErrorMessages(false);
-        };
-
 Other Common Form Features
 --------------------------
 
