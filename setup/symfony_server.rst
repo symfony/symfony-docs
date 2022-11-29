@@ -237,7 +237,14 @@ domains work:
 
 .. code-block:: terminal
 
-    $ https_proxy=http://127.0.0.1:7080 curl https://my-domain.wip
+    # Example with curl
+    $ https_proxy=$(symfony proxy:url) curl https://my-domain.wip
+
+    # Example with Blackfire and curl
+    $ https_proxy=$(symfony proxy:url) blackfire curl https://my-domain.wip
+
+    # Example with Cypress
+    $ https_proxy=$(symfony proxy:url) ./node_modules/bin/cypress open
 
 .. note::
 
@@ -279,6 +286,11 @@ server provides a ``run`` command to wrap them as follows:
 
 Configuring Workers
 -------------------
+
+.. caution::
+
+    This feature is experimental and could change or be removed at any time
+    without prior notice.
 
 If you like some processes to start automatically, along with the webserver
 (``symfony server:start``), add a configuration file to your project:
