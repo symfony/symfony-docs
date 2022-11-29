@@ -647,7 +647,7 @@ Resolving a URI
 
     The :class:`Symfony\\Component\\DomCrawler\\UriResolver` helper class was added in Symfony 5.1.
 
-The :class:`Symfony\\Component\\DomCrawler\\UriResolver` class takes an URI
+The :class:`Symfony\\Component\\DomCrawler\\UriResolver` class takes a URI
 (relative, absolute, fragment, etc.) and turns it into an absolute URI against
 another given base URI::
 
