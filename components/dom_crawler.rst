@@ -635,7 +635,7 @@ the whole form or specific field(s)::
 Resolving a URI
 ~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\DomCrawler\\UriResolver` class takes an URI
+The :class:`Symfony\\Component\\DomCrawler\\UriResolver` class takes a URI
 (relative, absolute, fragment, etc.) and turns it into an absolute URI against
 another given base URI::
 

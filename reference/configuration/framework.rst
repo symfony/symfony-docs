@@ -2265,7 +2265,7 @@ package:
 
 .. note::
 
-    If an URL is set, the JSON manifest is downloaded on each request using the `http_client`_.
+    If a URL is set, the JSON manifest is downloaded on each request using the `http_client`_.
 
 .. _reference-assets-strict-mode:
 
