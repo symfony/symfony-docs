@@ -280,6 +280,11 @@ server provides a ``run`` command to wrap them as follows:
 Configuring Workers
 -------------------
 
+.. caution::
+
+    This feature is experimental and could change or be removed at any time
+    without prior notice.
+
 If you like some processes to start automatically, along with the webserver
 (``symfony server:start``), add a configuration file to your project:
 
