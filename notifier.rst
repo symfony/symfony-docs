@@ -65,6 +65,7 @@ Service          Package                                DSN
 46elks           ``symfony/forty-six-elks-notifier``    ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
 AllMySms         ``symfony/all-my-sms-notifier``        ``allmysms://LOGIN:APIKEY@default?from=FROM``
 AmazonSns        ``symfony/amazon-sns-notifier``        ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+Bandwidth        ``symfony/bandwidth-notifier``         ``bandwidth://USERNAME:PASSWORD@default?from=FROM&account_id=ACCOUNT_ID&application_id=APPLICATION_ID&priority=PRIORITY``
 Clickatell       ``symfony/clickatell-notifier``        ``clickatell://ACCESS_TOKEN@default?from=FROM``
 ContactEveryone  ``symfony/contact-everyone-notifier``  ``contact-everyone://TOKEN@default?&diffusionname=DIFFUSION_NAME&category=CATEGORY``
 Esendex          ``symfony/esendex-notifier``           ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
@@ -113,7 +114,7 @@ Yunpian          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@defau
 
 .. versionadded:: 6.3
 
-    The RingCentral and Termii integrations were introduced in Symfony 6.3.
+    The Bandwith, RingCentral and Termii integrations were introduced in Symfony 6.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
