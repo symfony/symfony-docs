@@ -63,6 +63,15 @@ object.
             'mapped' => false,
         ]);
 
+    or if you want to use it with the ``RepeatedType``::
+
+        $builder->add('plainPassword', RepeatedType::class, [
+            'type' => PasswordType::class,
+            'first_options'  => ['label' => 'Password', 'hash_property_path' => 'password'],
+            'second_options' => ['label' => 'Repeat Password'],
+            'mapped' => false,
+        ]);
+
 Overridden Options
 ------------------
 
