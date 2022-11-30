@@ -31,14 +31,14 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
             public string $mode = 'strict';
         }
 
-Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
-use it as an annotation/attribute in other classes.
+Add ``#[\Attribute]`` to the constraint class if you want to
+use it as an attribute in other classes.
 
 .. versionadded:: 6.1
 
     The ``#[HasNamedArguments]`` attribute was introduced in Symfony 6.1.
 
-You can use ``#[HasNamedArguments]`` or ``getRequiredOptions()`` to make some constraint options required::
+You can use ``#[HasNamedArguments]`` to make some constraint options required::
 
     // src/Validator/ContainsAlphanumeric.php
     namespace App\Validator;
