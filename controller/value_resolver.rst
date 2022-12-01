@@ -265,7 +265,7 @@ and adding a priority:
                 autowire: true
             # ...
 
-            App\ArgumentResolver\UserValueResolver:
+            App\ArgumentResolver\BookingIdValueResolver:
                 tags:
                     - { name: controller.argument_value_resolver, priority: 150 }
 
@@ -283,7 +283,7 @@ and adding a priority:
                 <defaults autowire="true"/>
                 <!-- ... -->
 
-                <service id="App\ArgumentResolver\UserValueResolver">
+                <service id="App\ArgumentResolver\BookingIdValueResolver">
                     <tag name="controller.argument_value_resolver" priority="150"/>
                 </service>
             </services>
@@ -295,12 +295,12 @@ and adding a priority:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\ArgumentResolver\UserValueResolver;
+        use App\ArgumentResolver\BookingIdValueResolver;
 
         return static function (ContainerConfigurator $container) {
             $services = $configurator->services();
 
-            $services->set(UserValueResolver::class)
+            $services->set(BookingIdValueResolver::class)
                 ->tag('controller.argument_value_resolver', ['priority' => 150])
             ;
         };
