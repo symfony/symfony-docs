@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-11-19T16:58:30Z
+
+@nicolas-grekas, given the examples, is this really the expected behavior?
+Even if this is correct, it is quite confusing, isn't it?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2022-11-19T19:41:25Z
+
+That's correct and that maps to the RFC for relative URL resolution.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-11-19T20:53:28Z
+
+Thanks for the feedback
