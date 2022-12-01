@@ -324,7 +324,7 @@ this returns ``true`` if:
   ``@var Doctrine\Common\Collections\Collection<App\Entity\SomeEntity>``, etc.)
 
 ``Type::getCollectionKeyTypes()`` & ``Type::getCollectionValueTypes()``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the property is a collection, additional type objects may be returned
 for both the key and value types of the collection (if the information is
