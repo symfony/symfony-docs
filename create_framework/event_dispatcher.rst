@@ -8,7 +8,7 @@ hook into the framework life cycle to modify the way the request is handled.
 What kind of hooks are we talking about? Authentication or caching for
 instance. To be flexible, hooks must be plug-and-play; the ones you "register"
 for an application are different from the next one depending on your specific
-needs. Many software have a similar concept like Drupal or Wordpress. In some
+needs. Many software have a similar concept like Drupal or WordPress. In some
 languages, there is even a standard like `WSGI`_ in Python or `Rack`_ in Ruby.
 
 As there is no standard for PHP, we are going to use a well-known design
