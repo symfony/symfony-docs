@@ -323,13 +323,13 @@ this returns ``true`` if:
   ``@var SomeClass<DateTime>``, ``@var SomeClass<integer,string>``,
   ``@var Doctrine\Common\Collections\Collection<App\Entity\SomeEntity>``, etc.)
 
-``Type::getCollectionKeyType()`` & ``Type::getCollectionValueType()``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``Type::getCollectionKeyTypes()`` & ``Type::getCollectionValueTypes()``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If the property is a collection, additional type objects may be returned
 for both the key and value types of the collection (if the information is
-available), via the :method:`Type::getCollectionKeyType() <Symfony\\Component\\PropertyInfo\\Type::getCollectionKeyType>`
-and :method:`Type::getCollectionValueType() <Symfony\\Component\\PropertyInfo\\Type::getCollectionValueType>`
+available), via the :method:`Type::getCollectionKeyTypes() <Symfony\\Component\\PropertyInfo\\Type::getCollectionKeyTypes>`
+and :method:`Type::getCollectionValueTypes() <Symfony\\Component\\PropertyInfo\\Type::getCollectionValueTypes>`
 methods.
 
 .. _`components-property-info-extractors`:

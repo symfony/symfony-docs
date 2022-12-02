@@ -929,16 +929,21 @@ every request.
 
 Here are some common examples of how ``base_uri`` merging works in practice:
 
-=======================  ==================  ==========================
-``base_uri``             Relative URI        Actual Requested URI
-=======================  ==================  ==========================
-http://example.org       /bar                http://example.org/bar
-http://example.org/foo   /bar                http://example.org/bar
-http://example.org/foo   bar                 http://example.org/bar
-http://example.org/foo/  bar                 http://example.org/foo/bar
-http://example.org       http://symfony.com  http://symfony.com
-http://example.org/?bar  bar                 http://example.org/bar
-=======================  ==================  ==========================
+==========================  ==================  =============================
+``base_uri``                Relative URI        Actual Requested URI
+==========================  ==================  =============================
+http://example.org          /bar                http://example.org/bar
+http://example.org/foo      /bar                http://example.org/bar
+http://example.org/foo      bar                 http://example.org/bar
+http://example.org/foo/     /bar                http://example.org/bar
+http://example.org/foo/     bar                 http://example.org/foo/bar
+http://example.org          http://symfony.com  http://symfony.com
+http://example.org/?bar     bar                 http://example.org/bar
+http://example.org/api/v4   /bar                http://example.org/bar
+http://example.org/api/v4/  /bar                http://example.org/bar
+http://example.org/api/v4   bar                 http://example.org/api/bar
+http://example.org/api/v4/  bar                 http://example.org/api/v4/bar
+==========================  ==================  =============================
 
 bindto
 ......
