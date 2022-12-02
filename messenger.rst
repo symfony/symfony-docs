@@ -76,10 +76,6 @@ message class (or a message interface)::
     methods. You may use the attribute on as many methods in a single class as you
     like, allowing you to group the handling of multiple related types of messages.
 
-.. versionadded:: 6.1
-
-    Support for ``#[AsMessageHandler]`` on methods was introduced in Symfony 6.1.
-
 Thanks to :ref:`autoconfiguration <services-autoconfigure>` and the ``SmsNotification``
 type-hint, Symfony knows that this handler should be called when an ``SmsNotification``
 message is dispatched. Most of the time, this is all you need to do. But you can
