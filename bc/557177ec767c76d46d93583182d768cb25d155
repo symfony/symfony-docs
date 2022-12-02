@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-12-01T16:15:00Z
+
+The `array` return type is on purpose. See https://github.com/symfony/symfony-docs/pull/17362#discussion_r998090665
+
+---------------------------------------------------------------------------
+
+by kaznovac at 2022-12-02T10:09:13Z
+
+@javiereguiluz thanks for the reference (I wasn't aware type change was intentional)
+
+I've reverted it and updated the PR, can you please recheck?
