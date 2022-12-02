@@ -317,6 +317,8 @@ Symfony comes with several built-in user providers:
     Loads users from a configuration file;
 :ref:`Chain User Provider <security-chain-user-provider>`
     Merges two or more user providers into a new user provider.
+    Since each firewall has exactly *one* user provider, you can use this
+    to chain multiple providers together.
 
 The built-in user providers cover the most common needs for applications, but you
 can also create your own :ref:`custom user provider <security-custom-user-provider>`.
