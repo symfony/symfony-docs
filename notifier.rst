@@ -176,9 +176,9 @@ The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
 integration with these chat services:
 
-==============  ====================================  =============================================================================
+==============  ====================================  ===============================================================================
 Service         Package                               DSN
-==============  ====================================  =============================================================================
+==============  ====================================  ===============================================================================
 AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Chatwork        ``symfony/chatwork-notifier``         ``chatwork://API_TOKEN@default?room_id=ID``
 Discord         ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
@@ -193,13 +193,18 @@ MicrosoftTeams  ``symfony/microsoft-teams-notifier``  ``microsoftteams://default
 RocketChat      ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
 Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
+Twitter         ``symfony/twitter-notifier``          ``TWITTER_DSN=twitter://API_KEY:API_SECRET:ACCESS_TOKEN:ACCESS_SECRET@default``
 Zendesk         ``symfony/zendesk-notifier``          ``zendesk://EMAIL:TOKEN@SUBDOMAIN``
 Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
-==============  ====================================  =============================================================================
+==============  ====================================  ===============================================================================
 
 .. versionadded:: 6.2
 
     The Zendesk and Chatwork integration were introduced in Symfony 6.2.
+
+.. versionadded:: 6.3
+
+    The Twitter integration was introduced in Symfony 6.3.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
