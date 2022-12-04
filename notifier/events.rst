@@ -4,11 +4,6 @@
 Using Events
 ============
 
-.. versionadded:: 5.4
-
-    The ``MessageEvent``, ``FailedMessageEvent`` and ``SentMessageEvent`` were
-    introduced in Symfony 5.4.
-
 The class:``...\\..\\Transport`` of the Notifier component allows you to optionally hook
 into the lifecycle via events.
 
