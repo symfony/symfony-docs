@@ -258,6 +258,8 @@ try to add data when no memory is available. An example setting could look as fo
 
     maxmemory 100mb
     maxmemory-policy allkeys-lru
+    
+When using the :class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`, only ``noeviction`` and ``volatile-*`` eviction policies are supported by the adapter. We recommend ``volatile-lru`` though.
 
 Read more about this topic in the official `Redis LRU Cache Documentation`_.
 
