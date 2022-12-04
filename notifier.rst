@@ -206,7 +206,7 @@ MicrosoftTeams  ``symfony/microsoft-teams-notifier``  ``microsoftteams://default
 RocketChat      ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
 Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
 Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
-Twitter         ``symfony/twitter-notifier``          ``TWITTER_DSN=twitter://API_KEY:API_SECRET:ACCESS_TOKEN:ACCESS_SECRET@default``
+Twitter         ``symfony/twitter-notifier``          ``twitter://API_KEY:API_SECRET:ACCESS_TOKEN:ACCESS_SECRET@default``
 Zendesk         ``symfony/zendesk-notifier``          ``zendesk://EMAIL:TOKEN@SUBDOMAIN``
 Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ==============  ====================================  ===============================================================================
