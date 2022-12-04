@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------
+
+by 94noni at 2021-12-28T05:11:50Z
+
+I would rathee document it like workflow component events (sub part of doc and not new page)
+Nice addition :)
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2022-07-12T15:17:50Z
+
+I guess we need to link your new page here https://symfony.com/doc/current/notifier.html#learn-more
+
+---------------------------------------------------------------------------
+
+by ismail1432 at 2022-07-13T14:09:45Z
+
+>I guess we need to link your new page here https://symfony.com/doc/current/notifier.html#learn-more
+
+Thanks @welcoMattic, from what I understand the instruction `notifier/*` [in file](https://github.com/symfony/symfony-docs/blob/5.4/notifier.rst#learn-more) means all pages in the notifier folder will be automatically added so nothing to do specifically.
+
+```
+Learn more
+----------
+
+.. toctree::
+    :maxdepth: 1
+    :glob:
+
+    notifier/*
+```
+
+---------------------------------------------------------------------------
+
+by welcoMattic at 2022-07-30T11:42:18Z
+
+@javiereguiluz can you review this one please? I guess it's ok, but I'm not RST master :smile:
+
+---------------------------------------------------------------------------
+
+by ismail1432 at 2022-10-29T15:05:16Z
+
+Hello @OskarStark
+
+Thanks for the review and sorry for the delay I missed the notifications.
+
+---------------------------------------------------------------------------
+
+by ismail1432 at 2022-11-13T14:26:44Z
+
+friendly ping 👋
