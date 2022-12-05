@@ -53,8 +53,8 @@ will invalidate all signed URIs and Remember Me cookies. That's why, after
 changing this value, you should regenerate the application cache and log
 out all the application users.
 
-catch_all_throwables
-~~~~~~~~~~~~~~~~~~~~
+handle_all_throwables
+~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
@@ -65,7 +65,7 @@ Starting from Symfony 7.0, the default value of this option will be ``true``.
 
 .. versionadded:: 6.2
 
-    The ``catch_all_throwables`` option was introduced in Symfony 6.2.
+    The ``handle_all_throwables`` option was introduced in Symfony 6.2.
 
 .. _configuration-framework-http_cache:
 
