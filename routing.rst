@@ -183,12 +183,6 @@ the ``BlogController``:
             ;
         };
 
-.. versionadded:: 5.1
-
-    Starting from Symfony 5.1, by default Symfony only loads the routes defined
-    in YAML format. If you define routes in XML and/or PHP formats, update the
-    ``src/Kernel.php`` file to add support for the ``.xml`` and ``.php`` file extensions.
-
 .. _routing-matching-http-methods:
 
 Matching HTTP Methods
