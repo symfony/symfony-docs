@@ -332,6 +332,28 @@ a previous message to edit::
             ])
         );
 
+Answering Callback Queries in Telegram
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.3
+
+    The ``TelegramOptions::answerCallbackQuery()`` method was introduced in Symfony 6.3.
+
+When sending message with inline keyboard buttons with callback data, you can use
+:class:`Symfony\\Component\\Notifier\\Bridge\\Telegram\\TelegramOptions` to `answer callback queries`_::
+
+    use Symfony\Component\Notifier\Bridge\Telegram\TelegramOptions;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+
+    $chatMessage = new ChatMessage('Thank you!');
+    $telegramOptions = (new TelegramOptions())
+        ->chatId($chatId)
+        ->answerCallbackQuery(
+            callbackQueryId: '12345', // extracted from callback
+            showAlert: true,
+            cacheTime: 1,
+        );
+
 Adding text to a Microsoft Teams Message
 ----------------------------------------
 
@@ -424,3 +446,4 @@ The result will be something like:
 .. _`Embed elements`: https://discord.com/developers/docs/resources/webhook
 .. _`message options`: https://core.telegram.org/bots/api
 .. _`MessageCard options`: https://docs.microsoft.com/en-us/outlook/actionable-messages/message-card-reference
+.. _`answer callback queries`: https://core.telegram.org/bots/api#answercallbackquery
