@@ -955,6 +955,10 @@ To add support for "param converters" we need SensioFrameworkExtraBundle:
 
     $ composer require sensio/framework-extra-bundle
 
+.. versionadded:: 6.2
+
+    SensioFrameworkExtraBundle was deprecated in Symfony 6.2.
+
 Now, keep the previous route configuration, but change the arguments of the
 controller action. Instead of ``string $slug``, add ``BlogPost $post``::
 
