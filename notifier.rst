@@ -98,6 +98,7 @@ Smsapi           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default
 SmsBiuras        ``symfony/sms-biuras-notifier``        ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
 Smsc             ``symfony/smsc-notifier``              ``smsc://LOGIN:PASSWORD@default?from=FROM``
 SMSFactor        ``symfony/sms-factor-notifier``        ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
+Smsmode          ``symfony/smsmode-notifier``           ``smsmode://API_KEY@default?from=FROM``
 SpotHit          ``symfony/spot-hit-notifier``          ``spothit://TOKEN@default?from=FROM``
 Telnyx           ``symfony/telnyx-notifier``            ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 Termii           ``symfony/termii-notifier``            ``termii://API_KEY@default?from=FROM&channel=CHANNEL``
@@ -119,7 +120,7 @@ Yunpian          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@defau
 
 .. versionadded:: 6.3
 
-    The Bandwith, iSendPro, Plivo, RingCentral and Termii integrations were introduced
+    The Bandwith, iSendPro, Plivo, RingCentral, Smsmode and Termii integrations were introduced
     in Symfony 6.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
