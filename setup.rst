@@ -49,10 +49,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_directory --version="6.2.*@dev" --webapp
+    $ symfony new my_project_directory --version="6.2.*" --webapp
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_directory --version="6.2.*@dev"
+    $ symfony new my_project_directory --version="6.2.*"
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--webapp`` option installs all the packages that you
@@ -64,12 +64,12 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/skeleton:"6.2.*@dev" my_project_directory
+    $ composer create-project symfony/skeleton:"6.2.*" my_project_directory
     $ cd my_project_directory
     $ composer require webapp
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"6.2.*@dev" my_project_directory
+    $ composer create-project symfony/skeleton:"6.2.*" my_project_directory
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_directory/`` directory, download some dependencies
