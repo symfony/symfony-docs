@@ -4,8 +4,8 @@
 Using Events
 ============
 
-The class:``...\\..\\Transport`` of the Notifier component allows you to optionally hook
-into the lifecycle via events.
+The :class:`Symfony\\Component\\Notifier\\Transport`` class of the Notifier component
+allows you to optionally hook into the lifecycle via events.
 
 The ``MessageEvent::class`` Event
 ---------------------------------

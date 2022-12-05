@@ -1940,7 +1940,7 @@ If you need to get the logged in user from a service, use the
 
     The :class:`Symfony\\Bundle\\SecurityBundle\\Security` class
     was introduced in Symfony 6.2. In previous Symfony versions this class was
-    defined in ``Symfony\Bundle\SecurityBundle\Security``.
+    defined in ``Symfony\Component\Security\Core\Security``.
 
 Fetch the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
