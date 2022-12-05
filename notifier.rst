@@ -67,6 +67,7 @@ AllMySms         ``symfony/all-my-sms-notifier``        ``allmysms://LOGIN:APIKE
 AmazonSns        ``symfony/amazon-sns-notifier``        ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 Bandwidth        ``symfony/bandwidth-notifier``         ``bandwidth://USERNAME:PASSWORD@default?from=FROM&account_id=ACCOUNT_ID&application_id=APPLICATION_ID&priority=PRIORITY``
 Clickatell       ``symfony/clickatell-notifier``        ``clickatell://ACCESS_TOKEN@default?from=FROM``
+ClickSend        ``symfony/click-send-notifier``        ``clicksend://API_USERNAME:API_KEY@default?from=FROM&source=SOURCE&list_id=LIST_ID&from_email=FROM_EMAIL``
 ContactEveryone  ``symfony/contact-everyone-notifier``  ``contact-everyone://TOKEN@default?&diffusionname=DIFFUSION_NAME&category=CATEGORY``
 Esendex          ``symfony/esendex-notifier``           ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
 FakeSms          ``symfony/fake-sms-notifier``          ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
@@ -119,7 +120,7 @@ Yunpian          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@defau
 
 .. versionadded:: 6.3
 
-    The Bandwith, iSendPro, Plivo, RingCentral and Termii integrations were introduced
+    The Bandwith, ClickSend, iSendPro, Plivo, RingCentral and Termii integrations were introduced
     in Symfony 6.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
