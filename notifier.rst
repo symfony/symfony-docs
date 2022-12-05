@@ -85,11 +85,8 @@ Nexmo            ``symfony/nexmo-notifier``             Abandoned in favor of Vo
 Octopush         ``symfony/octopush-notifier``          ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
 OrangeSms        ``symfony/orange-sms-notifier``        ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME``
 OvhCloud         ``symfony/ovh-cloud-notifier``         ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME&no_stop_clause=true``
-<<<<<<< HEAD
 RingCentral      ``symfony/ring-central-notifier``      ``ringcentral://API_TOKEN@default?from=FROM``
-=======
 Plivo            ``symfony/plivo-notifier``             ``plivo://AUTH_ID:AUTH_TOKEN@default?from=FROM``
->>>>>>> 80403f278 ([Notifier] Add Plivo bridge)
 Sendberry        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
 Sendinblue       ``symfony/sendinblue-notifier``        ``sendinblue://API_KEY@default?sender=PHONE``
 Sms77            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
