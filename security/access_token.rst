@@ -94,7 +94,7 @@ This handler must implement
         public function getUserBadgeFrom(string $accessToken): UserBadge
         {
             // e.g. query the "access token" database to search for this token
-            $accessToken = $this->repository->findOneByValue($token);
+            $accessToken = $this->repository->findOneByValue($accessToken);
             if (null === $accessToken || !$accessToken->isValid()) {
                 throw new BadCredentialsException('Invalid credentials.');
             }
