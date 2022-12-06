@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2022-10-25T08:59:41Z
+
+> I wonder where should I put such documentation for the EntityArgumentResolver ?
+
+I think the "Automatically Fetching Objects (EntityValueResolver)" section in the doctrine guide would be a good place for this. If it gets very verbose (because of the many options), we might want to move it to a sub-guide under `doctrine/` and link it from the main guide.
+
+---------------------------------------------------------------------------
+
+by jderusse at 2022-11-27T17:17:25Z
+
+Documentation about options added
