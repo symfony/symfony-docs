@@ -755,9 +755,9 @@ control behavior:
 
         #[Route('/product/{product_id}')]
         public function show(
-          Product $product
-          #[MapEntity(id: 'product_id')]
-          Comment $comment
+            Product $product
+            #[MapEntity(id: 'product_id')]
+            Comment $comment
         ): Response {
         }
 
@@ -768,10 +768,10 @@ control behavior:
 
         #[Route('/product/{category}/{slug}/comments/{comment_slug}')]
         public function show(
-          #[MapEntity(mapping: ['date' => 'date', 'slug' => 'slug'])]
-          Product $product
-          #[MapEntity(mapping: ['comment_slug' => 'slug'])]
-          Comment $comment
+            #[MapEntity(mapping: ['date' => 'date', 'slug' => 'slug'])]
+            Product $product
+            #[MapEntity(mapping: ['comment_slug' => 'slug'])]
+            Comment $comment
         ): Response {
         }
 
@@ -781,9 +781,9 @@ control behavior:
 
         #[Route('/product/{slug}/{date}')]
         public function show(
-          #[MapEntity(exclude: ['date'])]
-          Product $product
-          \DateTime $date
+            #[MapEntity(exclude: ['date'])]
+            Product $product
+            \DateTime $date
         ): Response {
         }
 
@@ -797,8 +797,8 @@ control behavior:
 
         #[Route('/product/{id}')]
         public function show(
-          #[MapEntity(entityManager: ['foo'])]
-          Product $product
+            #[MapEntity(entityManager: ['foo'])]
+            Product $product
         ): Response {
         }
 
@@ -1070,7 +1070,6 @@ Learn more
 .. _`Transactions and Concurrency`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/transactions-and-concurrency.html
 .. _`DoctrineMigrationsBundle`: https://github.com/doctrine/DoctrineMigrationsBundle
 .. _`NativeQuery`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/native-sql.html
-.. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-limits.html
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
