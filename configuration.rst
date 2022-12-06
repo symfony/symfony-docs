@@ -60,13 +60,11 @@ configure your applications. Symfony lets you choose between YAML, XML and PHP
 and throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
-.. versionadded:: 5.1
+.. note::
 
-    Starting from Symfony 5.1, by default Symfony only loads the configuration
+    By default, Symfony only loads the configuration
     files defined in YAML format. If you define configuration in XML and/or PHP
-    formats, update the ``src/Kernel.php`` file to add support for the ``.xml``
-    and ``.php`` file extensions by overriding the
-    :method:`Symfony\\Component\\HttpKernel\\Kernel::configureContainer` method::
+    formats, update the ``src/Kernel.php`` file::
 
         // src/Kernel.php
         use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -93,8 +91,8 @@ shown in these three formats.
         }
 
 There isn't any practical difference between formats. In fact, Symfony
-transforms and caches all of them into PHP before running the application, so
-there's not even any performance difference between them.
+transforms all of them into PHP and caches them before running the application, so
+there's not even any performance difference.
 
 YAML is used by default when installing packages because it's concise and very
 readable. These are the main advantages and disadvantages of each format:
