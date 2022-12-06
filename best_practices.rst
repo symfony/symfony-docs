@@ -246,13 +246,13 @@ Instead, you must use dependency injection to fetch services by
 :ref:`type-hinting action method arguments <controller-accessing-services>` or
 constructor arguments.
 
-Use EntityValueResolver If It Is Convenient
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use Entity Value Resolvers If They Are Convenient
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using :doc:`Doctrine </doctrine>`, then you can *optionally* use the
-`EntityValueResolver`_ to automatically query for an entity and pass it as an
-argument to your controller. It will also show a 404 page if no entity can be
-found.
+If you're using :doc:`Doctrine </doctrine>`, then you can *optionally* use
+the :ref:`EntityValueResolver <doctrine-entity-value-resolver>` to
+automatically query for an entity and pass it as an argument to your
+controller. It will also show a 404 page if no entity can be found.
 
 If the logic to get an entity from a route variable is more complex, instead of
 configuring the EntityValueResolver, it's better to make the Doctrine query
@@ -451,7 +451,6 @@ you must set up a redirection.
 .. _`Symfony Demo`: https://github.com/symfony/demo
 .. _`download Symfony`: https://symfony.com/download
 .. _`Composer`: https://getcomposer.org/
-.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`feature toggles`: https://en.wikipedia.org/wiki/Feature_toggle
 .. _`smoke testing`: https://en.wikipedia.org/wiki/Smoke_testing_(software)
 .. _`Webpack`: https://webpack.js.org/
