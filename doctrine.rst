@@ -598,17 +598,21 @@ the :ref:`doctrine-queries` section.
     see the web debug toolbar, install the ``profiler`` :ref:`Symfony pack <symfony-packs>`
     by running this command: ``composer require --dev symfony/profiler-pack``.
 
-Automatically Fetching Objects (ParamConverter)
------------------------------------------------
+.. _doctrine-entity-value-resolver:
 
-In many cases, you can use the `SensioFrameworkExtraBundle`_ to do the query
-for you automatically! First, install the bundle in case you don't have it:
+Automatically Fetching Objects (EntityValueResolver)
+----------------------------------------------------
 
-.. code-block:: terminal
+.. versionadded:: 6.2
 
-    $ composer require sensio/framework-extra-bundle
+    Entity Value Resolver was introduced in Symfony 6.2.
 
-Now, simplify your controller::
+.. versionadded:: 2.7.1
+
+    Autowiring of the ``EntityValueResolver`` was introduced in DoctrineBundle 2.7.1.
+
+In many cases, you can use the ``EntityValueResolver`` to do the query for you
+automatically! You can simplify the controller to::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -621,7 +625,7 @@ Now, simplify your controller::
 
     class ProductController extends AbstractController
     {
-        #[Route('/product/{id}', name: 'product_show')]
+        #[Route('/product/{id}')]
         public function show(Product $product): Response
         {
             // use the Product!
@@ -632,7 +636,178 @@ Now, simplify your controller::
 That's it! The bundle uses the ``{id}`` from the route to query for the ``Product``
 by the ``id`` column. If it's not found, a 404 page is generated.
 
-There are many more options you can use. Read more about the `ParamConverter`_.
+This behavior is enabled by default on all your controllers. You can
+disable it by setting the ``doctrine.orm.controller_resolver.auto_mapping``
+config option to ``false``.
+
+When disabled, you can enable it individually on the desired controllers by
+using the ``MapEntity`` attribute::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use App\Entity\Product;
+    use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
+    // ...
+
+    class ProductController extends AbstractController
+    {
+        #[Route('/product/{id}')]
+        public function show(
+            #[MapEntity]
+            Product $product
+        ): Response {
+            // use the Product!
+            // ...
+        }
+    }
+
+.. tip::
+
+    When enabled globally, it's possible to disabled the behavior on a specific
+    controller, by using the ``MapEntity`` set to ``disabled``.
+
+        public function show(
+            #[CurrentUser]
+            #[MapEntity(disabled: true)]
+            User $user
+        ): Response {
+            // User is not resolved by the EntityValueResolver
+            // ...
+        }
+
+Fetch Automatically
+~~~~~~~~~~~~~~~~~~~
+
+If your route wildcards match properties on your entity, then the resolver
+will automatically fetch them::
+
+    /**
+     * Fetch via primary key because {id} is in the route.
+     */
+    #[Route('/product/{id}')]
+    public function showByPk(Post $post): Response
+    {
+    }
+
+    /**
+     * Perform a findOneBy() where the slug property matches {slug}.
+     */
+    #[Route('/product/{slug}')]
+    public function showBySlug(Post $post): Response
+    {
+    }
+
+Automatic fetching works in these situations:
+
+* If ``{id}`` is in your route, then this is used to fetch by
+  primary key via the ``find()`` method.
+
+* The resolver will attempt to do a ``findOneBy()`` fetch by using
+  *all* of the wildcards in your route that are actually properties
+  on your entity (non-properties are ignored).
+
+You can control this behavior by actually *adding* the ``MapEntity``
+attribute and using the `MapEntity options`_.
+
+Fetch via an Expression
+~~~~~~~~~~~~~~~~~~~~~~~
+
+If automatic fetching doesn't work, you can write an expression using the
+:doc:`ExpressionLanguage component </components/expression_language>`::
+
+    #[Route('/product/{product_id}')]
+    public function show(
+        #[MapEntity(expr: 'repository.find(product_id)')]
+        Product $product
+    ): Response {
+    }
+
+In the expression, the ``repository`` variable will be your entity's
+Repository class and any route wildcards - like ``{product_id}`` are
+available as variables.
+
+This can also be used to help resolve multiple arguments::
+
+    #[Route('/product/{id}/comments/{comment_id}')]
+    public function show(
+        Product $product
+        #[MapEntity(expr: 'repository.find(comment_id)')]
+        Comment $comment
+    ): Response {
+    }
+
+In the example above, the ``$product`` argument is handled automatically,
+but ``$comment`` is configured with the attribute since they cannot both follow
+the default convention.
+
+MapEntity Options
+~~~~~~~~~~~~~~~~~
+
+A number of options are available on the ``MapEntity`` annotation to
+control behavior:
+
+``id``
+    If an ``id`` option is configured and matches a route parameter, then
+    the resolver will find by the primary key::
+
+        #[Route('/product/{product_id}')]
+        public function show(
+          Product $product
+          #[MapEntity(id: 'product_id')]
+          Comment $comment
+        ): Response {
+        }
+
+``mapping``
+    Configures the properties and values to use with the ``findOneBy()``
+    method: the key is the route placeholder name and the value is the Doctrine
+    property name::
+
+        #[Route('/product/{category}/{slug}/comments/{comment_slug}')]
+        public function show(
+          #[MapEntity(mapping: ['date' => 'date', 'slug' => 'slug'])]
+          Product $product
+          #[MapEntity(mapping: ['comment_slug' => 'slug'])]
+          Comment $comment
+        ): Response {
+        }
+
+``exclude``
+    Configures the properties that should be used in the ``findOneBy()``
+    method by *excluding* one or more properties so that not *all* are used:
+
+        #[Route('/product/{slug}/{date}')]
+        public function show(
+          #[MapEntity(exclude: ['date'])]
+          Product $product
+          \DateTime $date
+        ): Response {
+        }
+
+``stripNull``
+    If true, then when ``findOneBy()`` is used, any values that are
+    ``null`` will not be used for the query.
+
+``entityManager``
+    By default, the ``EntityValueResolver`` uses the *default*
+    entity manager, but you can configure this::
+
+        #[Route('/product/{id}')]
+        public function show(
+          #[MapEntity(entityManager: ['foo'])]
+          Product $product
+        ): Response {
+        }
+
+``evictCache``
+    If true, forces Doctrine to always fetch the entity from the database
+    instead of cache.
+
+``disabled``
+    If true, the ``EntityValueResolver`` will not try to replace the argument.
 
 Updating an Object
 ------------------
@@ -896,7 +1071,6 @@ Learn more
 .. _`DoctrineMigrationsBundle`: https://github.com/doctrine/DoctrineMigrationsBundle
 .. _`NativeQuery`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/native-sql.html
 .. _`SensioFrameworkExtraBundle`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-.. _`ParamConverter`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`limit of 767 bytes for the index key prefix`: https://dev.mysql.com/doc/refman/5.6/en/innodb-limits.html
 .. _`Doctrine screencast series`: https://symfonycasts.com/screencast/symfony-doctrine
 .. _`API Platform`: https://api-platform.com/docs/core/validation/
