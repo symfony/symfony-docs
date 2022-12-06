@@ -794,9 +794,9 @@ Symfony provides the following env var processors:
             // config/services.php
             $container->setParameter('typed_env', '%env(enum:App\Enum\Environment:APP_ENV)%');
 
-    .. versionadded:: 6.2
+    .. versionadded:: 6.2.1
 
-        The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.
+        The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.1.
 
 It is also possible to combine any number of processors:
 
