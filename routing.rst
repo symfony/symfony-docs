@@ -301,7 +301,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
 
     HTML forms only support ``GET`` and ``POST`` methods. If you're calling a
     route with a different method from an HTML form, add a hidden field called
-    ``_method`` with the method to use (e.g. ``<input type="hidden" name="_method" value="PUT"/>``).
+    ``_method`` with the method to use (e.g. ``<input type="hidden" name="_method" value="PUT">``).
     If you create your forms with :doc:`Symfony Forms </forms>` this is done
     automatically for you.
 
