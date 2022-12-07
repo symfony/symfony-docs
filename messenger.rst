@@ -259,6 +259,11 @@ matched under ``routing`` will still be handled immediately, i.e. synchronously.
 
 .. note::
 
+    You may use ``'App\Message\*'`` combined with valid namespace. The wildcard
+    at the end will act as a routing for all messages within the matching namespace.
+    The wildcard can follow any valid namespace but has to be placed at the end.
+    This is useful to route all classes sharing the same namespace to the same transport.
+
     You may use ``'*'`` as the message class. This will act as a default routing
     rule for any message not matched under ``routing``. This is useful to ensure
     no message is handled synchronously by default.
