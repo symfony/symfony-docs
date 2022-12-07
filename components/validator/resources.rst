@@ -76,7 +76,7 @@ configure the locations of these files::
 
 .. note::
 
-    If you want to load YAML mapping files then you will also need to install
+    If you want to load YAML mapping files, then you will also need to install
     :doc:`the Yaml component </components/yaml>`.
 
 .. tip::
