@@ -49,7 +49,7 @@ Run this command to install the Mercure support:
 
 .. code-block:: terminal
 
-    $ composer require mercure
+    $ composer require symfony/mercure
 
 To manage persistent connections, Mercure relies on a Hub: a dedicated server
 that handles persistent SSE connections with the clients.
