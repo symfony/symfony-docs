@@ -319,12 +319,16 @@ In your extension, you can load this and dynamically set its arguments::
             // ... now use the flat $config array
         }
 
-Using the Bundle Class
-----------------------
+Using the AbstractBundle Class
+------------------------------
 
 .. versionadded:: 6.1
 
     The ``AbstractBundle`` class was introduced in Symfony 6.1.
+    
+.. caution::
+
+    This is an alternative implementation to the above mentioned Bundle class. Bundle and AbstractBundle are not compatible.
 
 Instead of creating an extension and configuration class, you can also
 extend :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to
