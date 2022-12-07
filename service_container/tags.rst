@@ -161,9 +161,9 @@ all services that were tagged with some specific tag. This is useful in
 compiler passes where you can find these services and use or modify them in
 some specific way.
 
-For example, if you are using Swift Mailer you might imagine that you want
+For example, if you are using the Symfony component Mailer you might imagine that you want
 to implement a "transport chain", which is a collection of classes implementing
-``\Swift_Transport``. Using the chain, you'll want Swift Mailer to try several
+``\MailerTransport``. Using the chain, you'll want Mailer to try several
 ways of transporting the message until one succeeds.
 
 To begin with, define the ``TransportChain`` class::
@@ -180,7 +180,7 @@ To begin with, define the ``TransportChain`` class::
             $this->transports = [];
         }
 
-        public function addTransport(\Swift_Transport $transport): void
+        public function addTransport(\MailerTransport $transport): void
         {
             $this->transports[] = $transport;
         }
@@ -227,7 +227,7 @@ Then, define the chain as a service:
 Define Services with a Custom Tag
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now you might want several of the ``\Swift_Transport`` classes to be instantiated
+Now you might want several of the ``\MailerTransport`` classes to be instantiated
 and added to the chain automatically using the ``addTransport()`` method.
 For example, you may add the following transports as services:
 
@@ -237,11 +237,11 @@ For example, you may add the following transports as services:
 
         # config/services.yaml
         services:
-            Swift_SmtpTransport:
+            MailerSmtpTransport:
                 arguments: ['%mailer_host%']
                 tags: ['app.mail_transport']
 
-            Swift_SendmailTransport:
+            MailerSendmailTransport:
                 tags: ['app.mail_transport']
 
     .. code-block:: xml
@@ -254,13 +254,13 @@ For example, you may add the following transports as services:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Swift_SmtpTransport">
+                <service id="MailerSmtpTransport">
                     <argument>%mailer_host%</argument>
 
                     <tag name="app.mail_transport"/>
                 </service>
 
-                <service id="Swift_SendmailTransport">
+                <service id="MailerSendmailTransport">
                     <tag name="app.mail_transport"/>
                 </service>
             </services>
@@ -274,13 +274,13 @@ For example, you may add the following transports as services:
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
-            $services->set(\Swift_SmtpTransport::class)
+            $services->set(\MailerSmtpTransport::class)
                 // the param() method was introduced in Symfony 5.2.
                 ->args([param('mailer_host')])
                 ->tag('app.mail_transport')
             ;
 
-            $services->set(\Swift_SendmailTransport::class)
+            $services->set(\MailerSendmailTransport::class)
                 ->tag('app.mail_transport')
             ;
         };
@@ -375,12 +375,12 @@ To begin with, change the ``TransportChain`` class::
             $this->transports = [];
         }
 
-        public function addTransport(\Swift_Transport $transport, $alias): void
+        public function addTransport(\MailerTransport $transport, $alias): void
         {
             $this->transports[$alias] = $transport;
         }
 
-        public function getTransport($alias): ?\Swift_Transport
+        public function getTransport($alias): ?\MailerTransport
         {
             if (array_key_exists($alias, $this->transports)) {
                 return $this->transports[$alias];
@@ -390,7 +390,7 @@ To begin with, change the ``TransportChain`` class::
         }
     }
 
-As you can see, when ``addTransport()`` is called, it takes not only a ``Swift_Transport``
+As you can see, when ``addTransport()`` is called, it takes not only a ``MailerTransport``
 object, but also a string alias for that transport. So, how can you allow
 each tagged transport service to also supply an alias?
 
@@ -402,12 +402,12 @@ To answer this, change the service declaration:
 
         # config/services.yaml
         services:
-            Swift_SmtpTransport:
+            MailerSmtpTransport:
                 arguments: ['%mailer_host%']
                 tags:
                     - { name: 'app.mail_transport', alias: 'smtp' }
 
-            Swift_SendmailTransport:
+            MailerSendmailTransport:
                 tags:
                     - { name: 'app.mail_transport', alias: 'sendmail' }
 
@@ -421,13 +421,13 @@ To answer this, change the service declaration:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Swift_SmtpTransport">
+                <service id="MailerSmtpTransport">
                     <argument>%mailer_host%</argument>
 
                     <tag name="app.mail_transport" alias="smtp"/>
                 </service>
 
-                <service id="Swift_SendmailTransport">
+                <service id="MailerSendmailTransport">
                     <tag name="app.mail_transport" alias="sendmail"/>
                 </service>
             </services>
@@ -441,13 +441,13 @@ To answer this, change the service declaration:
         return function(ContainerConfigurator $configurator) {
             $services = $configurator->services();
 
-            $services->set(\Swift_SmtpTransport::class)
+            $services->set(\MailerSmtpTransport::class)
                 // the param() method was introduced in Symfony 5.2.
                 ->args([param('mailer_host')])
                 ->tag('app.mail_transport', ['alias' => 'smtp'])
             ;
 
-            $services->set(\Swift_SendmailTransport::class)
+            $services->set(\MailerSendmailTransport::class)
                 ->tag('app.mail_transport', ['alias' => 'sendmail'])
             ;
         };
@@ -463,13 +463,13 @@ To answer this, change the service declaration:
         # config/services.yaml
         services:
             # Compact syntax
-            Swift_SendmailTransport:
-                class: \Swift_SendmailTransport
+            MailerSendmailTransport:
+                class: \MailerSendmailTransport
                 tags: ['app.mail_transport']
 
             # Verbose syntax
-            Swift_SendmailTransport:
-                class: \Swift_SendmailTransport
+            MailerSendmailTransport:
+                class: \MailerSendmailTransport
                 tags:
                     - { name: 'app.mail_transport' }
 
