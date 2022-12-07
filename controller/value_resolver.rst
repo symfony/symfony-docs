@@ -146,7 +146,7 @@ Symfony ships with the following value resolvers in the
     argument list. When the action is called, the last (variadic) argument will
     contain all the values of this array.
 
-In addition, some components and official bundles provide other value resolvers:
+In addition, some components, bridges and official bundles provide other value resolvers:
 
 :class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`
     Injects the object that represents the current logged in user if type-hinted
@@ -158,6 +158,33 @@ In addition, some components and official bundles provide other value resolvers:
     If the argument is not nullable and there is no logged in user or the logged in
     user has a user class not matching the type-hinted class, an ``AccessDeniedException``
     is thrown by the resolver to prevent access to the controller.
+
+:class:`Symfony\\Bridge\\Doctrine\\ArgumentResolver\\EntityValueResolver`
+    Automatically query for an entity and pass it as an argument to your controller.
+
+    For example, the following will query the ``Product`` entity which has ``{id}`` as primary key::
+
+        // src/Controller/DefaultController.php
+        namespace App\Controller;
+
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        class DefaultController
+        {
+            #[Route('/product/{id}')]
+            public function share(Product $product): Response
+            {
+                // ...
+            }
+        }
+
+    To learn more about the use of the ``EntityValueResolver``, see the dedicated
+    section :ref:`Automatically Fetching Objects <doctrine-entity-value-resolver>`.
+
+    .. versionadded:: 6.2
+
+        The ``EntityValueResolver`` was introduced in Symfony 6.2.
 
 PSR-7 Objects Resolver:
     Injects a Symfony HttpFoundation ``Request`` object created from a PSR-7 object
