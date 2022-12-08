@@ -424,4 +424,4 @@ take a look at how this bundle works.
 .. _`OpenAPI`: https://www.openapis.org
 .. _`GraphQL`: https://graphql.org
 .. _`JSON:API`: https://jsonapi.org
-.. _`HAL`: http://stateless.co/hal_specification.html
+.. _`HAL`: https://stateless.group/hal_specification.html
