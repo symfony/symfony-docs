@@ -736,6 +736,7 @@ reason, this component also provides mocks for these PHP functions:
 * :phpfunction:`class_exists`
 * :phpfunction:`interface_exists`
 * :phpfunction:`trait_exists`
+* :phpfunction:`enum_exists`
 
 Use Case
 ~~~~~~~~
@@ -797,6 +798,16 @@ classes, interfaces and/or traits for the code to run::
             // ...
         }
     }
+
+Note that mocking a class with ``ClassExistsMock::withMockedClasses()``
+will make :phpfunction:`class_exists`, :phpfunction:`interface_exists`
+and :phpfunction:`trait_exists` return true.
+
+To register an enumeration and mock :phpfunction:`enum_exists`,
+``ClassExistsMock::withMockedEnums()`` must be used. Note that, like in
+PHP 8.1 and later, calling ``class_exists`` on a enum will return ``true``.
+That's why calling ``ClassExistsMock::withMockedEnums()`` will also register the enum
+as a mocked class.
 
 Troubleshooting
 ---------------
