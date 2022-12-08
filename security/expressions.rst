@@ -73,7 +73,8 @@ syntax, see :doc:`/components/expression_language/syntax`.
 Inside the expression, you have access to a number of variables:
 
 ``user``
-    The user object (or the string ``anon`` if you're not authenticated).
+    An instance of :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface`
+    that represents the current user or ``null`` if you're not authenticated.
 ``role_names``
     An array with the string representation of the roles the user has. This array
     includes any roles granted indirectly via the :ref:`role hierarchy <security-role-hierarchy>` but it
