@@ -2578,7 +2578,7 @@ enable_annotations
 
 **type**: ``boolean`` **default**: ``false``
 
-If this option is enabled, validation constraints can be defined using annotations.
+If this option is enabled, validation constraints can be defined using annotations or attributes.
 
 translation_domain
 ..................
@@ -2787,7 +2787,7 @@ enable_annotations
 
 **type**: ``boolean`` **default**: ``false``
 
-If this option is enabled, serialization groups can be defined using annotations.
+If this option is enabled, serialization groups can be defined using annotations or attributes.
 
 .. seealso::
 
