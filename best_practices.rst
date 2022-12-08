@@ -81,8 +81,8 @@ Configuration
 Use Environment Variables for Infrastructure Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The values of these options change from one machine to another (e.g. from your
-development machine to the production server) but they don't modify the
+The values of these options change from one machine to another (e.g., from your
+development machine to the production server), but they don't modify the
 application behavior.
 
 :ref:`Use env vars in your project <config-env-vars>` to define these options
@@ -93,7 +93,7 @@ and create multiple ``.env`` files to :ref:`configure env vars per environment <
 Use Secrets for Sensitive Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When your application has sensitive configuration - like an API key - you should
+When your application has sensitive configuration, like an API key, you should
 store those securely via :doc:`Symfony’s secrets management system </configuration/secrets>`.
 
 Use Parameters for Application Configuration
@@ -119,7 +119,7 @@ Then, use just one or two words to describe the purpose of the parameter:
 
     # config/services.yaml
     parameters:
-        # don't do this: 'dir' is too generic and it doesn't convey any meaning
+        # don't do this: 'dir' is too generic, and it doesn't convey any meaning
         app.dir: '...'
         # do this: short but easy to understand names
         app.contents_dir: '...'
@@ -164,7 +164,7 @@ InvoiceBundle, etc. However, a bundle is meant to be something that can be
 reused as a stand-alone piece of software.
 
 If you need to reuse some feature in your projects, create a bundle for it (in a
-private repository, to not make it publicly available). For the rest of your
+private repository, do not make it publicly available). For the rest of your
 application code, use PHP namespaces to organize code instead of bundles.
 
 Use Autowiring to Automate the Configuration of Application Services
@@ -186,14 +186,14 @@ Services Should be Private Whenever Possible
 those services via ``$container->get()``. Instead, you will need to use proper
 dependency injection.
 
-Use the YAML Format to Configure your Own Services
+Use the YAML Format to Configure your own Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you use the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 most services will be configured automatically. However, in some edge cases
 you'll need to configure services (or parts of them) manually.
 
-YAML is the format recommended to configure services because it's friendly to
+YAML is the format recommended configuring services because it's friendly to
 newcomers and concise, but Symfony also supports XML and PHP configuration.
 
 Use Attributes to Define the Doctrine Entity Mapping
@@ -228,13 +228,13 @@ important parts of your application.
 
 .. _best-practice-controller-annotations:
 
-Use Attributes or Annotations to Configure Routing, Caching and Security
+Use Attributes or Annotations to Configure Routing, Caching, and Security
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using attributes or annotations for routing, caching and security simplifies
+Using attributes or annotations for routing, caching, and security simplifies
 configuration. You don't need to browse several files created with different
-formats (YAML, XML, PHP): all the configuration is just where you need it and
-it only uses one format.
+formats (YAML, XML, PHP): all the configuration is just where you  require it,
+and it only uses one format.
 
 Don't Use Annotations to Configure the Controller Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -271,7 +271,7 @@ Templates
 Use Snake Case for Template Names and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use lowercase snake_case for template names, directories and variables (e.g.
+Use lowercase snake_case for template names, directories, and variables (e.g.,
 ``user_profile`` instead of ``userProfile`` and ``product/edit_form.html.twig``
 instead of ``Product/EditForm.html.twig``).
 
@@ -280,7 +280,7 @@ Prefix Template Fragments with an Underscore
 
 Template fragments, also called *"partial templates"*, allow to
 :ref:`reuse template contents <templates-reuse-contents>`. Prefix their names
-with an underscore to better differentiate them from complete templates (e.g.
+with an underscore to better differentiate them from complete templates (e.g.,
 ``_user_metadata.html.twig`` or ``_caution_message.html.twig``).
 
 Forms
@@ -289,7 +289,7 @@ Forms
 Define your Forms as PHP Classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Creating :ref:`forms in classes <creating-forms-in-classes>` allows to reuse
+Creating :ref:`forms in classes <creating-forms-in-classes>` allows reusing
 them in different parts of the application. Besides, not creating forms in
 controllers simplify the code and maintenance of the controllers.
 
@@ -301,7 +301,7 @@ button of a form used to both create and edit items should change from "Add new"
 to "Save changes" depending on where it's used.
 
 Instead of adding buttons in form classes or the controllers, it's recommended
-to add buttons in the templates. This also improves the separation of concerns,
+to add buttons in the templates. This also improves the separation of concerns
 because the button styling (CSS class and other attributes) is defined in the
 template instead of in a PHP class.
 
@@ -323,7 +323,7 @@ Use a Single Action to Render and Process the Form
 
 :ref:`Rendering forms <rendering-forms>` and :ref:`processing forms <processing-forms>`
 are two of the main tasks when handling forms. Both are too similar (most of the
-times, almost identical), so it's much simpler to let a single controller action
+time, almost identical), so it's much simpler to let a single controller action
 handle both.
 
 .. _best-practice-internationalization:
@@ -347,8 +347,8 @@ Use Keys for Translations Instead of Content Strings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using keys simplifies the management of the translation files because you can
-change the original contents in templates, controllers and services without
-having to update all of the translation files.
+change the original contents in templates, controllers, and services without
+having to update all the translation files.
 
 Keys should always describe their *purpose* and *not* their location. For
 example, if a form has a field with the label "Username", then a nice key
@@ -361,7 +361,7 @@ Define a Single Firewall
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unless you have two legitimately different authentication systems and users
-(e.g. form login for the main site and a token system for your API only), it's
+(e.g., form login for the main site and a token system for your API only), it's
 recommended to have only one firewall to keep things simple.
 
 Additionally, you should use the ``anonymous`` key under your firewall. If you
@@ -389,13 +389,13 @@ Web Assets
 Use Webpack Encore to Process Web Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Web assets are things like CSS, JavaScript and image files that make the
-frontend of your site looks and works great. `Webpack`_ is the leading JavaScript
+Web assets are things like CSS, JavaScript, and image files that make the
+frontend of your site look and work great. `Webpack`_ is the leading JavaScript
 module bundler that compiles, transforms and packages assets for usage in a browser.
 
 :doc:`Webpack Encore </frontend>` is a JavaScript library that gets rid of most
 of Webpack complexity without hiding any of its features or distorting its usage
-and philosophy. It was originally created for Symfony applications, but it works
+and philosophy. It was created for Symfony applications, but it works
 for any application using any technology.
 
 Tests
@@ -453,7 +453,7 @@ public URL changes, users won't be able to browse it unless you set up a
 redirection to the new URL.
 
 That's why it's recommended to use raw URLs in tests instead of generating them
-from routes. Whenever a route changes, tests will fail and you'll know that
+from routes. Whenever a route changes, tests will fail, and you'll know that
 you must set up a redirection.
 
 .. _`Symfony Demo`: https://github.com/symfony/demo
