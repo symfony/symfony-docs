@@ -717,10 +717,10 @@ configure the ``providers`` option:
 
 .. tip::
 
-    If you use Lokalise as provider and a locale format following the `ISO 639-1`_ (e.g., "en" or "fr"),
+    If you use Lokalise as provider and a locale format following the `ISO 639-1`_ (e.g. "en" or "fr"),
     you have to set the `Custom Language Name setting`_ in Lokalise for each of your locales,
     in order to override the default value (which follow the `ISO 639-1`_ succeeded by a sub-code
-    in capital letters that specifies the national variety (e.g., "GB" or "US" according to `ISO 3166-1 alpha-2`_)).
+    in capital letters that specifies the national variety (e.g. "GB" or "US" according to `ISO 3166-1 alpha-2`_)).
 
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

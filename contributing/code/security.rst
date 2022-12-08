@@ -152,7 +152,7 @@ score for Impact is capped at 6. Each area is scored between 0 and 4.*
   on an end-users system, or the server that it runs on? (0-4)
 * Availability: Is the availability of a service or application affected? Is
   it reduced availability or total loss of availability of a service /
-  application? Availability includes networked services (e.g., databases) or
+  application? Availability includes networked services (e.g. databases) or
   resources such as consumption of network bandwidth, processor cycles, or
   disk space. (0-4)
 
