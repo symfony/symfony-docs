@@ -161,7 +161,7 @@ all services that were tagged with some specific tag. This is useful in
 compiler passes where you can find these services and use or modify them in
 some specific way.
 
-For example, if you are using the Symfony component Mailer you might imagine that you want
+For example, if you are using the Symfony Mailer component you might want
 to implement a "transport chain", which is a collection of classes implementing
 ``\MailerTransport``. Using the chain, you'll want Mailer to try several
 ways of transporting the message until one succeeds.
