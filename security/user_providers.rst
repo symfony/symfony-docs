@@ -229,8 +229,8 @@ After setting up hashing, you can configure all the user information in
 Chain User Provider
 -------------------
 
-This user provider combines two or more of the other provider types (e.g.
-``entity`` and ``ldap``) to create a new user provider. The order in which
+This user provider combines two or more of the other providers
+to create a new user provider. The order in which
 providers are configured is important because Symfony will look for users
 starting from the first provider and will keep looking for in the other
 providers until the user is found:
