@@ -24,7 +24,7 @@ Contributing
 ------------
 
 We love contributors! For more information on how you can contribute, please read
-the [Symfony Docs Contributing Guide](https://symfony.com/doc/current/contributing/documentation/overview.html)
+the [Symfony Docs Contributing Guide](https://symfony.com/doc/current/contributing/documentation/overview.html).
 
 **Important**: use `4.4` branch as the base of your pull requests, unless you are
 documenting a feature that was introduced *after* Symfony 4.4 (e.g. in Symfony 5.4).
@@ -32,7 +32,7 @@ documenting a feature that was introduced *after* Symfony 4.4 (e.g. in Symfony 5
 Build Documentation Locally
 ---------------------------
 
-This is not needed for contributing, but it's useful if you want to debug some
+This is not needed for contributing, but it's useful if you would like to debug some
 issue in the docs or if you want to read Symfony Documentation offline.
 
 ```bash
