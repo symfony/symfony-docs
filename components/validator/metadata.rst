@@ -67,7 +67,7 @@ Then, add the Validator component configuration to the class::
 Classes
 -------
 
-Some constraints allow to validate the entire object. For example, the
+Some constraints allow validating the entire object. For example, the
 :doc:`Callback </reference/constraints/Callback>` constraint is a generic
 constraint that's applied to the class itself.
 
