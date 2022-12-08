@@ -52,6 +52,8 @@ to change these files after package installation
     :doc:`Symfony Configuration Reference </reference/index>` or run the
     ``config:dump-reference`` command.
 
+.. _configuration-formats:
+
 Configuration Formats
 ~~~~~~~~~~~~~~~~~~~~~
 
