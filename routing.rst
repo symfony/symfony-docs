@@ -152,8 +152,8 @@ the ``BlogController``:
 .. note::
 
     By default Symfony only loads the routes defined in YAML format. If you
-    define routes in XML and/or PHP formats, update the ``src/Kernel.php`` file
-    to add support for the ``.xml`` and ``.php`` file extensions.
+    define routes in XML and/or PHP formats, you need to
+    :ref:`update the ``src/Kernel.php`` file <configuration-formats>`.
 
 .. _routing-matching-http-methods:
 
