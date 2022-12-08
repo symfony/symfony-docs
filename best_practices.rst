@@ -81,7 +81,7 @@ Configuration
 Use Environment Variables for Infrastructure Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The values of these options change from one machine to another (e.g., from your
+The values of these options change from one machine to another (e.g. from your
 development machine to the production server), but they don't modify the
 application behavior.
 
@@ -271,7 +271,7 @@ Templates
 Use Snake Case for Template Names and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Use lowercase snake_case for template names, directories, and variables (e.g.,
+Use lowercase snake_case for template names, directories, and variables (e.g.
 ``user_profile`` instead of ``userProfile`` and ``product/edit_form.html.twig``
 instead of ``Product/EditForm.html.twig``).
 
@@ -280,7 +280,7 @@ Prefix Template Fragments with an Underscore
 
 Template fragments, also called *"partial templates"*, allow to
 :ref:`reuse template contents <templates-reuse-contents>`. Prefix their names
-with an underscore to better differentiate them from complete templates (e.g.,
+with an underscore to better differentiate them from complete templates (e.g.
 ``_user_metadata.html.twig`` or ``_caution_message.html.twig``).
 
 Forms
@@ -361,7 +361,7 @@ Define a Single Firewall
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unless you have two legitimately different authentication systems and users
-(e.g., form login for the main site and a token system for your API only), it's
+(e.g. form login for the main site and a token system for your API only), it's
 recommended to have only one firewall to keep things simple.
 
 Additionally, you should use the ``anonymous`` key under your firewall. If you

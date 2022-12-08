@@ -195,7 +195,7 @@ b. You may Distribute or Publicly Perform an Adaptation only under the terms of:
 (i) this License; (ii) a later version of this License with the same License
 Elements as this License; (iii) a Creative Commons jurisdiction license (either
 this or a later license version) that contains the same License Elements as this
-License (e.g., Attribution-ShareAlike 3.0 US)); (iv) a Creative Commons
+License (e.g. Attribution-ShareAlike 3.0 US)); (iv) a Creative Commons
 Compatible License. If you license the Adaptation under one of the licenses
 mentioned in (iv), you must comply with the terms of that license. If you
 license the Adaptation under the terms of any of the licenses mentioned in (i),
@@ -221,7 +221,7 @@ Collections, You must, unless a request has been made pursuant to Section 4(a),
 keep intact all copyright notices for the Work and provide, reasonable to the
 medium or means You are utilizing: (i) the name of the Original Author (or
 pseudonym, if applicable) if supplied, and/or if the Original Author and/or
-Licensor designate another party or parties (e.g., a sponsor institute,
+Licensor designate another party or parties (e.g. a sponsor institute,
 publishing entity, journal) for attribution ("Attribution Parties") in
 Licensor's copyright notice, terms of service or by other reasonable means, the
 name of such party or parties; (ii) the title of the Work if supplied; (iii) to
@@ -229,7 +229,7 @@ the extent reasonably practicable, the URI, if any, that Licensor specifies to
 be associated with the Work, unless such URI does not refer to the copyright
 notice or licensing information for the Work; and (iv) , consistent with Section
 3(b), in the case of an Adaptation, a credit identifying the use of the Work in
-the Adaptation (e.g., "French translation of the Work by Original Author," or
+the Adaptation (e.g. "French translation of the Work by Original Author," or
 "Screenplay based on original Work by Original Author"). The credit required by
 this Section 4(c) may be implemented in any reasonable manner; provided,
 however, that in the case of a Adaptation or Collection, at a minimum such
