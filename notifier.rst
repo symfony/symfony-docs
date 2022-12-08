@@ -714,9 +714,10 @@ and its ``asChatMessage()`` method::
     }
 
 The
-:class:`Symfony\\Component\\Notifier\\Notification\\SmsNotificationInterface`
-and
+:class:`Symfony\\Component\\Notifier\\Notification\\SmsNotificationInterface`,
 :class:`Symfony\\Component\\Notifier\\Notification\\EmailNotificationInterface`
+and
+:class:`Symfony\\Component\\Notifier\\Notification\\PushNotificationInterface`
 also exists to modify messages sent to those channels.
 
 Customize Browser Notifications (Flash Messages)
