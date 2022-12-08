@@ -278,7 +278,7 @@ information about the current event, even while it's still running. This
 object can be converted to a string for a quick summary::
 
     // ...
-    dump((string) $this->stopwatch->getEvent()); // dumps e.g. '4.50 MiB - 26 ms'
+    dump((string) $this->stopwatch->getEvent('export-data')); // dumps e.g. '4.50 MiB - 26 ms'
 
 You can also profile your template code with the :ref:`stopwatch Twig tag <reference-twig-tag-stopwatch>`:
 
