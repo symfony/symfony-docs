@@ -1648,16 +1648,16 @@ You can log in a user programmatically using the `login()` method of the
             $user = ...;
 
             // log the user in on the current firewall
-            $this->security->login($user);
+            $security->login($user);
 
             // if the firewall has more than one authenticator, you must pass it explicitly
             // by using the name of built-in authenticators...
-            $this->security->login($user, 'form_login');
+            $security->login($user, 'form_login');
             // ...or the service id of custom authenticators
-            $this->security->login($user, ExampleAuthenticator::class);
+            $security->login($user, ExampleAuthenticator::class);
 
             // you can also log in on a different firewall
-            $this->security->login($user, 'form_login', 'other_firewall');
+            $security->login($user, 'form_login', 'other_firewall');
 
             // ... redirect the user to its account page for instance
         }
