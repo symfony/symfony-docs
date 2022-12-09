@@ -1093,7 +1093,7 @@ always as a collection.
     changed by adding the ``\XML_COMMENT_NODE`` option to the ``XmlEncoder::ENCODER_IGNORED_NODE_TYPES``
     key of the ``$defaultContext`` of the ``XmlEncoder`` constructor or
     directly to the ``$context`` argument of the ``encode()`` method::
-    
+
         $xmlEncoder->encode($array, 'xml', [XmlEncoder::ENCODER_IGNORED_NODE_TYPES => [\XML_COMMENT_NODE]]);
 
 The ``XmlEncoder`` Context Options
@@ -1124,6 +1124,7 @@ Option                          Description                                     
 ``encoder_ignored_node_types``  Array of node types (`DOM XML_* constants`_)       ``[]``
                                 to be ignored while encoding
 ``load_options``                XML loading `options with libxml`_                 ``\LIBXML_NONET | \LIBXML_NOBLANKS``
+``save_options``                XML saving `options with libxml`_                  ``0``
 ``remove_empty_tags``           If set to true, removes all empty tags in the      ``false``
                                 generated XML
 ==============================  =================================================  ==========================
