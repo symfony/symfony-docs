@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-11-30T09:45:52Z
+
+Not sure about removing it in `6.2` or add:
+
+```rst
+.. deprecated::
+
+    Using ``legacy_error_messages`` is deprecated since Symfony 6.2.
+```
+
+WDYT @symfony/team-symfony-docs ?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2022-12-01T16:33:02Z
+
+I'm ok with fully removing it. If you search for this specific option (because you see it in your code or some blog post), you should still, in theory, find the result in an older version of the docs.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-12-08T16:41:22Z
+
+I was divided, but at the end I opted for doing what Ryan said. This is a very uncommon config option anyways. Thanks.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-12-08T16:43:11Z
+
+I was going to merge this ... but I can't because of this error:
+
+```
+Unable to commit branch pull/17473
+```
+
+@OskarStark can you try to merge this? Thanks
