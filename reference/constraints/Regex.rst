@@ -258,12 +258,17 @@ This is the message that will be shown if this validator fails.
 
 You can use the following parameters in this message:
 
-===============  ==============================================================
-Parameter        Description
-===============  ==============================================================
-``{{ value }}``  The current (invalid) value
-``{{ label }}``  Corresponding form field label
-===============  ==============================================================
+=================  ==============================================================
+Parameter          Description
+=================  ==============================================================
+``{{ value }}``    The current (invalid) value
+``{{ label }}``    Corresponding form field label
+``{{ pattern }}``  The expected matching pattern
+=================  ==============================================================
+
+.. versionadded:: 6.3
+
+   The ``{{ pattern }}`` parameter was introduced in 6.3.
 
 ``pattern``
 ~~~~~~~~~~~
