@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by 94noni at 2022-11-18T08:03:15Z
+
+> Is there a tip in order to set label at PR creation ?
+
+Perhaps create a new carsonbot action that detect the symfony/symfony PR number, and check its state if merged or not ^^
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-11-28T10:57:12Z
+
+We created the `6.3` branch, can you please retarget your PR? Thanks
+
+---------------------------------------------------------------------------
+
+by alamirault at 2022-11-28T20:07:47Z
+
+@OskarStark I rebased on 6.3
