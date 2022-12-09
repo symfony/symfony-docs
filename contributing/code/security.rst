@@ -22,8 +22,8 @@ email for confirmation):
   is set to ``true`` or ``APP_ENV`` set to anything but ``prod``);
 
 * Any fix that can be classified as **security hardening** like route
-  enumeration, login throttling bypasses, denial of service attacks, or timing
-  attacks.
+  enumeration, login throttling bypasses, denial of service attacks, timing
+  attacks, or lack of ``SensitiveParameter`` attributes.
 
 In any case, the core team has the final decision on which issues are
 considered security vulnerabilities.
