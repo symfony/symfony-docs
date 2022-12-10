@@ -19,14 +19,60 @@ installed and configured the `phpredis extension`_.
 
 You have two different options to use Redis to store sessions:
 
-(1) The first PHP-based option is to configure Redis session handler directly in
-the server ``php.ini`` file:
+(1) The first PHP-based option is to use the ``session.handler.native_redis`` service as
+``handler_id`` to let the extension manage the sessions itself. It is important to specify
+a ``save_path``, which defines the server where the extension will store the session:
 
-.. code-block:: ini
+.. configuration-block::
 
-    ; php.ini
-    session.save_handler = redis
-    session.save_path = "tcp://192.168.0.178:6379?auth=REDIS_PASSWORD"
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            session:
+                # ...
+                handler_id: 'session.handler.native_redis'
+                save_path: 'tcp://192.168.0.178:6379?auth=REDIS_PASSWORD'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:session enabled="true"
+                                   handler-id="session.handler.native_redis"
+                                   save-path="tcp://192.168.0.178:6379?auth=REDIS_PASSWORD"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->session()
+                // ...
+                ->handlerId('session.handler.native_redis')
+                ->savePath('tcp://192.168.0.178:6379?auth=REDIS_PASSWORD')
+            ;
+        };
+
+That's all! Symfony will now use your Redis server to read and write the session
+data. This solution does perform session locking and avoids *race conditions*.
+
+.. seealso::
+
+    If you use Memcached instead of Redis, follow a similar approach but replace
+    ``session.handler.native_redis`` by ``session.handler.native_memcached`` and
+    leave out the scheme (``tcp://``) in the server address.
 
 (2) The second Symfony-based option is to configure Redis sessions as follows.
 
