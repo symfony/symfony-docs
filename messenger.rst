@@ -1441,6 +1441,7 @@ The transport has a number of options:
 ``delay[queue_name_pattern]``                 Pattern to use to create the queues                ``delay_%exchange_name%_%routing_key%_%delay%``
 ``delay[exchange_name]``                      Name of the exchange to be used for the            ``delays``
                                               delayed/retried messages
+``delay[arguments]``                          Extra arguments for the delays queues
 ``queues[name][arguments]``                   Extra arguments
 ``queues[name][binding_arguments]``           Arguments to be used while binding the queue.
 ``queues[name][binding_keys]``                The binding keys (if any) to bind to this queue
