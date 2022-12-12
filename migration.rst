@@ -275,16 +275,13 @@ could look something like this::
     $request = Request::createFromGlobals();
     $response = $kernel->handle($request);
 
-    /*
-     * LegacyBridge will take care of figuring out whether to boot up the
-     * existing application or to send the Symfony response back to the client.
-     */
-    $scriptFile = LegacyBridge::prepareLegacyScript($request, $response, __DIR__);
-    if ($scriptFile !== null) {
-        require $scriptFile;
-    } else {
+    if (false === $response->isNotFound()) {
+        // Symfony successfully handled the route.
         $response->send();
+    } else {
+        LegacyBridge::handleRequest($request, $response, __DIR__);
     }
+
     $kernel->terminate($request, $response);
 
 There are 2 major deviations from the original file:
@@ -297,10 +294,9 @@ Line 18
   it over. For instance, by replacing outdated or redundant libraries with
   Symfony components.
 
-Line 41 - 50
-  Instead of sending the Symfony response directly, a ``LegacyBridge`` is
-  called to decide whether the legacy application should be booted and used to
-  create the response instead.
+Line 41 - 46
+  If Symfony handled the response, it is sent; otherwise, the ``LegacyBridge``
+  handles the request.
 
 This legacy bridge is responsible for figuring out which file should be loaded
 in order to process the old application logic. This can either be a front
@@ -316,19 +312,50 @@ somewhat like this::
 
     class LegacyBridge
     {
-        public static function prepareLegacyScript(Request $request, Response $response, string $publicDirectory): ?string
+
+        /**
+         * Map the incoming request to the right file. This is the
+         * key function of the LegacyBridge.
+         *
+         * Sample code only. Your implementation will vary, depending on the
+         * architecture of the legacy code and how it's executed.
+         *
+         * If your mapping is complicated, you may want to write unit tests
+         * to verify your logic, hence this is public static.
+         */
+        public static function getLegacyScript(Request $request): string
         {
-            // If Symfony successfully handled the route, you do not have to do anything.
-            if (false === $response->isNotFound()) {
-                return null;
+            $requestPathInfo = $request->getPathInfo();
+            $legacyRoot = __DIR__ . '/../';
+
+            // Map a route to a legacy script:
+            if ($requestPathInfo == '/customer/') {
+                return "{$legacyRoot}src/customers/list.php";
             }
 
-            // Figure out how to map to the needed script file
-            // from the existing application and possibly (re-)set
-            // some env vars.
-            $legacyScriptFilename = ...;
+            // Map a direct file call, e.g. an ajax call:
+            if ($requestPathInfo == 'inc/ajax_cust_details.php') {
+                return "{$legacyRoot}inc/ajax_cust_details.php";
+            }
 
-            return $legacyScriptFilename;
+            // ... etc.
+
+            throw new \Exception("Unhandled legacy mapping for $requestPathInfo");
+        }
+
+
+        public static function handleRequest(Request $request, Response $response, string $publicDirectory): ?string
+        {
+            $legacyScriptFilename = LegacyBridge::getLegacyScript($request);
+
+            // Possibly (re-)set some env vars (e.g. to handle forms
+            // posting to PHP_SELF):
+            $p = $request->getPathInfo();
+            $_SERVER['PHP_SELF'] = $p;
+            $_SERVER['SCRIPT_NAME'] = $p;
+            $_SERVER['SCRIPT_FILENAME'] = $legacyScriptFilename;
+
+            require $legacyScriptFilename;
         }
     }
 
