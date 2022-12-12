@@ -94,6 +94,7 @@ Other Constraints
 * :doc:`Compound </reference/constraints/Compound>`
 * :doc:`Callback </reference/constraints/Callback>`
 * :doc:`Expression </reference/constraints/Expression>`
+* :doc:`When </reference/constraints/When>`
 * :doc:`All </reference/constraints/All>`
 * :doc:`Valid </reference/constraints/Valid>`
 * :doc:`Traverse </reference/constraints/Traverse>`
