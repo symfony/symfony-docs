@@ -1657,7 +1657,12 @@ You can log in a user programmatically using the ``login()`` method of the
             // you can also log in on a different firewall
             $security->login($user, 'form_login', 'other_firewall');
 
-            // ... redirect the user, e.g. to their account page
+            // use the redirection logic applied to regular login,
+            $redirectResponse = $security->login($user);
+            return $redirectResponse;
+            // or use a specific redirection logic
+            // (redirect the user to its account page for instance)
+            // ...
         }
     }
 
