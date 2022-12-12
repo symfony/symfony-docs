@@ -1624,7 +1624,7 @@ Login Programmatically
 
     The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
     class was introduced in Symfony 6.2. Prior to 6.2, it was called
-    ``Symfony\Bundle\SecurityBundle\Security``.
+    ``Symfony\Component\Security\Core\Security``.
 
 .. versionadded:: 6.2
 
@@ -1794,7 +1794,7 @@ Logout programmatically
 
     The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
     class was introduced in Symfony 6.2. Prior to 6.2, it was called
-    ``Symfony\Bundle\SecurityBundle\Security``.
+    ``Symfony\Component\Security\Core\Security``.
 
 .. versionadded:: 6.2
 
