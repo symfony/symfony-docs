@@ -641,9 +641,9 @@ This example shows how you could configure the database connection using an env 
             $container->extension('doctrine', [
                 'dbal' => [
                     // by convention the env var names are always uppercase
-                    'url' => '%env(resolve:DATABASE_URL)%',
-                    // or
                     'url' => env('DATABASE_URL')->resolve(),
+                    // or
+                    'url' => '%env(resolve:DATABASE_URL)%',
                 ],
             ]);
         };
