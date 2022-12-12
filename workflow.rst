@@ -1,7 +1,7 @@
 Workflow
 ========
 
-Using the Workflow component inside a Symfony application requires to know first
+Using the Workflow component inside a Symfony application requires knowing first
 some basic theory and concepts about workflows and state machines.
 :doc:`Read this article </workflow/workflow-and-state-machine>` for a quick overview.
 
@@ -29,8 +29,8 @@ Creating a Workflow
 -------------------
 
 A workflow is a process or a lifecycle that your objects go through. Each
-step or stage in the process is called a *place*. You do also define *transitions*
-to that describes the action to get from one place to another.
+step or stage in the process is called a *place*. You also define *transitions*,
+which describe the action needed to get from one place to another.
 
 .. image:: /_images/components/workflow/states_transitions.png
 
@@ -39,8 +39,8 @@ a ``Definition`` and a way to write the states to the objects (i.e. an
 instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`.)
 
 Consider the following example for a blog post. A post can have these places:
-``draft``, ``reviewed``, ``rejected``, ``published``. You can define the workflow
-like this:
+``draft``, ``reviewed``, ``rejected``, ``published``. You could define the workflow as 
+follows:
 
 .. configuration-block::
 
