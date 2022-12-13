@@ -34,9 +34,9 @@ short) defined somewhere in your application. This enum has to be of type
 
     enum TextAlign: string
     {
-        case Left = 'Left/Start aligned';
-        case Center = 'Center/Middle aligned';
-        case Right = 'Right/End aligned';
+        case Left = 'Left aligned';
+        case Center = 'Center aligned';
+        case Right = 'Right aligned';
     }
 
 Instead of using the values of the enumeration in a ``choices`` option, the
@@ -51,6 +51,20 @@ Instead of using the values of the enumeration in a ``choices`` option, the
 This will display a ``<select>`` tag with the three possible values defined in
 the ``TextAlign`` enum. Use the `expanded`_ and `multiple`_ options to display
 these values as ``<input type="checkbox">`` or ``<input type="radio">``.
+
+The label displayed in the ``<option>`` elements of the ``<select>`` is the enum
+name. PHP defines some strict rules for these names (e.g. they can't contain
+dots or spaces). If you need more flexibility for these labels, use the
+``choice_label`` option and define a function that returns the custom label::
+
+    ->add('textAlign', EnumType::class, [
+        'class' => TextAlign::class,
+        'choice_label' => match ($choice) {
+            TextAlign::Left => 'text_align.left.label',
+            TextAlign::Center => 'text_align.center.label',
+            TextAlign::Right  => 'text_align.right.label',
+        },
+    ]);
 
 Field Options
 -------------

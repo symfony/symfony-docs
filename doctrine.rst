@@ -768,7 +768,7 @@ control behavior:
 
         #[Route('/product/{category}/{slug}/comments/{comment_slug}')]
         public function show(
-            #[MapEntity(mapping: ['date' => 'date', 'slug' => 'slug'])]
+            #[MapEntity(mapping: ['category' => 'category', 'slug' => 'slug'])]
             Product $product
             #[MapEntity(mapping: ['comment_slug' => 'slug'])]
             Comment $comment
@@ -777,7 +777,7 @@ control behavior:
 
 ``exclude``
     Configures the properties that should be used in the ``findOneBy()``
-    method by *excluding* one or more properties so that not *all* are used:
+    method by *excluding* one or more properties so that not *all* are used::
 
         #[Route('/product/{slug}/{date}')]
         public function show(
