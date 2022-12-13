@@ -537,11 +537,11 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
 
 .. caution::
 
-    When testing ``InputOption::VALUE_NONE`` command options, you must pass an
+    When testing ``InputOption::VALUE_NONE`` command options, you must pass a non
     empty value to them::
     
         $commandTester = new CommandTester($command);
-        $commandTester->execute(['--some-option' => '']);
+        $commandTester->execute(['--some-option' => 'true']);
 
 .. note::
 
