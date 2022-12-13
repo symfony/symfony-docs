@@ -239,6 +239,8 @@ Sessions are automatically started whenever you read, write or even check for
 the existence of data in the session. This may hurt your application performance
 because all users will receive a session cookie. In order to prevent that, you
 must *completely* avoid accessing the session.
+By default, every Symfony form starts a session to store a CSRF token. To disable
+this, see :doc:`CSRF Protection </security/csrf>`.
 
 More about Sessions
 -------------------
