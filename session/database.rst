@@ -51,7 +51,7 @@ First, define a Symfony service for the connection to the Redis server:
                     # - auth:
                     #     - '%env(REDIS_PASSWORD)%'
                     
-                    # uncomment the following if your Redis server requires user and password (When user is not default)
+                    # uncomment the following if your Redis server requires a user and a password (when user is not default)
                     # - auth:
                     #     - ['%env(REDIS_USER)%','%env(REDIS_PASSWORD)%']
 
@@ -74,6 +74,12 @@ First, define a Symfony service for the connection to the Redis server:
                     <call method="auth">
                         <argument>%env(REDIS_PASSWORD)%</argument>
                     </call> -->
+
+                    <!-- uncomment the following if your Redis server requires a user and a password (when user is not default):
+                    <call method="auth">
+                        <argument>%env(REDIS_USER)%</argument>
+                        <argument>%env(REDIS_PASSWORD)%</argument>
+                    </call> -->
                 </service>
             </services>
         </container>
@@ -87,6 +93,8 @@ First, define a Symfony service for the connection to the Redis server:
             ->addMethodCall('connect', ['%env(REDIS_HOST)%', '%env(int:REDIS_PORT)%'])
             // uncomment the following if your Redis server requires a password:
             // ->addMethodCall('auth', ['%env(REDIS_PASSWORD)%'])
+            // uncomment the following if your Redis server requires a user and a password (when user is not default):
+            // ->addMethodCall('auth', ['%env(REDIS_USER)%', '%env(REDIS_PASSWORD)%'])
         ;
 
 Now pass this ``\Redis`` connection as an argument of the service associated to the
