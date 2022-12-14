@@ -254,7 +254,7 @@ domains work:
 
 .. tip::
 
-    If you prefer to use a different TLD, edit the ``~/.symfony/proxy.json``
+    If you prefer to use a different TLD, edit the ``~/.symfony5/proxy.json``
     file (where ``~`` means the path to your user directory) and change the
     value of the ``tld`` option from ``wip`` to any other TLD.
 
