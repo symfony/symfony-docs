@@ -232,6 +232,14 @@ new custom domain.
     Browse the http://127.0.0.1:7080 URL to get the full list of local project
     directories, their custom domains, and port numbers.
 
+You can also add a wildcard domain:
+
+.. code-block:: terminal
+
+    $ symfony proxy:domain:attach "*.my-domain"
+
+So it will match all subdomains like ``https://admin.my-domain.wip``, ``https://other.my-domain.wip``...
+
 When running console commands, add the ``https_proxy`` env var to make custom
 domains work:
 
