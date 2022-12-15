@@ -254,7 +254,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
             http_method_override: true
             
     
-    See https://symfony.com/doc/current/reference/configuration/framework.html#http-method-override for more informations.
+    See https://symfony.com/doc/current/reference/configuration/framework.html#http-method-override for more information.
 
 .. tip::
 
