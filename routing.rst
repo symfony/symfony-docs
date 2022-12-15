@@ -304,6 +304,13 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
     ``_method`` with the method to use (e.g. ``<input type="hidden" name="_method" value="PUT">``).
     If you create your forms with :doc:`Symfony Forms </forms>` this is done
     automatically for you.
+    Also note that ```framework.http_method_override``` needs to be set for this to work :
+    
+    .. code-block:: yaml
+    
+        # config/packages/framework.yaml
+        framework:
+            http_method_override: true
 
 .. _routing-matching-expressions:
 
