@@ -733,7 +733,7 @@ This can also be used to help resolve multiple arguments::
 
     #[Route('/product/{id}/comments/{comment_id}')]
     public function show(
-        Product $product
+        Product $product,
         #[MapEntity(expr: 'repository.find(comment_id)')]
         Comment $comment
     ): Response {
@@ -755,9 +755,8 @@ control behavior:
 
         #[Route('/product/{product_id}')]
         public function show(
-            Product $product
             #[MapEntity(id: 'product_id')]
-            Comment $comment
+            Product $product
         ): Response {
         }
 
@@ -769,7 +768,7 @@ control behavior:
         #[Route('/product/{category}/{slug}/comments/{comment_slug}')]
         public function show(
             #[MapEntity(mapping: ['category' => 'category', 'slug' => 'slug'])]
-            Product $product
+            Product $product,
             #[MapEntity(mapping: ['comment_slug' => 'slug'])]
             Comment $comment
         ): Response {
@@ -782,7 +781,7 @@ control behavior:
         #[Route('/product/{slug}/{date}')]
         public function show(
             #[MapEntity(exclude: ['date'])]
-            Product $product
+            Product $product,
             \DateTime $date
         ): Response {
         }
