@@ -243,6 +243,19 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
             ;
         };
 
+.. note::
+
+    To use the non-standard methods (PUT, PATCH, DELETE), don't forget to allow this in the config/packages/framework.yaml file like this :
+    
+        .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_method_override: true
+            
+    
+    See https://symfony.com/doc/current/reference/configuration/framework.html#http-method-override for more informations.
+
 .. tip::
 
     HTML forms only support ``GET`` and ``POST`` methods. If you're calling a
