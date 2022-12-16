@@ -755,7 +755,7 @@ control behavior:
 
         #[Route('/product/{product_id}')]
         public function show(
-            #[MapEntity(id: 'product_id')] Product $product
+            #[MapEntity(id: 'product_id')] Product $product,
             Comment $comment
         ): Response {
         }
@@ -768,7 +768,7 @@ control behavior:
         #[Route('/product/{category}/{slug}/comments/{comment_slug}')]
         public function show(
             #[MapEntity(mapping: ['category' => 'category', 'slug' => 'slug'])]
-            Product $product
+            Product $product,
             #[MapEntity(mapping: ['comment_slug' => 'slug'])]
             Comment $comment
         ): Response {
@@ -781,7 +781,7 @@ control behavior:
         #[Route('/product/{slug}/{date}')]
         public function show(
             #[MapEntity(exclude: ['date'])]
-            Product $product
+            Product $product,
             \DateTime $date
         ): Response {
         }
