@@ -755,8 +755,7 @@ control behavior:
 
         #[Route('/product/{product_id}')]
         public function show(
-            Product $product
-            #[MapEntity(id: 'product_id')]
+            #[MapEntity(id: 'product_id')] Product $product
             Comment $comment
         ): Response {
         }
