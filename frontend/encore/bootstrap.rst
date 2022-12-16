@@ -73,6 +73,25 @@ Now, require bootstrap from any of your JavaScript files:
         $('[data-toggle="popover"]').popover();
     });
 
+Using Bootstrap with Turbo
+---------------------------
+
+If you are using bootstrap with Turbo Drive, to allow your JavaScript to load on each page change,
+wrap the initialization in a ``turbo:load`` event listener:
+
+.. code-block:: javascript
+
+    // app.js
+
+    // this waits for Turbo Drive to load
+    document.addEventListener('turbo:load', function (e) {
+        // this enables bootstrap tooltips globally
+        let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new Tooltip(tooltipTriggerEl)
+        });
+    });
+
 Using other Bootstrap / jQuery Plugins
 --------------------------------------
 
