@@ -66,23 +66,29 @@ can be retrieved via ``/soap?wsdl``::
 
     use App\Service\HelloService;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
     class HelloServiceController extends AbstractController
     {
         #[Route('/soap')]
-        public function index(HelloService $helloService)
+        public function index(HelloService $helloService, Request $request)
         {
             $soapServer = new \SoapServer('/path/to/hello.wsdl');
             $soapServer->setObject($helloService);
 
             $response = new Response();
-            $response->headers->set('Content-Type', 'text/xml; charset=ISO-8859-1');
 
             ob_start();
-            $soapServer->handle();
+            $soapServer->handle($request->getContent());
             $response->setContent(ob_get_clean());
+
+            foreach (headers_list() as $header) {
+                $header = explode(':', $header, 2);
+                $response->headers->set($header[0], $header[1]);
+            }
+            header_remove();
 
             return $response;
         }
@@ -92,11 +98,13 @@ Take note of the calls to ``ob_start()`` and ``ob_get_clean()``. These
 methods control `output buffering`_ which allows you to "trap" the echoed
 output of ``$server->handle()``. This is necessary because Symfony expects
 your controller to return a ``Response`` object with the output as its "content".
-You must also remember to set the ``"Content-Type"`` header to ``"text/xml"``, as
-this is what the client will expect. So, you use ``ob_start()`` to start
-buffering the STDOUT and use ``ob_get_clean()`` to dump the echoed output
-into the content of the Response and clear the output buffer. Finally, you're
-ready to return the ``Response``.
+So, you use ``ob_start()`` to start buffering the STDOUT and use
+``ob_get_clean()`` to dump the echoed output into the content of the Response
+and clear the output buffer. Since ``$server->handle()`` can set headers it is
+also necessary to "trap" these. For this we use ``headers_list`` which provides
+the set headers, these are then parsed and added into the Response after which
+``header_remove`` is used to remove the headers and to avoid duplicates.
+Finally, you're ready to return the ``Response``.
 
 Below is an example of calling the service using a native `SoapClient`_ client. This example
 assumes that the ``index()`` method in the controller above is accessible via
