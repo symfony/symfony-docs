@@ -126,7 +126,7 @@ Here is a simplified example of a database transport::
 
 The implementation above is not runnable code but illustrates how a
 :class:`Symfony\\Component\\Messenger\\Transport\\TransportInterface` could
-be implemented. For real implementations see :class:`Symfony\\Component\\Messenger\\Transport\\InMemoryTransport`
+be implemented. For real implementations see :class:`Symfony\\Component\\Messenger\\Transport\\InMemory\\InMemoryTransport`
 and :class:`Symfony\\Component\\Messenger\\Bridge\\Doctrine\\Transport\\DoctrineReceiver`.
 
 Register your Factory
