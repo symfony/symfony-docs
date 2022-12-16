@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-12-14T16:26:13Z
+
+@jmsche the directory name is `symfony6` for Symfony 6 versions?
+
+---------------------------------------------------------------------------
+
+by jmsche at 2022-12-14T16:42:16Z
+
+@javiereguiluz No, seems related to CLI version
+
+see https://github.com/symfony-cli/symfony-cli/blob/48ca923fa3adc2e725788626f02501dff52ddc6a/util/util.go#L30
