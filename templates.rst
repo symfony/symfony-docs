@@ -728,10 +728,18 @@ depending on your needs:
            and they are visible on the web page #}
         {{ dump(article) }}
 
+        {# optionally, use named arguments to display them as labels next to
+           the dumped contents #}
+        {{ dump(blog_posts: articles, user: app.user) }}
+
         <a href="/article/{{ article.slug }}">
             {{ article.title }}
         </a>
     {% endfor %}
+
+.. versionadded:: 6.3
+
+    The option to use named arguments in ``dump()`` was introduced in Symfony 6.3.
 
 To avoid leaking sensitive information, the ``dump()`` function/tag is only
 available in the ``dev`` and ``test`` :ref:`configuration environments <configuration-environments>`.
