@@ -79,7 +79,7 @@ server SSL certificate:
     +         options.server = {
     +             type: 'https',
     +             options: {
-    +                 pfx: path.join(process.env.HOME, '.symfony/certs/default.p12'),
+    +                 pfx: path.join(process.env.HOME, '.symfony5/certs/default.p12'),
     +             }
     +         }
     +     })
