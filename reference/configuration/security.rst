@@ -666,6 +666,7 @@ X.509 Authentication
                         provider:    your_user_provider
                         user:        SSL_CLIENT_S_DN_Email
                         credentials: SSL_CLIENT_S_DN
+                        user_identifier: emailAddress
 
     .. code-block:: xml
 
@@ -687,6 +688,7 @@ X.509 Authentication
                     <x509 provider="your_user_provider"
                         user="SSL_CLIENT_S_DN_Email"
                         credentials="SSL_CLIENT_S_DN"
+                        user_identifier="emailAddress"
                     />
                 </firewall>
             </config>
@@ -703,6 +705,7 @@ X.509 Authentication
                 ->provider('your_user_provider')
                 ->user('SSL_CLIENT_S_DN_Email')
                 ->credentials('SSL_CLIENT_S_DN')
+                ->user_identifier('emailAddress')
             ;
         };
 
@@ -723,7 +726,18 @@ If the ``user`` parameter is not available, the name of the ``$_SERVER``
 parameter containing the full "distinguished name" of the certificate
 (exposed by e.g. Nginx).
 
-Symfony identifies the value following ``emailAddress=`` in this parameter.
+By default, Symfony identifies the value following ``emailAddress=`` in this parameter.
+This can be changed using the ``user_identifier`` parameter.
+
+user_identifier
+...........
+
+**type**: ``string`` **default**: ``emailAddress``
+
+The ``user_identifier`` parameter is used to find the user identifier in the
+"distinguished name" e.g. ``Subject: C=FR, O=My Organization, CN=user1, emailAddress=user1@myorg.fr``.
+
+By setting this parameter to ``CN``, the returned user identifier will be the "Common Name" ``user1``
 
 .. _reference-security-firewall-remote-user:
 
