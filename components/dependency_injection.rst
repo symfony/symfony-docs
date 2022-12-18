@@ -300,6 +300,7 @@ config files:
             $services = $container->services();
             $services->set('mailer', 'Mailer')
                 ->args(['%mailer.transport%'])
+            ;
 
             $services->set('mailer', 'Mailer')
                 ->args([param('mailer.transport')])
