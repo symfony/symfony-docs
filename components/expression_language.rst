@@ -41,7 +41,7 @@ way without using PHP and without introducing security problems:
     article.commentCount > 100 and article.category not in ["misc"]
 
     # Send an alert when
-    product.stock < 15
+    product.stock &lt; 15
 
 Expressions can be seen as a very restricted PHP sandbox and are immune to
 external injections as you must explicitly declare which variables are available
