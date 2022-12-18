@@ -1681,7 +1681,7 @@ during a request::
     namespace App\Tests\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-    use Symfony\Component\Messenger\Transport\InMemoryTransport;
+    use Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport;
 
     class DefaultControllerTest extends WebTestCase
     {
@@ -1697,6 +1697,12 @@ during a request::
             $this->assertCount(1, $transport->getSent());
         }
     }
+
+.. versionadded:: 6.3
+
+    The namespace of the ``InMemoryTransport`` class changed in Symfony 6.3 from
+    ``Symfony\Component\Messenger\Transport\InMemoryTransport`` to
+    ``Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport``.
 
 The transport has a number of options:
 
