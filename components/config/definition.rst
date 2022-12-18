@@ -780,7 +780,7 @@ the following ways:
 - ``ifTrue()``
 - ``ifString()``
 - ``ifNull()``
-- ``ifEmpty()`` (since Symfony 3.2)
+- ``ifEmpty()``
 - ``ifArray()``
 - ``ifInArray()``
 - ``ifNotInArray()``
