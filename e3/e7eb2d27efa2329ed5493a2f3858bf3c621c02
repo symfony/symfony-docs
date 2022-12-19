@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2022-12-19T07:42:42Z
+
+> But I would keep google in the list, the note should be enough
+
+I prefer not to. This is really a foot gun as the configuration for Gmail is really hard and there are so many alternative out there that are better. I could even suggest deprecating support and removing it in 7.0.
+
+---------------------------------------------------------------------------
+
+by 1ed at 2022-12-19T07:54:31Z
+
+Other services usually require domain verification, which is not always possible in an early phase of a project, but deploying a test site to get early feedback is mandatory. I use Gmail and Google Groups (as a catch all address) in this case to handle sending emails, and it works great. Please do not remove Gmail, without a free and usable alternative which works without domian verification. I can update the docs if needed.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2022-12-19T07:58:26Z
+
+@1ed Here, we are only warning users. I suggested that we could even deprecate support, but we won't :)
+
+---------------------------------------------------------------------------
+
+by fabpot at 2022-12-19T07:58:56Z
+
+@1ed But we are looking for someone who can update the docs to explain exactly how to configure it as many people struggle.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-12-19T08:05:17Z
+
+@1ed a while ago I suggested some rewords for Gmail article after having to use it in my own projects. I wonder if they are still correct: https://github.com/symfony/symfony-docs/pull/5856/files
+
+---------------------------------------------------------------------------
+
+by 1ed at 2022-12-19T08:23:55Z
+
+> @1ed But we are looking for someone who can update the docs to explain exactly how to configure it as many people struggle.
+
+I can do that. @javiereguiluz I will check the current docs and maybe write step-by-step instructions. I'm quite busy atm, but give me some time to come up with something.
+
+These changes look great by the way, I just wanted to share my use case.
