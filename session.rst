@@ -1469,7 +1469,7 @@ this as the locale for the given user. To accomplish this, you can hook into
 the login process and update the user's session with this locale value before
 they are redirected to their first page.
 
-To do this, you need an event subscriber on the ``security.interactive_login``
+To do this, you need an event subscriber on the ``LoginSuccessEvent::class``
 event::
 
     // src/EventSubscriber/UserLocaleSubscriber.php
@@ -1477,8 +1477,7 @@ event::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpFoundation\RequestStack;
-    use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
-    use Symfony\Component\Security\Http\SecurityEvents;
+    use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 
     /**
      * Stores the locale of the user in the session after the
@@ -1491,9 +1490,9 @@ event::
         ) {
         }
 
-        public function onInteractiveLogin(InteractiveLoginEvent $event): void
+        public function onLoginSuccess(LoginSuccessEvent $event): void
         {
-            $user = $event->getAuthenticationToken()->getUser();
+            $user = $event->getUser();
 
             if (null !== $user->getLocale()) {
                 $this->requestStack->getSession()->set('_locale', $user->getLocale());
@@ -1503,7 +1502,7 @@ event::
         public static function getSubscribedEvents(): array
         {
             return [
-                SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',
+                LoginSuccessEvent::class => 'onLoginSuccess',
             ];
         }
     }
