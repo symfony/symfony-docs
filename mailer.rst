@@ -105,7 +105,7 @@ Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instead of using your own SMTP server or sendmail binary, you can send emails
-via a 3rd party provider:
+via a third-party provider:
 
 ==================  ==============================================
 Service             Install with
@@ -125,7 +125,7 @@ OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
     As a convenience, Symfony also provides support for Gmail (``composer
     require symfony/google-mailer``), but this should not be used in
     production. In development, you should probably use an :ref:`email catcher
-    <mail-catcher>` instead. Note that most supported providers also provide a
+    <mail-catcher>` instead. Note that most supported providers also offer a
     free tier.
 
 .. versionadded:: 5.2
