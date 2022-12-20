@@ -6,7 +6,7 @@ The preferred way to develop your Symfony application is to use
 
 However, when running the application in the production environment, you'll need
 to use a fully-featured web server. This article describes how to use Symfony
-with Apache or Nginx.
+with Apache, Nginx or Caddy.
 
 .. sidebar:: The public directory
 
@@ -187,7 +187,7 @@ Caddy
 
 When using Caddy on the server, you can use a configuration like this:
 
-.. code-block:: raw
+.. code-block:: text
 
     # /etc/caddy/Caddyfile
     example.com, www.example.com {
@@ -225,3 +225,4 @@ Caddy in a container infrastructure.
 
 .. _`Nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/
 .. _`How to run Symfony applications using NGINX Unit`: https://unit.nginx.org/howto/symfony/
+.. _`official Caddy documentation`: https://caddyserver.com/docs/
