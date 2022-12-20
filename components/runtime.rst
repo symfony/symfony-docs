@@ -325,6 +325,9 @@ You can also configure ``extra.runtime`` in ``composer.json``:
         }
     }
 
+Then, update your Composer files (running ``composer dump-autoload``, for instance),
+so that the ``vendor/autoload_runtime.php`` files gets regenerated with the new option.
+
 The following options are supported by the ``SymfonyRuntime``:
 
 ``env`` (default: ``APP_ENV`` environment variable, or ``"dev"``)
