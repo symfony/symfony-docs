@@ -12,7 +12,6 @@ integration, CSS inlining, file attachments and a lot more. Get them installed w
 
     $ composer require symfony/mailer
 
-
 .. _mailer-transport-setup:
 
 Transport Setup
@@ -96,14 +95,13 @@ native        ``native://default``                      Mailer uses the sendmail
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of using your own SMTP server or sendmail binary, you can send emails via a 3rd party
-provider. Mailer supports several - install whichever you want:
+Instead of using your own SMTP server or sendmail binary, you can send emails
+via a third-party provider:
 
 ==================  ==============================================
 Service             Install with
 ==================  ==============================================
 Amazon SES          ``composer require symfony/amazon-mailer``
-Gmail               ``composer require symfony/google-mailer``
 MailChimp           ``composer require symfony/mailchimp-mailer``
 Mailgun             ``composer require symfony/mailgun-mailer``
 Mailjet             ``composer require symfony/mailjet-mailer``
@@ -114,6 +112,7 @@ MailPace            ``composer require symfony/mailpace-mailer``
 Infobip             ``composer require symfony/infobip-mailer``
 ==================  ==============================================
 
+<<<<<<< HEAD
 .. versionadded:: 6.2
 
     The ``MailPace`` integration was introduced in Symfony 6.2 (in previous
@@ -122,6 +121,15 @@ Infobip             ``composer require symfony/infobip-mailer``
 .. versionadded:: 6.2
 
     The Infobip integration was introduced in Symfony 6.2.
+=======
+.. note::
+
+    As a convenience, Symfony also provides support for Gmail (``composer
+    require symfony/google-mailer``), but this should not be used in
+    production. In development, you should probably use an :ref:`email catcher
+    <mail-catcher>` instead. Note that most supported providers also offer a
+    free tier.
+>>>>>>> 6.1
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -1572,6 +1580,17 @@ and their priorities:
 
 Development & Debugging
 -----------------------
+
+.. _mail-catcher:
+
+Enabling an Email Catcher
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When developing locally, it is recommended to use an email catcher. If you have
+enabled Docker support via Symfony recipes, an email catcher is automatically
+configured. In addition, if you are using the :doc:`Symfony local web server
+</setup/symfony_server>`, the mailer DSN is automatically exposed via the
+:ref:`symfony binary Docker integration <symfony-server-docker>`.
 
 Sending Test Emails
 ~~~~~~~~~~~~~~~~~~~
