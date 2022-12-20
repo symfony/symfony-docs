@@ -49,7 +49,7 @@ define the ``runtime.dotenv_path`` option in the ``composer.json`` file:
         }
     }
 
-Then, update your Composer files (running ``composer update``, for instance),
+Then, update your Composer files (running ``composer dump-autoload``, for instance),
 so that the ``vendor/autoload_runtime.php`` files gets regenerated with the new
 ``.env`` path.
 
