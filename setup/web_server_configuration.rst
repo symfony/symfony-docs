@@ -22,13 +22,12 @@ with Apache or Nginx.
     another location (e.g. ``public_html/``) make sure you
     :ref:`override the location of the public/ directory <override-web-dir>`.
 
-Apache with PHP-FPM
+Configuring PHP-FPM
 -------------------
 
-To make use of PHP-FPM with Apache, you first have to ensure that you have
-the FastCGI process manager ``php-fpm`` binary and Apache's FastCGI module
-installed (for example, on a Debian based system you have to install the
-``libapache2-mod-fastcgi`` and ``php7.4-fpm`` packages).
+All configuration examples below use the PHP FastCGI process manager
+(PHP-FPM). Ensure that you have installed PHP-FPM (for example, on a Debian
+based system you have to install the ``php-fpm`` package).
 
 PHP-FPM uses so-called *pools* to handle incoming FastCGI requests. You can
 configure an arbitrary number of pools in the FPM configuration. In a pool
@@ -36,6 +35,8 @@ you configure either a TCP socket (IP and port) or a Unix domain socket to
 listen on. Each pool can also be run under a different UID and GID:
 
 .. code-block:: ini
+
+    ; /etc/php/7.4/fpm/pool.d/www.conf
 
     ; a pool called www
     [www]
@@ -45,43 +46,37 @@ listen on. Each pool can also be run under a different UID and GID:
     ; use a unix domain socket
     listen = /var/run/php/php7.4-fpm.sock
 
-    ; or listen on a TCP socket
-    listen = 127.0.0.1:9000
+    ; or listen on a TCP connection
+    ; listen = 127.0.0.1:9000
 
-Using mod_proxy_fcgi with Apache 2.4
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Apache
+------
 
-If you are running Apache 2.4, you can use ``mod_proxy_fcgi`` to pass incoming
-requests to PHP-FPM. Configure PHP-FPM to listen on a TCP or Unix socket, enable
-``mod_proxy`` and ``mod_proxy_fcgi`` in your Apache configuration, and use the
-``SetHandler`` directive to pass requests for PHP files to PHP FPM:
+If you are running Apache 2.4+, you can use ``mod_proxy_fcgi`` to pass
+incoming requests to PHP-FPM. Install the Apache2 FastCGI mod
+(``libapache2-mod-fastcgi`` on Debian), enable ``mod_proxy`` and
+``mod_proxy_fcgi`` in your Apache configuration, and use the ``SetHandler``
+directive to pass requests for PHP files to PHP FPM:
 
 .. code-block:: apache
 
+    # /etc/apache2/conf.d/example.com.conf
     <VirtualHost *:80>
-        ServerName domain.tld
-        ServerAlias www.domain.tld
+        ServerName example.com
+        ServerAlias www.example.com
 
         # Uncomment the following line to force Apache to pass the Authorization
         # header to PHP: required for "basic_auth" under PHP-FPM and FastCGI
         #
         # SetEnvIfNoCase ^Authorization$ "(.+)" HTTP_AUTHORIZATION=$1
 
-        # For Apache 2.4.9 or higher
-        # Using SetHandler avoids issues with using ProxyPassMatch in combination
-        # with mod_rewrite or mod_autoindex
         <FilesMatch \.php$>
-            SetHandler proxy:fcgi://127.0.0.1:9000
-            # for Unix sockets, Apache 2.4.10 or higher
-            # SetHandler proxy:unix:/path/to/fpm.sock|fcgi://dummy
+            # when using PHP-FPM as a unix socket
+            SetHandler proxy:unix:/var/run/php/php7.4-fpm.sock|fcgi://dummy
+
+            # when PHP-FPM is configured to use TCP
+            # SetHandler proxy:fcgi://127.0.0.1:9000
         </FilesMatch>
-
-        # If you use Apache version below 2.4.9 you must consider update or use this instead
-        # ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/public/$1
-
-        # If you run your Symfony application on a subpath of your document root, the
-        # regular expression must be changed accordingly:
-        # ProxyPassMatch ^/path-to-app/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/var/www/project/public/$1
 
         DocumentRoot /var/www/project/public
         <Directory /var/www/project/public>
@@ -107,8 +102,9 @@ The **minimum configuration** to get your application running under Nginx is:
 
 .. code-block:: nginx
 
+    # /etc/nginx/conf.d/example.com.conf
     server {
-        server_name domain.tld www.domain.tld;
+        server_name example.com www.example.com;
         root /var/www/project/public;
 
         location / {
@@ -124,7 +120,12 @@ The **minimum configuration** to get your application running under Nginx is:
         # }
 
         location ~ ^/index\.php(/|$) {
+            # when using PHP-FPM as a unix socket
             fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+
+            # when PHP-FPM is configured to use TCP
+            # fastcgi_pass 127.0.0.1:9000;
+
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
 
@@ -146,7 +147,7 @@ The **minimum configuration** to get your application running under Nginx is:
             fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
             fastcgi_param DOCUMENT_ROOT $realpath_root;
             # Prevents URIs that include the front controller. This will 404:
-            # http://domain.tld/index.php/some-path
+            # http://example.com/index.php/some-path
             # Remove the internal directive to allow URIs like this
             internal;
         }
@@ -166,11 +167,6 @@ The **minimum configuration** to get your application running under Nginx is:
     If you use NGINX Unit, check out the official article about
     `How to run Symfony applications using NGINX Unit`_.
 
-.. note::
-
-    Depending on your PHP-FPM config, the ``fastcgi_pass`` can also be
-    ``fastcgi_pass 127.0.0.1:9000``.
-
 .. tip::
 
     This executes **only** ``index.php`` in the public directory. All other files
@@ -186,7 +182,46 @@ The **minimum configuration** to get your application running under Nginx is:
 
 For advanced Nginx configuration options, read the official `Nginx documentation`_.
 
-.. _`Apache documentation`: https://httpd.apache.org/docs/
-.. _`FastCgiExternalServer`: https://docs.oracle.com/cd/B31017_01/web.1013/q20204/mod_fastcgi.html#FastCgiExternalServer
+Caddy
+-----
+
+When using Caddy on the server, you can use a configuration like this:
+
+.. code-block:: raw
+
+    # /etc/caddy/Caddyfile
+    example.com, www.example.com {
+        root * /var/www/project/public
+
+        # serve files directly if they can be found (e.g. CSS or JS files in public/)
+        encode zstd gzip
+        file_server
+
+
+        # otherwise, use PHP-FPM (replace "unix//var/..." with "127.0.0.1:9000" when using TCP)
+        php_fastcgi unix//var/run/php/php7.4-fpm.sock {
+            # optionally set the value of the environment variables used in the application
+            # env APP_ENV "prod"
+            # env APP_SECRET "<app-secret-id>"
+            # env DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name"
+
+            # Configure the FastCGI to resolve any symlinks in the root path.
+            # This ensures that OpCache is using the destination filenames,
+            # instead of the symlinks, to cache opcodes and php files see
+            # https://caddy.community/t/root-symlink-folder-updates-and-caddy-reload-not-working/10557
+            resolve_root_symlink
+        }
+
+        # return 404 for all other php files not matching the front controller
+        # this prevents access to other php files you don't want to be accessible.
+        @phpFile {
+            path *.php*
+        }
+        error @phpFile "Not found" 404
+    }
+
+See the `official Caddy documentation`_ for more examples, such as using
+Caddy in a container infrastructure.
+
 .. _`Nginx documentation`: https://www.nginx.com/resources/wiki/start/topics/recipes/symfony/
 .. _`How to run Symfony applications using NGINX Unit`: https://unit.nginx.org/howto/symfony/
