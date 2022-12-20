@@ -154,9 +154,10 @@ template: the paths in ``entrypoints.json`` will always be the final, correct pa
 And if you use :doc:`splitEntryChunks() </frontend/encore/split-chunks>` (where Webpack splits the output into even
 more files), all the necessary ``script`` and ``link`` tags will render automatically.
 
-If you're *not* using Symfony, you can ignore the ``entrypoints.json`` file and
-point to the final, built file directly. ``entrypoints.json`` is only required for
-some optional features.
+If you are not using Symfony you won't have the ``encore_entry_*`` functions available.
+Instead, you can point directly to the final built files or write code to parse
+``entrypoints.json`` manually. The entrypoints file is needed only if you're using
+certain optional features, like ``splitEntryChunks()``.
 
 .. versionadded:: 1.9.0
 
