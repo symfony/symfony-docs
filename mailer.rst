@@ -112,16 +112,12 @@ MailPace            ``composer require symfony/mailpace-mailer``
 Infobip             ``composer require symfony/infobip-mailer``
 ==================  ==============================================
 
-<<<<<<< HEAD
 .. versionadded:: 6.2
 
-    The ``MailPace`` integration was introduced in Symfony 6.2 (in previous
-    Symfony versions it was called ``OhMySMTP``).
+    The Infobip integration was introduced in Symfony 6.2 and the ``MailPace``
+    integration was renamed in Symfony 6.2 (in previous Symfony versions it was
+    called ``OhMySMTP``).
 
-.. versionadded:: 6.2
-
-    The Infobip integration was introduced in Symfony 6.2.
-=======
 .. note::
 
     As a convenience, Symfony also provides support for Gmail (``composer
@@ -129,7 +125,6 @@ Infobip             ``composer require symfony/infobip-mailer``
     production. In development, you should probably use an :ref:`email catcher
     <mail-catcher>` instead. Note that most supported providers also offer a
     free tier.
->>>>>>> 6.1
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
