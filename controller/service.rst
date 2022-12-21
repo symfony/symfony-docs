@@ -100,9 +100,9 @@ a service like: ``App\Controller\HelloController::index``:
 
         # config/routes.yaml
         hello:
-            path:     /hello
+            path:       /hello
             controller: App\Controller\HelloController::index
-            methods: GET
+            methods:    GET
 
     .. code-block:: xml
 
@@ -181,8 +181,8 @@ which is a common practice when following the `ADR pattern`_
 
         # config/routes.yaml
         hello:
-            path:     /hello/{name}
-            controller: app.hello_controller
+            path:       /hello/{name}
+            controller: App\Controller\HelloController
 
     .. code-block:: xml
 
@@ -194,16 +194,18 @@ which is a common practice when following the `ADR pattern`_
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
             <route id="hello" path="/hello/{name}">
-                <default key="_controller">app.hello_controller</default>
+                <default key="_controller">App\Controller\HelloController</default>
             </route>
 
         </routes>
 
     .. code-block:: php
 
+        use App\Controller\HelloController;
+
         // app/config/routing.php
         $collection->add('hello', new Route('/hello', [
-            '_controller' => 'app.hello_controller',
+            '_controller' => HelloController::class,
         ]));
 
 Alternatives to base Controller Methods
