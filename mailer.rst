@@ -120,6 +120,7 @@ Infobip             ``composer require symfony/infobip-mailer``
 .. versionadded:: 6.2
 
     The Infobip integration was introduced in Symfony 6.2.
+
 .. note::
 
     As a convenience, Symfony also provides support for Gmail (``composer
