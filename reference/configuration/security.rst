@@ -869,7 +869,7 @@ Learn more about user checkers in :doc:`/security/user_checkers`.
 providers
 ---------
 
-This options defines how the application users are loaded (from a database,
+This option defines how the application users are loaded (from a database,
 an LDAP server, a configuration file, etc.) Read
 :doc:`/security/user_providers` to learn more about each of those
 providers.
