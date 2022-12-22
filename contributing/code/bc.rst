@@ -12,11 +12,6 @@ that release branch (5.x in the previous example).
 We also provide deprecation message triggered in the code base to help you with
 the migration process across major releases.
 
-.. caution::
-
-    This promise was introduced with Symfony 2.3 and does not apply to previous
-    versions of Symfony.
-
 However, backward compatibility comes in many different flavors. In fact, almost
 every change that we make to the framework can potentially break an application.
 For example, if we add a new method to a class, this will break an application
