@@ -110,16 +110,12 @@ need to create a custom data collector. Instead, use the built-in utilities to
     Consider using a professional profiler such as `Blackfire`_ to measure and
     analyze the execution of your application in detail.
 
-Enabling the Profiler Conditionally
------------------------------------
+.. _enabling-the-profiler-conditionally:
 
-.. caution::
+Enabling the Profiler Programmatically
+--------------------------------------
 
-    The possibility to use a matcher to enable the profiler conditionally was
-    removed in Symfony 4.0.
-
-Symfony Profiler cannot be enabled/disabled conditionally using matchers, because
-that feature was removed in Symfony 4.0. However, you can use the ``enable()``
+Symfony Profiler can be enabled and disabled programmatically. You can use the ``enable()``
 and ``disable()`` methods of the :class:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler`
 class in your controllers to manage the profiler programmatically::
 
