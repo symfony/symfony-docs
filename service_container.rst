@@ -1074,11 +1074,8 @@ unique string as the key of each service config:
 Explicitly Configuring Services and Arguments
 ---------------------------------------------
 
-Prior to Symfony 3.3, all services and (typically) arguments were explicitly configured:
-it was not possible to :ref:`load services automatically <service-container-services-load-example>`
-and :ref:`autowiring <services-autowire>` was much less common.
-
-Both of these features are optional. And even if you use them, there may be some
+:ref:`Loading services automatically <service-container-services-load-example>`
+and :ref:`autowiring <services-autowire>` are optional. And even if you use them, there may be some
 cases where you want to manually wire a service. For example, suppose that you want
 to register *2* services for the ``SiteUpdateManager`` class - each with a different
 admin email. In this case, each needs to have a unique service id:

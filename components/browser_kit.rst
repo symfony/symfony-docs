@@ -8,13 +8,6 @@ The BrowserKit Component
     The BrowserKit component simulates the behavior of a web browser, allowing
     you to make requests, click on links and submit forms programmatically.
 
-.. note::
-
-    In Symfony versions prior to 4.3, the BrowserKit component could only make
-    internal requests to your application. Starting from Symfony 4.3, this
-    component can also :ref:`make HTTP requests to any public site <component-browserkit-external-requests>`
-    when using it in combination with the :doc:`HttpClient component </http_client>`.
-
 Installation
 ------------
 
