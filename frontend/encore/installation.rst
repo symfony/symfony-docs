@@ -139,6 +139,9 @@ is the main config file for both Webpack and Webpack Encore:
 
     module.exports = Encore.getWebpackConfig();
 
+Creating Other Supporting File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Next, open the new ``assets/app.js`` file which contains some JavaScript code
 *and* imports some CSS:
 
@@ -185,7 +188,7 @@ a system that you'll learn about soon:
     // register any custom, 3rd party controllers here
     // app.register('some_controller_name', SomeImportedController);
 
-And finally, create an ``assets/controllers.json`` file, which also fits into
+Then create an ``assets/controllers.json`` file, which also fits into
 the Stimulus system:
 
 .. code-block:: json
@@ -193,6 +196,18 @@ the Stimulus system:
     {
         "controllers": [],
         "entrypoints": []
+    }
+
+Finally, though it's optional, add the following ``scripts`` to your ``package.json``
+file so you can run the same commands in the rest of the documentation:
+
+.. code-block:: json
+
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
     }
 
 You'll customize and learn more about these files in :doc:`/frontend/encore/simple-example`.
