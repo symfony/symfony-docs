@@ -55,7 +55,7 @@ logging these HTTP codes based on the MonologBundle configuration:
             $mainHandler = $monolog->handler('main')
                 // ...
                 ->type('fingers_crossed')
-                ->handler(...)
+                ->handler('...')
             ;
 
             $mainHandler->excludedHttpCode()->code(403);

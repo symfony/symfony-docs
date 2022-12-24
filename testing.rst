@@ -267,7 +267,7 @@ the container is returned by ``static::getContainer()``::
 
             // (3) run some service & test the result
             $newsletterGenerator = $container->get(NewsletterGenerator::class);
-            $newsletter = $newsletterGenerator->generateMonthlyNews(...);
+            $newsletter = $newsletterGenerator->generateMonthlyNews(/* ... */);
 
             $this->assertEquals('...', $newsletter->getContent());
         }

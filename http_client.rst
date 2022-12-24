@@ -1257,7 +1257,7 @@ that network errors can happen when calling e.g. ``getStatusCode()`` too::
     // ...
     try {
         // both lines can potentially throw
-        $response = $client->request(...);
+        $response = $client->request(/* ... */);
         $headers = $response->getHeaders();
         // ...
     } catch (TransportExceptionInterface $e) {
