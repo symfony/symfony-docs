@@ -267,7 +267,7 @@ possible.
     signed when using the fragment renderer and the ``render_esi`` Twig
     function.
 
-The ``render_esi`` helper supports two other useful options:
+The ``render_esi`` helper supports three other useful options:
 
 ``alt``
     Used as the ``alt`` attribute on the ESI tag, which allows you to specify an
@@ -277,5 +277,12 @@ The ``render_esi`` helper supports two other useful options:
     If set to true, an ``onerror`` attribute will be added to the ESI with a value
     of ``continue`` indicating that, in the event of a failure, the gateway cache
     will remove the ESI tag silently.
+
+``absolute_uri``
+     If set to true, an absolute URI will be generated. **default**: ``false``
+
+.. versionadded:: 6.2
+
+    The ``absolute_uri`` option was introduced in Symfony 6.2.
 
 .. _`ESI`: http://www.w3.org/TR/esi-lang
