@@ -418,6 +418,22 @@ you can dump them as ``~`` with the ``DUMP_NULL_AS_TILDE`` flag::
     $dumped = Yaml::dump(['foo' => null], 2, 4, Yaml::DUMP_NULL_AS_TILDE);
     // foo: ~
 
+Dumping Numeric Keys as Strings
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, digit-only array keys are dumped as integers. You can use the
+``DUMP_NUMERIC_KEY_AS_STRING`` flag if you want to dump string-only keys::
+
+    $dumped = Yaml::dump([200 => 'foo']);
+    // 200: foo
+
+    $dumped = Yaml::dump([200 => 'foo'], 2, 4, Yaml::DUMP_NUMERIC_KEY_AS_STRING);
+    // '200': foo
+
+.. versionadded:: 6.3
+
+    The ``DUMP_NUMERIC_KEY_AS_STRING`` flag was introduced in Symfony 6.3.
+
 Syntax Validation
 ~~~~~~~~~~~~~~~~~
 
