@@ -336,7 +336,7 @@ special type of exception::
             // throw new NotFoundHttpException('The product does not exist');
         }
 
-        return $this->render(...);
+        return $this->render(/* ... */);
     }
 
 The :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createNotFoundException`
@@ -457,10 +457,10 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
             );
             // $this->addFlash() is equivalent to $request->getSession()->getFlashBag()->add()
 
-            return $this->redirectToRoute(...);
+            return $this->redirectToRoute(/* ... */);
         }
 
-        return $this->render(...);
+        return $this->render(/* ... */);
     }
 
 After processing the request, the controller sets a flash message in the session

@@ -123,19 +123,22 @@ Further in this article, you can find a
     .. configuration-block::
 
         .. code-block:: yaml
-
+        
             # config/packages/test/security.yaml
-            password_hashers:
-                # Use your user class name here
-                App\Entity\User:
-                    algorithm: plaintext # disable hashing (only do this in tests!)
+            security:
+                # ...
 
-                # or use the lowest possible values
-                App\Entity\User:
-                    algorithm: auto # This should be the same value as in config/packages/security.yaml
-                    cost: 4 # Lowest possible value for bcrypt
-                    time_cost: 3 # Lowest possible value for argon
-                    memory_cost: 10 # Lowest possible value for argon
+                password_hashers:
+                    # Use your user class name here
+                    App\Entity\User:
+                        algorithm: plaintext # disable hashing (only do this in tests!)
+
+                    # or use the lowest possible values
+                    App\Entity\User:
+                        algorithm: auto # This should be the same value as in config/packages/security.yaml
+                        cost: 4 # Lowest possible value for bcrypt
+                        time_cost: 3 # Lowest possible value for argon
+                        memory_cost: 10 # Lowest possible value for argon
 
         .. code-block:: xml
 
