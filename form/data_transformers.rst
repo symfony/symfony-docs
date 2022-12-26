@@ -112,7 +112,7 @@ slightly::
     $builder->add(
         $builder
             ->create('tags', TextType::class)
-            ->addModelTransformer(...)
+            ->addModelTransformer(/* ... */)
     );
 
 Example #2: Transforming an Issue Number into an Issue Entity
