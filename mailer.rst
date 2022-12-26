@@ -160,7 +160,7 @@ party provider:
 Provider             SMTP                                                 HTTP                                        API
 ==================== ==================================================== =========================================== ========================================
 Amazon SES           ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
-Google Gmail         gmail+smtp://USERNAME:PASSWORD@default               n/a                                         n/a
+Google Gmail         gmail+smtp://USERNAME:APP-PASSWORD@default           n/a                                         n/a
 Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
 Mailgun              mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
 Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
@@ -187,6 +187,15 @@ OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a   
 
     When using SMTP, the default timeout for sending a message before throwing an
     exception is the value defined in the `default_socket_timeout`_ PHP.ini option.
+
+.. note::
+
+    To use Google Gmail, you must have a Google Account with 2-Step-Verification (2FA)
+    enabled and you must use `App Password`_ to authenticate. Also note that Google
+    revokes your App Passwords when you change your Google Account password and then
+    you need to generate a new one.
+    Using other methods (like ``XOAUTH2`` or the ``Gmail API``) are not supported currently.
+    You should use Gmail for testing purposes only and use a real provider in production.
 
 .. tip::
 
@@ -1562,3 +1571,4 @@ you can use the built in assertions::
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
+.. _`App Password`: https://support.google.com/accounts/answer/185833
