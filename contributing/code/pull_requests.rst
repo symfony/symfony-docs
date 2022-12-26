@@ -87,6 +87,8 @@ Get the Symfony source code:
 
 * Fork the `Symfony repository`_ (click on the "Fork" button);
 
+* Uncheck the "Copy the ``X.Y`` branch only";
+
 * After the "forking action" has completed, clone your fork locally
   (this will create a ``symfony`` directory):
 

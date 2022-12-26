@@ -1853,7 +1853,7 @@ this globally (or for each transport) to a service that implements
                     ->context('foo', 'bar');
 
             $messenger->transport('async_priority_normal')
-                ->dsn(...)
+                ->dsn('...')
                 ->serializer('messenger.transport.symfony_serializer');
         };
 
@@ -2094,8 +2094,8 @@ Then, make sure to "route" your message to *both* transports:
         return static function (FrameworkConfig $framework) {
             $messenger = $framework->messenger();
 
-            $messenger->transport('async_priority_normal')->dsn(...);
-            $messenger->transport('image_transport')->dsn(...);
+            $messenger->transport('async_priority_normal')->dsn('...');
+            $messenger->transport('image_transport')->dsn('...');
 
             $messenger->routing('App\Message\UploadedImage')
                 ->senders(['image_transport', 'async_priority_normal']);
