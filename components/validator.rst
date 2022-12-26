@@ -57,7 +57,7 @@ If you have lots of validation errors, you can filter them by error code::
 
     use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-    $violations = $validator->validate(...);
+    $violations = $validator->validate(/* ... */);
     if (0 !== count($violations->findByCodes(UniqueEntity::NOT_UNIQUE_ERROR))) {
         // handle this specific error (display some message, send an email, etc.)
     }
