@@ -63,6 +63,28 @@ falls back to the behavior of `render`_ otherwise.
     in the function name, e.g. ``render_hinclude()`` will use the hinclude.js
     strategy. This works for all ``render_*()`` functions.
 
+fragment_uri
+~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ fragment_uri(controller, absolute = false, strict = true, sign = true) }}
+
+``controller``
+    **type**: ``ControllerReference``
+``absolute`` *(optional)*
+    **type**: ``boolean`` **default**: ``false``
+``strict`` *(optional)*
+    **type**: ``boolean`` **default**: ``true``
+``sign`` *(optional)*
+    **type**: ``boolean`` **default**: ``true``
+
+Generates the URI of a fragment.
+
+.. versionadded:: 5.3
+
+    The ``fragment_uri()`` function was introduced in Symfony 5.3.
+
 controller
 ~~~~~~~~~~
 
