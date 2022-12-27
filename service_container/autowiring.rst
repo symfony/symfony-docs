@@ -564,8 +564,8 @@ logic about those arguments::
 
     The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
 
-The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-parameters>`
-and even :doc:`complex expressions </service_container/expression_language>`::
+The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-parameters>`,
+:doc:`complex expressions </service_container/expression_language>` and even :ref:`environment variables <config-env-vars>`::
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
@@ -580,16 +580,25 @@ and even :doc:`complex expressions </service_container/expression_language>`::
             #[Autowire('%kernel.project_dir%/data')]
             string $dataDir,
 
-            #[Autowire('%kernel.debug%')]
+            // or use argument "param"
+            #[Autowire(param: 'kernel.debug')]
             bool $debugMode,
 
-            // and expressions
+            // expressions
             #[Autowire(expression: 'service("App\\Mail\\MailerConfiguration").getMailerMethod()')]
             string $mailerMethod
+
+            // environment variable
+            #[Autowire(env: 'SOME_ENV_VAR')]
+            string $senderName
         ) {
         }
         // ...
     }
+
+.. versionadded:: 6.3
+
+    The ``param`` and ``env`` arguments were introduced in Symfony 6.3.
 
 .. _autowiring-calls:
 
