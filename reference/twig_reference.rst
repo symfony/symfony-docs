@@ -79,7 +79,7 @@ fragment_uri
 ``sign`` *(optional)*
     **type**: ``boolean`` **default**: ``true``
 
-Generates the URI of a fragment.
+Generates the URI of :ref:`a fragment <fragments-path-config>`.
 
 .. versionadded:: 5.3
 
