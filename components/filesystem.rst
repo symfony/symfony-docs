@@ -352,7 +352,7 @@ following rules iteratively until no further processing can be done:
 - root paths ("/" and "C:/") always terminate with a slash;
 - non-root paths never terminate with a slash;
 - schemes (such as "phar://") are kept;
-- replace "~" with the user's home directory.
+- replace ``~`` with the user's home directory.
 
 You can canonicalize a path with :method:`Symfony\\Component\\Filesystem\\Path::canonicalize`::
 
