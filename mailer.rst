@@ -1342,9 +1342,8 @@ disable asynchronous delivery.
     The :method:`Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport::stop`
     method was made public in Symfony 6.1.
 
-Bus transport can also be selected by
-adding an ``X-Bus-Transport`` header (which will remove automatically from
-the final message)::
+You can also select the transport by adding an ``X-Bus-Transport`` header (which
+will be remove automatically from the final message)::
 
     // Use the bus transport "app.another_bus":
     $email->getHeaders()->addTextHeader('X-Bus-Transport', 'app.another_bus');
