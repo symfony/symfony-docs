@@ -81,10 +81,6 @@ fragment_uri
 
 Generates the URI of :ref:`a fragment <fragments-path-config>`.
 
-.. versionadded:: 5.3
-
-    The ``fragment_uri()`` function was introduced in Symfony 5.3.
-
 controller
 ~~~~~~~~~~
 
