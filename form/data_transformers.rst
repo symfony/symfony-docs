@@ -177,11 +177,8 @@ to and from the issue number and the ``Issue`` object::
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
-        private $entityManager;
-
-        public function __construct(EntityManagerInterface $entityManager)
+        public function __construct(private EntityManagerInterface $entityManager)
         {
-            $this->entityManager = $entityManager;
         }
 
         /**
