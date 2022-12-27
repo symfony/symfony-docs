@@ -63,7 +63,7 @@ dots or spaces). If you need more flexibility for these labels, use the
 
     ->add('textAlign', EnumType::class, [
         'class' => TextAlign::class,
-        'choice_label' => match ($choice) {
+        'choice_label' => fn ($choice) => match ($choice) {
             TextAlign::Left => 'text_align.left.label',
             TextAlign::Center => 'text_align.center.label',
             TextAlign::Right  => 'text_align.right.label',
