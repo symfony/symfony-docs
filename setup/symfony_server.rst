@@ -292,16 +292,46 @@ server provides a ``run`` command to wrap them as follows:
     # stop the web server (and all the associated commands) when you are finished
     $ symfony server:stop
 
-Configuring Workers
--------------------
+Configuration file
+------------------
 
 .. caution::
 
     This feature is experimental and could change or be removed at any time
     without prior notice.
 
+There are several options that you can set using a ``.symfony.local.yaml`` config file:
+
+.. code-block:: yaml
+
+    # Sets domain1.wip and domain2.wip for the current project
+    proxy:
+        domains:
+            - domain1
+            - domain2
+
+    http:
+        document_root: public/ # Path to the project document root
+        passthru: index.php # Project passthru index
+        port: 8000 # Force the port that will be used to run the server
+        preferred_port: 8001 # Preferred HTTP port [default: 8000]
+        p12: path/to/p12_cert # Name of the file containing the TLS certificate to use in p12 format
+        allow_http: true # Prevent auto-redirection from HTTP to HTTPS
+        no_tls: true # Use HTTP instead of HTTPS
+        daemon: true # Run the server in the background
+        use_gzip: true # Toggle GZIP compression
+
+.. caution::
+
+    Setting domains in this configuration file will override any domains you set
+    using the ``proxy:domain:attach`` command for the current project when you start
+    the server.
+
+Configuring Workers
+~~~~~~~~~~~~~~~~~~~
+
 If you like some processes to start automatically, along with the webserver
-(``symfony server:start``), add a configuration file to your project:
+(``symfony server:start``), you can set them in the YAML configuration file:
 
 .. code-block:: yaml
 
