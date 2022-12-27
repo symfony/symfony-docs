@@ -81,6 +81,7 @@ whitelist:
         - '# username is your full Gmail or Google Apps email address'
         - '.. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection'
         - '.. versionadded:: 1.9.0' # Encore
+        - '.. versionadded:: 1.8.2' # Encore
         - '.. versionadded:: 0.28.4' # Encore
         - '.. versionadded:: 2.4.0' # SwiftMailer
         - '.. versionadded:: 1.30' # Twig

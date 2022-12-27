@@ -58,6 +58,10 @@ If your Symfony application is running on a custom domain (e.g.
           }
       }
 
+.. versionadded:: 1.8.2
+
+    The ``--public`` option was added in Encore 1.8.2
+
 After restarting Encore and reloading your web page, you will probably see
 different issues in the web console:
 
@@ -68,6 +72,25 @@ different issues in the web console:
 
 You still need to make other configuration changes, as explained in the
 following sections.
+
+If your Webpack Dev Server HMR hub is unreachable because it is located
+in a different url, you may use this option to tell webpack where to look
+for it:
+
+.. code-block:: diff
+
+    {
+          ...
+          "scripts": {
+    -        "dev-server": "encore dev-server",
+    +        "dev-server": "encore dev-server --public http://app.vm:8080 --client-web-socket-url ws://app.vm:8080/ws",
+              ...
+          }
+    }
+
+Note that in this particular case, ``--public`` will do the job of telling
+webpack where to locate its HMR hub. But there may be edge cases in which
+you may need to specify this as well.
 
 Allow External Access
 ~~~~~~~~~~~~~~~~~~~~~
@@ -91,6 +114,32 @@ connections:
 
     Make sure to run the development server inside your virtual machine only;
     otherwise other computers can have access to it.
+
+Docker support
+~~~~~~~~~~~~~~
+
+If you are using ``docker``, to set up a ``nodejs`` ``docker-compose`` setup
+that works with the ``localhost:8080`` domain, add this to your
+``docker-compose-yml`` file:
+
+.. code-block:: yaml
+
+    services:
+        nodejs:
+            image: node:16
+            working_dir: /var/www
+            ports:
+                - '8080:8080'
+            volumes:
+                - ./:/var/www:rw,cached
+                - ~/.symfony/certs/default.p12:/root/.symfony/certs/default.p12
+            command: bash -c "yarn && yarn run dev-server --public https://localhost:8080 --host 0.0.0.0 --server-type https"
+
+.. note::
+
+    ``https``: You may need to load the ``https://localhost:8080`` url once
+    with your browser and accept the security exception before your assets
+    can be loaded correctly under https.
 
 Fix "Invalid Host header" Issue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
