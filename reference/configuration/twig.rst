@@ -302,6 +302,25 @@ globals
 It defines the global variables injected automatically into all Twig templates.
 Learn more about :doc:`Twig global variables </templating/global_variables>`.
 
+mailer
+~~~~~~
+
+.. _config-twig-html-to-text-converter:
+
+html_to_text_converter
+......................
+
+**type**: ``string`` **default**: ````
+
+.. versionadded:: 6.2
+
+    The ``html_to_text_converter`` option was introduced in Symfony 6.2.
+
+The service implementing
+:class:`Symfony\\Component\\Mime\\HtmlToTextConverter\\HtmlToTextConverterInterface`
+that will be used to automatically create the text part of an email from its
+HTML contents when not explicitly defined.
+
 number_format
 ~~~~~~~~~~~~~
 
