@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-12-28T11:39:30Z
+
+This should be parsed differently by the docs-builder @weaverryan
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2022-12-28T12:50:01Z
+
+> This should be parsed differently by the docs-builder @weaverryan
+
+Do you think it's a parsing issue ? Syntax seems to be incomplete regarding others todo block
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-12-28T19:42:07Z
+
+> Do you think it's a parsing issue ? Syntax seems to be incomplete regarding others todo block
+
+Yes, because before, when we use `Sphinx` to render the docs, this todo was not rendered, now while using the new `symfony-tools/docs-builder` it shows up...
+
+cc @nikophil
+
+---------------------------------------------------------------------------
+
+by nikophil at 2022-12-29T08:16:35Z
+
+Hello,
+
+the problem comes from the [rst parser](https://github.com/doctrine/rst-parser).
+
+[rst language reference](https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#comments) says comments could look like this, which works with the parser:
+```rst
+.. This is a comment
+```
+or this, which is not considered as a comment and is a bug in the parser
+```rst
+..
+    this is a comment
+```
+
+they don't give an example for this kind of block (not even [in sphinx doc](https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#comments))
+```rst
+.. first comment
+    still a comment in the same block
+```
+but they do provide a "syntax diagram" which makes me think this should also be considered as a comment:
+```
++-------+----------------------+
+| ".. " | comment              |
++-------+ block                |
+        |                      |
+        +----------------------+
+```
+
+Still, if Sphynx did consider the later as a block comment, maybe this behavior could land in the parser as well.
+Moreover, the way that GitHub and PHPStorm highlights the syntax proves this kind of "comment block" should be handled by the parser:
+```rst
+.. I am a comment and appear in grey
+   I am also in grey, so I am a comment
+I am not in grey, because I am not a comment
+```
+
+I've open a PR the rst repository
+https://github.com/doctrine/rst-parser/pull/220
+
+---------------------------------------------------------------------------
+
+by nikophil at 2022-12-29T16:23:52Z
+
+PR is merged, let's wait for them to release the patch :blush:
+
+---------------------------------------------------------------------------
+
+by nikophil at 2022-12-29T16:46:09Z
+
+@OskarStark @weaverryan The PR has been released in 0.5.3
+I don't know how the release of the docs builder is made (a phar creation I guess....).
+But upgrading the rst parser inside de docs builder will fix this issue
