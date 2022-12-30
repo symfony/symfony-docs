@@ -347,6 +347,10 @@ Templates are now much simpler because you can pass translatable objects to the
 
 .. tip::
 
+    The translation parameters can also be a :class:`Symfony\\Component\\Translation\\TranslatableMessage`.
+
+.. tip::
+
     There's also a :ref:`function called t() <reference-twig-function-t>`,
     available both in Twig and PHP, as a shortcut to create translatable objects.
 

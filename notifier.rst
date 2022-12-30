@@ -795,9 +795,9 @@ all configured texter and chatter transports only in the ``dev`` (and/or
                 slack: 'null://null'
 
 .. TODO
-    - Using the message bus for asynchronous notification
-    - Describe notifier monolog handler
-    - Describe notification_on_failed_messages integration
+..    - Using the message bus for asynchronous notification
+..    - Describe notifier monolog handler
+..    - Describe notification_on_failed_messages integration
 
 Learn more
 ----------
