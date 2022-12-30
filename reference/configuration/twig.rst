@@ -319,7 +319,7 @@ html_to_text_converter
 The service implementing
 :class:`Symfony\\Component\\Mime\\HtmlToTextConverter\\HtmlToTextConverterInterface`
 that will be used to automatically create the text part of an email from its
-HTML contents when not explicitely defined.
+HTML contents when not explicitly defined.
 
 number_format
 ~~~~~~~~~~~~~
