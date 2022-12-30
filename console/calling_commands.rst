@@ -58,6 +58,6 @@ method)::
 
 .. note::
 
-    Most of the times, calling a command from code that is not executed on the
+    Most of the time, calling a command from code that is not executed on the
     command line is not a good idea. The main reason is that the command's
     output is optimized for the console and not to be passed to other commands.

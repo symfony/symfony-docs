@@ -35,10 +35,19 @@ Symfony Profiler, which will look like this:
     in the ``X-Debug-Token-Link`` HTTP response header. Browse the ``/_profiler``
     URL to see all profiles.
 
+.. versionadded:: 6.3
+
+    Profile garbage collection was introduced in Symfony 6.3.
+
+.. note::
+
+    To limit the storage used by profiles on disk, they are probabilistically
+    removed after 2 days.
+
 Accessing Profiling Data Programmatically
 -----------------------------------------
 
-Most of the times, the profiler information is accessed and analyzed using its
+Most of the time, the profiler information is accessed and analyzed using its
 web-based interface. However, you can also retrieve profiling information
 programmatically thanks to the methods provided by the ``profiler`` service.
 
