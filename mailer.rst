@@ -717,12 +717,22 @@ method of the ``TemplatedEmail`` class and also to a special variable called
 Text Content
 ~~~~~~~~~~~~
 
-When the text content of a ``TemplatedEmail`` is not explicitly defined, mailer
-will generate it automatically by converting the HTML contents into text. If you
-have `league/html-to-markdown`_ installed in your application,
-it uses that to turn HTML into Markdown (so the text email has some visual appeal).
-Otherwise, it applies the :phpfunction:`strip_tags` PHP function to the original
-HTML contents.
+When the text content of a ``TemplatedEmail`` is not explicitly defined, it is
+automatically generated from the HTML contents.
+
+Symfony uses the following strategy when generating the text version of an
+email:
+
+* If an explicit HTML to text converter has been configured (see
+  :ref:`twig.mailer.html_to_text_converter
+  <config-twig-html-to-text-converter>`), it calls it;
+
+* If not, and if you have `league/html-to-markdown`_ installed in your
+  application, it uses it to turn HTML into Markdown (so the text email has
+  some visual appeal);
+
+* Otherwise, it applies the :phpfunction:`strip_tags` PHP function to the
+  original HTML contents.
 
 If you want to define the text content yourself, use the ``text()`` method
 explained in the previous sections or the ``textTemplate()`` method provided by
@@ -732,13 +742,13 @@ the ``TemplatedEmail`` class:
 
     + use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
-    $email = (new TemplatedEmail())
-        // ...
+     $email = (new TemplatedEmail())
+         // ...
 
-        ->htmlTemplate('emails/signup.html.twig')
+         ->htmlTemplate('emails/signup.html.twig')
     +     ->textTemplate('emails/signup.txt.twig')
-        // ...
-    ;
+         // ...
+     ;
 
 .. _mailer-twig-embedding-images:
 
