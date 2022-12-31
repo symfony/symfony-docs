@@ -33,8 +33,8 @@ it::
     listener priority to a higher value than ``LocaleListener`` priority (which
     you can obtain by running the ``debug:event kernel.request`` command).
 
-Read :doc:`/session/locale_sticky_session` for more information on making
-the user's locale "sticky" to their session.
+Read :ref:`locale-sticky-session` for more information on making the user's
+locale "sticky" to their session.
 
 .. note::
 

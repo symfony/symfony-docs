@@ -39,7 +39,7 @@ The translation process has several steps:
 
 #. Determine, :doc:`set and manage the user's locale </translation/locale>`
    for the request and optionally
-   :doc:`on the user's entire session </session/locale_sticky_session>`.
+   :ref:`on the user's entire session <locale-sticky-session>`.
 
 Installation
 ------------
