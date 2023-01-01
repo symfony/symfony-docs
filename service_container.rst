@@ -1186,6 +1186,22 @@ If you want to pass the second, you'll need to :ref:`manually wire the service <
     and the automatically loaded service will be passed - by default - when you type-hint
     ``SiteUpdateManager``. That's why creating the alias is a good idea.
 
+When using PHP closures to configure your services, it is possible to automatically
+inject the current environment value by adding a string argument named ``$env`` to
+the closure::
+
+.. configuration-block::
+
+    .. code-block:: php
+
+        // config/packages/my_config.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $configurator, string $env) {
+            // `$env` is automatically filled in, you can configure your
+            // services depending on which environment you're on
+        };
+
 Learn more
 ----------
 
