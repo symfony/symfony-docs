@@ -1020,6 +1020,8 @@ Crawler Assertions
 ``assertSelectorExists(string $selector, string $message = '')``/``assertSelectorNotExists(string $selector, string $message = '')``
     Asserts that the given selector does (not) match at least one element
     in the response.
+``assertSelectorCount(int $expectedCount, string $selector, string $message = '')``
+    Asserts that the expected number of selector elements are in the response
 ``assertSelectorTextContains(string $selector, string $text, string $message = '')``/``assertSelectorTextNotContains(string $selector, string $text, string $message = '')``
     Asserts that the first element matching the given selector does (not)
     contain the expected text.
@@ -1038,6 +1040,10 @@ Crawler Assertions
 ``assertFormValue(string $formSelector, string $fieldName, string $value, string $message = '')``/``assertNoFormValue(string $formSelector, string $fieldName, string $message = '')``
     Asserts that value of the field of the first form matching the given
     selector does (not) equal the expected value.
+
+.. versionadded:: 6.3
+
+    The ``assertSelectorCount()`` method was introduced in Symfony 6.3.
 
 Mailer Assertions
 .................
