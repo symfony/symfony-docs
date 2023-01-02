@@ -1483,6 +1483,20 @@ the email is sent::
         // do something with the message
     }
 
+If you want to stop the Message from being sent, call ``reject()`` (it will
+also stop the event propagation)::
+
+    use Symfony\Component\Mailer\Event\MessageEvent;
+
+    public function onMessage(MessageEvent $event): void
+    {
+        $event->reject();
+    }
+
+.. versionadded:: 6.3
+
+    The ``reject()`` method was introduced in Symfony 6.3.
+
 .. tip::
 
     When using a ``MessageEvent`` listener to
