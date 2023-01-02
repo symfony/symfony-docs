@@ -552,8 +552,7 @@ from GitHub or Slack, use the first argument of ``withEmoji()`` method::
     $slug = $slugger->slug('a 😺, 🐈‍⬛, and a 🦁');
     // $slug = 'a-smiley-cat-black-cat-and-a-lion';
 
-If you want to strip emojis from a string, you can also use the special
-``strip`` locale::
+If you want to strip emojis from slugs, use the special ``strip`` locale::
 
     use Symfony\Component\String\Slugger\AsciiSlugger;
 
@@ -562,6 +561,10 @@ If you want to strip emojis from a string, you can also use the special
 
     $slug = $slugger->slug('a 😺, 🐈‍⬛, and a 🦁');
     // $slug = 'a-and-a';
+
+.. versionadded:: 6.3
+
+    The option to strip emojis from slugs was introduced in Symfony 6.3.
 
 .. _string-inflector:
 
