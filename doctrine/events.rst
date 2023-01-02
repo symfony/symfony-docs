@@ -353,6 +353,30 @@ with the ``doctrine.orm.entity_listener`` tag:
             ;
         };
 
+
+Doctrine Entity Listeners may also be defined using PHP attributes.  When using PHP attributes it is not necessary to create a service for the listener.
+
+    .. code-block:: php
+
+        // src/EventListener/UserChangedNotifier.php
+        namespace App\EventListener;
+
+        use App\Entity\User;
+        use Doctrine\Persistence\Event\LifecycleEventArgs;
+        use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+
+        #[AsEntityListener(event:'postUpdate',  method:'postUpdate', entity:User::class)]
+        class UserChangedNotifier
+        {
+            // the entity listener methods receive two arguments:
+            // the entity instance and the lifecycle event
+            public function postUpdate(User $user, LifecycleEventArgs $event): void
+            {
+                // ... do something to notify the changes
+            }
+        }
+
+
 Doctrine Lifecycle Subscribers
 ------------------------------
 
