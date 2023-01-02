@@ -295,14 +295,14 @@ history::
     $crawler = $client->forward();
 
 You can delete the client's history with the ``restart()`` method. This will
-also delete all the cookies::
+also delete all the cookies, and reinitialize the $_SERVER parameters (e.g. HTTP headers)::
 
     use Acme\Client;
 
     $client = new Client();
     $client->request('GET', '/');
 
-    // reset the client (history and cookies are cleared too)
+    // reset the client (history, cookies and $_SERVER parameters are cleared too)
     $client->restart();
 
 .. _component-browserkit-external-requests:
