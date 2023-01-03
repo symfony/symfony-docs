@@ -1,48 +1,48 @@
 Text Fields
 ~~~~~~~~~~~
 
-* :doc:`TextType </reference/forms/types/text>`
-* :doc:`TextareaType </reference/forms/types/textarea>`
-* :doc:`EmailType </reference/forms/types/email>`
-* :doc:`IntegerType </reference/forms/types/integer>`
-* :doc:`MoneyType </reference/forms/types/money>`
-* :doc:`NumberType </reference/forms/types/number>`
-* :doc:`PasswordType </reference/forms/types/password>`
-* :doc:`PercentType </reference/forms/types/percent>`
-* :doc:`SearchType </reference/forms/types/search>`
-* :doc:`UrlType </reference/forms/types/url>`
-* :doc:`RangeType </reference/forms/types/range>`
-* :doc:`TelType </reference/forms/types/tel>`
-* :doc:`ColorType </reference/forms/types/color>`
+* :doc:`TextType </forms/types/text>`
+* :doc:`TextareaType </forms/types/textarea>`
+* :doc:`EmailType </forms/types/email>`
+* :doc:`IntegerType </forms/types/integer>`
+* :doc:`MoneyType </forms/types/money>`
+* :doc:`NumberType </forms/types/number>`
+* :doc:`PasswordType </forms/types/password>`
+* :doc:`PercentType </forms/types/percent>`
+* :doc:`SearchType </forms/types/search>`
+* :doc:`UrlType </forms/types/url>`
+* :doc:`RangeType </forms/types/range>`
+* :doc:`TelType </forms/types/tel>`
+* :doc:`ColorType </forms/types/color>`
 
 Choice Fields
 ~~~~~~~~~~~~~
 
-* :doc:`ChoiceType </reference/forms/types/choice>`
-* :doc:`EnumType </reference/forms/types/enum>`
-* :doc:`EntityType </reference/forms/types/entity>`
-* :doc:`CountryType </reference/forms/types/country>`
-* :doc:`LanguageType </reference/forms/types/language>`
-* :doc:`LocaleType </reference/forms/types/locale>`
-* :doc:`TimezoneType </reference/forms/types/timezone>`
-* :doc:`CurrencyType </reference/forms/types/currency>`
+* :doc:`ChoiceType </forms/types/choice>`
+* :doc:`EnumType </forms/types/enum>`
+* :doc:`EntityType </forms/types/entity>`
+* :doc:`CountryType </forms/types/country>`
+* :doc:`LanguageType </forms/types/language>`
+* :doc:`LocaleType </forms/types/locale>`
+* :doc:`TimezoneType </forms/types/timezone>`
+* :doc:`CurrencyType </forms/types/currency>`
 
 Date and Time Fields
 ~~~~~~~~~~~~~~~~~~~~
 
-* :doc:`DateType </reference/forms/types/date>`
-* :doc:`DateIntervalType </reference/forms/types/dateinterval>`
-* :doc:`DateTimeType </reference/forms/types/datetime>`
-* :doc:`TimeType </reference/forms/types/time>`
-* :doc:`BirthdayType </reference/forms/types/birthday>`
-* :doc:`WeekType </reference/forms/types/week>`
+* :doc:`DateType </forms/types/date>`
+* :doc:`DateIntervalType </forms/types/dateinterval>`
+* :doc:`DateTimeType </forms/types/datetime>`
+* :doc:`TimeType </forms/types/time>`
+* :doc:`BirthdayType </forms/types/birthday>`
+* :doc:`WeekType </forms/types/week>`
 
 Other Fields
 ~~~~~~~~~~~~
 
-* :doc:`CheckboxType </reference/forms/types/checkbox>`
-* :doc:`FileType </reference/forms/types/file>`
-* :doc:`RadioType </reference/forms/types/radio>`
+* :doc:`CheckboxType </forms/types/checkbox>`
+* :doc:`FileType </forms/types/file>`
+* :doc:`RadioType </forms/types/radio>`
 
 Symfony UX Fields
 ~~~~~~~~~~~~~~~~~
@@ -55,31 +55,31 @@ These types are part of the :doc:`Symfony UX initiative </frontend/ux>`:
 UID Fields
 ~~~~~~~~~~
 
-* :doc:`UuidType </reference/forms/types/uuid>`
-* :doc:`UlidType </reference/forms/types/ulid>`
+* :doc:`UuidType </forms/types/uuid>`
+* :doc:`UlidType </forms/types/ulid>`
 
 Field Groups
 ~~~~~~~~~~~~
 
-* :doc:`CollectionType </reference/forms/types/collection>`
-* :doc:`RepeatedType </reference/forms/types/repeated>`
+* :doc:`CollectionType </forms/types/collection>`
+* :doc:`RepeatedType </forms/types/repeated>`
 
 Hidden Fields
 ~~~~~~~~~~~~~
 
-* :doc:`HiddenType </reference/forms/types/hidden>`
+* :doc:`HiddenType </forms/types/hidden>`
 
 Buttons
 ~~~~~~~
 
-* :doc:`ButtonType </reference/forms/types/button>`
-* :doc:`ResetType </reference/forms/types/reset>`
-* :doc:`SubmitType </reference/forms/types/submit>`
+* :doc:`ButtonType </forms/types/button>`
+* :doc:`ResetType </forms/types/reset>`
+* :doc:`SubmitType </forms/types/submit>`
 
 Base Fields
 ~~~~~~~~~~~
 
-* :doc:`FormType </reference/forms/types/form>`
+* :doc:`FormType </forms/types/form>`
 
 .. _`CropperType`: https://github.com/symfony/ux/tree/2.x/src/Cropperjs#readme
 .. _`DropzoneType`: https://github.com/symfony/ux/tree/2.x/src/Dropzone#readme
