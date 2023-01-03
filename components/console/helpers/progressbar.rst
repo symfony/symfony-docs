@@ -337,12 +337,26 @@ display that are not available in the list of built-in placeholders, you can
 create your own. Let's see how you can create a ``remaining_steps`` placeholder
 that displays the number of remaining steps::
 
+    // This definition is globally registered for all ProgressBar instances
     ProgressBar::setPlaceholderFormatterDefinition(
         'remaining_steps',
         function (ProgressBar $progressBar, OutputInterface $output) {
             return $progressBar->getMaxSteps() - $progressBar->getProgress();
         }
     );
+
+It is also possible to set a placeholder formatter per ProgressBar instance
+with the ``setPlaceholderFormatter`` method::
+
+    $progressBar = new ProgressBar($output, 3, 0);
+    $progressBar->setFormat('%countdown% [%bar%]');
+    $progressBar->setPlaceholderFormatter('countdown', function (ProgressBar $progressBar) {
+        return $progressBar->getMaxSteps() - $progressBar->getProgress();
+    });
+
+.. versionadded:: 6.3
+
+    The ``setPlaceholderFormatter()`` method was introduced in Symfony 6.3.
 
 Custom Messages
 ~~~~~~~~~~~~~~~
