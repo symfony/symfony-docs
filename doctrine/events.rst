@@ -235,8 +235,9 @@ Doctrine Entity Listeners
 
 Entity listeners are defined as PHP classes that listen to a single Doctrine
 event on a single entity class. For example, suppose that you want to send some
-notifications whenever a ``User`` entity is modified in the database. To do so,
-define a listener for the ``postUpdate`` Doctrine event::
+notifications whenever a ``User`` entity is modified in the database.
+
+First, define a PHP class that handles the ``postUpdate`` Doctrine event::
 
     // src/EventListener/UserChangedNotifier.php
     namespace App\EventListener;
@@ -254,9 +255,27 @@ define a listener for the ``postUpdate`` Doctrine event::
         }
     }
 
-The next step is to enable the Doctrine listener in the Symfony application by
-creating a new service for it and :doc:`tagging it </service_container/tags>`
-with the ``doctrine.orm.entity_listener`` tag:
+Then, add the ``#[AsDoctrineListener]`` attribute to the class to enable it as
+a Doctrine entity listener in your application:
+
+    .. code-block:: php
+
+        // src/EventListener/UserChangedNotifier.php
+        namespace App\EventListener;
+
+        // ...
+        use App\Entity\User;
+        use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
+
+        #[AsDoctrineListener(event: 'postUpdate',  method: 'postUpdate', entity: User::class)]
+        class UserChangedNotifier
+        {
+            // ...
+        }
+
+That's it. Alternatively, if you prefer to not use PHP attributes, you must
+configure a service for the entity listener and :doc:`tag it </service_container/tags>`
+with the ``doctrine.orm.entity_listener`` tag as follows:
 
 .. configuration-block::
 
@@ -352,30 +371,6 @@ with the ``doctrine.orm.entity_listener`` tag:
                 ])
             ;
         };
-
-
-Doctrine Entity Listeners may also be defined using PHP attributes.  When using PHP attributes it is not necessary to create a service for the listener.
-
-    .. code-block:: php
-
-        // src/EventListener/UserChangedNotifier.php
-        namespace App\EventListener;
-
-        use App\Entity\User;
-        use Doctrine\Persistence\Event\LifecycleEventArgs;
-        use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
-
-        #[AsEntityListener(event:'postUpdate',  method:'postUpdate', entity:User::class)]
-        class UserChangedNotifier
-        {
-            // the entity listener methods receive two arguments:
-            // the entity instance and the lifecycle event
-            public function postUpdate(User $user, LifecycleEventArgs $event): void
-            {
-                // ... do something to notify the changes
-            }
-        }
-
 
 Doctrine Lifecycle Subscribers
 ------------------------------
