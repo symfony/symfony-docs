@@ -565,7 +565,8 @@ logic about those arguments::
     The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
 
 The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-parameters>`,
-:doc:`complex expressions </service_container/expression_language>` and even :ref:`environment variables <config-env-vars>`::
+:doc:`complex expressions </service_container/expression_language>` and even
+:ref:`environment variables <config-env-vars>`::
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
@@ -588,7 +589,7 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
             #[Autowire(expression: 'service("App\\Mail\\MailerConfiguration").getMailerMethod()')]
             string $mailerMethod
 
-            // environment variable
+            // environment variables
             #[Autowire(env: 'SOME_ENV_VAR')]
             string $senderName
         ) {
