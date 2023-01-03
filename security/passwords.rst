@@ -123,7 +123,7 @@ Further in this article, you can find a
     .. configuration-block::
 
         .. code-block:: yaml
-        
+
             # config/packages/test/security.yaml
             security:
                 # ...
@@ -533,8 +533,10 @@ migration by returning ``true`` in the ``needsRehash()`` method::
         }
     }
 
-Named Password Hashers
-----------------------
+.. _named-password-hashers:
+
+Dynamic Password Hashers
+------------------------
 
 Usually, the same password hasher is used for all users by configuring it
 to apply to all instances of a specific class. Another option is to use a
@@ -634,6 +636,12 @@ the name of the hasher to use::
             return null; // use the default hasher
         }
     }
+
+.. caution::
+
+    When :ref:`migrating passwords <security-password-migration>`, you don't
+    need to implement ``PasswordHasherAwareInterface`` to return the legacy
+    hasher name: Symfony will detect it from your ``migrate_from`` configuration.
 
 If you created your own password hasher implementing the
 :class:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface`,
