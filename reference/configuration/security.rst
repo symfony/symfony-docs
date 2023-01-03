@@ -899,6 +899,54 @@ multiple firewalls, the "context" could actually be shared:
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
 
+stateless
+~~~~~~~~~
+
+Firewalls can configure a ``stateless`` boolean option in order to declare that the session mustn't be used when authenticating user:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    stateless: true
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main" stateless="true">
+                    <!-- ... -->
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->stateless(true);
+            // ...
+        };
+
 User Checkers
 ~~~~~~~~~~~~~
 
