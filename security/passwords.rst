@@ -639,9 +639,9 @@ the name of the hasher to use::
 
 .. caution::
 
-    When :ref:`migrating passwords <security-password-migration>`, you don't need to implement ``PasswordHasherAwareInterface``
-    to return the legacy hasher name:
-    Symfony will detect it from your ``migrate_from`` configuration.
+    When :ref:`migrating passwords <security-password-migration>`, you don't
+    need to implement ``PasswordHasherAwareInterface`` to return the legacy
+    hasher name: Symfony will detect it from your ``migrate_from`` configuration.
 
 If you created your own password hasher implementing the
 :class:`Symfony\\Component\\PasswordHasher\\PasswordHasherInterface`,
