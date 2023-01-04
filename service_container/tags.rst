@@ -591,6 +591,76 @@ application handlers::
         }
     }
 
+If for some reason you need to exclude one or more services when using a tagged
+iterator, add the ``exclude`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            # This is the service we want to exclude, even if the 'app.handler' tag is attached
+            App\Handler\Three:
+                tags: ['app.handler']
+
+            App\HandlerCollection:
+                arguments:
+                    - !tagged_iterator { tag: app.handler, exclude: ['App\Handler\Three'] }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- This is the service we want to exclude, even if the 'app.handler' tag is attached -->
+                <service id="App\Handler\Three">
+                    <tag name="app.handler"/>
+                </service>
+
+                <service id="App\HandlerCollection">
+                    <!-- inject all services tagged with app.handler as first argument -->
+                    <argument type="tagged_iterator" tag="app.handler">
+                        <exclude>App\Handler\Three</exclude>
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $configurator) {
+            $services = $configurator->services();
+
+            // ...
+
+            // This is the service we want to exclude, even if the 'app.handler' tag is attached
+            $services->set(App\Handler\Three::class)
+                ->tag('app.handler')
+            ;
+
+            $services->set(App\HandlerCollection::class)
+                // inject all services tagged with app.handler as first argument
+                ->args([tagged_iterator('app.handler', exclude: [App\Handler\Three::class])])
+            ;
+        };
+
+.. versionadded:: 6.1
+
+    The ``exclude`` option was introduced in Symfony 6.1.
+
 .. seealso::
 
     See also :doc:`tagged locator services </service_container/service_subscribers_locators>`
