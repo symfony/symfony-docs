@@ -591,8 +591,8 @@ application handlers::
         }
     }
 
-If for some reason you need to exclude one or multiple services when using a tagged
-iterator, this can be done by using the ``exclude`` option:
+If for some reason you need to exclude one or more services when using a tagged
+iterator, add the ``exclude`` option:
 
 .. configuration-block::
 
