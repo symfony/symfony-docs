@@ -524,6 +524,9 @@ all services tagged with ``app.handler`` into its constructor argument::
         }
     }
 
+Symfony allows you to inject the services using YAML/XML/PHP configuration or
+directly via PHP attributes:
+
 .. configuration-block::
 
     .. code-block:: php-attributes

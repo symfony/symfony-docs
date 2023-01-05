@@ -247,9 +247,44 @@ Defining a Service Locator
 --------------------------
 
 To manually define a service locator and inject it to another service, create an
-argument of type ``service_locator``:
+argument of type ``service_locator``.
+
+Consider the following ``CommandBus`` class where you want to inject
+some services into it via a service locator::
+
+    // src/HandlerCollection.php
+    namespace App;
+
+    use Symfony\Component\DependencyInjection\ServiceLocator;
+
+    class CommandBus
+    {
+        public function __construct(ServiceLocator $locator)
+        {
+        }
+    }
+
+Symfony allows you to inject the service locator using YAML/XML/PHP configuration
+or directly via PHP attributes:
 
 .. configuration-block::
+
+    .. conde-block:: php-attributes
+
+        // src/CommandBus.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
+        use Symfony\Component\DependencyInjection\ServiceLocator;
+
+        class CommandBus
+        {
+            public function __construct(
+                // creates a service locator with all the services tagged with 'app.handler'
+                #[TaggedLocator('app.handler')] ServiceLocator $locator
+            ) {
+            }
+        }
 
     .. code-block:: yaml
 
@@ -304,22 +339,6 @@ argument of type ``service_locator``:
 As shown in the previous sections, the constructor of the ``CommandBus`` class
 must type-hint its argument with ``ContainerInterface``. Then, you can get any of
 the service locator services via their ID (e.g. ``$this->locator->get('App\FooCommand')``).
-
-The same behavior can be achieved using the ``#[TaggedLocator]`` attribute. This
-attribute must be directly used on a ``ServiceLocator`` argument::
-
-    // src/HandlerCollection.php
-    namespace App;
-
-    use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
-    use Symfony\Component\DependencyInjection\ServiceLocator;
-
-    class HandlerCollection
-    {
-        public function __construct(#[TaggedLocator('app.handler')] ServiceLocator $locator)
-        {
-        }
-    }
 
 .. versionadded:: 5.3
 
