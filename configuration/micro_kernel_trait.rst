@@ -24,6 +24,52 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // index.php
+        use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        use Symfony\Component\HttpFoundation\JsonResponse;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        require __DIR__.'/vendor/autoload.php';
+
+        class Kernel extends BaseKernel
+        {
+            use MicroKernelTrait;
+
+            public function registerBundles(): array
+            {
+                return [
+                    new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+                ];
+            }
+
+            protected function configureContainer(ContainerConfigurator $c): void
+            {
+                // PHP equivalent of config/packages/framework.yaml
+                $c->extension('framework', [
+                    'secret' => 'S0ME_SECRET'
+                ]);
+            }
+
+            #[Route('/random/{limit}', name='random_number')]
+            public function randomNumber(int $limit): JsonResponse
+            {
+                return new JsonResponse([
+                    'number' => random_int(0, $limit),
+                ]);
+            }
+        }
+
+        $kernel = new Kernel('dev', true);
+        $request = Request::createFromGlobals();
+        $response = $kernel->handle($request);
+        $response->send();
+        $kernel->terminate($request, $response);
+
     .. code-block:: php
 
         // index.php
@@ -60,52 +106,6 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
                 $routes->add('random_number', '/random/{limit}')->controller([$this, 'randomNumber']);
             }
 
-            public function randomNumber(int $limit): JsonResponse
-            {
-                return new JsonResponse([
-                    'number' => random_int(0, $limit),
-                ]);
-            }
-        }
-
-        $kernel = new Kernel('dev', true);
-        $request = Request::createFromGlobals();
-        $response = $kernel->handle($request);
-        $response->send();
-        $kernel->terminate($request, $response);
-
-    .. code-block:: php-attributes
-
-        // index.php
-        use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
-        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-        use Symfony\Component\HttpFoundation\JsonResponse;
-        use Symfony\Component\HttpFoundation\Request;
-        use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        require __DIR__.'/vendor/autoload.php';
-
-        class Kernel extends BaseKernel
-        {
-            use MicroKernelTrait;
-
-            public function registerBundles(): array
-            {
-                return [
-                    new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-                ];
-            }
-
-            protected function configureContainer(ContainerConfigurator $c): void
-            {
-                // PHP equivalent of config/packages/framework.yaml
-                $c->extension('framework', [
-                    'secret' => 'S0ME_SECRET'
-                ]);
-            }
-
-            #[Route('/random/{limit}', name='random_number')]
             public function randomNumber(int $limit): JsonResponse
             {
                 return new JsonResponse([
