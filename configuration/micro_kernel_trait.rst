@@ -20,55 +20,109 @@ via Composer:
       symfony/http-foundation symfony/routing \
       symfony/dependency-injection symfony/framework-bundle
 
-Next, create an ``index.php`` file that defines the kernel class and runs it::
+Next, create an ``index.php`` file that defines the kernel class and runs it:
 
-    // index.php
-    use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
-    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-    use Symfony\Component\HttpFoundation\JsonResponse;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
-    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+.. configuration-block::
 
-    require __DIR__.'/vendor/autoload.php';
+    .. code-block:: php
 
-    class Kernel extends BaseKernel
-    {
-        use MicroKernelTrait;
+        // index.php
+        use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        use Symfony\Component\HttpFoundation\JsonResponse;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        public function registerBundles(): array
+        require __DIR__.'/vendor/autoload.php';
+
+        class Kernel extends BaseKernel
         {
-            return [
-                new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            ];
+            use MicroKernelTrait;
+
+            public function registerBundles(): array
+            {
+                return [
+                    new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+                ];
+            }
+
+            protected function configureContainer(ContainerConfigurator $c): void
+            {
+                // PHP equivalent of config/packages/framework.yaml
+                $c->extension('framework', [
+                    'secret' => 'S0ME_SECRET'
+                ]);
+            }
+
+            protected function configureRoutes(RoutingConfigurator $routes): void
+            {
+                $routes->add('random_number', '/random/{limit}')->controller([$this, 'randomNumber']);
+            }
+
+            public function randomNumber(int $limit): JsonResponse
+            {
+                return new JsonResponse([
+                    'number' => random_int(0, $limit),
+                ]);
+            }
         }
 
-        protected function configureContainer(ContainerConfigurator $c): void
+        $kernel = new Kernel('dev', true);
+        $request = Request::createFromGlobals();
+        $response = $kernel->handle($request);
+        $response->send();
+        $kernel->terminate($request, $response);
+
+    .. code-block:: php-attributes
+
+        // index.php
+        use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        use Symfony\Component\HttpFoundation\JsonResponse;
+        use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        require __DIR__.'/vendor/autoload.php';
+
+        class Kernel extends BaseKernel
         {
-            // PHP equivalent of config/packages/framework.yaml
-            $c->extension('framework', [
-                'secret' => 'S0ME_SECRET'
-            ]);
+            use MicroKernelTrait;
+
+            public function registerBundles(): array
+            {
+                return [
+                    new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+                ];
+            }
+
+            protected function configureContainer(ContainerConfigurator $c): void
+            {
+                // PHP equivalent of config/packages/framework.yaml
+                $c->extension('framework', [
+                    'secret' => 'S0ME_SECRET'
+                ]);
+            }
+
+            #[Route('/random/{limit}', name='random_number')]
+            public function randomNumber(int $limit): JsonResponse
+            {
+                return new JsonResponse([
+                    'number' => random_int(0, $limit),
+                ]);
+            }
         }
 
-        protected function configureRoutes(RoutingConfigurator $routes): void
-        {
-            $routes->add('random_number', '/random/{limit}')->controller([$this, 'randomNumber']);
-        }
+        $kernel = new Kernel('dev', true);
+        $request = Request::createFromGlobals();
+        $response = $kernel->handle($request);
+        $response->send();
+        $kernel->terminate($request, $response);
 
-        public function randomNumber(int $limit): JsonResponse
-        {
-            return new JsonResponse([
-                'number' => random_int(0, $limit),
-            ]);
-        }
-    }
+.. versionadded:: 6.1
 
-    $kernel = new Kernel('dev', true);
-    $request = Request::createFromGlobals();
-    $response = $kernel->handle($request);
-    $response->send();
-    $kernel->terminate($request, $response);
+    The PHP attributes notation has been introduced in Symfony 6.1.
 
 That's it! To test it, start the :doc:`Symfony Local Web Server
 </setup/symfony_server>`:
