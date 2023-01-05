@@ -255,7 +255,7 @@ First, define a PHP class that handles the ``postUpdate`` Doctrine event::
         }
     }
 
-Then, add the ``#[AsDoctrineListener]`` attribute to the class to enable it as
+Then, add the ``#[AsEntityListener]`` attribute to the class to enable it as
 a Doctrine entity listener in your application:
 
     .. code-block:: php
@@ -265,9 +265,10 @@ a Doctrine entity listener in your application:
 
         // ...
         use App\Entity\User;
-        use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
+        use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+        use Doctrine\ORM\Events;
 
-        #[AsDoctrineListener(event: 'postUpdate',  method: 'postUpdate', entity: User::class)]
+        #[AsEntityListener(event: Events::postUpdate, method: 'postUpdate', entity: User::class)]
         class UserChangedNotifier
         {
             // ...
