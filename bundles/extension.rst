@@ -54,10 +54,11 @@ method to return the instance of the extension::
 
     // ...
     use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
+    use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
     class AcmeHelloBundle extends Bundle
     {
-        public function getContainerExtension()
+        public function getContainerExtension(): ?ExtensionInterface
         {
             return new UnconventionalExtensionClass();
         }
