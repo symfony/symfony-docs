@@ -339,10 +339,6 @@ As shown in the previous sections, the constructor of the ``CommandBus`` class
 must type-hint its argument with ``ContainerInterface``. Then, you can get any of
 the service locator services via their ID (e.g. ``$this->locator->get('App\FooCommand')``).
 
-.. versionadded:: 5.3
-
-    The ``#[TaggedLocator]`` attribute was introduced in Symfony 5.3 and requires PHP 8.
-
 Reusing a Service Locator in Multiple Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

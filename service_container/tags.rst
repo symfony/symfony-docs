@@ -607,10 +607,6 @@ directly via PHP attributes:
             ;
         };
 
-.. versionadded:: 5.3
-
-    The ``#[TaggedIterator]`` attribute was introduced in Symfony 5.3 and requires PHP 8.
-
 .. seealso::
 
     See also :doc:`tagged locator services </service_container/service_subscribers_locators>`
