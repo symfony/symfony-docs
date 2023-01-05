@@ -227,8 +227,8 @@ with the ``doctrine.event_listener`` tag:
 
         use App\EventListener\SearchIndexer;
 
-        return static function (ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             // listeners are applied by default to all Doctrine connections
             $services->set(SearchIndexer::class)
@@ -360,8 +360,8 @@ with the ``doctrine.orm.entity_listener`` tag:
         use App\Entity\User;
         use App\EventListener\UserChangedNotifier;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(UserChangedNotifier::class)
                 ->tag('doctrine.orm.entity_listener', [
@@ -501,8 +501,8 @@ Doctrine connection to use) you must do that in the manual service configuration
 
         use App\EventListener\DatabaseActivitySubscriber;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(DatabaseActivitySubscriber::class)
                 ->tag('doctrine.event_subscriber'[

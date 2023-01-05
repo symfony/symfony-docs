@@ -147,8 +147,8 @@ the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
         // config/packages/debug.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
-            $container->extension('debug', [
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $containerConfigurator->extension('debug', [
                 'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
             ]);
         };

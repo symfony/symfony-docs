@@ -106,16 +106,16 @@ files so they don't collide with the files from ``src/Kernel.php``::
             return $this->getProjectDir().'/var/log/api';
         }
 
-        protected function configureContainer(ContainerConfigurator $container): void
+        protected function configureContainer(ContainerConfigurator $containerConfigurator): void
         {
-            $container->import('../config/api/{packages}/*.yaml');
-            $container->import('../config/api/{packages}/'.$this->environment.'/*.yaml');
+            $containerConfigurator->import('../config/api/{packages}/*.yaml');
+            $containerConfigurator->import('../config/api/{packages}/'.$this->environment.'/*.yaml');
 
             if (is_file(\dirname(__DIR__).'/config/api/services.yaml')) {
-                $container->import('../config/api/services.yaml');
-                $container->import('../config/api/{services}_'.$this->environment.'.yaml');
+                $containerConfigurator->import('../config/api/services.yaml');
+                $containerConfigurator->import('../config/api/{services}_'.$this->environment.'.yaml');
             } else {
-                $container->import('../config/api/{services}.php');
+                $containerConfigurator->import('../config/api/{services}.php');
             }
         }
 

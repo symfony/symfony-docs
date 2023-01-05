@@ -200,8 +200,8 @@ configuration:
         // config/packages/framework.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
-            $container->extension('framework', [
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $containerConfigurator->extension('framework', [
                 'session' => [
                     'gc_probability' => null,
                 ],

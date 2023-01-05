@@ -122,8 +122,8 @@ services:
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set('app.mysql_lock', MysqlLock::class);
             $services->set('app.postgresql_lock', PostgresqlLock::class);
@@ -184,8 +184,8 @@ the generic ``app.lock`` service can be defined as follows:
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set('app.mysql_lock', MysqlLock::class);
             $services->set('app.postgresql_lock', PostgresqlLock::class);
