@@ -511,10 +511,36 @@ Symfony provides a shortcut to inject all services tagged with a specific tag,
 which is a common need in some applications, so you don't have to write a
 compiler pass just for that.
 
-In the following example, all services tagged with ``app.handler`` are passed as
-first  constructor argument to the ``App\HandlerCollection`` service:
+Consider the following ``HandlerCollection`` class where you want to inject
+all services tagged with ``app.handler`` into its constructor argument::
+
+    // src/HandlerCollection.php
+    namespace App;
+
+    class HandlerCollection
+    {
+        public function __construct(iterable $handlers)
+        {
+        }
+    }
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/HandlerCollection.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+        class HandlerCollection
+        {
+            public function __construct(
+                // the attribute must be applied directly to the argument to autowire
+                #[TaggedIterator('app.handler')] iterable $handlers
+            ) {
+            }
+        }
 
     .. code-block:: yaml
 
@@ -577,35 +603,6 @@ first  constructor argument to the ``App\HandlerCollection`` service:
                 ->args([tagged_iterator('app.handler')])
             ;
         };
-
-After compilation the ``HandlerCollection`` service is able to iterate over your
-application handlers::
-
-    // src/HandlerCollection.php
-    namespace App;
-
-    class HandlerCollection
-    {
-        public function __construct(iterable $handlers)
-        {
-        }
-    }
-
-Injecting tagged services can be also be done through autowiring thanks to the
-``#[TaggedIterator]`` attribute. This attribute must be directly used on the
-argument to autowire::
-
-    // src/HandlerCollection.php
-    namespace App;
-
-    use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
-
-    class HandlerCollection
-    {
-        public function __construct(#[TaggedIterator('app.handler')] iterable $handlers)
-        {
-        }
-    }
 
 .. versionadded:: 5.3
 
