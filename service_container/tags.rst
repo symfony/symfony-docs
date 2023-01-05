@@ -591,6 +591,26 @@ application handlers::
         }
     }
 
+Injecting tagged services can be also be done through autowiring thanks to the
+``#[TaggedIterator]`` attribute. This attribute must be directly used on the
+argument to autowire::
+
+    // src/HandlerCollection.php
+    namespace App;
+
+    use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+    class HandlerCollection
+    {
+        public function __construct(#[TaggedIterator('app.handler')] iterable $handlers)
+        {
+        }
+    }
+
+.. versionadded:: 5.3
+
+    The ``#[TaggedIterator]`` attribute was introduced in Symfony 5.3 and requires PHP 8.
+
 .. seealso::
 
     See also :doc:`tagged locator services </service_container/service_subscribers_locators>`
