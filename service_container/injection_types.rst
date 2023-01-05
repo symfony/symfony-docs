@@ -116,15 +116,16 @@ by cloning the original service, this approach allows you to make a service immu
 
     // ...
     use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Contracts\Service\Attribute\Required;
 
     class NewsletterManager
     {
         private $mailer;
 
         /**
-         * @required
          * @return static
          */
+        #[Required]
         public function withMailer(MailerInterface $mailer): self
         {
             $new = clone $this;
@@ -220,14 +221,14 @@ that accepts the dependency::
     // src/Mail/NewsletterManager.php
     namespace App\Mail;
 
+    use Symfony\Contracts\Service\Attribute\Required;
+
     // ...
     class NewsletterManager
     {
         private $mailer;
 
-        /**
-         * @required
-         */
+        #[Required]
         public function setMailer(MailerInterface $mailer): void
         {
             $this->mailer = $mailer;
