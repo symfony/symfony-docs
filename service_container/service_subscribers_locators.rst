@@ -305,6 +305,26 @@ As shown in the previous sections, the constructor of the ``CommandBus`` class
 must type-hint its argument with ``ContainerInterface``. Then, you can get any of
 the service locator services via their ID (e.g. ``$this->locator->get('App\FooCommand')``).
 
+The same behavior can be achieved using the ``#[TaggedLocator]`` attribute. This
+attribute must be directly used on a ``ServiceLocator`` argument::
+
+    // src/HandlerCollection.php
+    namespace App;
+
+    use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
+    use Symfony\Component\DependencyInjection\ServiceLocator;
+
+    class HandlerCollection
+    {
+        public function __construct(#[TaggedLocator('app.handler')] ServiceLocator $locator)
+        {
+        }
+    }
+
+.. versionadded:: 5.3
+
+    The ``#[TaggedLocator]`` attribute was introduced in Symfony 5.3 and requires PHP 8.
+
 Reusing a Service Locator in Multiple Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -459,7 +479,7 @@ will share identical locators among all the services referencing them::
             // ...
             'logger' => new Reference('logger'),
         ];
-        
+
         $myService = $container->findDefinition(MyService::class);
 
         $myService->addArgument(ServiceLocatorTagPass::register($container, $locateableServices));
