@@ -511,10 +511,39 @@ Symfony provides a shortcut to inject all services tagged with a specific tag,
 which is a common need in some applications, so you don't have to write a
 compiler pass just for that.
 
-In the following example, all services tagged with ``app.handler`` are passed as
-first  constructor argument to the ``App\HandlerCollection`` service:
+Consider the following ``HandlerCollection`` class where you want to inject
+all services tagged with ``app.handler`` into its constructor argument::
+
+    // src/HandlerCollection.php
+    namespace App;
+
+    class HandlerCollection
+    {
+        public function __construct(iterable $handlers)
+        {
+        }
+    }
+
+Symfony allows you to inject the services using YAML/XML/PHP configuration or
+directly via PHP attributes:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/HandlerCollection.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+        class HandlerCollection
+        {
+            public function __construct(
+                // the attribute must be applied directly to the argument to autowire
+                #[TaggedIterator('app.handler')] iterable $handlers
+            ) {
+            }
+        }
 
     .. code-block:: yaml
 
@@ -578,23 +607,25 @@ first  constructor argument to the ``App\HandlerCollection`` service:
             ;
         };
 
-After compilation the ``HandlerCollection`` service is able to iterate over your
-application handlers::
-
-    // src/HandlerCollection.php
-    namespace App;
-
-    class HandlerCollection
-    {
-        public function __construct(iterable $handlers)
-        {
-        }
-    }
-
 If for some reason you need to exclude one or more services when using a tagged
 iterator, add the ``exclude`` option:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/HandlerCollection.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+        class HandlerCollection
+        {
+            public function __construct(
+                #[TaggedIterator('app.handler', exclude: ['App\Handler\Three'])] iterable $handlers
+            ) {
+            }
+        }
 
     .. code-block:: yaml
 
