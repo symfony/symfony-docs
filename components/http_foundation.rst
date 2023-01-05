@@ -144,6 +144,13 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getInt`
     Returns the parameter value converted to integer;
 
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getEnum`
+    Returns the parameter value converted to a PHP enum;
+
+.. versionadded:: 6.3
+
+    The `ParameterBag::getEnum()` method was added in Symfony 6.3.
+
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
