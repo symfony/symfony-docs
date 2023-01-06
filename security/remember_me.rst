@@ -111,6 +111,9 @@ Using the remember me cookie is not always appropriate (e.g. you should not
 use it on a shared PC). This is why by default, Symfony requires your users
 to opt-in to the remember me system via a request parameter.
 
+Remember Me for Form Login
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 This request parameter is often set via a checkbox in the login form. This
 checkbox must have a name of ``_remember_me``:
 
@@ -131,6 +134,25 @@ checkbox must have a name of ``_remember_me``:
 .. note::
 
     Optionally, you can configure a custom name for this checkbox using the
+    ``name`` setting under the ``remember_me`` section.
+
+Remember Me for JSON Login
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you implement the login via an API that uses :ref:`JSON Login <json-login>`
+you can add a ``_remember_me`` key to the body of your POST request.
+
+.. code-block:: json
+
+    {
+        "username": "dunglas@example.com",
+        "password": "MyPassword",
+        "_remember_me": true
+    }
+
+.. note::
+
+    Optionally, you can configure a custom name for this key using the
     ``name`` setting under the ``remember_me`` section.
 
 Always activating Remember Me
