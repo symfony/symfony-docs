@@ -240,8 +240,8 @@ your ``Session`` object with the default ``AttributeBag`` by the ``NamespacedAtt
         use Symfony\Component\HttpFoundation\Session\Attribute\NamespacedAttributeBag;
         use Symfony\Component\HttpFoundation\Session\Session;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set('session', Session::class)
                 ->public()

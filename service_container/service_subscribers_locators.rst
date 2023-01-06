@@ -231,8 +231,8 @@ service type to a service.
 
         use App\CommandBus;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(CommandBus::class)
                 ->tag('container.service_subscriber', ['key' => 'logger', 'id' => 'monolog.logger.event']);
@@ -323,8 +323,8 @@ or directly via PHP attributes:
 
         use App\CommandBus;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(CommandBus::class)
                 ->args([service_locator([
@@ -409,8 +409,8 @@ other services. To do so, create a new service definition using the
 
         use Symfony\Component\DependencyInjection\ServiceLocator;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set('app.command_handler_locator', ServiceLocator::class)
                 // In versions earlier to Symfony 5.1 the service() function was called ref()
@@ -471,8 +471,8 @@ Now you can inject the service locator in any other services:
 
         use App\CommandBus;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(CommandBus::class)
                 ->args([service('app.command_handler_locator')]);
@@ -562,8 +562,8 @@ of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(App\Handler\One::class)
                 ->tag('app.handler', ['key' => 'handler_one'])
@@ -652,8 +652,8 @@ attribute to the locator service defining the name of this custom method:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
-            $configurator->services()
+        return function(ContainerConfigurator $containerConfigurator) {
+            $containerConfigurator->services()
                 ->set(App\HandlerCollection::class)
                     ->args([tagged_locator('app.handler', 'key', 'myOwnMethodName')])
             ;

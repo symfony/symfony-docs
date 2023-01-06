@@ -145,13 +145,13 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
         // config/packages/acme_something.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
-            $container->extension('acme_something', [
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $containerConfigurator->extension('acme_something', [
                 // ...
                 'use_acme_goodbye' => false,
                 'entity_manager_name' => 'non_default',
             ]);
-            $container->extension('acme_other', [
+            $containerConfigurator->extension('acme_other', [
                 // ...
                 'use_acme_goodbye' => false,
             ]);

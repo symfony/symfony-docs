@@ -290,8 +290,8 @@ you'll need to configure the data collector explicitly:
 
         use App\DataCollector\RequestCollector;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(RequestCollector::class)
                 ->tag('data_collector', [

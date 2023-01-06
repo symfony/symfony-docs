@@ -123,12 +123,12 @@ a relative or absolute path to the imported file:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
-            $configurator->import('services/mailer.php');
+        return function(ContainerConfigurator $containerConfigurator) {
+            $containerConfigurator->import('services/mailer.php');
             // If you want to import a whole directory:
-            $configurator->import('services/');
+            $containerConfigurator->import('services/');
 
-            $services = $configurator->services()
+            $services = $containerConfigurator->services()
                 ->defaults()
                     ->autowire()
                     ->autoconfigure()
