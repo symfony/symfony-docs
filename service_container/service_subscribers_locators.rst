@@ -269,7 +269,7 @@ or directly via PHP attributes:
 
 .. configuration-block::
 
-    .. conde-block:: php-attributes
+    .. code-block:: php-attributes
 
         // src/CommandBus.php
         namespace App;
