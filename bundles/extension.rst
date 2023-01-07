@@ -131,18 +131,18 @@ method::
 
     class AcmeHelloBundle extends AbstractBundle
     {
-        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $builder): void
         {
             // load an XML, PHP or Yaml file
-            $container->import('../config/services.xml');
+            $containerConfigurator->import('../config/services.xml');
 
             // you can also add or replace parameters and services
-            $container->parameters()
+            $containerConfigurator->parameters()
                 ->set('acme_hello.phrase', $config['phrase'])
             ;
 
             if ($config['scream']) {
-                $container->services()
+                $containerConfigurator->services()
                     ->get('acme_hello.printer')
                         ->class(ScreamingPrinter::class)
                 ;
