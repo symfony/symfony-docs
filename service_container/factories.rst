@@ -298,8 +298,8 @@ e.g. change the service based on a parameter:
         use App\Email\NewsletterManagerInterface;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(NewsletterManagerInterface::class)
                 // use the "tracable_newsletter" service when debug is enabled, "newsletter" otherwise.
