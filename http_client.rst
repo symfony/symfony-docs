@@ -143,7 +143,8 @@ method to retrieve a new instance of the client with new default options::
 
     $this->client = $client->withOptions([
         'base_uri' => 'https://...',
-        'headers' => ['header-name' => 'header-value']
+        'headers' => ['header-name' => 'header-value'],
+        'extra' => ['my-key' => 'my-value'],
     ]);
 
 Some options are described in this guide:
