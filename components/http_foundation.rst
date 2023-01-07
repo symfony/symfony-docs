@@ -752,7 +752,7 @@ the response content will look like this:
 Session
 -------
 
-The session information is in its own document: :doc:`/components/http_foundation/sessions`.
+The session information is in its own document: :doc:`/session`.
 
 Safe Content Preference
 -----------------------
@@ -829,10 +829,9 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    /components/http_foundation/*
     /controller
     /controller/*
-    /session/*
+    /session
     /http_cache/*
 
 .. _nginx: https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
