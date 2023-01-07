@@ -341,9 +341,9 @@ compiler pass ``AddEventAliasesPass``::
 
     class Kernel extends BaseKernel
     {
-        protected function build(ContainerBuilder $container)
+        protected function build(ContainerBuilder $containerBuilder)
         {
-            $container->addCompilerPass(new AddEventAliasesPass([
+            $containerBuilder->addCompilerPass(new AddEventAliasesPass([
                 MyCustomEvent::class => 'my_custom_event',
             ]));
         }

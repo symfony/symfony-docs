@@ -537,7 +537,7 @@ will share identical locators among all the services referencing them::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
-    public function process(ContainerBuilder $container): void
+    public function process(ContainerBuilder $containerBuilder): void
     {
         // ...
 
@@ -546,9 +546,9 @@ will share identical locators among all the services referencing them::
             'logger' => new Reference('logger'),
         ];
 
-        $myService = $container->findDefinition(MyService::class);
+        $myService = $containerBuilder->findDefinition(MyService::class);
 
-        $myService->addArgument(ServiceLocatorTagPass::register($container, $locateableServices));
+        $myService->addArgument(ServiceLocatorTagPass::register($containerBuilder, $locateableServices));
     }
 
 Indexing the Collection of Services

@@ -118,8 +118,8 @@ Take the following ``access_control`` entries as an example:
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Config\SecurityConfig;
 
-        return static function (ContainerBuilder $container, SecurityConfig $security) {
-            $container->setParameter('env(TRUSTED_IPS)', '10.0.0.1, 10.0.0.2');
+        return static function (ContainerBuilder $containerBuilder, SecurityConfig $security) {
+            $containerBuilder->setParameter('env(TRUSTED_IPS)', '10.0.0.1, 10.0.0.2');
             // ...
 
             $security->accessControl()
