@@ -513,7 +513,7 @@ a Symfony service for the connection to the Redis server:
                     # uncomment the following if your Redis server requires a password
                     # - auth:
                     #     - '%env(REDIS_PASSWORD)%'
-                    
+
                     # uncomment the following if your Redis server requires a user and a password (when user is not default)
                     # - auth:
                     #     - ['%env(REDIS_USER)%','%env(REDIS_PASSWORD)%']
@@ -677,7 +677,7 @@ To use it, first register a new handler service with your database credentials:
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <services>
-                <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
+                <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                     <argument>%env(DATABASE_URL)%</argument>
 
                     <!-- you can also use PDO configuration, but requires passing two arguments: -->
@@ -697,8 +697,8 @@ To use it, first register a new handler service with your database credentials:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfiguratorConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(PdoSessionHandler::class)
                 ->args([
@@ -795,7 +795,7 @@ passed to the ``PdoSessionHandler`` service:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler" public="false">
+                <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler">
                     <argument>%env(DATABASE_URL)%</argument>
                     <argument type="collection">
                         <argument key="db_table">customer_session</argument>
@@ -812,8 +812,8 @@ passed to the ``PdoSessionHandler`` service:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfiguratorConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(PdoSessionHandler::class)
                 ->args([
@@ -972,7 +972,7 @@ the MongoDB connection as argument:
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <services>
-                <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler" public="false">
+                <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler">
                     <argument type="service">doctrine_mongodb.odm.default_connection</argument>
                 </service>
             </services>
@@ -985,8 +985,8 @@ the MongoDB connection as argument:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfiguratorConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(MongoDbSessionHandler::class)
                 ->args([
@@ -1087,7 +1087,7 @@ configure these values with the second argument passed to the
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler" public="false">
+                <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler">
                     <argument type="service">doctrine_mongodb.odm.default_connection</argument>
                     <argument type="collection">
                         <argument key="id_field">_guid</argument>
@@ -1104,8 +1104,8 @@ configure these values with the second argument passed to the
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(MongoDbSessionHandler::class)
                 ->args([
