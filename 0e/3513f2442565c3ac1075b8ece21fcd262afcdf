@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by fabpot at 2023-01-05T17:24:31Z
+
+@javiereguiluz I'd like to not wait too much before merging this one as updating it will be a pain if we merge something in the related files.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2023-01-06T15:38:58Z
+
+I think I've taken all comments into accounts.
+
+---------------------------------------------------------------------------
+
+by fabpot at 2023-01-07T07:42:34Z
+
+Hopefully, we're good now. We will refactor the content more if needed later on.
