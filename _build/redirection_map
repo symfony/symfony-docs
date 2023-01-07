@@ -536,3 +536,4 @@
 /components/security/firewall /security#the-firewall
 /components/security/secure_tools /security/passwords
 /components/security /security
+/components/var_dumper/advanced /components/var_dumper
