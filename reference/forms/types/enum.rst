@@ -92,6 +92,8 @@ These options inherit from the :doc:`ChoiceType </reference/forms/types/choice>`
 
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
+.. include:: /reference/forms/types/options/group_by.rst.inc
+
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
