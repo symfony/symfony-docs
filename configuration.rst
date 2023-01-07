@@ -102,7 +102,7 @@ YAML is used by default when installing packages because it's concise and very
 readable. These are the main advantages and disadvantages of each format:
 
 * **YAML**: simple, clean and readable, but not all IDEs support autocompletion
-  and validation for it. :doc:`Learn the YAML syntax </components/yaml/yaml_format>`;
+  and validation for it. :ref:`Learn the YAML syntax <yaml-format>`;
 * **XML**: autocompleted/validated by most IDEs and is parsed natively by PHP,
   but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
 * **PHP**: very powerful and it allows you to create dynamic configuration with
