@@ -360,8 +360,8 @@ the ``test`` environment as follows:
         use App\Contracts\Repository\NewsRepositoryInterface;
         use App\Repository\NewsRepository;
 
-        return static function (ContainerConfigurator $container) {
-            $container->services()
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $containerConfigurator->services()
                 // redefine the alias as it should be while making it public
                 ->alias(NewsRepositoryInterface::class, NewsRepository::class)
                     ->public()

@@ -71,8 +71,8 @@ You can mark the service as ``lazy`` by manipulating its definition:
 
         use App\Twig\AppExtension;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(AppExtension::class)->lazy();
         };
@@ -137,8 +137,8 @@ specific interfaces.
         use App\Twig\AppExtension;
         use Twig\Extension\ExtensionInterface;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(AppExtension::class)
                 ->lazy()

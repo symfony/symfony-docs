@@ -436,7 +436,7 @@ configuration in your application before using these commands:
         use Symfony\Component\Uid\Command\InspectUlidCommand;
         use Symfony\Component\Uid\Command\InspectUuidCommand;
 
-        return static function (ContainerConfigurator $configurator): void {
+        return static function (ContainerConfigurator $containerConfigurator): void {
             // ...
 
             $services
