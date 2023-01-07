@@ -183,8 +183,8 @@ order in which user checkers are called::
         use App\Security\AccountEnabledUserChecker;
         use App\Security\APIAccessAllowedUserChecker;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(AccountEnabledUserChecker::class)
                 ->tag('security.user_checker.api', ['priority' => 10])

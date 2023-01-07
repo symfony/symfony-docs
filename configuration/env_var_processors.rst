@@ -423,8 +423,8 @@ Symfony provides the following env var processors:
             // config/services.php
             use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-            return static function (ContainerConfigurator $configurator): void {
-                $container = $configurator->services()
+            return static function (ContainerConfigurator $containerConfigurator): void {
+                $container = $containerConfigurator->services()
                     ->set(\RedisCluster::class, \RedisCluster::class)->args([null, '%env(shuffle:csv:REDIS_NODES)%']);
             };
 
