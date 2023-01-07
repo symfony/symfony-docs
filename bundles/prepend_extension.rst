@@ -173,10 +173,10 @@ method::
 
     class FooBundle extends AbstractBundle
     {
-        public function prependExtension(ContainerConfigurator $containerConfigurator, ContainerBuilder $builder): void
+        public function prependExtension(ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
         {
             // prepend
-            $builder->prependExtensionConfig('framework', [
+            $containerBuilder->prependExtensionConfig('framework', [
                 'cache' => ['prefix_seed' => 'foo/bar'],
             ]);
 
