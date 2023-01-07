@@ -248,7 +248,8 @@
 /cookbook/session/index /session
 /cookbook/session/limit_metadata_writes /reference/configuration/framework
 /session/limit_metadata_writes /reference/configuration/framework
-/cookbook/session/locale_sticky_session /session/locale_sticky_session
+/cookbook/session/locale_sticky_session /session#locale-sticky-session
+/cookbook/locale_sticky_session /session#locale-sticky-session
 /cookbook/session/php_bridge /session/php_bridge
 /cookbook/session/proxy_examples /session/proxy_examples
 /cookbook/session/sessions_directory /session/sessions_directory
@@ -477,8 +478,9 @@
 /components/translation/custom_message_formatter https://github.com/symfony/translation
 /components/notifier https://github.com/symfony/notifier
 /components/routing https://github.com/symfony/routing
-/doctrine/pdo_session_storage /session/database
-/doctrine/mongodb_session_storage /session/database
+/session/database /session#session-database
+/doctrine/pdo_session_storage /session#session-database-pdo
+/doctrine/mongodb_session_storage /session#session-database-mongodb
 /components/dotenv https://github.com/symfony/dotenv
 /components/mercure /mercure
 /components/polyfill_apcu https://github.com/symfony/polyfill-apcu

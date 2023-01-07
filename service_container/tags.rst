@@ -41,8 +41,8 @@ example:
 
         use App\Twig\AppExtension;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(AppExtension::class)
                 ->tag('twig.extension');
@@ -107,8 +107,8 @@ If you want to apply tags automatically for your own services, use the
 
         use App\Security\CustomInterface;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             // this config only applies to the services created by this file
             $services
@@ -217,8 +217,8 @@ Then, define the chain as a service:
 
         use App\Mail\TransportChain;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(TransportChain::class);
         };
@@ -271,8 +271,8 @@ For example, you may add the following transports as services:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(\MailerSmtpTransport::class)
                 // the param() method was introduced in Symfony 5.2.
@@ -438,8 +438,8 @@ To answer this, change the service declaration:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(\MailerSmtpTransport::class)
                 // the param() method was introduced in Symfony 5.2.
@@ -590,8 +590,8 @@ directly via PHP attributes:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(App\Handler\One::class)
                 ->tag('app.handler')
@@ -651,8 +651,8 @@ the number, the earlier the tagged service will be located in the collection:
 
         use App\Handler\One;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(One::class)
                 ->tag('app.handler', ['priority' => 20])
@@ -711,8 +711,8 @@ you can define it in the configuration of the collecting service:
 
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        return function (ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function (ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             // ...
 
@@ -783,8 +783,8 @@ indexed by the ``key`` attribute:
         use App\Handler\Two;
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        return function (ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function (ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(One::class)
                 ->tag('app.handler', ['key' => 'handler_one']);
@@ -881,8 +881,8 @@ array element. For example, to retrieve the ``handler_two`` handler::
             use App\HandlerCollection;
             use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-            return function (ContainerConfigurator $configurator) {
-                $services = $configurator->services();
+            return function (ContainerConfigurator $containerConfigurator) {
+                $services = $containerConfigurator->services();
 
                 // ...
 

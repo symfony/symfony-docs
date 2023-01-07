@@ -104,8 +104,8 @@ using a special "tag":
 
         use App\EventListener\ExceptionListener;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(ExceptionListener::class)
                 ->tag('kernel.event_listener', ['event' => 'kernel.exception'])

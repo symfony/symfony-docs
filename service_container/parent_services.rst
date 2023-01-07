@@ -122,8 +122,8 @@ avoid duplicated service definitions:
         use App\Repository\DoctrinePostRepository;
         use App\Repository\DoctrineUserRepository;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(BaseDoctrineRepository::class)
                 ->abstract()
@@ -231,8 +231,8 @@ the child class:
         use App\Repository\DoctrineUserRepository;
         // ...
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(BaseDoctrineRepository::class)
                 // ...
