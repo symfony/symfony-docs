@@ -640,11 +640,8 @@ Autowiring will automatically call *any* method with the ``#[Required]`` attribu
 above it, autowiring each argument. If you need to manually wire some of the arguments
 to a method, you can always explicitly :doc:`configure the method call </service_container/calls>`.
 
-If your PHP version doesn't support attributes (they were introduced in PHP 8),
-you can use the ``@required`` annotation instead.
-
 Despite property injection having some :ref:`drawbacks <property-injection>`,
-autowiring with ``#[Required]`` or ``@required`` can also be applied to public
+autowiring with ``#[Required]`` can also be applied to public
 typed properties:
 
 .. configuration-block::
