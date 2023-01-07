@@ -741,8 +741,8 @@ typical alert levels, which you can implement immediately using:
 
         use Symfony\Component\Notifier\FlashMessage\BootstrapFlashMessageImportanceMapper;
 
-        return function(ContainerConfigurator $configurator) {
-            $configurator->services()
+        return function(ContainerConfigurator $containerConfigurator) {
+            $containerConfigurator->services()
                 ->set('notifier.flash_message_importance_mapper', BootstrapFlashMessageImportanceMapper::class)
             ;
         };

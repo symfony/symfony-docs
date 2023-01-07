@@ -93,10 +93,10 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
                 ];
             }
 
-            protected function configureContainer(ContainerConfigurator $c): void
+            protected function configureContainer(ContainerConfigurator $containerConfigurator): void
             {
                 // PHP equivalent of config/packages/framework.yaml
-                $c->extension('framework', [
+                $containerConfigurator->extension('framework', [
                     'secret' => 'S0ME_SECRET'
                 ]);
             }
@@ -325,7 +325,7 @@ add a service conditionally based on the ``foo`` value::
                 ->end();
         }
 
-        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $builder): void
         {
             if ($config['foo']) {
                 $builder->register('foo_service', \stdClass::class);
