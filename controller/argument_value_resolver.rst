@@ -338,8 +338,8 @@ and adding a priority.
 
         use App\ArgumentResolver\UserValueResolver;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(UserValueResolver::class)
                 ->tag('controller.argument_value_resolver', ['priority' => 50])

@@ -919,8 +919,8 @@ faster alternative to the
 
         use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-        return static function (ContainerConfigurator $container) {
-            $container->services()
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $containerConfigurator->services()
                 // ...
                 ->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
                     ->tag('serializer.normalizer')
