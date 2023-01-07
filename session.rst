@@ -697,7 +697,7 @@ To use it, first register a new handler service with your database credentials:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        return static function (ContainerConfigurator $containerConfiguratorConfigurator) {
+        return static function (ContainerConfigurator $containerConfigurator) {
             $services = $containerConfigurator->services();
 
             $services->set(PdoSessionHandler::class)
@@ -807,7 +807,7 @@ passed to the ``PdoSessionHandler`` service:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        return static function (ContainerConfigurator $containerConfiguratorConfigurator) {
+        return static function (ContainerConfigurator $containerConfigurator) {
             $services = $containerConfigurator->services();
 
             $services->set(PdoSessionHandler::class)
@@ -980,7 +980,7 @@ the MongoDB connection as argument:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
-        return static function (ContainerConfigurator $containerConfiguratorConfigurator) {
+        return static function (ContainerConfigurator $containerConfigurator) {
             $services = $containerConfigurator->services();
 
             $services->set(MongoDbSessionHandler::class)
