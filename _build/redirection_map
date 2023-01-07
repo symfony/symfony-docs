@@ -407,6 +407,7 @@
 /security/entity_provider /security/user_provider
 /session/avoid_session_start /session
 /session/sessions_directory /session
+/session/configuring_ttl /session#session-configure-ttl
 /frontend/encore/legacy-apps /frontend/encore/legacy-applications
 /configuration/external_parameters /configuration/environment_variables
 /contributing/code/patches /contributing/code/pull_requests
