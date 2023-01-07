@@ -31,6 +31,6 @@
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (ContainerConfigurator $container) {
-                $container->import('%kernel.project_dir%/somefile.yaml');
+            return static function (ContainerConfigurator $containerConfigurator) {
+                $containerConfigurator->import('%kernel.project_dir%/somefile.yaml');
             };

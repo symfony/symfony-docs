@@ -83,8 +83,8 @@ create its object:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerStaticFactory;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(NewsletterManager::class)
                 // the first argument is the class and the second argument is the static method
@@ -154,8 +154,8 @@ Configuration of the service container then looks like this:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             // first, create a service for the factory
             $services->set(NewsletterManagerFactory::class);
@@ -232,8 +232,8 @@ method name:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(NewsletterManager::class)
                 ->factory(service(InvokableNewsletterManagerFactory::class));
@@ -292,8 +292,8 @@ previous examples takes the ``templating`` service as an argument:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $configurator) {
-            $services = $configurator->services();
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(NewsletterManager::class)
                 ->factory([service(NewsletterManagerFactory::class), 'createNewsletterManager'])
