@@ -2626,8 +2626,8 @@ for these events.
 
             use App\EventListener\LogoutSubscriber;
 
-            return function(ContainerConfigurator $configurator) {
-                $services = $configurator->services();
+            return function(ContainerConfigurator $containerConfigurator) {
+                $services = $containerConfigurator->services();
 
                 $services->set(LogoutSubscriber::class)
                     ->tag('kernel.event_subscriber', [

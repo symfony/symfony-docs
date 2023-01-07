@@ -324,8 +324,8 @@ and adding a priority:
 
         use App\ValueResolver\BookingIdValueResolver;
 
-        return static function (ContainerConfigurator $container) {
-            $services = $configurator->services();
+        return static function (ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
 
             $services->set(BookingIdValueResolver::class)
                 ->tag('controller.argument_value_resolver', ['priority' => 150])
