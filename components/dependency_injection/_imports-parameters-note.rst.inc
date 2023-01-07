@@ -2,7 +2,7 @@
 
     Due to the way in which parameters are resolved, you cannot use them
     to build paths in imports dynamically. This means that something like
-    the following doesn't work:
+    **the following does not work:**
 
     .. configuration-block::
 
