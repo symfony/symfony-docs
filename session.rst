@@ -715,11 +715,6 @@ To use it, first register a new handler service with your database credentials:
     When using MySQL as the database, the DSN defined in ``DATABASE_URL`` can
     contain the ``charset`` and ``unix_socket`` options as query string parameters.
 
-    .. versionadded:: 5.3
-
-        The support for ``charset`` and ``unix_socket`` options was introduced
-        in Symfony 5.3.
-
 Next, use the :ref:`handler_id <config-framework-session-handler-id>`
 configuration option to tell Symfony to use this service as the session handler:
 
