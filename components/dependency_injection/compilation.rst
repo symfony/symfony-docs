@@ -64,10 +64,10 @@ A very simple extension may just load configuration files into the container::
 
     class AcmeDemoExtension implements ExtensionInterface
     {
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $containerBuilder)
         {
             $loader = new XmlFileLoader(
-                $container,
+                $containerBuilder,
                 new FileLocator(__DIR__.'/../Resources/config')
             );
             $loader->load('services.xml');
@@ -135,7 +135,7 @@ are loaded::
 The values from those sections of the config files are passed into the first
 argument of the ``load()`` method of the extension::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $containerBuilder)
     {
         $foo = $configs[0]['foo']; //fooValue
         $bar = $configs[0]['bar']; //barValue
@@ -161,7 +161,7 @@ you could access the config value this way::
     use Symfony\Component\Config\Definition\Processor;
     // ...
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $containerBuilder)
     {
         $configuration = new Configuration();
         $processor = new Processor();
@@ -222,13 +222,13 @@ The processed config value can now be added as container parameters as if
 it were listed in a ``parameters`` section of the config file but with the
 additional benefit of merging multiple files and validation of the configuration::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $containerBuilder)
     {
         $configuration = new Configuration();
         $processor = new Processor();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $container->setParameter('acme_demo.FOO', $config['foo']);
+        $containerBuilder->setParameter('acme_demo.FOO', $config['foo']);
 
         // ...
     }
@@ -237,14 +237,14 @@ More complex configuration requirements can be catered for in the Extension
 classes. For example, you may choose to load a main service configuration
 file but also load a secondary one only if a certain parameter is set::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $containerBuilder)
     {
         $configuration = new Configuration();
         $processor = new Processor();
         $config = $processor->processConfiguration($configuration, $configs);
 
         $loader = new XmlFileLoader(
-            $container,
+            $containerBuilder,
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.xml');
@@ -295,11 +295,11 @@ method is called by implementing
     {
         // ...
 
-        public function prepend(ContainerBuilder $container)
+        public function prepend(ContainerBuilder $containerBuilder)
         {
             // ...
 
-            $container->prependExtensionConfig($name, $config);
+            $containerBuilder->prependExtensionConfig($name, $config);
 
             // ...
         }
@@ -326,7 +326,7 @@ compilation::
 
     class AcmeDemoExtension implements ExtensionInterface, CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $containerBuilder)
         {
             // ... do something during the compilation
         }
@@ -380,7 +380,7 @@ class implementing the ``CompilerPassInterface``::
 
     class CustomPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $containerBuilder)
         {
             // ... do something during the compilation
         }

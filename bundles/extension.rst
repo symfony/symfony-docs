@@ -38,7 +38,7 @@ This is how the extension of an AcmeHelloBundle should look like::
 
     class AcmeHelloExtension extends Extension
     {
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $containerBuilder)
         {
             // ... you'll load the files here later
         }
@@ -94,10 +94,10 @@ For instance, assume you have a file called ``services.xml`` in the
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
     // ...
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $containerBuilder)
     {
         $loader = new XmlFileLoader(
-            $container,
+            $containerBuilder,
             new FileLocator(__DIR__.'/../../config')
         );
         $loader->load('services.xml');
@@ -171,7 +171,7 @@ they are compiled when generating the application cache to improve the overall
 performance. Define the list of annotated classes to compile in the
 ``addAnnotatedClassesToCompile()`` method::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $containerBuilder)
     {
         // ...
 
