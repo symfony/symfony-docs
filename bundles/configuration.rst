@@ -221,7 +221,7 @@ force validation (e.g. if an additional option was passed, an exception will be
 thrown)::
 
     // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $containerBuilder)
     {
         $configuration = new Configuration();
 
@@ -263,15 +263,15 @@ In your extension, you can load this and dynamically set its arguments::
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $containerBuilder)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
+        $loader = new XmlFileLoader($containerBuilder, new FileLocator(dirname(__DIR__).'/Resources/config'));
         $loader->load('services.xml');
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $definition = $container->getDefinition('acme.social.twitter_client');
+        $definition = $containerBuilder->getDefinition('acme.social.twitter_client');
         $definition->replaceArgument(0, $config['twitter']['client_id']);
         $definition->replaceArgument(1, $config['twitter']['client_secret']);
     }
@@ -292,7 +292,7 @@ In your extension, you can load this and dynamically set its arguments::
         class AcmeHelloExtension extends ConfigurableExtension
         {
             // note that this method is called loadInternal and not load
-            protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
+            protected function loadInternal(array $mergedConfig, ContainerBuilder $containerBuilder)
             {
                 // ...
             }
@@ -308,7 +308,7 @@ In your extension, you can load this and dynamically set its arguments::
     (e.g. by overriding configurations and using :phpfunction:`isset` to check
     for the existence of a value). Be aware that it'll be very hard to support XML::
 
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $containerBuilder)
         {
             $config = [];
             // let resources override the previous set value

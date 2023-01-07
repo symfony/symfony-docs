@@ -447,14 +447,14 @@ and use that when configuring the pool.
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+        return static function (ContainerBuilder $containerBuilder, FrameworkConfig $framework) {
             $framework->cache()
                 ->pool('cache.my_redis')
                     ->adapters(['cache.adapter.redis'])
                     ->provider('app.my_custom_redis_provider');
 
 
-            $container->register('app.my_custom_redis_provider', \Redis::class)
+            $containerBuilder->register('app.my_custom_redis_provider', \Redis::class)
                 ->setFactory([RedisAdapter::class, 'createConnection'])
                 ->addArgument('redis://localhost')
                 ->addArgument([

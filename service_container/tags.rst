@@ -128,9 +128,9 @@ In a Symfony application, call this method in your kernel class::
     {
         // ...
 
-        protected function build(ContainerBuilder $container): void
+        protected function build(ContainerBuilder $containerBuilder): void
         {
-            $container->registerForAutoconfiguration(CustomInterface::class)
+            $containerBuilder->registerForAutoconfiguration(CustomInterface::class)
                 ->addTag('app.custom_tag')
             ;
         }
@@ -144,9 +144,9 @@ In a Symfony bundle, call this method in the ``load()`` method of the
     {
         // ...
 
-        public function load(array $configs, ContainerBuilder $container): void
+        public function load(array $configs, ContainerBuilder $containerBuilder): void
         {
-            $container->registerForAutoconfiguration(CustomInterface::class)
+            $containerBuilder->registerForAutoconfiguration(CustomInterface::class)
                 ->addTag('app.custom_tag')
             ;
         }
@@ -307,17 +307,17 @@ container for any services with the ``app.mail_transport`` tag::
 
     class MailTransportPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container): void
+        public function process(ContainerBuilder $containerBuilder): void
         {
             // always first check if the primary service is defined
-            if (!$container->has(TransportChain::class)) {
+            if (!$containerBuilder->has(TransportChain::class)) {
                 return;
             }
 
-            $definition = $container->findDefinition(TransportChain::class);
+            $definition = $containerBuilder->findDefinition(TransportChain::class);
 
             // find all service IDs with the app.mail_transport tag
-            $taggedServices = $container->findTaggedServiceIds('app.mail_transport');
+            $taggedServices = $containerBuilder->findTaggedServiceIds('app.mail_transport');
 
             foreach ($taggedServices as $id => $tags) {
                 // add the transport service to the TransportChain service
@@ -344,9 +344,9 @@ or from your kernel::
     {
         // ...
 
-        protected function build(ContainerBuilder $container): void
+        protected function build(ContainerBuilder $containerBuilder): void
         {
-            $container->addCompilerPass(new MailTransportPass());
+            $containerBuilder->addCompilerPass(new MailTransportPass());
         }
     }
 
@@ -482,7 +482,7 @@ use this, update the compiler::
 
     class TransportCompilerPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container): void
+        public function process(ContainerBuilder $containerBuilder): void
         {
             // ...
 

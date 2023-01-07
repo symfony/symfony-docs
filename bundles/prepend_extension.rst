@@ -35,7 +35,7 @@ To give an Extension the power to do this, it needs to implement
     {
         // ...
 
-        public function prepend(ContainerBuilder $container)
+        public function prepend(ContainerBuilder $containerBuilder)
         {
             // ...
         }
@@ -56,15 +56,15 @@ a configuration setting in multiple bundles as well as disable a flag in multipl
 in case a specific other bundle is not registered::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $containerBuilder)
     {
         // get all bundles
-        $bundles = $container->getParameter('kernel.bundles');
+        $bundles = $containerBuilder->getParameter('kernel.bundles');
         // determine if AcmeGoodbyeBundle is registered
         if (!isset($bundles['AcmeGoodbyeBundle'])) {
             // disable AcmeGoodbyeBundle in bundles
             $config = ['use_acme_goodbye' => false];
-            foreach ($container->getExtensions() as $name => $extension) {
+            foreach ($containerBuilder->getExtensions() as $name => $extension) {
                 match ($name) {
                     // set use_acme_goodbye to false in the config of
                     // acme_something and acme_other
@@ -72,21 +72,21 @@ in case a specific other bundle is not registered::
                     // note that if the user manually configured
                     // use_acme_goodbye to true in config/services.yaml
                     // then the setting would in the end be true and not false
-                    'acme_something', 'acme_other' => $container->prependExtensionConfig($name, $config),
+                    'acme_something', 'acme_other' => $containerBuilder->prependExtensionConfig($name, $config),
                     default => null
                 };
             }
         }
 
         // get the configuration of AcmeHelloExtension (it's a list of configuration)
-        $configs = $container->getExtensionConfig($this->getAlias());
+        $configs = $containerBuilder->getExtensionConfig($this->getAlias());
 
         // iterate in reverse to preserve the original order after prepending the config
         foreach (array_reverse($configs) as $config) {
             // check if entity_manager_name is set in the "acme_hello" configuration
             if (isset($config['entity_manager_name'])) {
                 // prepend the acme_something settings with the entity_manager_name
-                $container->prependExtensionConfig('acme_something', [
+                $containerBuilder->prependExtensionConfig('acme_something', [
                     'entity_manager_name' => $config['entity_manager_name'],
                 ]);
             }
