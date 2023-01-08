@@ -897,3 +897,25 @@ array element. For example, to retrieve the ``handler_two`` handler::
                     ])
                 ;
             };
+
+The #[AsTaggedItem] attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is possible to define both the priority and the index of a tagged
+item thanks to the ``#[AsTaggedItem]`` attribute. This attribute must
+be used directly on the class of the service you want to configure::
+
+    // src/Handler/One.php
+    namespace App\Handler;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsTaggedItem;
+
+    #[AsTaggedItem(index: 'handler_one', priority: 10)]
+    class One
+    {
+        // ...
+    }
+
+.. versionadded:: 5.3
+
+    The ``#[AsTaggedItem]`` attribute was introduced in Symfony 5.3 and requires PHP 8.
