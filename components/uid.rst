@@ -88,6 +88,99 @@ following methods to create a ``Uuid`` object from it::
     $uuid = Uuid::fromBase58('TuetYWNHhmuSQ3xPoVLv9M');
     $uuid = Uuid::fromRfc4122('d9e7a184-5d5b-11ea-a62a-3499710062d0');
 
+You can also use the ``UuidFactory`` to generate UUIDs. First, you may
+configure the behavior of the factory using configuration files::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/uid.yaml
+        framework:
+            uid:
+                default_uuid_version: 6
+                name_based_uuid_version: 5
+                name_based_uuid_namespace: ~
+                time_based_uuid_version: 6
+                time_based_uuid_node: ~
+
+    .. code-block:: xml
+
+        <!-- config/packages/uid.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:framework="http://symfony.com/schema/dic/symfony"
+                   xsi:schemaLocation="http://symfony.com/schema/dic/services
+                        https://symfony.com/schema/dic/services/services-1.0.xsd
+                        http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:uid
+                    default_uuid_version="6"
+                    name_based_uuid_version="5"
+                    name_based_uuid_namespace=""
+                    time_based_uuid_version="6"
+                    time_based_uuid_node=""
+                />
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/uid.php
+        <?php
+
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return static function (ContainerConfigurator $configurator): void {
+            $services = $configurator->services()
+                ->defaults()
+                ->autowire()
+                ->autoconfigure();
+
+            $configurator->extension('framework', [
+                'uid' => [
+                    'default_uuid_version' => 6,
+                    'name_based_uuid_version' => 5,
+                    'name_based_uuid_namespace' => '',
+                    'time_based_uuid_version' => 6,
+                    'time_based_uuid_node' => '',
+                ],
+            ]);
+        };
+
+Then, you can inject the factory in your services and use it to generate UUIDs based
+on the configuration you defined::
+
+    <?php
+
+    namespace App\Service;
+
+    use Symfony\Component\Uid\Factory\UuidFactory;
+
+    class FooService
+    {
+        private UuidFactory $uuidFactory;
+
+        public function __construct(UuidFactory $uuidFactory)
+        {
+            $this->uuidFactory = $uuidFactory;
+        }
+
+        public function generate(): void
+        {
+            // This creates a UUID of the version given in the configuration file (v6 by default)
+            $uuid = $this->uuidFactory->create();
+
+            $nameBasedUuid = $this->uuidFactory->nameBased(/** ... */);
+            $randomBasedUuid = $this->uuidFactory->randomBased();
+            $timestampBased = $this->uuidFactory->timeBased();
+
+            // ...
+        }
+    }
+
 Converting UUIDs
 ~~~~~~~~~~~~~~~~
 
@@ -261,6 +354,31 @@ following methods to create a ``Ulid`` object from it::
     $ulid = Ulid::fromBase32('01E439TP9XJZ9RPFH3T1PYBCR8');
     $ulid = Ulid::fromBase58('1BKocMc5BnrVcuq2ti4Eqm');
     $ulid = Ulid::fromRfc4122('0171069d-593d-97d3-8b3e-23d06de5b308');
+
+Like UUIDs, ULIDs have their own factory, ``UlidFactory``, that can be used to generate them::
+
+    <?php
+
+    namespace App\Service;
+
+    use Symfony\Component\Uid\Factory\UlidFactory;
+
+    class FooService
+    {
+        private UlidFactory $ulidFactory;
+
+        public function __construct(UlidFactory $ulidFactory)
+        {
+            $this->ulidFactory = $ulidFactory;
+        }
+
+        public function generate(): void
+        {
+            $ulid = $this->ulidFactory->create();
+
+            // ...
+        }
+    }
 
 There's also a special ``NilUlid`` class to represent ULID ``null`` values::
 
