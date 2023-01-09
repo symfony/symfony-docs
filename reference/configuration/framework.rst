@@ -3612,21 +3612,19 @@ use the configuration of the first exception that matches ``instanceof``:
                     status_code: 422
 
 You can map a status code and a set of headers to an exception thanks
-to the ``#[WithHttpStatus]`` attribute on the exception class:
+to the ``#[WithHttpStatus]`` attribute on the exception class::
 
-.. code-block:: php
+    namespace App\Exception;
 
-        namespace App\Exception;
+    use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
 
-        use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
-
-        #[WithHttpStatus(422, [
-           'Retry-After' => 10,
-           'X-Custom-Header' => 'header-value',
-        ])]
-        class CustomException extends \Exception
-        {
-        }
+    #[WithHttpStatus(422, [
+       'Retry-After' => 10,
+       'X-Custom-Header' => 'header-value',
+    ])]
+    class CustomException extends \Exception
+    {
+    }
 
 .. versionadded:: 6.3
 
