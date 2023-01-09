@@ -247,9 +247,9 @@ Now it looks like this::
             return $bundles;
         }
 
-        protected function build(ContainerBuilder $container)
+        protected function build(ContainerBuilder $containerBuilder)
         {
-            $container->registerExtension(new AppExtension());
+            $containerBuilder->registerExtension(new AppExtension());
         }
 
         protected function configureContainer(ContainerConfigurator $containerConfigurator): void
@@ -325,10 +325,10 @@ add a service conditionally based on the ``foo`` value::
                 ->end();
         }
 
-        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $builder): void
+        public function loadExtension(array $config, ContainerConfigurator $containerConfigurator, ContainerBuilder $containerBuilder): void
         {
             if ($config['foo']) {
-                $builder->register('foo_service', \stdClass::class);
+                $containerBuilder->register('foo_service', \stdClass::class);
             }
         }
     }
