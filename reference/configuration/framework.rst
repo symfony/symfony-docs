@@ -3611,6 +3611,27 @@ use the configuration of the first exception that matches ``instanceof``:
                     log_level: 'debug'
                     status_code: 422
 
+You can map a status code and a set of headers to an exception thanks
+to the ``#[WithHttpStatus]`` attribute on the exception class:
+
+.. code-block:: php
+
+        namespace App\Exception;
+
+        use Symfony\Component\HttpKernel\Attribute\WithHttpStatus;
+
+        #[WithHttpStatus(422, [
+           'Retry-After' => 10,
+           'X-Custom-Header' => 'header-value',
+        ])]
+        class CustomException extends \Exception
+        {
+        }
+
+.. versionadded:: 6.3
+
+    The ``#[WithHttpStatus]`` attribute was introduced in Symfony 6.3.
+
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
