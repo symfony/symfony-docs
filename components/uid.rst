@@ -146,11 +146,8 @@ on the configuration you defined::
 
     class FooService
     {
-        private UuidFactory $uuidFactory;
-
-        public function __construct(UuidFactory $uuidFactory)
+        public function __construct(private UuidFactory $uuidFactory)
         {
-            $this->uuidFactory = $uuidFactory;
         }
 
         public function generate(): void
@@ -337,11 +334,8 @@ Like UUIDs, ULIDs have their own factory, ``UlidFactory``, that can be used to g
 
     class FooService
     {
-        private UlidFactory $ulidFactory;
-
-        public function __construct(UlidFactory $ulidFactory)
+        public function __construct(private UlidFactory $ulidFactory)
         {
-            $this->ulidFactory = $ulidFactory;
         }
 
         public function generate(): void
