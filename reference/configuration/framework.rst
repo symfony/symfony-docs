@@ -3642,6 +3642,23 @@ to the ``#[WithHttpStatus]`` attribute on the exception class::
 
     The ``#[WithHttpStatus]`` attribute was introduced in Symfony 6.3.
 
+It is also possible to map a log level on a custom exception class using
+the ``#[WithLogLevel]`` attribute::
+
+    namespace App\Exception;
+
+    use Psr\Log\LogLevel;
+    use Symfony\Component\HttpKernel\Attribute\WithLogLevel;
+
+    #[WithLogLevel(LogLevel::WARNING)]
+    class CustomException extends \Exception
+    {
+    }
+
+.. versionadded:: 6.3
+
+    The ``#[WithLogLevel]`` attribute was introduced in Symfony 6.3.
+
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
