@@ -307,8 +307,8 @@ or directly via PHP attributes:
             <services>
                 <service id="App\CommandBus">
                     <argument type="service_locator">
-                        <argument key="App\FooCommand" type="service" id="sapp.command_handler.foo"/>
-                        <argument key="App\BarCommandr" type="service" id="app.command_handler.bar"/>
+                        <argument key="App\FooCommand" type="service" id="app.command_handler.foo"/>
+                        <argument key="App\BarCommand" type="service" id="app.command_handler.bar"/>
                         <!-- if the element has no key, the ID of the original service is used -->
                         <argument type="service" id="app.command_handler.baz"/>
                     </argument>
