@@ -32,7 +32,7 @@ The most common way to listen to an event is to register an **event listener**::
 
     class ExceptionListener
     {
-        public function onKernelException(ExceptionEvent $event)
+        public function __invoke(ExceptionEvent $event): void
         {
             // You get the exception object from the received event
             $exception = $event->getThrowable();
@@ -60,16 +60,8 @@ The most common way to listen to an event is to register an **event listener**::
         }
     }
 
-.. tip::
-
-    Each event receives a slightly different type of ``$event`` object. For
-    the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`.
-    Check out the :doc:`Symfony events reference </reference/events>` to see
-    what type of object each event provides.
-
 Now that the class is created, you need to register it as a service and
-notify Symfony that it is a "listener" on the ``kernel.exception`` event by
-using a special "tag":
+notify Symfony that it is a event listener by using a special "tag":
 
 .. configuration-block::
 
@@ -78,8 +70,7 @@ using a special "tag":
         # config/services.yaml
         services:
             App\EventListener\ExceptionListener:
-                tags:
-                    - { name: kernel.event_listener, event: kernel.exception }
+                tags: [kernel.event_listener]
 
     .. code-block:: xml
 
@@ -92,7 +83,7 @@ using a special "tag":
 
             <services>
                 <service id="App\EventListener\ExceptionListener">
-                    <tag name="kernel.event_listener" event="kernel.exception"/>
+                    <tag name="kernel.event_listener"/>
                 </service>
             </services>
         </container>
@@ -108,7 +99,7 @@ using a special "tag":
             $services = $containerConfigurator->services();
 
             $services->set(ExceptionListener::class)
-                ->tag('kernel.event_listener', ['event' => 'kernel.exception'])
+                ->tag('kernel.event_listener')
             ;
         };
 
@@ -117,10 +108,7 @@ listener class:
 
 #. If the ``kernel.event_listener`` tag defines the ``method`` attribute, that's
    the name of the method to be called;
-#. If no ``method`` attribute is defined, try to call the method whose name
-   is ``on`` + "PascalCased event name" (e.g. ``onKernelException()`` method for
-   the ``kernel.exception`` event);
-#. If that method is not defined either, try to call the ``__invoke()`` magic
+#. If no ``method`` attribute is defined, try to call the ``__invoke()`` magic
    method (which makes event listeners invokable);
 #. If the ``__invoke()`` method is not defined either, throw an exception.
 
@@ -133,6 +121,27 @@ listener class:
     guarantee that one listener is executed before another. The priorities of the
     internal Symfony listeners usually range from ``-256`` to ``256`` but your
     own listeners can use any positive or negative integer.
+
+.. note::
+
+    There is an optional attribute for the ``kernel.event_listener`` tag called
+    ``event`` which is useful when listener ``$event`` argument is not typed.
+    If you configure it, it will change type of ``$event`` object.
+    For the ``kernel.exception`` event, it is :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`.
+    Check out the :doc:`Symfony events reference </reference/events>` to see
+    what type of object each event provides.
+
+    With this attribute, Symfony follows this logic to decide which method to call
+    inside the event listener class:
+
+    #. If the ``kernel.event_listener`` tag defines the ``method`` attribute, that's
+       the name of the method to be called;
+    #. If no ``method`` attribute is defined, try to call the method whose name
+       is ``on`` + "PascalCased event name" (e.g. ``onKernelException()`` method for
+       the ``kernel.exception`` event);
+    #. If that method is not defined either, try to call the ``__invoke()`` magic
+       method (which makes event listeners invokable);
+    #. If the ``__invoke()`` method is not defined either, throw an exception.
 
 Defining Event Listeners with PHP Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
