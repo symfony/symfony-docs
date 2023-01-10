@@ -117,6 +117,29 @@ If you want to apply tags automatically for your own services, use the
                     ->tag('app.custom_tag');
         };
 
+It is also possible to use the ``#[AutoconfigureTag]`` attribute directly on the
+base class or interface::
+
+    // src/Security/CustomInterface.php
+    namespace App\Security;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
+
+    #[AutoconfigureTag('app.custom_tag')]
+    interface CustomInterface
+    {
+        // ...
+    }
+
+.. tip::
+
+    If you need more capabilities to autoconfigure instances of your base class
+    like their laziness, their bindings or their calls for example, you may rely
+    on the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
+
+.. versionadded:: 5.3
+
+    The ``#[Autoconfigure]`` and ``#[AutoconfigureTag]`` attributes were introduced in Symfony 5.3.
 
 For more advanced needs, you can define the automatic tags using the
 :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration` method.
