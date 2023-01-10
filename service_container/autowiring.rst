@@ -547,11 +547,10 @@ attribute like this::
 
     class MastodonClient
     {
-        private $transformer;
-
-        public function __construct(#[Target('app.uppercase_transformer')] TransformerInterface $transformer)
-        {
-            $this->transformer = $transformer;
+        public function __construct(
+            #[Target('app.uppercase_transformer')]
+            private TransformerInterface $transformer
+        ){
         }
     }
 
