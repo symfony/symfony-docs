@@ -18,22 +18,21 @@ directory, which has this default structure:
     │  ├─ bundles.php
     │  ├─ routes.yaml
     │  └─ services.yaml
-    ├─ ...
 
-The ``routes.yaml`` file defines the :doc:`routing configuration </routing>`;
-the ``services.yaml`` file configures the services of the
-:doc:`service container </service_container>`; the ``bundles.php`` file enables/
-disables packages in your application.
+* The ``routes.yaml`` file defines the :doc:`routing configuration </routing>`;
+* The ``services.yaml`` file configures the services of the
+:doc:`service container </service_container>`;
+* The ``bundles.php`` file enables/disables packages in your application;
+* The ``config/packages/`` directory stores the configuration of every package
+  installed in your application.
 
-You'll be working mostly in the ``config/packages/`` directory. This directory
-stores the configuration of every package installed in your application.
 Packages (also called "bundles" in Symfony and "plugins/modules" in other
 projects) add ready-to-use features to your projects.
 
 When using :ref:`Symfony Flex <symfony-flex>`, which is enabled by default in
 Symfony applications, packages update the ``bundles.php`` file and create new
 files in ``config/packages/`` automatically during their installation. For
-example, this is the default file created by the "API Platform" package:
+example, this is the default file created by the "API Platform" bundle:
 
 .. code-block:: yaml
 
@@ -42,9 +41,9 @@ example, this is the default file created by the "API Platform" package:
         mapping:
             paths: ['%kernel.project_dir%/src/Entity']
 
-Splitting the configuration into lots of small files is intimidating for some
+Splitting the configuration into lots of small files might appear intimidating for some
 Symfony newcomers. However, you'll get used to them quickly and you rarely need
-to change these files after package installation
+to change these files after package installation.
 
 .. tip::
 
