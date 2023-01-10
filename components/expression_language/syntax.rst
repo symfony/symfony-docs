@@ -127,9 +127,16 @@ Working with Functions
 ----------------------
 
 You can also use registered functions in the expression by using the same
-syntax as PHP and JavaScript. The ExpressionLanguage component comes with one
-function by default: ``constant()``, which will return the value of the PHP
-constant::
+syntax as PHP and JavaScript. The ExpressionLanguage component comes with the
+following functions by default:
+
+* ``constant()``
+* ``enum()``
+
+``constant()`` function
+~~~~~~~~~~~~~~~~~~~~~~~
+
+This function will return the value of a PHP constant::
 
     define('DB_USER', 'root');
 
@@ -138,6 +145,43 @@ constant::
     ));
 
 This will print out ``root``.
+
+This also works with class constants::
+
+    namespace App\SomeNamespace;
+
+    class Foo
+    {
+        public const API_ENDPOINT = '/api';
+    }
+
+    var_dump($expressionLanguage->evaluate(
+        'constant("App\\\SomeNamespace\\\Foo::API_ENDPOINT")'
+    ));
+
+This will print out ``/api``.
+
+``enum()`` function
+~~~~~~~~~~~~~~~~~~~
+
+This function will return the case of an enumeration::
+
+    namespace App\SomeNamespace;
+
+    enum Foo
+    {
+        case Bar;
+    }
+
+    var_dump(App\Enum\Foo::Bar === $expressionLanguage->evaluate(
+        'enum("App\\\SomeNamespace\\\Foo::Bar")'
+    ));
+
+This will print out ``true``.
+
+.. versionadded:: 6.3
+
+    The ``enum()`` function was introduced in Symfony 6.3.
 
 .. tip::
 
