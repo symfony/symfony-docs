@@ -554,10 +554,6 @@ attribute like this::
         }
     }
 
-.. versionadded:: 5.3
-
-    The ``#[Target]`` attribute was introduced in Symfony 5.3.
-
 Fixing Non-Autowireable Arguments
 ---------------------------------
 
