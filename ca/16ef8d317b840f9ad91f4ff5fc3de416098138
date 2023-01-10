@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by ro0NL at 2022-12-20T10:17:44Z
+
+a combination of withMockedClasses + withMockedEnums should be explained IMHO (https://github.com/symfony/symfony/pull/48516#issuecomment-1353261478)
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2022-12-20T12:09:59Z
+
+@ro0NL the doc was actually written before adding `withMockedEnums`. I think it worth updating this, good idea! I'll have a look
+
+---------------------------------------------------------------------------
+
+by ro0NL at 2022-12-20T12:11:59Z
+
+while at it, we should probably mention mocking a class (symbol) means all *_exists() functions return true
+
+except enums, hence mockWithEnum
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2022-12-20T16:50:39Z
+
+Updated, @javiereguiluz please tell me if I need to rephrase anything! :slightly_smiling_face:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-01-10T08:31:00Z
+
+@alexandre-daubois can you please check if this PR is up-to-date with the latest work in the code PR? Please ping me afterwards, so I can merge it, thanks
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-01-10T12:32:26Z
+
+@OskarStark I updated the documentation! :slightly_smiling_face:
