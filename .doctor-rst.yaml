@@ -7,6 +7,7 @@ rules:
     composer_dev_option_not_at_the_end: ~
     correct_code_block_directive_based_on_the_content: ~
     deprecated_directive_should_have_version: ~
+    ensure_exactly_one_space_before_directive_type: ~
     ensure_exactly_one_space_between_link_definition_and_link: ~
     ensure_link_definition_contains_valid_url: ~
     ensure_order_of_code_blocks_in_configuration_block: ~
