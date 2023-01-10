@@ -898,8 +898,8 @@ array element. For example, to retrieve the ``handler_two`` handler::
                 ;
             };
 
-The #[AsTaggedItem] attribute
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``#[AsTaggedItem]`` attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is possible to define both the priority and the index of a tagged
 item thanks to the ``#[AsTaggedItem]`` attribute. This attribute must
