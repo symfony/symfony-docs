@@ -137,10 +137,6 @@ base class or interface::
     like their laziness, their bindings or their calls for example, you may rely
     on the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
 
-.. versionadded:: 5.3
-
-    The ``#[Autoconfigure]`` and ``#[AutoconfigureTag]`` attributes were introduced in Symfony 5.3.
-
 For more advanced needs, you can define the automatic tags using the
 :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerForAutoconfiguration` method.
 
