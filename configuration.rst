@@ -86,6 +86,23 @@ readable. These are the main advantages and disadvantages of each format:
 
         The automatic loading of PHP configuration files was introduced in Symfony 6.1.
 
+<<<<<<< HEAD
+=======
+There isn't any practical difference between formats. In fact, Symfony
+transforms and caches all of them into PHP before running the application, so
+there's not even any performance difference between them.
+
+YAML is used by default when installing packages because it's concise and very
+readable. These are the main advantages and disadvantages of each format:
+
+* **YAML**: simple, clean and readable, but not all IDEs support autocompletion
+  and validation for it. :ref:`Learn the YAML syntax <yaml-format>`;
+* **XML**: autocompleted/validated by most IDEs and is parsed natively by PHP,
+  but sometimes it generates configuration considered too verbose. `Learn the XML syntax`_;
+* **PHP**: very powerful and it allows you to create dynamic configuration with
+  arrays or a :ref:`ConfigBuilder <config-config-builder>`.
+
+>>>>>>> 5.4
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
