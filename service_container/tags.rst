@@ -996,7 +996,3 @@ be used directly on the class of the service you want to configure::
     {
         // ...
     }
-
-.. versionadded:: 5.3
-
-    The ``#[AsTaggedItem]`` attribute was introduced in Symfony 5.3.
