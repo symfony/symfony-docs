@@ -231,102 +231,102 @@ Changing Classes
 This table tells you which changes you are allowed to do when working on
 Symfony's classes:
 
-==================================================  ==============  ===============
-Type of Change                                      Change Allowed  Notes
-==================================================  ==============  ===============
-Remove entirely                                     No
-Make final                                          No              :ref:`[6] <note-6>`
-Make abstract                                       No
-Change name or namespace                            No
-Change parent class                                 Yes             :ref:`[4] <note-4>`
-Add interface                                       Yes
-Remove interface                                    No
+========================================================================  ==============  ===============
+Type of Change                                                            Change Allowed  Notes
+========================================================================  ==============  ===============
+Remove entirely                                                           No
+Make final                                                                No              :ref:`[6] <note-6>`
+Make abstract                                                             No
+Change name or namespace                                                  No
+Change parent class                                                       Yes             :ref:`[4] <note-4>`
+Add interface                                                             Yes
+Remove interface                                                          No
 **Public Properties**
-Add public property                                 Yes
-Remove public property                              No
-Reduce visibility                                   No
-Move to parent class                                Yes
+Add public property                                                       Yes
+Remove public property                                                    No
+Reduce visibility                                                         No
+Move to parent class                                                      Yes
 **Protected Properties**
-Add protected property                              Yes
-Remove protected property                           No              :ref:`[7] <note-7>`
-Reduce visibility                                   No              :ref:`[7] <note-7>`
-Make public                                         No              :ref:`[7] <note-7>`
-Move to parent class                                Yes
+Add protected property                                                    Yes
+Remove protected property                                                 No              :ref:`[7] <note-7>`
+Reduce visibility                                                         No              :ref:`[7] <note-7>`
+Make public                                                               No              :ref:`[7] <note-7>`
+Move to parent class                                                      Yes
 **Private Properties**
-Add private property                                Yes
-Make public or protected                            Yes
-Remove private property                             Yes
+Add private property                                                      Yes
+Make public or protected                                                  Yes
+Remove private property                                                   Yes
 **Constructors**
-Add constructor without mandatory arguments         Yes             :ref:`[1] <note-1>`
-Remove constructor                                  No
-Reduce visibility of a public constructor           No
-Reduce visibility of a protected constructor        No              :ref:`[7] <note-7>`
-Move to parent class                                Yes
+Add constructor without mandatory arguments                               Yes             :ref:`[1] <note-1>`
+Remove constructor                                                        No
+Reduce visibility of a public constructor                                 No
+Reduce visibility of a protected constructor                              No              :ref:`[7] <note-7>`
+Move to parent class                                                      Yes
 **Destructors**
-Add destructor                                      Yes
-Remove destructor                                   No
-Move to parent class                                Yes
+Add destructor                                                            Yes
+Remove destructor                                                         No
+Move to parent class                                                      Yes
 **Public Methods**
-Add public method                                   Yes
-Remove public method                                No
-Change name                                         No
-Reduce visibility                                   No
-Make final                                          No              :ref:`[6] <note-6>`
-Move to parent class                                Yes
-Add argument without a default value                No
-Add argument with a default value                   No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Remove argument                                     No              :ref:`[3] <note-3>`
-Add default value to an argument                    No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Remove default value of an argument                 No
-Add type hint to an argument                        No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Remove type hint of an argument                     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Change argument type                                No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Add return type                                     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Remove return type                                  No              :ref:`[7] <note-7>` :ref:`[8] <note-8>` :ref:`[9] <note-9>`
-Change return type                                  No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Add public method                                                         Yes
+Remove public method                                                      No
+Change name                                                               No
+Reduce visibility                                                         No
+Make final                                                                No              :ref:`[6] <note-6>`
+Move to parent class                                                      Yes
+:ref:`Add argument without a default value <add-argument-public-method>`  No
+:ref:`Add argument with a default value <add-argument-public-method>`     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove argument                                                           No              :ref:`[3] <note-3>`
+Add default value to an argument                                          No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove default value of an argument                                       No
+Add type hint to an argument                                              No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove type hint of an argument                                           No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Change argument type                                                      No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Add return type                                                           No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove return type                                                        No              :ref:`[7] <note-7>` :ref:`[8] <note-8>` :ref:`[9] <note-9>`
+Change return type                                                        No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 **Protected Methods**
-Add protected method                                Yes
-Remove protected method                             No              :ref:`[7] <note-7>`
-Change name                                         No              :ref:`[7] <note-7>`
-Reduce visibility                                   No              :ref:`[7] <note-7>`
-Make final                                          No              :ref:`[6] <note-6>`
-Make public                                         No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Move to parent class                                Yes
-Add argument without a default value                No              :ref:`[7] <note-7>`
-Add argument with a default value                   No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Remove argument                                     No              :ref:`[3] <note-3>`
-Add default value to an argument                    No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Remove default value of an argument                 No              :ref:`[7] <note-7>`
-Add type hint to an argument                        No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Remove type hint of an argument                     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Change argument type                                No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Add return type                                     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Remove return type                                  No              :ref:`[7] <note-7>` :ref:`[8] <note-8>` :ref:`[9] <note-9>`
-Change return type                                  No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Add protected method                                                      Yes
+Remove protected method                                                   No              :ref:`[7] <note-7>`
+Change name                                                               No              :ref:`[7] <note-7>`
+Reduce visibility                                                         No              :ref:`[7] <note-7>`
+Make final                                                                No              :ref:`[6] <note-6>`
+Make public                                                               No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Move to parent class                                                      Yes
+:ref:`Add argument without a default value <add-argument-public-method>`  No
+:ref:`Add argument with a default value <add-argument-public-method>`     No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove argument                                                           No              :ref:`[3] <note-3>`
+Add default value to an argument                                          No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove default value of an argument                                       No              :ref:`[7] <note-7>`
+Add type hint to an argument                                              No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove type hint of an argument                                           No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Change argument type                                                      No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Add return type                                                           No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Remove return type                                                        No              :ref:`[7] <note-7>` :ref:`[8] <note-8>` :ref:`[9] <note-9>`
+Change return type                                                        No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
 **Private Methods**
-Add private method                                  Yes
-Remove private method                               Yes
-Change name                                         Yes
-Make public or protected                            Yes
-Add argument without a default value                Yes
-Add argument with a default value                   Yes
-Remove argument                                     Yes
-Add default value to an argument                    Yes
-Remove default value of an argument                 Yes
-Add type hint to an argument                        Yes
-Remove type hint of an argument                     Yes
-Change argument type                                Yes
-Add return type                                     Yes
-Remove return type                                  Yes
-Change return type                                  Yes
+Add private method                                                        Yes
+Remove private method                                                     Yes
+Change name                                                               Yes
+Make public or protected                                                  Yes
+Add argument without a default value                                      Yes
+Add argument with a default value                                         Yes
+Remove argument                                                           Yes
+Add default value to an argument                                          Yes
+Remove default value of an argument                                       Yes
+Add type hint to an argument                                              Yes
+Remove type hint of an argument                                           Yes
+Change argument type                                                      Yes
+Add return type                                                           Yes
+Remove return type                                                        Yes
+Change return type                                                        Yes
 **Static Methods and Properties**
-Turn non static into static                         No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
-Turn static into non static                         No
+Turn non static into static                                               No              :ref:`[7] <note-7>` :ref:`[8] <note-8>`
+Turn static into non static                                               No
 **Constants**
-Add constant                                        Yes
-Remove constant                                     No
-Change value of a constant                          Yes             :ref:`[1] <note-1>` :ref:`[5] <note-5>`
-==================================================  ==============  ===============
+Add constant                                                              Yes
+Remove constant                                                           No
+Change value of a constant                                                Yes             :ref:`[1] <note-1>` :ref:`[5] <note-5>`
+========================================================================  ==============  ===============
 
 Changing Traits
 ~~~~~~~~~~~~~~~
@@ -334,84 +334,84 @@ Changing Traits
 This table tells you which changes you are allowed to do when working on
 Symfony's traits:
 
-==================================================  ==============  ===============
-Type of Change                                      Change Allowed  Notes
-==================================================  ==============  ===============
-Remove entirely                                     No
-Change name or namespace                            No
-Use another trait                                   Yes
+===============================================================================  ==============  ===============
+Type of Change                                                                   Change Allowed  Notes
+===============================================================================  ==============  ===============
+Remove entirely                                                                  No
+Change name or namespace                                                         No
+Use another trait                                                                Yes
 **Public Properties**
-Add public property                                 Yes
-Remove public property                              No
-Reduce visibility                                   No
-Move to a used trait                                Yes
+Add public property                                                              Yes
+Remove public property                                                           No
+Reduce visibility                                                                No
+Move to a used trait                                                             Yes
 **Protected Properties**
-Add protected property                              Yes
-Remove protected property                           No
-Reduce visibility                                   No
-Make public                                         No
-Move to a used trait                                Yes
+Add protected property                                                           Yes
+Remove protected property                                                        No
+Reduce visibility                                                                No
+Make public                                                                      No
+Move to a used trait                                                             Yes
 **Private Properties**
-Add private property                                Yes
-Remove private property                             No
-Make public or protected                            Yes
-Move to a used trait                                Yes
+Add private property                                                             Yes
+Remove private property                                                          No
+Make public or protected                                                         Yes
+Move to a used trait                                                             Yes
 **Constructors and destructors**
-Have constructor or destructor                      No
+Have constructor or destructor                                                   No
 **Public Methods**
-Add public method                                   Yes
-Remove public method                                No
-Change name                                         No
-Reduce visibility                                   No
-Make final                                          No              :ref:`[6] <note-6>`
-Move to used trait                                  Yes
-Add argument without a default value                No
-Add argument with a default value                   No
-Remove argument                                     No
-Add default value to an argument                    No
-Remove default value of an argument                 No
-Add type hint to an argument                        No
-Remove type hint of an argument                     No
-Change argument type                                No
-Change return type                                  No
+Add public method                                                                Yes
+Remove public method                                                             No
+Change name                                                                      No
+Reduce visibility                                                                No
+Make final                                                                       No              :ref:`[6] <note-6>`
+Move to used trait                                                               Yes
+:ref:`Add argument without a default value <add-argument-public-method>`         No
+:ref:`Add argument with a default value <add-argument-public-method>`            No
+Remove argument                                                                  No
+Add default value to an argument                                                 No
+Remove default value of an argument                                              No
+Add type hint to an argument                                                     No
+Remove type hint of an argument                                                  No
+Change argument type                                                             No
+Change return type                                                               No
 **Protected Methods**
-Add protected method                                Yes
-Remove protected method                             No
-Change name                                         No
-Reduce visibility                                   No
-Make final                                          No              :ref:`[6] <note-6>`
-Make public                                         No              :ref:`[8] <note-8>`
-Move to used trait                                  Yes
-Add argument without a default value                No
-Add argument with a default value                   No
-Remove argument                                     No
-Add default value to an argument                    No
-Remove default value of an argument                 No
-Add type hint to an argument                        No
-Remove type hint of an argument                     No
-Change argument type                                No
-Change return type                                  No
+Add protected method                                                             Yes
+Remove protected method                                                          No
+Change name                                                                      No
+Reduce visibility                                                                No
+Make final                                                                       No              :ref:`[6] <note-6>`
+Make public                                                                      No              :ref:`[8] <note-8>`
+Move to used trait                                                               Yes
+:ref:`Add argument without a default value <add-argument-public-method>`         No
+:ref:`Add argument with a default value <add-argument-public-method>`            No
+Remove argument                                                                  No
+Add default value to an argument                                                 No
+Remove default value of an argument                                              No
+Add type hint to an argument                                                     No
+Remove type hint of an argument                                                  No
+Change argument type                                                             No
+Change return type                                                               No
 **Private Methods**
-Add private method                                  Yes
-Remove private method                               No
-Change name                                         No
-Make public or protected                            Yes
-Move to used trait                                  Yes
-Add argument without a default value                No
-Add argument with a default value                   No
-Remove argument                                     No
-Add default value to an argument                    No
-Remove default value of an argument                 No
-Add type hint to an argument                        No
-Remove type hint of an argument                     No
-Change argument type                                No
-Add return type                                     No
-Remove return type                                  No
-Change return type                                  No
-**Static Methods and Properties**
-Turn non static into static                         No
-Turn static into non static                         No
-==================================================  ==============  ===============
+Add private method                                                               Yes
+Remove private method                                                            No
+Change name                                                                      No
+Make public or protected                                                         Yes
+Move to used trait                                                               Yes
+Add argument without a default value                                             No
+Add argument with a default value                                                No
+Remove argument                                                                  No
+Add default value to an argument                                                 No
+Remove default value of an argument                                              No
+Add type hint to an argument                                                     No
+Remove type hint of an argument                                                  No
+Change argument type                                                             No
+Add return type                                                                  No
+Remove return type                                                               No
+Change return type                                                               No
+**Static Methods and Properties**          
+Turn non static into static                                                      No
+Turn static into non static                                                      No
+===============================================================================  ==============  ===============
 
 Notes
 ~~~~~
@@ -472,5 +472,70 @@ a return type is only possible with a child type.
 **[10]** Parameter names are only covered by the compatibility promise for
 constructors of Attribute classes. Using PHP named arguments might break your
 code when upgrading to newer Symfony versions.
+
+Making Code Changes in a Backward Compatible Way
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As you read above, many changes are not allowed because they would represent a
+backward compability break. However, we want to be able to improve the code and
+its features over time and that can be done thanks to some strategies that
+allow to still do some unallowed changes in several steps that ensure backward
+compability and a smooth upgrade path. Some of them are described in the next
+sections.
+
+.. _add-argument-public-method:
+
+Adding an Argument to a Public Method
+.....................................
+
+Adding a new argument to a public method is possible only if this is the last
+argument of the method.
+
+If that's the case, here is how to do it properly in a minor version:
+
+#. Add the argument as a comment in the signature::
+
+    // the new argument can be optional
+    public function say(string $text, /* bool $stripWithespace = true */): void
+    {
+    }
+
+    // or required
+    public function say(string $text, /* bool $stripWithespace */): void
+    {
+    }
+
+#. Document the new argument in a PHPDoc::
+
+    /**
+     * @param bool $stripWithespace
+     */
+
+#. Use ``func_num_args`` and ``func_get_arg`` to retrieve the argument in the
+   method::
+
+        $stripWithespace = 2 <= \func_num_args() ? func_get_arg(1) : false;
+
+   Note that the default value is ``false`` to keep the current behavior.
+
+#. If the argument has a default value that will change the current behavior,
+   warn the user::
+
+    trigger_deprecation('symfony/COMPONENT', 'X.Y', 'Not passing the "bool $stripWithespace" argument explicitly is deprecated, its default value will change to X in Z.0.');
+
+#. If the argument has no default value, warn the user that is going to be
+   required in the next major version::
+
+    if (\func_num_args() < 2) {
+        trigger_deprecation('symfony/COMPONENT', 'X.Y', 'The "%s()" method will have a new "bool $stripWithespace" argument in version Z.0, not defining it is deprecated.', __METHOD__);
+
+        $stripWithespace = false;
+    } else {
+        $stripWithespace = func_get_arg(1);
+    }
+
+#. In the next major version (``X.0``), uncomment the argument, remove the
+   PHPDoc if there is no need for a description, and remove the
+   ``func_get_arg`` code and the warning if any.
 
 .. _`Semantic Versioning`: https://semver.org/
