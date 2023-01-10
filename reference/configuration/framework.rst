@@ -1031,6 +1031,18 @@ enabled
 Whether to enable the support for retry failed HTTP request or not.
 This setting is automatically set to true when one of the child settings is configured.
 
+extra
+.....
+
+**type**: ``array``
+
+Arbitrary additional data to pass to the HTTP client for further use.
+This can be particularly useful when :ref:`decorating an existing client <extensibility>`.
+
+.. versionadded:: 6.3
+
+    The ``extra`` option has been introduced in Symfony 6.3.
+
 .. _http-headers:
 
 headers
