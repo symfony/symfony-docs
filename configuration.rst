@@ -20,12 +20,12 @@ directory, which has this default structure:
     │  └─ services.yaml
 
 * The ``routes.yaml`` file defines the :doc:`routing configuration </routing>`;
-* the ``services.yaml`` file configures the services of the
+* The ``services.yaml`` file configures the services of the
 :doc:`service container </service_container>`;
-* the ``bundles.php`` file enables/disables packages in your application.
+* The ``bundles.php`` file enables/disables packages in your application;
+* The ``config/packages/`` directory stores the configuration of every package
+  installed in your application.
 
-The ``config/packages/`` directory
-stores the configuration of every package installed in your application.
 Packages (also called "bundles" in Symfony and "plugins/modules" in other
 projects) add ready-to-use features to your projects.
 
