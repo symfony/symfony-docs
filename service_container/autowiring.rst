@@ -529,6 +529,32 @@ If the argument is named ``$shoutyTransformer``,
 But, you can also manually wire any *other* service by specifying the argument
 under the arguments key.
 
+Another possibility is to use the ``#[Target]`` attribute. By using this attribute
+on the argument you want to autowire, you can define exactly which service to inject
+by using its alias. Thanks to this, you're able to have multiple services implementing
+the same interface and keep the argument name decorrelated of any implementation name
+(like shown in the example above).
+
+Let's say you defined the ``app.uppercase_transformer`` alias for the
+``App\Util\UppercaseTransformer`` service. You would be able to use the ``#[Target]``
+attribute like this::
+
+    // src/Service/MastodonClient.php
+    namespace App\Service;
+
+    use App\Util\TransformerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+
+    class MastodonClient
+    {
+        private $transformer;
+
+        public function __construct(#[Target('app.uppercase_transformer')] TransformerInterface $transformer)
+        {
+            $this->transformer = $transformer;
+        }
+    }
+
 .. _autowire-attribute:
 
 Fixing Non-Autowireable Arguments
