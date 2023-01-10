@@ -738,6 +738,10 @@ reason, this component also provides mocks for these PHP functions:
 * :phpfunction:`trait_exists`
 * :phpfunction:`enum_exists`
 
+.. versionadded:: 6.3
+
+    The ``enum_exists`` function was introduced in Symfony 6.3.
+
 Use Case
 ~~~~~~~~
 
@@ -808,6 +812,10 @@ To register an enumeration and mock :phpfunction:`enum_exists`,
 PHP 8.1 and later, calling ``class_exists`` on a enum will return ``true``.
 That's why calling ``ClassExistsMock::withMockedEnums()`` will also register the enum
 as a mocked class.
+
+.. versionadded:: 6.3
+
+    The ``enum_exists`` function was introduced in Symfony 6.3.
 
 Troubleshooting
 ---------------
