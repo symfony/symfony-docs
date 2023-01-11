@@ -1101,7 +1101,7 @@ Option                          Description                                     
 ==============================  =================================================  ==========================
 ``xml_format_output``           If set to true, formats the generated XML with     ``false``
                                 line breaks and indentation
-``xml_version``                 Sets the XML version attribute                     ``1.1``
+``xml_version``                 Sets the XML version attribute                     ``1.0``
 ``xml_encoding``                Sets the XML encoding attribute                    ``utf-8``
 ``xml_standalone``              Adds standalone attribute in the generated XML     ``true``
 ``xml_type_cast_attributes``    This provides the ability to forget the attribute  ``true``
