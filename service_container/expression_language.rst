@@ -71,7 +71,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
                 ->args([expr("service('App\\\\Mail\\\\MailerConfiguration').getMailerMethod()")]);
         };
 
-To learn more about the expression language syntax, see :doc:`/components/expression_language/syntax`.
+To learn more about the expression language syntax, see :ref:`expression-language-syntax`.
 
 In this context, you have access to 2 functions:
 
