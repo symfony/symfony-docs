@@ -70,7 +70,6 @@ whitelist:
         - '/FOSUserBundle(.*)\.yml/'
         - '/``.yml``/'
         - '/(.*)\.orm\.yml/' # currently DoctrineBundle only supports .yml
-        - '/rst-class/'
         - /docker-compose\.yml/
     lines:
         - 'in config files, so the old ``app/config/config_dev.yml`` goes to'
@@ -78,11 +77,9 @@ whitelist:
         - 'code in production without a proxy, it becomes trivially easy to abuse your'
         - '.. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle'
         - 'The bin/console Command'
-        - '# username is your full Gmail or Google Apps email address'
         - '.. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection'
         - '.. versionadded:: 1.9.0' # Encore
         - '.. versionadded:: 0.28.4' # Encore
-        - '.. versionadded:: 2.4.0' # SwiftMailer
         - '.. versionadded:: 1.11' # Messenger (Middleware / DoctrineBundle)
         - '.. versionadded:: 1.18' # Flex in setup/upgrade_minor.rst
         - '.. versionadded:: 1.0.0' # Encore
@@ -92,8 +89,6 @@ whitelist:
         - '123,' # assertion for var_dumper - components/var_dumper.rst
         - '"foo",' # assertion for var_dumper - components/var_dumper.rst
         - '$var .= "Because of this `\xE9` octet (\\xE9),\n";'
-        - "`Deploying Symfony 4 Apps on Heroku`_."
-        - ".. _`Deploying Symfony 4 Apps on Heroku`: https://devcenter.heroku.com/articles/deploying-symfony4"
         - "//                  224, 165, 141, 224, 164, 164, 224, 165, 135])"
         - '.. versionadded:: 0.2' # MercureBundle
         - 'provides a ``loginUser()`` method to simulate logging in in your functional'
