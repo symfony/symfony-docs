@@ -83,8 +83,6 @@ whitelist:
         - '.. versionadded:: 1.9.0' # Encore
         - '.. versionadded:: 0.28.4' # Encore
         - '.. versionadded:: 2.4.0' # SwiftMailer
-        - '.. versionadded:: 1.30' # Twig
-        - '.. versionadded:: 1.35' # Twig
         - '.. versionadded:: 1.11' # Messenger (Middleware / DoctrineBundle)
         - '.. versionadded:: 1.18' # Flex in setup/upgrade_minor.rst
         - '.. versionadded:: 1.0.0' # Encore
