@@ -7,9 +7,9 @@ release and maintain its different versions.
 Symfony releases follow the `semantic versioning`_ strategy and they are
 published through a *time-based model*:
 
-* A new **Symfony patch version** (e.g. 4.4.12, 5.1.9) comes out roughly every
+* A new **Symfony patch version** (e.g. 5.4.12, 6.1.9) comes out roughly every
   month. It only contains bug fixes, so you can safely upgrade your applications;
-* A new **Symfony minor version** (e.g. 4.4, 5.0, 5.1) comes out every *six months*:
+* A new **Symfony minor version** (e.g. 5.4, 6.0, 6.1) comes out every *six months*:
   one in *May* and one in *November*. It contains bug fixes and new features,
   can contain new deprecations but it doesn't include any breaking change,
   so you can safely upgrade your applications;
@@ -54,7 +54,7 @@ Maintenance
 
 Starting from the Symfony 3.x branch, the number of minor versions is limited to
 five per branch (X.0, X.1, X.2, X.3 and X.4). The last minor version of a branch
-(e.g. 4.4, 5.4) is considered a **long-term support version** and the other
+(e.g. 5.4, 6.4) is considered a **long-term support version** and the other
 ones are considered **standard versions**:
 
 =======================  =====================  ================================
@@ -88,17 +88,17 @@ learn more about how deprecations are handled in Symfony.
 .. _major-version-development:
 
 This deprecation policy also requires a custom development process for major
-versions (5.0, 6.0, etc.) In those cases, Symfony develops at the same time
-two versions: the new major one (e.g. 5.0) and the latest version of the
-previous branch (e.g. 4.4).
+versions (6.0, 7.0, etc.) In those cases, Symfony develops at the same time
+two versions: the new major one (e.g. 6.0) and the latest version of the
+previous branch (e.g. 5.4).
 
 Both versions have the same new features, but they differ in the deprecated
-features. The oldest version (4.4 in this example) contains all the deprecated
-features whereas the new version (5.0 in this example) removes all of them.
+features. The oldest version (5.4 in this example) contains all the deprecated
+features whereas the new version (6.0 in this example) removes all of them.
 
-This allows you to upgrade your projects to the latest minor version (e.g. 4.4),
+This allows you to upgrade your projects to the latest minor version (e.g. 5.4),
 see all the deprecation messages and fix them. Once you have fixed all those
-deprecations, you can upgrade to the new major version (e.g. 5.0) without
+deprecations, you can upgrade to the new major version (e.g. 6.0) without
 effort, because it contains the same features (the only difference are the
 deprecated features, which your project no longer uses).
 

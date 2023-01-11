@@ -32,7 +32,7 @@ tests, such as Doctrine, Twig and Monolog. To do so,
 
     .. code-block:: terminal
 
-        $ COMPOSER_ROOT_VERSION=4.4.x-dev composer update
+        $ COMPOSER_ROOT_VERSION=5.4.x-dev composer update
 
 .. _running:
 
