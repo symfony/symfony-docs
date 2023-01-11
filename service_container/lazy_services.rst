@@ -33,8 +33,8 @@ until you interact with the proxy in some way.
 
 .. versionadded:: 6.2
 
-    Starting from Symfony 6.2, you don't have to install any package (e.g.
-    ``symfony/proxy-manager-bridge``) in order to use the lazy service instantiation.
+    Starting from Symfony 6.2, service laziness is supported out of the box
+    without having to install any additional package.
 
 Configuration
 -------------
