@@ -3579,12 +3579,11 @@ exceptions that match the given exception class:
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <framework:exceptions>
-                    <exception id="Symfony\Component\HttpKernel\Exception\BadRequestHttpException">
-                        <framework:log_level>debug</framework:log_level>
-                        <framework:status_code>422</framework:status_code>
-                    </exception>
-                </framework:exceptions>
+                <framework:exception
+                    class="Symfony\Component\HttpKernel\Exception\BadRequestHttpException"
+                    log-level="debug"
+                    status-code="422"
+                />
                 <!-- ... -->
             </framework:config>
         </container>
@@ -3596,13 +3595,9 @@ exceptions that match the given exception class:
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework) {
-            $framework
-                ->exceptions(BadRequestHttpException::class)
-                ->log_level('debug');
-
-            $framework
-                ->exceptions(BadRequestHttpException::class)
-                ->status_code(422);
+            $framework->exception(BadRequestHttpException::class)
+                ->logLevel('debug')
+                ->statusCode(422)
             ;
         };
 
