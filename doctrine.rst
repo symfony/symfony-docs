@@ -638,7 +638,7 @@ by the ``id`` column. If it's not found, a 404 page is generated.
 
 This behavior is enabled by default on all your controllers. You can
 disable it by setting the ``doctrine.orm.controller_resolver.auto_mapping``
-config option to ``false``.
+config option to ``false`` and also disable ``the sensio_framework_extra.request.auto_convert``
 
 When disabled, you can enable it individually on the desired controllers by
 using the ``MapEntity`` attribute::
