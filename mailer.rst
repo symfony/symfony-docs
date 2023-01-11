@@ -102,6 +102,7 @@ via a third-party provider:
 Service             Install with
 ==================  ==============================================
 Amazon SES          ``composer require symfony/amazon-mailer``
+Google              ``composer require symfony/google-mailer``
 MailChimp           ``composer require symfony/mailchimp-mailer``
 Mailgun             ``composer require symfony/mailgun-mailer``
 Mailjet             ``composer require symfony/mailjet-mailer``
