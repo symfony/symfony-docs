@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-12-16T18:57:55Z
+
+What about rewording the versionadded in 6.2 branch to:
+
+"Since 6.2 laziness is supported out of the box without using any additional package."
+
+Lets remove the explicit mention of the package name, so we can keep it this way until 7.0, plus we have a reference also in 6.2+ for people who remember you need to do sth in the past to have laziness.
