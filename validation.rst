@@ -212,7 +212,13 @@ Inside the template, you can output the list of errors exactly as needed:
 .. note::
 
     Each validation error (called a "constraint violation"), is represented by
-    a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object.
+    a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object. This
+    object allows you, among other things, to get the constraint that caused this
+    violation thanks to the ``ConstraintViolation::getConstraint()`` method.
+
+.. versionadded:: 6.3
+
+    The ``ConstraintViolation::getConstraint()`` method was introduced in Symfony 6.3.
 
 .. index::
    single: Validation; Callables
