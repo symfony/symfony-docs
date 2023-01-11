@@ -707,9 +707,19 @@ iterator, add the ``exclude`` option:
             ;
         };
 
+.. note::
+
+    In the case the referencing service is itself tagged with the tag being used in the tagged
+    iterator, it is automatically excluded from the injected iterable.
+
 .. versionadded:: 6.1
 
     The ``exclude`` option was introduced in Symfony 6.1.
+
+.. versionadded:: 6.3
+
+    The automatic exclusion of the referencing service in the injected iterable was
+    introduced in  Symfony 6.3.
 
 .. seealso::
 
