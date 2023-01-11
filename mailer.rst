@@ -565,7 +565,7 @@ and headers.
 
     .. code-block:: yaml
 
-        # config/packages/dev/mailer.yaml
+        # config/packages/mailer.yaml
         framework:
             mailer:
                 envelope:
@@ -1442,10 +1442,11 @@ the mailer configuration file (e.g. in the ``dev`` or ``test`` environments):
 
     .. code-block:: yaml
 
-        # config/packages/dev/mailer.yaml
-        framework:
-            mailer:
-                dsn: 'null://null'
+        # config/packages/mailer.yaml
+        when@dev:
+            framework:
+                mailer:
+                    dsn: 'null://null'
 
     .. code-block:: xml
 
@@ -1490,11 +1491,12 @@ a specific address, instead of the *real* address:
 
     .. code-block:: yaml
 
-        # config/packages/dev/mailer.yaml
-        framework:
-            mailer:
-                envelope:
-                    recipients: ['youremail@example.com']
+        # config/packages/mailer.yaml
+        when@dev:
+            framework:
+                mailer:
+                    envelope:
+                        recipients: ['youremail@example.com']
 
     .. code-block:: xml
 
