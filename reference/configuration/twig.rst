@@ -67,10 +67,10 @@ autoescape_service
 
 **type**: ``string`` **default**: ``null``
 
-As of Twig 1.17, the escaping strategy applied by default to the template is
-determined during compilation time based on the filename of the template. This
-means for example that the contents of a ``*.html.twig`` template are escaped
-for HTML and the contents of ``*.js.twig`` are escaped for JavaScript.
+The escaping strategy applied by default to the template is determined during
+compilation time based on the filename of the template. This means for example
+that the contents of a ``*.html.twig`` template are escaped for HTML and the
+contents of ``*.js.twig`` are escaped for JavaScript.
 
 This option allows to define the Symfony service which will be used to determine
 the default escaping applied to the template.
