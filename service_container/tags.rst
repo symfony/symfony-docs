@@ -719,7 +719,7 @@ iterator, add the ``exclude`` option:
 .. versionadded:: 6.3
 
     The automatic exclusion of the referencing service in the injected iterable was
-    introduced in  Symfony 6.3.
+    introduced in Symfony 6.3.
 
 .. seealso::
 
