@@ -36,12 +36,10 @@ user object's ``isSuperAdmin()`` method returns ``true``, then access will
 be granted (note: your User object may not have an ``isSuperAdmin()`` method,
 that method is invented for this example).
 
-This uses an expression and you can learn more about the expression language
-syntax, see :ref:`expression-language-syntax`.
-
 .. _security-expression-variables:
 
-Inside the expression, you have access to a number of variables:
+The security expression must use any valid :ref:`expression language syntax <expression-language-syntax>`
+and can use any of these variables created by Symfony:
 
 ``user``
     The user object (or the string ``anon`` if you're not authenticated).
