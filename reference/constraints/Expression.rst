@@ -141,7 +141,7 @@ One way to accomplish this is with the Expression constraint:
 The :ref:`expression <reference-constraint-expression-option>` option is the
 expression that must return true in order for validation to pass. To learn
 more about the expression language syntax, see
-:doc:`/components/expression_language/syntax`.
+:ref:`expression-language-syntax`.
 
 .. sidebar:: Mapping the Error to a Specific Field
 
@@ -265,7 +265,7 @@ The expression that will be evaluated. If the expression evaluates to a false
 value (using ``==``, not ``===``), validation will fail.
 
 To learn more about the expression language syntax, see
-:doc:`/components/expression_language/syntax`.
+:ref:`expression-language-syntax`.
 
 Inside of the expression, you have access to up to 2 variables:
 

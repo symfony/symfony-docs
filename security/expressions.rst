@@ -37,7 +37,7 @@ be granted (note: your User object may not have an ``isSuperAdmin()`` method,
 that method is invented for this example).
 
 This uses an expression and you can learn more about the expression language
-syntax, see :doc:`/components/expression_language/syntax`.
+syntax, see :ref:`expression-language-syntax`.
 
 .. _security-expression-variables:
 
