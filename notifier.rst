@@ -776,6 +776,21 @@ typical alert levels, which you can implement immediately using:
             ;
         };
 
+Testing Notifier
+----------------
+
+Symfony provides a :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\NotificationAssertionsTrait`
+which provide useful methods for testing your Notifier implementation.
+You can benefit from this class by using it directly or extending the
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`.
+
+See :ref:`testing documentation <notifier-assertions>` for the list of available assertions.
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\NotificationAssertionsTrait`
+    was introduced in Symfony 6.2.
+
 Disabling Delivery
 ------------------
 
