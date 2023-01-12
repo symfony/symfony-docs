@@ -121,9 +121,8 @@ One way to accomplish this is with the Expression constraint:
         }
 
 The :ref:`expression <reference-constraint-expression-option>` option is the
-expression that must return true in order for validation to pass. To learn
-more about the expression language syntax, see
-:doc:`/components/expression_language/syntax`.
+expression that must return true in order for validation to pass. Learn more
+about the :ref:`expression language syntax <expression-language-syntax>`.
 
 Alternatively, you can set the ``negate`` option to ``false`` in order to
 assert that the expression must return ``true`` for validation to fail.
@@ -229,14 +228,10 @@ Options
 **type**: ``string`` [:ref:`default option <validation-default-option>`]
 
 The expression that will be evaluated. If the expression evaluates to a false
-value (using ``==``, not ``===``), validation will fail.
+value (using ``==``, not ``===``), validation will fail. Learn more about the
+:ref:`expression language syntax <expression-language-syntax>`.
 
-To learn more about the expression language syntax, see
-:doc:`/components/expression_language/syntax`.
-
-Inside of the expression, you have access to up to 2 variables:
-
-Depending on how you use the constraint, you have access to 1 or 2 variables
+Depending on how you use the constraint, you have access to different variables
 in your expression:
 
 * ``this``: The object being validated (e.g. an instance of BlogPost);
