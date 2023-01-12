@@ -540,6 +540,8 @@
 /components/security /security
 /components/var_dumper/advanced /components/var_dumper#advanced-usage
 /components/yaml/yaml_format /components/yaml#yaml-format
+/components/expression_language/syntax /components/expression_language#expression-language-syntax
+/components/expression_language/extending /components/expression_language#expression-language-extending
 /email /mailer
 /frontend/assetic /frontend
 /frontend/assetic/index /frontend
