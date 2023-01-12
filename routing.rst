@@ -325,9 +325,9 @@ arbitrary matching logic:
             ;
         };
 
-The value of the ``condition`` option is any valid
-:doc:`ExpressionLanguage expression </components/expression_language/syntax>`
-and can use any of these variables created by Symfony:
+The value of the ``condition`` option is an expression using any valid
+:ref:`expression language syntax <expression-language-syntax>` and can use any
+of these variables created by Symfony:
 
 ``context``
     An instance of :class:`Symfony\\Component\\Routing\\RequestContext`,
