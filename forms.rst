@@ -968,6 +968,8 @@ example to add an *"I agree with these terms"* checkbox), set the ``mapped``
 option to ``false`` in those fields::
 
     // ...
+    use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     use Symfony\Component\Form\FormBuilderInterface;
 
     class TaskType extends AbstractType
