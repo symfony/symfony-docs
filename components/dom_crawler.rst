@@ -221,16 +221,24 @@ Access the value of the first node of the current selection::
     // avoid the exception passing an argument that text() returns when node does not exist
     $message = $crawler->filterXPath('//body/p')->text('Default text content');
 
-    // by default, text() trims white spaces, including the internal ones
+    // by default, text() trims whitespace characters, including the internal ones
     // (e.g. "  foo\n  bar    baz \n " is returned as "foo bar baz")
     // pass FALSE as the second argument to return the original text unchanged
     $crawler->filterXPath('//body/p')->text('Default text content', false);
 
-    // innerText() is similar to text() but only returns the text that is
-    // the direct descendant of the current node, excluding any child nodes
+    // innerText() is similar to text() but returns only text that is a direct
+    // descendant of the current node, excluding text from child nodes
     $text = $crawler->filterXPath('//body/p')->innerText();
-    // if content is <p>Foo <span>Bar</span></p>
-    // innerText() returns 'Foo' and text() returns 'Foo Bar'
+    // if content is <p>Foo <span>Bar</span></p> or <p><span>Bar</span> Foo</p>
+    // innerText() returns 'Foo' and text() returns 'Foo Bar' respectively 'Bar Foo'
+
+    // if there are multiple text nodes, between other child nodes, like
+    // <p>Foo <span>Bar</span> Baz</p>
+    // innerText() returns only the first text node 'Foo'
+
+    // like text(), innerText() also trims whitespace characters by default,
+    // but you can get the unchanged text by passing FALSE as argument
+    $text = $crawler->filterXPath('//body/p')->innerText(false);
 
 Access the attribute value of the first node of the current selection::
 
