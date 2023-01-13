@@ -1533,10 +1533,11 @@ a specific address, instead of the *real* address:
 Write a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To functionally test that an email was sent, and even assert the email content or headers,
-you can use the built in assertions provided by :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`.
-
-See :ref:`testing documentation <mailer-assertions>` for the list of available assertions.::
+Symfony provides lots of :ref:`built-in mailer assertions <mailer-assertions>`
+to functionally test that an email was sent, its contents or headers, etc.
+They are available in test classes extending
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` or when using
+the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 
     // tests/Controller/MailControllerTest.php
     namespace App\Tests\Controller;
@@ -1545,7 +1546,6 @@ See :ref:`testing documentation <mailer-assertions>` for the list of available a
 
     class MailControllerTest extends WebTestCase
     {
-
         public function testMailIsSentAndContentIsOk()
         {
             $client = static::createClient();

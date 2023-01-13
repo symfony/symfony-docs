@@ -1061,6 +1061,8 @@ Crawler Assertions
     ``assertFormValue()`` and ``assertNoFormValue()`` methods were introduced
     in Symfony 5.2.
 
+.. _mailer-assertions:
+
 Mailer Assertions
 .................
 
