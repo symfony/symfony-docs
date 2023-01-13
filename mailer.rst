@@ -512,7 +512,7 @@ and headers.
 
     .. code-block:: yaml
 
-        # config/packages/dev/mailer.yaml
+        # config/packages/mailer.yaml
         framework:
             mailer:
                 envelope:
@@ -1440,10 +1440,11 @@ the mailer configuration file (e.g. in the ``dev`` or ``test`` environments):
 
     .. code-block:: yaml
 
-        # config/packages/dev/mailer.yaml
-        framework:
-            mailer:
-                dsn: 'null://null'
+        # config/packages/mailer.yaml
+        when@dev:
+            framework:
+                mailer:
+                    dsn: 'null://null'
 
     .. code-block:: xml
 
@@ -1488,11 +1489,12 @@ a specific address, instead of the *real* address:
 
     .. code-block:: yaml
 
-        # config/packages/dev/mailer.yaml
-        framework:
-            mailer:
-                envelope:
-                    recipients: ['youremail@example.com']
+        # config/packages/mailer.yaml
+        when@dev:
+            framework:
+                mailer:
+                    envelope:
+                        recipients: ['youremail@example.com']
 
     .. code-block:: xml
 
@@ -1531,22 +1533,22 @@ a specific address, instead of the *real* address:
 Write a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-To functionally test that an email was sent, and even assert the email content or headers,
-you can use the built in assertions::
+Symfony provides lots of :ref:`built-in mailer assertions <mailer-assertions>`
+to functionally test that an email was sent, its contents or headers, etc.
+They are available in test classes extending
+:class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase` or when using
+the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 
     // tests/Controller/MailControllerTest.php
     namespace App\Tests\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
     class MailControllerTest extends WebTestCase
     {
-        use MailerAssertionsTrait;
-
         public function testMailIsSentAndContentIsOk()
         {
-            $client = $this->createClient();
+            $client = static::createClient();
             $client->request('GET', '/mail/send');
             $this->assertResponseIsSuccessful();
 

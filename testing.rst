@@ -1039,6 +1039,8 @@ Crawler Assertions
     Asserts that value of the field of the first form matching the given
     selector does (not) equal the expected value.
 
+.. _mailer-assertions:
+
 Mailer Assertions
 .................
 
