@@ -663,9 +663,9 @@ X.509 Authentication
                 main:
                     # ...
                     x509:
-                        provider:    your_user_provider
-                        user:        SSL_CLIENT_S_DN_Email
-                        credentials: SSL_CLIENT_S_DN
+                        provider:        your_user_provider
+                        user:            SSL_CLIENT_S_DN_Email
+                        credentials:     SSL_CLIENT_S_DN
                         user_identifier: emailAddress
 
     .. code-block:: xml
@@ -705,7 +705,7 @@ X.509 Authentication
                 ->provider('your_user_provider')
                 ->user('SSL_CLIENT_S_DN_Email')
                 ->credentials('SSL_CLIENT_S_DN')
-                ->user_identifier('emailAddress')
+                ->userIdentifier('emailAddress')
             ;
         };
 
@@ -726,18 +726,24 @@ If the ``user`` parameter is not available, the name of the ``$_SERVER``
 parameter containing the full "distinguished name" of the certificate
 (exposed by e.g. Nginx).
 
-By default, Symfony identifies the value following ``emailAddress=`` in this parameter.
-This can be changed using the ``user_identifier`` parameter.
+By default, Symfony identifies the value following ``emailAddress=`` in this
+parameter. This can be changed using the ``user_identifier`` option.
 
 user_identifier
-...........
+...............
 
 **type**: ``string`` **default**: ``emailAddress``
 
-The ``user_identifier`` parameter is used to find the user identifier in the
-"distinguished name" e.g. ``Subject: C=FR, O=My Organization, CN=user1, emailAddress=user1@myorg.fr``.
+.. versionadded:: 6.3
 
-By setting this parameter to ``CN``, the returned user identifier will be the "Common Name" ``user1``
+    The ``user_identifier`` option was introduced in Symfony 6.3.
+
+The value of this option tells Symfony which parameter to use to find the user
+identifier in the "distinguished name".
+
+For example, if the "distinguished name" is
+``Subject: C=FR, O=My Organization, CN=user1, emailAddress=user1@myorg.fr``,
+and the value of this option is ``'CN'``, the user identifier will be ``'user1'``.
 
 .. _reference-security-firewall-remote-user:
 

@@ -1316,8 +1316,8 @@ ways:
 #. If it is not set (e.g. when using Nginx), it uses ``SSL_CLIENT_S_DN`` and
    matches the value following ``emailAddress``.
 
-You can customize the name of the three parameters under the ``x509`` key.
-See :ref:`the configuration reference <reference-security-firewall-x509>`
+You can customize the name of some parameters under the ``x509`` key.
+See :ref:`the x509 configuration reference <reference-security-firewall-x509>`
 for more details.
 
 Remote Users
