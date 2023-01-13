@@ -58,7 +58,7 @@ Configuration Formats
 ~~~~~~~~~~~~~~~~~~~~~
 
 Unlike other frameworks, Symfony doesn't impose a specific format on you to
-configure your applications, but lets you choose between YAML, XML and PHP. 
+configure your applications, but lets you choose between YAML, XML and PHP.
 Throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
@@ -652,6 +652,12 @@ This example shows how you could configure the database connection using an env 
                 ],
             ]);
         };
+
+Your env vars may also be accessed in your code thanks to PHP super
+globals ``$_ENV`` and ``$_SERVER``. Both are equivalent::
+
+    $databaseUrl = $_ENV['DATABASE_URL']; // mysql://db_user:db_password@127.0.0.1:3306/db_name
+    $env = $_SERVER['APP_ENV']; // prod
 
 .. versionadded:: 5.3
 
