@@ -1534,21 +1534,21 @@ Write a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 To functionally test that an email was sent, and even assert the email content or headers,
-you can use the built in assertions::
+you can use the built in assertions provided by :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`.
+
+See :ref:`testing documentation <mailer-assertions>` for the list of available assertions.::
 
     // tests/Controller/MailControllerTest.php
     namespace App\Tests\Controller;
 
-    use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
     use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
     class MailControllerTest extends WebTestCase
     {
-        use MailerAssertionsTrait;
 
         public function testMailIsSentAndContentIsOk()
         {
-            $client = $this->createClient();
+            $client = static::createClient();
             $client->request('GET', '/mail/send');
             $this->assertResponseIsSuccessful();
 
