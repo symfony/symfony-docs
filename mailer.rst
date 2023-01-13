@@ -1480,8 +1480,15 @@ the email is sent::
         if (!$message instanceof Email) {
             return;
         }
-        // do something with the message
+        // do something with the message (logging, ...)
+
+        // and/or add some Messenger stamps
+        $event->addStamp(new SomeMessengerStamp());
     }
+
+.. versionadded:: 6.2
+
+    Methods ``addStamp()`` and ``getStamps()`` were introduced in Symfony 6.2.
 
 If you want to stop the Message from being sent, call ``reject()`` (it will
 also stop the event propagation)::
@@ -1510,48 +1517,6 @@ and their priorities:
 .. code-block:: terminal
 
     $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\MessageEvent"
-
-QueuingMessageEvent
-~~~~~~~~~~~~~~~~~~~
-
-**Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\QueuingMessageEvent`
-
-.. versionadded:: 6.2
-
-    The ``QueuingMessageEvent`` class was introduced in Symfony 6.2.
-
-``QueuingMessageEvent`` allows to add some logic before the email is sent to
-the Messenger bus (this event is not dispatched when no bus is configured); it
-extends ``MessageEvent`` to allow adding Messenger stamps to the Messenger
-message sent to the bus::
-
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\Mailer\Event\QueuingMessageEvent;
-    use Symfony\Component\Mime\Email;
-
-    public function onMessage(QueuingMessageEvent $event): void
-    {
-        $message = $event->getMessage();
-        if (!$message instanceof Email) {
-            return;
-        }
-        // do something with the message (logging, ...)
-
-        // and/or add some Messenger stamps
-        $event->addStamp(new SomeMessengerStamp());
-    }
-
-This event lets listeners do something before a message is sent to the queue
-(like adding stamps or logging) but any changes to the message or the envelope
-are discarded. To change the message or the envelope, listen to
-``MessageEvent`` instead.
-
-Execute this command to find out which listeners are registered for this event
-and their priorities:
-
-.. code-block:: terminal
-
-    $ php bin/console debug:event-dispatcher "Symfony\Component\Mailer\Event\QueuingMessageEvent"
 
 SentMessageEvent
 ~~~~~~~~~~~~~~~~
