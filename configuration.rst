@@ -363,7 +363,7 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
 .. note::
 
     If some parameter value includes the ``%`` character, you need to escape it
-    by adding another ``%`` so Symfony doesn't consider it a reference to a
+    by adding another ``%``, so Symfony doesn't consider it a reference to a
     parameter name:
 
     .. configuration-block::
@@ -425,17 +425,19 @@ The files stored in ``config/packages/`` are used by Symfony to configure the
 the application behavior by changing which configuration files are loaded.
 That's the idea of Symfony's **configuration environments**.
 
-A typical Symfony application begins with three environments: ``dev`` (for local
-development), ``prod`` (for production servers) and ``test`` (for
-:doc:`automated tests </testing>`). When running the application, Symfony loads
-the configuration files in this order (the last files can override the values
-set in the previous ones):
+A typical Symfony application begins with three environments:
 
-#. ``config/packages/*.yaml`` (and ``*.xml`` and ``*.php`` files too);
-#. ``config/packages/<environment-name>/*.yaml`` (and ``*.xml`` and ``*.php`` files too);
-#. ``config/services.yaml`` (and ``services.xml`` and ``services.php`` files too);
-#. ``config/services_<environment-name>.yaml`` (and ``services_<environment-name>.xml``
-   and ``services_<environment-name>.php`` files too).
+* ``dev`` for local development,
+* ``prod`` for production servers,
+* ``test`` for :doc:`automated tests </testing>`.
+
+When running the application, Symfony loads the configuration files in this
+order (the last files can override the values set in the previous ones):
+
+#. The files in ``config/packages/*.<extension>``;
+#. the files in ``config/packages/<environment-name>/*.<extension>``;
+#. ``config/services.<extension>``;
+#. ``config/services_<environment-name>.<extension>``.
 
 Take the ``framework`` package, installed by default, as an example:
 
