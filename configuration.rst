@@ -409,12 +409,13 @@ the application behavior by changing which configuration files are loaded.
 That's the idea of Symfony's **configuration environments**.
 
 A typical Symfony application begins with three environments:
+
 * ``dev`` for local development,
 * ``prod`` for production servers,
 * ``test`` for :doc:`automated tests </testing>`.
-When running the application, Symfony loads
-the configuration files in this order (the last files can override the values
-set in the previous ones):
+
+When running the application, Symfony loads the configuration files in this
+order (the last files can override the values set in the previous ones):
 
 #. The files in ``config/packages/*.<extension>``;
 #. the files in ``config/packages/<environment-name>/*.<extension>``;
