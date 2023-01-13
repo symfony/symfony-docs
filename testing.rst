@@ -1045,6 +1045,8 @@ Crawler Assertions
 
     The ``assertSelectorCount()`` method was introduced in Symfony 6.3.
 
+.. _mailer-assertions:
+
 Mailer Assertions
 .................
 
