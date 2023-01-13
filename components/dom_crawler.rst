@@ -230,7 +230,7 @@ Access the value of the first node of the current selection::
     // descendant of the current node, excluding text from child nodes
     $text = $crawler->filterXPath('//body/p')->innerText();
     // if content is <p>Foo <span>Bar</span></p> or <p><span>Bar</span> Foo</p>
-    // innerText() returns 'Foo' and text() returns 'Foo Bar' respectively 'Bar Foo'
+    // innerText() returns 'Foo' in both cases; and text() returns 'Foo Bar' and 'Bar Foo' respectively
 
     // if there are multiple text nodes, between other child nodes, like
     // <p>Foo <span>Bar</span> Baz</p>
@@ -239,6 +239,11 @@ Access the value of the first node of the current selection::
     // like text(), innerText() also trims whitespace characters by default,
     // but you can get the unchanged text by passing FALSE as argument
     $text = $crawler->filterXPath('//body/p')->innerText(false);
+
+.. versionadded:: 6.3
+
+    The removal of whitespace characters by default in ``innerText()`` was
+    introduced in Symfony 6.3.
 
 Access the attribute value of the first node of the current selection::
 
