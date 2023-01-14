@@ -607,6 +607,23 @@ accessor methods for parameters::
     To learn more about compiling the container see
     :doc:`/components/dependency_injection/compilation`.
 
+It is also possible to deprecate a container parameter. This is particularly useful
+if you're writing your own package and want to warn developers to not use a parameter anymore
+because it will be removed in one of the next version of your package.
+Deprecating a container parameter can be done as follow::
+
+    $container->deprecateParameter(
+        'vendor.database_user',
+        'vendor-name/package-name',
+        '1.3',
+        // optionally you can set a custom deprecation message
+        '"vendor.database_user" is deprecated, you should configure database credentials with the "vendor.database_dsn" parameter instead.'
+    );
+
+.. versionadded:: 6.3
+
+    The ``ContainerBuilder::deprecateParameter`` method was introduced in Symfony 6.3.
+
 .. _services-wire-specific-service:
 
 Choose a Specific Service
