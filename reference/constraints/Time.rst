@@ -2,7 +2,7 @@ Time
 ====
 
 Validates that a value is a valid time, meaning a string (or an object that can
-be cast into a string) that follows a valid ``HH:MM:SS`` format.
+be cast into a string) that follows a valid ``H:i:s`` format.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
