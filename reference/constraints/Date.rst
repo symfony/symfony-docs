@@ -2,7 +2,7 @@ Date
 ====
 
 Validates that a value is a valid date, meaning a string (or an object that can
-be cast into a string) that follows a valid ``YYYY-MM-DD`` format.
+be cast into a string) that follows a valid ``Y-m-d`` format.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
