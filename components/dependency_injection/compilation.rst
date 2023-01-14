@@ -254,6 +254,37 @@ file but also load a secondary one only if a certain parameter is set::
         }
     }
 
+You are also able to deprecate container parameters in your extension to warn
+to not use a specific parameter anymore. This is particularly useful to help
+developers with the migration process across major versions of an extension.
+The deprecation can be done thanks to the ``ContainerBuilder::deprecateParameter``
+method. This can only be achieved when configuring an extension with PHP, as this is
+not possible to do it with other configuration formats (YAML, XML). Let's define a
+parameter in our extension that will be declared as deprecated::
+
+    public function load(array $configs, ContainerBuilder $containerBuilder)
+    {
+        // ...
+
+        $containerBuilder->setParameter('acme_demo.database_user', $configs['db_user']);
+
+        $containerBuilder->deprecateParameter(
+            'acme_demo.database_user',
+            'acme/database-package',
+            '1.3',
+            // optionally you can set a custom deprecation message
+            '"acme_demo.database_user" is deprecated, you should configure database credentials with the "acme_demo.database_dsn" parameter instead.'
+        );
+    }
+
+The parameter being deprecated must be set before being declared as deprecated. Otherwise
+a :class:`Symfony\\Component\\DependencyInjection\\Exception\\ParameterNotFoundException` exception
+will be thrown.
+
+.. versionadded:: 6.3
+
+     The ``ContainerBuilder::deprecateParameter`` method was introduced in Symfony 6.3.
+
 .. note::
 
     Just registering an extension with the container is not enough to get
@@ -478,7 +509,7 @@ serves at dumping the compiled container::
     the :ref:`dumpFile() method <filesystem-dumpfile>` from Symfony Filesystem
     component or other methods provided by Symfony (e.g. ``$containerConfigCache->write()``)
     which are atomic.
-    
+
 ``ProjectServiceContainer`` is the default name given to the dumped container
 class. However, you can change this with the ``class`` option when you
 dump it::
