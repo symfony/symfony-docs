@@ -675,7 +675,7 @@ Logging in Users (Authentication)
 When you want to add application tests for protected pages, you have to
 first "login" as a user. Reproducing the actual steps - such as
 submitting a login form - makes a test very slow. For this reason, Symfony
-provides a ``loginUser()`` method to simulate logging in in your functional
+provides a ``loginUser()`` method to simulate logging in your functional
 tests.
 
 Instead of logging in with real users, it's recommended to create a user
