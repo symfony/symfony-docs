@@ -372,6 +372,30 @@ dealing with the ``TransformerInterface``.
     discovered that implements an interface, configuring the alias is not mandatory
     and Symfony will automatically create one.
 
+.. tip::
+
+    Autowiring is powerful enough to guess which service to inject even when using
+    union and intersection types. This means you're able to type-hint argument with
+    complex types like this::
+
+        use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+        use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+        use Symfony\Component\Serializer\SerializerInterface;
+
+        class DataFormatter
+        {
+            public function __construct((NormalizerInterface&DenormalizerInterface)|SerializerInterface $transformer)
+            {
+                // ...
+            }
+
+            // ...
+        }
+
+.. versionadded:: 5.4
+
+    The support of union and intersection types was introduced in Symfony 5.4.
+
 Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 
