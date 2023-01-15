@@ -784,6 +784,22 @@ you can define it in the configuration of the collecting service:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/HandlerCollection.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+        class HandlerCollection
+        {
+            public function __construct(
+                #[TaggedIterator('app.handler', defaultPriorityMethod: 'getPriority')]
+                iterable $handlers
+            ) {
+            }
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -838,6 +854,22 @@ Using the previous example, this service configuration creates a collection
 indexed by the ``key`` attribute:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/HandlerCollection.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+        class HandlerCollection
+        {
+            public function __construct(
+                #[TaggedIterator('app.handler', indexAttribute: 'key')]
+                iterable $handlers
+            ) {
+            }
+        }
 
     .. code-block:: yaml
 
@@ -944,6 +976,22 @@ array element. For example, to retrieve the ``handler_two`` handler::
     with the ``default_index_method`` attribute on the tagged argument:
 
     .. configuration-block::
+
+        .. code-block:: php-attributes
+
+            // src/HandlerCollection.php
+            namespace App;
+
+            use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+            class HandlerCollection
+            {
+                public function __construct(
+                    #[TaggedIterator('app.handler', defaultIndexMethod: 'getIndex')]
+                    iterable $handlers
+                ) {
+                }
+            }
 
         .. code-block:: yaml
 

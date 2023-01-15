@@ -510,6 +510,23 @@ of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/CommandBus.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
+        use Symfony\Component\DependencyInjection\ServiceLocator;
+
+        class CommandBus
+        {
+            public function __construct(
+                #[TaggedLocator('app.handler', indexAttribute: 'key')]
+                ServiceLocator $locator
+            ) {
+            }
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -612,6 +629,23 @@ If you prefer to use another method name, add a ``default_index_method``
 attribute to the locator service defining the name of this custom method:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/CommandBus.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedLocator;
+        use Symfony\Component\DependencyInjection\ServiceLocator;
+
+        class CommandBus
+        {
+            public function __construct(
+                #[TaggedLocator('app.handler', 'key', defaultIndexMethod: 'myOwnMethodName')]
+                ServiceLocator $locator
+            ) {
+            }
+        }
 
     .. code-block:: yaml
 
