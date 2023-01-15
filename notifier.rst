@@ -38,7 +38,7 @@ The notifier component supports the following channels:
   services like Slack and Telegram;
 * :ref:`Email channel <notifier-email-channel>` integrates the :doc:`Symfony Mailer </mailer>`;
 * Browser channel uses :ref:`flash messages <flash-messages>`.
-* Push Channel sends notifications to phones and browsers via push notifications.
+* :ref:`Push channel <notifier-push-channel>` sends notifications to phones and browsers via push notifications.
 
 .. tip::
 
@@ -339,6 +339,8 @@ notification emails:
             ;
         };
 
+.. _notifier-push-channel:
+
 Push Channel
 ~~~~~~~~~~~~
 
@@ -357,7 +359,7 @@ integration with these push services:
 Service         Package                               DSN
 ==============  ====================================  =================================================================================
 Expo            ``symfony/expo-notifier``              ``expo://Token@default``
-OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID''``
+OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
 ==============  ====================================  =================================================================================
 
 .. versionadded:: 5.4
