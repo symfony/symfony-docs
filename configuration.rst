@@ -57,7 +57,7 @@ Configuration Formats
 ~~~~~~~~~~~~~~~~~~~~~
 
 Unlike other frameworks, Symfony doesn't impose a specific format on you to
-configure your applications, but lets you choose between YAML, XML and PHP. 
+configure your applications, but lets you choose between YAML, XML and PHP.
 Throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
