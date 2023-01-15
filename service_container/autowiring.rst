@@ -392,10 +392,6 @@ dealing with the ``TransformerInterface``.
             // ...
         }
 
-.. versionadded:: 5.4
-
-    The support of union and intersection types was introduced in Symfony 5.4.
-
 Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 
