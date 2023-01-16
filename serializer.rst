@@ -145,8 +145,8 @@ configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
         use Symfony\Component\Serializer\Encoder\YamlEncoder;
+        use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework) {

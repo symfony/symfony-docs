@@ -753,9 +753,7 @@ Symfony provides the following env var processors:
 
 ``env(enum:FooEnum:BAR)``
     Tries to convert an environment variable to an actual ``\BackedEnum`` value.
-    This processor takes the fully qualified name of the ``\BackedEnum`` as an argument.
-
-    .. code-block:: php
+    This processor takes the fully qualified name of the ``\BackedEnum`` as an argument::
 
         # App\Enum\Environment
         enum Environment: string
