@@ -1,5 +1,9 @@
 rules:
     american_english: ~
+    argument_variable_must_match_type:
+        arguments:
+            - { type: 'ContainerBuilder', name: 'containerBuilder' }
+            - { type: 'ContainerConfigurator', name: 'containerConfigurator' }
     avoid_repetetive_words: ~
     blank_line_after_anchor: ~
     blank_line_after_directive: ~
@@ -96,6 +100,5 @@ whitelist:
         - '.. versionadded:: 3.6' # MonologBundle
         - '// bin/console'
         - 'End to End Tests (E2E)'
-        - '.. code-block:: php'
         - '.. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket'
         - '..  End to End Tests (E2E)'

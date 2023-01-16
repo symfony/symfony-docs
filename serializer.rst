@@ -146,8 +146,8 @@ configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
         use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+        use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework) {
             $framework->serializer()
