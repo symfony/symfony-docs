@@ -232,9 +232,7 @@ instance, which contains all information from the method signature.
 The ``resolve()`` method should return either an empty array (if it cannot resolve
 this argument) or an array with the resolved value(s). Usually arguments are
 resolved as a single value, but variadic arguments require resolving multiple
-values. That's why you must always return an array, even for single values:
-
-.. code-block:: php
+values. That's why you must always return an array, even for single values::
 
     // src/ValueResolver/IdentifierValueResolver.php
     namespace App\ValueResolver;
