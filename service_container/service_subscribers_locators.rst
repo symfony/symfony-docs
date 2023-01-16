@@ -279,7 +279,7 @@ This is done by having ``getSubscribedServices()`` return an array of
             new SubscribedService('logger', LoggerInterface::class, attributes: new Autowire(service: 'monolog.logger.event')),
 
             // can event use parameters
-            new SubscribedService('env', string, attributes: new Autowire('%kernel.environment%')),
+            new SubscribedService('env', 'string', attributes: new Autowire('%kernel.environment%')),
 
             // Target
             new SubscribedService('event.logger', LoggerInterface::class, attributes: new Target('eventLogger')),
