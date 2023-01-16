@@ -99,8 +99,8 @@ the ``@`` character, which is the usual syntax to
     .. code-block:: php
 
         // config/packages/twig.php
-        use Symfony\Config\TwigConfig;
         use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+        use Symfony\Config\TwigConfig;
 
         return static function (TwigConfig $twig) {
             // ...

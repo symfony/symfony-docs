@@ -61,8 +61,8 @@ You can configure this using the ``entry_point`` setting:
     .. code-block:: php
 
         // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
         use App\Security\SocialConnectAuthenticator;
+        use Symfony\Config\SecurityConfig;
 
         return static function (SecurityConfig $security) {
             $security->enableAuthenticatorManager(true);
