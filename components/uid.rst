@@ -133,7 +133,7 @@ configure the behavior of the factory using configuration files::
 
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $configurator): void {
+        return static function (ContainerConfigurator $containerConfigurator): void {
             $services = $configurator->services()
                 ->defaults()
                 ->autowire()
