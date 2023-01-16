@@ -145,9 +145,9 @@ configuration:
     .. code-block:: php
 
         // config/packages/framework.php
-        use Symfony\Config\FrameworkConfig;
         use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
         use Symfony\Component\Serializer\Encoder\YamlEncoder;
+        use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework) {
             $framework->serializer()
@@ -412,7 +412,7 @@ their paths using a :doc:`valid PropertyAccess syntax </components/property_acce
             attributes:
                 dob:
                     serialized_path: '[profile][information][birthday]'
-        
+
     .. code-block:: xml
 
         <?xml version="1.0" encoding="UTF-8" ?>
@@ -430,8 +430,8 @@ their paths using a :doc:`valid PropertyAccess syntax </components/property_acce
 
     The option to configure a ``SerializedPath`` was introduced in Symfony 6.2.
 
-Using the configuration from above, denormalizing with a metadata-aware 
-normalizer will write the ``birthday`` field from ``$data`` onto the ``Person`` 
+Using the configuration from above, denormalizing with a metadata-aware
+normalizer will write the ``birthday`` field from ``$data`` onto the ``Person``
 object::
 
     $data = [
@@ -441,10 +441,10 @@ object::
             ],
         ],
     ];
-    $person = $normalizer->denormalize($data, Person::class, 'any'); 
+    $person = $normalizer->denormalize($data, Person::class, 'any');
     $person->getBirthday(); // 01-01-1970
 
-When using annotations or attributes, the ``SerializedPath`` can either 
+When using annotations or attributes, the ``SerializedPath`` can either
 be set on the property or the associated _getter_ method. The ``SerializedPath``
 cannot be used in combination with a ``SerializedName`` for the same property.
 
