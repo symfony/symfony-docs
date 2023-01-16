@@ -1,0 +1,22 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-01-16T12:23:45Z
+
+@alamirault the last error is tricky, because it is in a "listing"... 🤔
+
+---------------------------------------------------------------------------
+
+by alamirault at 2023-01-16T13:21:38Z
+
+Using `::` will broke rendering ?
+Else is "listing" is easily detectable ? By a directive type ?
+
+I can't check before tomorrow
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-01-16T13:22:40Z
+
+> Using :: will broke rendering ?
+
+Lets check
