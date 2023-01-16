@@ -355,11 +355,16 @@ Service         Package                               DSN
 Engagespot      ``symfony/engagespot-notifier``        ``engagespot://API_KEY@default?campaign_name=CAMPAIGN_NAME``
 Expo            ``symfony/expo-notifier``              ``expo://Token@default``
 OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
+PagerDuty       ``symfony/pager-duty-notifier``        ``pagerduty://TOKEN@SUBDOMAIN``
 ==============  ====================================  =================================================================================
 
 .. versionadded:: 6.1
 
     The Engagespot integration was introduced in Symfony 6.1.
+
+.. versionadded:: 6.3
+
+    The PagerDuty integration was introduced in Symfony 6.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
