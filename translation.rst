@@ -860,9 +860,7 @@ of:
 
 * All the services that are tagged with ``kernel.locale_aware``;
 * ``\Locale::setDefault()``;
-* If a request is available, the ``_locale`` request attribute.
-
-.. code-block:: php
+* If a request is available, the ``_locale`` request attribute::
 
     use Symfony\Component\Translation\LocaleSwitcher;
 

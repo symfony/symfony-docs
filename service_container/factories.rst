@@ -295,8 +295,8 @@ e.g. change the service based on a parameter:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Email\NewsletterManagerInterface;
         use App\Email\NewsletterManagerFactory;
+        use App\Email\NewsletterManagerInterface;
 
         return function(ContainerConfigurator $containerConfigurator) {
             $services = $containerConfigurator->services();
