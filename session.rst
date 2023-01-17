@@ -249,6 +249,8 @@ needs.
     You can use the
     :method:`Symfony\\Component\\HttpFoundation\\Session\\Flash\\FlashBagInterface::peek`
     method instead to retrieve the message while keeping it in the bag.
+    Instead of doing ``$request->getSession()->getFlashBag()``, you can also inject the
+    ``Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface``.
 
 Configuration
 -------------
