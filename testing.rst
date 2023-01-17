@@ -321,52 +321,13 @@ concrete one::
         }
     }
 
-In order to make the alias public, you will need to update configuration for
-the ``test`` environment as follows:
+No further configuration in required, as the test service container is a special one
+that allows you to interact with private services and aliases.
 
-.. configuration-block::
+.. versionadded:: 6.3
 
-    .. code-block:: yaml
-
-        # config/services_test.yaml
-        services:
-            # redefine the alias as it should be while making it public
-            App\Contracts\Repository\NewsRepositoryInterface:
-                alias: App\Repository\NewsRepository
-                public: true
-
-    .. code-block:: xml
-
-        <!-- config/services_test.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-        ">
-            <services>
-                <!-- redefine the alias as it should be while making it public -->
-                <service id="App\Contracts\Repository\NewsRepositoryInterface"
-                    alias="App\Repository\NewsRepository"
-                />
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services_test.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Contracts\Repository\NewsRepositoryInterface;
-        use App\Repository\NewsRepository;
-
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->services()
-                // redefine the alias as it should be while making it public
-                ->alias(NewsRepositoryInterface::class, NewsRepository::class)
-                    ->public()
-            ;
-        };
+    The possibility to set a private service with the test service container without
+    declaring the alias as public was introduced in Symfony 6.3.
 
 .. _testing-databases:
 
