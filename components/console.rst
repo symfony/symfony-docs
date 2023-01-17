@@ -52,6 +52,20 @@ Then, you can register the commands using
     // ...
     $application->add(new GenerateAdminCommand());
 
+You can also register inline commands and define their behavior thanks to the
+``Command::setCode()`` method::
+
+    // ...
+    $application->register('generate-admin')
+        ->addArgument('username', InputArgument::REQUIRED)
+        ->setCode(function (InputInterface $input, OutputInterface $output): int {
+            // ...
+
+            return Command::SUCCESS;
+        });
+
+This is useful when creating a :doc:`single-command application </components/console/single_command_tool>`.
+
 See the :doc:`/console` article for information about how to create commands.
 
 Learn more
