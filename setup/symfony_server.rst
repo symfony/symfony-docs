@@ -488,22 +488,22 @@ its location, same as for ``docker-compose``:
     ``symfony console doctrine:database:drop --force --env=test``, the command will drop the database
     defined in your Docker configuration and not the "test" one.
 
-SymfonyCloud Integration
-------------------------
+Platform.sh Integration
+-----------------------
 
 The local Symfony server provides full, but optional, integration with
-`SymfonyCloud`_, a service optimized to run your Symfony applications on the
+`Platform.sh`_, a service optimized to run your Symfony applications on the
 cloud. It provides features such as creating environments, backups/snapshots,
-and even access to a copy of the production data from your local machine to help
-debug any issues.
+and even access to a copy of the production data from your local machine to
+help debug any issues.
 
-`Read SymfonyCloud technical docs`_.
+`Read Platform.sh for Symfony technical docs`_.
 
 .. _`install Symfony`: https://symfony.com/download
 .. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
-.. _`SymfonyCloud`: https://symfony.com/cloud/
-.. _`Read SymfonyCloud technical docs`: https://symfony.com/doc/master/cloud/intro.html
+.. _`Platform.sh`: https://symfony.com/cloud/
+.. _`Read Platform.sh for Symfony technical docs`: https://symfony.com/doc/master/cloud/intro.html
 .. _`Proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
