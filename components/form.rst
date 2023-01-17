@@ -389,8 +389,8 @@ is created from the form factory.
 
     .. code-block:: php-standalone
 
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         // ...
 
@@ -409,9 +409,9 @@ is created from the form factory.
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\HttpFoundation\Request;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\HttpFoundation\Request;
 
         class TaskController extends AbstractController
         {
@@ -449,9 +449,9 @@ an "edit" form), pass in the default data when creating your form builder:
 
     .. code-block:: php-standalone
 
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\FormType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
-        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
         // ...
 
@@ -470,8 +470,8 @@ an "edit" form), pass in the default data when creating your form builder:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
 
         class DefaultController extends AbstractController
         {
@@ -674,10 +674,10 @@ option when building each field:
 
     .. code-block:: php-standalone
 
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
-        use Symfony\Component\Form\Extension\Core\Type\DateType;
 
         $form = $formFactory->createBuilder()
             ->add('task', TextType::class, [
@@ -697,10 +697,10 @@ option when building each field:
         namespace App\Controller;
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\Type;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints\Type;
 
         class DefaultController extends AbstractController
         {
