@@ -302,6 +302,19 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
+match
+~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+When this option is ``false``, the constraint checks that the given value is
+not one of the values defined in the ``choices`` option. In practice, it makes
+the ``Choice`` constraint behave like a ``NotChoice`` constraint.
+
+.. versionadded:: 6.2
+
+    The ``match`` option was introduced in Symfony 6.2.
+
 ``message``
 ~~~~~~~~~~~
 
