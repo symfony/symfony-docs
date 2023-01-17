@@ -254,13 +254,13 @@ file but also load a secondary one only if a certain parameter is set::
         }
     }
 
-You are also able to deprecate container parameters in your extension to warn
-to not use a specific parameter anymore. This is particularly useful to help
-developers with the migration process across major versions of an extension.
-The deprecation can be done thanks to the ``ContainerBuilder::deprecateParameter``
-method. This can only be achieved when configuring an extension with PHP, as this is
-not possible to do it with other configuration formats (YAML, XML). Let's define a
-parameter in our extension that will be declared as deprecated::
+You can also deprecate container parameters in your extension to warn users
+about not using them anymore. This helps with the migration across major versions
+of an extension.
+
+Deprecation is only possible when using PHP to configure the extension, not when
+using XML or YAML. Use the ``ContainerBuilder::deprecateParameter()`` method to
+provide the deprecation details::
 
     public function load(array $configs, ContainerBuilder $containerBuilder)
     {
@@ -277,13 +277,13 @@ parameter in our extension that will be declared as deprecated::
         );
     }
 
-The parameter being deprecated must be set before being declared as deprecated. Otherwise
-a :class:`Symfony\\Component\\DependencyInjection\\Exception\\ParameterNotFoundException` exception
-will be thrown.
+The parameter being deprecated must be set before being declared as deprecated.
+Otherwise a :class:`Symfony\\Component\\DependencyInjection\\Exception\\ParameterNotFoundException`
+exception will be thrown.
 
 .. versionadded:: 6.3
 
-     The ``ContainerBuilder::deprecateParameter`` method was introduced in Symfony 6.3.
+    The ``ContainerBuilder::deprecateParameter()`` method was introduced in Symfony 6.3.
 
 .. note::
 
