@@ -311,7 +311,6 @@ concrete one::
                 ])
             ;
 
-            // the following line won't work unless the alias is made public
             $container->set(NewsRepositoryInterface::class, $newsRepository);
 
             // will be injected the mocked repository
@@ -326,8 +325,8 @@ that allows you to interact with private services and aliases.
 
 .. versionadded:: 6.3
 
-    The possibility to set a private service with the test service container without
-    declaring the alias as public was introduced in Symfony 6.3.
+    The possibility to set a private service with the test service container
+    without declaring a public alias for it was introduced in Symfony 6.3.
 
 .. _testing-databases:
 
