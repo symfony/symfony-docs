@@ -44,7 +44,7 @@ If you set ``by_reference`` to false, submitting looks like this::
 So, all that ``by_reference=false`` really does is that it clones the object,
 which enforces the framework to call the setter on the parent object.
 
-Similarly, if you're using the :doc:`CollectionType </reference/forms/types/collection>`
+Similarly, if you are using the :doc:`CollectionType </reference/forms/types/collection>`
 field where your underlying collection data is an object (like with
 Doctrine's ``ArrayCollection``), then ``by_reference`` must be set to ``false``
 if you need the adder and remover (e.g. ``addAuthor()`` and ``removeAuthor()``)

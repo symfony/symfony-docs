@@ -10,7 +10,7 @@ Instead, it just returns a value:
     const $ = require('jquery');
 
 In practice, this will cause problems with some outside libraries that *rely* on
-jQuery to be global *or* if *your* JavaScript isn't being processed through Webpack
+jQuery to be global *or* if *your* JavaScript is not being processed through Webpack
 (e.g. you have some JavaScript in your templates) and you need jQuery. Both will
 cause similar errors:
 
@@ -43,7 +43,7 @@ variables and automatically require ``jquery`` and set those variables for you.
 It "rewrites" the "bad" code to be correct.
 
 Internally, this ``autoProvidejQuery()`` method calls the ``autoProvideVariables()``
-method from Encore. In practice, it's equivalent to doing:
+method from Encore. In practice, it is equivalent to doing:
 
 .. code-block:: javascript
 
@@ -85,7 +85,7 @@ page, add:
 
 The ``global`` variable is a special way of setting things in the ``window``
 variable. In a web context, using ``global`` and ``window`` are equivalent,
-except that ``window.jQuery`` won't work when using ``autoProvidejQuery()``.
+except that ``window.jQuery`` will not work when using ``autoProvidejQuery()``.
 In other words, use ``global``.
 
 Additionally, be sure to set the ``script_attributes.defer`` option to ``false``

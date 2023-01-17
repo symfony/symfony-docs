@@ -55,7 +55,7 @@ handlers could be to inject the main dependency injection container.
 
 However, injecting the entire container is discouraged because it gives too
 broad access to existing services and it hides the actual dependencies of the
-services. Doing so also requires services to be made public, which isn't the
+services. Doing so also requires services to be made public, which is not the
 case by default in Symfony applications.
 
 **Service Subscribers** are intended to solve this problem by giving access to a
@@ -151,7 +151,7 @@ Service types can also be keyed by a service name for internal use::
     }
 
 When extending a class that also implements ``ServiceSubscriberInterface``,
-it's your responsibility to call the parent when overriding the method. This
+it is your responsibility to call the parent when overriding the method. This
 typically happens when extending ``AbstractController``::
 
     use Psr\Log\LoggerInterface;
@@ -347,7 +347,7 @@ the service locator services via their ID (e.g. ``$this->locator->get('App\FooCo
 Reusing a Service Locator in Multiple Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you inject the same service locator in several services, it's better to
+If you inject the same service locator in several services, it is better to
 define the service locator as a stand-alone service and then inject it in the
 other services. To do so, create a new service definition using the
 ``ServiceLocator`` class:
@@ -481,7 +481,7 @@ Now you can inject the service locator in any other services:
 Using Service Locators in Compiler Passes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In :doc:`compiler passes </service_container/compiler_passes>` it's recommended
+In :doc:`compiler passes </service_container/compiler_passes>` it is recommended
 to use the :method:`Symfony\\Component\\DependencyInjection\\Compiler\\ServiceLocatorTagPass::register`
 method to create the service locators. This will save you some boilerplate and
 will share identical locators among all the services referencing them::

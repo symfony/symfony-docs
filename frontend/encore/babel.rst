@@ -28,7 +28,7 @@ Need to extend the Babel configuration further? The easiest way is via
             includeNodeModules: ['foundation-sites'],
 
             // or completely control the exclude rule (note that you
-            // can't use both "includeNodeModules" and "exclude" at
+            // cannot use both "includeNodeModules" and "exclude" at
             // the same time)
             exclude: /bower_components/
         })

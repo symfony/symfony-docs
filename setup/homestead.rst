@@ -26,7 +26,7 @@ Homestead as explained in `the Homestead documentation`_.
 Setting Up a Symfony Application
 --------------------------------
 
-Imagine you've installed your Symfony application in
+Imagine you have installed your Symfony application in
 ``~/projects/symfony_demo`` on your local system. You first need Homestead to
 sync your files in this project. Run ``homestead edit`` to edit the
 Homestead configuration and configure the ``~/projects`` directory:
@@ -41,7 +41,7 @@ Homestead configuration and configure the ``~/projects`` directory:
 The ``projects/`` directory on your PC is now accessible at
 ``/home/vagrant/projects`` in the Homestead environment.
 
-After you've done this, configure the Symfony application in the Homestead
+After you have done this, configure the Symfony application in the Homestead
 configuration:
 
 .. code-block:: yaml

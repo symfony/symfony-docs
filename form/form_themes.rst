@@ -19,14 +19,14 @@ in a single Twig template and they are enabled in the
 :ref:`twig.form_themes <config-twig-form-themes>` option:
 
 * `form_div_layout.html.twig`_, wraps each form field inside a ``<div>`` element
-  and it's the theme used by default in Symfony applications unless you configure
+  and it is the theme used by default in Symfony applications unless you configure
   it as explained later in this article.
 * `form_table_layout.html.twig`_, wraps the entire form inside a ``<table>``
   element and each form field inside a ``<tr>`` element.
 * `bootstrap_3_layout.html.twig`_, wraps each form field inside a ``<div>``
   element with the appropriate CSS classes to apply the styles used by the
   `Bootstrap 3 CSS framework`_.
-* `bootstrap_3_horizontal_layout.html.twig`_, it's similar to the previous
+* `bootstrap_3_horizontal_layout.html.twig`_, it is similar to the previous
   theme, but the CSS classes applied are the ones used to display the forms
   horizontally (i.e. the label and the widget in the same row).
 * `bootstrap_4_layout.html.twig`_, same as ``bootstrap_3_layout.html.twig``, but
@@ -120,7 +120,7 @@ themes at the end of the list.
 Applying Themes to Single Forms
 -------------------------------
 
-Although most of the times you'll apply form themes globally, you may need to
+Although most of the times you will apply form themes globally, you may need to
 apply a theme only to some specific form. You can do that with the
 :ref:`form_theme Twig tag <reference-twig-tag-form-theme>`:
 
@@ -179,7 +179,7 @@ Disabling Global Themes for Single Forms
 Global form themes defined in the app are always applied to all forms, even
 those which use the ``form_theme`` tag to apply their own themes. You may want
 to disable this for example when creating an admin interface for a bundle which
-can be installed on different Symfony applications (and so you can't control what
+can be installed on different Symfony applications (and so you cannot control what
 themes are enabled globally). To do that, add the ``only`` keyword after the list
 of form themes:
 
@@ -228,7 +228,7 @@ upon the form themes enabled in your app):
     <input type="number" id="form_age" name="form[age]" required="required" value="33"/>
 
 Symfony uses a Twig block called ``integer_widget`` to render that field. This
-is because the field type is ``integer`` and you're rendering its ``widget`` (as
+is because the field type is ``integer`` and you are rendering its ``widget`` (as
 opposed to its ``label`` or ``errors`` or ``help``). The first step to create a
 form theme is to know which Twig block to override, as explained in the
 following section.
@@ -281,7 +281,7 @@ corresponds to the field ``id`` attribute (e.g. ``product_description``,
 The ``id`` attribute contains both the form name and the field name (e.g.
 ``product_price``). The form name can be set manually or generated automatically
 based on your form type name (e.g. ``ProductType`` equates to ``product``). If
-you're not sure what your form name is, look at the HTML code rendered for your
+you are not sure what your form name is, look at the HTML code rendered for your
 form. You can also define this value explicitly with the ``block_name`` option::
 
     use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -470,7 +470,7 @@ extends another (``'base.html.twig'`` in the previous example). If your template
 does not, you must point ``form_theme`` to a separate template, as explained in
 the next section.
 
-Another disadvantage is that the customized form blocks can't be reused when
+Another disadvantage is that the customized form blocks cannot be reused when
 rendering other forms in other templates. If that's what you need, create a form
 theme in a separate template as explained in the next section.
 
@@ -609,7 +609,7 @@ bit more complicated:
 Customizing the Form Validation Errors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you define :doc:`validation rules </validation>` for your objects, you'll see
+If you define :doc:`validation rules </validation>` for your objects, you will see
 some validation error messages when the submitted data is not valid. These
 messages are displayed with the :ref:`form_errors() <reference-forms-twig-errors>`
 function and can be customized with the ``form_errors`` Twig block in any form

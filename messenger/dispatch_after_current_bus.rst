@@ -129,7 +129,7 @@ will not be rolled back.
     exceptions that are thrown while handling a message with the
     ``DispatchAfterCurrentBusStamp``.
 
-The ``dispatch_after_current_bus`` middleware is enabled by default. If you're
+The ``dispatch_after_current_bus`` middleware is enabled by default. If you are
 configuring your middleware manually, be sure to register
 ``dispatch_after_current_bus`` before ``doctrine_transaction`` in the middleware
 chain. Also, the ``dispatch_after_current_bus`` middleware must be loaded for

@@ -66,7 +66,7 @@ Retrieving a Validator Instance
 -------------------------------
 
 The Validator object (that implements :class:`Symfony\\Component\\Validator\\Validator\\ValidatorInterface`) is the main access
-point of the Validator component. To create a new instance of it, it's
+point of the Validator component. To create a new instance of it, it is
 recommended to use the :class:`Symfony\\Component\\Validator\\Validation` class::
 
     use Symfony\Component\Validator\Validation;
@@ -74,7 +74,7 @@ recommended to use the :class:`Symfony\\Component\\Validator\\Validation` class:
     $validator = Validation::createValidator();
 
 This ``$validator`` object can validate simple variables such as strings, numbers
-and arrays, but it can't validate objects. To do so, configure the
+and arrays, but it cannot validate objects. To do so, configure the
 ``Validator`` as explained in the next sections.
 
 Learn More

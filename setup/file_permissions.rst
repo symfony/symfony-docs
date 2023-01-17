@@ -57,7 +57,7 @@ running these commands) and the web server user.
 
 .. note::
 
-    ``setfacl`` isn't available on NFS mount points. However, storing cache and
+    ``setfacl`` is not available on NFS mount points. However, storing cache and
     logs over NFS is strongly discouraged for performance reasons.
 
 2. Use the same User for the CLI and the Web Server

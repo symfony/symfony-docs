@@ -4,10 +4,10 @@
 Over time - and especially when you upgrade to a new version of a library - an
 updated version of the :ref:`recipe <recipes-description>` may be available.
 These updates are usually minor - e.g. new comments in a configuration file - but
-it's a good idea to keep your files in sync with the recipes.
+it is a good idea to keep your files in sync with the recipes.
 
 Symfony Flex provides several commands to help upgrade your recipes. Be sure to
-commit any unrelated changes you're working on before starting:
+commit any unrelated changes you are working on before starting:
 
 .. versionadded:: 1.18
 

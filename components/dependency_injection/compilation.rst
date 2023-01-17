@@ -429,7 +429,7 @@ been run, use::
 You can also control the order in which compiler passes are run for each
 compilation phase. Use the optional third argument of ``addCompilerPass()`` to
 set the priority as an integer number. The default priority is ``0`` and the higher
-its value, the earlier it's executed::
+its value, the earlier it is executed::
 
     // ...
     // FirstPass is executed after SecondPass because its priority is lower

@@ -19,7 +19,7 @@ Routes can be configured in YAML, XML, PHP or using either attributes or
 annotations. All formats provide the same features and performance, so choose
 your favorite.
 :ref:`Symfony recommends attributes <best-practice-controller-annotations>`
-because it's convenient to put the route and controller in the same place.
+because it is convenient to put the route and controller in the same place.
 
 Creating Routes as Attributes or Annotations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -29,7 +29,7 @@ PHP attributes and annotations allow to define routes next to the code of the
 native in PHP 8 and higher versions, so you can use them right away.
 
 In PHP 7 and earlier versions you can use annotations (via the Doctrine Annotations
-library), but first you'll need to install the following dependency in your project:
+library), but first you will need to install the following dependency in your project:
 
 .. code-block:: terminal
 
@@ -299,7 +299,7 @@ Use the ``methods`` option to restrict the verbs each route should respond to:
 
 .. tip::
 
-    HTML forms only support ``GET`` and ``POST`` methods. If you're calling a
+    HTML forms only support ``GET`` and ``POST`` methods. If you are calling a
     route with a different method from an HTML form, add a hidden field called
     ``_method`` with the method to use (e.g. ``<input type="hidden" name="_method" value="PUT">``).
     If you create your forms with :doc:`Symfony Forms </forms>` this is done
@@ -443,7 +443,7 @@ for the underlying PHP to execute.
 Debugging Routes
 ~~~~~~~~~~~~~~~~
 
-As your application grows, you'll eventually have a *lot* of routes. Symfony
+As your application grows, you will eventually have a *lot* of routes. Symfony
 includes some commands to help you debug routing issues. First, the ``debug:router``
 command lists all your application routes in the same order in which Symfony
 evaluates them:
@@ -481,7 +481,7 @@ route details:
     +-------------+---------------------------------------------------------+
 
 The other command is called ``router:match`` and it shows which route will match
-the given URL. It's useful to find out why some URL is not executing the
+the given URL. It is useful to find out why some URL is not executing the
 controller action that you expect:
 
 .. code-block:: terminal
@@ -494,7 +494,7 @@ Route Parameters
 ----------------
 
 The previous examples defined routes where the URL never changes (e.g. ``/blog``).
-However, it's common to define routes where some parts are variable. For example,
+However, it is common to define routes where some parts are variable. For example,
 the URL to display some blog post will probably include the title or slug
 (e.g. ``/blog/my-first-post`` or ``/blog/all-about-symfony``).
 
@@ -1370,7 +1370,7 @@ Slash Characters in Route Parameters
 Route parameters can contain any values except the ``/`` slash character,
 because that's the character used to separate the different parts of the URLs.
 For example, if the ``token`` value in the ``/share/{token}`` route contains a
-``/`` character, this route won't match.
+``/`` character, this route will not match.
 
 A possible solution is to change the parameter requirements to be more permissive:
 
@@ -1462,7 +1462,7 @@ A possible solution is to change the parameter requirements to be more permissiv
 
 .. note::
 
-    If the route includes the special ``{_format}`` parameter, you shouldn't
+    If the route includes the special ``{_format}`` parameter, you should not
     use the ``.+`` requirement for the parameters that allow slashes. For example,
     if the pattern is ``/share/{token}.{_format}`` and ``{token}`` allows any
     character, the ``/share/foo/bar.json`` URL will consider ``foo/bar.json``
@@ -1586,7 +1586,7 @@ at least one occurrence of the ``%alias_id%`` placeholder in your template.
 Route Groups and Prefixes
 -------------------------
 
-It's common for a group of routes to share some options (e.g. all routes related
+It is common for a group of routes to share some options (e.g. all routes related
 to the blog start with ``/blog``) That's why Symfony includes a feature to share
 route configuration.
 
@@ -1978,7 +1978,7 @@ Redirecting URLs with Trailing Slashes
 Historically, URLs have followed the UNIX convention of adding trailing slashes
 for directories (e.g. ``https://example.com/foo/``) and removing them to refer
 to files (``https://example.com/foo``). Although serving different contents for
-both URLs is OK, nowadays it's common to treat both URLs as the same URL and
+both URLs is OK, nowadays it is common to treat both URLs as the same URL and
 redirect between them.
 
 Symfony follows this logic to redirect between URLs with and without trailing
@@ -2239,7 +2239,7 @@ these routes.
 .. note::
 
     When using sub-domain routing, you must set the ``Host`` HTTP headers in
-    :doc:`functional tests </testing>` or routes won't match::
+    :doc:`functional tests </testing>` or routes will not match::
 
         $crawler = $client->request(
             'GET',
@@ -2479,7 +2479,7 @@ Symfony turns the response into a private non-cacheable response.
 For details, see :doc:`/http_cache`.
 
 Routes can configure a ``stateless`` boolean option in order to declare that the
-session shouldn't be used when matching a request:
+session should not be used when matching a request:
 
 .. configuration-block::
 
@@ -2632,12 +2632,12 @@ use the ``generateUrl()`` helper::
 .. caution::
 
     While objects are converted to string when used as placeholders, they are not
-    converted when used as extra parameters. So, if you're passing an object (e.g. an Uuid)
+    converted when used as extra parameters. So, if you are passing an object (e.g. an Uuid)
     as value of an extra parameter, you need to explicitly convert it to a string::
 
         $this->generateUrl('blog', ['uuid' => (string) $entity->getUuid()]);
 
-If your controller does not extend from ``AbstractController``, you'll need to
+If your controller does not extend from ``AbstractController``, you will need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
 follow the instructions of the next section.
 
@@ -2719,7 +2719,7 @@ Generating URLs in Commands
 Generating URLs in commands works the same as
 :ref:`generating URLs in services <routing-generating-urls-in-services>`. The
 only difference is that commands are not executed in the HTTP context. Therefore,
-if you generate absolute URLs, you'll get ``http://localhost/`` as the host name
+if you generate absolute URLs, you will get ``http://localhost/`` as the host name
 instead of your real host name.
 
 The solution is to configure the ``default_uri`` option to define the
@@ -2767,7 +2767,7 @@ The solution is to configure the ``default_uri`` option to define the
 
     The ``default_uri`` option was introduced in Symfony 5.1.
 
-Now you'll get the expected results when generating URLs in your commands::
+Now you will get the expected results when generating URLs in your commands::
 
     // src/Command/SomeCommand.php
     namespace App\Command;
@@ -3044,7 +3044,7 @@ give the argument a default value (i.e. ``$slug = null``).
     Some mandatory parameters are missing ("slug") to generate a URL for route
     "blog_show".
 
-This means that you're trying to generate a URL to the ``blog_show`` route but
+This means that you are trying to generate a URL to the ``blog_show`` route but
 you are *not* passing a ``slug`` value (which is required, because it has a
 ``{slug}`` parameter in the route path). To fix this, pass a ``slug`` value when
 generating the route::

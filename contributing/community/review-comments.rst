@@ -17,7 +17,7 @@ have dyslexia or similar conditions that affect their writing.
 Not to mention that some might have a bad experience from previous
 contributions (to other projects).
 
-You're not alone in this. This guide will try to help you write
+You are not alone in this. This guide will try to help you write
 constructive, respectful and helpful reviews and replies.
 
 .. tip::
@@ -30,7 +30,7 @@ constructive, respectful and helpful reviews and replies.
 
 It’s important to accept that many programming decisions are opinions.
 Discuss trade-offs, which you prefer, and reach a resolution quickly.
-It's not about being right or wrong, but using what works.
+It is not about being right or wrong, but using what works.
 
 Tone of Voice
 -------------
@@ -38,7 +38,7 @@ Tone of Voice
 We don't expect you to be completely formal, or to even write error-free
 English. Just remember this: don't swear, and be respectful to others.
 
-Don't reply in anger or with an aggressive tone. If you're angry, we understand
+Don't reply in anger or with an aggressive tone. If you are angry, we understand
 that, but swearing/cursing and name calling doesn't really encourage anyone to
 help you. Take a deep breath, count to 10 and try to *clearly* explain what problems
 you encounter.
@@ -46,14 +46,14 @@ you encounter.
 Inclusive Language
 ------------------
 
-In an effort to be inclusive to a wide group of people, it's recommended to
+In an effort to be inclusive to a wide group of people, it is recommended to
 use personal pronouns that don't suggest a particular gender. Unless someone
 has stated their pronouns, use "they", "them" instead of "he", "she", "his",
 "hers", "his/hers", "he/she", etc.
 
 Try to avoid using wording that may be considered excluding, needlessly gendered
 (e.g. words that have a male or female base), racially motivated or singles out
-a particular group in society. For example, it's recommended to use words like
+a particular group in society. For example, it is recommended to use words like
 "folks", "team", "everyone" instead of "guys", "ladies", "yanks", etc.
 
 Giving Positive Feedback
@@ -79,7 +79,7 @@ Assume everyone is intelligent and well-meaning.
     Maybe you can ask for clarification? Suggest an alternative?
     Or provide a simple explanation *why* you disagree with their proposal.
 
-    * ``This looks wrong. Are you sure it's correct?`` (e.g. typo/syntax error)
+    * ``This looks wrong. Are you sure it is correct?`` (e.g. typo/syntax error)
 
     * ``What do you think of "RequestFactory" instead of RequestCreator?``
 
@@ -89,7 +89,7 @@ don't get into endless you-are-wrong discussions or "flame wars".
 Don't use hyperbole ("always", "never", "endlessly", "nothing", "worst", "horrible", "terrible").
 
 **Don't:** *"I don't like how you wrote this code"* - there is no clear explanation why you
-don't like how it's written.
+don't like how it is written.
 
 **Better:** *"I find it hard to read this code as there are many nested if statements, can you make it more
 readable? By encapsulating some of the details or maybe adding some comments to explain the overall logic."* -
@@ -109,9 +109,9 @@ If a piece of code is in fact wrong, explain why:
 * "We tried that in the past (link to the relevant PR) but we needed to revert it for XXX reason."
 
 * "That change would introduce too many merge conflicts when merging up Symfony branches.
-  In the past we've always rejected changes like this."
+  In the past we have always rejected changes like this."
 
-* "I profiled this change and it hurts performance significantly" - if you don't profile, it's an opinion, so we can ignore
+* "I profiled this change and it hurts performance significantly" - if you don't profile, it is an opinion, so we can ignore
 
 * "Code doesn't match Symfony's CS rules (e.g. use ``[]`` instead of ``array()``)"
 
@@ -144,7 +144,7 @@ Use words like "Please", "Thank you" and "Could you" instead of making demands;
 * "Please use 4 spaces instead of tabs", "This needs be on the previous line";
 
 During a pull request review you can usually leave more than one comment,
-you don't have to use "Please" all the time. But it wouldn't hurt.
+you don't have to use "Please" all the time. But it would not hurt.
 
 It may not seem like much, but saying "Thank you" does make others feel
 more welcome.
@@ -170,7 +170,7 @@ Keep it real and friendly.
 to the Symfony community.** And don't marginalize someone's problems;
 ``Well I guess that's not supposed to happen? 😆``.
 
-Even if someone's explanation is "inviting to joke about it", it's a real
+Even if someone's explanation is "inviting to joke about it", it is a real
 problem to them. Making jokes about this doesn't help with solving their
 problem and only makes them *feel stupid*. Instead, try to discover the
 actual problem.
@@ -179,8 +179,8 @@ Final Words
 -----------
 
 Don't feel bad if you "failed" to follow these tips. As long as your
-intentions were good and you didn't really offend or insult anyone;
-you can explain you misunderstood, you didn't mean to marginalize or
+intentions were good and you did not really offend or insult anyone;
+you can explain you misunderstood, you did not mean to marginalize or
 simply failed.
 
 But don't say it "just because", if your apology is not really meant

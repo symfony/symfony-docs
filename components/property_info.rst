@@ -228,7 +228,7 @@ provide whether properties are readable or writable as booleans::
 
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
 for getter/isser/setter/hasser method in addition to whether or not a property is public
-to determine if it's accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
+to determine if it is accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
 works.
 
 .. _property-info-initializable:
@@ -437,7 +437,7 @@ with the ``property_info`` service in the Symfony Framework::
     // the `serializer_groups` option must be configured (may be set to null)
     $serializerExtractor->getProperties($class, ['serializer_groups' => ['mygroup']]);
    
-If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
+If ``serializer_groups`` is set to ``null``, serializer groups metadata will not be
 checked but you will get only the properties considered by the Serializer
 Component (notably the ``@Ignore`` annotation is taken into account).
 

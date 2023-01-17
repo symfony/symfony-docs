@@ -8,7 +8,7 @@ Autowiring allows you to manage services in the container with minimal
 configuration. It reads the type-hints on your constructor (or other methods)
 and automatically passes the correct services to each method. Symfony's
 autowiring is designed to be predictable: if it is not absolutely clear which
-dependency should be passed, you'll see an actionable exception.
+dependency should be passed, you will see an actionable exception.
 
 .. tip::
 
@@ -18,7 +18,7 @@ dependency should be passed, you'll see an actionable exception.
 An Autowiring Example
 ---------------------
 
-Imagine you're building an API to publish statuses on a Twitter feed, obfuscated
+Imagine you are building an API to publish statuses on a Twitter feed, obfuscated
 with `ROT13`_, a fun encoder that shifts all characters 13 letters forward in
 the alphabet.
 
@@ -60,7 +60,7 @@ And now a Twitter client using this transformer::
         }
     }
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 **both classes are automatically registered as services and configured to be autowired**.
 This means you can use them immediately without *any* configuration.
 
@@ -178,7 +178,7 @@ Autowiring works by reading the ``Rot13Transformer`` *type-hint* in ``TwitterCli
 The autowiring system **looks for a service whose id exactly matches the type-hint**:
 so ``App\Util\Rot13Transformer``. In this case, that exists! When you configured
 the ``Rot13Transformer`` service, you used its fully-qualified class name as its
-id. Autowiring isn't magic: it looks for a service whose id matches the type-hint.
+id. Autowiring is not magic: it looks for a service whose id matches the type-hint.
 If you :ref:`load services automatically <service-container-services-load-example>`,
 each service's id is its class name.
 
@@ -213,7 +213,7 @@ adding a service alias:
         services:
             # ...
 
-            # the id is not a class, so it won't be used for autowiring
+            # the id is not a class, so it will not be used for autowiring
             app.rot13.transformer:
                 class: App\Util\Rot13Transformer
                 # ...
@@ -249,7 +249,7 @@ adding a service alias:
         return function(ContainerConfigurator $containerConfigurator) {
             // ...
 
-            // the id is not a class, so it won't be used for autowiring
+            // the id is not a class, so it will not be used for autowiring
             $services->set('app.rot13.transformer', Rot13Transformer::class)
                 ->autowire();
 
@@ -377,7 +377,7 @@ dealing with the ``TransformerInterface``.
 .. tip::
 
     Autowiring is powerful enough to guess which service to inject even when using
-    union and intersection types. This means you're able to type-hint argument with
+    union and intersection types. This means you are able to type-hint argument with
     complex types like this::
 
         use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -417,7 +417,7 @@ Suppose you create a second class - ``UppercaseTransformer`` that implements
 
 If you register this as a service, you now have *two* services that implement the
 ``App\Util\TransformerInterface`` type. Autowiring subsystem can not decide
-which one to use. Remember, autowiring isn't magic; it looks for a service
+which one to use. Remember, autowiring is not magic; it looks for a service
 whose id matches the type-hint. So you need to choose one by creating an alias
 from the type to the correct service id (see :ref:`autowiring-interface-alias`).
 Additionally, you can define several named autowiring aliases if you want to use
@@ -557,7 +557,7 @@ under the arguments key.
 
 Another possibility is to use the ``#[Target]`` attribute. By using this attribute
 on the argument you want to autowire, you can define exactly which service to inject
-by using its alias. Thanks to this, you're able to have multiple services implementing
+by using its alias. Thanks to this, you are able to have multiple services implementing
 the same interface and keep the argument name decorrelated of any implementation name
 (like shown in the example above).
 
@@ -601,7 +601,7 @@ Autowiring other Methods (e.g. Setters and Public Typed Properties)
 -------------------------------------------------------------------
 
 When autowiring is enabled for a service, you can *also* configure the container
-to call methods on your class when it's instantiated. For example, suppose you want
+to call methods on your class when it is instantiated. For example, suppose you want
 to inject the ``logger`` service, and decide to use setter-injection:
 
 .. configuration-block::
@@ -712,7 +712,7 @@ typed properties:
 Autowiring Controller Action Methods
 ------------------------------------
 
-If you're using the Symfony Framework, you can also autowire arguments to your controller
+If you are using the Symfony Framework, you can also autowire arguments to your controller
 action methods. This is a special case for autowiring, which exists for convenience.
 See :ref:`controller-accessing-services` for more details.
 

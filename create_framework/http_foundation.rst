@@ -9,7 +9,7 @@ top of the Symfony components is better than creating a framework from scratch.
 
 .. note::
 
-    We won't talk about the traditional benefits of using a framework when
+    We will not talk about the traditional benefits of using a framework when
     working on big applications with more than a few developers; the Internet
     already has plenty of good resources on that topic.
 
@@ -167,7 +167,7 @@ charge of sending the response whenever you see fit.
 
 .. note::
 
-    We haven't explicitly set the ``Content-Type`` header in the rewritten
+    We have not explicitly set the ``Content-Type`` header in the rewritten
     code as the charset of the Response object defaults to ``UTF-8``.
 
 With the ``Request`` class, you have all the request information at your

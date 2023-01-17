@@ -1,7 +1,7 @@
 Using a CDN
 ===========
 
-Are you deploying to a CDN? That's awesome :) Once you've made sure that your
+Are you deploying to a CDN? That's awesome :) Once you have made sure that your
 built files are uploaded to the CDN, configure it in Encore:
 
 .. code-block:: diff
@@ -30,7 +30,7 @@ e.g. ``https://my-cool-app.com.global.prod.fastly.net/dashboard.js``.
 
 .. note::
 
-    It's still your responsibility to put your assets on the CDN - e.g. by
+    It is still your responsibility to put your assets on the CDN - e.g. by
     uploading them or by using "origin pull", where your CDN pulls assets
     directly from your web server.
 

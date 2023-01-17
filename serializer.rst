@@ -90,7 +90,7 @@ As well as the following normalizers:
 Other :ref:`built-in normalizers <component-serializer-normalizers>` and
 custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` and
-:ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
+:ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It is also
 possible to set the priority of the tag in order to decide the matching order.
 
 .. caution::

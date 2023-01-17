@@ -6,16 +6,16 @@ us make a better Symfony.
 
 .. caution::
 
-    If you think you've found a security issue, please use the special
+    If you think you have found a security issue, please use the special
     :doc:`procedure <security>` instead.
 
 Before submitting a bug:
 
-* Double-check the official :doc:`documentation </index>` to see if you're not misusing the
+* Double-check the official :doc:`documentation </index>` to see if you are not misusing the
   framework;
 
 * Ask for assistance on `Stack Overflow`_, on the #support channel of
-  `the Symfony Slack`_ or on the ``#symfony`` `IRC channel`_ if you're not sure if
+  `the Symfony Slack`_ or on the ``#symfony`` `IRC channel`_ if you are not sure if
   your issue really is a bug.
 
 If your problem definitely looks like a bug, report it using the official bug

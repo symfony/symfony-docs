@@ -30,7 +30,7 @@ the `WebpackEncoreBundle`_, create the ``assets/`` directory, add a
 skip the rest of this article and go write your first JavaScript and CSS by
 reading :doc:`/frontend/encore/simple-example`!
 
-If you are not using Symfony Flex, you'll need to create all these directories
+If you are not using Symfony Flex, you will need to create all these directories
 and files by yourself following the instructions shown in the next section.
 
 Installing Encore in non Symfony Applications
@@ -66,7 +66,7 @@ is the main config file for both Webpack and Webpack Encore:
     const Encore = require('@symfony/webpack-encore');
 
     // Manually configure the runtime environment if not already configured yet by the "encore" command.
-    // It's useful when you use tools that rely on webpack.config.js file.
+    // It is useful when you use tools that rely on webpack.config.js file.
     if (!Encore.isRuntimeEnvironmentConfigured()) {
         Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
     }
@@ -94,7 +94,7 @@ is the main config file for both Webpack and Webpack Encore:
         .splitEntryChunks()
 
         // will require an extra script tag for runtime.js
-        // but, you probably want this, unless you're building a single-page app
+        // but, you probably want this, unless you are building a single-page app
         .enableSingleRuntimeChunk()
 
         /*
@@ -133,7 +133,7 @@ is the main config file for both Webpack and Webpack Encore:
         // requires WebpackEncoreBundle 1.4 or higher
         //.enableIntegrityHashes(Encore.isProduction())
 
-        // uncomment if you're having problems with a jQuery plugin
+        // uncomment if you are having problems with a jQuery plugin
         //.autoProvidejQuery()
     ;
 
@@ -171,7 +171,7 @@ And the new ``assets/styles/app.css`` file:
     }
 
 You should also add an ``assets/bootstrap.js`` file, which initializes Stimulus:
-a system that you'll learn about soon:
+a system that you will learn about soon:
 
 .. code-block:: javascript
 
@@ -198,7 +198,7 @@ the Stimulus system:
         "entrypoints": []
     }
 
-Finally, though it's optional, add the following ``scripts`` to your ``package.json``
+Finally, though it is optional, add the following ``scripts`` to your ``package.json``
 file so you can run the same commands in the rest of the documentation:
 
 .. code-block:: json
@@ -210,7 +210,7 @@ file so you can run the same commands in the rest of the documentation:
         "build": "encore production --progress"
     }
 
-You'll customize and learn more about these files in :doc:`/frontend/encore/simple-example`.
+You will customize and learn more about these files in :doc:`/frontend/encore/simple-example`.
 When you execute Encore, it will ask you to install a few more dependencies based
 on which features of Encore you have enabled.
 

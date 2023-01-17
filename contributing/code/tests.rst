@@ -7,7 +7,7 @@ The Symfony project uses a third-party service which automatically runs tests
 for any submitted :doc:`patch <pull_requests>`. If the new code breaks any test,
 the pull request will show an error message with a link to the full error details.
 
-In any case, it's a good practice to run tests locally before submitting a
+In any case, it is a good practice to run tests locally before submitting a
 :doc:`patch <pull_requests>` for inclusion, to check that you have not broken anything.
 
 .. _phpunit:

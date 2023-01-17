@@ -176,7 +176,7 @@ Content Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::newLine`
     It displays a blank line in the command output. Although it may seem useful,
-    most of the times you won't need it at all. The reason is that every helper
+    most of the times you will not need it at all. The reason is that every helper
     already adds their own blank lines, so you don't have to care about the
     vertical spacing::
 
@@ -295,7 +295,7 @@ User Input Methods
         });
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::askHidden`
-    It's very similar to the ``ask()`` method but the user's input will be hidden
+    It is very similar to the ``ask()`` method but the user's input will be hidden
     and it cannot define a default value. Use it when asking for sensitive information::
 
         $io->askHidden('What is your password?');
@@ -337,7 +337,7 @@ Result Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::success`
     It displays the given string or array of strings highlighted as a successful
-    message (with a green background and the ``[OK]`` label). It's meant to be
+    message (with a green background and the ``[OK]`` label). It is meant to be
     used once to display the final result of executing the given command, but you
     can use it repeatedly during the execution of the command::
 
@@ -353,9 +353,9 @@ Result Methods
         ]);
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::info`
-    It's similar to the ``success()`` method (the given string or array of strings
+    It is similar to the ``success()`` method (the given string or array of strings
     are displayed with a green background) but the ``[OK]`` label is not prefixed.
-    It's meant to be used once to display the final result of executing the given
+    It is meant to be used once to display the final result of executing the given
     command, without showing the result as a successful or failed one::
 
         // use simple strings for short info messages
@@ -375,7 +375,7 @@ Result Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::warning`
     It displays the given string or array of strings highlighted as a warning
-    message (with a red background and the ``[WARNING]`` label). It's meant to be
+    message (with a red background and the ``[WARNING]`` label). It is meant to be
     used once to display the final result of executing the given command, but you
     can use it repeatedly during the execution of the command::
 
@@ -392,7 +392,7 @@ Result Methods
 
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::error`
     It displays the given string or array of strings highlighted as an error
-    message (with a red background and the ``[ERROR]`` label). It's meant to be
+    message (with a red background and the ``[ERROR]`` label). It is meant to be
     used once to display the final result of executing the given command, but you
     can use it repeatedly during the execution of the command::
 
@@ -424,7 +424,7 @@ define your own set of console styles. Create a class that implements the
     }
 
 Then, instantiate this custom class instead of the default ``SymfonyStyle`` in
-your commands. Thanks to the ``StyleInterface`` you won't need to change the code
+your commands. Thanks to the ``StyleInterface`` you will not need to change the code
 of your commands to change their appearance::
 
     // src/Command/GreetCommand.php

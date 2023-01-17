@@ -203,7 +203,7 @@ this interface::
                 // ... send the link and return a response (see next section)
             }
 
-            // if it's not submitted, render the "login" form
+            // if it is not submitted, render the "login" form
             return $this->render('security/login.html.twig');
         }
 

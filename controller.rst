@@ -12,7 +12,7 @@ to render the content of a page.
 
 .. tip::
 
-    If you haven't already created your first working page, check out
+    If you have not already created your first working page, check out
     :doc:`/page_creation` and then come back!
 
 .. index::
@@ -58,7 +58,7 @@ This controller is pretty straightforward:
   the ``use`` keyword imports the ``Response`` class, which the controller
   must return.
 
-* *line 7*: The class can technically be called anything, but it's suffixed
+* *line 7*: The class can technically be called anything, but it is suffixed
   with ``Controller`` by convention.
 
 * *line 12*: The action method is allowed to have a ``$max`` argument thanks to the
@@ -110,7 +110,7 @@ Add the ``use`` statement atop your controller class and then modify
       }
 
 That's it! You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
-and many others that you'll learn about next.
+and many others that you will learn about next.
 
 .. index::
    single: Controller; Redirecting
@@ -175,7 +175,7 @@ and ``redirect()`` methods::
 Rendering Templates
 ~~~~~~~~~~~~~~~~~~~
 
-If you're serving HTML, you'll want to render a template. The ``render()``
+If you are serving HTML, you will want to render a template. The ``render()``
 method renders a template **and** puts that content into a ``Response``
 object for you::
 
@@ -357,7 +357,7 @@ HTTP status code::
     throw new \Exception('Something went wrong!');
 
 In every case, an error page is shown to the end user and a full debug
-error page is shown to the developer (i.e. when you're in "Debug" mode - see
+error page is shown to the developer (i.e. when you are in "Debug" mode - see
 :ref:`page-creation-environments`).
 
 To customize the error page that's shown to the user, see the
@@ -399,7 +399,7 @@ By design, flash messages are meant to be used exactly once: they vanish from
 the session automatically as soon as you retrieve them. This feature makes
 "flash" messages particularly great for storing user notifications.
 
-For example, imagine you're processing a :doc:`form </forms>` submission::
+For example, imagine you are processing a :doc:`form </forms>` submission::
 
 .. configuration-block::
 
@@ -578,7 +578,7 @@ access to some frequently used utilities such as ``render()`` and
 ``createNotFoundException()`` utility which is used to return a page not found
 response.
 
-In other articles, you'll learn how to use specific services from inside your controller
+In other articles, you will learn how to use specific services from inside your controller
 that will help you persist and fetch objects from a database, process form submissions,
 handle caching and more.
 

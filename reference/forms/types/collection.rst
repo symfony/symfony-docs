@@ -78,7 +78,7 @@ A much more flexible method would look like this:
 In both cases, no input fields would render unless your ``emails`` data
 array already contained some emails.
 
-In this simple example, it's still impossible to add new addresses or remove
+In this simple example, it is still impossible to add new addresses or remove
 existing addresses. Adding new addresses is possible by using the `allow_add`_
 option (and optionally the `prototype`_ option) (see example below). Removing
 emails from the ``emails`` array is possible with the `allow_delete`_ option.
@@ -87,7 +87,7 @@ Adding and Removing Items
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If `allow_add`_ is set to ``true``, then if any unrecognized items are submitted,
-they'll be added seamlessly to the array of items. This is great in theory,
+they will be added seamlessly to the array of items. This is great in theory,
 but takes a little bit more effort in practice to get the client-side JavaScript
 correct.
 
@@ -121,7 +121,7 @@ will look like this:
 By replacing ``__name__`` with some unique value (e.g. ``2``),
 you can build and insert new HTML fields into your form.
 
-Using jQuery, a simple example might look like this. If you're rendering
+Using jQuery, a simple example might look like this. If you are rendering
 your collection fields all at once (e.g. ``form_row(form.emails)``), then
 things are even easier because the ``data-prototype`` attribute is rendered
 automatically for you (with a slight difference - see note below) and all
@@ -184,11 +184,11 @@ And update the template as follows:
 
 .. tip::
 
-    If you're rendering the entire collection at once, then the prototype
+    If you are rendering the entire collection at once, then the prototype
     is automatically available on the ``data-prototype`` attribute of the
     element (e.g. ``div`` or ``table``) that surrounds your collection.
     The only difference is that the entire "form row" is rendered for you,
-    meaning you wouldn't have to wrap it in any container element as it
+    meaning you would not have to wrap it in any container element as it
     was done above.
 
 Field Options
@@ -211,9 +211,9 @@ the client side. For more information, see the above example and
 
 .. caution::
 
-    If you're embedding entire other forms to reflect a one-to-many database
+    If you are embedding entire other forms to reflect a one-to-many database
     relationship, you may need to manually ensure that the foreign key of
-    these new objects is set correctly. If you're using Doctrine, this won't
+    these new objects is set correctly. If you are using Doctrine, this will not
     happen automatically. See the above link for more details.
 
 allow_delete
@@ -225,13 +225,13 @@ If set to ``true``, then if an existing item is not contained in the submitted
 data, it will be correctly absent from the final array of items. This means
 that you can implement a "delete" button via JavaScript which removes a form
 element from the DOM. When the user submits the form, its absence from the
-submitted data will mean that it's removed from the final array.
+submitted data will mean that it is removed from the final array.
 
 For more information, see :ref:`form-collections-remove`.
 
 .. caution::
 
-    Be careful when using this option when you're embedding a collection
+    Be careful when using this option when you are embedding a collection
     of objects. In this case, if any embedded forms are removed, they *will*
     correctly be missing from the final array of objects. However, depending
     on your application logic, when one of those objects is removed, you
@@ -284,7 +284,7 @@ entry_options
 This is the array that's passed to the form type specified in the `entry_type`_
 option. For example, if you used the :doc:`ChoiceType </reference/forms/types/choice>`
 as your `entry_type`_ option (e.g. for a collection of drop-down menus),
-then you'd need to at least pass the ``choices`` option to the underlying
+then you would need to at least pass the ``choices`` option to the underlying
 type::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -310,7 +310,7 @@ entry_type
 
 This is the field type for each item in this collection (e.g. ``TextType``,
 ``ChoiceType``, etc). For example, if you have an array of email addresses,
-you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
+you would use the :doc:`EmailType </reference/forms/types/email>`. If you want
 to embed a collection of some other form, pass the form type class as this
 option (e.g. ``MyFormType::class``).
 
@@ -335,12 +335,12 @@ collection field:
 
     {{ form_row(form.emails.vars.prototype) }}
 
-Note that all you really need is the "widget", but depending on how you're
+Note that all you really need is the "widget", but depending on how you are
 rendering your form, having the entire "form row" may be easier for you.
 
 .. tip::
 
-    If you're rendering the entire collection field at once, then the prototype
+    If you are rendering the entire collection field at once, then the prototype
     form row is automatically available on the ``data-prototype`` attribute
     of the element (e.g. ``div`` or ``table``) that surrounds your collection.
 

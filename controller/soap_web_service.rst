@@ -20,7 +20,7 @@ create one from scratch or use a 3rd party generator.
 
 SOAP works by exposing the methods of a PHP object to an external entity
 (i.e. the person using the SOAP service). To start, create a class - ``HelloService`` -
-which represents the functionality that you'll expose in your SOAP service.
+which represents the functionality that you will expose in your SOAP service.
 In this case, the SOAP service will allow the client to call a method called
 ``hello``, which happens to send an email::
 
@@ -48,7 +48,7 @@ In this case, the SOAP service will allow the client to call a method called
         }
     }
 
-Next, make sure that your new class is registered as a service. If you're using
+Next, make sure that your new class is registered as a service. If you are using
 the :ref:`default services configuration <service-container-services-load-example>`,
 you don't need to do anything!
 
@@ -92,7 +92,7 @@ your controller to return a ``Response`` object with the output as its "content"
 You must also remember to set the ``"Content-Type"`` header to ``"text/xml"``, as
 this is what the client will expect. So, you use ``ob_start()`` to start
 buffering the STDOUT and use ``ob_get_clean()`` to dump the echoed output
-into the content of the Response and clear the output buffer. Finally, you're
+into the content of the Response and clear the output buffer. Finally, you are
 ready to return the ``Response``.
 
 Below is an example of calling the service using a native `SoapClient`_ client. This example

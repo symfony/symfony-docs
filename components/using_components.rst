@@ -7,7 +7,7 @@
 How to Install and Use the Symfony Components
 =============================================
 
-If you're starting a new project (or already have a project) that will use
+If you are starting a new project (or already have a project) that will use
 one or more components, the easiest way to integrate everything is with `Composer`_.
 Composer is smart enough to download the component(s) that you need and take
 care of autoloading so that you can begin using the libraries immediately.
@@ -18,7 +18,7 @@ this applies to using any component.
 Using the Finder Component
 --------------------------
 
-**1.** If you're creating a new project, create a new empty directory for it.
+**1.** If you are creating a new project, create a new empty directory for it.
 
 **2.** Open a terminal, step into this directory and use Composer to grab the library.
 

@@ -124,7 +124,7 @@ The following block shows all possible configuration keys:
     issues can make your version be considered a different number (e.g. ``5.7``
     will be rounded as ``5.6999999999999996447286321199499070644378662109375``).
 
-    If you don't define this option and you haven't created your database
+    If you don't define this option and you have not created your database
     yet, you may get ``PDOException`` errors because Doctrine will try to
     guess the database server version automatically and none is available.
 
@@ -228,7 +228,7 @@ can be placed directly under ``doctrine.orm`` config level.
                 # ...
 
 This shortened version is commonly used in other documentation sections.
-Keep in mind that you can't use both syntaxes at the same time.
+Keep in mind that you cannot use both syntaxes at the same time.
 
 Caching Drivers
 ~~~~~~~~~~~~~~~
@@ -276,7 +276,7 @@ you can control. The following configuration options exist for a mapping:
 ``type``
 ........
 
-One of ``annotation`` (for PHP annotations; it's the default value),
+One of ``annotation`` (for PHP annotations; it is the default value),
 ``attribute`` (for PHP attributes), ``xml``, ``yml``, ``php`` or
 ``staticphp``. This specifies which type of metadata type your mapping uses.
 
@@ -303,7 +303,7 @@ to be used in DQL queries or for Repository access.
 ``is_bundle``
 .............
 
-This option is ``false`` by default and it's considered a legacy option. It was
+This option is ``false`` by default and it is considered a legacy option. It was
 only useful in previous Symfony versions, when it was recommended to use bundles
 to organize the application code.
 
@@ -318,8 +318,8 @@ If you store metadata somewhere else in your bundle, you can define your
 own mappings, where you tell Doctrine exactly *where* to look, along with
 some other configurations.
 
-If you're using the ``auto_mapping`` configuration, you just need to overwrite
-the configurations you want. In this case it's important that the key of
+If you are using the ``auto_mapping`` configuration, you just need to overwrite
+the configurations you want. In this case it is important that the key of
 the mapping configurations corresponds to the name of the bundle.
 
 For example, suppose you decide to store your ``XML`` configuration for
@@ -437,18 +437,18 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 Detecting a Mapping Configuration Format
 ........................................
 
-If the ``type`` on the bundle configuration isn't set, the DoctrineBundle
+If the ``type`` on the bundle configuration is not set, the DoctrineBundle
 will try to detect the correct mapping configuration format for the bundle.
 
 DoctrineBundle will look for files matching ``*.orm.[FORMAT]`` (e.g.
-``Post.orm.yaml``) in the configured ``dir`` of your mapping (if you're mapping
+``Post.orm.yaml``) in the configured ``dir`` of your mapping (if you are mapping
 a bundle, then ``dir`` is relative to the bundle's directory).
 
 The bundle looks for (in this order) XML, YAML and PHP files.
 Using the ``auto_mapping`` feature, every bundle can have only one
 configuration format. The bundle will stop as soon as it locates one.
 
-If it wasn't possible to determine a configuration format for a bundle,
+If it was not possible to determine a configuration format for a bundle,
 the DoctrineBundle will check if there is an ``Entity`` folder in the bundle's
 root directory. If the folder exist, Doctrine will fall back to using an
 annotation driver.

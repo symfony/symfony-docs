@@ -205,13 +205,13 @@ use the ``ldap`` user provider.
 
     The Security component escapes provided input data when the LDAP user
     provider is used. However, the LDAP component itself does not provide
-    any escaping yet. Thus, it's your responsibility to prevent LDAP injection
+    any escaping yet. Thus, it is your responsibility to prevent LDAP injection
     attacks when using the component directly.
 
 .. caution::
 
     The user configured above in the user provider is only used to retrieve
-    data. It's a static user defined by its username and password (for improved
+    data. It is a static user defined by its username and password (for improved
     security, define the password as an environment variable).
 
     If your LDAP server allows retrieval of information anonymously, you can
@@ -257,7 +257,7 @@ default_roles
 **type**: ``array`` **default**: ``[]``
 
 This is the default role you wish to give to a user fetched from the LDAP
-server. If you do not configure this key, your users won't have any roles,
+server. If you do not configure this key, your users will not have any roles,
 and will not be considered as authenticated fully.
 
 uid_key
@@ -353,7 +353,7 @@ your users have the following two DN: ``dc=companyA,dc=example,dc=com`` and
 ``dc=example,dc=com``.
 
 Bear in mind that usernames must be unique across both DN, as the authentication
-provider won't be able to select the correct user for the bind process if more
+provider will not be able to select the correct user for the bind process if more
 than one is found.
 
 Examples are provided below, for both ``form_login_ldap`` and

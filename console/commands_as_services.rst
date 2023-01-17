@@ -4,7 +4,7 @@
 How to Define Commands as Services
 ==================================
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 your command classes are already registered as services. Great! This is the
 recommended setup.
 
@@ -50,7 +50,7 @@ For example, suppose you want to log something from within your command::
         }
     }
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the command class will automatically be registered as a service and passed the ``$logger``
 argument (thanks to autowiring). In other words, you only need to create this
 class and everything works automatically! You can call the ``app:sunshine``
@@ -60,7 +60,7 @@ command and start logging.
 
     You *do* have access to services in ``configure()``. However, if your command is
     not :ref:`lazy <console-command-service-lazy-loading>`, try to avoid doing any
-    work (e.g. making database queries), as that code will be run, even if you're using
+    work (e.g. making database queries), as that code will be run, even if you are using
     the console to execute a different command.
 
 .. _console-command-service-lazy-loading:

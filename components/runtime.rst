@@ -54,10 +54,10 @@ the component. This file runs the following logic:
 .. caution::
 
     If you use the Composer ``--no-plugins`` option, the ``autoload_runtime.php``
-    file won't be created.
+    file will not be created.
 
     If you use the Composer ``--no-scripts`` option, make sure your Composer version
-    is ``>=2.1.3``; otherwise the ``autoload_runtime.php`` file won't be created.
+    is ``>=2.1.3``; otherwise the ``autoload_runtime.php`` file will not be created.
 
 To make a console application, the bootstrap code would look like::
 
@@ -488,7 +488,7 @@ always using this ``ReactPHPRunner``::
                 return new ReactPHPRunner($application, $this->port);
             }
 
-            // if it's not a PSR-15 application, use the GenericRuntime to
+            // if it is not a PSR-15 application, use the GenericRuntime to
             // run the application (see "Resolvable Applications" above)
             return parent::getRunner($application);
         }

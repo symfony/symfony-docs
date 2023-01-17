@@ -75,7 +75,7 @@ database for you:
     $ php bin/console doctrine:database:create
 
 There are more options in ``config/packages/doctrine.yaml`` that you can configure,
-including your ``server_version`` (e.g. 5.7 if you're using MySQL 5.7), which may
+including your ``server_version`` (e.g. 5.7 if you are using MySQL 5.7), which may
 affect how Doctrine functions.
 
 .. tip::
@@ -86,7 +86,7 @@ affect how Doctrine functions.
 Creating an Entity Class
 ------------------------
 
-Suppose you're building an application where products need to be displayed.
+Suppose you are building an application where products need to be displayed.
 Without even thinking about Doctrine or databases, you already know that
 you need a ``Product`` object to represent those products.
 
@@ -168,7 +168,7 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
 
 .. note::
 
-    If you are using an SQLite database, you'll see the following error:
+    If you are using an SQLite database, you will see the following error:
     *PDOException: SQLSTATE[HY000]: General error: 1 Cannot add a NOT NULL
     column with default value NULL*. Add a ``nullable=true`` option to the
     ``description`` property to fix the problem.
@@ -179,11 +179,11 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
     InnoDB tables in MySQL 5.6 and earlier versions. String columns with 255
     character length and ``utf8mb4`` encoding surpass that limit. This means
     that any column of type ``string`` and ``unique=true`` must set its
-    maximum ``length`` to ``190``. Otherwise, you'll see this error:
+    maximum ``length`` to ``190``. Otherwise, you will see this error:
     *"[PDOException] SQLSTATE[42000]: Syntax error or access violation:
     1071 Specified key was too long; max key length is 767 bytes"*.
 
-This class is called an "entity". And soon, you'll be able to save and query Product
+This class is called an "entity". And soon, you will be able to save and query Product
 objects to a ``product`` table in your database. Each property in the ``Product``
 entity can be mapped to a column in that table. This is usually done with attributes:
 the ``#[ORM\Column(...)]`` comments that you see above each property:
@@ -335,7 +335,7 @@ them when you deploy.
 Persisting Objects to the Database
 ----------------------------------
 
-It's time to save a ``Product`` object to the database! Let's create a new controller
+It is time to save a ``Product`` object to the database! Let's create a new controller
 to experiment:
 
 .. code-block:: terminal
@@ -399,7 +399,7 @@ Take a look at the previous example in more detail:
   controller method.
 
 * **line 15** The ``$doctrine->getManager()`` method gets Doctrine's
-  *entity manager* object, which is the most important object in Doctrine. It's
+  *entity manager* object, which is the most important object in Doctrine. It is
   responsible for saving objects to, and fetching objects from, the database.
 
 * **lines 17-20** In this section, you instantiate and work with the ``$product``
@@ -409,7 +409,7 @@ Take a look at the previous example in more detail:
   ``$product`` object. This does **not** cause a query to be made to the database.
 
 * **line 26** When the ``flush()`` method is called, Doctrine looks through
-  all of the objects that it's managing to see if they need to be persisted
+  all of the objects that it is managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,
   creating a new row in the ``product`` table.
@@ -419,7 +419,7 @@ Take a look at the previous example in more detail:
     If the ``flush()`` call fails, a ``Doctrine\ORM\ORMException`` exception
     is thrown. See `Transactions and Concurrency`_.
 
-Whether you're creating or updating objects, the workflow is always the same: Doctrine
+Whether you are creating or updating objects, the workflow is always the same: Doctrine
 is smart enough to know if it should INSERT or UPDATE your entity.
 
 .. _automatic_object_validation:
@@ -445,7 +445,7 @@ some basic validation tasks::
         public function createProduct(ValidatorInterface $validator): Response
         {
             $product = new Product();
-            // This will trigger an error: the column isn't nullable in the database
+            // This will trigger an error: the column is not nullable in the database
             $product->setName(null);
             // This will trigger a type mismatch error: an integer is expected
             $product->setPrice('1999');
@@ -464,7 +464,7 @@ some basic validation tasks::
 Although the ``Product`` entity doesn't define any explicit
 :doc:`validation configuration </validation>`, Symfony introspects the Doctrine
 mapping configuration to infer some validation rules. For example, given that
-the ``name`` property can't be ``null`` in the database, a
+the ``name`` property cannot be ``null`` in the database, a
 :doc:`NotNull constraint </reference/constraints/NotNull>` is added automatically
 to the property (if it doesn't contain that constraint already).
 
@@ -630,14 +630,14 @@ Now, simplify your controller::
     }
 
 That's it! The bundle uses the ``{id}`` from the route to query for the ``Product``
-by the ``id`` column. If it's not found, a 404 page is generated.
+by the ``id`` column. If it is not found, a 404 page is generated.
 
 There are many more options you can use. Read more about the `ParamConverter`_.
 
 Updating an Object
 ------------------
 
-Once you've fetched an object from Doctrine, you interact with it the same as
+Once you have fetched an object from Doctrine, you interact with it the same as
 with any PHP model::
 
     // src/Controller/ProductController.php
@@ -678,7 +678,7 @@ Using Doctrine to edit an existing product consists of three steps:
 #. modifying the object;
 #. calling ``flush()`` on the entity manager.
 
-You *can* call ``$entityManager->persist($product)``, but it isn't necessary:
+You *can* call ``$entityManager->persist($product)``, but it is not necessary:
 Doctrine is already "watching" your object for changes.
 
 Deleting an Object
@@ -690,8 +690,8 @@ method of the entity manager::
     $entityManager->remove($product);
     $entityManager->flush();
 
-As you might expect, the ``remove()`` method notifies Doctrine that you'd
-like to remove the given object from the database. The ``DELETE`` query isn't
+As you might expect, the ``remove()`` method notifies Doctrine that you would
+like to remove the given object from the database. The ``DELETE`` query is not
 actually executed until the ``flush()`` method is called.
 
 .. _doctrine-queries:
@@ -699,7 +699,7 @@ actually executed until the ``flush()`` method is called.
 Querying for Objects: The Repository
 ------------------------------------
 
-You've already seen how the repository object allows you to run basic queries
+You have already seen how the repository object allows you to run basic queries
 without any work::
 
     // from inside a controller
@@ -792,7 +792,7 @@ based on PHP conditions)::
         public function findAllGreaterThanPrice(int $price, bool $includeUnavailableProducts = false): array
         {
             // automatically knows to select Products
-            // the "p" is an alias you'll use in the rest of the query
+            // the "p" is an alias you will use in the rest of the query
             $qb = $this->createQueryBuilder('p')
                 ->where('p.price > :price')
                 ->setParameter('price', $price)

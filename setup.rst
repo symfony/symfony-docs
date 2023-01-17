@@ -59,7 +59,7 @@ The only difference between these two commands is the number of packages
 installed by default. The ``--webapp`` option installs all the packages that you
 usually need to build web applications, so the installation size will be bigger.
 
-If you're not using the Symfony binary, run these commands to create the new
+If you are not using the Symfony binary, run these commands to create the new
 Symfony application using Composer:
 
 .. code-block:: terminal
@@ -74,7 +74,7 @@ Symfony application using Composer:
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_directory/`` directory, download some dependencies
-into it and even generate the basic directories and files you'll need to get
+into it and even generate the basic directories and files you will need to get
 started. In other words, your new application is ready!
 
 .. note::
@@ -103,7 +103,7 @@ Git, setup your project with the following commands:
     $ cd my-project/
     $ composer install
 
-You'll probably also need to customize your :ref:`.env file <config-dot-env>`
+You will probably also need to customize your :ref:`.env file <config-dot-env>`
 and do a few other project-specific tasks (e.g. creating a database). When
 working on a existing Symfony application for the first time, it may be useful
 to run this command which displays information about the project:
@@ -117,7 +117,7 @@ Running Symfony Applications
 
 In production, you should install a web server like Nginx or Apache and
 :doc:`configure it to run Symfony </setup/web_server_configuration>`. This
-method can also be used if you're not using the Symfony local web server for
+method can also be used if you are not using the Symfony local web server for
 development.
 
 .. _symfony-binary-web-server:
@@ -137,18 +137,18 @@ local web server as follows:
     $ symfony server:start
 
 Open your browser and navigate to ``http://localhost:8000/``. If everything is
-working, you'll see a welcome page. Later, when you are finished working, stop
+working, you will see a welcome page. Later, when you are finished working, stop
 the server by pressing ``Ctrl+C`` from your terminal.
 
 .. tip::
 
     The web server works with any PHP application, not only Symfony projects,
-    so it's a very useful generic development tool.
+    so it is a very useful generic development tool.
 
 Symfony Docker Integration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you'd like to use Docker with Symfony, see :doc:`setup/docker`
+If you would like to use Docker with Symfony, see :doc:`setup/docker`
 
 .. _symfony-flex:
 
@@ -179,7 +179,7 @@ following example:
     $ cd my-project/
     $ composer require logger
 
-If you run that command in a Symfony application which doesn't use Flex, you'll
+If you run that command in a Symfony application which doesn't use Flex, you will
 see a Composer error explaining that ``logger`` is not a valid package name.
 However, if the application has Symfony Flex installed, that command installs
 and enables all the packages needed to use the official Symfony logger.
@@ -219,7 +219,7 @@ For example, to add debugging features in your application, you can run the
 which in turn installs several packages like ``symfony/debug-bundle``,
 ``symfony/monolog-bundle``, ``symfony/var-dumper``, etc.
 
-You won't see the ``symfony/debug-pack`` dependency in your ``composer.json``,
+You will not see the ``symfony/debug-pack`` dependency in your ``composer.json``,
 as Flex automatically unpacks the pack. This means that it only adds the real
 packages as dependencies (e.g. you will see a new ``symfony/var-dumper`` in
 ``require-dev``). While it is not recommended, you can use the ``composer
@@ -287,7 +287,7 @@ The Symfony Demo application
 ----------------------------
 
 `The Symfony Demo Application`_ is a fully-functional application that shows the
-recommended way to develop Symfony applications. It's a great learning tool for
+recommended way to develop Symfony applications. It is a great learning tool for
 Symfony newcomers and its code contains tons of comments and helpful notes.
 
 Run this command to create a new project based on the Symfony Demo application:
@@ -299,7 +299,7 @@ Run this command to create a new project based on the Symfony Demo application:
 Start Coding!
 -------------
 
-With setup behind you, it's time to :doc:`Create your first page in Symfony </page_creation>`.
+With setup behind you, it is time to :doc:`Create your first page in Symfony </page_creation>`.
 
 Learn More
 ----------

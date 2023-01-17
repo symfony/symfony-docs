@@ -12,7 +12,7 @@ is mostly read-only after warm-up::
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
     use Symfony\Component\Cache\Adapter\PhpArrayAdapter;
 
-    // somehow, decide it's time to warm up the cache!
+    // somehow, decide it is time to warm up the cache!
     if ($needsWarmup) {
         // some static values
         $values = [

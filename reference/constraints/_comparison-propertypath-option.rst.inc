@@ -12,6 +12,6 @@ with regard to the ``$startDate`` property of the same object, use
 .. tip::
 
     When using this option, its value is available in error messages as the
-    ``{{ compared_value_path }}`` placeholder. Although it's not intended to
-    include it in the error messages displayed to end users, it's useful when
+    ``{{ compared_value_path }}`` placeholder. Although it is not intended to
+    include it in the error messages displayed to end users, it is useful when
     using APIs for doing any mapping logic on client-side.

@@ -8,10 +8,10 @@ This handler deals directly with the HTTP interface of Elasticsearch. This means
 it will slow down your application if Elasticsearch takes time to answer. Even
 if all HTTP calls are done asynchronously.
 
-In a development environment, it's fine to keep the default configuration: for
+In a development environment, it is fine to keep the default configuration: for
 each log, an HTTP request will be made to push the log to Elasticsearch.
 
-In a production environment, it's highly recommended to wrap this handler in a
+In a production environment, it is highly recommended to wrap this handler in a
 handler with buffering capabilities (like the ``FingersCrossedHandler`` or
 ``BufferHandler``) in order to call Elasticsearch only once with a bulk push. For
 even better performance and fault tolerance, a proper `ELK stack`_ is recommended.

@@ -5,7 +5,7 @@ How to Define Controllers as Services
 =====================================
 
 In Symfony, a controller does *not* need to be registered as a service. But if
-you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 and your controllers extend the `AbstractController`_ class, they *are* automatically
 registered as services. This means you can use dependency injection like any
 other normal service.

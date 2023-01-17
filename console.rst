@@ -121,15 +121,15 @@ want a command to create a user::
             // of the command. You can also use these constants to make code more readable
 
             // return this if there was no problem running the command
-            // (it's equivalent to returning int(0))
+            // (it is equivalent to returning int(0))
             return Command::SUCCESS;
 
             // or return this if some error happened during the execution
-            // (it's equivalent to returning int(1))
+            // (it is equivalent to returning int(1))
             // return Command::FAILURE;
 
             // or return this to indicate incorrect command usage; e.g. invalid options
-            // or missing arguments (it's equivalent to returning int(2))
+            // or missing arguments (it is equivalent to returning int(2))
             // return Command::INVALID
         }
     }
@@ -177,7 +177,7 @@ You can optionally define a description, help message and the
 
     If you want to always run the ``list`` command fast, add the ``--short`` option
     to it (``php bin/console list --short``). This will avoid instantiating command
-    classes, but it won't show any description for commands that use the
+    classes, but it will not show any description for commands that use the
     ``setDescription()`` method instead of the static property.
 
 .. versionadded:: 5.3
@@ -201,7 +201,7 @@ available in the ``configure()`` method::
         public function __construct(bool $requirePassword = false)
         {
             // best practices recommend to call the parent constructor first and
-            // then set your own properties. That wouldn't work in this case
+            // then set your own properties. That would not work in this case
             // because configure() needs the properties set in this constructor
             $this->requirePassword = $requirePassword;
 
@@ -247,8 +247,8 @@ In PHP 8 and newer versions, you can register the command by adding the
     The ability to use PHP attributes to configure commands was introduced in
     Symfony 5.3.
 
-If you can't use PHP attributes, register the command as a service and
-:doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
+If you cannot use PHP attributes, register the command as a service and
+:doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you are using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
@@ -261,7 +261,7 @@ After configuring and registering the command, you can run it in the terminal:
 
     $ php bin/console app:create-user
 
-As you might expect, this command will do nothing as you didn't write any logic
+As you might expect, this command will do nothing as you did not write any logic
 yet. Add your own logic inside the ``execute()`` method.
 
 Console Output

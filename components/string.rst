@@ -164,7 +164,7 @@ Each string object can be transformed into the other two types of objects::
     // the optional $fromEncoding argument defines the encoding of the original string
     $foo = (new ByteString('さよなら'))->toCodePointString('ISO-2022-JP');
 
-If the conversion is not possible for any reason, you'll get an
+If the conversion is not possible for any reason, you will get an
 :class:`Symfony\\Component\\String\\Exception\\InvalidArgumentException`.
 
 There is also a method to get the bytes stored at some position::
@@ -398,7 +398,7 @@ Methods to Join, Split, Truncate and Reverse
     u('Symfony is great')->slice(11);    // 'great'
     u('Symfony is great')->slice(-5);    // 'great'
 
-    // reduces the string to the length given as argument (if it's longer)
+    // reduces the string to the length given as argument (if it is longer)
     u('Lorem Ipsum')->truncate(3);             // 'Lor'
     u('Lorem Ipsum')->truncate(80);            // 'Lorem Ipsum'
     // the second argument is the character(s) added when a string is cut
@@ -482,7 +482,7 @@ letter A with ring above"*) or a sequence of two code points (``U+0061`` =
 Slugger
 -------
 
-In some contexts, such as URLs and file/directory names, it's not safe to use
+In some contexts, such as URLs and file/directory names, it is not safe to use
 any Unicode character. A *slugger* transforms a given string into another string
 that only includes safe ASCII characters::
 
@@ -594,7 +594,7 @@ class to convert English words from/to singular/plural with confidence::
     $result = $inflector->pluralize('news');      // ['news']
     $result = $inflector->pluralize('person');    // ['persons', 'people']
 
-The value returned by both methods is always an array because sometimes it's not
+The value returned by both methods is always an array because sometimes it is not
 possible to determine a unique singular/plural form for the given word.
 
 .. _`ASCII`: https://en.wikipedia.org/wiki/ASCII

@@ -537,4 +537,4 @@ This way you can test any user interaction (even complex ones) by passing the ap
 
     On Windows systems Symfony uses a special binary to implement hidden
     questions. This means that those questions don't use the default ``Input``
-    console object and therefore you can't test them on Windows.
+    console object and therefore you cannot test them on Windows.

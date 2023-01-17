@@ -153,7 +153,7 @@ All attributes on the parent service are shared with the child **except** for
 .. tip::
 
     In the examples shown, the classes sharing the same configuration also
-    extend from the same parent class in PHP. This isn't necessary at all.
+    extend from the same parent class in PHP. This is not necessary at all.
     You can also extract common parts of similar service definitions into
     a parent service without also extending a parent class in PHP.
 

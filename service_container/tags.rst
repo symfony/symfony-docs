@@ -186,7 +186,7 @@ some specific way.
 
 For example, if you are using the Symfony Mailer component you might want
 to implement a "transport chain", which is a collection of classes implementing
-``\MailerTransport``. Using the chain, you'll want Mailer to try several
+``\MailerTransport``. Using the chain, you will want Mailer to try several
 ways of transporting the message until one succeeds.
 
 To begin with, define the ``TransportChain`` class::
@@ -309,7 +309,7 @@ For example, you may add the following transports as services:
         };
 
 Notice that each service was given a tag named ``app.mail_transport``. This is
-the custom tag that you'll use in your compiler pass. The compiler pass is what
+the custom tag that you will use in your compiler pass. The compiler pass is what
 makes this tag "mean" something.
 
 .. _service-container-compiler-pass-tags:
@@ -496,7 +496,7 @@ To answer this, change the service declaration:
                 tags:
                     - { name: 'app.mail_transport' }
 
-Notice that you've added a generic ``alias`` key to the tag. To actually
+Notice that you have added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::
 
     use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;

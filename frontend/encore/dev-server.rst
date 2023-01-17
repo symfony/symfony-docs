@@ -17,10 +17,10 @@ This builds and serves the front-end assets from a new server. This server runs 
 This server does not actually write the files to disk; instead it serves them from memory,
 allowing for hot module reloading.
 
-As a consequence, the ``link`` and ``script`` tags need to point to the new server. If you're using the
+As a consequence, the ``link`` and ``script`` tags need to point to the new server. If you are using the
 ``encore_entry_script_tags()`` and ``encore_entry_link_tags()`` Twig shortcuts (or are
 :ref:`processing your assets through entrypoints.json <load-manifest-files>` in some other way),
-you're done: the paths in your templates will automatically point to the dev server.
+you are done: the paths in your templates will automatically point to the dev server.
 
 dev-server Options
 ------------------
@@ -62,8 +62,8 @@ method in your ``webpack.config.js`` file:
 Enabling HTTPS using the Symfony Web Server
 -------------------------------------------
 
-If you're using the :doc:`Symfony web server </setup/symfony_server>` locally with HTTPS,
-you'll need to also tell the dev-server to use HTTPS. To do this, you can reuse the Symfony web
+If you are using the :doc:`Symfony web server </setup/symfony_server>` locally with HTTPS,
+you will need to also tell the dev-server to use HTTPS. To do this, you can reuse the Symfony web
 server SSL certificate:
 
 .. code-block:: diff
@@ -105,14 +105,14 @@ the following option:
         })
 
 Beware that this is not a recommended security practice in general, but here
-it's required to solve the CORS issue.
+it is required to solve the CORS issue.
 
 Hot Module Replacement HMR
 --------------------------
 
 Hot module replacement is a superpower of the ``dev-server`` where styles and
 (in some cases) JavaScript can automatically update without needing to reload
-your page. HMR works automatically with CSS (as long as you're using the
+your page. HMR works automatically with CSS (as long as you are using the
 ``dev-server`` and Encore 1.0 or higher) but only works with some JavaScript
 (like :doc:`Vue.js </frontend/encore/vuejs>`).
 

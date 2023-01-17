@@ -11,7 +11,7 @@ field, while others display a native color picker.
 
 The value of the underlying ``<input type="color">`` field is always a
 7-character string specifying an RGB color in lower case hexadecimal notation.
-That's why it's not possible to select semi-transparent colors with this
+That's why it is not possible to select semi-transparent colors with this
 element.
 
 +---------------------------+---------------------------------------------------------------------+
@@ -42,7 +42,7 @@ html5
 
 When this option is set to ``true``, the form type checks that its value matches
 the `HTML5 color format`_ (``/^#[0-9a-f]{6}$/i``). If it doesn't match it,
-you'll see the following error message: *"This value is not a valid HTML5 color"*.
+you will see the following error message: *"This value is not a valid HTML5 color"*.
 
 Overridden Options
 ------------------

@@ -5,7 +5,7 @@
 
 .. tip::
 
-    Annotation classes aren't loaded automatically, so you must load them
+    Annotation classes are not loaded automatically, so you must load them
     using a class loader like this::
 
         use Composer\Autoload\ClassLoader;

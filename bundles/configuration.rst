@@ -6,7 +6,7 @@ How to Create Friendly Configuration for a Bundle
 =================================================
 
 If you open your main application configuration directory (usually
-``config/packages/``), you'll see a number of different files, such as
+``config/packages/``), you will see a number of different files, such as
 ``framework.yaml``, ``twig.yaml`` and ``doctrine.yaml``. Each of these
 configures a specific bundle, allowing you to define options at a high level and
 then let the bundle make all the low-level, complex changes based on your
@@ -103,7 +103,7 @@ load correct services and parameters inside an "Extension" class.
 .. note::
 
     The root key of your bundle configuration (``acme_social`` in the previous
-    example) is automatically determined from your bundle name (it's the
+    example) is automatically determined from your bundle name (it is the
     `snake case`_ of the bundle name without the ``Bundle`` suffix ).
 
 .. seealso::
@@ -231,7 +231,7 @@ thrown)::
         // $config['twitter']['client_id'] and $config['twitter']['client_secret']
     }
 
-The ``processConfiguration()`` method uses the configuration tree you've defined
+The ``processConfiguration()`` method uses the configuration tree you have defined
 in the ``Configuration`` class to validate, normalize and merge all the
 configuration arrays together.
 
@@ -306,7 +306,7 @@ In your extension, you can load this and dynamically set its arguments::
     Using the Config component is fully optional. The ``load()`` method gets an
     array of configuration values. You can instead parse these arrays yourself
     (e.g. by overriding configurations and using :phpfunction:`isset` to check
-    for the existence of a value). Be aware that it'll be very hard to support XML::
+    for the existence of a value). Be aware that it will be very hard to support XML::
 
         public function load(array $configs, ContainerBuilder $containerBuilder)
         {

@@ -6,7 +6,7 @@ Upgrading a Third-Party Bundle for a Major Symfony Version
 
 Symfony 3 was released in November 2015. Although this version doesn't contain
 any new features, it removes all the backward compatibility layers included in
-the previous 2.8 version. If your bundle uses any deprecated feature and it's
+the previous 2.8 version. If your bundle uses any deprecated feature and it is
 published as a third-party bundle, applications upgrading to Symfony 3 will no
 longer be able to use it.
 
@@ -46,7 +46,7 @@ The above example can be updated to work with Symfony 3 as follows:
 .. tip::
 
     Another common version constraint found on third-party bundles is ``>=2.N``.
-    You should avoid using that constraint because it's too generic (it means
+    You should avoid using that constraint because it is too generic (it means
     that your bundle is compatible with any future Symfony version). Use instead
     ``~2.N|~3.0`` or ``^2.N|~3.0`` to make your bundle future-proof.
 
@@ -54,7 +54,7 @@ Look for Deprecations and Fix Them
 ----------------------------------
 
 Besides allowing users to use your bundle with Symfony 3, your bundle must stop using
-any feature deprecated by the 2.8 version because they are removed in 3.0 (you'll get
+any feature deprecated by the 2.8 version because they are removed in 3.0 (you will get
 exceptions or PHP errors). The easiest way to detect deprecations is to install
 the `symfony/phpunit-bridge package`_ and then run the test suite.
 
@@ -108,7 +108,7 @@ of deprecated features:
 Testing your Bundle in Symfony 3
 --------------------------------
 
-Now that your bundle has removed all deprecations, it's time to test it for real
+Now that your bundle has removed all deprecations, it is time to test it for real
 in a Symfony 3 application. Assuming that you already have a Symfony 3 application,
 you can test the updated bundle locally without having to install it through
 Composer.
@@ -120,13 +120,13 @@ vendor directory to your local bundle root directory:
 
     $ ln -s /path/to/your/local/bundle/ vendor/you-vendor-name/your-bundle-name
 
-If your operating system doesn't support symbolic links, you'll need to copy
+If your operating system doesn't support symbolic links, you will need to copy
 your local bundle directory into the appropriate directory inside ``vendor/``.
 
 Update the Travis CI Configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In addition to running tools locally, it's recommended to set-up Travis CI service
+In addition to running tools locally, it is recommended to set-up Travis CI service
 to run the tests of your bundle using different Symfony configurations. Use the
 following recommended configuration as the starting point of your own configuration:
 
@@ -167,7 +167,7 @@ Updating your Code to Support Symfony 2.x and 3.x at the Same Time
 
 The real challenge of adding Symfony 3 support for your bundles is when you want
 to support both Symfony 2.x and 3.x simultaneously using the same code. There
-are some edge cases where you'll need to deal with the API differences.
+are some edge cases where you will need to deal with the API differences.
 
 Before diving into the specifics of the most common edge cases, the general
 recommendation is to **not rely on the Symfony Kernel version** to decide which

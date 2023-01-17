@@ -177,7 +177,7 @@ application:
 
 .. note::
 
-    The ``abc`` part of the header isn't important unless you have multiple
+    The ``abc`` part of the header is not important unless you have multiple
     "surrogates" that need to advertise their capabilities. See
     `Surrogate-Capability Header`_ for details.
 
@@ -211,7 +211,7 @@ Symfony adds automatically:
 
     If you followed the advice about ensuring a consistent caching
     behavior, those VCL functions already exist. Append the code
-    to the end of the function, they won't interfere with each other.
+    to the end of the function, they will not interfere with each other.
 
 .. index::
     single: Varnish; Invalidation

@@ -20,13 +20,13 @@ your page.
 Installing Symfony UX
 ---------------------
 
-Before you install any specific UX library, make sure you've installed
+Before you install any specific UX library, make sure you have installed
 :doc:`Webpack Encore </frontend/encore/installation>`.
 
 If you already have it installed, make sure you have an
 ``assets/bootstrap.js`` file (this initializes Stimulus & the UX packages),
 an ``assets/controllers.json`` file (this controls the 3rd party UX packages that
-you've installed) and ``.enableStimulusBridge('./assets/controllers.json')`` in
+you have installed) and ``.enableStimulusBridge('./assets/controllers.json')`` in
 your ``webpack.config.js`` file. If these are missing, try upgrading the
 ``symfony/webpack-encore-bundle`` Flex recipe. See
 :ref:`Upgrading Flex Recipes <updating-flex-recipes>`.
@@ -94,7 +94,7 @@ package will automatically register:
 * And all controllers described in ``assets/controllers.json`` as Stimulus controllers.
 
 The end result: you install a package, and you instantly have a Stimulus
-controller available! In this example, it's called
+controller available! In this example, it is called
 ``@symfony/ux-chartjs/chart``. Well, technically, it will be called
 ``symfony--ux-chartjs--chart``. However, you can pass the original name
 into the ``{{ stimulus_controller() }}`` function from WebpackEncoreBundle, and

@@ -165,7 +165,7 @@ CSS or any other language.
 Doctrine Entities/Documents
 ---------------------------
 
-If the bundle includes Doctrine ORM entities and/or ODM documents, it's
+If the bundle includes Doctrine ORM entities and/or ODM documents, it is
 recommended to define their mapping using XML files stored in
 ``Resources/config/doctrine/``. This allows to override that mapping using the
 :doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
@@ -255,7 +255,7 @@ Installation
 
 Bundles should set ``"type": "symfony-bundle"`` in their ``composer.json`` file.
 With this, :ref:`Symfony Flex <symfony-flex>` will be able to automatically
-enable your bundle when it's installed.
+enable your bundle when it is installed.
 
 If your bundle requires any setup (e.g. configuration, new files, changes to
 ``.gitignore``, etc), then you should create a `Symfony Flex recipe`_.
@@ -467,7 +467,7 @@ Services
 If the bundle defines services, they must be prefixed with the bundle alias
 instead of using fully qualified class names like you do in your project
 services. For example, AcmeBlogBundle services must be prefixed with ``acme_blog``.
-The reason is that bundles shouldn't rely on features such as service autowiring
+The reason is that bundles should not rely on features such as service autowiring
 or autoconfiguration to not impose an overhead when compiling application services.
 
 In addition, services not meant to be used by the application directly, should
@@ -508,7 +508,7 @@ The ``composer.json`` file should include at least the following metadata:
     a string (or array of strings) with a `valid license identifier`_, such as ``MIT``.
 
 ``autoload``
-    This information is used by Symfony to load the classes of the bundle. It's
+    This information is used by Symfony to load the classes of the bundle. It is
     recommended to use the `PSR-4`_ autoload standard: use the namespace as key,
     and the location of the bundle's main class (relative to ``composer.json``)
     as value. As the main class is located in the ``src/`` directory of the bundle:

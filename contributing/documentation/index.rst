@@ -5,7 +5,7 @@ These short articles explain everything you need to contribute to the Symfony
 documentation:
 
 :doc:`The Contribution Process </contributing/documentation/overview>`
-    Explains the steps to follow to contribute fixes and new contents. It's the
+    Explains the steps to follow to contribute fixes and new contents. It is the
     same contribution process followed by most open source projects, so you may
     already know everything that is needed.
 

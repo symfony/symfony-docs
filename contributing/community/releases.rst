@@ -37,8 +37,8 @@ is divided into two phases:
   for the whole Symfony ecosystem (third-party libraries, bundles, and
   projects using Symfony) to catch up.
 
-During the development phase, any new feature can be reverted if it won't be
-finished in time or if it won't be stable enough to be included in the current
+During the development phase, any new feature can be reverted if it will not be
+finished in time or if it will not be stable enough to be included in the current
 final release.
 
 .. tip::

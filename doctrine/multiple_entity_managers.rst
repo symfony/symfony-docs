@@ -170,10 +170,10 @@ The following configuration code shows how you can configure two entity managers
             ;
         };
 
-In this case, you've defined two entity managers and called them ``default``
+In this case, you have defined two entity managers and called them ``default``
 and ``customer``. The ``default`` entity manager manages entities in the
 ``src/Entity/Main`` directory, while the ``customer`` entity manager manages
-entities in ``src/Entity/Customer``. You've also defined two connections, one
+entities in ``src/Entity/Customer``. You have also defined two connections, one
 for each entity manager, but you are free to define the same connection for both.
 
 .. caution::

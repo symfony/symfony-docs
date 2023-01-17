@@ -250,7 +250,7 @@ representation of the object.
 
     Object serialization is specific to this implementation, other PHP YAML
     parsers will likely not recognize the ``php/object`` tag and non-PHP
-    implementations certainly won't - use with discretion!
+    implementations certainly will not - use with discretion!
 
 Parsing and Dumping Objects as Maps
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -514,7 +514,7 @@ escaped with double quotes:
   ``\_``, ``\L``, ``\P``
 
 Finally, there are other cases when the strings must be quoted, no matter if
-you're using single or double quotes:
+you are using single or double quotes:
 
 * When the string is ``true`` or ``false`` (otherwise, it would be treated as a
   boolean value);
@@ -558,7 +558,7 @@ where each line break is replaced by a space:
 .. note::
 
     Notice the two spaces before each line in the previous examples. They
-    won't appear in the resulting PHP strings.
+    will not appear in the resulting PHP strings.
 
 Numbers
 .......
@@ -760,7 +760,7 @@ The YAML specification defines some tags to set the type of any data explicitly:
 .. code-block:: yaml
 
     data:
-        # this value is parsed as a string (it's not transformed into a DateTime)
+        # this value is parsed as a string (it is not transformed into a DateTime)
         start_date: !!str 2002-12-14
 
         # this value is parsed as a float number (it will be 3.0 instead of 3)

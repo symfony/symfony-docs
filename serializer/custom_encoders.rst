@@ -15,7 +15,7 @@ to use another structure that's not supported.
 Creating a new encoder
 ----------------------
 
-Imagine you want to serialize and deserialize YAML. For that you'll have to
+Imagine you want to serialize and deserialize YAML. For that you will have to
 create your own encoder that uses the
 :doc:`Yaml Component </components/yaml>`::
 
@@ -61,12 +61,12 @@ Registering it in your app
 --------------------------
 
 If you use the Symfony Framework. then you probably want to register this encoder
-as a service in your app. If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+as a service in your app. If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that's done automatically!
 
 .. tip::
 
-    If you're not using :ref:`autoconfigure <services-autoconfigure>`, make sure
+    If you are not using :ref:`autoconfigure <services-autoconfigure>`, make sure
     to register your class as a service and tag it with ``serializer.encoder``.
 
-Now you'll be able to serialize and deserialize YAML!
+Now you will be able to serialize and deserialize YAML!

@@ -49,7 +49,7 @@ Symfony application.
 Step 1) Create a new Front Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Instead of creating the new front controller from scratch, it's easier to
+Instead of creating the new front controller from scratch, it is easier to
 duplicate the existing one. For example, create ``public/api.php`` from
 ``public/index.php``.
 
@@ -194,7 +194,7 @@ In Symfony applications, functional tests extend by default from the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase` class. Inside that
 class, a method called ``getKernelClass()`` tries to find the class of the kernel
 to use to run the application during tests. The logic of this method does not
-support multiple kernel applications, so your tests won't use the right kernel.
+support multiple kernel applications, so your tests will not use the right kernel.
 
 The solution is to create a custom base class for functional tests extending
 from ``WebTestCase`` class and overriding the ``getKernelClass()`` method to
@@ -227,7 +227,7 @@ return the fully qualified class name of the kernel to use::
 Adding more Kernels to the Application
 --------------------------------------
 
-If your application is very complex and you create several kernels, it's better
+If your application is very complex and you create several kernels, it is better
 to store them in their own directories instead of messing with lots of files in
 the default ``src/`` directory:
 

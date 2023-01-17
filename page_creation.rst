@@ -7,7 +7,7 @@
 Create your First Page in Symfony
 =================================
 
-Creating a new page - whether it's an HTML page or a JSON endpoint - is a
+Creating a new page - whether it is an HTML page or a JSON endpoint - is a
 two-step process:
 
 #. **Create a route**: A route is the URL (e.g. ``/about``) to your page and
@@ -37,7 +37,7 @@ Creating a Page: Route and Controller
 
 .. tip::
 
-    Before continuing, make sure you've read the :doc:`Setup </setup>`
+    Before continuing, make sure you have read the :doc:`Setup </setup>`
     article and can access your new Symfony app in the browser.
 
 Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (well,
@@ -82,11 +82,11 @@ you run off to play the lottery, check out how this works. Remember the two step
 to create a page?
 
 #. *Create a controller and a method*: This is a function where *you* build the page and ultimately
-   return a ``Response`` object. You'll learn more about :doc:`controllers </controller>`
+   return a ``Response`` object. You will learn more about :doc:`controllers </controller>`
    in their own section, including how to return JSON responses;
 
 #. *Create a route*: In ``config/routes.yaml``, the route defines the URL to your
-   page (``path``) and what ``controller`` to call. You'll learn more about :doc:`routing </routing>`
+   page (``path``) and what ``controller`` to call. You will learn more about :doc:`routing </routing>`
    in its own section, including how to make *variable* URLs.
 
 .. _annotation-routes:
@@ -152,7 +152,7 @@ You may not have noticed, but when you ran ``composer require annotations``, two
 special things happened, both thanks to a powerful Composer plugin called
 :ref:`Flex <symfony-flex>`.
 
-First, ``annotations`` isn't a real package name: it's an *alias* (i.e. shortcut)
+First, ``annotations`` is not a real package name: it is an *alias* (i.e. shortcut)
 that Flex resolves to ``sensio/framework-extra-bundle``.
 
 Second, after this package was downloaded, Flex runs a *recipe*, which is a
@@ -174,7 +174,7 @@ Try running it:
 
 You should see a list of commands that can give you debugging information, help generate
 code, generate database migrations and a lot more. As you install more packages,
-you'll see more commands.
+you will see more commands.
 
 To get a list of *all* of the routes in your system, use the ``debug:router`` command:
 
@@ -195,7 +195,7 @@ You should see your ``app_lucky_number`` route in the list:
 You will also see debugging routes besides ``app_lucky_number`` -- more on
 the debugging routes in the next section.
 
-You'll learn about many more commands as you continue!
+You will learn about many more commands as you continue!
 
 .. tip::
 
@@ -214,7 +214,7 @@ a *huge* amount of debugging information along the bottom of your page while
 developing. This is all included out of the box using a :ref:`Symfony pack <symfony-packs>`
 called ``symfony/profiler-pack``.
 
-You will see a dark bar along the bottom of the page. You'll learn more about
+You will see a dark bar along the bottom of the page. You will learn more about
 all the information it holds along the way, but feel free to experiment: hover
 over and click the different icons to get information about routing,
 performance, logging and more.
@@ -222,7 +222,7 @@ performance, logging and more.
 Rendering a Template
 --------------------
 
-If you're returning HTML from your controller, you'll probably want to render
+If you are returning HTML from your controller, you will probably want to render
 a template. Fortunately, Symfony comes with `Twig`_: a templating language that's
 minimal, powerful and actually quite fun.
 
@@ -290,13 +290,13 @@ Now you may wonder where the Web Debug Toolbar has gone: that's because there is
 no ``</body>`` tag in the current template. You can add the body element yourself,
 or extend ``base.html.twig``, which contains all default HTML elements.
 
-In the :doc:`templates </templates>` article, you'll learn all about Twig: how
+In the :doc:`templates </templates>` article, you will learn all about Twig: how
 to loop, render other templates and leverage its powerful layout inheritance system.
 
 Checking out the Project Structure
 ----------------------------------
 
-Great news! You've already worked inside the most important directories in your
+Great news! You have already worked inside the most important directories in your
 project:
 
 ``config/``
@@ -309,8 +309,8 @@ project:
 ``templates/``
     All your Twig templates live here.
 
-Most of the time, you'll be working in ``src/``, ``templates/`` or ``config/``.
-As you keep reading, you'll learn what can be done inside each of these.
+Most of the time, you will be working in ``src/``, ``templates/`` or ``config/``.
+As you keep reading, you will learn what can be done inside each of these.
 
 So what about the other directories in the project?
 
@@ -336,7 +336,7 @@ when needed.
 What's Next?
 ------------
 
-Congrats! You're already starting to master Symfony and learn a whole new
+Congrats! You are already starting to master Symfony and learn a whole new
 way of building beautiful, functional, fast and maintainable applications.
 
 OK, time to finish mastering the fundamentals by reading these articles:

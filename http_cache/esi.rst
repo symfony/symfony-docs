@@ -48,7 +48,7 @@ the ESI tags have been resolved, the gateway cache merges each into the main
 page and sends the final content to the client.
 
 All of this happens transparently at the gateway cache level (i.e. outside
-of your application). As you'll see, if you choose to take advantage of ESI
+of your application). As you will see, if you choose to take advantage of ESI
 tags, Symfony makes the process of including them almost effortless.
 
 .. _using-esi-in-symfony2:
@@ -143,7 +143,7 @@ if there is no gateway cache installed.
 
 .. tip::
 
-    As you'll see below, the ``maxPerPage`` variable you pass is available
+    As you will see below, the ``maxPerPage`` variable you pass is available
     as an argument to your controller (i.e. ``$maxPerPage``). The variables
     passed through ``render_esi`` also become part of the cache key so that
     you have unique caches for each combination of variables and values.
@@ -151,7 +151,7 @@ if there is no gateway cache installed.
 When using the default ``render()`` function (or setting the renderer to
 ``inline``), Symfony merges the included page content into the main one
 before sending the response to the client. But if you use the ``esi`` renderer
-(i.e. call ``render_esi()``) *and* if Symfony detects that it's talking to a
+(i.e. call ``render_esi()``) *and* if Symfony detects that it is talking to a
 gateway cache that supports ESI, it generates an ESI include tag. But if there
 is no gateway cache or if it does not support ESI, Symfony will just merge
 the included page content within the main one as it would have done if you had

@@ -162,7 +162,7 @@ before running them:
 
 Internally, the value of the debug mode becomes the ``kernel.debug``
 parameter used inside the :doc:`service container </service_container>`.
-If you look inside the application configuration file, you'll see the
+If you look inside the application configuration file, you will see the
 parameter used, for example, to turn Twig's debug mode on:
 
 .. configuration-block::
@@ -243,7 +243,7 @@ However, each environment caches its own set of files:
 
 Sometimes, when debugging, it may be helpful to inspect a cached file to
 understand how something is working. When doing so, remember to look in
-the directory of the environment you're using (most commonly ``dev/`` while
+the directory of the environment you are using (most commonly ``dev/`` while
 developing and debugging). While it can vary, the ``var/cache/dev/`` directory
 includes the following:
 

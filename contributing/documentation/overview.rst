@@ -17,12 +17,12 @@ Before Your First Contribution
 Fast Online Contributions
 -------------------------
 
-If you're making a relatively small change - like fixing a typo or rewording
+If you are making a relatively small change - like fixing a typo or rewording
 something - the easiest way to contribute is directly on GitHub! You can do this
-while you're reading the Symfony documentation.
+while you are reading the Symfony documentation.
 
 **Step 1.** Click on the **edit this page** button on the upper right corner
-and you'll be redirected to GitHub:
+and you will be redirected to GitHub:
 
 .. image:: /_images/contributing/docs-github-edit-page.png
    :align: center
@@ -57,8 +57,8 @@ Symfony Documentation.
 Your First Documentation Contribution
 -------------------------------------
 
-In this section, you'll learn how to contribute to the Symfony documentation for
-the first time. The next section will explain the shorter process you'll follow
+In this section, you will learn how to contribute to the Symfony documentation for
+the first time. The next section will explain the shorter process you will follow
 in the future for every contribution after your first one.
 
 Let's imagine that you want to improve the Setup guide. In order to make your
@@ -86,7 +86,7 @@ this command:
     $ cd symfony-docs/
     $ git remote add upstream https://github.com/symfony/symfony-docs.git
 
-If things went right, you'll see the following when listing the "remotes" of
+If things went right, you will see the following when listing the "remotes" of
 your project:
 
 .. code-block:: terminal
@@ -104,7 +104,7 @@ Fetch all the commits of the upstream branches by executing this command:
     $ git fetch upstream
 
 The purpose of this step is to allow you work simultaneously on the official
-Symfony repository and on your own fork. You'll see this in action in a moment.
+Symfony repository and on your own fork. You will see this in action in a moment.
 
 **Step 4.** Create a dedicated **new branch** for your changes. Use a short and
 memorable name for the new branch (if you are fixing a reported issue, use
@@ -166,7 +166,7 @@ which is the name of the branch you created and where you made your changes.
 A short phrase or paragraph describing the proposed changes is enough to ensure
 that your contribution can be reviewed.
 
-**Step 9.** Now that you've successfully submitted your first contribution to
+**Step 9.** Now that you have successfully submitted your first contribution to
 the Symfony documentation, **go and celebrate!**  The documentation managers
 will carefully review your work in short time and they will let you know about
 any required change.
@@ -192,7 +192,7 @@ profile, you will get a cool `Symfony Documentation Badge`_.
 Your Next Documentation Contributions
 -------------------------------------
 
-Check you out! You've made your first contribution to the Symfony documentation!
+Check you out! You have made your first contribution to the Symfony documentation!
 Somebody throw a party! Your first contribution took a little extra time because
 you had to learn a few standards and set up your computer. But from now on,
 your contributions will be much easier to complete.
@@ -224,7 +224,7 @@ contribution to the Symfony docs:
 
 After completing your next contributions, also watch your ranking improve on
 the list of `Symfony Documentation Contributors`_. You guessed right: after all
-this hard work, it's **time to celebrate again!**
+this hard work, it is **time to celebrate again!**
 
 Review your changes
 -------------------
@@ -254,7 +254,7 @@ into multiple branches, corresponding to the different versions of Symfony itsel
 The latest (e.g. ``5.x``) branch holds the documentation for the development branch of
 the code.
 
-Unless you're documenting a feature that was introduced after Symfony 5.4,
+Unless you are documenting a feature that was introduced after Symfony 5.4,
 your changes should always be based on the ``5.4`` branch. Documentation managers
 will use the necessary Git-magic to also apply your changes to all the active
 branches of the documentation.
@@ -266,11 +266,11 @@ You can do it. But please use one of these two prefixes to let reviewers know
 about the state of your work:
 
 * ``[WIP]`` (Work in Progress) is used when you are not yet finished with your
-  pull request, but you would like it to be reviewed. The pull request won't
+  pull request, but you would like it to be reviewed. The pull request will not
   be merged until you say it is ready.
 
-* ``[WCM]`` (Waiting Code Merge) is used when you're documenting a new feature
-  or change that hasn't been accepted yet into the core code. The pull request
+* ``[WCM]`` (Waiting Code Merge) is used when you are documenting a new feature
+  or change that has not been accepted yet into the core code. The pull request
   will not be merged until it is merged in the core code (or closed if the
   change is rejected).
 
@@ -278,7 +278,7 @@ Would You Accept a Huge Pull Request with Lots of Changes?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, make sure that the changes are somewhat related. Otherwise, please create
-separate pull requests. Anyway, before submitting a huge change, it's probably a
+separate pull requests. Anyway, before submitting a huge change, it is probably a
 good idea to open an issue in the Symfony Documentation repository to ask the
 managers if they agree with your proposed changes. Otherwise, they could refuse
 your proposal after you put all that hard work into making the changes. We

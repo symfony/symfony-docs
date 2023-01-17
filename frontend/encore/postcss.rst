@@ -17,7 +17,7 @@ First enable it in ``webpack.config.js``:
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
-Encore, you're done!
+Encore, you are done!
 
 Next, download any plugins you want, like ``autoprefixer``:
 

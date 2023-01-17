@@ -26,7 +26,7 @@ This will cause the call of ``StaticClass::getConstants()`` to not happen if the
 request is redirected and if there is no pre set or submitted data. Otherwise
 the choice options would need to be resolved thus triggering the callback.
 
-When you're defining a custom choice type that may be reused in many fields
+When you are defining a custom choice type that may be reused in many fields
 (like entries of a collection) or reused in multiple forms at once, you
 should use the :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList`
 static methods to wrap the loader and make the choice list cacheable for

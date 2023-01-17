@@ -34,7 +34,7 @@ simple. Hardcoding URLs can be a disadvantage because:
   carefully update the URLs of all assets included in all templates. The Asset
   component allows to move assets effortlessly just by changing the base path
   value associated with the package of assets;
-* **It's nearly impossible to use multiple CDNs**: this technique requires
+* **It is nearly impossible to use multiple CDNs**: this technique requires
   you to change the URL of the asset randomly for each request. The Asset component
   provides out-of-the-box support for any number of multiple CDNs, both regular
   (``http://``) and secure (``https://``).

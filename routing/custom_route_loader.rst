@@ -6,7 +6,7 @@ How to Create a custom Route Loader
 
 Basic applications can define all their routes in a single configuration file -
 usually ``config/routes.yaml`` (see :ref:`routing-creating-routes`).
-However, in most applications it's common to import routes definitions from
+However, in most applications it is common to import routes definitions from
 different resources: PHP annotations in controller files, YAML, XML or PHP
 files stored in some directory, etc.
 
@@ -83,7 +83,7 @@ Symfony provides several route loaders for the most common needs:
 .. note::
 
     When importing resources, the key (e.g. ``app_file``) is the name of the collection.
-    Just be sure that it's unique per file so no other lines override it.
+    Just be sure that it is unique per file so no other lines override it.
 
 If your application needs are different, you can create your own custom route
 loader as explained in the next section.
@@ -160,7 +160,7 @@ Loading Routes with a Custom Service
 ------------------------------------
 
 Using a regular Symfony service is the simplest way to load routes in a
-customized way. It's much easier than creating a full custom route loader, so
+customized way. It is much easier than creating a full custom route loader, so
 you should always consider this option first.
 
 To do so, define ``type: service`` as the type of the loaded routing resource
@@ -201,9 +201,9 @@ of the service whose ID is ``admin_route_loader``. Your service doesn't have to
 extend or implement any special class, but the called method must return a
 :class:`Symfony\\Component\\Routing\\RouteCollection` object.
 
-If you're using :ref:`autoconfigure <services-autoconfigure>`, your class should
+If you are using :ref:`autoconfigure <services-autoconfigure>`, your class should
 implement the :class:`Symfony\\Bundle\\FrameworkBundle\\Routing\\RouteLoaderInterface`
-interface to be tagged automatically. If you're **not using autoconfigure**,
+interface to be tagged automatically. If you are **not using autoconfigure**,
 tag it manually with ``routing.route_loader``.
 
 .. note::

@@ -192,7 +192,7 @@ that all have constraints on their properties.
 When the object implements ``\Traversable`` (like here with its child
 ``\IteratorAggregate``), its traversal strategy will implicitly be set and the
 object will be iterated over without defining the constraint.
-It's mostly useful to add it to be explicit or to disable the traversal using
+It is mostly useful to add it to be explicit or to disable the traversal using
 the ``traverse`` option.
 If a public getter exists to return the inner books collection like
 ``getBooks(): Collection``, the :doc:`/reference/constraints/Valid` constraint

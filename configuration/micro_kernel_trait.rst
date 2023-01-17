@@ -143,7 +143,7 @@ Advanced Example: Twig, Annotations and the Web Debug Toolbar
 The purpose of the ``MicroKernelTrait`` is *not* to have a single-file application.
 Instead, its goal to give you the power to choose your bundles and structure.
 
-First, you'll probably want to put your PHP classes in an ``src/`` directory. Configure
+First, you will probably want to put your PHP classes in an ``src/`` directory. Configure
 your ``composer.json`` file to load from there:
 
 .. code-block:: json
@@ -341,7 +341,7 @@ Finally, you need a front controller to boot and run the application. Create a
     $response->send();
     $kernel->terminate($request, $response);
 
-That's it! This ``/random/10`` URL will work, Twig will render, and you'll even
+That's it! This ``/random/10`` URL will work, Twig will render, and you will even
 get the web debug toolbar to show up at the bottom. The final structure looks like
 this:
 

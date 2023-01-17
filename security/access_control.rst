@@ -221,7 +221,7 @@ requests *except* those from a trusted, internal server.
 
 .. caution::
 
-    As you'll read in the explanation below the example, the ``ips`` option
+    As you will read in the explanation below the example, the ``ips`` option
     does not restrict to a specific IP address. Instead, using the ``ips``
     key means that the ``access_control`` entry will only match this IP address,
     and users accessing it from a different IP address will continue down

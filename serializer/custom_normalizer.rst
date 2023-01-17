@@ -13,7 +13,7 @@ Creating a New Normalizer
 -------------------------
 
 Imagine you want add, modify, or remove some properties during the serialization
-process. For that you'll have to create your own normalizer. But it's usually
+process. For that you will have to create your own normalizer. But it is usually
 preferable to let Symfony normalize the object, then hook into the normalization
 to customize the normalized data. To do that, leverage the ``ObjectNormalizer``::
 
@@ -59,7 +59,7 @@ Registering it in your Application
 
 Before using this normalizer in a Symfony application it must be registered as
 a service and :doc:`tagged </service_container/tags>` with ``serializer.normalizer``.
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is done automatically!
 
 Performance

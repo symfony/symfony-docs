@@ -15,7 +15,7 @@ via the ``Request`` object::
     }
 
 To set the user's locale, you may want to create a custom event listener so
-that it's set before any other parts of the system (i.e. the translator) need
+that it is set before any other parts of the system (i.e. the translator) need
 it::
 
         public function onKernelRequest(RequestEvent $event)
@@ -167,7 +167,7 @@ application.
 Setting a Default Locale
 ------------------------
 
-What if the user's locale hasn't been determined? You can guarantee that a
+What if the user's locale has not been determined? You can guarantee that a
 locale is set on each user's request by defining a ``default_locale`` for
 the framework:
 

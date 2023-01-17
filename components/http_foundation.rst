@@ -583,7 +583,7 @@ represented by a PHP callable instead of a string::
     been called before or the ``output_buffering`` ``php.ini`` option is enabled,
     you must call ``ob_flush()`` before ``flush()``.
 
-    Additionally, PHP isn't the only layer that can buffer output. Your web
+    Additionally, PHP is not the only layer that can buffer output. Your web
     server might also buffer based on its configuration. Some servers, such as
     nginx, let you disable buffering at the config level or by adding a special HTTP
     header in the response::
@@ -667,7 +667,7 @@ It is possible to delete the file after the response is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
-If the size of the served file is unknown (e.g. because it's being generated on the fly,
+If the size of the served file is unknown (e.g. because it is being generated on the fly,
 or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
 instance to ``BinaryFileResponse``. This will disable ``Range`` and ``Content-Length``
 handling, switching to chunked encoding instead::
@@ -737,7 +737,7 @@ The ``JsonResponse`` class sets the ``Content-Type`` header to
 JSONP Callback
 ~~~~~~~~~~~~~~
 
-If you're using JSONP, you can set the callback function that the data should
+If you are using JSONP, you can set the callback function that the data should
 be passed to::
 
     $response->setCallback('handleResponse');

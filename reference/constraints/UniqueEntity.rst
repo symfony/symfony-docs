@@ -136,7 +136,7 @@ between all of the rows in your user table:
 .. caution::
 
     This constraint cannot deal with duplicates found in a collection of items
-    that haven't been persisted as entities yet. You'll need to create your own
+    that have not been persisted as entities yet. You will need to create your own
     validator to handle that case.
 
 Options
@@ -148,7 +148,7 @@ em
 **type**: ``string``
 
 The name of the entity manager to use for making the query to determine
-the uniqueness. If it's left blank, the correct entity manager will be
+the uniqueness. If it is left blank, the correct entity manager will be
 determined for this class. For that reason, this option should probably
 not need to be used.
 
@@ -346,7 +346,7 @@ Parameter        Description
 
 **type**: ``string`` **default**: ``findBy``
 
-The name of the repository method used to determine the uniqueness. If it's left
+The name of the repository method used to determine the uniqueness. If it is left
 blank, ``findBy()`` will be used. The method receives as its argument a
 ``fieldName => value`` associative array (where ``fieldName`` is each of the
 fields configured in the ``fields`` option). The method should return a

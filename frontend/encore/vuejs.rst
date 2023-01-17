@@ -26,7 +26,7 @@ Want to use `Vue.js`_? No problem! First enable it in ``webpack.config.js``:
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
-Encore, you're done!
+Encore, you are done!
 
 Any ``.vue`` files that you require will be processed correctly. You can also
 configure the `vue-loader options`_ by passing an options callback to
@@ -108,14 +108,14 @@ You can enable `JSX with Vue.js`_ by configuring the second parameter of the
 
 Next, run or restart Encore. When you do, you will see an error message helping
 you install any missing dependencies. After running that command and restarting
-Encore, you're done!
+Encore, you are done!
 
 Your ``.jsx`` files will now be transformed through ``@vue/babel-preset-jsx``.
 
 Using styles
 ~~~~~~~~~~~~
 
-You can't use ``<style>`` in ``.jsx`` files. As a workaround, you can import
+You cannot use ``<style>`` in ``.jsx`` files. As a workaround, you can import
 ``.css``, ``.scss``, etc. files manually:
 
 .. code-block:: jsx
@@ -142,7 +142,7 @@ You can't use ``<style>`` in ``.jsx`` files. As a workaround, you can import
 Using Scoped Styles
 ~~~~~~~~~~~~~~~~~~~
 
-You can't use `Scoped Styles`_ (``<style scoped>``) either in ``.jsx`` files. As
+You cannot use `Scoped Styles`_ (``<style scoped>``) either in ``.jsx`` files. As
 a workaround, you can use `CSS Modules`_ by suffixing import paths with
 ``?module``:
 
@@ -177,7 +177,7 @@ The output will be something like ``<h1 class="title_a3dKp">Hello World</h1>``.
 Using images
 ~~~~~~~~~~~~
 
-You can't use ``<img src="./image.png">`` in ``.jsx`` files. As a workaround,
+You cannot use ``<img src="./image.png">`` in ``.jsx`` files. As a workaround,
 you can import them with ``require()`` function:
 
 .. code-block:: jsx

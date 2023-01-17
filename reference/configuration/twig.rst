@@ -112,7 +112,7 @@ charset
 
 **type**: ``string`` **default**: ``'%kernel.charset%'``
 
-The charset used by the template files. By default it's the same as the value of
+The charset used by the template files. By default it is the same as the value of
 the :ref:`kernel.charset container parameter <configuration-kernel-charset>`,
 which is ``UTF-8`` by default in Symfony applications.
 

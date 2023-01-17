@@ -3,7 +3,7 @@ Using Bootstrap CSS & JS
 
 This article explains how to install and integrate the `Bootstrap CSS framework`_
 in your Symfony application using :doc:`Webpack Encore </frontend>`.
-First, to be able to customize things further, we'll install ``bootstrap``:
+First, to be able to customize things further,  we will install ``bootstrap``:
 
 .. code-block:: terminal
 

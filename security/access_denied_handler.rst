@@ -52,7 +52,7 @@ unauthenticated user tries to access a protected resource::
         }
     }
 
-That's it if you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`.
+That's it if you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`.
 Otherwise, you have to register this service in the container.
 
 Now, configure this service ID as the entry point for the firewall:
@@ -129,8 +129,8 @@ response)::
         }
     }
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-you're done! Symfony will automatically know about your new service. You can then
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you are done! Symfony will automatically know about your new service. You can then
 configure it under your firewall:
 
 .. configuration-block::
@@ -199,7 +199,7 @@ configure a :ref:`kernel.exception listener <use-kernel-exception-event>`::
         {
             return [
                 // the priority must be greater than the Security HTTP
-                // ExceptionListener, to make sure it's called before
+                // ExceptionListener, to make sure it is called before
                 // the default exception listener
                 KernelEvents::EXCEPTION => ['onKernelException', 2],
             ];

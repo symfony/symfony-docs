@@ -30,7 +30,7 @@ means that you *may* need to include *multiple* ``script`` tags (or ``link`` tag
 for CSS) in your template. Encore creates an :ref:`entrypoints.json <encore-entrypointsjson-simple-description>`
 file that lists exactly which CSS and JavaScript files are needed for each entry.
 
-If you're using the ``encore_entry_link_tags()`` and ``encore_entry_script_tags()``
+If you are using the ``encore_entry_link_tags()`` and ``encore_entry_script_tags()``
 Twig functions from WebpackEncoreBundle, you don't need to do anything else! These
 functions automatically read this file and render as many ``script`` or ``link``
 tags as needed:

@@ -93,7 +93,7 @@ Entities & Entity Mapping
 -------------------------
 
 Overriding entity mapping is only possible if a bundle provides a mapped
-superclass (such as the ``User`` entity in the FOSUserBundle). It's possible to
+superclass (such as the ``User`` entity in the FOSUserBundle). It is possible to
 override attributes and associations in this way. Learn more about this feature
 and its limitations in `the Doctrine documentation`_.
 

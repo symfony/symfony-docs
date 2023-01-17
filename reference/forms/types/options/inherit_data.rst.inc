@@ -11,5 +11,5 @@ multiple forms. See :doc:`/form/inherit_data_option`.
 
     When a field has the ``inherit_data`` option set, it uses the data of
     the parent form as is. This means that
-    :doc:`Data Transformers </form/data_transformers>` won't be
+    :doc:`Data Transformers </form/data_transformers>` will not be
     applied to that field.

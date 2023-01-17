@@ -48,12 +48,12 @@ intercept_redirects
 **type**: ``boolean`` **default**: ``false``
 
 If a redirect occurs during an HTTP response, the browser follows it automatically
-and you won't see the toolbar or the profiler of the original URL, only the
+and you will not see the toolbar or the profiler of the original URL, only the
 redirected URL.
 
 When setting this option to ``true``, the browser *stops* before making any
 redirection and shows you the URL which is going to redirect to, its toolbar,
-and its profiler. Once you've inspected the toolbar/profiler data, you can click
+and its profiler. Once you have inspected the toolbar/profiler data, you can click
 on the given link to perform the redirect.
 
 toolbar

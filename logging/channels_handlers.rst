@@ -121,7 +121,7 @@ You can change the channel Monolog logs to one service at a time. This is done
 either via the :ref:`configuration <monolog-channels-config>` below
 or by tagging your service with :ref:`monolog.logger <dic_tags-monolog>` and
 specifying which channel the service should log to. With the tag, the logger
-that is injected into that service is preconfigured to use the channel you've
+that is injected into that service is preconfigured to use the channel you have
 specified.
 
 .. _monolog-channels-config:

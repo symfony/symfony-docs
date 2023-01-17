@@ -34,8 +34,8 @@ and ``manifest.json``. Each file is similar, and contains a map to the final, ve
 filenames.
 
 The first file – ``entrypoints.json`` – is used by the ``encore_entry_script_tags()``
-and ``encore_entry_link_tags()`` Twig helpers. If you're using these, then your
-CSS and JavaScript files will render with the new, versioned filename. If you're
+and ``encore_entry_link_tags()`` Twig helpers. If you are using these, then your
+CSS and JavaScript files will render with the new, versioned filename. If you are
 not using Symfony, your app will need to read this file in a similar way.
 
 The ``manifest.json`` file is only needed to get the versioned filename of *other*
@@ -51,7 +51,7 @@ the CSS and JavaScript files):
     }
 
 In your app, you need to read this file if you want to be able to link (e.g. via
-an ``img`` tag) to certain assets. If you're using Symfony, just activate the
+an ``img`` tag) to certain assets. If you are using Symfony, just activate the
 ``json_manifest_file`` versioning strategy:
 
 .. code-block:: yaml
@@ -82,7 +82,7 @@ symlink strategies.
 
 However, even when applying those techniques, there could be a lapse of time
 when some publicly/privately cached response requests the previous version of
-the assets. If your application can't afford to serve any broken asset, the best
+the assets. If your application cannot afford to serve any broken asset, the best
 solution is to use a CDN (or custom made service) that keeps all the old assets
 cached for some time.
 

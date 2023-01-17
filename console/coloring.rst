@@ -102,7 +102,7 @@ Commands can use the special ``<href>`` tag to display links similar to the
 
 If your terminal belongs to the `list of terminal emulators that support links`_
 you can click on the *"Symfony Homepage"* text to open its URL in your default
-browser. Otherwise, you'll see *"Symfony Homepage"* as regular text and the URL
+browser. Otherwise, you will see *"Symfony Homepage"* as regular text and the URL
 will be lost.
 
 .. _Cmder: https://github.com/cmderdev/cmder

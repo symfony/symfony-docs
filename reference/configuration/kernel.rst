@@ -88,7 +88,7 @@ Cache Directory
 **type**: ``string`` **default**: ``$this->getProjectDir()/var/cache/$this->environment``
 
 This returns the absolute path of the cache directory of your Symfony project.
-It's calculated automatically based on the current
+It is calculated automatically based on the current
 :ref:`environment <configuration-environments>`. Data might be written to this
 path at runtime.
 
@@ -125,7 +125,7 @@ Log Directory
 **type**: ``string`` **default**: ``$this->getProjectDir()/var/log``
 
 This returns the absolute path of the log directory of your Symfony project.
-It's calculated automatically based on the current
+It is calculated automatically based on the current
 :ref:`environment <configuration-environments>`.
 
 This value is exposed via the ``kernel.logs_dir`` configuration parameter and

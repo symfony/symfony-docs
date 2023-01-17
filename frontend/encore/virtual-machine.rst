@@ -112,11 +112,11 @@ the dev-server. To fix this, set the ``allowedHosts`` option:
 
 .. caution::
 
-    Beware that `it's not recommended to set allowedHosts to all`_ in general, but
-    here it's required to solve the issue when using Encore in a virtual machine.
+    Beware that `it is not recommended to set allowedHosts to all`_ in general, but
+    here it is required to solve the issue when using Encore in a virtual machine.
 
 .. _`VirtualBox`: https://www.virtualbox.org/
 .. _`VMWare`: https://www.vmware.com
 .. _`NFS`: https://en.wikipedia.org/wiki/Network_File_System
 .. _`polling`: https://webpack.js.org/configuration/watch/#watchoptionspoll
-.. _`it's not recommended to set allowedHosts to all`: https://webpack.js.org/configuration/dev-server/#devserverallowedhosts
+.. _`it is not recommended to set allowedHosts to all`: https://webpack.js.org/configuration/dev-server/#devserverallowedhosts

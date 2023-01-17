@@ -2,21 +2,21 @@ Flex: Compose your Application
 ==============================
 
 After reading the first part of this tutorial, you have decided that Symfony was
-worth another 10 minutes. Great choice! In this second part, you'll learn about
+worth another 10 minutes. Great choice! In this second part, you will learn about
 Symfony Flex: the amazing tool that makes adding new features as simple as running
-one command. It's also the reason why Symfony is ideal for a small micro-service
+one command. It is also the reason why Symfony is ideal for a small micro-service
 or a huge application. Curious? Perfect!
 
 Symfony: Start Micro!
 ---------------------
 
-Unless you're building a pure API (more on that soon!), you'll probably want to
-render HTML. To do that, you'll use `Twig`_. Twig is a flexible, fast, and secure
+Unless you are building a pure API (more on that soon!), you will probably want to
+render HTML. To do that, you will use `Twig`_. Twig is a flexible, fast, and secure
 template engine for PHP. It makes your templates more readable and concise; it also
 makes them more friendly for web designers.
 
 Is Twig already installed in our application? Actually, not yet! And that's great!
-When you start a new Symfony project, it's *small*:  only the most critical dependencies
+When you start a new Symfony project, it is *small*:  only the most critical dependencies
 are included in your ``composer.json`` file:
 
 .. code-block:: text
@@ -31,7 +31,7 @@ are included in your ``composer.json`` file:
 
 This makes Symfony different from any other PHP framework! Instead of starting with
 a *bulky* app with *every* possible feature you might ever need, a Symfony app is
-small, simple and *fast*. And you're in total control of what you add.
+small, simple and *fast*. And you are in total control of what you add.
 
 Flex Recipes and Aliases
 ------------------------
@@ -45,13 +45,13 @@ So how can we install and configure Twig? By running one single command:
 Two *very* interesting things happen behind the scenes thanks to Symfony Flex: a
 Composer plugin that is already installed in our project.
 
-First, ``twig`` is not the name of a Composer package: it's a Flex *alias* that
+First, ``twig`` is not the name of a Composer package: it is a Flex *alias* that
 points to ``symfony/twig-bundle``. Flex resolves that alias for Composer.
 
 And second, Flex installs a *recipe* for ``symfony/twig-bundle``. What's a recipe?
-It's a way for a library to automatically configure itself by adding and modifying
+It is a way for a library to automatically configure itself by adding and modifying
 files. Thanks to recipes, adding features is seamless and automated: install a package
-and you're done!
+and you are done!
 
 You can find a full list of recipes and aliases inside `RECIPES.md on the recipes repository`_.
 
@@ -107,7 +107,7 @@ methods and tools, like ``render()``. Create the new template:
     <h1>Hello {{ name }}</h1>
 
 That's it! The ``{{ name }}`` syntax will print the ``name`` variable that's passed
-in from the controller. If you're new to Twig, welcome! You'll learn more about
+in from the controller. If you are new to Twig, welcome! You will learn more about
 its syntax and power later.
 
 But, right now, the page *only* contains the ``h1`` tag. To give it an HTML layout,
@@ -128,7 +128,7 @@ This is called template inheritance: our page now inherits the HTML structure fr
 Profiler: Debugging Paradise
 ----------------------------
 
-One of the *coolest* features of Symfony isn't even installed yet! Let's fix that:
+One of the *coolest* features of Symfony is not even installed yet! Let's fix that:
 
 .. code-block:: terminal
 
@@ -137,13 +137,13 @@ One of the *coolest* features of Symfony isn't even installed yet! Let's fix tha
 Yes! This is another alias! And Flex *also* installs another recipe, which automates
 the configuration of Symfony's Profiler. What's the result? Refresh!
 
-See that black bar on the bottom? That's the web debug toolbar, and it's your new
+See that black bar on the bottom? That's the web debug toolbar, and it is your new
 best friend. By hovering over each icon, you can get information about what controller
 was executed, performance information, cache hits & misses and a lot more. Click
 any icon to go into the *profiler* where you have even *more* detailed debugging
 and performance data!
 
-Oh, and as you install more libraries, you'll get more tools (like a web debug toolbar
+Oh, and as you install more libraries, you will get more tools (like a web debug toolbar
 icon that shows database queries).
 
 You can now directly use the profiler because it configured *itself* thanks to
@@ -259,10 +259,10 @@ app back in its original state. Experiment without worry.
 More Features, Architecture and Speed
 -------------------------------------
 
-I hope you're as excited about Flex as I am! But we still have *one* more chapter,
-and it's the most important yet. I want to show you how Symfony empowers you to quickly
-build features *without* sacrificing code quality or performance. It's all about
-the service container, and it's Symfony's super power. Read on: about :doc:`/quick_tour/the_architecture`.
+I hope you are as excited about Flex as I am! But we still have *one* more chapter,
+and it is the most important yet. I want to show you how Symfony empowers you to quickly
+build features *without* sacrificing code quality or performance. It is all about
+the service container, and it is Symfony's super power. Read on: about :doc:`/quick_tour/the_architecture`.
 
 .. _`RECIPES.md on the recipes repository`: https://github.com/symfony/recipes/blob/flex/main/RECIPES.md
 .. _`API Platform`: https://api-platform.com/

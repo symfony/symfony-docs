@@ -135,7 +135,7 @@ By design, flash messages are meant to be used exactly once: they vanish from
 the session automatically as soon as you retrieve them. This feature makes
 "flash" messages particularly great for storing user notifications.
 
-For example, imagine you're processing a :doc:`form </forms>` submission::
+For example, imagine you are processing a :doc:`form </forms>` submission::
 
 .. configuration-block::
 
@@ -184,7 +184,7 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
 
 After processing the request, the controller sets a flash message in the session
 and then redirects. The message key (``notice`` in this example) can be anything:
-you'll use this key to retrieve the message.
+you will use this key to retrieve the message.
 
 In the template of the next page (or even better, in your base layout template),
 read any flash messages from the session using the ``flashes()`` method provided
@@ -240,7 +240,7 @@ by the :ref:`Twig global app variable <twig-app-variable>`:
             }
         }
 
-It's common to use ``notice``, ``warning`` and ``error`` as the keys of the
+It is common to use ``notice``, ``warning`` and ``error`` as the keys of the
 different types of flash messages, but you can use any key that fits your
 needs.
 
@@ -462,7 +462,7 @@ Store Sessions in a Database
 ----------------------------
 
 Symfony stores sessions in files by default. If your application is served by
-multiple servers, you'll need to use a database instead to make sessions work
+multiple servers, you will need to use a database instead to make sessions work
 across different servers.
 
 Symfony can store sessions in all kinds of databases (relational, NoSQL and
@@ -872,7 +872,7 @@ to set up this table for you according to the database engine used::
         // the table could not be created for some reason
     }
 
-If you prefer to set up the table yourself, it's recommended to generate an
+If you prefer to set up the table yourself, it is recommended to generate an
 empty database migration with the following command:
 
 .. code-block:: terminal
@@ -1165,7 +1165,7 @@ Making the Locale "Sticky" during a User's Session
 
 Symfony stores the locale setting in the Request, which means that this setting
 is not automatically saved ("sticky") across requests. But, you *can* store the
-locale in the session, so that it's used on subsequent requests.
+locale in the session, so that it is used on subsequent requests.
 
 Creating a LocaleSubscriber
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1215,8 +1215,8 @@ can determine the correct locale however you want::
         }
     }
 
-If you're using the :ref:`default services.yaml configuration
-<service-container-services-load-example>`, you're done! Symfony will
+If you are using the :ref:`default services.yaml configuration
+<service-container-services-load-example>`, you are done! Symfony will
 automatically know about the event subscriber and call the ``onKernelRequest``
 method on each request.
 
@@ -1272,7 +1272,7 @@ via some "Change Locale" route & controller), or create a route with the
                 // ->addTag('kernel.event_subscriber')
             ;
 
-Now celebrate by changing the user's locale and seeing that it's sticky
+Now celebrate by changing the user's locale and seeing that it is sticky
 throughout the request.
 
 Remember, to get the user's locale, always use the :method:`Request::getLocale
@@ -1360,7 +1360,7 @@ a custom save handler by defining a class that extends the
 class.
 
 Then, define the class as a :ref:`service
-<service-container-creating-service>`. If you're using the :ref:`default
+<service-container-creating-service>`. If you are using the :ref:`default
 services.yaml configuration <service-container-services-load-example>`, that
 happens automatically.
 
@@ -1497,7 +1497,7 @@ intercept the session before it is written::
 Integrating with Legacy Applications
 ------------------------------------
 
-If you're integrating the Symfony full-stack Framework into a legacy
+If you are integrating the Symfony full-stack Framework into a legacy
 application that starts the session with ``session_start()``, you may still be
 able to use Symfony's session management by using the PHP Bridge session.
 

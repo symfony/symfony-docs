@@ -215,7 +215,7 @@ Before defining the children of an array node, you can provide options like:
     ``isRequired()`` is also called).
 ``addDefaultsIfNotSet()``
     If any child nodes have default values, use them if explicit values
-    haven't been provided.
+    have not been provided.
 ``normalizeKeys(false)``
     If called (with ``false``), keys with dashes are *not* normalized to underscores.
     It is recommended to use this with prototype nodes where the user will define
@@ -657,7 +657,7 @@ normalization would make both of these ``auto_connect``.
 
 .. caution::
 
-    The target key will not be altered if it's mixed like
+    The target key will not be altered if it is mixed like
     ``foo-bar_moo`` or if it already exists.
 
 Another difference between YAML and XML is in the way arrays of values may

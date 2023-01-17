@@ -115,7 +115,7 @@ Translation of text is done through the  ``translator`` service
 (:class:`Symfony\\Component\\Translation\\Translator`). To translate a block
 of text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
-for example, that you're translating a static message from inside a controller::
+for example, that you are translating a static message from inside a controller::
 
     // ...
     use Symfony\Contracts\Translation\TranslatorInterface;
@@ -193,7 +193,7 @@ idea of the message. The keyword message is then used as the "id" for
 any translations. In this case, translations must be made for the default
 locale (i.e. to translate ``symfony.great`` to ``Symfony is great``).
 
-The second method is handy because the message key won't need to be changed
+The second method is handy because the message key will not need to be changed
 in every translation file if you decide that the message should actually
 read "Symfony is really great" in the default locale.
 
@@ -335,7 +335,7 @@ all the information needed to fully translate its contents when needed::
 
     use Symfony\Component\Translation\TranslatableMessage;
 
-    // the first argument is required and it's the original message
+    // the first argument is required and it is the original message
     $message = new TranslatableMessage('Symfony is great!');
     // the optional second argument defines the translation parameters and
     // the optional third argument is the translation domain
@@ -539,7 +539,7 @@ provides many loaders:
 
 The choice of which loader to use is entirely up to you and is a matter of
 taste. The recommended option is to use YAML for simple projects and use XLIFF
-if you're generating translations with specialized programs or teams.
+if you are generating translations with specialized programs or teams.
 
 .. caution::
 
@@ -643,14 +643,14 @@ use Loco. First, install it:
 
     $ composer require symfony/loco-translation-provider
 
-You'll now have a new line in your ``.env`` file that you can uncomment:
+You will now have a new line in your ``.env`` file that you can uncomment:
 
 .. code-block:: env
 
     # .env
     LOCO_DSN=loco://API_KEY@default
 
-The ``LOCO_DSN`` isn't a *real* address: it's a convenient format that offloads
+The ``LOCO_DSN`` is not a *real* address: it is a convenient format that offloads
 most of the configuration work to Symfony. The ``loco`` scheme activates the
 Loco provider that you just installed, which knows all about how to push and
 pull translations via Loco. The *only* part you need to change is the
@@ -781,21 +781,21 @@ to learn more about how to handle it.
 Fallback Translation Locales
 ----------------------------
 
-Imagine that the user's locale is ``es_AR`` and that you're translating the
+Imagine that the user's locale is ``es_AR`` and that you are translating the
 key ``Symfony is great``. To find the Spanish translation, Symfony actually
 checks translation resources for several locales:
 
 #. First, Symfony looks for the translation in a ``es_AR`` (Argentinean
    Spanish) translation resource (e.g. ``messages.es_AR.yaml``);
 
-#. If it wasn't found, Symfony looks for the translation in the
+#. If it was not found, Symfony looks for the translation in the
    parent locale, which is automatically defined only for some locales. In
    this example, the parent locale is ``es_419`` (Latin American Spanish);
 
-#. If it wasn't found, Symfony looks for the translation in a ``es``
+#. If it was not found, Symfony looks for the translation in a ``es``
    (Spanish) translation resource (e.g. ``messages.es.yaml``);
 
-#. If the translation still isn't found, Symfony uses the ``fallbacks`` option,
+#. If the translation still is not found, Symfony uses the ``fallbacks`` option,
    which can be configured as follows:
 
    .. configuration-block::
@@ -842,7 +842,7 @@ checks translation resources for several locales:
 
 .. note::
 
-    When Symfony can't find a translation in the given locale, it will
+    When Symfony cannot find a translation in the given locale, it will
     add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
 

@@ -80,7 +80,7 @@ for new output before going to the next iteration::
 
 The ``mustRun()`` method is identical to ``run()``, except that it will throw
 a :class:`Symfony\\Component\\Process\\Exception\\ProcessFailedException`
-if the process couldn't be executed successfully (i.e. the process exited
+if the process could not be executed successfully (i.e. the process exited
 with a non-zero code)::
 
     use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -100,7 +100,7 @@ with a non-zero code)::
 
     You can get the last output time in seconds by using the
     :method:`Symfony\\Component\\Process\\Process::getLastOutputTime` method.
-    This method returns ``null`` if the process wasn't started!
+    This method returns ``null`` if the process was not started!
 
 Configuring Process Options
 ---------------------------
@@ -202,7 +202,7 @@ anonymous function to the
 
 .. note::
 
-    This feature won't work as expected in servers using PHP output buffering.
+    This feature will not work as expected in servers using PHP output buffering.
     In those cases, either disable the `output_buffering`_ PHP option or use the
     :phpfunction:`ob_flush` PHP function to force sending the output buffer.
 
@@ -259,8 +259,8 @@ are done doing other stuff::
 
     Beware also that if you do that, the said PHP-FPM process will not be
     available to serve any new request until the subprocess is finished. This
-    means you can quickly block your FPM pool if you're not careful enough.
-    That is why it's generally way better not to do any fancy things even
+    means you can quickly block your FPM pool if you are not careful enough.
+    That is why it is generally way better not to do any fancy things even
     after the request is sent, but to use a job queue instead.
 
 :method:`Symfony\\Component\\Process\\Process::wait` takes one optional argument:

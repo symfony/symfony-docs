@@ -4,11 +4,11 @@
 Upgrading a Minor Version (e.g. 5.0.0 to 5.1.0)
 ===============================================
 
-If you're upgrading a minor version (where the middle number changes), then
+If you are upgrading a minor version (where the middle number changes), then
 you should *not* encounter significant backward compatibility changes. For
 details, see the :doc:`Symfony backward compatibility promise </contributing/code/bc>`.
 
-However, some backwards-compatibility breaks *are* possible and you'll learn in
+However, some backwards-compatibility breaks *are* possible and you will learn in
 a second how to prepare for them.
 
 There are two steps to upgrading a minor version:
@@ -78,7 +78,7 @@ Next, use Composer to download new versions of the libraries:
 --------------------------------------------------
 
 In theory, you should be done! However, you *may* need to make a few changes
-to your code to get everything working. Additionally, some features you're
+to your code to get everything working. Additionally, some features you are
 using might still work, but might now be deprecated. While that's fine,
 if you know about these deprecations, you can start to fix them over time.
 

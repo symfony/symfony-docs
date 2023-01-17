@@ -18,8 +18,8 @@ with lots of debug information to help you discover the root problem:
    :align: center
    :class: with-browser
 
-Since these pages contain a lot of sensitive internal information, Symfony won't
-display them in the production environment. Instead, it'll show a minimal and
+Since these pages contain a lot of sensitive internal information, Symfony will not
+display them in the production environment. Instead, it will show a minimal and
 generic **error page**:
 
 .. image:: /_images/controller/error_pages/errors-in-prod-environment.png
@@ -102,7 +102,7 @@ To override the 404 error template for HTML pages, create a new
         <h1>Page not found</h1>
 
         <p>
-            The requested page couldn't be located. Checkout for any URL
+            The requested page could not be located. Checkout for any URL
             misspelling or <a href="{{ path('homepage') }}">return to the homepage</a>.
         </p>
     {% endblock %}
@@ -140,7 +140,7 @@ user is logged out on the 404 page (it will work while testing, but not on produ
 Testing Error Pages during Development
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-While you're in the development environment, Symfony shows the big *exception*
+While you are in the development environment, Symfony shows the big *exception*
 page instead of your shiny new customized error page. So, how can you see
 what it looks like and debug it?
 

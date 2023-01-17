@@ -95,7 +95,7 @@ You can access the ``names`` argument as an array::
 There are three argument variants you can use:
 
 ``InputArgument::REQUIRED``
-    The argument is mandatory. The command doesn't run if the argument isn't
+    The argument is mandatory. The command doesn't run if the argument is not
     provided;
 
 ``InputArgument::OPTIONAL``
@@ -171,7 +171,7 @@ flag:
     Hi Fabien!
     Hi Fabien!
 
-    # the order of options isn't important
+    # the order of options is not important
     $ php bin/console app:greet Fabien --iterations=5 --yell
     $ php bin/console app:greet Fabien --yell --iterations=5
     $ php bin/console app:greet --yell --iterations=5 Fabien
@@ -250,7 +250,7 @@ Options with optional arguments
 -------------------------------
 
 There is nothing forbidding you to create a command with an option that
-optionally accepts a value, but it's a bit tricky. Consider this example::
+optionally accepts a value, but it is a bit tricky. Consider this example::
 
     // ...
     use Symfony\Component\Console\Input\InputOption;
@@ -266,7 +266,7 @@ optionally accepts a value, but it's a bit tricky. Consider this example::
     ;
 
 This option can be used in 3 ways: ``greet --yell``, ``greet --yell=louder``,
-and ``greet``. However, it's hard to distinguish between passing the option
+and ``greet``. However, it is hard to distinguish between passing the option
 without a value (``greet --yell``) and not passing the option (``greet``).
 
 To solve this issue, you have to set the option's default value to ``false``::
@@ -285,7 +285,7 @@ To solve this issue, you have to set the option's default value to ``false``::
         )
     ;
 
-Now it's possible to differentiate between not passing the option and not
+Now it is possible to differentiate between not passing the option and not
 passing any value for it::
 
     $optionValue = $input->getOption('yell');

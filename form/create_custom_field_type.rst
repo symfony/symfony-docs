@@ -6,7 +6,7 @@ How to Create a Custom Form Field Type
 
 Symfony comes with :doc:`tens of form types </reference/forms/types>` (called
 "form fields" in other projects) ready to use in your applications. However,
-it's common to create custom form types to solve specific purposes in your
+it is common to create custom form types to solve specific purposes in your
 projects.
 
 Creating Form Types Based on Symfony Built-in Types
@@ -100,7 +100,7 @@ following set of fields as the "postal address":
     <object data="../_images/form/form-custom-type-postal-address.svg" type="image/svg+xml"></object>
 
 As explained above, form types are PHP classes that implement
-:class:`Symfony\\Component\\Form\\FormTypeInterface`, although it's more
+:class:`Symfony\\Component\\Form\\FormTypeInterface`, although it is more
 convenient to extend instead from :class:`Symfony\\Component\\Form\\AbstractType`::
 
     // src/Form/Type/PostalAddressType.php
@@ -120,16 +120,16 @@ These are the most important methods that a form type class can define:
 .. _form-type-methods-explanation:
 
 ``buildForm()``
-    It adds and configures other types into this type. It's the same method used
+    It adds and configures other types into this type. It is the same method used
     when :ref:`creating Symfony form classes <creating-forms-in-classes>`.
 
 ``buildView()``
-    It sets any extra variables you'll need when rendering the field in a template.
+    It sets any extra variables you will need when rendering the field in a template.
 
 ``finishView()``
     This method allows to modify the "view" of any rendered widget. This is useful
     if your form type consists of many fields, or contains a type that produces
-    many HTML elements (e.g. ``ChoiceType``). For any other use case, it's
+    many HTML elements (e.g. ``ChoiceType``). For any other use case, it is
     recommended to use ``buildView()`` instead.
 
 ``configureOptions()``
@@ -441,7 +441,7 @@ following diagram shows some of the Twig block names defined in this example:
     When the name of your form class matches any of the built-in field types,
     your form might not be rendered correctly. A form type named
     ``App\Form\PasswordType`` will have the same block name as the built-in
-    ``PasswordType`` and won't be rendered correctly. Override the
+    ``PasswordType`` and will not be rendered correctly. Override the
     ``getBlockPrefix()`` method to return a unique block prefix (e.g.
     ``app_password``) to avoid collisions.
 
@@ -483,7 +483,7 @@ defined by the form or be completely independent::
         }
     }
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this example will already work! Otherwise, :ref:`create a service <service-container-creating-service>`
 for this form class and :doc:`tag it </service_container/tags>` with ``form.type``.
 

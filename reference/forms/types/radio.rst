@@ -9,7 +9,7 @@ will be set to the specified value. Radio buttons cannot be unchecked -
 the value only changes when another radio button with the same name gets
 checked.
 
-The ``RadioType`` isn't usually used directly. More commonly it's used
+The ``RadioType`` is not usually used directly. More commonlyit is used
 internally by other types such as :doc:`ChoiceType </reference/forms/types/choice>`.
 If you want to have a boolean field, use :doc:`CheckboxType </reference/forms/types/checkbox>`.
 

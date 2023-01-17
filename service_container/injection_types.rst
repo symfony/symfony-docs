@@ -85,7 +85,7 @@ service container configuration:
 .. tip::
 
     Type hinting the injected object means that you can be sure that a suitable
-    dependency has been injected. By type-hinting, you'll get a clear error
+    dependency has been injected. By type-hinting, you will get a clear error
     immediately if an unsuitable dependency is injected. By type hinting
     using an interface rather than a class you can make the choice of dependency
     more flexible. And assuming you only use methods defined in the interface,

@@ -8,7 +8,7 @@ The Lock Component
     The Lock Component creates and manages `locks`_, a mechanism to provide
     exclusive access to a shared resource.
 
-If you're using the Symfony Framework, read the
+If you are using the Symfony Framework, read the
 :doc:`Symfony Framework Lock documentation </lock>`.
 
 Installation
@@ -151,8 +151,8 @@ the ``createLock()`` method. If needed, these locks can also be released early
 with the ``release()`` method.
 
 The trickiest part when working with expiring locks is choosing the right TTL.
-If it's too short, other processes could acquire the lock before finishing the
-job; if it's too long and the process crashes before calling the ``release()``
+If it is too short, other processes could acquire the lock before finishing the
+job; if it is too long and the process crashes before calling the ``release()``
 method, the resource will stay locked until the timeout::
 
     // ...
@@ -170,10 +170,10 @@ method, the resource will stay locked until the timeout::
 
 .. tip::
 
-    To avoid leaving the lock in a locked state, it's recommended to wrap the
+    To avoid leaving the lock in a locked state, it is recommended to wrap the
     job in a try/catch/finally block to always try to release the expiring lock.
 
-In case of long-running tasks, it's better to start with a not too long TTL and
+In case of long-running tasks, it is better to start with a not too long TTL and
 then use the :method:`Symfony\\Component\\Lock\\LockInterface::refresh` method
 to reset the TTL to its original value::
 
@@ -285,7 +285,7 @@ to acquire the lock in a blocking mode::
     The `priority policy`_ of Symfony's shared locks depends on the underlying
     store (e.g. Redis store prioritizes readers vs writers).
 
-When a read-only lock is acquired with the ``acquireRead()`` method, it's
+When a read-only lock is acquired with the ``acquireRead()`` method, it is
 possible to **promote** the lock, and change it to a write lock, by calling the
 ``acquire()`` method::
 
@@ -299,7 +299,7 @@ possible to **promote** the lock, and change it to a write lock, by calling the
     $lock->acquire(true); // Promote the lock to a write lock
     $this->update($userId);
 
-In the same way, it's possible to **demote** a write lock, and change it to a
+In the same way, it is possible to **demote** a write lock, and change it to a
 read-only lock by calling the ``acquireRead()`` method.
 
 When the provided store does not implement the
@@ -331,11 +331,11 @@ lose the lock it acquired automatically::
     // Perform a very long process that might exceed TTL of the lock
 
     if ($lock->isAcquired()) {
-        // Still all good, no other instance has acquired the lock in the meantime, we're safe
+        // Still all good, no other instance has acquired the lock in the meantime, we are safe
         $this->commit();
     } else {
         // Bummer! Our lock has apparently exceeded TTL and another process has started in
-        // the meantime so it's not safe for us to commit.
+        // the meantime so it is not safe for us to commit.
         $this->rollback();
         throw new \Exception('Process failed');
     }
@@ -349,7 +349,7 @@ lose the lock it acquired automatically::
 
 .. [1] Technically, the true owners of the lock are the ones that share the same instance of ``Key``,
     not ``Lock``. But from a user perspective, ``Key`` is internal and you will likely only be working
-    with the ``Lock`` instance so it's easier to think of the ``Lock`` instance as being the one that
+    with the ``Lock`` instance so it is easier to think of the ``Lock`` instance as being the one that
     is the owner of the lock.
 
 .. _lock-stores:
@@ -402,7 +402,7 @@ when the PHP process ends)::
 .. caution::
 
     Beware that some file systems (such as some types of NFS) do not support
-    locking. In those cases, it's better to use a directory on a local disk
+    locking. In those cases, it is better to use a directory on a local disk
     drive or a remote store.
 
 .. _lock-store-memcached:
@@ -693,7 +693,7 @@ PHP process is terminated::
 Reliability
 -----------
 
-The component guarantees that the same resource can't be locked twice as long as
+The component guarantees that the same resource cannot be locked twice as long as
 the component is used in the following way.
 
 Remote Stores
@@ -770,7 +770,7 @@ time of the machine changes, a lock could be released sooner than expected.
 
 .. caution::
 
-    To guarantee that date won't change, the NTP service should be disabled
+    To guarantee that date will not change, the NTP service should be disabled
     and the date should be updated when the service is stopped.
 
 FlockStore
@@ -801,7 +801,7 @@ Some file systems (such as some types of NFS) do not support locking.
 
 Files on the file system can be removed during a maintenance operation. For
 instance, to clean up the ``/tmp`` directory or after a reboot of the machine
-when a directory uses ``tmpfs``. It's not an issue if the lock is released when
+when a directory uses ``tmpfs``. It is not an issue if the lock is released when
 the process ended, but it is in case of ``Lock`` reused between requests.
 
 .. caution::
@@ -821,7 +821,7 @@ be lost without notifying the running processes.
 
 .. caution::
 
-    To avoid that someone else acquires a lock after a restart, it's recommended
+    To avoid that someone else acquires a lock after a restart, it is recommended
     to delay service start and wait at least as long as the longest lock TTL.
 
 By default Memcached uses a LRU mechanism to remove old entries when the service
@@ -829,7 +829,7 @@ needs space to add new items.
 
 .. caution::
 
-    The number of items stored in Memcached must be under control. If it's not
+    The number of items stored in Memcached must be under control. If it is not
     possible, LRU should be disabled and Lock should be stored in a dedicated
     Memcached service away from Cache.
 
@@ -867,7 +867,7 @@ about `Expire Data from Collections by Setting TTL`_ in MongoDB.
 
 .. tip::
 
-    ``MongoDbStore`` will attempt to automatically create a TTL index. It's
+    ``MongoDbStore`` will attempt to automatically create a TTL index. It is
     recommended to set constructor option ``gcProbablity`` to ``0.0`` to
     disable this behavior if you have manually dealt with TTL index creation.
 
@@ -933,7 +933,7 @@ be lost without notifying the running processes.
 
 .. caution::
 
-    To avoid that someone else acquires a lock after a restart, it's recommended
+    To avoid that someone else acquires a lock after a restart, it is recommended
     to delay service start and wait at least as long as the longest lock TTL.
 
 .. tip::
@@ -953,11 +953,11 @@ removed by mistake.
 CombinedStore
 ~~~~~~~~~~~~~
 
-Combined stores allow the storage of locks across several backends. It's a common
+Combined stores allow the storage of locks across several backends. It is a common
 mistake to think that the lock mechanism will be more reliable. This is wrong.
 The ``CombinedStore`` will be, at best, as reliable as the least reliable of
 all managed stores. As soon as one managed store returns erroneous information,
-the ``CombinedStore`` won't be reliable.
+the ``CombinedStore`` will not be reliable.
 
 .. caution::
 
@@ -966,7 +966,7 @@ the ``CombinedStore`` won't be reliable.
 
 .. tip::
 
-    Instead of using a cluster of Redis or Memcached servers, it's better to use
+    Instead of using a cluster of Redis or Memcached servers, it is better to use
     a ``CombinedStore`` with a single server per managed store.
 
 SemaphoreStore

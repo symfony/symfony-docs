@@ -7,7 +7,7 @@ How to Simplify Configuration of Multiple Bundles
 
 When building reusable and extensible applications, developers are often
 faced with a choice: either create a single large bundle or multiple smaller
-bundles. Creating a single bundle has the drawback that it's impossible for
+bundles. Creating a single bundle has the drawback that it is impossible for
 users to remove unused functionality. Creating multiple
 bundles has the drawback that configuration becomes more tedious and settings
 often need to be repeated for various bundles.
@@ -80,7 +80,7 @@ in case a specific other bundle is not registered::
             }
         }
 
-        // get the configuration of AcmeHelloExtension (it's a list of configuration)
+        // get the configuration of AcmeHelloExtension (it is a list of configuration)
         $configs = $containerBuilder->getExtensionConfig($this->getAlias());
 
         // iterate in reverse to preserve the original order after prepending the config
@@ -162,4 +162,4 @@ More than one Bundle using PrependExtensionInterface
 
 If there is more than one bundle that prepends the same extension and defines
 the same key, the bundle that is registered **first** will take priority:
-next bundles won't override this specific config setting.
+next bundles will not override this specific config setting.

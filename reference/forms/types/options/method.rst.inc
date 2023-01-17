@@ -18,7 +18,7 @@ is used to decide whether to process the form submission in the
 
     When the method is PUT, PATCH, or DELETE, Symfony will automatically
     render a ``_method`` hidden field in your form. This is used to "fake"
-    these HTTP methods, as they're not supported on standard browsers. This can
+    these HTTP methods, as they are not supported on standard browsers. This can
     be useful when :ref:`matching routes by HTTP method <routing-matching-http-methods>`.
 
 .. note::

@@ -132,7 +132,7 @@ Configure OPcache for Maximum Performance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The default OPcache configuration is not suited for Symfony applications, so
-it's recommended to change these settings as follows:
+it is recommended to change these settings as follows:
 
 .. code-block:: ini
 
@@ -159,7 +159,7 @@ overhead that can be avoided as follows:
     opcache.validate_timestamps=0
 
 After each deployment, you must empty and regenerate the cache of OPcache. Otherwise
-you won't see the updates made in the application. Given that in PHP, the CLI
+you will not see the updates made in the application. Given that in PHP, the CLI
 and the web processes don't share the same OPcache, you cannot clear the web
 server OPcache by executing some command in your terminal. These are some of the
 possible solutions:
@@ -202,7 +202,7 @@ and changed classes. In production servers, PHP files should never change,
 unless a new application version is deployed. That's why you can optimize
 Composer's autoloader to scan the entire application once and build an
 optimized "class map", which is a big array of the locations of all the classes
-and it's stored in ``vendor/composer/autoload_classmap.php``.
+and it is stored in ``vendor/composer/autoload_classmap.php``.
 
 Execute this command to generate the new class map (and make it part of your
 deployment process too):
@@ -226,7 +226,7 @@ Profiling with Blackfire
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 `Blackfire`_ is the best tool to profile and optimize performance of Symfony
-applications during development, test and production. It's a commercial service,
+applications during development, test and production. It is a commercial service,
 but provides free features that you can use to find bottlenecks in your projects.
 
 Profiling with Symfony Stopwatch
@@ -269,12 +269,12 @@ and Symfony will inject the ``debug.stopwatch`` service::
         }
     }
 
-If the request calls this service during its execution, you'll see a new
+If the request calls this service during its execution, you will see a new
 event called ``export-data`` in the Symfony profiler.
 
 The ``start()``, ``stop()`` and ``getEvent()`` methods return a
 :class:`Symfony\\Component\\Stopwatch\\StopwatchEvent` object that provides
-information about the current event, even while it's still running. This
+information about the current event, even while it is still running. This
 object can be converted to a string for a quick summary::
 
     // ...

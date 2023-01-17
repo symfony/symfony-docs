@@ -8,7 +8,7 @@ The HttpKernel Component
 
     The HttpKernel component provides a structured process for converting
     a ``Request`` into a ``Response`` by making use of the EventDispatcher
-    component. It's flexible enough to create a full-stack framework (Symfony),
+    component. It is flexible enough to create a full-stack framework (Symfony),
     a micro-framework (Silex) or an advanced CMS system (Drupal).
 
 Installation
@@ -98,7 +98,7 @@ Initially, using the :class:`Symfony\\Component\\HttpKernel\\HttpKernel` does
 not take many steps. You create an
 :doc:`event dispatcher </components/event_dispatcher>` and a
 :ref:`controller and argument resolver <component-http-kernel-resolve-controller>`
-(explained below). To complete your working kernel, you'll add more event
+(explained below). To complete your working kernel, you will add more event
 listeners to the events discussed below::
 
     use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -192,7 +192,7 @@ attributes).
 .. note::
 
     When setting a response for the ``kernel.request`` event, the propagation
-    is stopped. This means listeners with lower priority won't be executed.
+    is stopped. This means listeners with lower priority will not be executed.
 
 .. sidebar:: ``kernel.request`` in the Symfony Framework
 
@@ -405,7 +405,7 @@ return a ``Response``.
 .. note::
 
     When setting a response for the ``kernel.view`` event, the propagation
-    is stopped. This means listeners with lower priority won't be executed.
+    is stopped. This means listeners with lower priority will not be executed.
 
 .. sidebar:: ``kernel.view`` in the Symfony Framework
 
@@ -534,7 +534,7 @@ below for more details).
 .. note::
 
     When setting a response for the ``kernel.exception`` event, the propagation
-    is stopped. This means listeners with lower priority won't be executed.
+    is stopped. This means listeners with lower priority will not be executed.
 
 .. sidebar:: ``kernel.exception`` in the Symfony Framework
 
@@ -583,7 +583,7 @@ below for more details).
 Creating an Event Listener
 --------------------------
 
-As you've seen, you can create and attach event listeners to any of the events
+As you have seen, you can create and attach event listeners to any of the events
 dispatched during the ``HttpKernel::handle()`` cycle. Typically a listener is a PHP
 class with a method that's executed, but it can be anything. For more information
 on creating and attaching event listeners, see :doc:`/components/event_dispatcher`.
@@ -614,7 +614,7 @@ kernel.exception             ``KernelEvents::EXCEPTION``             :class:`Sym
 A full Working Example
 ----------------------
 
-When using the HttpKernel component, you're free to attach any listeners
+When using the HttpKernel component, you are free to attach any listeners
 to the core events, use any controller resolver that implements the
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ControllerResolverInterface` and
 use any argument resolver that implements the
@@ -669,7 +669,7 @@ Sub Requests
 In addition to the "main" request that's sent into ``HttpKernel::handle()``,
 you can also send a so-called "sub request". A sub request looks and acts like
 any other request, but typically serves to render just one small portion of
-a page instead of a full page. You'll most commonly make sub-requests from
+a page instead of a full page. You will most commonly make sub-requests from
 your controller (or perhaps from inside a template, that's being rendered by
 your controller).
 

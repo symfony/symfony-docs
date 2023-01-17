@@ -20,7 +20,7 @@ in order to construct your ``NewsletterManager``.
 
 Configuring lazy services is one answer to this. With a lazy service, a
 "proxy" of the ``mailer`` service is actually injected. It looks and acts
-like the ``mailer``, except that the ``mailer`` isn't actually instantiated
+like the ``mailer``, except that the ``mailer`` is not actually instantiated
 until you interact with the proxy in some way.
 
 .. caution::

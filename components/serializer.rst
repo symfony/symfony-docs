@@ -146,7 +146,7 @@ in this case :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`.
 Deserializing an Object
 -----------------------
 
-You'll now learn how to do the exact opposite. This time, the information
+You will now learn how to do the exact opposite. This time, the information
 of the ``Person`` class would be encoded in XML format::
 
     use App\Model\Person;
@@ -641,7 +641,7 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\PropertyNormalizer`::
 CamelCase to snake_case
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In many formats, it's common to use underscores to separate words (also known
+In many formats, it is common to use underscores to separate words (also known
 as snake_case). However, in Symfony applications is common to use CamelCase to
 name properties (even though the `PSR-1 standard`_ doesn't recommend any
 specific case for property names).
@@ -1313,7 +1313,7 @@ context option to ``false``::
 Collecting Type Errors While Denormalizing
 ------------------------------------------
 
-When denormalizing a payload to an object with typed properties, you'll get an
+When denormalizing a payload to an object with typed properties, you will get an
 exception if the payload contains properties that don't have the same type as
 the object.
 
@@ -1629,7 +1629,7 @@ If you want to deserialize such a structure, you need to add the
 :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
 to the set of normalizers. By appending ``[]`` to the type parameter of the
 :method:`Symfony\\Component\\Serializer\\Serializer::deserialize` method,
-you indicate that you're expecting an array instead of a single object::
+you indicate that you are expecting an array instead of a single object::
 
     use Symfony\Component\Serializer\Encoder\JsonEncoder;
     use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
@@ -1648,7 +1648,7 @@ Handling Constructor Arguments
 ------------------------------
 
 If the class constructor defines arguments, as usually happens with
-`Value Objects`_, the serializer won't be able to create the object if some
+`Value Objects`_, the serializer will not be able to create the object if some
 arguments are missing. In those cases, use the ``default_constructor_arguments``
 context option::
 

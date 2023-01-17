@@ -199,7 +199,7 @@ Available Options
 
 ``recv_timeout`` (type: ``int``, default: ``0``)
     Specifies the amount of time (in microseconds) before timing out during an outgoing socket (read) operation.
-    When the ``no_block`` option isn't enabled, this will allow you to still have timeouts on the reading of data.
+    When the ``no_block`` option is not enabled, this will allow you to still have timeouts on the reading of data.
 
     Valid option values include ``0`` or *any positive integer*.
 
@@ -211,7 +211,7 @@ Available Options
 
 ``send_timeout`` (type: ``int``, default: ``0``)
     Specifies the amount of time (in microseconds) before timing out during an
-    incoming socket (send) operation. When the ``no_block`` option isn't enabled,
+    incoming socket (send) operation. When the ``no_block`` option is not enabled,
     this will allow you to still have timeouts on the sending of data.
 
     Valid option values include ``0`` or *any positive integer*.

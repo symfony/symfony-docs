@@ -474,7 +474,7 @@ Symfony provides the following env var processors:
 ``env(trim:FOO)``
     Trims the content of ``FOO`` env var, removing whitespaces from the beginning
     and end of the string. This is especially useful in combination with the
-    ``file`` processor, as it'll remove newlines at the end of a file.
+    ``file`` processor, as it will remove newlines at the end of a file.
 
     .. configuration-block::
 
@@ -763,7 +763,7 @@ It is also possible to combine any number of processors:
 Custom Environment Variable Processors
 --------------------------------------
 
-It's also possible to add your own processors for environment variables. First,
+It is also possible to add your own processors for environment variables. First,
 create a class that implements
 :class:`Symfony\\Component\\DependencyInjection\\EnvVarProcessorInterface`::
 
@@ -788,6 +788,6 @@ create a class that implements
 
 To enable the new processor in the app, register it as a service and
 :doc:`tag it </service_container/tags>` with the ``container.env_var_processor``
-tag. If you're using the
+tag. If you are using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.

@@ -421,7 +421,7 @@ expressions (e.g. the request, the current user, etc.):
 .. caution::
 
     When using variables in expressions, avoid passing untrusted data into the
-    array of variables. If you can't avoid that, sanitize non-alphanumeric
+    array of variables. If you cannot avoid that, sanitize non-alphanumeric
     characters in untrusted data to prevent malicious users from injecting
     control characters and altering the expression.
 
@@ -501,7 +501,7 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
 AST Dumping and Editing
 -----------------------
 
-It's difficult to manipulate or inspect the expressions created with the ExpressionLanguage
+It is difficult to manipulate or inspect the expressions created with the ExpressionLanguage
 component, because the expressions are plain strings. A better approach is to
 turn those expressions into an AST. In computer science, `AST`_ (*Abstract
 Syntax Tree*) is *"a tree representation of the structure of source code written

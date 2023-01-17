@@ -40,7 +40,7 @@ Use the Default Directory Structure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unless your project follows a development practice that imposes a certain
-directory structure, follow the default Symfony directory structure. It's flat,
+directory structure, follow the default Symfony directory structure. It is flat,
 self-explanatory and not coupled to Symfony:
 
 .. code-block:: text
@@ -123,7 +123,7 @@ Then, use just one or two words to describe the purpose of the parameter:
         app.dir: '...'
         # do this: short but easy to understand names
         app.contents_dir: '...'
-        # it's OK to use dots, underscores, dashes or nothing, but always
+        # it is OK to use dots, underscores, dashes or nothing, but always
         # be consistent and use the same format for all the parameters
         app.dir.contents: '...'
         app.contents-dir: '...'
@@ -150,7 +150,7 @@ Twig templates and Doctrine entities, whereas parameters are only available
 from places with access to the :doc:`service container </service_container>`.
 
 The only notable disadvantage of using constants for this kind of configuration
-values is that it's complicated to redefine their values in your tests.
+values is that it is complicated to redefine their values in your tests.
 
 Business Logic
 --------------
@@ -191,9 +191,9 @@ Use the YAML Format to Configure your own Services
 
 If you use the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 most services will be configured automatically. However, in some edge cases
-you'll need to configure services (or parts of them) manually.
+you will need to configure services (or parts of them) manually.
 
-YAML is the format recommended configuring services because it's friendly to
+YAML is the format recommended configuring services because it is friendly to
 newcomers and concise, but Symfony also supports XML and PHP configuration.
 
 Use Attributes to Define the Doctrine Entity Mapping
@@ -203,7 +203,7 @@ Doctrine entities are plain PHP objects that you store in some "database".
 Doctrine only knows about your entities through the mapping metadata configured
 for your model classes.
 
-Doctrine supports several metadata formats, but it's recommended to use PHP
+Doctrine supports several metadata formats, but it is recommended to use PHP
 attributes because they are by far the most convenient and agile way of setting
 up and looking for mapping information.
 
@@ -222,7 +222,7 @@ or checking security permissions.
 
 Extending your controllers from this base controller couples your application
 to Symfony. Coupling is generally wrong, but it may be OK in this case because
-controllers shouldn't contain any business logic. Controllers should contain
+controllers should not contain any business logic. Controllers should contain
 nothing more than a few lines of *glue-code*, so you are not coupling the
 important parts of your application.
 
@@ -257,12 +257,12 @@ constructor arguments.
 Use ParamConverters If They Are Convenient
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using :doc:`Doctrine </doctrine>`, then you can *optionally* use the
+If you are using :doc:`Doctrine </doctrine>`, then you can *optionally* use the
 `ParamConverter`_ to automatically query for an entity and pass it as an argument
 to your controller. It will also show a 404 page if no entity can be found.
 
 If the logic to get an entity from a route variable is more complex, instead of
-configuring the ParamConverter, it's better to make the Doctrine query inside
+configuring the ParamConverter, it is better to make the Doctrine query inside
 the controller (e.g. by calling to a :doc:`Doctrine repository method </doctrine>`).
 
 Templates
@@ -298,16 +298,16 @@ Add Form Buttons in Templates
 
 Form classes should be agnostic to where they will be used. For example, the
 button of a form used to both create and edit items should change from "Add new"
-to "Save changes" depending on where it's used.
+to "Save changes" depending on where it is used.
 
-Instead of adding buttons in form classes or the controllers, it's recommended
+Instead of adding buttons in form classes or the controllers, it is recommended
 to add buttons in the templates. This also improves the separation of concerns
 because the button styling (CSS class and other attributes) is defined in the
 template instead of in a PHP class.
 
 However, if you create a :doc:`form with multiple submit buttons </form/multiple_buttons>`
 you should define them in the controller instead of the template. Otherwise, you
-won't be able to check which button was clicked when handling the form in the controller.
+will not be able to check which button was clicked when handling the form in the controller.
 
 Define Validation Constraints on the Underlying Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -323,7 +323,7 @@ Use a Single Action to Render and Process the Form
 
 :ref:`Rendering forms <rendering-forms>` and :ref:`processing forms <processing-forms>`
 are two of the main tasks when handling forms. Both are too similar (most of the
-time, almost identical), so it's much simpler to let a single controller action
+time, almost identical), so it is much simpler to let a single controller action
 handle both.
 
 .. _best-practice-internationalization:
@@ -336,7 +336,7 @@ Use the XLIFF Format for Your Translation Files
 
 Of all the translation formats supported by Symfony (PHP, Qt, ``.po``, ``.mo``,
 JSON, CSV, INI, etc.), ``XLIFF`` and ``gettext`` have the best support in the tools used
-by professional translators. And since it's based on XML, you can validate ``XLIFF``
+by professional translators. And since it is based on XML, you can validate ``XLIFF``
 file contents as you write them.
 
 Symfony also supports notes in XLIFF files, making them more user-friendly for
@@ -361,7 +361,7 @@ Define a Single Firewall
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unless you have two legitimately different authentication systems and users
-(e.g. form login for the main site and a token system for your API only), it's
+(e.g. form login for the main site and a token system for your API only), it is
 recommended to have only one firewall to keep things simple.
 
 Additionally, you should use the ``anonymous`` key under your firewall. If you
@@ -439,7 +439,7 @@ checks that all application URLs load successfully::
     }
 
 Add this test while creating your application because it requires little effort
-and checks that none of your pages returns an error. Later, you'll add more
+and checks that none of your pages returns an error. Later, you will add more
 specific tests for each page.
 
 .. _hardcode-urls-in-a-functional-test:
@@ -447,13 +447,13 @@ specific tests for each page.
 Hard-code URLs in a Functional Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In Symfony applications, it's recommended to :ref:`generate URLs <routing-generating-urls>`
+In Symfony applications, it is recommended to :ref:`generate URLs <routing-generating-urls>`
 using routes to automatically update all links when a URL changes. However, if a
-public URL changes, users won't be able to browse it unless you set up a
+public URL changes, users will not be able to browse it unless you set up a
 redirection to the new URL.
 
-That's why it's recommended to use raw URLs in tests instead of generating them
-from routes. Whenever a route changes, tests will fail, and you'll know that
+That's why it is recommended to use raw URLs in tests instead of generating them
+from routes. Whenever a route changes, tests will fail, and you will know that
 you must set up a redirection.
 
 .. _`Symfony Demo`: https://github.com/symfony/demo

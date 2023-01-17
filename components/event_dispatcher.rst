@@ -32,7 +32,7 @@ truly extensible.
 Take an example from :doc:`the HttpKernel component </components/http_kernel>`.
 Once a ``Response`` object has been created, it may be useful to allow other
 elements in the system to modify it (e.g. add some cache headers) before
-it's actually used. To make this possible, the Symfony kernel throws an
+(it is actually used. To make this possible, the Symfony kernel throws an
 event - ``kernel.response``. Here's how it works:
 
 * A *listener* (PHP object) tells a central *dispatcher* object that it
@@ -70,10 +70,10 @@ Usage
 Events
 ~~~~~~
 
-When an event is dispatched, it's identified by a unique name (e.g.
+When an event is dispatched, it is identified by a unique name (e.g.
 ``kernel.response``), which any number of listeners might be listening to.
 An :class:`Symfony\\Contracts\\EventDispatcher\\Event` instance is also
-created and passed to all of the listeners. As you'll see later, the ``Event``
+created and passed to all of the listeners. As you will see later, the ``Event``
 object itself often contains data about the event being dispatched.
 
 .. index::
@@ -158,7 +158,7 @@ The ``addListener()`` method takes up to three arguments:
     a string representing a function or an array representing an object
     method or a class method.
 
-    So far, you've seen how PHP objects can be registered as listeners.
+    So far, you have seen how PHP objects can be registered as listeners.
     You can also register PHP `Closures`_ as event listeners::
 
         use Symfony\Contracts\EventDispatcher\Event;
@@ -282,7 +282,7 @@ Creating an Event Class
 
 Suppose you want to create a new event - ``order.placed`` - that is dispatched
 each time a customer orders a product with your application. When dispatching
-this event, you'll pass a custom event instance that has access to the placed
+this event, you will pass a custom event instance that has access to the placed
 order. Start by creating this custom event class and documenting it::
 
     namespace Acme\Store\Event;

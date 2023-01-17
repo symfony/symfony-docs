@@ -138,7 +138,7 @@ Testing Types Registered as Services
 ------------------------------------
 
 Your form may be used as a service, as it depends on other services (e.g. the
-Doctrine entity manager). In these cases, using the above code won't work, as
+Doctrine entity manager). In these cases, using the above code will not work, as
 the Form component instantiates the form type without passing any arguments
 to the constructor.
 

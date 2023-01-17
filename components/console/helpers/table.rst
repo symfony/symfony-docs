@@ -394,7 +394,7 @@ Modifying Rendered Tables
 -------------------------
 
 The ``render()`` method requires passing the entire table contents. However,
-sometimes that information is not available beforehand because it's generated
+sometimes that information is not available beforehand because it is generated
 dynamically. In those cases, use the
 :method:`Symfony\\Component\\Console\\Helper\\Table::appendRow` method, which
 takes the same arguments as the ``addRow()`` method, to add rows at the bottom

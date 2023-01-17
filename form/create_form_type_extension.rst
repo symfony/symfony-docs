@@ -62,7 +62,7 @@ Registering your Form Type Extension as a Service
 
 Form type extensions must be :ref:`registered as services <service-container-creating-service>`
 and :doc:`tagged </service_container/tags>` with the ``form.type_extension`` tag.
-If you're using the
+If you are using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 
@@ -75,7 +75,7 @@ this is already done for you, thanks to :ref:`autoconfiguration <services-autoco
     after another extension. Using this attribute requires you to add the
     service configuration explicitly.
 
-Once the extension is registered, any method that you've overridden (e.g.
+Once the extension is registered, any method that you have overridden (e.g.
 ``buildForm()``) will be called whenever *any* field of the given type
 (``FileType``) is built.
 
@@ -241,7 +241,7 @@ In the same way, since **most** form types natively available in Symfony inherit
 from the ``FormType`` form type, a form type extension applying to ``FormType``
 would apply to all of these (notable exceptions are the ``ButtonType`` form
 types). Also keep in mind that if you created (or are using) a *custom* form type,
-it's possible that it does *not* extend ``FormType``, and so your form type extension
+it is possible that it does *not* extend ``FormType``, and so your form type extension
 may not be applied to it.
 
 Another option is to return multiple form types in the ``getExtendedTypes()``

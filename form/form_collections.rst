@@ -5,8 +5,8 @@ How to Embed a Collection of Forms
 ==================================
 
 Symfony Forms can embed a collection of many other forms, which is useful to
-edit related entities in a single form. In this article, you'll create a form to
-edit a ``Task`` class and, right inside the same form, you'll be able to edit,
+edit related entities in a single form. In this article, you will create a form to
+edit a ``Task`` class and, right inside the same form, you will be able to edit,
 create and remove many ``Tag`` objects related to that Task.
 
 Let's start by creating a ``Task`` entity::
@@ -128,7 +128,7 @@ inside the task form itself::
         }
     }
 
-In your controller, you'll create a new form from the ``TaskType``::
+In your controller, you will create a new form from the ``TaskType``::
 
     // src/Controller/TaskController.php
     namespace App\Controller;
@@ -217,7 +217,7 @@ add as many tag forms as they need directly in the browser. This requires a bit
 of JavaScript code.
 
 But first, you need to let the form collection know that instead of exactly two,
-it will receive an *unknown* number of tags. Otherwise, you'll see a
+it will receive an *unknown* number of tags. Otherwise, you will see a
 *"This form should not contain extra fields"* error. This is done with the
 ``allow_add`` option::
 
@@ -304,7 +304,7 @@ The ``addFormToCollection()`` function's job will be to use the ``data-prototype
 attribute to dynamically add a new form when this link is clicked. The ``data-prototype``
 HTML contains the tag's ``text`` input element with a name of ``task[tags][__name__][name]``
 and id of ``task_tags___name___name``. The ``__name__`` is a placeholder, which
-you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``):
+you will replace with a unique, incrementing number (e.g. ``task[tags][3][name]``):
 
 .. code-block:: javascript
 
@@ -375,26 +375,26 @@ With these two changes, when the form is submitted, each new ``Tag`` object
 is added to the ``Task`` class by calling the ``addTag()`` method. Before this
 change, they were added internally by the form by calling ``$task->getTags()->add($tag)``.
 That was fine, but forcing the use of the "adder" method makes handling
-these new ``Tag`` objects easier (especially if you're using Doctrine, which
+these new ``Tag`` objects easier (especially if you are using Doctrine, which
 you will learn about next!).
 
 .. caution::
 
     You have to create **both** ``addTag()`` and ``removeTag()`` methods,
     otherwise the form will still use ``setTag()`` even if ``by_reference`` is ``false``.
-    You'll learn more about the ``removeTag()`` method later in this article.
+    You will learn more about the ``removeTag()`` method later in this article.
 
 .. caution::
 
     Symfony can only make the plural-to-singular conversion (e.g. from the
     ``tags`` property to the ``addTag()`` method) for English words. Code
-    written in any other language won't work as expected.
+    written in any other language will not work as expected.
 
 .. sidebar:: Doctrine: Cascading Relations and saving the "Inverse" side
 
     To save the new tags with Doctrine, you need to consider a couple more
     things. First, unless you iterate over all of the new ``Tag`` objects and
-    call ``$entityManager->persist($tag)`` on each, you'll receive an error from
+    call ``$entityManager->persist($tag)`` on each, you will receive an error from
     Doctrine:
 
     .. code-block:: text
@@ -454,7 +454,7 @@ you will learn about next!).
     of Doctrine relationships. In this example, if the "owning" side of the
     relationship is "Task", then persistence will work fine as the tags are
     properly added to the Task. However, if the owning side is on "Tag", then
-    you'll need to do a little bit more work to ensure that the correct side
+    you will need to do a little bit more work to ensure that the correct side
     of the relationship is modified.
 
     The trick is to make sure that the single "Task" is set on each "Tag".
@@ -475,7 +475,7 @@ you will learn about next!).
             $this->tags->add($tag);
         }
 
-    If you're going for ``addTask()``, make sure you have an appropriate method
+    If you are going for ``addTask()``, make sure you have an appropriate method
     that looks something like this::
 
         // src/Entity/Tag.php
@@ -528,7 +528,7 @@ Now, you need to put some code into the ``removeTag()`` method of ``Task``::
 
 
 The ``allow_delete`` option means that if an item of a collection
-isn't sent on submission, the related data is removed from the collection
+is not sent on submission, the related data is removed from the collection
 on the server. In order for this to work in an HTML form, you must remove
 the DOM element for the collection item to be removed, before submitting
 the form.
@@ -581,13 +581,13 @@ the relationship between the removed ``Tag`` and ``Task`` object.
     ``Tag`` is properly removed.
 
     In Doctrine, you have two sides of the relationship: the owning side and the
-    inverse side. Normally in this case you'll have a many-to-one relationship
+    inverse side. Normally in this case you will have a many-to-one relationship
     and the deleted tags will disappear and persist correctly (adding new
     tags also works effortlessly).
 
     But if you have a one-to-many relationship or a many-to-many relationship with a
     ``mappedBy`` on the Task entity (meaning Task is the "inverse" side),
-    you'll need to do more work for the removed tags to persist correctly.
+    you will need to do more work for the removed tags to persist correctly.
 
     In this case, you can modify the controller to remove the relationship
     on the removed tag. This assumes that you have some ``edit()`` action which
@@ -648,8 +648,8 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 
     As you can see, adding and removing the elements correctly can be tricky.
     Unless you have a many-to-many relationship where Task is the "owning" side,
-    you'll need to do extra work to make sure that the relationship is properly
-    updated (whether you're adding new tags or removing existing tags) on
+    you will need to do extra work to make sure that the relationship is properly
+    updated (whether you are adding new tags or removing existing tags) on
     each Tag object itself.
 
 .. seealso::

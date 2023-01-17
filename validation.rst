@@ -38,7 +38,7 @@ The Basics of Validation
 ------------------------
 
 The best way to understand validation is to see it in action. To start, suppose
-you've created a plain-old-PHP object that you need to use somewhere in
+you have created a plain-old-PHP object that you need to use somewhere in
 your application::
 
     // src/Entity/Author.php
@@ -51,7 +51,7 @@ your application::
 
 So far, this is an ordinary class that serves some purpose inside your
 application. The goal of validation is to tell you if the data of an object is
-valid. For this to work, you'll configure a list of rules (called
+valid. For this to work, you will configure a list of rules (called
 :ref:`constraints <validation-constraints>`) that the object must follow in
 order to be valid. These rules are usually defined using PHP code or
 annotations but they can also be defined as ``.yaml`` or ``.xml`` files inside
@@ -200,9 +200,9 @@ will appear.
 
 .. tip::
 
-    Most of the time, you won't interact directly with the ``validator``
+    Most of the time, you will not interact directly with the ``validator``
     service or need to worry about printing out the errors. Most of the time,
-    you'll use validation indirectly when handling submitted form data. For
+    you will use validation indirectly when handling submitted form data. For
     more information, see :ref:`how to validate Symfony forms <validating-forms>`.
 
 You could also pass the collection of errors into a template::
@@ -243,9 +243,9 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
 
 :method:`Symfony\\Component\\Validator\\Validation::createCallable`
     This returns a closure that throws ``ValidationFailedException`` when the
-    constraints aren't matched.
+    constraints are not matched.
 :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
-    This returns a closure that returns ``false`` when the constraints aren't matched.
+    This returns a closure that returns ``false`` when the constraints are not matched.
 
 .. versionadded:: 5.1
 
@@ -499,7 +499,7 @@ options can be specified in this way.
 This is purely meant to make the configuration of the most common option of
 a constraint shorter and quicker.
 
-If you're ever unsure of how to specify an option, either check the namespace
+If you are ever unsure of how to specify an option, either check the namespace
 ``Symfony\Component\Validator\Constraints`` for the constraint or play it safe
 by always passing in an array of options (the first method shown above).
 
@@ -807,7 +807,7 @@ Final Thoughts
 The Symfony ``validator`` is a powerful tool that can be leveraged to
 guarantee that the data of any object is "valid". The power behind validation
 lies in "constraints", which are rules that you can apply to properties or
-getter methods of your object. And while you'll most commonly use the validation
+getter methods of your object. And while you will most commonly use the validation
 framework indirectly when using forms, remember that it can be used anywhere
 to validate any object.
 

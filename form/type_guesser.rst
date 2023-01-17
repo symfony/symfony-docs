@@ -34,7 +34,7 @@ This interface requires four methods:
 :method:`Symfony\\Component\\Form\\FormTypeGuesserInterface::guessPattern`
     Tries to guess the value of the ``pattern`` input attribute.
 
-Start by creating the class and these methods. Next, you'll learn how to fill each in::
+Start by creating the class and these methods. Next, you will learn how to fill each in::
 
     // src/Form/TypeGuesser/PHPDocTypeGuesser.php
     namespace App\Form\TypeGuesser;
@@ -174,11 +174,11 @@ set.
 Registering a Type Guesser
 --------------------------
 
-If you're using :ref:`autowire <services-autowire>` and
-:ref:`autoconfigure <services-autoconfigure>`, you're done! Symfony already knows
+If you are using :ref:`autowire <services-autowire>` and
+:ref:`autoconfigure <services-autoconfigure>`, you are done! Symfony already knows
 and is using your form type guesser.
 
-If you're **not** using autowire and autoconfigure, register your service manually
+If you are **not** using autowire and autoconfigure, register your service manually
 and tag it with ``form.type_guesser``:
 
 .. configuration-block::
@@ -219,7 +219,7 @@ and tag it with ``form.type_guesser``:
 
 .. sidebar:: Registering a Type Guesser in the Component
 
-    If you're using the Form component standalone in your PHP project, use
+    If you are using the Form component standalone in your PHP project, use
     :method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuesser` or
     :method:`Symfony\\Component\\Form\\FormFactoryBuilder::addTypeGuessers` of
     the ``FormFactoryBuilder`` to register new type guessers::

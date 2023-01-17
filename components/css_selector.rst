@@ -28,7 +28,7 @@ Usage
 Why Use CSS selectors?
 ~~~~~~~~~~~~~~~~~~~~~~
 
-When you're parsing an HTML or an XML document, by far the most powerful
+When you are parsing an HTML or an XML document, by far the most powerful
 method is `XPath`_.
 
 XPath expressions are incredibly flexible, so there is almost always an

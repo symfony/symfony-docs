@@ -31,7 +31,7 @@ Importing Configuration with ``imports``
 ----------------------------------------
 
 By default, service configuration lives in ``config/services.yaml``. But if that
-file becomes large, you're free to organize into multiple files. Suppose you
+file becomes large, you are free to organize into multiple files. Suppose you
 decided to move some configuration to a new file:
 
 .. configuration-block::
@@ -163,8 +163,8 @@ Importing Configuration via Container Extensions
 Third-party bundle container configuration, including Symfony core services,
 are usually loaded using another method: a :doc:`container extension </bundles/extension>`.
 
-Internally, each bundle defines its services in files like you've seen so far.
-However, these files aren't imported using the ``import`` directive. Instead, bundles
+Internally, each bundle defines its services in files like you have seen so far.
+However, these files are not imported using the ``import`` directive. Instead, bundles
 use a *dependency injection extension* to load the files automatically. As soon
 as you enable a bundle, its extension is called, which is able to load service
 configuration files.

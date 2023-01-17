@@ -74,7 +74,7 @@ To render each field individually, use something like this:
 
     The names ``first`` and ``second`` are the default names for the two
     sub-fields. However, these names can be controlled via the `first_name`_
-    and `second_name`_ options. If you've set these options, then use those
+    and `second_name`_ options. If you have set these options, then use those
     values instead of ``first`` and ``second`` when rendering.
 
 Validation

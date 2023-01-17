@@ -51,8 +51,8 @@ to take some manual steps after transferring the files (see `Common Deployment T
 Using Source Control
 ~~~~~~~~~~~~~~~~~~~~
 
-If you're using source control (e.g. Git or SVN), you can simplify by having
-your live installation also be a copy of your repository. When you're ready to
+If you are using source control (e.g. Git or SVN), you can simplify by having
+your live installation also be a copy of your repository. When you are ready to
 upgrade, fetch the latest updates from your source control
 system. When using Git, a common approach is to create a tag for each release
 and check out the appropriate tag on deployment (see `Git Tagging`_).
@@ -99,7 +99,7 @@ Common Deployment Tasks
 -----------------------
 
 Before and after deploying your actual source code, there are a number of common
-things you'll need to do:
+things you will need to do:
 
 A) Check Requirements
 ~~~~~~~~~~~~~~~~~~~~~
@@ -137,7 +137,7 @@ B) Configure your Environment Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Most Symfony applications read their configuration from environment variables.
-While developing locally, you'll usually store these in ``.env`` and ``.env.local``
+While developing locally, you will usually store these in ``.env`` and ``.env.local``
 (for local overrides). On production, you have two options:
 
 1. Create "real" environment variables. How you set environment variables, depends
@@ -187,7 +187,7 @@ as you normally do:
 .. caution::
 
     If you get a "class not found" error during this step, you may need to
-    run ``export APP_ENV=prod`` (or ``export SYMFONY_ENV=prod`` if you're not
+    run ``export APP_ENV=prod`` (or ``export SYMFONY_ENV=prod`` if you are not
     using :ref:`Symfony Flex <symfony-flex>`) before running this command so
     that the ``post-install-cmd`` scripts run in the ``prod`` environment.
 
@@ -243,7 +243,7 @@ The :ref:`project root directory <configuration-kernel-project-directory>`
 calculated automatically by Symfony as the directory where the main
 ``composer.json`` file is stored.
 
-In deployments not using the ``composer.json`` file, you'll need to override the
+In deployments not using the ``composer.json`` file, you will need to override the
 :method:`Symfony\\Component\\HttpKernel\\Kernel::getProjectDir` method
 :ref:`as explained in this section <configuration-kernel-project-directory>`.
 

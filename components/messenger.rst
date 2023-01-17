@@ -274,7 +274,7 @@ them to the application.
 
 Imagine you already processed some "orders" in your application using a
 ``NewOrder`` message. Now you want to integrate with a 3rd party or a legacy
-application but you can't use an API and need to use a shared CSV file with new
+application but you cannot use an API and need to use a shared CSV file with new
 orders.
 
 You will read this CSV file and dispatch a ``NewOrder`` message. All you need to

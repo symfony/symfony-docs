@@ -14,7 +14,7 @@ The PHPUnit Testing Framework
 -----------------------------
 
 Symfony integrates with an independent library called `PHPUnit`_ to give
-you a rich testing framework. This article won't cover PHPUnit itself,
+you a rich testing framework. This article will not cover PHPUnit itself,
 which has its own excellent `documentation`_.
 
 Before creating your first test, install ``symfony/test-pack``, which installs
@@ -79,7 +79,7 @@ from writing standard PHPUnit unit tests. You can learn about it in the
 PHPUnit documentation: `Writing Tests for PHPUnit`_.
 
 By convention, the ``tests/`` directory should replicate the directory
-of your application for unit tests. So, if you're testing a class in the
+of your application for unit tests. So, if you are testing a class in the
 ``src/Form/`` directory, put the test in the ``tests/Form/`` directory.
 Autoloading is automatically enabled via the ``vendor/autoload.php`` file
 (as configured by default in the ``phpunit.xml.dist`` file).
@@ -290,7 +290,7 @@ Sometimes it can be useful to mock a dependency of a tested service.
 From the example in the previous section, let's assume the
 ``NewsletterGenerator`` has a dependency to a private alias
 ``NewsRepositoryInterface`` pointing to a private ``NewsRepository`` service
-and you'd like to use a mocked ``NewsRepositoryInterface`` instead of the
+and you would like to use a mocked ``NewsRepositoryInterface`` instead of the
 concrete one::
 
     // ...
@@ -311,7 +311,7 @@ concrete one::
                 ])
             ;
 
-            // the following line won't work unless the alias is made public
+            // the following line will not work unless the alias is made public
             $container->set(NewsRepositoryInterface::class, $newsRepository);
 
             // will be injected the mocked repository
@@ -445,7 +445,7 @@ test finishes to undo all changes. Read more in the documentation of the
 Load Dummy Data Fixtures
 ........................
 
-Instead of using the real data from the production database, it's common to
+Instead of using the real data from the production database, it is common to
 use fake or dummy data in the test database. This is usually called
 *"fixtures data"* and Doctrine provides a library to create and load them.
 Install it with:
@@ -516,7 +516,7 @@ have a very specific workflow:
 .. note::
 
     The tools used in this section can be installed via the ``symfony/test-pack``,
-    use ``composer require symfony/test-pack`` if you haven't done so already.
+    use ``composer require symfony/test-pack`` if you have not done so already.
 
 Write Your First Application Test
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -594,7 +594,7 @@ returns a ``Crawler`` instance.
 .. tip::
 
     Hardcoding the request URLs is a best practice for application tests.
-    If the test generates URLs using the Symfony router, it won't detect
+    If the test generates URLs using the Symfony router, it will not detect
     any change made to the application URLs which may impact the end users.
 
 The full signature of the ``request()`` method is::
@@ -678,7 +678,7 @@ submitting a login form - makes a test very slow. For this reason, Symfony
 provides a ``loginUser()`` method to simulate logging in your functional
 tests.
 
-Instead of logging in with real users, it's recommended to create a user
+Instead of logging in with real users, it is recommended to create a user
 only for tests. You can do that with `Doctrine data fixtures`_ to load the
 testing users only in the test database.
 
@@ -825,7 +825,7 @@ Interacting with the Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Like a real browser, the Client and Crawler objects can be used to interact
-with the page you're served:
+with the page you are served:
 
 .. _testing-links:
 

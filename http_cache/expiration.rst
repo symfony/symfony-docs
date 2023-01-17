@@ -42,7 +42,7 @@ additional directives):
     ``setPublic()`` and ``setMaxAge()`` methods. According to the
     `Serving Stale Responses`_ section of RFC 7234, the ``s-maxage`` setting
     (added by ``setSharedMaxAge()`` method) prohibits a cache to use a stale
-    response in ``stale-if-error`` scenarios. That's why it's recommended to use
+    response in ``stale-if-error`` scenarios. That's why it is recommended to use
     both ``public`` and ``max-age`` directives.
 
 .. index::
@@ -76,7 +76,7 @@ The resulting HTTP header will look like this:
     The ``setExpires()`` method automatically converts the date to the GMT
     timezone as required by the specification.
 
-Note that in HTTP versions before 1.1 the origin server wasn't required to
+Note that in HTTP versions before 1.1 the origin server was not required to
 send the ``Date`` header. Consequently, the cache (e.g. the browser) might
 need to rely on the local clock to evaluate the ``Expires`` header making
 the lifetime calculation vulnerable to clock skew. Another limitation

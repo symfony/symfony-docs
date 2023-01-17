@@ -30,7 +30,7 @@ file::
         Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
         Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
         Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
-        // this bundle is enabled only in 'dev' and 'test', so you can't use it in 'prod'
+        // this bundle is enabled only in 'dev' and 'test', so you cannot use it in 'prod'
         Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
     ];
 
@@ -69,7 +69,7 @@ called ``AcmeTestBundle.php``::
 
 This empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
-of the bundle. Now that you've created the bundle, enable it::
+of the bundle. Now that you have created the bundle, enable it::
 
     // config/bundles.php
     return [
@@ -111,7 +111,7 @@ to be adjusted if needed:
 A bundle can be as small or large as the feature it implements. It contains
 only the files you need and nothing else.
 
-As you move through the guides, you'll learn how to persist objects to a
+As you move through the guides, you will learn how to persist objects to a
 database, create and validate forms, create translations for your application,
 write tests and much more. Each of these has their own place and role within
 the bundle.

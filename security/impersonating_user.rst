@@ -4,9 +4,9 @@
 How to Impersonate a User
 =========================
 
-Sometimes, it's useful to be able to switch from one user to another without
+Sometimes, it is useful to be able to switch from one user to another without
 having to log out and log in again (for instance when you are debugging something
-a user sees that you can't reproduce).
+a user sees that you cannot reproduce).
 
 .. caution::
 
@@ -361,7 +361,7 @@ logic you want::
     }
 
 That's it! When switching users, your voter now has full control over whether or
-not this is allowed. If your voter isn't called, see :ref:`declaring-the-voter-as-a-service`.
+not this is allowed. If your voter is not called, see :ref:`declaring-the-voter-as-a-service`.
 
 Events
 ------
@@ -405,7 +405,7 @@ switch users, add an event subscriber on this event::
         }
     }
 
-That's it! If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+That's it! If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically discover your service and call ``onSwitchUser`` whenever
 a switch user occurs.
 

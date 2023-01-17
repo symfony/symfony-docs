@@ -15,7 +15,7 @@ Creating an Extension Class
 
 In order to load service configuration, you have to create a Dependency
 Injection (DI) Extension for your bundle. By default, the Extension class must
-follow these conventions (but later you'll learn how to skip them if needed):
+follow these conventions (but later you will learn how to skip them if needed):
 
 * It has to live in the ``DependencyInjection`` namespace of the bundle;
 
@@ -40,7 +40,7 @@ This is how the extension of an AcmeHelloBundle should look like::
     {
         public function load(array $configs, ContainerBuilder $containerBuilder)
         {
-            // ... you'll load the files here later
+            // ... you will load the files here later
         }
     }
 
@@ -144,6 +144,6 @@ the full classmap executing the ``dump-autoload`` command of Composer.
 
 .. caution::
 
-    This technique can't be used when the classes to compile use the ``__DIR__``
+    This technique cannot be used when the classes to compile use the ``__DIR__``
     or ``__FILE__`` constants, because their values will change when loading
     these classes from the ``classes.php`` file.

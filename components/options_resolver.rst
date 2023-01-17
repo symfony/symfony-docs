@@ -81,7 +81,7 @@ like the following when using the ``Mailer`` class::
 
 No error will be shown. In the best case, the bug will appear during testing,
 but the developer will spend time looking for the problem. In the worst case,
-the bug might not appear until it's deployed to the live system.
+the bug might not appear until it is deployed to the live system.
 
 Fortunately, the :class:`Symfony\\Component\\OptionsResolver\\OptionsResolver`
 class helps you to fix this problem::
@@ -136,7 +136,7 @@ code::
         }
     }
 
-It's a good practice to split the option configuration into a separate method::
+It is a good practice to split the option configuration into a separate method::
 
     // ...
     class Mailer
@@ -496,7 +496,7 @@ these options, you can return the desired default value::
 
 .. note::
 
-    The closure is only executed if the ``port`` option isn't set by the user
+    The closure is only executed if the ``port`` option is not set by the user
     or overwritten in a subclass.
 
 A previously set default value can be accessed by adding a second argument to
@@ -542,7 +542,7 @@ Options without Default Values
 In some cases, it is useful to define an option without setting a default value.
 This is useful if you need to know whether or not the user *actually* set
 an option or not. For example, if you set the default value for an option,
-it's not possible to know whether the user passed this value or if it comes
+it is not possible to know whether the user passed this value or if it comes
 from the default::
 
     // ...

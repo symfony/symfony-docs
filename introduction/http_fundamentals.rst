@@ -6,11 +6,11 @@
 Symfony and HTTP Fundamentals
 =============================
 
-Great news! While you're learning Symfony, you're *also* learning the fundamentals
+Great news! While you are learning Symfony, you are *also* learning the fundamentals
 of the *web*. Symfony is closely modeled after the HTTP Request-Response flow: that
 *fundamental* paradigm that's behind almost *all* communication on the web.
 
-In this article, you'll walk through the HTTP fundamentals and find out how these
+In this article, you will walk through the HTTP fundamentals and find out how these
 are applied throughout Symfony.
 
 Requests and Responses in HTTP
@@ -27,7 +27,7 @@ HTTP is the term used to describe this text-based language. The goal of
 your server is *always* to understand text requests and return text responses.
 
 Symfony is built from the ground up around that reality. Whether you realize
-it or not, HTTP is something you use every day. With Symfony, you'll learn
+it or not, HTTP is something you use every day. With Symfony, you will learn
 how to master it.
 
 .. index::
@@ -366,7 +366,7 @@ to do:
 Incoming requests are interpreted by the :doc:`Routing component </routing>` and
 passed to PHP functions that return ``Response`` objects.
 
-This may not make sense yet, but as you keep reading, you'll learn about :doc:`routes </routing>`
+This may not make sense yet, but as you keep reading, you will learn about :doc:`routes </routing>`
 and :doc:`controllers </controller>`: the two fundamental parts to creating a page.
 But as you go along, don't forget that no matter *how* complex your app gets, your
 job is always the same: read information from the Request and use it to create a
@@ -375,13 +375,13 @@ Response.
 Summary: The Request-Response Flow
 ----------------------------------
 
-Here's what we've learned so far:
+Here's what we have learned so far:
 
 #. A client (e.g. a browser) sends an HTTP request;
 #. Each request executes the same, single file (called a "front controller");
 #. The front controller boots Symfony and passes the request information;
 #. Internally, Symfony uses *routes* and *controllers* to create the Response for
-   the page (we'll learn about these soon!);
+   the page ( we will learn about these soon!);
 #. Symfony turns your ``Response`` object into the text headers and content
    (i.e. the HTTP response), which are sent back to the client.
 

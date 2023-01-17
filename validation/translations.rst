@@ -8,14 +8,14 @@ The validation constraints used in forms can translate their error messages by
 creating a translation resource for the ``validators``
 :ref:`translation domain <translation-resource-locations>`.
 
-First of all, install the Symfony translation component (if it's not already
+First of all, install the Symfony translation component (if it is not already
 installed in your application) running the following command:
 
 .. code-block:: terminal
 
     $ composer require symfony/translation
 
-Suppose you've created a plain-old-PHP object that you need to use somewhere in
+Suppose you have created a plain-old-PHP object that you need to use somewhere in
 your application::
 
     // src/Entity/Author.php

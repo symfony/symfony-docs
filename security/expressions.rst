@@ -42,7 +42,7 @@ The security expression must use any valid :ref:`expression language syntax <exp
 and can use any of these variables created by Symfony:
 
 ``user``
-    The user object (or the string ``anon`` if you're not authenticated).
+    The user object (or the string ``anon`` if you are not authenticated).
 ``role_names``
     An array with the string representation of the roles the user has. This array
     includes any roles granted indirectly via the :ref:`role hierarchy <security-role-hierarchy>` but it
@@ -55,7 +55,7 @@ and can use any of these variables created by Symfony:
     The token object.
 ``trust_resolver``
     The :class:`Symfony\\Component\\Security\\Core\\Authentication\\AuthenticationTrustResolverInterface`,
-    object: you'll probably use the ``is_*()`` functions below instead.
+    object: you will probably use the ``is_*()`` functions below instead.
 
 Additionally, you have access to a number of functions inside the expression:
 
@@ -72,7 +72,7 @@ Additionally, you have access to a number of functions inside the expression:
     Equal to checking if the user has the ``IS_AUTHENTICATED_FULLY`` role.
 ``is_granted()``
     Checks if the user has the given permission. Optionally accepts a
-    second argument with the object where permission is checked on. It's
+    second argument with the object where permission is checked on. It is
     equivalent to using the :ref:`isGranted() method <security-isgranted>`
     from the security service.
 

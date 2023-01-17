@@ -29,7 +29,7 @@ The dump() Function
 -------------------
 
 The VarDumper component creates a global ``dump()`` function that you can
-use instead of e.g. :phpfunction:`var_dump`. By using it, you'll gain:
+use instead of e.g. :phpfunction:`var_dump`. By using it, you will gain:
 
 * Per object and resource types specialized view to e.g. filter out
   Doctrine internals while dumping a single proxy entity, or get more
@@ -37,8 +37,8 @@ use instead of e.g. :phpfunction:`var_dump`. By using it, you'll gain:
 * Configurable output formats: HTML or colored command line output;
 * Ability to dump internal references, either soft ones (objects or
   resources) or hard ones (``=&`` on arrays or objects properties).
-  Repeated occurrences of the same object/array/resource won't appear
-  again and again anymore. Moreover, you'll be able to inspect the
+  Repeated occurrences of the same object/array/resource will not appear
+  again and again anymore. Moreover, you will be able to inspect the
   reference structure of your data;
 * Ability to operate in the context of an output buffering handler.
 
@@ -73,7 +73,7 @@ current PHP SAPI:
     If you want to catch the dump output as a string, please read the
     :ref:`advanced section <var-dumper-advanced>` which contains examples of
     it.
-    You'll also learn how to change the format or redirect the output to
+    You will also learn how to change the format or redirect the output to
     wherever you want.
 
 .. tip::
@@ -104,7 +104,7 @@ with the debug output can be confusing. That's why this component provides a
 server to collect all the dumped data.
 
 Start the server with the ``server:dump`` command and whenever you call to
-``dump()``, the dumped data won't be displayed in the output but sent to that
+``dump()``, the dumped data will not be displayed in the output but sent to that
 server, which outputs it to its own console or to an HTML file:
 
 .. code-block:: terminal
@@ -247,7 +247,7 @@ Choosing between both is mostly a matter of personal taste, still:
   shall not be modified: variables are not dumped inline, but in the web
   debug toolbar;
 * on the contrary, ``{{ dump(foo.bar) }}`` dumps inline and thus may or not
-  be suited to your use case (e.g. you shouldn't use it in an HTML
+  be suited to your use case (e.g. you should not use it in an HTML
   attribute or a ``<script>`` tag).
 
 This behavior can be changed by configuring the ``debug.dump_destination``
@@ -287,7 +287,7 @@ The ``VarDumperTestTrait`` also includes these other methods:
 
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::setUpVarDumper`
     is used to configure the available casters and their options, which is a way
-    to only control the fields you're expecting and allows writing concise tests.
+    to only control the fields you are expecting and allows writing concise tests.
 
 :method:`Symfony\\Component\\VarDumper\\Test\\VarDumperTestTrait::tearDownVarDumper`
     is called automatically after each case to reset the custom configuration

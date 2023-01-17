@@ -35,7 +35,7 @@ following information:
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\RequestEvent`
 
 This event is dispatched very early in Symfony, before the controller is
-determined. It's useful to add information to the Request or return a Response
+determined. It is useful to add information to the Request or return a Response
 early to stop the handling of the request.
 
 .. seealso::
@@ -55,7 +55,7 @@ their priorities:
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerEvent`
 
 This event is dispatched after the controller has been resolved but before executing
-it. It's useful to initialize things later needed by the
+it. It is useful to initialize things later needed by the
 controller, such as `param converters`_, and even to change the controller
 entirely::
 
@@ -85,7 +85,7 @@ their priorities:
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ControllerArgumentsEvent`
 
-This event is dispatched just before a controller is called. It's useful to
+This event is dispatched just before a controller is called. It is useful to
 configure the arguments that are going to be passed to the controller.
 Typically, this is used to map URL routing parameters to their corresponding
 named arguments; or pass the current request when the ``Request`` type-hint is
@@ -119,7 +119,7 @@ their priorities:
 
 This event is dispatched after the controller has been executed but *only* if
 the controller does *not* return a :class:`Symfony\\Component\\HttpFoundation\\Response`
-object. It's useful to transform the returned value (e.g. a string with some
+object. It is useful to transform the returned value (e.g. a string with some
 HTML contents) into the ``Response`` object needed by Symfony::
 
     use Symfony\Component\HttpFoundation\Response;
@@ -152,7 +152,7 @@ their priorities:
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ResponseEvent`
 
 This event is dispatched after the controller or any ``kernel.view`` listener
-returns a ``Response`` object. It's useful to modify or replace the response
+returns a ``Response`` object. It is useful to modify or replace the response
 before sending it back (e.g. add/modify HTTP headers, add cookies, etc.)::
 
     use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -180,7 +180,7 @@ their priorities:
 
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\FinishRequestEvent`
 
-This event is dispatched after the ``kernel.response`` event. It's useful to reset
+This event is dispatched after the ``kernel.response`` event. It is useful to reset
 the global state of the application (for example, the translator listener resets
 the translator's locale to the one of the parent request)::
 
@@ -210,7 +210,7 @@ their priorities:
 
 This event is dispatched after the response has been sent (after the execution
 of the :method:`Symfony\\Component\\HttpKernel\\HttpKernel::handle` method).
-It's useful to perform slow or complex tasks that don't need to be completed to
+It is useful to perform slow or complex tasks that don't need to be completed to
 send the response (e.g. sending emails).
 
 .. seealso::
@@ -232,7 +232,7 @@ their priorities:
 **Event Class**: :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
 
 This event is dispatched as soon as an error occurs during the handling of the
-HTTP request. It's useful to recover from errors or modify the exception details
+HTTP request. It is useful to recover from errors or modify the exception details
 sent as response::
 
     use Symfony\Component\HttpFoundation\Response;
@@ -269,7 +269,7 @@ response:
   then ``getStatusCode()`` is called on the exception and used (the headers
   from ``getHeaders()`` are also added);
 
-* If both of the above aren't true, then a 500 status code is used.
+* If both of the above are not true, then a 500 status code is used.
 
 .. note::
 

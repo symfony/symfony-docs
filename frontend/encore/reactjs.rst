@@ -35,7 +35,7 @@ Enable react in your ``webpack.config.js``:
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
-Encore, you're done!
+Encore, you are done!
 
 Your ``.js`` and ``.jsx`` files will now be transformed through ``babel-preset-react``.
 

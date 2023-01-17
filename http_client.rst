@@ -212,7 +212,7 @@ The HTTP client also has one configuration option called
 Scoping Client
 ~~~~~~~~~~~~~~
 
-It's common that some of the HTTP client options depend on the URL of the
+It is common that some of the HTTP client options depend on the URL of the
 request (e.g. you must set some headers when making requests to GitHub API but
 not for other hosts). If that's your case, the component provides scoped
 clients (using :class:`Symfony\\Component\\HttpClient\\ScopingHttpClient`) to
@@ -482,7 +482,7 @@ each request (which overrides any global authentication):
 
     The NTLM authentication mechanism requires using the cURL transport.
     By using ``HttpClient::createForBaseUri()``, we ensure that the auth credentials
-    won't be sent to any other hosts than https://example.com/.
+    will not be sent to any other hosts than https://example.com/.
 
 Query String Parameters
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -570,7 +570,7 @@ Uploading Data
 ~~~~~~~~~~~~~~
 
 This component provides several methods for uploading data using the ``body``
-option. You can use regular strings, closures, iterables and resources and they'll be
+option. You can use regular strings, closures, iterables and resources and they will be
 processed automatically when making the requests::
 
     $response = $client->request('POST', 'https://...', [
@@ -590,7 +590,7 @@ processed automatically when making the requests::
     ]);
 
 When uploading data with the ``POST`` method, if you don't define the
-``Content-Type`` HTTP header explicitly, Symfony assumes that you're uploading
+``Content-Type`` HTTP header explicitly, Symfony assumes that you are uploading
 form data and adds the required
 ``'Content-Type: application/x-www-form-urlencoded'`` header for you.
 
@@ -691,7 +691,7 @@ Redirects
 
 By default, the HTTP client follows redirects, up to a maximum of 20, when
 making a request. Use the ``max_redirects`` setting to configure this behavior
-(if the number of redirects is higher than the configured value, you'll get a
+(if the number of redirects is higher than the configured value, you will get a
 :class:`Symfony\\Component\\HttpClient\\Exception\\RedirectionException`)::
 
     $response = $client->request('GET', 'https://...', [
@@ -772,7 +772,7 @@ HTTPS Certificates
 
 HttpClient uses the system's certificate store to validate SSL certificates
 (while browsers use their own stores). When using self-signed certificates
-during development, it's recommended to create your own certificate authority
+during development, it is recommended to create your own certificate authority
 (CA) and add it to your system's store.
 
 Alternatively, you can also disable ``verify_host`` and ``verify_peer`` (see
@@ -892,7 +892,7 @@ Add an ``extra.curl`` option in your configuration to pass those extra options::
 .. note::
 
     Some cURL options are impossible to override (e.g. because of thread safety)
-    and you'll get an exception when trying to override them.
+    and you will get an exception when trying to override them.
 
 HTTP Compression
 ~~~~~~~~~~~~~~~~
@@ -902,7 +902,7 @@ The HTTP header ``Accept-Encoding: gzip`` is added automatically if:
 * When using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
 * When using the native HTTP client: `Zlib PHP extension`_ is installed
 
-If the server does respond with a gzipped response, it's decoded transparently.
+If the server does respond with a gzipped response, it is decoded transparently.
 To disable HTTP compression, send an ``Accept-Encoding: identity`` HTTP header.
 
 Chunked transfer encoding is enabled automatically if both your PHP runtime and
@@ -1017,7 +1017,7 @@ following methods::
 
     ``$response->getInfo()`` is non-blocking: it returns *live* information
     about the response. Some of them might not be known yet (e.g. ``http_code``)
-    when you'll call it.
+    when you will call it.
 
 .. _http-client-streaming-responses:
 
@@ -1053,7 +1053,7 @@ response sequentially instead of waiting for the entire response::
 Canceling Responses
 ~~~~~~~~~~~~~~~~~~~
 
-To abort a request (e.g. because it didn't complete in due time, or you want to
+To abort a request (e.g. because it did not complete in due time, or you want to
 fetch only the first bytes of the response, etc.), you can either use the
 ``cancel()`` method of ``ResponseInterface``::
 
@@ -1131,7 +1131,7 @@ This behavior provided at destruction-time is part of the fail-safe design of th
 component. No errors will be unnoticed: if you don't write the code to handle
 errors, exceptions will notify you when needed. On the other hand, if you write
 the error-handling code (by calling ``$response->getStatusCode()``), you will
-opt-out from these fallback mechanisms as the destructor won't have anything
+opt-out from these fallback mechanisms as the destructor will not have anything
 remaining to do.
 
 Concurrent Requests
@@ -1266,7 +1266,7 @@ that network errors can happen when calling e.g. ``getStatusCode()`` too::
 
 .. note::
 
-    Because ``$response->getInfo()`` is non-blocking, it shouldn't throw by design.
+    Because ``$response->getInfo()`` is non-blocking, it should not throw by design.
 
 When multiplexing responses, you can deal with errors for individual streams by
 catching ``TransportExceptionInterface`` in the foreach loop::
@@ -1308,7 +1308,7 @@ installed in your application::
     $client = HttpClient::create();
     $client = new CachingHttpClient($client, $store);
 
-    // this won't hit the network if the resource is already in the cache
+    // this will not hit the network if the resource is already in the cache
     $response = $client->request('GET', 'https://example.com/cacheable-resource');
 
 ``CachingHttpClient`` accepts a third argument to set the options of the ``HttpCache``.
@@ -1516,7 +1516,7 @@ Because ``HttplugClient`` implements the three interfaces, you can use it this w
     $httpClient = new HttplugClient();
     $apiClient = new SomeSdk($httpClient, $httpClient, $httpClient);
 
-If you'd like to work with promises, ``HttplugClient`` also implements the
+If you would like to work with promises, ``HttplugClient`` also implements the
 ``HttpAsyncClient`` interface. To use it, you need to install the
 ``guzzlehttp/promises`` package:
 
@@ -1524,7 +1524,7 @@ If you'd like to work with promises, ``HttplugClient`` also implements the
 
     $ composer require guzzlehttp/promises
 
-Then you're ready to go::
+Then you are ready to go::
 
     use Psr\Http\Message\ResponseInterface;
     use Symfony\Component\HttpClient\HttplugClient;
@@ -1545,7 +1545,7 @@ Then you're ready to go::
             }
         );
 
-    // after you're done with sending several requests,
+    // after you are done with sending several requests,
     // you must wait for them to complete concurrently
 
     // wait for a specific promise to resolve while monitoring them all
@@ -1603,7 +1603,7 @@ If you want to extend the behavior of a base HTTP client, you can use
             $response = $this->decoratedClient->request($method, $url, $options);
 
             // if you call here any method on $response, the HTTP request
-            // won't be async; see below for a better way
+            // will not be async; see below for a better way
 
             return $response;
         }
@@ -1690,8 +1690,8 @@ Testing
 -------
 
 This component includes the ``MockHttpClient`` and ``MockResponse`` classes to
-use in tests that shouldn't make actual HTTP requests. Such tests can be
-useful, as they will run faster and produce consistent results, since they're
+use in tests that should not make actual HTTP requests. Such tests can be
+useful, as they will run faster and produce consistent results, since they are
 not dependent on an external service. By not making actual HTTP requests there
 is no need to worry about the service being online or the request changing
 state, for example deleting a resource.
@@ -1725,7 +1725,7 @@ constructor. These will be yielded in order when requests are made::
     $response2 = $client->request('...'); // returns $responses[1]
 
 Another way of using ``MockHttpClient`` is to pass a callback that generates the
-responses dynamically when it's called::
+responses dynamically when it is called::
 
     use Symfony\Component\HttpClient\MockHttpClient;
     use Symfony\Component\HttpClient\Response\MockResponse;

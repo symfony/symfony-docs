@@ -7,7 +7,7 @@ make you more productive while developing your applications.
 
 Although this server is not intended for production use, it supports HTTP/2,
 TLS/SSL, automatic generation of security certificates, local domains, and many
-other features that sooner or later you'll need when developing web projects.
+other features that sooner or later you will need when developing web projects.
 Moreover, the server is not tied to Symfony and you can also use it with any
 PHP application and even with HTML or single page applications.
 
@@ -41,7 +41,7 @@ workflow to serve a Symfony project:
     $ symfony open:local
 
 Running the server this way makes it display the log messages in the console, so
-you won't be able to run other commands at the same time. If you prefer, you can
+you will not be able to run other commands at the same time. If you prefer, you can
 run the Symfony server in the background:
 
 .. code-block:: terminal
@@ -132,7 +132,7 @@ computer:
 
     $ symfony local:php:list
 
-      # You'll see all supported SAPIs (CGI, FastCGI, etc.) for each version.
+      # You will see all supported SAPIs (CGI, FastCGI, etc.) for each version.
       # FastCGI (php-fpm) is used when possible; then CGI (which acts as a FastCGI
       # server as well), and finally, the server falls back to plain CGI.
 
@@ -167,7 +167,7 @@ running non-Symfony commands:
     $ php -r "..."
 
     # runs the command with the PHP version selected by the project
-    # (or the default PHP version if the project didn't select one)
+    # (or the default PHP version if the project did not select one)
     $ symfony php -r "..."
 
 Local Domain Names
@@ -176,7 +176,7 @@ Local Domain Names
 By default, projects are accessible at some random port of the ``127.0.0.1``
 local IP. However, sometimes it is preferable to associate a domain name to them:
 
-* It's more convenient when you work continuously on the same project because
+* It is more convenient when you work continuously on the same project because
   port numbers can change but domains don't;
 * The behavior of some applications depend on their domains/subdomains;
 * To have stable endpoints, such as the local redirection URL for OAuth2.
@@ -206,7 +206,7 @@ If the proxy doesn't work as explained in the following sections, check these:
 
 * Some browsers (e.g. Chrome) require to re-apply proxy settings (clicking on
   ``Re-apply settings`` button on the ``chrome://net-internals/#proxy`` page)
-  or a full restart after starting the proxy. Otherwise, you'll see a
+  or a full restart after starting the proxy. Otherwise, you will see a
   *"This webpage is not available"* error (``ERR_NAME_NOT_RESOLVED``);
 * Some Operating Systems (e.g. macOS) don't apply by default the proxy settings
   to local hosts and domains. You may need to remove ``*.local`` and/or other
@@ -270,7 +270,7 @@ Long-Running Commands
 ---------------------
 
 Long-running commands, such as the ones that compile front-end web assets, block
-the terminal and you can't run other commands at the same time. The Symfony
+the terminal and you cannot run other commands at the same time. The Symfony
 server provides a ``run`` command to wrap them as follows:
 
 .. code-block:: terminal
@@ -444,7 +444,7 @@ Or click on the links in the "Server" section of the web debug toolbar.
     database name.
 
 When Docker services are running, browse a page of your Symfony application and
-check the "Symfony Server" section in the web debug toolbar; you'll see that
+check the "Symfony Server" section in the web debug toolbar; you will see that
 "Docker Compose" is "Up".
 
 .. note::

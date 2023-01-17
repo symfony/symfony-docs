@@ -98,7 +98,7 @@ Skip straight to the next section.
 Otherwise, set the URL of your hub as the value of the ``MERCURE_URL``
 and ``MERCURE_PUBLIC_URL`` env vars.
 Sometimes a different URL must be called by the Symfony app (usually to publish),
-and the JavaScript client (usually to subscribe). It's especially common when
+and the JavaScript client (usually to subscribe). It is especially common when
 the Symfony app must use a local URL and the client-side JavaScript code a public one.
 In this case, ``MERCURE_URL`` must contain the local URL used by the
 Symfony app (e.g. ``https://mercure/.well-known/mercure``), and ``MERCURE_PUBLIC_URL``
@@ -407,7 +407,7 @@ of the ``Update`` constructor to ``true``::
                 true // private
             );
 
-            // Publisher's JWT must contain this topic, a URI template it matches or * in mercure.publish or you'll get a 401
+            // Publisher's JWT must contain this topic, a URI template it matches or * in mercure.publish or you will get a 401
             // Subscriber's JWT must contain this topic, a URI template it matches or * in mercure.subscribe to receive the update
             $hub->publish($update);
 
@@ -577,7 +577,7 @@ date, that can be refreshed programmatically.
 Web APIs
 --------
 
-When creating a web API, it's convenient to be able to instantly push
+When creating a web API, it is convenient to be able to instantly push
 new versions of the resources to all connected devices, and to update
 their views.
 
@@ -621,7 +621,7 @@ its Mercure support.
 Testing
 --------
 
-During unit testing it's usually not needed to send updates to Mercure.
+During unit testing it is usually not needed to send updates to Mercure.
 
 You can instead make use of the `MockHub` class::
 

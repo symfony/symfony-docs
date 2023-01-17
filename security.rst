@@ -78,7 +78,7 @@ discussed:
     explains the *new authenticator-based* system (identified by the
     ``enable_authenticator_manager: true`` config option).
 
-    Refer to the `5.2 version of this documentation`_ if you're still using
+    Refer to the `5.2 version of this documentation`_ if you are still using
     the legacy security system.
 
 .. _create-user-class:
@@ -398,7 +398,7 @@ First, make sure your User class implements the
     }
 
 Then, configure which password hasher should be used for this class. If your
-``security.yaml`` file wasn't already pre-configured, then ``make:user`` should
+``security.yaml`` file was not already pre-configured, then ``make:user`` should
 have done this for you:
 
 .. configuration-block::
@@ -601,14 +601,14 @@ in other words, it enables many ways to ask the question "Who are you?".
 
 Often, the user is unknown (i.e. not logged in) when they first visit your
 website. If you visit your homepage right now, you *will* have access and
-you'll see that you're visiting a page behind the firewall in the toolbar:
+you will see that you are visiting a page behind the firewall in the toolbar:
 
 .. image:: /_images/security/anonymous_wdt.png
    :align: center
 
 Visiting a URL under a firewall doesn't necessarily require you to be authenticated
 (e.g. the login form has to be accessible or some parts of your application
-are public). You'll learn how to restrict access to URLs, controllers or
+are public). You will learn how to restrict access to URLs, controllers or
 anything else within your firewall in the :ref:`access control
 <security-access-control>` section.
 
@@ -1831,7 +1831,7 @@ accessed via the ``getUser()`` shortcut in the
     {
         public function index(): Response
         {
-            // usually you'll want to make sure the user is authenticated first,
+            // usually you will want to make sure the user is authenticated first,
             // see "Authorization" below
             $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -1840,7 +1840,7 @@ accessed via the ``getUser()`` shortcut in the
             /** @var \App\Entity\User $user */
             $user = $this->getUser();
 
-            // Call whatever methods you've added to your User class
+            // Call whatever methods you have added to your User class
             // For example, if you added a getFirstName() method, you can use that.
             return new Response('Well hi there '.$user->getFirstName());
         }
@@ -1937,10 +1937,10 @@ database and every user is *always* given at least one role: ``ROLE_USER``::
 
 This is a nice default, but you can do *whatever* you want to determine which roles
 a user should have. The only rule is that every role **must start with** the
-``ROLE_`` prefix - otherwise, things won't work as expected. Other than that,
+``ROLE_`` prefix - otherwise, things will not work as expected. Other than that,
 a role is just a string and you can invent whatever you need (e.g. ``ROLE_PRODUCT_ADMIN``).
 
-You'll use these roles next to grant access to specific sections of your site.
+You will use these roles next to grant access to specific sections of your site.
 
 .. _security-role-hierarchy:
 
@@ -2013,7 +2013,7 @@ Users with ``ROLE_SUPER_ADMIN``, will automatically have ``ROLE_ADMIN``,
 
 .. note::
 
-    The ``role_hierarchy`` values are static - you can't, for example, store the
+    The ``role_hierarchy`` values are static - you cannot, for example, store the
     role hierarchy in a database. If you need that, create a custom
     :doc:`security voter </security/voters>` that looks for the user roles
     in the database.
@@ -2214,10 +2214,10 @@ That's it! If access is not granted, a special
 is thrown and no more code in your controller is called. Then, one of two things
 will happen:
 
-1) If the user isn't logged in yet, they will be asked to log in (e.g. redirected
+1) If the user is not logged in yet, they will be asked to log in (e.g. redirected
    to the login page).
 
-2) If the user *is* logged in, but does *not* have the ``ROLE_ADMIN`` role, they'll
+2) If the user *is* logged in, but does *not* have the ``ROLE_ADMIN`` role, they will
    be shown the 403 access denied page (which you can
    :ref:`customize <controller-error-pages-by-status-code>`).
 
@@ -2332,7 +2332,7 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
           // ...
       }
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically pass the ``security.helper`` to your service
 thanks to autowiring and the ``Security`` type-hint.
 
@@ -2344,7 +2344,7 @@ more-specific interface.
 Allowing Unsecured Access (i.e. Anonymous Users)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When a visitor isn't yet logged in to your website, they are treated as
+When a visitor is not yet logged in to your website, they are treated as
 "unauthenticated" and don't have any roles. This will block them from
 visiting your pages if you defined an ``access_control`` rule.
 
@@ -2419,7 +2419,7 @@ the login page):
 Granting Anonymous Users Access in a Custom Voter
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using a :doc:`custom voter </security/voters>`, you can allow
+If you are using a :doc:`custom voter </security/voters>`, you can allow
 anonymous users access by checking if there is no user set on the token::
 
     // src/Security/PostVoter.php
@@ -2462,7 +2462,7 @@ Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
 If you *only* want to check if a user is logged in (you don't care about roles),
 you have the following two options.
 
-Firstly, if you've given *every* user ``ROLE_USER``, you can check for that role.
+Firstly, if you have given *every* user ``ROLE_USER``, you can check for that role.
 
 Secondly, you can use a special "attribute" in place of a role::
 
@@ -2478,7 +2478,7 @@ Secondly, you can use a special "attribute" in place of a role::
 You can use ``IS_AUTHENTICATED_FULLY`` anywhere roles are used: like
 ``access_control`` or in Twig.
 
-``IS_AUTHENTICATED_FULLY`` isn't a role, but it kind of acts like one, and every
+``IS_AUTHENTICATED_FULLY`` is not a role, but it kind of acts like one, and every
 user that has logged in will have this. Actually, there are some special attributes
 like this:
 
@@ -2516,7 +2516,7 @@ Understanding how Users are Refreshed from the Session
 
 At the end of every request (unless your firewall is ``stateless``), your
 ``User`` object is serialized to the session. At the beginning of the next
-request, it's deserialized and then passed to your user provider to "refresh" it
+request, it is deserialized and then passed to your user provider to "refresh" it
 (e.g. Doctrine queries for a fresh user).
 
 Then, the two User objects (the original from the session and the refreshed User
@@ -2527,7 +2527,7 @@ your user will be logged out. This is a security measure to make sure that malic
 users can be de-authenticated if core user data changes.
 
 However, in some cases, this process can cause unexpected authentication problems.
-If you're having problems authenticating, it could be that you *are* authenticating
+If you are having problems authenticating, it could be that you *are* authenticating
 successfully, but you immediately lose authentication after the first redirect.
 
 In that case, review the serialization logic (e.g. the ``__serialize()`` or
@@ -2661,13 +2661,13 @@ Frequently Asked Questions
 --------------------------
 
 **Can I have Multiple Firewalls?**
-    Yes! But it's usually not necessary. Each firewall is like a separate security
+    Yes! But it is usually not necessary. Each firewall is like a separate security
     system, being authenticated in one firewall doesn't make you authenticated in
     another one. One firewall can have multiple diverse ways of allowing
     authentication (e.g. form login, API key authentication and LDAP).
 
 **Can I Share Authentication Between Firewalls?**
-    Yes, but only with some configuration. If you're using multiple firewalls and
+    Yes, but only with some configuration. If you are using multiple firewalls and
     you authenticate against one firewall, you will *not* be authenticated against
     any other firewalls automatically. Different firewalls are like different security
     systems. To do this you have to explicitly specify the same
@@ -2676,12 +2676,12 @@ Frequently Asked Questions
 
 **Security doesn't seem to work on my Error Pages**
     As routing is done *before* security, 404 error pages are not covered by
-    any firewall. This means you can't check for security or even access the
+    any firewall. This means you cannot check for security or even access the
     user object on these pages. See :doc:`/controller/error_pages`
     for more details.
 
-**My Authentication Doesn't Seem to Work: No Errors, but I'm Never Logged In**
-    Sometimes authentication may be successful, but after redirecting, you're
+**My Authentication Doesn't Seem to Work: No Errors, but I am Never Logged In**
+    Sometimes authentication may be successful, but after redirecting, you are
     logged out immediately due to a problem loading the ``User`` from the session.
     To see if this is an issue, check your log file (``var/log/dev.log``) for
     the log message:

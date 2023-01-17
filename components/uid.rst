@@ -29,7 +29,7 @@ UUIDs
 `UUIDs`_ (*universally unique identifiers*) are one of the most popular UIDs in
 the software industry. UUIDs are 128-bit numbers usually represented as five
 groups of hexadecimal characters: ``xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx``
-(the ``M`` digit is the UUID version and the ``N`` digit is the UUID variant).
+(the ``M`` dig it is the UUID version and the ``N`` digit is the UUID variant).
 
 Generating UUIDs
 ~~~~~~~~~~~~~~~~
@@ -48,7 +48,7 @@ to create each type of UUID::
 
     // UUID type 3 and 5 generate a UUID hashing the given namespace and name. Type 3 uses
     // MD5 hashes and Type 5 uses SHA-1. The namespace is another UUID (e.g. a Type 4 UUID)
-    // and the name is an arbitrary string (e.g. a product name; if it's unique).
+    // and the name is an arbitrary string (e.g. a product name; if it is unique).
     $namespace = Uuid::v4();
     $name = $product->getUniqueName();
 
@@ -62,9 +62,9 @@ to create each type of UUID::
     $uuid = Uuid::v3(Uuid::NAMESPACE_OID, $name);  // same as: Uuid::v3('oid', $name);
     $uuid = Uuid::v3(Uuid::NAMESPACE_X500, $name); // same as: Uuid::v3('x500', $name);
 
-    // UUID type 6 is not part of the UUID standard. It's lexicographically sortable
+    // UUID type 6 is not part of the UUID standard. It is lexicographically sortable
     // (like ULIDs) and contains a 60-bit timestamp and 63 extra unique bits.
-    // It's defined in http://gh.peabody.io/uuidv6/
+    // It is defined in http://gh.peabody.io/uuidv6/
     $uuid = Uuid::v6(); // $uuid is an instance of Symfony\Component\Uid\UuidV6
 
 .. versionadded:: 5.3
@@ -215,7 +215,7 @@ UUID objects created with the ``Uuid`` class can use the following methods
     $uuid = Uuid::v4();
     $uuid instanceof UuidV4; // true
 
-    // getting the UUID datetime (it's only available in certain UUID types)
+    // getting the UUID datetime (it is only available in certain UUID types)
     $uuid = Uuid::v1();
     $uuid->getDateTime(); // returns a \DateTimeImmutable instance
 
@@ -295,7 +295,7 @@ entity primary keys::
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these UUID types to build the SQL query
 (e.g. ``->findOneBy(['user' => $user->getUuid()])``). However, when using DQL
-queries or building the query yourself, you'll need to set ``uuid`` as the type
+queries or building the query yourself, you will need to set ``uuid`` as the type
 of the UUID parameters::
 
     // src/Repository/ProductRepository.php
@@ -501,7 +501,7 @@ entity primary keys::
 When using built-in Doctrine repository methods (e.g. ``findOneBy()``), Doctrine
 knows how to convert these ULID types to build the SQL query
 (e.g. ``->findOneBy(['user' => $user->getUlid()])``). However, when using DQL
-queries or building the query yourself, you'll need to set ``ulid`` as the type
+queries or building the query yourself, you will need to set ``ulid`` as the type
 of the ULID parameters::
 
     // src/Repository/ProductRepository.php

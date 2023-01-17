@@ -199,7 +199,7 @@ Group Sequence Providers
 ------------------------
 
 Imagine a ``User`` entity which can be a normal user or a premium user. When
-it's a premium user, some extra constraints should be added to the user entity
+it is a premium user, some extra constraints should be added to the user entity
 (e.g. the credit card details). To dynamically determine which groups should
 be activated, you can create a Group Sequence Provider. First, create the
 entity and a new constraint group called ``Premium``:
@@ -342,7 +342,7 @@ method, which should return an array of groups to use::
 
             // when returning a nested array, all the groups included in each array
             // are validated. E.g. if 'User' fails, 'Premium' is also validated
-            // (and you'll get its violations too) but 'Api' won't be validated:
+            // (and you will get its violations too) but 'Api' will not be validated:
             return [['User', 'Premium'], 'Api'];
         }
     }

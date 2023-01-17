@@ -31,7 +31,7 @@ example::
         }
     }
 
-But, you already have a PSR-16 cache object, and you'd like to pass this to the class
+But, you already have a PSR-16 cache object, and you would like to pass this to the class
 instead. No problem! The Cache component provides the
 :class:`Symfony\\Component\\Cache\\Adapter\\Psr16Adapter` class for exactly
 this use-case::
@@ -66,7 +66,7 @@ example::
         }
     }
 
-But, you already have a PSR-6 cache pool object, and you'd like to pass this to
+But, you already have a PSR-6 cache pool object, and you would like to pass this to
 the class instead. No problem! The Cache component provides the
 :class:`Symfony\\Component\\Cache\\Psr16Cache` class for exactly
 this use-case::

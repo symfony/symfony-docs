@@ -185,7 +185,7 @@ The possible values of this option are:
 access_control
 --------------
 
-Defines the security protection of the URLs of your application. It's used for
+Defines the security protection of the URLs of your application. It is used for
 example to trigger the user authentication when trying to access to the backend
 and to allow unauthenticated users to the login form page.
 
@@ -326,7 +326,7 @@ login_path
 **type**: ``string`` **default**: ``/login``
 
 This is the route or path that the user will be redirected to (unless ``use_forward``
-is set to ``true``) when they try to access a protected resource but aren't
+is set to ``true``) when they try to access a protected resource but are not
 fully authenticated.
 
 This path **must** be accessible by a normal, unauthenticated user, else
@@ -372,7 +372,7 @@ use_forward
 
 **type**: ``boolean`` **default**: ``false``
 
-If you'd like the user to be forwarded to the login form instead of being
+If you would like the user to be forwarded to the login form instead of being
 redirected, set this option to ``true``.
 
 username_parameter
@@ -828,8 +828,8 @@ Firewall Context
 ~~~~~~~~~~~~~~~~
 
 Most applications will only need one :ref:`firewall <firewalls-authentication>`.
-But if your application *does* use multiple firewalls, you'll notice that
-if you're authenticated in one firewall, you're not automatically authenticated
+But if your application *does* use multiple firewalls, you will notice that
+if you are authenticated in one firewall, you are not automatically authenticated
 in another. In other words, the systems don't share a common "context":
 each firewall acts like a separate security system.
 
@@ -897,7 +897,7 @@ multiple firewalls, the "context" could actually be shared:
 
     The firewall context key is stored in session, so every firewall using it
     must set its ``stateless`` option to ``false``. Otherwise, the context is
-    ignored and you won't be able to authenticate on multiple firewalls at the
+    ignored and you will not be able to authenticate on multiple firewalls at the
     same time.
 
 User Checkers

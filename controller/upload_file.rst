@@ -8,7 +8,7 @@ How to Upload Files
 
     Instead of handling file uploading yourself, you may consider using the
     `VichUploaderBundle`_ community bundle. This bundle provides all the common
-    operations (such as file renaming, saving and deleting) and it's tightly
+    operations (such as file renaming, saving and deleting) and it is tightly
     integrated with Doctrine ORM, MongoDB ODM, PHPCR ODM and Propel.
 
 Imagine that you have a ``Product`` entity in your application and you want to
@@ -77,7 +77,7 @@ so Symfony doesn't try to get/set its value from the related entity::
                     // every time you edit the Product details
                     'required' => false,
 
-                    // unmapped fields can't define their validation using annotations
+                    // unmapped fields cannot define their validation using annotations
                     // in the associated entity, so you can use the PHP constraint classes
                     'constraints' => [
                         new File([
@@ -203,7 +203,7 @@ There are some important things to consider in the code of the above controller:
    the original file size (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getSize`)
    and the original file name (:method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::getClientOriginalName`).
    However, they are considered *not safe* because a malicious user could tamper
-   that information. That's why it's always better to generate a unique name and
+   that information. That's why it is always better to generate a unique name and
    use the :method:`Symfony\\Component\\HttpFoundation\\File\\UploadedFile::guessExtension`
    method to let Symfony guess the right extension according to the file MIME type;
 
@@ -329,7 +329,7 @@ Then, define a service for this class:
             ;
         };
 
-Now you're ready to use this service in the controller::
+Now you are ready to use this service in the controller::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -361,7 +361,7 @@ Using a Doctrine Listener
 
 The previous versions of this article explained how to handle file uploads using
 :ref:`Doctrine listeners <doctrine-lifecycle-listener>`. However, this is no longer
-recommended, because Doctrine events shouldn't be used for your domain logic.
+recommended, because Doctrine events should not be used for your domain logic.
 
 Moreover, Doctrine listeners are often dependent on internal Doctrine behavior
 which may change in future versions. Also, they can introduce performance issues

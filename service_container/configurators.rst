@@ -117,7 +117,7 @@ Using the Configurator
 ----------------------
 
 You can configure the service configurator using the ``configurator`` option. If
-you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 all the classes are already loaded as services. All you need to do is specify the
 ``configurator``:
 

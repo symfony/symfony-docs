@@ -92,7 +92,7 @@ that the progress bar display is refreshed with a 100% completion.
 
     If you want to output something while the progress bar is running,
     call :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::clear` first.
-    After you're done, call
+    After you are done, call
     :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::display`
     to show the progress bar again.
 
@@ -158,7 +158,7 @@ level of verbosity of the ``OutputInterface`` instance:
 
 .. note::
 
-    If you call a command with the quiet flag (``-q``), the progress bar won't
+    If you call a command with the quiet flag (``-q``), the progress bar will not
     be displayed.
 
 Instead of relying on the verbosity mode of the current command, you can also
@@ -377,7 +377,7 @@ of the custom placeholders::
 Displaying Multiple Progress Bars
 ---------------------------------
 
-When using :ref:`Console output sections <console-output-sections>` it's
+When using :ref:`Console output sections <console-output-sections>` it is
 possible to display multiple progress bars at the same time and change their
 progress independently::
 

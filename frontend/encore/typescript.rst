@@ -26,7 +26,7 @@ In ``tsconfig.json`` you can define more options, as shown in `tsconfig.json ref
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
-Encore, you're done!
+Encore, you are done!
 
 Any ``.ts`` files that you require will be processed correctly. You can
 also configure the `ts-loader options`_ via the ``enableTypeScriptLoader()``

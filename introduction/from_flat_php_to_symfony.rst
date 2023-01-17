@@ -8,24 +8,24 @@ Symfony versus Flat PHP
 
 **Why is Symfony better than just opening up a file and writing flat PHP?**
 
-If you've never used a PHP framework, aren't familiar with the
+If you have never used a PHP framework, are not familiar with the
 `Model-View-Controller`_ (MVC) philosophy, or just wonder what all the *hype*
 is around Symfony, this article is for you. Instead of *telling* you that
 Symfony allows you to develop faster and better software than with flat PHP,
-you'll see for yourself.
+you will see for yourself.
 
-In this article, you'll write a basic application in flat PHP, and then
-refactor it to be more organized. You'll travel through time, seeing the
+In this article, you will write a basic application in flat PHP, and then
+refactor it to be more organized. You will travel through time, seeing the
 decisions behind why web development has evolved over the past several years
 to where it is now.
 
-By the end, you'll see how Symfony can rescue you from mundane tasks and
+By the end, you will see how Symfony can rescue you from mundane tasks and
 let you take back control of your code.
 
 A Basic Blog in Flat PHP
 ------------------------
 
-In this article, you'll build the token blog application using only flat PHP.
+In this article, you will build the token blog application using only flat PHP.
 To begin, create a single page that displays blog entries that have been
 persisted to the database. Writing in flat PHP is quick and dirty:
 
@@ -127,7 +127,7 @@ is primarily an HTML file that uses a template-like PHP syntax:
     </html>
 
 By convention, the file that contains all the application logic - ``index.php`` -
-is known as a "controller". The term controller is a word you'll hear a lot,
+is known as a "controller". The term controller is a word you will hear a lot,
 regardless of the language or framework you use. It refers to the area
 of *your* code that processes user input and prepares the response.
 
@@ -201,7 +201,7 @@ At this point, the application has been refactored into three distinct pieces
 offering various advantages and the opportunity to reuse almost everything
 on different pages.
 
-The only part of the code that *can't* be reused is the page layout. Fix
+The only part of the code that *cannot* be reused is the page layout. Fix
 that by creating a new ``templates/layout.php`` file:
 
 .. code-block:: html+php
@@ -241,9 +241,9 @@ the ``templates/layout.php``:
     <?php include 'layout.php' ?>
 
 You now have a setup that will allow you to reuse the layout.
-Unfortunately, to accomplish this, you're forced to use a few ugly
+Unfortunately, to accomplish this, you are forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
-solves this using a `Templating`_ component. You'll see it in action shortly.
+solves this using a `Templating`_ component. You will see it in action shortly.
 
 Adding a Blog "show" Page
 -------------------------
@@ -305,7 +305,7 @@ Creating the second page now requires very little work and no code is duplicated
 this page introduces even more lingering problems that a framework can solve
 for you. For example, a missing or invalid ``id`` query parameter will cause
 the page to crash. It would be better if this caused a 404 page to be rendered,
-but this can't really be done yet.
+but this cannot really be done yet.
 
 Another major problem is that each individual controller file must include
 the ``model.php`` file. What if each controller file suddenly needed to include
@@ -338,13 +338,13 @@ application change slightly, but start to become more flexible:
 When using a front controller, a single PHP file (``index.php`` in this case)
 renders *every* request. For the blog post show page, ``/index.php/show`` will
 actually execute the ``index.php`` file, which is now responsible for routing
-requests internally based on the full URI. As you'll see, a front controller
+requests internally based on the full URI. As you will see, a front controller
 is a very powerful tool.
 
 Creating the Front Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You're about to take a **big** step with the application. With one file handling
+You are about to take a **big** step with the application. With one file handling
 all requests, you can centralize things such as security handling, configuration
 loading, and routing. In this application, ``index.php`` must now be smart
 enough to render the blog post list page *or* the blog post show page based
@@ -402,7 +402,7 @@ have *many* controller functions: one for each page.
 
 By now, the application has evolved from a single PHP file into a structure
 that is organized and allows for code reuse. You should be happier, but far
-from being satisfied. For example, the routing system is fickle, and wouldn't
+from being satisfied. For example, the routing system is fickle, and would not
 recognize that the list page - ``/index.php``  - should be accessible also via ``/``
 (if Apache rewrite rules were added). Also, instead of developing the blog,
 a lot of time is being spent working on the "architecture" of the code (e.g.
@@ -527,7 +527,7 @@ The Sample Application in Symfony
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The blog has come a *long* way, but it still contains a lot of code for such
-a basic application. Along the way, you've made a basic routing system and
+a basic application. Along the way, you have made a basic routing system and
 a function using ``ob_start()`` and ``ob_get_clean()`` to render templates.
 If, for some reason, you needed to continue building this "framework" from
 scratch, you could at least use Symfony's standalone :doc:`Routing </routing>`
@@ -635,7 +635,7 @@ in a readable format:
         controller: App\Controller\BlogController::show
 
 Now that Symfony is handling all the mundane tasks, the front controller
-``public/index.php`` is reduced to bootstrapping. And since it does so little, you'll never
+``public/index.php`` is reduced to bootstrapping. And since it does so little, you will never
 have to touch it::
 
     // public/index.php
@@ -656,7 +656,7 @@ route is called and your code inside the controller creates and returns the
 appropriate ``Response`` object. The HTTP headers and content of the ``Response``
 object are sent back to the client.
 
-It's a beautiful thing.
+It is a beautiful thing.
 
 .. raw:: html
 
@@ -665,7 +665,7 @@ It's a beautiful thing.
 Where Symfony Delivers
 ----------------------
 
-In the rest of the documentation articles, you'll learn more about how each piece of
+In the rest of the documentation articles, you will learn more about how each piece of
 Symfony works and how you can organize your project. For now, celebrate how
 migrating the blog from flat PHP to Symfony has improved your life:
 

@@ -12,8 +12,8 @@ Why would you Like to Create your Own Framework?
 ------------------------------------------------
 
 Why would you like to create your own framework in the first place? If you
-look around, everybody will tell you that it's a bad thing to reinvent the
-wheel and that you'd better choose an existing framework and forget about
+look around, everybody will tell you that it is a bad thing to reinvent the
+wheel and that you would better choose an existing framework and forget about
 creating your own altogether. Most of the time, they are right but there are
 a few good reasons to start creating your own framework:
 
@@ -42,7 +42,7 @@ And each step will be the occasion to learn more about some of the Symfony
 Components.
 
 Many modern web frameworks advertise themselves as being MVC frameworks. This
-tutorial won't talk about the MVC pattern, as the Symfony Components are able to
+tutorial will not talk about the MVC pattern, as the Symfony Components are able to
 create any type of frameworks, not just the ones that follow the MVC
 architecture. Anyway, if you have a look at the MVC semantics, this book is
 about how to create the Controller part of a framework. For the Model and the

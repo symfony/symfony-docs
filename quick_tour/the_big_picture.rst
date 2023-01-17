@@ -4,7 +4,7 @@ The Big Picture
 Start using Symfony in 10 minutes! Really! That's all you need to understand the
 most important concepts and start building a real project!
 
-If you've used a web framework before, you should feel right at home with
+If you have used a web framework before, you should feel right at home with
 Symfony. If not, welcome to a whole new way of developing web applications. Symfony
 *embraces* best practices, keeps backwards compatibility (Yes! Upgrading is always
 safe & easy!) and offers long-term support.
@@ -14,7 +14,7 @@ safe & easy!) and offers long-term support.
 Downloading Symfony
 -------------------
 
-First, make sure you've installed `Composer`_ and have PHP 7.1.3 or higher.
+First, make sure you have installed `Composer`_ and have PHP 7.1.3 or higher.
 
 Ready? In a terminal, run:
 
@@ -41,7 +41,7 @@ Symfony application:
 
 Can we already load the project in a browser? Yes! You can setup
 :doc:`Nginx or Apache </setup/web_server_configuration>` and configure their
-document root to be the ``public/`` directory. But, for development, it's better
+document root to be the ``public/`` directory. But, for development, it is better
 to :doc:`install the Symfony local web server </setup/symfony_server>` and run
 it as follows:
 
@@ -58,7 +58,7 @@ Try your new app by going to ``http://localhost:8000`` in a browser!
 Fundamentals: Route, Controller, Response
 -----------------------------------------
 
-Our project only has about 15 files, but it's ready to become a sleek API, a robust
+Our project only has about 15 files, but it is ready to become a sleek API, a robust
 web app, or a microservice. Symfony starts small, but scales with you.
 
 But before we go too far, let's dig into the fundamentals by building our first page.
@@ -196,7 +196,7 @@ in ``DefaultController``::
         }
     }
 
-Routing can do *even* more, but we'll save that for another time! Right now, our
+Routing can do *even* more, but  we will save that for another time! Right now, our
 app needs more features! Like a template engine, logging, debugging tools and more.
 
 Keep reading with :doc:`/quick_tour/flex_recipes`.

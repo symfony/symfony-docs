@@ -7,7 +7,7 @@ Configures the string used as the label of the field, in case the ``label``
 option was not set. This is useful when using
 :ref:`keyword translation messages <translation-real-vs-keyword-messages>`.
 
-If you're using keyword translation messages as labels, you often end up having
+If you are using keyword translation messages as labels, you often end up having
 multiple keyword messages for the same label (e.g. ``profile_address_street``,
 ``invoice_address_street``). This is because the label is built for each "path"
 to a field. To avoid duplicated keyword messages, you can configure the label

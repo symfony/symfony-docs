@@ -4,7 +4,7 @@
 How to Use the Profiler in a Functional Test
 ============================================
 
-It's highly recommended that a functional test only tests the Response. But if
+It is highly recommended that a functional test only tests the Response. But if
 you write functional tests that monitor your production servers, you might
 want to write tests on the profiling data as it gives you a great way to check
 various things and enforce some metrics.

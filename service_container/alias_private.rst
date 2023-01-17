@@ -289,7 +289,7 @@ The following example shows how to inject an anonymous service into another serv
 .. note::
 
     Anonymous services do *NOT* inherit the definitions provided from the
-    defaults defined in the configuration. So you'll need to explicitly mark
+    defaults defined in the configuration. So you will need to explicitly mark
     service as autowired or autoconfigured when doing an anonymous service
     e.g.: ``inline_service(Foo::class)->autowire()->autoconfigure()``.
 

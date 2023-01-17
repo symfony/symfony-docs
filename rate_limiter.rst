@@ -8,7 +8,7 @@ Rate Limiter
 A "rate limiter" controls how frequently some event (e.g. an HTTP request or a
 login attempt) is allowed to happen. Rate limiting is commonly used as a
 defensive measure to protect services from excessive use (intended or not) and
-maintain their availability. It's also useful to control your internal or
+maintain their availability. It is also useful to control your internal or
 outbound processes (e.g. limit the number of simultaneously processed messages).
 
 Symfony uses these rate limiters in built-in features like :ref:`login throttling <security-login-throttling>`,
@@ -34,7 +34,7 @@ rate limits: **fixed window**, **sliding window**, **token bucket**.
 Fixed Window Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is the simplest technique and it's based on setting a limit for a given
+This is the simplest technique and it is based on setting a limit for a given
 interval of time (e.g. 5,000 requests per hour or 3 login attempts every 15
 minutes).
 
@@ -92,7 +92,7 @@ continuously updating the budget of resource usage. It roughly works like this:
 * A bucket is created with an initial set of tokens;
 * A new token is added to the bucket with a predefined frequency (e.g. every second);
 * Allowing an event consumes one or more tokens;
-* If the bucket still contains tokens, the event is allowed; otherwise, it's denied;
+* If the bucket still contains tokens, the event is allowed; otherwise,  it is denied;
 * If the bucket is at full capacity, new tokens are discarded.
 
 The below diagram shows a token bucket of size 4 that is filled with a rate
@@ -231,7 +231,7 @@ the number of requests to the API::
 
     class ApiController extends AbstractController
     {
-        // if you're using service autowiring, the variable name must be:
+        // if you are using service autowiring, the variable name must be:
         // "rate limiter name" (in camelCase) + "Limiter" suffix
         public function index(Request $request, RateLimiterFactory $anonymousApiLimiter)
         {
@@ -297,7 +297,7 @@ using the ``reserve()`` method::
     }
 
 The ``reserve()`` method is able to reserve a token in the future. Only use
-this method if you're planning to wait, otherwise you will block other
+this method if you are planning to wait, otherwise you will block other
 processes by reserving unused tokens.
 
 .. note::
@@ -318,7 +318,7 @@ processes by reserving unused tokens.
 Exposing the Rate Limiter Status
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When using a rate limiter in APIs, it's common to include some standard HTTP
+When using a rate limiter in APIs, it is common to include some standard HTTP
 headers in the response to expose the limit status (e.g. remaining tokens, when
 new tokens will be available, etc.)
 

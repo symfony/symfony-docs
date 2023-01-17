@@ -195,7 +195,7 @@ Available Options
     requires phpredis v4 or higher and a TCP-keepalive enabled server.
 
 ``lazy`` (type: ``bool``, default: ``null``)
-    Enables or disables lazy connections to the backend. It's ``false`` by
+    Enables or disables lazy connections to the backend. It is ``false`` by
     default when using this as a stand-alone component and ``true`` by default
     when using it inside a Symfony application.
 
@@ -227,7 +227,7 @@ Available Options
 Working with Tags
 -----------------
 
-In order to use tag-based invalidation, you can wrap your adapter in :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`, but when Redis is used as backend, it's often more interesting to use the dedicated :class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag invalidation logic is implemented in Redis itself, this adapter offers better performance when using tag-based invalidation::
+In order to use tag-based invalidation, you can wrap your adapter in :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`, but when Redis is used as backend, it is often more interesting to use the dedicated :class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag invalidation logic is implemented in Redis itself, this adapter offers better performance when using tag-based invalidation::
 
     use Symfony\Component\Cache\Adapter\RedisAdapter;
     use Symfony\Component\Cache\Adapter\RedisTagAwareAdapter;

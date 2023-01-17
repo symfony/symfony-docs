@@ -148,7 +148,7 @@ can run it with:
 
     $ php application.php d:g Fabien
 
-    # as long as it's unambiguous, you can also mix upper and lower case
+    # as long as it is unambiguous, you can also mix upper and lower case
     # php application.php Demo:g Fabien
     # php application.php de:Gr Fabien
     # php application.php DE:Gre Fabien

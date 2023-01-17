@@ -16,7 +16,7 @@ Twig Templating Language
 
 The `Twig`_ templating language allows you to write concise, readable templates
 that are more friendly to web designers and, in several ways, more powerful than
-PHP templates. Take a look at the following Twig template example. Even if it's
+PHP templates. Take a look at the following Twig template example. Even if it is
 the first time you see Twig, you probably understand most of it:
 
 .. code-block:: html+twig
@@ -45,7 +45,7 @@ Twig syntax is based on these three constructs:
 * ``{# ... #}``, used to add comments to the template (unlike HTML comments,
   these comments are not included in the rendered page).
 
-You can't run PHP code inside Twig templates, but Twig provides utilities to
+You cannot run PHP code inside Twig templates, but Twig provides utilities to
 run some logic in the templates. For example, **filters** modify content before
 being rendered, like the ``upper`` filter to uppercase contents:
 
@@ -180,7 +180,7 @@ Linking to Pages
 Instead of writing the link URLs by hand, use the ``path()`` function to
 generate URLs based on the :ref:`routing configuration <routing-creating-routes>`.
 
-Later, if you want to modify the URL of a particular page, all you'll need to do
+Later, if you want to modify the URL of a particular page, all you will need to do
 is change the routing configuration: the templates will automatically generate
 the new URL.
 
@@ -466,7 +466,7 @@ use the ``render()`` helper::
         }
     }
 
-If your controller does not extend from ``AbstractController``, you'll need to
+If your controller does not extend from ``AbstractController``, you will need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
 use the ``render()`` method of the ``twig`` service.
 
@@ -651,7 +651,7 @@ Linting Twig Templates
 ~~~~~~~~~~~~~~~~~~~~~~
 
 The ``lint:twig`` command checks that your Twig templates don't have any syntax
-errors. It's useful to run it before deploying your application to production
+errors. It is useful to run it before deploying your application to production
 (e.g. in your continuous integration server):
 
 .. code-block:: terminal
@@ -681,7 +681,7 @@ Inspecting Twig Information
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The ``debug:twig`` command lists all the information available about Twig
-(functions, filters, global variables, etc.). It's useful to check if your
+(functions, filters, global variables, etc.). It is useful to check if your
 :doc:`custom Twig extensions </templating/twig_extension>` are working properly
 and also to check the Twig features added when :ref:`installing packages <symfony-flex>`:
 
@@ -758,7 +758,7 @@ following code to display the user information is repeated in several places:
     </div>
 
 First, create a new Twig template called ``blog/_user_profile.html.twig`` (the
-``_`` prefix is optional, but it's a convention used to better differentiate
+``_`` prefix is optional, but it is a convention used to better differentiate
 between full templates and template fragments).
 
 Then, remove that content from the original ``blog/index.html.twig`` template
@@ -798,7 +798,7 @@ in some cases.
 
 Imagine that the template fragment displays the three most recent blog articles.
 To do that, it needs to make a database query to get those articles. When using
-the ``include()`` function, you'd need to do the same database query in every
+the ``include()`` function, you would need to do the same database query in every
 page that includes the fragment. This is not very convenient.
 
 A better alternative is to **embed the result of executing some controller**
@@ -826,7 +826,7 @@ First, create the controller that renders a certain number of recent articles::
     }
 
 Then, create the ``blog/_recent_articles.html.twig`` template fragment (the
-``_`` prefix in the template name is optional, but it's a convention used to
+``_`` prefix in the template name is optional, but it is a convention used to
 better differentiate between full templates and template fragments):
 
 .. code-block:: html+twig
@@ -914,10 +914,10 @@ template fragments. Configure that special URL in the ``fragments`` option:
 Template Inheritance and Layouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As your application grows you'll find more and more repeated elements between
+As your application grows you will find more and more repeated elements between
 pages, such as headers, footers, sidebars, etc. :ref:`Including templates <templates-include>`
 and :ref:`embedding controllers <templates-embed-controllers>` can help, but
-when pages share a common structure, it's better to use **inheritance**.
+when pages share a common structure, it is better to use **inheritance**.
 
 The concept of `Twig template inheritance`_ is similar to PHP class inheritance.
 You define a parent template that other templates can extend from and child

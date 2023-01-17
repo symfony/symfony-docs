@@ -6,22 +6,22 @@ HTTP Cache Validation
 
 When a resource needs to be updated as soon as a change is made to the underlying
 data, the expiration model falls short. With the `expiration model`_, the
-application won't be asked to return the updated response until the cache
+application will not be asked to return the updated response until the cache
 finally becomes stale.
 
 The `validation model`_ addresses this issue. Under this model, the cache continues
 to store responses. The difference is that, for each request, the cache asks the
 application if the cached response is still valid or if it needs to be regenerated.
 If the cache *is* still valid, your application should return a 304 status code
-and no content. This tells the cache that it's OK to return the cached response.
+and no content. This tells the cache that it is OK to return the cached response.
 
-Under this model, you only save CPU if you're able to determine that the
+Under this model, you only save CPU if you are able to determine that the
 cached response is still valid by doing *less* work than generating the whole
 page again (see below for an implementation example).
 
 .. tip::
 
-    The 304 status code means "Not Modified". It's important because with
+    The 304 status code means "Not Modified". It is important because with
     this status code the response does *not* contain the actual content being
     requested. Instead, the response only consists of the response headers that
     tells the cache that it can use its stored version of the content.
@@ -40,7 +40,7 @@ Validation with the ``ETag`` Header
 
 The `HTTP ETag`_ ("entity-tag") header is an optional HTTP header whose value is
 an arbitrary string that uniquely identifies one representation of the target
-resource. It's entirely generated and set by your application so that you can
+resource. It is entirely generated and set by your application so that you can
 tell, for example, if the ``/about`` resource that's stored by the cache is
 up-to-date with what your application would return.
 
@@ -101,7 +101,7 @@ This algorithm works and is very generic, but you need to create the whole
 ``Response`` before being able to compute the ``ETag``, which is sub-optimal.
 In other words, it saves on bandwidth, but not CPU cycles.
 
-In the :ref:`optimizing-cache-validation` section, you'll see how validation
+In the :ref:`optimizing-cache-validation` section, you will see how validation
 can be used more intelligently to determine the validity of a cache without
 doing so much work.
 
@@ -122,7 +122,7 @@ The ``Last-Modified`` header is the second form of validation. According
 to the HTTP specification, "The ``Last-Modified`` header field indicates
 the date and time at which the origin server believes the representation
 was last modified." In other words, the application decides whether or not
-the cached content has been updated based on whether or not it's been updated
+the cached content has been updated based on whether or not it is been updated
 since the response was cached.
 
 For instance, you can use the latest update date for all the objects needed to
@@ -222,7 +222,7 @@ the better. The ``Response::isNotModified()`` method does exactly that::
             // do more work here - like retrieving more data
             $comments = ...;
 
-            // or render a template with the $response you've already started
+            // or render a template with the $response you have already started
             return $this->render('article/show.html.twig', [
                 'article' => $article,
                 'comments' => $comments,

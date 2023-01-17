@@ -16,7 +16,7 @@ Basic Usage
 -----------
 
 This constraint can be applied to properties (e.g. a ``termsAccepted`` property
-on a registration model) and methods. It's most powerful in the latter case,
+on a registration model) and methods. It is most powerful in the latter case,
 where you can assert that a method returns a true value. For example, suppose
 you have the following method::
 

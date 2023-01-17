@@ -28,7 +28,7 @@ your app needs. Encore can do a lot more: minify files, pre-process Sass/LESS,
 support React, Vue.js, etc.
 
 The other files - ``bootstrap.js``, ``controllers.json`` and ``hello_controller.js``
-relate to a topic you'll learn about soon: `Stimulus & Symfony UX`_.
+relate to a topic you will learn about soon: `Stimulus & Symfony UX`_.
 
 Configuring Encore/Webpack
 --------------------------
@@ -154,9 +154,9 @@ template: the paths in ``entrypoints.json`` will always be the final, correct pa
 And if you use :doc:`splitEntryChunks() </frontend/encore/split-chunks>` (where Webpack splits the output into even
 more files), all the necessary ``script`` and ``link`` tags will render automatically.
 
-If you are not using Symfony you won't have the ``encore_entry_*`` functions available.
+If you are not using Symfony you will not have the ``encore_entry_*`` functions available.
 Instead, you can point directly to the final built files or write code to parse
-``entrypoints.json`` manually. The entrypoints file is needed only if you're using
+``entrypoints.json`` manually. The entrypoints file is needed only if you are using
 certain optional features, like ``splitEntryChunks()``.
 
 .. versionadded:: 1.9.0
@@ -181,7 +181,7 @@ files. First, create a file that exports a function, class or any other value:
         return `Yo yo ${name} - welcome to Encore!`;
     };
 
-We'll use jQuery to print this message on the page. Install it via:
+We will use jQuery to print this message on the page. Install it via:
 
 .. code-block:: terminal
 
@@ -218,7 +218,7 @@ Stimulus & Symfony UX
 
 As simple as the above example is, instead of building your application inside of
 ``app.js``, we recommend `Stimulus`_: a small JavaScript framework that makes it
-easy to attach behavior to HTML. It's powerful, and you will love it! Symfony
+easy to attach behavior to HTML. It is powerful, and you will love it! Symfony
 even provides packages to add more features to Stimulus. These are called the
 Symfony UX Packages.
 
@@ -304,7 +304,7 @@ want to include on *certain* pages?
 Lazy Controllers
 ~~~~~~~~~~~~~~~~
 
-One very nice solution if you're using Stimulus is to leverage `lazy controllers`_.
+One very nice solution if you are using Stimulus is to leverage `lazy controllers`_.
 To activate this on a controller, add a special ``stimulusFetch: 'lazy'`` above
 your controller class:
 
@@ -319,7 +319,7 @@ your controller class:
     }
 
 That's it! This controller's code - and any modules that it imports - will be
-split to *separate* files by Encore. Then, those files won't be downloaded until
+split to *separate* files by Encore. Then, those files will not be downloaded until
 the moment a matching element (e.g. ``<div data-controller="lazy-example">``)
 appears on the page!
 
@@ -400,7 +400,7 @@ live inside ``checkout``.
 Using Sass/LESS/Stylus
 ----------------------
 
-You've already mastered the basics of Encore. Nice! But, there are *many* more
+You have already mastered the basics of Encore. Nice! But, there are *many* more
 features that you can opt into if you need them. For example, instead of using plain
 CSS you can also use Sass, LESS or Stylus. To use Sass, rename the ``app.css``
 file to ``app.scss`` and update the ``import`` statement:
@@ -422,8 +422,8 @@ Then, tell Encore to enable the Sass preprocessor:
     +    .enableSassLoader()
       ;
 
-Because you just changed your ``webpack.config.js`` file, you'll need to restart
-Encore. When you do, you'll see an error!
+Because you just changed your ``webpack.config.js`` file, you will need to restart
+Encore. When you do, you will see an error!
 
 .. code-block:: terminal
 

@@ -256,7 +256,7 @@ the ``EventSubscriber`` directory. Symfony takes care of the rest.
 .. tip::
 
     If your methods are *not* called when an exception is thrown, double-check that
-    you're :ref:`loading services <service-container-services-load-example>` from
+    you are :ref:`loading services <service-container-services-load-example>` from
     the ``EventSubscriber`` directory and have :ref:`autoconfigure <services-autoconfigure>`
     enabled. You can also manually add the ``kernel.event_subscriber`` tag.
 
@@ -280,7 +280,7 @@ a "main" request or a "sub request"::
             // The isMainRequest() method was introduced in Symfony 5.3.
             // In previous versions it was called isMasterRequest()
             if (!$event->isMainRequest()) {
-                // don't do anything if it's not the main request
+                // don't do anything if it is not the main request
                 return;
             }
 

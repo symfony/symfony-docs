@@ -56,9 +56,9 @@ choice_self_translation
     The ``choice_self_translation`` option was introduced in Symfony 5.1.
 
 By default, language names are translated into the current locale of the
-application. For example, when browsing the application in English, you'll get
+application. For example, when browsing the application in English, you will get
 an array like ``[..., 'cs' => 'Czech', ..., 'es' => 'Spanish', ..., 'zh' => 'Chinese']``
-and when browsing it in French, you'll get the following array:
+and when browsing it in French, you will get the following array:
 ``[..., 'cs' => 'tchèque', ..., 'es' => 'espagnol', ..., 'zh' => 'chinois']``.
 
 If this option is ``true``, each language is translated into its own language,

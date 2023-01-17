@@ -5,7 +5,7 @@ How to Create a Custom Validation Constraint
 ============================================
 
 You can create a custom constraint by extending the base constraint class,
-:class:`Symfony\\Component\\Validator\\Constraint`. As an example you're
+:class:`Symfony\\Component\\Validator\\Constraint`. As an example you are
 going to create a basic validator that checks if a string contains only
 alphanumeric characters.
 
@@ -231,7 +231,7 @@ configured like options on core Symfony constraints.
 Constraint Validators with Dependencies
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 then your validator is already registered as a service and :doc:`tagged </service_container/tags>`
 with the necessary ``validator.constraint_validator``. This means you can
 :ref:`inject services or configuration <services-constructor-injection>` like any other service.

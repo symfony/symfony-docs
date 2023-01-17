@@ -28,7 +28,7 @@ breaks require you to make significant changes to your classes or your
 architecture, others are fixed by changing the name of a method.
 
 That's why we created this page for you. The section "Using Symfony Code" will
-tell you how you can ensure that your application won't break completely when
+tell you how you can ensure that your application will not break completely when
 upgrading to a newer version of the same major release branch.
 
 The second section, "Working on Symfony Code", is targeted at Symfony
@@ -55,7 +55,7 @@ Using our Interfaces
 ~~~~~~~~~~~~~~~~~~~~
 
 All interfaces shipped with Symfony can be used in type hints. You can also call
-any of the methods that they declare. We guarantee that we won't break code that
+any of the methods that they declare. We guarantee that we will not break code that
 sticks to these rules.
 
 .. caution::
@@ -63,7 +63,7 @@ sticks to these rules.
     The exception to this rule are interfaces tagged with ``@internal``. Such
     interfaces should not be used or implemented.
 
-If you implement an interface, we promise that we won't ever break your code.
+If you implement an interface, we promise that we will not ever break your code.
 
 The following table explains in detail which use cases are covered by our
 backward compatibility promise:
@@ -438,10 +438,10 @@ ancestor of the class.
 
 .. _note-5:
 
-**[5]** The value of a constant may only be changed when the constants aren't
+**[5]** The value of a constant may only be changed when the constants are not
 used in configuration (e.g. Yaml and XML files), as these do not support
 constants and have to hardcode the value. For instance, event name constants
-can't change the value without introducing a BC break. Additionally, if a
+cannot change the value without introducing a BC break. Additionally, if a
 constant will likely be used in objects that are serialized, the value of a
 constant should not be changed.
 

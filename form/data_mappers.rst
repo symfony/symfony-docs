@@ -28,7 +28,7 @@ It is important to know the difference between
 Creating a Data Mapper
 ----------------------
 
-Suppose that you want to save a set of colors to the database. For this, you're
+Suppose that you want to save a set of colors to the database. For this, you are
 using an immutable color object::
 
     // src/Painting/Color.php
@@ -63,20 +63,20 @@ using an immutable color object::
         }
     }
 
-The form type should be allowed to edit a color. But because you've decided to
+The form type should be allowed to edit a color. But because you have decided to
 make the ``Color`` object immutable, a new color object has to be created each time
 one of the values is changed.
 
 .. tip::
 
-    If you're using a mutable object with constructor arguments, instead of
+    If you are using a mutable object with constructor arguments, instead of
     using a data mapper, you should configure the ``empty_data`` option with a closure
     as described in
     :ref:`How to Configure empty Data for a Form Class <forms-empty-data-closure>`.
 
 The red, green and blue form fields have to be mapped to the constructor
 arguments and the ``Color`` instance has to be mapped to red, green and blue
-form fields. Recognize a familiar pattern? It's time for a data mapper. The
+form fields. Recognize a familiar pattern? It is time for a data mapper. The
 easiest way to create one is by implementing :class:`Symfony\\Component\\Form\\DataMapperInterface`
 in your form type::
 
@@ -193,7 +193,7 @@ Mapping Form Fields Using Callbacks
 Conveniently, you can also map data from and into a form field by using the
 ``getter`` and ``setter`` options. For example, suppose you have a form with some
 fields and only one of them needs to be mapped in some special way or you only
-need to change how it's written into the underlying object. In that case, register
+need to change how it is written into the underlying object. In that case, register
 a PHP callable that is able to write or read to/from that specific object::
 
     public function buildForm(FormBuilderInterface $builder, array $options)

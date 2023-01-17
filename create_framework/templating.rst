@@ -174,7 +174,7 @@ tested. The controller does little: it gets the year from the request
 attributes, pass it to the ``is_leap_year()`` function, and according to the
 return value it creates a new Response object.
 
-As always, you can decide to stop here and use the framework as is; it's
+As always, you can decide to stop here and use the framework as is; it is
 probably all you need to create simple websites like those fancy one-page
 `websites`_ and hopefully a few others.
 

@@ -37,7 +37,7 @@ a "Later" ``<optgroup>``:
 .. image:: /_images/reference/form/choice-example5.png
    :align: center
 
-If you return ``null``, the option won't be grouped. You can also pass a string
+If you return ``null``, the option will not be grouped. You can also pass a string
 "property path" that will be called to get the group. See the `choice_label`_ for
 details about using a property path.
 

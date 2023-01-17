@@ -35,7 +35,7 @@ The recommended workflow when working with Symfony forms is the following:
    data and do something with it (e.g. persist it in a database).
 
 Each of these steps is explained in detail in the next sections. To make
-examples easier to follow, all of them assume that you're building a small Todo
+examples easier to follow, all of them assume that you are building a small Todo
 list application that displays "tasks".
 
 Users create and edit tasks using Symfony forms. Each task is an instance of the
@@ -71,7 +71,7 @@ following ``Task`` class::
     }
 
 This class is a "plain-old-PHP-object" because, so far, it has nothing to do
-with Symfony or any other library. It's a normal PHP object that directly solves
+with Symfony or any other library. It is a normal PHP object that directly solves
 a problem inside *your* application (i.e. the need to represent a task in your
 application). But you can also edit :doc:`Doctrine entities </doctrine>` in the
 same way.
@@ -81,8 +81,8 @@ same way.
 Form Types
 ~~~~~~~~~~
 
-Before creating your first Symfony form, it's important to understand the
-concept of "form type". In other projects, it's common to differentiate between
+Before creating your first Symfony form, it is important to understand the
+concept of "form type". In other projects, it is common to differentiate between
 "forms" and "form fields". In Symfony, all of them are "form types":
 
 * a single ``<input type="text">`` form field is a "form type" (e.g. ``TextType``);
@@ -143,13 +143,13 @@ use the ``createFormBuilder()`` helper::
         }
     }
 
-If your controller does not extend from ``AbstractController``, you'll need to
+If your controller does not extend from ``AbstractController``, you will need to
 :ref:`fetch services in your controller <controller-accessing-services>` and
 use the ``createBuilder()`` method of the ``form.factory`` service.
 
-In this example, you've added two fields to your form - ``task`` and ``dueDate``
+In this example, you have added two fields to your form - ``task`` and ``dueDate``
 - corresponding to the ``task`` and ``dueDate`` properties of the ``Task``
-class. You've also assigned each a :ref:`form type <form-types>` (e.g. ``TextType``
+class. You have also assigned each a :ref:`form type <form-types>` (e.g. ``TextType``
 and ``DateType``), represented by its fully qualified class name. Finally, you
 added a submit button with a custom label for submitting the form to the server.
 
@@ -159,12 +159,12 @@ Creating Form Classes
 ~~~~~~~~~~~~~~~~~~~~~
 
 Symfony recommends putting as little logic as possible in controllers. That's why
-it's better to move complex forms to dedicated classes instead of defining them
+it is better to move complex forms to dedicated classes instead of defining them
 in controller actions. Besides, forms defined in classes can be reused in
 multiple actions and services.
 
 Form classes are :ref:`form types <form-types>` that implement
-:class:`Symfony\\Component\\Form\\FormTypeInterface`. However, it's better to
+:class:`Symfony\\Component\\Form\\FormTypeInterface`. However, it is better to
 extend from :class:`Symfony\\Component\\Form\\AbstractType`, which already
 implements the interface and provides some utilities::
 
@@ -228,7 +228,7 @@ object passed to the second argument to ``createForm()`` (i.e. ``$task``).
 Later, when you begin :doc:`embedding forms </form/embedded>`, this will no
 longer be sufficient.
 
-So, while not always necessary, it's generally a good idea to explicitly specify
+So, while not always necessary, it is generally a good idea to explicitly specify
 the ``data_class`` option by adding the following to your form type class::
 
     // src/Form/Type/TaskType.php
@@ -318,7 +318,7 @@ suitable for being rendered in an HTML form.
     ``isPublished()`` or ``hasReminder()``) instead of a getter (e.g.
     ``getPublished()`` or ``getReminder()``).
 
-As short as this rendering is, it's not very flexible. Usually, you'll need more
+As short as this rendering is, it is not very flexible. Usually, you will need more
 control about how the entire form or some of its fields look. For example, thanks
 to the :doc:`Bootstrap 5 integration with Symfony forms </form/bootstrap5>` you
 can set this option to generate forms compatible with the Bootstrap 5 CSS framework:
@@ -417,7 +417,7 @@ written into the form object::
 This controller follows a common pattern for handling forms and has three
 possible paths:
 
-#. When initially loading the page in a browser, the form hasn't been submitted
+#. When initially loading the page in a browser, the form has not been submitted
    yet and ``$form->isSubmitted()`` returns ``false``. So, the form is created
    and rendered;
 
@@ -452,7 +452,7 @@ Validating Forms
 ----------------
 
 In the previous section, you learned how a form can be submitted with valid
-or invalid data. In Symfony, the question isn't whether the "form" is valid, but
+or invalid data. In Symfony, the question is not whether the "form" is valid, but
 whether or not the underlying object (``$task`` in this example) is valid after
 the form has applied the submitted data to it. Calling ``$form->isValid()`` is a
 shortcut that asks the ``$task`` object whether or not it has valid data.
@@ -567,7 +567,7 @@ object.
             }
         }
 
-That's it! If you re-submit the form with invalid data, you'll see the
+That's it! If you re-submit the form with invalid data, you will see the
 corresponding errors printed out with the form.
 
 To see the second approach - adding constraints to the form - and to
@@ -652,7 +652,7 @@ argument of ``createForm()``::
         }
     }
 
-If you try to use the form now, you'll see an error message: *The option
+If you try to use the form now, you will see an error message: *The option
 "require_due_date" does not exist.* That's because forms must declare all the
 options they accept using the ``configureOptions()`` method::
 
@@ -832,7 +832,7 @@ to the ``form()`` or the ``form_start()`` helper functions:
 Changing the Form Name
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If you inspect the HTML contents of the rendered form, you'll see that the
+If you inspect the HTML contents of the rendered form, you will see that the
 ``<form>`` name and the field names are generated from the type class name
 (e.g. ``<form name="task" ...>`` and ``<select name="task[dueDate][date][month]" ...>``).
 
@@ -946,14 +946,14 @@ the following options will be guessed too:
     is guessed from the validation constraints (if ``Length`` or ``Range`` is used)
     or from the :doc:`Doctrine </doctrine>` metadata (via the field's length).
 
-If you'd like to change one of the guessed values, override it in the options field array::
+If you would like to change one of the guessed values, override it in the options field array::
 
     ->add('task', null, ['attr' => ['maxlength' => 4]])
 
 .. seealso::
 
     Besides guessing the form type, Symfony also guesses :ref:`validation constraints <validating-forms>`
-    if you're using a Doctrine entity. Read :ref:`automatic_object_validation`
+    if you are using a Doctrine entity. Read :ref:`automatic_object_validation`
     guide for more information.
 
 Unmapped Fields
@@ -963,7 +963,7 @@ When editing an object via a form, all form fields are considered properties of
 the object. Any fields on the form that do not exist on the object will cause an
 exception to be thrown.
 
-If you need extra fields in the form that won't be stored in the object (for
+If you need extra fields in the form that will not be stored in the object (for
 example to add an *"I agree with these terms"* checkbox), set the ``mapped``
 option to ``false`` in those fields::
 
@@ -990,7 +990,7 @@ These "unmapped fields" can be set and accessed in a controller with::
     $form->get('agreeTerms')->getData();
     $form->get('agreeTerms')->setData(true);
 
-Additionally, if there are any fields on the form that aren't included in
+Additionally, if there are any fields on the form that are not included in
 the submitted data, those fields will be explicitly set to ``null``.
 
 Learn more

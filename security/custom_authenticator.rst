@@ -174,7 +174,7 @@ can define what happens in these cases:
     useful for e.g. login forms, where the login controller is run again
     with the login errors.
 
-    If you're using :ref:`login throttling <security-login-throttling>`,
+    If you are using :ref:`login throttling <security-login-throttling>`,
     you can check if ``$exception`` is an instance of
     :class:`Symfony\\Component\\Security\\Core\\Exception\\TooManyLoginAttemptsAuthenticationException`
     (e.g. to display an appropriate message).

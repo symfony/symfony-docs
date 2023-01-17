@@ -19,7 +19,7 @@ command helps you to find these missing or unused translation messages templates
 
 .. caution::
 
-    The extractors can't find messages translated outside templates (like form
+    The extractors cannot find messages translated outside templates (like form
     labels or controllers) unless using :ref:`translatable-objects` or calling
     the ``trans()`` method on a translator (since Symfony 5.3). Dynamic
     translations using variables or expressions in templates are not
@@ -27,14 +27,14 @@ command helps you to find these missing or unused translation messages templates
 
     .. code-block:: twig
 
-        {# this translation uses a Twig variable, so it won't be detected #}
+        {# this translation uses a Twig variable, so it will not be detected #}
         {% set message = 'Symfony is great' %}
         {{ message|trans }}
 
 Suppose your application's default_locale is ``fr`` and you have configured
 ``en`` as the fallback locale (see :ref:`translation-configuration` and
 :ref:`translation-fallback` for how to configure these). And suppose
-you've already setup some translations for the ``fr`` locale:
+you have already setup some translations for the ``fr`` locale:
 
 .. configuration-block::
 
@@ -113,7 +113,7 @@ locale and the result when the fallback locale ``en`` would be used. On top
 of that, it will also show you when the translation is the same as the fallback
 translation (this could indicate that the message was not correctly translated).
 Furthermore, it indicates that the message ``Symfony is great`` is unused
-because it is translated, but you haven't used it anywhere yet.
+because it is translated, but you have not used it anywhere yet.
 
 Now, if you translate the message in one of your templates, you will get this
 output:

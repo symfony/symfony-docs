@@ -253,7 +253,7 @@ Override the Public Directory
 
 If you need to rename or move your ``public/`` directory, the only thing you
 need to guarantee is that the path to the ``vendor/`` directory is still correct in
-your ``index.php`` front controller. If you renamed the directory, you're fine.
+your ``index.php`` front controller. If you renamed the directory, you are fine.
 But if you moved it in some way, you may need to modify these paths inside those
 files::
 
@@ -299,5 +299,5 @@ option in your ``composer.json`` file like this:
 .. tip::
 
     This modification can be of interest if you are working in a virtual
-    environment and cannot use NFS - for example, if you're running a Symfony
+    environment and cannot use NFS - for example, if you are running a Symfony
     application using Vagrant/VirtualBox in a guest operating system.

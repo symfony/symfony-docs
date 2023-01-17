@@ -6,10 +6,10 @@ Service Method Calls and Setter Injection
 
 .. tip::
 
-    If you're using autowiring, you can use ``#[Required]`` or ``@required`` to
+    If you are using autowiring, you can use ``#[Required]`` or ``@required`` to
     :ref:`automatically configure method calls <autowiring-calls>`.
 
-Usually, you'll want to inject your dependencies via the constructor. But sometimes,
+Usually, you will want to inject your dependencies via the constructor. But sometimes,
 especially if a dependency is optional, you may want to use "setter injection". For
 example::
 

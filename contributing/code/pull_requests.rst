@@ -352,7 +352,7 @@ Some answers to the questions trigger some more requirements:
 * If you answer no to "Tests pass", you must add an item to a todo-list with
   the actions that must be done to fix the tests;
 
-* If the "license" is not MIT, just don't submit the pull request as it won't
+* If the "license" is not MIT, just don't submit the pull request as it will not
   be accepted anyway.
 
 If some of the previous requirements are not met, create a todo-list and add

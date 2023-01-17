@@ -161,7 +161,7 @@ without using the ``encore`` command you will encounter the following error:
 
 .. code-block:: text
 
-    Error: Encore.setOutputPath() cannot be called yet because the runtime environment doesn't appear to be configured. Make sure you're using the encore executable or call Encore.configureRuntimeEnvironment() first if you're purposely not calling Encore directly.
+    Error: Encore.setOutputPath() cannot be called yet because the runtime environment doesn't appear to be configured. Make sure you are using the encore executable or call Encore.configureRuntimeEnvironment() first if you are purposely not calling Encore directly.
 
 The reason behind that message is that Encore needs to know a few things before
 being able to create a configuration object, the most important one being what

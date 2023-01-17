@@ -6,7 +6,7 @@ How to Use a Form without a Data Class
 
 In most cases, a form is tied to an object, and the fields of the form get
 and store their data on the properties of that object. This is exactly what
-you've seen so far in this article with the ``Task`` class.
+you have seen so far in this article with the ``Task`` class.
 
 But sometimes, you may want to use a form without a class, and get back an
 array of the submitted data. The ``getData()`` method allows you to do
@@ -66,14 +66,14 @@ an array.
 
     Be advised, however, that in most cases using the ``getData()`` method is
     a better choice, since it returns the data (usually an object) after
-    it's been transformed by the Form component.
+   it is been transformed by the Form component.
 
 Adding Validation
 -----------------
 
 The only missing piece is validation. Usually, when you call ``$form->handleRequest($request)``,
 the object is validated by reading the constraints that you applied to that
-class. If your form is mapped to an object (i.e. you're using the ``data_class``
+class. If your form is mapped to an object (i.e. you are using the ``data_class``
 option or passing an object to your form), this is almost always the approach
 you want to use. See :doc:`/validation` for more details.
 

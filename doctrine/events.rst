@@ -26,7 +26,7 @@ There are different ways to listen to these Doctrine events:
 These are the **drawbacks and advantages** of each one:
 
 * Callbacks have better performance because they only apply to a single entity
-  class, but you can't reuse the logic for different entities and they don't
+  class, but you cannot reuse the logic for different entities and they don't
   have access to :doc:`Symfony services </service_container>`;
 * Lifecycle listeners and subscribers can reuse logic among different entities
   and can access Symfony services but their performance is worse because they
@@ -447,7 +447,7 @@ want to log all the database activity. To do so, define a subscriber for the
         }
     }
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`
 and DoctrineBundle 2.1 (released May 25, 2020) or newer, this example will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>` for this
 subscriber and :doc:`tag it </service_container/tags>` with ``doctrine.event_subscriber``.

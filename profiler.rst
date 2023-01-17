@@ -132,7 +132,7 @@ class in your controllers to manage the profiler programmatically::
 
         public function someMethod(?Profiler $profiler)
         {
-            // $profiler won't be set if your environment doesn't have the profiler (like prod, by default)
+            // $profiler will not be set if your environment doesn't have the profiler (like prod, by default)
             if (null !== $profiler) {
                 // if it exists, disable the profiler for this particular controller action
                 $profiler->disable();

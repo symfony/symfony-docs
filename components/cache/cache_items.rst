@@ -71,7 +71,7 @@ By default, cache items are stored permanently. In practice, this "permanent
 storage" can vary greatly depending on the type of cache being used, as
 explained in the :doc:`/components/cache/cache_pools` article.
 
-However, in some applications it's common to use cache items with a shorter
+However, in some applications it is common to use cache items with a shorter
 lifespan. Consider for example an application which caches the latest news just
 for one minute. In those cases, use the ``expiresAfter()`` method to set the
 number of seconds to cache the item::
@@ -102,7 +102,7 @@ In order to decide if the returned object represents a value coming from the sto
 or not, caches use the concept of hits and misses:
 
 * **Cache Hits** occur when the requested item is found in the cache, its value
-  is not corrupted or invalid and it hasn't expired;
+  is not corrupted or invalid and it has not expired;
 * **Cache Misses** are the opposite of hits, so they occur when the item is not
   found in the cache, its value is corrupted or invalid for any reason or the
   item has expired.

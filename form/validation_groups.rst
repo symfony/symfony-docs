@@ -8,7 +8,7 @@ Validation Groups
 -----------------
 
 If your object takes advantage of :doc:`validation groups </validation/groups>`,
-you'll need to specify which validation group(s) your form should use. Pass
+you will need to specify which validation group(s) your form should use. Pass
 this as an option when :ref:`creating forms in controllers <creating-forms-in-controllers>`::
 
     $form = $this->createFormBuilder($user, [

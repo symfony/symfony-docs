@@ -14,7 +14,7 @@ in the default helper set and you can get it by calling
 
     $formatter = $this->getHelper('formatter');
 
-The methods return a string, which you'll usually render to the console by
+The methods return a string, which you will usually render to the console by
 passing it to the
 :method:`OutputInterface::writeln <Symfony\\Component\\Console\\Output\\OutputInterface::writeln>` method.
 
@@ -60,7 +60,7 @@ method creates the desired output. If you pass ``true`` as third parameter, the
 block will be formatted with more padding (one blank line above and below the
 messages and 2 spaces on the left and right).
 
-The exact "style" you use in the block is up to you. In this case, you're using
+The exact "style" you use in the block is up to you. In this case, you are using
 the pre-defined ``error`` style, but there are other styles, or you can create
 your own. See :doc:`/console/coloring`.
 

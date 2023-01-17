@@ -5,7 +5,7 @@ How to Use Data Transformers
 ============================
 
 Data transformers are used to translate the data for a field into a format that can
-be displayed in a form (and back on submit). They're already used internally for
+be displayed in a form (and back on submit). They are already used internally for
 many field types. For example, the :doc:`DateType </reference/forms/types/date>` field
 can be rendered as a ``yyyy-MM-dd``-formatted input text box. Internally, a data transformer
 converts the ``DateTime`` value of the field to a ``yyyy-MM-dd`` formatted string
@@ -96,7 +96,7 @@ class::
 The ``CallbackTransformer`` takes two callback functions as arguments. The
 first transforms the original value into a format that'll be used to render the
 field. The second does the reverse: it transforms the submitted value back into
-the format you'll use in your code.
+the format you will use in your code.
 
 .. tip::
 
@@ -203,7 +203,7 @@ to and from the issue number and the ``Issue`` object::
          */
         public function reverseTransform($issueNumber): ?Issue
         {
-            // no issue number? It's optional, so that's ok
+            // no issue number? It is optional, so that's ok
             if (!$issueNumber) {
                 return null;
             }
@@ -235,7 +235,7 @@ The ``reverseTransform()`` method does the reverse: it converts the submitted va
 back into the format you want (e.g. convert the ``id`` back to the ``Issue`` object).
 
 To cause a validation error, throw a :class:`Symfony\\Component\\Form\\Exception\\TransformationFailedException`.
-But the message you pass to this exception won't be shown to the user. You'll set
+But the message you pass to this exception will not be shown to the user. You will set
 that message with the ``invalid_message`` option (see below).
 
 .. note::
@@ -321,7 +321,7 @@ end-user error message in the data transformer using the
         }
     }
 
-That's it! If you're using the
+That's it! If you are using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically know to pass your ``TaskType`` an instance of the
 ``IssueToNumberTransformer`` thanks to :ref:`autowire <services-autowire>` and
@@ -336,12 +336,12 @@ Now, you can use your ``TaskType``::
 
     // ...
 
-Cool, you're done! Your user will be able to enter an issue number into the
+Cool, you are done! Your user will be able to enter an issue number into the
 text field, which will be transformed back into an Issue object. This means
 that, after a successful submission, the Form component will pass a real
 ``Issue`` object to ``Task::setIssue()`` instead of the issue number.
 
-If the issue isn't found, a form error will be created for that field and
+If the issue is not found, a form error will be created for that field and
 its error message can be controlled with the ``invalid_message`` field option.
 
 .. caution::
@@ -406,7 +406,7 @@ First, create the custom field type class::
 Great! This will act and render like a text field (``getParent()``), but will automatically
 have the data transformer *and* a nice default value for the ``invalid_message`` option.
 
-As long as you're using :ref:`autowire <services-autowire>` and
+As long as you are using :ref:`autowire <services-autowire>` and
 :ref:`autoconfigure <services-autoconfigure>`, you can start using the form immediately::
 
     // src/Form/Type/TaskType.php
@@ -431,7 +431,7 @@ As long as you're using :ref:`autowire <services-autowire>` and
 
 .. tip::
 
-    If you're not using ``autowire`` and ``autoconfigure``, see
+    If you are not using ``autowire`` and ``autoconfigure``, see
     :doc:`/form/create_custom_field_type` for how to configure your new ``IssueSelectorType``.
 
 .. _model-and-view-transformers:
@@ -450,14 +450,14 @@ In any form, the three different types of data are:
 
 #. **Model data** - This is the data in the format used in your application
    (e.g. an ``Issue`` object). If you call ``Form::getData()`` or ``Form::setData()``,
-   you're dealing with the "model" data.
+   you are dealing with the "model" data.
 
 #. **Norm Data** - This is a normalized version of your data and is commonly
-   the same as your "model" data (though not in our example). It's not commonly
+   the same as your "model" data (though not in our example). It is not commonly
    used directly.
 
 #. **View Data** - This is the format that's used to fill in the form fields
-   themselves. It's also the format in which the user will submit the data. When
+   themselves. It is also the format in which the user will submit the data. When
    you call ``Form::submit($data)``, the ``$data`` is in the "view" data format.
 
 The two different types of transformers help convert to and from each of these

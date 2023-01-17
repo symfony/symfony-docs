@@ -67,7 +67,7 @@ create messages from Twig templates, embed images, inline CSS and more. Details
 on how to use those features can be found in the Mailer documentation:
 :ref:`Twig: HTML & CSS <mailer-twig>`.
 
-But if you're using the Mime component without the Symfony framework, you'll need
+But if you are using the Mime component without the Symfony framework, you will need
 to handle a few setup details.
 
 Twig Setup
@@ -117,10 +117,10 @@ Creating Raw Email Messages
 ---------------------------
 
 This is useful for advanced applications that need absolute control over every
-email part. It's not recommended for applications with regular email
+email part. It is not recommended for applications with regular email
 requirements because it adds complexity for no real gain.
 
-Before continuing, it's important to have a look at the low level structure of
+Before continuing, it is important to have a look at the low level structure of
 an email message. Consider a message which includes some content as both text
 and HTML, a single PNG image embedded in those contents and a PDF file attached
 to it. The MIME standard allows structuring this message in different ways, but
@@ -262,7 +262,7 @@ Another useful utility allows to guess the MIME type of any given file::
 
 Guessing the MIME type is a time-consuming process that requires inspecting
 part of the file contents. Symfony applies multiple guessing mechanisms, one
-of them based on the PHP `fileinfo extension`_. It's recommended to install
+of them based on the PHP `fileinfo extension`_. It is recommended to install
 that extension to improve the guessing performance.
 
 Adding a MIME Type Guesser
@@ -294,7 +294,7 @@ You can add your own MIME type guesser by creating a class that implements
 
 MIME type guessers must be :ref:`registered as services <service-container-creating-service>`
 and :doc:`tagged </service_container/tags>` with the ``mime.mime_type_guesser`` tag.
-If you're using the
+If you are using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
 

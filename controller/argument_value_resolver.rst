@@ -4,7 +4,7 @@
 Extending Action Argument Resolving
 ===================================
 
-In the :doc:`controller guide </controller>`, you've learned that you can get the
+In the :doc:`controller guide </controller>`, you have learned that you can get the
 :class:`Symfony\\Component\\HttpFoundation\\Request` object via an argument in
 your controller. This argument has to be type-hinted by the ``Request`` class
 in order to be recognized. This is done via the
@@ -63,7 +63,7 @@ PSR-7 Objects Resolver:
 Adding a Custom Value Resolver
 ------------------------------
 
-In the next example, you'll create a value resolver to inject the object that
+In the next example, you will create a value resolver to inject the object that
 represents the current user whenever a controller method type-hints an argument
 with the ``User`` class::
 
@@ -241,7 +241,7 @@ and adding a priority.
             ;
         };
 
-While adding a priority is optional, it's recommended to add one to make sure
+While adding a priority is optional,it is recommended to add one to make sure
 the expected value is injected. The built-in ``RequestAttributeValueResolver``,
 which fetches attributes from the ``Request``, has a priority of ``100``. If your
 resolver also fetches ``Request`` attributes, set a priority of ``100`` or more.

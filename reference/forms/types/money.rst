@@ -89,7 +89,7 @@ scale
 **type**: ``integer`` **default**: ``2``
 
 If, for some reason, you need some scale other than 2 decimal places,
-you can modify this value. You probably won't need to do this unless,
+you can modify this value. You probably will not need to do this unless,
 for example, you want to round to the nearest dollar (set the scale
 to ``0``).
 

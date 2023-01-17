@@ -105,7 +105,7 @@ correctly::
 
     public function index(Request $request)
 
-    // won't work
+    // will not work
     public function index($request)
 
 More interesting, ``getArguments()`` is also able to inject any Request

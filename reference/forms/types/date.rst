@@ -43,7 +43,7 @@ field as **three different choice fields**::
         'widget' => 'choice',
     ]);
 
-If your underlying date is *not* a ``DateTime`` object (e.g. it's a Unix
+If your underlying date is *not* a ``DateTime`` object (e.g. it is a Unix
 timestamp or a ``DateTimeImmutable`` object), configure the `input`_ option::
 
     $builder->add('publishedAt', DateType::class, [
@@ -102,7 +102,7 @@ picker:
     </script>
 
 This ``format`` key tells the date picker to use the date format that Symfony expects.
-This can be tricky: if the date picker is misconfigured, Symfony won't understand
+This can be tricky: if the date picker is misconfigured, Symfony will not understand
 the format and will throw a validation error. You can also configure the format
 that Symfony should expect via the `format`_ option.
 

@@ -9,7 +9,7 @@ depending on your needs.
 Complete Docker Environment
 ---------------------------
 
-If you'd like a complete Docker environment (i.e. where PHP, web server, database,
+If you would like a complete Docker environment (i.e. where PHP, web server, database,
 etc. are all in Docker), check out `https://github.com/dunglas/symfony-docker`_.
 
 Alternatively, you can install PHP on your local machine and use the
@@ -37,8 +37,8 @@ following code somewhere inside:
     ###> recipes ###
     ###< recipes ###
 
-The recipe will find this section and add the changes inside. If you're using
-`https://github.com/dunglas/symfony-docker`_, you'll already have this.
+The recipe will find this section and add the changes inside. If you are using
+`https://github.com/dunglas/symfony-docker`_, you will already have this.
 
 After installing the package, rebuild your containers by running:
 
@@ -49,7 +49,7 @@ After installing the package, rebuild your containers by running:
 Symfony Binary Web Server and Docker Support
 --------------------------------------------
 
-If you're using the :ref:`symfony binary web server <symfony-local-web-server>` (e.g. ``symfony server:start``),
+If you are using the :ref:`symfony binary web server <symfony-local-web-server>` (e.g. ``symfony server:start``),
 then it can automatically detect your Docker services and expose them as environment
 variables. See :ref:`symfony-server-docker`.
 

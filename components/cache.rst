@@ -150,7 +150,7 @@ The following cache adapters are available:
 Generic Caching (PSR-6)
 -----------------------
 
-To use the generic PSR-6 Caching abilities, you'll need to learn its key
+To use the generic PSR-6 Caching abilities, you will need to learn its key
 concepts:
 
 **Item**

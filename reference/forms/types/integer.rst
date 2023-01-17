@@ -9,7 +9,7 @@ good at handling data that's in an integer form. The input ``number`` field
 looks like a text box, except that - if the user's browser supports HTML5
 - it will have some extra front-end functionality.
 
-This field has different options on how to handle input values that aren't
+This field has different options on how to handle input values that are not
 integers. By default, all non-integer values (e.g. 6.78) will round down
 (e.g. 6).
 

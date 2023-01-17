@@ -7,7 +7,7 @@ How to Find Errors in Translation Files
 
 Symfony processes all the application translation files as part of the process
 that compiles the application code before executing it. If there's an error in
-any translation file, you'll see an error message explaining the problem.
+any translation file, you will see an error message explaining the problem.
 
 If you prefer, you can also validate the contents of any YAML and XLIFF
 translation file using the ``lint:yaml`` and ``lint:xliff`` commands:

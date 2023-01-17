@@ -66,6 +66,6 @@ and can be used in the ``formatter`` option:
 * ``monolog.formatter.line``: formats a record into a one-line string
 * ``monolog.formatter.loggly``: formats a record information into JSON in a format compatible with Loggly
 * ``monolog.formatter.logstash``: serializes a record to Logstash Event Format
-* ``monolog.formatter.normalizer``: normalizes a record to remove objects/resources so it's easier to dump to various targets
+* ``monolog.formatter.normalizer``: normalizes a record to remove objects/resources so it is easier to dump to various targets
 * ``monolog.formatter.scalar``: formats a record into an associative array of scalar (+ null) values (objects and arrays will be JSON encoded)
 * ``monolog.formatter.wildfire``: serializes a record according to Wildfire's header requirements

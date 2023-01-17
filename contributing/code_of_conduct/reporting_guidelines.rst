@@ -61,11 +61,11 @@ to how to respond. Responses may include:
 * On a case by case basis, other actions may be possible but will usually be
   coordinated with the core team and the Symfony company.
 
-We'll respond within one week to the person who filed the report with either a
+We will respond within one week to the person who filed the report with either a
 resolution or an explanation of why the situation is not yet resolved.
 
-Once we've determined our final actions, we'll contact the original reporter to
-let them know what action (if any) we'll be taking. We'll take into account feedback
+Once we have determined our final actions,  we will contact the original reporter to
+let them know what action (if any)  we will be taking. We will take into account feedback
 from the reporter on the appropriateness of our response, but our response will be
 determined by what will be best for community safety.
 

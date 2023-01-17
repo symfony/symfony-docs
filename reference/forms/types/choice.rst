@@ -314,7 +314,7 @@ Field Variables
 
 .. tip::
 
-    In Twig template, instead of using ``is_selected()``, it's significantly
+    In Twig template, instead of using ``is_selected()``, it is significantly
     faster to use the :ref:`selectedchoice <form-twig-selectedchoice>` test.
 
 Accessing Form Choice Data

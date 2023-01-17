@@ -25,7 +25,7 @@ To use the Sass, LESS or Stylus pre-processors, enable the one you want in ``web
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
-Encore, you're done!
+Encore, you are done!
 
 You can also pass configuration options to each of the loaders. See the
 `Encore's index.js file`_ for detailed documentation.

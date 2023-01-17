@@ -69,7 +69,7 @@ Setup: Checking for Access in a Controller
 ------------------------------------------
 
 Suppose you have a ``Post`` object and you need to decide whether or not the current
-user can *edit* or *view* the object. In your controller, you'll check access with
+user can *edit* or *view* the object. In your controller, you will check access with
 code like this::
 
     // src/Controller/PostController.php
@@ -135,7 +135,7 @@ would look like this::
 
         protected function supports(string $attribute, $subject): bool
         {
-            // if the attribute isn't one we support, return false
+            // if the attribute is not one we support, return false
             if (!in_array($attribute, [self::VIEW, self::EDIT])) {
                 return false;
             }
@@ -215,7 +215,7 @@ Configuring the Voter
 ---------------------
 
 To inject the voter into the security layer, you must declare it as a service
-and tag it with ``security.voter``. But if you're using the
+and tag it with ``security.voter``. But if you are using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 that's done automatically for you! When you
 :ref:`call isGranted() with view/edit and pass a Post object <how-to-use-the-voter-in-a-controller>`,
@@ -259,8 +259,8 @@ with ``ROLE_SUPER_ADMIN``::
         }
     }
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-you're done! Symfony will automatically pass the ``security.helper``
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you are done! Symfony will automatically pass the ``security.helper``
 service when instantiating your voter (thanks to autowiring).
 
 .. _security-voters-change-strategy:

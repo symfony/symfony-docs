@@ -175,9 +175,9 @@ the class name or the string ``Default``.
     When validating *just* the User object, there is no difference between the
     ``Default`` group and the ``User`` group. But, there is a difference if
     ``User`` has embedded objects. For example, imagine ``User`` has an
-    ``address`` property that contains some ``Address`` object and that you've
+    ``address`` property that contains some ``Address`` object and that you have
     added the :doc:`/reference/constraints/Valid` constraint to this property
-    so that it's validated when you validate the ``User`` object.
+    so that it is validated when you validate the ``User`` object.
 
     If you validate ``User`` using the ``Default`` group, then any constraints
     on the ``Address`` class that are in the ``Default`` group *will* be used.
@@ -203,6 +203,6 @@ as the third argument to the ``validate()`` method::
 If no groups are specified, all constraints that belong to the group ``Default``
 will be applied.
 
-In a full stack Symfony project, you'll usually work with validation indirectly
+In a full stack Symfony project, you will usually work with validation indirectly
 through the form library. For information on how to use validation groups inside
 forms, see :doc:`/form/validation_groups`.

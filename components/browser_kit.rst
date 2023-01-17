@@ -187,7 +187,7 @@ request format (uppercase, underscores instead of dashes and prefixed with ``HTT
 Before saving those headers to the request, they are lower-cased, with ``HTTP_``
 stripped, and underscores converted into dashes.
 
-If you're making a request to an application that has special rules about header
+If you are making a request to an application that has special rules about header
 capitalization or punctuation, override the ``getHeaders()`` method, which must
 return an associative array of headers::
 

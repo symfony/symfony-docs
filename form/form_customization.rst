@@ -5,7 +5,7 @@ How to Customize Form Rendering
 ===============================
 
 Symfony gives you several ways to customize how a form is rendered. In this
-article you'll learn how to make single customizations to one or more fields of
+article you will learn how to make single customizations to one or more fields of
 your forms. If you need to customize all your forms in the same way, create
 instead a :doc:`form theme </form/form_themes>` or use any of the built-in
 themes, such as the :doc:`Bootstrap theme for Symfony forms </form/bootstrap4>`.
@@ -77,11 +77,11 @@ control over how each form field is rendered, so you can fully customize them:
 
 .. caution::
 
-   If you're rendering each field manually, make sure you don't forget the
+   If you are rendering each field manually, make sure you don't forget the
    ``_token`` field that is automatically added for CSRF protection.
 
    You can also use ``{{ form_rest(form) }}`` (recommended) to render any
-   fields that aren't rendered manually. See
+   fields that are not rendered manually. See
    :ref:`the form_rest() documentation <reference-forms-twig-rest>` below for
    more information.
 
@@ -113,7 +113,7 @@ class to the rendered input text field:
 
 .. note::
 
-    If you're rendering an entire form at once (or an entire embedded form),
+    If you are rendering an entire form at once (or an entire embedded form),
     the ``variables`` argument will only be applied to the form itself and
     not its children. In other words, the following will **not** pass a
     "foo" class attribute to all of the child fields in the form:
@@ -140,7 +140,7 @@ Form Themes
 -----------
 
 The Twig functions and variables shown in the previous sections can help you
-customize one or more fields of your forms. However, this customization can't
+customize one or more fields of your forms. However, this customization cannot
 be applied to the rest of the forms of your app.
 
 If you want to customize all forms in the same way (for example to adapt the
@@ -289,7 +289,7 @@ The second argument to ``form_widget()`` is an array of variables. The most
 common variable is ``attr``, which is an array of HTML attributes to apply
 to the HTML widget. In some cases, certain types also have other template-related
 options that can be passed. These are discussed on a type-by-type basis.
-The ``attributes`` are not applied recursively to child fields if you're
+The ``attributes`` are not applied recursively to child fields if you are
 rendering many fields at once (e.g. ``form_widget(form)``).
 
 See ":ref:`twig-reference-form-variables`" to learn more about the ``variables``
@@ -321,9 +321,9 @@ form_rest(form_view, variables)
 ...............................
 
 This renders all fields that have not yet been rendered for the given form.
-It's a good idea to always have this somewhere inside your form as it'll
+It is a good idea to always have this somewhere inside your form as it will
 render hidden fields for you and make any fields you forgot to render easier to
-spot (since it'll render the field for you).
+spot (since it will render the field for you).
 
 .. code-block:: twig
 
@@ -365,7 +365,7 @@ This test will check if the current ``form`` does not have a parent form view.
 
 .. code-block:: twig
 
-    {# DON'T DO THIS: this simple check can't differentiate between a form having
+    {# DON'T DO THIS: this simple check cannot differentiate between a form having
        a parent form view and a form defining a nested form field called 'parent' #}
 
     {% if form.parent is null %}
@@ -413,7 +413,7 @@ Variable                Usage
 ``data``                The normalized data of the type.
 ``disabled``            If ``true``, ``disabled="disabled"`` is added to the field.
 ``errors``              An array of any errors attached to *this* specific field (e.g. ``form.title.errors``).
-                        Note that you can't use ``form.errors`` to determine if a form is valid,
+                        Note that you cannot use ``form.errors`` to determine if a form is valid,
                         since this only returns "global" errors: some individual fields may have errors.
                         Instead, use the ``valid`` option.
 ``form``                The current ``FormView`` instance.

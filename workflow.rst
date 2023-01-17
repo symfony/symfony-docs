@@ -190,7 +190,7 @@ The configured property will be used via its implemented getter/setter methods b
     state marking store does not support a model being on multiple places at the
     same time. This means a "workflow" must use a "multiple_state" marking store
     and a "state_machine" must use a "single_state" marking store. Symfony
-    configures the marking store according to the "type" by default, so it's
+    configures the marking store according to the "type" by default, so it is
     preferable to not configure it.
 
     A single state marking store uses a ``string`` to store the data. A multiple
@@ -201,7 +201,7 @@ The configured property will be used via its implemented getter/setter methods b
     The ``marking_store.type`` (the default value depends on the ``type`` value)
     and ``property`` (default value ``['marking']``) attributes of the
     ``marking_store`` option are optional. If omitted, their default values will
-    be used. It's highly recommended to use the default value.
+    be used. It is highly recommended to use the default value.
 
 .. tip::
 

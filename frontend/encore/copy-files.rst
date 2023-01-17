@@ -53,7 +53,7 @@ files into your final output directory. First enable it in ``webpack.config.js``
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
-Encore, you're done!
+Encore, you are done!
 
 This will copy all files from ``assets/images`` into ``public/build/images``.
 If you have :doc:`versioning enabled <versioning>`, the copied files will
@@ -69,7 +69,7 @@ To render inside Twig, use the ``asset()`` function:
     {# assets/images/subdir/logo.png was copied to public/build/images/subdir/logo.png #}
     <img src="{{ asset('build/images/subdir/logo.png') }}" alt="ACME logo">
 
-Make sure you've enabled the :ref:`json_manifest_path <load-manifest-files>` option,
+Make sure you have enabled the :ref:`json_manifest_path <load-manifest-files>` option,
 which tells the ``asset()`` function to read the final paths from the ``manifest.json``
-file. If you're not sure what path argument to pass to the ``asset()`` function,
+file. If you are not sure what path argument to pass to the ``asset()`` function,
 find the file in ``manifest.json`` and use the *key* as the argument.

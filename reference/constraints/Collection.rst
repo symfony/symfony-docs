@@ -3,7 +3,7 @@ Collection
 
 This constraint is used when the underlying data is a collection (i.e. an
 array or an object that implements ``Traversable`` and ``ArrayAccess``),
-but you'd like to validate different keys of that collection in different
+but would not like to validate different keys of that collection in different
 ways. For example, you might validate the ``email`` key using the ``Email``
 constraint and the ``inventory`` key of the collection with the ``Range``
 constraint.
@@ -392,7 +392,7 @@ error will be returned. If set to ``true``, extra fields are OK.
 
 If this option is set to ``false`` and one or more fields from the `fields`_
 option are not present in the underlying collection, a validation error
-will be returned. If set to ``true``, it's OK if some fields in the `fields`_
+will be returned. If set to ``true``, it is OK if some fields in the `fields`_
 option are not present in the underlying collection.
 
 ``extraFieldsMessage``

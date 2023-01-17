@@ -184,7 +184,7 @@ you to use literal text in the select statements:
 
 .. tip::
 
-    It's possible to translate ICU MessageFormat messages directly in code,
+    It is possible to translate ICU MessageFormat messages directly in code,
     without having to define them in any file::
 
         $invitation = '{organizer_gender, select,
@@ -317,7 +317,7 @@ Usage of this string is the same as with variables and select::
         // Instead of
         $message = $translator->trans('balance_message', $balance);
         // with a message like:
-        // ]-Inf,0]Oops! I'm down|]0,1000]I still have money|]1000,Inf]I have lots of money
+        // ]-Inf,0]Oops! I am down|]0,1000]I still have money|]1000,Inf]I have lots of money
 
         // use three different messages for each range:
         if ($balance < 0) {

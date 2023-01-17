@@ -22,7 +22,7 @@ install messenger:
 Creating a Message & Handler
 ----------------------------
 
-Messenger centers around two different classes that you'll create: (1) a message
+Messenger centers around two different classes that you will create: (1) a message
 class that holds data and (2) a handler(s) class that will be called when that
 message is dispatched. The handler class will read the message class and perform
 one or more tasks.
@@ -77,7 +77,7 @@ message class (or a message interface)::
 
 .. note::
 
-    You can also create a class without the attribute (e.g. if you're
+    You can also create a class without the attribute (e.g. if you are
     using PHP 7.4), by implementing :class:`Symfony\\Component\\Messenger\\Handler\\MessageHandlerInterface`
     instead.
 
@@ -94,7 +94,7 @@ see all the configured handlers, run:
 Dispatching the Message
 -----------------------
 
-You're ready! To dispatch the message (and call the handler), inject the
+You are ready! To dispatch the message (and call the handler), inject the
 ``messenger.default_bus`` service (via the ``MessageBusInterface``), like in a controller::
 
     // src/Controller/DefaultController.php
@@ -343,7 +343,7 @@ to multiple transports:
 Doctrine Entities in Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you need to pass a Doctrine entity in a message, it's better to pass the entity's
+If you need to pass a Doctrine entity in a message, it is better to pass the entity's
 primary key (or whatever relevant information the handler actually needs, like ``email``,
 etc.) instead of the object (otherwise you might see errors related to the Entity Manager)::
 
@@ -397,10 +397,10 @@ This guarantees the entity contains fresh data.
 Handling Messages Synchronously
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If a message doesn't :ref:`match any routing rules <messenger-routing>`, it won't
+If a message doesn't :ref:`match any routing rules <messenger-routing>`, it will not
 be sent to any transport and will be handled immediately. In some cases (like
 when `binding handlers to different transports`_),
-it's easier or more flexible to handle this explicitly: by creating a ``sync``
+it is easier or more flexible to handle this explicitly: by creating a ``sync``
 transport and "sending" messages there to be handled immediately:
 
 .. configuration-block::
@@ -468,7 +468,7 @@ from something that is not supported. See :doc:`/messenger/custom-transport`.
 Consuming Messages (Running the Worker)
 ---------------------------------------
 
-Once your messages have been routed, in most cases, you'll need to "consume" them.
+Once your messages have been routed, in most cases, you will need to "consume" them.
 You can do this with the ``messenger:consume`` command:
 
 .. code-block:: terminal
@@ -498,7 +498,7 @@ Deploying to Production
 On production, there are a few important things to think about:
 
 **Use a Process Manager like Supervisor or systemd to keep your worker(s) running**
-    You'll want one or more "workers" running at all times. To do that, use a
+    You will want one or more "workers" running at all times. To do that, use a
     process control system like :ref:`Supervisor <messenger-supervisor>`
     or :ref:`systemd <messenger-systemd>`.
 
@@ -516,10 +516,10 @@ On production, there are a few important things to think about:
     the ``messenger:consume`` command.
 
 **Restart Workers on Deploy**
-    Each time you deploy, you'll need to restart all your worker processes so
+    Each time you deploy, you will need to restart all your worker processes so
     that they see the newly deployed code. To do this, run ``messenger:stop-workers``
     on deployment. This will signal to each worker that it should finish the message
-    it's currently handling and should shut down gracefully. Then, the process manager
+    it is currently handling and should shut down gracefully. Then, the process manager
     will create new worker processes. The command uses the :ref:`app <cache-configuration-with-frameworkbundle>`
     cache internally - so make sure this is configured to use an adapter you like.
 
@@ -1070,7 +1070,7 @@ be discarded. To avoid this happening, you can instead configure a ``failure_tra
 
 In this example, if handling a message fails 3 times (default ``max_retries``),
 it will then be sent to the ``failed`` transport. While you *can* use
-``messenger:consume failed`` to consume this like a normal transport, you'll
+``messenger:consume failed`` to consume this like a normal transport, you will
 usually want to manually view the messages in the failure transport and choose
 to retry them:
 
@@ -1453,7 +1453,7 @@ Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 .. tip::
 
     To avoid tools like Doctrine Migrations from trying to remove this table because
-    it's not part of your normal schema, you can set the ``schema_filter`` option:
+    it is not part of your normal schema, you can set the ``schema_filter`` option:
 
     .. configuration-block::
 
@@ -1854,7 +1854,7 @@ The transport has a number of options:
 Serializing Messages
 ~~~~~~~~~~~~~~~~~~~~
 
-When messages are sent to (and received from) a transport, they're serialized
+When messages are sent to (and received from) a transport, they are serialized
 using PHP's native ``serialize()`` & ``unserialize()`` functions. You can change
 this globally (or for each transport) to a service that implements
 :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\SerializerInterface`:
@@ -1993,7 +1993,7 @@ by tagging the handler service with ``messenger.message_handler``
                 tags:
                     -
                         name: messenger.message_handler
-                        # only needed if can't be guessed by type-hint
+                        # only needed if cannot be guessed by type-hint
                         handles: App\Message\SmsNotification
 
     .. code-block:: xml
@@ -2007,7 +2007,7 @@ by tagging the handler service with ``messenger.message_handler``
 
             <services>
                 <service id="App\MessageHandler\SmsNotificationHandler">
-                     <!-- handles is only needed if it can't be guessed by type-hint -->
+                     <!-- handles is only needed if it cannot be guessed by type-hint -->
                      <tag name="messenger.message_handler"
                           handles="App\Message\SmsNotification"/>
                 </service>
@@ -2022,7 +2022,7 @@ by tagging the handler service with ``messenger.message_handler``
 
         $container->register(SmsNotificationHandler::class)
             ->addTag('messenger.message_handler', [
-                // only needed if can't be guessed by type-hint
+                // only needed if cannot be guessed by type-hint
                 'handles' => SmsNotification::class,
             ]);
 
@@ -2078,7 +2078,7 @@ Binding Handlers to Different Transports
 
 Each message can have multiple handlers, and when a message is consumed
 *all* of its handlers are called. But you can also configure a handler to only
-be called when it's received from a *specific* transport. This allows you to
+be called when it is received from a *specific* transport. This allows you to
 have a single message where each handler is called by a different "worker"
 that's consuming a different transport.
 
@@ -2233,9 +2233,9 @@ to your message::
 
 Internally, each message is wrapped in an ``Envelope``, which holds the message
 and stamps. You can create this manually or allow the message bus to do it. There
-are a variety of different stamps for different purposes and they're used internally
+are a variety of different stamps for different purposes and they are used internally
 to track information about a message - like the message bus that's handling it
-or if it's being retried after failure.
+or if it is being retried after failure.
 
 Middleware
 ~~~~~~~~~~
@@ -2357,7 +2357,7 @@ may want to use:
                     command_bus:
                         middleware:
                             # each time a message is handled, the Doctrine connection
-                            # is "pinged" and reconnected if it's closed. Useful
+                            # is "pinged" and reconnected if it is closed. Useful
                             # if your workers run for a long time and the database
                             # connection is sometimes lost
                             - doctrine_ping_connection

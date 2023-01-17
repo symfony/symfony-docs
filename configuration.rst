@@ -42,7 +42,7 @@ example, this is the default file created by the "API Platform" bundle:
             paths: ['%kernel.project_dir%/src/Entity']
 
 Splitting the configuration into lots of small files might appear intimidating for some
-Symfony newcomers. However, you'll get used to them quickly and you rarely need
+Symfony newcomers. However, you will get used to them quickly and you rarely need
 to change these files after package installation.
 
 .. tip::
@@ -93,11 +93,11 @@ shown in these three formats.
             }
         }
 
-There isn't any practical difference between formats. In fact, Symfony
+There is not any practical difference between formats. In fact, Symfony
 transforms and caches all of them into PHP before running the application, so
 there's not even any performance difference between them.
 
-YAML is used by default when installing packages because it's concise and very
+YAML is used by default when installing packages because it is concise and very
 readable. These are the main advantages and disadvantages of each format:
 
 * **YAML**: simple, clean and readable, but not all IDEs support autocompletion
@@ -540,7 +540,7 @@ Selecting the Active Environment
 
 Symfony applications come with a file called ``.env`` located at the project
 root directory. This file is used to define the value of environment variables
-and it's explained in detail :ref:`later in this article <config-dot-env>`.
+and it is explained in detail :ref:`later in this article <config-dot-env>`.
 
 Open the ``.env`` file (or better, the ``.env.local`` file if you created one)
 and edit the value of the ``APP_ENV`` variable to change the environment in
@@ -581,7 +581,7 @@ going to production:
 
 .. tip::
 
-    It's common for environments to be similar to each other, so you can
+    It is common for environments to be similar to each other, so you can
     use `symbolic links`_ between ``config/packages/<environment-name>/``
     directories to reuse the same configuration.
 
@@ -693,7 +693,7 @@ To define the value of an env var, you have several options:
     credentials.
 
     The values of the env vars are also exposed in the web interface of the
-    :doc:`Symfony profiler </profiler>`. In practice this shouldn't be a
+    :doc:`Symfony profiler </profiler>`. In practice this should not be a
     problem because the web profiler must **never** be enabled in production.
 
 .. _configuration-env-var-in-dev:
@@ -729,7 +729,7 @@ added automatically by :ref:`Symfony Flex <symfony-flex>` when installing packag
 .. tip::
 
     Since the ``.env`` file is read and parsed on every request, you don't need to
-    clear the Symfony cache or restart the PHP container if you're using Docker.
+    clear the Symfony cache or restart the PHP container if you are using Docker.
 
 .env File Syntax
 ................
@@ -803,12 +803,12 @@ the right situation:
 * ``.env``: defines the default values of the env vars needed by the application;
 * ``.env.local``: overrides the default values for all environments but only on
   the machine which contains the file. This file should not be committed to the
-  repository and it's ignored in the ``test`` environment (because tests should
+  repository and it is ignored in the ``test`` environment (because tests should
   produce the same results for everyone);
 * ``.env.<environment>`` (e.g. ``.env.test``): overrides env vars only for one
   environment but for all machines (these files *are* committed);
 * ``.env.<environment>.local`` (e.g. ``.env.test.local``): defines machine-specific
-  env var overrides only for one environment. It's similar to ``.env.local``,
+  env var overrides only for one environment. It is similar to ``.env.local``,
   but the overrides only apply to one environment.
 
 *Real* environment variables always win over env vars created by any of the
@@ -1135,12 +1135,12 @@ namespace ``Symfony\Config``::
 
     Only root classes in the namespace ``Symfony\Config`` are ConfigBuilders.
     Nested configs (e.g. ``\Symfony\Config\Framework\CacheConfig``) are regular
-    PHP objects which aren't autowired when using them as an argument type.
+    PHP objects which are not autowired when using them as an argument type.
 
 Keep Going!
 -----------
 
-Congratulations! You've tackled the basics of Symfony. Next, learn about *each*
+Congratulations! You have tackled the basics of Symfony. Next, learn about *each*
 part of Symfony individually by following the guides. Check out:
 
 * :doc:`/forms`

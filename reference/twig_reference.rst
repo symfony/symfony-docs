@@ -36,7 +36,7 @@ render
 
 Makes a request to the given internal URI or controller and returns the result.
 The render strategy can be specified in the ``strategy`` key of the options.
-It's commonly used to :ref:`embed controllers in templates <templates-embed-controllers>`.
+It is commonly used to :ref:`embed controllers in templates <templates-embed-controllers>`.
 
 .. _reference-twig-function-render-esi:
 
@@ -52,7 +52,7 @@ render_esi
 ``options`` *(optional)*
     **type**: ``array`` **default**: ``[]``
 
-It's similar to the `render`_ function and defines the same arguments. However,
+It is similar to the `render`_ function and defines the same arguments. However,
 it generates an ESI tag when :doc:`ESI support </http_cache/esi>` is enabled or
 falls back to the behavior of `render`_ otherwise.
 
@@ -200,7 +200,7 @@ logout_url
 ``key`` *(optional)*
     **type**: ``string``
 
-Equal to the `logout_path`_ function, but it'll generate an absolute URL
+Equal to the `logout_path`_ function, but it will generate an absolute URL
 instead of a relative one.
 
 path
@@ -218,7 +218,7 @@ path
     **type**: ``boolean`` **default**: ``false``
 
 Returns the relative URL (without the scheme and host) for the given route.
-If ``relative`` is enabled, it'll create a path relative to the current path.
+If ``relative`` is enabled, it will create a path relative to the current path.
 
 .. seealso::
 
@@ -240,7 +240,7 @@ url
     **type**: ``boolean`` **default**: ``false``
 
 Returns the absolute URL (with scheme and host) for the given route. If
-``schemeRelative`` is enabled, it'll create a scheme-relative URL.
+``schemeRelative`` is enabled, it will create a scheme-relative URL.
 
 .. seealso::
 
@@ -276,7 +276,7 @@ relative_path
     **type**: ``string``
 
 Returns the relative path from the passed absolute URL. For example, assume
-you're on the following page in your app:
+you are on the following page in your app:
 ``http://example.com/products/hover-board``.
 
 .. code-block:: twig
@@ -327,7 +327,7 @@ impersonation_exit_url
 
     The ``impersonation_exit_url()`` function was introduced in Symfony 5.2.
 
-It's similar to the `impersonation_exit_path`_ function, but it generates
+It is similar to the `impersonation_exit_path`_ function, but it generates
 absolute URLs instead of relative URLs.
 
 .. _reference-twig-function-t:
@@ -474,7 +474,7 @@ abbr_method
 
 Generates an ``<abbr>`` element using the ``FQCN::method()`` syntax. If
 ``method`` is ``Closure``, ``Closure`` will be used instead and if ``method``
-doesn't have a class name, it's shown as a function (``method()``).
+doesn't have a class name,it is shown as a function (``method()``).
 
 format_args
 ~~~~~~~~~~~

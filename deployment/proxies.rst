@@ -12,7 +12,7 @@ instead of reading the ``REMOTE_ADDR`` header (which will now be the IP address 
 your reverse proxy), the user's true IP will be stored in a standard ``Forwarded: for="..."``
 header or a ``X-Forwarded-For`` header.
 
-If you don't configure Symfony to look for these headers, you'll get incorrect
+If you don't configure Symfony to look for these headers, you will get incorrect
 information about the client's IP address, whether or not the client is connecting
 via HTTPS, the client's port and the hostname being requested.
 
@@ -115,12 +115,12 @@ But what if the IP of my Reverse Proxy Changes Constantly!
 
 Some reverse proxies (like AWS Elastic Load Balancing) don't have a
 static IP address or even a range that you can target with the CIDR notation.
-In this case, you'll need to - *very carefully* - trust *all* proxies.
+In this case, you will need to - *very carefully* - trust *all* proxies.
 
 #. Configure your web server(s) to *not* respond to traffic from *any* clients
    other than your load balancers. For AWS, this can be done with `security groups`_.
 
-#. Once you've guaranteed that traffic will only come from your trusted reverse
+#. Once you have guaranteed that traffic will only come from your trusted reverse
    proxies, configure Symfony to *always* trust incoming request:
 
     .. code-block:: yaml
@@ -132,7 +132,7 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
             # run time by $_SERVER['REMOTE_ADDR'])
             trusted_proxies: '127.0.0.1,REMOTE_ADDR'
 
-That's it! It's critical that you prevent traffic from all non-trusted sources.
+That's it! It is critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
 
@@ -154,7 +154,7 @@ other information.
             trusted_proxies: '%env(TRUSTED_PROXIES)%'
 
 If you are also using a reverse proxy on top of your load balancer (e.g.
-`CloudFront`_), calling ``$request->server->get('REMOTE_ADDR')`` won't be
+`CloudFront`_), calling ``$request->server->get('REMOTE_ADDR')`` will not be
 enough, as it will only trust the node sitting directly above your application
 (in this case your load balancer). You also need to append the IP addresses or
 ranges of any additional proxy (e.g. `CloudFront IP ranges`_) to the array of
@@ -167,7 +167,7 @@ Some reverse proxies (like `CloudFront`_ with ``CloudFront-Forwarded-Proto``)
 may force you to use a custom header. For instance you have
 ``Custom-Forwarded-Proto`` instead of ``X-Forwarded-Proto``.
 
-In this case, you'll need to set the header ``X-Forwarded-Proto`` with the value
+In this case, you will need to set the header ``X-Forwarded-Proto`` with the value
 of ``Custom-Forwarded-Proto`` early enough in your application, i.e. before
 handling the request::
 

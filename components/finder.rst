@@ -85,7 +85,7 @@ Exclude directories from matching with the
     // directories passed as argument must be relative to the ones defined with the in() method
     $finder->in(__DIR__)->exclude('ruby');
 
-It's also possible to ignore directories that you don't have permission to read::
+It is also possible to ignore directories that you don't have permission to read::
 
     $finder->ignoreUnreadableDirs()->in(__DIR__);
 

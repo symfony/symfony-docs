@@ -78,7 +78,7 @@ When you use these type-hints in your controller methods or inside your
 :ref:`own services <service-container-creating-service>`, Symfony will automatically
 pass you the service object matching that type.
 
-Throughout the docs, you'll see how to use the many different services that live
+Throughout the docs, you will see how to use the many different services that live
 in the container.
 
 .. tip::
@@ -86,7 +86,7 @@ in the container.
     There are actually *many* more services in the container, and each service has
     a unique id in the container, like ``request_stack`` or ``router.default``. For a full
     list, you can run ``php bin/console debug:container``. But most of the time,
-    you won't need to worry about this. See :ref:`services-wire-specific-service`.
+    you will not need to worry about this. See :ref:`services-wire-specific-service`.
     See :doc:`/service_container/debug`.
 
 .. index::
@@ -99,7 +99,7 @@ Creating/Configuring Services in the Container
 
 You can also organize your *own* code into services. For example, suppose you need
 to show your users a random, happy message. If you put this code in your controller,
-it can't be re-used. Instead, you decide to create a new class::
+it cannot be re-used. Instead, you decide to create a new class::
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
@@ -120,7 +120,7 @@ it can't be re-used. Instead, you decide to create a new class::
         }
     }
 
-Congratulations! You've created your first service class! You can use it immediately
+Congratulations! You have created your first service class! You can use it immediately
 inside your controller::
 
     // src/Controller/ProductController.php
@@ -146,7 +146,7 @@ inside your controller::
 
 When you ask for the ``MessageGenerator`` service, the container constructs a new
 ``MessageGenerator`` object and returns it (see sidebar below). But if you never ask
-for the service, it's *never* constructed: saving memory and speed. As a bonus, the
+for the service, it is *never* constructed: saving memory and speed. As a bonus, the
 ``MessageGenerator`` service is only created *once*: the same instance is returned
 each time you ask for it.
 
@@ -154,7 +154,7 @@ each time you ask for it.
 
 .. sidebar:: Automatic Service Loading in services.yaml
 
-    The documentation assumes you're using the following service configuration,
+    The documentation assumes you are using the following service configuration,
     which is the default config for a new project:
 
     .. configuration-block::
@@ -237,9 +237,9 @@ each time you ask for it.
 
     Thanks to this configuration, you can automatically use any classes from the
     ``src/`` directory as a service, without needing to manually configure
-    it. Later, you'll learn more about this in :ref:`service-psr4-loader`.
+    it. Later, you will learn more about this in :ref:`service-psr4-loader`.
 
-    If you'd prefer to manually wire your service, that's totally possible: see
+    If you would prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
 
 Limiting Services to a specific Symfony Environment
@@ -307,7 +307,7 @@ when instantiating the ``MessageGenerator``. How does it know to do this?
 :ref:`Autowiring <services-autowire>`. The key is the ``LoggerInterface``
 type-hint in your ``__construct()`` method and the ``autowire: true`` config in
 ``services.yaml``. When you type-hint an argument, the container will automatically
-find the matching service. If it can't, you'll see a clear exception with a helpful
+find the matching service. If it cannot, you will see a clear exception with a helpful
 suggestion.
 
 By the way, this method of adding dependencies to your ``__construct()`` method is
@@ -316,7 +316,7 @@ called *dependency injection*.
 .. _services-debug-container-types:
 
 How should you know to use ``LoggerInterface`` for the type-hint? You can either
-read the docs for whatever feature you're using, or get a list of autowireable
+read the docs for whatever feature you are using, or get a list of autowireable
 type-hints by running:
 
 .. code-block:: terminal
@@ -446,7 +446,7 @@ example, suppose you want to make the admin email configurable:
           }
       }
 
-If you make this change and refresh, you'll see an error:
+If you make this change and refresh, you will see an error:
 
     Cannot autowire service "App\\Service\\SiteUpdateManager": argument "$adminEmail"
     of method "__construct()" must have a type-hint or be given a value explicitly.
@@ -522,7 +522,7 @@ Thanks to this, the container will pass ``manager@example.com`` to the ``$adminE
 argument of ``__construct`` when creating the ``SiteUpdateManager`` service. The
 other arguments will still be autowired.
 
-But, isn't this fragile? Fortunately, no! If you rename the ``$adminEmail`` argument
+But, is not this fragile? Fortunately, no! If you rename the ``$adminEmail`` argument
 to something else - e.g. ``$mainEmail`` - you will get a clear exception when you
 reload the next page (even if that page doesn't use this service).
 
@@ -605,7 +605,7 @@ accessor methods for parameters::
 
     The used ``.`` notation is a
     :ref:`Symfony convention <service-naming-conventions>` to make parameters
-    easier to read. Parameters are flat key-value elements, they can't
+    easier to read. Parameters are flat key-value elements, they cannot
     be organized into a nested array
 
 .. note::
@@ -826,7 +826,7 @@ The autowire Option
 -------------------
 
 Above, the ``services.yaml`` file has ``autowire: true`` in the ``_defaults`` section
-so that it applies to all services defined in that file. With this setting, you're
+so that it applies to all services defined in that file. With this setting, you are
 able to type-hint arguments in the ``__construct()`` method of your services and
 the container will automatically pass you the correct arguments. This entire entry
 has been written around autowiring.
@@ -846,7 +846,7 @@ on your service's *class*. This is mostly used to *auto-tag* your services.
 For example, to create a Twig extension, you need to create a class, register it
 as a service, and :doc:`tag </service_container/tags>` it with ``twig.extension``.
 
-But, with ``autoconfigure: true``, you don't need the tag. In fact, if you're using
+But, with ``autoconfigure: true``, you don't need the tag. In fact, if you are using
 the :ref:`default services.yaml config <service-container-services-load-example>`,
 you don't need to do *anything*: the service will be automatically loaded. Then,
 ``autoconfigure`` will add the ``twig.extension`` tag *for* you, because your class
@@ -857,7 +857,7 @@ Linting Service Definitions
 ---------------------------
 
 The ``lint:container`` command checks that the arguments injected into services
-match their type declarations. It's useful to run it before deploying your
+match their type declarations. It is useful to run it before deploying your
 application to production (e.g. in your continuous integration server):
 
 .. code-block:: terminal
@@ -942,7 +942,7 @@ setting:
 Importing Many Services at once with resource
 ---------------------------------------------
 
-You've already seen that you can import many services at once by using the ``resource``
+You have already seen that you can import many services at once by using the ``resource``
 key. For example, the default Symfony configuration contains this:
 
 .. configuration-block::
@@ -1018,7 +1018,7 @@ Multiple Service Definitions Using the Same Namespace
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you define services using the YAML config format, the PHP namespace is used
-as the key of each configuration, so you can't define different service configs
+as the key of each configuration, so you cannot define different service configs
 for classes under the same namespace:
 
 .. configuration-block::
@@ -1192,7 +1192,7 @@ admin email. In this case, each needs to have a unique service id:
 In this case, *two* services are registered: ``site_update_manager.superadmin``
 and ``site_update_manager.normal_users``. Thanks to the alias, if you type-hint
 ``SiteUpdateManager`` the first (``site_update_manager.superadmin``) will be passed.
-If you want to pass the second, you'll need to :ref:`manually wire the service <services-wire-specific-service>`.
+If you want to pass the second, you will need to :ref:`manually wire the service <services-wire-specific-service>`.
 
 .. caution::
 

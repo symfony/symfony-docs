@@ -102,7 +102,7 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
 
 .. tip::
 
-    While it is possible to reconfigure the ``system`` cache, it's recommended
+    While it is possible to reconfigure the ``system`` cache, it is recommended
     to keep the default configuration applied to it by Symfony.
 
 The Cache component comes with a series of adapters pre-configured:
@@ -495,9 +495,9 @@ chain of adapters.
 
 A cache chain combines several cache pools into a single one. When storing an
 item in a cache chain, Symfony stores it in all pools sequentially. When
-retrieving an item, Symfony tries to get it from the first pool. If it's not
+retrieving an item, Symfony tries to get it from the first pool. If it is not
 found, it tries the next pools until the item is found or an exception is thrown.
-Because of this behavior, it's recommended to define the adapters in the chain
+Because of this behavior, it is recommended to define the adapters in the chain
 in order from fastest to slowest.
 
 If an error happens when storing an item in a pool, Symfony stores it in the

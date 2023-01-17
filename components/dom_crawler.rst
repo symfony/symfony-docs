@@ -65,9 +65,9 @@ tree.
     The DomCrawler will attempt to automatically fix your HTML to match the
     official specification. For example, if you nest a ``<p>`` tag inside
     another ``<p>`` tag, it will be moved to be a sibling of the parent tag.
-    This is expected and is part of the HTML5 spec. But if you're getting
+    This is expected and is part of the HTML5 spec. But if you are getting
     unexpected behavior, this could be a cause. And while the DomCrawler
-    isn't meant to dump content, you can see the "fixed" version of your HTML
+    is not meant to dump content, you can see the "fixed" version of your HTML
     by :ref:`dumping it <component-dom-crawler-dumping>`.
 
 .. note::
@@ -153,8 +153,8 @@ and :method:`Symfony\\Component\\DomCrawler\\Crawler::filter`::
     :method:`Symfony\\Component\\DomCrawler\\Crawler::setDefaultNamespacePrefix`
     method.
 
-    The default namespace is removed when loading the content if it's the only
-    namespace in the document. It's done to simplify the XPath queries.
+    The default namespace is removed when loading the content if it is the only
+    namespace in the document. It is done to simplify the XPath queries.
 
 Namespaces can be explicitly registered with the
 :method:`Symfony\\Component\\DomCrawler\\Crawler::registerNamespace` method::
@@ -285,7 +285,7 @@ Adding the Content
 
 The crawler supports multiple ways of adding the content, but they are mutually
 exclusive, so you can only use one of them to add content (e.g. if you pass the
-content to the ``Crawler`` constructor, you can't call ``addContent()`` later)::
+content to the ``Crawler`` constructor, you cannot call ``addContent()`` later)::
 
     $crawler = new Crawler('<html><body/></html>');
 
@@ -329,7 +329,7 @@ and :phpclass:`DOMNode` objects::
 .. sidebar:: Manipulating and Dumping a ``Crawler``
 
     These methods on the ``Crawler`` are intended to initially populate your
-    ``Crawler`` and aren't intended to be used to further manipulate a DOM
+    ``Crawler`` and are not intended to be used to further manipulate a DOM
     (though this is possible). However, since the ``Crawler`` is a set of
     :phpclass:`DOMElement` objects, you can use any method or property available
     on :phpclass:`DOMElement`, :phpclass:`DOMNode` or :phpclass:`DOMDocument`.
@@ -585,14 +585,14 @@ and uploading files::
 Using the Form Data
 ...................
 
-What's the point of doing all of this? If you're testing internally, you
+What's the point of doing all of this? If you are testing internally, you
 can grab the information off of your form as if it had just been submitted
 by using the PHP values::
 
     $values = $form->getPhpValues();
     $files = $form->getPhpFiles();
 
-If you're using an external HTTP client, you can use the form to grab all
+If you are using an external HTTP client, you can use the form to grab all
 of the information you need to create a POST request for the form::
 
     $uri = $form->getUri();

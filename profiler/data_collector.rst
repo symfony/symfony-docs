@@ -63,7 +63,7 @@ These are the method that you can define in the data collector class:
         to provide your own ``serialize()`` method.
 
 :method:`Symfony\\Component\\HttpKernel\\DataCollector\\DataCollectorInterface::reset` method:
-    It's called between requests to reset the state of the profiler. By default
+    It is called between requests to reset the state of the profiler. By default
     it only empties the ``$this->data`` contents, but you can override this method
     to do additional cleaning.
 
@@ -82,7 +82,7 @@ data serialization (during :ref:`kernel.terminate <component-http-kernel-kernel-
 
 .. note::
 
-    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
+    If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`
     with ``autoconfigure``, then Symfony will start using your data collector after the
     next page refresh. Otherwise, :ref:`enable the data collector by hand <data_collector_tag>`.
 
@@ -231,7 +231,7 @@ All blocks have access to the ``collector`` object.
 
 .. note::
 
-    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
+    If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`
     with ``autoconfigure``, then Symfony will start displaying your collector data
     in the toolbar after the next page refresh. Otherwise, :ref:`enable the data collector by hand <data_collector_tag>`.
 
@@ -242,7 +242,7 @@ Enabling Custom Data Collectors
 
 If you don't use Symfony's default configuration with
 :ref:`autowire and autoconfigure <service-container-services-load-example>`
-you'll need to configure the data collector explicitly:
+you will need to configure the data collector explicitly:
 
 .. configuration-block::
 

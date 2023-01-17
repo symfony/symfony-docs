@@ -106,8 +106,8 @@ A controller that implements this interface looks like this::
 Creating an Event Subscriber
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Next, you'll need to create an event subscriber, which will hold the logic
-that you want to be executed before your controllers. If you're not familiar with
+Next, you will need to create an event subscriber, which will hold the logic
+that you want to be executed before your controllers. If you are not familiar with
 event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
 
     // src/EventSubscriber/TokenSubscriber.php
@@ -164,7 +164,7 @@ you want.
 .. tip::
 
     If your subscriber is *not* called on each request, double-check that
-    you're :ref:`loading services <service-container-services-load-example>` from
+    you are :ref:`loading services <service-container-services-load-example>` from
     the ``EventSubscriber`` directory and have :ref:`autoconfigure <services-autoconfigure>`
     enabled. You can also manually add the ``kernel.event_subscriber`` tag.
 
@@ -202,7 +202,7 @@ serve as a basic flag that this request underwent token authentication::
 
 Now, configure the subscriber to listen to another event and add ``onKernelResponse()``.
 This will look for the ``auth_token`` flag on the request object and set a custom
-header on the response if it's found::
+header on the response if it is found::
 
     // add the new use statement at the top of your file
     use Symfony\Component\HttpKernel\Event\ResponseEvent;

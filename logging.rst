@@ -64,7 +64,7 @@ The following sections assume that Monolog is installed.
 Where Logs are Stored
 ---------------------
 
-By default, log entries are written to the ``var/log/dev.log`` file when you're
+By default, log entries are written to the ``var/log/dev.log`` file when you are
 in the ``dev`` environment.
 
 In the ``prod`` environment, logs are written to `STDERR PHP stream`_, which
@@ -157,7 +157,7 @@ to write logs using the :phpfunction:`syslog` function:
                 ->level('error');
         };
 
-This defines a *stack* of handlers and each handler is called in the order that it's
+This defines a *stack* of handlers and each handler is called in the order that it is
 defined.
 
 .. note::

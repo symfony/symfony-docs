@@ -33,8 +33,8 @@ Field Options
 
 **type**: ``boolean`` **default**: ``false``
 
-Usually, if you submit extra fields that aren't configured in your form,
-you'll get a "This form should not contain extra fields." validation error.
+Usually, if you submit extra fields that are not configured in your form,
+you will get a "This form should not contain extra fields." validation error.
 
 You can silence this validation error by enabling the ``allow_extra_fields``
 option on the form.

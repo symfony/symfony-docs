@@ -32,7 +32,7 @@ secret
 
 **type**: ``string`` **required**
 
-This is a string that should be unique to your application and it's commonly
+This is a string that should be unique to your application and it is commonly
 used to add more entropy to security related operations. Its value should
 be a series of characters, numbers and symbols chosen randomly and the
 recommended length is around 32 characters.
@@ -168,7 +168,7 @@ named ``kernel.http_method_override``.
 
 .. caution::
 
-    If you're using the :ref:`HttpCache Reverse Proxy <symfony2-reverse-proxy>`
+    If you are using the :ref:`HttpCache Reverse Proxy <symfony2-reverse-proxy>`
     with this option, the kernel will ignore the ``_method`` parameter,
     which could lead to errors.
 
@@ -431,7 +431,7 @@ performance a bit:
         };
 
 If some user makes requests with a locale not included in this option, the
-application won't display any error because Symfony will display contents using
+application will not display any error because Symfony will display contents using
 the fallback locale.
 
 set_content_language_from_locale
@@ -467,7 +467,7 @@ disallow_search_engine_index
 **type**: ``boolean`` **default**: ``true`` when the debug mode is enabled, ``false`` otherwise.
 
 If ``true``, Symfony adds a ``X-Robots-Tag: noindex`` HTTP tag to all responses
-(unless your own app adds that header, in which case it's not modified). This
+(unless your own app adds that header, in which case it is not modified). This
 `X-Robots-Tag HTTP header`_ tells search engines to not index your web site.
 This option is a protection measure in case you accidentally publish your site
 in debug mode.
@@ -494,7 +494,7 @@ the configuration of your web server. One simple solution to avoid these
 attacks is to configure a list of hosts that your Symfony application can respond
 to. That's the purpose of this ``trusted_hosts`` option. If the incoming
 request's hostname doesn't match one of the regular expressions in this list,
-the application won't respond and the user will receive a 400 response.
+the application will not respond and the user will receive a 400 response.
 
 .. configuration-block::
 
@@ -637,7 +637,7 @@ can also :ref:`disable CSRF protection on individual forms <form-csrf-customizat
             ;
         };
 
-If you're using forms, but want to avoid starting your session (e.g. using
+If you are using forms, but want to avoid starting your session (e.g. using
 forms in an API-only website), ``csrf_protection`` will need to be set to
 ``false``.
 
@@ -1083,7 +1083,7 @@ jitter
 
     The ``jitter`` option was introduced in Symfony 5.2.
 
-This option adds some randomness to the delay. It's useful to avoid sending
+This option adds some randomness to the delay. It is useful to avoid sending
 multiple requests to the server at the exact same time. The randomness is
 calculated as ``delay * jitter``. For example: if delay is ``1000ms`` and jitter
 is ``0.2``, the actual delay will be a number between ``800`` and ``1200`` (1000 +/- 20%).
@@ -1473,7 +1473,7 @@ type
 
 **type**: ``string``
 
-The type of the resource to hint the loaders about the format. This isn't
+The type of the resource to hint the loaders about the format. This is not
 needed when you use the default routers with the expected file extensions
 (``.xml``, ``.yaml``, ``.php``).
 
@@ -1542,7 +1542,7 @@ using the `utf-8 modifier`_. This will for example match any UTF-8 character
 when using ``.``, instead of matching only a single byte.
 
 If the charset of your application is UTF-8 (as defined in the
-:ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it's
+:ref:`getCharset() method <configuration-kernel-charset>` of your kernel) it is
 recommended setting it to ``true``. This will make non-UTF8 URLs to generate 404
 errors.
 
@@ -1618,7 +1618,7 @@ cache_limiter
 
 **type**: ``string`` or ``int`` **default**: ``''``
 
-If set to ``0``, Symfony won't set any particular header related to the cache
+If set to ``0``, Symfony will not set any particular header related to the cache
 and it will rely on the cache control method configured in the
 `session.cache-limiter`_ PHP.ini option.
 
@@ -1662,7 +1662,7 @@ cookie_domain
 
 **type**: ``string`` **default**: ``''``
 
-This determines the domain to set in the session cookie. By default, it's
+This determines the domain to set in the session cookie. By default, it is
 blank, meaning the host name of the server which generated the cookie according
 to the cookie specification.
 
@@ -1716,7 +1716,7 @@ cookie_httponly
 **type**: ``boolean`` **default**: ``true``
 
 This determines whether cookies should only be accessible through the HTTP
-protocol. This means that the cookie won't be accessible by scripting
+protocol. This means that the cookie will not be accessible by scripting
 languages, such as JavaScript. This setting can effectively help to reduce
 identity theft through XSS attacks.
 
@@ -2184,7 +2184,7 @@ individually for each asset package:
                 version_strategy: 'app.asset.my_versioning_strategy'
                 packages:
                     foo_package:
-                        # this package removes any versioning (its assets won't be versioned)
+                        # this package removes any versioning (its assets will not be versioned)
                         version: ~
                     bar_package:
                         # this package uses its own strategy (the default strategy is ignored)
@@ -2205,7 +2205,7 @@ individually for each asset package:
 
             <framework:config>
                 <framework:assets version-strategy="app.asset.my_versioning_strategy">
-                    <!-- this package removes any versioning (its assets won't be versioned) -->
+                    <!-- this package removes any versioning (its assets will not be versioned) -->
                     <framework:package
                         name="foo_package"
                         version="null"/>
@@ -2232,7 +2232,7 @@ individually for each asset package:
                 ->versionStrategy('app.asset.my_versioning_strategy');
 
             $framework->assets()->package('foo_package')
-                // this package removes any versioning (its assets won't be versioned)
+                // this package removes any versioning (its assets will not be versioned)
                 ->version(null);
 
             $framework->assets()->package('bar_package')
@@ -2424,7 +2424,7 @@ fallbacks
 
 **type**: ``string|array`` **default**: value of `default_locale`_
 
-This option is used when the translation key for the current locale wasn't
+This option is used when the translation key for the current locale was not
 found.
 
 .. seealso::
@@ -2605,7 +2605,7 @@ enabled
 **type**: ``boolean`` **default**: ``true``
 
 If you set this option to ``false``, no HTTP requests will be made and the given
-password will be considered valid. This is useful when you don't want or can't
+password will be considered valid. This is useful when you don't want or cannot
 make HTTP requests, such as in ``dev`` and ``test`` environments or in
 continuous integration servers.
 
@@ -2617,7 +2617,7 @@ endpoint
 By default, the :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
 constraint uses the public API provided by `haveibeenpwned.com`_. This option
 allows to define a different, but compatible, API endpoint to make the password
-checks. It's useful for example when the Symfony application is run in an
+checks. It is useful for example when the Symfony application is run in an
 intranet without public access to the internet.
 
 static_method
@@ -2955,7 +2955,7 @@ ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``
 ``cache.adapter.redis``, ``cache.adapter.memcached`` and ``cache.adapter.pdo``.
 
 There's also a special adapter called ``cache.adapter.array`` which stores
-contents in memory using a PHP array and it's used to disable caching (mostly on
+contents in memory using a PHP array and it is used to disable caching (mostly on
 the ``dev`` environment).
 
 .. tip::
@@ -3172,7 +3172,7 @@ cache item keys. A common practice is to use the unique name of the application
 multiple applications into the same path (on different servers) that share the
 same cache backend.
 
-It's also useful when using `blue/green deployment`_ strategies and more
+It is also useful when using `blue/green deployment`_ strategies and more
 generally, when you need to abstract out the actual deployment directory (for
 example, when warming caches offline).
 

@@ -67,7 +67,7 @@ PHP; it implements ``HttpKernelInterface`` and wraps another
     $response = $framework->handle($request);
     $response->send();
 
-That's all it takes to add HTTP caching support to our framework. Isn't it
+That's all it takes to add HTTP caching support to our framework. Is not it
 amazing?
 
 Configuring the cache needs to be done via HTTP cache headers. For instance,

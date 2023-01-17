@@ -95,7 +95,7 @@ Options
 
 **type**: ``boolean`` **default**: ``false``
 
-If set to ``true``, ``null`` values are considered valid and won't trigger a
+If set to ``true``, ``null`` values are considered valid and will not trigger a
 constraint violation.
 
 .. include:: /reference/constraints/_groups-option.rst.inc

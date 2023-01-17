@@ -83,9 +83,9 @@ If you want to create a function instead of a filter, define the
 Register an Extension as a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Next, register your class as a service and tag it with ``twig.extension``. If you're
+Next, register your class as a service and tag it with ``twig.extension``. If you are
 using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-you're done! Symfony will automatically know about your new service and add the tag.
+you are done! Symfony will automatically know about your new service and add the tag.
 
 You can now start using your filter in any Twig template. Optionally, execute
 this command to confirm that your new filter was successfully registered:
@@ -136,7 +136,7 @@ callable defined in ``getFilters()``::
         }
     }
 
-Then, create the new ``AppRuntime`` class (it's not required but these classes
+Then, create the new ``AppRuntime`` class (it is not required but these classes
 are suffixed with ``Runtime`` by convention) and include the logic of the
 previous ``formatPrice()`` method::
 
@@ -150,7 +150,7 @@ previous ``formatPrice()`` method::
         public function __construct()
         {
             // this simple example doesn't define any dependency, but in your own
-            // extensions, you'll need to inject services using this constructor
+            // extensions, you will need to inject services using this constructor
         }
 
         public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
@@ -162,7 +162,7 @@ previous ``formatPrice()`` method::
         }
     }
 
-If you're using the default ``services.yaml`` configuration, this will already
+If you are using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
 for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 

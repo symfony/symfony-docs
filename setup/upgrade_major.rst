@@ -31,7 +31,7 @@ classes, etc) code still works, but is marked as *deprecated*, indicating that
 it will be removed/changed in the future and that you should stop using it.
 
 When the major version is released (e.g. 6.0.0), all deprecated features and
-functionality are removed. So, as long as you've updated your code to stop
+functionality are removed. So, as long as you have updated your code to stop
 using these deprecated features in the last version before the major (e.g.
 ``5.4.*``), you should be able to upgrade without a problem. That means that
 you should first :doc:`upgrade to the last minor version </setup/upgrade_minor>`
@@ -54,7 +54,7 @@ cause a class deeper to trigger the warning. In this case, Symfony does its
 best to give a clear message, but you may need to research that warning further.
 
 And sometimes, the warning may come from a third-party library or bundle
-that you're using. If that's true, there's a good chance that those deprecations
+that you are using. If that's true, there's a good chance that those deprecations
 have already been updated. In that case, upgrade the library to fix them.
 
 Once all the deprecation warnings are gone, you can upgrade with a lot
@@ -92,7 +92,7 @@ Now, you can start fixing the notices:
         2x in PageAdminTest::testPageList from Symfony\Cmf\SimpleCmsBundle\Tests\WebTest\Admin
         1x in PageAdminTest::testPageEdit from Symfony\Cmf\SimpleCmsBundle\Tests\WebTest\Admin
 
-Once you fixed them all, the command ends with ``0`` (success) and you're
+Once you fixed them all, the command ends with ``0`` (success) and you are
 done!
 
 .. caution::
@@ -103,7 +103,7 @@ done!
 
 .. sidebar:: Using the Weak Deprecations Mode
 
-    Sometimes, you can't fix all deprecations (e.g. something was deprecated
+    Sometimes, you cannot fix all deprecations (e.g. something was deprecated
     in 5.4 and you still need to support 5.3). In these cases, you can still
     use the bridge to fix as many deprecations as possible and then allow
     more of them to make your tests pass again. You can do this by using the
@@ -249,7 +249,7 @@ env var. The value of this env var is url-encoded (e.g.
     * ``2`` to add all possible return types (default, recommended for applications);
     * ``1`` to add return types only to tests, final, internal or private methods;
     * ``phpdoc`` to only add ``@return`` docblock annotations to the incompatible
-      methods, or ``#[\ReturnTypeWillChange]`` if it's triggered by the PHP engine.
+      methods, or ``#[\ReturnTypeWillChange]`` if it is triggered by the PHP engine.
 
 ``php``
     The target version of PHP - e.g. ``7.1`` doesn't generate "object"
@@ -302,7 +302,7 @@ Classes in the ``vendor/`` directory are always ignored.
        will get deprecation notices telling them to add the missing return
        types from your package to their code.
 
-       If you didn't need any PHPDoc and all your method declarations are
+       If you did not need any PHPDoc and all your method declarations are
        already compatible with Symfony, you can safely allow ``^6.0`` for
        the Symfony dependencies. Otherwise, you have to continue with (2).
 

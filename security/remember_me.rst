@@ -7,7 +7,7 @@ How to Add "Remember Me" Login Functionality
 .. caution::
 
     This article documents the remember me system that was introduced in
-    the new authenticator system in 5.3. If you're using the deprecated
+    the new authenticator system in 5.3. If you are using the deprecated
     security system, refer to the `5.2 version of this documentation`_.
 
 Once a user is authenticated, their credentials are typically stored in the
@@ -87,7 +87,7 @@ the session lasts using a cookie with the ``remember_me`` firewall option:
         };
 
 The ``secret`` option is the only required option and it is used to sign
-the remember me cookie. It's common to use the ``kernel.secret`` parameter,
+the remember me cookie. It is common to use the ``kernel.secret`` parameter,
 which is defined using the ``APP_SECRET`` environment variable.
 
 After enabling the ``remember_me`` system in the configuration, there are a
@@ -599,7 +599,7 @@ cookie created by the system:
 ``name`` (default value: ``REMEMBERME``)
     The name of the cookie used to keep the user logged in. If you enable the
     ``remember_me`` feature in several firewalls of the same application, make sure
-    to choose a different name for the cookie of each firewall. Otherwise, you'll
+    to choose a different name for the cookie of each firewall. Otherwise, you will
     face lots of security related problems.
 
 ``lifetime`` (default value: ``31536000`` i.e. 1 year in seconds)
@@ -622,7 +622,7 @@ cookie created by the system:
 
 ``httponly`` (default value: ``true``)
     If ``true``, the cookie associated with this feature is accessible only
-    through the HTTP protocol. This means that the cookie won't be accessible
+    through the HTTP protocol. This means that the cookie will not be accessible
     by scripting languages, such as JavaScript.
 
 ``samesite`` (default value: ``null``)

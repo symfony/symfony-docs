@@ -143,7 +143,7 @@ Set this option to ``false`` to not require any TLD in the hostnames.
 
     This constraint does not validate that the given TLD value is included in
     the `list of official top-level domains`_ (because that list is growing
-    continuously and it's hard to keep track of it).
+    continuously and it is hard to keep track of it).
 
 .. _`RFC 2606`: https://tools.ietf.org/html/rfc2606
 .. _`list of official top-level domains`: https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains

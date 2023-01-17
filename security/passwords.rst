@@ -288,7 +288,7 @@ install the SymfonyCastsResetPasswordBundle:
 
 Then, use the ``make:reset-password`` command. This asks you a few
 questions about your app and generates all the files you need! After,
-you'll see a success message and a list of any other steps you need to do.
+you will see a success message and a list of any other steps you need to do.
 
 .. code-block:: terminal
 
@@ -441,7 +441,7 @@ Upgrade the Password
 ~~~~~~~~~~~~~~~~~~~~
 
 Upon successful login, the Security system checks whether a better algorithm
-is available to hash the user's password. If it is, it'll hash the correct
+is available to hash the user's password. If it is, it will hash the correct
 password using the new hash. When using a custom authenticator, you must
 use the ``PasswordCredentials`` in the :ref:`security passport <security-passport>`.
 
@@ -451,7 +451,7 @@ password should be stored:
 * :ref:`When using Doctrine's entity user provider <upgrade-the-password-doctrine>`
 * :ref:`When using a custom user provider <upgrade-the-password-custom-provider>`
 
-After this, you're done and passwords are always hashed as securely as possible!
+After this, you are done and passwords are always hashed as securely as possible!
 
 .. note::
 
@@ -468,7 +468,7 @@ Upgrade the Password when using Doctrine
 When using the :ref:`entity user provider <security-entity-user-provider>`, implement
 :class:`Symfony\\Component\\Security\\Core\\User\\PasswordUpgraderInterface` in
 the ``UserRepository`` (see `the Doctrine docs for information`_ on how to
-create this class if it's not already created). This interface implements
+create this class if it is not already created). This interface implements
 storing the newly created password hash::
 
     // src/Repository/UserRepository.php
@@ -496,7 +496,7 @@ storing the newly created password hash::
 Upgrade the Password when using a Custom User Provider
 ......................................................
 
-If you're using a :ref:`custom user provider <security-custom-user-provider>`, implement the
+If you are using a :ref:`custom user provider <security-custom-user-provider>`, implement the
 :class:`Symfony\\Component\\Security\\Core\\User\\PasswordUpgraderInterface` in
 the user provider::
 
@@ -522,7 +522,7 @@ the user provider::
 Trigger Password Migration From a Custom Hasher
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you're using a custom password hasher, you can trigger the password
+If you are using a custom password hasher, you can trigger the password
 migration by returning ``true`` in the ``needsRehash()`` method::
 
     // src/Security/CustomPasswordHasher.php
@@ -735,12 +735,12 @@ The Bcrypt Password Hasher
 It produces hashed passwords with the `bcrypt password hashing function`_.
 Hashed passwords are ``60`` characters long, so make sure to
 allocate enough space for them to be persisted. Also, passwords include the
-`cryptographic salt`_ inside them (it's generated automatically for each new
+`cryptographic salt`_ inside them (it is generated automatically for each new
 password) so you don't have to deal with it.
 
 Its only configuration option is ``cost``, which is an integer in the range of
 ``4-31`` (by default, ``13``). Each single increment of the cost **doubles the
-time** it takes to hash a password. It's designed this way so the password
+time** it takes to hash a password. It is designed this way so the password
 strength can be adapted to the future improvements in computation power.
 
 You can change the cost at any time — even if you already have some passwords
@@ -765,7 +765,7 @@ in PHP 7.2 by bundling the `libsodium`_ extension.
 The hashed passwords are ``96`` characters long, but due to the hashing
 requirements saved in the resulting hash this may change in the future, so make
 sure to allocate enough space for them to be persisted. Also, passwords include
-the `cryptographic salt`_ inside them (it's generated automatically for each new
+the `cryptographic salt`_ inside them (it is generated automatically for each new
 password) so you don't have to deal with it.
 
 .. _reference-security-pbkdf2:

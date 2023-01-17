@@ -39,7 +39,7 @@ the user provider uses :doc:`Doctrine </doctrine>` to retrieve them.
                         # the property to query by - e.g. email, username, etc
                         property: 'email'
 
-                        # optional: if you're using multiple Doctrine entity
+                        # optional: if you are using multiple Doctrine entity
                         # managers, this option defines which one to use
                         #manager_name: 'customer'
 
@@ -61,7 +61,7 @@ the user provider uses :doc:`Doctrine </doctrine>` to retrieve them.
                          property: the property to query by - e.g. email, username, etc-->
                     <entity class="App\Entity\User" property="email"/>
 
-                    <!-- optional, if you're using multiple Doctrine entity
+                    <!-- optional, if you are using multiple Doctrine entity
                          managers, "manager-name" defines which one to use -->
                     <!-- <entity class="App\Entity\User" property="email"
                                  manager-name="customer"/> -->
@@ -86,7 +86,7 @@ the user provider uses :doc:`Doctrine </doctrine>` to retrieve them.
                         // the property to query by - e.g. email, username, etc
                         'property' => 'email',
 
-                        // optional: if you're using multiple Doctrine entity
+                        // optional: if you are using multiple Doctrine entity
                         // managers, this option defines which one to use
                         //'manager_name' => 'customer',
                     ],
@@ -206,7 +206,7 @@ method on your ``UserRepository`` will be called.
 Memory User Provider
 --------------------
 
-It's not recommended to use this provider in real applications because of its
+It is not recommended to use this provider in real applications because of its
 limitations and how difficult it is to manage users. It may be useful in application
 prototypes and for limited applications that don't store users in databases.
 
@@ -275,10 +275,10 @@ Creating a Custom User Provider
 
 Most applications don't need to create a custom provider. If you store users in
 a database, a LDAP server or a configuration file, Symfony supports that.
-However, if you're loading users from a custom location (e.g. via an API or
-legacy database connection), you'll need to create a custom user provider.
+However, if you are loading users from a custom location (e.g. via an API or
+legacy database connection), you will need to create a custom user provider.
 
-First, make sure you've followed the :doc:`Security Guide </security>` to create
+First, make sure you have followed the :doc:`Security Guide </security>` to create
 your ``User`` class.
 
 If you used the ``make:user`` command to create your ``User`` class (and you
@@ -302,7 +302,7 @@ command will generate a nice skeleton to get you started::
          * In previous versions it was called loadUserByUsername()
          *
          * Symfony calls this method if you use features like switch_user
-         * or remember_me. If you're not using these features, you do not
+         * or remember_me. If you are not using these features, you do not
          * need to implement this method.
          *
          * @throws UserNotFoundException if the user is not found
@@ -359,7 +359,7 @@ command will generate a nice skeleton to get you started::
     }
 
 Most of the work is already done! Read the comments in the code and update the
-TODO sections to finish the user provider. When you're done, tell Symfony about
+TODO sections to finish the user provider. When you are done, tell Symfony about
 the user provider by adding it in ``security.yaml``:
 
 .. code-block:: yaml

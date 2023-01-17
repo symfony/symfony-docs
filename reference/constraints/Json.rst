@@ -27,7 +27,7 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
         {
             /**
              * @Assert\Json(
-             *     message = "You've entered an invalid Json."
+             *     message = "You have entered an invalid Json."
              * )
              */
             private $chapters;
@@ -43,7 +43,7 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
         class Book
         {
             #[Assert\Json(
-                message: "You've entered an invalid Json."
+                message: "You have entered an invalid Json."
             )]
             private $chapters;
         }
@@ -55,7 +55,7 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
             properties:
                 chapters:
                     - Json:
-                        message: You've entered an invalid Json.
+                        message: You have entered an invalid Json.
 
     .. code-block:: xml
 
@@ -68,7 +68,7 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
             <class name="App\Entity\Book">
                 <property name="chapters">
                     <constraint name="Json">
-                        <option name="message">You've entered an invalid Json.</option>
+                        <option name="message">You have entered an invalid Json.</option>
                     </constraint>
                 </property>
             </class>

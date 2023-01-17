@@ -31,7 +31,7 @@ Now, inject that into an ``ImmutableEventDispatcher``::
 
     $immutableDispatcher = new ImmutableEventDispatcher($dispatcher);
 
-You'll need to use this new dispatcher in your project.
+You will need to use this new dispatcher in your project.
 
 If you are trying to execute one of the methods which modifies the dispatcher
 (e.g. ``addListener()``), a ``BadMethodCallException`` is thrown.

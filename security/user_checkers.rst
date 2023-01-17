@@ -63,7 +63,7 @@ displayed to the user::
 Enabling the Custom User Checker
 --------------------------------
 
-Next, make sure your user checker is registered as a service. If you're using the
+Next, make sure your user checker is registered as a service. If you are using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 the service is registered automatically.
 

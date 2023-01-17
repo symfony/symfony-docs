@@ -5,7 +5,7 @@ Upgrading Existing Applications to Symfony Flex
 
 Using Symfony Flex is optional, even in Symfony 4, where Flex is used by
 default. However, Flex is so convenient and improves your productivity so much
-that it's strongly recommended to upgrade your existing applications to it.
+that it is strongly recommended to upgrade your existing applications to it.
 
 Symfony Flex recommends that applications use the following directory structure,
 which is the same used by default in Symfony 4, but you can
@@ -89,7 +89,7 @@ manual steps:
        $ rm -rf vendor/*
        $ composer install
 
-#. Regardless of which of the previous steps you followed, at this point you'll have
+#. Regardless of which of the previous steps you followed, at this point you will have
    lots of new config files in ``config/``. They contain the default config
    defined by Symfony, so you must check your original files in ``app/config/``
    and make the needed changes in the new files. Flex config doesn't use suffixes

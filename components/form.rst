@@ -68,7 +68,7 @@ factory.
 Request Handling
 ~~~~~~~~~~~~~~~~
 
-To process form data, you'll need to call the :method:`Symfony\\Component\\Form\\Form::handleRequest`
+To process form data, you will need to call the :method:`Symfony\\Component\\Form\\Form::handleRequest`
 method::
 
     $form->handleRequest();
@@ -145,7 +145,7 @@ the CSRF generator and validated when binding the form.
 
 .. tip::
 
-    If you're not using the HttpFoundation component, you can use
+    If you are not using the HttpFoundation component, you can use
     :class:`Symfony\\Component\\Security\\Csrf\\TokenStorage\\NativeSessionTokenStorage`
     instead, which relies on PHP's native session handling::
 
@@ -164,12 +164,12 @@ You can disable CSRF protection per form using the ``csrf_protection`` option::
 Twig Templating
 ~~~~~~~~~~~~~~~
 
-If you're using the Form component to process HTML forms, you'll need a way to
+If you are using the Form component to process HTML forms, you will need a way to
 render your form as HTML form fields (complete with field values, errors, and
 labels). If you use `Twig`_ as your template engine, the Form component offers a
 rich integration.
 
-To use the integration, you'll need the twig bridge, which provides integration
+To use the integration, you will need the twig bridge, which provides integration
 between Twig and several Symfony components:
 
 .. code-block:: terminal
@@ -179,7 +179,7 @@ between Twig and several Symfony components:
 The TwigBridge integration provides you with several
 :ref:`Twig Functions <reference-form-twig-functions-variables>`
 that help you render the HTML widget, label, help and errors for each field
-(as well as a few other things). To configure the integration, you'll need
+(as well as a few other things). To configure the integration, you will need
 to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension\\FormExtension`::
 
     use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -242,7 +242,7 @@ For general details on rendering forms, see :doc:`/form/form_customization`.
 Translation
 ~~~~~~~~~~~
 
-If you're using the Twig integration with one of the default form theme files
+If you are using the Twig integration with one of the default form theme files
 (e.g. ``form_div_layout.html.twig``), there is a Twig filter (``trans``)
 that is used for translating form labels, errors, option
 text and other strings.
@@ -294,18 +294,18 @@ Validation
 ~~~~~~~~~~
 
 The Form component comes with tight (but optional) integration with Symfony's
-Validator component. If you're using a different solution for validation,
+Validator component. If you are using a different solution for validation,
 no problem! Take the submitted/bound data of your form (which is an
 array or object) and pass it through your own validation system.
 
 To use the integration with Symfony's Validator component, first make sure
-it's installed in your application:
+it is installed in your application:
 
 .. code-block:: terminal
 
     $ composer require symfony/validator
 
-If you're not familiar with Symfony's Validator component, read more about
+If you are not familiar with Symfony's Validator component, read more about
 it: :doc:`/validation`. The Form component comes with a
 :class:`Symfony\\Component\\Form\\Extension\\Validator\\ValidatorExtension`
 class, which automatically applies validation to your data on bind. These
@@ -359,7 +359,7 @@ and then access it whenever you need to build a form.
     ``$formFactory``. The point here is that you will probably need to create
     this object in some more "global" way so you can access it from anywhere.
 
-Exactly how you gain access to your one form factory is up to you. If you're
+Exactly how you gain access to your one form factory is up to you. If you are
 using a service container (like provided with the
 :doc:`DependencyInjection component </components/dependency_injection>`),
 then you should add the form factory to your container and grab it out whenever
@@ -374,7 +374,7 @@ Creating a simple Form
 
 .. tip::
 
-    If you're using the Symfony Framework, then the form factory is available
+    If you are using the Symfony Framework, then the form factory is available
     automatically as a service called ``form.factory``, you can inject it as
     ``Symfony\Component\Form\FormFactoryInterface``. Also, the default
     base controller class has a :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::createFormBuilder`
@@ -436,13 +436,13 @@ for each new field you want to create. The first argument to ``add()`` is the
 name of your field, and the second is the fully qualified class name. The Form
 component comes with a lot of :doc:`built-in types </reference/forms/types>`.
 
-Now that you've built your form, learn how to :ref:`render <component-form-intro-rendering-form>`
+Now that you have built your form, learn how to :ref:`render <component-form-intro-rendering-form>`
 it and :ref:`process the form submission <component-form-intro-handling-submission>`.
 
 Setting default Values
 ~~~~~~~~~~~~~~~~~~~~~~
 
-If you need your form to load with some default values (or you're building
+If you need your form to load with some default values (or you are building
 an "edit" form), pass in the default data when creating your form builder:
 
 .. configuration-block::
@@ -519,8 +519,8 @@ done by passing a special form "view" object to your template (notice the
 
 That's it! By printing ``form_widget(form)``, each field in the form is
 rendered, along with a label and error message (if there is one). While this is
-convenient, it's not very flexible (yet). Usually, you'll want to render each
-form field individually so you can control how the form looks. You'll learn how
+convenient,it is not very flexible (yet). Usually, you will want to render each
+form field individually so you can control how the form looks. You will learn how
 to do that in the :doc:`form customization </form/form_customization>` article.
 
 Changing a Form's Method and Action
@@ -644,7 +644,7 @@ method:
 
     The form's ``createView()`` method should be called *after* ``handleRequest()`` is
     called. Otherwise, when using :doc:`form events </form/events>`, changes done
-    in the ``*_SUBMIT`` events won't be applied to the view (like validation errors).
+    in the ``*_SUBMIT`` events will not be applied to the view (like validation errors).
 
 This defines a common form "workflow", which contains 3 different possibilities:
 
@@ -760,7 +760,7 @@ Clearing Form Errors
 
 Any errors can be manually cleared using the
 :method:`Symfony\\Component\\Form\\ClearableErrorsInterface::clearErrors`
-method. This is useful when you'd like to validate the form without showing
+method. This is useful when you would like to validate the form without showing
 validation errors to the user (i.e. during a partial AJAX submission or
 :doc:`dynamic form modification </form/dynamic_form_modification>`).
 

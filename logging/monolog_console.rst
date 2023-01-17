@@ -9,7 +9,7 @@ It is possible to use the console to print messages for certain
 :class:`Symfony\\Component\\Console\\Output\\OutputInterface` instance that
 is passed when a command is run.
 
-When a lot of logging has to happen, it's cumbersome to print information
+When a lot of logging has to happen, it is cumbersome to print information
 depending on the verbosity settings (``-v``, ``-vv``, ``-vvv``) because the
 calls need to be wrapped in conditions. For example::
 

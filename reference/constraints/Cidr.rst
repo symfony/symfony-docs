@@ -107,14 +107,14 @@ This message is shown if the string is not a valid CIDR notation.
 
 **type**: ``integer`` **default**: ``0``
 
-It's a constraint for the lowest value a valid netmask may have.
+It is a constraint for the lowest value a valid netmask may have.
 
 ``netmaskMax``
 ~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``32`` for IPv4 or ``128`` for IPv6
 
-It's a constraint for the biggest value a valid netmask may have.
+It is a constraint for the biggest value a valid netmask may have.
 
 ``netmaskRangeViolationMessage``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

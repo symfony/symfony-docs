@@ -29,7 +29,7 @@ field and defines the same options.
 Example Usage
 -------------
 
-Before using this field, you'll need to have some PHP enumeration (or "enum" for
+Before using this field, you will need to have some PHP enumeration (or "enum" for
 short) defined somewhere in your application. This enum has to be of type
 "backed enum", where each keyword defines a scalar value such as a string::
 
@@ -57,7 +57,7 @@ the ``TextAlign`` enum. Use the `expanded`_ and `multiple`_ options to display
 these values as ``<input type="checkbox">`` or ``<input type="radio">``.
 
 The label displayed in the ``<option>`` elements of the ``<select>`` is the enum
-name. PHP defines some strict rules for these names (e.g. they can't contain
+name. PHP defines some strict rules for these names (e.g. they cannot contain
 dots or spaces). If you need more flexibility for these labels, use the
 ``choice_label`` option and define a function that returns the custom label::
 
@@ -143,7 +143,7 @@ We can now group choices by the enum case value::
 
 This callback will group choices in 3 categories: ``Upper``, ``Lower`` and ``Other``.
 
-If you return ``null``, the option won't be grouped.
+If you return ``null``, the option will not be grouped.
 
 .. include:: /reference/forms/types/options/multiple.rst.inc
 

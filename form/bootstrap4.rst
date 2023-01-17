@@ -18,7 +18,7 @@ template which other templates extend from):
         <!-- Copy JavaScript from https://getbootstrap.com/docs/4.4/getting-started/introduction/#js -->
     {% endblock %}
 
-If your application uses modern front-end practices, it's better to use
+If your application uses modern front-end practices, it is better to use
 :doc:`Webpack Encore </frontend>` and follow :doc:`this tutorial </frontend/encore/bootstrap>`
 to import Bootstrap's sources into your SCSS and JavaScript files.
 
@@ -86,7 +86,7 @@ Form errors are rendered **inside** the ``<label>`` element to make sure there
 is a strong connection between the error and its ``<input>``, as required by the
 `WCAG 2.0 standard`_. To achieve this, ``form_errors()`` is called by
 ``form_label()`` internally. If you call to ``form_errors()`` in your template,
-you'll get the error messages displayed *twice*.
+you will get the error messages displayed *twice*.
 
 .. tip::
 

@@ -14,7 +14,7 @@ Basic Usage
 
 Suppose you have a ``description`` field and you want to verify that it
 begins with a valid word character. The regular expression to test for this
-would be ``/^\w+/``, indicating that you're looking for at least one or
+would be ``/^\w+/``, indicating that you are looking for at least one or
 more word characters at the beginning of your string:
 
 .. configuration-block::
@@ -91,7 +91,7 @@ more word characters at the beginning of your string:
         }
 
 Alternatively, you can set the `match`_ option to ``false`` in order to
-assert that a given string does *not* match. In the following example, you'll
+assert that a given string does *not* match. In the following example, you will
 assert that the ``firstName`` field does not contain any numbers and give
 it a custom message:
 

@@ -97,8 +97,8 @@ native        ``native://default``                      Mailer uses the sendmail
 .. caution::
 
     When using ``native://default``, if ``php.ini`` uses the ``sendmail -t``
-    command, you won't have error reporting and ``Bcc`` headers won't be removed.
-    It's highly recommended to NOT use ``native://default`` as you cannot control
+    command, you will not have error reporting and ``Bcc`` headers will not be removed.
+    It is highly recommended to NOT use ``native://default`` as you cannot control
     how sendmail is configured (prefer using ``sendmail://default`` if possible).
 
 Using a 3rd Party Transport
@@ -144,14 +144,14 @@ use SendGrid. First, install it:
 
     $ composer require symfony/sendgrid-mailer
 
-You'll now have a new line in your ``.env`` file that you can uncomment:
+You will now have a new line in your ``.env`` file that you can uncomment:
 
 .. code-block:: env
 
     # .env
     MAILER_DSN=sendgrid://KEY@default
 
-The ``MAILER_DSN`` isn't a *real* address: it's a convenient format that
+The ``MAILER_DSN`` is not a *real* address: it is a convenient format that
 offloads most of the configuration work to mailer. The ``sendgrid`` scheme
 activates the SendGrid provider that you just installed, which knows all about
 how to deliver messages via SendGrid. The *only* part you need to change is the
@@ -281,7 +281,7 @@ TLS Peer Verification
 ~~~~~~~~~~~~~~~~~~~~~
 
 By default, SMTP transports perform TLS peer verification. This behavior is
-configurable with the ``verify_peer`` option. Although it's not recommended to
+configurable with the ``verify_peer`` option. Although it is not recommended to
 disable this verification for security reasons, it can be useful while developing
 the application or when using a self-signed certificate::
 
@@ -325,7 +325,7 @@ Other Options
 
 ``restart_threshold_sleep``
     The number of seconds to sleep between stopping and re-starting the transport.
-    It's common to combine it with ``restart_threshold``::
+    It is common to combine it with ``restart_threshold``::
 
         $dsn = 'smtps://smtp.example.com?restart_threshold=10&restart_threshold_sleep=1'
 
@@ -382,7 +382,7 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
 
 That's it! The message will be sent via the transport you configured. If the
 transport is configured to :ref:`send emails asynchronously <mailer-sending-messages-async>`,
-the message won't be actually sent until :doc:`a worker consumes it <messenger-worker>`.
+the message will not be actually sent until :doc:`a worker consumes it <messenger-worker>`.
 
 Email Addresses
 ~~~~~~~~~~~~~~~
@@ -455,12 +455,12 @@ Message Headers
 Messages include a number of header fields to describe their contents. Symfony
 sets all the required headers automatically, but you can set your own headers
 too. There are different types of headers (Id header, Mailbox header, Date
-header, etc.) but most of the times you'll set text headers::
+header, etc.) but most of the times you will set text headers::
 
     $email = (new Email())
         ->getHeaders()
             // this non-standard header tells compliant autoresponders ("email holiday mode") to not
-            // reply to this message because it's an automated email
+            // reply to this message because it is an automated email
             ->addTextHeader('X-Auto-Response-Suppress', 'OOF, DR, RN, NRN, AutoReply')
 
             // use an array if you want to add a header with multiple values
@@ -509,7 +509,7 @@ Use the ``attachFromPath()`` method to attach files that exist on your file syst
         ->attachFromPath('/path/to/documents/terms-of-use.pdf')
         // optionally you can tell email clients to display a custom name for the file
         ->attachFromPath('/path/to/documents/privacy.pdf', 'Privacy Policy')
-        // optionally you can provide an explicit MIME type (otherwise it's guessed)
+        // optionally you can provide an explicit MIME type (otherwise it is guessed)
         ->attachFromPath('/path/to/documents/contract.doc', 'Contract', 'application/msword')
     ;
 
@@ -686,7 +686,7 @@ frameworks to create complex HTML email messages. First, make sure Twig is insta
 
     $ composer require symfony/twig-bundle
 
-    # or if you're using the component in a non-Symfony app:
+    # or if you are using the component in a non-Symfony app:
     # composer require symfony/twig-bridge
 
 HTML Content
@@ -1014,7 +1014,7 @@ directly from GitHub and save it in ``assets/styles``.
 Signing and Encrypting Messages
 -------------------------------
 
-It's possible to sign and/or encrypt email messages to increase their
+It is possible to sign and/or encrypt email messages to increase their
 integrity/security. Both options can be combined to encrypt a signed message
 and/or to sign an encrypted message.
 
@@ -1478,7 +1478,7 @@ the mailer configuration file (e.g. in the ``dev`` or ``test`` environments):
 
 .. note::
 
-    If you're using Messenger and routing to a transport, the message will *still*
+    If you are using Messenger and routing to a transport, the message will *still*
     be sent to that transport.
 
 Always Send to the same Address

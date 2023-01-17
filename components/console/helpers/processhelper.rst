@@ -4,7 +4,7 @@
 Process Helper
 ==============
 
-The Process Helper shows processes as they're running and reports
+The Process Helper shows processes as they are running and reports
 useful information about process status.
 
 To display process details, use the :class:`Symfony\\Component\\Console\\Helper\\ProcessHelper`

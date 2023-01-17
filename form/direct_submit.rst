@@ -35,7 +35,7 @@ control over when exactly your form is submitted and what data is passed to it::
     }
 
 The list of fields submitted with the ``submit()`` method must be the same as
-the fields defined by the form class. Otherwise, you'll see a form validation error::
+the fields defined by the form class. Otherwise, you will see a form validation error::
 
     public function new(Request $request): Response
     {

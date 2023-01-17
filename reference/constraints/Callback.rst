@@ -3,7 +3,7 @@ Callback
 
 The purpose of the Callback constraint is to create completely custom
 validation rules and to assign any validation errors to specific fields
-on your object. If you're using validation with forms, this means that
+on your object. If you are using validation with forms, this means that
 instead of displaying custom errors at the top of the form, you can
 display them next to the field they apply to.
 
@@ -14,7 +14,7 @@ can do anything, including creating and assigning validation errors.
 .. note::
 
     A callback method itself doesn't *fail* or return any value. Instead,
-    as you'll see in the example, a callback method has the ability to directly
+    as you will see in the example, a callback method has the ability to directly
     add validator "violations".
 
 ==========  ===================================================================
@@ -282,7 +282,7 @@ constructor of the Callback constraint::
 
     Using a ``Closure`` together with annotation configuration will disable the
     annotation cache for that class/property/method because ``Closure`` cannot
-    be cached. For best performance, it's recommended to use a static callback method.
+    be cached. For best performance, it is recommended to use a static callback method.
 
 Options
 -------

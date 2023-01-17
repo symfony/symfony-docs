@@ -1,7 +1,7 @@
 Upgrading other Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-You may also want to upgrade the rest of your libraries. If you've done a
+You may also want to upgrade the rest of your libraries. If you have done a
 good job with your `version constraints`_ in ``composer.json``, you can do
 this safely by running:
 

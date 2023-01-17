@@ -4,7 +4,7 @@
 HTTP Cache
 ==========
 
-The nature of rich web applications means that they're dynamic. No matter
+The nature of rich web applications means that they are dynamic. No matter
 how efficient your application, each request will always contain more overhead
 than serving a static file. Usually, that's fine. But when you need your requests
 to be lightning fast, you need HTTP caching.
@@ -14,7 +14,7 @@ Caching on the Shoulders of Giants
 
 With HTTP Caching, you cache the full output of a page (i.e. the response) and bypass
 your application *entirely* on subsequent requests. Caching entire responses
-isn't always possible for highly dynamic sites, or is it? With
+is not always possible for highly dynamic sites, or is it? With
 :doc:`Edge Side Includes (ESI) </http_cache/esi>`, you can use the power of HTTP caching
 on only *fragments* of your site.
 
@@ -22,11 +22,11 @@ The Symfony cache system is different because it relies on the simplicity
 and power of the HTTP cache as defined in `RFC 7234 - Caching`_. Instead of
 reinventing a caching methodology, Symfony embraces the standard that defines
 basic communication on the Web. Once you understand the fundamental HTTP
-validation and expiration caching models, you'll be ready to master the Symfony
+validation and expiration caching models, you will be ready to master the Symfony
 cache system.
 
-Since caching with HTTP isn't unique to Symfony, many articles already exist
-on the topic. If you're new to HTTP caching, Ryan Tomayko's article
+Since caching with HTTP is not unique to Symfony, many articles already exist
+on the topic. If you are new to HTTP caching, Ryan Tomayko's article
 `Things Caches Do`_ is *highly* recommended. Another in-depth resource is Mark
 Nottingham's `Cache Tutorial`_.
 
@@ -70,7 +70,7 @@ Symfony Reverse Proxy
 ~~~~~~~~~~~~~~~~~~~~~
 
 Symfony comes with a reverse proxy (i.e. gateway cache) written in PHP.
-:ref:`It's not a fully-featured reverse proxy cache like Varnish <http-cache-symfony-versus-varnish>`,
+:ref:`It is not a fully-featured reverse proxy cache like Varnish <http-cache-symfony-versus-varnish>`,
 but it is a great way to start.
 
 .. tip::
@@ -132,7 +132,7 @@ config option and set it to either ``none``, ``short`` or ``full`` to add this
 information.
 
 ``short`` will add the information for the main request only.
-It's written in a concise way that makes it easy to record the
+It is written in a concise way that makes it easy to record the
 information in your server log files. For example, in Apache you can
 use ``%{X-Symfony-Cache}o`` in ``LogFormat`` format statements.
 This information can be used to extract general information about
@@ -164,8 +164,8 @@ cache efficiency of your routes.
 Making your Responses HTTP Cacheable
 ------------------------------------
 
-Once you've added a reverse proxy cache (e.g. like the Symfony reverse proxy or Varnish),
-you're ready to cache your responses. To do that, you need to *communicate* to your
+Once you have added a reverse proxy cache (e.g. like the Symfony reverse proxy or Varnish),
+you are ready to cache your responses. To do that, you need to *communicate* to your
 cache *which* responses are cacheable and for how long. This is done by setting HTTP
 cache headers on the response.
 
@@ -191,7 +191,7 @@ These four headers are used to help cache your responses via *two* different mod
 
 .. sidebar:: Reading the HTTP Specification
 
-    All of the HTTP headers you'll read about are *not* invented by Symfony! They're
+    All of the HTTP headers you will read about are *not* invented by Symfony! They are
     part of an HTTP specification that's used by sites all over the web. To dig deeper
     into HTTP Caching, check out the documents `RFC 7234 - Caching`_ and
     `RFC 7232 - Conditional Requests`_.
@@ -237,8 +237,8 @@ Thanks to this new code, your HTTP response will have the following header:
     Cache-Control: public, maxage=3600, must-revalidate
 
 This tells your HTTP reverse proxy to cache this response for 3600 seconds. If *anyone*
-requests this URL again before 3600 seconds, your application *won't* be hit at all.
-If you're using the Symfony reverse proxy, look at the ``X-Symfony-Cache`` header
+requests this URL again before 3600 seconds, your application *will not* be hit at all.
+If you are using the Symfony reverse proxy, look at the ``X-Symfony-Cache`` header
 for debugging information about cache hits and misses.
 
 .. tip::
@@ -246,12 +246,12 @@ for debugging information about cache hits and misses.
     The URI of the request is used as the cache key (unless you :doc:`vary </http_cache/cache_vary>`).
 
 This provides great performance and is simple to use. But, cache *invalidation*
-is not supported. If your content change, you'll need to wait until your cache
+is not supported. If your content change, you will need to wait until your cache
 expires for the page to update.
 
 .. tip::
 
-    Actually, you *can* manually invalidate your cache, but it's not part of the
+    Actually, you *can* manually invalidate your cache, but it is not part of the
     HTTP Caching spec. See :ref:`http-cache-invalidation`.
 
 If you need to set cache headers for many different controller actions, check out
@@ -270,7 +270,7 @@ Validation Caching
    single: HTTP headers; Cache-Control
 
 With expiration caching, you say "cache for 3600 seconds!". But, when someone
-updates cached content, you won't see that content on your site until the cache
+updates cached content, you will not see that content on your site until the cache
 expires.
 
 If you need to see updated content *immediately*, you either need to
@@ -288,7 +288,7 @@ Safe Methods: Only caching GET or HEAD requests
 HTTP caching only works for "safe" HTTP methods (like GET and HEAD). This means
 three things:
 
-* Don't try to cache PUT or DELETE requests. It won't work and with good reason.
+* Don't try to cache PUT or DELETE requests. It will not work and with good reason.
   These methods are meant to be used when mutating the state of your application
   (e.g. deleting a blog post). Caching them would prevent certain requests from hitting
   and mutating your application.
@@ -373,7 +373,7 @@ the `FOSHttpCacheBundle`_.
 
 In order to disable the default Symfony behavior that makes requests using the
 session uncacheable, add the following internal header to your response and
-Symfony won't modify it::
+Symfony will not modify it::
 
     use Symfony\Component\HttpKernel\EventListener\AbstractSessionListener;
 

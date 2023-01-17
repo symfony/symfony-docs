@@ -19,7 +19,7 @@ Basic Usage
 The ``IsFalse`` constraint can be applied to a property or a "getter" method,
 but is most commonly useful in the latter case. For example, suppose that
 you want to guarantee that some ``state`` property is *not* in a dynamic
-``invalidStates`` array. First, you'd create a "getter" method::
+``invalidStates`` array. First, you would create a "getter" method::
 
     protected $state;
 
@@ -46,7 +46,7 @@ method returns **false**:
         {
             /**
              * @Assert\IsFalse(
-             *     message = "You've entered an invalid state."
+             *     message = "You have entered an invalid state."
              * )
              */
             public function isStateInvalid()
@@ -65,7 +65,7 @@ method returns **false**:
         class Author
         {
             #[Assert\IsFalse(
-                message: "You've entered an invalid state."
+                message: "You have entered an invalid state."
             )]
             public function isStateInvalid()
             {
@@ -80,7 +80,7 @@ method returns **false**:
             getters:
                 stateInvalid:
                     - 'IsFalse':
-                        message: You've entered an invalid state.
+                        message: You have entered an invalid state.
 
     .. code-block:: xml
 
@@ -93,7 +93,7 @@ method returns **false**:
             <class name="App\Entity\Author">
                 <getter property="stateInvalid">
                     <constraint name="IsFalse">
-                        <option name="message">You've entered an invalid state.</option>
+                        <option name="message">You have entered an invalid state.</option>
                     </constraint>
                 </getter>
             </class>
@@ -112,7 +112,7 @@ method returns **false**:
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addGetterConstraint('stateInvalid', new Assert\IsFalse([
-                    'message' => "You've entered an invalid state.",
+                    'message' => "You have entered an invalid state.",
                 ]));
             }
 

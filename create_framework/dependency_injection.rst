@@ -61,7 +61,7 @@ reporting turned on and errors displayed in the browser to ease debugging::
     ini_set('display_errors', 1);
     error_reporting(-1);
 
-... but you certainly won't want that same configuration on the production
+... but you certainly will not want that same configuration on the production
 environment. Having two different front controllers gives you the opportunity
 to have a slightly different configuration for each of them.
 
@@ -78,7 +78,7 @@ issues:
   anymore;
 
 * Related to the previous point, we cannot test our framework without much
-  effort anymore as it's impossible to mock internal objects;
+  effort anymore as it is impossible to mock internal objects;
 
 * We cannot change the charset passed to ``ResponseListener`` anymore (a
   workaround could be to pass it as a constructor argument).
@@ -245,11 +245,11 @@ and much more. The Symfony dependency injection container is really powerful
 and is able to manage any kind of PHP class.
 
 Don't yell at me if you don't want to use a dependency injection container in
-your framework. If you don't like it, don't use it. It's your framework, not
+your framework. If you don't like it, don't use it. It is your framework, not
 mine.
 
 This is (already) the last chapter of this book on creating a framework on top
-of the Symfony components. I'm aware that many topics have not been covered
+of the Symfony components. I am aware that many topics have not been covered
 in great details, but hopefully it gives you enough information to get started
 on your own and to better understand how the Symfony framework works
 internally.

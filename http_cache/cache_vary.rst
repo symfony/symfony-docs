@@ -5,12 +5,12 @@
 Varying the Response for HTTP Cache
 ===================================
 
-So far, it's been assumed that each URI has exactly one representation of the
+So far, it is been assumed that each URI has exactly one representation of the
 target resource. By default, HTTP caching is done by using the URI of the
 resource as the cache key. If two people request the same URI of a cacheable
 resource, the second person will receive the cached version.
 
-Sometimes this isn't enough and different versions of the same URI need to
+Sometimes this is not enough and different versions of the same URI need to
 be cached based on one or more request header values. For instance, if you
 compress pages when the client supports it, any given URI has two representations:
 one when the client supports compression, and one when it does not. This

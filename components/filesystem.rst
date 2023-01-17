@@ -296,7 +296,7 @@ exception on failure::
 
 :method:`Symfony\\Component\\Filesystem\\Filesystem::dumpFile` saves the given
 contents into a file. It does this in an atomic manner: it writes a temporary
-file first and then moves it to the new file location when it's finished.
+file first and then moves it to the new file location when it is finished.
 This means that the user will always see either the complete old file or
 complete new file (but never a partially-written file)::
 

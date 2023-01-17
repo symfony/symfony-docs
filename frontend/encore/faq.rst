@@ -23,7 +23,7 @@ For example, you could execute this locally (or on a build server), and use
 `rsync`_ or something else to transfer the generated files to your production
 server. Or, you could put your files on your production server first (e.g. via
 ``git pull``) and then run this command on production (ideally, before traffic
-hits your code). In this case, you'll need to install Node.js on your production
+hits your code). In this case, you will need to install Node.js on your production
 server.
 
 **2) Only Deploy the Built Assets**
@@ -50,7 +50,7 @@ and the built files. Your ``.gitignore`` file should include:
 .. code-block:: text
 
     /node_modules/
-    # whatever path you're passing to Encore.setOutputPath()
+    # whatever path you are passing to Encore.setOutputPath()
     /public/build
 
 You *should* commit all of your source asset files, ``package.json`` and ``yarn.lock`` or ``package-lock.json``.
@@ -78,9 +78,9 @@ like ``/myAppSubdir``), you will need to configure that when calling ``Encore.se
     +     .setManifestKeyPrefix('build')
       ;
 
-If you're using the ``encore_entry_script_tags()`` and ``encore_entry_link_tags()``
+If you are using the ``encore_entry_script_tags()`` and ``encore_entry_link_tags()``
 Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`
-in some other way) you're done! These shortcut methods read from an
+in some other way) you are done! These shortcut methods read from an
 :ref:`entrypoints.json <encore-entrypointsjson-simple-description>` file that will
 now contain the subdirectory.
 
@@ -92,13 +92,13 @@ or ``jQuery`` to be a global variable. But, when you use Webpack and ``require('
 no global variables are set.
 
 The fix depends on if the error is happening in your code or inside some third-party
-code that you're using. See :doc:`/frontend/encore/legacy-applications` for the fix.
+code that you are using. See :doc:`/frontend/encore/legacy-applications` for the fix.
 
 Uncaught ReferenceError: webpackJsonp is not defined
 ----------------------------------------------------
 
-If you get this error, it's probably because you've forgotten to add a ``script``
-tag for the ``runtime.js`` file that contains Webpack's runtime. If you're using
+If you get this error, it is probably because you have forgotten to add a ``script``
+tag for the ``runtime.js`` file that contains Webpack's runtime. If you are using
 the ``encore_entry_script_tags()`` Twig function, this should never happen: the
 file script tag is rendered automatically.
 
@@ -120,7 +120,7 @@ But, instead of working, you see an error:
     * respond.js in ./assets/app.js
 
 Typically, a package will "advertise" its "main" file by adding a ``main`` key to
-its ``package.json``. But sometimes, old libraries won't have this. Instead, you'll
+its ``package.json``. But sometimes, old libraries will not have this. Instead, you will
 need to specifically require the file you need. In this case, the file you should
 use is located at ``node_modules/respond.js/dest/respond.src.js``. You can require
 this via:
@@ -148,8 +148,8 @@ productive (for example by resolving aliases). However, you may face this error:
 .. code-block:: text
 
     Encore.setOutputPath() cannot be called yet because the runtime environment
-    doesn't appear to be configured. Make sure you're using the encore executable
-    or call Encore.configureRuntimeEnvironment() first if you're purposely not
+    doesn't appear to be configured. Make sure you are using the encore executable
+    or call Encore.configureRuntimeEnvironment() first if you are purposely not
     calling Encore directly.
 
 It fails because the Encore Runtime Environment is only configured when you are

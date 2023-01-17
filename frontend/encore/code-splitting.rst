@@ -23,7 +23,7 @@ clicked a link:
 In this example, the VideoPlayer module and everything it imports will be packaged
 into the final, built JavaScript file, even though it may not be very common for
 someone to actually need it. A better solution is to use `dynamic imports`_: load
-the code via AJAX when it's needed:
+the code via AJAX whenit is needed:
 
 .. code-block:: javascript
 
@@ -45,7 +45,7 @@ the code via AJAX when it's needed:
     });
 
 By using ``import()`` like a function, the module will be downloaded async and
-the ``.then()`` callback will be executed when it's finished. The ``VideoPlayer``
+the ``.then()`` callback will be executed when it is finished. The ``VideoPlayer``
 argument to the callback will be the loaded module. In other words, it works like
 normal AJAX calls! Behind the scenes, Webpack will package the ``VideoPlayer`` module
 into a separate file (e.g. ``0.js``) so it can be downloaded. All the details are

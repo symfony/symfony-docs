@@ -22,7 +22,7 @@ template which other templates extend from):
         <!-- Copy JavaScript from https://getbootstrap.com/docs/5.0/getting-started/introduction/#js -->
     {% endblock %}
 
-If your application uses modern front-end practices, it's better to use
+If your application uses modern front-end practices, it is better to use
 :doc:`Webpack Encore </frontend>` and follow :doc:`this tutorial </frontend/encore/bootstrap>`
 to import Bootstrap's sources into your SCSS and JavaScript files.
 

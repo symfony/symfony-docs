@@ -1,14 +1,14 @@
 How to Install or Upgrade to the Latest, Unreleased Symfony Version
 ===================================================================
 
-In this article, you'll learn how to install and use new Symfony versions before
+In this article, you will learn how to install and use new Symfony versions before
 they are released as stable versions.
 
 Creating a New Project Based on an Unstable Symfony Version
 -----------------------------------------------------------
 
 
-Suppose that the Symfony 5.4 version hasn't been released yet and you want to create
+Suppose that the Symfony 5.4 version has not been released yet and you want to create
 a new project to test its features. First, `install the Composer package manager`_.
 Then, open a command console, enter your project's directory and
 run the following command:
@@ -18,13 +18,13 @@ run the following command:
     # Download the absolute latest commit
     $ composer create-project symfony/skeleton my_project -s dev
 
-Once the command finishes, you'll have a new Symfony project created
+Once the command finishes, you will have a new Symfony project created
 in the ``my_project/`` directory.
 
 Upgrading your Project to an Unstable Symfony Version
 -----------------------------------------------------
 
-Suppose again that Symfony 5.4 hasn't been released yet and you want to upgrade
+Suppose again that Symfony 5.4 has not been released yet and you want to upgrade
 an existing application to test that your project works with it.
 
 First, open the ``composer.json`` file located in the root directory of your
@@ -58,7 +58,7 @@ Symfony version has deprecated some of its features.
 
 .. tip::
 
-    If you use Git to manage the project's code, it's a good practice to create
+    If you use Git to manage the project's code, it is a good practice to create
     a new branch to test the new Symfony version. This solution avoids introducing
     any issue in your application and allows you to test the new version with
     total confidence:

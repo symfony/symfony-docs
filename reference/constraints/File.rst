@@ -13,7 +13,7 @@ form field.
 
 .. seealso::
 
-    If the file you're validating is an image, try the :doc:`Image </reference/constraints/Image>`
+    If the file you are validating is an image, try the :doc:`Image </reference/constraints/Image>`
     constraint.
 
 ==========  ===================================================================
@@ -27,7 +27,7 @@ Basic Usage
 
 This constraint is most commonly used on a property that will be rendered
 in a form as a :doc:`FileType </reference/forms/types/file>` field. For
-example, suppose you're creating an author form where you can upload a "bio"
+example, suppose you are creating an author form where you can upload a "bio"
 PDF for the author. In your form, the ``bioFile`` property would be a ``file``
 type. The ``Author`` class might look as follows::
 
@@ -310,7 +310,7 @@ Parameter        Description
 
 **type**: ``string`` **default**: ``Cannot write temporary file to disk.``
 
-The message that is displayed if the uploaded file can't be stored in the
+The message that is displayed if the uploaded file cannot be stored in the
 temporary folder.
 
 This message has no parameters.

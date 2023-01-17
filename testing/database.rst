@@ -95,7 +95,7 @@ testing.
 Functional Testing of A Doctrine Repository
 -------------------------------------------
 
-In :ref:`functional tests <functional-tests>` you'll make queries to the
+In :ref:`functional tests <functional-tests>` you will make queries to the
 database using the actual Doctrine repositories, instead of mocking them. To do
 so, get the entity manager via the service container as follows::
 

@@ -292,7 +292,7 @@ Here is a summary that should help you pick the right configuration:
 Baseline Deprecations
 .....................
 
-If your application has some deprecations that you can't fix for some reasons,
+If your application has some deprecations that you cannot fix for some reasons,
 you can tell Symfony to ignore them. The trick is to create a file with the
 allowed deprecations and define it as the "deprecation baseline". Deprecations
 inside that file are ignored but the rest of deprecations are still reported.
@@ -325,7 +325,7 @@ By default, the bridge will display a detailed output with the number of
 deprecations and where they arise. If this is too much for you, you can use
 ``SYMFONY_DEPRECATIONS_HELPER=verbose=0`` to turn the verbose output off.
 
-It's also possible to change verbosity per deprecation type. For example, using
+It is also possible to change verbosity per deprecation type. For example, using
 ``quiet[]=indirect&quiet[]=other`` will hide details for deprecations of types
 "indirect" and "other".
 
@@ -904,7 +904,7 @@ its ``bin/simple-phpunit`` command. It has the following features:
 
 The script writes the modified PHPUnit it builds in a directory that can be
 configured by the ``SYMFONY_PHPUNIT_DIR`` env var, or in the same directory as
-the ``simple-phpunit`` if it is not provided. It's also possible to set this
+the ``simple-phpunit`` if it is not provided. It is also possible to set this
 env var in the ``phpunit.xml.dist`` file.
 
 If you have installed the bridge through Composer, you can run it by calling e.g.:
@@ -915,12 +915,12 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 
 .. tip::
 
-    It's possible to change the PHPUnit version by setting the
+    It is possible to change the PHPUnit version by setting the
     ``SYMFONY_PHPUNIT_VERSION`` env var in the ``phpunit.xml.dist`` file (e.g.
     ``<server name="SYMFONY_PHPUNIT_VERSION" value="5.5"/>``). This is the
     preferred method as it can be committed to your version control repository.
 
-    It's also possible to set ``SYMFONY_PHPUNIT_VERSION`` as a real env var
+    It is also possible to set ``SYMFONY_PHPUNIT_VERSION`` as a real env var
     (not defined in a :ref:`dotenv file <config-dot-env>`).
 
     In the same way, ``SYMFONY_MAX_PHPUNIT_VERSION`` will set the maximum version
@@ -937,7 +937,7 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     If you still need to use ``prophecy`` (but not ``symfony/yaml``),
     then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
 
-    It's also possible to set this env var in the ``phpunit.xml.dist`` file.
+    It is also possible to set this env var in the ``phpunit.xml.dist`` file.
     
 .. tip::
 

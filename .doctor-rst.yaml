@@ -29,6 +29,7 @@ rules:
     no_blank_line_after_filepath_in_yaml_code_block: ~
     no_brackets_in_method_directive: ~
     no_composer_req: ~
+    no_contraction: ~
     no_directive_after_shorthand: ~
     no_explicit_use_of_code_block_php: ~
     no_inheritdoc: ~

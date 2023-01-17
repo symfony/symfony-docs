@@ -4,7 +4,7 @@
 How to Dynamically Modify Forms Using Form Events
 =================================================
 
-Oftentimes, a form can't be created statically. In this article, you'll learn
+Oftentimes, a form cannot be created statically. In this article, you will learn
 how to customize your form based on three common use-cases:
 
 1) :ref:`Customizing your Form Based on the Underlying Data <form-events-underlying-data>`
@@ -61,7 +61,7 @@ a bare form class looks like::
 
 .. note::
 
-    If this particular section of code isn't already familiar to you, you
+    If this particular section of code is not already familiar to you, you
     probably need to take a step back and first review the :doc:`Forms article </forms>`
     before proceeding.
 
@@ -74,7 +74,7 @@ Suppose now, that you don't want the user to be able to change the ``name`` valu
 once the object has been created. To do this, you can rely on Symfony's
 :doc:`EventDispatcher component </components/event_dispatcher>`
 system to analyze the data on the object and modify the form based on the
-Product object's data. In this article, you'll learn how to add this level of
+Product object's data. In this article, you will learn how to add this level of
 flexibility to your forms.
 
 Adding an Event Listener to a Form Class
@@ -105,7 +105,7 @@ creating that particular field is delegated to an event listener::
     }
 
 The goal is to create a ``name`` field *only* if the underlying ``Product``
-object is new (e.g. hasn't been persisted to the database). Based on that,
+object is new (e.g. has not been persisted to the database). Based on that,
 the event listener might look like the following::
 
     // ...
@@ -328,7 +328,7 @@ security helper to fill in the listener logic::
 Using the Form
 ~~~~~~~~~~~~~~
 
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+If you are using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 your form is ready to be used thanks to :ref:`autowire <services-autowire>` and
 :ref:`autoconfigure <services-autoconfigure>`.
 Otherwise, :ref:`register the form class as a service <service-container-creating-service>`
@@ -420,11 +420,11 @@ sport like this::
         // ...
     }
 
-When you're building this form to display to the user for the first time,
+When you are building this form to display to the user for the first time,
 then this example works perfectly.
 
 However, things get more difficult when you handle the form submission. This
-is because the ``PRE_SET_DATA`` event tells us the data that you're starting
+is because the ``PRE_SET_DATA`` event tells us the data that you are starting
 with (e.g. an empty ``SportMeetup`` object), *not* the submitted data.
 
 On a form, we can usually listen to the following events:
@@ -485,11 +485,11 @@ The type would now look like::
             $builder->get('sport')->addEventListener(
                 FormEvents::POST_SUBMIT,
                 function (FormEvent $event) use ($formModifier) {
-                    // It's important here to fetch $event->getForm()->getData(), as
+                    // It is important here to fetch $event->getForm()->getData(), as
                     // $event->getData() will get you the client data (that is, the ID)
                     $sport = $event->getForm()->getData();
 
-                    // since we've added the listener to the child, we'll have to pass on
+                    // since we have added the listener to the child,  we will have to pass on
                     // the parent to the callback function!
                     $formModifier($event->getForm()->getParent(), $sport);
                 }

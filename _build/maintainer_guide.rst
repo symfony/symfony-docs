@@ -3,7 +3,7 @@ Symfony Docs Maintainer Guide
 
 The `symfony/symfony-docs`_ repository stores the Symfony project documentation
 and is managed by the `Symfony Docs team`_. This article explains in detail some
-of those management tasks, so it's only useful for maintainers and not regular
+of those management tasks, so it is only useful for maintainers and not regular
 readers or Symfony developers.
 
 Reviewing Pull Requests
@@ -17,7 +17,7 @@ but there are extra things to keep in mind for maintainers:
 * Don't assume that contributors know what you think is obvious (e.g. lots of
   them don't know what to "squash commits" means).
 * Don't use acronyms like IMO, IIRC, etc. or complex English words (most
-  contributors are not native in English and it's intimidating for them).
+  contributors are not native in English and it is intimidating for them).
 * Never engage in a heated discussion. Lock it right away using GitHub.
 * Never discuss non-tech issues. Some PRs are related to our Diversity initiative
   and some people always try to drag you into politics. Never engage in that and
@@ -26,14 +26,14 @@ but there are extra things to keep in mind for maintainers:
 Fixing Minor Issues Yourself
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It's common for new contributors to make lots of minor mistakes in the syntax
-of the RST format used in the docs. It's also common for non English speakers to
+It is common for new contributors to make lots of minor mistakes in the syntax
+of the RST format used in the docs. It is also common for non English speakers to
 make minor typos.
 
 Even if your intention is good, if you add lots of comments when reviewing a
-first contribution, that person will probably not contribute again. It's better
+first contribution, that person will probably not contribute again. It is better
 to fix the minor errors and typos yourself while merging. If that person
-contributes again, it's OK to mention some of the minor issues to educate them.
+contributes again, it is OK to mention some of the minor issues to educate them.
 
 .. code-block:: terminal
 
@@ -53,7 +53,7 @@ contributes again, it's OK to mention some of the minor issues to educate them.
       $ git commit -a
       # Use "Minor reword", "Minor tweak", etc. as the commit message
 
-      # now run the 'push' command shown above by 'gh' (it's different each time)
+      # now run the 'push' command shown above by 'gh' (it is different each time)
       $ git push gh "5.4" refs/notes/github-comments
 
 Merging Pull Requests
@@ -93,8 +93,8 @@ interface. Then:
 Merging Process
 ~~~~~~~~~~~~~~~
 
-At first, it's common to make mistakes and merge things badly. Don't worry. This
-has happened to all of us and we've always been able to recover from any mistake.
+At first, it is common to make mistakes and merge things badly. Don't worry. This
+has happened to all of us and we have always been able to recover from any mistake.
 
 Step 1: Select the right branch to merge
 ........................................
@@ -107,7 +107,7 @@ PRs must be merged in the oldest maintained branch where they are applicable:
   usually means ``master``. And don't forget to check that new feature includes
   the ``versionadded`` directive.
 
-It's very common for contributors (specially newcomers) to select the wrong
+It is very common for contributors (specially newcomers) to select the wrong
 branch for their PRs, so we must always check if the change should go to the
 proposed branch or not.
 
@@ -121,12 +121,12 @@ Never use GitHub's web interface (or desktop clients) to merge PRs or to solve
 merge conflicts. Always use the ``gh`` tool for anything related to merges.
 
 We require two approval votes from team members before merging a PR, except if
-it's a typo, a small change or clearly an error.
+it is a typo, a small change or clearly an error.
 
 If a PR contains lots of commits, there's no need to ask the contributor to
 squash them. The ``gh`` tool does that automatically. The only exceptions are
 when commits are made by more than one person and when there's a merge commit.
-``gh`` can't squash commits in those cases, so it's better to ask to the
+``gh`` cannot squash commits in those cases, so it is better to ask to the
 original contributor.
 
 .. code-block:: terminal
@@ -147,13 +147,13 @@ original contributor.
     $ git push origin
     $ git push upstream
 
-It's common to have to change the branch where a PR is merged. Instead of asking
+It is common to have to change the branch where a PR is merged. Instead of asking
 the contributors to rebase their PRs, the "gh" tool can change the branch with
 the ``-s`` option:
 
 .. code-block:: terminal
 
-    # e.g. this PR was sent against 'master', but it's merged in '4.4'
+    # e.g. this PR was sent against 'master', but it is merged in '4.4'
     $ gh merge 11160 -s 4.4
 
 Sometimes, when changing the branch, you may face rebase issues, but they are
@@ -228,7 +228,7 @@ maintained branches until ``master``. Imagine that you are merging a PR against
 
 .. tip::
 
-    When the support of a Symfony branch ends, it's recommended to delete your
+    When the support of a Symfony branch ends, it is recommended to delete your
     local branch to avoid merging in it unawarely:
 
     .. code-block:: terminal
@@ -250,12 +250,12 @@ When updating your local branches before merging:
     $ git checkout 4.4
     $ git merge upstream/4.4
 
-It's possible that you merge a wrong upstream branch unawarely. It's usually
-easy to spot because you'll see lots of conflicts:
+It is possible that you merge a wrong upstream branch unawarely. It is usually
+easy to spot because you will see lots of conflicts:
 
 .. code-block:: terminal
 
-    # DON'T DO THIS! It's a wrong branch merge
+    # DON'T DO THIS! It is a wrong branch merge
     $ git checkout 4.4
     $ git merge upstream/5.0
 
@@ -269,12 +269,12 @@ local branch and check it out again:
     $ git checkout 4.4 upstream/4.4
 
 If you did push the wrong branch merge, ask for help in the documentation
-mergers chat and we'll help solve the problem.
+mergers chat and we will help solve the problem.
 
 Solving merge conflicts
 .......................
 
-When merging things to upper branches, most of the times you'll see conflicts:
+When merging things to upper branches, most of the times you will see conflicts:
 
 .. code-block:: terminal
 
@@ -303,7 +303,7 @@ the marker used by Git for conflicts) and then do this:
 .. tip::
 
     When there are lots of conflicts, look for ``<<<<<`` with your editor in all
-    docs before committing the changes. It's common to forget about some of them.
+    docs before committing the changes. It is common to forget about some of them.
     If you prefer, you can run this too: ``git grep --cached "<<<<<"``.
 
 Merging deleted files

@@ -2,14 +2,14 @@ The Architecture
 ================
 
 You are my hero! Who would have thought that you would still be here after the first
-two parts? Your efforts will be well-rewarded soon. The first two parts didn't look
+two parts? Your efforts will be well-rewarded soon. The first two parts did not look
 too deeply at the architecture of the framework. Because it makes Symfony stand apart
 from the framework crowd, let's dive into the architecture now.
 
 Add Logging
 -----------
 
-A new Symfony app is micro: it's basically just a routing & controller system. But
+A new Symfony app is micro: it is basically just a routing & controller system. But
 thanks to Flex, installing more features is simple.
 
 Want a logging system? No problem:
@@ -131,7 +131,7 @@ Great! You can use this immediately in your controller::
 That's it! Symfony will instantiate the ``GreetingGenerator`` automatically and
 pass it as an argument. But, could we *also* move the logger logic to ``GreetingGenerator``?
 Yes! You can use autowiring inside a service to access *other* services. The only
-difference is that it's done in the constructor:
+difference is that it is done in the constructor:
 
 .. code-block:: diff
 
@@ -221,13 +221,13 @@ this hurt performance?" Actually, no! Symfony is blazing fast.
 
 How is that possible? The service system is managed by a very important object called
 the "container". Most frameworks have a container, but Symfony's is unique because
-it's *cached*. When you loaded your first page, all of the service information was
+it is *cached*. When you loaded your first page, all of the service information was
 compiled and saved. This means that the autowiring and autoconfiguration features
 add *no* overhead! It also means that you get *great* errors: Symfony inspects and
 validates *everything* when the container is built.
 
 Now you might be wondering what happens when you update a file and the cache needs
-to rebuild? I like your thinking! It's smart enough to rebuild on the next page
+to rebuild? I like your thinking! It is smart enough to rebuild on the next page
 load. But that's really the topic of the next section.
 
 Development Versus Production: Environments
@@ -281,7 +281,7 @@ from ``dev`` to ``prod``:
     + APP_ENV=prod
 
 But I want to talk more about environment variables next. Change the value back
-to ``dev``: debugging tools are great when you're working locally.
+to ``dev``: debugging tools are great when you are working locally.
 
 Environment Variables
 ---------------------
@@ -305,7 +305,7 @@ variables and are read by your app:
     APP_SECRET=cc86c7ca937636d5ddf1b754beb22a10
     ###< symfony/framework-bundle ###
 
-At first, the file doesn't contain much. But as your app grows, you'll add more
+At first, the file doesn't contain much. But as your app grows, you will add more
 configuration as you need it. But, actually, it gets much more interesting! Suppose
 your app needs a database ORM. Let's install the Doctrine ORM:
 
@@ -329,7 +329,7 @@ Thanks to a new recipe installed by Flex, look at the ``.env`` file again:
 
 The new ``DATABASE_URL`` environment variable was added *automatically* and is already
 referenced by the new ``doctrine.yaml`` configuration file. By combining environment
-variables and Flex, you're using industry best practices without any extra effort.
+variables and Flex, you are using industry best practices without any extra effort.
 
 Keep Going!
 -----------

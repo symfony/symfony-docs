@@ -102,7 +102,7 @@ If you need to fetch several cache items simultaneously, use instead the
     // ...
     $stocks = $cache->getItems(['AAPL', 'FB', 'GOOGL', 'MSFT']);
 
-Again, if any of the keys doesn't represent a valid cache item, you won't get
+Again, if any of the keys doesn't represent a valid cache item, you will not get
 a ``null`` value but an empty ``CacheItem`` object.
 
 The last method related to fetching cache items is ``hasItem($key)``, which

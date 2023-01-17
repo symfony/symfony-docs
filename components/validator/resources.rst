@@ -14,7 +14,7 @@ The Validator component collects that metadata using a set of loaders.
 
 .. seealso::
 
-    You'll learn how to define the metadata in :doc:`metadata`.
+    You will learn how to define the metadata in :doc:`metadata`.
 
 The StaticMethodLoader
 ----------------------
@@ -191,6 +191,6 @@ You can set this custom implementation using
 
 .. caution::
 
-    Since you are using a custom metadata factory, you can't configure loaders
+    Since you are using a custom metadata factory, you cannot configure loaders
     and caches using the ``add*Mapping()`` methods anymore. You now have to
     inject them into your custom metadata factory yourself.
