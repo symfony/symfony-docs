@@ -163,6 +163,25 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
+exactly
+~~~~~~~
+
+**type**: ``integer``
+
+This option is the exact length value. Validation will fail if
+the given value's length is not **exactly** equal to this value.
+
+.. note::
+
+    This option is the one being set by default when using the Length constraint
+    without passing any named argument to it. This means that for example,
+    ``@Assert\Length(20)`` and ``@Assert\Length(exactly=20)`` are equivalent, as
+    well as ``#[Assert\Length(20)]`` and ``#[Assert\Length(exactly: 20)]``.
+
+.. versionadded::
+
+    The named argument ``exactly`` was introduced in Symfony 5.2.
+
 exactMessage
 ~~~~~~~~~~~~
 
