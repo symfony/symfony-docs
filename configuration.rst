@@ -658,7 +658,7 @@ To define the value of an env var, you have several options:
 
 .. tip::
 
-    Some hosts - like SymfonyCloud - offer easy `utilities to manage env vars`_
+    Some hosts - like Platform.sh - offer easy `utilities to manage env vars`_
     in production.
 
 .. note::
