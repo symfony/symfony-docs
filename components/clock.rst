@@ -104,3 +104,46 @@ the system up to nanosecond precision. It can be used to measure the elapsed
 time between two calls without being affected by inconsistencies sometimes introduced
 by the system clock, e.g. by updating it. Instead, it consistently increases time,
 making it especially useful for measuring performance.
+
+Using a Clock inside a Service
+------------------------------
+
+If your application uses :ref:`service autoconfiguration <services-autoconfigure>`,
+any service whose class uses the :class:`Symfony\\Component\\Clock\\ClockAwareTrait` will
+benefit of a ``ClockInterface`` typed-property ``$clock`` with the default implementation
+passed as a service. Services using this trait will also benefit of a ``now()`` method.
+
+By using this trait in your services to retrieve the current time, it will be easier to
+write time-sensitive classes. For example, by using the ``MockClock`` implementation as the
+default one during tests, you will have full control of the "current time".
+
+This is also true for the other clock implementations, as you will be assured to always use
+the same clock implementation across your code each time you need it::
+
+    namespace App\TimeUtils;
+
+    use Symfony\Component\Clock\ClockAwareTrait;
+
+    class MonthSensitive
+    {
+        use ClockAwareTrait;
+
+        public function isWinterMonth(): bool
+        {
+            $now = $this->now();
+
+            return match ($now->format('F')) {
+                'December', 'January', 'February', 'March' => true,
+                default => false,
+            };
+        }
+    }
+
+Thanks to the ``ClockAwareTrait`` and by using the ``MockClock`` implementation,
+you will be able to test different times returned by ``now()``. This allows you
+to test every case of your method without the need of actually being in a month
+or another.
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\Clock\\ClockAwareTrait` was introduced in Symfony 6.3.
