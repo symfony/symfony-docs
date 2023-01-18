@@ -26,6 +26,23 @@ optionally some *algorithm options*:
 
 .. configuration-block::
 
+    .. code-block:: php-standalone
+
+        use App\Entity\User;
+        use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
+        use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
+        $passwordHasherFactory = new PasswordHasherFactory([
+            // auto hasher with default options for the User class (and children)
+            User::class => ['algorithm' => 'auto'],
+
+            // auto hasher with custom options for all PasswordAuthenticatedUserInterface instances
+            PasswordAuthenticatedUserInterface::class => [
+                'algorithm' => 'auto',
+                'cost' => 15,
+            ],
+        ]);
+
     .. code-block:: yaml
 
         # config/packages/security.yaml
@@ -90,23 +107,6 @@ optionally some *algorithm options*:
                 ->cost(15);
         };
 
-    .. code-block:: php-standalone
-
-        use App\Entity\User;
-        use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
-        use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
-
-        $passwordHasherFactory = new PasswordHasherFactory([
-            // auto hasher with default options for the User class (and children)
-            User::class => ['algorithm' => 'auto'],
-
-            // auto hasher with custom options for all PasswordAuthenticatedUserInterface instances
-            PasswordAuthenticatedUserInterface::class => [
-                'algorithm' => 'auto',
-                'cost' => 15,
-            ],
-        ]);
-
 .. versionadded:: 5.3
 
     The ``password_hashers`` option was introduced in Symfony 5.3. In previous
@@ -134,7 +134,7 @@ Further in this article, you can find a
     .. configuration-block::
 
         .. code-block:: yaml
-        
+
             # config/packages/test/security.yaml
             security:
                 # ...
@@ -321,6 +321,26 @@ on the new hasher to point to the old, legacy hasher(s):
 
 .. configuration-block::
 
+    .. code-block:: php-standalone
+
+        // ...
+        $passwordHasherFactory = new PasswordHasherFactory([
+            'legacy' => [
+                'algorithm' => 'sha256',
+                'encode_as_base64' => true,
+                'iterations' => 1,
+            ],
+
+            User::class => [
+                // the new hasher, along with its options
+                'algorithm' => 'sodium',
+                'migrate_from' => [
+                    'bcrypt', // uses the "bcrypt" hasher with the default options
+                    'legacy', // uses the "legacy" hasher configured above
+                ],
+            ],
+        ]);
+
     .. code-block:: yaml
 
         # config/packages/security.yaml
@@ -397,26 +417,6 @@ on the new hasher to point to the old, legacy hasher(s):
                 ])
             ;
         };
-
-    .. code-block:: php-standalone
-
-        // ...
-        $passwordHasherFactory = new PasswordHasherFactory([
-            'legacy' => [
-                'algorithm' => 'sha256',
-                'encode_as_base64' => true,
-                'iterations' => 1,
-            ],
-
-            User::class => [
-                // the new hasher, along with its options
-                'algorithm' => 'sodium',
-                'migrate_from' => [
-                    'bcrypt', // uses the "bcrypt" hasher with the default options
-                    'legacy', // uses the "legacy" hasher configured above
-                ],
-            ],
-        ]);
 
 With this setup:
 
@@ -560,6 +560,18 @@ cost. This can be done with named hashers:
 
 .. configuration-block::
 
+    .. code-block:: php-standalone
+
+        use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
+
+        $passwordHasherFactory = new PasswordHasherFactory([
+            // ...
+            'harsh' => [
+                'algorithm' => 'auto',
+                'cost' => 15
+            ],
+        ]);
+
     .. code-block:: yaml
 
         # config/packages/security.yaml
@@ -603,18 +615,6 @@ cost. This can be done with named hashers:
                 ->cost(15)
             ;
         };
-
-    .. code-block:: php-standalone
-
-        use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
-
-        $passwordHasherFactory = new PasswordHasherFactory([
-            // ...
-            'harsh' => [
-                'algorithm' => 'auto',
-                'cost' => 15
-            ],
-        ]);
 
 This creates a hasher named ``harsh``. In order for a ``User`` instance
 to use it, the class must implement

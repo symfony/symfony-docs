@@ -260,6 +260,19 @@ configuration <config-framework-session>` in
 
 .. configuration-block::
 
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HttpFoundation\Cookie;
+        use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+        use Symfony\Component\HttpFoundation\Session\Session;
+        use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
+        $storage = new NativeSessionStorage([
+            'cookie_secure' => 'auto',
+            'cookie_samesite' => Cookie::SAMESITE_LAX,
+        ]);
+        $session = new Session($storage);
+
     .. code-block:: yaml
 
         # config/packages/framework.yaml
@@ -322,19 +335,6 @@ configuration <config-framework-session>` in
             ;
         };
 
-    .. code-block:: php-standalone
-
-        use Symfony\Component\HttpFoundation\Cookie;
-        use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
-        use Symfony\Component\HttpFoundation\Session\Session;
-        use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-
-        $storage = new NativeSessionStorage([
-            'cookie_secure' => 'auto',
-            'cookie_samesite' => Cookie::SAMESITE_LAX,
-        ]);
-        $session = new Session($storage);
-
 Setting the ``handler_id`` config option to ``null`` means that Symfony will
 use the native PHP session mechanism. The session metadata files will be stored
 outside of the Symfony application, in a directory controlled by PHP. Although
@@ -348,6 +348,18 @@ is ``save_path``, which defines the directory where Symfony will store the
 session metadata files:
 
 .. configuration-block::
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HttpFoundation\Cookie;
+        use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+        use Symfony\Component\HttpFoundation\Session\Session;
+        use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
+        use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+
+        $handler = new NativeFileSessionHandler('/var/sessions');
+        $storage = new NativeSessionStorage([], $handler);
+        $session = new Session($storage);
 
     .. code-block:: yaml
 
@@ -388,18 +400,6 @@ session metadata files:
                 ->savePath('%kernel.project_dir%/var/sessions/%kernel.environment%')
             ;
         };
-
-    .. code-block:: php-standalone
-
-        use Symfony\Component\HttpFoundation\Cookie;
-        use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
-        use Symfony\Component\HttpFoundation\Session\Session;
-        use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
-        use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
-
-        $handler = new NativeFileSessionHandler('/var/sessions');
-        $storage = new NativeSessionStorage([], $handler);
-        $session = new Session($storage);
 
 Check out the Symfony config reference to learn more about the other available
 :ref:`Session configuration options <config-framework-session>`.
@@ -1506,6 +1506,22 @@ for the ``handler_id``:
 
 .. configuration-block::
 
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HttpFoundation\Session\Session;
+        use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
+
+        // legacy application configures session
+        ini_set('session.save_handler', 'files');
+        ini_set('session.save_path', '/tmp');
+        session_start();
+
+        // Get Symfony to interface with this existing session
+        $session = new Session(new PhpBridgeSessionStorage());
+
+        // symfony will now interface with the existing PHP session
+        $session->start();
+
     .. code-block:: yaml
 
         # config/packages/framework.yaml
@@ -1542,22 +1558,6 @@ for the ``handler_id``:
                 ->handlerId(null)
             ;
         };
-
-    .. code-block:: php-standalone
-
-        use Symfony\Component\HttpFoundation\Session\Session;
-        use Symfony\Component\HttpFoundation\Session\Storage\PhpBridgeSessionStorage;
-
-        // legacy application configures session
-        ini_set('session.save_handler', 'files');
-        ini_set('session.save_path', '/tmp');
-        session_start();
-
-        // Get Symfony to interface with this existing session
-        $session = new Session(new PhpBridgeSessionStorage());
-
-        // symfony will now interface with the existing PHP session
-        $session->start();
 
 Otherwise, if the problem is that you cannot avoid the application
 starting the session with ``session_start()``, you can still make use of

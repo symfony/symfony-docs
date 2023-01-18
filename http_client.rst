@@ -94,6 +94,12 @@ You can configure the global options using the ``default_options`` option:
 
 .. configuration-block::
 
+    .. code-block:: php-standalone
+
+        $client = HttpClient::create([
+             'max_redirects' => 7,
+        ]);
+
     .. code-block:: yaml
 
         # config/packages/framework.yaml
@@ -132,12 +138,6 @@ You can configure the global options using the ``default_options`` option:
             ;
         };
 
-    .. code-block:: php-standalone
-
-        $client = HttpClient::create([
-             'max_redirects' => 7,
-        ]);
-
 You can also use the :method:`Symfony\\Contracts\\HttpClient\\HttpClientInterface::withOptions`
 method to retrieve a new instance of the client with new default options::
 
@@ -166,6 +166,10 @@ The HTTP client also has one configuration option called
 ``max_host_connections``, this option can not be overridden by a request:
 
 .. configuration-block::
+
+    .. code-block:: php-standalone
+
+        $client = HttpClient::create([], 10);
 
     .. code-block:: yaml
 
@@ -205,10 +209,6 @@ The HTTP client also has one configuration option called
             ;
         };
 
-    .. code-block:: php-standalone
-
-        $client = HttpClient::create([], 10);
-
 Scoping Client
 ~~~~~~~~~~~~~~
 
@@ -219,6 +219,32 @@ clients (using :class:`Symfony\\Component\\HttpClient\\ScopingHttpClient`) to
 autoconfigure the HTTP client based on the requested URL:
 
 .. configuration-block::
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HttpClient\HttpClient;
+        use Symfony\Component\HttpClient\ScopingHttpClient;
+
+        $client = HttpClient::create();
+        $client = new ScopingHttpClient($client, [
+            // the options defined as values apply only to the URLs matching
+            // the regular expressions defined as keys
+            'https://api\.github\.com/' => [
+                'headers' => [
+                    'Accept' => 'application/vnd.github.v3+json',
+                    'Authorization' => 'token '.$githubToken,
+                ],
+            ],
+            // ...
+        ]);
+
+        // relative URLs will use the 2nd argument as base URI and use the options of the 3rd argument
+        $client = ScopingHttpClient::forBaseUri($client, 'https://api.github.com/', [
+            'headers' => [
+                'Accept' => 'application/vnd.github.v3+json',
+                'Authorization' => 'token '.$githubToken,
+            ],
+        ]);
 
     .. code-block:: yaml
 
@@ -300,32 +326,6 @@ autoconfigure the HTTP client based on the requested URL:
             ;
         };
 
-    .. code-block:: php-standalone
-
-        use Symfony\Component\HttpClient\HttpClient;
-        use Symfony\Component\HttpClient\ScopingHttpClient;
-
-        $client = HttpClient::create();
-        $client = new ScopingHttpClient($client, [
-            // the options defined as values apply only to the URLs matching
-            // the regular expressions defined as keys
-            'https://api\.github\.com/' => [
-                'headers' => [
-                    'Accept' => 'application/vnd.github.v3+json',
-                    'Authorization' => 'token '.$githubToken,
-                ],
-            ],
-            // ...
-        ]);
-
-        // relative URLs will use the 2nd argument as base URI and use the options of the 3rd argument
-        $client = ScopingHttpClient::forBaseUri($client, 'https://api.github.com/', [
-            'headers' => [
-                'Accept' => 'application/vnd.github.v3+json',
-                'Authorization' => 'token '.$githubToken,
-            ],
-        ]);
-
 You can define several scopes, so that each set of options is added only if a
 requested URL matches one of the regular expressions set by the ``scope`` option.
 
@@ -387,6 +387,23 @@ defined globally in the configuration (to apply it to all requests) and to
 each request (which overrides any global authentication):
 
 .. configuration-block::
+
+    .. code-block:: php-standalone
+
+        $client = HttpClient::createForBaseUri('https://example.com/', [
+            // HTTP Basic authentication (there are multiple ways of configuring it)
+            'auth_basic' => ['the-username'],
+            'auth_basic' => ['the-username', 'the-password'],
+            'auth_basic' => 'the-username:the-password',
+
+            // HTTP Bearer authentication (also called token authentication)
+            'auth_bearer' => 'the-bearer-token',
+
+            // Microsoft NTLM authentication (there are multiple ways of configuring it)
+            'auth_ntlm' => ['the-username'],
+            'auth_ntlm' => ['the-username', 'the-password'],
+            'auth_ntlm' => 'the-username:the-password',
+        ]);
 
     .. code-block:: yaml
 
@@ -452,23 +469,6 @@ each request (which overrides any global authentication):
             ;
         };
 
-    .. code-block:: php-standalone
-
-        $client = HttpClient::createForBaseUri('https://example.com/', [
-            // HTTP Basic authentication (there are multiple ways of configuring it)
-            'auth_basic' => ['the-username'],
-            'auth_basic' => ['the-username', 'the-password'],
-            'auth_basic' => 'the-username:the-password',
-
-            // HTTP Bearer authentication (also called token authentication)
-            'auth_bearer' => 'the-bearer-token',
-
-            // Microsoft NTLM authentication (there are multiple ways of configuring it)
-            'auth_ntlm' => ['the-username'],
-            'auth_ntlm' => ['the-username', 'the-password'],
-            'auth_ntlm' => 'the-username:the-password',
-        ]);
-
 .. code-block:: php
 
     $response = $client->request('GET', 'https://...', [
@@ -505,6 +505,15 @@ Headers
 Use the ``headers`` option to define the default headers added to all requests:
 
 .. configuration-block::
+
+    .. code-block:: php-standalone
+
+        // this header is added to all requests made by this client
+        $client = HttpClient::create([
+            'headers' => [
+                'User-Agent' => 'My Fancy App',
+            ],
+        ]);
 
     .. code-block:: yaml
 
@@ -546,15 +555,6 @@ Use the ``headers`` option to define the default headers added to all requests:
                     ->header('User-Agent', 'My Fancy App')
             ;
         };
-
-    .. code-block:: php-standalone
-
-        // this header is added to all requests made by this client
-        $client = HttpClient::create([
-            'headers' => [
-                'User-Agent' => 'My Fancy App',
-            ],
-        ]);
 
 You can also set new headers or override the default ones for specific requests::
 
@@ -928,6 +928,10 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
 
 .. configuration-block::
 
+    .. code-block:: php-standalone
+
+        $client = HttpClient::create(['http_version' => '2.0']);
+
     .. code-block:: yaml
 
         # config/packages/framework.yaml
@@ -965,10 +969,6 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
                     ->httpVersion('2.0')
             ;
         };
-
-    .. code-block:: php-standalone
-
-        $client = HttpClient::create(['http_version' => '2.0']);
 
 Support for HTTP/2 PUSH works out of the box when libcurl >= 7.61 is used with
 PHP >= 7.2.17 / 7.3.4: pushed responses are put into a temporary cache and are

@@ -763,6 +763,15 @@ This service can be configured using ``framework.http_client.default_options``:
 
 .. configuration-block::
 
+    .. code-block:: php-standalone
+
+        $client = HttpClient::create([
+            'headers' => [
+                'X-Powered-By' => 'ACME App',
+            ],
+            'max_redirects' => 7,
+        ], 10);
+
     .. code-block:: yaml
 
         # config/packages/framework.yaml
@@ -809,15 +818,6 @@ This service can be configured using ``framework.http_client.default_options``:
             ],
         ]);
 
-    .. code-block:: php-standalone
-
-        $client = HttpClient::create([
-            'headers' => [
-                'X-Powered-By' => 'ACME App',
-            ],
-            'max_redirects' => 7,
-        ], 10);
-
 .. _reference-http-client-scoped-clients:
 
 Multiple pre-configured HTTP client services can be defined, each with its
@@ -826,6 +826,13 @@ the default options defined for the ``http_client`` service. You can override
 these options and can define a few others:
 
 .. configuration-block::
+
+    .. code-block:: php-standalone
+
+        $client = HttpClient::createForBaseUri('https://...', [
+            'auth_bearer' => 'secret_bearer_token',
+            // ...
+        ]);
 
     .. code-block:: yaml
 
@@ -868,13 +875,6 @@ these options and can define a few others:
                     ],
                 ],
             ],
-        ]);
-
-    .. code-block:: php-standalone
-
-        $client = HttpClient::createForBaseUri('https://...', [
-            'auth_bearer' => 'secret_bearer_token',
-            // ...
         ]);
 
 Options defined for scoped clients apply only to URLs that match either their

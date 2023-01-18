@@ -387,22 +387,6 @@ is created from the form factory.
 
 .. configuration-block::
 
-    .. code-block:: php-standalone
-
-        use Symfony\Component\Form\Extension\Core\Type\DateType;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-        // ...
-
-        $form = $formFactory->createBuilder()
-            ->add('task', TextType::class)
-            ->add('dueDate', DateType::class)
-            ->getForm();
-
-        var_dump($twig->render('new.html.twig', [
-            'form' => $form->createView(),
-        ]));
-
     .. code-block:: php-symfony
 
         // src/Controller/TaskController.php
@@ -431,6 +415,22 @@ is created from the form factory.
             }
         }
 
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+
+        // ...
+
+        $form = $formFactory->createBuilder()
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->getForm();
+
+        var_dump($twig->render('new.html.twig', [
+            'form' => $form->createView(),
+        ]));
+
 As you can see, creating a form is like writing a recipe: you call ``add()``
 for each new field you want to create. The first argument to ``add()`` is the
 name of your field, and the second is the fully qualified class name. The Form
@@ -446,23 +446,6 @@ If you need your form to load with some default values (or you're building
 an "edit" form), pass in the default data when creating your form builder:
 
 .. configuration-block::
-
-    .. code-block:: php-standalone
-
-        use Symfony\Component\Form\Extension\Core\Type\DateType;
-        use Symfony\Component\Form\Extension\Core\Type\FormType;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-        // ...
-
-        $defaults = [
-            'dueDate' => new \DateTime('tomorrow'),
-        ];
-
-        $form = $formFactory->createBuilder(FormType::class, $defaults)
-            ->add('task', TextType::class)
-            ->add('dueDate', DateType::class)
-            ->getForm();
 
     .. code-block:: php-symfony
 
@@ -489,6 +472,23 @@ an "edit" form), pass in the default data when creating your form builder:
                 // ...
             }
         }
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+
+        // ...
+
+        $defaults = [
+            'dueDate' => new \DateTime('tomorrow'),
+        ];
+
+        $form = $formFactory->createBuilder(FormType::class, $defaults)
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->getForm();
 
 .. tip::
 
@@ -533,19 +533,6 @@ by :method:`Symfony\\Component\\Form\\Form::handleRequest` to determine whether 
 
 .. configuration-block::
 
-    .. code-block:: php-standalone
-
-        use Symfony\Component\Form\Extension\Core\Type\FormType;
-
-        // ...
-
-        $formBuilder = $formFactory->createBuilder(FormType::class, null, [
-            'action' => '/search',
-            'method' => 'GET',
-        ]);
-
-        // ...
-
     .. code-block:: php-symfony
 
         // src/Controller/DefaultController.php
@@ -567,6 +554,19 @@ by :method:`Symfony\\Component\\Form\\Form::handleRequest` to determine whether 
             }
         }
 
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Form\Extension\Core\Type\FormType;
+
+        // ...
+
+        $formBuilder = $formFactory->createBuilder(FormType::class, null, [
+            'action' => '/search',
+            'method' => 'GET',
+        ]);
+
+        // ...
+
 .. _component-form-intro-handling-submission:
 
 Handling Form Submissions
@@ -576,37 +576,6 @@ To handle form submissions, use the :method:`Symfony\\Component\\Form\\Form::han
 method:
 
 .. configuration-block::
-
-    .. code-block:: php-standalone
-
-        use Symfony\Component\HttpFoundation\Request;
-        use Symfony\Component\HttpFoundation\RedirectResponse;
-        use Symfony\Component\Form\Extension\Core\Type\DateType;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
-
-        // ...
-
-        $form = $formFactory->createBuilder()
-            ->add('task', TextType::class)
-            ->add('dueDate', DateType::class)
-            ->getForm();
-
-        $request = Request::createFromGlobals();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-
-            // ... perform some action, such as saving the data to the database
-
-            $response = new RedirectResponse('/task/success');
-            $response->prepare($request);
-
-            return $response->send();
-        }
-
-        // ...
 
     .. code-block:: php-symfony
 
@@ -640,6 +609,37 @@ method:
             }
         }
 
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\HttpFoundation\RedirectResponse;
+        use Symfony\Component\HttpFoundation\Request;
+
+        // ...
+
+        $form = $formFactory->createBuilder()
+            ->add('task', TextType::class)
+            ->add('dueDate', DateType::class)
+            ->getForm();
+
+        $request = Request::createFromGlobals();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            // ... perform some action, such as saving the data to the database
+
+            $response = new RedirectResponse('/task/success');
+            $response->prepare($request);
+
+            return $response->send();
+        }
+
+        // ...
+
 .. caution::
 
     The form's ``createView()`` method should be called *after* ``handleRequest()`` is
@@ -672,25 +672,6 @@ option when building each field:
 
 .. configuration-block::
 
-    .. code-block:: php-standalone
-
-        use Symfony\Component\Form\Extension\Core\Type\DateType;
-        use Symfony\Component\Form\Extension\Core\Type\TextType;
-        use Symfony\Component\Validator\Constraints\NotBlank;
-        use Symfony\Component\Validator\Constraints\Type;
-
-        $form = $formFactory->createBuilder()
-            ->add('task', TextType::class, [
-                'constraints' => new NotBlank(),
-            ])
-            ->add('dueDate', DateType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                    new Type(\DateTime::class),
-                ],
-            ])
-            ->getForm();
-
     .. code-block:: php-symfony
 
         // src/Controller/DefaultController.php
@@ -720,6 +701,25 @@ option when building each field:
                 // ...
             }
         }
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\Form\Extension\Core\Type\DateType;
+        use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Constraints\Type;
+
+        $form = $formFactory->createBuilder()
+            ->add('task', TextType::class, [
+                'constraints' => new NotBlank(),
+            ])
+            ->add('dueDate', DateType::class, [
+                'constraints' => [
+                    new NotBlank(),
+                    new Type(\DateTime::class),
+                ],
+            ])
+            ->getForm();
 
 When the form is bound, these validation constraints will be applied automatically
 and the errors will display next to the fields on error.
