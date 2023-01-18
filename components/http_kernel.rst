@@ -136,13 +136,6 @@ See ":ref:`http-kernel-working-example`" for a more concrete implementation.
 For general information on adding listeners to the events below, see
 :ref:`http-kernel-creating-listener`.
 
-.. caution::
-
-    As of 3.1 the :class:`Symfony\\Component\\HttpKernel\\HttpKernel` accepts a
-    fourth argument, which must be an instance of
-    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolverInterface`.
-    In 4.0 this argument will become mandatory.
-
 .. seealso::
 
     There is a wonderful tutorial series on using the HttpKernel component and
