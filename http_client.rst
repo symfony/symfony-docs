@@ -985,6 +985,10 @@ following methods::
 
 .. note::
 
+    ``$response->toStream()`` is part of :class:`Symfony\\Component\\HttpClient\\Response\\StreamableInterface`.
+
+.. note::
+
     ``$response->getInfo()`` is non-blocking: it returns *live* information
     about the response. Some of them might not be known yet (e.g. ``http_code``)
     when you'll call it.
