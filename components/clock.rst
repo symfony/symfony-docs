@@ -108,17 +108,17 @@ making it especially useful for measuring performance.
 Using a Clock inside a Service
 ------------------------------
 
+Using the Clock component in your services to retrieve the current time makes
+them easier to test. For example, by using the ``MockClock`` implementation as
+the default one during tests, you will have full control to set the "current time"
+to any arbitrary date/time.
+
+In order to use this component in your services, make their classes use the
+:class:`Symfony\\Component\\Clock\\ClockAwareTrait` and add a ``ClockInterface``
+typed-property ``$clock`` to their constructors.
+
 If your application uses :ref:`service autoconfiguration <services-autoconfigure>`,
-any service whose class uses the :class:`Symfony\\Component\\Clock\\ClockAwareTrait` will
-benefit of a ``ClockInterface`` typed-property ``$clock`` with the default implementation
-passed as a service. Services using this trait will also benefit of a ``now()`` method.
-
-By using this trait in your services to retrieve the current time, it will be easier to
-write time-sensitive classes. For example, by using the ``MockClock`` implementation as the
-default one during tests, you will have full control of the "current time".
-
-This is also true for the other clock implementations, as you will be assured to always use
-the same clock implementation across your code each time you need it::
+your services can now call the ``$this->now()`` method to get the current time::
 
     namespace App\TimeUtils;
 
@@ -139,10 +139,10 @@ the same clock implementation across your code each time you need it::
         }
     }
 
-Thanks to the ``ClockAwareTrait`` and by using the ``MockClock`` implementation,
-you will be able to test different times returned by ``now()``. This allows you
-to test every case of your method without the need of actually being in a month
-or another.
+Thanks to the ``ClockAwareTrait``, and by using the ``MockClock`` implementation,
+you can set the current time arbitrarily without having to change your service code.
+This will help you test every case of your method without the need of actually
+being in a month or another.
 
 .. versionadded:: 6.3
 
