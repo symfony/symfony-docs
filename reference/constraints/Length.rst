@@ -178,7 +178,7 @@ the given value's length is not **exactly** equal to this value.
     ``@Assert\Length(20)`` and ``@Assert\Length(exactly=20)`` are equivalent, as
     well as ``#[Assert\Length(20)]`` and ``#[Assert\Length(exactly: 20)]``.
 
-.. versionadded::
+.. versionadded:: 5.2
 
     The named argument ``exactly`` was introduced in Symfony 5.2.
 
