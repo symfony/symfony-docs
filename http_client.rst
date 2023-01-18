@@ -1440,6 +1440,27 @@ Now you can make HTTP requests with the PSR-18 client as follows:
 
         $content = json_decode($response->getBody()->getContents(), true);
 
+You can also pass a set of default options to your client thanks to the
+``Psr18Client::withOptions()`` method::
+
+    use Symfony\Component\HttpClient\Psr18Client;
+
+    $client = (new Psr18Client())
+        ->withOptions([
+            'base_uri' => 'https://symfony.com',
+            'headers' => [
+                'Accept' => 'application/json',
+            ],
+        ]);
+
+    $request = $client->createRequest('GET', '/versions.json');
+
+    // ...
+
+.. versionadded:: 6.2
+
+    The ``Psr18Client::withOptions()`` method was introduced in Symfony 6.2.
+
 HTTPlug
 ~~~~~~~
 
@@ -1527,6 +1548,24 @@ Then you're ready to go::
 
     // wait for all remaining promises to resolve
     $httpClient->wait();
+
+You can also pass a set of default options to your client thanks to the
+``HttplugClient::withOptions()`` method::
+
+    use Psr\Http\Message\ResponseInterface;
+    use Symfony\Component\HttpClient\HttplugClient;
+
+    $httpClient = (new HttplugClient())
+        ->withOptions([
+            'base_uri' => 'https://my.api.com',
+        ]);
+    $request = $httpClient->createRequest('GET', '/');
+
+    // ...
+
+.. versionadded:: 6.2
+
+    The ``HttplugClient::withOptions()`` method was introduced in Symfony 6.2.
 
 Native PHP Streams
 ~~~~~~~~~~~~~~~~~~
