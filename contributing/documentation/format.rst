@@ -90,11 +90,25 @@ The previous reStructuredText snippet renders as follow:
 
         // Configuration in PHP
 
+It may be relevant in some cases to write code examples when using the whole Symfony framework, but also
+when using components as standalone libraries without the whole framework installed. In this case, you
+may use special formats ``php-symfony`` and ``php-standalone``, which will be rendered like this:
+
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        // PHP code using features provided by the Symfony framework
+
+    .. code-block:: php-standalone
+
+        // PHP code using standalone components
+
 The current list of supported formats are the following:
 
-===================  ======================================
+===================  ==========================================================================================
 Markup Format        Use It to Display
-===================  ======================================
+===================  ==========================================================================================
 ``html``             HTML
 ``xml``              XML
 ``php``              PHP
@@ -105,7 +119,9 @@ Markup Format        Use It to Display
 ``ini``              INI
 ``php-annotations``  PHP Annotations
 ``php-attributes``   PHP Attributes
-===================  ======================================
+``php-symfony``      PHP code example when using the Symfony framework
+``php-standalone``   PHP code to be used in a standalone context, for example when using standalone components
+===================  ==========================================================================================
 
 Adding Links
 ~~~~~~~~~~~~
