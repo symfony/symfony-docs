@@ -104,7 +104,7 @@ load correct services and parameters inside an "Extension" class.
 
     The root key of your bundle configuration (``acme_social`` in the previous
     example) is automatically determined from your bundle name (it's the
-    `snake case`_ of the bundle name without the ``Bundle`` suffix ).
+    `snake case`_ of the bundle name without the ``Bundle`` suffix).
 
 .. seealso::
 
