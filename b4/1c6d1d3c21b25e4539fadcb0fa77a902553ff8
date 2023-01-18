@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-01-16T07:12:26Z
+
+Needs a rebase and please revert the change in `var_dumper.rst` for know, so we can merge this PR 👍
+
+Thanks
+
+---------------------------------------------------------------------------
+
+by alamirault at 2023-01-17T19:33:16Z
+
+I rebased and revert change for `var_dumper.rst`
