@@ -78,12 +78,9 @@ whitelist:
     lines:
         - 'in config files, so the old ``app/config/config_dev.yml`` goes to'
         - '#. The most important config file is ``app/config/services.yml``, which now is'
-        - 'code in production without a proxy, it becomes trivially easy to abuse your'
-        - '.. _`EasyDeployBundle`: https://github.com/EasyCorp/easy-deploy-bundle'
         - 'The bin/console Command'
         - '.. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection'
         - '.. versionadded:: 1.9.0' # Encore
-        - '.. versionadded:: 0.28.4' # Encore
         - '.. versionadded:: 1.11' # Messenger (Middleware / DoctrineBundle)
         - '.. versionadded:: 1.18' # Flex in setup/upgrade_minor.rst
         - '.. versionadded:: 1.0.0' # Encore
@@ -93,12 +90,10 @@ whitelist:
         - '123,' # assertion for var_dumper - components/var_dumper.rst
         - '"foo",' # assertion for var_dumper - components/var_dumper.rst
         - '$var .= "Because of this `\xE9` octet (\\xE9),\n";'
-        - "//                  224, 165, 141, 224, 164, 164, 224, 165, 135])"
         - '.. versionadded:: 0.2' # MercureBundle
         - 'provides a ``loginUser()`` method to simulate logging in in your functional'
         - '.. code-block:: twig'
         - '.. versionadded:: 3.6' # MonologBundle
         - '// bin/console'
-        - 'End to End Tests (E2E)'
         - '.. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket'
         - '..  End to End Tests (E2E)'
