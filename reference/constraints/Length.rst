@@ -135,8 +135,7 @@ the given value's length is not **exactly** equal to this value.
 
     This option is the one being set by default when using the Length constraint
     without passing any named argument to it. This means that for example,
-    ``@Assert\Length(20)`` and ``@Assert\Length(exactly=20)`` are equivalent, as
-    well as ``#[Assert\Length(20)]`` and ``#[Assert\Length(exactly: 20)]``.
+    ``#[Assert\Length(20)]`` and ``#[Assert\Length(exactly: 20)]`` are equivalent.
 
 exactMessage
 ~~~~~~~~~~~~
