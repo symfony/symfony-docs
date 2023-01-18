@@ -114,11 +114,11 @@ the default one during tests, you will have full control to set the "current tim
 to any arbitrary date/time.
 
 In order to use this component in your services, make their classes use the
-:class:`Symfony\\Component\\Clock\\ClockAwareTrait` and add a ``ClockInterface``
-typed-property ``$clock`` to their constructors.
+:class:`Symfony\\Component\\Clock\\ClockAwareTrait`. Thanks to
+:ref:`service autoconfiguration <services-autoconfigure>`, the ``setClock()`` method
+of the trait will automatically be called by the service container.
 
-If your application uses :ref:`service autoconfiguration <services-autoconfigure>`,
-your services can now call the ``$this->now()`` method to get the current time::
+You can now call the ``$this->now()`` method to get the current time::
 
     namespace App\TimeUtils;
 
