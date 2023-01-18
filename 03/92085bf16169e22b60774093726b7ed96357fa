@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-01-15T10:40:57Z
+
+Thanks for reporting this. The method is not part of the contract interface ... but it's defined by all tpyes of HttpClient responses 🤔
+
+See https://github.com/search?q=org%3Asymfony+tostream&type=code
+
+---------------------------------------------------------------------------
+
+by henrikac at 2023-01-15T12:17:32Z
+
+I see. I removed `toStream` from this section because I noticed that the `ResponseInterface` contains all the methods mentioned in this section but `toStream`.
+
+*Edit:*
+I just made a test project where I installed `symfony/http-client`. Typing `$response->toStream();` gives no autocompletion in the editor + I get this red error-line under `toStream`, however, the code works just fine.
+
+Would it be better to re-formulate the intro in [this section](https://symfony.com/doc/current/http_client.html#processing-responses)? or maybe actually add the method to the interface?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-01-17T09:35:40Z
+
+Let's ask @nicolas-grekas to see if he can help us decide what to do here. Thanks!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-01-17T09:38:27Z
+
+toStream is part of [`StreamableInterface`](https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/HttpClient/Response/StreamableInterface.php). Can't we mention it instead of removing info that might be useful?
+
+---------------------------------------------------------------------------
+
+by henrikac at 2023-01-17T10:49:31Z
+
+> toStream is part of [StreamableInterface](https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/HttpClient/Response/StreamableInterface.php). Can't we mention it instead of removing info that might be useful?
+
+Will update the PR later today to mention this instead of removing `toStream`.
