@@ -94,9 +94,21 @@ Symfony ships with the following value resolvers in the
     You can restrict how the input can be formatted with the
     :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapDateTime` attribute.
 
+    .. tip::
+
+        The ``DateTimeInterface`` object is generated with the :doc:`Clock component </components/clock>`,
+        which means you can have full control over the date and time values the controller receives when
+        testing your application. This can be achieved by using the
+        :class:`Symfony\\Component\\Clock\\MockClock` implementation in your test environment.
+
     .. versionadded:: 6.1
 
         The ``DateTimeValueResolver`` was introduced in Symfony 6.1.
+
+    .. versionadded:: 6.3
+
+        The use of the :doc:`Clock component </components/clock>` to generate the
+        ``DateTimeInterface`` object was introduced in Symfony 6.3.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestValueResolver`
     Injects the current ``Request`` if type-hinted with ``Request`` or a class
