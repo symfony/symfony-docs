@@ -34,8 +34,58 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
+Usage
+-----
+
+The :class:`Symfony\\Component\\Clock\\Clock` class returns the current time and
+allows to use any implementation of the interface described by `PSR-20`_ as a global
+clock in your application::
+
+    use Symfony\Component\Clock\Clock;
+    use Symfony\Component\Clock\MockClock;
+
+    // You can set a custom clock implementation, or use the NativeClock default one
+    Clock::set(new MockClock());
+
+    // Then, you can get the clock instance
+    $clock = Clock::get();
+
+    // Additionally, you can set a timezone
+    $clock->withTimeZone('Europe/Paris');
+
+    // From here, you are able to get the current time
+    $now = $clock->now();
+
+    // And also to sleep for an amount of time
+    $clock->sleep(2.5);
+
+The Clock component also provides the ``now()`` function::
+
+    use function Symfony\Component\Clock\now;
+
+    // Get the current time as a DateTimeImmutable instance
+    $now = now();
+
+.. tip::
+
+    If you want to use the Clock component in your services, you may
+    have a look at the section about
+    :ref:`using a clock inside your services <clock_use-inside-a-service>`.
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\Clock\\Clock` class and ``now()`` function
+    were introduced in Symfony 6.3.
+
+Available Clocks Implementations
+--------------------------------
+
+The Clock component provides many ready-to-use implementations of the
+:class:`Symfony\\Component\\Clock\\ClockInterface`, which you can use
+as global clocks in your application depending on your needs.
+
 NativeClock
------------
+~~~~~~~~~~~
 
 A clock service replaces creating a new ``DateTime`` or
 ``DateTimeImmutable`` object for the current time. Instead, you inject the
@@ -60,7 +110,7 @@ determine the current time::
     }
 
 MockClock
----------
+~~~~~~~~~
 
 The ``MockClock`` is instantiated with a time and does not move forward on its own. The time is
 fixed until ``sleep()`` or ``modify()`` are called. This gives you full control over what your code
@@ -97,13 +147,15 @@ is expired or not, by modifying the clock's time::
     }
 
 Monotonic Clock
----------------
+~~~~~~~~~~~~~~~
 
 The ``MonotonicClock`` allows you to implement a precise stopwatch; depending on
 the system up to nanosecond precision. It can be used to measure the elapsed
 time between two calls without being affected by inconsistencies sometimes introduced
 by the system clock, e.g. by updating it. Instead, it consistently increases time,
 making it especially useful for measuring performance.
+
+.. _clock_use-inside-a-service:
 
 Using a Clock inside a Service
 ------------------------------
@@ -205,3 +257,5 @@ control on your time-sensitive code's behavior.
 .. versionadded:: 6.3
 
     The :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait` was introduced in Symfony 6.3.
+
+.. _`PSR-20`: https://www.php-fig.org/psr/psr-20/
