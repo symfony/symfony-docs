@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2023-01-18T19:44:37Z
+
+What is the reason for this change? (the title says "fix", but I don't think it changed the meaning of the existing text?)
+
+To me, this is too much implementation detail for the documentation. It combines many topics that might be unknown to the reader in a single paragraph, which distracts from the actual usage part of this trait.
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-01-18T19:51:27Z
+
+> What is the reason for this change? (the title says "fix", but I don't think it changed the meaning of the existing text?)
+
+It fixes the documentation because to use `$clock` provided by the trait, you don't have to add a type-hinted property to the constructor like it was written. When you use the trait, everything's done thanks to `#[Required]` attribute above trait's `setClock()`. This PR aims to fix this part.
+
+> To me, this is too much implementation detail for the documentation. It combines many topics that might be unknown to the reader in a single paragraph, which distracts from the actual usage part of this trait.
+
+Do you see it somewhere else, like in a dedicated page for example? 🙂 It's true now that the component has all these different features, it may be a good idea to split this in separate pages like it is for [the Console component](https://symfony.com/doc/current/components/console.html#sln)?
+
+---------------------------------------------------------------------------
+
+by wouterj at 2023-01-18T20:24:44Z
+
+> It fixes the documentation because to use $clock provided by the trait, you don't have to add a type-hinted property to the constructor like it was written.
+
+Ah, sorry. I was too quick, makes sense 👍 but let's make the paragraph a bit simpler (I'll propose something after this comment).
+
+> Do you see it somewhere else, like in a dedicated page for example?
+
+No, I meant that we now mention quite some unrelated concepts like "`#[Required]` attribute" and "service autoconfiguration". As these are somewhat advanced terms, they can distract people from what we actually try to explain to them: how to use the `ClockAwareTrait`. While writing documentation, it's often good to leave out as much implementation details as possible. If someone wants to know how a feature works, they can have a look in the code.
+
+> It may be a good idea to split this in separate pages like it is for [the Console component](https://symfony.com/doc/current/components/console.html#sln)?
+
+We are actually doing the opposite the past years: move all separate articles into single guides. We've discovered that it's much easier for readers if all information about a single topic is on a single page (especially now that the docs have a sticky table of contents)
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-01-19T07:03:53Z
+
+Thank you for your explanations @wouterj! It's definitely clearer now and I totally prefer your version without superfluous technical details. I'll keep this in mind in future contributions.
+
+The "single page documentation" way to do is also very good to know. I agree that everything in one page makes the info research easier. I'll actually apply this in the followup PR regarding Nicolas' comment https://github.com/symfony/symfony-docs/pull/17771#pullrequestreview-1254034932.
+
+Thanks for the time you spent on that feedback 👍
