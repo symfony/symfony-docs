@@ -860,7 +860,8 @@ of:
 
 * All the services that are tagged with ``kernel.locale_aware``;
 * ``\Locale::setDefault()``;
-* If a request is available, the ``_locale`` request attribute::
+* If the ``RequestContext`` service is available, the ``_locale``
+  parameter (so urls are generated with the new locale)::
 
     use Symfony\Component\Translation\LocaleSwitcher;
 
