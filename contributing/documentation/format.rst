@@ -90,9 +90,10 @@ The previous reStructuredText snippet renders as follow:
 
         // Configuration in PHP
 
-It may be relevant in some cases to write code examples when using the whole Symfony framework, but also
-when using components as standalone libraries without the whole framework installed. In this case, you
-may use special formats ``php-symfony`` and ``php-standalone``, which will be rendered like this:
+All code examples assume that you are using that feature inside a Symfony
+application. If you ever need to also show how to use it when working with
+standalone components in any PHP application, use the special formats
+``php-symfony`` and ``php-standalone``, which will be rendered like this:
 
 .. configuration-block::
 
@@ -106,9 +107,9 @@ may use special formats ``php-symfony`` and ``php-standalone``, which will be re
 
 The current list of supported formats are the following:
 
-===================  ==========================================================================================
+===================  ==============================================================================
 Markup Format        Use It to Display
-===================  ==========================================================================================
+===================  ==============================================================================
 ``html``             HTML
 ``xml``              XML
 ``php``              PHP
@@ -120,8 +121,8 @@ Markup Format        Use It to Display
 ``php-annotations``  PHP Annotations
 ``php-attributes``   PHP Attributes
 ``php-symfony``      PHP code example when using the Symfony framework
-``php-standalone``   PHP code to be used in a standalone context, for example when using standalone components
-===================  ==========================================================================================
+``php-standalone``   PHP code to be used in any PHP application using standalone Symfony components
+===================  ==============================================================================
 
 Adding Links
 ~~~~~~~~~~~~
