@@ -38,13 +38,14 @@ Usage
 -----
 
 The :class:`Symfony\\Component\\Clock\\Clock` class returns the current time and
-allows to use any implementation of the interface described by `PSR-20`_ as a global
-clock in your application::
+allows to use any `PSR-20`_ compatible implementation as a global clock in your
+application::
 
     use Symfony\Component\Clock\Clock;
     use Symfony\Component\Clock\MockClock;
 
-    // You can set a custom clock implementation, or use the NativeClock default one
+    // by default, Clock uses the NativeClock implementation, but you can change
+    // this by setting any other implementation
     Clock::set(new MockClock());
 
     // Then, you can get the clock instance
@@ -53,10 +54,10 @@ clock in your application::
     // Additionally, you can set a timezone
     $clock->withTimeZone('Europe/Paris');
 
-    // From here, you are able to get the current time
+    // From here, you can get the current time
     $now = $clock->now();
 
-    // And also to sleep for an amount of time
+    // And sleep for any number of seconds
     $clock->sleep(2.5);
 
 The Clock component also provides the ``now()`` function::
@@ -66,11 +67,7 @@ The Clock component also provides the ``now()`` function::
     // Get the current time as a DateTimeImmutable instance
     $now = now();
 
-.. tip::
-
-    If you want to use the Clock component in your services, you may
-    have a look at the section about
-    :ref:`using a clock inside your services <clock_use-inside-a-service>`.
+Later on this page you can learn how to use this clock in your services and tests.
 
 .. versionadded:: 6.3
 
@@ -80,7 +77,7 @@ The Clock component also provides the ``now()`` function::
 Available Clocks Implementations
 --------------------------------
 
-The Clock component provides many ready-to-use implementations of the
+The Clock component provides some ready-to-use implementations of the
 :class:`Symfony\\Component\\Clock\\ClockInterface`, which you can use
 as global clocks in your application depending on your needs.
 
