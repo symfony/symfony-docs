@@ -147,3 +147,61 @@ being in a month or another.
 .. versionadded:: 6.3
 
     The :class:`Symfony\\Component\\Clock\\ClockAwareTrait` was introduced in Symfony 6.3.
+
+Writing Time-Sensitive Tests
+----------------------------
+
+The Clock component provides another trait, this one easing you the writing of time-sensitive
+tests: the :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`. The purpose
+of this trait is to provide methods to freeze time and restore the global clock after
+each test.
+
+To interact with the mocked clock in your tests, you will have to use the ``ClockSensitiveTrait::mockTime()``
+method. This method accepts many types as its only argument:
+
+* A string, which can be a date or an interval. Examples: ``1996-07-01`` or ``+2 days``
+* A ``DateTimeImmutable`` to set the clock at
+* A boolean, to freeze or restore the global clock
+
+Let's say you want to test the method ``MonthSensitive::isWinterMonth()`` of the above example.
+An approach of the test class could be written this way::
+
+    namespace App\Tests\TimeUtils;
+
+    use App\TimeUtils\MonthSensitive;
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\Clock\Test\ClockSensitiveTrait;
+
+    class MonthSensitiveTest extends TestCase
+    {
+        use ClockSensitiveTrait;
+
+        public function testIsWinterMonth(): void
+        {
+            $clock = static::mockTime(new \DateTimeImmutable('2022-03-02'));
+
+            $monthSensitive = new MonthSensitive();
+            $monthSensitive->setClock($clock);
+
+            $this->assertTrue($monthSensitive->isWinterMonth());
+        }
+
+        public function testIsNotWinterMonth(): void
+        {
+            $clock = static::mockTime(new \DateTimeImmutable('2023-06-02'));
+
+            $monthSensitive = new MonthSensitive();
+            $monthSensitive->setClock($clock);
+
+            $this->assertFalse($monthSensitive->isWinterMonth());
+        }
+    }
+
+It doesn't matter which time of the year you are running this test, it will always behave
+the same way. By combining the :class:`Symfony\\Component\\Clock\\ClockAwareTrait` and
+:class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`, you have full control on
+your time-sensitive code's behavior.
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait` was introduced in Symfony 6.3.
