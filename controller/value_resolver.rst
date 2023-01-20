@@ -96,10 +96,10 @@ Symfony ships with the following value resolvers in the
 
     .. tip::
 
-        The ``DateTimeInterface`` object is generated with the :doc:`Clock component </components/clock>`,
-        which means you can have full control over the date and time values the controller receives when
-        testing your application. This can be achieved by using the
-        :class:`Symfony\\Component\\Clock\\MockClock` implementation in your test environment.
+        The ``DateTimeInterface`` object is generated with the :doc:`Clock component </components/clock>`.
+        This. gives your full control over the date and time values the controller
+        receives when testing your application and using the
+        :class:`Symfony\\Component\\Clock\\MockClock` implementation.
 
     .. versionadded:: 6.1
 
