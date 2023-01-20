@@ -151,20 +151,20 @@ being in a month or another.
 Writing Time-Sensitive Tests
 ----------------------------
 
-The Clock component provides another trait, this one easing you the writing of time-sensitive
-tests: the :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`. The purpose
-of this trait is to provide methods to freeze time and restore the global clock after
-each test.
+The Clock component provides another trait, called :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`,
+to help you write time-sensitive tests. This trait provides methods to freeze
+time and restore the global clock after each test.
 
-To interact with the mocked clock in your tests, you will have to use the ``ClockSensitiveTrait::mockTime()``
-method. This method accepts many types as its only argument:
+Use the ``ClockSensitiveTrait::mockTime()`` method to interact with the mocked
+clock in your tests. This method accepts different types as its only argument:
 
-* A string, which can be a date or an interval. Examples: ``1996-07-01`` or ``+2 days``
-* A ``DateTimeImmutable`` to set the clock at
-* A boolean, to freeze or restore the global clock
+* A string, which can be a date to set the clock at (e.g. ``1996-07-01``) or an
+  interval to modify the clock (e.g. ``+2 days``);
+* A ``DateTimeImmutable`` to set the clock at;
+* A boolean, to freeze or restore the global clock.
 
-Let's say you want to test the method ``MonthSensitive::isWinterMonth()`` of the above example.
-An approach of the test class could be written this way::
+Let's say you want to test the method ``MonthSensitive::isWinterMonth()`` of the
+above example. This is how you can write that test::
 
     namespace App\Tests\TimeUtils;
 
@@ -197,10 +197,10 @@ An approach of the test class could be written this way::
         }
     }
 
-It doesn't matter which time of the year you are running this test, it will always behave
-the same way. By combining the :class:`Symfony\\Component\\Clock\\ClockAwareTrait` and
-:class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`, you have full control on
-your time-sensitive code's behavior.
+This test will behave the same no matter which time of the year you run it.
+By combining the :class:`Symfony\\Component\\Clock\\ClockAwareTrait` and
+:class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`, you have full
+control on your time-sensitive code's behavior.
 
 .. versionadded:: 6.3
 
