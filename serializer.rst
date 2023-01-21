@@ -5,9 +5,22 @@ How to Use the Serializer
 =========================
 
 Symfony provides a serializer to serialize/deserialize to and from objects and
-different formats (e.g. JSON or XML). Before using it, read the
-:doc:`Serializer component docs </components/serializer>` to get familiar with
-its philosophy and the normalizers and encoders terminology.
+different formats (e.g. JSON or XML).
+
+In order to do so, the Serializer component follows the following schema:
+
+.. raw:: html
+
+    <object data="../_images/components/serializer/serializer_workflow.svg" type="image/svg+xml"></object>
+
+As you can see in the picture above, an array is used as an intermediary between
+objects and serialized contents. This way, encoders will only deal with turning
+specific **formats** into **arrays** and vice versa. The same way, Normalizers
+will deal with turning specific **objects** into **arrays** and vice versa.
+
+Serialization is a complex topic. This component may not cover all your use
+cases out of the box, but it can be useful for developing tools to
+serialize and deserialize your objects.
 
 .. _activating_the_serializer:
 
@@ -21,25 +34,259 @@ install the ``serializer`` :ref:`Symfony pack <symfony-packs>` before using it:
 
     $ composer require symfony/serializer-pack
 
-Using the Serializer Service
-----------------------------
+.. note::
+
+    This pack also installs some commonly used optional dependencies of the
+    Serializer component. When using this component outside the Symfony
+    framework, you might want to start with the ``symfony/serializer``
+    package and install optional dependencies if you need them.
+
+Serializing an Object
+---------------------
+
+For the sake of this example, assume the following class already
+exists in your project::
+
+    namespace App\Model;
+
+    class Person
+    {
+        private int $age;
+        private string $name;
+        private bool $sportsperson;
+        private ?\DateTime $createdAt;
+
+        // Getters
+        public function getAge(): int
+        {
+            return $this->age;
+        }
+
+        public function getName(): string
+        {
+            return $this->name;
+        }
+
+        public function getCreatedAt()
+        {
+            return $this->createdAt;
+        }
+
+        // Issers
+        public function isSportsperson(): bool
+        {
+            return $this->sportsperson;
+        }
+
+        // Setters
+        public function setAge(int $age): void
+        {
+            $this->age = $age;
+        }
+
+        public function setName(string $name): void
+        {
+            $this->name = $name;
+        }
+
+        public function setSportsperson(bool $sportsperson): void
+        {
+            $this->sportsperson = $sportsperson;
+        }
+
+        public function setCreatedAt(\DateTime $createdAt = null): void
+        {
+            $this->createdAt = $createdAt;
+        }
+    }
+
+Now, if you want to serialize this object into JSON, you need to
+use the ``serializer`` service by typehinting for
+:class:`Symfony\\Component\\Serializer\\SerializerInterface`:
+
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        // src/Controller/PersonController.php
+        namespace App\Controller;
+
+        use App\Model\Person;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\HttpFoundation\JsonResponse;
+        use Symfony\Component\HttpFoundation\Response;
+        use Symfony\Component\Serializer\SerializerInterface;
+
+        class PersonController extends AbstractController
+        {
+            public function index(SerializerInterface $serializer): Response
+            {
+                $person = new Person();
+                $person->setName('foo');
+                $person->setAge(99);
+                $person->setSportsperson(false);
+
+                $jsonContent = $serializer->serialize($person, 'json');
+                // $jsonContent contains {"name":"foo","age":99,"sportsperson":false}
+
+                return JsonResponse::fromJsonString($jsonContent);
+            }
+        }
+
+    .. code-block:: php-standalone
+
+        use App\Model\Person;
+        use Symfony\Component\Serializer\Encoder\JsonEncoder;
+        use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+        use Symfony\Component\Serializer\Serializer;
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
+        $serializer = new Serializer($normalizers, $encoders);
+
+        $person = new Person();
+        $person->setName('foo');
+        $person->setAge(99);
+        $person->setSportsperson(false);
+
+        $jsonContent = $serializer->serialize($person, 'json');
+        // $jsonContent contains {"name":"foo","age":99,"sportsperson":false}
+
+The first parameter of the :method:`Symfony\\Component\\Serializer\\Serializer::serialize`
+is the object to be serialized and the second is used to choose the proper encoder (i.e. format),
+in this case the :class:`Symfony\\Component\\Serializer\\Encoder\\JsonEncoder`.
+
+.. tip::
+
+    When your controller class extends ``AbstractController``, you can
+    simplify your controller by using
+    the :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::json`
+    method to create a JSON response using the Serializer service::
+
+        class PersonController extends AbstractController
+        {
+            public function index(): Response
+            {
+                $person = new Person();
+                $person->setName('foo');
+                $person->setAge(99);
+                $person->setSportsperson(false);
+
+                return $this->json($person);
+            }
+        }
+
+Deserializing an Object
+-----------------------
+
+The serialize can also do the exact opposite (called "deserialization"),
+which is creating a PHP object from a formatted string (e.g. JSON or XML):
+
+.. configuration-block::
+
+    .. code-block:: php-symfony
+
+        // src/Controller/PersonController.php
+        namespace App\Controller;
+
+        // ...
+        use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+        use Symfony\Component\HttpFoundation\Request;
+
+        class PersonController extends AbstractController
+        {
+            // ...
+
+            public function create(Request $request, SerializerInterface $serializer): Response
+            {
+                if ('json' !== $request->getContentTypeFormat()) {
+                    throw new BadRequestException('Unsupported content format');
+                }
+
+                $jsonData = $request->getContent();
+                $person = $serializer->deserialize($jsonData, Person::class, 'json');
+
+                // this creates a new Person instance based on the $jsonData
+                // (which contains e.g. `{"name": "Jane Doe", "age": 59, "sportsperson": true}`)
+
+                // ... do something with $person and return a response
+            }
+        }
+
+    .. code-block:: php-standalone
+
+        use App\Model\Person;
+        use Symfony\Component\Serializer\Encoder\JsonEncoder;
+        use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+        use Symfony\Component\Serializer\Serializer;
+
+        // ...
+        $jsonData = <<<EOF
+        {
+            "name": "Jane Doe",
+            "age": 58,
+            "sportsperson": true
+        }
+        EOF;
+
+        $person = $serializer->deserialize($jsonData, Person::class, 'json');
+
+In this case, :method:`Symfony\\Component\\Serializer\\Serializer::deserialize`
+needs three parameters:
+
+#. The data to be decoded
+#. The name of the class this information will be decoded to
+#. The name of the encoder used to convert the data to an array (i.e. the input format)
+
+.. note::
+
+    By default, additional attributes that are not mapped to the
+    denormalized object will be ignored by the Serializer component. For
+    instance, if a request to the above controller contains
+    ``{"name": "Jane Doe", "age": 59, "sportsperson": true, "city": "Paris"}``,
+    the ``city`` field will be ignored. You can disallow extra attributes
+    using the :ref:`serializer context <serializer-context>` you'll learn
+    about later.
+
+Deserializing in an Existing Object
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The serializer can also be used to update an existing object::
+
+    // ...
+    $person = new Person();
+    $person->setName('Jane Doe');
+    $person->setAge(59);
+    $person->setSportsperson(true);
+
+
+    $data = <<<EOF
+    <person>
+        "sportsperson": false
+        "age": 49
+    </person>
+    EOF;
+
+    $serializer->deserialize($data, Person::class, 'xml', [AbstractNormalizer::OBJECT_TO_POPULATE => $person]);
+    // $person = App\Model\Person(name: 'foo', age: '69', sportsperson: true)
+
+The ``AbstractNormalizer::OBJECT_TO_POPULATE`` is only used for the top
+level object. If that object is the root of a tree structure, all child
+elements that exist in the normalized data will be re-created with new
+instances.
+
+When the ``AbstractObjectNormalizer::DEEP_OBJECT_TO_POPULATE`` option is set to
+true, existing children of the root ``OBJECT_TO_POPULATE`` are updated from the
+normalized data, instead of the denormalizer re-creating them. Note that
+``DEEP_OBJECT_TO_POPULATE`` only works for single child objects, but not for
+arrays of objects. Those will still be replaced when present in the normalized
+data.
+
+Using the Serializer in Twig Templates
+--------------------------------------
 
 Once enabled, the serializer service can be injected in any service where
 you need it or it can be used in a controller::
-
-    // src/Controller/DefaultController.php
-    namespace App\Controller;
-
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\Serializer\SerializerInterface;
-
-    class DefaultController extends AbstractController
-    {
-        public function index(SerializerInterface $serializer)
-        {
-            // keep reading for usage examples
-        }
-    }
 
 Or you can use the ``serialize`` Twig filter in a template:
 
