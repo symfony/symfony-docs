@@ -181,5 +181,186 @@ populated by using the special ``"\0"`` property name to define their internal v
 
     The :class:`Symfony\\Component\\VarExporter\\Hydrator` was introduced in Symfony 6.2.
 
+Creating Lazy Objects
+---------------------
+
+Lazy-objects are objects instantiated empty and populated on-demand. This is
+particularly useful when you have for example properties in your classes that
+requires some heavy computation to determine their value. In this case, you
+may want to trigger the property's value processing only when you actually need
+its value. Thanks to this, the heavy computation won't be done if you never use
+this property. The VarExporter component is bundled with two traits helping
+you implement such mechanism easily in your classes.
+
+.. _var-exporter_ghost-objects:
+
+LazyGhostTrait
+~~~~~~~~~~~~~~
+
+Ghost objects are empty objects, which see their properties populated the first
+time any method is called. Thanks to :class:`Symfony\\Component\\VarExporter\\LazyGhostTrait`,
+the implementation of the lazy mechanism is eased. In the following example, we are
+defining the ``$hash`` property as lazy. We also declare that the ``MyLazyObject::computeHash()``
+method should be called only when ``$hash``'s value need to be known::
+
+    namespace App\Hash;
+
+    use Symfony\Component\VarExporter\LazyGhostTrait;
+
+    class HashProcessor
+    {
+        use LazyGhostTrait;
+        // Because of how the LazyGhostTrait trait works internally, you
+        // must add this private property in your class
+        private int $lazyObjectId;
+
+        // This property may require a heavy computation to have its value
+        public readonly string $hash;
+
+        public function __construct()
+        {
+            self::createLazyGhost(initializer: [
+                'hash' => $this->computeHash(...),
+            ], instance: $this);
+        }
+
+        private function computeHash(array $data): string
+        {
+            // Compute $this->hash value with the passed data
+        }
+    }
+
+:class:`Symfony\\Component\\VarExporter\\LazyGhostTrait` also allows to
+convert non-lazy classes to lazy ones::
+
+    namespace App\Hash;
+
+    use Symfony\Component\VarExporter\LazyGhostTrait;
+
+    class HashProcessor
+    {
+        public readonly string $hash;
+
+        public function __construct(array $data)
+        {
+            $this->hash = $this->computeHash($data);
+        }
+
+        private function computeHash(array $data): string
+        {
+            // ...
+        }
+
+        public function validateHash(): bool
+        {
+            // ...
+        }
+    }
+
+    class LazyHashProcessor extends HashProcessor
+    {
+        use LazyGhostTrait;
+    }
+
+    $processor = LazyHashProcessor::createLazyGhost(initializer: function (HashProcessor $instance): void {
+        // Do any operation you need here: call setters, getters, methods to validate the hash, etc.
+        $data = /** Retrieve required data to compute the hash */;
+        $instance->__construct(...$data);
+        $instance->validateHash();
+    });
+
+While you never query ``$processor->hash`` value, heavy methods will never be triggered.
+But still, the ``$processor`` object exists and can be used in your code, passed to
+methods, functions, etc.
+
+Additionally and by adding two arguments to initializer function, it is possible to initialize
+properties one-by-one::
+
+    $processor = LazyHashProcessor::createLazyGhost(initializer: function (HashProcessor $instance, string $propertyName, ?string $propertyScope): mixed {
+        if (HashProcessor::class === $propertyScope && 'hash' === $propertyName) {
+            // Return $hash value
+        }
+
+        // Then you can add more logic for the other properties
+    });
+
+Ghost objects unfortunately can't work with abstract classes but also internal PHP classes.
+Nevertheless, the VarExporter component covers this need with the help of to
+:ref:`Virtual Proxies <var-exporter_virtual-proxies>`.
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\\Component\\VarExporter\\LazyGhostTrait` was introduced in Symfony 6.2.
+
+.. _var-exporter_virtual-proxies:
+
+LazyProxyTrait
+~~~~~~~~~~~~~~
+
+The purpose of virtual proxies in the same one as
+:ref:`ghost objects <var-exporter_ghost-objects>`, but their internal behavior is
+totally different. Where ghost objects requires to extend a base class, virtual
+proxies take advantage of the **Liskov Substitution principle**. This principle
+describes that if two objects are implementing the same interface, you can swap between
+the different implementations without breaking your application. This is what virtual
+proxies take advantage of. To use virtual proxies, you may use
+:class:`Symfony\\Component\\VarExporter\\ProxyHelper` to generate proxy's class
+code::
+
+    namespace App\Hash;
+
+    use Symfony\Component\VarExporter\ProxyHelper;
+
+    interface ProcessorInterface
+    {
+        public function getHash(): bool;
+    }
+
+    abstract class AbstractProcessor implements ProcessorInterface
+    {
+        protected string $hash;
+
+        public function getHash(): bool
+        {
+            return $this->hash;
+        }
+    }
+
+    class HashProcessor extends AbstractProcessor
+    {
+        public function __construct(array $data)
+        {
+            $this->hash = $this->computeHash($data);
+        }
+
+        private function computeHash(array $data): string
+        {
+            // ...
+        }
+    }
+
+    $proxyCode = ProxyHelper::generateLazyProxy(new \ReflectionClass(AbstractProcessor::class));
+    // $proxyCode contains the actual proxy and the reference to LazyProxyTrait.
+    // In production env, this should be dumped into a file to avoid calling eval().
+    eval('class HashProcessorProxy'.$proxyCode);
+
+    $processor = HashProcessorProxy::createLazyProxy(initializer: function (): ProcessorInterface {
+        $data = /** Retrieve required data to compute the hash */;
+        $instance = new HashProcessor(...$data);
+
+        // Do any operation you need here: call setters, getters, methods to validate the hash, etc.
+
+        return $instance;
+    });
+
+Just like ghost objects, while you never query ``$processor->hash``, its value will not be computed.
+The main difference with ghost objects is that this time, we created a proxy of an abstract class.
+This also works with internal PHP class.
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\\Component\\VarExporter\\LazyProxyTrait` and
+    :class:`Symfony\\Component\\VarExporter\\ProxyHelper` were introduced in Symfony 6.2.
+
 .. _`OPcache`: https://www.php.net/opcache
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
