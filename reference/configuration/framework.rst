@@ -2935,11 +2935,9 @@ enable_annotations
 
 **type**: ``boolean`` **default**: ``false``
 
-If this option is enabled, serialization groups can be defined using annotations or attributes.
-
-.. seealso::
-
-    For more information, see :ref:`serializer-using-serialization-groups-annotations`.
+Enables support for annotations in the serializer component. See
+:ref:`the reference <reference-attributes-serializer>` for a list of
+supported annotations.
 
 .. _reference-serializer-name_converter:
 
@@ -2955,8 +2953,7 @@ value.
 
 .. seealso::
 
-    For more information, see
-    :ref:`component-serializer-converting-property-names-when-serializing-and-deserializing`.
+    For more information, see :ref:`serializer-name-conversion`.
 
 .. _reference-serializer-circular_reference_handler:
 

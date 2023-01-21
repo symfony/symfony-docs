@@ -57,15 +57,17 @@ Security
 
 * :ref:`CurrentUser <security-json-login>`
 
+.. _reference-attributes-serializer:
+
 Serializer
 ~~~~~~~~~~
 
-* :ref:`Context <serializer_serializer-context>`
+* :ref:`Context <serializer-context>`
 * :ref:`DiscriminatorMap <serializer_interfaces-and-abstract-classes>`
-* :ref:`Groups <component-serializer-attributes-groups-annotations>`
+* :ref:`Groups <serializer-groups-annotation>`
 * :ref:`Ignore <serializer_ignoring-attributes>`
 * :ref:`MaxDepth <serializer_handling-serialization-depth>`
-* :ref:`SerializedName <serializer_name-conversion>`
+* :ref:`SerializedName <serializer-name-conversion>`
 
 Symfony UX
 ~~~~~~~~~~
