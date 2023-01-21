@@ -51,6 +51,9 @@ Then, you can register the commands using
 
     // ...
     $application->add(new GenerateAdminCommand());
+    
+The command must have a valid name set, for example by calling the parent constructor.
+of ``Symfony\Component\Console\Command\Command``.
 
 You can also register inline commands and define their behavior thanks to the
 ``Command::setCode()`` method::
