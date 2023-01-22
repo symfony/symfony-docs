@@ -70,9 +70,9 @@ current PHP SAPI:
 
 .. note::
 
-    If you want to catch the dump output as a string, please read the
-    :ref:`advanced section <var-dumper-advanced>` which contains examples of
-    it.
+    If you want to catch the dump output as a string or customize the way information
+    are displayed, please read the :ref:`advanced section <var-dumper-advanced>` which
+    contains examples of it.
     You'll also learn how to change the format or redirect the output to
     wherever you want.
 
@@ -496,6 +496,8 @@ like this::
         $dumper->dump($cloner->cloneVar($var));
     });
 
+.. _var-dumper-cloners:
+
 Cloners
 ~~~~~~~
 
@@ -875,3 +877,86 @@ that holds a file name or a URL, you can wrap them in a ``LinkStub`` to tell
 
         return $array;
     }
+
+Customizing The Output On ``dump()`` Call
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``dump()`` function takes full advantage of PHP 8 named arguments. By using
+the named argument syntax when calling ``dump()``, a label will be displayed right
+before the dump output::
+
+    $user = new User();
+    $password = 'root';
+
+    dump(user: $user, password: $password);
+
+This will output the label ``user`` before dumping the actual content of ``$user``, and
+also the label ``password`` before dumping ``$password`` content.
+
+.. tip::
+
+    By passing multiple arguments to the ``dump()`` function in the same call, if no
+    explicit named argument is given, the index (starting from 1) of the dumped variable
+    will be displayed to help you group outputs by ``dump()`` call.
+
+.. versionadded:: 6.3
+
+    The support of named arguments was introduced in Symfony 6.3.
+
+The ``dump()`` function also accepts a set of named arguments to tweak the
+output. These named arguments all start with a ``_`` to avoid interfering with
+other named arguments you may use to display your own variables. For example, if
+you want to display a debug stacktrace with your variable content, you can do it
+as follow::
+
+    $var = ['test'];
+    dump($var, _trace: true);
+
+Here is the list of the supported options:
+
+* ``_format``: explicitly choose the format to display the output between ``cli``,
+  ``html`` or ``server``.
+* ``_trace``: displays the debug backtrace from where ``dump()`` has been called.
+  This option accepts a boolean (``true`` to display the trace, ``false`` to hide it),
+  but also an integer. This integer limits the stacktrace size being displayed.
+* ``_theme``: set the theme to use when using ``html`` format, between ``dark`` or ``light``.
+* ``_charset``: set the charset to use for the output content.
+* ``_flags``: a bitmask of ``AbstractDumper::DUMP_*`` flags. To see available flags, have a
+  look at :class:`Symfony\\Component\\VarDumper\\Dumper\\AbstractDumper`.
+* ``_max_items``: set the value being passed to
+  :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxItems` of the default
+  cloner. For more information, see the :ref:`Cloners <var-dumper-cloners>` section.
+* ``_min_depth``: set the value being passed to
+  :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMinDepth` of the default
+  cloner. For more information, see the :ref:`Cloners <var-dumper-cloners>` section.
+* ``_max_string``: set the value being passed to
+  :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxString` of the default
+  cloner. For more information, see the :ref:`Cloners <var-dumper-cloners>` section.
+* ``_max_depth``: set the value being passed to
+  :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxDepth` of the default
+  cloner. For more information, see the :ref:`Cloners <var-dumper-cloners>` section.
+* ``_max_items_per_depth``: set the value being passed to
+  :method:`Symfony\\Component\\VarDumper\\Cloner\\VarCloner::setMaxItemsPerDepth` of the default
+  cloner. For more information, see the :ref:`Cloners <var-dumper-cloners>` section.
+
+You can also set these options globally thanks to the ``VAR_DUMPER_OPTIONS`` environment variable,
+formatted as a query string:
+
+.. code-block:: bash
+
+    # .env (or .env.local)
+    VAR_DUMPER_OPTIONS="_trace=3&_max_items=4&_theme=light"
+
+Finally, the :class:`Symfony\\Component\\VarDumper\\Dumper\\VarDumperOptions` is an option
+builder that you can use to create your options array thanks to a fluent interface. This
+class provides the ``VarDumperOptions::toArray()`` method to get the options as an array
+and use them in a ``dump()`` call with to the spread operator.
+
+.. note::
+
+    If a format is set with ``VAR_DUMPER_FORMAT`` environment variable, it will be used instead
+    of the one defined by the ``VAR_DUMPER_OPTIONS`` environment variable.
+
+.. versionadded:: 6.3
+
+    Special options of ``dump()`` were introduced in Symfony 6.3.
