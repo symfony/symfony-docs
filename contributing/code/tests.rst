@@ -65,6 +65,10 @@ what's going on and if the tests are broken because of the new code.
 Through Docker
 --------------
 
+.. versionadded:: 6.3
+
+    Running tests through Docker was introduced in Symfony 6.3.
+
 You must `install Composer`_ and ``docker``.
 
 .. note::
