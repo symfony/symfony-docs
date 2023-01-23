@@ -863,10 +863,12 @@ dispatched. Listeners receive a
 The ``FailedMessageEvent`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Typical Purposes**: Doing something before the exception is thrown (Retry to send the message or log additional information).
+**Typical Purposes**: Doing something before the exception is thrown
+(Retry to send the message or log additional information).
 
-Whenever an exception is thrown while sending the message, the event class ``FailedMessageEvent`` is
-dispatched. A listener can do anything useful before the exception is thrown.
+Whenever an exception is thrown while sending the message, the event class
+``FailedMessageEvent`` is dispatched. A listener can do anything useful before
+the exception is thrown.
 
 Listeners receive a
 :class:`Symfony\\Component\\Notifier\\Event\\FailedMessageEvent` event::
@@ -887,11 +889,11 @@ Listeners receive a
 The ``SentMessageEvent`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Typical Purposes**: To perform some action when the message is successfully sent (like retrieve the id returned
-when the message is sent).
+**Typical Purposes**: To perform some action when the message is successfully
+sent (like retrieve the id returned when the message is sent).
 
-After the message has been successfully sent, the event class ``SentMessageEvent`` is
-dispatched. Listeners receive a
+After the message has been successfully sent, the event class ``SentMessageEvent``
+is dispatched. Listeners receive a
 :class:`Symfony\\Component\\Notifier\\Event\\SentMessageEvent` event::
 
     use Symfony\Component\Notifier\Event\SentMessageEvent;

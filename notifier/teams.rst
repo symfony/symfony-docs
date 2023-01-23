@@ -4,6 +4,10 @@
 Microsoft Teams Notifier
 ========================
 
+The Microsoft Teams Notifier package allows to use Microsoft Teams via the Symfony
+Notifier component. Read the :doc:`main Notifier docs </notifier>` to learn about
+installing and configuring that component.
+
 Adding text to a Message
 ------------------------
 

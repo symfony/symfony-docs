@@ -4,6 +4,10 @@
 Discord Notifier
 ================
 
+The Discord Notifier package allows to use Discord via the Symfony Notifier
+component. Read the :doc:`main Notifier docs </notifier>` to learn about installing
+and configuring that component.
+
 Adding Interactions to a Message
 --------------------------------
 
