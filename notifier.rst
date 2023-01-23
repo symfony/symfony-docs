@@ -42,7 +42,6 @@ The notifier component supports the following channels:
     API's tokens.
 
 .. _notifier-sms-channel:
-.. _notifier-texter-dsn:
 
 SMS Channel
 ~~~~~~~~~~~
@@ -153,8 +152,41 @@ configure the ``texter_transports``:
             ;
         };
 
+.. _sending-sms:
+
+The :class:`Symfony\\Component\\Notifier\\TexterInterface` class allows you to
+send SMS messages::
+
+    // src/Controller/SecurityController.php
+    namespace App\Controller;
+
+    use Symfony\Component\Notifier\Message\SmsMessage;
+    use Symfony\Component\Notifier\TexterInterface;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class SecurityController
+    {
+        #[Route('/login/success')]
+        public function loginSuccess(TexterInterface $texter)
+        {
+            $sms = new SmsMessage(
+                // the phone number to send the SMS message to
+                '+1411111111',
+                // the message
+                'A new login was detected!'
+            );
+
+            $sentMessage = $texter->send($sms);
+
+            // ...
+        }
+    }
+
+The ``send()`` method returns a variable of type
+:class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
+information such as the message ID and the original message contents.
+
 .. _notifier-chat-channel:
-.. _notifier-chatter-dsn:
 
 Chat Channel
 ~~~~~~~~~~~~
@@ -170,24 +202,24 @@ The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
 integration with these chat services:
 
-==============  ====================================  =============================================================================
-Service         Package                               DSN
-==============  ====================================  =============================================================================
-AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
-Discord         ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
-FakeChat        ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
-Firebase        ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
-Gitter          ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
-GoogleChat      ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
-LinkedIn        ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
-Mattermost      ``symfony/mattermost-notifier``       ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
-Mercure         ``symfony/mercure-notifier``          ``mercure://HUB_ID?topic=TOPIC``
-MicrosoftTeams  ``symfony/microsoft-teams-notifier``  ``microsoftteams://default/PATH``
-RocketChat      ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
-Slack           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
-Telegram        ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
-Zulip           ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
-==============  ====================================  =============================================================================
+======================================  ====================================  =============================================================================
+Service                                 Package                               DSN
+======================================  ====================================  =============================================================================
+AmazonSns                               ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+:doc:`Discord <notifier/discord>`       ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
+FakeChat                                ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
+Firebase                                ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
+Gitter                                  ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
+GoogleChat                              ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
+LinkedIn                                ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
+Mattermost                              ``symfony/mattermost-notifier``       ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
+Mercure                                 ``symfony/mercure-notifier``          ``mercure://HUB_ID?topic=TOPIC``
+:doc:`MicrosoftTeams <notifier/teams>`  ``symfony/microsoft-teams-notifier``  ``microsoftteams://default/PATH``
+RocketChat                              ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+:doc:`Slack <notifier/slack>`           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
+:doc:`Telegram <notifier/telegram>`     ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
+Zulip                                   ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
+======================================  ====================================  =============================================================================
 
 Chatters are configured using the ``chatter_transports`` setting:
 
@@ -237,6 +269,41 @@ Chatters are configured using the ``chatter_transports`` setting:
                 ->chatterTransport('slack', env('SLACK_DSN'))
             ;
         };
+
+.. _sending-chat-messages:
+
+The :class:`Symfony\\Component\\Notifier\\ChatterInterface` class allows
+you to send messages to chat services::
+
+    // src/Controller/CheckoutController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Notifier\ChatterInterface;
+    use Symfony\Component\Notifier\Message\ChatMessage;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class CheckoutController extends AbstractController
+    {
+        /**
+         * @Route("/checkout/thankyou")
+         */
+        public function thankyou(ChatterInterface $chatter)
+        {
+            $message = (new ChatMessage('You got a new invoice for 15 EUR.'))
+                // if not set explicitly, the message is send to the
+                // default transport (the first one configured)
+                ->transport('slack');
+
+            $sentMessage = $chatter->send($message);
+
+            // ...
+        }
+    }
+
+The ``send()`` method returns a variable of type
+:class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
+information such as the message ID and the original message contents.
 
 .. _notifier-email-channel:
 
@@ -767,18 +834,87 @@ all configured texter and chatter transports only in the ``dev`` (and/or
             chatter_transports:
                 slack: 'null://null'
 
+.. _notifier-events:
+
+.. index::
+    single: Notifier; Events
+
+Using Events
+------------
+
+The :class:`Symfony\\Component\\Notifier\\Transport`` class of the Notifier component
+allows you to optionally hook into the lifecycle via events.
+
+The ``MessageEvent::class`` Event
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Typical Purposes**: Doing something before the message is send (like logging
+which message is going to be send, or displaying something about the event
+to be executed.
+
+Just before send the message, the event class ``MessageEvent`` is
+dispatched. Listeners receive a
+:class:`Symfony\\Component\\Notifier\\Event\\MessageEvent` event::
+
+    use Symfony\Component\Notifier\Event\MessageEvent;
+
+    $dispatcher->addListener(MessageEvent::class, function (MessageEvent $event) {
+        // gets the message instance
+        $message = $event->getMessage();
+
+        // log something
+        $this->logger(sprintf('Message with subject: %s will be send to %s, $message->getSubject(), $message->getRecipientId()'));
+    });
+
+The ``FailedMessageEvent`` Event
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Typical Purposes**: Doing something before the exception is thrown
+(Retry to send the message or log additional information).
+
+Whenever an exception is thrown while sending the message, the event class
+``FailedMessageEvent`` is dispatched. A listener can do anything useful before
+the exception is thrown.
+
+Listeners receive a
+:class:`Symfony\\Component\\Notifier\\Event\\FailedMessageEvent` event::
+
+    use Symfony\Component\Notifier\Event\FailedMessageEvent;
+
+    $dispatcher->addListener(FailedMessageEvent::class, function (FailedMessageEvent $event) {
+        // gets the message instance
+        $message = $event->getMessage();
+
+        // gets the error instance
+        $error = $event->getError();
+
+        // log something
+        $this->logger(sprintf('The message with subject: %s has not been sent successfully. The error is: %s, $message->getSubject(), $error->getMessage()'));
+    });
+
+The ``SentMessageEvent`` Event
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**Typical Purposes**: To perform some action when the message is successfully
+sent (like retrieve the id returned when the message is sent).
+
+After the message has been successfully sent, the event class ``SentMessageEvent``
+is dispatched. Listeners receive a
+:class:`Symfony\\Component\\Notifier\\Event\\SentMessageEvent` event::
+
+    use Symfony\Component\Notifier\Event\SentMessageEvent;
+
+    $dispatcher->addListener(SentMessageEvent::class, function (SentMessageEvent $event) {
+        // gets the message instance
+        $message = $event->getOriginalMessage();
+
+        // log something
+        $this->logger(sprintf('The message has been successfully sent and have id: %s, $message->getMessageId()'));
+    });
+
 .. TODO
 ..    - Using the message bus for asynchronous notification
 ..    - Describe notifier monolog handler
 ..    - Describe notification_on_failed_messages integration
-
-Learn more
-----------
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    notifier/*
 
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
