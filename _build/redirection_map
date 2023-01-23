@@ -542,6 +542,9 @@
 /components/yaml/yaml_format /components/yaml#yaml-format
 /components/expression_language/syntax /components/expression_language#expression-language-syntax
 /components/expression_language/extending /components/expression_language#expression-language-extending
+/notifier/chatters /notifier#sending-chat-messages
+/notifier/texters /notifier#sending-sms
+/notifier/events /notifier#notifier-events
 /email /mailer
 /frontend/assetic /frontend
 /frontend/assetic/index /frontend
