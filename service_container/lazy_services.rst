@@ -105,7 +105,7 @@ To check if your proxy works you can check the interface of the received object:
 
 You can also configure your service's laziness thanks to the
 :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
-The attribute has to be used like this::
+For example, to define your service as lazy use the following::
 
     namespace App\Twig;
 
