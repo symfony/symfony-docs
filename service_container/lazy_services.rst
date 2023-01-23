@@ -36,6 +36,8 @@ until you interact with the proxy in some way.
     Starting from Symfony 6.2, service laziness is supported out of the box
     without having to install any additional package.
 
+.. _lazy-services_configuration:
+
 Configuration
 -------------
 
@@ -87,6 +89,26 @@ To check if your lazy service works you can check the interface of the received 
 
     dump(class_implements($service));
     // the output should include "Symfony\Component\VarExporter\LazyGhostObjectInterface"
+
+You can also configure your service's laziness thanks to the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
+For example, to define your service as lazy use the following::
+
+    namespace App\Twig;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+    use Twig\Extension\ExtensionInterface;
+
+    #[Autoconfigure(lazy: true)]
+    class AppExtension implements ExtensionInterface
+    {
+        // ...
+    }
+
+.. versionadded:: 5.4
+
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute
+    was introduced in Symfony 5.4.
 
 Interface Proxifying
 --------------------
@@ -145,6 +167,27 @@ specific interfaces.
                 ->tag('proxy', ['interface' => ExtensionInterface::class])
             ;
         };
+
+Just like in the :ref:`Configuration <lazy-services_configuration>` section, you can
+use the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure`
+attribute to configure the interface to proxify by passing its FQCN as the ``lazy``
+parameter value::
+
+    namespace App\Twig;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+    use Twig\Extension\ExtensionInterface;
+
+    #[Autoconfigure(lazy: ExtensionInterface::class)]
+    class AppExtension implements ExtensionInterface
+    {
+        // ...
+    }
+
+.. versionadded:: 5.4
+
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute
+    was introduced in Symfony 5.4.
 
 The virtual `proxy`_ injected into other services will only implement the
 specified interfaces and will not extend the original service class, allowing to
