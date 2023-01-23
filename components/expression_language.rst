@@ -432,6 +432,13 @@ For example::
 
 The ``$inGroup`` would evaluate to ``true``.
 
+.. deprecated:: 6.3
+
+    In Symfony versions previous to 6.3, ``in`` and ``not in`` operators
+    were using loose comparison. Using these operators with variables of
+    different types is now deprecated, and these operators will be using
+    strict comparison from Symfony 7.0.
+
 Numeric Operators
 .................
 
