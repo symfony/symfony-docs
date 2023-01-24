@@ -165,14 +165,13 @@ handler level or at the channel level instead of registering it globally
 (see the following sections).
 
 When registering a new processor, instead of adding the tag manually in your
-configuration files, you can take full advantage of the ``#[AsMonologProcessor]``
-attribute by using it one the processor class::
+configuration files, you can use the ``#[AsMonologProcessor]`` attribute to
+apply it on the processor class::
 
     // src/Logger/SessionRequestProcessor.php
     namespace App\Logger;
 
     use Monolog\Attribute\AsMonologProcessor;
-    // ...
 
     #[AsMonologProcessor]
     class SessionRequestProcessor
@@ -180,13 +179,16 @@ attribute by using it one the processor class::
         // ...
     }
 
-The ``#[AsMonologProcessor]`` attribute takes 3 optional arguments:
+The ``#[AsMonologProcessor]`` attribute takes these optional arguments:
 
-* ``channel``: the logging channel the processor should be pushed to
-* ``handler``: the handler the processor should be pushed to
-* ``method``: the method that processes the records (if the attribute is used
-  at the class level). Indeed, the attribute can also be used directly
-  on a class method.
+* ``channel``: the logging channel the processor should be pushed to;
+* ``handler``: the handler the processor should be pushed to;
+* ``method``: the method that processes the records (useful when applying
+  the attribute to the entire class instead of a single method).
+
+.. versionadded:: 3.8
+
+    The ``#[AsMonologProcessor]`` attribute was introduced in MonologBundle 3.8.
 
 Symfony's MonologBridge provides processors that can be registered inside your application.
 
