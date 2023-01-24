@@ -64,7 +64,7 @@ Additionally, you have access to a number of functions inside the expression:
     "fully" - i.e. returns true if the user is "logged in".
 ``is_anonymous()``
     Returns ``true`` if the user is anonymous. That is, the firewall confirms that it
-    does not know this user's identity. This is different from ``IS_AUTHENTICATED_ANONYMOUSLY``,
+    does not know this user's identity. This is different from ``PUBLIC_ACCESS``,
     which is granted to *all* users, including authenticated ones.
 ``is_remember_me()``
     Similar, but not equal to ``IS_AUTHENTICATED_REMEMBERED``, see below.
