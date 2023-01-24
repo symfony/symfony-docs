@@ -167,7 +167,7 @@ split the configuration into two separate firewalls:
                 ->formLogin();
 
             $accessControl = $security->accessControl();
-            $accessControl->path('^/login')->roles(['IS_AUTHENTICATED_ANONYMOUSLY']);
+            $accessControl->path('^/login')->roles(['PUBLIC_ACCESS']);
             $accessControl->path('^/api')->roles(['ROLE_API_USER']);
             $accessControl->path('^/')->roles(['ROLE_USER']);
         };
