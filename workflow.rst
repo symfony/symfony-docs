@@ -194,7 +194,10 @@ The configured property will be used via its implemented getter/setter methods b
     preferable to not configure it.
 
     A single state marking store uses a ``string`` to store the data. A multiple
-    state marking store uses an ``array`` to store the data.
+    state marking store uses an ``array`` to store the data. If no state marking
+    store is defined you have to return ``null`` in both cases (e.g. the above
+    example should define a return type like ``App\Entity\BlogPost::getCurrentPlace(): ?array``
+    or like ``App\Entity\BlogPost::getCurrentPlace(): ?string``).
 
 .. tip::
 
