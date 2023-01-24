@@ -3,7 +3,7 @@
 Running Symfony Tests
 =====================
 
-The Symfony project uses a third-party service which automatically runs tests
+The Symfony project uses a CI (Continuous Integration) service which automatically runs tests
 for any submitted :doc:`patch <pull_requests>`. If the new code breaks any test,
 the pull request will show an error message with a link to the full error details.
 
