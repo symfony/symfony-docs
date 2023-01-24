@@ -299,7 +299,7 @@ will fallback to a write lock by calling the ``acquire()`` method.
 The Owner of The Lock
 ---------------------
 
-Locks that are acquired for the first time are owned [1]_ by the ``Lock`` instance that acquired
+Locks that are acquired for the first time are :ref:`owned <lock-owner-technical-details>` by the ``Lock`` instance that acquired
 it. If you need to check whether the current ``Lock`` instance is (still) the owner of
 a lock, you can use the ``isAcquired()`` method::
 
@@ -336,7 +336,11 @@ lose the lock it acquired automatically::
     you have to use ``acquire()`` for this. The ``isAcquired()`` method is used to check
     if the lock has been acquired by the **current process** only.
 
-.. [1] Technically, the true owners of the lock are the ones that share the same instance of ``Key``,
+.. _lock-owner-technical-details:
+
+.. note::
+
+    Technically, the true owners of the lock are the ones that share the same instance of ``Key``,
     not ``Lock``. But from a user perspective, ``Key`` is internal and you will likely only be working
     with the ``Lock`` instance so it's easier to think of the ``Lock`` instance as being the one that
     is the owner of the lock.
