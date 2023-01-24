@@ -146,7 +146,7 @@ Pull Request Merging Policy
 
 A pull request **can be merged** if:
 
-* It is a minor change [1]_;
+* It is a :ref:`minor change <core-team_minor-changes>`;
 
 * Enough time was given for peer reviews;
 
@@ -162,7 +162,8 @@ Pull Request Merging Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All code must be committed to the repository through pull requests, except for
-minor changes [1]_ which can be committed directly to the repository.
+:ref:`minor change <core-team_minor-changes>` which can be committed directly
+to the repository.
 
 **Mergers** must always use the command-line ``gh`` tool provided by the
 **Project Leader** to merge the pull requests.
@@ -178,8 +179,12 @@ Symfony Core Rules and Protocol Amendments
 The rules described in this document may be amended at any time at the
 discretion of the **Project Leader**.
 
-.. [1] Minor changes comprise typos, DocBlock fixes, code standards
-       violations, and minor CSS, JavaScript and HTML modifications.
+.. _core-team_minor-changes:
+
+.. note::
+
+    Minor changes comprise typos, DocBlock fixes, code standards
+    violations, and minor CSS, JavaScript and HTML modifications.
 
 .. _`symfony-docs repository`: https://github.com/symfony/symfony-docs
 .. _`fabpot`: https://github.com/fabpot/
