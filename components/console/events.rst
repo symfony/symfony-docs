@@ -174,10 +174,10 @@ Listeners receive a
     use Symfony\Component\Console\Event\ConsoleSignalEvent;
 
     $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
-       
+
         // gets the signal number
         $signal = $event->getHandlingSignal();
-        
+
         if (\SIGINT === $signal) {
             echo "bye bye!";
         }
@@ -217,6 +217,18 @@ handle signals themselves. To do so, implement the
             // ...
         }
     }
+
+It is your responsibility to handle signals that are relevant to you (even
+``SIGKILL``, ``SIGTERM``, etc). This allows you to ignore them or do tasks
+before terminating the process for example. This behavior is intended, as
+it leaves more flexibility to developers to handle each type of signal the
+way they want to.
+
+.. deprecated:: 6.3
+
+    In Symfony versions previous to 6.3, all signals (except from ``SIGUSR1`` and
+    ``SIGUSR2``) would terminate the script by calling ``exit(0)``. From Symfony 6.3,
+    no more signal is automatically calling ``exit(0)``.
 
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
 .. _`Signals`: https://en.wikipedia.org/wiki/Signal_(IPC)
