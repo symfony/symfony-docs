@@ -218,17 +218,15 @@ handle signals themselves. To do so, implement the
         }
     }
 
-It is your responsibility to handle signals that are relevant to you (even
-``SIGKILL``, ``SIGTERM``, etc). This allows you to ignore them or do tasks
-before terminating the process for example. This behavior is intended, as
-it leaves more flexibility to developers to handle each type of signal the
-way they want to.
+Symfony doesn't handle any signal received by the command (not even ``SIGKILL``,
+``SIGTERM``, etc). This behavior is intended, as it gives you the flexibility to
+handle all signals e.g. to do some tasks before terminating the command.
 
 .. deprecated:: 6.3
 
-    In Symfony versions previous to 6.3, all signals (except from ``SIGUSR1`` and
-    ``SIGUSR2``) would terminate the script by calling ``exit(0)``. From Symfony 6.3,
-    no more signal is automatically calling ``exit(0)``.
+    In Symfony versions previous to 6.3, all signals (except ``SIGUSR1`` and
+    ``SIGUSR2``) would terminate the script by calling ``exit(0)``. Starting
+    from Symfony 6.3, no more signal is automatically calling ``exit(0)``.
 
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
 .. _`Signals`: https://en.wikipedia.org/wiki/Signal_(IPC)
