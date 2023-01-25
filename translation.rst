@@ -26,6 +26,11 @@ into the language of the user::
     *language* code, an underscore (``_``), then the `ISO 3166-1 alpha-2`_
     *country* code (e.g. ``fr_FR`` for French/France) is recommended.
 
+Translations can be organized into groups, called **domains**. By default, all
+messages use the default ``messages`` domain::
+
+    echo $translator->trans('Hello World', domain: 'messages');
+
 The translation process has several steps:
 
 #. :ref:`Enable and configure <translation-configuration>` Symfony's
@@ -103,19 +108,17 @@ are located:
             ;
         };
 
-The locale used in translations is the one stored on the request. This is
-typically set via a ``_locale`` attribute on your routes (see :ref:`translation-locale-url`).
-
 .. _translation-basic:
 
 Basic Translation
 -----------------
 
-Translation of text is done through the  ``translator`` service
-(:class:`Symfony\\Component\\Translation\\Translator`). To translate a block
-of text (called a *message*), use the
+Translation of text is done through the ``translator`` service
+(:class:`Symfony\\Component\\Translation\\Translator`). To translate a block of
+text (called a *message*), use the
 :method:`Symfony\\Component\\Translation\\Translator::trans` method. Suppose,
-for example, that you're translating a static message from inside a controller::
+for example, that you're translating a static message from inside a
+controller::
 
     // ...
     use Symfony\Contracts\Translation\TranslatorInterface;
@@ -251,24 +254,18 @@ The Translation Process
 To actually translate the message, Symfony uses the following process when
 using the ``trans()`` method:
 
-#. The ``locale`` of the current user, which is stored on the request is determined;
+#. The ``locale`` of the current user, which is stored on the request is
+   determined; this is typically set via a ``_locale`` attribute on your routes
+   (see :ref:`translation-locale-url`);
 
-#. A catalog (e.g. big collection) of translated messages is loaded from translation
-   resources defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
-   :ref:`fallback locale <translation-fallback>` are also loaded and
-   added to the catalog if they don't already exist. The end result is a large
-   "dictionary" of translations. This catalog is cached in production to
-   minimize performance impact.
+#. A catalog of translated messages is loaded from translation resources
+   defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
+   :ref:`fallback locale <translation-fallback>` are also loaded and added to
+   the catalog if they don't already exist. The end result is a large
+   "dictionary" of translations.
 
 #. If the message is located in the catalog, the translation is returned. If
    not, the translator returns the original message.
-
-.. tip::
-
-    When translating strings that are not in the default domain (``messages``),
-    you must specify the domain as the third argument of ``trans()``::
-
-        $translator->trans('Symfony is great', [], 'admin');
 
 .. _message-placeholders:
 .. _pluralization:
@@ -296,22 +293,6 @@ plural, based on some variable:
 To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
 using PHP's :phpclass:`MessageFormatter` class. Read more about this in
 :doc:`/translation/message_format`.
-
-.. tip::
-
-    If you don't use the ICU MessageFormat syntax in your translation files,
-    pass a parameter named "%count%" to select the best plural form of the message:
-
-    .. code-block:: twig
-
-       {{ message|trans({'%name%': '...', '%count%': 1}, 'app') }}
-
-    The ``message`` variable must include all the different versions of this
-    message based on the value of the ``count`` parameter. For example:
-
-    .. code-block:: text
-
-        {0}%name% has no apples|{1}%name% has one apple|]1,Inf[ %name% has %count% apples
 
 .. _translatable-objects:
 
@@ -362,6 +343,41 @@ Translations in Templates
 Most of the time, translation occurs in templates. Symfony provides native
 support for both Twig and PHP templates.
 
+.. _translation-filters:
+
+Using Twig Filters
+~~~~~~~~~~~~~~~~~~
+
+The ``trans`` filter can be used to translate *variable texts* and complex expressions:
+
+.. code-block:: twig
+
+    {{ message|trans }}
+
+    {{ message|trans({'%name%': 'Fabien'}, 'app') }}
+
+.. tip::
+
+    You can set the translation domain for an entire Twig template with a single tag:
+
+    .. code-block:: twig
+
+       {% trans_default_domain 'app' %}
+
+    Note that this only influences the current template, not any "included"
+    template (in order to avoid side effects).
+
+By default, the translated messages are output escaped; apply the ``raw``
+filter after the translation filter to avoid the automatic escaping:
+
+.. code-block:: html+twig
+
+    {% set message = '<h3>foo</h3>' %}
+
+    {# strings and variables translated via a filter are escaped by default #}
+    {{ message|trans|raw }}
+    {{ '<h3>bar</h3>'|trans|raw }}
+
 .. _translation-tags:
 
 Using Twig Tags
@@ -392,50 +408,11 @@ You can also specify the message domain and pass some additional variables:
 
     {% trans with {'%name%': 'Fabien'} from 'app' into 'fr' %}Hello %name%{% endtrans %}
 
-.. _translation-filters:
+.. caution::
 
-Using Twig Filters
-~~~~~~~~~~~~~~~~~~
-
-The ``trans`` filter can be used to translate *variable texts* and complex expressions:
-
-.. code-block:: twig
-
-    {{ message|trans }}
-
-    {{ message|trans({'%name%': 'Fabien'}, 'app') }}
-
-.. tip::
-
-    Using the translation tags or filters have the same effect, but with
-    one subtle difference: automatic output escaping is only applied to
-    translations using a filter. In other words, if you need to be sure
-    that your translated message is *not* output escaped, you must apply
-    the ``raw`` filter after the translation filter:
-
-    .. code-block:: html+twig
-
-        {# text translated between tags is never escaped #}
-        {% trans %}
-            <h3>foo</h3>
-        {% endtrans %}
-
-        {% set message = '<h3>foo</h3>' %}
-
-        {# strings and variables translated via a filter are escaped by default #}
-        {{ message|trans|raw }}
-        {{ '<h3>bar</h3>'|trans|raw }}
-
-.. tip::
-
-    You can set the translation domain for an entire Twig template with a single tag:
-
-    .. code-block:: twig
-
-       {% trans_default_domain 'app' %}
-
-    Note that this only influences the current template, not any "included"
-    template (in order to avoid side effects).
+Using the translation tag has the same effect as the filter, but with one
+major difference: automatic output escaping is **not** applied to translations
+using a tag.
 
 Forcing the Translator Locale
 -----------------------------
@@ -444,17 +421,12 @@ When translating a message, the translator uses the specified locale or the
 ``fallback`` locale if necessary. You can also manually specify the locale to
 use for translation::
 
-    $translator->trans(
-        'Symfony is great',
-        [],
-        'messages',
-        'fr_FR'
-    );
+    $translator->trans('Symfony is great', locale: 'fr_FR');
 
 Extracting Translation Contents and Updating Catalogs Automatically
 -------------------------------------------------------------------
 
-The most time-consuming tasks when translating an application is to extract all
+The most time-consuming task when translating an application is to extract all
 the template contents to be translated and to keep all the translation files in
 sync. Symfony includes a command called ``translation:extract`` that helps you
 with these tasks:
@@ -513,10 +485,7 @@ priority message files.
 The filename of the translation files is also important: each message file
 must be named according to the following path: ``domain.locale.loader``:
 
-* **domain**: Domains are a way to organize messages into groups. Unless
-  parts of the application are explicitly separated from each other, it is
-  recommended to only use the default ``messages`` domain (e.g.
-  ``messages.en.yaml``).
+* **domain**: The translation domain;
 
 * **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
 
@@ -598,10 +567,15 @@ if you're generating translations with specialized programs or teams.
 
 .. note::
 
-    You can also store translations in a database, or any other storage by
-    providing a custom class implementing the
-    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface` interface.
-    See the :ref:`dic-tags-translation-loader` tag for more information.
+    You can also store translations in a database; it can be handled by
+    Doctrine through the `Translatable Extension`_ or the `Translatable
+    Behavior`_ (PHP 5.4+). For more information, see the documentation for
+    these libraries.
+
+    For any other storage, you need to provide a custom class implementing the
+    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface`
+    interface. See the :ref:`dic-tags-translation-loader` tag for more
+    information.
 
 .. _translation-providers:
 
@@ -617,9 +591,9 @@ them the new contents to translate frequently and merge the results back in the
 application.
 
 Instead of doing this manually, Symfony provides integration with several
-third-party translation services (e.g. Crowdin or Lokalise). You can upload and
-download (called "push" and "pull") translations to/from these services and
-merge the results automatically in the application.
+third-party translation services. You can upload and download (called "push"
+and "pull") translations to/from these services and merge the results
+automatically in the application.
 
 Installing and Configuring a Third Party Provider
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -666,7 +640,7 @@ Loco (localise.biz)    loco://API_KEY@default
 Lokalise               lokalise://PROJECT_ID:API_KEY@default
 =====================  ==========================================================
 
-To enable a translation provider, add the correct DSN in your ``.env`` file and
+To enable a translation provider, customize the DSN in your ``.env`` file and
 configure the ``providers`` option:
 
 .. configuration-block::
@@ -724,10 +698,12 @@ configure the ``providers`` option:
 
 .. tip::
 
-    If you use Lokalise as provider and a locale format following the `ISO 639-1`_ (e.g. "en" or "fr"),
-    you have to set the `Custom Language Name setting`_ in Lokalise for each of your locales,
-    in order to override the default value (which follow the `ISO 639-1`_ succeeded by a sub-code
-    in capital letters that specifies the national variety (e.g. "GB" or "US" according to `ISO 3166-1 alpha-2`_)).
+    If you use Lokalise as a provider and a locale format following the `ISO
+    639-1`_ (e.g. "en" or "fr"), you have to set the `Custom Language Name
+    setting`_ in Lokalise for each of your locales, in order to override the
+    default value (which follow the `ISO 639-1`_ succeeded by a sub-code in
+    capital letters that specifies the national variety (e.g. "GB" or "US"
+    according to `ISO 3166-1 alpha-2`_)).
 
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -770,11 +746,212 @@ now use the following commands to push (upload) and pull (download) translations
     # check out the command help to see its options (format, domains, locales, intl-icu, etc.)
     $ php bin/console translation:pull --help
 
+.. _translation-locale:
+
+.. index::
+    single: Translation; Locale
+
 Handling the User's Locale
 --------------------------
 
-Translating happens based on the user's locale. Read :doc:`/translation/locale`
-to learn more about how to handle it.
+Translating happens based on the user's locale. The locale of the current user
+is stored in the request and is accessible via the ``Request`` object::
+
+    use Symfony\Component\HttpFoundation\Request;
+
+    public function index(Request $request)
+    {
+        $locale = $request->getLocale();
+    }
+
+To set the user's locale, you may want to create a custom event listener so
+that it's set before any other parts of the system (i.e. the translator) need
+it::
+
+        public function onKernelRequest(RequestEvent $event)
+        {
+            $request = $event->getRequest();
+
+            // some logic to determine the $locale
+            $request->setLocale($locale);
+        }
+
+.. note::
+
+    The custom listener must be called **before** ``LocaleListener``, which
+    initializes the locale based on the current request. To do so, set your
+    listener priority to a higher value than ``LocaleListener`` priority (which
+    you can obtain by running the ``debug:event kernel.request`` command).
+
+Read :ref:`locale-sticky-session` for more information on making the user's
+locale "sticky" to their session.
+
+.. note::
+
+    Setting the locale using ``$request->setLocale()`` in the controller is
+    too late to affect the translator. Either set the locale via a listener
+    (like above), the URL (see next) or call ``setLocale()`` directly on the
+    ``translator`` service.
+
+See the :ref:`translation-locale-url` section below about setting the
+locale via routing.
+
+.. _translation-locale-url:
+
+The Locale and the URL
+~~~~~~~~~~~~~~~~~~~~~~
+
+Since you can store the locale of the user in the session, it may be tempting
+to use the same URL to display a resource in different languages based on the
+user's locale. For example, ``http://www.example.com/contact`` could show
+content in English for one user and French for another user. Unfortunately,
+this violates a fundamental rule of the Web: that a particular URL returns the
+same resource regardless of the user. To further muddy the problem, which
+version of the content would be indexed by search engines?
+
+A better policy is to include the locale in the URL using the
+:ref:`special _locale parameter <routing-locale-parameter>`:
+
+.. configuration-block::
+
+    .. code-block:: php-annotations
+
+        // src/Controller/ContactController.php
+        namespace App\Controller;
+
+        // ...
+        class ContactController extends AbstractController
+        {
+            /**
+             * @Route(
+             *     "/{_locale}/contact",
+             *     name="contact",
+             *     requirements={
+             *         "_locale": "en|fr|de",
+             *     }
+             * )
+             */
+            public function contact()
+            {
+            }
+        }
+        
+    .. code-block:: php-attributes
+
+        // src/Controller/ContactController.php
+        namespace App\Controller;
+
+        // ...
+        class ContactController extends AbstractController
+        {
+            #[Route(
+                path: '/{_locale}/contact',
+                name: 'contact',
+                requirements: [
+                    '_locale' => 'en|fr|de',
+                ],
+            )]
+            public function contact()
+            {
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        contact:
+            path:       /{_locale}/contact
+            controller: App\Controller\ContactController::index
+            requirements:
+                _locale: en|fr|de
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="contact" path="/{_locale}/contact">
+                controller="App\Controller\ContactController::index">
+                <requirement key="_locale">en|fr|de</requirement>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use App\Controller\ContactController;
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes) {
+            $routes->add('contact', '/{_locale}/contact')
+                ->controller([ContactController::class, 'index'])
+                ->requirements([
+                    '_locale' => 'en|fr|de',
+                ])
+            ;
+        };
+
+When using the special ``_locale`` parameter in a route, the matched locale
+is *automatically set on the Request* and can be retrieved via the
+:method:`Symfony\\Component\\HttpFoundation\\Request::getLocale` method. In
+other words, if a user visits the URI ``/fr/contact``, the locale ``fr`` will
+automatically be set as the locale for the current request.
+
+You can now use the locale to create routes to other translated pages in your
+application.
+
+.. tip::
+
+    Define the locale requirement as a :ref:`container parameter <configuration-parameters>`
+    to avoid hardcoding its value in all your routes.
+
+.. index::
+    single: Translations; Fallback and default locale
+
+.. _translation-default-locale:
+
+Setting a Default Locale
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+What if the user's locale hasn't been determined? You can guarantee that a
+locale is set on each user's request by defining a ``default_locale`` for
+the framework:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/translation.yaml
+        framework:
+            default_locale: en
+
+    .. code-block:: xml
+
+        <!-- config/packages/translation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config default-locale="en"/>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/translation.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->defaultLocale('en');
+        };
 
 .. _translation-fallback:
 
@@ -846,20 +1023,286 @@ checks translation resources for several locales:
     add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
 
-Translating Database Content
-----------------------------
+.. _translation-debug:
 
-The translation of database content should be handled by Doctrine through
-the `Translatable Extension`_ or the `Translatable Behavior`_ (PHP 5.4+).
-For more information, see the documentation for these libraries.
+.. index::
+    single: Translation; Debug
+    single: Translation; Missing Messages
+    single: Translation; Unused Messages
 
-Debugging Translations
-----------------------
+How to Find Missing or Unused Translation Messages
+--------------------------------------------------
 
-When you work with many translation messages in different languages, it can
-be hard to keep track which translations are missing and which are not used
-anymore. Read :doc:`/translation/debug` to find out how to identify these
-messages.
+When you work with many translation messages in different languages, it can be
+hard to keep track which translations are missing and which are not used
+anymore. The ``debug:translation`` command helps you to find these missing or
+unused translation messages templates:
+
+.. code-block:: twig
+
+    {# messages can be found when using the trans filter and tag #}
+    {% trans %}Symfony is great{% endtrans %}
+
+    {{ 'Symfony is great'|trans }}
+
+.. caution::
+
+    The extractors can't find messages translated outside templates (like form
+    labels or controllers) unless using :ref:`translatable-objects` or calling
+    the ``trans()`` method on a translator (since Symfony 5.3). Dynamic
+    translations using variables or expressions in templates are not
+    detected either:
+
+    .. code-block:: twig
+
+        {# this translation uses a Twig variable, so it won't be detected #}
+        {% set message = 'Symfony is great' %}
+        {{ message|trans }}
+
+Suppose your application's default_locale is ``fr`` and you have configured
+``en`` as the fallback locale (see :ref:`translation-configuration` and
+:ref:`translation-fallback` for how to configure these). And suppose
+you've already setup some translations for the ``fr`` locale:
+
+.. configuration-block::
+
+    .. code-block:: xml
+
+        <!-- translations/messages.fr.xlf -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+            <file source-language="en" datatype="plaintext" original="file.ext">
+                <body>
+                    <trans-unit id="1">
+                        <source>Symfony is great</source>
+                        <target>J'aime Symfony</target>
+                    </trans-unit>
+                </body>
+            </file>
+        </xliff>
+
+    .. code-block:: yaml
+
+        # translations/messages.fr.yaml
+        Symfony is great: J'aime Symfony
+
+    .. code-block:: php
+
+        // translations/messages.fr.php
+        return [
+            'Symfony is great' => 'J\'aime Symfony',
+        ];
+
+and for the ``en`` locale:
+
+.. configuration-block::
+
+    .. code-block:: xml
+
+        <!-- translations/messages.en.xlf -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+            <file source-language="en" datatype="plaintext" original="file.ext">
+                <body>
+                    <trans-unit id="1">
+                        <source>Symfony is great</source>
+                        <target>Symfony is great</target>
+                    </trans-unit>
+                </body>
+            </file>
+        </xliff>
+
+    .. code-block:: yaml
+
+        # translations/messages.en.yaml
+        Symfony is great: Symfony is great
+
+    .. code-block:: php
+
+        // translations/messages.en.php
+        return [
+            'Symfony is great' => 'Symfony is great',
+        ];
+
+To inspect all messages in the ``fr`` locale for the application, run:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:translation fr
+
+    ---------  ------------------  ----------------------  -------------------------------
+     State      Id                  Message Preview (fr)    Fallback Message Preview (en)
+    ---------  ------------------  ----------------------  -------------------------------
+     unused     Symfony is great    J'aime Symfony          Symfony is great
+    ---------  ------------------  ----------------------  -------------------------------
+
+It shows you a table with the result when translating the message in the ``fr``
+locale and the result when the fallback locale ``en`` would be used. On top
+of that, it will also show you when the translation is the same as the fallback
+translation (this could indicate that the message was not correctly translated).
+Furthermore, it indicates that the message ``Symfony is great`` is unused
+because it is translated, but you haven't used it anywhere yet.
+
+Now, if you translate the message in one of your templates, you will get this
+output:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:translation fr
+
+    ---------  ------------------  ----------------------  -------------------------------
+     State      Id                  Message Preview (fr)    Fallback Message Preview (en)
+    ---------  ------------------  ----------------------  -------------------------------
+                Symfony is great    J'aime Symfony          Symfony is great
+    ---------  ------------------  ----------------------  -------------------------------
+
+The state is empty which means the message is translated in the ``fr`` locale
+and used in one or more templates.
+
+If you delete the message ``Symfony is great`` from your translation file
+for the ``fr`` locale and run the command, you will get:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:translation fr
+
+    ---------  ------------------  ----------------------  -------------------------------
+     State      Id                  Message Preview (fr)    Fallback Message Preview (en)
+    ---------  ------------------  ----------------------  -------------------------------
+     missing    Symfony is great    Symfony is great        Symfony is great
+    ---------  ------------------  ----------------------  -------------------------------
+
+The state indicates the message is missing because it is not translated in
+the ``fr`` locale but it is still used in the template. Moreover, the message
+in the ``fr`` locale equals to the message in the ``en`` locale. This is a
+special case because the untranslated message id equals its translation in
+the ``en`` locale.
+
+If you copy the content of the translation file in the ``en`` locale to the
+translation file in the ``fr`` locale and run the command, you will get:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:translation fr
+
+    ----------  ------------------  ----------------------  -------------------------------
+     State       Id                  Message Preview (fr)    Fallback Message Preview (en)
+    ----------  ------------------  ----------------------  -------------------------------
+     fallback    Symfony is great    Symfony is great        Symfony is great
+    ----------  ------------------  ----------------------  -------------------------------
+
+You can see that the translations of the message are identical in the ``fr``
+and ``en`` locales which means this message was probably copied from English
+to French and maybe you forgot to translate it.
+
+By default, all domains are inspected, but it is possible to specify a single
+domain:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:translation en --domain=messages
+
+When the application has a lot of messages, it is useful to display only the
+unused or only the missing messages, by using the ``--only-unused`` or
+``--only-missing`` options:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:translation en --only-unused
+    $ php bin/console debug:translation en --only-missing
+
+Debug Command Exit Codes
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+The exit code of the ``debug:translation`` command changes depending on the
+status of the translations. Use the following public constants to check it::
+
+    use Symfony\Bundle\FrameworkBundle\Command\TranslationDebugCommand;
+
+    // generic failure (e.g. there are no translations)
+    TranslationDebugCommand::EXIT_CODE_GENERAL_ERROR;
+
+    // there are missing translations
+    TranslationDebugCommand::EXIT_CODE_MISSING;
+
+    // there are unused translations
+    TranslationDebugCommand::EXIT_CODE_UNUSED;
+
+    // some translations are using the fallback translation
+    TranslationDebugCommand::EXIT_CODE_FALLBACK;
+
+These constants are defined as "bit masks", so you can combine them as follows::
+
+    if (TranslationDebugCommand::EXIT_CODE_MISSING | TranslationDebugCommand::EXIT_CODE_UNUSED) {
+        // ... there are missing and/or unused translations
+    }
+
+.. versionadded:: 5.1
+
+    The exit codes were introduced in Symfony 5.1
+
+.. _translation-lint:
+
+.. index::
+    single: Translation; Lint
+    single: Translation; Translation File Errors
+
+How to Find Errors in Translation Files
+---------------------------------------
+
+Symfony processes all the application translation files as part of the process
+that compiles the application code before executing it. If there's an error in
+any translation file, you'll see an error message explaining the problem.
+
+If you prefer, you can also validate the contents of any YAML and XLIFF
+translation file using the ``lint:yaml`` and ``lint:xliff`` commands:
+
+.. code-block:: terminal
+
+    # lint a single file
+    $ php bin/console lint:yaml translations/messages.en.yaml
+    $ php bin/console lint:xliff translations/messages.en.xlf
+
+    # lint a whole directory
+    $ php bin/console lint:yaml translations
+    $ php bin/console lint:xliff translations
+
+    # lint multiple files or directories
+    $ php bin/console lint:yaml translations path/to/trans
+    $ php bin/console lint:xliff translations/messages.en.xlf translations/messages.es.xlf
+
+The linter results can be exported to JSON using the ``--format`` option:
+
+.. code-block:: terminal
+
+    $ php bin/console lint:yaml translations/ --format=json
+    $ php bin/console lint:xliff translations/ --format=json
+
+When running these linters inside `GitHub Actions`_, the output is automatically
+adapted to the format required by GitHub, but you can force that format too:
+
+.. code-block:: terminal
+
+    $ php bin/console lint:yaml translations/ --format=github
+    $ php bin/console lint:xliff translations/ --format=github
+
+.. versionadded:: 5.3
+
+    The ``github`` output format was introduced in Symfony 5.3 for ``lint:yaml``
+    and in Symfony 5.4 for ``lint:xliff``.
+
+.. tip::
+
+    The Yaml component provides a stand-alone ``yaml-lint`` binary allowing
+    you to lint YAML files without having to create a console application:
+
+    .. code-block:: terminal
+
+        $ php vendor/bin/yaml-lint translations/
+
+    .. versionadded:: 5.1
+
+        The ``yaml-lint`` binary was introduced in Symfony 5.1.
 
 Summary
 -------
@@ -884,9 +1327,6 @@ Learn more
     :maxdepth: 1
 
     translation/message_format
-    translation/locale
-    translation/debug
-    translation/lint
     translation/xliff
 
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
@@ -896,3 +1336,4 @@ Learn more
 .. _`Translatable Extension`: https://github.com/doctrine-extensions/DoctrineExtensions/blob/main/doc/translatable.md
 .. _`Translatable Behavior`: https://github.com/KnpLabs/DoctrineBehaviors
 .. _`Custom Language Name setting`: https://docs.lokalise.com/en/articles/1400492-uploading-files#custom-language-codes
+.. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
