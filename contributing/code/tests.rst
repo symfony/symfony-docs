@@ -90,7 +90,7 @@ To do so, execute the following:
 
 .. code-block:: terminal
 
-    $ composer docker-composer
+    $ composer docker-install-dependencies
 
 Running the Tests
 ~~~~~~~~~~~~~~~~~
