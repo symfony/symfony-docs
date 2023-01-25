@@ -190,6 +190,10 @@ In addition, documentation follows these rules:
   * simply
   * trivial
 
+* Contractions are allowed to be used across the documentation. This means
+  you're allowed to write ``you would`` as well as ``you'd``, ``it is`` as
+  well as ``it's``, etc.
+
 .. _`the Sphinx documentation`: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#literal-blocks
 .. _`Twig Coding Standards`: https://twig.symfony.com/doc/3.x/coding_standards.html
 .. _`reserved by the IANA`: https://tools.ietf.org/html/rfc2606#section-3
