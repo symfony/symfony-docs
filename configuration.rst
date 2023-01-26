@@ -20,8 +20,7 @@ directory, which has this default structure:
     │  └─ services.yaml
 
 * The ``routes.yaml`` file defines the :doc:`routing configuration </routing>`;
-* The ``services.yaml`` file configures the services of the
-:doc:`service container </service_container>`;
+* The ``services.yaml`` file configures the services of the :doc:`service container </service_container>`;
 * The ``bundles.php`` file enables/disables packages in your application;
 * The ``config/packages/`` directory stores the configuration of every package
   installed in your application.
