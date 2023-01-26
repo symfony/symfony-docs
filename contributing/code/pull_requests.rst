@@ -505,11 +505,7 @@ PR. Before re-submitting the PR, rebase with ``upstream/6.x`` or
 
 .. code-block:: terminal
 
-<<<<<<< HEAD
-    $ git rebase -f upstream/6.1
-=======
     $ git rebase -f upstream/6.x
->>>>>>> 5.4
     $ git push --force origin BRANCH_NAME
 
 .. note::
