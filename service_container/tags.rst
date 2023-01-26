@@ -401,11 +401,7 @@ To begin with, change the ``TransportChain`` class::
 
         public function getTransport($alias): ?\MailerTransport
         {
-            if (array_key_exists($alias, $this->transports)) {
-                return $this->transports[$alias];
-            }
-
-            return null;
+            return $this->transports[$alias] ?? null;
         }
     }
 
