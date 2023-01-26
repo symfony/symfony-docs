@@ -405,7 +405,7 @@ To begin with, change the ``TransportChain`` class::
 
         public function getTransport($alias): ?\MailerTransport
         {
-            return  return $this->transports[$alias] ?? null;
+            return $this->transports[$alias] ?? null;
         }
     }
 
