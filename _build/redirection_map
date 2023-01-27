@@ -540,8 +540,10 @@
 /components/security/secure_tools /security/passwords
 /components/security /security
 /components/var_dumper/advanced /components/var_dumper#advanced-usage
-/components/yaml/yaml_format /components/yaml#yaml-format
-/components/expression_language/syntax /components/expression_language#expression-language-syntax
+/components/yaml/yaml_format /reference/formats/yaml
+/components/expression_language/syntax /reference/formats/expression_language
+/components/expression_language/ast /components/expression_language#expression-language-ast
+/components/expression_language/caching /components/expression_language#expression-language-caching
 /components/expression_language/extending /components/expression_language#expression-language-extending
 /notifier/chatters /notifier#sending-chat-messages
 /notifier/texters /notifier#sending-sms

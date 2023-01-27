@@ -292,7 +292,7 @@ plural, based on some variable:
 
 To manage these situations, Symfony follows the `ICU MessageFormat`_ syntax by
 using PHP's :phpclass:`MessageFormatter` class. Read more about this in
-:doc:`/translation/message_format`.
+:doc:`/reference/formats/message_format`.
 
 .. _translatable-objects:
 
