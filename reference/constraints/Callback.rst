@@ -278,7 +278,7 @@ constructor of the Callback constraint::
         }
     }
 
-.. warning::
+.. caution::
 
     Using a ``Closure`` together with annotation configuration will disable the
     annotation cache for that class/property/method because ``Closure`` cannot
