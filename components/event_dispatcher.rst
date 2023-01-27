@@ -515,7 +515,7 @@ Learn More
     :maxdepth: 1
     :glob:
 
-    /event_dispatcher/*
+    event_dispatcher
 
 * :ref:`The kernel.event_listener tag <dic-tags-kernel-event-listener>`
 * :ref:`The kernel.event_subscriber tag <dic-tags-kernel-event-subscriber>`
