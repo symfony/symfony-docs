@@ -67,7 +67,7 @@ that method is invented for this example).
 
 .. _security-expression-variables:
 
-The security expression must use any valid :ref:`expression language syntax <expression-language-syntax>`
+The security expression must use any valid :doc:`expression language syntax </reference/formats/expression_language>`
 and can use any of these variables created by Symfony:
 
 ``user``

@@ -156,11 +156,13 @@
 /cookbook/email/index /email
 /cookbook/email/spool /email/spool
 /cookbook/email/testing /email/testing
-/cookbook/event_dispatcher/before_after_filters /event_dispatcher/before_after_filters
+/cookbook/event_dispatcher/before_after_filters /event_dispatcher#event-dispatcher-before-after-filters
+/event_dispatcher/before_after_filters /event_dispatcher#event-dispatcher-before-after-filters
 /cookbook/event_dispatcher/class_extension /event_dispatcher/class_extension
 /cookbook/event_dispatcher/event_listener /event_dispatcher
 /cookbook/event_dispatcher/index /event_dispatcher
 /cookbook/event_dispatcher/method_behavior /event_dispatcher/method_behavior
+/event_dispatcher/method_behavior /event_dispatcher#event-dispatcher-method-behavior
 /cookbook/expressions /security/expressions
 /expressions /security/expressions
 /cookbook/form/create_custom_field_type /form/create_custom_field_type
@@ -542,8 +544,10 @@
 /components/security/secure_tools /security/passwords
 /components/security /security
 /components/var_dumper/advanced /components/var_dumper#advanced-usage
-/components/yaml/yaml_format /components/yaml#yaml-format
-/components/expression_language/syntax /components/expression_language#expression-language-syntax
+/components/yaml/yaml_format /reference/formats/yaml
+/components/expression_language/syntax /reference/formats/expression_language
+/components/expression_language/ast /components/expression_language#expression-language-ast
+/components/expression_language/caching /components/expression_language#expression-language-caching
 /components/expression_language/extending /components/expression_language#expression-language-extending
 /notifier/chatters /notifier#sending-chat-messages
 /notifier/texters /notifier#sending-sms

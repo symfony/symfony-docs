@@ -245,7 +245,7 @@ constructor of the Callback constraint::
         }
     }
 
-.. warning::
+.. caution::
 
     Using a ``Closure`` together with attribute configuration will disable the
     attribute cache for that class/property/method because ``Closure`` cannot

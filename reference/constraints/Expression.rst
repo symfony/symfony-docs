@@ -122,7 +122,7 @@ One way to accomplish this is with the Expression constraint:
 
 The :ref:`expression <reference-constraint-expression-option>` option is the
 expression that must return true in order for validation to pass. Learn more
-about the :ref:`expression language syntax <expression-language-syntax>`.
+about the :doc:`expression language syntax </reference/formats/expression_language>`.
 
 Alternatively, you can set the ``negate`` option to ``false`` in order to
 assert that the expression must return ``true`` for validation to fail.
@@ -229,7 +229,7 @@ Options
 
 The expression that will be evaluated. If the expression evaluates to a false
 value (using ``==``, not ``===``), validation will fail. Learn more about the
-:ref:`expression language syntax <expression-language-syntax>`.
+:doc:`expression language syntax </reference/formats/expression_language>`.
 
 Depending on how you use the constraint, you have access to different variables
 in your expression:
