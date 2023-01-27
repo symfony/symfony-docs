@@ -29,7 +29,7 @@ control over when exactly your form is submitted and what data is passed to it::
             }
         }
 
-        return $this->renderForm('task/new.html.twig', [
+        return $this->render('task/new.html.twig', [
             'form' => $form,
         ]);
     }
