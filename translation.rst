@@ -1326,8 +1326,8 @@ Learn more
 .. toctree::
     :maxdepth: 1
 
-    translation/message_format
-    translation/xliff
+    reference/formats/message_format
+    reference/formats/xliff
 
 .. _`i18n`: https://en.wikipedia.org/wiki/Internationalization_and_localization
 .. _`ICU MessageFormat`: https://unicode-org.github.io/icu/userguide/format_parse/messages/
