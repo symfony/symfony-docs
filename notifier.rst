@@ -309,7 +309,7 @@ you to send messages to chat services::
         public function thankyou(ChatterInterface $chatter)
         {
             $message = (new ChatMessage('You got a new invoice for 15 EUR.'))
-                // if not set explicitly, the message is send to the
+                // if not set explicitly, the message is sent to the
                 // default transport (the first one configured)
                 ->transport('slack');
 
