@@ -358,6 +358,19 @@ Configuration parameters are very common in Symfony applications. Some packages
 even define their own parameters (e.g. when installing the translation package,
 a new ``locale`` parameter is added to the ``config/services.yaml`` file).
 
+.. tip::
+
+    When working with :ref:`Compiler Passes </service_container/compiler_passes>`,
+    you have the possibility to declare parameters that will only be available
+    during the container compilation. These parameters will be automatically removed
+    from the container once its build is done. To declare parameters only
+    available at compile-time, pre-prend their name with a dot ``.`` (for example,
+    ``.mailer.transport``).
+
+.. versionadded:: 6.3
+
+    Parameters only available at compile time were introduced in Symfony 6.3.
+
 .. seealso::
 
     Later in this article you can read how to
