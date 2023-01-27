@@ -457,6 +457,9 @@
 /templating/inheritance /templates#template-inheritance-and-layouts
 /testing/doctrine /testing/database
 /translation/templates /translation#translation-in-templates
+/translation/debug /translation#translation-debug
+/translation/lint /translation#translation-lint
+/translation/locale /translation#translation-locale
 /doctrine/lifecycle_callbacks /doctrine/events
 /doctrine/event_listeners_subscribers /doctrine/events
 /doctrine/common_extensions /doctrine
