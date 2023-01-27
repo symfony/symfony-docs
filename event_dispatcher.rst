@@ -404,11 +404,379 @@ for a particular event dispatcher:
 
     The ``dispatcher`` option was introduced in Symfony 5.3.
 
-Learn more
-----------
+.. _event-dispatcher-before-after-filters:
 
-.. toctree::
-    :maxdepth: 1
+How to Set Up Before and After Filters
+--------------------------------------
 
-    event_dispatcher/before_after_filters
-    event_dispatcher/method_behavior
+It is quite common in web application development to need some logic to be
+performed right before or directly after your controller actions acting as
+filters or hooks.
+
+Some web frameworks define methods like ``preExecute()`` and ``postExecute()``,
+but there is no such thing in Symfony. The good news is that there is a much
+better way to interfere with the Request -> Response process using the
+:doc:`EventDispatcher component </components/event_dispatcher>`.
+
+Token Validation Example
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Imagine that you need to develop an API where some controllers are public
+but some others are restricted to one or some clients. For these private features,
+you might provide a token to your clients to identify themselves.
+
+So, before executing your controller action, you need to check if the action
+is restricted or not. If it is restricted, you need to validate the provided
+token.
+
+.. note::
+
+    Please note that for simplicity in this recipe, tokens will be defined
+    in config and neither database setup nor authentication via the Security
+    component will be used.
+
+Before Filters with the ``kernel.controller`` Event
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+First, define some token configuration as parameters:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        parameters:
+            tokens:
+                client1: pass1
+                client2: pass2
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <parameter key="tokens" type="collection">
+                    <parameter key="client1">pass1</parameter>
+                    <parameter key="client2">pass2</parameter>
+                </parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        $container->setParameter('tokens', [
+            'client1' => 'pass1',
+            'client2' => 'pass2',
+        ]);
+
+Tag Controllers to Be Checked
+.............................
+
+A ``kernel.controller`` (aka ``KernelEvents::CONTROLLER``) listener gets notified
+on *every* request, right before the controller is executed. So, first, you need
+some way to identify if the controller that matches the request needs token validation.
+
+A clean and easy way is to create an empty interface and make the controllers
+implement it::
+
+    namespace App\Controller;
+
+    interface TokenAuthenticatedController
+    {
+        // ...
+    }
+
+A controller that implements this interface looks like this::
+
+    namespace App\Controller;
+
+    use App\Controller\TokenAuthenticatedController;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+    class FooController extends AbstractController implements TokenAuthenticatedController
+    {
+        // An action that needs authentication
+        public function bar()
+        {
+            // ...
+        }
+    }
+
+Creating an Event Subscriber
+............................
+
+Next, you'll need to create an event subscriber, which will hold the logic
+that you want to be executed before your controllers. If you're not familiar with
+event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
+
+    // src/EventSubscriber/TokenSubscriber.php
+    namespace App\EventSubscriber;
+
+    use App\Controller\TokenAuthenticatedController;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\HttpKernel\Event\ControllerEvent;
+    use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+    use Symfony\Component\HttpKernel\KernelEvents;
+
+    class TokenSubscriber implements EventSubscriberInterface
+    {
+        private $tokens;
+
+        public function __construct($tokens)
+        {
+            $this->tokens = $tokens;
+        }
+
+        public function onKernelController(ControllerEvent $event)
+        {
+            $controller = $event->getController();
+
+            // when a controller class defines multiple action methods, the controller
+            // is returned as [$controllerInstance, 'methodName']
+            if (is_array($controller)) {
+                $controller = $controller[0];
+            }
+
+            if ($controller instanceof TokenAuthenticatedController) {
+                $token = $event->getRequest()->query->get('token');
+                if (!in_array($token, $this->tokens)) {
+                    throw new AccessDeniedHttpException('This action needs a valid token!');
+                }
+            }
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return [
+                KernelEvents::CONTROLLER => 'onKernelController',
+            ];
+        }
+    }
+
+That's it! Your ``services.yaml`` file should already be setup to load services from
+the ``EventSubscriber`` directory. Symfony takes care of the rest. Your
+``TokenSubscriber`` ``onKernelController()`` method will be executed on each request.
+If the controller that is about to be executed implements ``TokenAuthenticatedController``,
+token authentication is applied. This lets you have a "before" filter on any controller
+you want.
+
+.. tip::
+
+    If your subscriber is *not* called on each request, double-check that
+    you're :ref:`loading services <service-container-services-load-example>` from
+    the ``EventSubscriber`` directory and have :ref:`autoconfigure <services-autoconfigure>`
+    enabled. You can also manually add the ``kernel.event_subscriber`` tag.
+
+After Filters with the ``kernel.response`` Event
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to having a "hook" that's executed *before* your controller, you
+can also add a hook that's executed *after* your controller. For this example,
+imagine that you want to add a ``sha1`` hash (with a salt using that token) to
+all responses that have passed this token authentication.
+
+Another core Symfony event - called ``kernel.response`` (aka ``KernelEvents::RESPONSE``) -
+is notified on every request, but after the controller returns a Response object.
+To create an "after" listener, create a listener class and register
+it as a service on this event.
+
+For example, take the ``TokenSubscriber`` from the previous example and first
+record the authentication token inside the request attributes. This will
+serve as a basic flag that this request underwent token authentication::
+
+    public function onKernelController(ControllerEvent $event)
+    {
+        // ...
+
+        if ($controller instanceof TokenAuthenticatedController) {
+            $token = $event->getRequest()->query->get('token');
+            if (!in_array($token, $this->tokens)) {
+                throw new AccessDeniedHttpException('This action needs a valid token!');
+            }
+
+            // mark the request as having passed token authentication
+            $event->getRequest()->attributes->set('auth_token', $token);
+        }
+    }
+
+Now, configure the subscriber to listen to another event and add ``onKernelResponse()``.
+This will look for the ``auth_token`` flag on the request object and set a custom
+header on the response if it's found::
+
+    // add the new use statement at the top of your file
+    use Symfony\Component\HttpKernel\Event\ResponseEvent;
+
+    public function onKernelResponse(ResponseEvent $event)
+    {
+        // check to see if onKernelController marked this as a token "auth'ed" request
+        if (!$token = $event->getRequest()->attributes->get('auth_token')) {
+            return;
+        }
+
+        $response = $event->getResponse();
+
+        // create a hash and set it as a response header
+        $hash = sha1($response->getContent().$token);
+        $response->headers->set('X-CONTENT-HASH', $hash);
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            KernelEvents::CONTROLLER => 'onKernelController',
+            KernelEvents::RESPONSE => 'onKernelResponse',
+        ];
+    }
+
+That's it! The ``TokenSubscriber`` is now notified before every controller is
+executed (``onKernelController()``) and after every controller returns a response
+(``onKernelResponse()``). By making specific controllers implement the ``TokenAuthenticatedController``
+interface, your listener knows which controllers it should take action on.
+And by storing a value in the request's "attributes" bag, the ``onKernelResponse()``
+method knows to add the extra header. Have fun!
+
+.. _event-dispatcher-method-behavior:
+
+How to Customize a Method Behavior without Using Inheritance
+------------------------------------------------------------
+
+If you want to do something right before, or directly after a method is
+called, you can dispatch an event respectively at the beginning or at the
+end of the method::
+
+    class CustomMailer
+    {
+        // ...
+
+        public function send($subject, $message)
+        {
+            // dispatch an event before the method
+            $event = new BeforeSendMailEvent($subject, $message);
+            $this->dispatcher->dispatch($event, 'mailer.pre_send');
+
+            // get $subject and $message from the event, they may have been modified
+            $subject = $event->getSubject();
+            $message = $event->getMessage();
+
+            // the real method implementation is here
+            $returnValue = ...;
+
+            // do something after the method
+            $event = new AfterSendMailEvent($returnValue);
+            $this->dispatcher->dispatch($event, 'mailer.post_send');
+
+            return $event->getReturnValue();
+        }
+    }
+
+In this example, two events are dispatched:
+
+#. ``mailer.pre_send``, before the method is called,
+#. and ``mailer.post_send`` after the method is called.
+
+Each uses a custom Event class to communicate information to the listeners
+of the two events. For example, ``BeforeSendMailEvent`` might look like
+this::
+
+    // src/Event/BeforeSendMailEvent.php
+    namespace App\Event;
+
+    use Symfony\Contracts\EventDispatcher\Event;
+
+    class BeforeSendMailEvent extends Event
+    {
+        private $subject;
+        private $message;
+
+        public function __construct($subject, $message)
+        {
+            $this->subject = $subject;
+            $this->message = $message;
+        }
+
+        public function getSubject()
+        {
+            return $this->subject;
+        }
+
+        public function setSubject($subject)
+        {
+            $this->subject = $subject;
+        }
+
+        public function getMessage()
+        {
+            return $this->message;
+        }
+
+        public function setMessage($message)
+        {
+            $this->message = $message;
+        }
+    }
+
+And the ``AfterSendMailEvent`` even like this::
+
+    // src/Event/AfterSendMailEvent.php
+    namespace App\Event;
+
+    use Symfony\Contracts\EventDispatcher\Event;
+
+    class AfterSendMailEvent extends Event
+    {
+        private $returnValue;
+
+        public function __construct($returnValue)
+        {
+            $this->returnValue = $returnValue;
+        }
+
+        public function getReturnValue()
+        {
+            return $this->returnValue;
+        }
+
+        public function setReturnValue($returnValue)
+        {
+            $this->returnValue = $returnValue;
+        }
+    }
+
+Both events allow you to get some information (e.g. ``getMessage()``) and even change
+that information (e.g. ``setMessage()``).
+
+Now, you can create an event subscriber to hook into this event. For example, you
+could listen to the ``mailer.post_send`` event and change the method's return value::
+
+    // src/EventSubscriber/MailPostSendSubscriber.php
+    namespace App\EventSubscriber;
+
+    use App\Event\AfterSendMailEvent;
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+    class MailPostSendSubscriber implements EventSubscriberInterface
+    {
+        public function onMailerPostSend(AfterSendMailEvent $event)
+        {
+            $returnValue = $event->getReturnValue();
+            // modify the original ``$returnValue`` value
+
+            $event->setReturnValue($returnValue);
+        }
+
+        public static function getSubscribedEvents()
+        {
+            return [
+                'mailer.post_send' => 'onMailerPostSend',
+            ];
+        }
+    }
+
+That's it! Your subscriber should be called automatically (or read more about
+:ref:`event subscriber configuration <ref-event-subscriber-configuration>`).
