@@ -360,16 +360,14 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
 
 .. tip::
 
-    When working with :ref:`Compiler Passes </service_container/compiler_passes>`,
-    you have the possibility to declare parameters that will only be available
-    during the container compilation. These parameters will be automatically removed
-    from the container once its build is done. To declare parameters only
-    available at compile-time, pre-prend their name with a dot ``.`` (for example,
-    ``.mailer.transport``).
+    By convention, parameters whose names start with a dot ``.`` (for example,
+    ``.mailer.transport``), are available only during the container compilation.
+    They are useful when working with :ref:`Compiler Passes </service_container/compiler_passes>`
+    to declare some temporary parameters that won't be available later in the application.
 
 .. versionadded:: 6.3
 
-    Parameters only available at compile time were introduced in Symfony 6.3.
+    Compile-time parameters were introduced in Symfony 6.3.
 
 .. seealso::
 
