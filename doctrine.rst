@@ -135,19 +135,19 @@ Whoa! You now have a new ``src/Entity/Product.php`` file::
     use App\Repository\ProductRepository;
     use Doctrine\ORM\Mapping as ORM;
 
-     #[ORM\Entity(repositoryClass: ProductRepository::class)]
+    #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
         #[ORM\Id]
         #[ORM\GeneratedValue]
         #[ORM\Column]
-        private int $id;
+        private ?int $id = null;
 
         #[ORM\Column(length: 255)]
-        private string $name;
+        private ?string $name = null;
 
         #[ORM\Column]
-        private int $price;
+        private ?int $price = null;
 
         public function getId(): ?int
         {
