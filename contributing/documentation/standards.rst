@@ -92,6 +92,7 @@ Configuration examples should show all supported formats using
 * **Validation**: Attributes, YAML, XML, PHP
 * **Doctrine Mapping**: Attributes, YAML, XML, PHP
 * **Translation**: XML, YAML, PHP
+* **Code Examples** (if applicable): PHP Symfony, PHP Standalone
 
 Example
 ~~~~~~~
