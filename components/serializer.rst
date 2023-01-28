@@ -35,11 +35,6 @@ The preferred normalizer is the
 but other normalizers are available. All the examples shown below use
 the ``ObjectNormalizer``.
 
-Context
--------
-
-Many Serializer features can be configured :doc:`using a context </serializer#serializer-context>`.
-
 .. _component-serializer-attributes-groups:
 
 Attributes Groups
