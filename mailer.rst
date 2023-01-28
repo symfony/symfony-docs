@@ -108,7 +108,7 @@ Mailjet             ``composer require symfony/mailjet-mailer``
 Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
-MailPace            ``composer require symfony/mailpace-mailer``
+MailPace            ``composer require symfony/mail-pace-mailer``
 Infobip             ``composer require symfony/infobip-mailer``
 ==================  ==============================================
 
