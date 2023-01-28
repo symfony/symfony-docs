@@ -88,10 +88,11 @@ Configuration examples should show all supported formats using
 (and their orders) are:
 
 * **Configuration** (including services): YAML, XML, PHP
-* **Routing**: Annotations, YAML, XML, PHP
-* **Validation**: Annotations, YAML, XML, PHP
-* **Doctrine Mapping**: Annotations, YAML, XML, PHP
+* **Routing**: Attributes, Annotations, YAML, XML, PHP
+* **Validation**: Attributes, Annotations, YAML, XML, PHP
+* **Doctrine Mapping**: Attributes, Annotations, YAML, XML, PHP
 * **Translation**: XML, YAML, PHP
+* **Code Examples** (if applicable): PHP Symfony, PHP Standalone
 
 Example
 ~~~~~~~
