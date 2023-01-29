@@ -568,9 +568,8 @@ if you're generating translations with specialized programs or teams.
 .. note::
 
     You can also store translations in a database; it can be handled by
-    Doctrine through the `Translatable Extension`_ or the `Translatable
-    Behavior`_ (PHP 5.4+). For more information, see the documentation for
-    these libraries.
+    Doctrine through the `Translatable Extension`_ or the `Translatable Behavior`_
+    (PHP 5.4+). For more information, see the documentation for these libraries.
 
     For any other storage, you need to provide a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface`
@@ -699,8 +698,8 @@ configure the ``providers`` option:
 .. tip::
 
     If you use Lokalise as a provider and a locale format following the `ISO
-    639-1`_ (e.g. "en" or "fr"), you have to set the `Custom Language Name
-    setting`_ in Lokalise for each of your locales, in order to override the
+    639-1`_ (e.g. "en" or "fr"), you have to set the `Custom Language Name setting`_
+    in Lokalise for each of your locales, in order to override the
     default value (which follow the `ISO 639-1`_ succeeded by a sub-code in
     capital letters that specifies the national variety (e.g. "GB" or "US"
     according to `ISO 3166-1 alpha-2`_)).
