@@ -42,7 +42,7 @@ The translation process has several steps:
 #. :ref:`Create translation resources/files <translation-resources>`
    for each supported locale that translate each message in the application;
 
-#. Determine, :doc:`set and manage the user's locale </translation/locale>`
+#. Determine, :ref:`set and manage the user's locale <translation-locale>`
    for the request and optionally
    :ref:`on the user's entire session <locale-sticky-session>`.
 
@@ -410,9 +410,9 @@ You can also specify the message domain and pass some additional variables:
 
 .. caution::
 
-Using the translation tag has the same effect as the filter, but with one
-major difference: automatic output escaping is **not** applied to translations
-using a tag.
+    Using the translation tag has the same effect as the filter, but with one
+    major difference: automatic output escaping is **not** applied to translations
+    using a tag.
 
 Forcing the Translator Locale
 -----------------------------
@@ -568,9 +568,8 @@ if you're generating translations with specialized programs or teams.
 .. note::
 
     You can also store translations in a database; it can be handled by
-    Doctrine through the `Translatable Extension`_ or the `Translatable
-    Behavior`_ (PHP 5.4+). For more information, see the documentation for
-    these libraries.
+    Doctrine through the `Translatable Extension`_ or the `Translatable Behavior`_
+    (PHP 5.4+). For more information, see the documentation for these libraries.
 
     For any other storage, you need to provide a custom class implementing the
     :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface`
@@ -699,8 +698,8 @@ configure the ``providers`` option:
 .. tip::
 
     If you use Lokalise as a provider and a locale format following the `ISO
-    639-1`_ (e.g. "en" or "fr"), you have to set the `Custom Language Name
-    setting`_ in Lokalise for each of your locales, in order to override the
+    639-1`_ (e.g. "en" or "fr"), you have to set the `Custom Language Name setting`_
+    in Lokalise for each of your locales, in order to override the
     default value (which follow the `ISO 639-1`_ succeeded by a sub-code in
     capital letters that specifies the national variety (e.g. "GB" or "US"
     according to `ISO 3166-1 alpha-2`_)).
