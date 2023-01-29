@@ -410,9 +410,9 @@ You can also specify the message domain and pass some additional variables:
 
 .. caution::
 
-Using the translation tag has the same effect as the filter, but with one
-major difference: automatic output escaping is **not** applied to translations
-using a tag.
+    Using the translation tag has the same effect as the filter, but with one
+    major difference: automatic output escaping is **not** applied to translations
+    using a tag.
 
 Forcing the Translator Locale
 -----------------------------
