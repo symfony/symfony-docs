@@ -1214,6 +1214,8 @@ response and get remaining contents that might come back in a new timeout, etc.
 
     Use the ``max_duration`` option to limit the time a full request/response can last.
 
+.. _http-client_network-errors:
+
 Dealing with Network Errors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1974,6 +1976,59 @@ test it in a real application::
             self::assertSame($responseData, $expectedResponseData);
         }
     }
+
+Simulate a Transport Exception
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When making HTTP requests, it sometimes occurs an error at transport level.
+You can find more information about transport errors it in the
+:ref:`Network Errors <http-client_network-errors>` section.
+
+It may be useful to test how your application behaves in case of a transport
+error. :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` allows
+you to do so, by yielding the exception from its body::
+
+    // ExternalArticleServiceTest.php
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\HttpClient\MockHttpClient;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    final class ExternalArticleServiceTest extends TestCase
+    {
+        // ...
+
+        public function testTransportLevelError(): void
+        {
+            $requestData = ['title' => 'Testing with Symfony HTTP Client'];
+            $httpClient = new MockHttpClient([
+                // You can create the exception directly in the body...
+                new MockResponse([new \RuntimeException('Error at transport level')]),
+
+                // ... or you can yield the exception from a callback
+                new MockResponse((static function (): \Generator {
+                       yield new TransportException('Error at transport level');
+                })()),
+            ]);
+
+            $service = new ExternalArticleService($httpClient);
+
+            try {
+                $service->createArticle($requestData);
+
+                // An exception should have been thrown in `createArticle()`, so this line should never be reached
+                $this->fail();
+            } catch (TransportException $e) {
+                $this->assertEquals(new \RuntimeException('Error at transport level'), $e->getPrevious());
+                $this->assertSame('Error at transport level', $e->getMessage());
+            }
+        }
+    }
+
+.. versionadded:: 6.1
+
+    Being allowed to pass an exception directly to the body of a
+    :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` was
+    introduced in Symfony 6.1.
 
 .. _`cURL PHP extension`: https://www.php.net/curl
 .. _`Zlib PHP extension`: https://www.php.net/zlib
