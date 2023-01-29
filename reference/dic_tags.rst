@@ -642,7 +642,7 @@ register it as a service, then tag it with ``kernel.fragment_renderer``.
 kernel.locale_aware
 -------------------
 
-**Purpose**: To access and use the current :doc:`locale </translation/locale>`
+**Purpose**: To access and use the current :ref:`locale <translation-locale>`
 
 Setting and retrieving the locale can be done via configuration or using
 container parameters, listeners, route parameters or the current request.

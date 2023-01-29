@@ -42,7 +42,7 @@ The translation process has several steps:
 #. :ref:`Create translation resources/files <translation-resources>`
    for each supported locale that translate each message in the application;
 
-#. Determine, :doc:`set and manage the user's locale </translation/locale>`
+#. Determine, :ref:`set and manage the user's locale <translation-locale>`
    for the request and optionally
    :ref:`on the user's entire session <locale-sticky-session>`.
 
