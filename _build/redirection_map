@@ -256,7 +256,8 @@
 /cookbook/session/proxy_examples /session/proxy_examples
 /cookbook/session/sessions_directory /session/sessions_directory
 /cookbook/symfony1 /introduction/symfony1
-/cookbook/templating/global_variables /templating/global_variables
+/cookbook/templating/global_variables /templating#templating-global-variables
+/templating/global_variables /templating#templating-global-variables
 /cookbook/templating/index /templating
 /cookbook/templating/namespaced_paths /templating/namespaced_paths
 /cookbook/templating/PHP /templating/PHP
@@ -388,6 +389,9 @@
 /quick_tour/the_view /quick_tour/flex_recipes
 /service_container/service_locators /service_container/service_subscribers_locators
 /templating/overriding /bundles/override
+/templating/twig_extension /templates#templates-twig-extension
+/templating/hinclude /templates#templates-hinclude
+/templating/PHP /templates
 /security/custom_provider /security/user_provider
 /security/multiple_user_providers /security/user_provider
 /security/custom_password_authenticator /security/guard_authentication

@@ -1287,7 +1287,7 @@ the service is auto-registered and auto-tagged. But, you can also register it ma
 
 For information on how to create the actual Twig Extension class, see
 `Twig's documentation`_ on the topic or read the
-:doc:`/templating/twig_extension` article.
+:ref:`templates-twig-extension` article.
 
 twig.loader
 -----------

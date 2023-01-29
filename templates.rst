@@ -9,6 +9,10 @@ whether you need to render HTML from a :doc:`controller </controller>` or genera
 the :doc:`contents of an email </mailer>`. Templates in Symfony are created with
 Twig: a flexible, fast, and secure template engine.
 
+.. caution::
+
+    Starting from Symfony 5.0, PHP templates are no longer supported.
+
 .. _twig-language:
 
 Twig Templating Language
@@ -56,7 +60,7 @@ being rendered, like the ``upper`` filter to uppercase contents:
 Twig comes with a long list of `tags`_, `filters`_ and `functions`_ that are
 available by default. In Symfony applications you can also use these
 :doc:`Twig filters and functions defined by Symfony </reference/twig_reference>`
-and you can :doc:`create your own Twig filters and functions </templating/twig_extension>`.
+and you can :ref:`create your own Twig filters and functions <templates-twig-extension>`.
 
 Twig is fast in the ``prod`` :ref:`environment <configuration-environments>`
 (because templates are compiled into PHP and cached automatically), but
@@ -407,7 +411,125 @@ gives you access to these variables:
     object representing the security token.
 
 In addition to the global ``app`` variable injected by Symfony, you can also
-:doc:`inject variables automatically to all Twig templates </templating/global_variables>`.
+inject variables automatically to all Twig templates as explained in the next
+section.
+
+.. index::
+   single: Templating; Global variables
+
+.. _templating-global-variables:
+
+Global Variables
+~~~~~~~~~~~~~~~~
+
+Twig allows you to automatically inject one or more variables into all
+templates. These global variables are defined in the ``twig.globals`` option
+inside the main Twig configuration file:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/twig.yaml
+        twig:
+            # ...
+            globals:
+                ga_tracking: 'UA-xxxxx-x'
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <!-- ... -->
+                <twig:global key="ga_tracking">UA-xxxxx-x</twig:global>
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            // ...
+
+            $twig->global('ga_tracking')->value('UA-xxxxx-x');
+        };
+
+Now, the variable ``ga_tracking`` is available in all Twig templates, so you
+can use it without having to pass it explicitly from the controller or service
+that renders the template:
+
+.. code-block:: html+twig
+
+    <p>The Google tracking code is: {{ ga_tracking }}</p>
+
+In addition to static values, Twig global variables can also reference services
+from the :doc:`service container </service_container>`. The main drawback is
+that these services are not loaded lazily. In other words, as soon as Twig is
+loaded, your service is instantiated, even if you never use that global
+variable.
+
+To define a service as a global Twig variable, prefix the service ID string
+with the ``@`` character, which is the usual syntax to :ref:`refer to services
+in container parameters <service-container-parameters>`:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/twig.yaml
+        twig:
+            # ...
+            globals:
+                # the value is the service's id
+                uuid: '@App\Generator\UuidGenerator'
+
+    .. code-block:: xml
+
+        <!-- config/packages/twig.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:twig="http://symfony.com/schema/dic/twig"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/twig
+                https://symfony.com/schema/dic/twig/twig-1.0.xsd">
+
+            <twig:config>
+                <!-- ... -->
+                <twig:global key="uuid" id="App\Generator\UuidGenerator" type="service"/>
+            </twig:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/twig.php
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+        use Symfony\Config\TwigConfig;
+
+        return static function (TwigConfig $twig) {
+            // ...
+
+            $twig->global('uuid')->value(service('App\Generator\UuidGenerator'));
+        };
+
+Now you can use the ``uuid`` variable in any Twig template to access to the
+``UuidGenerator`` service:
+
+.. code-block:: twig
+
+    UUID: {{ uuid.generate }}
 
 Twig Components
 ---------------
@@ -682,7 +804,7 @@ Inspecting Twig Information
 
 The ``debug:twig`` command lists all the information available about Twig
 (functions, filters, global variables, etc.). It's useful to check if your
-:doc:`custom Twig extensions </templating/twig_extension>` are working properly
+:ref:`custom Twig extensions <templates-twig-extension>` are working properly
 and also to check the Twig features added when :ref:`installing packages <symfony-flex>`:
 
 .. code-block:: terminal
@@ -906,10 +1028,103 @@ template fragments. Configure that special URL in the ``fragments`` option:
     the application performance if you embed lots of controllers. If possible,
     :doc:`cache the template fragment </http_cache/esi>`.
 
-.. seealso::
+.. index::
+    single: Templating; hinclude.js
 
-    Templates can also :doc:`embed contents asynchronously </templating/hinclude>`
-    with the ``hinclude.js`` JavaScript library.
+.. _templates-hinclude:
+
+How to Embed Asynchronous Content with hinclude.js
+--------------------------------------------------
+
+Templates can also embed contents asynchronously with the ``hinclude.js``
+JavaScript library.
+
+First, include the `hinclude.js`_ library in your page
+:ref:`linking to it <templates-link-to-assets>` from the template or adding it
+to your application JavaScript :doc:`using Webpack Encore </frontend>`.
+
+As the embedded content comes from another page (or controller for that matter),
+Symfony uses a version of the standard ``render()`` function to configure
+``hinclude`` tags in templates:
+
+.. code-block:: twig
+
+    {{ render_hinclude(controller('...')) }}
+    {{ render_hinclude(url('...')) }}
+
+.. note::
+
+    When using the ``controller()`` function, you must also configure the
+    :ref:`fragments path option <fragments-path-config>`.
+
+When JavaScript is disabled or it takes a long time to load you can display a
+default content rendering some template:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            fragments:
+                hinclude_default_template: hinclude.html.twig
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <!-- ... -->
+            <framework:config>
+                <framework:fragments hinclude-default-template="hinclude.html.twig"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            // ...
+            $framework->fragments()
+                ->hincludeDefaultTemplate('hinclude.html.twig')
+            ;
+        };
+
+You can define default templates per ``render()`` function (which will override
+any global default template that is defined):
+
+.. code-block:: twig
+
+    {{ render_hinclude(controller('...'),  {
+        default: 'default/content.html.twig'
+    }) }}
+
+Or you can also specify a string to display as the default content:
+
+.. code-block:: twig
+
+    {{ render_hinclude(controller('...'), {default: 'Loading...'}) }}
+
+Use the ``attributes`` option to define the value of hinclude.js options:
+
+.. code-block:: twig
+
+    {# by default, cross-site requests don't use credentials such as cookies, authorization
+       headers or TLS client certificates; set this option to 'true' to use them #}
+    {{ render_hinclude(controller('...'), {attributes: {'data-with-credentials': 'true'}}) }}
+
+    {# by default, the JavaScript code included in the loaded contents is not run;
+       set this option to 'true' to run that JavaScript code #}
+    {{ render_hinclude(controller('...'), {attributes: {evaljs: 'true'}}) }}
 
 Template Inheritance and Layouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1207,14 +1422,175 @@ you can refer to it as ``@AcmeFoo/user/profile.html.twig``.
     You can also :ref:`override bundle templates <override-templates>` in case
     you want to change some parts of the original bundle templates.
 
-Learn more
-----------
+.. index::
+   single: Twig extensions
 
-.. toctree::
-    :maxdepth: 1
-    :glob:
+.. _templates-twig-extension:
 
-    /templating/*
+Writing a Twig Extension
+------------------------
+
+`Twig Extensions`_ allow the creation of custom functions, filters, and more to use
+in your Twig templates. Before writing your own Twig extension, check if
+the filter/function that you need is already implemented in:
+
+* The `default Twig filters and functions`_;
+* The :doc:`Twig filters and functions added by Symfony </reference/twig_reference>`;
+* The `official Twig extensions`_ related to strings, HTML, Markdown, internationalization, etc.
+
+Create the Extension Class
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose you want to create a new filter called ``price`` that formats a number
+as currency:
+
+.. code-block:: twig
+
+    {{ product.price|price }}
+
+    {# pass in the 3 optional arguments #}
+    {{ product.price|price(2, ',', '.') }}
+
+Create a class that extends ``AbstractExtension`` and fill in the logic::
+
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
+
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
+
+    class AppExtension extends AbstractExtension
+    {
+        public function getFilters()
+        {
+            return [
+                new TwigFilter('price', [$this, 'formatPrice']),
+            ];
+        }
+
+        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        {
+            $price = number_format($number, $decimals, $decPoint, $thousandsSep);
+            $price = '$'.$price;
+
+            return $price;
+        }
+    }
+
+If you want to create a function instead of a filter, define the
+``getFunctions()`` method::
+
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
+
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFunction;
+
+    class AppExtension extends AbstractExtension
+    {
+        public function getFunctions()
+        {
+            return [
+                new TwigFunction('area', [$this, 'calculateArea']),
+            ];
+        }
+
+        public function calculateArea(int $width, int $length)
+        {
+            return $width * $length;
+        }
+    }
+
+.. tip::
+
+    Along with custom filters and functions, you can also register
+    `global variables`_.
+
+Register an Extension as a Service
+..................................
+
+Next, register your class as a service and tag it with ``twig.extension``. If you're
+using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+you're done! Symfony will automatically know about your new service and add the tag.
+
+You can now start using your filter in any Twig template. Optionally, execute
+this command to confirm that your new filter was successfully registered:
+
+.. code-block:: terminal
+
+    # display all information about Twig
+    $ php bin/console debug:twig
+
+    # display only the information about a specific filter
+    $ php bin/console debug:twig --filter=price
+
+.. _lazy-loaded-twig-extensions:
+
+Creating Lazy-Loaded Twig Extensions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Including the code of the custom filters/functions in the Twig extension class
+is the simplest way to create extensions. However, Twig must initialize all
+extensions before rendering any template, even if the template doesn't use an
+extension.
+
+If extensions don't define dependencies (i.e. if you don't inject services in
+them) performance is not affected. However, if extensions define lots of complex
+dependencies (e.g. those making database connections), the performance loss can
+be significant.
+
+That's why Twig allows decoupling the extension definition from its
+implementation. Following the same example as before, the first change would be
+to remove the ``formatPrice()`` method from the extension and update the PHP
+callable defined in ``getFilters()``::
+
+    // src/Twig/AppExtension.php
+    namespace App\Twig;
+
+    use App\Twig\AppRuntime;
+    use Twig\Extension\AbstractExtension;
+    use Twig\TwigFilter;
+
+    class AppExtension extends AbstractExtension
+    {
+        public function getFilters()
+        {
+            return [
+                // the logic of this filter is now implemented in a different class
+                new TwigFilter('price', [AppRuntime::class, 'formatPrice']),
+            ];
+        }
+    }
+
+Then, create the new ``AppRuntime`` class (it's not required but these classes
+are suffixed with ``Runtime`` by convention) and include the logic of the
+previous ``formatPrice()`` method::
+
+    // src/Twig/AppRuntime.php
+    namespace App\Twig;
+
+    use Twig\Extension\RuntimeExtensionInterface;
+
+    class AppRuntime implements RuntimeExtensionInterface
+    {
+        public function __construct()
+        {
+            // this simple example doesn't define any dependency, but in your own
+            // extensions, you'll need to inject services using this constructor
+        }
+
+        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        {
+            $price = number_format($number, $decimals, $decPoint, $thousandsSep);
+            $price = '$'.$price;
+
+            return $price;
+        }
+    }
+
+If you're using the default ``services.yaml`` configuration, this will already
+work! Otherwise, :ref:`create a service <service-container-creating-service>`
+for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
 .. _`Twig`: https://twig.symfony.com
 .. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
@@ -1231,3 +1607,8 @@ Learn more
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
 .. _`UX Twig Component`: https://symfony.com/bundles/ux-twig-component/current/index.html
 .. _`UX Live Component`: https://symfony.com/bundles/ux-live-component/current/index.html
+.. _`Twig Extensions`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
+.. _`default Twig filters and functions`: https://twig.symfony.com/doc/3.x/#reference
+.. _`official Twig extensions`: https://github.com/twigphp?q=extra
+.. _`global variables`: https://twig.symfony.com/doc/3.x/advanced.html#id1
+.. _`hinclude.js`: http://mnot.github.io/hinclude/

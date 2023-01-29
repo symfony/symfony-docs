@@ -736,7 +736,7 @@ is disabled. This can be either a template name or the content itself.
 
 .. seealso::
 
-    See :doc:`/templating/hinclude` for more information about hinclude.
+    See :ref:`templates-hinclude` for more information about hinclude.
 
 .. _reference-fragments-path:
 

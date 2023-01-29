@@ -12,7 +12,7 @@ components with Twig templates. This article explains them all.
 .. tip::
 
     If these extensions provided by Symfony are not enough, you can
-    :doc:`create a custom Twig extension </templating/twig_extension>` to define
+    :ref:`create a custom Twig extension <templates-twig-extension>` to define
     even more filters and functions.
 
 .. _reference-twig-functions:
