@@ -248,12 +248,9 @@ machine type, use ``camelCased workflow name + StateMachine``::
 
     class MyClass
     {
-        private $blogPublishingWorkflow;
-
         // Symfony will inject the 'blog_publishing' workflow configured before
-        public function __construct(WorkflowInterface $blogPublishingWorkflow)
+        public function __construct(private readonly WorkflowInterface $blogPublishingWorkflow)
         {
-            $this->blogPublishingWorkflow = $blogPublishingWorkflow;
         }
 
         public function toReview(BlogPost $post)
@@ -268,9 +265,37 @@ machine type, use ``camelCased workflow name + StateMachine``::
         }
     }
 
+Workflows can also be injected thanks to their name and the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target`
+attribute::
+
+    use App\Entity\BlogPost;
+    use Symfony\Component\DependencyInjection\Attribute\Target;
+    use Symfony\Component\Workflow\WorkflowInterface;
+
+    class MyClass
+    {
+        public function __construct(
+            #[Target('blog_publishing')]
+            private readonly WorkflowInterface $workflow
+        ) {
+        }
+
+        // ...
+    }
+
+This allows you to decorrelate the argument name of any implementation
+name.
+
 .. versionadded:: 6.2
 
     All workflows and state machines services are tagged since in Symfony 6.2.
+
+.. versionadded:: 6.3
+
+    Injecting a workflow with only its name and
+    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target` was
+    introduced in Symfony 6.3.
 
 .. tip::
 
