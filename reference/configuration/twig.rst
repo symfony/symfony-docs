@@ -231,7 +231,7 @@ globals
 **type**: ``array`` **default**: ``[]``
 
 It defines the global variables injected automatically into all Twig templates.
-Learn more about :doc:`Twig global variables </templating/global_variables>`.
+Learn more about :ref:`Twig global variables <templating-global-variables>`.
 
 number_format
 ~~~~~~~~~~~~~
