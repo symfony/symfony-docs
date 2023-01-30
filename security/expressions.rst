@@ -34,6 +34,23 @@ and ``#[IsGranted()]`` attribute also accept an
                 // ...
             }
         }
+    .. code-block:: php-attributes
+
+        // src/Controller/MyController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\ExpressionLanguage\Expression;
+        use Symfony\Component\HttpFoundation\Response;
+
+        class MyController extends AbstractController
+        {
+            #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_MANAGER")'))]
+            public function index(): Response
+            {
+                // ...
+            }
+        }
 
     .. code-block:: php
 
