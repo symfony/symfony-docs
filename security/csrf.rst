@@ -71,7 +71,7 @@ protected forms. As an alternative, you can:
 * Embed the form inside an uncached :doc:`ESI fragment </http_cache/esi>` and
   cache the rest of the page contents;
 * Cache the entire page and load the form via an uncached AJAX request;
-* Cache the entire page and use :doc:`hinclude.js </templating/hinclude>` to
+* Cache the entire page and use :ref:`hinclude.js <templates-hinclude>` to
   load the CSRF token with an uncached AJAX request and replace the form
   field value with it.
 
