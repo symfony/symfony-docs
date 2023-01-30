@@ -465,8 +465,8 @@ enable_csrf
 **type**: ``boolean`` **default**: ``null``
 
 Set this option to ``true`` to enable CSRF protection in the logout process
-using Symfony's default CSRF token generator. Set also the ``csrf_token_generator``
-option if you need to use a custom CSRF token generator.
+using Symfony's default CSRF token manager. Set also the ``csrf_token_manager``
+option if you need to use a custom CSRF token manager.
 
 .. versionadded:: 6.2
 
@@ -479,8 +479,8 @@ csrf_parameter
 
 The name of the parameter that stores the CSRF token value.
 
-csrf_token_generator
-~~~~~~~~~~~~~~~~~~~~
+csrf_token_manager
+~~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``null``
 
