@@ -105,11 +105,6 @@ For example, to define your service as lazy use the following::
         // ...
     }
 
-.. versionadded:: 5.4
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute
-    was introduced in Symfony 5.4.
-
 Interface Proxifying
 --------------------
 
@@ -183,11 +178,6 @@ parameter value::
     {
         // ...
     }
-
-.. versionadded:: 5.4
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute
-    was introduced in Symfony 5.4.
 
 The virtual `proxy`_ injected into other services will only implement the
 specified interfaces and will not extend the original service class, allowing to
