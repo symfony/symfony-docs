@@ -1946,7 +1946,7 @@ Localized Routes (i18n)
 -----------------------
 
 If your application is translated into multiple languages, each route can define
-a different URL per each :doc:`translation locale </translation/locale>`. This
+a different URL per each :ref:`translation locale <translation-locale>`. This
 avoids the need for duplicating routes, which also reduces the potential bugs:
 
 .. configuration-block::
