@@ -71,7 +71,7 @@ rules:
 # do not report as violation
 whitelist:
     regex:
-        - '/FOSUserBundle(.*)\.yml/'
+        - '/``.yml``/'
         - '/(.*)\.orm\.yml/' # currently DoctrineBundle only supports .yml
         - /docker-compose\.yml/
     lines:
@@ -84,9 +84,6 @@ whitelist:
         - '.. versionadded:: 1.18' # Flex in setup/upgrade_minor.rst
         - '.. versionadded:: 1.0.0' # Encore
         - '.. versionadded:: 2.7.1' # Doctrine
-        - '0 => 123' # assertion for var_dumper - components/var_dumper.rst
-        - '1 => "foo"' # assertion for var_dumper - components/var_dumper.rst
-        - '.. versionadded:: 5.1' # Private Services
         - '123,' # assertion for var_dumper - components/var_dumper.rst
         - '"foo",' # assertion for var_dumper - components/var_dumper.rst
         - '$var .= "Because of this `\xE9` octet (\\xE9),\n";'
