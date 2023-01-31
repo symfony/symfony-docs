@@ -362,7 +362,7 @@ data_collector
 **Purpose**: Create a class that collects custom data for the profiler
 
 For details on creating your own custom data collection, read the
-:doc:`/profiler/data_collector` article.
+:ref:`profiler-data-collector` article.
 
 doctrine.event_listener
 -----------------------
@@ -718,7 +718,7 @@ the tag.
 
 This is mostly useful when running your projects in application servers that
 reuse the Symfony application between requests to improve performance. This tag
-is applied for example to the built-in :doc:`data collectors </profiler/data_collector>`
+is applied for example to the built-in :ref:`data collectors <profiler-data-collector>`
 of the profiler to delete all their information.
 
 .. _dic_tags-mime:
