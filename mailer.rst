@@ -752,8 +752,6 @@ the ``TemplatedEmail`` class:
 
 .. code-block:: diff
 
-    + use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-
     $email = (new TemplatedEmail())
         // ...
 
