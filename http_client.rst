@@ -790,8 +790,9 @@ SSRF (Server-side request forgery) Handling
 requests to an arbitrary domain. These attacks can also target the internal
 hosts and IPs of the attacked server.
 
-If you use an ``HttpClient`` together with user-provided URIs, it is probably a
-good idea to decorate it with a ``NoPrivateNetworkHttpClient``. This will
+If you use an :class:`Symfony\\Component\\HttpClient\\HttpClient` together
+with user-provided URIs, it is probably a good idea to decorate it with a
+:class:`Symfony\\Component\\HttpClient\\NoPrivateNetworkHttpClient`. This will
 ensure local networks are made inaccessible to the HTTP client::
 
     use Symfony\Component\HttpClient\HttpClient;
@@ -871,8 +872,8 @@ Configuring CurlHttpClient Options
 
 PHP allows to configure lots of `cURL options`_ via the :phpfunction:`curl_setopt`
 function. In order to make the component more portable when not using cURL, the
-``CurlHttpClient`` only uses some of those options (and they are ignored in the
-rest of clients).
+:class:`Symfony\\Component\\HttpClient\\CurlHttpClient` only uses some of those
+options (and they are ignored in the rest of clients).
 
 Add an ``extra.curl`` option in your configuration to pass those extra options::
 
@@ -1059,7 +1060,8 @@ Canceling Responses
 
 To abort a request (e.g. because it didn't complete in due time, or you want to
 fetch only the first bytes of the response, etc.), you can either use the
-``cancel()`` method of ``ResponseInterface``::
+``cancel()`` method of
+:class:`Symfony\\Contracts\\HttpClient\\ResponseInterface`::
 
     $response->cancel();
 
@@ -1073,7 +1075,8 @@ Or throw an exception from a progress callback::
         },
     ]);
 
-The exception will be wrapped in an instance of ``TransportExceptionInterface``
+The exception will be wrapped in an instance of
+:class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`
 and will abort the request.
 
 In case the response was canceled using ``$response->cancel()``,
@@ -1273,7 +1276,8 @@ that network errors can happen when calling e.g. ``getStatusCode()`` too::
     Because ``$response->getInfo()`` is non-blocking, it shouldn't throw by design.
 
 When multiplexing responses, you can deal with errors for individual streams by
-catching ``TransportExceptionInterface`` in the foreach loop::
+catching :class:`Symfony\\Contracts\\HttpClient\\Exception\\TransportExceptionInterface`
+in the foreach loop::
 
     foreach ($client->stream($responses) as $response => $chunk) {
         try {
@@ -1417,9 +1421,9 @@ PSR-18 and PSR-17
 
 This component implements the `PSR-18`_ (HTTP Client) specifications via the
 :class:`Symfony\\Component\\HttpClient\\Psr18Client` class, which is an adapter
-to turn a Symfony ``HttpClientInterface`` into a PSR-18 ``ClientInterface``.
-This class also implements the relevant methods of `PSR-17`_ to ease creating
-request objects.
+to turn a Symfony :class:`Symfony\\Contracts\\HttpClient\\HttpClientInterface`
+into a PSR-18 ``ClientInterface``. This class also implements the relevant
+methods of `PSR-17`_ to ease creating request objects.
 
 To use it, you need the ``psr/http-client`` package and a `PSR-17`_ implementation:
 
@@ -1480,9 +1484,9 @@ The `HTTPlug`_ v1 specification was published before PSR-18 and is superseded by
 it. As such, you should not use it in newly written code. The component is still
 interoperable with libraries that require it thanks to the
 :class:`Symfony\\Component\\HttpClient\\HttplugClient` class. Similarly to
-``Psr18Client`` implementing relevant parts of PSR-17, ``HttplugClient`` also
-implements the factory methods defined in the related ``php-http/message-factory``
-package.
+:class:`Symfony\\Component\\HttpClient\\Psr18Client` implementing relevant parts of PSR-17,
+``HttplugClient`` also implements the factory methods defined in the related
+``php-http/message-factory`` package.
 
 .. code-block:: terminal
 
@@ -1629,10 +1633,6 @@ The solution is to also decorate the response object itself.
 :class:`Symfony\\Component\\HttpClient\\Response\\TraceableResponse` are good
 examples as a starting point.
 
-.. versionadded:: 5.2
-
-    ``AsyncDecoratorTrait`` was introduced in Symfony 5.2.
-
 In order to help writing more advanced response processors, the component provides
 an :class:`Symfony\\Component\\HttpClient\\AsyncDecoratorTrait`. This trait allows
 processing the stream of chunks as they come back from the network::
@@ -1690,15 +1690,20 @@ has many safety checks that will throw a ``LogicException`` if the chunk
 passthru doesn't behave correctly; e.g. if a chunk is yielded after an ``isLast()``
 one, or if a content chunk is yielded before an ``isFirst()`` one, etc.
 
+.. versionadded:: 5.2
+
+    :class:`Symfony\\Component\\HttpClient\\AsyncDecoratorTrait` was introduced in Symfony 5.2.
+
 Testing
 -------
 
-This component includes the ``MockHttpClient`` and ``MockResponse`` classes to
-use in tests that shouldn't make actual HTTP requests. Such tests can be
-useful, as they will run faster and produce consistent results, since they're
-not dependent on an external service. By not making actual HTTP requests there
-is no need to worry about the service being online or the request changing
-state, for example deleting a resource.
+This component includes the :class:`Symfony\\Component\\HttpClient\\MockHttpClient`
+and :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` classes to use
+in tests that shouldn't make actual HTTP requests. Such tests can be useful, as they
+will run faster and produce consistent results, since they're not dependent on an
+external service. By not making actual HTTP requests there is no need to worry about
+the service being online or the request changing state, for example deleting
+a resource.
 
 ``MockHttpClient`` implements the ``HttpClientInterface``, just like any actual
 HTTP client in this component. When you type-hint with ``HttpClientInterface``
