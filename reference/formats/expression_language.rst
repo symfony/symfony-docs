@@ -186,7 +186,7 @@ This will print out ``true``.
 .. tip::
 
     To read how to register your own functions to use in an expression, see
-    ":doc:`/components/expression_language/extending`".
+    ":ref:`expression-language-extending`".
 
 .. _component-expression-arrays:
 
