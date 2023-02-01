@@ -922,11 +922,11 @@ However, Symfony provides useful shortcut methods for the most common cases:
 Response Assertions
 ...................
 
-``assertResponseIsSuccessful(string $message = '')``
+``assertResponseIsSuccessful(string $message = '', bool $verbose = true)``
     Asserts that the response was successful (HTTP status is 2xx).
-``assertResponseStatusCodeSame(int $expectedCode, string $message = '')``
+``assertResponseStatusCodeSame(int $expectedCode, string $message = '', bool $verbose = true)``
     Asserts a specific HTTP status code.
-``assertResponseRedirects(string $expectedLocation = null, int $expectedCode = null, string $message = '')``
+``assertResponseRedirects(string $expectedLocation = null, int $expectedCode = null, string $message = '', bool $verbose = true)``
     Asserts the response is a redirect response (optionally, you can check
     the target location and status code).
 ``assertResponseHasHeader(string $headerName, string $message = '')``/``assertResponseNotHasHeader(string $headerName, string $message = '')``
@@ -943,7 +943,7 @@ Response Assertions
     Asserts the response format returned by the
     :method:`Symfony\\Component\\HttpFoundation\\Response::getFormat` method
     is the same as the expected value.
-``assertResponseIsUnprocessable(string $message = '')``
+``assertResponseIsUnprocessable(string $message = '', bool $verbose = true)``
     Asserts the response is unprocessable (HTTP status is 422)
 
 Request Assertions
