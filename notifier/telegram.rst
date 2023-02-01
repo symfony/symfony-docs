@@ -89,3 +89,4 @@ When sending message with inline keyboard buttons with callback data, you can us
         );
 
 .. _`message options`: https://core.telegram.org/bots/api
+.. _`answer callback queries`: https://core.telegram.org/bots/api#answercallbackquery
