@@ -2,7 +2,7 @@ Profiler
 ========
 
 The profiler is a powerful **development tool** that gives detailed information
-about the execution of any request. 
+about the execution of any request.
 
 .. caution::
 
@@ -211,6 +211,7 @@ event::
         $response = $event->getResponse();
         $response->headers->set('Symfony-Debug-Toolbar-Replace', 1);
     }
+
 .. index::
    single: Profiling; Data collector
 
