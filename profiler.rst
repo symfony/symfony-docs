@@ -217,7 +217,7 @@ event::
 .. _profiler-data-collector:
 
 Creating a Data Collector
-=========================
+-------------------------
 
 The Symfony Profiler obtains its profiling and debug information using some
 special classes called data collectors. Symfony comes bundled with a few of
