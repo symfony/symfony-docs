@@ -126,5 +126,5 @@ finish. It can be achieved by embedding the token in the error message::
 
 .. tip::
 
-    Read the API for built-in :doc:`data collectors </profiler/data_collector>`
+    Read the API for built-in :ref:`data collectors <profiler-data-collector>`
     to learn more about their interfaces.

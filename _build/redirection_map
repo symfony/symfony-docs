@@ -190,7 +190,8 @@
 /cookbook/logging/monolog_console /logging/monolog_console
 /cookbook/logging/monolog_email /logging/monolog_email
 /cookbook/logging/monolog_regex_based_excludes /logging/monolog_regex_based_excludes
-/cookbook/profiler/data_collector /profiler/data_collector
+/cookbook/profiler/data_collector /profiler#profiler-data-collector
+/profiler/data_collector /profiler#profiler-data-collector
 /cookbook/profiler/index /profiler
 /cookbook/profiler/matchers /profiler/matchers
 /cookbook/profiler/profiling_data /profiler/profiling_data
