@@ -147,7 +147,7 @@ One way to accomplish this is with the When constraint:
 
 The `expression`_ option is the expression that must return true in order
 to trigger the validation of the attached constraints. To learn more about
-the expression language syntax, see :doc:`/components/expression_language/syntax`.
+the expression language syntax, see :doc:`/reference/formats/expression_language`.
 
 For more information about the expression and what variables are available
 to you, see the `expression`_ option details below.
@@ -165,7 +165,7 @@ If the expression evaluates to a falsey value (i.e. using ``==``, not ``===``),
 validation of constraints won't be triggered.
 
 To learn more about the expression language syntax, see
-:doc:`/components/expression_language/syntax`.
+:doc:`/reference/formats/expression_language`.
 
 Depending on how you use the constraint, you have access to 1 or 2 variables
 in your expression:
