@@ -484,9 +484,8 @@ However, it's common to define routes where some parts are variable. For example
 the URL to display some blog post will probably include the title or slug
 (e.g. ``/blog/my-first-post`` or ``/blog/all-about-symfony``).
 
-In Symfony routes, variable parts are wrapped in ``{ ... }`` and they must have
-a unique name. For example, the route to display the blog post contents is
-defined as ``/blog/{slug}``:
+In Symfony routes, variable parts are wrapped in ``{ }``.
+For example, the route to display the blog post contents is defined as ``/blog/{slug}``:
 
 .. configuration-block::
 
