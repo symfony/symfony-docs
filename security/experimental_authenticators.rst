@@ -56,9 +56,79 @@ The authenticator-based system can be enabled using the
 The new system is backwards compatible with the current authentication
 system, with some exceptions that will be explained in this article:
 
+* :ref:`Access control must be used to enforce authentication <authenticators-access-control>`
 * :ref:`Anonymous users no longer exist <authenticators-removed-anonymous>`
 * :ref:`Configuring the authentication entry point is required when more than one authenticator is used <authenticators-required-entry-point>`
 * :ref:`The authentication providers are refactored into Authenticators <authenticators-removed-authentication-providers>`
+
+.. _authenticators-access-control:
+
+Use Access Control to Require Authentication
+--------------------------------------------
+
+Previously, if the firewall wasn't configured with ``anonymous`` support,
+it automatically required users to authenticate. As the new firewall
+always supports unauthenticated requests (:ref:`authenticators-removed-anonymous`),
+you **must** define ``access_control`` rules to enforce authentication.
+Without this, unauthenticated users can visit pages behind the firewall.
+
+If the application doesn't use roles, you can check for
+``IS_AUTHENTICATED_REMEMBERED`` to require authentication (both normal and
+remembered):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            enable_authenticator_manager: true
+
+            # ...
+            access_control:
+                # require authentication for all routes under /admin
+                - { path: ^/admin, roles: IS_AUTHENTICATED_REMEMBERED }
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config enable-authenticator-manager="true">
+                <!-- ... -->
+
+                <access-control>
+                    <!-- require authentication for all routes under /admin -->
+                    <rule path="^/admin" role="IS_AUTHENTICATED_REMEMBERED"/>
+                </access-control>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+
+        $container->loadFromExtension('security', [
+            'enable_authenticator_manager' => true,
+
+            // ...
+            'access_control' => [
+                // require authentication for all routes under /admin
+                ['path' => '^/admin', 'roles' => 'IS_AUTHENTICATED_REMEMBERED']
+            ],
+        ]);
+
+.. tip::
+
+    If you're using Symfony 5.4 or newer, use ``IS_AUTHENTICATED`` instead.
 
 .. _authenticators-removed-anonymous:
 
