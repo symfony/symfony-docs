@@ -942,7 +942,7 @@ is dispatched. Listeners receive a
         $message = $event->getOriginalMessage();
 
         // log something
-        $this->logger(sprintf('The message has been successfully sent and have id: %s, $message->getMessageId()'));
+        $this->logger(sprintf('The message has been successfully sent and has id: %s, $message->getMessageId()'));
     });
 
 .. TODO
