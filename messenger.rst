@@ -2345,8 +2345,8 @@ to be handled asynchronously). Keep this in mind if you create your own middlewa
 You can add your own middleware to this list, or completely disable the default
 middleware and *only* include your own.
 
-If a middleware service is abstract, you can configure its constructor's arguments.
-A different instance will be created per bus.
+If a middleware service is abstract, you can configure its constructor's arguments
+and a different instance will be created per bus.
 
 .. configuration-block::
 
