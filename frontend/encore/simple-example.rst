@@ -75,7 +75,7 @@ To build the assets, run the following if you use the Yarn package manager:
     $ yarn dev-server
     # or
     $ npm run dev-server
-    
+
     # compile assets once
     $ yarn dev
     # or
@@ -229,7 +229,7 @@ to initialize Stimulus and automatically load any "controllers" from the
 
 Let's look at a simple Stimulus example. In a Twig template, suppose you have:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <div {{ stimulus_controller('say-hello') }}>
         <input type="text" {{ stimulus_target('say-hello', 'name') }}>
