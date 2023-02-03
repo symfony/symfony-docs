@@ -36,7 +36,7 @@ jobs:
                 run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
             -   name: Cache dependencies
-                uses: actions/cache@v2
+                uses: actions/cache@v3
                 with:
                     path: ${{ steps.composercache.outputs.dir }}
                     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -67,7 +67,7 @@ jobs:
                 id: extract_base_branch
 
             -   name: "Cache DOCtor-RST"
-                uses: actions/cache@v2
+                uses: actions/cache@v3
                 with:
                     path: .cache
                     key: ${{ runner.os }}-doctor-rst-${{ steps.extract_base_branch.outputs.branch }}
@@ -109,7 +109,7 @@ jobs:
 
           - name: Cache dependencies
             if: ${{ steps.find-files.outputs.files }}
-            uses: actions/cache@v2
+            uses: actions/cache@v3
             with:
                 path: ${{ steps.composercache.outputs.dir }}
                 key: ${{ runner.os }}-composer-codeBlocks-${{ hashFiles('_checker/composer.lock', '_sf_app/composer.lock') }}
