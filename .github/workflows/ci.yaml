@@ -73,7 +73,7 @@ jobs:
                     key: ${{ runner.os }}-doctor-rst-${{ steps.extract_base_branch.outputs.branch }}
 
             -   name: "Run DOCtor-RST"
-                uses: docker://oskarstark/doctor-rst:1.35.1
+                uses: docker://oskarstark/doctor-rst:1.38.2
                 with:
                     args: --short --error-format=github --cache-file=/github/workspace/.cache/doctor-rst.cache
 
