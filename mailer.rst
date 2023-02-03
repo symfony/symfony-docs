@@ -54,6 +54,7 @@ over SMTP by configuring the DSN in your ``.env`` file (the ``user``,
     .. code-block:: php
 
         // config/packages/mailer.php
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
         use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
         return static function (ContainerConfigurator $containerConfigurator): void {
@@ -1179,6 +1180,7 @@ This can be configured by replacing the ``dsn`` configuration entry with a
     .. code-block:: php
 
         // config/packages/mailer.php
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
         use Symfony\Config\FrameworkConfig;
 
         return static function (FrameworkConfig $framework) {

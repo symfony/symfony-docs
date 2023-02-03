@@ -75,8 +75,42 @@ Serializing Locks
 The :class:`Symfony\\Component\\Lock\\Key` contains the state of the
 :class:`Symfony\\Component\\Lock\\Lock` and can be serialized. This
 allows the user to begin a long job in a process by acquiring the lock, and
-continue the job in another process using the same lock::
+continue the job in another process using the same lock.
 
+First, you may create a serializable class containing the resource and the
+key of the lock::
+
+    // src/Lock/RefreshTaxonomy.php
+    namespace App\Lock;
+
+    use Symfony\Component\Lock\Key;
+
+    class RefreshTaxonomy
+    {
+        private object $article;
+        private Key $key;
+
+        public function __construct(object $article, Key $key)
+        {
+            $this->article = $article;
+            $this->key = $key;
+        }
+
+        public function getArticle(): object
+        {
+            return $this->article;
+        }
+
+        public function getKey(): Key
+        {
+            return $this->key;
+        }
+    }
+
+Then, you can use this class to dispatch all that's needed for another process
+to handle the rest of the job::
+
+    use App\Lock\RefreshTaxonomy;
     use Symfony\Component\Lock\Key;
     use Symfony\Component\Lock\Lock;
 

@@ -700,6 +700,100 @@ For a full list of *all* possible services in the container, run:
 
     $ php bin/console debug:container
 
+Injecting a Closure as an Argument
+----------------------------------
+
+It is possible to inject a callable as an argument of a service.
+Let's add an argument to our ``MessageGenerator`` constructor::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Psr\Log\LoggerInterface;
+
+    class MessageGenerator
+    {
+        private $logger;
+        private $messageHash;
+
+        public function __construct(LoggerInterface $logger, callable $generateMessageHash)
+        {
+            $this->logger = $logger;
+            $this->messageHash = $generateMessageHash();
+        }
+        // ...
+    }
+
+Now, we would add a new invokable service to generate the message hash::
+
+    // src/Hash/MessageHashGenerator.php
+    namespace App\Hash;
+
+    class MessageHashGenerator
+    {
+        public function __invoke(): string
+        {
+            // Compute and return a message hash
+        }
+    }
+
+Our configuration looks like this:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ... same code as before
+
+            # explicitly configure the service
+            App\Service\MessageGenerator:
+                arguments:
+                    $logger: '@monolog.logger.request'
+                    $generateMessageHash: !closure '@App\Hash\MessageHashGenerator'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... same code as before -->
+
+                <!-- Explicitly configure the service -->
+                <service id="App\Service\MessageGenerator">
+                    <argument key="$logger" type="service" id="monolog.logger.request"/>
+                    <argument key="$generateMessageHash" type="closure" id="App\Hash\MessageHashGenerator"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\MessageGenerator;
+
+        return function(ContainerConfigurator $containerConfigurator) {
+            // ... same code as before
+
+            // explicitly configure the service
+            $services->set(MessageGenerator::class)
+                ->arg('$logger', service('monolog.logger.request'))
+                ->arg('$generateMessageHash', closure('App\Hash\MessageHashGenerator'))
+            ;
+        };
+
+.. versionadded:: 6.1
+
+    The ``closure`` argument type was introduced in Symfony 6.1.
+
 .. _services-binding:
 
 Binding Arguments by Name or Type
