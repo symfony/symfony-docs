@@ -11,7 +11,8 @@ forms, which is useful when creating forms that expose one-to-many
 relationships (e.g. a product from where you can manage many related product
 photos).
 
-When rendered, existing collection entries are indexed by the keys of the array that is passed as the collection type field data.
+When rendered, existing collection entries are indexed by the keys of the array
+that is passed as the collection type field data.
 
 +---------------------------+--------------------------------------------------------------------------+
 | Rendered as               | depends on the `entry_type`_ option                                      |
