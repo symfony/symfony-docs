@@ -3026,6 +3026,8 @@ Troubleshooting
 
 Here are some common errors you might see while working with routing:
 
+.. code-block:: text
+
     Controller "App\\Controller\\BlogController::show()" requires that you
     provide a value for the "$slug" argument.
 
@@ -3039,6 +3041,8 @@ This happens when your controller method has an argument (e.g. ``$slug``)::
 But your route path does *not* have a ``{slug}`` parameter (e.g. it is
 ``/blog/show``). Add a ``{slug}`` to your route path: ``/blog/show/{slug}`` or
 give the argument a default value (i.e. ``$slug = null``).
+
+.. code-block:: text
 
     Some mandatory parameters are missing ("slug") to generate a URL for route
     "blog_show".
