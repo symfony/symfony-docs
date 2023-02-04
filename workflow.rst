@@ -808,6 +808,10 @@ of domain logic in your templates:
 
 ``workflow_transitions()``
     Returns an array with all the transitions enabled for the given object.
+   
+    - Parameters:
+        * object $subject, 
+        * string $name = null : Workflow name ( first if null )
 
 ``workflow_transition()``
     Returns a specific transition enabled for the given object and transition name.
