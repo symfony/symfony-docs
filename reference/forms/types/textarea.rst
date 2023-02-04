@@ -40,13 +40,13 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 
 .. include:: /reference/forms/types/options/disabled.rst.inc
 
-.. include:: /reference/forms/types/options/empty_data_declaration.rst.inc
+.. include:: /reference/forms/types/options/text_empty_data_declaration.rst.inc
 
 From an HTTP perspective, submitted data is always a string or an array of strings.
 So by default, the form will treat any empty string as null. If you prefer to get
 an empty string, explicitly set the ``empty_data`` option to an empty string.
 
-.. include:: /reference/forms/types/options/empty_data_description.rst.inc
+.. include:: /reference/forms/types/options/text_empty_data_description.rst.inc
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
