@@ -151,6 +151,34 @@ values::
 This will restrict the ``delivery`` options to be either ``standard``,
 ``expedited``  or ``priority``.
 
+You can also provide enum values to ``enumNode()``. Let's define an enumeration
+describing the possible states of the example above::
+
+    enum Delivery: string
+    {
+        case Standard = 'standard';
+        case Expedited = 'expedited';
+        case Priority = 'priority';
+    }
+
+The configuration can now be written like this::
+
+    $rootNode
+        ->children()
+            ->enumNode('delivery')
+                // You can provide all values of the enum...
+                ->values(Delivery::cases())
+                // ... or you can pass only some values next to other scalar values
+                ->values([Delivery::Priority, Delivery::Standard, 'other', false])
+            ->end()
+        ->end()
+    ;
+
+.. versionadded:: 6.3
+
+    The support of enum values in ``enumNode()`` was introduced
+    in Symfony 6.3.
+
 Array Nodes
 ~~~~~~~~~~~
 
