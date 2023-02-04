@@ -121,13 +121,10 @@ to be adjusted if needed:
 
 .. caution::
 
-    The recommended bundle structure was changed in Symfony 5, read the
-    `Symfony 4.4 bundle documentation`_ for information about the old
-    structure.
-
-    When using the new ``AbstractBundle`` class, the bundle defaults to the
-    new structure. Override the ``Bundle::getPath()`` method to change to
-    the old structure::
+    The recommended bundle structure was changed in Symfony 5; since Symfony 6.1
+    you can use the new ``AbstractBundle`` class for it.
+    If you need to use the old directory structure, read the `Symfony 4.4 bundle documentation`_ 
+    and override the ``Bundle::getPath()`` method::
 
         class AcmeTestBundle extends AbstractBundle
         {
