@@ -191,6 +191,10 @@ actually deals with emailing you the error. The settings for this are
 straightforward, the to and from addresses, the formatter, the content type
 and the subject.
 
+.. tip::
+
+If you use messenger, make sure that your message class implements ``\JsonSerializable`` in order to get the message content in your logs, because messenger uses his monolog directly and his context serializer wish use ``json_encode`` for seriliazation. That's why we need to customize JSON representation when encoded is done with ``json_encode``.
+
 You can combine these handlers with other handlers so that the errors still
 get logged on the server as well as the emails being sent:
 
