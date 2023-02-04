@@ -54,6 +54,26 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
         }
     }
 
+If you're creating a REST api with a custom response, here's an example 
+of what you would have in the `normalize` function:
+
+        public function normalize($product, string $format = null, array $context = [])
+        {
+            $data = $this->normalizer->normalize($product, $format, $context);
+            
+            // Here, add, edit, or delete your fields:
+            $data = [
+                'id' => $product->getId(),
+                'name' => $product->getName(),
+                'description' => $product->getDescription(),
+                'price' => $product->getPrice(),
+                'available' => $product->getAvailable(),
+                'category' => $product->getCategory()->getName(),
+            ];
+            return $data;
+        }
+
+
 Registering it in your Application
 ----------------------------------
 
