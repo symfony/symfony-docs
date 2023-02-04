@@ -1575,6 +1575,28 @@ you indicate that you're expecting an array instead of a single object::
     $data = ...; // The serialized data from the previous example
     $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 
+
+By default the :class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+will give the whole array to other denormalizers when checking for support.
+Sometimes a denormalizer will also check if the data has the correct datatype,
+and may fail because it expected the datatype of an element inside the array.
+
+In such cases it's possible to pass ``true`` for the first argument of
+:class:`Symfony\\Component\\Serializer\\Normalizer\\ArrayDenormalizer`
+to indicate that only the first element of the array must be checked::
+
+    use Symfony\Component\Serializer\Encoder\JsonEncoder;
+    use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+    use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    $serializer = new Serializer(
+        [new GetSetMethodNormalizer(), new ArrayDenormalizer(true)],
+        [new JsonEncoder()]
+    );
+
+    $data = ...; // The serialized data from the previous example
+    $persons = $serializer->deserialize($data, 'Acme\Person[]', 'json');
 Handling Constructor Arguments
 ------------------------------
 
