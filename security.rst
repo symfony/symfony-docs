@@ -2661,18 +2661,12 @@ Frequently Asked Questions
 --------------------------
 
 **Can I have Multiple Firewalls?**
-    Yes! But it's usually not necessary. Each firewall is like a separate security
-    system, being authenticated in one firewall doesn't make you authenticated in
-    another one. One firewall can have multiple diverse ways of allowing
-    authentication (e.g. form login, API key authentication and LDAP).
-
-**Can I Share Authentication Between Firewalls?**
-    Yes, but only with some configuration. If you're using multiple firewalls and
-    you authenticate against one firewall, you will *not* be authenticated against
-    any other firewalls automatically. Different firewalls are like different security
-    systems. To do this you have to explicitly specify the same
-    :ref:`reference-security-firewall-context` for different firewalls. However,
-    one main firewall is usually sufficient for the needs of most applications.
+    Yes! Each firewall is like a separate security system, being authenticated in one
+    firewall doesn't make you authenticated in another one. Each firewall can have
+    multiple ways of allowing authentication (e.g. form login, and API key authentication).
+    If you want to share authentication between firewalls,
+    you have to explicitly specify the same
+    :ref:`reference-security-firewall-context` for different firewalls.
 
 **Security doesn't seem to work on my Error Pages**
     As routing is done *before* security, 404 error pages are not covered by
