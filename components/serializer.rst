@@ -1561,7 +1561,7 @@ context option::
         }
     }
 
-    $normalizer = new ObjectNormalizer($classMetadataFactory);
+    $normalizer = new ObjectNormalizer();
     $serializer = new Serializer([$normalizer]);
 
     $data = $serializer->denormalize(
