@@ -602,8 +602,12 @@ store locks and does not expire.
 RedisStore
 ~~~~~~~~~~
 
+.. versionadded:: 6.3
+
+    ``\Relay\Relay`` support was introduced in Symfony 6.3.
+
 The RedisStore saves locks on a Redis server, it requires a Redis connection
-implementing the ``\Redis``, ``\RedisArray``, ``\RedisCluster`` or
+implementing the ``\Redis``, ``\RedisArray``, ``\RedisCluster``, ``\Relay\Relay`` or
 ``\Predis`` classes. This store does not support blocking, and expects a TTL to
 avoid stalled locks::
 

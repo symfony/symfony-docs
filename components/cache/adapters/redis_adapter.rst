@@ -25,9 +25,9 @@ to utilize a cluster of servers to provide redundancy and/or fail-over is also a
 
     **Requirements:** At least one `Redis server`_ must be installed and running to use this
     adapter. Additionally, this adapter requires a compatible extension or library that implements
-    ``\Redis``, ``\RedisArray``, ``RedisCluster``, or ``\Predis``.
+    ``\Redis``, ``\RedisArray``, ``RedisCluster``, ``\Relay\Relay`` or ``\Predis``.
 
-This adapter expects a `Redis`_, `RedisArray`_, `RedisCluster`_, or `Predis`_ instance to be
+This adapter expects a `Redis`_, `RedisArray`_, `RedisCluster`_, `Relay`_ or `Predis`_ instance to be
 passed as the first parameter. A namespace and default cache lifetime can optionally be passed
 as the second and third parameters::
 
@@ -46,6 +46,10 @@ as the second and third parameters::
         // until RedisAdapter::clear() is invoked or the server(s) are purged)
         $defaultLifetime = 0
     );
+
+.. versionadded:: 6.3
+
+    Support for `Relay`_ was introduced in Symfony 6.3.
 
 Configure the Connection
 ------------------------
@@ -165,10 +169,14 @@ array of ``key => value`` pairs representing option names and their respective v
 Available Options
 ~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 6.3
+
+    ``\Relay\Relay`` support was introduced in Symfony 6.3.
+
 ``class`` (type: ``string``, default: ``null``)
-    Specifies the connection library to return, either ``\Redis`` or ``\Predis\Client``.
-    If none is specified, it will return ``\Redis`` if the ``redis`` extension is
-    available, and ``\Predis\Client`` otherwise. Explicitly set this to ``\Predis\Client`` for Sentinel if you are
+    Specifies the connection library to return, either ``\Redis``, ``\Relay\Relay`` or ``\Predis\Client``.
+    If none is specified, fallback value is in following order, depending which one is available first:
+    ``\Redis``, ``\Relay\Relay``, ``\Predis\Client``. Explicitly set this to ``\Predis\Client`` for Sentinel if you are
     running into issues when retrieving master information.
 
 ``persistent`` (type: ``int``, default: ``0``)
@@ -258,6 +266,7 @@ Read more about this topic in the official `Redis LRU Cache Documentation`_.
 .. _`Redis`: https://github.com/phpredis/phpredis
 .. _`RedisArray`: https://github.com/phpredis/phpredis/blob/master/arrays.markdown#readme
 .. _`RedisCluster`: https://github.com/phpredis/phpredis/blob/master/cluster.markdown#readme
+.. _`Relay`: https://relay.so/
 .. _`Predis`: https://packagist.org/packages/predis/predis
 .. _`Predis Connection Parameters`: https://github.com/nrk/predis/wiki/Connection-Parameters#list-of-connection-parameters
 .. _`TCP-keepalive`: https://redis.io/topics/clients#tcp-keepalive
