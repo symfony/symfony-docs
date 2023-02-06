@@ -334,6 +334,8 @@ add this logic to the bundle class directly::
     namespace Acme\SocialBundle;
 
     use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
     use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
     class AcmeSocialBundle extends AbstractBundle
