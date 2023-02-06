@@ -245,10 +245,11 @@ the number of requests to the API::
             // RateLimitExceededException if the limit has been reached
             // $limiter->consume(1)->ensureAccepted();
 
+            // to reset the counter
+            // $limiter->reset();
+
             // ...
         }
-
-        // ...
     }
 
 .. note::
