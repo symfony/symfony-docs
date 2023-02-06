@@ -829,7 +829,7 @@ First, make sure that the VarDumper component is installed in the application:
 
 .. code-block:: terminal
 
-    $ composer require --dev symfony/var-dumper
+    $ composer require --dev symfony/debug-bundle
 
 Then, use either the ``{% dump %}`` tag or the ``{{ dump() }}`` function
 depending on your needs:
