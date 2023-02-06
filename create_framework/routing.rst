@@ -35,7 +35,7 @@ template as follows:
 .. code-block:: html+php
 
     <!-- example.com/src/pages/hello.php -->
-    Hello <?= htmlspecialchars(isset($name) ? $name : 'World', ENT_QUOTES, 'UTF-8') ?>
+    Hello <?= htmlspecialchars($name ?? 'World', ENT_QUOTES, 'UTF-8') ?>
 
 Now, we are in good shape to add new features.
 
