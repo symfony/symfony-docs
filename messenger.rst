@@ -339,6 +339,20 @@ to multiple transports:
     from ``Notification``, both the routing for ``Notification`` and
     ``SmsNotification`` will be used.
 
+.. tip::
+
+    You can define and override the transport that a message is using at
+    runtime by using the
+    :class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp` on
+    the envelope of the message. This stamp takes an array of transport
+    name as its only argument. For more information about stamps, see
+    `Envelopes & Stamps`_.
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp`
+    stamp was introduced in Symfony 6.2.
+
 Doctrine Entities in Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
