@@ -21,7 +21,9 @@ Concrete Examples
 * Pattern of inappropriate social contact, such as requesting/assuming
   inappropriate levels of intimacy with others;
 * Continued one-on-one communication after requests to cease;
-* Putting down people based on their technology choices or their work.
+* Putting down people based on their technology choices or their work;
+* Taking photographs of conference attendees and speakers and publishing them
+  without their explicit permission.
 
 The original list is inspired and modified from `geek feminism`_ and
 confirmed by experiences from PHPWomen.
