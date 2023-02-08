@@ -629,6 +629,7 @@ This example shows how you could configure the application secret using an env v
                 http://symfony.com/schema/dic/symfony
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
+            <!-- by convention the env var names are always uppercase -->
             <framework:config secret="%env(APP_SECRET)%"/>
 
         </container>
@@ -640,6 +641,7 @@ This example shows how you could configure the application secret using an env v
 
         return static function (ContainerConfigurator $containerConfigurator) {
             $container->extension('framework', [
+                // by convention the env var names are always uppercase
                 'secret' => '%env(APP_SECRET)%',
             ]);
         };
