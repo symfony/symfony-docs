@@ -32,6 +32,7 @@ rules:
     no_directive_after_shorthand: ~
     no_explicit_use_of_code_block_php: ~
     no_inheritdoc: ~
+    no_merge_conflict: ~
     no_namespace_after_use_statements: ~
     no_php_open_tag_in_code_block_php_directive: ~
     no_space_before_self_xml_closing_tag: ~
@@ -54,7 +55,6 @@ rules:
     versionadded_directive_should_have_version: ~
     yaml_instead_of_yml_suffix: ~
     yarn_dev_option_at_the_end: ~
-    no_merge_conflict:
 
     #   master
     versionadded_directive_major_version:
