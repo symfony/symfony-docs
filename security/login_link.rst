@@ -404,6 +404,13 @@ The signed URL contains 3 parameters:
     properties. Whenever these change, the hash changes and previous login
     links are invalidated.
 
+For a user that returns ``user@example.com`` on ``$user->getUserIdentifier()``
+call, the generated login link looks like this:
+
+.. code-block:: text
+
+    http://example.com/login_check?user=user@example.com&expires=1675707377&hash=f0Jbda56Y...A5sUCI~TQF701fwJ...7m2n4A~
+
 You can add more properties to the ``hash`` by using the
 ``signature_properties`` option:
 
@@ -646,6 +653,23 @@ user create this POST request (e.g. by clicking a button)::
             <button type="submit">Continue</button>
         </form>
     {% endblock %}
+
+Hashing Strategy
+~~~~~~~~~~~~~~~~
+
+Internally, the :class:`Symfony\\Component\\Security\\Http\\LoginLink\\LoginLinkHandler`
+implementation uses the
+:class:`Symfony\\Component\\Security\\Core\\Signature\\SignatureHasher` to create the
+hash contained in the login link.
+
+This hasher creates a first hash with the expiration
+date of the link, the values of the configured signature properties and the
+user identifier. The used hashing algorithm is SHA-256.
+
+Once this first hash is processed and encoded in Base64, a new one is created
+from the first hash value and the ``kernel.secret`` container parameter. This
+allows Symfony to sign this final hash, which is contained in the login URL.
+The final hash is also a Base64 encoded SHA-256 hash.
 
 Customizing the Success Handler
 -------------------------------
