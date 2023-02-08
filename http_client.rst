@@ -1977,14 +1977,13 @@ test it in a real application::
         }
     }
 
-Simulate a Transport Exception
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Testing Network Transport Exceptions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When making HTTP requests, it sometimes occurs an error at transport level.
-You can find more information about transport errors it in the
-:ref:`Network Errors <http-client_network-errors>` section.
+As explained in the :ref:`Network Errors section <http-client_network-errors>`,
+when making HTTP requests you might face errors at transport level.
 
-It may be useful to test how your application behaves in case of a transport
+That's why it's useful to test how your application behaves in case of a transport
 error. :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` allows
 you to do so, by yielding the exception from its body::
 
