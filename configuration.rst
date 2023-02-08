@@ -605,51 +605,42 @@ The values of these options are resolved at runtime (only once per request, to
 not impact performance) so you can change the application behavior without having
 to clear the cache.
 
-This example shows how you could configure the database connection using an env var:
+This example shows how you could configure the application secret using an env var:
 
 .. configuration-block::
 
     .. code-block:: yaml
 
-        # config/packages/doctrine.yaml
-        doctrine:
-            dbal:
-                # by convention the env var names are always uppercase
-                url: '%env(resolve:DATABASE_URL)%'
+        # config/packages/framework.yaml
+        framework:
+            # by convention the env var names are always uppercase
+            secret: '%env(APP_SECRET)%'
             # ...
 
     .. code-block:: xml
 
-        <!-- config/packages/doctrine.xml -->
+        <!-- config/packages/framework.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
+            xmlns:framework="http://symfony.com/schema/dic/framework"
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/doctrine
-                https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd">
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
-            <doctrine:config>
-                <!-- by convention the env var names are always uppercase -->
-                <doctrine:dbal url="%env(resolve:DATABASE_URL)%"/>
-            </doctrine:config>
+            <framework:config secret="%env(APP_SECRET)%"/>
 
         </container>
 
     .. code-block:: php
 
-        // config/packages/doctrine.php
+        // config/packages/framework.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->extension('doctrine', [
-                'dbal' => [
-                    // by convention the env var names are always uppercase
-                    'url' => env('DATABASE_URL')->resolve(),
-                    // or
-                    'url' => '%env(resolve:DATABASE_URL)%',
-                ],
+            $container->extension('framework', [
+                'secret' => '%env(APP_SECRET)%',
             ]);
         };
 
