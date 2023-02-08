@@ -373,6 +373,12 @@ block and set the value of two variables called ``icon`` and ``text``:
 
 .. tip::
 
+    Symfony Profiler icons are selected from `Tabler icons`_, a large and open
+    source collection of SVG icons. It's recommended to also use those icons for
+    your own profiler panels to get a consistent look.
+
+.. tip::
+
     Built-in collector templates define all their images as embedded SVG files.
     This makes them work everywhere without having to mess with web assets links:
 
@@ -519,3 +525,4 @@ you'll need to configure the data collector explicitly:
 
 .. _`Single-page applications`: https://en.wikipedia.org/wiki/Single-page_application
 .. _`Blackfire`: https://blackfire.io/docs/introduction?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=profiler
+.. _`Tabler icons`: https://github.com/tabler/tabler-icons
