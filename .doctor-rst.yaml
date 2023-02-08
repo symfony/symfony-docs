@@ -54,7 +54,7 @@ rules:
     versionadded_directive_should_have_version: ~
     yaml_instead_of_yml_suffix: ~
     yarn_dev_option_at_the_end: ~
-    no_merge_conflict:
+    no_merge_conflict: ~
 
     #   master
     versionadded_directive_major_version:
