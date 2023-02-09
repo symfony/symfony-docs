@@ -2005,7 +2005,7 @@ you to do so, by yielding the exception from its body::
 
                 // ... or you can yield the exception from a callback
                 new MockResponse((static function (): \Generator {
-                       yield new TransportException('Error at transport level');
+                    yield new TransportException('Error at transport level');
                 })()),
             ]);
 
