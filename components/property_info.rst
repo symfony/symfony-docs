@@ -332,6 +332,11 @@ available), via the :method:`Type::getCollectionKeyTypes() <Symfony\\Component\\
 and :method:`Type::getCollectionValueTypes() <Symfony\\Component\\PropertyInfo\\Type::getCollectionValueTypes>`
 methods.
 
+.. note::
+
+    The ``list`` pseudo type is returned by the PropertyInfo component as an
+    array with integer as the key type.
+
 .. _`components-property-info-extractors`:
 
 Extractors
