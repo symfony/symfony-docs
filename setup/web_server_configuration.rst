@@ -177,7 +177,7 @@ Apache with PHP-FPM
 To make use of PHP-FPM with Apache, you first have to ensure that you have
 the FastCGI process manager ``php-fpm`` binary and Apache's FastCGI module
 installed (for example, on a Debian based system you have to install the
-``libapache2-mod-fastcgi`` and ``php7.4-fpm`` packages).
+``libapache2-mod-fastcgi`` and ``php8.1-fpm`` packages).
 
 PHP-FPM uses so-called *pools* to handle incoming FastCGI requests. You can
 configure an arbitrary number of pools in the FPM configuration. In a pool
@@ -192,7 +192,7 @@ listen on. Each pool can also be run under a different UID and GID:
     group = www-data
 
     ; use a unix domain socket
-    listen = /var/run/php/php7.4-fpm.sock
+    listen = /var/run/php/php8.1-fpm.sock
 
     ; or listen on a TCP socket
     listen = 127.0.0.1:9000
@@ -290,7 +290,7 @@ instead:
 
 .. code-block:: apache
 
-    FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php/php7.4-fpm.sock -pass-header Authorization
+    FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php/php8.1-fpm.sock -pass-header Authorization
 
 .. _web-server-nginx:
 
@@ -318,7 +318,7 @@ The **minimum configuration** to get your application running under Nginx is:
         # }
 
         location ~ ^/index\.php(/|$) {
-            fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+            fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
 
