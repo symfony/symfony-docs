@@ -332,6 +332,15 @@ available), via the :method:`Type::getCollectionKeyTypes() <Symfony\\Component\\
 and :method:`Type::getCollectionValueTypes() <Symfony\\Component\\PropertyInfo\\Type::getCollectionValueTypes>`
 methods.
 
+.. note::
+
+    The ``list`` pseudo type is returned by the PropertyInfo component as an
+    array with integer as the key type.
+
+.. versionadded:: 5.4
+
+    The support for the ``list`` pseudo type was introduced in Symfony 5.4.
+
 .. _`components-property-info-extractors`:
 
 Extractors
@@ -436,14 +445,14 @@ with the ``property_info`` service in the Symfony Framework::
 
     // the `serializer_groups` option must be configured (may be set to null)
     $serializerExtractor->getProperties($class, ['serializer_groups' => ['mygroup']]);
-   
+
 If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
 checked but you will get only the properties considered by the Serializer
 Component (notably the ``@Ignore`` annotation is taken into account).
 
 .. versionadded:: 5.2
 
-    Support for the ``null`` value in ``serializer_groups`` was introduced in Symfony 5.2. 
+    Support for the ``null`` value in ``serializer_groups`` was introduced in Symfony 5.2.
 
 DoctrineExtractor
 ~~~~~~~~~~~~~~~~~
