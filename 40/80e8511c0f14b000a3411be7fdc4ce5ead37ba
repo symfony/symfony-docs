@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2023-02-08T23:13:54Z
+
+Several months after that issue, Symfony CLI switched provider to provide signing: https://symfony.com/blog/signed-packages-for-symfony-cli
+
+Are we sure we still need this for macOs?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-02-09T05:53:43Z
+
+I'm still facing this issue after every Symfony server version update on macOS. Maybe I'm doing something wrong?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-02-09T16:17:24Z
+
+I just re-read that blog post. It only refers to Linux packages. So, macOS is still impacted by this issue.
