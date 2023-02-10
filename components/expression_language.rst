@@ -19,7 +19,11 @@ Installation
 .. include:: /components/require_autoload.rst.inc
 
 How can the Expression Engine Help Me?
---------------------------------------
+
+.. _how-can-the-expression-engine-help-me:
+
+How can the Expression Language Help Me?
+----------------------------------------
 
 The purpose of the component is to allow users to use expressions inside
 configuration for more complex logic. For some examples, the Symfony Framework

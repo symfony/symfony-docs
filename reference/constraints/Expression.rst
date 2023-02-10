@@ -250,6 +250,12 @@ For more information about the expression and what variables are available
 to you, see the :ref:`expression <reference-constraint-expression-option>`
 option details below.
 
+.. tip::
+
+    Internally, this expression validator constraint uses a service called
+    ``validator.expression_language`` to evaluate the expressions. You can
+    decorate or extend that service to fit your own needs.
+
 Options
 -------
 
