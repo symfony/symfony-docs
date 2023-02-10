@@ -30,10 +30,98 @@ to use PHP :ref:`with Nginx <web-server-nginx>`.
     another location (e.g. ``public_html/``) make sure you
     :ref:`override the location of the public/ directory <override-web-dir>`.
 
+.. _web-server-nginx:
+
+Nginx
+-----
+
+The **minimum configuration** to get your application running under Nginx is:
+
+.. code-block:: nginx
+
+    server {
+        server_name domain.tld www.domain.tld;
+        root /var/www/project/public;
+
+        location / {
+            # try to serve file directly, fallback to index.php
+            try_files $uri /index.php$is_args$args;
+        }
+
+        # optionally disable falling back to PHP script for the asset directories;
+        # nginx will return a 404 error when files are not found instead of passing the
+        # request to Symfony (improves performance but Symfony's 404 page is not displayed)
+        # location /bundles {
+        #     try_files $uri =404;
+        # }
+
+        location ~ ^/index\.php(/|$) {
+            fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+            fastcgi_split_path_info ^(.+\.php)(/.*)$;
+            include fastcgi_params;
+
+            # optionally set the value of the environment variables used in the application
+            # fastcgi_param APP_ENV prod;
+            # fastcgi_param APP_SECRET <app-secret-id>;
+            # fastcgi_param DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name";
+
+            # When you are using symlinks to link the document root to the
+            # current version of your application, you should pass the real
+            # application path instead of the path to the symlink to PHP
+            # FPM.
+            # Otherwise, PHP's OPcache may not properly detect changes to
+            # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
+            # for more information).
+            # Caveat: When PHP-FPM is hosted on a different machine from nginx
+            #         $realpath_root may not resolve as you expect! In this case try using
+            #         $document_root instead.
+            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+            fastcgi_param DOCUMENT_ROOT $realpath_root;
+            # Prevents URIs that include the front controller. This will 404:
+            # http://domain.tld/index.php/some-path
+            # Remove the internal directive to allow URIs like this
+            internal;
+        }
+
+        # return 404 for all other php files not matching the front controller
+        # this prevents access to other php files you don't want to be accessible.
+        location ~ \.php$ {
+            return 404;
+        }
+
+        error_log /var/log/nginx/project_error.log;
+        access_log /var/log/nginx/project_access.log;
+    }
+
+.. tip::
+
+    If you use NGINX Unit, check out the official article about
+    `How to run Symfony applications using NGINX Unit`_.
+
+.. note::
+
+    Depending on your PHP-FPM config, the ``fastcgi_pass`` can also be
+    ``fastcgi_pass 127.0.0.1:9000``.
+
+.. tip::
+
+    This executes **only** ``index.php`` in the public directory. All other files
+    ending in ".php" will be denied.
+
+    If you have other PHP files in your public directory that need to be executed,
+    be sure to include them in the ``location`` block above.
+
+.. caution::
+
+    After you deploy to production, make sure that you **cannot** access the ``index.php``
+    script (i.e. ``http://example.com/index.php``).
+
+For advanced Nginx configuration options, read the official `Nginx documentation`_.
+
 .. _web-server-apache-mod-php:
 
-Adding Rewrite Rules
---------------------
+Adding Rewrite Rules for Apache
+-------------------------------
 
 The easiest way is to install the ``apache`` :ref:`Symfony pack <symfony-packs>`
 by executing the following command:
@@ -291,94 +379,6 @@ instead:
 .. code-block:: apache
 
     FastCgiExternalServer /usr/lib/cgi-bin/php7-fcgi -socket /var/run/php/php7.4-fpm.sock -pass-header Authorization
-
-.. _web-server-nginx:
-
-Nginx
------
-
-The **minimum configuration** to get your application running under Nginx is:
-
-.. code-block:: nginx
-
-    server {
-        server_name domain.tld www.domain.tld;
-        root /var/www/project/public;
-
-        location / {
-            # try to serve file directly, fallback to index.php
-            try_files $uri /index.php$is_args$args;
-        }
-
-        # optionally disable falling back to PHP script for the asset directories;
-        # nginx will return a 404 error when files are not found instead of passing the
-        # request to Symfony (improves performance but Symfony's 404 page is not displayed)
-        # location /bundles {
-        #     try_files $uri =404;
-        # }
-
-        location ~ ^/index\.php(/|$) {
-            fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
-            fastcgi_split_path_info ^(.+\.php)(/.*)$;
-            include fastcgi_params;
-
-            # optionally set the value of the environment variables used in the application
-            # fastcgi_param APP_ENV prod;
-            # fastcgi_param APP_SECRET <app-secret-id>;
-            # fastcgi_param DATABASE_URL "mysql://db_user:db_pass@host:3306/db_name";
-
-            # When you are using symlinks to link the document root to the
-            # current version of your application, you should pass the real
-            # application path instead of the path to the symlink to PHP
-            # FPM.
-            # Otherwise, PHP's OPcache may not properly detect changes to
-            # your PHP files (see https://github.com/zendtech/ZendOptimizerPlus/issues/126
-            # for more information).
-            # Caveat: When PHP-FPM is hosted on a different machine from nginx
-            #         $realpath_root may not resolve as you expect! In this case try using
-            #         $document_root instead.
-            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-            fastcgi_param DOCUMENT_ROOT $realpath_root;
-            # Prevents URIs that include the front controller. This will 404:
-            # http://domain.tld/index.php/some-path
-            # Remove the internal directive to allow URIs like this
-            internal;
-        }
-
-        # return 404 for all other php files not matching the front controller
-        # this prevents access to other php files you don't want to be accessible.
-        location ~ \.php$ {
-            return 404;
-        }
-
-        error_log /var/log/nginx/project_error.log;
-        access_log /var/log/nginx/project_access.log;
-    }
-
-.. tip::
-
-    If you use NGINX Unit, check out the official article about
-    `How to run Symfony applications using NGINX Unit`_.
-
-.. note::
-
-    Depending on your PHP-FPM config, the ``fastcgi_pass`` can also be
-    ``fastcgi_pass 127.0.0.1:9000``.
-
-.. tip::
-
-    This executes **only** ``index.php`` in the public directory. All other files
-    ending in ".php" will be denied.
-
-    If you have other PHP files in your public directory that need to be executed,
-    be sure to include them in the ``location`` block above.
-
-.. caution::
-
-    After you deploy to production, make sure that you **cannot** access the ``index.php``
-    script (i.e. ``http://example.com/index.php``).
-
-For advanced Nginx configuration options, read the official `Nginx documentation`_.
 
 .. _`Apache documentation`: https://httpd.apache.org/docs/
 .. _`FastCgiExternalServer`: https://docs.oracle.com/cd/B31017_01/web.1013/q20204/mod_fastcgi.html#FastCgiExternalServer
