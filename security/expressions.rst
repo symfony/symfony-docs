@@ -26,27 +26,16 @@ and ``#[IsGranted()]`` attribute also accept an
 
         class MyController extends AbstractController
         {
-            #[IsGranted(new Expression(
-                '"ROLE_ADMIN" in role_names or (is_authenticated() and user.isSuperAdmin())'
-            ))]
-            public function index(): Response
+            #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_MANAGER")'))]
+            public function show(): Response
             {
                 // ...
             }
-        }
-    .. code-block:: php-attributes
 
-        // src/Controller/MyController.php
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\ExpressionLanguage\Expression;
-        use Symfony\Component\HttpFoundation\Response;
-
-        class MyController extends AbstractController
-        {
-            #[IsGranted(new Expression('is_granted("ROLE_ADMIN") or is_granted("ROLE_MANAGER")'))]
-            public function index(): Response
+            #[IsGranted(new Expression(
+                '"ROLE_ADMIN" in role_names or (is_authenticated() and user.isSuperAdmin())'
+            ))]
+            public function edit(): Response
             {
                 // ...
             }
@@ -63,7 +52,16 @@ and ``#[IsGranted()]`` attribute also accept an
 
         class MyController extends AbstractController
         {
-            public function index(): Response
+            public function show(): Response
+            {
+                $this->denyAccessUnlessGranted(new Expression(
+                    'is_granted("ROLE_ADMIN") or is_granted("ROLE_MANAGER")'
+                ));
+
+                // ...
+            }
+
+            public function edit(): Response
             {
                 $this->denyAccessUnlessGranted(new Expression(
                     '"ROLE_ADMIN" in role_names or (is_authenticated() and user.isSuperAdmin())'
