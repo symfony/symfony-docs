@@ -273,6 +273,27 @@ into the client constructor::
     $client = new Client([], null, $cookieJar);
     // ...
 
+.. _component-browserkit-sending-cookies:
+
+Sending Cookies
+~~~~~~~~~~~~~~~
+
+Requests can include cookies. To do so, use the ``serverParameters`` argument of
+the :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::request` method
+to set the ``Cookie`` header value::
+
+    $client->request('GET', '/', [], [], [
+        'HTTP_COOKIE' => new Cookie('flavor', 'chocolate', strtotime('+1 day')),
+
+        // you can also pass the cookie contents as a string
+        'HTTP_COOKIE' => 'flavor=chocolate; expires=Sat, 11 Feb 2023 12:18:13 GMT; Max-Age=86400; path=/'
+    ]);
+
+.. note::
+
+    All HTTP headers set with the ``serverParameters`` argument must be
+    prefixed by ``HTTP_``.
+
 History
 -------
 
