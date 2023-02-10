@@ -56,6 +56,18 @@ run the Symfony server in the background:
     # show the latest log messages
     $ symfony server:log
 
+.. tip::
+
+    On macOS, when starting the Symfony server you might see a warning dialog asking
+    _"Do you want the application to accept incoming network connections?"_.
+    This happens when running unsigned appplications that are not listed in the
+    firewall list. The solution is to run this command that signs the Symfony binary:
+
+    .. code-block:: terminal
+
+        # change the path to the location of your Symfony binary
+        $ sudo codesign --force --deep --sign - /opt/homebrew/Cellar/symfony-cli/5.4.21/bin/symfony
+
 Enabling PHP-FPM
 ----------------
 

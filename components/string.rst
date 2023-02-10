@@ -490,10 +490,11 @@ The slugger transliterates the original string into the Latin script before
 applying the other transformations. The locale of the original string is
 detected automatically, but you can define it explicitly::
 
-    // this tells the slugger to transliterate from Korean language
+    // this tells the slugger to transliterate from Korean ('ko') language
     $slugger = new AsciiSlugger('ko');
 
     // you can override the locale as the third optional parameter of slug()
+    // e.g. this slugger transliterates from Persian ('fa') language
     $slug = $slugger->slug('...', '-', 'fa');
 
 In a Symfony application, you don't need to create the slugger yourself. Thanks
