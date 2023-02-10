@@ -16,9 +16,9 @@ When using Apache, you can configure PHP as an
 :ref:`PHP FPM <web-server-apache-fpm>`. FastCGI also is the preferred way
 to use PHP :ref:`with Nginx <web-server-nginx>`.
 
-.. sidebar:: The public directory
+.. sidebar:: The ``public`` directory
 
-    The public directory is the home of all of your application's public and
+    The ``public`` directory is the home of all of your application's public and
     static files, including images, stylesheets and JavaScript files. It is
     also where the front controller (``index.php``) lives.
 
