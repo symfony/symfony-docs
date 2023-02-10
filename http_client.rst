@@ -686,6 +686,21 @@ You can either handle cookies yourself using the ``Cookie`` HTTP header or use
 the :doc:`BrowserKit component </components/browser_kit>` which provides this
 feature and integrates seamlessly with the HttpClient component.
 
+However, you're able to send cookies in your request. This is how you can do
+so using :class:`Symfony\\Contracts\\HttpClient\\HttpClient`::
+
+    use Symfony\Component\HttpClient\HttpClient;
+    use Symfony\Component\HttpFoundation\Cookie;
+
+    $client = HttpClient::create([
+        'headers' => [
+            'Cookie' => new Cookie('flavor', 'chocolate', strtotime('+1 day')),
+
+            // you're also able to pass a string instead
+            'Cookie' => 'flavor=chocolate; expires=Sat, 11 Feb 2023 12:18:13 GMT; Max-Age=86400; path=/'
+        ],
+    ]);
+
 Redirects
 ~~~~~~~~~
 
