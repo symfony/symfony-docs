@@ -646,6 +646,12 @@ This example shows how you could configure the application secret using an env v
             ]);
         };
 
+Your env vars may also be accessed in your code thanks to PHP super
+globals ``$_ENV`` and ``$_SERVER``. Both are equivalent::
+
+    $databaseUrl = $_ENV['DATABASE_URL']; // mysql://db_user:db_password@127.0.0.1:3306/db_name
+    $env = $_SERVER['APP_ENV']; // prod
+
 .. versionadded:: 5.3
 
     The ``env()`` configurator syntax was introduced in 5.3.
