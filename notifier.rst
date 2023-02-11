@@ -117,6 +117,7 @@ Yunpian          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@defau
 
     The Bandwith, iSendPro, Plivo, RingCentral and Termii integrations were introduced
     in Symfony 6.3.
+    The ``from`` option in ``Smsapi`` DSN is optional since Symfony 6.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
