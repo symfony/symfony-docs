@@ -630,6 +630,17 @@ This example shows how you could configure the application secret using an env v
             ]);
         };
 
+.. note::
+
+    Your env vars can also be accessed via the PHP super globals ``$_ENV`` and
+    ``$_SERVER`` (both are equivalent)::
+
+        $databaseUrl = $_ENV['DATABASE_URL']; // mysql://db_user:db_password@127.0.0.1:3306/db_name
+        $env = $_SERVER['APP_ENV']; // prod
+
+    However, in Symfony applications there's no need to use this, because the
+    configuration system provides a better way of working with env vars.
+
 .. seealso::
 
     The values of env vars can only be strings, but Symfony includes some
