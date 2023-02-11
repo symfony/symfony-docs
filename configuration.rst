@@ -646,17 +646,22 @@ This example shows how you could configure the application secret using an env v
             ]);
         };
 
-Your env vars may also be accessed in your code thanks to PHP super
-globals ``$_ENV`` and ``$_SERVER``. Both are equivalent::
-
-    $databaseUrl = $_ENV['DATABASE_URL']; // mysql://db_user:db_password@127.0.0.1:3306/db_name
-    $env = $_SERVER['APP_ENV']; // prod
-
 .. versionadded:: 5.3
 
     The ``env()`` configurator syntax was introduced in 5.3.
     In ``PHP`` configuration files, it will allow to autocomplete methods based
     on processors name (i.e. ``env('SOME_VAR')->default('foo')``).
+
+.. note::
+
+    Your env vars can also be accessed via the PHP super globals ``$_ENV`` and
+    ``$_SERVER`` (both are equivalent)::
+
+        $databaseUrl = $_ENV['DATABASE_URL']; // mysql://db_user:db_password@127.0.0.1:3306/db_name
+        $env = $_SERVER['APP_ENV']; // prod
+
+    However, in Symfony applications there's no need to use this, because the
+    configuration system provides a better way of working with env vars.
 
 .. seealso::
 
