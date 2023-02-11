@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2023-01-16T11:07:53Z
+
+Is it really a common use case to access environment variables through the superglobal arrays? I usually reference them inside my service configuration with `%env(...)%` instead (values are injected into services this way instead of having code depend on global state).
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-01-16T12:42:34Z
+
+I wouldn't say it is "common" but this is something that can happen, especially when using the Dotenv component as a standalone. But I may add a note to inform that best practices is to inject env vars through `%env()%` maybe?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2023-02-03T11:29:25Z
+
+I think I would put it the other way around: Show examples how to make use of the env processor in the DI config and add a short sentence explaining that you *could* also access the value through the superglobal arrays.
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-02-05T08:27:10Z
+
+I moved the paragraph below the examples with `%env()%` and reworded a bit to indicates that env vars _may_ be accessed in the code. Is it better? 🙂
