@@ -62,39 +62,39 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-==============  ====================================  ===========================================================================
-Service         Package                               DSN
-==============  ====================================  ===========================================================================
-AllMySms        ``symfony/all-my-sms-notifier``       ``allmysms://LOGIN:APIKEY@default?from=FROM``
-AmazonSns       ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
-Clickatell      ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
-Esendex         ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
-FakeSms         ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
-FreeMobile      ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:API_KEY@default?phone=PHONE``
-GatewayApi      ``symfony/gateway-api-notifier``      ``gatewayapi://TOKEN@default?from=FROM``
-Infobip         ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
-Iqsms           ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
-LightSms        ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
-Mailjet         ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?from=FROM``
-MessageBird     ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
-MessageMedia    ``symfony/message-media-notifier``    ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
-Mobyt           ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
-Nexmo           ``symfony/nexmo-notifier``            Abandoned in favor of Vonage (symfony/vonage-notifier).
-Octopush        ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
-OvhCloud        ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
-Sendinblue      ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
-Sms77           ``symfony/sms77-notifier``            ``sms77://API_KEY@default?from=FROM``
-Sinch           ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-Smsapi          ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
-SmsBiuras       ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
-Smsc            ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
-SpotHit         ``symfony/spot-hit-notifier``         ``spothit://TOKEN@default?from=FROM``
-Telnyx          ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
-TurboSms        ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
-Twilio          ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
-Vonage          ``symfony/vonage-notifier``           ``vonage://KEY:SECRET@default?from=FROM``
-Yunpian         ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
-==============  ====================================  ===========================================================================
+===============  ====================================  ===========================================================================
+Service          Package                               DSN
+===============  ====================================  ===========================================================================
+`AllMySms`_      ``symfony/all-my-sms-notifier``       ``allmysms://LOGIN:APIKEY@default?from=FROM``
+`AmazonSns`_     ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+`Clickatell`_    ``symfony/clickatell-notifier``       ``clickatell://ACCESS_TOKEN@default?from=FROM``
+`Esendex`_       ``symfony/esendex-notifier``          ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
+`FakeSms`_       ``symfony/fake-sms-notifier``         ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
+`FreeMobile`_    ``symfony/free-mobile-notifier``      ``freemobile://LOGIN:API_KEY@default?phone=PHONE``
+`GatewayApi`_    ``symfony/gateway-api-notifier``      ``gatewayapi://TOKEN@default?from=FROM``
+`Infobip`_       ``symfony/infobip-notifier``          ``infobip://AUTH_TOKEN@HOST?from=FROM``
+`Iqsms`_         ``symfony/iqsms-notifier``            ``iqsms://LOGIN:PASSWORD@default?from=FROM``
+`LightSms`_      ``symfony/light-sms-notifier``        ``lightsms://LOGIN:TOKEN@default?from=PHONE``
+`Mailjet`_       ``symfony/mailjet-notifier``          ``mailjet://TOKEN@default?from=FROM``
+`MessageBird`_   ``symfony/message-bird-notifier``     ``messagebird://TOKEN@default?from=FROM``
+`MessageMedia`_  ``symfony/message-media-notifier``    ``messagemedia://API_KEY:API_SECRET@default?from=FROM``
+`Mobyt`_         ``symfony/mobyt-notifier``            ``mobyt://USER_KEY:ACCESS_TOKEN@default?from=FROM``
+`Nexmo`_         ``symfony/nexmo-notifier``            Abandoned in favor of Vonage (symfony/vonage-notifier).
+`Octopush`_      ``symfony/octopush-notifier``         ``octopush://USERLOGIN:APIKEY@default?from=FROM&type=TYPE``
+`OvhCloud`_      ``symfony/ovh-cloud-notifier``        ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
+`Sendinblue`_    ``symfony/sendinblue-notifier``       ``sendinblue://API_KEY@default?sender=PHONE``
+`Sms77`_         ``symfony/sms77-notifier``            ``sms77://API_KEY@default?from=FROM``
+`Sinch`_         ``symfony/sinch-notifier``            ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
+`Smsapi`_        ``symfony/smsapi-notifier``           ``smsapi://TOKEN@default?from=FROM``
+`SmsBiuras`_     ``symfony/sms-biuras-notifier``       ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
+`Smsc`_          ``symfony/smsc-notifier``             ``smsc://LOGIN:PASSWORD@default?from=FROM``
+`SpotHit`_       ``symfony/spot-hit-notifier``         ``spothit://TOKEN@default?from=FROM``
+`Telnyx`_        ``symfony/telnyx-notifier``           ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
+`TurboSms`_      ``symfony/turbo-sms-notifier``        ``turbosms://AUTH_TOKEN@default?from=FROM``
+`Twilio`_        ``symfony/twilio-notifier``           ``twilio://SID:TOKEN@default?from=FROM``
+`Vonage`_        ``symfony/vonage-notifier``           ``vonage://KEY:SECRET@default?from=FROM``
+`Yunpian`_       ``symfony/yunpian-notifier``          ``yunpian://APIKEY@default``
+==============   ====================================  ===========================================================================
 
 .. versionadded:: 5.1
 
@@ -224,24 +224,24 @@ The chat channel is used to send chat messages to users by using
 :class:`Symfony\\Component\\Notifier\\Chatter` classes. Symfony provides
 integration with these chat services:
 
-======================================  ====================================  =============================================================================
-Service                                 Package                               DSN
-======================================  ====================================  =============================================================================
-AmazonSns                               ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
-:doc:`Discord <notifier/discord>`       ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
-FakeChat                                ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
-Firebase                                ``symfony/firebase-notifier``          ``firebase://USERNAME:PASSWORD@default``
-Gitter                                  ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
-GoogleChat                              ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
-LinkedIn                                ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
-Mattermost                              ``symfony/mattermost-notifier``       ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
-Mercure                                 ``symfony/mercure-notifier``          ``mercure://HUB_ID?topic=TOPIC``
-:doc:`MicrosoftTeams <notifier/teams>`  ``symfony/microsoft-teams-notifier``  ``microsoftteams://default/PATH``
-RocketChat                              ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
-:doc:`Slack <notifier/slack>`           ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
-:doc:`Telegram <notifier/telegram>`     ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
-Zulip                                   ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
-======================================  ====================================  =============================================================================
+=======================================  ====================================  =============================================================================
+Service                                  Package                               DSN
+=======================================  ====================================  =============================================================================
+`AmazonSns`_                             ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+:doc:`Discord <notifier/discord>`        ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
+`FakeChat`_                              ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
+`Firebase`_                              ``symfony/firebase-notifier``         ``firebase://USERNAME:PASSWORD@default``
+`Gitter`_                                ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
+`GoogleChat`_                            ``symfony/google-chat-notifier``      ``googlechat://ACCESS_KEY:ACCESS_TOKEN@default/SPACE?thread_key=THREAD_KEY``
+`LinkedIn`_                              ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
+`Mattermost`_                            ``symfony/mattermost-notifier``       ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
+`Mercure`_                               ``symfony/mercure-notifier``          ``mercure://HUB_ID?topic=TOPIC``
+:doc:`MicrosoftTeams <notifier/teams>`   ``symfony/microsoft-teams-notifier``  ``microsoftteams://default/PATH``
+`RocketChat`_                            ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
+:doc:`Slack <notifier/slack>`            ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
+:doc:`Telegram <notifier/telegram>`      ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
+`Zulip`_                                 ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
+======================================   ====================================  =============================================================================
 
 .. versionadded:: 5.1
 
@@ -911,4 +911,42 @@ is dispatched. Listeners receive a
 ..    - Describe notifier monolog handler
 ..    - Describe notification_on_failed_messages integration
 
+.. _`AllMySms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AllMySms/README.md
+.. _`AmazonSns`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AmazonSns/README.md
+.. _`Clickatell`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Clickatell/README.md
+.. _`Esendex`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Esendex/README.md
+.. _`FakeChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeChat/README.md
+.. _`FakeSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeSms/README.md
+.. _`Firebase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Firebase/README.md
+.. _`FreeMobile`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FreeMobile/README.md
+.. _`GatewayApi`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GatewayApi/README.md
+.. _`Gitter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Gitter/README.md
+.. _`GoogleChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GoogleChat/README.md
+.. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Infobip/README.md
+.. _`Iqsms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Iqsms/README.md
+.. _`LightSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LightSms/README.md
+.. _`LinkedIn`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LinkedIn/README.md
+.. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mailjet/README.md
+.. _`Mattermost`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mattermost/README.md
+.. _`Mercure`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mercure/README.md
+.. _`MessageBird`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/MessageBird/README.md
+.. _`MessageMedia`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/MessageMedia/README.md
+.. _`Mobyt`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mobyt/README.md
+.. _`Nexmo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Nexmo/README.md
+.. _`Octopush`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Octopush/README.md
+.. _`OvhCloud`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OvhCloud/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
+.. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
+.. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendinblue/README.md
+.. _`Sinch`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sinch/README.md
+.. _`Sms77`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sms77/README.md
+.. _`Smsapi`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsapi/README.md
+.. _`SmsBiuras`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsBiuras/README.md
+.. _`Smsc`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsc/README.md
+.. _`SpotHit`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SpotHit/README.md
+.. _`Telnyx`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telnyx/README.md
+.. _`TurboSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/TurboSms/README.md
+.. _`Twilio`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Twilio/README.md
+.. _`Vonage`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Vonage/README.md
+.. _`Yunpian`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Yunpian/README.md
+.. _`Zulip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Zulip/README.md
