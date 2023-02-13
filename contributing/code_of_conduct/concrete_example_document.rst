@@ -1,4 +1,4 @@
-Code of Conduct: Concrete Example Document
+iCode of Conduct: Concrete Example Document
 ==========================================
 
 This is a living document that serves to give concrete examples of
@@ -22,8 +22,8 @@ Concrete Examples
   inappropriate levels of intimacy with others;
 * Continued one-on-one communication after requests to cease;
 * Putting down people based on their technology choices or their work;
-* Taking photographs of conference attendees and speakers and publishing them
-  without their explicit permission.
+* Taking photographs of a conference attendee or speaker in the foreground and
+  publishing them without their permission.
 
 The original list is inspired and modified from `geek feminism`_ and
 confirmed by experiences from PHPWomen.
