@@ -1,4 +1,4 @@
-iCode of Conduct: Concrete Example Document
+Code of Conduct: Concrete Example Document
 ==========================================
 
 This is a living document that serves to give concrete examples of
