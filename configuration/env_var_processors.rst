@@ -399,7 +399,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(AUTH_FILE): '../config/auth.json'
+                env(AUTH_FILE): '%kernel.project_dir%/config/auth.json'
             google:
                 auth: '%env(file:AUTH_FILE)%'
 
@@ -440,7 +440,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(PHP_FILE): '../config/.runtime-evaluated.php'
+                env(PHP_FILE): '%kernel.project_dir%/config/.runtime-evaluated.php'
             app:
                 auth: '%env(require:PHP_FILE)%'
 
@@ -482,7 +482,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(AUTH_FILE): '../config/auth.json'
+                env(AUTH_FILE): '%kernel.project_dir%/config/auth.json'
             google:
                 auth: '%env(trim:file:AUTH_FILE)%'
 
