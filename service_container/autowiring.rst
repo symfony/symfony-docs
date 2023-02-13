@@ -631,7 +631,7 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
             bool $debugMode,
 
             // expressions
-            #[Autowire(expression: 'service("App\\Mail\\MailerConfiguration").getMailerMethod()')]
+            #[Autowire(expression: 'service("App\\\Mail\\\MailerConfiguration").getMailerMethod()')]
             string $mailerMethod
 
             // environment variables
