@@ -5,3 +5,4 @@ Diversity Initiative
     :maxdepth: 2
 
     governance
+    further_reading
