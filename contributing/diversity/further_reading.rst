@@ -1,10 +1,10 @@
-Further reading / viewing
-====================
+Further Reading / Viewing
+=========================
 
 This is a non-exhaustive list of further reading on the topic of diversity.
 
 Diversity in Open Source
-----------
+------------------------
 
 `Sage Sharp - What makes a good community? <https://sage.thesharps.us/2015/10/06/what-makes-a-good-community>`_
 `Ashe Dryden - The Ethics of Unpaid Labor and the OSS Community <https://www.ashedryden.com/blog/the-ethics-of-unpaid-labor-and-the-oss-community>`_
@@ -13,20 +13,20 @@ Diversity in Open Source
 `Karolina Szczur - Building Inclusive Communities <https://speakerdeck.com/fox/building-inclusive-communities>`_
 
 Code of Conduct
-----------
+---------------
 
 `Karolina Szczur - When a Code of Conduct becomes harmful <https://medium.com/@fox/when-a-code-of-conduct-becomes-harmful-1d4e737ff7aa>`_
 `Ashe Dryden - Codes of Conduct 101 + FAQ <https://www.ashedryden.com/blog/codes-of-conduct-101-faq>`_
 `Phil Sturgeon - Codes of Conduct: Maybe They're Not So Bad? <https://philsturgeon.uk/2016/09/15/codes-of-conduct-maybe-theyre-not-so-bad>`_
 
 Inclusive language
-----------
+------------------
 
 `Jenée Desmond-Harris - Why I’m finally convinced it's time to stop saying "you guys" <https://www.vox.com/2015/6/11/8761227/you-guys-sexism-language>`_
 `inclusive language presentations <https://github.com/hcorona/diversity-inclusion/blob/master/inclusive-language-presentations.md>`_
 
-Other talks and blog posts
-----------
+Other talks and Blog Posts
+--------------------------
 
 `Lena Reinhard – A Talk About Nothing <https://www.youtube.com/watch?v=D3e3V66TH2Y>`_
 `Lena Reinhard - A Talk about Everything <https://www.youtube.com/watch?v=CZx7rYoq1Uw>`_
@@ -37,12 +37,12 @@ Other talks and blog posts
 `CIS people declaring their pronouns <https://medium.com/@mrsexsmith/dear-cis-people-who-put-your-pronouns-on-your-hello-my-name-is-nametags-78c047ed7af1>`_
 
 Books
-----------
+-----
 
 `Emily Chang - Brotopia <http://www.brotopiabook.com>`_
 
 Websites
-----------
+--------
 
 `Better Allies <https://maleallies.com>`_
 `Geek Feminism WIKI <http://geekfeminism.wikia.com/wiki/Geek_Feminism_Wiki>`_
