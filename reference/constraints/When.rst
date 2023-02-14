@@ -69,7 +69,7 @@ One way to accomplish this is with the When constraint:
         {
             #[Assert\GreaterThan(0)]
             #[Assert\When(
-                expression: 'this.type == "percent"',
+                expression: 'this.getType() == "percent"',
                 constraints: [
                     new Assert\LessThanOrEqual(100, message: 'The value should be between 1 and 100!')
                 ],
@@ -87,7 +87,7 @@ One way to accomplish this is with the When constraint:
                 value:
                     - GreaterThan: 0
                     - When:
-                        expression: "this.type == 'percent'"
+                        expression: "this.getType() == 'percent'"
                         constraints:
                             - LessThanOrEqual:
                                 value: 100
@@ -105,7 +105,7 @@ One way to accomplish this is with the When constraint:
                     <constraint name="GreaterThan">0</constraint>
                     <constraint name="When">
                         <option name="expression">
-                            this.type == 'percent'
+                            this.getType() == 'percent'
                         </option>
                         <option name="constraints">
                             <constraint name="LessThanOrEqual">
@@ -132,7 +132,7 @@ One way to accomplish this is with the When constraint:
             {
                 $metadata->addPropertyConstraint('value', new Assert\GreaterThan(0));
                 $metadata->addPropertyConstraint('value', new Assert\When([
-                    'expression' => 'this.type == "percent"',
+                    'expression' => 'this.getType() == "percent"',
                     'constraints' => [
                         new Assert\LessThanOrEqual([
                             'value' => 100,
