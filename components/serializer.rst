@@ -1104,7 +1104,8 @@ Option                  Description                                            D
                         with a ``\t`` character
 ``as_collection``       Always returns results as a collection, even if only   ``true``
                         one line is decoded.
-``no_headers``          Disables header in the encoded CSV                     ``false``
+``no_headers``          Setting to ``false`` will use first row as headers.    ``false``
+                        ``true`` generate numeric headers.
 ``output_utf8_bom``     Outputs special `UTF-8 BOM`_ along with encoded data   ``false``
 ======================= =====================================================  ==========================
 
