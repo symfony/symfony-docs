@@ -170,6 +170,36 @@ like this::
 
     $newsletterManager = $containerBuilder->get('newsletter_manager');
 
+Getting Services That Don't Exist
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, when you try to get a service that doesn't exist, you see an exception.
+You can override this behavior as follows::
+
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\DependencyInjection\ContainerInterface;
+
+    $containerBuilder = new ContainerBuilder();
+
+    // ...
+
+    // the second argument is optional and defines what to do when the service doesn't exist
+    $newsletterManager = $containerBuilder->get('newsletter_manager', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE);
+
+
+These are all the possible behaviors:
+
+ * ``ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE``: throws an exception
+   at compile time (this is the **default** behavior);
+ * ``ContainerInterface::RUNTIME_EXCEPTION_ON_INVALID_REFERENCE``: throws an
+   exception at runtime, when trying to access the missing service;
+ * ``ContainerInterface::NULL_ON_INVALID_REFERENCE``: returns ``null``;
+ * ``ContainerInterface::IGNORE_ON_INVALID_REFERENCE``: ignores the wrapping
+   command asking for the reference (for instance, ignore a setter if the service
+   does not exist);
+ * ``ContainerInterface::IGNORE_ON_UNINITIALIZED_REFERENCE``: ignores/returns
+   ``null`` for uninitialized services or invalid references.
+
 Avoiding your Code Becoming Dependent on the Container
 ------------------------------------------------------
 
