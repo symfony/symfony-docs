@@ -145,7 +145,7 @@ Options
 em
 ~~
 
-**type**: ``string``
+**type**: ``string`` **default**: ``null``
 
 The name of the entity manager to use for making the query to determine
 the uniqueness. If it's left blank, the correct entity manager will be
@@ -155,7 +155,7 @@ not need to be used.
 ``entityClass``
 ~~~~~~~~~~~~~~~
 
-**type**: ``string``
+**type**: ``string`` **default**: ``null``
 
 By default, the query performed to ensure the uniqueness uses the repository of
 the current class instance. However, in some cases, such as when using Doctrine
