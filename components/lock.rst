@@ -553,12 +553,21 @@ does not support blocking, and expects a TTL to avoid stalled locks::
 
     This store does not support TTL lower than 1 second.
 
-The table where values are stored is created automatically on the first call to
-the :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::save` method.
+The table where values are stored will be automatically generated when your run the command :
+
+.. code-block:: terminal
+
+    $ php bin/console make:migration
+
+If you prefer to create the table yourself and it has not already been created, you can
+create this table explicitly by calling the
+:method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::createTable` method.
 You can also add this table to your schema by calling
 :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::configureSchema` method
-in your code or create this table explicitly by calling the
-:method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::createTable` method.
+in your code
+
+If the table has not been created upstream, it will be created automatically on the first call to
+the :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::save` method.
 
 .. _lock-store-pgsql:
 
