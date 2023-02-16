@@ -70,13 +70,6 @@ tree.
     isn't meant to dump content, you can see the "fixed" version of your HTML
     by :ref:`dumping it <component-dom-crawler-dumping>`.
 
-.. note::
-
-    If you need better support for HTML5 contents or want to get rid of the
-    inconsistencies of PHP's DOM extension, install the `html5-php library`_.
-    The DomCrawler component will use it automatically when the content has
-    an HTML5 doctype.
-
 Node Filtering
 ~~~~~~~~~~~~~~
 
@@ -650,5 +643,3 @@ Learn more
 
 * :doc:`/testing`
 * :doc:`/components/css_selector`
-
-.. _`html5-php library`: https://github.com/Masterminds/html5-php
