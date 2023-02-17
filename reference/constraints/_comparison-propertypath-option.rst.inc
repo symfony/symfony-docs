@@ -1,7 +1,7 @@
 ``propertyPath``
 ~~~~~~~~~~~~~~~~
 
-**type**: ``string``
+**type**: ``string`` **default**: ``null``
 
 It defines the object property whose value is used to make the comparison.
 
