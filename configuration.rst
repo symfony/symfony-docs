@@ -189,6 +189,9 @@ reusable configuration value. By convention, parameters are defined under the
             app.some_constant: !php/const GLOBAL_CONSTANT
             app.another_constant: !php/const App\Entity\BlogPost::MAX_ITEMS
 
+            # Enum case as parameter values
+            app.some_enum: !php/enum App\Enum\PostState::Published
+
         # ...
 
     .. code-block:: xml
@@ -226,6 +229,9 @@ reusable configuration value. By convention, parameters are defined under the
                 <!-- PHP constants as parameter values -->
                 <parameter key="app.some_constant" type="constant">GLOBAL_CONSTANT</parameter>
                 <parameter key="app.another_constant" type="constant">App\Entity\BlogPost::MAX_ITEMS</parameter>
+
+                <!-- Enum case as parameter values -->
+                <parameter key="app.some_enum" type="enum">App\Enum\PostState::Published</parameter>
             </parameters>
 
             <!-- ... -->
@@ -237,6 +243,7 @@ reusable configuration value. By convention, parameters are defined under the
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Entity\BlogPost;
+        use App\Enum\PostState;
 
         return static function (ContainerConfigurator $containerConfigurator) {
             $containerConfigurator->parameters()
@@ -256,6 +263,9 @@ reusable configuration value. By convention, parameters are defined under the
                 // PHP constants as parameter values
                 ->set('app.some_constant', GLOBAL_CONSTANT)
                 ->set('app.another_constant', BlogPost::MAX_ITEMS);
+
+                // Enum case as parameter values
+                ->set('app.some_enum', PostState::Published);
         };
 
         // ...
@@ -271,6 +281,10 @@ reusable configuration value. By convention, parameters are defined under the
         <parameter key="app.admin_email">
             something@example.com
         </parameter>
+
+.. versionadded:: 6.2
+
+    Passing an enum case as a service parameter was introduced in Symfony 6.2.
 
 Once defined, you can reference this parameter value from any other
 configuration file using a special syntax: wrap the parameter name in two ``%``
