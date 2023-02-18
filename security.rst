@@ -1631,7 +1631,7 @@ Login Programmatically
     The :method:`Symfony\\Bundle\\SecurityBundle\\Security::login`
     method was introduced in Symfony 6.2.
 
-You can log in a user programmatically using the `login()` method of the
+You can log in a user programmatically using the ``login()`` method of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
 
     // src/Controller/SecurityController.php
@@ -1662,6 +1662,11 @@ You can log in a user programmatically using the `login()` method of the
             // ... redirect the user to its account page for instance
         }
     }
+
+.. tip::
+
+    When logging in on a different firewall, the current and the other firewall
+    need to share the same :ref:`firewall context <reference-security-firewall-context>`.
 
 .. _security-logging-out:
 
