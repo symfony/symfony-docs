@@ -74,7 +74,7 @@ manual steps:
 
    .. code-block:: terminal
 
-       $ composer require annotations asset orm-pack twig \
+       $ composer require annotations asset orm twig \
          logger mailer form security translation validator
        $ composer require --dev dotenv maker-bundle orm-fixtures profiler
 
