@@ -497,11 +497,6 @@ requested during the program execution. You can also create lazy strings from a
     // hash computation only if it's needed
     $lazyHash = LazyString::fromStringable(new Hash());
 
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\String\\LazyString` class was introduced
-    in Symfony 5.1.
-
 Slugger
 -------
 
