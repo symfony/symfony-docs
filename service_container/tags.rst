@@ -175,6 +175,54 @@ In a Symfony bundle, call this method in the ``load()`` method of the
         }
     }
 
+Autoconfiguration registering is not limited to interfaces. It is possible
+to use PHP 8 attributes to autoconfigure services by using the
+:method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
+method::
+
+    // src/Attribute/SensitiveElement.php
+    namespace App\Attribute;
+
+    #[\Attribute(\Attribute::TARGET_CLASS)]
+    class SensitiveElement
+    {
+        private string $token;
+
+        public function __construct(string $token)
+        {
+            $this->token = $token;
+        }
+
+        public function getToken(): string
+        {
+            return $this->token;
+        }
+    }
+
+    // src/Kernel.php
+    use App\Attribute\SensitiveElement;
+
+    class Kernel extends BaseKernel
+    {
+        // ...
+
+        protected function build(ContainerBuilder $containerBuilder): void
+        {
+            // ...
+
+            $containerBuilder->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (ChildDefinition $definition, SensitiveElement $attribute, \ReflectionClass $reflector): void {
+                // Apply the 'app.sensitive_element' tag to all classes with SensitiveElement
+                // attribute, and attach the token value to the tag
+                $definition->addTag('app.sensitive_element', ['token' => $attribute->getToken()]);
+            });
+        }
+    }
+
+.. versionadded:: 5.3
+
+    The :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
+    method was introduced in Symfony 5.3.
+
 Creating custom Tags
 --------------------
 
