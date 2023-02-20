@@ -2129,6 +2129,71 @@ That's it! You can now consume each transport:
     If a handler does *not* have ``from_transport`` config, it will be executed
     on *every* transport that the message is received from.
 
+Process Messages by Batches
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can declare "special" handlers which will process messages by batch.
+By doing so, the handler will wait for a certain amount of messages to be
+pending before processing them. The declaration of a batch handler is done
+by implementing
+:class:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerInterface`. The
+:class:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerTrait` is also
+provided in order to ease the declaration of these special handlers::
+
+    use Symfony\Component\Messenger\Handler\Acknowledger;
+    use Symfony\Component\Messenger\Handler\BatchHandlerInterface;
+    use Symfony\Component\Messenger\Handler\BatchHandlerTrait;
+
+    class MyBatchHandler implements BatchHandlerInterface
+    {
+        use BatchHandlerTrait;
+
+        public function __invoke(MyMessage $message, Acknowledger $ack = null)
+        {
+            return $this->handle($message, $ack);
+        }
+
+        private function process(array $jobs): void
+        {
+            foreach ($jobs as [$message, $ack]) {
+                try {
+                    // Compute $result from $message...
+
+                    // Acknowledge the processing of the message
+                    $ack->ack($result);
+                } catch (\Throwable $e) {
+                    $ack->nack($e);
+                }
+            }
+        }
+
+        // Optionally, you can redefine the `shouldFlush()` method
+        // of the trait to define your own batch size
+        private function shouldFlush(): bool
+        {
+            return 100 <= \count($this->jobs);
+        }
+    }
+
+.. note::
+
+    When the ``$ack`` argument of ``__invoke()`` is ``null``, the message is
+    expected to be handled synchronously. Otherwise, ``__invoke()`` is
+    expected to return the number of pending messages. The
+    :class:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerTrait` handles
+    this for you.
+
+.. note::
+
+    By default, pending batches are flushed when the worker is idle as well
+    as when it is stopped.
+
+.. versionadded:: 5.4
+
+    :class:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerInterface` and
+    :class:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerTrait` were
+    introduced in Symfony 5.4.
+
 Extending Messenger
 -------------------
 
