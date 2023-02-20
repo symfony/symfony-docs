@@ -95,6 +95,20 @@ services.
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/Mail/PhpMailer.php
+        namespace App\Mail;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+
+        #[AsAlias(id: 'app.mailer', public: true)]
+        class PhpMailer
+        {
+            // ...
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -139,6 +153,10 @@ services.
             $services->alias('app.mailer', PhpMailer::class);
         };
 
+.. versionadded:: 6.3
+
+    The ``#[AsAlias]`` attribute was introduced in Symfony 6.3.
+
 This means that when using the container directly, you can access the
 ``PhpMailer`` service by asking for the ``app.mailer`` service like this::
 
@@ -154,6 +172,25 @@ This means that when using the container directly, you can access the
         services:
             # ...
             app.mailer: '@App\Mail\PhpMailer'
+
+.. tip::
+
+    When using ``#[AsAlias]`` attribute, you may omit passing ``id`` argument
+    if the class implements exactly one interface. ``MailerInterface`` will be
+    alias of ``PhpMailer``::
+
+        // src/Mail/PhpMailer.php
+        namespace App\Mail;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+        use Symfony\Component\Mailer\MailerInterface;
+
+        #[AsAlias]
+        class PhpMailer implements MailerInterface
+        {
+            // ...
+        }
 
 Deprecating Service Aliases
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
