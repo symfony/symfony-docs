@@ -165,8 +165,10 @@ There is also a method to get the bytes stored at some position::
     b('नमस्ते')->bytesAt(1);   // [164]
     u('नमस्ते')->bytesAt(1);   // [224, 164, 174]
 
-Methods Related to Length and White Spaces
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _methods-related-to-length-and-white-spaces:
+
+Methods Related to Length and Whitespace Characters
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -190,14 +192,14 @@ Methods Related to Length and White Spaces
     END";
     u($text)->width(); // 14
 
-    // only returns TRUE if the string is exactly an empty string (not even white spaces)
+    // only returns TRUE if the string is exactly an empty string (not even whitespace)
     u('hello world')->isEmpty();  // false
     u('     ')->isEmpty();        // false
     u('')->isEmpty();             // true
 
-    // removes all white spaces from the start and end of the string and replaces two
-    // or more consecutive white spaces inside contents by a single white space
-    u("  \n\n   hello        world \n    \n")->collapseWhitespace(); // 'hello world'
+    // removes all whitespace (' \n\r\t\x0C') from the start and end of the string and
+    // replaces two or more consecutive whitespace characters with a single space (' ') character
+    u("  \n\n   hello \t   \n\r   world \n    \n")->collapseWhitespace(); // 'hello world'
 
 Methods to Change Case
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -286,7 +288,7 @@ Methods to Pad and Trim
     // repeats the given string the number of times passed as argument
     u('_.')->repeat(10); // '_._._._._._._._._._.'
 
-    // removes the given characters (by default, white spaces) from the string
+    // removes the given characters (default: whitespace characters) from the beginning and end of a string
     u('   Lorem Ipsum   ')->trim(); // 'Lorem Ipsum'
     u('Lorem Ipsum   ')->trim('m'); // 'Lorem Ipsum   '
     u('Lorem Ipsum')->trim('m');    // 'Lorem Ipsu'

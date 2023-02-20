@@ -796,8 +796,7 @@ The name of the ``$_SERVER`` parameter holding the user identifier.
 Firewall Context
 ~~~~~~~~~~~~~~~~
 
-Most applications will only need one :ref:`firewall <firewalls-authentication>`.
-But if your application *does* use multiple firewalls, you'll notice that
+If your application uses multiple :ref:`firewalls <firewalls-authentication>`, you'll notice that
 if you're authenticated in one firewall, you're not automatically authenticated
 in another. In other words, the systems don't share a common "context":
 each firewall acts like a separate security system.
