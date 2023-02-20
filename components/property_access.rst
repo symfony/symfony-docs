@@ -83,20 +83,20 @@ You can also use multi dimensional arrays::
 
 .. tip::
 
-    If the key of the array contains a dot ``.`` or a left squared bracket ``[``,
-    it is possible to escape these characters with a backslash. In the above example,
-    if the array key ``first_name`` becomes ``first.name``, accessing the value can
-    be achieved like this::
+    If the key of the array contains a dot ``.`` or a left square bracket ``[``,
+    you must escape those characters with a backslash. In the above example,
+    if the array key was ``first.name`` instead of ``first_name``, you should
+    access its value as follows::
 
         var_dump($propertyAccessor->getValue($persons, '[0][first\.name]')); // 'Wouter'
         var_dump($propertyAccessor->getValue($persons, '[1][first\.name]')); // 'Ryan'
 
-    Right squared brackets ``]`` don't need to be escaped.
+    Right square brackets ``]`` don't need to be escaped in array keys.
 
-.. versionadded:: 6.3
+    .. versionadded:: 6.3
 
-    Escaping dots and left squared bracket in a property path was
-    introduced in Symfony 6.3.
+        Escaping dots and left square brackets in a property path was
+        introduced in Symfony 6.3.
 
 Reading from Objects
 --------------------
