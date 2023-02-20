@@ -35,7 +35,7 @@ the current log level and the console verbosity.
 
 The example above could then be rewritten as::
 
-    // src/Command/YourCommand.php
+    // src/Command/MyCommand.php
     namespace App\Command;
 
     use Psr\Log\LoggerInterface;
@@ -43,9 +43,9 @@ The example above could then be rewritten as::
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    class YourCommand extends Command
+    class MyCommand extends Command
     {
-        private $logger;
+        private LoggerInterface $logger;
 
         public function __construct(LoggerInterface $logger)
         {
@@ -58,6 +58,14 @@ The example above could then be rewritten as::
             $this->logger->notice('Some more info');
         }
     }
+
+.. tip::
+
+    You can also change the log level for a specific command at runtime with:
+
+.. code-block:: terminal
+
+    $ LOG_LEVEL=debug php bin/console ...
 
 Depending on the verbosity level that the command is run in and the user's
 configuration (see below), these messages may or may not be displayed to
