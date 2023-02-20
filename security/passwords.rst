@@ -827,6 +827,12 @@ If you need to create your own, it needs to follow these rules:
 
             return $passwordIsValid;
         }
+
+        public function needsRehash(string $hashedPassword): bool
+        {
+            // Check if a password hash would benefit from rehashing
+            return $needsRehash;
+        }
     }
 
 Now, define a password hasher using the ``id`` setting:

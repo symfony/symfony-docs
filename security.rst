@@ -824,8 +824,8 @@ Finally, create or update the template:
 
 .. caution::
 
-    The ``error`` variable passed into the template is an instance of
-    :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`.
+    The ``error`` variable passed into the template is an instance
+    of :class:`Symfony\\Component\\Security\\Core\\Exception\\AuthenticationException`.
     It may contain sensitive information about the authentication failure.
     *Never* use ``error.message``: use the ``messageKey`` property instead,
     as shown in the example. This message is always safe to display.
@@ -1659,7 +1659,7 @@ You can log in a user programmatically using the `login()` method of the
             // you can also log in on a different firewall
             $security->login($user, 'form_login', 'other_firewall');
 
-            // ... redirect the user to its account page for instance
+            // ... redirect the user, e.g. to their account page
         }
     }
 
