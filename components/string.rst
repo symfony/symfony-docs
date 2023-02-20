@@ -481,6 +481,55 @@ letter A with ring above"*) or a sequence of two code points (``U+0061`` =
     u('å')->normalize(UnicodeString::NFD);
     u('å')->normalize(UnicodeString::NFKD);
 
+Lazily-loaded Strings
+---------------------
+
+Additionally to other types of strings presented above, the
+:class:`Symfony\\Component\\String\\LazyString` allows to store
+a string whose value is only generated when you need it. This is
+useful when the string needs a heavy computation to determine its value,
+like a hash for example. A lazy string can be declared like this::
+
+    use Symfony\Component\String\LazyString;
+
+    $lazyString = LazyString::fromCallable(function () {
+        // Compute the string value...
+        $value = ...;
+
+        // Then return the final value
+        return $value;
+    });
+
+The callback will only be executed when the value of the lazy string is
+requested in the program execution.
+
+A lazy string can also be created from a ``Stringable`` object::
+
+    class Hash implements \Stringable
+    {
+        public function __toString(): string
+        {
+            return $this->computeHash();
+        }
+
+        private function computeHash(): string
+        {
+            // Compute hash value with potentially heavy processing
+            $hash = ...;
+
+            return $hash;
+        }
+    }
+
+    // Then create a lazy string from this hash, which will trigger
+    // hash computation only if it's needed
+    $lazyHash = LazyString::fromStringable(new Hash());
+
+.. versionadded:: 5.1
+
+    The :class:`Symfony\\Component\\String\\LazyString` class was introduced
+    in Symfony 5.1.
+
 Slugger
 -------
 
