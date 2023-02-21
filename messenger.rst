@@ -2206,12 +2206,6 @@ provided in order to ease the declaration of these special handlers::
     By default, pending batches are flushed when the worker is idle as well
     as when it is stopped.
 
-.. versionadded:: 5.4
-
-    :class:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerInterface` and
-    :class:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerTrait` were
-    introduced in Symfony 5.4.
-
 Extending Messenger
 -------------------
 
