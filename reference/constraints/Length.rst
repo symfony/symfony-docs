@@ -124,7 +124,7 @@ Parameter          Description
 =================  ============================================================
 
 ``countUnit``
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``Length::COUNT_CODEPOINTS``
 
