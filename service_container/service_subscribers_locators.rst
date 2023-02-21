@@ -362,8 +362,6 @@ or directly via PHP attributes:
                     <argument type="service_locator">
                         <argument key="App\FooCommand" type="service" id="app.command_handler.foo"/>
                         <argument key="App\BarCommand" type="service" id="app.command_handler.bar"/>
-                        <!-- if the element has no key, the ID of the original service is used -->
-                        <argument type="service" id="app.command_handler.baz"/>
                     </argument>
                 </service>
             </services>
@@ -383,8 +381,6 @@ or directly via PHP attributes:
                 ->args([service_locator([
                     'App\FooCommand' => service('app.command_handler.foo'),
                     'App\BarCommand' => service('app.command_handler.bar'),
-                    // if the element has no key, the ID of the original service is used
-                    service('app.command_handler.baz'),
                 ])]);
         };
 
