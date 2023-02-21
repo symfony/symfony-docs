@@ -123,8 +123,8 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-exactly
-~~~~~~~
+``exactly``
+~~~~~~~~~~~
 
 **type**: ``integer``
 
@@ -137,8 +137,8 @@ the given value's length is not **exactly** equal to this value.
     without passing any named argument to it. This means that for example,
     ``#[Assert\Length(20)]`` and ``#[Assert\Length(exactly: 20)]`` are equivalent.
 
-exactMessage
-~~~~~~~~~~~~
+``exactMessage``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``
 
