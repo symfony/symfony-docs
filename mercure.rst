@@ -193,16 +193,11 @@ MercureBundle provides a more advanced configuration:
 
         {
             "mercure": {
-                "publish": []
+                "publish": ["*"]
             }
         }
 
-    Because the array is empty, the Symfony app will only be authorized to publish
-    public updates (see the authorization_ section for further information).
-
-    The jwt.io website is a convenient way to create and sign JWTs.
-    Checkout this `example JWT`_, that grants publishing rights for all *topics*
-    (notice the star in the array).
+    The jwt.io website is a convenient way to create and sign JWTs, checkout this `example JWT`_.
     Don't forget to set your secret key properly in the bottom of the right panel of the form!
 
 Basic Usage
