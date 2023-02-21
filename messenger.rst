@@ -2173,13 +2173,25 @@ provided in order to ease the declaration of these special handlers::
             }
         }
 
-        // Optionally, you can redefine the `shouldFlush()` method
-        // of the trait to define your own batch size
+        // Optionally, you can either redefine the `shouldFlush()` method
+        // of the trait to define your own batch size...
         private function shouldFlush(): bool
         {
             return 100 <= \count($this->jobs);
         }
+
+        // ... or redefine the `getBatchSize()` method if the default
+        // flush behavior suits your needs
+        private function getBatchSize(): int
+        {
+            return 100;
+        }
     }
+
+.. versionadded:: 6.3
+
+    The :method:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerTrait::getBatchSize`
+    method was introduced 6.3.
 
 .. note::
 
