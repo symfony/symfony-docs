@@ -319,16 +319,19 @@ In your extension, you can load this and dynamically set its arguments::
             // ... now use the flat $config array
         }
 
-Using the Bundle Class
-----------------------
+.. _using-the-bundle-class:
+
+Using the AbstractBundle Class
+------------------------------
 
 .. versionadded:: 6.1
 
     The ``AbstractBundle`` class was introduced in Symfony 6.1.
 
-Instead of creating an extension and configuration class, you can also
-extend :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to
-add this logic to the bundle class directly::
+As an alternative, instead of creating an extension and configuration class as
+shown in the previous section, you can also extend
+:class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to add this
+logic to the bundle class directly::
 
     // src/AcmeSocialBundle.php
     namespace Acme\SocialBundle;
