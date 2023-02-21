@@ -1,0 +1,36 @@
+---------------------------------------------------------------------------
+
+by upyx at 2023-01-04T09:04:32Z
+
+@OskarStark
+Described behavior ("if the element has no key, the ID of the original service is used") hasn't been implemented. There is a bug in the documentation. Hovewer, I'm going to implement it in 7.0.
+
+The PR removes a wrong description from older versions.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-02-21T13:40:57Z
+
+After we merge this in `5.4` can you submit a PR with the new behavior for `6.3`?
+
+---------------------------------------------------------------------------
+
+by upyx at 2023-02-21T15:03:26Z
+
+> After we merge this in `5.4` can you submit a PR with the new behavior for `6.3`?
+
+It's have already been merged in symfony/symfony#48686. And it will be changed again in 7.0.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-02-21T15:06:14Z
+
+Sorry I meant, create a PR against the Symfony docs repo
+
+---------------------------------------------------------------------------
+
+by upyx at 2023-02-21T15:12:28Z
+
+> Sorry I meant, create a PR against the Symfony docs repo
+
+Yes, I will check the 6.3 branch and create a PR with necessary changes (if any).
