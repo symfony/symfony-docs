@@ -1284,17 +1284,13 @@ When using PHP closures to configure your services, it is possible to automatica
 inject the current environment value by adding a string argument named ``$env`` to
 the closure::
 
-.. configuration-block::
+    // config/packages/my_config.php
+    namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-    .. code-block:: php
-
-        // config/packages/my_config.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        return function(ContainerConfigurator $configurator, string $env) {
-            // `$env` is automatically filled in, you can configure your
-            // services depending on which environment you're on
-        };
+    return function(ContainerConfigurator $configurator, string $env) {
+        // `$env` is automatically filled in, so you can configure your
+        // services depending on which environment you're on
+    };
 
 Learn more
 ----------
