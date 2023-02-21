@@ -399,7 +399,9 @@ to help you unit test the completion logic::
             $suggestions = $tester->complete(['']);
             $this->assertSame(['Fabien', 'Fabrice', 'Wouter'], $suggestions);
 
-            // complete the input with "Fa" as input
+            // If you filter the values inside your own code (not recommended, unless you
+            // need to improve performance of e.g. a database query), you can test this
+            // by passing the user input
             $suggestions = $tester->complete(['Fa']);
             $this->assertSame(['Fabien', 'Fabrice'], $suggestions);
         }

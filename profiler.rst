@@ -198,23 +198,35 @@ production. To do that, create an :doc:`event subscriber </event_dispatcher>`
 and listen to the :ref:`kernel.response <component-http-kernel-kernel-response>`
 event::
 
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpKernel\Event\ResponseEvent;
+    use Symfony\Component\HttpKernel\KernelInterface;
 
     // ...
-
-    public function onKernelResponse(ResponseEvent $event)
+    
+    class MySubscriber implements EventSubscriberInterface
     {
-        if (!$event->getKernel()->isDebug()) {
-            return;
+        public function __construct(private KernelInterface $kernel)
+        {
         }
+        
+        // ...
 
-        $request = $event->getRequest();
-        if (!$request->isXmlHttpRequest()) {
-            return;
+        public function onKernelResponse(ResponseEvent $event)
+        {
+            if (!$this->kernel->isDebug()) {
+                return;
+            }
+
+            $request = $event->getRequest();
+            if (!$request->isXmlHttpRequest()) {
+                return;
+            }
+
+            $response = $event->getResponse();
+            $response->headers->set('Symfony-Debug-Toolbar-Replace', 1);
         }
-
-        $response = $event->getResponse();
-        $response->headers->set('Symfony-Debug-Toolbar-Replace', 1);
     }
 
 .. index::
