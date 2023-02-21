@@ -200,10 +200,10 @@ event::
 
     // ...
     
-    class MySubscriber implements EventSubscriberInterface {
-        public function __construct(
-            private KernelInterface $kernel,
-        ) {
+    class MySubscriber implements EventSubscriberInterface
+    {
+        public function __construct(private KernelInterface $kernel)
+        {
         }
         
         // ...
