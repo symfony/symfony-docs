@@ -163,8 +163,8 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
-exactly
-~~~~~~~
+``exactly``
+~~~~~~~~~~~
 
 **type**: ``integer``
 
@@ -182,8 +182,8 @@ the given value's length is not **exactly** equal to this value.
 
     The named argument ``exactly`` was introduced in Symfony 5.2.
 
-exactMessage
-~~~~~~~~~~~~
+``exactMessage``
+~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This value should have exactly {{ limit }} characters.``
 
