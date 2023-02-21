@@ -396,11 +396,11 @@ to help you unit test the completion logic::
             $suggestions = $tester->complete(['']);
             $this->assertSame(['Fabien', 'Fabrice', 'Wouter'], $suggestions);
 
-            // complete the input with "Fa" as input
-            // note that the list does not reduce because the completion tester doesn't run any shell, 
-            // it only tests the PHP part of the completion logic, so it should always include all values
+            // If you filter the values inside your own code (not recommended, unless you
+            // need to improve performance of e.g. a database query), you can test this
+            // by passing the user input
             $suggestions = $tester->complete(['Fa']);
-            $this->assertSame(['Fabien', 'Fabrice', 'Wouter'], $suggestions);
+            $this->assertSame(['Fabien', 'Fabrice'], $suggestions);
         }
     }
 
