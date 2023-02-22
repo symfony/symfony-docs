@@ -268,6 +268,38 @@ You can find a list of existing mime types on the `IANA website`_.
     (i.e. the form type is not defined explicitly in the ``->add()`` method of
     the form builder) and when the field doesn't define its own ``accept`` value.
 
+``filenameMaxLength``
+~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``integer`` **default**: ``null``
+
+.. versionadded:: 6.3
+
+    The ``filenameMaxLength`` was introduced in Symfony 6.3.
+
+If set, the validator will check that the filename of the underlying file
+doesn't exceed a certain length.
+
+``filenameTooLongMessage``
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``The filename is too long. It should have {{ filename_max_length }} character or less.|The filename is too long. It should have {{ filename_max_length }} characters or less.``
+
+.. versionadded:: 6.3
+
+    The ``filenameTooLongMessage`` was introduced in Symfony 6.3.
+
+The message displayed if the filename of the file exceeds the limit set
+with the ``filenameMaxLength`` option.
+
+You can use the following parameters in this message:
+
+==============================  ==============================================================
+Parameter                       Description
+==============================  ==============================================================
+``{{ filename_max_length }}``   Maximum number of characters allowed
+==============================  ==============================================================
+
 ``extensionsMessage``
 ~~~~~~~~~~~~~~~~~~~~~
 
