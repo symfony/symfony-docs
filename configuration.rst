@@ -297,7 +297,7 @@ reusable configuration value. By convention, parameters are defined under the
 
 .. versionadded:: 6.3
 
-    The ``trim`` attribute was intrduced in Symfony 6.3.
+    The ``trim`` attribute was introduced in Symfony 6.3.
 
 Once defined, you can reference this parameter value from any other
 configuration file using a special syntax: wrap the parameter name in two ``%``
