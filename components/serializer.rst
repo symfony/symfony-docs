@@ -1751,6 +1751,61 @@ will be thrown. The type enforcement of the properties can be disabled by settin
 the serializer context option ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT``
 to ``true``.
 
+It is also possible to denormalize an array of object. To do so, ensure
+the owner object contains a adder method, so the Serializer is able to
+guess the type of object to denormalize in your collection. Let's
+rename ``$inner`` to ``$inners`` and create a adder method::
+
+    namespace Acme;
+
+    use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+    use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+    use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+    use Symfony\Component\Serializer\Serializer;
+
+    class ObjectOuter
+    {
+        private array $inners;
+
+        // ...
+
+        public function getInners()
+        {
+            return $this->inners;
+        }
+
+        public function setInners(array $inners)
+        {
+            $this->inners = $inner;
+        }
+
+        // This is the key method that will allow the Serializer
+        // to know the type of object of your collection
+        public function addInner(ObjectInner $inner)
+        {
+            $this->inners[] = $inner;
+        }
+
+        // ...
+    }
+
+    $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());
+    // ArrayDenormalizer is also needed for the array denormalization to work
+    $serializer = new Serializer([new DateTimeNormalizer(), $normalizer, new ArrayDenormalizer()]);
+
+    $obj = $serializer->denormalize(
+        [
+            'inners' => [
+                ['foo' => 'foo', 'bar' => 'bar']
+            ],
+            'date' => '1988/01/21',
+        ],
+        ObjectOuter::class
+    );
+
+Now, the ``$inners`` property contains an array of ``ObjectInner`` objects.
+
 Serializing Interfaces and Abstract Classes
 -------------------------------------------
 
