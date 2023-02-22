@@ -272,8 +272,8 @@ reusable configuration value. By convention, parameters are defined under the
 
 .. caution::
 
-    When using XML configuration, the values between ``<parameter>`` tags are
-    not trimmed. This means that the value of the following parameter will be
+    By default and when using XML configuration, the values between ``<parameter>``
+    tags are not trimmed. This means that the value of the following parameter will be
     ``'\n    something@example.com\n'``:
 
     .. code-block:: xml
@@ -282,9 +282,22 @@ reusable configuration value. By convention, parameters are defined under the
             something@example.com
         </parameter>
 
+    If you want to trim the value of your parameter, use the ``trim`` attribute.
+    When using it, the value of the following parameter will be ``something@example.com``:
+
+    .. code-block:: xml
+
+        <parameter key="app.admin_email" trim="true">
+            something@example.com
+        </parameter>
+
 .. versionadded:: 6.2
 
     Passing an enum case as a service parameter was introduced in Symfony 6.2.
+
+.. versionadded:: 6.3
+
+    The ``trim`` attribute was intrduced in Symfony 6.3.
 
 Once defined, you can reference this parameter value from any other
 configuration file using a special syntax: wrap the parameter name in two ``%``
