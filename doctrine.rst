@@ -278,12 +278,13 @@ methods:
 
       // src/Entity/Product.php
       // ...
+    +  use Doctrine\DBAL\Types\Types;
 
       class Product
       {
           // ...
 
-    +     #[ORM\Column(type: 'text')]
+    +     #[ORM\Column(type: Types::TEXT)]
     +     private $description;
 
           // getDescription() & setDescription() were also added
@@ -350,17 +351,15 @@ and save it::
 
     // ...
     use App\Entity\Product;
-    use Doctrine\Persistence\ManagerRegistry;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController extends AbstractController
     {
         #[Route('/product', name: 'create_product')]
-        public function createProduct(ManagerRegistry $doctrine): Response
+        public function createProduct(EntityManagerInterface $entityManager): Response
         {
-            $entityManager = $doctrine->getManager();
-
             $product = new Product();
             $product->setName('Keyboard');
             $product->setPrice(1999);
@@ -394,13 +393,10 @@ Take a look at the previous example in more detail:
 
 .. _doctrine-entity-manager:
 
-* **line 13** The ``ManagerRegistry $doctrine`` argument tells Symfony to
-  :ref:`inject the Doctrine service <services-constructor-injection>` into the
-  controller method.
-
-* **line 15** The ``$doctrine->getManager()`` method gets Doctrine's
-  *entity manager* object, which is the most important object in Doctrine. It's
-  responsible for saving objects to, and fetching objects from, the database.
+* **line 13** The ``EntityManagerInterface $entityManager`` argument tells Symfony 
+  to :ref:`inject the Entity Manager service <services-constructor-injection>` into 
+  the controller method. This object is responsible for saving objects to, and
+  fetching objects from, the database.
 
 * **lines 17-20** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
@@ -499,6 +495,7 @@ be able to go to ``/product/1`` to see your new product::
     namespace App\Controller;
 
     use App\Entity\Product;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     // ...
@@ -506,9 +503,9 @@ be able to go to ``/product/1`` to see your new product::
     class ProductController extends AbstractController
     {
         #[Route('/product/{id}', name: 'product_show')]
-        public function show(ManagerRegistry $doctrine, int $id): Response
+        public function show(EntityManagerInterface $entityManager, int $id): Response
         {
-            $product = $doctrine->getRepository(Product::class)->find($id);
+            $product = $entityManager->getRepository(Product::class)->find($id);
 
             if (!$product) {
                 throw $this->createNotFoundException(
@@ -558,7 +555,7 @@ job is to help you fetch entities of a certain class.
 
 Once you have a repository object, you have many helper methods::
 
-    $repository = $doctrine->getRepository(Product::class);
+    $repository = $entityManager->getRepository(Product::class);
 
     // look for a single Product by its primary key (usually "id")
     $product = $repository->find($id);
@@ -826,9 +823,8 @@ with any PHP model::
     class ProductController extends AbstractController
     {
         #[Route('/product/edit/{id}', name: 'product_edit')]
-        public function update(ManagerRegistry $doctrine, int $id): Response
+        public function update(EntityManagerInterface $entityManager, int $id): Response
         {
-            $entityManager = $doctrine->getManager();
             $product = $entityManager->getRepository(Product::class)->find($id);
 
             if (!$product) {
@@ -877,7 +873,7 @@ You've already seen how the repository object allows you to run basic queries
 without any work::
 
     // from inside a controller
-    $repository = $doctrine->getRepository(Product::class);
+    $repository = $entityManager->getRepository(Product::class);
     $product = $repository->find($id);
 
 But what if you need a more complex query? When you generated your entity with
@@ -944,7 +940,7 @@ Now, you can call this method on the repository::
     // from inside a controller
     $minPrice = 1000;
 
-    $products = $doctrine->getRepository(Product::class)->findAllGreaterThanPrice($minPrice);
+    $products = $entityManager->getRepository(Product::class)->findAllGreaterThanPrice($minPrice);
 
     // ...
 
