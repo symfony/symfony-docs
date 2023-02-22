@@ -119,6 +119,18 @@ Set of request headers that trigger "private" cache-control behavior on response
 that don't explicitly state whether the response is public or private via a
 Cache-Control directive. (default: Authorization and Cookie)
 
+skip_response_headers
+.....................
+
+**type**: ``array`` **default**: ``Set-Cookie``
+
+Set of response headers that will never be cached even when the response is cacheable
+and public.
+
+.. versionadded:: 6.3
+
+    The ``skip_response_headers`` option was introduced in Symfony 6.3.
+
 allow_reload
 ............
 
