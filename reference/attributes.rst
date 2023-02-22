@@ -112,6 +112,11 @@ Each validation constraint comes with a PHP attribute. See
 
 * :doc:`HasNamedArgument </validation/custom_constraint>`
 
+Webhook
+~~~~~~~
+
+* :ref:`AsRemoteEventConsumer <webhook_consume-remote-events>`
+
 .. _`AsEntityAutocompleteField`: https://symfony.com/bundles/ux-autocomplete/current/index.html#usage-in-a-form-with-ajax
 .. _`AsLiveComponent`: https://symfony.com/bundles/ux-live-component/current/index.html
 .. _`AsTwigComponent`: https://symfony.com/bundles/ux-twig-component/current/index.html
