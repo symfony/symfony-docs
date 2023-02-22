@@ -1287,7 +1287,7 @@ the closure::
     // config/packages/my_config.php
     namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-    return function(ContainerConfigurator $configurator, string $env) {
+    return function(ContainerConfigurator $containerConfigurator, string $env) {
         // `$env` is automatically filled in, so you can configure your
         // services depending on which environment you're on
     };
