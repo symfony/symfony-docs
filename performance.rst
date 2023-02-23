@@ -220,13 +220,14 @@ deployment process too):
 Disable Dumping the Container as XML in Debug Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In debug mode, Symfony compiles the :doc:`service container </service_container>`
-into an XML file. This XML file is used by various commands such as
-``debug:container`` and ``debug:autowiring``. When the container grows larger and larger,
-so does the size of the file and the time to generate it. Sometimes the benefit of this
-file does not outweigh the decrease in performance.
+In :ref:`debug mode <debug-mode>`, Symfony generates an XML file with all the
+:doc:`service container </service_container>` information (services, arguments, etc.)
+This XML file is used by various debugging commands such as ``debug:container``
+and ``debug:autowiring``.
 
-In these situations, you can disable dumping of the XML file by setting `debug.container.dump` to `false`:
+When the container grows larger and larger, so does the size of the file and the
+time to generate it. If the benefit of this XML file does not outweigh the decrease
+in performance, you can stop generating the file as follows:
 
 .. configuration-block::
 
@@ -257,6 +258,10 @@ In these situations, you can disable dumping of the XML file by setting `debug.c
 
         // ...
         $container->parameters()->set('debug.container.dump', false);
+
+.. versionadded:: 6.3
+
+    The ``debug.container.dump`` option was introduced in Symfony 6.3.
 
 .. _profiling-applications:
 
