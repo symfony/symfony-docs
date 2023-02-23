@@ -217,6 +217,47 @@ deployment process too):
   used in your application and prevents Composer from scanning the file system for
   classes that are not found in the class map. (see: `Composer's autoloader optimization`_).
 
+Disable Dumping the Container as XML in Debug Mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In debug mode, Symfony compiles the :doc:`service container </service_container>`
+into an XML file. This XML file is used by various commands such as
+``debug:container`` and ``debug:autowiring``. When the container grows larger and larger,
+so does the size of the file and the time to generate it. Sometimes the benefit of this
+file does not outweigh the decrease in performance.
+
+In these situations, you can disable dumping of the XML file by setting `debug.container.dump` to `false`:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        parameters:
+            # ...
+            debug.container.dump: false
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <parameters>
+                <!-- ... -->
+                <parameter key="debug.container.dump">false</parameter>
+            </parameters>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+
+        // ...
+        $container->parameters()->set('debug.container.dump', false);
+
 .. _profiling-applications:
 
 Profiling Symfony Applications
