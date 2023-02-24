@@ -214,11 +214,6 @@ method::
         }
     }
 
-.. versionadded:: 5.3
-
-    The :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
-    method was introduced in Symfony 5.3.
-
 Creating custom Tags
 --------------------
 
