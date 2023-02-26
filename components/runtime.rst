@@ -483,5 +483,28 @@ The end user will now be able to create front controller like::
         return new SomeCustomPsr15Application();
     };
 
+Create Your Own Runtime Template
+--------------------------------
+
+In some cases the default generic runtime template generated (`vendor/autoload_runtime.php`)
+file is not enough. For example: you want to use a different entry point than
+`$_SERVER['FILE_SCRIPTNAME']` or a different SAPI than the traditional `cli`,
+`phpdbg` or `embed`.
+
+To use your own template, you can register it as follows:
+
+.. code-block:: json
+
+    {
+        "require": {
+            "...": "..."
+        },
+        "extra": {
+            "runtime": {
+                "autoload_template": "resources/runtime/autoload_runtime.template"
+            }
+        }
+    }
+
 .. _ReactPHP: https://reactphp.org/
 .. _`PSR-15`: https://www.php-fig.org/psr/psr-15/
