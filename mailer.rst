@@ -111,7 +111,12 @@ SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
 MailPace            ``composer require symfony/mail-pace-mailer``
 Infobip             ``composer require symfony/infobip-mailer``
+MailerSend          ``composer require symfony/mailersend-mailer``
 ==================  ==============================================
+
+.. versionadded:: 6.3
+
+    The MailerSend integration was introduced in Symfony 6.3.
 
 .. versionadded:: 6.2
 
@@ -177,6 +182,7 @@ Postmark             postmark+smtp://ID@default                           n/a   
 Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
 Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
 Infobip              infobip+smtp://KEY@default                           n/a                                         infobip+api://KEY@BASE_URL
+MailerSend           mailersend+smtp://KEY@default                        n/a                                         mailersend+api://KEY@BASE_URL
 ==================== ==================================================== =========================================== ========================================
 
 .. versionadded:: 6.3
