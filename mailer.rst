@@ -115,10 +115,10 @@ Amazon SES          ``composer require symfony/amazon-mailer``
 MailChimp           ``composer require symfony/mailchimp-mailer``
 Mailgun             ``composer require symfony/mailgun-mailer``
 Mailjet             ``composer require symfony/mailjet-mailer``
+OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
 Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
-OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
 ==================  ==============================================
 
 .. note::
