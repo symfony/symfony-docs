@@ -114,15 +114,15 @@ Infobip             ``composer require symfony/infobip-mailer``
 MailerSend          ``composer require symfony/mailersend-mailer``
 ==================  ==============================================
 
-.. versionadded:: 6.3
-
-    The MailerSend integration was introduced in Symfony 6.3.
-
 .. versionadded:: 6.2
 
     The Infobip integration was introduced in Symfony 6.2 and the ``MailPace``
     integration was renamed in Symfony 6.2 (in previous Symfony versions it was
     called ``OhMySMTP``).
+
+.. versionadded:: 6.3
+
+    The MailerSend integration was introduced in Symfony 6.3.
 
 .. note::
 
