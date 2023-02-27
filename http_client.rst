@@ -827,12 +827,11 @@ Using URI Templates
 ~~~~~~~~~~~~~~~~~~~
 
 The :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient` provides
-a client that eases the use of URI templates, as described in the `RFC 6570`_.
-Here is an example of how to use this client with URI templates::
+a client that eases the use of URI templates, as described in the `RFC 6570`_::
 
     $client = new UriTemplateHttpClient();
 
-    // This request will result on querying http://example.org/users?page=1
+    // this will make a request to the URL http://example.org/users?page=1
     $client->request('GET', 'http://example.org/{resource}{?page}', [
         'vars' => [
             'resource' => 'users',
