@@ -430,6 +430,7 @@ Engagespot      ``symfony/engagespot-notifier``        ``engagespot://API_KEY@de
 Expo            ``symfony/expo-notifier``              ``expo://Token@default``
 OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
 PagerDuty       ``symfony/pager-duty-notifier``        ``pagerduty://TOKEN@SUBDOMAIN``
+Pushover        ``symfony/pushover-notifier``          ``pushover://USER_KEY:APP_TOKEN@default``
 ==============  ====================================  =================================================================================
 
 .. versionadded:: 6.1
@@ -438,7 +439,7 @@ PagerDuty       ``symfony/pager-duty-notifier``        ``pagerduty://TOKEN@SUBDO
 
 .. versionadded:: 6.3
 
-    The PagerDuty integration was introduced in Symfony 6.3.
+    The PagerDuty and Pushover integrations were introduced in Symfony 6.3.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
