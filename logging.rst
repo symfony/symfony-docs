@@ -32,6 +32,15 @@ To log a message, inject the default logger in your controller or service::
         $logger->info('I just got the logger');
         $logger->error('An error occurred');
 
+        // log messages can also contain placeholders (wrap the placeholder name with braces)
+        // these placeholders are useful for logging tools, which can aggregate log messages
+        // that are the same except for some variable values inside them, for translation
+        // systems in order to create localized messages, and for security because escaping
+        // can then be done by the implementation in a context-aware fashion
+        $logger->debug('User {userId} has logged in', [
+            'userId' => $this->getUserId(),
+        ]);
+
         $logger->critical('I left the oven on!', [
             // include extra "context" info in your logs
             'cause' => 'in_hurry',
