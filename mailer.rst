@@ -103,15 +103,15 @@ via a third-party provider:
 Service             Install with
 ==================  ==============================================
 Amazon SES          ``composer require symfony/amazon-mailer``
+Infobip             ``composer require symfony/infobip-mailer``
 MailChimp           ``composer require symfony/mailchimp-mailer``
+MailerSend          ``composer require symfony/mailersend-mailer``
 Mailgun             ``composer require symfony/mailgun-mailer``
 Mailjet             ``composer require symfony/mailjet-mailer``
+MailPace            ``composer require symfony/mail-pace-mailer``
 Postmark            ``composer require symfony/postmark-mailer``
 SendGrid            ``composer require symfony/sendgrid-mailer``
 Sendinblue          ``composer require symfony/sendinblue-mailer``
-MailPace            ``composer require symfony/mail-pace-mailer``
-Infobip             ``composer require symfony/infobip-mailer``
-MailerSend          ``composer require symfony/mailersend-mailer``
 ==================  ==============================================
 
 .. versionadded:: 6.2
