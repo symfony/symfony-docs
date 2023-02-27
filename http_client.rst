@@ -155,6 +155,7 @@ Some options are described in this guide:
 * `Redirects`_
 * `Retry Failed Requests`_
 * `HTTP Proxies`_
+* `Using URI Templates`_
 
 Check out the full :ref:`http_client config reference <reference-http-client>`
 to learn about all the options.
@@ -821,6 +822,83 @@ in your requests::
     ]);
 
 This setting won’t affect other clients.
+
+Using URI Templates
+~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient` provides
+a client that eases the use of URI templates, as described in the `RFC 6570`_.
+Here is an example of how to use this client with URI templates::
+
+    $client = new UriTemplateHttpClient();
+
+    // This request will result on querying http://example.org/users?page=1
+    $client->request('GET', 'http://example.org/{resource}{?page}', [
+        'vars' => [
+            'resource' => 'users',
+            'page' => 1,
+        ],
+    ]);
+
+When using this client in the framework context, all existing HTTP clients
+are decorated by the :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient`.
+This means that URI template feature is enabled by default for all HTTP clients
+you may use in your application.
+
+You can configure variables that will be replaced globally in all URI templates
+of your application:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            http_client:
+                default_options:
+                    vars:
+                        - secret: 'secret-token'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:http-client>
+                    <framework:default-options>
+                        <framework:vars name="secret">secret-token</framework:vars>
+                    </framework:default-options>
+                </framework:http-client>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->httpClient()
+                ->defaultOptions()
+                    ->vars(['secret' => 'secret-token'])
+            ;
+        };
+
+If you want to define your own logic to handle variables of URI templates, you
+can do so by redefining the ``http_client.uri_template_expander`` alias. Your
+service must be invokable.
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient` was
+    introduced in Symfony 6.3.
 
 Performance
 -----------
@@ -2055,3 +2133,4 @@ you to do so, by yielding the exception from its body::
 .. _`EventSource`: https://www.w3.org/TR/eventsource/#eventsource
 .. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods
 .. _`SSRF`: https://portswigger.net/web-security/ssrf
+.. _`RFC 6570`: https://www.rfc-editor.org/rfc/rfc6570
