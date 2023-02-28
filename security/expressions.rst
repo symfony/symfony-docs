@@ -144,6 +144,27 @@ Additionally, you have access to a number of functions inside the expression:
     true if the user has actually logged in during this session (i.e. is
     full-fledged).
 
+If you want to use a controller argument in the expression, you need to pass it
+as ``subject``::
+
+    #[Route(path: '/{slug}')]
+    #[IsGranted(new Expression('"Improvement" == subject.getName()'), subject: 'category')]
+    public function categoryShow(
+        #[MapEntity()]
+        NewsCategory $category,
+    ) {
+
+And if you have many arguments::
+
+    #[Route(path: '/{slug}/{slug2}')]
+    #[IsGranted(new Expression('"Improvement" == subject["category"].getName() and "bar" == subject["foobar"].getTitle()'), subject: ['category', 'foobar'])]
+    public function categoryShow(
+        #[MapEntity(expr: 'repository.findOneBy({"slug": slug})')]
+        NewsCategory $category,
+        #[MapEntity(expr: 'repository.findOneBy({"slug": slug2})')]
+        Foobar $foobar,
+    ) {
+
 Learn more
 ----------
 
