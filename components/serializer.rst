@@ -1245,7 +1245,7 @@ to ``true``::
 Preventing ``null`` value fallback for nullable properties
 ----------------------------------------------------------
 
-By default, the Serializer will add `null` to nullable properties when the parameters for those are not provided.
+By default, the Serializer will add ``null`` to nullable properties when the parameters for those are not provided.
 You can change this behavior by setting the ``AbstractNormalizer::PREVENT_NULLABLE_FALLBACK`` context option
 to ``true``::
 
