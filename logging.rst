@@ -32,11 +32,8 @@ To log a message, inject the default logger in your controller or service::
         $logger->info('I just got the logger');
         $logger->error('An error occurred');
 
-        // log messages can also contain placeholders (wrap the placeholder name with braces)
-        // these placeholders are useful for logging tools, which can aggregate log messages
-        // that are the same except for some variable values inside them, for translation
-        // systems in order to create localized messages, and for security because escaping
-        // can then be done by the implementation in a context-aware fashion
+        // log messages can also contain placeholders, which are variable names
+        // wrapped in braces whose values are passed as the second argument
         $logger->debug('User {userId} has logged in', [
             'userId' => $this->getUserId(),
         ]);
@@ -48,6 +45,14 @@ To log a message, inject the default logger in your controller or service::
 
         // ...
     }
+
+Adding placeholders to log messages is recommended because:
+
+* It's easier to check log messages because many logging tools group log messages
+  that are the same except for some variable values inside them;
+* It's much easier to translate those log messages;
+* It's better for security, because escaping can then be done by the
+  implementation in a context-aware fashion.
 
 The ``logger`` service has different methods for different logging levels/priorities.
 See `LoggerInterface`_ for a list of all of the methods on the logger.
