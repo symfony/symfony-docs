@@ -1249,7 +1249,8 @@ By default, the Serializer will add ``null`` to nullable properties when the par
 You can change this behavior by setting the ``AbstractNormalizer::PREVENT_NULLABLE_FALLBACK`` context option
 to ``true``::
 
-    class Dummy {
+    class Dummy
+    {
         public function __construct(
             public string $foo,
             public ?string $bar,
