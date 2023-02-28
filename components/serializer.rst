@@ -1265,7 +1265,8 @@ to ``true``::
 
 .. versionadded:: 6.3
 
-    The context flag was introduced in Symfony 6.3.
+    The ``AbstractNormalizer::PREVENT_NULLABLE_FALLBACK`` context option
+    was introduced in Symfony 6.3.
 
 Skipping Uninitialized Properties
 ---------------------------------
