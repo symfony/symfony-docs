@@ -1253,7 +1253,8 @@ to ``true``::
         public function __construct(
             public string $foo,
             public ?string $bar,
-        )
+        ) {
+        }
     }
 
     $data = ['foo' => 'notNull'];
