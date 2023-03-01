@@ -740,7 +740,8 @@ and ``user`` to the Unix user on your server.
 If you use the Redis Transport, note that each worker needs a unique consumer
 name to avoid the same message being handled by multiple workers. One way to
 achieve this is to set an environment variable in the Supervisor configuration
-file, which you can then refer to in ``messenger.yaml`` (see Redis section above):
+file, which you can then refer to in ``messenger.yaml``
+(see the ref:`Redis section <messenger-redis-transport>` below):
 
 .. code-block:: ini
 
@@ -1545,6 +1546,8 @@ ttr                 The message time to run before it
                     is put back in the ready queue
                     - in seconds.                        90
 ==================  ===================================  ======================
+
+.. _messenger-redis-transport:
 
 Redis Transport
 ~~~~~~~~~~~~~~~
