@@ -1,0 +1,25 @@
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2023-02-23T17:20:27Z
+
+Ryan and me were discussing about another page in https://github.com/symfony/symfony-docs/pull/17364, namely https://symfony.com/doc/current/form/form_collections.html#allowing-new-tags-with-the-prototype
+
+I wasn't even aware that this JavaScript code exists on https://symfony.com/doc/current/reference/forms/types/collection.html as well ;-) So given the fact that it's hard enough to maintain this entire collections/JavaScript topic in one place, I think **those two pages/parts should be merged.**
+If you agree with that in principle, the question would be: Which one should contain everything, and which one mainly a link to the other?
+
+Besides that, I agree that getting rid of jQuery is a good idea :-)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-02-23T19:28:09Z
+
+> I wasn't even aware that this JavaScript code exists on https://symfony.com/doc/current/reference/forms/types/collection.html as well ;-) So given the fact that it's hard enough to maintain this entire collections/JavaScript topic in one place, I think those two pages/parts should be merge
+
+Oh geez, same for me. Let's merge - I would make https://symfony.com/doc/current/form/form_collections.html#allowing-new-tags-with-the-prototype the source of truth and link from the reference, but either is fine.
+
+---------------------------------------------------------------------------
+
+by jeromegxj at 2023-02-27T09:17:11Z
+
+The easiest move and the one that make sense, is to remove the subsection `collection.html#adding-and-removing-items`
+That page already has multiple links to `https://symfony.com/doc/current/form/form_collections.html#allowing-new-tags-with-the-prototype`
