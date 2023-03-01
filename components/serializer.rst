@@ -1242,7 +1242,7 @@ to ``true``::
     $result = $normalizer->normalize($dummy, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
     // ['bar' => 'notNull']
 
-Preventing ``null`` value fallback for nullable properties
+Preventing ``null`` Value Fallback for Nullable Properties
 ----------------------------------------------------------
 
 By default, the Serializer will add ``null`` to nullable properties when the parameters for those are not provided.
