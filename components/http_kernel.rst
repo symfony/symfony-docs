@@ -131,10 +131,10 @@ listeners to the events discussed below::
     // trigger the kernel.terminate event
     $kernel->terminate($request, $response);
 
-See ":ref:`http-kernel-working-example`" for a more concrete implementation.
+See ":ref:`A full working example <http-kernel-working-example>`" for a more concrete implementation.
 
 For general information on adding listeners to the events below, see
-:ref:`http-kernel-creating-listener`.
+:ref:`Creating an Event Listener <http-kernel-creating-listener>`.
 
 .. seealso::
 
@@ -229,7 +229,7 @@ This implementation is explained more in the sidebar below::
 
     interface ControllerResolverInterface
     {
-        public function getController(Request $request);
+        public function getController(Request $request): callable|false;
     }
 
 Internally, the ``HttpKernel::handle()`` method first calls
