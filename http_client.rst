@@ -1783,11 +1783,6 @@ assertions on the request before returning the mocked response::
 
     // ...
 
-.. versionadded:: 5.1
-
-    Passing a list of callbacks to the ``MockHttpClient`` was introduced
-    in Symfony 5.1.
-
 .. tip::
 
     Instead of using the first argument, you can also set the (list of)

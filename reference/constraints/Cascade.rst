@@ -1,11 +1,6 @@
 Cascade
 =======
 
-.. versionadded:: 5.2
-
-    The :class:`Symfony\\Component\\Validator\\Constraints\\Cascade` was
-    introduced in Symfony 5.2 and requires PHP 7.4.
-
 The Cascade constraint is used to validate a whole class, including all the
 objects that might be stored in its properties. Thanks to this constraint,
 you don't need to add the :doc:`/reference/constraints/Valid` constraint on
@@ -26,32 +21,6 @@ constraints that are set in the child classes ``BookMetadata`` and
 ``Author``:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Model/BookCollection.php
-        namespace App\Model;
-
-        use App\Model\Author;
-        use App\Model\BookMetadata;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @Assert\Cascade
-         */
-        class BookCollection
-        {
-            /**
-             * @Assert\NotBlank
-             */
-            protected $name = '';
-
-            public BookMetadata $metadata;
-
-            public Author $author;
-
-            // ...
-        }
 
     .. code-block:: php-attributes
 
