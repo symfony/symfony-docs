@@ -143,9 +143,24 @@ do so, define a listener for the ``postPersist`` Doctrine event::
         }
     }
 
-The next step is to enable the Doctrine listener in the Symfony application by
-creating a new service for it and :doc:`tagging it </service_container/tags>`
-with the ``doctrine.event_listener`` tag:
+Then, add the ``#[AsDoctrineListener]`` attribute to the class to enable it as
+a Doctrine listener in your application::
+
+        // src/EventListener/SearchIndexer.php
+        namespace App\EventListener;
+
+        use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
+        use Doctrine\ORM\Events;
+
+        #[AsDoctrineListener(event: Events::postPersist, priority: 500, connection: 'default')]
+        class SearchIndexer
+        {
+            // ...
+        }
+
+Alternatively, if you prefer to not use PHP attributes, you mustenable the Doctrine listener in the Symfony application by creating a new 
+service for it and :doc:`tagging it </service_container/tags>` with 
+the ``doctrine.event_listener`` tag:
 
 .. configuration-block::
 
@@ -272,7 +287,7 @@ a Doctrine entity listener in your application::
             // ...
         }
 
-That's it. Alternatively, if you prefer to not use PHP attributes, you must
+Alternatively, if you prefer to not use PHP attributes, you must
 configure a service for the entity listener and :doc:`tag it </service_container/tags>`
 with the ``doctrine.orm.entity_listener`` tag as follows:
 
