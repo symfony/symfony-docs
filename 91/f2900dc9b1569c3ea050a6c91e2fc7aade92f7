@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-02-27T06:26:58Z
+
+Is this possible since 6.2? If yes, please add a `versionadded` directive. You can search the repository for examples.
+
+Thanks
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2023-02-27T12:46:48Z
+
+> Is this possible since 6.2? If yes, please add a `versionadded` directive. You can search the repository for examples.
+>
+> Thanks
+
+It is possible since DoctrineBundle 2.8, I feel like it is before SF 6.2.
+But seems to be compliant with 5.4 maybe I need rebase ?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-03-01T19:03:57Z
+
+Lets target `6.2` and as this is an "external" attribute, no `versionadded` is needed 👍
