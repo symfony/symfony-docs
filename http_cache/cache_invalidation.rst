@@ -90,6 +90,22 @@ Then, register the class as a service that :doc:`decorates </service_container/s
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/CacheKernel.php
+        namespace App;
+
+        // ...
+        use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
+        use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+        #[Autoconfigure(bind: ['$surrogate' => '@?esi'])]
+        #[AsDecorator(decorates: 'http_cache')]
+        class CacheKernel extends HttpCache
+        {
+            // ...
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
