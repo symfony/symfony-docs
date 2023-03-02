@@ -818,6 +818,8 @@ and also to check the Twig features added when :ref:`installing packages <symfon
     # pass a template path to show the physical file which will be loaded
     $ php bin/console debug:twig @Twig/Exception/error.html.twig
 
+.. _twig-dump-utilities:
+
 The Dump Twig Utilities
 ~~~~~~~~~~~~~~~~~~~~~~~
 
