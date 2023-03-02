@@ -1761,6 +1761,33 @@ responses dynamically when it's called::
     $client = new MockHttpClient($callback);
     $response = $client->request('...'); // calls $callback to get the response
 
+You can also pass a list of callbacks if you need to perform specific
+assertions on the request before returning the mocked response::
+
+    $expectedRequests = [
+        function ($method, $url, $options) {
+            $this->assertSame('GET', $method);
+            $this->assertSame('https://example.com/api/v1/customer', $url);
+
+            return new MockResponse('...');
+        },
+        function ($method, $url, $options) {
+            $this->assertSame('POST', $method);
+            $this->assertSame('https://example.com/api/v1/customer/1/products', $url);
+
+            return new MockResponse('...');
+        },
+    ];
+
+    $client = new MockHttpClient($expectedRequest);
+
+    // ...
+
+.. versionadded:: 5.1
+
+    Passing a list of callbacks to the ``MockHttpClient`` was introduced
+    in Symfony 5.1.
+
 .. tip::
 
     Instead of using the first argument, you can also set the (list of)
