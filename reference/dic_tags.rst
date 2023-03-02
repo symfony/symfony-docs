@@ -1417,4 +1417,3 @@ Bridge.
 .. _`Twig's documentation`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
 .. _`Twig Loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
 .. _`PHP class preloading`: https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.preload
-.. _`serializer.php`: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Resources/config/serializer.php
