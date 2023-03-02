@@ -160,6 +160,9 @@ debug
 If ``true``, the compiled templates include a ``__toString()`` method that can
 be used to display their nodes.
 
+This option also controls the behavior of :ref:`the Twig dump utilities <twig-dump-utilities>`.
+If this option is ``false``, the ``dump()`` function doesn't output any contents.
+
 .. _config-twig-default-path:
 
 default_path
