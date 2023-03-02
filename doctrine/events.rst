@@ -158,9 +158,9 @@ a Doctrine listener in your application::
             // ...
         }
 
-Alternatively, if you prefer to not use PHP attributes, you mustenable the Doctrine listener in the Symfony application by creating a new 
-service for it and :doc:`tagging it </service_container/tags>` with 
-the ``doctrine.event_listener`` tag:
+Alternatively, if you prefer to not use PHP attributes, you must enable the
+listener in the Symfony application by creating a new service for it and
+:doc:`tagging it </service_container/tags>` with the ``doctrine.event_listener`` tag:
 
 .. configuration-block::
 
