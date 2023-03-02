@@ -951,6 +951,15 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     The ``SYMFONY_PHPUNIT_REQUIRE`` env variable was introduced in
     Symfony 5.3.
 
+.. code-block:: xml
+
+    <!-- phpunit.xml.dist -->
+
+        <!-- ... -->
+        <server name="SYMFONY_PHPUNIT_REQUIRE" value="phpspec/prophecy-phpunit"/>
+        <!-- It is also possible to require a specific version as in composer.json -->
+        <server name="SYMFONY_PHPUNIT_REQUIRE" value="phpspec/prophecy-phpunit:^1.0"/>
+
 Code Coverage Listener
 ----------------------
 
