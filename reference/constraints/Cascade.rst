@@ -6,9 +6,10 @@ Cascade
     The :class:`Symfony\\Component\\Validator\\Constraints\\Cascade` was
     introduced in Symfony 5.2 and requires PHP 7.4.
 
-The Cascade constraint is used to validate a whole class. It allows to
-omit to add the :doc:`/reference/constraints/Valid` constraint on each
-child object of your class you want to validate.
+The Cascade constraint is used to validate a whole class, including all the
+objects that might be stored in its properties. Thanks to this constraint,
+you don't need to add the :doc:`/reference/constraints/Valid` constraint on
+every child object that you want to validate in your class.
 
 ==========  ===================================================================
 Applies to  :ref:`class <validation-class-target>`
@@ -20,7 +21,7 @@ Basic Usage
 
 In the following example, the
 :class:`Symfony\\Component\\Validator\\Constraints\\Cascade` constraint
-will tell the validator to validate all fields of the class, including
+will tell the validator to validate all properties of the class, including
 constraints that are set in the child classes ``BookMetadata`` and
 ``Author``:
 
