@@ -47,8 +47,9 @@ the word "PURGE" is a convention, technically this can be any string) instead
 of ``GET`` and make the cache proxy detect this and remove the data from the
 cache instead of going to the application to get a response.
 
-Here is how you can configure the Symfony reverse proxy (See :doc:`/http_cache`)
-to support the ``PURGE`` HTTP method::
+Here is how you can configure the :ref:`Symfony reverse proxy <symfony-gateway-cache>`
+to support the ``PURGE`` HTTP method. First create a caching kernel that overrides the
+:method:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache::invalidate` method::
 
     // src/CacheKernel.php
     namespace App;
@@ -83,6 +84,58 @@ to support the ``PURGE`` HTTP method::
             return $response;
         }
     }
+
+Then, register the class as a service that :doc:`decorates </service_container/service_decoration>`
+``http_cache``::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\CacheKernel:
+                decorates: http_cache
+                arguments:
+                    - '@kernel'
+                    - '@http_cache.store'
+                    - '@?esi'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <service id="App\CacheKernel" decorates="http_cache">
+                <argument type="service" id="kernel"/>
+                <argument type="service" id="http_cache.store"/>
+                <argument type="service" id="esi" on-invalid="null"/>
+            </service>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\CacheKernel;
+
+        return function (ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
+
+            $services->set(CacheKernel::class)
+                ->decorate('http_cache')
+                ->args([
+                    service('kernel'),
+                    service('http_cache.store'),
+                    service('esi')->nullOnInvalid(),
+                ])
+            ;
+        };
 
 .. caution::
 
