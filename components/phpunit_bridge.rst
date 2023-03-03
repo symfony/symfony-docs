@@ -938,18 +938,27 @@ If you have installed the bridge through Composer, you can run it by calling e.g
     then set the ``SYMFONY_PHPUNIT_REMOVE`` env var to ``symfony/yaml``.
 
     It's also possible to set this env var in the ``phpunit.xml.dist`` file.
-    
+
 .. tip::
 
     It is also possible to require additional packages that will be installed along
-    the rest of the needed PHPUnit packages using the ``SYMFONY_PHPUNIT_REQUIRE``
+    with the rest of the needed PHPUnit packages using the ``SYMFONY_PHPUNIT_REQUIRE``
     env variable. This is specially useful for installing PHPUnit plugins without
-    having to add them to your main ``composer.json`` file.
+    having to add them to your main ``composer.json`` file. The required packages
+    need to be separated with a space.
 
-.. versionadded:: 5.3
+    .. code-block:: xml
 
-    The ``SYMFONY_PHPUNIT_REQUIRE`` env variable was introduced in
-    Symfony 5.3.
+        <!-- phpunit.xml.dist -->
+        <!-- ... -->
+        <php>
+            <env name="SYMFONY_PHPUNIT_REQUIRE" value="vendor/name:^1.2 vendor/name2:^3"/>
+        </php>
+
+    .. versionadded:: 5.3
+
+        The ``SYMFONY_PHPUNIT_REQUIRE`` env variable was introduced in
+        Symfony 5.3.
 
 Code Coverage Listener
 ----------------------
