@@ -503,7 +503,7 @@ a Symfony service for the connection to the Redis server:
                     # - { 'prefix': 'my_prefix', 'ttl': 600 }
 
             Redis:
-                # you can also use \RedisArray, \RedisCluster or \Predis\Client classes
+                # you can also use \RedisArray, \RedisCluster, \Relay\Relay or \Predis\Client classes
                 class: Redis
                 calls:
                     - connect:
@@ -526,7 +526,7 @@ a Symfony service for the connection to the Redis server:
             xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-                <!-- you can also use \RedisArray, \RedisCluster or \Predis\Client classes -->
+                <!-- you can also use \RedisArray, \RedisCluster, \Relay\Relay or \Predis\Client classes -->
                 <service id="Redis" class="Redis">
                     <call method="connect">
                         <argument>%env(REDIS_HOST)%</argument>
@@ -565,7 +565,7 @@ a Symfony service for the connection to the Redis server:
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler;
 
         $container
-            // you can also use \RedisArray, \RedisCluster or \Predis\Client classes
+            // you can also use \RedisArray, \RedisCluster, \Relay\Relay or \Predis\Client classes
             ->register('Redis', \Redis::class)
             ->addMethodCall('connect', ['%env(REDIS_HOST)%', '%env(int:REDIS_PORT)%'])
             // uncomment the following if your Redis server requires a password:
