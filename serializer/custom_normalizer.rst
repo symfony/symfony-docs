@@ -23,14 +23,13 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
     use App\Entity\Topic;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-    use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
     class TopicNormalizer implements NormalizerInterface
     {
         private $router;
         private $normalizer;
 
-        public function __construct(UrlGeneratorInterface $router, ObjectNormalizer $normalizer)
+        public function __construct(UrlGeneratorInterface $router, NormalizerInterface $normalizer)
         {
             $this->router = $router;
             $this->normalizer = $normalizer;
