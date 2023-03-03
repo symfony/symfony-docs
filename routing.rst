@@ -949,11 +949,11 @@ A common routing need is to convert the value stored in some parameter (e.g. an
 integer acting as the user ID) into another value (e.g. the object that
 represents the user). This feature is called a "param converter".
 
-To add support for "param converters" we need SensioFrameworkExtraBundle:
+.. versionadded:: 6.2
 
-.. code-block:: terminal
-
-    $ composer require sensio/framework-extra-bundle
+    Starting from Symfony 6.2, route param conversion is a built-in feature.
+    In previous Symfony versions you had to install the package
+    ``sensio/framework-extra-bundle`` before using this feature.
 
 Now, keep the previous route configuration, but change the arguments of the
 controller action. Instead of ``string $slug``, add ``BlogPost $post``::
@@ -984,8 +984,9 @@ this case), the "param converter" makes a database request to find the object
 using the request parameters (``slug`` in this case). If no object is found,
 Symfony generates a 404 response automatically.
 
-Read the `full param converter documentation`_ to learn about the converters
-provided by Symfony and how to configure them.
+Check out the `Doctrine param conversion documentation <doctrine-entity-value-resolver>`_
+to learn about the ``#[MapEntity]`` attribute that can be used to customize the
+database queries used to fetch the object from the route parameter.
 
 Special Parameters
 ~~~~~~~~~~~~~~~~~~
@@ -2672,5 +2673,4 @@ Learn more about Routing
 
 .. _`PHP regular expressions`: https://www.php.net/manual/en/book.pcre.php
 .. _`PCRE Unicode properties`: https://www.php.net/manual/en/regexp.reference.unicode.php
-.. _`full param converter documentation`: https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/converters.html
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
