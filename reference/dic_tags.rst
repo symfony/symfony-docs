@@ -1004,9 +1004,11 @@ and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`.
 
 For more details, see :doc:`/serializer`.
 
-The priorities of the default normalizers can be found in the
-:method:`Symfony\\Bundle\\FrameworkBundle\\DependencyInjection\\FrameworkExtension::registerSerializerConfiguration`
-method.
+Run the following command to check the priorities of the default normalizers:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:container --tag serializer.normalizer
 
 .. _dic-tags-translation-loader:
 

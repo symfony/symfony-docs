@@ -919,9 +919,18 @@ If you have installed the bridge through Composer, you can run it by calling e.g
 .. tip::
 
     It is also possible to require additional packages that will be installed along
-    the rest of the needed PHPUnit packages using the ``SYMFONY_PHPUNIT_REQUIRE``
+    with the rest of the needed PHPUnit packages using the ``SYMFONY_PHPUNIT_REQUIRE``
     env variable. This is specially useful for installing PHPUnit plugins without
-    having to add them to your main ``composer.json`` file.
+    having to add them to your main ``composer.json`` file. The required packages
+    need to be separated with a space.
+
+    .. code-block:: xml
+
+        <!-- phpunit.xml.dist -->
+        <!-- ... -->
+        <php>
+            <env name="SYMFONY_PHPUNIT_REQUIRE" value="vendor/name:^1.2 vendor/name2:^3"/>
+        </php>
 
 Code Coverage Listener
 ----------------------
