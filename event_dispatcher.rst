@@ -191,6 +191,39 @@ You can add multiple ``#[AsEventListener()]`` attributes to configure different 
         }
     }
 
+:class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener`
+can also be applied to methods directly::
+
+    namespace App\EventListener;
+
+    use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+
+    final class MyMultiListener
+    {
+        #[AsEventListener()]
+        public function onCustomEvent(CustomEvent $event): void
+        {
+            // ...
+        }
+
+        #[AsEventListener(event: 'foo', priority: 42)]
+        public function onFoo(): void
+        {
+            // ...
+        }
+
+        #[AsEventListener(event: 'bar')]
+        public function onBarEvent(): void
+        {
+            // ...
+        }
+    }
+
+.. note::
+
+    Note that the attribute doesn't require its ``event`` parameter to be set
+    if the method already type-hints the expected event.
+
 .. _events-subscriber:
 
 Creating an Event Subscriber
