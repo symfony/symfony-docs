@@ -221,9 +221,8 @@ can also be applied to methods directly::
 
 .. note::
 
-    You can notice that the attribute doesn't require its ``event``
-    parameter to be set if the method already type-hints the
-    expected event.
+    Note that the attribute doesn't require its ``event`` parameter to be set
+    if the method already type-hints the expected event.
 
 .. _events-subscriber:
 
