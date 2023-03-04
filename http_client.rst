@@ -627,6 +627,11 @@ according to the ``multipart/form-data`` content-type. The
         'body' => $formData->bodyToIterable(),
     ]);
 
+By default, :class:`Symfony\\Component\\Mime\\Part\\Multipart\\FormDataPart`
+will transfer file uploads in binary encoding. But you can enforce Base64::
+
+    DataPart::fromPath('/path/to/uploaded/file', null, null, 'base64')
+
 .. tip::
 
     When using multidimensional arrays the :class:`Symfony\\Component\\Mime\\Part\\Multipart\\FormDataPart`
