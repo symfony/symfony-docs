@@ -178,10 +178,30 @@ Listeners receive a
         // gets the signal number
         $signal = $event->getHandlingSignal();
 
+        // sets the exit code
+        $event->setExitCode(0);
+
         if (\SIGINT === $signal) {
             echo "bye bye!";
         }
     });
+
+It is also possible to abort the exit if you want the command to continue its
+execution even after the event has been dispatched, thanks to the
+:method:`Symfony\\Component\\Console\\Event\\ConsoleSignalEvent::abortExit`
+method::
+
+    use Symfony\Component\Console\ConsoleEvents;
+    use Symfony\Component\Console\Event\ConsoleSignalEvent;
+
+    $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
+        $event->abortExit();
+    });
+
+.. versionadded:: 6.3
+
+    The ``setExitCode()``, ``getExitCode()`` and ``abortExit()`` methods were introduced
+    in Symfony 6.3.
 
 .. tip::
 
@@ -208,13 +228,17 @@ handle signals themselves. To do so, implement the
             return [\SIGINT, \SIGTERM];
         }
 
-        public function handleSignal(int $signal): void
+        public function handleSignal(int $signal): int|false
         {
             if (\SIGINT === $signal) {
                 // ...
             }
 
             // ...
+
+            // return an integer to set the exit code, or
+            // false to continue normal execution
+            return 0;
         }
     }
 
@@ -227,6 +251,10 @@ handle all signals e.g. to do some tasks before terminating the command.
     In Symfony versions previous to 6.3, all signals (except ``SIGUSR1`` and
     ``SIGUSR2``) would terminate the script by calling ``exit(0)``. Starting
     from Symfony 6.3, no more signal is automatically calling ``exit(0)``.
+
+.. deprecated:: 6.3
+
+    Not returning a value in ``handleSignal()`` is deprecated since Symfony 6.3.
 
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
 .. _`Signals`: https://en.wikipedia.org/wiki/Signal_(IPC)
