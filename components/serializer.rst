@@ -465,6 +465,8 @@ If some serialization groups are set, only attributes allowed by those groups ca
 
 As for groups, attributes can be selected during both the serialization and deserialization process.
 
+.. _serializer_ignoring-attributes:
+
 Ignoring Attributes
 -------------------
 
@@ -676,6 +678,8 @@ processes::
 
     $anne = $normalizer->denormalize(['first_name' => 'Anne'], 'Person');
     // Person object with firstName: 'Anne'
+
+.. _serializer_name-conversion:
 
 Configure name conversion using metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1436,6 +1440,8 @@ having unique identifiers::
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
 
+.. _serializer_handling-serialization-depth:
+
 Handling Serialization Depth
 ----------------------------
 
@@ -1750,6 +1756,8 @@ the type of the property is ``int``, an :class:`Symfony\\Component\\Serializer\\
 will be thrown. The type enforcement of the properties can be disabled by setting
 the serializer context option ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT``
 to ``true``.
+
+.. _serializer_interfaces-and-abstract-classes:
 
 Serializing Interfaces and Abstract Classes
 -------------------------------------------

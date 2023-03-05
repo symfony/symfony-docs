@@ -243,6 +243,8 @@ service type to a service.
     The ``key`` attribute can be omitted if the service name internally is the
     same as in the service container.
 
+.. _service-subscribers-locators_defining-service-locator:
+
 Defining a Service Locator
 --------------------------
 
@@ -694,6 +696,8 @@ attribute to the locator service defining the name of this custom method:
     Since code should not be responsible for defining how the locators are
     going to be used, a configuration key (``key`` in the example above) must
     be set so the custom method may be called as a fallback.
+
+.. _service-subscribers-service-subscriber-trait:
 
 Service Subscriber Trait
 ------------------------

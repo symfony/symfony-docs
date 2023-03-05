@@ -398,6 +398,8 @@ dealing with the ``TransformerInterface``.
 
     The support of union and intersection types was introduced in Symfony 5.4.
 
+.. _autowiring-multiple-implementations-same-type:
+
 Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 
