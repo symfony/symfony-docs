@@ -654,16 +654,15 @@ another given base URI::
 Using a HTML5 Parser
 ~~~~~~~~~~~~~~~~~~~~
 
-You can specify to the :class:`Symfony\\Component\\DomCrawler\\Crawler` to use
-an HTML5 parser when instantiating it by setting the ``useHtml5Parser`` constructor
-argument to ``true``::
+If you need the :class:`Symfony\\Component\\DomCrawler\\Crawler` to use an HTML5
+parser, set its ``useHtml5Parser`` constructor argument to ``true``::
 
     use Symfony\Component\DomCrawler\Crawler;
 
     $crawler = new Crawler(null, $uri, useHtml5Parser: true);
 
-By doing do, the crawler will use the parser from the `masterminds/html5`_ library internally to parse
-documents.
+By doing do, the crawler will use the HTML5 parser provided by the `masterminds/html5`_
+library to parse the documents.
 
 .. versionadded:: 6.3
 
