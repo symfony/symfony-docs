@@ -58,7 +58,6 @@ following:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Author
         {
             #[Assert\Collection(
