@@ -1043,6 +1043,12 @@ using for example OpenSSL or obtained at an official Certificate Authority (CA).
 The email recipient must have the CA certificate in the list of trusted issuers
 in order to verify the signature.
 
+.. caution::
+
+    If you use message signature, sending to ``Bcc`` will be removed from the
+    message. If you need to send a message to multiple recipients, you need 
+    to compute a new signature for each recipient.
+
 S/MIME Signer
 .............
 
