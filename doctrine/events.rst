@@ -164,7 +164,7 @@ listener in the Symfony application by creating a new service for it and
 
 .. configuration-block::
 
-    .. code-block:: attribute
+    .. code-block:: php-attributes
 
         // src/App/EventListener/SearchIndexer.php
         namespace App\EventListener;

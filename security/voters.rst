@@ -66,42 +66,71 @@ Setup: Checking for Access in a Controller
 
 Suppose you have a ``Post`` object and you need to decide whether or not the current
 user can *edit* or *view* the object. In your controller, you'll check access with
-code like this::
+code like this:
 
-    // src/Controller/PostController.php
+.. configuration-block::
 
-    // ...
-    class PostController extends AbstractController
-    {
-        #[Route('/posts/{id}', name: 'post_show')]
-        public function show($id): Response
+    .. code-block:: php-attributes
+
+        // src/Controller/PostController.php
+
+        // ...
+        use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+        class PostController extends AbstractController
         {
-            // get a Post object - e.g. query for it
-            $post = ...;
-
+            #[Route('/posts/{id}', name: 'post_show')]
             // check for "view" access: calls all voters
-            $this->denyAccessUnlessGranted('view', $post);
+            #[IsGranted('show', 'post')]
+            public function show(Post $post): Response
+            {
+                // ...
+            }
 
-            // ...
-        }
-
-        #[Route('/posts/{id}/edit', name: 'post_edit')]
-        public function edit($id): Response
-        {
-            // get a Post object - e.g. query for it
-            $post = ...;
-
+            #[Route('/posts/{id}/edit', name: 'post_edit')]
             // check for "edit" access: calls all voters
-            $this->denyAccessUnlessGranted('edit', $post);
-
-            // ...
+            #[IsGranted('edit', 'post')]
+            public function edit(Post $post): Response
+            {
+                // ...
+            }
         }
-    }
 
-The ``denyAccessUnlessGranted()`` method (and also the ``isGranted()`` method)
+    .. code-block:: php
+
+        // src/Controller/PostController.php
+
+        // ...
+
+        class PostController extends AbstractController
+        {
+            #[Route('/posts/{id}', name: 'post_show')]
+            public function show(Post $post): Response
+            {
+                // check for "view" access: calls all voters
+                $this->denyAccessUnlessGranted('view', $post);
+
+                // ...
+            }
+
+            #[Route('/posts/{id}/edit', name: 'post_edit')]
+            public function edit(Post $post): Response
+            {
+                // check for "edit" access: calls all voters
+                $this->denyAccessUnlessGranted('edit', $post);
+
+                // ...
+            }
+        }
+
+The ``#[IsGranted()]`` attribute or ``denyAccessUnlessGranted()`` method (and also the ``isGranted()`` method)
 calls out to the "voter" system. Right now, no voters will vote on whether or not
 the user can "view" or "edit" a ``Post``. But you can create your *own* voter that
 decides this using whatever logic you want.
+
+.. versionadded:: 6.2
+
+    The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
 
 Creating the custom Voter
 -------------------------
@@ -423,3 +452,35 @@ must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Ac
                 // ...
             ;
         };
+
+.. _security-voters-change-message-and-status-code:
+
+Changing the message and status code returned
+---------------------------------------------
+
+By default, the ``#[IsGranted]`` attribute will throw a
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
+and return an http **403** status code with **Access Denied** as message.
+
+However, you can change this behavior by specifying the message and status code returned::
+
+    // src/Controller/PostController.php
+
+    // ...
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    class PostController extends AbstractController
+    {
+        #[Route('/posts/{id}', name: 'post_show')]
+        #[IsGranted('show', 'post', 'Post not found', 404)]
+        public function show(Post $post): Response
+        {
+            // ...
+        }
+    }
+
+.. tip::
+
+    If the status code is different than 403, a
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
+    will be throw instead.
