@@ -164,6 +164,23 @@ listener in the Symfony application by creating a new service for it and
 
 .. configuration-block::
 
+    .. code-block:: attribute
+
+        // src/App/EventListener/SearchIndexer.php
+        namespace App\EventListener;
+
+        use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
+        use Doctrine\ORM\Event\LifecycleEventArgs;
+
+        #[AsDoctrineListener('postPersist'/*, 500, 'default'*/)]
+        class SearchIndexer
+        {
+            public function postPersist(LifecycleEventArgs $event): void
+            {
+                // ...
+            }
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
@@ -233,6 +250,11 @@ listener in the Symfony application by creating a new service for it and
                 ])
             ;
         };
+
+.. versionadded:: 2.7.2
+
+    The :class:`Doctrine\\Bundle\\DoctrineBundle\\Attribute\\AsDoctrineListener`
+    attribute was introduced in DoctrineBundle 2.7.2.
 
 .. tip::
 

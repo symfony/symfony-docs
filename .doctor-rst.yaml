@@ -81,6 +81,7 @@ whitelist:
         - '#. The most important config file is ``app/config/services.yml``, which now is'
         - 'The bin/console Command'
         - '.. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection'
+        - '.. versionadded:: 2.7.2' # Doctrine
         - '.. versionadded:: 1.9.0' # Encore
         - '.. versionadded:: 1.11' # Messenger (Middleware / DoctrineBundle)
         - '.. versionadded:: 1.18' # Flex in setup/upgrade_minor.rst
