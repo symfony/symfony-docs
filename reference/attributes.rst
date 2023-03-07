@@ -27,9 +27,12 @@ Contracts
 Dependency Injection
 ~~~~~~~~~~~~~~~~~~~~
 
+* :doc:`AsDecorator </service_container/service_decoration>`
 * :ref:`AsTaggedItem <tags_as-tagged-item>`
 * :ref:`Autoconfigure <lazy-services_configuration>`
 * :ref:`AutoconfigureTag <di-instanceof>`
+* :ref:`Autowire <autowire-attribute>`
+* :doc:`MapDecorated </service_container/service_decoration>`
 * :ref:`TaggedIterator <tags_reference-tagged-services>`
 * :ref:`TaggedLocator <service-subscribers-locators_defining-service-locator>`
 * :ref:`Target <autowiring-multiple-implementations-same-type>`
@@ -40,10 +43,17 @@ EventDispatcher
 
 * :ref:`AsEventListener <event-dispatcher_event-listener-attributes>`
 
+FrameworkBundle
+~~~~~~~~~~~~~~~
+
+* :ref:`AsRoutingConditionService <routing-matching-expressions>`
+
 HttpKernel
 ~~~~~~~~~~
 
 * :doc:`AsController </controller/service>`
+* :ref:`Cache <http-cache-expiration-intro>`
+* :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapDateTime`
 
 Messenger
 ~~~~~~~~~
@@ -59,6 +69,7 @@ Security
 ~~~~~~~~
 
 * :ref:`CurrentUser <security-json-login>`
+* :ref:`IsGranted <security-securing-controller-annotations>`
 
 Serializer
 ~~~~~~~~~~
@@ -69,9 +80,17 @@ Serializer
 * :ref:`Ignore <serializer_ignoring-attributes>`
 * :ref:`MaxDepth <serializer_handling-serialization-depth>`
 * :ref:`SerializedName <serializer_name-conversion>`
+* :ref:`SerializedPath <serializer-enabling-metadata-cache>`
+
+Twig
+~~~~
+
+* :ref:`Template <templates-template-attribute>`
 
 Validator
 ~~~~~~~~~
 
 Each validation constraint comes with a PHP attribute. See
 :doc:`/reference/constraints` for a full list of validation constraints.
+
+* :doc:`HasNamedArgument </validation/custom_constraint>`
