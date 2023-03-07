@@ -217,6 +217,8 @@ available in the ``configure()`` method::
         }
     }
 
+.. _console_registering-the-command:
+
 Registering the Command
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -548,13 +550,13 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
         $application->setAutoExit(false);
 
         $tester = new ApplicationTester($application);
-        
+
 
 .. caution::
 
     When testing ``InputOption::VALUE_NONE`` command options, you must pass an
     empty value to them::
-    
+
         $commandTester = new CommandTester($command);
         $commandTester->execute(['--some-option' => '']);
 

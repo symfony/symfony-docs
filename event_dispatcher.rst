@@ -143,6 +143,8 @@ listener class:
        method (which makes event listeners invokable);
     #. If the ``__invoke()`` method is not defined either, throw an exception.
 
+.. _event-dispatcher_event-listener-attributes:
+
 Defining Event Listeners with PHP Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
