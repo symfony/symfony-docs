@@ -29,7 +29,6 @@ The following constraints ensure that:
 
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Student
         {
             #[Assert\AtLeastOneOf([

@@ -44,7 +44,6 @@ You can validate each of these constraints sequentially to solve these issues:
         use App\Validator\Constraints as AcmeAssert;
         use Symfony\Component\Validator\Constraints as Assert;
 
-        // IMPORTANT: nested attributes requires PHP 8.1 or higher
         class Place
         {
             #[Assert\Sequentially([
