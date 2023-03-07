@@ -222,7 +222,7 @@ OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a   
     revokes your App Passwords when you change your Google Account password and then
     you need to generate a new one.
     Using other methods (like ``XOAUTH2`` or the ``Gmail API``) are not supported currently.
-    You should use Gmail for testing purposes only and use a real provider in production. 
+    You should use Gmail for testing purposes only and use a real provider in production.
 
 .. tip::
 
@@ -1046,7 +1046,7 @@ in order to verify the signature.
 .. caution::
 
     If you use message signature, sending to ``Bcc`` will be removed from the
-    message. If you need to send a message to multiple recipients, you need 
+    message. If you need to send a message to multiple recipients, you need
     to compute a new signature for each recipient.
 
 S/MIME Signer
@@ -1560,7 +1560,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
             $client->request('GET', '/mail/send');
             $this->assertResponseIsSuccessful();
 
-            $this->assertEmailCount(1);
+            $this->assertEmailCount(1); // use assertQueuedEmailCount() when using Messenger
 
             $email = $this->getMailerMessage();
 
@@ -1583,7 +1583,5 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`App Password`: https://support.google.com/accounts/answer/185833
 
-.. tip::
 
-    If you're using Messenger you should use ``$this->assertQueuedEmailCount(1);`` instead.
-    
+
