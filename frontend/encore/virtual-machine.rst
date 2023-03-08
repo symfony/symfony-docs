@@ -93,7 +93,7 @@ connections:
     otherwise other computers can have access to it.
 
 Fix "Invalid Host header" Issue
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Webpack will respond ``Invalid Host header`` when trying to access files from
 the dev-server. To fix this, set the ``allowedHosts`` option:

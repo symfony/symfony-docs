@@ -2,7 +2,7 @@
    single: Forms; Fields; TelType
 
 TelType Field
-===============
+=============
 
 The ``TelType`` field is a text field that is rendered using the HTML5
 ``<input type="tel">`` tag. Following the recommended HTML5 behavior, the value
