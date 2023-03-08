@@ -171,12 +171,6 @@ recommended to define their mapping using XML files stored in
 :doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
 This is not possible when using annotations/attributes to define the mapping.
 
-.. caution::
-
-    The recommended bundle structure was changed in Symfony 5, read the
-    `Symfony 4.4 bundle documentation`_ for information about the old
-    structure.
-
 Tests
 -----
 
