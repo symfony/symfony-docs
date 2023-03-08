@@ -984,7 +984,7 @@ this case), the "param converter" makes a database request to find the object
 using the request parameters (``slug`` in this case). If no object is found,
 Symfony generates a 404 response automatically.
 
-Check out the `Doctrine param conversion documentation <doctrine-entity-value-resolver>`_
+Check out the :ref:`Doctrine param conversion documentation <doctrine-entity-value-resolver>`
 to learn about the ``#[MapEntity]`` attribute that can be used to customize the
 database queries used to fetch the object from the route parameter.
 
