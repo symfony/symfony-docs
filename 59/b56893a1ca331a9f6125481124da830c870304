@@ -1,0 +1,49 @@
+---------------------------------------------------------------------------
+
+by GromNaN at 2022-03-16T18:58:50Z
+
+`buffer_size` for finger_crossed can be mentioned.
+https://github.com/symfony/recipes/blob/master/symfony/monolog-bundle/3.7/config/packages/monolog.yaml#L48
+
+---------------------------------------------------------------------------
+
+by kbond at 2022-05-03T13:17:12Z
+
+To clarify, this is handled automatically when consuming messenger messages, correct?
+
+---------------------------------------------------------------------------
+
+by Seldaek at 2022-05-03T13:30:58Z
+
+Yes I believe so as of https://github.com/symfony/symfony/pull/40761
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-11-09T14:55:24Z
+
+@GromNaN as early reviewer, do you see something else to add on this PR? thank you
+
+---------------------------------------------------------------------------
+
+by GromNaN at 2022-11-09T15:16:28Z
+
+All good. I'm wondering why this is not automatic.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-11-09T15:17:54Z
+
+Should be against `4.4`
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-11-09T15:32:12Z
+
+@OskarStark fair enough, will handle it soon :)
+thx @GromNaN for answer
+
+---------------------------------------------------------------------------
+
+by 94noni at 2023-03-06T15:12:50Z
+
+v4 is eol, thus this PR is reviewable as it is
