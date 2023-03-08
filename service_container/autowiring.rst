@@ -392,6 +392,8 @@ dealing with the ``TransformerInterface``.
             // ...
         }
 
+.. _autowiring-multiple-implementations-same-type:
+
 Dealing with Multiple Implementations of the Same Type
 ------------------------------------------------------
 

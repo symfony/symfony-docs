@@ -232,7 +232,7 @@ data.
 Context
 -------
 
-Many Serializer features can be configured :doc:`using a context </serializer#serializer-context>`.
+Many Serializer features can be configured :doc:`using a context </serializer#serializer_serializer-context>`.
 
 .. _component-serializer-attributes-groups:
 
@@ -432,6 +432,8 @@ If some serialization groups are set, only attributes allowed by those groups ca
 
 As for groups, attributes can be selected during both the serialization and deserialization process.
 
+.. _serializer_ignoring-attributes:
+
 Ignoring Attributes
 -------------------
 
@@ -627,6 +629,8 @@ processes::
 
     $anne = $normalizer->denormalize(['first_name' => 'Anne'], 'Person');
     // Person object with firstName: 'Anne'
+
+.. _serializer_name-conversion:
 
 Configure name conversion using metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1193,7 +1197,7 @@ Option          Description                                               Defaul
 Context Builders
 ----------------
 
-Instead of passing plain PHP arrays to the :ref:`serialization context <serializer-context>`,
+Instead of passing plain PHP arrays to the :ref:`serialization context <serializer_serializer-context>`,
 you can use "context builders" to define the context using a fluent interface::
 
     use Symfony\Component\Serializer\Context\Encoder\CsvEncoderContextBuilder;
@@ -1395,6 +1399,8 @@ having unique identifiers::
     $serializer = new Serializer([$normalizer], [$encoder]);
     var_dump($serializer->serialize($org, 'json'));
     // {"name":"Les-Tilleuls.coop","members":[{"name":"K\u00e9vin", organization: "Les-Tilleuls.coop"}]}
+
+.. _serializer_handling-serialization-depth:
 
 Handling Serialization Depth
 ----------------------------
@@ -1692,6 +1698,8 @@ the type of the property is ``int``, an :class:`Symfony\\Component\\Serializer\\
 will be thrown. The type enforcement of the properties can be disabled by setting
 the serializer context option ``ObjectNormalizer::DISABLE_TYPE_ENFORCEMENT``
 to ``true``.
+
+.. _serializer_interfaces-and-abstract-classes:
 
 Serializing Interfaces and Abstract Classes
 -------------------------------------------

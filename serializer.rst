@@ -90,7 +90,7 @@ possible to set the priority of the tag in order to decide the matching order.
     ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory
     usage and exposing internal details.
 
-.. _serializer-context:
+.. _serializer_serializer-context:
 
 Serializer Context
 ------------------

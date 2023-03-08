@@ -562,6 +562,8 @@ than one tag. You tag a service twice or more with the ``app.mail_transport``
 tag. The second ``foreach`` loop iterates over the ``app.mail_transport``
 tags set for the current service and gives you the attributes.
 
+.. _tags_reference-tagged-services:
+
 Reference Tagged Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1094,6 +1096,8 @@ array element. For example, to retrieve the ``handler_two`` handler::
                     ])
                 ;
             };
+
+.. _tags_as-tagged-item:
 
 The ``#[AsTaggedItem]`` attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

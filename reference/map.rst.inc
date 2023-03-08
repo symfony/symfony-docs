@@ -35,4 +35,5 @@ Others
 * :doc:`Configuring the Kernel </reference/configuration/kernel>`
 * :doc:`Twig Extensions (forms, filters, tags, etc) Reference </reference/twig_reference>`
 * :doc:`/reference/dic_tags`
+* :doc:`Symfony Attributes Overview </reference/attributes>`
 * :doc:`/reference/events`
