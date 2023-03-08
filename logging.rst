@@ -381,6 +381,15 @@ information to your log entries.
 
 See :doc:`/logging/processors` for details.
 
+Handling Logs in Long Running Processes
+---------------------------------------
+
+During long running processes, logs can be accumulated into Monolog and cause some
+buffer overflow, memory increase or even non logical logs. Monolog in-memory data
+can be cleared using the ``reset()`` method on a ``Monolog\Logger`` instance.
+This should typically be called between every job or task that a long running process
+is working through.
+
 Learn more
 ----------
 
