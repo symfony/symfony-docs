@@ -232,7 +232,7 @@ data.
 Context
 -------
 
-Many Serializer features can be configured :doc:`using a context </serializer#serializer-context>`.
+Many Serializer features can be configured :doc:`using a context </serializer#serializer_serializer-context>`.
 
 .. _component-serializer-attributes-groups:
 
@@ -1093,7 +1093,7 @@ always as a collection.
     changed by adding the ``\XML_COMMENT_NODE`` option to the ``XmlEncoder::ENCODER_IGNORED_NODE_TYPES``
     key of the ``$defaultContext`` of the ``XmlEncoder`` constructor or
     directly to the ``$context`` argument of the ``encode()`` method::
-    
+
         $xmlEncoder->encode($array, 'xml', [XmlEncoder::ENCODER_IGNORED_NODE_TYPES => [\XML_COMMENT_NODE]]);
 
 The ``XmlEncoder`` Context Options
@@ -1192,7 +1192,7 @@ Option          Description                                               Defaul
 Context Builders
 ----------------
 
-Instead of passing plain PHP arrays to the :ref:`serialization context <serializer-context>`,
+Instead of passing plain PHP arrays to the :ref:`serialization context <serializer_serializer-context>`,
 you can use "context builders" to define the context using a fluent interface::
 
     use Symfony\Component\Serializer\Context\Encoder\CsvEncoderContextBuilder;
