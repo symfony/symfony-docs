@@ -313,7 +313,7 @@ Field Variables
     faster to use the :ref:`selectedchoice <form-twig-selectedchoice>` test.
 
 Accessing Form Choice Data
-...........................
+..........................
 
 The ``form.vars`` variable of each choice entry holds data such as whether the
 choice is selected or not. If you need to get the full list of choices data and

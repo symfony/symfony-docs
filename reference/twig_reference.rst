@@ -127,7 +127,7 @@ and :ref:`reference-assets-json-manifest-path` configuration options.
     Read more about :ref:`linking to web assets from templates <templates-link-to-assets>`.
 
 asset_version
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~
 
 .. code-block:: twig
 

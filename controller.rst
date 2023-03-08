@@ -19,7 +19,7 @@ to render the content of a page.
    single: Controller; Basic example
 
 A Basic Controller
--------------------
+------------------
 
 While a controller can be any PHP callable (function, method on an object,
 or a ``Closure``), a controller is usually a method inside a controller
