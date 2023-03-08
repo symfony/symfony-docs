@@ -167,9 +167,15 @@ Doctrine Entities/Documents
 
 If the bundle includes Doctrine ORM entities and/or ODM documents, it's
 recommended to define their mapping using XML files stored in
-``Resources/config/doctrine/``. This allows to override that mapping using the
+``config/doctrine/``. This allows to override that mapping using the
 :doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
 This is not possible when using annotations/attributes to define the mapping.
+
+.. caution::
+
+    The recommended bundle structure was changed in Symfony 5, read the
+    `Symfony 4.4 bundle documentation`_ for information about the old
+    structure.
 
 Tests
 -----
@@ -560,3 +566,4 @@ Learn more
 .. _`valid license identifier`: https://spdx.org/licenses/
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
 .. _`Travis CI`: https://docs.travis-ci.com/
+.. _`Symfony 4.4 bundle documentation`: https://symfony.com/doc/4.4/bundles.html#bundle-directory-structure
