@@ -664,7 +664,7 @@ using the ``MapEntity`` attribute::
 .. tip::
 
     When enabled globally, it's possible to disabled the behavior on a specific
-    controller, by using the ``MapEntity`` set to ``disabled``.
+    controller, by using the ``MapEntity`` set to ``disabled``::
 
         public function show(
             #[CurrentUser]
