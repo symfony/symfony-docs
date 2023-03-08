@@ -1582,6 +1582,3 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`App Password`: https://support.google.com/accounts/answer/185833
-
-
-
