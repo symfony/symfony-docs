@@ -240,6 +240,8 @@ each time you ask for it.
     If you'd prefer to manually wire your service, that's totally possible: see
     :ref:`services-explicitly-configure-wire-services`.
 
+.. _service-container_limiting-to-env:
+
 Limiting Services to a specific Symfony Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

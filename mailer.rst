@@ -1033,6 +1033,12 @@ using for example OpenSSL or obtained at an official Certificate Authority (CA).
 The email recipient must have the CA certificate in the list of trusted issuers
 in order to verify the signature.
 
+.. caution::
+
+    If you use message signature, sending to ``Bcc`` will be removed from the
+    message. If you need to send a message to multiple recipients, you need
+    to compute a new signature for each recipient.
+
 S/MIME Signer
 .............
 
@@ -1727,7 +1733,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
             $client->request('GET', '/mail/send');
             $this->assertResponseIsSuccessful();
 
-            $this->assertEmailCount(1);
+            $this->assertEmailCount(1); // use assertQueuedEmailCount() when using Messenger
 
             $email = $this->getMailerMessage();
 
@@ -1749,3 +1755,6 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`App Password`: https://support.google.com/accounts/answer/185833
+
+
+
