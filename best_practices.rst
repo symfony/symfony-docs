@@ -229,7 +229,7 @@ important parts of your application.
 .. _best-practice-controller-annotations:
 
 Use Attributes or Annotations to Configure Routing, Caching, and Security
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using attributes or annotations for routing, caching, and security simplifies
 configuration. You don't need to browse several files created with different
@@ -445,7 +445,7 @@ specific tests for each page.
 .. _hardcode-urls-in-a-functional-test:
 
 Hard-code URLs in a Functional Test
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In Symfony applications, it's recommended to :ref:`generate URLs <routing-generating-urls>`
 using routes to automatically update all links when a URL changes. However, if a

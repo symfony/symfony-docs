@@ -413,7 +413,7 @@ If ``true``, users are always redirected to the default target path regardless
 of the previous URL that was stored in the session.
 
 default_target_path
-....................
+...................
 
 **type**: ``string`` **default**: ``/``
 

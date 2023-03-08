@@ -1069,7 +1069,7 @@ context to pass in these options using the key ``json_encode_options`` or
     $this->serializer->serialize($data, 'json', ['json_encode_options' => \JSON_PRESERVE_ZERO_FRACTION]);
 
 The ``CsvEncoder``
-~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 The ``CsvEncoder`` encodes to and decodes from CSV.
 

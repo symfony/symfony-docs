@@ -3,7 +3,7 @@
    single: Components; Runtime
 
 The Runtime Component
-======================
+=====================
 
     The Runtime Component decouples the bootstrapping logic from any global state
     to make sure the application can run with runtimes like PHP-PM, ReactPHP,

@@ -1227,7 +1227,7 @@ The value of this option is an associative array of ``domain => IP address``
 (e.g ``['symfony.com' => '46.137.106.254', ...]``).
 
 retry_strategy
-...............
+..............
 
 **type**: ``string``
 

@@ -74,7 +74,7 @@ Now, require bootstrap from any of your JavaScript files:
     });
 
 Using Bootstrap with Turbo
----------------------------
+--------------------------
 
 If you are using bootstrap with Turbo Drive, to allow your JavaScript to load on each page change,
 wrap the initialization in a ``turbo:load`` event listener:
