@@ -70,7 +70,7 @@ method can be safely called repeatedly, even if the lock is already acquired.
     third argument of the ``createLock()`` method to ``false``.
 
 Serializing Locks
-------------------
+-----------------
 
 The :class:`Symfony\\Component\\Lock\\Key` contains the state of the
 :class:`Symfony\\Component\\Lock\\Lock` and can be serialized. This

@@ -614,7 +614,7 @@ Checkout `the dedicated API Platform documentation`_ to learn more about
 its Mercure support.
 
 Testing
---------
+-------
 
 During unit testing it's usually not needed to send updates to Mercure.
 
