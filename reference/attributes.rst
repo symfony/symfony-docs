@@ -4,9 +4,9 @@
 Symfony Attributes Overview
 ===========================
 
-Attributes are the successor of annotation since PHP 8. Attributes are native
+Attributes are the successor of annotations since PHP 8. Attributes are native
 to the language and Symfony takes full advantage of them across the framework
-ans its different components.
+and its different components.
 
 Doctrine Bridge
 ~~~~~~~~~~~~~~~
