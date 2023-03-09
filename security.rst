@@ -2456,15 +2456,17 @@ these voters is similar to the role-based access checks implemented in the
 previous chapters. Read :doc:`/security/voters` to learn how to implement
 your own voter.
 
-Checking to see if a User is Logged In (IS_AUTHENTICATED_FULLY)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _checking-to-see-if-a-user-is-logged-in-is-authenticated-fully:
+
+Checking to see if a User is Logged In
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you *only* want to check if a user is logged in (you don't care about roles),
 you have the following two options.
 
 Firstly, if you've given *every* user ``ROLE_USER``, you can check for that role.
 
-Secondly, you can use a special "attribute" in place of a role::
+Secondly, you can use the special "attribute" ``IS_AUTHENTICATED_FULLY`` in place of a role::
 
     // ...
 
