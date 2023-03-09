@@ -828,7 +828,7 @@ URLs of ``<a>`` elements:
         );
 
 Force/Allow Media URLs
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 Like :ref:`link URLs <html-sanitizer-link-url>`, you can also control the
 URLs of other media in the HTML. The following attributes are checked by
