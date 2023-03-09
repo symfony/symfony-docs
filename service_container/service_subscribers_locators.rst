@@ -12,6 +12,11 @@ instantiation of the services to be lazy. However, that's not possible using
 the explicit dependency injection since services are not all meant to
 be ``lazy`` (see :doc:`/service_container/lazy_services`).
 
+.. seealso::
+
+    Another way to inject services lazily is via a
+    :doc:`service closure </service_container/service_closures>`.
+
 This can typically be the case in your controllers, where you may inject several
 services in the constructor, but the action called only uses some of them.
 Another example are applications that implement the `Command pattern`_
