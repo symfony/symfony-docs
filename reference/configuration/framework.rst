@@ -3561,6 +3561,8 @@ Defines the kind of workflow that is going to be created, which can be either
 a normal workflow or a state machine. Read :doc:`this article </workflow/workflow-and-state-machine>`
 to know their differences.
 
+.. _framework_exceptions:
+
 exceptions
 ~~~~~~~~~~
 

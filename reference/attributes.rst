@@ -12,6 +12,7 @@ Doctrine Bridge
 ~~~~~~~~~~~~~~~
 
 * :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
+* :ref:`MapEntity <doctrine-entity-value-resolver>`
 
 Command
 ~~~~~~~
@@ -27,11 +28,13 @@ Contracts
 Dependency Injection
 ~~~~~~~~~~~~~~~~~~~~
 
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AsAlias`
 * :doc:`AsDecorator </service_container/service_decoration>`
 * :ref:`AsTaggedItem <tags_as-tagged-item>`
 * :ref:`Autoconfigure <lazy-services_configuration>`
 * :ref:`AutoconfigureTag <di-instanceof>`
 * :ref:`Autowire <autowire-attribute>`
+* :ref:`Exclude <service-psr4-loader>`
 * :doc:`MapDecorated </service_container/service_decoration>`
 * :ref:`TaggedIterator <tags_reference-tagged-services>`
 * :ref:`TaggedLocator <service-subscribers-locators_defining-service-locator>`
@@ -52,8 +55,12 @@ HttpKernel
 ~~~~~~~~~~
 
 * :doc:`AsController </controller/service>`
+* :class:`Symfony\\Component\\HttpKernel\\Attribute\\AsPinnedValueResolver`
 * :ref:`Cache <http-cache-expiration-intro>`
 * :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapDateTime`
+* :class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver`
+* :ref:`WithHttpStatus <framework_exceptions>`
+* :ref:`WithLogLevel <framework_exceptions>`
 
 Messenger
 ~~~~~~~~~
