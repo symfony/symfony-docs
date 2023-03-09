@@ -408,7 +408,7 @@ You can also use these functions:
         // Controller (using an alias):
         #[Route(condition: "service('route_checker').check(request)")]
         // Or without alias:
-        #[Route(condition: "service('Ap\\\Service\\\RouteChecker').check(request)")]
+        #[Route(condition: "service('App\\\Service\\\RouteChecker').check(request)")]
 
 .. versionadded:: 6.1
 
