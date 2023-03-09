@@ -19,6 +19,7 @@ using a processor::
     // src/Logger/SessionRequestProcessor.php
     namespace App\Logger;
 
+    use Monolog\LogRecord;
     use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
     use Symfony\Component\HttpFoundation\RequestStack;
 
