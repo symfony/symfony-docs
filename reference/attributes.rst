@@ -12,6 +12,7 @@ Doctrine Bridge
 ~~~~~~~~~~~~~~~
 
 * :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
+* :ref:`MapEntity <doctrine-entity-value-resolver>`
 
 Command
 ~~~~~~~
