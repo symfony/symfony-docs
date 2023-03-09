@@ -2431,6 +2431,18 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
           // ...
       }
 
+.. tip::
+
+    Using ``isGranted()`` checks authorization against the currently logged in user. If you need to check
+    against a user that is not the one logged in or if checking authorization when the user session is not
+    available in a CLI context (example: message queue, cronjob) ``userIsGranted()`` can be used to set the
+    target user explicitly.
+
+    .. versionadded:: 6.4
+
+        The :method:`Symfony\\Bundle\\SecurityBundle\\Security::userIsGranted`
+        method was introduced in Symfony 6.4.
+
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 Symfony will automatically pass the ``security.helper`` to your service
 thanks to autowiring and the ``Security`` type-hint.
