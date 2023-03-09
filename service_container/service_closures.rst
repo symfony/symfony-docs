@@ -4,10 +4,6 @@
 Service Closures
 ================
 
-.. versionadded:: 5.4
-
-    The ``service_closure()`` function was introduced in Symfony 5.4.
-
 This feature wraps the injected service into a closure allowing it to be
 lazily loaded when and if needed.
 This is useful if the service being injected is a bit heavy to instantiate
