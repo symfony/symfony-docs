@@ -560,4 +560,3 @@ Learn more
 .. _`valid license identifier`: https://spdx.org/licenses/
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
 .. _`Travis CI`: https://docs.travis-ci.com/
-.. _`Symfony 4.4 bundle documentation`: https://symfony.com/doc/4.4/bundles.html#bundle-directory-structure

@@ -1124,9 +1124,6 @@ These are parameters that you can configure:
 ``expiry_field`` (default ``expires_at``):
     The name of the field where to store the session lifetime.
 
-.. index::
-    single: Sessions, saving locale
-
 Migrating Between Session Handlers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
