@@ -53,7 +53,7 @@ HttpKernel
 
 * :doc:`AsController </controller/service>`
 * :ref:`Cache <http-cache-expiration-intro>`
-* :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapDateTime`
+* :ref:`MapDateTime <functionality-shipped-with-the-httpkernel>`
 
 Messenger
 ~~~~~~~~~

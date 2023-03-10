@@ -96,7 +96,8 @@ Symfony ships with the following value resolvers in the
 
     .. versionadded:: 6.1
 
-        The ``DateTimeValueResolver`` was introduced in Symfony 6.1.
+        The ``DateTimeValueResolver`` and the ``MapDateTime`` attribute were
+        introduced in Symfony 6.1.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestValueResolver`
     Injects the current ``Request`` if type-hinted with ``Request`` or a class
