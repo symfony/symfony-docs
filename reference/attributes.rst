@@ -28,7 +28,7 @@ Contracts
 Dependency Injection
 ~~~~~~~~~~~~~~~~~~~~
 
-* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AsAlias`
+* :ref:`AsAlias <services-alias>`
 * :doc:`AsDecorator </service_container/service_decoration>`
 * :ref:`AsTaggedItem <tags_as-tagged-item>`
 * :ref:`Autoconfigure <lazy-services_configuration>`
