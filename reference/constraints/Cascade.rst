@@ -87,4 +87,16 @@ Options
 
 The ``groups`` option is not available for this constraint.
 
+``exclude``
+~~~~~~~~~~~
+
+**type**: ``array`` | ``string`` **default**: ``null``
+
+This option can be used to exclude one or more properties from the
+cascade validation.
+
+.. versionadded:: 6.3
+
+    The ``exclude`` option was introduced in Symfony 6.3.
+
 .. include:: /reference/constraints/_payload-option.rst.inc
