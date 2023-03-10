@@ -851,7 +851,7 @@ The Serializer component provides several built-in normalizers:
 :class:`Symfony\\Component\\Serializer\\Normalizer\\BackedEnumNormalizer`
     This normalizer converts a \BackedEnum objects into strings or integers.
 
-    By default, it throw an exception when data is not belong to a backed enumeration. If you
+    By default, an exception is thrown when data is not a valid backed enumeration. If you
     want ``null`` instead, you can set the ``BackedEnumNormalizer::ALLOW_INVALID_VALUES`` option.
 
     .. versionadded:: 6.3
