@@ -100,6 +100,79 @@ create its object:
     the configured class name may be used by compiler passes and therefore
     should be set to a sensible value.
 
+Using the Class as Factory Itself
+---------------------------------
+
+When the static factory method is on the same class as the created instance,
+the class name can be omitted from the factory declaration.
+Let's suppose the ``NewsletterManager`` class has a ``create()`` method that needs
+to be called to create the object and needs a sender::
+
+    // src/Email/NewsletterManager.php
+    namespace App\Email;
+
+    // ...
+
+    class NewsletterManager
+    {
+        private string $sender;
+
+        public static function create(string $sender): self
+        {
+            $newsletterManager = new self();
+            $newsletterManager->sender = $sender;
+            // ...
+
+            return $newsletterManager;
+        }
+    }
+
+You can omit the class on the factory declaration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\Email\NewsletterManager:
+                factory: [null, 'create']
+                arguments:
+                    $sender: 'fabien@symfony.com'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Email\NewsletterManager">
+                    <factory method="create"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Email\NewsletterManager;
+
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
+
+            // Note that we are not using service()
+            $services->set(NewsletterManager::class)
+                ->factory([null, 'create']);
+        };
+
 Non-Static Factories
 --------------------
 
