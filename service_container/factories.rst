@@ -65,12 +65,6 @@ create its object:
                 <service id="App\Email\NewsletterManager">
                     <!-- the first argument is the class and the second argument is the static method -->
                     <factory class="App\Email\NewsletterManagerStaticFactory" method="createNewsletterManager"/>
-
-                    <!-- if the factory class is the same as the service class, you can omit
-                         the 'class' attribute and define just the 'method' attribute:
-
-                         <factory method="createNewsletterManager"/>
-                    -->
                 </service>
             </services>
         </container>
