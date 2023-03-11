@@ -45,8 +45,9 @@ The example above could then be rewritten as::
 
     class YourCommand extends Command
     {
-        public function __construct(private LoggerInterface $logger)
-        {
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
 
         protected function execute(InputInterface $input, OutputInterface $output)
