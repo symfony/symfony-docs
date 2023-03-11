@@ -262,7 +262,7 @@ method directly:
 * :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator`
 * :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedLocator`
 * :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target`
-* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\MapDecorated`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireDecorated`
 
 This is done by having ``getSubscribedServices()`` return an array of
 :class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService` objects
@@ -865,7 +865,7 @@ of the following dependency injection attributes:
 * :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedIterator`
 * :class:`Symfony\\Component\\DependencyInjection\\Attribute\\TaggedLocator`
 * :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target`
-* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\MapDecorated`
+* :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireDecorated`
 
 Here's an example::
 

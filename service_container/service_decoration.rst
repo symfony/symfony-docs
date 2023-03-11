@@ -150,14 +150,14 @@ automatically changed to ``'.inner'``):
 
         // ...
         use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
-        use Symfony\Component\DependencyInjection\Attribute\MapDecorated;
+        use Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
 
         #[AsDecorator(decorates: Mailer::class)]
         class DecoratingMailer
         {
             private $inner;
 
-            public function __construct(#[MapDecorated] $inner)
+            public function __construct(#[AutowireDecorated] $inner)
             {
                 $this->inner = $inner;
             }
@@ -214,6 +214,12 @@ automatically changed to ``'.inner'``):
                 // pass the old service as an argument
                 ->args([service('.inner')]);
         };
+
+.. deprecated:: 6.3
+
+    The ``#[MapDecorated]`` attribute is deprecated since Symfony 6.3.
+    Instead, use the
+    :class:`#[AutowireDecorated] <Symfony\\Component\\DependencyInjection\\Attribute\\AutowireDecorated>` attribute.
 
 .. tip::
 
@@ -293,14 +299,14 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
 
             // ...
             use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
-            use Symfony\Component\DependencyInjection\Attribute\MapDecorated;
+            use Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
 
             #[AsDecorator(decorates: Foo::class, priority: 5)]
             class Bar
             {
                 private $inner;
 
-                public function __construct(#[MapDecorated] $inner)
+                public function __construct(#[AutowireDecorated] $inner)
                 {
                     $this->inner = $inner;
                 }
@@ -312,7 +318,7 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             {
                 private $inner;
 
-                public function __construct(#[MapDecorated] $inner)
+                public function __construct(#[AutowireDecorated] $inner)
                 {
                     $this->inner = $inner;
                 }
@@ -616,7 +622,7 @@ Three different behaviors are available:
 
             // ...
             use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
-            use Symfony\Component\DependencyInjection\Attribute\MapDecorated;
+            use Symfony\Component\DependencyInjection\Attribute\AutowireDecorated;
             use Symfony\Component\DependencyInjection\ContainerInterface;
 
             #[AsDecorator(decorates: Mailer::class, onInvalid: ContainerInterface::IGNORE_ON_INVALID_REFERENCE)]
@@ -624,7 +630,7 @@ Three different behaviors are available:
             {
                 private $inner;
 
-                public function __construct(#[MapDecorated] $inner)
+                public function __construct(#[AutowireDecorated] $inner)
                 {
                     $this->inner = $inner;
                 }
