@@ -2558,7 +2558,7 @@ If you're having problems authenticating, it could be that you *are* authenticat
 successfully, but you immediately lose authentication after the first redirect.
 
 In that case, review the serialization logic (e.g. the ``__serialize()`` or
-``serialize()`` methods) on you user class (if you have any) to make sure
+``serialize()`` methods) on your user class (if you have any) to make sure
 that all the fields necessary are serialized and also exclude all the
 fields not necessary to be serialized (e.g. Doctrine relations).
 
