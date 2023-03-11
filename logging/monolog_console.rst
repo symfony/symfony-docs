@@ -45,11 +45,9 @@ The example above could then be rewritten as::
 
     class YourCommand extends Command
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
 
         protected function execute(InputInterface $input, OutputInterface $output)
