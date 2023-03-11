@@ -790,11 +790,9 @@ methods. You can inject this as a service anywhere in your application::
 
     class UserApiNormalizer
     {
-        private UrlHelper $urlHelper;
-
-        public function __construct(UrlHelper $urlHelper)
-        {
-            $this->urlHelper = $urlHelper;
+        public function __construct(
+            private UrlHelper $urlHelper,
+        ) {
         }
 
         public function normalize($user)

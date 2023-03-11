@@ -44,15 +44,15 @@ Here is a simplified example of a database transport::
 
     class YourTransport implements TransportInterface
     {
-        private $db;
-        private $serializer;
+        private SerializerInterface $serializer;
 
         /**
          * @param FakeDatabase $db is used for demo purposes. It is not a real class.
          */
-        public function __construct(FakeDatabase $db, SerializerInterface $serializer = null)
-        {
-            $this->db = $db;
+        public function __construct(
+            private FakeDatabase $db,
+            SerializerInterface $serializer = null,
+        ) {
             $this->serializer = $serializer ?? new PhpSerializer();
         }
 

@@ -186,10 +186,10 @@ change your constructor like this:
 
 .. code-block:: diff
 
-    -     public function __construct(LoggerInterface $logger)
-    +     public function __construct(LoggerInterface $fooBarLogger)
-        {
-            $this->logger = $fooBarLogger;
+        public function __construct(
+    -     LoggerInterface $logger,
+    +     LoggerInterface $fooBarLogger,
+        ) {
         }
 
 .. _`MonologBundle`: https://github.com/symfony/monolog-bundle

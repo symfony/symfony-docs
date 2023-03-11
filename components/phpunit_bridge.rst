@@ -952,11 +952,9 @@ Consider the following example::
 
     class Foo
     {
-        private $bar;
-
-        public function __construct(Bar $bar)
-        {
-            $this->bar = $bar;
+        public function __construct(
+            private Bar $bar,
+        ) {
         }
 
         public function fooMethod()

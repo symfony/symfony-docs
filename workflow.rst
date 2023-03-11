@@ -39,7 +39,7 @@ a ``Definition`` and a way to write the states to the objects (i.e. an
 instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`.)
 
 Consider the following example for a blog post. A post can have these places:
-``draft``, ``reviewed``, ``rejected``, ``published``. You could define the workflow as 
+``draft``, ``reviewed``, ``rejected``, ``published``. You could define the workflow as
 follows:
 
 .. configuration-block::
@@ -248,12 +248,10 @@ machine type, use ``camelCased workflow name + StateMachine``::
 
     class MyClass
     {
-        private $blogPublishingWorkflow;
-
-        // Symfony will inject the 'blog_publishing' workflow configured before
-        public function __construct(WorkflowInterface $blogPublishingWorkflow)
-        {
-            $this->blogPublishingWorkflow = $blogPublishingWorkflow;
+        public function __construct(
+            // Symfony will inject the 'blog_publishing' workflow configured before
+            private WorkflowInterface $blogPublishingWorkflow,
+        ) {
         }
 
         public function toReview(BlogPost $post)
@@ -413,11 +411,9 @@ workflow leaves a place::
 
     class WorkflowLoggerSubscriber implements EventSubscriberInterface
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
 
         public function onLeave(Event $event)

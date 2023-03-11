@@ -53,15 +53,15 @@ short example containing most features described below::
          * @var string
          */
         private $fooBar;
-        private $qux;
 
         /**
          * @param $dummy some argument description
          */
-        public function __construct(string $dummy, Qux $qux)
-        {
+        public function __construct(
+            string $dummy,
+            private Qux $qux,
+        ) {
             $this->fooBar = $this->transformText($dummy);
-            $this->qux = $qux;
         }
 
         /**

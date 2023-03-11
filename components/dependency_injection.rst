@@ -58,11 +58,9 @@ so this is passed into the constructor::
 
     class Mailer
     {
-        private $transport;
-
-        public function __construct($transport)
-        {
-            $this->transport = $transport;
+        public function __construct(
+            private $transport,
+        ) {
         }
 
         // ...
@@ -99,11 +97,9 @@ like this::
 
     class NewsletterManager
     {
-        private $mailer;
-
-        public function __construct(\Mailer $mailer)
-        {
-            $this->mailer = $mailer;
+        public function __construct(
+            private \Mailer $mailer,
+        ) {
         }
 
         // ...

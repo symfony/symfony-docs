@@ -710,11 +710,9 @@ very high and the recipient has a phone number::
 
     class InvoiceNotification extends Notification
     {
-        private $price;
-
-        public function __construct(int $price)
-        {
-            $this->price = $price;
+        public function __construct(
+            private int $price,
+        ) {
         }
 
         public function getChannels(RecipientInterface $recipient)
@@ -749,11 +747,9 @@ and its ``asChatMessage()`` method::
 
     class InvoiceNotification extends Notification implements ChatNotificationInterface
     {
-        private $price;
-
-        public function __construct(int $price)
-        {
-            $this->price = $price;
+        public function __construct(
+            private int $price,
+        ) {
         }
 
         public function asChatMessage(RecipientInterface $recipient, string $transport = null): ?ChatMessage

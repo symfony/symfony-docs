@@ -610,11 +610,9 @@ processes::
 
     class Person
     {
-        private $firstName;
-
-        public function __construct($firstName)
-        {
-            $this->firstName = $firstName;
+        public function __construct(
+            private $firstName,
+        ) {
         }
 
         public function getFirstName()
@@ -667,12 +665,10 @@ defines a ``Person`` entity with a ``firstName`` property:
 
         class Person
         {
-            #[SerializedName('customer_name')]
-            private $firstName;
-
-            public function __construct($firstName)
-            {
-                $this->firstName = $firstName;
+            public function __construct(
+                #[SerializedName('customer_name')]
+                private $firstName,
+            ) {
             }
 
             // ...
@@ -1605,13 +1601,10 @@ context option::
 
     class MyObj
     {
-        private $foo;
-        private $bar;
-
-        public function __construct($foo, $bar)
-        {
-            $this->foo = $foo;
-            $this->bar = $bar;
+        public function __construct(
+            private $foo,
+            private $bar,
+        ) {
         }
     }
 

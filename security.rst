@@ -610,14 +610,12 @@ use the :class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
 
     class ExampleService
     {
-        private Security $security;
-
-        public function __construct(Security $security, RequestStack $requestStack)
-        {
-            $this->requestStack = $requestStack;
+        public function __construct(
             // Avoid calling getFirewallConfig() in the constructor: auth may not
             // be complete yet. Instead, store the entire Security object.
-            $this->security = $security;
+            private Security $security,
+            RequestStack $requestStack,
+        ) {
         }
 
         public function someMethod()
@@ -1918,13 +1916,11 @@ If you need to get the logged in user from a service, use the
 
     class ExampleService
     {
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            // Avoid calling getUser() in the constructor: auth may not
-            // be complete yet. Instead, store the entire Security object.
-            $this->security = $security;
+        // Avoid calling getUser() in the constructor: auth may not
+        // be complete yet. Instead, store the entire Security object.
+        public function __construct(
+            private Security $security,
+        ){
         }
 
         public function someMethod()
@@ -2347,11 +2343,9 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
 
       class SalesReportManager
       {
-    +     private $security;
-
-    +     public function __construct(Security $security)
-    +     {
-    +         $this->security = $security;
+    +     public function __construct(
+    +         Security $security,
+    +     ) {
     +     }
 
           public function generateReport()

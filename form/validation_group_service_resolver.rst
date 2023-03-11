@@ -13,14 +13,10 @@ parameter::
 
     class ValidationGroupResolver
     {
-        private $service1;
-
-        private $service2;
-
-        public function __construct($service1, $service2)
-        {
-            $this->service1 = $service1;
-            $this->service2 = $service2;
+        public function __construct(
+            private $service1,
+            private $service2,
+        ) {
         }
 
         public function __invoke(FormInterface $form): array
@@ -44,11 +40,9 @@ Then in your form, inject the resolver and set it as the ``validation_groups``::
 
     class MyClassType extends AbstractType
     {
-        private $groupResolver;
-
-        public function __construct(ValidationGroupResolver $groupResolver)
-        {
-            $this->groupResolver = $groupResolver;
+        public function __construct(
+            private ValidationGroupResolver $groupResolver,
+        ) {
         }
 
         // ...

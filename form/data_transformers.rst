@@ -177,8 +177,9 @@ to and from the issue number and the ``Issue`` object::
 
     class IssueToNumberTransformer implements DataTransformerInterface
     {
-        public function __construct(private EntityManagerInterface $entityManager)
-        {
+        public function __construct(
+            private EntityManagerInterface $entityManager,
+        ) {
         }
 
         /**
@@ -261,11 +262,9 @@ and type-hint the new class::
     // ...
     class TaskType extends AbstractType
     {
-        private $transformer;
-
-        public function __construct(IssueToNumberTransformer $transformer)
-        {
-            $this->transformer = $transformer;
+        public function __construct(
+            private IssueToNumberTransformer $transformer,
+        ) {
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -378,11 +377,9 @@ First, create the custom field type class::
 
     class IssueSelectorType extends AbstractType
     {
-        private $transformer;
-
-        public function __construct(IssueToNumberTransformer $transformer)
-        {
-            $this->transformer = $transformer;
+        public function __construct(
+            private IssueToNumberTransformer $transformer,
+        ) {
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -484,7 +481,7 @@ To use the view transformer, call ``addViewTransformer()``.
     data. So your model transformer cannot reduce the number of items within the
     Collection (i.e. filtering out some items), as in that case the collection
     ends up with some empty children.
-    
+
     A possible workaround for that limitation could be not using the underlying
     object directly, but a DTO (Data Transfer Object) instead, that implements
     the transformation of such incompatible data structures.

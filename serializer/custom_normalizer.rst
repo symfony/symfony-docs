@@ -27,13 +27,10 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
 
     class TopicNormalizer implements NormalizerInterface
     {
-        private $router;
-        private $normalizer;
-
-        public function __construct(UrlGeneratorInterface $router, ObjectNormalizer $normalizer)
-        {
-            $this->router = $router;
-            $this->normalizer = $normalizer;
+        public function __construct(
+            private UrlGeneratorInterface $router,
+            private ObjectNormalizer $normalizer,
+        ) {
         }
 
         public function normalize($topic, string $format = null, array $context = [])

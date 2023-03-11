@@ -155,11 +155,9 @@ automatically changed to ``'.inner'``):
         #[AsDecorator(decorates: Mailer::class)]
         class DecoratingMailer
         {
-            private $inner;
-
-            public function __construct(#[MapDecorated] $inner)
-            {
-                $this->inner = $inner;
+            public function __construct(
+                private #[MapDecorated] $inner,
+            ) {
             }
 
             // ...
@@ -298,11 +296,9 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             #[AsDecorator(decorates: Foo::class, priority: 5)]
             class Bar
             {
-                private $inner;
-
-                public function __construct(#[MapDecorated] $inner)
-                {
-                    $this->inner = $inner;
+                public function __construct(
+                    private #[MapDecorated] $inner,
+                ) {
                 }
                 // ...
             }
@@ -310,11 +306,9 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             #[AsDecorator(decorates: Foo::class, priority: 1)]
             class Baz
             {
-                private $inner;
-
-                public function __construct(#[MapDecorated] $inner)
-                {
-                    $this->inner = $inner;
+                public function __construct(
+                    private #[MapDecorated] $inner,
+                ) {
                 }
 
                 // ...
@@ -622,11 +616,9 @@ Three different behaviors are available:
             #[AsDecorator(decorates: Mailer::class, onInvalid: ContainerInterface::IGNORE_ON_INVALID_REFERENCE)]
             class Bar
             {
-                private $inner;
-
-                public function __construct(#[MapDecorated] $inner)
-                {
-                    $this->inner = $inner;
+                public function __construct(
+                    private #[MapDecorated] $inner,
+                ) {
                 }
 
                 // ...
@@ -690,11 +682,9 @@ Three different behaviors are available:
 
         class DecoratorService
         {
-            private $decorated;
-
-            public function __construct(?OptionalService $decorated)
-            {
-                $this->decorated = $decorated;
+            public function __construct(
+                private ?OptionalService $decorated,
+            ) {
             }
 
             public function tellInterestingStuff(): string

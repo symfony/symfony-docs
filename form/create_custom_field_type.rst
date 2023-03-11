@@ -463,11 +463,9 @@ defined by the form or be completely independent::
 
     class PostalAddressType extends AbstractType
     {
-        private $entityManager;
-
-        public function __construct(EntityManagerInterface $entityManager)
-        {
-            $this->entityManager = $entityManager;
+        public function __construct(
+            private EntityManagerInterface $entityManager,
+        ) {
         }
 
         // ...
