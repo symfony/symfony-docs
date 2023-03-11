@@ -103,7 +103,8 @@ Symfony ships with the following value resolvers in the
 
     .. versionadded:: 6.1
 
-        The ``DateTimeValueResolver`` was introduced in Symfony 6.1.
+        The ``DateTimeValueResolver`` and the ``MapDateTime`` attribute were
+        introduced in Symfony 6.1.
 
     .. versionadded:: 6.3
 
