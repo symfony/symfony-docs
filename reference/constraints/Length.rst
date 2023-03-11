@@ -123,6 +123,29 @@ Parameter          Description
 ``{{ value }}``    The current (invalid) value
 =================  ============================================================
 
+``countUnit``
+~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``Length::COUNT_CODEPOINTS``
+
+The character count unit to use for the length check. By default :phpfunction:`mb_strlen`
+is used, which counts Unicode code points.
+
+Can be one of the following constants of the
+:class:`Symfony\\Component\\Validator\\Constraints\\Length` class:
+
+* ``COUNT_BYTES``: Uses :phpfunction:`strlen` counting the length of the string in bytes.
+* ``COUNT_CODEPOINTS``: Uses :phpfunction:`mb_strlen` counting the length of the string in Unicode
+  code points. This was the sole behavior until Symfony 6.2 and is the default since Symfony 6.3.
+  Simple (multibyte) Unicode characters count as 1 character, while for example ZWJ sequences of
+  composed emojis count as multiple characters.
+* ``COUNT_GRAPHEMES``: Uses :phpfunction:`grapheme_strlen` counting the length of the string in
+  graphemes, i.e. even emojis and ZWJ sequences of composed emojis count as 1 character.
+
+.. versionadded:: 6.3
+
+    The ``countUnit`` option was introduced in Symfony 6.3.
+
 ``exactly``
 ~~~~~~~~~~~
 
