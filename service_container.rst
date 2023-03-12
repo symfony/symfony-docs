@@ -702,6 +702,8 @@ For a full list of *all* possible services in the container, run:
 
     $ php bin/console debug:container
 
+.. _container_closure-as-argument:
+
 Injecting a Closure as an Argument
 ----------------------------------
 
@@ -795,6 +797,51 @@ Our configuration looks like this:
 .. versionadded:: 6.1
 
     The ``closure`` argument type was introduced in Symfony 6.1.
+
+It is also possible to convert a callable into an injected closure
+thanks to the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
+attribute. Let's say our ``MessageHashGenerator`` class now has a ``generate()``
+method::
+
+        // src/Hash/MessageHashGenerator.php
+        namespace App\Hash;
+
+        class MessageHashGenerator
+        {
+            public function generate(): string
+            {
+                // Compute and return a message hash
+            }
+        }
+
+We can inject the ``generate()`` method of the ``MessageHashGenerator``
+like this::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use App\Hash\MessageHashGenerator;
+    use Psr\Log\LoggerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\AutowireCallable;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            private readonly LoggerInterface $logger,
+            #[AutowireCallable(service: MessageHashGenerator::class, method: 'generate')]
+            private readonly \Closure $generateMessageHash
+        ) {
+            // ...
+        }
+
+        // ...
+    }
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
+    attribute was introduced in Symfony 6.3.
 
 .. _services-binding:
 
