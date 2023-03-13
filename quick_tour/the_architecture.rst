@@ -21,7 +21,6 @@ Want a logging system? No problem:
 This installs and configures (via a recipe) the powerful `Monolog`_ library. To
 use the logger in a controller, add a new argument type-hinted with ``LoggerInterface``::
 
-    <?php
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
@@ -86,7 +85,6 @@ To keep your code organized, you can even create your own services! Suppose you
 want to generate a random greeting (e.g. "Hello", "Yo", etc). Instead of putting
 this code directly in your controller, create a new class::
 
-    <?php
     // src/GreetingGenerator.php
     namespace App;
 
@@ -103,7 +101,6 @@ this code directly in your controller, create a new class::
 
 Great! You can use it immediately in your controller::
 
-    <?php
     // src/Controller/DefaultController.php
     namespace App\Controller;
 
@@ -163,7 +160,6 @@ by creating an event subscriber or a security voter for complex authorization
 rules. Let's add a new filter to Twig called ``greet``. How? Create a class
 that extends ``AbstractExtension``::
 
-    <?php
     // src/Twig/GreetExtension.php
     namespace App\Twig;
 
