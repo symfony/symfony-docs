@@ -538,6 +538,57 @@ The ``file()`` helper provides some arguments to configure its behavior::
         return $this->file('invoice_3241.pdf', 'my_invoice.pdf', ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
+Sending Early Hints
+~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.3
+
+    The Early Hints helper of the ``AbstractController`` was introduced
+    in Symfony 6.3.
+
+Early hints allow to tell user's browser to start downloading some assets
+even before sending the response content. Thanks to this, the browser is able
+to prefetch resources that will be needed once the full response is finally sent.
+These resources are commonly Javascript or CSS files, but it can be any type of
+resource.
+
+.. note::
+
+    In order to work, the SAPI you're using must support this feature, like
+    `FrankenPHP`_.
+
+You can send early hints from your controller action thanks to the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::sendEarlyHints`
+method::
+
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Component\WebLink\Link;
+
+    class HomepageController extends AbstractController
+    {
+        #[Route("/", name: "homepage")]
+        public function index(): Response
+        {
+            $response = $this->sendEarlyHints([
+                (new Link(href: '/style.css'))->withAttribute('as', 'stylesheet'),
+                (new Link(href: '/script.js'))->withAttribute('as', 'script'),
+            ]);
+
+            // Do something slow...
+
+            return $this->render('homepage/index.html.twig', response: $response);
+        }
+    }
+
+The ``sendEarlyHints`` method will send a first informational response to the
+web browser with a 103 status code. If it supports it, the browser will start
+to download ``style.css`` and ``script.js`` while you're generating the response
+full content.
+
 Final Thoughts
 --------------
 
@@ -577,3 +628,4 @@ Learn more about Controllers
 
 .. _`Symfony Maker`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`unvalidated redirects security vulnerability`: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+.. _`FrankenPHP`: https://frankenphp.dev
