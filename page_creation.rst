@@ -44,7 +44,6 @@ Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (
 random) number and prints it. To do that, create a "Controller" class and a
 "controller" method inside of it::
 
-    <?php
     // src/Controller/LuckyController.php
     namespace App\Controller;
 
