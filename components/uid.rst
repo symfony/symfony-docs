@@ -99,9 +99,9 @@ configure the behavior of the factory using configuration files::
             uid:
                 default_uuid_version: 6
                 name_based_uuid_version: 5
-                name_based_uuid_namespace: ~
+                name_based_uuid_namespace: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
                 time_based_uuid_version: 6
-                time_based_uuid_node: ~
+                time_based_uuid_node: 121212121212
 
     .. code-block:: xml
 
@@ -118,9 +118,9 @@ configure the behavior of the factory using configuration files::
                 <framework:uid
                     default_uuid_version="6"
                     name_based_uuid_version="5"
-                    name_based_uuid_namespace=""
+                    name_based_uuid_namespace="6ba7b810-9dad-11d1-80b4-00c04fd430c8"
                     time_based_uuid_version="6"
-                    time_based_uuid_node=""
+                    time_based_uuid_node="121212121212"
                 />
             </framework:config>
         </container>
@@ -140,9 +140,9 @@ configure the behavior of the factory using configuration files::
                 'uid' => [
                     'default_uuid_version' => 6,
                     'name_based_uuid_version' => 5,
-                    'name_based_uuid_namespace' => '',
+                    'name_based_uuid_namespace' => '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
                     'time_based_uuid_version' => 6,
-                    'time_based_uuid_node' => '',
+                    'time_based_uuid_node' => 121212121212,
                 ],
             ]);
         };
