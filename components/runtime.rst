@@ -26,7 +26,6 @@ The Runtime component abstracts most bootstrapping logic as so-called
 For instance, the Runtime component allows Symfony's ``public/index.php``
 to look like this::
 
-    <?php
     // public/index.php
     use App\Kernel;
 
@@ -116,7 +115,6 @@ Resolvable Arguments
 
 The closure returned from the front-controller may have zero or more arguments::
 
-    <?php
     // public/index.php
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
@@ -163,7 +161,6 @@ Resolvable Applications
 The application returned by the closure below is a Symfony Kernel. However,
 a number of different applications are supported::
 
-    <?php
     // public/index.php
     use App\Kernel;
 
@@ -183,7 +180,6 @@ The ``SymfonyRuntime`` can handle these applications:
     The Response will be printed by
     :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ResponseRunner`::
 
-        <?php
         // public/index.php
         use Symfony\Component\HttpFoundation\Response;
 
@@ -196,8 +192,6 @@ The ``SymfonyRuntime`` can handle these applications:
 :class:`Symfony\\Component\\Console\\Command\\Command`
     To write single command applications. This will use the
     :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner`::
-
-        <?php
 
         use Symfony\Component\Console\Command\Command;
         use Symfony\Component\Console\Input\InputInterface;
@@ -216,8 +210,6 @@ The ``SymfonyRuntime`` can handle these applications:
 :class:`Symfony\\Component\\Console\\Application`
     Useful with console applications with more than one command. This will use the
     :class:`Symfony\\Component\\Runtime\\Runner\\Symfony\\ConsoleApplicationRunner`::
-
-        <?php
 
         use Symfony\Component\Console\Application;
         use Symfony\Component\Console\Command\Command;
@@ -246,7 +238,6 @@ applications:
     The ``RunnerInterface`` is a way to use a custom application with the
     generic Runtime::
 
-        <?php
         // public/index.php
         use Symfony\Component\Runtime\RunnerInterface;
 
@@ -267,9 +258,7 @@ applications:
     Your "application" can also be a ``callable``. The first callable will return
     the "application" and the second callable is the "application" itself::
 
-        <?php
         // public/index.php
-
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
         return function () {
@@ -286,8 +275,6 @@ applications:
     If the callable doesn't return anything, the ``SymfonyRuntime`` will assume
     everything is fine::
 
-        <?php
-
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
         return function () {
@@ -299,8 +286,6 @@ Using Options
 
 Some behavior of the Runtimes can be modified through runtime options. They
 can be set using the ``APP_RUNTIME_OPTIONS`` environment variable::
-
-    <?php
 
     $_SERVER['APP_RUNTIME_OPTIONS'] = [
         'project_dir' => '/var/task',
@@ -481,8 +466,6 @@ always using this ``ReactPHPRunner``::
     }
 
 The end user will now be able to create front controller like::
-
-    <?php
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 

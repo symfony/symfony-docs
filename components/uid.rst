@@ -129,17 +129,15 @@ configure the behavior of the factory using configuration files::
     .. code-block:: php
 
         // config/packages/uid.php
-        <?php
-
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         return static function (ContainerConfigurator $containerConfigurator): void {
-            $services = $configurator->services()
+            $services = $containerConfigurator->services()
                 ->defaults()
                 ->autowire()
                 ->autoconfigure();
 
-            $configurator->extension('framework', [
+            $containerConfigurator->extension('framework', [
                 'uid' => [
                     'default_uuid_version' => 6,
                     'name_based_uuid_version' => 5,
@@ -152,8 +150,6 @@ configure the behavior of the factory using configuration files::
 
 Then, you can inject the factory in your services and use it to generate UUIDs based
 on the configuration you defined::
-
-    <?php
 
     namespace App\Service;
 
@@ -353,8 +349,6 @@ following methods to create a ``Ulid`` object from it::
     $ulid = Ulid::fromRfc4122('0171069d-593d-97d3-8b3e-23d06de5b308');
 
 Like UUIDs, ULIDs have their own factory, ``UlidFactory``, that can be used to generate them::
-
-    <?php
 
     namespace App\Service;
 
