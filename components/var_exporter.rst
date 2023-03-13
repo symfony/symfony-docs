@@ -75,7 +75,6 @@ following class hierarchy::
 When exporting the ``ConcreteClass`` data with VarExporter, the generated PHP
 file looks like this::
 
-    <?php
     return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
         $o = [
             clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Symfony\\Component\\VarExporter\\Tests\\ConcreteClass'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Symfony\\Component\\VarExporter\\Tests\\ConcreteClass')),
