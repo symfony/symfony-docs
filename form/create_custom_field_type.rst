@@ -271,7 +271,8 @@ to define, validate and process their values::
 
             // optionally you can transform the given values for the options to
             // simplify the further processing of those options
-            $resolver->setNormalizer('allowed_states', static function (Options $options, $states) {
+            $resolver->setNormalizer('allowed_states', static function (Options $options, $states): ?array 
+            {
                 if (null === $states) {
                     return $states;
                 }
