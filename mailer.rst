@@ -665,9 +665,9 @@ transports, which is useful to debug errors.
 
 .. note::
 
-    You will need to replace :class:`Symfony\\Component\\Mailer\\MailerInterface`
-    with :class:`Symfony\\Component\\Mailer\\Transport\\TransportInterface` to have
-    the message object returned.
+    If your code used :class:`Symfony\\Component\\Mailer\\MailerInterface`, you
+    need to replace it by :class:`Symfony\\Component\\Mailer\\Transport\\TransportInterface`
+    to have the ``SentMessage`` object returned.
 
 .. note::
 
