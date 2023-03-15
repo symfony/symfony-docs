@@ -821,9 +821,9 @@ like this::
     class MessageGenerator
     {
         public function __construct(
-            private readonly LoggerInterface $logger,
+            private LoggerInterface $logger,
             #[AutowireCallable(service: MessageHashGenerator::class, method: 'generate')]
-            private readonly \Closure $generateMessageHash
+            private \Closure $generateMessageHash
         ) {
             // ...
         }

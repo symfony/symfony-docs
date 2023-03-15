@@ -105,7 +105,7 @@ in the service class, without further configuration::
     {
         public function __construct(
             #[AutowireServiceClosure('mailer')]
-            private readonly \Closure $mailer
+            private \Closure $mailer
         ) {
             $this->mailer = $mailer;
         }

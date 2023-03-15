@@ -278,7 +278,7 @@ attribute::
     {
         public function __construct(
             #[Target('blog_publishing')]
-            private readonly WorkflowInterface $workflow
+            private WorkflowInterface $workflow
         ) {
         }
 
