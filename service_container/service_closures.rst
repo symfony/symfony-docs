@@ -107,7 +107,6 @@ in the service class, without further configuration::
             #[AutowireServiceClosure('mailer')]
             private \Closure $mailer
         ) {
-            $this->mailer = $mailer;
         }
 
         public function doSomething(): void
