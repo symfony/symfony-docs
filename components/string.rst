@@ -633,6 +633,12 @@ class to convert English words from/to singular/plural with confidence::
 The value returned by both methods is always an array because sometimes it's not
 possible to determine a unique singular/plural form for the given word.
 
+.. note::
+
+    Symfony also provides a :class:`Symfony\\Component\\String\\Inflector\\FrenchInflector`
+    and an :class:`Symfony\\Component\\String\\Inflector\\InflectorInterface` if
+    you need to implement your own inflector.
+
 .. _`ASCII`: https://en.wikipedia.org/wiki/ASCII
 .. _`Unicode`: https://en.wikipedia.org/wiki/Unicode
 .. _`Code points`: https://en.wikipedia.org/wiki/Code_point
