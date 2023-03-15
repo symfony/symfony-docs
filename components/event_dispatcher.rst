@@ -296,11 +296,9 @@ order. Start by creating this custom event class and documenting it::
     {
         public const NAME = 'order.placed';
 
-        protected $order;
-
-        public function __construct(Order $order)
-        {
-            $this->order = $order;
+        public function __construct(
+            protected Order $order,
+        ) {
         }
 
         public function getOrder(): Order

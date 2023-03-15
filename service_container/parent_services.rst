@@ -18,12 +18,11 @@ you may have multiple repository classes which need the
     // ...
     abstract class BaseDoctrineRepository
     {
-        protected $objectManager;
         protected $logger;
 
-        public function __construct(ObjectManager $objectManager)
-        {
-            $this->objectManager = $objectManager;
+        public function __construct(
+            protected ObjectManager $objectManager,
+        ) {
         }
 
         public function setLogger(LoggerInterface $logger): void

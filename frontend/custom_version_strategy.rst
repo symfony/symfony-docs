@@ -52,28 +52,17 @@ version string::
 
     class GulpBusterVersionStrategy implements VersionStrategyInterface
     {
-        /**
-         * @var string
-         */
-        private $manifestPath;
-
-        /**
-         * @var string
-         */
-        private $format;
+        private string $format;
 
         /**
          * @var string[]
          */
-        private $hashes;
+        private array $hashes;
 
-        /**
-         * @param string      $manifestPath
-         * @param string|null $format
-         */
-        public function __construct(string $manifestPath, string $format = null)
-        {
-            $this->manifestPath = $manifestPath;
+        public function __construct(
+            private string $manifestPath,
+            ?string $format = null,
+        ) {
             $this->format = $format ?: '%s?%s';
         }
 

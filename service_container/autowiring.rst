@@ -45,11 +45,9 @@ And now a Twitter client using this transformer::
 
     class TwitterClient
     {
-        private $transformer;
-
-        public function __construct(Rot13Transformer $transformer)
-        {
-            $this->transformer = $transformer;
+        public function __construct(
+            private Rot13Transformer $transformer,
+        ) {
         }
 
         public function tweet(User $user, string $key, string $status): void
@@ -167,9 +165,9 @@ Autowiring works by reading the ``Rot13Transformer`` *type-hint* in ``TwitterCli
     {
         // ...
 
-        public function __construct(Rot13Transformer $transformer)
-        {
-            $this->transformer = $transformer;
+        public function __construct(
+            private Rot13Transformer $transformer,
+        ) {
         }
     }
 
@@ -299,8 +297,9 @@ Now that you have an interface, you should use this as your type-hint::
 
     class TwitterClient
     {
-        public function __construct(TransformerInterface $transformer)
-        {
+        public function __construct(
+            private TransformerInterface $transformer,
+        ) {
             // ...
         }
 
@@ -384,8 +383,9 @@ dealing with the ``TransformerInterface``.
 
         class DataFormatter
         {
-            public function __construct((NormalizerInterface&DenormalizerInterface)|SerializerInterface $transformer)
-            {
+            public function __construct(
+                private (NormalizerInterface&DenormalizerInterface)|SerializerInterface $transformer,
+            ) {
                 // ...
             }
 
@@ -436,11 +436,9 @@ the injection::
 
     class MastodonClient
     {
-        private $transformer;
-
-        public function __construct(TransformerInterface $shoutyTransformer)
-        {
-            $this->transformer = $shoutyTransformer;
+        public function __construct(
+            private TransformerInterface $shoutyTransformer,
+        ) {
         }
 
         public function toot(User $user, string $key, string $status): void

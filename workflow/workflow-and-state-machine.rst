@@ -259,11 +259,9 @@ you can get this state machine by injecting the Workflow registry service::
 
     class SomeService
     {
-        private $workflows;
-
-        public function __construct(Registry $workflows)
-        {
-            $this->workflows = $workflows;
+        public function __construct(
+            private Registry $workflows,
+        ) {
         }
 
         public function someMethod(PullRequest $pullRequest)
@@ -288,11 +286,9 @@ to access the proper service::
 
     class SomeService
     {
-        private $stateMachine;
-
-        public function __construct(StateMachine $stateMachine)
-        {
-            $this->stateMachine = $stateMachine;
+        public function __construct(
+            private StateMachine $stateMachine,
+        ) {
         }
 
         public function someMethod(PullRequest $pullRequest)

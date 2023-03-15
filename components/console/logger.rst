@@ -19,11 +19,9 @@ PSR-3 compliant logger::
 
     class MyDependency
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
 
         public function doStuff()

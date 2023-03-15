@@ -136,8 +136,9 @@ difference is that it's done in the constructor:
 
       class GreetingGenerator
       {
-    +     public function __construct(private readonly LoggerInterface $logger)
-    +     {
+    +     public function __construct(
+    +         private readonly LoggerInterface $logger,
+    +     ) {
     +     }
 
           public function getRandomGreeting(): string
@@ -169,8 +170,9 @@ that extends ``AbstractExtension``::
 
     class GreetExtension extends AbstractExtension
     {
-        public function __construct(private readonly GreetingGenerator $greetingGenerator)
-        {
+        public function __construct(
+            private readonly GreetingGenerator $greetingGenerator,
+        ) {
         }
 
         public function getFilters()

@@ -36,15 +36,11 @@ using an immutable color object::
 
     final class Color
     {
-        private $red;
-        private $green;
-        private $blue;
-
-        public function __construct(int $red, int $green, int $blue)
-        {
-            $this->red = $red;
-            $this->green = $green;
-            $this->blue = $blue;
+        public function __construct(
+            private int $red,
+            private int $green,
+            private int $blue,
+        ) {
         }
 
         public function getRed(): int

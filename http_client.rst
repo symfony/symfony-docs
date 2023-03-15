@@ -32,11 +32,9 @@ automatically when type-hinting for :class:`Symfony\\Contracts\\HttpClient\\Http
 
         class SymfonyDocs
         {
-            private $client;
-
-            public function __construct(HttpClientInterface $client)
-            {
-                $this->client = $client;
+            public function __construct(
+                private HttpClientInterface $client,
+            ) {
             }
 
             public function fetchGitHubInformation(): array
@@ -1378,11 +1376,9 @@ interface you need to code against when a client is needed::
 
     class MyApiLayer
     {
-        private $client;
-
-        public function __construct(HttpClientInterface $client)
-        {
-            $this->client = $client;
+        public function __construct(
+            private HttpClientInterface $client,
+        ) {
         }
 
         // [...]
@@ -1430,11 +1426,9 @@ Now you can make HTTP requests with the PSR-18 client as follows:
 
         class Symfony
         {
-            private $client;
-
-            public function __construct(ClientInterface $client)
-            {
-                $this->client = $client;
+            public function __construct(
+                private ClientInterface $client,
+            ) {
             }
 
             public function getAvailableVersions(): array
@@ -1940,11 +1934,9 @@ test it in a real application::
 
     final class ExternalArticleService
     {
-        private HttpClientInterface $httpClient;
-
-        public function __construct(HttpClientInterface $httpClient)
-        {
-            $this->httpClient = $httpClient;
+        public function __construct(
+            private HttpClientInterface $httpClient,
+        ) {
         }
 
         public function createArticle(array $requestData): array

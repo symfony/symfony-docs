@@ -85,11 +85,9 @@ to create a configurator class to configure these instances::
 
     class EmailConfigurator
     {
-        private $formatterManager;
-
-        public function __construct(EmailFormatterManager $formatterManager)
-        {
-            $this->formatterManager = $formatterManager;
+        public function __construct(
+            private EmailFormatterManager $formatterManager,
+        ) {
         }
 
         public function configure(EmailFormatterAwareInterface $emailManager): void

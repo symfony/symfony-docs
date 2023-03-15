@@ -234,13 +234,10 @@ you can create your own message sender::
 
     class ImportantActionToEmailSender implements SenderInterface
     {
-        private $mailer;
-        private $toEmail;
-
-        public function __construct(MailerInterface $mailer, string $toEmail)
-        {
-            $this->mailer = $mailer;
-            $this->toEmail = $toEmail;
+        public function __construct(
+            private MailerInterface $mailer,
+            private string $toEmail,
+        ) {
         }
 
         public function send(Envelope $envelope): Envelope
@@ -286,13 +283,10 @@ do is to write your own CSV receiver::
 
     class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {
-        private $serializer;
-        private $filePath;
-
-        public function __construct(SerializerInterface $serializer, string $filePath)
-        {
-            $this->serializer = $serializer;
-            $this->filePath = $filePath;
+        public function __construct(
+            private SerializerInterface $serializer,
+            private string $filePath,
+        ) {
         }
 
         public function get(): iterable

@@ -228,11 +228,9 @@ with ``ROLE_SUPER_ADMIN``::
     {
         // ...
 
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
         protected function voteOnAttribute($attribute, mixed $subject, TokenInterface $token): bool

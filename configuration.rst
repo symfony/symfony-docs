@@ -1065,11 +1065,9 @@ parameters at once by type-hinting any of its constructor arguments with the
 
     class MessageGenerator
     {
-        private $params;
-
-        public function __construct(ContainerBagInterface $params)
-        {
-            $this->params = $params;
+        public function __construct(
+            private ContainerBagInterface $params,
+        ) {
         }
 
         public function someMethod()

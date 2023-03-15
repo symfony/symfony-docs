@@ -166,11 +166,9 @@ the impersonator user::
 
     class SomeService
     {
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
         public function someMethod()
@@ -374,11 +372,9 @@ logic you want::
 
     class SwitchToCustomerVoter extends Voter
     {
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
         protected function supports($attribute, $subject): bool

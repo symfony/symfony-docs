@@ -431,13 +431,12 @@ information from annotations of properties and methods, such as ``@var``,
     // src/Domain/Foo.php
     class Foo
     {
-        private $bar;
-
         /**
          * @param string $bar
          */
-        public function __construct($bar) {
-            $this->bar = $bar;
+        public function __construct(
+            private $bar,
+        ) {
         }
     }
 

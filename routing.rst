@@ -2285,8 +2285,9 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
 
     class SomeService
     {
-        public function __construct(private UrlGeneratorInterface $router)
-        {
+        public function __construct(
+            private UrlGeneratorInterface $router,
+        ) {
         }
 
         public function someMethod()
@@ -2401,8 +2402,9 @@ Now you'll get the expected results when generating URLs in your commands::
 
     class SomeCommand extends Command
     {
-        public function __construct(private RouterInterface $router)
-        {
+        public function __construct(
+            private RouterInterface $router,
+        ) {
             parent::__construct();
         }
 

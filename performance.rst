@@ -248,11 +248,9 @@ and Symfony will inject the ``debug.stopwatch`` service::
 
     class DataExporter
     {
-        private $stopwatch;
-
-        public function __construct(Stopwatch $stopwatch)
-        {
-            $this->stopwatch = $stopwatch;
+        public function __construct(
+            private Stopwatch $stopwatch,
+        ) {
         }
 
         public function export()
