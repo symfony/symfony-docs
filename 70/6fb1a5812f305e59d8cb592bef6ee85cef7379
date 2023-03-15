@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2023-03-15T15:34:13Z
+
+Since Symfony 6.2 requires PHP 8.1+, the `readonly` keyword is available. Is there a reason not to use it in these examples?
+
+Example:
+
+```diff
+- private MailerInterface $mailer,
++ private readonly MailerInterface $mailer,
+```
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-03-15T15:51:02Z
+
+Can you please open a separate issue about this topic? Thanks
