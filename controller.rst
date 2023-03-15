@@ -545,8 +545,6 @@ Sending Early Hints
 
     The Early Hints helper of the ``AbstractController`` was introduced
     in Symfony 6.3.
-.. _`Early hints`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103
-.. _`SAPI`: https://www.php.net/manual/en/function.php-sapi-name.php
 
 `Early hints`_ tell the browser to start downloading some assets even before the
 application sends the response content. This improves perceived performance
@@ -634,4 +632,6 @@ Learn more about Controllers
 
 .. _`Symfony Maker`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
 .. _`unvalidated redirects security vulnerability`: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+.. _`Early hints`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103
+.. _`SAPI`: https://www.php.net/manual/en/function.php-sapi-name.php
 .. _`FrankenPHP`: https://frankenphp.dev
