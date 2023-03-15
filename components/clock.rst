@@ -50,7 +50,7 @@ determine the current time::
     class ExpirationChecker
     {
         public function __construct(
-            private readonly ClockInterface $clock
+            private ClockInterface $clock
         ) {}
 
         public function isExpired(DateTimeInterface $validUntil): bool
