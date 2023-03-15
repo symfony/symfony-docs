@@ -36,11 +36,9 @@ unauthenticated user tries to access a protected resource::
 
     class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
     {
-        private $urlGenerator;
-
-        public function __construct(UrlGeneratorInterface $urlGenerator)
-        {
-            $this->urlGenerator = $urlGenerator;
+        public function __construct(
+            UrlGeneratorInterface $urlGenerator,
+        ) {
         }
 
         public function start(Request $request, AuthenticationException $authException = null): RedirectResponse

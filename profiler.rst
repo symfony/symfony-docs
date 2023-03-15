@@ -204,13 +204,14 @@ event::
     use Symfony\Component\HttpKernel\KernelInterface;
 
     // ...
-    
+
     class MySubscriber implements EventSubscriberInterface
     {
-        public function __construct(private KernelInterface $kernel)
-        {
+        public function __construct(
+            private KernelInterface $kernel,
+        ) {
         }
-        
+
         // ...
 
         public function onKernelResponse(ResponseEvent $event)

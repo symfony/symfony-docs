@@ -27,15 +27,11 @@ request handling logic into its own ``Simplex\Framework`` class::
 
     class Framework
     {
-        private $matcher;
-        private $controllerResolver;
-        private $argumentResolver;
-
-        public function __construct(UrlMatcher $matcher, ControllerResolver $controllerResolver, ArgumentResolver $argumentResolver)
-        {
-            $this->matcher = $matcher;
-            $this->controllerResolver = $controllerResolver;
-            $this->argumentResolver = $argumentResolver;
+        public function __construct(
+            private UrlMatcher $matcher,
+            private ControllerResolver $controllerResolver,
+            private ArgumentResolver $argumentResolver,
+        ) {
         }
 
         public function handle(Request $request)

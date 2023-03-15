@@ -20,13 +20,11 @@ all subsequent calls return the same instance, unless the service is
     class MyService
     {
         /**
-         * @var callable(): MailerInterface
+         * @param callable(): MailerInterface
          */
-        private \Closure $mailer;
-
-        public function __construct(\Closure $mailer)
-        {
-            $this->mailer = $mailer;
+        public function __construct(
+            private \Closure $mailer,
+        ) {
         }
 
         public function doSomething(): void

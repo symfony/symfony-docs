@@ -35,11 +35,9 @@ serialized::
 
     class SmsNotification
     {
-        private $content;
-
-        public function __construct(string $content)
-        {
-            $this->content = $content;
+        public function __construct(
+            private string $content,
+        ) {
         }
 
         public function getContent(): string
@@ -365,11 +363,9 @@ etc.) instead of the object (otherwise you might see errors related to the Entit
 
     class NewUserWelcomeEmail
     {
-        private $userId;
-
-        public function __construct(int $userId)
-        {
-            $this->userId = $userId;
+        public function __construct(
+            private int $userId,
+        ) {
         }
 
         public function getUserId(): int
@@ -390,11 +386,9 @@ Then, in your handler, you can query for a fresh object::
     #[AsMessageHandler]
     class NewUserWelcomeEmailHandler
     {
-        private $userRepository;
-
-        public function __construct(UserRepository $userRepository)
-        {
-            $this->userRepository = $userRepository;
+        public function __construct(
+            private UserRepository $userRepository,
+        ) {
         }
 
         public function __invoke(NewUserWelcomeEmail $welcomeEmail)

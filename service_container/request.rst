@@ -18,11 +18,9 @@ method::
 
     class NewsletterManager
     {
-        protected $requestStack;
-
-        public function __construct(RequestStack $requestStack)
-        {
-            $this->requestStack = $requestStack;
+        public function __construct(
+            protected RequestStack $requestStack,
+        ) {
         }
 
         public function anyMethod()

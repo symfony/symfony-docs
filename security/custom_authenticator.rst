@@ -229,11 +229,9 @@ using :ref:`the user provider <security-user-providers>`::
 
         class CustomAuthenticator extends AbstractAuthenticator
         {
-            private $userRepository;
-
-            public function __construct(UserRepository $userRepository)
-            {
-                $this->userRepository = $userRepository;
+            public function __construct(
+                private UserRepository $userRepository,
+            ) {
             }
 
             public function authenticate(Request $request): Passport

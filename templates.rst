@@ -619,11 +619,9 @@ the :class:`Twig\\Environment` class::
 
     class SomeService
     {
-        private $twig;
-
-        public function __construct(Environment $twig)
-        {
-            $this->twig = $twig;
+        public function __construct(
+            private Environment $twig,
+        ) {
         }
 
         public function someMethod()

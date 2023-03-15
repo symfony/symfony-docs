@@ -87,13 +87,10 @@ key of the lock::
 
     class RefreshTaxonomy
     {
-        private object $article;
-        private Key $key;
-
-        public function __construct(object $article, Key $key)
-        {
-            $this->article = $article;
-            $this->key = $key;
+        public function __construct(
+            private object $article,
+            private Key $key,
+        ) {
         }
 
         public function getArticle(): object

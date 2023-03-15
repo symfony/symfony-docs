@@ -553,11 +553,9 @@ the injected slugger is the same as the request locale::
 
     class MyService
     {
-        private $slugger;
-
-        public function __construct(SluggerInterface $slugger)
-        {
-            $this->slugger = $slugger;
+        public function __construct(
+            private SluggerInterface $slugger,
+        ) {
         }
 
         public function someMethod()

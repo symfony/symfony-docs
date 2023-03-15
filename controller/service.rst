@@ -190,11 +190,9 @@ service and use it directly::
 
     class HelloController
     {
-        private $twig;
-
-        public function __construct(Environment $twig)
-        {
-            $this->twig = $twig;
+        public function __construct(
+            private Environment $twig,
+        ) {
         }
 
         public function index($name)

@@ -284,11 +284,9 @@ and use it later::
 
     class MessageGenerator
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
 
         public function getHappyMessage(): string
@@ -347,13 +345,10 @@ made. To do that, you create a new class::
 
     class SiteUpdateManager
     {
-        private $messageGenerator;
-        private $mailer;
-
-        public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
-        {
-            $this->messageGenerator = $messageGenerator;
-            $this->mailer = $mailer;
+        public function __construct(
+            private MessageGenerator $messageGenerator,
+            private MailerInterface $mailer,
+        ) {
         }
 
         public function notifyOfSiteUpdate(): bool
@@ -421,11 +416,11 @@ example, suppose you want to make the admin email configurable:
           // ...
     +    private $adminEmail;
 
-    -    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
-    +    public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer, string $adminEmail)
-          {
-              // ...
-    +        $this->adminEmail = $adminEmail;
+          public function __construct(
+              private MessageGenerator $messageGenerator,
+              private MailerInterface $mailer,
+    +        private string $adminEmail,)
+          ) {
           }
 
           public function notifyOfSiteUpdate(): bool
@@ -623,11 +618,9 @@ The ``MessageGenerator`` service created earlier requires a ``LoggerInterface`` 
 
     class MessageGenerator
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
         }
         // ...
     }
@@ -717,12 +710,12 @@ Let's add an argument to our ``MessageGenerator`` constructor::
 
     class MessageGenerator
     {
-        private $logger;
         private $messageHash;
 
-        public function __construct(LoggerInterface $logger, callable $generateMessageHash)
-        {
-            $this->logger = $logger;
+        public function __construct(
+            private LoggerInterface $logger,
+            callable $generateMessageHash,
+        ) {
             $this->messageHash = $generateMessageHash();
         }
         // ...

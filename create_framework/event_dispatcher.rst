@@ -45,17 +45,12 @@ the Response instance::
 
     class Framework
     {
-        private $dispatcher;
-        private $matcher;
-        private $controllerResolver;
-        private $argumentResolver;
-
-        public function __construct(EventDispatcher $dispatcher, UrlMatcherInterface $matcher, ControllerResolverInterface $controllerResolver, ArgumentResolverInterface $argumentResolver)
-        {
-            $this->dispatcher = $dispatcher;
-            $this->matcher = $matcher;
-            $this->controllerResolver = $controllerResolver;
-            $this->argumentResolver = $argumentResolver;
+        public function __construct(
+            private EventDispatcher $dispatcher,
+            private UrlMatcherInterface $matcher,
+            private ControllerResolverInterface $controllerResolver,
+            private ArgumentResolverInterface $argumentResolver,
+        ) {
         }
 
         public function handle(Request $request)
@@ -94,13 +89,10 @@ now dispatched::
 
     class ResponseEvent extends Event
     {
-        private $request;
-        private $response;
-
-        public function __construct(Response $response, Request $request)
-        {
-            $this->response = $response;
-            $this->request = $request;
+        public function __construct(
+            private Response $response,
+            private Request $request,
+        ) {
         }
 
         public function getResponse()

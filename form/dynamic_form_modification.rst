@@ -238,11 +238,9 @@ service into the form type so you can get the current user object::
 
     class FriendMessageFormType extends AbstractType
     {
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
         // ....
@@ -267,11 +265,9 @@ security helper to fill in the listener logic::
 
     class FriendMessageFormType extends AbstractType
     {
-        private $security;
-
-        public function __construct(Security $security)
-        {
-            $this->security = $security;
+        public function __construct(
+            private Security $security,
+        ) {
         }
 
         public function buildForm(FormBuilderInterface $builder, array $options): void

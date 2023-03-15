@@ -50,13 +50,14 @@ You can use ``#[HasNamedArguments]`` to make some constraint options required::
     class ContainsAlphanumeric extends Constraint
     {
         public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-        public string $mode;
 
         #[HasNamedArguments]
-        public function __construct(string $mode, array $groups = null, mixed $payload = null)
-        {
+        public function __construct(
+            public string $mode,
+            array $groups = null,
+            mixed $payload = null,
+        ) {
             parent::__construct([], $groups, $payload);
-            $this->mode = $mode;
         }
     }
 

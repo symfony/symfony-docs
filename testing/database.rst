@@ -27,11 +27,9 @@ Suppose the class you want to test looks like this::
 
     class SalaryCalculator
     {
-        private $objectManager;
-
-        public function __construct(ObjectManager $objectManager)
-        {
-            $this->objectManager = $objectManager;
+        public function __construct(
+            private ObjectManager $objectManager,
+        ) {
         }
 
         public function calculateTotalSalary($id)

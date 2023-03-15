@@ -1021,11 +1021,9 @@ of:
 
     class SomeService
     {
-        private LocaleSwitcher $localeSwitcher;
-
-        public function __construct(LocaleSwitcher $localeSwitcher)
-        {
-            $this->localeSwitcher = $localeSwitcher;
+        public function __construct(
+            private LocaleSwitcher $localeSwitcher,
+        ) {
         }
 
         public function someMethod()

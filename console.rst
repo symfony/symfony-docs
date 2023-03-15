@@ -420,12 +420,9 @@ as a service, you can use normal dependency injection. Imagine you have a
 
     class CreateUserCommand extends Command
     {
-        private $userManager;
-
-        public function __construct(UserManager $userManager)
-        {
-            $this->userManager = $userManager;
-
+        public function __construct(
+            private UserManager $userManager,
+        ){
             parent::__construct();
         }
 

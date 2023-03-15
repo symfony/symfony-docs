@@ -551,11 +551,9 @@ event subscribers, you can learn more about them at :doc:`/event_dispatcher`::
 
     class TokenSubscriber implements EventSubscriberInterface
     {
-        private $tokens;
-
-        public function __construct($tokens)
-        {
-            $this->tokens = $tokens;
+        public function __construct(
+            private $tokens
+        ) {
         }
 
         public function onKernelController(ControllerEvent $event)
@@ -716,13 +714,10 @@ this::
 
     class BeforeSendMailEvent extends Event
     {
-        private $subject;
-        private $message;
-
-        public function __construct($subject, $message)
-        {
-            $this->subject = $subject;
-            $this->message = $message;
+        public function __construct(
+            private $subject,
+            private $message,
+        ) {
         }
 
         public function getSubject()
@@ -755,11 +750,9 @@ And the ``AfterSendMailEvent`` even like this::
 
     class AfterSendMailEvent extends Event
     {
-        private $returnValue;
-
-        public function __construct($returnValue)
-        {
-            $this->returnValue = $returnValue;
+        public function __construct(
+            private $returnValue,
+        ) {
         }
 
         public function getReturnValue()

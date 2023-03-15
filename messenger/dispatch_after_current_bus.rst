@@ -57,13 +57,10 @@ using the ``DispatchAfterCurrentBusMiddleware`` and adding a
 
     class RegisterUserHandler
     {
-        private $eventBus;
-        private $em;
-
-        public function __construct(MessageBusInterface $eventBus, EntityManagerInterface $em)
-        {
-            $this->eventBus = $eventBus;
-            $this->em = $em;
+        public function __construct(
+            private MessageBusInterface $eventBus,
+            private EntityManagerInterface $em,
+        ) {
         }
 
         public function __invoke(RegisterUser $command)
@@ -97,13 +94,10 @@ using the ``DispatchAfterCurrentBusMiddleware`` and adding a
 
     class WhenUserRegisteredThenSendWelcomeEmail
     {
-        private $mailer;
-        private $em;
-
-        public function __construct(MailerInterface $mailer, EntityManagerInterface $em)
-        {
-            $this->mailer = $mailer;
-            $this->em = $em;
+        public function __construct(
+            private MailerInterface $mailer,
+            EntityManagerInterface $em,
+        ) {
         }
 
         public function __invoke(UserRegistered $event)

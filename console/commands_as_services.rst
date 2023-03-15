@@ -26,12 +26,9 @@ For example, suppose you want to log something from within your command::
     #[AsCommand(name: 'app:sunshine')]
     class SunshineCommand extends Command
     {
-        private $logger;
-
-        public function __construct(LoggerInterface $logger)
-        {
-            $this->logger = $logger;
-
+        public function __construct(
+            private LoggerInterface $logger,
+        ) {
             // you *must* call the parent constructor
             parent::__construct();
         }

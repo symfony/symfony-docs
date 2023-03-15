@@ -239,13 +239,10 @@ logic to a separate service::
 
     class FileUploader
     {
-        private $targetDirectory;
-        private $slugger;
-
-        public function __construct($targetDirectory, SluggerInterface $slugger)
-        {
-            $this->targetDirectory = $targetDirectory;
-            $this->slugger = $slugger;
+        public function __construct(
+            private $targetDirectory,
+            private SluggerInterface $slugger,
+        ) {
         }
 
         public function upload(UploadedFile $file)

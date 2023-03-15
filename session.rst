@@ -45,12 +45,9 @@ if you type-hint an argument with :class:`Symfony\\Component\\HttpFoundation\\Re
 
         class SomeService
         {
-            private $requestStack;
-
-            public function __construct(RequestStack $requestStack)
-            {
-                $this->requestStack = $requestStack;
-
+            public function __construct(
+                private RequestStack $requestStack,
+            ) {
                 // Accessing the session in the constructor is *NOT* recommended, since
                 // it might not be accessible yet or lead to unwanted side-effects
                 // $this->session = $requestStack->getSession();
@@ -1295,11 +1292,9 @@ can determine the correct locale however you want::
 
     class LocaleSubscriber implements EventSubscriberInterface
     {
-        private $defaultLocale;
-
-        public function __construct(string $defaultLocale = 'en')
-        {
-            $this->defaultLocale = $defaultLocale;
+        public function __construct(
+            private string $defaultLocale = 'en',
+        ) {
         }
 
         public function onKernelRequest(RequestEvent $event)
@@ -1429,11 +1424,9 @@ event::
      */
     class UserLocaleSubscriber implements EventSubscriberInterface
     {
-        private $requestStack;
-
-        public function __construct(RequestStack $requestStack)
-        {
-            $this->requestStack = $requestStack;
+        public function __construct(
+            private RequestStack $requestStack,
+        ) {
         }
 
         public function onInteractiveLogin(InteractiveLoginEvent $event)

@@ -182,11 +182,9 @@ method::
     #[\Attribute(\Attribute::TARGET_CLASS)]
     class SensitiveElement
     {
-        private string $token;
-
-        public function __construct(string $token)
-        {
-            $this->token = $token;
+        public function __construct(
+            private string $token,
+        ) {
         }
 
         public function getToken(): string

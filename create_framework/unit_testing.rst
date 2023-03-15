@@ -62,15 +62,11 @@ resolver. Modify the framework to make use of them::
 
     class Framework
     {
-        protected $matcher;
-        protected $controllerResolver;
-        protected $argumentResolver;
-
-        public function __construct(UrlMatcherInterface $matcher, ControllerResolverInterface $resolver, ArgumentResolverInterface $argumentResolver)
-        {
-            $this->matcher = $matcher;
-            $this->controllerResolver = $resolver;
-            $this->argumentResolver = $argumentResolver;
+        public function __construct(
+            private UrlMatcherInterface $matcher,
+            private ControllerResolverInterface $resolver,
+            private ArgumentResolverInterface $argumentResolver,
+        ) {
         }
 
         // ...
