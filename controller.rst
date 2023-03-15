@@ -545,16 +545,18 @@ Sending Early Hints
 
     The Early Hints helper of the ``AbstractController`` was introduced
     in Symfony 6.3.
+.. _`Early hints`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103
+.. _`SAPI`: https://www.php.net/manual/en/function.php-sapi-name.php
 
-Early hints allow to tell user's browser to start downloading some assets
-even before sending the response content. Thanks to this, the browser is able
-to prefetch resources that will be needed once the full response is finally sent.
-These resources are commonly Javascript or CSS files, but it can be any type of
-resource.
+`Early hints`_ tell the browser to start downloading some assets even before the
+application sends the response content. This improves perceived performance
+because the browser can prefetch resources that will be needed once the full
+response is finally sent. These resources are commonly Javascript or CSS files,
+but they can be any type of resource.
 
 .. note::
 
-    In order to work, the SAPI you're using must support this feature, like
+    In order to work, the `SAPI`_ you're using must support this feature, like
     `FrankenPHP`_.
 
 You can send early hints from your controller action thanks to the
@@ -584,10 +586,14 @@ method::
         }
     }
 
-The ``sendEarlyHints`` method will send a first informational response to the
-web browser with a 103 status code. If it supports it, the browser will start
-to download ``style.css`` and ``script.js`` while you're generating the response
-full content.
+Technically, Early Hints are an informational HTTP response with the status code
+``103``. The ``sendEarlyHints()`` method creates a ``Response`` object with that
+status code and sends its headers immediately.
+
+This way, browsers can start downloading the assets immediately; like the
+``style.css`` and ``script.js`` files in the above example). The
+``sendEarlyHints()`` method also returns the ``Response`` object, which you
+must use to create the full response sent from the controller action.
 
 Final Thoughts
 --------------
