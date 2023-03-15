@@ -465,7 +465,7 @@ To answer this, change the service declaration:
 
             MailerSendmailTransport:
                 tags:
-                    - { name: 'app.mail_transport', alias: 'sendmail' }
+                    - { name: 'app.mail_transport', alias: ['sendmail', 'anotherAlias']}
 
     .. code-block:: xml
 
@@ -484,7 +484,10 @@ To answer this, change the service declaration:
                 </service>
 
                 <service id="MailerSendmailTransport">
-                    <tag name="app.mail_transport" alias="sendmail"/>
+                    <tag name="app.mail_transport">
+                        <attribute>sendmail</attribute>
+                        <attribute>anotherAlias</attribute>
+                    </tag>
                 </service>
             </services>
         </container>
@@ -504,9 +507,13 @@ To answer this, change the service declaration:
             ;
 
             $services->set(\MailerSendmailTransport::class)
-                ->tag('app.mail_transport', ['alias' => 'sendmail'])
+                ->tag('app.mail_transport', ['alias' => ['sendmail', 'anotherAlias']])
             ;
         };
+
+.. versionadded:: 6.2
+
+    Support for attributes as array was introduced in Symfony 6.2.
 
 .. tip::
 
