@@ -651,9 +651,9 @@ possible to determine a unique singular/plural form for the given word.
 
 .. note::
 
-    Symfony also provide a :class:`Symfony\\Component\\String\\Inflector\\FrenchInflector`
-    and an :class:`Symfony\\Component\\String\\Inflector\\InflectorInterface` to implements
-    if you need to use your own inflector.
+    Symfony also provides a :class:`Symfony\\Component\\String\\Inflector\\FrenchInflector`
+    and an :class:`Symfony\\Component\\String\\Inflector\\InflectorInterface` if
+    you need to implement your own inflector.
 
 .. _`ASCII`: https://en.wikipedia.org/wiki/ASCII
 .. _`Unicode`: https://en.wikipedia.org/wiki/Unicode
