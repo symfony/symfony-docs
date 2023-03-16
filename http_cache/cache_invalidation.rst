@@ -126,11 +126,13 @@ Then, register the class as a service that :doc:`decorates </service_container/s
             xsi:schemaLocation="http://symfony.com/schema/dic/services
                 https://symfony.com/schema/dic/services/services-1.0.xsd"
         >
-            <service id="App\CacheKernel" decorates="http_cache">
-                <argument type="service" id="kernel"/>
-                <argument type="service" id="http_cache.store"/>
-                <argument type="service" id="esi" on-invalid="null"/>
-            </service>
+            <services>
+                <service id="App\CacheKernel" decorates="http_cache">
+                    <argument type="service" id="kernel"/>
+                    <argument type="service" id="http_cache.store"/>
+                    <argument type="service" id="esi" on-invalid="null"/>
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
