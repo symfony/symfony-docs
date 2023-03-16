@@ -61,7 +61,7 @@ The most common way to listen to an event is to register an **event listener**::
     }
 
 Now that the class is created, you need to register it as a service and
-notify Symfony that it is a event listener by using a special "tag":
+notify Symfony that it is an event listener by using a special "tag":
 
 .. configuration-block::
 
