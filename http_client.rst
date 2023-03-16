@@ -1576,14 +1576,14 @@ interoperable with libraries that require it thanks to the
 Let's say you want to instantiate a class with the following constructor,
 that requires HTTPlug dependencies::
 
-    use Http\Client\HttpClient;
+    use Http\Client\HttpAsyncClient;
     use Http\Message\RequestFactory;
     use Http\Message\StreamFactory;
 
     class SomeSdk
     {
         public function __construct(
-            HttpClient $httpClient,
+            HttpAsyncClient $httpClient,
             RequestFactory $requestFactory,
             StreamFactory $streamFactory
         )
@@ -1597,8 +1597,7 @@ Because ``HttplugClient`` implements the three interfaces, you can use it this w
     $httpClient = new HttplugClient();
     $apiClient = new SomeSdk($httpClient, $httpClient, $httpClient);
 
-If you'd like to work with promises, ``HttplugClient`` also implements the
-``HttpAsyncClient`` interface. To use it, you need to install the
+To use it, you need to install the
 ``guzzlehttp/promises`` package:
 
 .. code-block:: terminal
