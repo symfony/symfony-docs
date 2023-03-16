@@ -70,8 +70,21 @@ Serializer
 * :ref:`MaxDepth <serializer_handling-serialization-depth>`
 * :ref:`SerializedName <serializer_name-conversion>`
 
+Symfony UX
+~~~~~~~~~~
+
+* `AsEntityAutocompleteField`_
+* `AsLiveComponent`_
+* `AsTwigComponent`_
+* `Broadcast`_
+
 Validator
 ~~~~~~~~~
 
 Each validation constraint comes with a PHP attribute. See
 :doc:`/reference/constraints` for a full list of validation constraints.
+
+.. _`AsEntityAutocompleteField`: https://symfony.com/bundles/ux-autocomplete/current/index.html#usage-in-a-form-with-ajax
+.. _`AsLiveComponent`: https://symfony.com/bundles/ux-live-component/current/index.html
+.. _`AsTwigComponent`: https://symfony.com/bundles/ux-twig-component/current/index.html
+.. _`Broadcast`: https://symfony.com/bundles/ux-turbo/current/index.html#broadcast-conventions-and-configuration
