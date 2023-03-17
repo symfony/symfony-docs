@@ -2188,7 +2188,7 @@ provided in order to ease the declaration of these special handlers::
 .. versionadded:: 6.3
 
     The :method:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerTrait::getBatchSize`
-    method was introduced 6.3.
+    method was introduced in Symfony 6.3.
 
 .. note::
 
