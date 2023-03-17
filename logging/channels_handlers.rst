@@ -99,10 +99,9 @@ can do it in any (or all) environments:
     such handler will ignore this configuration and will process every message
     passed to them.
 
-YAML Specification
-------------------
+.. _yaml-specification:
 
-You can specify the configuration by many forms:
+You can specify the configuration in different ways:
 
 .. code-block:: yaml
 
