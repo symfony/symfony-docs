@@ -160,6 +160,10 @@ follows:
     If you are creating your first workflows, consider using the ``workflow:dump``
     command to :doc:`debug the workflow contents </workflow/dumping-workflows>`.
 
+.. tip::
+
+    You can use constants in YAML files and add some in the BlogPost entity for places ``draft`` by ``!php/const App\Entity\BlogPost::STATE_DRAFT`` or for transitions ``to_review`` by ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``.
+
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
     // src/Entity/BlogPost.php
