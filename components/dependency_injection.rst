@@ -59,7 +59,7 @@ so this is passed into the constructor::
     class Mailer
     {
         public function __construct(
-            private readonly $transport,
+            private $transport,
         ) {
         }
 
