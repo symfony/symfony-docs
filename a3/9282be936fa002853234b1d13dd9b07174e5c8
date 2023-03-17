@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by 94noni at 2023-02-21T21:53:36Z
+
+kinda related https://github.com/symfony/webpack-encore/issues/1129
+
+---------------------------------------------------------------------------
+
+by raphaelriehl at 2023-03-06T13:39:28Z
+
+@jmsche : A small point to correct for the content of the package.json file, it is necessary to add the "version" otherwise it leads to an error.
+
+---------------------------------------------------------------------------
+
+by jmsche at 2023-03-14T10:16:24Z
+
+@raphaelriehl Thanks, added version to the package.json example :)
