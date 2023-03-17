@@ -158,7 +158,7 @@ on the configuration you defined::
     class FooService
     {
         public function __construct(
-            private UuidFactory $uuidFactory,
+            private readonly UuidFactory $uuidFactory,
         ) {
         }
 
@@ -358,7 +358,7 @@ Like UUIDs, ULIDs have their own factory, ``UlidFactory``, that can be used to g
     class FooService
     {
         public function __construct(
-            private UlidFactory $ulidFactory,
+            private readonly UlidFactory $ulidFactory,
         ) {
         }
 

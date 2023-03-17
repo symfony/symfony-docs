@@ -953,7 +953,7 @@ Consider the following example::
     class Foo
     {
         public function __construct(
-            private Bar $bar,
+            private readonly Bar $bar,
         ) {
         }
 

@@ -791,7 +791,7 @@ methods. You can inject this as a service anywhere in your application::
     class UserApiNormalizer
     {
         public function __construct(
-            private UrlHelper $urlHelper,
+            private readonly UrlHelper $urlHelper,
         ) {
         }
 

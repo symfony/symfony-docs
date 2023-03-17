@@ -20,7 +20,7 @@ PSR-3 compliant logger::
     class MyDependency
     {
         public function __construct(
-            private LoggerInterface $logger,
+            private readonly LoggerInterface $logger,
         ) {
         }
 

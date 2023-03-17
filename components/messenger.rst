@@ -235,8 +235,8 @@ you can create your own message sender::
     class ImportantActionToEmailSender implements SenderInterface
     {
         public function __construct(
-            private MailerInterface $mailer,
-            private string $toEmail,
+            private readonly MailerInterface $mailer,
+            private readonly string $toEmail,
         ) {
         }
 
@@ -284,8 +284,8 @@ do is to write your own CSV receiver::
     class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {
         public function __construct(
-            private SerializerInterface $serializer,
-            private string $filePath,
+            private readonly SerializerInterface $serializer,
+            private readonly string $filePath,
         ) {
         }
 

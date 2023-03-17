@@ -554,7 +554,7 @@ the injected slugger is the same as the request locale::
     class MyService
     {
         public function __construct(
-            private SluggerInterface $slugger,
+            private readonly SluggerInterface $slugger,
         ) {
         }
 

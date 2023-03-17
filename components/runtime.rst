@@ -406,8 +406,8 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
     class ReactPHPRunner implements RunnerInterface
     {
         public function __construct(
-            private RequestHandlerInterface $application,
-            private int $port,
+            private readonly RequestHandlerInterface $application,
+            private readonly int $port,
         ) {
         }
 
