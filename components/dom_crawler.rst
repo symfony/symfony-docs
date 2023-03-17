@@ -661,7 +661,7 @@ parser, set its ``useHtml5Parser`` constructor argument to ``true``::
 
     $crawler = new Crawler(null, $uri, useHtml5Parser: true);
 
-By doing do, the crawler will use the HTML5 parser provided by the `masterminds/html5`_
+By doing so, the crawler will use the HTML5 parser provided by the `masterminds/html5`_
 library to parse the documents.
 
 .. versionadded:: 6.3
