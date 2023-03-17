@@ -162,7 +162,10 @@ follows:
 
 .. tip::
 
-    You can use constants in YAML files and add some in the BlogPost entity for places ``draft`` by ``!php/const App\Entity\BlogPost::STATE_DRAFT`` or for transitions ``to_review`` by ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``.
+    You can use PHP constants in YAML files via the ``!php/const `` notation.
+    E.g. you can use ``!php/const App\Entity\BlogPost::STATE_DRAFT`` instead of
+    ``'draft'`` or ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``
+    instead of ``'to_review'``.
 
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
