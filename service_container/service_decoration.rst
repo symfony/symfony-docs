@@ -302,17 +302,9 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             #[AsDecorator(decorates: Foo::class, priority: 5)]
             class Bar
             {
-<<<<<<< HEAD
-                private $inner;
-
-                public function __construct(#[AutowireDecorated] $inner)
-                {
-                    $this->inner = $inner;
-=======
                 public function __construct(
-                    private #[MapDecorated] $inner,
+                    private #[AutowireDecorated] $inner,
                 ) {
->>>>>>> 6.2
                 }
                 // ...
             }
@@ -320,17 +312,9 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             #[AsDecorator(decorates: Foo::class, priority: 1)]
             class Baz
             {
-<<<<<<< HEAD
-                private $inner;
-
-                public function __construct(#[AutowireDecorated] $inner)
-                {
-                    $this->inner = $inner;
-=======
                 public function __construct(
-                    private #[MapDecorated] $inner,
+                    private #[AutowireDecorated] $inner,
                 ) {
->>>>>>> 6.2
                 }
 
                 // ...
@@ -638,17 +622,9 @@ Three different behaviors are available:
             #[AsDecorator(decorates: Mailer::class, onInvalid: ContainerInterface::IGNORE_ON_INVALID_REFERENCE)]
             class Bar
             {
-<<<<<<< HEAD
-                private $inner;
-
-                public function __construct(#[AutowireDecorated] $inner)
-                {
-                    $this->inner = $inner;
-=======
                 public function __construct(
-                    private #[MapDecorated] $inner,
+                    private #[AutowireDecorated] $inner,
                 ) {
->>>>>>> 6.2
                 }
 
                 // ...
