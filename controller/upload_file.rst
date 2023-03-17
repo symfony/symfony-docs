@@ -27,12 +27,12 @@ add a PDF brochure for each product. To do so, add a new property called
         #[ORM\Column(type: 'string')]
         private $brochureFilename;
 
-        public function getBrochureFilename()
+        public function getBrochureFilename(): string
         {
             return $this->brochureFilename;
         }
 
-        public function setBrochureFilename($brochureFilename)
+        public function setBrochureFilename(string $brochureFilename): self
         {
             $this->brochureFilename = $brochureFilename;
 
@@ -61,7 +61,7 @@ so Symfony doesn't try to get/set its value from the related entity::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -92,7 +92,7 @@ so Symfony doesn't try to get/set its value from the related entity::
             ;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Product::class,
@@ -126,13 +126,14 @@ Finally, you need to update the code of the controller that handles the form::
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Component\String\Slugger\SluggerInterface;
 
     class ProductController extends AbstractController
     {
         #[Route('/product/new', name: 'app_product_new')]
-        public function new(Request $request, SluggerInterface $slugger)
+        public function new(Request $request, SluggerInterface $slugger): Response
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
@@ -245,7 +246,7 @@ logic to a separate service::
         ) {
         }
 
-        public function upload(UploadedFile $file)
+        public function upload(UploadedFile $file): string
         {
             $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $this->slugger->slug($originalFilename);
