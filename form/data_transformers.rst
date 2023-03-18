@@ -78,11 +78,11 @@ class::
 
             $builder->get('tags')
                 ->addModelTransformer(new CallbackTransformer(
-                    function ($tagsAsArray) {
+                    function ($tagsAsArray): string {
                         // transform the array to a string
                         return implode(', ', $tagsAsArray);
                     },
-                    function ($tagsAsString) {
+                    function ($tagsAsString): array {
                         // transform the string back to an array
                         return explode(', ', $tagsAsString);
                     }
