@@ -29,12 +29,12 @@ add a PDF brochure for each product. To do so, add a new property called
          */
         private $brochureFilename;
 
-        public function getBrochureFilename()
+        public function getBrochureFilename(): string
         {
             return $this->brochureFilename;
         }
 
-        public function setBrochureFilename($brochureFilename)
+        public function setBrochureFilename(string $brochureFilename)
         {
             $this->brochureFilename = $brochureFilename;
 
