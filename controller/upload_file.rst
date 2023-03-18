@@ -128,6 +128,7 @@ Finally, you need to update the code of the controller that handles the form::
     use Symfony\Component\HttpFoundation\File\Exception\FileException;
     use Symfony\Component\HttpFoundation\File\UploadedFile;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -136,7 +137,7 @@ Finally, you need to update the code of the controller that handles the form::
         /**
          * @Route("/product/new", name="app_product_new")
          */
-        public function new(Request $request, SluggerInterface $slugger)
+        public function new(Request $request, SluggerInterface $slugger): Response
         {
             $product = new Product();
             $form = $this->createForm(ProductType::class, $product);
