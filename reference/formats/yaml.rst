@@ -338,6 +338,21 @@ official YAML specification but are useful in Symfony applications:
       data:
           my_object: !php/object 'O:8:"stdClass":1:{s:3:"bar";i:2;}'
 
+* ``!php/enum`` allows to use a PHP enum case. This tag takes the fully-qualified
+  class name of the enum case as its argument:
+
+  .. code-block:: yaml
+
+      data:
+          # You can use the typed enum case...
+          operator_type: !php/enum App\Operator\Enum\Type::Or
+          # ... or you can also use "->value" to directly use the value of a BackedEnum case
+          operator_type: !php/enum App\Operator\Enum\Type::Or->value
+
+.. versionadded:: 6.2
+
+    The ``!php/enum`` tag was introduced in Symfony 6.2.
+
 Unsupported YAML Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
