@@ -1634,6 +1634,10 @@ If you want to extend the behavior of a base HTTP client, you can use
         }
     }
 
+.. note::
+
+    A decoration priority higher than 5 is required to affect scoped clients
+
 A decorator like this one is useful in cases where processing the requests'
 arguments is enough. By decorating the ``on_progress`` option, you can
 even implement basic monitoring of the response. However, since calling
