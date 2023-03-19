@@ -286,7 +286,7 @@ User Input Methods
     In case you need to validate the given value, pass a callback validator as
     the third argument::
 
-        $io->ask('Number of workers to start', 1, function ($number) {
+        $io->ask('Number of workers to start', '1', function ($number) {
             if (!is_numeric($number)) {
                 throw new \RuntimeException('You must type a number.');
             }
