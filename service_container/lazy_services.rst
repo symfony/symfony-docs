@@ -106,6 +106,29 @@ For example, to define your service as lazy use the following::
         // ...
     }
 
+You can also configure laziness when your service is injected with 
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autowire` attribute.
+For example, to inject your service as lazy use the following::
+
+    namespace App\Service;
+
+    use App\Twig\AppExtension;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[Autowire(service: 'app.twig.app_extension', lazy: true)] ExtensionInterface $extension
+        ) {
+            // ...
+        }
+    }
+
+.. versionadded:: 6.3
+
+    The ``lazy`` argument of the `#[Autowire()]` attribute was introduced in
+    Symfony 6.3.
+
 Interface Proxifying
 --------------------
 
