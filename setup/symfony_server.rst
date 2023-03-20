@@ -59,7 +59,7 @@ run the Symfony server in the background:
 .. tip::
 
     On macOS, when starting the Symfony server you might see a warning dialog asking
-    _"Do you want the application to accept incoming network connections?"_.
+    *"Do you want the application to accept incoming network connections?"*.
     This happens when running unsigned appplications that are not listed in the
     firewall list. The solution is to run this command that signs the Symfony binary:
 
