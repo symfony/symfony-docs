@@ -2321,9 +2321,29 @@ is 403), this can be done by setting with the ``statusCode`` argument::
         // ...
     }
 
+You can also set the internal exception code of the
+:class:`Symfony\\Component\\Security\\Core\\Exception\\AccessDeniedException`
+that is thrown with the ``exceptionCode`` argument::
+
+    // src/Controller/AdminController.php
+    // ...
+
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    #[IsGranted('ROLE_ADMIN', statusCode: 403, exceptionCode: 10010)]
+    class AdminController extends AbstractController
+    {
+        // ...
+    }
+
 .. versionadded:: 6.2
 
     The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
+
+.. versionadded:: 6.3
+
+    The ``exceptionCode`` argument of the ``#[IsGranted()]`` attribute was
+    introduced in Symfony 6.3.
 
 .. _security-template:
 
