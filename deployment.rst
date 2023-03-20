@@ -223,6 +223,7 @@ setup:
 * Running any database migrations
 * Clearing your APCu cache
 * Add/edit CRON jobs
+* Restarting your workers
 * :ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
 * Pushing assets to a CDN
 * On a shared hosting platform using the Apache web server, you may need to
