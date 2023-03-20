@@ -315,6 +315,44 @@ The YAML specification defines some tags to set the type of any data explicitly:
             Pz7Y6OjuDg4J+fn5OTk6enp
             56enmleECcgggoBADs=
 
+Symfony Specific Features
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Yaml component provides some additional features that are not part of the
+official YAML specification but are useful in Symfony applications:
+
+* ``!php/const`` allows to get the value of a PHP constant. This tag takes the
+  fully-qualified class name of the constant as its argument:
+
+  .. code-block:: yaml
+
+      data:
+          page_limit: !php/const App\Pagination\Paginator::PAGE_LIMIT
+
+* ``!php/object`` allows to pass the serialized representation of a PHP
+  object (created with the `serialize()`_ function), which will be deserialized
+  when parsing the YAML file:
+
+  .. code-block:: yaml
+
+      data:
+          my_object: !php/object 'O:8:"stdClass":1:{s:3:"bar";i:2;}'
+
+* ``!php/enum`` allows to use a PHP enum case. This tag takes the fully-qualified
+  class name of the enum case as its argument:
+
+  .. code-block:: yaml
+
+      data:
+          # You can use the typed enum case...
+          operator_type: !php/enum App\Operator\Enum\Type::Or
+          # ... or you can also use "->value" to directly use the value of a BackedEnum case
+          operator_type: !php/enum App\Operator\Enum\Type::Or->value
+
+.. versionadded:: 6.2
+
+    The ``!php/enum`` tag was introduced in Symfony 6.2.
+
 Unsupported YAML Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -332,3 +370,4 @@ The following YAML features are not supported by the Symfony Yaml component:
 
 .. _`YAML 1.2 version specification`: https://yaml.org/spec/1.2/spec.html
 .. _`ISO-8601`: https://www.iso.org/iso-8601-date-and-time-format.html
+.. _`serialize()`: https://www.php.net/manual/en/function.serialize.php
