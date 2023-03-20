@@ -321,6 +321,28 @@ The YAML specification defines some tags to set the type of any data explicitly:
             Pz7Y6OjuDg4J+fn5OTk6enp
             56enmleECcgggoBADs=
 
+Symfony Specific Tags
+~~~~~~~~~~~~~~~~~~~~~
+
+The YAML component provides a few additional tags that brings a few
+features when parsed in your PHP code:
+
+* ``!php/const`` allows to use a constant name defined in a PHP file. This
+  tag takes a constant FQCN as its argument:
+
+.. code-block:: yaml
+
+    data:
+        page_limit: !php/const App\Pagination\Paginator::PAGE_LIMIT
+
+* ``!php/object`` allows to pass the serialized representation of a PHP
+  object, which will be deserialized when the parsing is done:
+
+.. code-block:: yaml
+
+    data:
+        my_object: !php/object 'O:8:"stdClass":1:{s:3:"bar";i:2;}'
+
 Unsupported YAML Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
