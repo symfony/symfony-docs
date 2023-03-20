@@ -147,9 +147,13 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getEnum`
     Returns the parameter value converted to a PHP enum;
 
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getString`
+    Returns the parameter value as a string;
+
 .. versionadded:: 6.3
 
-    The ``ParameterBag::getEnum()`` method was introduced in Symfony 6.3.
+    The ``ParameterBag::getEnum()`` and ``ParameterBag::getString()`` methods
+    were introduced in Symfony 6.3.
 
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
