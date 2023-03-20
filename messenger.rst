@@ -762,7 +762,59 @@ message before terminating.
 
 However, you might prefer to use different POSIX signals for graceful shutdown.
 You can override default ones by setting the ``framework.messenger.stop_worker_on_signals``
-configuration option.
+configuration option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                stop_worker_on_signals:
+                    - "SIGINT"
+                    - "SIGTERM"
+                    - "SIGUSR1"
+
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <!-- ... -->
+
+                    <framework:stop-worker-on-signals signal="SIGINT"/>
+                    <framework:stop-worker-on-signals signal="SIGTERM"/>
+                    <framework:stop-worker-on-signals signal="SIGUSR1"/>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $messenger = $framework->messenger();
+
+            // ...
+
+            $messenger
+                ->stopWorkerOnSignals([\SIGINT, \SIGTERM, \SIGUSR1])
+                // ...
+            ;
+        };
 
 .. versionadded:: 6.3
 
