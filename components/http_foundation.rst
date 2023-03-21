@@ -378,6 +378,10 @@ use the ``isPrivateIp()`` method from the
     $isPrivate = IpUtils::isPrivateIp($ipv6);
     // $isPrivate = false
 
+.. versionadded:: 6.3
+
+    The ``isPrivateIp()`` method was introduced in Symfony 6.3.
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
