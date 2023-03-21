@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-03-20T02:41:00Z
+
+Can you explain why?
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2023-03-20T07:22:25Z
+
+I think it can be considered as good practice to inject directly `EntityManagerInterface` or `FooRepository` instead of Doctrine and then fetching the service we need through the container, this is also the way shown in the book & SymfonyCasts
