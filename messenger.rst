@@ -761,8 +761,12 @@ the ``SIGTERM`` or ``SIGINT`` POSIX signals to finish processing their current
 message before terminating.
 
 However, you might prefer to use different POSIX signals for graceful shutdown.
-You can override default ones by setting ``framework.messenger.stop_worker_on_signals``
+You can override default ones by setting the ``framework.messenger.stop_worker_on_signals``
 configuration option.
+
+.. versionadded:: 6.3
+
+    The ``framework.messenger.stop_worker_on_signals`` option was introduced in Symfony 6.3.
 
 In some cases the ``SIGTERM`` signal is sent by Supervisor itself (e.g. stopping
 a Docker container having Supervisor as its entrypoint). In these cases you
