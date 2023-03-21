@@ -361,7 +361,7 @@ analysis purposes. Use the ``anonymize()`` method from the
     $anonymousIpv6 = IpUtils::anonymize($ipv6);
     // $anonymousIpv6 = '2a01:198:603:10::'
 
-Check if an IP belongs to a private subnet
+Check if an IP Belongs to a Private Subnet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you need to know if an IP address belongs to a private subnet, you can
