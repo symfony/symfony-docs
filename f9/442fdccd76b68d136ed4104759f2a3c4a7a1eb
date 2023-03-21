@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by WebMamba at 2023-03-20T17:53:13Z
+
+Great thanks @alexandre-daubois! I was searching for it after looking at your last PR!
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2023-03-20T21:17:05Z
+
+I am also tempted to explicitly specify the default status code, and maybe document `message` argument (or I can do another PR for that) WDYT ?
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-03-20T21:21:56Z
+
+Updated! What do you think?
