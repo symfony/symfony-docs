@@ -902,7 +902,8 @@ multiple firewalls, the "context" could actually be shared:
 stateless
 ~~~~~~~~~
 
-Firewalls can configure a ``stateless`` boolean option in order to declare that the session mustn't be used when authenticating user:
+Firewalls can configure a ``stateless`` boolean option in order to declare that
+the session must not be used when authenticating users:
 
 .. configuration-block::
 
