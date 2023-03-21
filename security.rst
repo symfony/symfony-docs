@@ -1657,14 +1657,18 @@ You can log in a user programmatically using the ``login()`` method of the
             // you can also log in on a different firewall
             $security->login($user, 'form_login', 'other_firewall');
 
-            // use the redirection logic applied to regular login,
+            // use the redirection logic applied to regular login
             $redirectResponse = $security->login($user);
             return $redirectResponse;
-            // or use a specific redirection logic
-            // (redirect the user to its account page for instance)
-            // ...
+
+            // or use a custom redirection logic (e.g. redirect users to their account page)
+            // return new RedirectResponse('...');
         }
     }
+
+.. versionadded:: 6.3
+
+    The feature to use a custom redirection logic was introduced in Symfony 6.3.
 
 .. _security-logging-out:
 
