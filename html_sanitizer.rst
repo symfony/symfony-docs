@@ -364,16 +364,13 @@ attributes from the `W3C Standard Proposal`_ are allowed.
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // allow the <article> element and 2 attributes
-                    ->allowElement('article')
-                        ->attribute('class')
-                        ->attribute('data-attr')
+                    ->allowElement('article', ['class', 'data-attr'])
 
                     // allow the <img> element and preserve the src attribute
-                    ->allowElement('img')
-                        ->attribute('src')
+                    ->allowElement('img', 'src')
 
                     // allow the <h1> element with all safe attributes
-                    ->allowElement('h1', '*')
+                    ->allowElement('h1')
             ;
         };
 
@@ -528,12 +525,10 @@ on all elements allowed *before this setting*.
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // allow "src' on <iframe> elements
-                    ->allowAttribute('src')
-                        ->element('iframe')
+                    ->allowAttribute('src', ['iframe'])
 
                     // allow "data-attr" on all elements currently allowed
-                    ->allowAttribute('data-attr')
-                        ->element('*')
+                    ->allowAttribute('data-attr', '*')
             ;
         };
 
@@ -620,12 +615,10 @@ This option allows you to disallow attributes that were allowed before.
                         ->element('*')
 
                     // ...except for the <section> element
-                    ->dropAttriute('data-attr')
-                        ->element('section')
+                    ->dropAttribute('data-attr', ['section'])
 
                     // disallows "style' on any allowed element
                     ->dropAttribute('style')
-                        ->element('*')
             ;
         };
 
@@ -640,7 +633,7 @@ This option allows you to disallow attributes that were allowed before.
                 ->allowAttribute('data-attr')
 
                 // ...except for the <section> element
-                ->dropAttriute('data-attr', ['section'])
+                ->dropAttribute('data-attr', ['section'])
 
                 // disallows "style' on any allowed element
                 ->dropAttribute('style')
@@ -695,8 +688,7 @@ element (even if the original one didn't contain a ``rel`` attribute):
         return static function (FrameworkConfig $framework) {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
-                    ->forceAttribute('a')
-                        ->attribute('rel', 'noopener noreferrer')
+                    ->forceAttribute('a', 'rel', 'noopener noreferrer')
             ;
         };
 
@@ -791,9 +783,7 @@ URLs of ``<a>`` elements:
 
                     // specifies the allowed URL schemes. If the URL has a different scheme, the
                     // attribute will be dropped
-                    ->allowedLinkScheme('http')
-                    ->allowedLinkScheme('https')
-                    ->allowedLinkScheme('mailto')
+                    ->allowedLinkSchemes(['http', 'https', 'mailto'])
 
                     // specifies the allowed hosts, the attribute will be dropped if the
                     // URL contains a different host
@@ -907,9 +897,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 
                     // specifies the allowed URL schemes. If the URL has a different scheme, the
                     // attribute will be dropped
-                    ->allowedMediaScheme('http')
-                    ->allowedMediaScheme('https')
-                    ->allowedMediaScheme('mailto')
+                    ->allowedMediaSchemes(['http', 'https', 'mailto'])
 
                     // specifies the allowed hosts, the attribute will be dropped if the URL
                     // contains a different host
