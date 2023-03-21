@@ -361,6 +361,23 @@ analysis purposes. Use the ``anonymize()`` method from the
     $anonymousIpv6 = IpUtils::anonymize($ipv6);
     // $anonymousIpv6 = '2a01:198:603:10::'
 
+Check if an IP belongs to a private subnet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to know if an IP address belongs to a private subnet, you can
+use the ``isPrivateIp()`` method from the
+:class:`Symfony\\Component\\HttpFoundation\\IpUtils` to do that::
+
+    use Symfony\Component\HttpFoundation\IpUtils;
+
+    $ipv4 = '192.168.1.1';
+    $isPrivate = IpUtils::isPrivateIp($ipv4);
+    // $isPrivate = true
+
+    $ipv6 = '2a01:198:603:10:396e:4789:8e99:890f';
+    $isPrivate = IpUtils::isPrivateIp($ipv6);
+    // $isPrivate = false
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
