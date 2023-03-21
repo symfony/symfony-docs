@@ -3485,7 +3485,7 @@ marking_store
 
 Each marking store can define any of these options:
 
-* ``arguments`` (**type**: ``array``)
+* ``property`` (**type**: ``string`` **default**: ``'marking'``)
 * ``service`` (**type**: ``string``)
 * ``type`` (**type**: ``string`` **allow value**: ``'method'``)
 
