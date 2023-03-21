@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by WebMamba at 2023-03-20T16:29:48Z
+
+I think we should also add something about the statusCode argument. I am not sure we have something about it
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-03-20T16:38:04Z
+
+@WebMamba Good idea! This must be done in 6.2. Here you are :slightly_smiling_face: ! https://github.com/symfony/symfony-docs/pull/18103
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-03-21T07:45:29Z
+
+https://github.com/symfony/symfony-docs/pull/18103 should be merged first
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-03-21T08:16:38Z
+
+Rebase unlocked ✅
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-03-21T12:25:06Z
+
+Rebased and updated :pray:
