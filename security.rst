@@ -2299,11 +2299,26 @@ the ``ROLE_SUPER_ADMIN`` permission:
     #[IsGranted('ROLE_ADMIN')]
     class AdminController extends AbstractController
     {
-        #[IsGranted('ROLE_SUPER_ADMIN')]
+        // Optionally, you can set a custom message that will be displayed to the user
+        #[IsGranted('ROLE_SUPER_ADMIN', message: 'You are not allowed to access the admin dashboard.')]
         public function adminDashboard(): Response
         {
             // ...
         }
+    }
+
+If you want to use a custom status code instead of the default one (which
+is 403), this can be done by setting with the ``statusCode`` argument::
+
+    // src/Controller/AdminController.php
+    // ...
+
+    use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+    #[IsGranted('ROLE_ADMIN', statusCode: 423)]
+    class AdminController extends AbstractController
+    {
+        // ...
     }
 
 .. versionadded:: 6.2
