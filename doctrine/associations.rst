@@ -313,14 +313,14 @@ Now you can see this new code in action! Imagine you're inside a controller::
     // ...
     use App\Entity\Category;
     use App\Entity\Product;
-    use Doctrine\Persistence\ManagerRegistry;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
 
     class ProductController extends AbstractController
     {
         #[Route('/product', name: 'product')]
-        public function index(ManagerRegistry $doctrine): Response
+        public function index(EntityManagerInterface $entityManager): Response
         {
             $category = new Category();
             $category->setName('Computer Peripherals');
@@ -333,7 +333,6 @@ Now you can see this new code in action! Imagine you're inside a controller::
             // relates this product to the category
             $product->setCategory($category);
 
-            $entityManager = $doctrine->getManager();
             $entityManager->persist($category);
             $entityManager->persist($product);
             $entityManager->flush();
@@ -379,9 +378,9 @@ before. First, fetch a ``$product`` object and then access its related
 
     class ProductController extends AbstractController
     {
-        public function show(ManagerRegistry $doctrine, int $id): Response
+        public function show(ProductRepository $productRepository, int $id): Response
         {
-            $product = $doctrine->getRepository(Product::class)->find($id);
+            $product = $productRepository->find($id);
             // ...
 
             $categoryName = $product->getCategory()->getName();
@@ -412,9 +411,9 @@ direction::
     // ...
     class ProductController extends AbstractController
     {
-        public function showProducts(ManagerRegistry $doctrine, int $id): Response
+        public function showProducts(CategoryRepository $categoryRepository, int $id): Response
         {
-            $category = $doctrine->getRepository(Category::class)->find($id);
+            $category = $categoryRepository->find($id);
 
             $products = $category->getProducts();
 
@@ -433,7 +432,7 @@ by adding JOINs.
     a "proxy" object in place of the true object. Look again at the above
     example::
 
-        $product = $doctrine->getRepository(Product::class)->find($id);
+        $product = $productRepository->find($id);
 
         $category = $product->getCategory();
 
@@ -503,9 +502,9 @@ object and its related ``Category`` in one query::
     // ...
     class ProductController extends AbstractController
     {
-        public function show(ManagerRegistry $doctrine, int $id): Response
+        public function show(ProductRepository $productRepository, int $id): Response
         {
-            $product = $doctrine->getRepository(Product::class)->findOneByIdJoinedToCategory($id);
+            $product = $productRepository->findOneByIdJoinedToCategory($id);
 
             $category = $product->getCategory();
 
