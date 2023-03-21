@@ -2321,8 +2321,6 @@ is 403), this can be done by setting with the ``statusCode`` argument::
         // ...
     }
 
-The default code is 403.
-
 .. versionadded:: 6.2
 
     The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
