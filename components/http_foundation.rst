@@ -158,6 +158,13 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
 
+    .. deprecated:: 6.3
+
+        Ignoring invalid values when using ``filter()`` is deprecated and will throw
+        a :class:`Symfony\\Component\\HttpKernel\\Exception\\BadRequestHttpException`
+        in Symfony 7.0. You can use the ``FILTER_NULL_ON_FAILURE`` flag to keep
+        ignoring them.
+
 All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
