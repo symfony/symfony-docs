@@ -5,25 +5,27 @@ NoSuspiciousCharacters
 
     The ``NoSuspiciousCharacters`` constraint was introduced in Symfony 6.3.
 
-..
+Validates that the given string does not contain characters used in spoofing
+security attacks, such as invisible characters such as zero-width spaces or
+characters that are visually similar.
 
-    Because Unicode contains such a large number of characters and incorporates
-    the varied writing systems of the world, incorrect usage can expose programs
-    or systems to possible security attacks.
+"symfony.com" and "ѕymfony.com" look similar, but their first letter is different
+(in the second string, the "s" is actually a `cyrillic small letter dze`_).
+This can make a user think they'll navigate to Symfony's website, whereas it
+would be somewhere else.
 
-    `Unicode® Technical Standard #39`_
+This is a kind of `spoofing attack`_ (called "IDN homograph attack"). It tries
+to identify something as something else to exploit the resulting confusion.
+This is why it is recommended to check user-submitted, public-facing identifiers
+for suspicious characters in order to prevent such attacks.
 
-"symfony.com" and "ѕymfony.com" look similar, but the latter actually starts with a
-`cyrillic small letter dze`_. It could make a user think they'll navigate to Symfony's
-website, whereas it would be somewhere else.
-This is a kind of `spoofing attack`_ (called "IDN homograph attack"). It tries to
-identify something as something else to exploit the resulting confusion.
-This is why it is recommended to check user-submitted, public-facing identifiers for
-suspicious characters in order to prevent such attacks.
+Because Unicode contains such a large number of characters and incorporates the
+varied writing systems of the world, incorrect usage can expose programs or
+systems to possible security attacks.
 
-This constraint ensures strings or :phpclass:`Stringable`s do not include any
-suspicious characters. As it leverages PHP's :phpclass:`Spoofchecker`, the intl
-extension must be enabled to use it.
+That's why this constraint ensures strings or :phpclass:`Stringable`s do not
+include any suspicious characters. As it leverages PHP's :phpclass:`Spoofchecker`,
+the intl extension must be enabled to use it.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
@@ -34,8 +36,8 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\NoSuspiciousChar
 Basic Usage
 -----------
 
-The following constraint will ensures a username cannot be spoofed by using many
-detection mechanisms:
+The following constraint will use different detection mechanisms to ensure that
+the username is not spoofed:
 
 .. configuration-block::
 
@@ -103,9 +105,13 @@ Options
 
 This option is a bitmask of the checks you want to perform on the string:
 
-* ``NoSuspiciousCharacters::CHECK_INVISIBLE`` checks for the presence of invisible characters such as zero-width spaces, or character sequences that are likely not to display, such as multiple occurrences of the same non-spacing mark.
-* ``NoSuspiciousCharacters::CHECK_MIXED_NUMBERS`` (usable with ICU 58 or higher) checks for numbers from different numbering systems.
-* ``NoSuspiciousCharacters::CHECK_HIDDEN_OVERLAY`` (usable with ICU 62 or higher) checks for combining characters hidden in their preceding one.
+* ``NoSuspiciousCharacters::CHECK_INVISIBLE`` checks for the presence of invisible
+  characters such as zero-width spaces, or character sequences that are likely
+  not to display, such as multiple occurrences of the same non-spacing mark.
+* ``NoSuspiciousCharacters::CHECK_MIXED_NUMBERS`` (usable with ICU 58 or higher)
+  checks for numbers from different numbering systems.
+* ``NoSuspiciousCharacters::CHECK_HIDDEN_OVERLAY`` (usable with ICU 62 or higher)
+  checks for combining characters hidden in their preceding one.
 
 You can also configure additional requirements using :ref:`locales <locales>` and
 :ref:`restrictionLevel <restrictionlevel>`.
@@ -131,15 +137,22 @@ Passing an empty array, or configuring :ref:`restrictionLevel <restrictionlevel>
 Configures the set of acceptable characters for the validated string through a
 specified "level":
 
-* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_MINIMAL`` requires the string's characters to match :ref:`the configured locales <locales>`'.
-* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_MODERATE`` also requires the string to be `covered`_ by Latin and any one other `Recommended`_ or `Limited Use`_ script, except Cyrillic, Greek, and Cherokee.
-* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_HIGH`` (usable with ICU 58 or higher) also requires the string to be `covered`_ by any of the following sets of scripts:
+* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_MINIMAL`` requires the string's
+  characters to match :ref:`the configured locales <locales>`'.
+* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_MODERATE`` also requires the string
+  to be `covered`_ by Latin and any one other `Recommended`_ or `Limited Use`_
+  script, except Cyrillic, Greek, and Cherokee.
+* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_HIGH`` (usable with ICU 58 or higher)
+  also requires the string to be `covered`_ by any of the following sets of scripts:
 
   * Latin + Han + Bopomofo (or equivalently: Latn + Hanb)
   * Latin + Han + Hiragana + Katakana (or equivalently: Latn + Jpan)
   * Latin + Han + Hangul (or equivalently: Latn + Kore)
-* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_SINGLE_SCRIPT`` also requires the string to be `single-script`_.
-* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_ASCII`` (usable with ICU 58 or higher) also requires the string's characters to be in the ASCII range.
+
+* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_SINGLE_SCRIPT`` also requires the
+  string to be `single-script`_.
+* ``NoSuspiciousCharacters::RESTRICTION_LEVEL_ASCII`` (usable with ICU 58 or higher)
+  also requires the string's characters to be in the ASCII range.
 
 You can accept all characters by setting this option to
 ``NoSuspiciousCharacters::RESTRICTION_LEVEL_NONE``.
@@ -148,7 +161,6 @@ You can accept all characters by setting this option to
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
-.. _`Unicode® Technical Standard #39`: https://unicode.org/reports/tr39/
 .. _`cyrillic small letter dze`: https://graphemica.com/%D1%95
 .. _`spoofing attack`: https://en.wikipedia.org/wiki/Spoofing_attack
 .. _`single-script`: https://unicode.org/reports/tr39/#def-single-script
