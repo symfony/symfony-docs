@@ -272,7 +272,7 @@ method of the ``FormFactory``::
     $form = $formFactory->createBuilder()
         ->add('username', TextType::class)
         ->add('showEmail', CheckboxType::class)
-        ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event) {
+        ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
             $user = $event->getData();
             $form = $event->getForm();
 
