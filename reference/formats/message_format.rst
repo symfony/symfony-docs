@@ -223,7 +223,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
         num_of_apples: >-
             {apples, plural,
                 =0    {There are no apples}
-                one   {There is one apple...}
+                =1    {There is one apple...}
                 other {There are # apples!}
             }
 
@@ -236,7 +236,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
                 <body>
                     <trans-unit id="num_of_apples">
                         <source>num_of_apples</source>
-                        <target>{apples, plural, =0 {There are no apples} one {There is one apple...} other {There are # apples!}}</target>
+                        <target>{apples, plural, =0 {There are no apples} =1 {There is one apple...} other {There are # apples!}}</target>
                     </trans-unit>
                 </body>
             </file>
@@ -248,7 +248,7 @@ handle pluralization in your messages (e.g. ``There are 3 apples`` vs
         return [
             'num_of_apples' => '{apples, plural,
                 =0    {There are no apples}
-                one   {There is one apple...}
+                =1    {There is one apple...}
                 other {There are # apples!}
             }',
         ];
