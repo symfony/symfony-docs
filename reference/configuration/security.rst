@@ -433,10 +433,12 @@ clear_site_data
 
 **type**: ``array`` **default**: ``[]``
 
-The Clear-Site-Data header clears browsing data (cookies, storage, cache) associated with the requesting website.
-It allows web developers to have more control over the data stored by a client browser for their origins.
+The ``Clear-Site-Data`` HTTP header clears browsing data (cookies, storage, cache)
+associated with the requesting website. It allows web developers to have more
+control over the data stored by a client browser for their origins.
+
 Allowed values are ``cache``, ``cookies``, ``storage`` and ``executionContexts``.
-And it's possible to use ``*`` as a wildcard for all directives::
+It's also possible to use ``*`` as a wildcard for all directives:
 
 .. configuration-block::
 
@@ -493,6 +495,10 @@ And it's possible to use ``*`` as a wildcard for all directives::
                 ],
             ],
         ]);
+
+.. versionadded:: 6.3
+
+    The ``clear_site_data`` option was introduced in Symfony 6.3.
 
 invalidate_session
 ~~~~~~~~~~~~~~~~~~
