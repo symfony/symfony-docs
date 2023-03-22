@@ -428,6 +428,72 @@ user logs out::
             ],
         ]);
 
+clear_site_data
+~~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``[]``
+
+The Clear-Site-Data header clears browsing data (cookies, storage, cache) associated with the requesting website.
+It allows web developers to have more control over the data stored by a client browser for their origins.
+Allowed values are ``cache``, ``cookies``, ``storage`` and ``executionContexts``.
+And it's possible to use ``*`` as a wildcard for all directives::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        clear_site_data:
+                            - cookies
+                            - storage
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <logout>
+                        <clear-site-data>cookies</clear-site-data>
+                        <clear-site-data>storage</clear-site-data>
+                    </logout>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        $container->loadFromExtension('security', [
+            // ...
+            'firewalls' => [
+                'main' => [
+                    'logout' => [
+                        'clear-site-data' => [
+                            'cookies',
+                            'storage',
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
 invalidate_session
 ~~~~~~~~~~~~~~~~~~
 
