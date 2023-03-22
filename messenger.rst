@@ -2493,12 +2493,13 @@ In addition to middleware, Messenger also dispatches several events. You can
 :doc:`create an event listener </event_dispatcher>` to hook into various parts
 of the process. For each, the event class is the event name:
 
-* :class:`Symfony\\Component\\Messenger\\Event\\WorkerStartedEvent`
-* :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageReceivedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\SendMessageToTransportsEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageFailedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageHandledEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageReceivedEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\WorkerMessageRetriedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerRunningEvent`
+* :class:`Symfony\\Component\\Messenger\\Event\\WorkerStartedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerStoppedEvent`
 
 Multiple Buses, Command & Event Buses
