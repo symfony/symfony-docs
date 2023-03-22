@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2023-01-16T11:14:34Z
+
+I think the previous formats were meant to be human-readable and not something that you could pass to `date()` or `DateTimeInterface::format()`. And I think not having the reader to know all the format options is a good thing. But can we somehow end up with something more clear than we have right now to avoid confusion?
+
+---------------------------------------------------------------------------
+
+by adnen-chouibi at 2023-01-16T12:08:01Z
+
+The Date constraint accepts only one format as mentioned in the example, $birthday it should be a string  "Y-m-d" formatted value.
+There is no other option to use it other than H:i:s for Time() and Y-m-d for Date().
