@@ -29,6 +29,7 @@ String Constraints
 * :doc:`UserPassword </reference/constraints/UserPassword>`
 * :doc:`NotCompromisedPassword </reference/constraints/NotCompromisedPassword>`
 * :doc:`CssColor </reference/constraints/CssColor>`
+* :doc:`NoSuspiciousCharacters </reference/constraints/NoSuspiciousCharacters>`
 
 Comparison Constraints
 ~~~~~~~~~~~~~~~~~~~~~~
