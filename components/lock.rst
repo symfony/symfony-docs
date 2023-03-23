@@ -550,11 +550,17 @@ does not support blocking, and expects a TTL to avoid stalled locks::
 
     This store does not support TTL lower than 1 second.
 
-The table where values are stored will be automatically generated when your run the command :
+The table where values are stored will be automatically generated when your run
+the command:
 
 .. code-block:: terminal
 
     $ php bin/console make:migration
+
+.. versionadded:: 6.3
+
+    The automatic table generation when running the ``make:migration`` command
+    was introduced in Symfony 6.3.
 
 If you prefer to create the table yourself and it has not already been created, you can
 create this table explicitly by calling the
