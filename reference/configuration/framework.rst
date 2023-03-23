@@ -254,7 +254,7 @@ reverse proxy. See :doc:`/deployment/proxies`.
 ide
 ~~~
 
-**type**: ``string`` **default**: ``null``
+**type**: ``string`` **default**: ``%env(default::SYMFONY_IDE)%``
 
 Symfony turns file paths seen in variable dumps and exception messages into
 links that open those files right inside your browser. If you prefer to open
