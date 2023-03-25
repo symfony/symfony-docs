@@ -228,7 +228,7 @@ integration with these chat services:
 Service                                  Package                               DSN
 =======================================  ====================================  =============================================================================
 `AmazonSns`_                             ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
-:doc:`Discord <notifier/discord>`        ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
+`Discord`_                               ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
 `FakeChat`_                              ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
 `Firebase`_                              ``symfony/firebase-notifier``         ``firebase://USERNAME:PASSWORD@default``
 `Gitter`_                                ``symfony/gitter-notifier``           ``gitter://TOKEN@default?room_id=ROOM_ID``
@@ -236,10 +236,10 @@ Service                                  Package                               D
 `LinkedIn`_                              ``symfony/linked-in-notifier``        ``linkedin://TOKEN:USER_ID@default``
 `Mattermost`_                            ``symfony/mattermost-notifier``       ``mattermost://ACCESS_TOKEN@HOST/PATH?channel=CHANNEL``
 `Mercure`_                               ``symfony/mercure-notifier``          ``mercure://HUB_ID?topic=TOPIC``
-:doc:`MicrosoftTeams <notifier/teams>`   ``symfony/microsoft-teams-notifier``  ``microsoftteams://default/PATH``
+`MicrosoftTeams`_                        ``symfony/microsoft-teams-notifier``  ``microsoftteams://default/PATH``
 `RocketChat`_                            ``symfony/rocket-chat-notifier``      ``rocketchat://TOKEN@ENDPOINT?channel=CHANNEL``
-:doc:`Slack <notifier/slack>`            ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
-:doc:`Telegram <notifier/telegram>`      ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
+`Slack`_                                 ``symfony/slack-notifier``            ``slack://TOKEN@default?channel=CHANNEL``
+`Telegram`_                              ``symfony/telegram-notifier``         ``telegram://TOKEN@default?channel=CHAT_ID``
 `Zulip`_                                 ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ======================================   ====================================  =============================================================================
 
@@ -914,6 +914,7 @@ is dispatched. Listeners receive a
 .. _`AllMySms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AllMySms/README.md
 .. _`AmazonSns`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AmazonSns/README.md
 .. _`Clickatell`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Clickatell/README.md
+.. _`Discord`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Discord/README.md
 .. _`Esendex`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Esendex/README.md
 .. _`FakeChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeChat/README.md
 .. _`FakeSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeSms/README.md
@@ -931,6 +932,7 @@ is dispatched. Listeners receive a
 .. _`Mercure`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mercure/README.md
 .. _`MessageBird`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/MessageBird/README.md
 .. _`MessageMedia`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/MessageMedia/README.md
+.. _`MicrosoftTeams`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/MicrosoftTeams/README.md
 .. _`Mobyt`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mobyt/README.md
 .. _`Nexmo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Nexmo/README.md
 .. _`Octopush`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Octopush/README.md
@@ -939,11 +941,13 @@ is dispatched. Listeners receive a
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
 .. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendinblue/README.md
 .. _`Sinch`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sinch/README.md
+.. _`Slack`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Slack/README.md
 .. _`Sms77`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sms77/README.md
 .. _`Smsapi`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsapi/README.md
 .. _`SmsBiuras`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsBiuras/README.md
 .. _`Smsc`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsc/README.md
 .. _`SpotHit`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SpotHit/README.md
+.. _`Telegram`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telegram/README.md
 .. _`Telnyx`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telnyx/README.md
 .. _`TurboSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/TurboSms/README.md
 .. _`Twilio`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Twilio/README.md
