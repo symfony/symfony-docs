@@ -236,6 +236,17 @@ OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a   
 
     Note that the protocol is *always* HTTPs and cannot be changed.
 
+.. note::
+
+    The specific transports, e.g. ``mailgun+smtp`` are designed to work without any manual configuration.
+    Changing the port by appending it to your DSN is not supported for any of these ``<provider>+smtp` transports.
+    If you need to change the port, use the ``smtp`` transport instead, like so:
+
+    .. code-block:: env
+
+        # .env
+        MAILER_DSN=smtp://KEY:DOMAIN@smtp.eu.mailgun.org.com:25
+
 High Availability
 ~~~~~~~~~~~~~~~~~
 
