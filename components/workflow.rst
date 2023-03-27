@@ -61,6 +61,8 @@ logic in one place and not spread all over your application.
 Usage
 -----
 
+::
+
     // ...
     // Consider that $blogPost is in place "draft" by default
     $blogPost = new BlogPost();
