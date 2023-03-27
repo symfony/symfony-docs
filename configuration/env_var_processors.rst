@@ -309,16 +309,16 @@ Symfony provides the following env var processors:
 
         .. code-block:: yaml
 
-            # config/packages/sentry.yaml
+            # config/packages/lexik_jwt_authentication.yaml
             parameters:
-                sentry_host: '10.0.0.1'
-                env(SENTRY_DSN): 'http://%sentry_host%/project'
-            sentry:
-                dsn: '%env(resolve:SENTRY_DSN)%'
+                jwt_config_dir: 'config/jwt'
+                env(JWT_SECRET_KEY): '%kernel.project_dir%/%jwt_config_dir%/private.pem'
+            lexik_jwt_authentication:
+                secret_key: '%env(resolve:JWT_SECRET_KEY)%'
 
         .. code-block:: xml
 
-            <!-- config/packages/sentry.xml -->
+            <!-- config/packages/lexik_jwt_authentication.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <container xmlns="http://symfony.com/schema/dic/services"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -326,20 +326,20 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <parameters>
-                    <parameter key="sentry_host">10.0.0.1</parameter>
-                    <parameter key="env(SENTRY_DSN)">http://%sentry_host%/project</parameter>
+                    <parameter key="jwt_config_dir">config/jwt</parameter>
+                    <parameter key="env(JWT_SECRET_KEY)">%kernel.project_dir%/%jwt_config_dir%/private.pem</parameter>
                 </parameters>
 
-                <sentry:config dsn="%env(resolve:SENTRY_DSN)%"/>
+                <lexik_jwt_authentication:secret_key dsn="%env(resolve:JWT_SECRET_KEY)%"/>
             </container>
 
         .. code-block:: php
 
-            // config/packages/sentry.php
-            $container->setParameter('sentry_host', '10.0.0.1');
-            $container->setParameter('env(SENTRY_DSN)', 'http://%sentry_host%/project');
-            $container->loadFromExtension('sentry', [
-                'dsn' => '%env(resolve:SENTRY_DSN)%',
+            // config/packages/lexik_jwt_authentication.php
+            $container->setParameter('jwt_config_dir', 'config/jwt');
+            $container->setParameter('env(JWT_SECRET_KEY)', '%kernel.project_dir%/%jwt_config_dir%/private.pem');
+            $container->loadFromExtension('lexik_jwt_authentication', [
+                'secret_key' => '%env(resolve:JWT_SECRET_KEY)%',
             ]);
 
 ``env(csv:FOO)``
