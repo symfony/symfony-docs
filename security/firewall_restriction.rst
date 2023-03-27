@@ -1,6 +1,3 @@
-.. index::
-   single: Security; Restrict Security Firewalls to a Request
-
 How to Restrict Firewalls to a Request
 ======================================
 

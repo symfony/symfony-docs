@@ -1,6 +1,3 @@
-.. index::
-    single: Console Helpers; Question Helper
-
 Question Helper
 ===============
 

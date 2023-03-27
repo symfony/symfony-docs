@@ -1,7 +1,3 @@
-.. index::
-   single: Security; Login link
-   single: Security; Magic link login
-
 How to use Passwordless Login Link Authentication
 =================================================
 

@@ -1,6 +1,3 @@
-.. index::
-    single: Doctrine; Lifecycle Callbacks; Doctrine Events
-
 Doctrine Events
 ===============
 

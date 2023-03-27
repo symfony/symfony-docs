@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Form testing
-
 How to Unit Test your Forms
 ===========================
 

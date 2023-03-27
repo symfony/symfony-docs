@@ -1,6 +1,3 @@
-.. index::
-    single: Security; Creating and Enabling Custom User Checkers
-
 How to Create and Enable Custom User Checkers
 =============================================
 

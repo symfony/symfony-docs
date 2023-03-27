@@ -1,6 +1,3 @@
-.. index::
-    single: Yaml; YAML Format
-
 The YAML Format
 ---------------
 

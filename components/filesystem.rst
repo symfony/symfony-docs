@@ -1,6 +1,3 @@
-.. index::
-   single: Filesystem
-
 The Filesystem Component
 ========================
 

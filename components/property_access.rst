@@ -1,7 +1,3 @@
-.. index::
-    single: PropertyAccess
-    single: Components; PropertyAccess
-
 The PropertyAccess Component
 ============================
 

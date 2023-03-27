@@ -1,6 +1,3 @@
-.. index::
-   single: Security; Customizing form login redirect
-
 Customizing the Form Login Authenticator Responses
 ==================================================
 

@@ -1,7 +1,3 @@
-.. index::
-   single: CssSelector
-   single: Components; CssSelector
-
 The CssSelector Component
 =========================
 

@@ -1,7 +1,3 @@
-.. index::
-   single: Messenger
-   single: Components; Messenger
-
 The Messenger Component
 =======================
 

@@ -1,6 +1,3 @@
-.. index::
-    single: Validation; Translation
-
 How to Translate Validation Constraint Messages
 ===============================================
 

@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: Array Cache
-
 Array Cache Adapter
 ===================
 

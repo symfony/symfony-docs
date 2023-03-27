@@ -1,7 +1,3 @@
-.. index::
-    single: PropertyInfo
-    single: Components; PropertyInfo
-
 The PropertyInfo Component
 ==========================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Symfony versus Flat PHP
-
 .. _symfony2-versus-flat-php:
 
 Symfony versus Flat PHP

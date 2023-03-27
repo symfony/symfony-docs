@@ -1,6 +1,3 @@
-.. index::
-   single: Deployment; Deployment tools
-
 .. _how-to-deploy-a-symfony2-application:
 
 How to Deploy a Symfony Application

@@ -1,7 +1,3 @@
-.. index::
-   single: VarDumper
-   single: Components; VarDumper
-
 The VarDumper Component
 =======================
 
@@ -470,10 +466,6 @@ then its dump representation::
 .. image:: /_images/components/var_dumper/09-cut.png
 
 .. _var-dumper-advanced:
-
-.. index::
-   single: VarDumper
-   single: Components; VarDumper
 
 Advanced Usage
 --------------

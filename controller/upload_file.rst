@@ -1,6 +1,3 @@
-.. index::
-   single: Controller; Upload; File
-
 How to Upload Files
 ===================
 

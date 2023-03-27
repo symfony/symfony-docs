@@ -1,8 +1,3 @@
-.. index::
-   single: HTTP
-   single: HttpKernel
-   single: Components; HttpKernel
-
 The HttpKernel Component
 ========================
 

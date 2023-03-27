@@ -1,6 +1,3 @@
-.. index::
-    single: Messenger; Multiple buses
-
 Multiple Buses
 ==============
 

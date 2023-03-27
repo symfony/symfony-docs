@@ -1,6 +1,3 @@
-.. index::
-    single: Form; Data mappers
-
 When and How to Use Data Mappers
 ================================
 

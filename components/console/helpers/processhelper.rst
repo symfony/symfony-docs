@@ -1,6 +1,3 @@
-.. index::
-    single: Console Helpers; Process Helper
-
 Process Helper
 ==============
 

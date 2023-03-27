@@ -1,7 +1,3 @@
-.. index::
-    single: OptionsResolver
-    single: Components; OptionsResolver
-
 The OptionsResolver Component
 =============================
 

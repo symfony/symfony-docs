@@ -1,6 +1,3 @@
-.. index::
-   single: Doctrine; Multiple entity managers
-
 How to Work with Multiple Entity Managers and Connections
 =========================================================
 

@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: Couchabase Cache
-
 .. _couchbase-collection-adapter:
 
 Couchbase Collection Cache Adapter

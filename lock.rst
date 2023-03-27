@@ -1,6 +1,3 @@
-.. index::
-    single: Lock
-
 Dealing with Concurrency with Locks
 ===================================
 

@@ -1,7 +1,3 @@
-.. index::
-   single: Inflector
-   single: Components; Inflector
-
 The Inflector Component
 =======================
 

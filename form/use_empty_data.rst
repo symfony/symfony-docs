@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Empty data
-
 How to Configure empty Data for a Form Class
 ============================================
 

@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Service Subscribers
-
 .. _service-locators:
 
 Service Subscribers & Locators

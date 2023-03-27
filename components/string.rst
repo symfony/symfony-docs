@@ -1,7 +1,3 @@
-.. index::
-   single: String
-   single: Components; String
-
 The String Component
 ====================
 

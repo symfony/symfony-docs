@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; country
-
 CountryType Field
 =================
 

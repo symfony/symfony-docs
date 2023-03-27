@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Form type extension
-
 How to Create a Form Type Extension
 ===================================
 

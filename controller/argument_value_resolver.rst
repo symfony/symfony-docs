@@ -1,6 +1,3 @@
-.. index::
-   single: Controller; Argument Value Resolvers
-
 Extending Action Argument Resolving
 ===================================
 

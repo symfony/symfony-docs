@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Custom Type Guesser
-
 Creating a custom Type Guesser
 ==============================
 

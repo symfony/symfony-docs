@@ -1,6 +1,3 @@
-.. index::
-    single: Configuration reference; Kernel class
-
 Configuring in the Kernel
 =========================
 

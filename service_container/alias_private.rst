@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Advanced configuration
-
 How to Create Service Aliases and Mark Services as Private
 ==========================================================
 

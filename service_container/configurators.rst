@@ -1,6 +1,3 @@
-.. index::
-   single: DependencyInjection; Service configurators
-
 How to Configure a Service with a Configurator
 ==============================================
 

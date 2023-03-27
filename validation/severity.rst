@@ -1,7 +1,3 @@
-.. index::
-    single: Validation; Error Levels
-    single: Validation; Payload
-
 How to Handle Different Error Levels
 ====================================
 

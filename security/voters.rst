@@ -1,6 +1,3 @@
-.. index::
-   single: Security; Data Permission Voters
-
 .. _security/custom-voter:
 
 How to Use Voters to Check User Permissions

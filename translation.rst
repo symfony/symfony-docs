@@ -1,6 +1,3 @@
-.. index::
-   single: Translations
-
 Translations
 ============
 
@@ -747,9 +744,6 @@ now use the following commands to push (upload) and pull (download) translations
 
 .. _translation-locale:
 
-.. index::
-    single: Translation; Locale
-
 Handling the User's Locale
 --------------------------
 
@@ -908,9 +902,6 @@ application.
     Define the locale requirement as a :ref:`container parameter <configuration-parameters>`
     to avoid hardcoding its value in all your routes.
 
-.. index::
-    single: Translations; Fallback and default locale
-
 .. _translation-default-locale:
 
 Setting a Default Locale
@@ -1023,11 +1014,6 @@ checks translation resources for several locales:
     see :ref:`reference-framework-translator-logging`.
 
 .. _translation-debug:
-
-.. index::
-    single: Translation; Debug
-    single: Translation; Missing Messages
-    single: Translation; Unused Messages
 
 How to Find Missing or Unused Translation Messages
 --------------------------------------------------
@@ -1241,10 +1227,6 @@ These constants are defined as "bit masks", so you can combine them as follows::
     The exit codes were introduced in Symfony 5.1
 
 .. _translation-lint:
-
-.. index::
-    single: Translation; Lint
-    single: Translation; Translation File Errors
 
 How to Find Errors in Translation Files
 ---------------------------------------

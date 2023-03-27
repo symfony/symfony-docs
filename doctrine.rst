@@ -1,6 +1,3 @@
-.. index::
-   single: Doctrine
-
 Databases and the Doctrine ORM
 ==============================
 

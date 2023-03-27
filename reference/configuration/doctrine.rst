@@ -1,7 +1,3 @@
-.. index::
-    single: Doctrine; ORM configuration reference
-    single: Configuration reference; Doctrine ORM
-
 Doctrine Configuration Reference (DoctrineBundle)
 =================================================
 
@@ -23,10 +19,6 @@ configuration.
     When using XML, you must use the ``http://symfony.com/schema/dic/doctrine``
     namespace and the related XSD schema is available at:
     ``https://symfony.com/schema/dic/doctrine/doctrine-1.0.xsd``
-
-.. index::
-    single: Configuration; Doctrine DBAL
-    single: Doctrine; DBAL configuration
 
 .. _`reference-dbal-configuration`:
 

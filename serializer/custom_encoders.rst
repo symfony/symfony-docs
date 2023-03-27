@@ -1,6 +1,3 @@
-.. index::
-   single: Serializer; Custom encoders
-
 How to Create your Custom Encoder
 =================================
 

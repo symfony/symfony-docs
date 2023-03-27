@@ -1,6 +1,3 @@
-.. index::
-    single: Console; Logger
-
 Using the Logger
 ================
 

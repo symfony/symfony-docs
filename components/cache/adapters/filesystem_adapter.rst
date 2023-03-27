@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: Filesystem Cache
-
 .. _component-cache-filesystem-adapter:
 
 Filesystem Cache Adapter

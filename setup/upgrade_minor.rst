@@ -1,6 +1,3 @@
-.. index::
-    single: Upgrading; Minor Version
-
 Upgrading a Minor Version (e.g. 5.0.0 to 5.1.0)
 ===============================================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Console; Style commands
-
 How to Style a Console Command
 ==============================
 

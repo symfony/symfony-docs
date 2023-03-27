@@ -1,6 +1,3 @@
-.. index::
-   single: Symfony Fundamentals
-
 .. _symfony2-and-http-fundamentals:
 
 Symfony and HTTP Fundamentals
@@ -29,9 +26,6 @@ your server is *always* to understand text requests and return text responses.
 Symfony is built from the ground up around that reality. Whether you realize
 it or not, HTTP is something you use every day. With Symfony, you'll learn
 how to master it.
-
-.. index::
-   single: HTTP; Request-response paradigm
 
 Step 1: The Client Sends a Request
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -158,9 +152,6 @@ each request and create and return the appropriate response.
     To learn more about the HTTP specification, read the original `HTTP 1.1 RFC`_
     or the `HTTP Bis`_, which is an active effort to clarify the original
     specification.
-
-.. index::
-   single: Symfony Fundamentals; Requests and responses
 
 Requests and Responses in PHP
 -----------------------------
@@ -293,9 +284,6 @@ content with security. How can you manage all of this and still keep your
 code organized and maintainable? Symfony was created to help you with these
 problems.
 
-.. index::
-    single: Front controller; Origins
-
 The Front Controller
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -346,9 +334,6 @@ A small front controller might look like this::
 
 This is better, but this is still a lot of repeated work! Fortunately, Symfony can
 help once again.
-
-.. index::
-    single: HTTP; Symfony request flow
 
 The Symfony Application Flow
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

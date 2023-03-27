@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: Doctrine Cache
-
 .. _doctrine-adapter:
 
 Doctrine Cache Adapter

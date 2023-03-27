@@ -1,6 +1,3 @@
-.. index::
-    single: Validation; Validating raw values
-
 How to Validate Raw Values (Scalar Values and Arrays)
 =====================================================
 
