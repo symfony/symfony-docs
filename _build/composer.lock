@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1243668a34d12e1bfc2a367bb87dd2c9",
+    "content-hash": "1c3437f0f5d5b44eb1a339dd720bbc38",
     "packages": [
         {
             "name": "doctrine/deprecations",
@@ -466,16 +466,16 @@
         },
         {
             "name": "symfony-tools/docs-builder",
-            "version": "v0.18.10",
+            "version": "v0.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony-tools/docs-builder.git",
-                "reference": "8420c687cff102ee30288380ab682ecf539dbf3b"
+                "reference": "544f4bd4cabffa9eeaa4e4c85f3a7084e1a54cdc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-tools/docs-builder/zipball/8420c687cff102ee30288380ab682ecf539dbf3b",
-                "reference": "8420c687cff102ee30288380ab682ecf539dbf3b",
+                "url": "https://api.github.com/repos/symfony-tools/docs-builder/zipball/544f4bd4cabffa9eeaa4e4c85f3a7084e1a54cdc",
+                "reference": "544f4bd4cabffa9eeaa4e4c85f3a7084e1a54cdc",
                 "shasum": ""
             },
             "require": {
@@ -494,6 +494,7 @@
             },
             "require-dev": {
                 "gajus/dindent": "^2.0",
+                "masterminds/html5": "^2.7",
                 "symfony/phpunit-bridge": "^5.2 || ^6.0",
                 "symfony/process": "^5.2 || ^6.0"
             },
@@ -513,9 +514,9 @@
             "description": "The build system for Symfony's documentation",
             "support": {
                 "issues": "https://github.com/symfony-tools/docs-builder/issues",
-                "source": "https://github.com/symfony-tools/docs-builder/tree/v0.18.10"
+                "source": "https://github.com/symfony-tools/docs-builder/tree/v0.20.0"
             },
-            "time": "2022-12-30T15:11:58+00:00"
+            "time": "2023-03-23T08:48:27+00:00"
         },
         {
             "name": "symfony/console",
