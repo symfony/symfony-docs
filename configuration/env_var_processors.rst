@@ -300,8 +300,7 @@ Symfony provides the following env var processors:
 
             # config/packages/sentry.yaml
             parameters:
-                env(HOST): '10.0.0.1'
-                sentry_host: '%env(HOST)%'
+                sentry_host: '10.0.0.1'
                 env(SENTRY_DSN): 'http://%sentry_host%/project'
             sentry:
                 dsn: '%env(resolve:SENTRY_DSN)%'
@@ -316,8 +315,7 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/services/services-1.0.xsd">
 
                 <parameters>
-                    <parameter key="env(HOST)">10.0.0.1</parameter>
-                    <parameter key="sentry_host">%env(HOST)%</parameter>
+                    <parameter key="sentry_host">10.0.0.1</parameter>
                     <parameter key="env(SENTRY_DSN)">http://%sentry_host%/project</parameter>
                 </parameters>
 
@@ -327,8 +325,7 @@ Symfony provides the following env var processors:
         .. code-block:: php
 
             // config/packages/sentry.php
-            $container->setParameter('env(HOST)', '10.0.0.1');
-            $container->setParameter('sentry_host', '%env(HOST)%');
+            $container->setParameter('sentry_host', '10.0.0.1');
             $container->setParameter('env(SENTRY_DSN)', 'http://%sentry_host%/project');
             $container->loadFromExtension('sentry', [
                 'dsn' => '%env(resolve:SENTRY_DSN)%',
@@ -441,7 +438,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(AUTH_FILE): '../config/auth.json'
+                env(AUTH_FILE): '%kernel.project_dir%/config/auth.json'
             google:
                 auth: '%env(file:AUTH_FILE)%'
 
@@ -482,7 +479,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(PHP_FILE): '../config/.runtime-evaluated.php'
+                env(PHP_FILE): '%kernel.project_dir%/config/.runtime-evaluated.php'
             app:
                 auth: '%env(require:PHP_FILE)%'
 
@@ -524,7 +521,7 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(AUTH_FILE): '../config/auth.json'
+                env(AUTH_FILE): '%kernel.project_dir%/config/auth.json'
             google:
                 auth: '%env(trim:file:AUTH_FILE)%'
 

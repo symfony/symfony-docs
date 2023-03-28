@@ -255,7 +255,7 @@ listen to the same ``kernel.exception`` event::
 
     class ExceptionSubscriber implements EventSubscriberInterface
     {
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             // return the subscribed events, their methods and priorities
             return [

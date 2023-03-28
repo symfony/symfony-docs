@@ -64,6 +64,13 @@ The actual default value of this option depends on other field options:
 * If ``data_class`` is not set and ``compound`` is ``false``, then ``''``
   (empty string).
 
+``is_empty_callback``
+~~~~~~~~~~~~~~~~~~~~~
+
+**type**: ``callable`` **default**: ``null``
+
+This callable takes form data and returns whether value is considered empty.
+
 .. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
 .. _reference-form-option-error-bubbling:
