@@ -74,6 +74,11 @@ Routing
 
 * :doc:`Route </routing>`
 
+Scheduler
+~~~~~~~~~
+
+* :ref:`AsSchedule <register-schedule-provider>`
+
 Security
 ~~~~~~~~
 

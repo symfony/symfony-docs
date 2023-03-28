@@ -54,6 +54,7 @@ Topics
     profiler
     rate_limiter
     routing
+    scheduler
     security
     session
     setup
