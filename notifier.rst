@@ -857,7 +857,7 @@ dispatched. Listeners receive a
         $message = $event->getMessage();
 
         // log something
-        $this->logger(sprintf('Message with subject: %s will be send to %s, $message->getSubject(), $message->getRecipientId()'));
+        $this->logger(sprintf('Message with subject: %s will be send to %s', $message->getSubject(), $message->getRecipientId()));
     });
 
 The ``FailedMessageEvent`` Event
@@ -883,7 +883,7 @@ Listeners receive a
         $error = $event->getError();
 
         // log something
-        $this->logger(sprintf('The message with subject: %s has not been sent successfully. The error is: %s, $message->getSubject(), $error->getMessage()'));
+        $this->logger(sprintf('The message with subject: %s has not been sent successfully. The error is: %s', $message->getSubject(), $error->getMessage()));
     });
 
 The ``SentMessageEvent`` Event
@@ -903,7 +903,7 @@ is dispatched. Listeners receive a
         $message = $event->getOriginalMessage();
 
         // log something
-        $this->logger(sprintf('The message has been successfully sent and has id: %s, $message->getMessageId()'));
+        $this->logger(sprintf('The message has been successfully sent and has id: %s', $message->getMessageId()));
     });
 
 .. TODO
