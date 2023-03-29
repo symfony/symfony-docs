@@ -103,9 +103,8 @@ For example, to define your service as lazy use the following::
         // ...
     }
 
-You can also configure laziness when your service is injected with 
-:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autowire` attribute.
-For example, to inject your service as lazy use the following::
+You can also configure laziness when your service is injected with the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autowire` attribute::
 
     namespace App\Service;
 
@@ -123,7 +122,7 @@ For example, to inject your service as lazy use the following::
 
 .. versionadded:: 6.3
 
-    The ``lazy`` argument of the `#[Autowire()]` attribute was introduced in
+    The ``lazy`` argument of the ``#[Autowire()]`` attribute was introduced in
     Symfony 6.3.
 
 Interface Proxifying
