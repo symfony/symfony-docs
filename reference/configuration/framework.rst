@@ -2954,7 +2954,7 @@ ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``
 
 .. versionadded:: 5.4
 
-    ``cache.adapter.doctrine_dbal`` has been introduced in Symfony 5.4.
+    ``cache.adapter.doctrine_dbal`` was introduced in Symfony 5.4.
 
 .. deprecated:: 5.4
 
