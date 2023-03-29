@@ -2877,9 +2877,9 @@ app
 **type**: ``string`` **default**: ``cache.adapter.filesystem``
 
 The cache adapter used by the ``cache.app`` service. The FrameworkBundle
-ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``,
-``cache.adapter.system``, ``cache.adapter.filesystem``, ``cache.adapter.psr6``,
-``cache.adapter.redis``, ``cache.adapter.memcached``, ``cache.adapter.pdo``,
+ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.system``,
+``cache.adapter.filesystem``, ``cache.adapter.psr6``, ``cache.adapter.redis``,
+``cache.adapter.memcached``, ``cache.adapter.pdo`` and
 ``cache.adapter.doctrine_dbal``.
 
 There's also a special adapter called ``cache.adapter.array`` which stores
