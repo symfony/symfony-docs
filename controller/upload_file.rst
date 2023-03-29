@@ -31,7 +31,7 @@ add a PDF brochure for each product. To do so, add a new property called
             return $this->brochureFilename;
         }
 
-        public function setBrochureFilename(string $brochureFilename)
+        public function setBrochureFilename(string $brochureFilename): self
         {
             $this->brochureFilename = $brochureFilename;
 
@@ -91,7 +91,7 @@ so Symfony doesn't try to get/set its value from the related entity::
             ;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'data_class' => Product::class,
