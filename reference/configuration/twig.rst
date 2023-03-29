@@ -1,6 +1,3 @@
-.. index::
-    pair: Twig; Configuration reference
-
 Twig Configuration Reference (TwigBundle)
 =========================================
 

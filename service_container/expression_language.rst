@@ -1,9 +1,3 @@
-.. index::
-    single: DependencyInjection; ExpressionLanguage
-    single: DependencyInjection; Expressions
-    single: Service Container; ExpressionLanguage
-    single: Service Container; Expressions
-
 How to Inject Values Based on Complex Expressions
 =================================================
 

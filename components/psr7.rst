@@ -1,6 +1,3 @@
-.. index::
-   single: PSR-7
-
 The PSR-7 Bridge
 ================
 

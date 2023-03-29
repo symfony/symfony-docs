@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; TextareaType
-
 TextareaType Field
 ==================
 

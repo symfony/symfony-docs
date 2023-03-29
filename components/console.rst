@@ -1,7 +1,3 @@
-.. index::
-    single: Console; CLI
-    single: Components; Console
-
 The Console Component
 =====================
 

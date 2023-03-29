@@ -1,6 +1,3 @@
-.. index::
-   single: Configuration
-
 Configuring Symfony
 ===================
 
@@ -376,9 +373,6 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
 
     Later in this article you can read how to
     :ref:`get configuration parameters in controllers and services <configuration-accessing-parameters>`.
-
-.. index::
-   single: Environments; Introduction
 
 .. _page-creation-environments:
 .. _page-creation-prod-cache-clear:

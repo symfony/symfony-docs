@@ -1,6 +1,3 @@
-.. index::
-   single: Console; How to Call a Command from a controller
-
 How to Call a Command from a Controller
 =======================================
 

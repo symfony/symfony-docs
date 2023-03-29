@@ -1,7 +1,3 @@
-.. index::
-   single: Validator
-   single: Components; Validator
-
 The Validator Component
 =======================
 

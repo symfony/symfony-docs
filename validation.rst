@@ -1,6 +1,3 @@
-.. index::
-   single: Validation
-
 Validation
 ==========
 
@@ -10,10 +7,6 @@ into a database or passed to a web service.
 
 Symfony provides a `Validator`_ component to handle this for you. This
 component is based on the `JSR303 Bean Validation specification`_.
-
-.. index::
-   pair: Validation; Installation
-   pair: Validation; Configuration
 
 Installation
 ------------
@@ -30,9 +23,6 @@ install the validator before using it:
     If your application doesn't use Symfony Flex, you might need to do some
     manual configuration to enable validation. Check out the
     :ref:`Validation configuration reference <reference-validation>`.
-
-.. index::
-   single: Validation; The basics
 
 The Basics of Validation
 ------------------------
@@ -129,9 +119,6 @@ be passed to the validator service to be checked.
     get the value of any property, so they can be public, private or protected
     (see :ref:`validator-constraint-targets`).
 
-.. index::
-   single: Validation; Using the validator
-
 Using the Validator Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -214,9 +201,6 @@ Inside the template, you can output the list of errors exactly as needed:
     Each validation error (called a "constraint violation"), is represented by
     a :class:`Symfony\\Component\\Validator\\ConstraintViolation` object.
 
-.. index::
-   single: Validation; Callables
-
 Validation Callables
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -230,9 +214,6 @@ when :ref:`validating OptionsResolver values <optionsresolver-validate-value>`):
     constraints aren't matched.
 :method:`Symfony\\Component\\Validator\\Validation::createIsValidCallable`
     This returns a closure that returns ``false`` when the constraints aren't matched.
-
-.. index::
-   single: Validation; Constraints
 
 .. _validation-constraints:
 
@@ -258,9 +239,6 @@ Symfony packages many of the most commonly-needed constraints:
 
 You can also create your own custom constraints. This topic is covered in
 the :doc:`/validation/custom_constraint` article.
-
-.. index::
-   single: Validation; Constraints configuration
 
 .. _validation-constraint-configuration:
 
@@ -456,9 +434,6 @@ of the form fields::
         ;
     }
 
-.. index::
-   single: Validation; Constraint targets
-
 .. _validator-constraint-targets:
 
 Constraint Targets
@@ -469,9 +444,6 @@ a getter method (e.g. ``getFullName()``) or an entire class. Property constraint
 are the most common and easy to use. Getter constraints allow you to specify
 more complex validation rules. Finally, class constraints are intended
 for scenarios where you want to validate a class as a whole.
-
-.. index::
-   single: Validation; Property constraints
 
 .. _validation-property-target:
 
@@ -556,9 +528,6 @@ class to have at least 3 characters.
     The validator will use a value ``null`` if a typed property is uninitialized.
     This can cause unexpected behavior if the property holds a value when initialized.
     In order to avoid this, make sure all properties are initialized before validating them.
-
-.. index::
-   single: Validation; Getter constraints
 
 Getters
 ~~~~~~~

@@ -1,6 +1,3 @@
-.. index::
-   single: Messenger
-
 Messenger: Sync & Queued Message Handling
 =========================================
 

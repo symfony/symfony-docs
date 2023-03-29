@@ -1,7 +1,3 @@
-.. index::
-   single: Intl
-   single: Components; Intl
-
 The Intl Component
 ==================
 

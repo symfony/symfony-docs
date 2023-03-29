@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Types Reference
-
 Form Types Reference
 ====================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Templating
-
 Creating and Using Templates
 ============================
 
@@ -392,9 +389,6 @@ gives you access to these variables:
 In addition to the global ``app`` variable injected by Symfony, you can also
 inject variables automatically to all Twig templates as explained in the next
 section.
-
-.. index::
-   single: Templating; Global variables
 
 .. _templating-global-variables:
 
@@ -1028,9 +1022,6 @@ template fragments. Configure that special URL in the ``fragments`` option:
     the application performance if you embed lots of controllers. If possible,
     :doc:`cache the template fragment </http_cache/esi>`.
 
-.. index::
-    single: Templating; hinclude.js
-
 .. _templates-hinclude:
 
 How to Embed Asynchronous Content with hinclude.js
@@ -1421,9 +1412,6 @@ you can refer to it as ``@AcmeFoo/user/profile.html.twig``.
 
     You can also :ref:`override bundle templates <override-templates>` in case
     you want to change some parts of the original bundle templates.
-
-.. index::
-   single: Twig extensions
 
 .. _templates-twig-extension:
 

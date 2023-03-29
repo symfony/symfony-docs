@@ -1,6 +1,3 @@
-.. index::
-    single: Console; Events
-
 Using Events
 ============
 

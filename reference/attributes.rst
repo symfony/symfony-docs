@@ -1,6 +1,3 @@
-.. index::
-    single: Attributes
-
 Symfony Attributes Overview
 ===========================
 

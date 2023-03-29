@@ -1,6 +1,3 @@
-.. index::
-    single: Secrets
-
 How to Keep Sensitive Information Secret
 ========================================
 

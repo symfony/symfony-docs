@@ -1,6 +1,3 @@
-.. index::
-   single: Asset; Custom Version Strategy
-
 How to Use a Custom Version Strategy for Assets
 ===============================================
 

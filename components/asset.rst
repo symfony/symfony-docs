@@ -1,7 +1,3 @@
-.. index::
-   single: Asset
-   single: Components; Asset
-
 The Asset Component
 ===================
 

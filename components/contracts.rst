@@ -1,7 +1,3 @@
-.. index::
-   single: Contracts
-   single: Components; Contracts
-
 The Contracts Component
 =======================
 

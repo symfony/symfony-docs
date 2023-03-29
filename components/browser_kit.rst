@@ -1,7 +1,3 @@
-.. index::
-   single: BrowserKit
-   single: Components; BrowserKit
-
 The BrowserKit Component
 ========================
 

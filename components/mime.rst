@@ -1,8 +1,3 @@
-.. index::
-   single: MIME
-   single: MIME Messages
-   single: Components; MIME
-
 The Mime Component
 ==================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Controller
-
 Controller
 ==========
 
@@ -14,9 +11,6 @@ to render the content of a page.
 
     If you haven't already created your first working page, check out
     :doc:`/page_creation` and then come back!
-
-.. index::
-   single: Controller; Basic example
 
 A Basic Controller
 ------------------
@@ -64,9 +58,6 @@ This controller is pretty straightforward:
 
 * *line 14*: The controller creates and returns a ``Response`` object.
 
-.. index::
-   single: Controller; Routes and controllers
-
 Mapping a URL to a Controller
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -77,9 +68,6 @@ a route. This was done above with the ``#[Route('/lucky/number/{max}')]``
 To see your page, go to this URL in your browser: http://localhost:8000/lucky/number/100
 
 For more information on routing, see :doc:`/routing`.
-
-.. index::
-   single: Controller; Base controller class
 
 .. _the-base-controller-class-services:
 .. _the-base-controller-classes-services:
@@ -109,9 +97,6 @@ Add the ``use`` statement atop your controller class and then modify
 
 That's it! You now have access to methods like :ref:`$this->render() <controller-rendering-templates>`
 and many others that you'll learn about next.
-
-.. index::
-   single: Controller; Redirecting
 
 Generating URLs
 ~~~~~~~~~~~~~~~
@@ -165,9 +150,6 @@ and ``redirect()`` methods::
     redirect to a URL provided by end-users, your application may be open
     to the `unvalidated redirects security vulnerability`_.
 
-.. index::
-   single: Controller; Rendering templates
-
 .. _controller-rendering-templates:
 
 Rendering Templates
@@ -182,9 +164,6 @@ object for you::
 
 Templating and Twig are explained more in the
 :doc:`Creating and Using Templates article </templates>`.
-
-.. index::
-   single: Controller; Accessing services
 
 .. _controller-accessing-services:
 .. _accessing-other-services:
@@ -289,10 +268,6 @@ use:
     created: templates/product/new.html.twig
     created: templates/product/show.html.twig
 
-.. index::
-   single: Controller; Managing errors
-   single: Controller; 404 pages
-
 Managing Errors and 404 Pages
 -----------------------------
 
@@ -361,10 +336,6 @@ object. To access it in your controller, add it as an argument and
 :ref:`Keep reading <request-object-info>` for more information about using the
 Request object.
 
-.. index::
-   single: Controller; The session
-   single: Session
-
 Managing the Session
 --------------------
 
@@ -403,9 +374,6 @@ For example, imagine you're processing a :doc:`form </forms>` submission::
         }
 
 :ref:`Reading <session-intro>` for more information about using Sessions.
-
-.. index::
-   single: Controller; Response object
 
 .. _request-object-info:
 

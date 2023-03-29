@@ -1,6 +1,3 @@
-.. index::
-    single: Console; Usage
-
 Using Console Commands, Shortcuts and Built-in Commands
 =======================================================
 

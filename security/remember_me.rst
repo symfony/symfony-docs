@@ -1,6 +1,3 @@
-.. index::
-   single: Security; "Remember me"
-
 How to Add "Remember Me" Login Functionality
 ============================================
 

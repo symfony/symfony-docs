@@ -1,6 +1,3 @@
-.. index::
-   single: Create your First Page in Symfony
-
 .. _creating-pages-in-symfony2:
 .. _creating-pages-in-symfony:
 
@@ -28,9 +25,6 @@ two-step process:
 
     Symfony *embraces* the HTTP Request-Response lifecycle. To find out more,
     see :doc:`/introduction/http_fundamentals`.
-
-.. index::
-   single: Page creation; Example
 
 Creating a Page: Route and Controller
 -------------------------------------

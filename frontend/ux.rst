@@ -1,6 +1,3 @@
-.. index::
-   single: Symfony UX
-
 The Symfony UX Initiative & Packages
 ====================================
 

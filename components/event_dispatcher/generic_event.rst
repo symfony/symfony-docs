@@ -1,6 +1,3 @@
-.. index::
-   single: EventDispatcher
-
 The Generic Event Object
 ========================
 

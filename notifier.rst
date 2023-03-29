@@ -1,6 +1,3 @@
-.. index::
-   single: Notifier
-
 Creating and Sending Notifications
 ==================================
 
@@ -864,9 +861,6 @@ all configured texter and chatter transports only in the ``dev`` (and/or
                 slack: 'null://null'
 
 .. _notifier-events:
-
-.. index::
-    single: Notifier; Events
 
 Using Events
 ------------

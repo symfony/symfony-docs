@@ -1,7 +1,3 @@
-.. index::
-   single: Workflow
-   single: Components; Workflow
-
 The Workflow Component
 ======================
 

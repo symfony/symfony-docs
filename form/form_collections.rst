@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Embed collection of forms
-
 How to Embed a Collection of Forms
 ==================================
 

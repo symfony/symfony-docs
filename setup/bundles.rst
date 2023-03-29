@@ -1,6 +1,3 @@
-.. index::
-    single: Upgrading; Bundle; Major Version
-
 Upgrading a Third-Party Bundle for a Major Symfony Version
 ==========================================================
 

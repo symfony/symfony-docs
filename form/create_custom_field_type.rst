@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Custom field type
-
 How to Create a Custom Form Field Type
 ======================================
 

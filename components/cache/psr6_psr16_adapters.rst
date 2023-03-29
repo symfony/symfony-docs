@@ -1,8 +1,3 @@
-.. index::
-   single: Cache
-   single: Performance
-   single: Components; Cache
-
 Adapters For Interoperability between PSR-6 and PSR-16 Cache
 ============================================================
 

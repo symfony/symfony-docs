@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; ChoiceType
-
 ChoiceType Field (select drop-downs, radio buttons & checkboxes)
 ================================================================
 

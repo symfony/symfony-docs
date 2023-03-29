@@ -1,6 +1,3 @@
-.. index::
-    single: Configuration reference; WebProfiler
-
 Profiler Configuration Reference (WebProfilerBundle)
 ====================================================
 

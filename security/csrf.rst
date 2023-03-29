@@ -1,6 +1,3 @@
-.. index::
-    single: CSRF; CSRF protection
-
 How to Implement CSRF Protection
 ================================
 

@@ -1,7 +1,3 @@
-.. index::
-    single: EventDispatcher; Debug
-    single: EventDispatcher; Traceable
-
 The Traceable Event Dispatcher
 ==============================
 

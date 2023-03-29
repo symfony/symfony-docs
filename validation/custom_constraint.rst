@@ -1,6 +1,3 @@
-.. index::
-   single: Validation; Custom constraints
-
 How to Create a Custom Validation Constraint
 ============================================
 

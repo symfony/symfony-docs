@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Method Calls
-
 Service Method Calls and Setter Injection
 =========================================
 

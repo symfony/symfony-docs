@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Compilation
-
 Compiling the Container
 =======================
 

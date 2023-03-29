@@ -1,7 +1,3 @@
-.. index::
-   single: Yaml
-   single: Components; Yaml
-
 The Yaml Component
 ==================
 

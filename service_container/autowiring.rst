@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Autowiring
-
 Defining Services Dependencies Automatically (Autowiring)
 =========================================================
 

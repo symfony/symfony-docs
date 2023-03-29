@@ -1,6 +1,3 @@
-.. index::
-    single: Console Helpers; DebugFormatter Helper
-
 Debug Formatter Helper
 ======================
 

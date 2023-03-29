@@ -1,6 +1,3 @@
-.. index::
-    single: Messenger; Record messages; Transaction messages
-
 Transactional Messages: Handle New Messages After Handling is Done
 ==================================================================
 

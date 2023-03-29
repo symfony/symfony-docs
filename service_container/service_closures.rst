@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Service Closures
-
 Service Closures
 ================
 

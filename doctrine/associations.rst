@@ -1,6 +1,3 @@
-.. index::
-    single: Doctrine; Associations
-
 How to Work with Doctrine Associations / Relations
 ==================================================
 

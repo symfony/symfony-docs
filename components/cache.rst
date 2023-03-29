@@ -1,8 +1,3 @@
-.. index::
-   single: Cache
-   single: Performance
-   single: Components; Cache
-
 .. _`cache-component`:
 
 The Cache Component

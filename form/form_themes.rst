@@ -1,7 +1,3 @@
-.. index::
-   single: Forms; Theming
-   single: Forms; Customizing fields
-
 How to Work with Form Themes
 ============================
 

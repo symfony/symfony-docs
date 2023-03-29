@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Validation groups based on submitted data
-
 How to Choose Validation Groups Based on the Submitted Data
 ===========================================================
 

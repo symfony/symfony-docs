@@ -1,6 +1,3 @@
-.. index::
-   single: Dependency Injection; Lazy Services
-
 Lazy Services
 =============
 

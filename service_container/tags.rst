@@ -1,7 +1,3 @@
-.. index::
-    single: DependencyInjection; Tags
-    single: Service Container; Tags
-
 How to Work with Service Tags
 =============================
 

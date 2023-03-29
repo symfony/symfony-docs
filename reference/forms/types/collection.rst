@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; CollectionType
-
 CollectionType Field
 ====================
 

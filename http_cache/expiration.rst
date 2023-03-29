@@ -1,6 +1,3 @@
-.. index::
-    single: Cache; HTTP expiration
-
 HTTP Cache Expiration
 =====================
 
@@ -13,10 +10,6 @@ The expiration model can be accomplished using one of two, nearly identical,
 HTTP headers: ``Expires`` or ``Cache-Control``.
 
 .. include:: /http_cache/_expiration-and-validation.rst.inc
-
-.. index::
-    single: Cache; Cache-Control header
-    single: HTTP headers; Cache-Control
 
 Expiration with the ``Cache-Control`` Header
 --------------------------------------------
@@ -59,10 +52,6 @@ additional directives):
     (added by ``setSharedMaxAge()`` method) prohibits a cache to use a stale
     response in ``stale-if-error`` scenarios. That's why it's recommended to use
     both ``public`` and ``max-age`` directives.
-
-.. index::
-    single: Cache; Expires header
-    single: HTTP headers; Expires
 
 Expiration with the ``Expires`` Header
 --------------------------------------

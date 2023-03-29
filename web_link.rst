@@ -1,6 +1,3 @@
-.. index::
-   single: Web Link
-
 Asset Preloading and Resource Hints with HTTP/2 and WebLink
 ===========================================================
 
