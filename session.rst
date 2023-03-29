@@ -1251,9 +1251,6 @@ has to return an integer which will be used as TTL.
             // Inject whatever dependencies you need to be able to resolve a TTL for the current session
             ->args([service('security')]);
 
-.. index::
-    single: Sessions, saving locale
-
 .. _locale-sticky-session:
 
 Making the Locale "Sticky" during a User's Session

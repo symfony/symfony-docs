@@ -1,6 +1,3 @@
-.. index::
-   single: Security; Access Token
-
 How to use Access Token Authentication
 ======================================
 
