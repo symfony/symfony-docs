@@ -1,7 +1,3 @@
-.. index::
-    single: How the front controller, ``Kernel`` and environments
-    work together
-
 Understanding how the Front Controller, Kernel and Environments Work together
 =============================================================================
 
@@ -122,9 +118,6 @@ new kernel.
     But odds are high that you don't need to change things like this on the
     fly by having several ``Kernel`` implementations.
 
-.. index::
-   single: Configuration; Debug mode
-
 .. _debug-mode:
 
 Debug Mode
@@ -218,9 +211,6 @@ Symfony's default ``Kernel`` class implements this method by loading first the
 config files found on ``config/packages/*`` and then, the files found on
 ``config/packages/ENVIRONMENT_NAME/``. You are free to implement this method
 differently if you need a more sophisticated way of loading your configuration.
-
-.. index::
-   single: Environments; Cache directory
 
 Environments and the Cache Directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

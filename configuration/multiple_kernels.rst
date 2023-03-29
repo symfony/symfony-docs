@@ -1,6 +1,3 @@
-.. index::
-   single: kernel, performance
-
 How To Create Symfony Applications with Multiple Kernels
 ========================================================
 

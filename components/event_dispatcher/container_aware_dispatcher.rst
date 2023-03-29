@@ -1,6 +1,3 @@
-.. index::
-   single: EventDispatcher; Service container aware
-
 The Container Aware Event Dispatcher
 ====================================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Tests; Crawler
-
 The DOM Crawler
 ===============
 

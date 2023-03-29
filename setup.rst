@@ -1,6 +1,3 @@
-.. index::
-   single: Installing and Setting up Symfony
-
 Installing & Setting up the Symfony Framework
 =============================================
 

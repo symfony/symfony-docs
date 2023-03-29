@@ -1,6 +1,3 @@
-.. index::
-    single: EventDispatcher; Immutable
-
 The Immutable Event Dispatcher
 ==============================
 

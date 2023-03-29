@@ -1,7 +1,3 @@
-.. index::
-   single: HttpClient
-   single: Components; HttpClient
-
 HTTP Client
 ===========
 

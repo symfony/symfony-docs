@@ -224,9 +224,6 @@ event::
         }
     }
 
-.. index::
-   single: Profiling; Data collector
-
 .. _profiler-data-collector:
 
 Creating a Data Collector

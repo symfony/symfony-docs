@@ -1,6 +1,3 @@
-.. index::
-    single: Security; Impersonating User
-
 How to Impersonate a User
 =========================
 

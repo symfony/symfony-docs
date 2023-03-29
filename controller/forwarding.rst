@@ -1,6 +1,3 @@
-.. index::
-    single: Controller; Forwarding
-
 How to Forward Requests to another Controller
 =============================================
 

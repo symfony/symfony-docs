@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; PercentType
-
 PercentType Field
 =================
 

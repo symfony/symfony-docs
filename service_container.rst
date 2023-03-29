@@ -1,7 +1,3 @@
-.. index::
-   single: Service Container
-   single: DependencyInjection; Container
-
 Service Container
 =================
 
@@ -88,9 +84,6 @@ in the container.
     list, you can run ``php bin/console debug:container``. But most of the time,
     you won't need to worry about this. See :ref:`services-wire-specific-service`.
     See :doc:`/service_container/debug`.
-
-.. index::
-   single: Service Container; Configuring services
 
 .. _service-container-creating-service:
 

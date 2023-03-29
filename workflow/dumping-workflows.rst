@@ -1,6 +1,3 @@
-.. index::
-    single: Workflow; Dumping Workflows
-
 How to Dump Workflows
 =====================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Tests; Profiling
-
 How to Use the Profiler in a Functional Test
 ============================================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Serializer
-
 How to Use the Serializer
 =========================
 

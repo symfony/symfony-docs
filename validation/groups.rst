@@ -1,6 +1,3 @@
-.. index::
-    single: Validation; Groups
-
 How to Apply only a Subset of all Your Validation Constraints (Validation Groups)
 =================================================================================
 

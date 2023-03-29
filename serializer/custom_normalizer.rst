@@ -1,6 +1,3 @@
-.. index::
-   single: Serializer; Custom normalizers
-
 How to Create your Custom Normalizer
 ====================================
 

@@ -1,7 +1,3 @@
-.. index::
-   single: HTTP
-   single: HttpFoundation, Sessions
-
 Sessions
 ========
 
@@ -121,9 +117,6 @@ class.
     performance because all users will receive a session cookie. In order to
     prevent starting sessions for anonymous users, you must *completely* avoid
     accessing the session.
-
-.. index::
-   single: Session; Flash messages
 
 .. _flash-messages:
 
@@ -452,9 +445,6 @@ particular cookie by reading the ``getLifetime()`` method::
 
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
-
-.. index::
-    single: Session; Database Storage
 
 .. _session-database:
 
@@ -1152,9 +1142,6 @@ This is the recommended migration workflow:
 #. After verifying that the sessions in your application are working, switch
    from the migrating handler to the new handler.
 
-.. index::
-    single: Sessions, saving locale
-
 .. _locale-sticky-session:
 
 Making the Locale "Sticky" during a User's Session
@@ -1343,9 +1330,6 @@ event::
     In order to update the language immediately after a user has changed their
     language preferences, you also need to update the session when you change
     the ``User`` entity.
-
-.. index::
-   single: Sessions, Session Proxy, Proxy
 
 Session Proxies
 ---------------

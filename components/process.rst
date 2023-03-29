@@ -1,7 +1,3 @@
-.. index::
-   single: Process
-   single: Components; Process
-
 The Process Component
 =====================
 

@@ -1,6 +1,3 @@
-.. index::
-    single: Configuration reference; Swift Mailer
-
 Mailer Configuration Reference (SwiftmailerBundle)
 ==================================================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Logging; Emailing errors
-
 How to Configure Monolog to Email Errors
 ========================================
 

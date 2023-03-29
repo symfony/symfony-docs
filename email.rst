@@ -1,6 +1,3 @@
-.. index::
-   single: Emails
-
 Swift Mailer
 ============
 

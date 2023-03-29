@@ -1,6 +1,3 @@
-.. index::
-   single: Create a UX bundle
-
 Create a UX bundle
 ==================
 

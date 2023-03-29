@@ -1,6 +1,3 @@
-.. index::
-   single: Logging; Console messages
-
 How to Configure Monolog to Display Console Messages
 ====================================================
 

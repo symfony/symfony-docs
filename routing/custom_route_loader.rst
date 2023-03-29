@@ -1,6 +1,3 @@
-.. index::
-   single: Routing; Custom route loader
-
 How to Create a custom Route Loader
 ===================================
 

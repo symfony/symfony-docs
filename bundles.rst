@@ -1,6 +1,3 @@
-.. index::
-   single: Bundles
-
 .. _page-creation-bundles:
 
 The Bundle System

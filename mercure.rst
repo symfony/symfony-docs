@@ -1,6 +1,3 @@
-.. index::
-   single: Mercure
-
 Pushing Data to Clients Using the Mercure Protocol
 ==================================================
 

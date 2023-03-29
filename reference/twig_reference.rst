@@ -1,6 +1,3 @@
-.. index::
-    single: Symfony Twig extensions
-
 Twig Extensions Defined by Symfony
 ==================================
 

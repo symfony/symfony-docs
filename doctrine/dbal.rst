@@ -1,6 +1,3 @@
-.. index::
-   pair: Doctrine; DBAL
-
 How to Use Doctrine DBAL
 ========================
 

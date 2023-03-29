@@ -1,6 +1,3 @@
-.. index::
-   single: Security; Authenticating against an LDAP server
-
 Authenticating against an LDAP server
 =====================================
 

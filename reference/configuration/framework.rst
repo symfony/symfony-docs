@@ -1,6 +1,3 @@
-.. index::
-    single: Configuration reference; Framework
-
 .. _framework-bundle-configuration:
 
 Framework Configuration Reference (FrameworkBundle)

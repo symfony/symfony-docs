@@ -1,6 +1,3 @@
-.. index::
-   single: Cache; Invalidation
-
 .. _http-cache-invalidation:
 
 Cache Invalidation

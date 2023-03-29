@@ -1,8 +1,3 @@
-.. index::
-   single: Doctrine; Simple Registration Form
-   single: Form; Simple Registration Form
-   single: Security; Simple Registration Form
-
 How to Implement a Registration Form
 ====================================
 

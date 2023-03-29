@@ -1,6 +1,3 @@
-.. index::
-    single: Using Parameters within a Dependency Injection Class
-
 Using Parameters within a Dependency Injection Class
 ----------------------------------------------------
 

@@ -1,6 +1,3 @@
-.. index::
-    pair: Monolog; Configuration reference
-
 Logging Configuration Reference (MonologBundle)
 ===============================================
 

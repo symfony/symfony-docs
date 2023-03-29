@@ -1,7 +1,3 @@
-.. index::
-    single: DependencyInjection; Importing Resources
-    single: Service Container; Importing Resources
-
 How to Import Configuration Files/Resources
 ===========================================
 
@@ -21,9 +17,6 @@ method, commonly used to import other resources, is via the ``imports``
 directive. The second method, using dependency injection extensions, is used by
 third-party bundles to load the configuration. Read on to learn more about both
 methods.
-
-.. index::
-    single: Service Container; Imports
 
 .. _service-container-imports-directive:
 
@@ -151,9 +144,6 @@ solution is to not use imports and add the service definitions in the same file,
 but after the ``App\`` definition to override it.
 
 .. include:: /components/dependency_injection/_imports-parameters-note.rst.inc
-
-.. index::
-    single: Service Container; Extension configuration
 
 .. _service-container-extension-configuration:
 

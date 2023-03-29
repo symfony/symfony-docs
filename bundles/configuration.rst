@@ -1,7 +1,3 @@
-.. index::
-   single: Configuration; Semantic
-   single: Bundle; Extension configuration
-
 How to Create Friendly Configuration for a Bundle
 =================================================
 

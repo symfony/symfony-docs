@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; With no class
-
 How to Use a Form without a Data Class
 ======================================
 

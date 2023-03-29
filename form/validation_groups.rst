@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Validation groups
-
 How to Define the Validation Groups to Use
 ==========================================
 

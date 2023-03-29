@@ -1,6 +1,3 @@
-.. index::
-   single: Migration
-
 Migrating an Existing Application to Symfony
 ============================================
 

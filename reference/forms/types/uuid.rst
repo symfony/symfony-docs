@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; UuidType
-
 UuidType Field
 ==============
 

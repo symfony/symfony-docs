@@ -1,6 +1,3 @@
-.. index::
-    single: Web Server
-
 Configuring a Web Server
 ========================
 

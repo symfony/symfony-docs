@@ -1,7 +1,3 @@
-.. index::
-   single: UID
-   single: Components; UID
-
 The UID Component
 =================
 

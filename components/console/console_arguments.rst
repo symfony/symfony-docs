@@ -1,6 +1,3 @@
-.. index::
-    single: Console; Console arguments
-
 Understanding how Console Arguments and Options Are Handled
 ===========================================================
 
