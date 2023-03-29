@@ -2879,7 +2879,18 @@ app
 The cache adapter used by the ``cache.app`` service. The FrameworkBundle
 ships with multiple adapters: ``cache.adapter.apcu``, ``cache.adapter.doctrine``,
 ``cache.adapter.system``, ``cache.adapter.filesystem``, ``cache.adapter.psr6``,
-``cache.adapter.redis``, ``cache.adapter.memcached`` and ``cache.adapter.pdo``.
+``cache.adapter.redis``, ``cache.adapter.memcached``, ``cache.adapter.pdo``,
+``cache.adapter.doctrine_dbal``.
+
+.. versionadded:: 5.4
+
+    ``cache.adapter.doctrine_dbal`` was introduced in Symfony 5.4.
+
+.. deprecated:: 5.4
+
+    Using ``cache.adapter.doctrine`` has been deprecated in favor of Symfony
+    Cache or PSR-6 adapters provided by Doctrine Cache and will be removed in
+    6.0.
 
 There's also a special adapter called ``cache.adapter.array`` which stores
 contents in memory using a PHP array and it's used to disable caching (mostly on
