@@ -723,13 +723,14 @@ Clear all custom pools:
     $ php bin/console cache:pool:clear cache.app_clearer
 
 Clear all cache pools:
-    .. code-block:: terminal
 
-        $ php bin/console cache:pool:clear --all
+.. code-block:: terminal
+
+    $ php bin/console cache:pool:clear --all
 
 .. versionadded:: 6.3
 
-    The `--all` option was introduced in Symfony 6.3.
+    The ``--all`` option was introduced in Symfony 6.3.
 
 Clear all caches everywhere:
 
