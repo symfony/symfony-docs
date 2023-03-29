@@ -59,7 +59,7 @@ a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
 ==================  =====================================  ===========================================================================
-Service             Package                               DSN
+Service             Package                                DSN
 ==================  =====================================  ===========================================================================
 `46elks`_           ``symfony/forty-six-elks-notifier``    ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
 `AllMySms`_         ``symfony/all-my-sms-notifier``        ``allmysms://LOGIN:APIKEY@default?from=FROM``
