@@ -1,7 +1,3 @@
-.. index::
-   single: Serializer
-   single: Components; Serializer
-
 The Serializer Component
 ========================
 

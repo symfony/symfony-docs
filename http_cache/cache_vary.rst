@@ -1,7 +1,3 @@
-.. index::
-   single: Cache; Vary
-   single: HTTP headers; Vary
-
 Varying the Response for HTTP Cache
 ===================================
 

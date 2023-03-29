@@ -1,6 +1,3 @@
-.. index::
-    single: Security; Configuration reference
-
 Security Configuration Reference (SecurityBundle)
 =================================================
 

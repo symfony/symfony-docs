@@ -1,6 +1,3 @@
-.. index::
-    single: Service Container; Decoration
-
 How to Decorate Services
 ========================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Security; Force HTTPS
-
 How to Force HTTPS or HTTP for different URLs
 =============================================
 

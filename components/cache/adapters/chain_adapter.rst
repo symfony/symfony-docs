@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: Chain Cache
-
 .. _component-cache-chain-adapter:
 
 Chain Cache Adapter

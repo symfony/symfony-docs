@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Events
-
 How to Dynamically Modify Forms Using Form Events
 =================================================
 

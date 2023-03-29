@@ -1,6 +1,3 @@
-.. index::
-    single: DependencyInjection; Synthetic Services
-
 How to Inject Instances into the Container
 ------------------------------------------
 

@@ -1,7 +1,3 @@
-.. index::
-    single: Expressions
-    Single: Components; Expression Language
-
 The ExpressionLanguage Component
 ================================
 
@@ -139,9 +135,6 @@ expressions (e.g. the request, the current user, etc.):
     characters in untrusted data to prevent malicious users from injecting
     control characters and altering the expression.
 
-.. index::
-    single: Caching; ExpressionLanguage
-
 .. _expression-language-caching:
 
 Caching
@@ -210,10 +203,6 @@ Both ``evaluate()`` and ``compile()`` can handle ``ParsedExpression`` and
 
     var_dump($expressionLanguage->evaluate($expression)); // prints 5
 
-.. index::
-    single: AST; ExpressionLanguage
-    single: AST; Abstract Syntax Tree
-
 .. _expression-language-ast:
 
 AST Dumping and Editing
@@ -261,9 +250,6 @@ method to turn the AST into an array::
     ;
 
 .. _expression-language-extending:
-
-.. index::
-    single: Extending; ExpressionLanguage
 
 Extending the ExpressionLanguage
 --------------------------------

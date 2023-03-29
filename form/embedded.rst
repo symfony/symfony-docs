@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Embedded forms
-
 How to Embed Forms
 ==================
 

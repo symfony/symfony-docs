@@ -1,6 +1,3 @@
-.. index::
-   single: Tests; Database
-
 How to Test A Doctrine Repository
 =================================
 

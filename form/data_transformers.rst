@@ -1,6 +1,3 @@
-.. index::
-   single: Form; Data transformers
-
 How to Use Data Transformers
 ============================
 

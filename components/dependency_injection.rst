@@ -1,7 +1,3 @@
-.. index::
-    single: DependencyInjection
-    single: Components; DependencyInjection
-
 The DependencyInjection Component
 =================================
 

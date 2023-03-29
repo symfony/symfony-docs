@@ -1,6 +1,3 @@
-.. index::
-   single: Controller; As Services
-
 How to Define Controllers as Services
 =====================================
 

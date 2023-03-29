@@ -1,7 +1,3 @@
-.. index::
-    single: Forms
-    single: Components; Form
-
 The Form Component
 ==================
 

@@ -1,6 +1,3 @@
-.. index::
-    single: Console; Commands as Services
-
 How to Define Commands as Services
 ==================================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Form; The "inherit_data" option
-
 How to Reduce Code Duplication with "inherit_data"
 ==================================================
 

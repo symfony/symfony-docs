@@ -1,6 +1,3 @@
-.. index::
-    single: Validator; Loading Resources
-
 Loading Resources
 =================
 

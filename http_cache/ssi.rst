@@ -1,7 +1,3 @@
-.. index::
-    single: Cache; SSI
-    single: SSI
-
 .. _server-side-includes:
 
 Working with Server Side Includes

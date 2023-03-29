@@ -1,6 +1,3 @@
-.. index::
-   single: Bundle; Best practices
-
 Best Practices for Reusable Bundles
 ===================================
 
@@ -8,9 +5,6 @@ This article is all about how to structure your **reusable bundles** to be
 configurable and extendable. Reusable bundles are those meant to be shared
 privately across many company projects or publicly so any Symfony project can
 install them.
-
-.. index::
-   pair: Bundle; Naming conventions
 
 .. _bundles-naming-conventions:
 

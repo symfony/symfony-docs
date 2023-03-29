@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Disabling validation
-
 How to Disable the Validation of Submitted Data
 ===============================================
 

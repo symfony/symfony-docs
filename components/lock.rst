@@ -1,7 +1,3 @@
-.. index::
-   single: Lock
-   single: Components; Lock
-
 The Lock Component
 ==================
 

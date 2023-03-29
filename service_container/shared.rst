@@ -1,6 +1,3 @@
-.. index::
-    single: Service Container; Shared Services
-
 How to Define Non Shared Services
 =================================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; SearchType
-
 SearchType Field
 ================
 

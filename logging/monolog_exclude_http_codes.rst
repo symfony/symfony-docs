@@ -1,8 +1,3 @@
-.. index::
-   single: Logging
-   single: Logging; Exclude HTTP Codes
-   single: Monolog; Exclude HTTP Codes
-
 How to Configure Monolog to Exclude Specific HTTP Codes from the Log
 ====================================================================
 

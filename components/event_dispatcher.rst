@@ -1,7 +1,3 @@
-.. index::
-   single: EventDispatcher
-   single: Components; EventDispatcher
-
 The EventDispatcher Component
 =============================
 
@@ -46,9 +42,6 @@ event - ``kernel.response``. Here's how it works:
   ``kernel.response`` event, allowing each of them to make modifications
   to the ``Response`` object.
 
-.. index::
-   single: EventDispatcher; Events
-
 Installation
 ------------
 
@@ -76,9 +69,6 @@ An :class:`Symfony\\Contracts\\EventDispatcher\\Event` instance is also
 created and passed to all of the listeners. As you'll see later, the ``Event``
 object itself often contains data about the event being dispatched.
 
-.. index::
-   pair: EventDispatcher; Naming conventions
-
 Naming Conventions
 ..................
 
@@ -89,9 +79,6 @@ naming conventions:
 * Prefix names with a namespace followed by a dot (e.g. ``order.*``, ``user.*``);
 * End names with a verb that indicates what action has been taken (e.g.
   ``order.placed``).
-
-.. index::
-   single: EventDispatcher; Event subclasses
 
 Event Names and Event Objects
 .............................
@@ -125,9 +112,6 @@ listeners registered with that event::
     use Symfony\Component\EventDispatcher\EventDispatcher;
 
     $dispatcher = new EventDispatcher();
-
-.. index::
-   single: EventDispatcher; Listeners
 
 Connecting Listeners
 ~~~~~~~~~~~~~~~~~~~~
@@ -262,9 +246,6 @@ determine which instance is passed.
 
 .. _event_dispatcher-closures-as-listeners:
 
-.. index::
-   single: EventDispatcher; Creating and dispatching an event
-
 Creating and Dispatching an Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -340,9 +321,6 @@ of the event to dispatch::
 Notice that the special ``OrderPlacedEvent`` object is created and passed to
 the ``dispatch()`` method. Now, any listener to the ``order.placed``
 event will receive the ``OrderPlacedEvent``.
-
-.. index::
-   single: EventDispatcher; Event subscribers
 
 .. _event_dispatcher-using-event-subscribers:
 
@@ -423,9 +401,6 @@ example, when the ``kernel.response`` event is triggered, the methods
 ``onKernelResponsePre()`` and ``onKernelResponsePost()`` are called in that
 order.
 
-.. index::
-   single: EventDispatcher; Stopping event flow
-
 .. _event_dispatcher-event-propagation:
 
 Stopping Event Flow/Propagation
@@ -460,9 +435,6 @@ method which returns a boolean value::
         // ...
     }
 
-.. index::
-   single: EventDispatcher; EventDispatcher aware events and listeners
-
 .. _event_dispatcher-dispatcher-aware-events:
 
 EventDispatcher Aware Events and Listeners
@@ -472,9 +444,6 @@ The ``EventDispatcher`` always passes the dispatched event, the event's
 name and a reference to itself to the listeners. This can lead to some advanced
 applications of the ``EventDispatcher`` including dispatching other events inside
 listeners, chaining events or even lazy loading listeners into the dispatcher object.
-
-.. index::
-   single: EventDispatcher; Event name introspection
 
 .. _event_dispatcher-event-name-introspection:
 

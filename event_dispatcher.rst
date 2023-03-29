@@ -1,7 +1,3 @@
-.. index::
-   single: Events; Create listener
-   single: Create subscriber
-
 Events and Event Listeners
 ==========================
 

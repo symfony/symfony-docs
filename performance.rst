@@ -1,6 +1,3 @@
-.. index::
-   single: Performance; Byte code cache; OPcache; APC
-
 Performance
 ===========
 

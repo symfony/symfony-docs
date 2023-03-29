@@ -1,7 +1,3 @@
-.. index::
-   single: VarExporter
-   single: Components; VarExporter
-
 The VarExporter Component
 =========================
 

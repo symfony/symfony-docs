@@ -1,6 +1,3 @@
-.. index::
-   single: Serializer; Custom context builders
-
 How to Create your Custom Context Builder
 =========================================
 

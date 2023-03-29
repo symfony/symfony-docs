@@ -1,7 +1,3 @@
-.. index::
-   single: Clock
-   single: Components; Clock
-
 The Clock Component
 ===================
 

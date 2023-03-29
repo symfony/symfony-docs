@@ -1,7 +1,3 @@
-.. index::
-    single: DependencyInjection; Debug
-    single: Service Container; Debug
-
 How to Debug the Service Container & List Services
 ==================================================
 

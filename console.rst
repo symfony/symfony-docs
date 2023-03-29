@@ -1,6 +1,3 @@
-.. index::
-   single: Console; Create commands
-
 Console Commands
 ================
 

@@ -1,7 +1,3 @@
-.. index::
-    single: DependencyInjection; Request
-    single: Service Container; Request
-
 How to Retrieve the Request from the Service Container
 ======================================================
 

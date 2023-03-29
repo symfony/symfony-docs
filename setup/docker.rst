@@ -1,5 +1,3 @@
-.. index:: Docker
-
 Using Docker with Symfony
 =========================
 

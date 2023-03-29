@@ -1,5 +1,3 @@
-.. index:: Flex
-
 Upgrading Existing Applications to Symfony Flex
 ===============================================
 

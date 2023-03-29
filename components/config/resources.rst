@@ -1,6 +1,3 @@
-.. index::
-   single: Config; Loading resources
-
 Loading Resources
 =================
 

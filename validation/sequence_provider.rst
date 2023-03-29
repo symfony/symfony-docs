@@ -1,7 +1,3 @@
-.. index::
-    single: Validation; Group Sequences
-    single: Validation; Group Sequence Providers
-
 How to Sequentially Apply Validation Groups
 ===========================================
 

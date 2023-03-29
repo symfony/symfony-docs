@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: Redis Cache
-
 .. _redis-adapter:
 
 Redis Cache Adapter

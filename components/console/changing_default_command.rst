@@ -1,6 +1,3 @@
-.. index::
-    single: Console; Changing the Default Command
-
 Changing the Default Command
 ============================
 

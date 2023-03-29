@@ -1,7 +1,3 @@
-.. index::
-   single: PHPUnitBridge
-   single: Components; PHPUnitBridge
-
 The PHPUnit Bridge
 ==================
 

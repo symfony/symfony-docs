@@ -1,6 +1,3 @@
-.. index::
-    single: Syntax; ExpressionLanguage
-
 The Expression Syntax
 =====================
 

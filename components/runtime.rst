@@ -1,7 +1,3 @@
-.. index::
-   single: Runtime
-   single: Components; Runtime
-
 The Runtime Component
 =====================
 

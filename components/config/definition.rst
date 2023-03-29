@@ -1,6 +1,3 @@
-.. index::
-   single: Config; Defining and processing configuration values
-
 Defining and Processing Configuration Values
 ============================================
 

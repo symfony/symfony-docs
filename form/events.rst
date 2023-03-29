@@ -1,6 +1,3 @@
-.. index::
-    single: Forms; Form Events
-
 Form Events
 ===========
 

@@ -1,7 +1,3 @@
-.. index::
-   single: Doctrine; Resolving target entities
-   single: Doctrine; Define relationships with abstract classes and interfaces
-
 How to Define Relationships with Abstract Classes and Interfaces
 ================================================================
 

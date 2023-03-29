@@ -1,14 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: APCu Cache
-    single: Array Cache
-    single: Chain Cache
-    single: Doctrine Cache
-    single: Filesystem Cache
-    single: Memcached Cache
-    single: PDO Cache, Doctrine DBAL Cache
-    single: Redis Cache
-
 .. _component-cache-cache-pools:
 
 Cache Pools and Supported Adapters

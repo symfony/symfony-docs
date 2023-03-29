@@ -1,6 +1,3 @@
-.. index::
-    single: Console Helpers; Progress Bar
-
 Progress Bar
 ============
 

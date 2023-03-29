@@ -1,6 +1,3 @@
-.. index::
-    single: Security; Creating a Custom Access Denied Handler
-
 How to Customize Access Denied Responses
 ========================================
 

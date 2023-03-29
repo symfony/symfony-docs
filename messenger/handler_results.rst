@@ -1,6 +1,3 @@
-.. index::
-    single: Messenger; Getting results / Working with command & query buses
-
 Getting Results from your Handler
 =================================
 

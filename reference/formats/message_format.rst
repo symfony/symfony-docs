@@ -1,6 +1,3 @@
-.. index::
-    single: Translation; Message Format
-
 How to Translate Messages using the ICU MessageFormat
 =====================================================
 

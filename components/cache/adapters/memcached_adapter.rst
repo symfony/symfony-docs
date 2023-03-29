@@ -1,7 +1,3 @@
-.. index::
-    single: Cache Pool
-    single: Memcached Cache
-
 .. _memcached-adapter:
 
 Memcached Cache Adapter

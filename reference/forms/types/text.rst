@@ -1,6 +1,3 @@
-.. index::
-   single: Forms; Fields; TextType
-
 TextType Field
 ==============
 

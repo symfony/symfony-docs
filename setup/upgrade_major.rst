@@ -1,6 +1,3 @@
-.. index::
-    single: Upgrading; Major Version
-
 Upgrading a Major Version (e.g. 5.4.0 to 6.0.0)
 ===============================================
 

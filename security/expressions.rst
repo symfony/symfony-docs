@@ -1,6 +1,3 @@
-.. index::
-   single: Expressions in the Framework
-
 Using Expressions in Security Access Controls
 =============================================
 

@@ -1,6 +1,3 @@
-.. index::
-   single: Logging
-
 How to Log Messages to different Files
 ======================================
 
