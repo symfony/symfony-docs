@@ -179,9 +179,14 @@ Structure
 
 * Exception and error message strings must be concatenated using :phpfunction:`sprintf`;
 
-* Exception and error messages must not contain backticks (e.g. 'The \`foo\` option ...'),
+* Exception and error messages must not contain backticks,
   even when referring to a technical element (such as a method or variable name).
-  Double quotes must be used at all time (e.g. 'The "foo" option ...'),;
+  Double quotes must be used at all time:
+
+  .. code-block:: diff
+
+    - Expected `foo` option to be one of ...
+    + Expected "foo" option to be one of ...
 
 * Exception and error messages must start with a capital letter and finish with a dot ``.``;
 
