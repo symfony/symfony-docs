@@ -931,6 +931,73 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                 ->allowRelativeMedias()
         );
 
+Max Input Length
+~~~~~~~~~~~~~~~~
+
+In order to prevent `DoS attacks`_, by default the HTML sanitizer limits the
+input length to ``20000`` characters (as measured by ``strlen($input)``). All
+the contents exceeding that length will be truncated. Use this option to
+increase or decrease this limit:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/html_sanitizer.yaml
+        framework:
+            html_sanitizer:
+                sanitizers:
+                    app.post_sanitizer:
+                        # ...
+
+                        # inputs longer (in characters) than this value will be truncated
+                        max_input_length: 30000 # default: 20000
+
+    .. code-block:: xml
+
+        <!-- config/packages/html_sanitizer.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:html-sanitizer>
+                    <framework:sanitizer name="app.post_sanitizer">
+                        <!-- inputs longer (in characters) than this value will be truncated (default: 20000) -->
+                        <framework:max-input-length>20000</framework:max-input-length>
+                    </framework:sanitizer>
+                </framework:html-sanitizer>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->htmlSanitizer()
+                ->sanitizer('app.post_sanitizer')
+                    // inputs longer (in characters) than this value will be truncated (default: 20000)
+                    ->withMaxInputLength(20000)
+            ;
+        };
+
+    .. code-block:: php-standalone
+
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+        use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
+
+        $postSanitizer = new HtmlSanitizer(
+            (new HtmlSanitizerConfig())
+                // inputs longer (in characters) than this value will be truncated (default: 20000)
+                ->withMaxInputLength(20000)
+        );
+
 Custom Attribute Sanitizers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1013,3 +1080,4 @@ to enable it for an HTML sanitizer:
 
 .. _`HTML Sanitizer W3C Standard Proposal`: https://wicg.github.io/sanitizer-api/
 .. _`W3C Standard Proposal`: https://wicg.github.io/sanitizer-api/
+.. _`DoS attacks`: https://en.wikipedia.org/wiki/Denial-of-service_attack

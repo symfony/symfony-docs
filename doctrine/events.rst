@@ -119,13 +119,13 @@ do so, define a listener for the ``postPersist`` Doctrine event::
     namespace App\EventListener;
 
     use App\Entity\Product;
-    use Doctrine\Persistence\Event\LifecycleEventArgs;
+    use Doctrine\ORM\Event\PostPersistEventArgs;
 
     class SearchIndexer
     {
         // the listener methods receive an argument which gives you access to
         // both the entity object of the event and the entity manager itself
-        public function postPersist(LifecycleEventArgs $args): void
+        public function postPersist(PostPersistEventArgs $args): void
         {
             $entity = $args->getObject();
 
@@ -139,6 +139,11 @@ do so, define a listener for the ``postPersist`` Doctrine event::
             // ... do something with the Product entity
         }
     }
+
+.. note::
+
+    In previous Doctrine versions, instead of ``PostPersistEventArgs``, you had
+    to use ``LifecycleEventArgs``, which was deprecated in Doctrine ORM 2.14.
 
 Then, add the ``#[AsDoctrineListener]`` attribute to the class to enable it as
 a Doctrine listener in your application::
@@ -167,12 +172,12 @@ listener in the Symfony application by creating a new service for it and
         namespace App\EventListener;
 
         use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
-        use Doctrine\ORM\Event\LifecycleEventArgs;
+        use Doctrine\ORM\Event\PostPersistEventArgs;
 
         #[AsDoctrineListener('postPersist'/*, 500, 'default'*/)]
         class SearchIndexer
         {
-            public function postPersist(LifecycleEventArgs $event): void
+            public function postPersist(PostPersistEventArgs $event): void
             {
                 // ...
             }
@@ -277,13 +282,13 @@ First, define a PHP class that handles the ``postUpdate`` Doctrine event::
     namespace App\EventListener;
 
     use App\Entity\User;
-    use Doctrine\Persistence\Event\LifecycleEventArgs;
+    use Doctrine\ORM\Event\PostUpdateEventArgs;
 
     class UserChangedNotifier
     {
         // the entity listener methods receive two arguments:
         // the entity instance and the lifecycle event
-        public function postUpdate(User $user, LifecycleEventArgs $event): void
+        public function postUpdate(User $user, PostUpdateEventArgs $event): void
         {
             // ... do something to notify the changes
         }
@@ -419,8 +424,10 @@ want to log all the database activity. To do so, define a subscriber for the
 
     use App\Entity\Product;
     use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
+    use Doctrine\ORM\Event\PostPersistEventArgs;
+    use Doctrine\ORM\Event\PostRemoveEventArgs;
+    use Doctrine\ORM\Event\PostUpdateEventArgs;
     use Doctrine\ORM\Events;
-    use Doctrine\Persistence\Event\LifecycleEventArgs;
 
     class DatabaseActivitySubscriber implements EventSubscriberInterface
     {
@@ -436,27 +443,25 @@ want to log all the database activity. To do so, define a subscriber for the
         }
 
         // callback methods must be called exactly like the events they listen to;
-        // they receive an argument of type LifecycleEventArgs, which gives you access
+        // they receive an argument of type Post*EventArgs, which gives you access
         // to both the entity object of the event and the entity manager itself
-        public function postPersist(LifecycleEventArgs $args): void
+        public function postPersist(PostPersistEventArgs $args): void
         {
-            $this->logActivity('persist', $args);
+            $this->logActivity('persist', $args->getObject());
         }
 
-        public function postRemove(LifecycleEventArgs $args): void
+        public function postRemove(PostRemoveEventArgs $args): void
         {
-            $this->logActivity('remove', $args);
+            $this->logActivity('remove', $args->getObject());
         }
 
-        public function postUpdate(LifecycleEventArgs $args): void
+        public function postUpdate(PostUpdateEventArgs $args): void
         {
-            $this->logActivity('update', $args);
+            $this->logActivity('update', $args->getObject());
         }
 
-        private function logActivity(string $action, LifecycleEventArgs $args): void
+        private function logActivity(string $action, mixed $entity): void
         {
-            $entity = $args->getObject();
-
             // if this subscriber only applies to certain entity types,
             // add some code to check the entity type as early as possible
             if (!$entity instanceof Product) {
@@ -466,6 +471,11 @@ want to log all the database activity. To do so, define a subscriber for the
             // ... get the entity information and log it somehow
         }
     }
+
+.. note::
+
+    In previous Doctrine versions, instead of ``Post*EventArgs`` classes, you had
+    to use ``LifecycleEventArgs``, which was deprecated in Doctrine ORM 2.14.
 
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
 and DoctrineBundle 2.1 (released May 25, 2020) or newer, this example will already

@@ -500,6 +500,12 @@ its location, same as for ``docker-compose``:
     ``symfony console doctrine:database:drop --force --env=test``, the command will drop the database
     defined in your Docker configuration and not the "test" one.
 
+.. caution::
+
+    Similar to other web servers, this tool automatically exposes all environment
+    variables available in the CLI context. Ensure that this local server is not
+    accessible on your local network without consent to avoid security issues.
+
 Platform.sh Integration
 -----------------------
 

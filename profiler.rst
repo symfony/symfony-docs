@@ -523,6 +523,27 @@ you'll need to configure the data collector explicitly:
                     // 'priority' => 300,
                 ]);
         };
+        
+Conditional Profiling
+~~~~~~~~~~~~~~~~~~~~~
+
+Symfony profiler provides an immense amount of debug information to quickly find the cause of any problem. However, that comes at a price, because the profiler must collect all that information while serving the request. This can slowdown the application even for requests where you don't look at the profiler information (which are most of them).
+
+You can enable the profiler conditionally. To do that, add these two new config options:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/dev/web_profiler.yaml
+            framework:
+                profiler:
+                    collect: false
+                    collect_parameter: 'profile'
+        
+The collect: false option disables the profiler by default and the collect_parameter: profile option enables it for requests that include the profile query parameter.
+
+You can freely choose the query parameter name and you can also enable the profiler by submitting a form field with that name (useful for POST requests) and even a request attribute.
 
 .. _`Single-page applications`: https://en.wikipedia.org/wiki/Single-page_application
 .. _`Blackfire`: https://blackfire.io/docs/introduction?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=profiler

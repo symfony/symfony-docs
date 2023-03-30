@@ -438,6 +438,7 @@ information from annotations of properties and methods, such as ``@var``,
 
     // Extraction.php
     use Symfony\Component\PropertyInfo\Extractor\PhpStanExtractor;
+    use App\Domain\Foo;
 
     $phpStanExtractor = new PhpStanExtractor();
     $phpStanExtractor->getTypesFromConstructor(Foo::class, 'bar');
@@ -504,6 +505,31 @@ with the ``property_info`` service in the Symfony Framework::
     $doctrineExtractor->getProperties($class);
     // Type information.
     $doctrineExtractor->getTypes($class, $property);
+
+ConstructorExtractor
+~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ConstructorExtractor`
+tries to extract properties information by using either the
+:class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpStanExtractor` or
+the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
+on the constructor arguments::
+
+    // src/Domain/Foo.php
+    class Foo
+    {
+        public function __construct(
+            private string $bar,
+        ) {
+        }
+    }
+
+    // Extraction.php
+    use App\Domain\Foo;
+    use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
+
+    $constructorExtractor = new ConstructorExtractor([new ReflectionExtractor()]);
+    $constructorExtractor->getTypes(Foo::class, 'bar')[0]->getBuiltinType(); // returns 'string'
 
 .. _`components-property-information-extractors-creation`:
 
