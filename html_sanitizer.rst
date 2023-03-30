@@ -932,7 +932,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
         );
 
 Configure max input length
-~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Using this option, you can change the default max input length of ``20000`` characters.
 Any input longer than this value will be truncated.
