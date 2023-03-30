@@ -695,6 +695,32 @@ you must register a service for it in order to use it as a named hasher:
 This creates a hasher named ``app_hasher`` from a service with the ID
 ``App\Security\Hasher\MyCustomPasswordHasher``.
 
+Hashing a Stand-Alone String
+----------------------------
+
+The password hasher can be used to hash strings independently
+of users. By using the
+:class:`Symfony\\Component\\PasswordHasher\\Hasher\\PasswordHasherFactory`,
+you can declare multiple hashers, retrieve any of them with
+its name and create hashes. You can then verify that a string matches the given
+hash::
+
+    use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
+
+    // configure different hashers via the factory
+    $factory = new PasswordHasherFactory([
+        'common' => ['algorithm' => 'bcrypt'],
+        'sodium' => ['algorithm' => 'sodium'],
+    ]);
+
+    // retrieve the hasher using bcrypt
+    $hasher = $factory->getPasswordHasher('common');
+    $hash = $hasher->hash('plain');
+
+    // verify that a given string matches the hash calculated above
+    $hasher->verify($hash, 'invalid'); // false
+    $hasher->verify($hash, 'plain'); // true
+
 .. _passwordhasher-supported-algorithms:
 
 Supported Algorithms
