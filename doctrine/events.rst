@@ -119,13 +119,13 @@ do so, define a listener for the ``postPersist`` Doctrine event::
     namespace App\EventListener;
 
     use App\Entity\Product;
-    use Doctrine\Persistence\Event\LifecycleEventArgs;
+    use Doctrine\ORM\Event\PostPersistEventArgs;
 
     class SearchIndexer
     {
         // the listener methods receive an argument which gives you access to
         // both the entity object of the event and the entity manager itself
-        public function postPersist(LifecycleEventArgs $args): void
+        public function postPersist(PostPersistEventArgs $args): void
         {
             $entity = $args->getObject();
 
@@ -167,12 +167,12 @@ listener in the Symfony application by creating a new service for it and
         namespace App\EventListener;
 
         use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
-        use Doctrine\ORM\Event\LifecycleEventArgs;
+        use Doctrine\ORM\Event\PostPersistEventArgs;
 
         #[AsDoctrineListener('postPersist'/*, 500, 'default'*/)]
         class SearchIndexer
         {
-            public function postPersist(LifecycleEventArgs $event): void
+            public function postPersist(PostPersistEventArgs $event): void
             {
                 // ...
             }
@@ -277,13 +277,13 @@ First, define a PHP class that handles the ``postUpdate`` Doctrine event::
     namespace App\EventListener;
 
     use App\Entity\User;
-    use Doctrine\Persistence\Event\LifecycleEventArgs;
+    use Doctrine\ORM\Event\PostUpdateEventArgs;
 
     class UserChangedNotifier
     {
         // the entity listener methods receive two arguments:
         // the entity instance and the lifecycle event
-        public function postUpdate(User $user, LifecycleEventArgs $event): void
+        public function postUpdate(User $user, PostUpdateEventArgs $event): void
         {
             // ... do something to notify the changes
         }
@@ -420,7 +420,9 @@ want to log all the database activity. To do so, define a subscriber for the
     use App\Entity\Product;
     use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
     use Doctrine\ORM\Events;
-    use Doctrine\Persistence\Event\LifecycleEventArgs;
+    use Doctrine\ORM\Event\PostPersistEventArgs;
+    use Doctrine\ORM\Event\PostRemoveEventArgs;
+    use Doctrine\ORM\Event\PostUpdateEventArgs;
 
     class DatabaseActivitySubscriber implements EventSubscriberInterface
     {
@@ -436,24 +438,24 @@ want to log all the database activity. To do so, define a subscriber for the
         }
 
         // callback methods must be called exactly like the events they listen to;
-        // they receive an argument of type LifecycleEventArgs, which gives you access
+        // they receive an argument of type PostPersistEventArgs, which gives you access
         // to both the entity object of the event and the entity manager itself
-        public function postPersist(LifecycleEventArgs $args): void
+        public function postPersist(PostPersistEventArgs $args): void
         {
             $this->logActivity('persist', $args);
         }
 
-        public function postRemove(LifecycleEventArgs $args): void
+        public function postRemove(PostRemoveEventArgs $args): void
         {
             $this->logActivity('remove', $args);
         }
 
-        public function postUpdate(LifecycleEventArgs $args): void
+        public function postUpdate(PostUpdateEventArgs $args): void
         {
             $this->logActivity('update', $args);
         }
 
-        private function logActivity(string $action, LifecycleEventArgs $args): void
+        private function logActivity(string $action, PostUpdateEventArgs|PostRemoveEventArgs|PostPersistEventArgs $args): void
         {
             $entity = $args->getObject();
 
