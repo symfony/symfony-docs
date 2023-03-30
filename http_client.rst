@@ -1429,7 +1429,7 @@ to wrap your HTTP client, open a connection to a server that responds with a
 
     If you know that the content of the ``ServerSentEvent`` is in the JSON format, you can
     use the :method:`Symfony\\Component\\HttpClient\\Chunk\\ServerSentEvent::getArrayData`
-    method to directly get the decoded JSON in an array.
+    method to directly get the decoded JSON as array.
 
 .. versionadded:: 6.3
 
