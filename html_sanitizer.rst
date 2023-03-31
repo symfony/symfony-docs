@@ -931,12 +931,11 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                 ->allowRelativeMedias()
         );
 
-Configure Max input length
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Max Input Length
+~~~~~~~~~~~~~~~~
 
 To prevent DoS attacks, the HTML sanitizer limits the input length to ``20000`` by default.
-Using this option, you can change the max input length.
-Inputs longer than this value will be truncated.
+Using this option, you can change the max input length, Inputs longer than this value will be truncated.
 
 .. configuration-block::
 
@@ -950,8 +949,7 @@ Inputs longer than this value will be truncated.
                         # ...
 
                         # specifies the max input length. Inputs longer than this value will be
-                        # truncated (default: 20000)
-                        max_input_length: 20000
+                        max_input_length: 30000 # default: 20000
 
     .. code-block:: xml
 
