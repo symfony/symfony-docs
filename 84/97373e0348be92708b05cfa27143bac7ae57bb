@@ -1,0 +1,12 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-03-27T17:35:34Z
+
+Reverted by @chalasr in https://github.com/symfony/symfony/pull/49831
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-03-31T07:11:39Z
+
+The new PR was merged
+* https://github.com/symfony/symfony/pull/49856
