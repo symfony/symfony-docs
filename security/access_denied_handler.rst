@@ -34,7 +34,7 @@ unauthenticated user tries to access a protected resource::
     class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
     {
         public function __construct(
-            UrlGeneratorInterface $urlGenerator,
+            private UrlGeneratorInterface $urlGenerator,
         ) {
         }
 
