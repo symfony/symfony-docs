@@ -75,6 +75,7 @@ Validation Constraints Reference
    constraints/All
    constraints/UserPassword
    constraints/NotCompromisedPassword
+   constraints/PasswordStrength
    constraints/Valid
    constraints/Traverse
    constraints/CssColor
