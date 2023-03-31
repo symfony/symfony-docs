@@ -18,6 +18,9 @@ rules:
     ensure_order_of_code_blocks_in_configuration_block: ~
     extend_abstract_controller: ~
     # extension_xlf_instead_of_xliff: ~
+    forbidden_directives:
+        directives:
+            - '.. index::'
     indention: ~
     lowercase_as_in_use_statements: ~
     max_blank_lines:
