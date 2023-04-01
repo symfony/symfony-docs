@@ -120,6 +120,15 @@ You can also configure laziness when your service is injected with the
         }
     }
 
+This attribute also allows you to define the interfaces to proxy when using
+laziness, and supports lazy-autowiring of intersection types::
+
+    public function __construct(
+        #[Autowire(service: 'foo', lazy: FooInterface::class)]
+        FooInterface|BarInterface $foo,
+    ) {
+    }
+
 .. versionadded:: 6.3
 
     The ``lazy`` argument of the ``#[Autowire()]`` attribute was introduced in
