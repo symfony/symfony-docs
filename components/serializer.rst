@@ -1206,7 +1206,15 @@ Option                          Description                                     
 ``save_options``                XML saving `options with libxml`_                  ``0``
 ``remove_empty_tags``           If set to true, removes all empty tags in the      ``false``
                                 generated XML
+``cdata_wrapping``              If set to false, will not wrap any value           ``true``
+                                containing one of the following characters (
+                                ``<``, ``>``, ``&``) in `a CDATA section`_ like
+                                following: ``<![CDATA[...]]>``
 ==============================  =================================================  ==========================
+
+.. versionadded:: 6.4
+
+    The `cdata_wrapping` option was introduced in Symfony 6.4.
 
 Example with custom ``context``::
 
@@ -1936,3 +1944,4 @@ Learn more
 .. _`data URI`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
 .. _seld/jsonlint: https://github.com/Seldaek/jsonlint
 .. _$flags: https://www.php.net/manual/en/json.constants.php
+.. _`a CDATA section`: https://en.wikipedia.org/wiki/CDATA
