@@ -1253,6 +1253,32 @@ and to expose the certificate's DN to the Symfony application:
         # pass the DN to the application
         SSLOptions +StdEnvVars
 
+    .. code-block:: caddy
+
+        tls {
+            client_auth {
+                mode verify_if_given # Please refer to the Caddy documentation for more information
+                trusted_ca_cert_file /path/to/my-custom-CA.pem
+            }
+        }
+
+        route {
+            # Other configuration options go here
+
+            php_fastcgi unix//var/run/php/php-fpm.sock {
+                env SSL_CLIENT_S_DN {tls_client_subject}
+
+                # Environment variables for other certificate fields that you might need.
+                # They are not used by Symfony, but you can use them in your application.
+                # All placeholders can be found at https://caddyserver.com/docs/caddyfile/concepts#placeholders
+                env SSL_CLIENT_S_FINGERPRINT {tls_client_fingerprint}
+                env SSL_CLIENT_S_CERTIFICATE {tls_client_certificate_der_base64}
+                env SSL_CLIENT_S_ISSUER {tls_client_issuer}
+                env SSL_CLIENT_S_SERIAL {tls_client_serial}
+                env SSL_CLIENT_S_VERSION {tls_version}
+            }
+        }
+
 Then, enable the X.509 authenticator using ``x509`` on your firewall:
 
 .. configuration-block::
