@@ -33,10 +33,10 @@ be processed depending a trigger you choose::
     namespace App\Schedule;
 
     use App\Message\EndofTrialMessage;
-    use Symfony\Component\Messenger\RecurringMessage;
     use Symfony\Component\Scheduler\Attribute\AsSchedule;
+    use Symfony\Component\Scheduler\RecurringMessage;
     use Symfony\Component\Scheduler\Schedule;
-    use Symfony\Component\Schedule\ScheduleProviderInterface;
+    use Symfony\Component\Scheduler\ScheduleProviderInterface;
 
     #[AsSchedule('trial')]
     final class EndOfTrialScheduleProvider implements ScheduleProviderInterface
@@ -52,7 +52,7 @@ be processed depending a trigger you choose::
 Run the Messenger consumer
 --------------------------
 
-Scheduler uses the same :ref:`Messenger worker<messenger-worker>` to consume
+Scheduler uses the same :ref:`Messenger worker <messenger-worker>` to consume
 messages dispatched by your schedule class.
 
 You can do this with the ``messenger:consume`` command:
