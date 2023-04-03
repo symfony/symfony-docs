@@ -94,7 +94,7 @@ The closure must accept a ``FormInterface`` instance as the first argument::
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'empty_data' => function (FormInterface $form) {
+            'empty_data' => function (FormInterface $form): Blog {
                 return new Blog($form->get('title')->getData());
             },
         ]);
