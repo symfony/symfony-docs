@@ -1,0 +1,64 @@
+---------------------------------------------------------------------------
+
+by Spomky at 2023-03-31T20:22:00Z
+
+> Build errors from "2023-03-31 08:[18](https://github.com/symfony/symfony-docs/actions/runs/4578843298/jobs/8085948168?pr=18151#step:7:19):34"
+         Error while processing "code-block" directive: "Unsupported code block
+         language "caddy". Added it in
+         SymfonyDocsBuilder\Renderers\CodeNodeRenderer" in file "security"
+
+How can I create a block definition for Caddy? Is it possible from this repository?
+
+---------------------------------------------------------------------------
+
+by Spomky at 2023-04-02T16:49:09Z
+
+Ping @francislavoie just in case of.
+
+---------------------------------------------------------------------------
+
+by francislavoie at 2023-04-02T17:44:54Z
+
+Seems fine to me. Is the subject the only field someone might care about? Wouldn't they want the fingerprint and/or the full client cert as well potentially?
+
+Might want to point to Caddy's docs where it documents the placeholders for the client cert. Also FYI there's these Caddyfile placeholder shortcuts that can be used to shorten the config https://caddyserver.com/docs/caddyfile/concepts#placeholders
+
+---------------------------------------------------------------------------
+
+by Spomky at 2023-04-02T17:49:02Z
+
+Actually, in one of my project, I also use the fingerprint and other data you mentioned
+```
+  env SSL_CLIENT_S_FINGERPRINT {http.request.tls.client.fingerprint}
+  env SSL_CLIENT_S_CERTIFICATE {http.request.tls.client.certificate_der_base64}
+  env SSL_CLIENT_S_ISSUER {http.request.tls.client.issuer}
+  env SSL_CLIENT_S_SERIAL {http.request.tls.client.serial}
+  env SSL_CLIENT_S_DN {http.request.tls.client.subject}
+```
+
+But those additional ones are not required nor understood by the authenticator, that is why I did not add them in the documentation page.
+
+---------------------------------------------------------------------------
+
+by francislavoie at 2023-04-02T17:51:44Z
+
+Might be worth mentioning it in case the user may need those additional fields for manual validation? You could put `#` comments on that chunk to say they're not used by Symfony 🤷‍♂️
+
+---------------------------------------------------------------------------
+
+by Spomky at 2023-04-02T18:13:31Z
+
+Indeed you are right.
+I updated the PR and added all other relevant env vars that could be used.
+
+---------------------------------------------------------------------------
+
+by francislavoie at 2023-04-02T18:20:27Z
+
+You could also switch to the short form as per my link. There's no downside to it.
+
+---------------------------------------------------------------------------
+
+by Spomky at 2023-04-02T18:23:10Z
+
+Many thanks 👌🏼. Done!
