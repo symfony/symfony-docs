@@ -412,7 +412,7 @@ logged in by destroying the session after a certain period of idle time. For
 example, it is common for banking applications to log the user out after just
 5 to 10 minutes of inactivity. Setting the cookie lifetime here is not
 appropriate because that can be manipulated by the client, so we must do the expiry
-on the server side. The easiest way is to implement this via garbage collection
+on the server side. The easiest way is to implement this via :ref:`session garbage collection <session-garbage-collection>`
 which runs reasonably frequently. The ``cookie_lifetime`` would be set to a
 relatively high value, and the garbage collection ``gc_maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
@@ -446,6 +446,8 @@ particular cookie by reading the ``getLifetime()`` method::
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
 
+.. _session-garbage-collection:
+
 Configuring Garbage Collection
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -468,9 +470,10 @@ configuration:
 
 .. code-block:: yaml
 
-    # config.yml
+    # config/packages/framework.yaml
     framework:
         session:
+            # ...
             gc_probability: null
 
 You can configure these settings by passing ``gc_probability``, ``gc_divisor``
