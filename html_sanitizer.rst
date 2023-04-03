@@ -934,8 +934,10 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 Max Input Length
 ~~~~~~~~~~~~~~~~
 
-To prevent DoS attacks, the HTML sanitizer limits the input length to ``20000`` by default.
-Using this option, you can change the max input length, Inputs longer than this value will be truncated.
+In order to prevent `DoS attacks`_, by default the HTML sanitizer limits the
+input length to ``20000`` characters (as measured by ``strlen($input)``). All
+the contents exceeding that length will be truncated. Use this option to
+increase or decrease this limit:
 
 .. configuration-block::
 
@@ -948,7 +950,7 @@ Using this option, you can change the max input length, Inputs longer than this 
                     app.post_sanitizer:
                         # ...
 
-                        # specifies the max input length. Inputs longer than this value will be
+                        # inputs longer (in characters) than this value will be truncated
                         max_input_length: 30000 # default: 20000
 
     .. code-block:: xml
@@ -965,8 +967,7 @@ Using this option, you can change the max input length, Inputs longer than this 
             <framework:config>
                 <framework:html-sanitizer>
                     <framework:sanitizer name="app.post_sanitizer">
-                        <!-- specifies the max input length. Inputs longer than this value will be
-                            truncated (default: 20000) -->
+                        <!-- inputs longer (in characters) than this value will be truncated (default: 20000) -->
                         <framework:max-input-length>20000</framework:max-input-length>
                     </framework:sanitizer>
                 </framework:html-sanitizer>
@@ -981,8 +982,7 @@ Using this option, you can change the max input length, Inputs longer than this 
         return static function (FrameworkConfig $framework) {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
-                    // specifies the max input length. Inputs longer than this value will be
-                    // truncated (default: 20000)
+                    // inputs longer (in characters) than this value will be truncated (default: 20000)
                     ->withMaxInputLength(20000)
             ;
         };
@@ -994,8 +994,7 @@ Using this option, you can change the max input length, Inputs longer than this 
 
         $postSanitizer = new HtmlSanitizer(
             (new HtmlSanitizerConfig())
-                // specifies the max input length. Inputs longer than this value will be
-                // truncated (default: 20000)
+                // inputs longer (in characters) than this value will be truncated (default: 20000)
                 ->withMaxInputLength(20000)
         );
 
@@ -1081,3 +1080,4 @@ to enable it for an HTML sanitizer:
 
 .. _`HTML Sanitizer W3C Standard Proposal`: https://wicg.github.io/sanitizer-api/
 .. _`W3C Standard Proposal`: https://wicg.github.io/sanitizer-api/
+.. _`DoS attacks`: https://en.wikipedia.org/wiki/Denial-of-service_attack
