@@ -1257,7 +1257,7 @@ and to expose the certificate's DN to the Symfony application:
 
         tls {
             client_auth {
-                mode verify_if_given # Please refer to the Caddy documentation for more information
+                mode verify_if_given # check the Caddy documentation for more information
                 trusted_ca_cert_file /path/to/my-custom-CA.pem
             }
         }
@@ -1270,7 +1270,7 @@ and to expose the certificate's DN to the Symfony application:
 
                 # Environment variables for other certificate fields that you might need.
                 # They are not used by Symfony, but you can use them in your application.
-                # All placeholders can be found at https://caddyserver.com/docs/caddyfile/concepts#placeholders
+                # See all placeholders: https://caddyserver.com/docs/caddyfile/concepts#placeholders
                 env SSL_CLIENT_S_FINGERPRINT {tls_client_fingerprint}
                 env SSL_CLIENT_S_CERTIFICATE {tls_client_certificate_der_base64}
                 env SSL_CLIENT_S_ISSUER {tls_client_issuer}
