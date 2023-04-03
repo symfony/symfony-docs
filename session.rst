@@ -409,7 +409,7 @@ logged in by destroying the session after a certain period of idle time. For
 example, it is common for banking applications to log the user out after just
 5 to 10 minutes of inactivity. Setting the cookie lifetime here is not
 appropriate because that can be manipulated by the client, so we must do the expiry
-on the server side. The easiest way is to implement this via garbage collection
+on the server side. The easiest way is to implement this via :ref:`session garbage collection <session-garbage-collection>`
 which runs reasonably frequently. The ``cookie_lifetime`` would be set to a
 relatively high value, and the garbage collection ``gc_maxlifetime`` would be set
 to destroy sessions at whatever the desired idle period is.
@@ -442,6 +442,42 @@ particular cookie by reading the ``getLifetime()`` method::
 
 The expiry time of the cookie can be determined by adding the created
 timestamp and the lifetime.
+
+.. _session-garbage-collection:
+
+Configuring Garbage Collection
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a session opens, PHP will call the ``gc`` handler randomly according to the
+probability set by ``session.gc_probability`` / ``session.gc_divisor``. For
+example if these were set to ``5/100`` respectively, it would mean a probability
+of 5%. Similarly, ``3/4`` would mean a 3 in 4 chance of being called, i.e. 75%.
+
+If the garbage collection handler is invoked, PHP will pass the value stored in
+the ``php.ini`` directive ``session.gc_maxlifetime``. The meaning in this context is
+that any stored session that was saved more than ``gc_maxlifetime`` ago should be
+deleted. This allows one to expire records based on idle time.
+
+However, some operating systems (e.g. Debian) do their own session handling and set
+the ``session.gc_probability`` variable to ``0`` to stop PHP doing garbage
+collection. That's why Symfony now overwrites this value to ``1``.
+
+If you wish to use the original value set in your ``php.ini``, add the following
+configuration:
+
+.. code-block:: yaml
+
+    # config/packages/framework.yaml
+    framework:
+        session:
+            # ...
+            gc_probability: null
+
+You can configure these settings by passing ``gc_probability``, ``gc_divisor``
+and ``gc_maxlifetime`` in an array to the constructor of
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage`
+or to the :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\NativeSessionStorage::setOptions`
+method.
 
 .. _session-database:
 
