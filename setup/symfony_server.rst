@@ -11,13 +11,6 @@ other features that sooner or later you'll need when developing web projects.
 Moreover, the server is not tied to Symfony and you can also use it with any
 PHP application and even with HTML or single page applications.
 
-.. caution::
-
-    This server will automatically expose all environment variables available
-    in the CLI tool context, **which can lead to security issues**.
-    One should assert that its server is not accessible on local network without
-    consent.
-
 Installation
 ------------
 
@@ -506,6 +499,12 @@ its location, same as for ``docker-compose``:
     (``DATABASE_URL=mysql://db_user:db_password@127.0.0.1:3306/test``) and if you run
     ``symfony console doctrine:database:drop --force --env=test``, the command will drop the database
     defined in your Docker configuration and not the "test" one.
+
+.. caution::
+
+    Similar to other web servers, this tool automatically exposes all environment
+    variables available in the CLI context. Ensure that this local server is not
+    accessible on your local network without consent you avoid security issues.
 
 Platform.sh Integration
 -----------------------
