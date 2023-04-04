@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-10-04T15:30:16Z
+
+I'm divided about adding this. I thought it was clear that this CLI + local server is only for the `dev` environment ... so it should never be used in production or any other real servers.
+
+But, let's wait to read more opinions. Thanks.
+
+---------------------------------------------------------------------------
+
+by 94noni at 2022-10-04T16:19:26Z
+
+@javiereguiluz
+
+> so it should never be used in production
+
+we are not using it in prod at all, but in development locally but as it run a web server, one can find it on local private network and see unrelated env vars
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-12-13T15:41:40Z
+
+@nicolas-grekas what do you think about this proposal? Thanks
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-01-17T10:39:27Z
+
+This looks unrelated to the symfony binary. Any other webserver will do the same, isn't it?
+
+---------------------------------------------------------------------------
+
+by 94noni at 2023-01-17T13:06:07Z
+
+> This looks unrelated to the symfony binary
+
+perhaps indeed; but to me it is worth noticing in the doc, thus this PR :)
+obviously feel free to close it if you think it is not worth the "security issue" it can rise
