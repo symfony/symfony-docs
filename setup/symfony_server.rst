@@ -504,7 +504,7 @@ its location, same as for ``docker-compose``:
 
     Similar to other web servers, this tool automatically exposes all environment
     variables available in the CLI context. Ensure that this local server is not
-    accessible on your local network without consent you avoid security issues.
+    accessible on your local network without consent to avoid security issues.
 
 Platform.sh Integration
 -----------------------
