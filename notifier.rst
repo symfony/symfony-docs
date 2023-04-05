@@ -36,7 +36,7 @@ The notifier component supports the following channels:
 .. tip::
 
     Use :doc:`secrets </configuration/secrets>` to securely store your
-    API's tokens.
+    API tokens.
 
 .. _notifier-sms-channel:
 
