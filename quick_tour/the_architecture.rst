@@ -237,31 +237,66 @@ whenever needed.
 But what about when you deploy to production? We will need to hide those tools and
 optimize for speed!
 
-This is solved by Symfony's *environment* system and there are three: ``dev``, ``prod``
-and ``test``. Based on the environment, Symfony loads different files in the ``config/``
-directory:
+This is solved by Symfony's *environment* system and there are three environments a
+typical Symfony application begins with: ``dev``, ``prod``, and ``test``. You can define
+options for specific environments in the configuration files from the ``config/``
+directory using the special ``when`` keyword:
 
-.. code-block:: text
+.. configuration-block::
 
-    config/
-    ├─ services.yaml
-    ├─ ...
-    └─ packages/
-        ├─ framework.yaml
-        ├─ ...
-        ├─ **dev/**
-            ├─ monolog.yaml
-            └─ ...
-        ├─ **prod/**
-            └─ monolog.yaml
-        └─ **test/**
-            ├─ framework.yaml
-            └─ ...
-    └─ routes/
-        ├─ annotations.yaml
-        └─ **dev/**
-            ├─ twig.yaml
-            └─ web_profiler.yaml
+        .. code-block:: yaml
+
+            # config/packages/routing.yaml
+            framework:
+                router:
+                    utf8: true
+
+            when@prod:
+                framework:
+                    router:
+                        strict_requirements: null
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <framework:config>
+                    <framework:router utf8="true"/>
+                </framework:config>
+
+                <when env="prod">
+                    <framework:config>
+                        <framework:router strict-requirements="null"/>
+                    </framework:config>
+                </when>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (FrameworkConfig $framework, ContainerConfigurator $containerConfigurator) {
+                $framework->router()
+                    ->utf8(true)
+                ;
+
+                if ('prod' === $containerConfigurator->env()) {
+                    $framework->router()
+                        ->strictRequirements(null)
+                    ;
+                }
+            };
 
 This is a *powerful* idea: by changing one piece of configuration (the environment),
 your app is transformed from a debugging-friendly experience to one that's optimized
