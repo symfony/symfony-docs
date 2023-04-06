@@ -424,10 +424,10 @@ want to log all the database activity. To do so, define a subscriber for the
 
     use App\Entity\Product;
     use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
-    use Doctrine\ORM\Events;
     use Doctrine\ORM\Event\PostPersistEventArgs;
     use Doctrine\ORM\Event\PostRemoveEventArgs;
     use Doctrine\ORM\Event\PostUpdateEventArgs;
+    use Doctrine\ORM\Events;
 
     class DatabaseActivitySubscriber implements EventSubscriberInterface
     {
