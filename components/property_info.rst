@@ -438,6 +438,7 @@ information from annotations of properties and methods, such as ``@var``,
 
     // Extraction.php
     use Symfony\Component\PropertyInfo\Extractor\PhpStanExtractor;
+    use App\Domain\Foo;
 
     $phpStanExtractor = new PhpStanExtractor();
     $phpStanExtractor->getTypesFromConstructor(Foo::class, 'bar');
@@ -517,17 +518,15 @@ on the constructor arguments::
     // src/Domain/Foo.php
     class Foo
     {
-        private $bar;
-
-        public function __construct(string $bar)
-        {
-            $this->bar = $bar;
+        public function __construct(
+            private string $bar,
+        ) {
         }
     }
 
     // Extraction.php
-    use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
     use App\Domain\Foo;
+    use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
 
     $constructorExtractor = new ConstructorExtractor([new ReflectionExtractor()]);
     $constructorExtractor->getTypes(Foo::class, 'bar')[0]->getBuiltinType(); // returns 'string'
