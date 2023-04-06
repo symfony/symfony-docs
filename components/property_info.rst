@@ -505,6 +505,38 @@ with the ``property_info`` service in the Symfony Framework::
     // Type information.
     $doctrineExtractor->getTypes($class, $property);
 
+ConstructorExtractor
+~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ConstructorExtractor`
+tries to extract properties information by using either the
+:class:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpStanExtractor` or
+the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor`
+on the constructor arguments::
+
+    // src/Domain/Foo.php
+    class Foo
+    {
+        private $bar;
+
+        public function __construct(string $bar)
+        {
+            $this->bar = $bar;
+        }
+    }
+
+    // Extraction.php
+    use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
+    use App\Domain\Foo;
+
+    $constructorExtractor = new ConstructorExtractor([new ReflectionExtractor()]);
+    $constructorExtractor->getTypes(Foo::class, 'bar')[0]->getBuiltinType(); // returns 'string'
+
+.. versionadded:: 5.2
+
+    The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ConstructorExtractor`
+    was introduced in Symfony 5.2.
+
 .. _`components-property-information-extractors-creation`:
 
 Creating Your Own Extractors
