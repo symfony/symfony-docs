@@ -455,6 +455,30 @@ header, etc.) but most of the times you'll set text headers::
     :ref:`configure emails globally <mailer-configure-email-globally>` to set the same
     headers to all sent emails.
 
+3rd Party Message Headers
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Certain 3rd party transports support "custom" header.
+
+The following transports currently support custom headers:
+
+Infobip
+.......
+
+============================  ========  =====================================================================================
+Header                        Type      Description
+============================  ========  =====================================================================================
+X-Infobip-IntermediateReport  boolean   The real-time Intermediate delivery report that will be sent on your callback server.
+X-Infobip-NotifyUrl           string    The URL on your callback server on which the Delivery report will be sent.
+X-Infobip-NotifyContentType   string    Preferred Delivery report content type. Can be application/json or application/xml.
+X-Infobip-MessageId           string    The ID that uniquely identifies the message sent to a recipient.
+X-Infobip-Track               boolean   Enable or disable open and click tracking.
+============================  ========  =====================================================================================
+
+.. versionadded:: 6.3
+
+    The Infobip custom header was introduced in Symfony 6.3.
+
 Message Contents
 ~~~~~~~~~~~~~~~~
 
