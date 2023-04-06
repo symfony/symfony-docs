@@ -532,11 +532,6 @@ on the constructor arguments::
     $constructorExtractor = new ConstructorExtractor([new ReflectionExtractor()]);
     $constructorExtractor->getTypes(Foo::class, 'bar')[0]->getBuiltinType(); // returns 'string'
 
-.. versionadded:: 5.2
-
-    The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ConstructorExtractor`
-    was introduced in Symfony 5.2.
-
 .. _`components-property-information-extractors-creation`:
 
 Creating Your Own Extractors
