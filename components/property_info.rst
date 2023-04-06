@@ -525,8 +525,8 @@ on the constructor arguments::
     }
 
     // Extraction.php
-    use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
     use App\Domain\Foo;
+    use Symfony\Component\PropertyInfo\Extractor\ConstructorExtractor;
 
     $constructorExtractor = new ConstructorExtractor([new ReflectionExtractor()]);
     $constructorExtractor->getTypes(Foo::class, 'bar')[0]->getBuiltinType(); // returns 'string'
