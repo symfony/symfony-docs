@@ -33,7 +33,7 @@ jobs:
             -   name: Get composer cache directory
                 id: composercache
                 working-directory: _build
-                run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
             -   name: Cache dependencies
                 uses: actions/cache@v3
@@ -63,7 +63,7 @@ jobs:
                 run: mkdir .cache
 
             -   name: "Extract base branch name"
-                run: echo "##[set-output name=branch;]$(echo ${GITHUB_BASE_REF:=${GITHUB_REF##*/}})"
+                run: echo "branch=$(echo ${GITHUB_BASE_REF:=${GITHUB_REF##*/}})" >> $GITHUB_OUTPUT
                 id: extract_base_branch
 
             -   name: "Cache DOCtor-RST"
@@ -100,12 +100,12 @@ jobs:
           - name: Find modified files
             id: find-files
             working-directory: docs
-            run: echo "::set-output name=files::$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep ".rst" | tr '\n' ' ')"
+            run: echo "files=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep ".rst" | tr '\n' ' ')" >> $GITHUB_OUTPUT
 
           - name: Get composer cache directory
             id: composercache
             working-directory: docs/_build
-            run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+            run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
           - name: Cache dependencies
             if: ${{ steps.find-files.outputs.files }}
