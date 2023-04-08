@@ -384,7 +384,7 @@ application outside of the global state in 6 steps:
    returns a :class:`Symfony\\Component\\Runtime\\RunnerInterface`: an instance
    that knows how to "run" the application object.
 #. The ``RunnerInterface::run(object $application)`` is called and it returns the
-   exit status code as `int`.
+   exit status code as ``int``.
 #. The PHP engine is terminated with this status code.
 
 When creating a new runtime, there are two things to consider: First, what arguments
