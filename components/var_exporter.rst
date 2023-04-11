@@ -90,22 +90,29 @@ file looks like this::
         []
     );
 
-Instantiating PHP Classes
--------------------------
+Instantiating & Hydrating PHP Classes
+-------------------------------------
 
-The other main feature provided by this component is an instantiator which can
-create objects and set their properties without calling their constructors or
-any other methods::
+Instantiator
+~~~~~~~~~~~~
+
+This component provides an instantiator, which can create objects and set
+their properties without calling their constructors or any other methods::
 
     use Symfony\Component\VarExporter\Instantiator;
 
-    // creates an empty instance of Foo
+    // Creates an empty instance of Foo
     $fooObject = Instantiator::instantiate(Foo::class);
 
-    // creates a Foo instance and sets one of its properties
+    // Creates a Foo instance and sets one of its properties
     $fooObject = Instantiator::instantiate(Foo::class, ['propertyName' => $propertyValue]);
 
-    // creates a Foo instance and sets a private property defined on its parent Bar class
+The instantiator also allows you to populate the property of a parent class. Assuming
+``Bar`` is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
+
+    use Symfony\Component\VarExporter\Instantiator;
+
+    // Creates a Foo instance and sets a private property defined on its parent Bar class
     $fooObject = Instantiator::instantiate(Foo::class, [], [
         Bar::class => ['privateBarProperty' => $propertyValue],
     ]);
@@ -113,7 +120,9 @@ any other methods::
 Instances of ``ArrayObject``, ``ArrayIterator`` and ``SplObjectHash`` can be
 created by using the special ``"\0"`` property name to define their internal value::
 
-    // Creates an SplObjectHash where $info1 is associated with $object1, etc.
+    use Symfony\Component\VarExporter\Instantiator;
+
+    // Creates an SplObjectStorage where $info1 is associated with $object1, etc.
     $theObject = Instantiator::instantiate(SplObjectStorage::class, [
         "\0" => [$object1, $info1, $object2, $info2...],
     ]);
@@ -122,6 +131,53 @@ created by using the special ``"\0"`` property name to define their internal val
     $theObject = Instantiator::instantiate(ArrayObject::class, [
         "\0" => [$inputArray],
     ]);
+
+Hydrator
+~~~~~~~~
+
+The instantiator assumes the object you want to populate doesn't exist yet.
+Somehow, you may want to fill properties of an already existing object. This is
+the goal of the :class:`Symfony\\Component\\VarExporter\\Hydrator`. Here is a
+basic usage of the hydrator populating a property of an object::
+
+    use Symfony\Component\VarExporter\Hydrator;
+
+    $object = new Foo();
+    Hydrator::hydrate($object, ['propertyName' => $propertyValue]);
+
+The hydrator also allows you to populate the property of a parent class. Assuming
+``Bar`` is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
+
+    use Symfony\Component\VarExporter\Hydrator;
+
+    $object = new Foo();
+    Hydrator::hydrate($object, [], [
+        Bar::class => ['privateBarProperty' => $propertyValue],
+    ]);
+
+    // Alternatively, you can use the special "\0" syntax
+    Hydrator::hydrate($object, ["\0Bar\0privateBarProperty" => $propertyValue]);
+
+Instances of ``ArrayObject``, ``ArrayIterator`` and ``SplObjectHash`` can be
+populated by using the special ``"\0"`` property name to define their internal value::
+
+    use Symfony\Component\VarExporter\Hydrator;
+
+    // Creates an SplObjectHash where $info1 is associated with $object1, etc.
+    $storage = new SplObjectStorage();
+    Hydrator::hydrate($storage, [
+        "\0" => [$object1, $info1, $object2, $info2...],
+    ]);
+
+    // creates an ArrayObject populated with $inputArray
+    $arrayObject = new ArrayObject();
+    Hydrator::hydrate($arrayObject, [
+        "\0" => [$inputArray],
+    ]);
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\\Component\\VarExporter\\Hydrator` was introduced in Symfony 6.2.
 
 .. _`OPcache`: https://www.php.net/opcache
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/
