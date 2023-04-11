@@ -112,7 +112,7 @@ via a third-party provider:
 Service               Install with
 ===================== ==============================================
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
-`MailChimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
+`Mailchimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``
 `Mailjet`_            ``composer require symfony/mailjet-mailer``
 `OhMySMTP`_           ``composer require symfony/oh-my-smtp-mailer``
@@ -1385,7 +1385,7 @@ If your transport does not support tags and metadata, they will be added as cust
 
 The following transports currently support tags and metadata:
 
-* MailChimp
+* Mailchimp
 * Mailgun
 * Postmark
 * Sendgrid
@@ -1596,7 +1596,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Inky`: https://get.foundation/emails/docs/inky.html
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
-.. _`MailChimp Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
+.. _`Mailchimp Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
 .. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
 .. _`Markdown syntax`: https://commonmark.org/
