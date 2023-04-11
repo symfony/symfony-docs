@@ -108,18 +108,18 @@ Using a 3rd Party Transport
 Instead of using your own SMTP server or sendmail binary, you can send emails
 via a third-party provider:
 
-==================  ==============================================
-Service             Install with
-==================  ==============================================
-Amazon SES          ``composer require symfony/amazon-mailer``
-MailChimp           ``composer require symfony/mailchimp-mailer``
-Mailgun             ``composer require symfony/mailgun-mailer``
-Mailjet             ``composer require symfony/mailjet-mailer``
-OhMySMTP            ``composer require symfony/oh-my-smtp-mailer``
-Postmark            ``composer require symfony/postmark-mailer``
-SendGrid            ``composer require symfony/sendgrid-mailer``
-Sendinblue          ``composer require symfony/sendinblue-mailer``
-==================  ==============================================
+===================== ==============================================
+Service               Install with
+===================== ==============================================
+`Amazon SES`_         ``composer require symfony/amazon-mailer``
+`MailChimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
+`Mailgun`_            ``composer require symfony/mailgun-mailer``
+`Mailjet`_            ``composer require symfony/mailjet-mailer``
+`OhMySMTP`_           ``composer require symfony/oh-my-smtp-mailer``
+`Postmark`_           ``composer require symfony/postmark-mailer``
+`SendGrid`_           ``composer require symfony/sendgrid-mailer``
+`Sendinblue`_         ``composer require symfony/sendinblue-mailer``
+===================== ==============================================
 
 .. note::
 
@@ -174,19 +174,19 @@ transport, but you can force to use one:
 This table shows the full list of available DSN formats for each third
 party provider:
 
-==================== ==================================================== =========================================== ========================================
-Provider             SMTP                                                 HTTP                                        API
-==================== ==================================================== =========================================== ========================================
-Amazon SES           ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
-Google Gmail         gmail+smtp://USERNAME:APP-PASSWORD@default           n/a                                         n/a
-Mailchimp Mandrill   mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
-Mailgun              mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
-Mailjet              mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
-Postmark             postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
-Sendgrid             sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
-Sendinblue           sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
-OhMySMTP             ohmysmtp+smtp://API_TOKEN@default                    n/a                                         ohmysmtp+api://API_TOKEN@default
-==================== ==================================================== =========================================== ========================================
+===================== ==================================================== =========================================== ========================================
+Provider              SMTP                                                 HTTP                                        API
+===================== ==================================================== =========================================== ========================================
+`Amazon SES`_         ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
+`Google Gmail`_       gmail+smtp://USERNAME:APP-PASSWORD@default           n/a                                         n/a
+`Mailchimp Mandrill`_ mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
+`Mailgun`_            mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
+`Mailjet`_            mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
+`Postmark`_           postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
+`Sendgrid`_           sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
+`Sendinblue`_         sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
+`OhMySMTP`_           ohmysmtp+smtp://API_TOKEN@default                    n/a                                         ohmysmtp+api://API_TOKEN@default
+===================== ==================================================== =========================================== ========================================
 
 .. caution::
 
@@ -1586,16 +1586,25 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
         }
     }
 
-.. _`high availability`: https://en.wikipedia.org/wiki/High_availability
-.. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
-.. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
-.. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
-.. _`Markdown syntax`: https://commonmark.org/
-.. _`Inky`: https://get.foundation/emails/docs/inky.html
-.. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
+.. _`Amazon SES`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Amazon/README.md
+.. _`App Password`: https://support.google.com/accounts/answer/185833
+.. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`DKIM`: https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
+.. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
+.. _`Google Gmail`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Google/README.md
+.. _`high availability`: https://en.wikipedia.org/wiki/High_availability
+.. _`Inky`: https://get.foundation/emails/docs/inky.html
+.. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
+.. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
+.. _`MailChimp Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
+.. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
+.. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
+.. _`Markdown syntax`: https://commonmark.org/
+.. _`OhMySMTP`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/OhMySmtp/README.md
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
-.. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
+.. _`Postmark`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
-.. _`App Password`: https://support.google.com/accounts/answer/185833
+.. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
+.. _`SendGrid`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/README.md
+.. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendinblue/README.md
