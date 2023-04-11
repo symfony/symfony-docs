@@ -164,9 +164,9 @@ transport, but you can force to use one:
 This table shows the full list of available DSN formats for each third
 party provider:
 
-==================== ==================================================== =========================================== ========================================
-Provider             SMTP                                                 HTTP                                        API
-==================== ==================================================== =========================================== ========================================
+===================== ==================================================== =========================================== ========================================
+Provider              SMTP                                                 HTTP                                        API
+===================== ==================================================== =========================================== ========================================
 `Amazon SES`_         ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
 `Google Gmail`_       gmail+smtp://USERNAME:APP-PASSWORD@default           n/a                                         n/a
 `Infobip`_            infobip+smtp://KEY@default                           n/a                                         infobip+api://KEY@BASE_URL
@@ -177,7 +177,7 @@ Provider             SMTP                                                 HTTP  
 `Postmark`_           postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
 `Sendgrid`_           sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
 `Sendinblue`_         sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
-==================== ==================================================== =========================================== ========================================
+===================== ==================================================== =========================================== ========================================
 
 .. caution::
 
