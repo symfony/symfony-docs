@@ -90,6 +90,8 @@ file looks like this::
         []
     );
 
+.. _instantiating-php-classes:
+
 Instantiating & Hydrating PHP Classes
 -------------------------------------
 
@@ -101,18 +103,18 @@ their properties without calling their constructors or any other methods::
 
     use Symfony\Component\VarExporter\Instantiator;
 
-    // Creates an empty instance of Foo
+    // creates an empty instance of Foo
     $fooObject = Instantiator::instantiate(Foo::class);
 
-    // Creates a Foo instance and sets one of its properties
+    // creates a Foo instance and sets one of its properties
     $fooObject = Instantiator::instantiate(Foo::class, ['propertyName' => $propertyValue]);
 
-The instantiator also allows you to populate the property of a parent class. Assuming
-``Bar`` is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
+The instantiator can also populate the property of a parent class. Assuming ``Bar``
+is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
 
     use Symfony\Component\VarExporter\Instantiator;
 
-    // Creates a Foo instance and sets a private property defined on its parent Bar class
+    // creates a Foo instance and sets a private property defined on its parent Bar class
     $fooObject = Instantiator::instantiate(Foo::class, [], [
         Bar::class => ['privateBarProperty' => $propertyValue],
     ]);
@@ -122,7 +124,7 @@ created by using the special ``"\0"`` property name to define their internal val
 
     use Symfony\Component\VarExporter\Instantiator;
 
-    // Creates an SplObjectStorage where $info1 is associated with $object1, etc.
+    // creates an SplObjectStorage where $info1 is associated with $object1, etc.
     $theObject = Instantiator::instantiate(SplObjectStorage::class, [
         "\0" => [$object1, $info1, $object2, $info2...],
     ]);
@@ -135,8 +137,8 @@ created by using the special ``"\0"`` property name to define their internal val
 Hydrator
 ~~~~~~~~
 
-The instantiator assumes the object you want to populate doesn't exist yet.
-Somehow, you may want to fill properties of an already existing object. This is
+Instead of populating objects that don't exist yet (using the instantiator),
+sometimes you want to populate properties of an already existing object. This is
 the goal of the :class:`Symfony\\Component\\VarExporter\\Hydrator`. Here is a
 basic usage of the hydrator populating a property of an object::
 
@@ -145,8 +147,8 @@ basic usage of the hydrator populating a property of an object::
     $object = new Foo();
     Hydrator::hydrate($object, ['propertyName' => $propertyValue]);
 
-The hydrator also allows you to populate the property of a parent class. Assuming
-``Bar`` is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
+The hydrator can also populate the property of a parent class. Assuming ``Bar``
+is the parent class of ``Foo`` and defines a ``privateBarProperty`` attribute::
 
     use Symfony\Component\VarExporter\Hydrator;
 
@@ -155,7 +157,7 @@ The hydrator also allows you to populate the property of a parent class. Assumin
         Bar::class => ['privateBarProperty' => $propertyValue],
     ]);
 
-    // Alternatively, you can use the special "\0" syntax
+    // alternatively, you can use the special "\0" syntax
     Hydrator::hydrate($object, ["\0Bar\0privateBarProperty" => $propertyValue]);
 
 Instances of ``ArrayObject``, ``ArrayIterator`` and ``SplObjectHash`` can be
@@ -163,7 +165,7 @@ populated by using the special ``"\0"`` property name to define their internal v
 
     use Symfony\Component\VarExporter\Hydrator;
 
-    // Creates an SplObjectHash where $info1 is associated with $object1, etc.
+    // creates an SplObjectHash where $info1 is associated with $object1, etc.
     $storage = new SplObjectStorage();
     Hydrator::hydrate($storage, [
         "\0" => [$object1, $info1, $object2, $info2...],
