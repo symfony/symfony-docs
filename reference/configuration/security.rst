@@ -973,10 +973,6 @@ Firewalls can configure a list of required badges that must be present on the au
             // ...
         };
 
-.. versionadded:: 5.3
-
-    The ``required_badges`` option was introduced in Symfony 5.3.
-
 providers
 ---------
 
