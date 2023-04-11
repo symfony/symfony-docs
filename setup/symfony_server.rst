@@ -65,10 +65,10 @@ run the Symfony server in the background:
 
     .. code-block:: terminal
 
-        # find the version of the Symfony binary
+        # find the installed version of the Symfony binary
         $ symfony version
 
-        # change the path to the location of your Symfony binary replacing {version}
+        # change the path to the location of your Symfony binary and replace {version} too
         $ sudo codesign --force --deep --sign - /opt/homebrew/Cellar/symfony-cli/{version}/bin/symfony
 
 Enabling PHP-FPM
