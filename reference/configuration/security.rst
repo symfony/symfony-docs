@@ -923,6 +923,60 @@ a ``user_checker`` option to define the service used to perform those checks.
 
 Learn more about user checkers in :doc:`/security/user_checkers`.
 
+Required Badges
+~~~~~~~~~~~~~~~
+
+Firewalls can configure a list of required badges that must be present on the authenticated passport:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    required_badges: ['CsrfTokenBadge', 'My\Badge']
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <!-- ... -->
+                    <required_badge>CsrfTokenBadge</required_badge>
+                    <required_badge>My\Badge</required_badge>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $mainFirewall = $security->firewall('main');
+            $mainFirewall->requiredBadges(['CsrfTokenBadge', 'My\Badge']);
+            // ...
+        };
+
+.. versionadded:: 5.3
+
+    The ``required_badges`` option was introduced in Symfony 5.3.
+
 providers
 ---------
 
