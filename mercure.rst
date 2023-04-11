@@ -615,7 +615,7 @@ Testing
 
 During unit testing it's usually not needed to send updates to Mercure.
 
-You can instead make use of the `MockHub` class::
+You can instead make use of the ``MockHub`` class::
 
     // tests/FunctionalTest.php
     namespace App\Tests\Unit\Controller;

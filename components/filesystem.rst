@@ -469,12 +469,12 @@ Finding Directories/Root Directories
 PHP offers the function :phpfunction:`dirname` to obtain the directory path of a
 file path. This method has a few quirks::
 
-- `dirname()` does not accept backslashes on UNIX
-- `dirname("C:/Programs")` returns "C:", not "C:/"
-- `dirname("C:/")` returns ".", not "C:/"
-- `dirname("C:")` returns ".", not "C:/"
-- `dirname("Programs")` returns ".", not ""
-- `dirname()` does not canonicalize the result
+- ``dirname()`` does not accept backslashes on UNIX
+- ``dirname("C:/Programs")`` returns "C:", not "C:/"
+- ``dirname("C:/")`` returns ".", not "C:/"
+- ``dirname("C:")`` returns ".", not "C:/"
+- ``dirname("Programs")`` returns ".", not ""
+- ``dirname()`` does not canonicalize the result
 
 :method:`Symfony\\Component\\Filesystem\\Path::getDirectory` fixes these
 shortcomings::
