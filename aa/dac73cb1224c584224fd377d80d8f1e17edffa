@@ -1,0 +1,8 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-04-06T06:34:24Z
+
+@MrYamous looks like we need to tweak the rule (regex) a bit more:
+
+* `$client = new RetryableHttpClient(HttpClient::create());`
+* `return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);`
