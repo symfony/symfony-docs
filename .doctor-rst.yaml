@@ -54,6 +54,7 @@ rules:
     typo: ~
     unused_links: ~
     use_deprecated_directive_instead_of_versionadded: ~
+    use_named_constructor_without_new_keyword_rule: ~
     use_https_xsd_urls: ~
     valid_inline_highlighted_namespaces: ~
     valid_use_statements: ~
