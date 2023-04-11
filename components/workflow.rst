@@ -28,7 +28,7 @@ a ``Definition`` and a way to write the states to the objects (i.e. an
 instance of a :class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`).
 
 Consider the following example for a blog post. A post can have one of a number
-of predefined statuses (`draft`, `reviewed`, `rejected`, `published`). In a workflow,
+of predefined statuses (``draft``, ``reviewed``, ``rejected``, ``published``). In a workflow,
 these statuses are called **places**. You can define the workflow like this::
 
     use Symfony\Component\Workflow\DefinitionBuilder;

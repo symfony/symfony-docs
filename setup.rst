@@ -145,7 +145,7 @@ the server by pressing ``Ctrl+C`` from your terminal.
 Symfony Docker Integration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you'd like to use Docker with Symfony, see :doc:`setup/docker`
+If you'd like to use Docker with Symfony, see :doc:`/setup/docker`.
 
 .. _symfony-flex:
 
