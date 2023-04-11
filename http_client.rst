@@ -60,7 +60,10 @@ automatically when type-hinting for :class:`Symfony\\Contracts\\HttpClient\\Http
         use Symfony\Component\HttpClient\HttpClient;
 
         $client = HttpClient::create();
-        $response = $client->request('GET', 'https://api.github.com/repos/symfony/symfony-docs');
+        $response = $client->request(
+            'GET',
+            'https://api.github.com/repos/symfony/symfony-docs'
+        );
 
         $statusCode = $response->getStatusCode();
         // $statusCode = 200
