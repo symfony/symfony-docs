@@ -104,7 +104,7 @@ Service               Install with
 ===================== ==============================================
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
 `Infobip`_            ``composer require symfony/infobip-mailer``
-`MailChimp`_          ``composer require symfony/mailchimp-mailer``
+`Mailchimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``
 `Mailjet`_            ``composer require symfony/mailjet-mailer``
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
@@ -175,7 +175,7 @@ Provider              SMTP                                          HTTP        
 `Amazon SES`_         ses+smtp://USERNAME:PASSWORD@default          ses+https://ACCESS_KEY:SECRET_KEY@default  ses+api://ACCESS_KEY:SECRET_KEY@default
 `Google Gmail`_       gmail+smtp://USERNAME:APP-PASSWORD@default    n/a                                        n/a
 `Infobip`_            infobip+smtp://KEY@default                    n/a                                        infobip+api://KEY@BASE_URL
-`MailChimp Mandrill`_ mandrill+smtp://USERNAME:PASSWORD@default     mandrill+https://KEY@default               mandrill+api://KEY@default
+`Mailchimp Mandrill`_ mandrill+smtp://USERNAME:PASSWORD@default     mandrill+https://KEY@default               mandrill+api://KEY@default
 `MailerSend`_         mailersend+smtp://KEY@default                 n/a                                        mailersend+api://KEY@BASE_URL
 `Mailgun`_            mailgun+smtp://USERNAME:PASSWORD@default      mailgun+https://KEY:DOMAIN@default         mailgun+api://KEY:DOMAIN@default
 `Mailjet`_            mailjet+smtp://ACCESS_KEY:SECRET_KEY@default  n/a                                        mailjet+api://ACCESS_KEY:SECRET_KEY@default
@@ -1424,7 +1424,7 @@ If your transport does not support tags and metadata, they will be added as cust
 
 The following transports currently support tags and metadata:
 
-* MailChimp
+* Mailchimp
 * Mailgun
 * Postmark
 * Sendgrid
@@ -1794,7 +1794,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Inky`: https://get.foundation/emails/docs/inky.html
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
-.. _`MailChimp Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
+.. _`Mailchimp Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
 .. _`MailerSend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailerSend/README.md
 .. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
