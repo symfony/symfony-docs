@@ -119,10 +119,10 @@ need to create a custom data collector. Instead, use the built-in utilities to
     Consider using a professional profiler such as `Blackfire`_ to measure and
     analyze the execution of your application in detail.
 
-.. _enabling-the-profiler-conditionally:
+.. _enabling-the-profiler-programmatically:
 
-Enabling the Profiler Programmatically
---------------------------------------
+Enabling the Profiler Programmatically or Conditionally
+-------------------------------------------------------
 
 Symfony Profiler can be enabled and disabled programmatically. You can use the ``enable()``
 and ``disable()`` methods of the :class:`Symfony\\Component\\HttpKernel\\Profiler\\Profiler`
@@ -178,6 +178,31 @@ create an alias pointing to the existing ``profiler`` service:
         use Symfony\Component\HttpKernel\Profiler\Profiler;
 
         $container->setAlias(Profiler::class, 'profiler');
+
+.. _enabling-the-profiler-conditionally:
+
+Enabling the Profiler Conditionally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Instead of enabling the profiler programmatically as explained in the previous
+section, you can also enable it when a certain condition is met (e.g. a certain
+parameter is included in the URL):
+
+.. code-block:: yaml
+
+    # config/packages/dev/web_profiler.yaml
+        framework:
+            profiler:
+                collect: false
+                collect_parameter: 'profile'
+
+This configuration disables the profiler by default (``collect: false``) to
+improve the application performance; but enables it for requests that include a
+query parameter called ``profile`` (you can freely choose this query parameter name).
+
+In addition to the query parameter, this feature also works when submitting a
+form field with that name (useful to enable the profiler in ``POST`` requests)
+or when including it as a request attribute.
 
 Updating the Web Debug Toolbar After AJAX Requests
 --------------------------------------------------
