@@ -170,12 +170,17 @@ value's length is not exactly this value.
 
 You can use the following parameters in this message:
 
-=================  ============================================================
-Parameter          Description
-=================  ============================================================
-``{{ limit }}``    The exact expected length
-``{{ value }}``    The current (invalid) value
-=================  ============================================================
+======================  ============================================================
+Parameter               Description
+======================  ============================================================
+``{{ limit }}``         The exact expected length
+``{{ value }}``         The current (invalid) value
+``{{ value_length }}``  The current value's length
+======================  ============================================================
+
+.. versionadded:: 6.3
+
+    The `{{ value_length }}` parameter was introduced in Symfony 6.3.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
@@ -199,12 +204,17 @@ than the `max`_ option.
 
 You can use the following parameters in this message:
 
-=================  ============================================================
-Parameter          Description
-=================  ============================================================
-``{{ limit }}``    The expected maximum length
-``{{ value }}``    The current (invalid) value
-=================  ============================================================
+======================  ============================================================
+Parameter               Description
+======================  ============================================================
+``{{ limit }}``         The expected maximum length
+``{{ value }}``         The current (invalid) value
+``{{ value_length }}``  The current value's length
+======================  ============================================================
+
+.. versionadded:: 6.3
+
+    The `{{ value_length }}` parameter was introduced in Symfony 6.3.
 
 ``min``
 ~~~~~~~
@@ -230,12 +240,17 @@ than the `min`_ option.
 
 You can use the following parameters in this message:
 
-=================  ============================================================
-Parameter          Description
-=================  ============================================================
-``{{ limit }}``    The expected minimum length
-``{{ value }}``    The current (invalid) value
-=================  ============================================================
+======================  ============================================================
+Parameter               Description
+======================  ============================================================
+``{{ limit }}``         The expected minimum length
+``{{ value }}``         The current (invalid) value
+``{{ value_length }}``  The current value's length
+======================  ============================================================
+
+.. versionadded:: 6.3
+
+    The `{{ value_length }}` parameter was introduced in Symfony 6.3.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
