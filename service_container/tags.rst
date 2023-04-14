@@ -601,7 +601,8 @@ directly via PHP attributes:
         {
             public function __construct(
                 // the attribute must be applied directly to the argument to autowire
-                #[TaggedIterator('app.handler')] iterable $handlers
+                #[TaggedIterator('app.handler')]
+                iterable $handlers
             ) {
             }
         }
@@ -683,7 +684,8 @@ iterator, add the ``exclude`` option:
         class HandlerCollection
         {
             public function __construct(
-                #[TaggedIterator('app.handler', exclude: ['App\Handler\Three'])] iterable $handlers
+                #[TaggedIterator('app.handler', exclude: ['App\Handler\Three'])]
+                iterable $handlers
             ) {
             }
         }
