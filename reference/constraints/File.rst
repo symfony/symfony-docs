@@ -444,5 +444,5 @@ The message that is displayed if the uploaded file is only partially uploaded.
 
 This message has no parameters.
 
-.. _`IANA website`: http://www.iana.org/assignments/media-types/media-types.xhtml
+.. _`IANA website`: https://www.iana.org/assignments/media-types/media-types.xhtml
 .. _`Wikipedia: Binary prefix`: https://en.wikipedia.org/wiki/Binary_prefix

@@ -281,4 +281,4 @@ The ``render_esi`` helper supports three other useful options:
 
     The ``absolute_uri`` option was introduced in Symfony 6.2.
 
-.. _`ESI`: http://www.w3.org/TR/esi-lang
+.. _`ESI`: https://www.w3.org/TR/esi-lang/

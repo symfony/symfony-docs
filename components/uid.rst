@@ -54,9 +54,9 @@ to create each type of UUID::
     $uuid = Uuid::v3(Uuid::NAMESPACE_OID, $name);  // same as: Uuid::v3('oid', $name);
     $uuid = Uuid::v3(Uuid::NAMESPACE_X500, $name); // same as: Uuid::v3('x500', $name);
 
-    // UUID type 6 is not part of the UUID standard. It's lexicographically sortable
+    // UUID type 6 is not yet part of the UUID standard. It's lexicographically sortable
     // (like ULIDs) and contains a 60-bit timestamp and 63 extra unique bits.
-    // It's defined in http://gh.peabody.io/uuidv6/
+    // It's defined in https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-04.html#name-uuid-version-6
     $uuid = Uuid::v6(); // $uuid is an instance of Symfony\Component\Uid\UuidV6
 
     // UUID version 7 features a time-ordered value field derived from the well known

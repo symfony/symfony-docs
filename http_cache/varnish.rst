@@ -225,9 +225,9 @@ proxy before it has expired, it adds complexity to your caching setup.
     Varnish and other reverse proxies for cache invalidation.
 
 .. _`Varnish`: https://varnish-cache.org/
-.. _`Edge Architecture`: http://www.w3.org/TR/edge-arch
+.. _`Edge Architecture`: https://www.w3.org/TR/edge-arch
 .. _`clean the cookies header`: https://varnish-cache.org/docs/7.0/reference/vmod_cookie.html
-.. _`Surrogate-Capability Header`: http://www.w3.org/TR/edge-arch
+.. _`Surrogate-Capability Header`: https://www.w3.org/TR/edge-arch
 .. _`cache invalidation`: https://tools.ietf.org/html/rfc2616#section-13.10
 .. _`FOSHttpCacheBundle`: https://foshttpcachebundle.readthedocs.io/en/latest/features/user-context.html
 .. _`default.vcl`: https://github.com/varnishcache/varnish-cache/blob/3.0/bin/varnishd/default.vcl

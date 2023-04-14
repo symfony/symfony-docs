@@ -133,4 +133,4 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
 
-.. _`ICU Project`: http://site.icu-project.org/
+.. _`ICU Project`: https://icu.unicode.org/

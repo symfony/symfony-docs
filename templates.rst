@@ -1613,4 +1613,4 @@ for this class and :doc:`tag your service </service_container/tags>` with ``twig
 .. _`default Twig filters and functions`: https://twig.symfony.com/doc/3.x/#reference
 .. _`official Twig extensions`: https://github.com/twigphp?q=extra
 .. _`global variables`: https://twig.symfony.com/doc/3.x/advanced.html#id1
-.. _`hinclude.js`: http://mnot.github.io/hinclude/
+.. _`hinclude.js`: https://mnot.github.io/hinclude/
