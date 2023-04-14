@@ -895,11 +895,11 @@ allows you to optionally hook into the lifecycle via events.
 The ``MessageEvent::class`` Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-**Typical Purposes**: Doing something before the message is send (like logging
-which message is going to be send, or displaying something about the event
+**Typical Purposes**: Doing something before the message is sent (like logging
+which message is going to be sent, or displaying something about the event
 to be executed.
 
-Just before send the message, the event class ``MessageEvent`` is
+Just before sending the message, the event class ``MessageEvent`` is
 dispatched. Listeners receive a
 :class:`Symfony\\Component\\Notifier\\Event\\MessageEvent` event::
 
