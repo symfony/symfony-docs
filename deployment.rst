@@ -255,10 +255,10 @@ Learn More
 
 .. _`Capifony`: https://github.com/everzet/capifony
 .. _`Capistrano`: https://capistranorb.com/
-.. _`Fabric`: http://www.fabfile.org/
+.. _`Fabric`: https://www.fabfile.org/
 .. _`Ansistrano`: https://ansistrano.com/
 .. _`Magallanes`: https://github.com/andres-montanez/Magallanes
-.. _`Memcached`: http://memcached.org/
+.. _`Memcached`: https://memcached.org/
 .. _`Redis`: https://redis.io/
 .. _`Symfony plugin`: https://github.com/capistrano/symfony/
 .. _`Deployer`: https://deployer.org/

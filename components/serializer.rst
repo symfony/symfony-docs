@@ -1890,7 +1890,7 @@ Learn more
 .. _RFC3339: https://tools.ietf.org/html/rfc3339#section-5.8
 .. _`options with libxml`: https://www.php.net/manual/en/libxml.constants.php
 .. _`DOM XML_* constants`: https://www.php.net/manual/en/dom.constants.php
-.. _JSON: http://www.json.org/
+.. _JSON: https://www.json.org/json-en.html
 .. _XML: https://www.w3.org/XML/
 .. _YAML: https://yaml.org/
 .. _CSV: https://tools.ietf.org/html/rfc4180

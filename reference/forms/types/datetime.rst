@@ -231,5 +231,5 @@ Field Variables
 |          |            | contains the input type to use (``datetime``, ``date`` or ``time``). |
 +----------+------------+----------------------------------------------------------------------+
 
-.. _`datetime local`: http://w3c.github.io/html-reference/datatypes.html#form.data.datetime-local
+.. _`datetime local`: https://html.spec.whatwg.org/multipage/input.html#local-date-and-time-state-(type=datetime-local)
 .. _`Date/Time Format Syntax`: https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax

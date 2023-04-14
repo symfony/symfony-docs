@@ -372,8 +372,8 @@ Here's what we've learned so far:
 
 .. _`xkcd`: https://xkcd.com/
 .. _`XMLHttpRequest`: https://en.wikipedia.org/wiki/XMLHttpRequest
-.. _`HTTP 1.1 RFC`: http://www.w3.org/Protocols/rfc2616/rfc2616.html
-.. _`HTTP Bis`: http://datatracker.ietf.org/wg/httpbis/
+.. _`HTTP 1.1 RFC`: https://www.w3.org/Protocols/rfc2616/rfc2616.html
+.. _`HTTP Bis`: https://datatracker.ietf.org/wg/httpbis/
 .. _`List of HTTP header fields`: https://en.wikipedia.org/wiki/List_of_HTTP_header_fields
 .. _`list of HTTP status codes`: https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
 .. _`List of common media types`: https://www.iana.org/assignments/media-types/media-types.xhtml
