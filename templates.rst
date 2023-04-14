@@ -380,11 +380,17 @@ gives you access to these variables:
 ``app.current_route_parameters``
     An array with the parameters passed to the route of the current request or an
     empty array if no request is available (equivalent to ``app.request.attributes.get('_route_params')``)
+``app.locale``
+    The locale used in the current :ref:`locale switcher <locale-switcher>` context.
 
 .. versionadded:: 6.2
 
     The ``app.current_route`` and ``app.current_route_parameters`` variables
     were introduced in Symfony 6.2.
+
+.. versionadded:: 6.3
+
+    The ``app.locale`` variable was introduced in Symfony 6.3.
 
 In addition to the global ``app`` variable injected by Symfony, you can also
 inject variables automatically to all Twig templates as explained in the next

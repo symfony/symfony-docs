@@ -988,6 +988,8 @@ checks translation resources for several locales:
     add the missing translation to the log file. For details,
     see :ref:`reference-framework-translator-logging`.
 
+.. _locale-switcher:
+
 Switch Locale Programmatically
 ------------------------------
 
