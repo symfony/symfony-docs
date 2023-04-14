@@ -524,5 +524,5 @@ options has been set.
 
 This message has no parameters.
 
-.. _`IANA website`: http://www.iana.org/assignments/media-types/media-types.xhtml
+.. _`IANA website`: https://www.iana.org/assignments/media-types/media-types.xhtml
 .. _`PHP GD extension`: https://www.php.net/manual/en/book.image.php

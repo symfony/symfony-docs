@@ -137,4 +137,4 @@ The actual default value of this option depends on other field options:
 
 .. _`ISO 639-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_639-1
 .. _`ISO 639-2 alpha-3 (2T)`: https://en.wikipedia.org/wiki/ISO_639-2
-.. _`International Components for Unicode`: http://site.icu-project.org
+.. _`International Components for Unicode`: https://icu.unicode.org/

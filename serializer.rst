@@ -522,7 +522,7 @@ take a look at how this bundle works.
 
 .. _`API Platform`: https://api-platform.com
 .. _`JSON-LD`: https://json-ld.org
-.. _`Hydra Core Vocabulary`: http://www.hydra-cg.com
+.. _`Hydra Core Vocabulary`: https://www.hydra-cg.com/
 .. _`OpenAPI`: https://www.openapis.org
 .. _`GraphQL`: https://graphql.org
 .. _`JSON:API`: https://jsonapi.org
