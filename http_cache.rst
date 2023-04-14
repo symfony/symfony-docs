@@ -391,7 +391,7 @@ Learn more
 
     http_cache/*
 
-.. _`Things Caches Do`: https://2ndscale.com/writings/things-caches-do
+.. _`Things Caches Do`: https://tomayko.com/blog/2008/things-caches-do
 .. _`Cache Tutorial`: https://www.mnot.net/cache_docs/
 .. _`Varnish`: https://varnish-cache.org/
 .. _`Squid in reverse proxy mode`: https://wiki.squid-cache.org/SquidFaq/ReverseProxy
