@@ -182,4 +182,4 @@ handling the request::
 .. _`CloudFront`: https://en.wikipedia.org/wiki/Amazon_CloudFront
 .. _`CloudFront IP ranges`: https://ip-ranges.amazonaws.com/ip-ranges.json
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
-.. _`nginx realip module`: http://nginx.org/en/docs/http/ngx_http_realip_module.html
+.. _`nginx realip module`: https://nginx.org/en/docs/http/ngx_http_realip_module.html

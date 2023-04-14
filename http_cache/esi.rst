@@ -253,4 +253,4 @@ The ``render_esi`` helper supports two other useful options:
     of ``continue`` indicating that, in the event of a failure, the gateway cache
     will remove the ESI tag silently.
 
-.. _`ESI`: http://www.w3.org/TR/esi-lang
+.. _`ESI`: https://www.w3.org/TR/esi-lang/

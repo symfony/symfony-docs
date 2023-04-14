@@ -37,4 +37,4 @@ loaded/dumped inside a Symfony application:
         </file>
     </xliff>
 
-.. _XLIFF: http://docs.oasis-open.org/xliff/xliff-core/v2.1/xliff-core-v2.1.html
+.. _XLIFF: https://docs.oasis-open.org/xliff/xliff-core/v2.1/xliff-core-v2.1.html
