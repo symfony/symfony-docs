@@ -542,11 +542,12 @@ method::
         public function index(): Response
         {
             $response = $this->sendEarlyHints([
+                new Link(rel: 'preconnect', href: 'https://fonts.google.com'),
                 (new Link(href: '/style.css'))->withAttribute('as', 'stylesheet'),
                 (new Link(href: '/script.js'))->withAttribute('as', 'script'),
             ]);
 
-            // Do something slow...
+            // prepare the contents of the response...
 
             return $this->render('homepage/index.html.twig', response: $response);
         }
