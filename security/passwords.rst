@@ -242,7 +242,7 @@ After configuring the correct algorithm, you can use the
                 // ...
             }
 
-            public function delete(UserPasswordHasherInterface $passwordHasher, UserInterface $user)
+            public function delete(UserPasswordHasherInterface $passwordHasher, UserInterface $user): void
             {
                 // ... e.g. get the password from a "confirm deletion" dialog
                 $plaintextPassword = ...;
