@@ -408,7 +408,7 @@ Change argument type                                                            
 Add return type                                                                  No
 Remove return type                                                               No
 Change return type                                                               No
-**Static Methods and Properties**          
+**Static Methods and Properties**
 Turn non static into static                                                      No
 Turn static into non static                                                      No
 ===============================================================================  ==============  ===============
@@ -477,10 +477,10 @@ Making Code Changes in a Backward Compatible Way
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 As you read above, many changes are not allowed because they would represent a
-backward compability break. However, we want to be able to improve the code and
+backward compatibility break. However, we want to be able to improve the code and
 its features over time and that can be done thanks to some strategies that
 allow to still do some unallowed changes in several steps that ensure backward
-compability and a smooth upgrade path. Some of them are described in the next
+compatibility and a smooth upgrade path. Some of them are described in the next
 sections.
 
 .. _add-argument-public-method:
