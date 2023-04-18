@@ -482,7 +482,7 @@ instance), the host might have been manipulated by an attacker.
 
 .. seealso::
 
-    You can read "`HTTP Host header attacks`_" for more information about
+    You can read `HTTP Host header attacks`_ for more information about
     these kinds of attacks.
 
 The Symfony :method:`Request::getHost() <Symfony\\Component\\HttpFoundation\\Request::getHost>`
