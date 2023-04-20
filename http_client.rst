@@ -731,6 +731,59 @@ The ``RetryableHttpClient`` uses a
 decide if the request should be retried, and to define the waiting time between
 each retry.
 
+Retry Over Several Base URIs
+............................
+
+.. versionadded:: 6.3
+
+    The multiple ``base_uri`` feature was added in Symfony 6.3.
+
+The ``RetryableHttpClient`` can be configured to use multiple base URIs. This
+feature provides increased flexibility and reliability for making HTTP
+requests. Pass an array of base URIs as option ``base_uri`` when making a 
+request::
+
+    $response = $client->request('GET', 'some-page', [
+        'base_uri' => [
+            // first request will use this base URI
+            'https://example.com/a/',
+            // if first request fails, the following base URI will be used
+            'https://example.com/b/',
+        ],
+    ]);
+
+When the number of retries is higher than the number of base URIs, the 
+last base URI will be used for the remaining retries.
+
+If you want to shuffle the order of base URIs for each retry attempt, nest the
+base URIs you want to shuffle in an additional array::
+
+    $response = $client->request('GET', 'some-page', [
+        'base_uri' => [
+            [
+                // a single random URI from this array will be used for the first request
+                'https://example.com/a/',
+                'https://example.com/b/',
+            ],
+            // non-nested base URIs are used in order
+            'https://example.com/c/',
+        ],
+    ]);
+
+This feature allows for a more randomized approach to handling retries, 
+reducing the likelihood of repeatedly hitting the same failed base URI.
+
+By using a nested array for the base URI, you can use this feature 
+to distribute the load among many nodes in a cluster of servers.
+
+You can also configure the array of base URIs using the ``withOptions()`` 
+method::
+
+    $client = $client->withOptions(['base_uri' => [
+        'https://example.com/a/',
+        'https://example.com/b/',
+    ]]);
+
 HTTP Proxies
 ~~~~~~~~~~~~
 
