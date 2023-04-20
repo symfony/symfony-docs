@@ -284,7 +284,7 @@ transform the form into a *form view* instance.
 .. deprecated:: 6.2
 
     Prior to Symfony 6.2, you had to use ``$this->render(..., ['form' => $form->createView()])``
-    or the ``renderForm()`` method to render to form. The ``renderForm()``
+    or the ``renderForm()`` method to render the form. The ``renderForm()``
     method is deprecated in favor of directly passing the ``FormInterface``
     instance to ``render()``.
 
