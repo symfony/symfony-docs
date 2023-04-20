@@ -1,0 +1,103 @@
+---------------------------------------------------------------------------
+
+by Tiriel at 2023-04-20T08:59:43Z
+
+Is the failed build normal? It doesn't seem related to my changes, and seems to affect other PRs towards 6.3 but I'm not sure.
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-04-20T09:09:31Z
+
+A `versionadded` is missing I suppose.
+
+I think we can make this a bit shorter and more straight to the point:
+
+```rst
+The ``RetryableHttpClient`` can be configured to use multiple base URIs. This feature provides increased flexibility and reliability for making HTTP requests. Pass an array of base URIs as option ``base_uri`` when making a request:
+
+.. code-block:: php
+
+    $response = $client->request('GET', 'foo-bar', [
+        'base_uri' => [
+            'http://example.com/a/', // first request will use this base URI
+            'http://example.com/b/', // if first request fails, this second base URI will be used
+        ],
+    ]);
+
+If you want to shuffle the order of base URIs for each retry attempt, nest the base URIs you want to shuffle in an additional array:
+
+.. code-block:: php
+
+    $response = $client->request('GET', 'foo-bar', [
+        'base_uri' => [
+            'http://example.com/a/',
+            [
+                'http://example.com/b/', // one random URI from this list will be used on retry #2
+                'http://example.com/c/',
+            ],
+            'http://example.com/d/', // non-nested base URIs are used in order
+        ],
+    ]);
+
+This feature allows for a more randomized approach to handling retries, reducing the likelihood of repeatedly hitting the same failed base URI.
+
+By using a nested array for the first base URI, you can use this feature to distribute the load among many nodes in a cluster of servers.
+
+When the number of retries is higher than the number of base URIs, the last base URI will be used for remaining retries.
+
+You can also configure the array of base URIs using the ``withOptions()`` method:
+
+.. code-block:: php
+
+    $client = $client->withOptions(['base_uri' => [
+        'http://example.com/a/',
+        'http://example.com/b/',
+    ]]);
+```
+
+---------------------------------------------------------------------------
+
+by Tiriel at 2023-04-20T10:25:55Z
+
+> A `versionadded` is missing I suppose.
+
+Yeah, indeed, sorry! Should I put the entire block inside the `versionadded` or only a small phrase explaining it's been added just now?
+
+> I think we can make this a bit shorter and more straight to the point:
+
+Ok, wil change this during break!
+
+---------------------------------------------------------------------------
+
+by Tiriel at 2023-04-20T10:45:03Z
+
+Just curious about one thing:
+
+> By using a nested array for the first base URI, you can use this feature to distribute the load among many nodes in a cluster of servers.
+
+It's not just for the first base URI unless I misunderstood one of your modifications. Or did I miss something?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-04-20T11:02:51Z
+
+> It's not just for the first base URI
+
+retries should be rare, so that randomizing only the second base URI wouldn't provide load balancing
+
+---------------------------------------------------------------------------
+
+by Tiriel at 2023-04-20T11:22:43Z
+
+> retries should be rare, so that randomizing only the second base URI wouldn't provide load balancing
+
+Okay got it, thanks! Was just to be sure though. Technically speaking, it works on any key of the array but it should be extremely rare to use it on subsequent keys indeed.
+But I do spotted some odd behaviour by looking again (see [here](https://github.com/symfony/symfony/pull/49809/files#r1172446146) )
+
+---------------------------------------------------------------------------
+
+by Tiriel at 2023-04-20T11:35:29Z
+
+> never merge, always rebase
+
+Okay sorry, going back for a rebase!
