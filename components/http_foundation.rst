@@ -216,6 +216,18 @@ If the request body is a JSON string, it can be accessed using
 
     $data = $request->toArray();
 
+If the request data could be ``$_POST`` data *or* a JSON string, you can use
+the :method:`Symfony\\Component\\HttpFoundation\\Request::getPayload` method
+which returns an instance of :class:`Symfony\\Component\\HttpFoundation\\InputBag`
+wrapping this data::
+
+    $data = $request->getPayload();
+
+.. versionadded:: 6.3
+
+    The :method:`Symfony\\Component\\HttpFoundation\\Request::getPayload`
+    method was introduced in Symfony 6.3.
+
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
 
