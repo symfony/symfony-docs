@@ -475,6 +475,23 @@ to your resolver and pass your custom name as its first argument::
         // ...
     }
 
+You can then pass this name as ``ValueResolver``'s first argument to pin your resolver::
+
+    // src/Controller/BookingController.php
+    namespace App\Controller;
+
+    use App\Reservation\BookingId;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\ValueResolver;
+
+    class BookingController
+    {
+        public function index(#[ValueResolver('booking_id')] BookingId $id): Response
+        {
+            // ... do something with $id
+        }
+    }
+
 .. versionadded:: 6.3
 
     The ``controller.targeted_value_resolver`` tag and ``AsTargetedValueResolver``
