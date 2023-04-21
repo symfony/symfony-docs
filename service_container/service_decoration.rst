@@ -153,7 +153,8 @@ automatically changed to ``'.inner'``):
         class DecoratingMailer
         {
             public function __construct(
-                private #[MapDecorated] $inner,
+                #[MapDecorated]
+                private $inner,
             ) {
             }
 
