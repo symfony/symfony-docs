@@ -1245,6 +1245,35 @@ A possible solution is to change the parameter requirements to be more permissiv
     as the token and the format will be empty. This can be solved by replacing
     the ``.+`` requirement by ``[^.]+`` to allow any character except dots.
 
+Backed Enum as Parameter
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+PHP 8.1 add support for Backed Enum, they can be used as route parameter and
+automatically converted to their value by Symfony.
+
+.. versionadded:: 6.3
+
+    Using a `\BackedEnum` as route parameter is available since Symfony 6.3.
+
+.. code-block:: php-attributes
+
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
+
+    use App\Enum\SuitsEnum;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class DefaultController extends AbstractController
+    {
+        #[Route('/cards/{suit}', name: 'cards_suit')]
+        public function list(SuitsEnum $suit = SuitsEnum::Diamonds): Response
+        {
+            // ...
+        }
+    }
+
 .. _routing-alias:
 
 Route Aliasing
