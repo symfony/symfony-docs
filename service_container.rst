@@ -927,6 +927,26 @@ setting:
             ;
         };
 
+It is also possible to define a service as public thanks to the ``#[Autoconfigure]``
+attribute. This attribute must be used directly on the class of the service
+you want to configure::
+
+    // src/Service/PublicService.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+    #[Autoconfigure(public: true)]
+    class PublicService
+    {
+        // ...
+    }
+
+.. versionadded:: 5.3
+
+    The ``#[Autoconfigure]`` attribute was introduced in Symfony 5.3. PHP
+    attributes require at least PHP 8.0.
+
 .. deprecated:: 5.1
 
     As of Symfony 5.1, it is no longer possible to autowire the service
