@@ -169,6 +169,17 @@ In addition, some components, bridges and official bundles provide other value r
     user has a user class not matching the type-hinted class, an ``AccessDeniedException``
     is thrown by the resolver to prevent access to the controller.
 
+:class:`Symfony\\Component\\Security\\Http\\Controller\\SecurityTokenValueResolver`
+    Injects the object that represents the current logged in token if type-hinted
+    with ``TokenInterface`` or a class extending it.
+
+    If the argument is not nullable and there is no logged in token, an ``HttpException`` with status code 401
+    is thrown by the resolver to prevent access to the controller.
+
+    .. versionadded:: 6.3
+
+        The ``SecurityTokenValueResolver`` was introduced in Symfony 6.3.
+
 :class:`Symfony\\Bridge\\Doctrine\\ArgumentResolver\\EntityValueResolver`
     Automatically query for an entity and pass it as an argument to your controller.
 
