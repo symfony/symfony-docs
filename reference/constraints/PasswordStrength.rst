@@ -1,6 +1,10 @@
 PasswordStrength
 ================
 
+.. versionadded:: 6.3
+
+    The ``PasswordStrength`` constraint was introduced in Symfony 6.3.
+
 Validates that the given password has reached the minimum strength required by
 the constraint.
 
@@ -15,7 +19,7 @@ Basic Usage
 
 The following constraint ensures that the ``rawPassword`` property of the
 ``User`` class reaches the minimum strength required by the constraint.
-By default, the minimum required score is 2.
+By default, the minimum required score is ``2``.
 
 .. configuration-block::
 
@@ -77,11 +81,12 @@ Available Options
 ``minScore``
 ~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: ``PasswordStrength::STRENGTH_REASONABLE`` (``2``)
+**type**: ``integer`` **default**: ``PasswordStrength::STRENGTH_MEDIUM`` (``2``)
 
 The minimum required strength of the password. Available constants are:
+
 * ``PasswordStrength::STRENGTH_WEAK`` = ``1``
-* ``PasswordStrength::STRENGTH_REASONABLE`` = ``2``
+* ``PasswordStrength::STRENGTH_MEDIUM`` = ``2``
 * ``PasswordStrength::STRENGTH_STRONG`` = ``3``
 * ``PasswordStrength::STRENGTH_VERY_STRONG`` = ``4``
 
