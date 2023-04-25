@@ -477,7 +477,7 @@ X-Infobip-Track               boolean   Enable or disable open and click trackin
 
 .. versionadded:: 6.3
 
-    The Infobip custom header was introduced in Symfony 6.3.
+    Infobip custom headers were introduced in Symfony 6.3.
 
 Message Contents
 ~~~~~~~~~~~~~~~~
