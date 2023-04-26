@@ -82,6 +82,12 @@ and what headers your reverse proxy uses to send information:
             ;
         };
 
+.. deprecated:: 5.2
+
+    In previous Symfony versions, the above example used ``HEADER_X_FORWARDED_ALL``
+    to trust all "X-Forwarded-" headers, but that constant is deprecated since
+    Symfony 5.2 in favor of the individual ``HEADER_X_FORWARDED_*`` constants.
+
 .. caution::
 
     Enabling the ``Request::HEADER_X_FORWARDED_HOST`` option exposes the
@@ -91,6 +97,22 @@ and what headers your reverse proxy uses to send information:
 The Request object has several ``Request::HEADER_*`` constants that control exactly
 *which* headers from your reverse proxy are trusted. The argument is a bit field,
 so you can also pass your own value (e.g. ``0b00110``).
+
+.. tip::
+
+    You can set a ``TRUSTED_PROXIES`` env var to configure proxies on a per-environment basis:
+
+    .. code-block:: bash
+
+        # .env
+        TRUSTED_PROXIES=127.0.0.1,10.0.0.0/8
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            # ...
+            trusted_proxies: '%env(TRUSTED_PROXIES)%'
 
 .. caution::
 
@@ -122,23 +144,6 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
 other information.
-
-.. tip::
-
-    In applications using :ref:`Symfony Flex <symfony-flex>` you can set the
-    ``TRUSTED_PROXIES`` env var:
-
-    .. code-block:: bash
-
-        # .env
-        TRUSTED_PROXIES=127.0.0.1,REMOTE_ADDR
-
-    .. code-block:: yaml
-
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            trusted_proxies: '%env(TRUSTED_PROXIES)%'
 
 If you are also using a reverse proxy on top of your load balancer (e.g.
 `CloudFront`_), calling ``$request->server->get('REMOTE_ADDR')`` won't be
