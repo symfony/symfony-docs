@@ -491,6 +491,50 @@ value:
             $framework->serializer()->nameConverter('serializer.name_converter.camel_case_to_snake_case');
         };
 
+Debugging the Serializer
+------------------------
+
+Use the ``debug:serializer`` command to dump the serializer metadata of a
+given class:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:serializer 'App\Entity\Book'
+
+        App\Entity\Book
+        ---------------
+
+        +----------+------------------------------------------------------------+
+        | Property | Options                                                    |
+        +----------+------------------------------------------------------------+
+        | name     | [                                                          |
+        |          |   "groups" => [                                            |
+        |          |       "book:read",                                         |
+        |          |       "book:write",                                        |
+        |          |   ]                                                        |
+        |          |   "maxDepth" => 1,                                         |
+        |          |   "serializedName" => "book_name"                          |
+        |          |   "ignore" => false                                        |
+        |          |   "normalizationContexts" => [],                           |
+        |          |   "denormalizationContexts" => []                          |
+        |          | ]                                                          |
+        | isbn     | [                                                          |
+        |          |   "groups" => [                                            |
+        |          |       "book:read",                                         |
+        |          |   ]                                                        |
+        |          |   "maxDepth" => null,                                      |
+        |          |   "serializedName" => null                                 |
+        |          |   "ignore" => false                                        |
+        |          |   "normalizationContexts" => [],                           |
+        |          |   "denormalizationContexts" => []                          |
+        |          | ]                                                          |
+        +----------+------------------------------------------------------------+
+
+.. versionadded:: 6.3
+
+    The debug:serializer`` command was introduced in Symfony 6.3.
+
+
 Going Further with the Serializer
 ---------------------------------
 
