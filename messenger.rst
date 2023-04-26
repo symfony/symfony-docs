@@ -2032,7 +2032,7 @@ To do this, add the ``from_transport`` option to each handler. For example::
 
     use App\Message\UploadedImage;
 
-    #[AsMessageHandler(from_transport: 'image_transport')]
+    #[AsMessageHandler(fromTransport: 'image_transport')]
     class ThumbnailUploadedImageHandler
     {
         public function __invoke(UploadedImage $uploadedImage)
@@ -2046,7 +2046,7 @@ And similarly::
     // src/MessageHandler/NotifyAboutNewUploadedImageHandler.php
     // ...
 
-    #[AsMessageHandler(from_transport: 'async_priority_normal')]
+    #[AsMessageHandler(fromTransport: 'async_priority_normal')]
     class NotifyAboutNewUploadedImageHandler
     {
         // ...
