@@ -420,15 +420,15 @@ The push channel is used to send notifications to users by using
 :class:`Symfony\\Component\\Notifier\\Texter` classes. Symfony provides
 integration with these push services:
 
-=================  ====================================  =================================================================================
-Service            Package                               DSN
-=================  ====================================  =================================================================================
-`Engagespot`_      ``symfony/engagespot-notifier``        ``engagespot://API_KEY@default?campaign_name=CAMPAIGN_NAME``
-`Expo`_            ``symfony/expo-notifier``              ``expo://Token@default``
-`OneSignal`_       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
-`PagerDuty`_       ``symfony/pager-duty-notifier``        ``pagerduty://TOKEN@SUBDOMAIN``
-`Pushover`_        ``symfony/pushover-notifier``          ``pushover://USER_KEY:APP_TOKEN@default``
-=================  ====================================  =================================================================================
+===============  ====================================  ==============================================================================
+Service          Package                               DSN
+===============  ====================================  ==============================================================================
+`Engagespot`_    ``symfony/engagespot-notifier``       ``engagespot://API_KEY@default?campaign_name=CAMPAIGN_NAME``
+`Expo`_          ``symfony/expo-notifier``             ``expo://Token@default``
+`OneSignal`_     ``symfony/one-signal-notifier``       ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
+`PagerDuty`_     ``symfony/pager-duty-notifier``       ``pagerduty://TOKEN@SUBDOMAIN``
+`Pushover`_      ``symfony/pushover-notifier``         ``pushover://USER_KEY:APP_TOKEN@default``
+===============  ====================================  ==============================================================================
 
 .. versionadded:: 6.1
 
