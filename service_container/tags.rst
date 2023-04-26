@@ -481,8 +481,10 @@ To answer this, change the service declaration:
 
                 <service id="MailerSendmailTransport">
                     <tag name="app.mail_transport">
-                        <attribute>sendmail</attribute>
-                        <attribute>anotherAlias</attribute>
+                        <attribute name="alias">
+                            <attribute name="0">sendmail</attribute>
+                            <attribute name="1">anotherAlias</attribute>
+                        </attribute>
                     </tag>
                 </service>
             </services>
