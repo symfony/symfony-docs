@@ -82,12 +82,6 @@ and what headers your reverse proxy uses to send information:
             ;
         };
 
-.. deprecated:: 5.2
-
-    In previous Symfony versions, the above example used ``HEADER_X_FORWARDED_ALL``
-    to trust all "X-Forwarded-" headers, but that constant is deprecated since
-    Symfony 5.2 in favor of the individual ``HEADER_X_FORWARDED_*`` constants.
-
 .. caution::
 
     Enabling the ``Request::HEADER_X_FORWARDED_HOST`` option exposes the
