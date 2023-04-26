@@ -986,8 +986,8 @@ is dispatched. Listeners receive a
 .. _`Iqsms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Iqsms/README.md
 .. _`iSendPro`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Isendpro/README.md
 .. _`KazInfoTeh`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/KazInfoTeh/README.md
-.. _`LightSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LightSms/README.md
 .. _`LINE Notify`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LineNotify/README.md
+.. _`LightSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LightSms/README.md
 .. _`LinkedIn`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/LinkedIn/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mailjet/README.md
 .. _`Mastodon`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mastodon/README.md
@@ -1005,8 +1005,8 @@ is dispatched. Listeners receive a
 .. _`PagerDuty`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/PagerDuty/README.md
 .. _`Plivo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Plivo/README.md
 .. _`Pushover`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Pushover/README.md
-.. _`RingCentral`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RingCentral/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
+.. _`RingCentral`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RingCentral/README.md
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
 .. _`SMSFactor`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsFactor/README.md
 .. _`Sendberry`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendberry/README.md
