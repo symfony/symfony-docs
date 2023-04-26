@@ -29,7 +29,7 @@ Usage
 Converting from HttpFoundation Objects to PSR-7
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The bridge provides an interface of a factory called 
+The bridge provides an interface of a factory called
 `HttpMessageFactoryInterface`_ that builds objects implementing PSR-7
 interfaces from HttpFoundation objects.
 
