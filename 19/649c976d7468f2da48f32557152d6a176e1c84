@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2023-04-20T08:01:40Z
+
+Hello, this change looks good but I think it should be applied on 6.0 doc as the default value [has been added with SF6](https://github.com/symfony/symfony/blob/6.0/UPGRADE-6.0.md#form)
