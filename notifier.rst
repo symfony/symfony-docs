@@ -431,6 +431,7 @@ Service          Package                               DSN
 `Engagespot`_    ``symfony/engagespot-notifier``       ``engagespot://API_KEY@default?campaign_name=CAMPAIGN_NAME``
 `Expo`_          ``symfony/expo-notifier``             ``expo://Token@default``
 `Novu`_          ``symfony/novu-notifier``             ``novu://API_KEY@default``
+`Ntfy`_          ``symfony/ntfy-notifier``             ``ntfy://default/TOPIC``
 `OneSignal`_     ``symfony/one-signal-notifier``       ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
 `PagerDuty`_     ``symfony/pager-duty-notifier``       ``pagerduty://TOKEN@SUBDOMAIN``
 `Pushover`_      ``symfony/pushover-notifier``         ``pushover://USER_KEY:APP_TOKEN@default``
@@ -446,7 +447,7 @@ Service          Package                               DSN
 
 .. versionadded:: 6.4
 
-    The Novu integration was introduced in Symfony 6.4.
+    The Novu and Ntfy integrations were introduced in Symfony 6.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -1009,6 +1010,7 @@ is dispatched. Listeners receive a
 .. _`Mobyt`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mobyt/README.md
 .. _`Nexmo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Nexmo/README.md
 .. _`Novu`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Novu/README.md
+.. _`Ntfy`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Ntfy/README.md
 .. _`Octopush`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Octopush/README.md
 .. _`OneSignal`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OneSignal/README.md
 .. _`OrangeSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OrangeSms/README.md
