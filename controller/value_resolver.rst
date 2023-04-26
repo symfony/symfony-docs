@@ -173,8 +173,8 @@ In addition, some components, bridges and official bundles provide other value r
     Injects the object that represents the current logged in token if type-hinted
     with ``TokenInterface`` or a class extending it.
 
-    If the argument is not nullable and there is no logged in token, an ``HttpException`` with status code 401
-    is thrown by the resolver to prevent access to the controller.
+    If the argument is not nullable and there is no logged in token, an ``HttpException``
+    with status code 401 is thrown by the resolver to prevent access to the controller.
 
     .. versionadded:: 6.3
 
