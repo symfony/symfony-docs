@@ -426,8 +426,8 @@ Service            Package                               DSN
 `Engagespot`_      ``symfony/engagespot-notifier``        ``engagespot://API_KEY@default?campaign_name=CAMPAIGN_NAME``
 `Expo`_            ``symfony/expo-notifier``              ``expo://Token@default``
 `OneSignal`_       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
-PagerDuty          ``symfony/pager-duty-notifier``        ``pagerduty://TOKEN@SUBDOMAIN``
-Pushover           ``symfony/pushover-notifier``          ``pushover://USER_KEY:APP_TOKEN@default``
+`PagerDuty`_       ``symfony/pager-duty-notifier``        ``pagerduty://TOKEN@SUBDOMAIN``
+`Pushover`_        ``symfony/pushover-notifier``          ``pushover://USER_KEY:APP_TOKEN@default``
 =================  ====================================  =================================================================================
 
 .. versionadded:: 6.1
@@ -1002,7 +1002,9 @@ is dispatched. Listeners receive a
 .. _`OneSignal`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OneSignal/README.md
 .. _`OrangeSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OrangeSms/README.md
 .. _`OvhCloud`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OvhCloud/README.md
+.. _`PagerDuty`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/PagerDuty/README.md
 .. _`Plivo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Plivo/README.md
+.. _`Pushover`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Pushover/README.md
 .. _`RingCentral`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RingCentral/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
