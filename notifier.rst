@@ -425,12 +425,12 @@ The push channel is used to send notifications to users by using
 :class:`Symfony\\Component\\Notifier\\Texter` classes. Symfony provides
 integration with these push services:
 
-=================  ====================================  =================================================================================
-Service            Package                               DSN
-=================  ====================================  =================================================================================
-`Expo`_            ``symfony/expo-notifier``              ``expo://Token@default``
-`OneSignal`_       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
-=================  ====================================  =================================================================================
+===============  ====================================  ==============================================================================
+Service          Package                               DSN
+===============  ====================================  ==============================================================================
+`Expo`_          ``symfony/expo-notifier``             ``expo://Token@default``
+`OneSignal`_     ``symfony/one-signal-notifier``       ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
+===============  ====================================  ==============================================================================
 
 .. versionadded:: 5.4
 
