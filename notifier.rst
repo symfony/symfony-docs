@@ -420,6 +420,7 @@ The push channel is used to send notifications to users by using
 :class:`Symfony\\Component\\Notifier\\Texter` classes. Symfony provides
 integration with these push services:
 
+<<<<<<< HEAD
 ==============  ====================================  =================================================================================
 Service         Package                               DSN
 ==============  ====================================  =================================================================================
@@ -429,6 +430,15 @@ OneSignal       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_
 PagerDuty       ``symfony/pager-duty-notifier``        ``pagerduty://TOKEN@SUBDOMAIN``
 Pushover        ``symfony/pushover-notifier``          ``pushover://USER_KEY:APP_TOKEN@default``
 ==============  ====================================  =================================================================================
+=======
+=================  ====================================  =================================================================================
+Service            Package                               DSN
+=================  ====================================  =================================================================================
+Engagespot         ``symfony/engagespot-notifier``        ``engagespot://API_KEY@default?campaign_name=CAMPAIGN_NAME``
+`Expo`_            ``symfony/expo-notifier``              ``expo://Token@default``
+`OneSignal`_       ``symfony/one-signal-notifier``        ``onesignal://APP_ID:API_KEY@default?defaultRecipientId=DEFAULT_RECIPIENT_ID``
+=================  ====================================  =================================================================================
+>>>>>>> 6.2
 
 .. versionadded:: 6.1
 
@@ -973,6 +983,7 @@ is dispatched. Listeners receive a
 .. _`ContactEveryone`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/ContactEveryone/README.md
 .. _`Discord`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Discord/README.md
 .. _`Esendex`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Esendex/README.md
+.. _`Expo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Expo/README.md
 .. _`FakeChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeChat/README.md
 .. _`FakeSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FakeSms/README.md
 .. _`Firebase`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Firebase/README.md
@@ -997,6 +1008,7 @@ is dispatched. Listeners receive a
 .. _`Mobyt`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Mobyt/README.md
 .. _`Nexmo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Nexmo/README.md
 .. _`Octopush`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Octopush/README.md
+.. _`OneSignal`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OneSignal/README.md
 .. _`OrangeSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OrangeSms/README.md
 .. _`OvhCloud`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/OvhCloud/README.md
 .. _`Plivo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Plivo/README.md
