@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by pyrech at 2023-04-02T09:57:24Z
+
+After some thoughts, I wonder if it should mention Flex at all because since Symfony 5.2, the trusted proxies is no longer configured by default in recipes (recipe of [5.2](https://github.com/symfony/recipes/blob/main/symfony/framework-bundle/5.2/manifest.json) VS [5.1](https://github.com/symfony/recipes/blob/main/symfony/framework-bundle/5.1/manifest.json))
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-04-07T14:15:52Z
+
+True, this is unrelated to flex.
+
+---------------------------------------------------------------------------
+
+by pyrech at 2023-04-21T13:30:12Z
+
+I removed mention to Flex :+1:
