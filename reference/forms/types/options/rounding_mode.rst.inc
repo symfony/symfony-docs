@@ -7,7 +7,7 @@ and ``\NumberFormatter::ROUND_HALFUP`` for ``MoneyType`` and ``NumberType``
 * IntegerType
 **default**: ``\NumberFormatter::ROUND_DOWN``
 
-* MoneyType and NumberType
+* MoneyType,  NumberType and PercentType
 **default**: ``\NumberFormatter::ROUND_HALFUP``
 
 
