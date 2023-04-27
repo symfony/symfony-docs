@@ -740,7 +740,7 @@ Retry Over Several Base URIs
 
 The ``RetryableHttpClient`` can be configured to use multiple base URIs. This
 feature provides increased flexibility and reliability for making HTTP
-requests. Pass an array of base URIs as option ``base_uri`` when making a 
+requests. Pass an array of base URIs as option ``base_uri`` when making a
 request::
 
     $response = $client->request('GET', 'some-page', [
@@ -752,7 +752,7 @@ request::
         ],
     ]);
 
-When the number of retries is higher than the number of base URIs, the 
+When the number of retries is higher than the number of base URIs, the
 last base URI will be used for the remaining retries.
 
 If you want to shuffle the order of base URIs for each retry attempt, nest the
@@ -770,13 +770,13 @@ base URIs you want to shuffle in an additional array::
         ],
     ]);
 
-This feature allows for a more randomized approach to handling retries, 
+This feature allows for a more randomized approach to handling retries,
 reducing the likelihood of repeatedly hitting the same failed base URI.
 
-By using a nested array for the base URI, you can use this feature 
+By using a nested array for the base URI, you can use this feature
 to distribute the load among many nodes in a cluster of servers.
 
-You can also configure the array of base URIs using the ``withOptions()`` 
+You can also configure the array of base URIs using the ``withOptions()``
 method::
 
     $client = $client->withOptions(['base_uri' => [
@@ -2031,6 +2031,30 @@ Then configure Symfony to use your callback:
                 ->mockResponseFactory(MockClientCallback::class)
             ;
         };
+
+To return json, you would normally do::
+
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    $response = new MockResponse(json_encode([
+            'foo' => 'bar',
+        ]), [
+        'response_headers' => [
+            'content-type' => 'application/json',
+        ],
+    ]);
+
+You can use :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse` instead::
+
+    use Symfony\Component\HttpClient\Response\JsonMockResponse;
+
+    $response = new JsonMockResponse([
+        'foo' => 'bar',
+    ]);
+
+.. versionadded:: 6.3
+
+    The ``JsonMockResponse`` was introduced in Symfony 6.3.
 
 Testing Request Data
 ~~~~~~~~~~~~~~~~~~~~
