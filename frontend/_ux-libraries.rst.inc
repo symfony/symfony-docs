@@ -19,6 +19,7 @@
   (`see demo <https://ux.symfony.com/twig-component>`_)
 * `ux-typed`_: Integration with `Typed`_ (`see demo <https://ux.symfony.com/typed>`_)
 * `ux-vue`_: Render `Vue`_ component from Twig (`see demo <https://ux.symfony.com/vue>`_)
+* `ux-svelte`_: Render `Svelte`_ component from Twig.
 
 .. _`ux-autocomplete`: https://symfony.com/bundles/ux-autocomplete/current/index.html
 .. _`ux-chartjs`: https://symfony.com/bundles/ux-chartjs/current/index.html
@@ -33,6 +34,7 @@
 .. _`ux-twig-component`: https://symfony.com/bundles/ux-twig-component/current/index.html
 .. _`ux-typed`: https://symfony.com/bundles/ux-typed/current/index.html
 .. _`ux-vue`: https://symfony.com/bundles/ux-vue/current/index.html
+.. _`ux-svelte`: https://symfony.com/bundles/ux-svelte/current/index.html
 .. _`Chart.js`: https://www.chartjs.org/
 .. _`Swup`: https://swup.js.org/
 .. _`React`: https://reactjs.org/
