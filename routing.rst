@@ -985,6 +985,35 @@ Check out the :ref:`Doctrine param conversion documentation <doctrine-entity-val
 to learn about the ``#[MapEntity]`` attribute that can be used to customize the
 database queries used to fetch the object from the route parameter.
 
+Backed Enum Parameters
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.3
+
+    The support of ``\BackedEnum`` as route parameters was introduced Symfony 6.3.
+
+You can use PHP `backed enumerations`_ as route parameters because Symfony will
+convert them automatically to their scalar values.
+
+.. code-block:: php-attributes
+
+    // src/Controller/DefaultController.php
+    namespace App\Controller;
+
+    use App\Enum\OrderStatusEnum;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class OrderController extends AbstractController
+    {
+        #[Route('/orders/list/{status}', name: 'list_orders_by_status')]
+        public function list(OrderStatusEnum $status = OrderStatusEnum::Paid): Response
+        {
+            // ...
+        }
+    }
+
 Special Parameters
 ~~~~~~~~~~~~~~~~~~
 
@@ -1244,35 +1273,6 @@ A possible solution is to change the parameter requirements to be more permissiv
     character, the ``/share/foo/bar.json`` URL will consider ``foo/bar.json``
     as the token and the format will be empty. This can be solved by replacing
     the ``.+`` requirement by ``[^.]+`` to allow any character except dots.
-
-Backed Enum as Parameter
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-PHP 8.1 add support for Backed Enum, they can be used as route parameter and
-automatically converted to their value by Symfony.
-
-.. versionadded:: 6.3
-
-    Using a `\BackedEnum` as route parameter is available since Symfony 6.3.
-
-.. code-block:: php-attributes
-
-    // src/Controller/DefaultController.php
-    namespace App\Controller;
-
-    use App\Enum\SuitsEnum;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
-
-    class DefaultController extends AbstractController
-    {
-        #[Route('/cards/{suit}', name: 'cards_suit')]
-        public function list(SuitsEnum $suit = SuitsEnum::Diamonds): Response
-        {
-            // ...
-        }
-    }
 
 .. _routing-alias:
 
@@ -2700,3 +2700,4 @@ Learn more about Routing
 .. _`PHP regular expressions`: https://www.php.net/manual/en/book.pcre.php
 .. _`PCRE Unicode properties`: https://www.php.net/manual/en/regexp.reference.unicode.php
 .. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle
+.. _`backed enumerations`: https://www.php.net/manual/en/language.enumerations.backed.php
