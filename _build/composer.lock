@@ -466,16 +466,16 @@
         },
         {
             "name": "symfony-tools/docs-builder",
-            "version": "v0.20.2",
+            "version": "v0.20.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony-tools/docs-builder.git",
-                "reference": "6486fd734bb151a05f592b06ac1569c62d338a08"
+                "reference": "11d9d81e3997e771ad1a57eabaa51fc22c500b35"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony-tools/docs-builder/zipball/6486fd734bb151a05f592b06ac1569c62d338a08",
-                "reference": "6486fd734bb151a05f592b06ac1569c62d338a08",
+                "url": "https://api.github.com/repos/symfony-tools/docs-builder/zipball/11d9d81e3997e771ad1a57eabaa51fc22c500b35",
+                "reference": "11d9d81e3997e771ad1a57eabaa51fc22c500b35",
                 "shasum": ""
             },
             "require": {
@@ -514,9 +514,9 @@
             "description": "The build system for Symfony's documentation",
             "support": {
                 "issues": "https://github.com/symfony-tools/docs-builder/issues",
-                "source": "https://github.com/symfony-tools/docs-builder/tree/v0.20.2"
+                "source": "https://github.com/symfony-tools/docs-builder/tree/v0.20.5"
             },
-            "time": "2023-04-04T06:17:34+00:00"
+            "time": "2023-04-28T09:41:45+00:00"
         },
         {
             "name": "symfony/console",
