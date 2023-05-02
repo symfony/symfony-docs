@@ -997,7 +997,7 @@ convert them automatically to their scalar values.
 
 .. code-block:: php-attributes
 
-    // src/Controller/DefaultController.php
+    // src/Controller/OrderController.php
     namespace App\Controller;
 
     use App\Enum\OrderStatusEnum;
