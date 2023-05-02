@@ -112,7 +112,7 @@ that all have constraints on their properties.
             /**
              * @var Collection|Book[]
              */
-            #[ORM\ManyToMany(targetEntity: Book::class)] 
+            #[ORM\ManyToMany(targetEntity: Book::class)]
             protected $books;
 
             // some other properties

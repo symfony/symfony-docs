@@ -44,6 +44,7 @@ rules:
     only_backslashes_in_use_statements_in_php_code_block: ~
     ordered_use_statements: ~
     php_prefix_before_bin_console: ~
+    remove_trailing_whitespace: ~
     replace_code_block_types: ~
     replacement: ~
     short_array_syntax: ~
