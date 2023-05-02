@@ -1619,47 +1619,10 @@ The `HTTPlug`_ v1 specification was published before PSR-18 and is superseded by
 it. As such, you should not use it in newly written code. The component is still
 interoperable with libraries that require it thanks to the
 :class:`Symfony\\Component\\HttpClient\\HttplugClient` class. Similarly to
-:class:`Symfony\\Component\\HttpClient\\Psr18Client` implementing relevant parts of PSR-17,
-``HttplugClient`` also implements the factory methods defined in the related
-``php-http/message-factory`` package.
+:class:`Symfony\\Component\\HttpClient\\Psr18Client`, ``HttplugClient`` also
+implements relevant parts of PSR-17.
 
-.. code-block:: terminal
-
-    # Let's suppose php-http/httplug is already required by the lib you want to use
-
-    # installs an efficient implementation of response and stream factories
-    # with autowiring aliases provided by Symfony Flex
-    $ composer require nyholm/psr7
-
-    # alternatively, install the php-http/discovery package to auto-discover
-    # any already installed implementations from common vendors:
-    # composer require php-http/discovery
-
-Let's say you want to instantiate a class with the following constructor,
-that requires HTTPlug dependencies::
-
-    use Http\Client\HttpClient;
-    use Http\Message\RequestFactory;
-    use Http\Message\StreamFactory;
-
-    class SomeSdk
-    {
-        public function __construct(
-            HttpClient $httpClient,
-            RequestFactory $requestFactory,
-            StreamFactory $streamFactory
-        )
-        // [...]
-    }
-
-Because ``HttplugClient`` implements the three interfaces, you can use it this way::
-
-    use Symfony\Component\HttpClient\HttplugClient;
-
-    $httpClient = new HttplugClient();
-    $apiClient = new SomeSdk($httpClient, $httpClient, $httpClient);
-
-If you'd like to work with promises, ``HttplugClient`` also implements the
+If you'd like to work with promises, ``HttplugClient`` implements the
 ``HttpAsyncClient`` interface. To use it, you need to install the
 ``guzzlehttp/promises`` package:
 
