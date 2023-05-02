@@ -38,6 +38,7 @@
 .. _`Chart.js`: https://www.chartjs.org/
 .. _`Swup`: https://swup.js.org/
 .. _`React`: https://reactjs.org/
+.. _`Svelte`: https://svelte.dev/
 .. _`Turbo Drive`: https://turbo.hotwired.dev/
 .. _`Typed`: https://github.com/mattboldt/typed.js/
 .. _`Vue`: https://vuejs.org/
