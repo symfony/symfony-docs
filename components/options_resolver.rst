@@ -51,7 +51,7 @@ check which options are set::
     }
 
 Also, the default values of the options are buried in the business logic of your
-code. Use the :phpfunction:`array_replace` to fix that::
+code. Use :phpfunction:`array_replace` to fix that::
 
     class Mailer
     {
