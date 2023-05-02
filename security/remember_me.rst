@@ -286,12 +286,14 @@ Signature based tokens
     By default, the remember me cookie contains a signature based on
     properties of the user. If the properties change, the signature changes
     and already generated tokens are no longer considered valid. See
-    :ref:`security-remember-me-signature` for more information.
+    :ref:`how to use them <security-remember-me-signature>` for more
+    information.
 
 Persistent tokens
     Persistent tokens store any generated token (e.g. in a database). This
     allows you to invalidate tokens by changing the rows in the database.
-    See :ref:`security-remember-me-persistent` for more information.
+    See :ref:`how to store tokens <security-remember-me-persistent>` for more
+    information.
 
 .. note::
 
