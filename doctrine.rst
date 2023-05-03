@@ -390,8 +390,8 @@ Take a look at the previous example in more detail:
 
 .. _doctrine-entity-manager:
 
-* **line 13** The ``EntityManagerInterface $entityManager`` argument tells Symfony 
-  to :ref:`inject the Entity Manager service <services-constructor-injection>` into 
+* **line 13** The ``EntityManagerInterface $entityManager`` argument tells Symfony
+  to :ref:`inject the Entity Manager service <services-constructor-injection>` into
   the controller method. This object is responsible for saving objects to, and
   fetching objects from, the database.
 

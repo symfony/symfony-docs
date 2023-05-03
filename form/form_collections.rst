@@ -355,7 +355,7 @@ Then create the controller:
 .. code-block:: javascript
 
     // assets/controllers/form-collection_controller.js
-    
+
     import { Controller } from '@hotwired/stimulus';
 
     export default class extends Controller {
@@ -371,7 +371,7 @@ Then create the controller:
             const item = document.createElement('li');
             item.innerHTML = this.prototypeValue.replace(/__name__/g, this.indexValue);
             this.collectionContainerTarget.appendChild(item);
-            this.indexValue++;           
+            this.indexValue++;
         }
     }
 
