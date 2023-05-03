@@ -358,7 +358,7 @@ logic to the bundle class directly::
             // Contrary to the Extension class, the "$config" variable is already merged
             // and processed. You can use it directly to configure the service container.
             $containerConfigurator->services()
-                ->get('acme.social.twitter_client')
+                ->set('acme.social.twitter_client')
                 ->arg(0, $config['twitter']['client_id'])
                 ->arg(1, $config['twitter']['client_secret'])
             ;
