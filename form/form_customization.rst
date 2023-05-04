@@ -92,22 +92,23 @@ control over how each form field is rendered, so you can fully customize them:
 Form Field Helpers
 ------------------
 
-The ``form_*()`` helpers render each part of the form field, including all its needed HTML elements. Most developers
-like this behavior, but some designers struggle with it, because it hides all the HTML in form themes which are not
-easy to manage by them.
+The ``form_*()`` helpers shown in the previous section render different parts of
+the form field, including all its HTML elements. Some developers and designers
+struggle with this behavior, because it hides all the HTML elements in form
+themes which are not trivial to customize.
 
-That's why some Twig form helpers are available to render the value of each form field part without adding any
-HTML around it:
+That's why Symfony provides other Twig form helpers that render the value of
+each form field part without adding any HTML around it:
 
-* ``field_name``
-* ``field_value``
-* ``field_label``
-* ``field_help``
-* ``field_errors``
-* ``field_choices`` (an iterator of the field choices; e.g. for ``<select>``)
+* ``field_name()``
+* ``field_value()``
+* ``field_label()``
+* ``field_help()``
+* ``field_errors()``
+* ``field_choices()`` (an iterator for choice fields; e.g. for ``<select>``)
 
-When using these helpers, you must write all the HTML contents for all form fields, which some people prefer to better
-control the generated HTML without having to deal with form themes:
+When using these helpers, you must write all the HTML contents for all form
+fields, so you no longer have to deal with form themes:
 
 .. code-block:: html+twig
 
