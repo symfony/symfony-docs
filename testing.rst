@@ -526,11 +526,10 @@ In the above example, the test validates that the HTTP response was successful
 and the request body contains a ``<h1>`` tag with ``"Hello world"``.
 
 The ``request()`` method also returns a crawler, which you can use to
-create more complex assertions in your tests::
+create more complex assertions in your tests (e.g. to count the number of page
+elements that match a given CSS selector)::
 
     $crawler = $client->request('GET', '/post/hello-world');
-
-    // for instance, count the number of ``.comment`` elements on the page
     $this->assertCount(4, $crawler->filter('.comment'));
 
 You can learn more about the crawler in :doc:`/testing/dom_crawler`.

@@ -779,7 +779,7 @@ could listen to the ``mailer.post_send`` event and change the method's return va
         public function onMailerPostSend(AfterSendMailEvent $event)
         {
             $returnValue = $event->getReturnValue();
-            // modify the original ``$returnValue`` value
+            // modify the original $returnValue value
 
             $event->setReturnValue($returnValue);
         }
