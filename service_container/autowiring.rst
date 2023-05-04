@@ -216,8 +216,8 @@ adding a service alias:
                 # ...
 
             # but this fixes it!
-            # the ``app.rot13.transformer`` service will be injected when
-            # an ``App\Util\Rot13Transformer`` type-hint is detected
+            # the "app.rot13.transformer" service will be injected when
+            # an App\Util\Rot13Transformer type-hint is detected
             App\Util\Rot13Transformer: '@app.rot13.transformer'
 
     .. code-block:: xml
@@ -251,8 +251,8 @@ adding a service alias:
                 ->autowire();
 
             // but this fixes it!
-            // the ``app.rot13.transformer`` service will be injected when
-            // an ``App\Util\Rot13Transformer`` type-hint is detected
+            // the "app.rot13.transformer" service will be injected when
+            // an App\Util\Rot13Transformer type-hint is detected
             $services->alias(Rot13Transformer::class, 'app.rot13.transformer');
         };
 
@@ -355,8 +355,8 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
 
             $services->set(Rot13Transformer::class);
 
-            // the ``App\Util\Rot13Transformer`` service will be injected when
-            // an ``App\Util\TransformerInterface`` type-hint is detected
+            // the App\Util\Rot13Transformer service will be injected when
+            // an App\Util\TransformerInterface type-hint is detected
             $services->alias(TransformerInterface::class, Rot13Transformer::class);
         };
 
@@ -526,13 +526,13 @@ the injection::
             $services->set(Rot13Transformer::class)->autowire();
             $services->set(UppercaseTransformer::class)->autowire();
 
-            // the ``App\Util\UppercaseTransformer`` service will be
-            // injected when an ``App\Util\TransformerInterface``
-            // type-hint for a ``$shoutyTransformer`` argument is detected.
+            // the App\Util\UppercaseTransformer service will be
+            // injected when an App\Util\TransformerInterface
+            // type-hint for a $shoutyTransformer argument is detected.
             $services->alias(TransformerInterface::class.' $shoutyTransformer', UppercaseTransformer::class);
 
             // If the argument used for injection does not match, but the
-            // type-hint still matches, the ``App\Util\Rot13Transformer``
+            // type-hint still matches, the App\Util\Rot13Transformer
             // service will be injected.
             $services->alias(TransformerInterface::class, Rot13Transformer::class);
 
