@@ -1,48 +1,59 @@
 How to Create Multiple Symfony Applications with a Single Kernel
 ================================================================
 
-In most Symfony applications, incoming requests are processed by the front controller at ``public/index.php``, which
-instantiates the ``src/Kernel.php`` class to create the application kernel. This kernel loads the bundles, configurations,
-and handles the request to generate the response.
+In Symfony applications, incoming requests are usually processed by the front
+controller at ``public/index.php``, which instantiates the ``src/Kernel.php``
+class to create the application kernel. This kernel loads the bundles, the
+configuration, and handles the request to generate the response.
 
-The current implementation of the Kernel class serves as a convenient default for a single application. However, it can
-also manage multiple applications. While the Kernel typically runs the same application with different configurations
-based on various :ref:`environments <configuration-environments>` , it can be adapted to run different applications with
-specific bundles and configurations.
+The current implementation of the Kernel class serves as a convenient default
+for a single application. However, it can also manage multiple applications.
+While the Kernel typically runs the same application with different
+configurations based on various :ref:`environments <configuration-environments>`,
+it can be adapted to run different applications with specific bundles and configuration.
 
-These are some of the common use cases for creating multiple applications with a single Kernel:
+These are some of the common use cases for creating multiple applications with a
+single Kernel:
 
-* An application that defines an API can be divided into two segments to improve performance. The first segment serves
-  the regular web application, while the second segment exclusively responds to API requests. This approach requires
-  loading fewer bundles and enabling fewer features for the second part, thus optimizing performance;
-* A highly sensitive application could be divided into two parts for enhanced security. The first part would only load
-  routes corresponding to the publicly exposed sections of the application. The second part would load the remainder of
-  the application, with its access safeguarded by the web server;
-* A monolithic application could be gradually transformed into a more distributed architecture, such as micro-services.
-  This approach allows for a seamless migration of a large application while still sharing common configurations and
-  components.
+* An application that defines an API can be divided into two segments to improve
+  performance. The first segment serves the regular web application, while the
+  second segment exclusively responds to API requests. This approach requires
+  loading fewer bundles and enabling fewer features for the second part, thus
+  optimizing performance;
+* A highly sensitive application could be divided into two parts for enhanced
+  security. The first part would only load routes corresponding to the publicly
+  exposed sections of the application. The second part would load the remainder
+  of the application, with its access safeguarded by the web server;
+* A monolithic application could be gradually transformed into a more
+  distributed architecture, such as micro-services. This approach allows for a
+  seamless migration of a large application while still sharing common
+  configurations and components.
 
 Turning a Single Application into Multiple Applications
 -------------------------------------------------------
 
-Let's explore the steps required to convert a single application into a new one that supports multiple applications:
+These are the steps required to convert a single application into a new one that
+supports multiple applications:
 
 1. Create a new application;
 2. Update the Kernel class to support multiple applications;
 3. Add a new ``APP_ID`` environment variable;
 4. Update the front controllers.
 
-The following example shows how to create a new application for the API of a new Symfony project.
+The following example shows how to create a new application for the API of a new
+Symfony project.
 
 Step 1) Create a new Application
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In this example, we will use the `Shared Kernel`_ pattern, where, although all applications maintain an isolated context,
-they can share common bundles, configurations, and code if desired. The optimal approach will depend on your specific
-needs and requirements, so it's up to you to decide which best suits your project.
+This example follows the `Shared Kernel`_ pattern: all applications maintain an
+isolated context, but they can share common bundles, configuration, and code if
+desired. The optimal approach will depend on your specific needs and
+requirements, so it's up to you to decide which best suits your project.
 
-First, let's create a new ``apps`` directory at the root of your project, which will hold all the necessary applications.
-Each application will follow a simplified directory structure like the one described in :ref:`Symfony Best Practice </best_practices>`:
+First, create a new ``apps`` directory at the root of your project, which will
+hold all the necessary applications. Each application will follow a simplified
+directory structure like the one described in :ref:`Symfony Best Practice </best_practices>`:
 
 .. code-block:: text
 
@@ -64,17 +75,20 @@ Each application will follow a simplified directory structure like the one descr
 
 .. note::
 
-    Note that the ``config/`` and ``src/`` directories at the root of the project will represent the shared context among
-    all applications within the ``apps/`` directory. Therefore, you should carefully consider what is common and what
-    should be placed in the specific application.
+    Note that the ``config/`` and ``src/`` directories at the root of the
+    project will represent the shared context among all applications within the
+    ``apps/`` directory. Therefore, you should carefully consider what is
+    common and what should be placed in the specific application.
 
 .. tip::
 
-    You might also consider renaming the namespace for the shared context, from ``App`` to ``Shared``, as it will make it
-    easier to distinguish and provide clearer meaning to this context.
+    You might also consider renaming the namespace for the shared context, from
+    ``App`` to ``Shared``, as it will make it easier to distinguish and provide
+    clearer meaning to this context.
 
-Since the new ``apps/api/src/`` directory will host the PHP code related to the API, we need to update the ``composer.json``
-file to include it in the autoload section:
+Since the new ``apps/api/src/`` directory will host the PHP code related to the
+API, you have to update the ``composer.json`` file to include it in the autoload
+section:
 
 .. code-block:: json
 
@@ -87,15 +101,18 @@ file to include it in the autoload section:
         }
     }
 
-Additionally, don't forget to run `composer dump-autoload` to generate the autoload files.
+Additionally, don't forget to run ``composer dump-autoload`` to generate the
+autoload files.
 
 Step 2) Update the Kernel class to support Multiple Applications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since we aim to support multiple applications, we will add a new property ``string $id`` to the Kernel to identify the
-application being loaded. This property will also allow us to split the cache, logs, and configuration files in order to
-avoid collisions with other applications. Moreover, it contributes to performance optimization, as each application will
-load only the required resources::
+Since there will be multiple applications, it's better to add a new property
+``string $id`` to the Kernel to identify the application being loaded. This
+property will also allow you to split the cache, logs, and configuration files
+in order to avoid collisions with other applications. Moreover, it contributes
+to performance optimization, as each application will load only the required
+resources::
 
     // src/Kernel.php
     namespace Shared;
@@ -193,14 +210,16 @@ load only the required resources::
         }
     }
 
-In this example, we reuse the default implementation to import configuration and routes based on a given configuration
-directory. As we saw earlier, this approach will import both shared and app-specific resources.
+This example reuses the default implementation to import the configuration and
+routes based on a given configuration directory. As shown earlier, this
+approach will import both the shared and the app-specific resources.
 
 Step 3) Add a new APP_ID environment variable
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now, let's introduce a new environment variable that identifies the current application. This new variable can be added
-to the ``.env`` file to provide a default value, but it should typically be added to your web server configuration.
+Next, define a new environment variable that identifies the current application.
+This new variable can be added to the ``.env`` file to provide a default value,
+but it should typically be added to your web server configuration.
 
 .. code-block:: bash
 
@@ -209,14 +228,17 @@ to the ``.env`` file to provide a default value, but it should typically be adde
 
 .. caution::
 
-    The value of this variable must match the application directory within ``apps/`` as it is used in the Kernel to load
-    the specific application configuration.
+    The value of this variable must match the application directory within
+    ``apps/`` as it is used in the Kernel to load the specific application
+    configuration.
 
 Step 4) Update the Front Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In this final step, we will update the front controllers ``public/index.php`` and ``bin/console`` to pass the value of
-the ``APP_ID`` variable to the Kernel instance. This will allow the Kernel to load and run the specified application::
+In this final step, update the front controllers ``public/index.php`` and
+``bin/console`` to pass the value of the ``APP_ID`` variable to the Kernel
+instance. This will allow the Kernel to load and run the specified
+application::
 
     // public/index.php
     use Shared\Kernel;
@@ -226,11 +248,12 @@ the ``APP_ID`` variable to the Kernel instance. This will allow the Kernel to lo
         return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG'], $context['APP_ID']);
     };
 
-Similar to configuring the required ``APP_ENV`` and ``APP_DEBUG`` values, the third argument of the Kernel constructor
-is now also necessary to setting the application ID, which is derived from an external configuration.
+Similar to configuring the required ``APP_ENV`` and ``APP_DEBUG`` values, the
+third argument of the Kernel constructor is now also necessary to set the
+application ID, which is derived from an external configuration.
 
-For the second front controller, we will define a new console option to allow passing the application ID we want to run
-under CLI context::
+For the second front controller, define a new console option to allow passing
+the application ID to run under CLI context::
 
     // bin/console
     use Shared\Kernel;
@@ -252,8 +275,9 @@ That's it!
 Executing Commands
 ------------------
 
-The ``bin/console`` script, which is used to run Symfony commands, always uses the ``Kernel`` class to build the
-application and load the commands. If you need to run console commands for a specific application, you can provide the
+The ``bin/console`` script, which is used to run Symfony commands, always uses
+the ``Kernel`` class to build the application and load the commands. If you
+need to run console commands for a specific application, you can provide the
 ``--id`` option along with the appropriate identity value:
 
 .. code-block:: terminal
@@ -266,8 +290,9 @@ application and load the commands. If you need to run console commands for a spe
     export APP_ID=api
     php bin/console cache:clear
 
-You might want to update the composer auto-scripts section to run multiple commands simultaneously. In this example,
-we assume you have a second application for managing the configuration (admin):
+You might want to update the composer auto-scripts section to run multiple
+commands simultaneously. This example shows the commands of two different
+applications called ``api`` and ``admin``:
 
 .. code-block:: json
 
@@ -282,19 +307,23 @@ we assume you have a second application for managing the configuration (admin):
         }
     }
 
-Then, run `composer auto-scripts` to test it!
+Then, run ``composer auto-scripts`` to test it!
 
 .. note::
 
-    The commands available for each console script (e.g. ``bin/console -iapi`` and ``bin/console -iadmin``) can differ
-    because they depend on the bundles enabled for each application, which could be different.
+    The commands available for each console script (e.g. ``bin/console -iapi``
+    and ``bin/console -iadmin``) can differ because they depend on the bundles
+    enabled for each application, which could be different.
 
 Rendering Templates
 -------------------
 
-Let's assume there is now another app called ``admin``. If you follow the :ref:`Symfony Best Practices </best_practices>`, the shared Kernel
-templates will be located in the ``templates/`` directory at the project's root. For admin-specific templates, you can
-create a new directory ``apps/admin/templates/`` which you will need to manually configure under the Admin application:
+Let's consider that you need to create another app called ``admin``. If you
+follow the :ref:`Symfony Best Practices </best_practices>`, the shared Kernel
+templates will be located in the ``templates/`` directory at the project's root.
+For admin-specific templates, you can create a new directory
+``apps/admin/templates/`` which you will need to manually configure under the
+Admin application:
 
 .. code-block:: yaml
 
@@ -303,15 +332,18 @@ create a new directory ``apps/admin/templates/`` which you will need to manually
         paths:
             '%kernel.project_dir%/apps/admin/templates': Admin
 
-Then, use this Twig namespace to reference any template within the Admin application only, for example ``@Admin/form/fields.html.twig``.
+Then, use this Twig namespace to reference any template within the Admin
+application only, for example ``@Admin/form/fields.html.twig``.
 
 Running Tests
 -------------
 
-In Symfony applications, functional tests typically extend from the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase`
-class by default. Within its parent class, ``KernelTestCase``, there is a method called ``createKernel()`` that attempts to
-create the kernel responsible for running the application during tests. However, the current logic of this method doesn't
-include our new application ID argument, so we need to make an update::
+In Symfony applications, functional tests typically extend from
+the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\WebTestCase` class by
+default. Within its parent class, ``KernelTestCase``, there is a method called
+``createKernel()`` that attempts to create the kernel responsible for running
+the application during tests. However, the current logic of this method doesn't
+include the new application ID argument, so you need to update it::
 
     // apps/api/tests/ApiTestCase.php
     namespace Api\Tests;
@@ -333,11 +365,12 @@ include our new application ID argument, so we need to make an update::
 
 .. note::
 
-    Keep in mind that we will set a fixed application ID value in this instance, as the specific test cases extending
-    from ``ApiTestCase`` will focus solely on the ``api`` tests.
+    This examples uses a hardcoded application ID value because the tests
+    extending this ``ApiTestCase`` class will focus solely on the ``api`` tests.
 
-In this situation, we have created a ``tests/`` directory inside the ``apps/api/`` application. As a result, we need to
-inform both the ``composer.json`` file and our ``phpunit.xml`` configuration about its existence:
+Now, create a ``tests/`` directory inside the ``apps/api/`` application. Then,
+update both the ``composer.json`` file and ``phpunit.xml`` configuration about
+its existence:
 
 .. code-block:: json
 
@@ -368,8 +401,9 @@ And, here is the update needed for the ``phpunit.xml`` file:
 Adding more Applications
 ------------------------
 
-Now you can begin adding more applications as needed, such as an ``admin`` application to manage the project's
-configuration and permissions. To do that, you will have to repeat the step 1 only:
+Now you can begin adding more applications as needed, such as an ``admin``
+application to manage the project's configuration and permissions. To do that,
+you will have to repeat the step 1 only:
 
 .. code-block:: text
 
@@ -384,6 +418,7 @@ configuration and permissions. To do that, you will have to repeat the step 1 on
     │  └─ api/
     │     └─ ...
 
-Additionally, you might need to update your web server configuration to set the ``APP_ID=admin`` under a different domain.
+Additionally, you might need to update your web server configuration to set the
+``APP_ID=admin`` under a different domain.
 
 .. _`Shared Kernel`: http://ddd.fed.wiki.org/view/shared-kernel
