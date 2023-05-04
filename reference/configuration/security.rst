@@ -448,10 +448,13 @@ redirected to the ``default_target_path`` to avoid a redirection loop.
     For historical reasons, and to match the misspelling of the HTTP standard,
     the option is called ``use_referer`` instead of ``use_referrer``.
 
-**Options Related to Logout Configuration**
+logout
+~~~~~~
+
+You can configure logout options.
 
 invalidate_session
-~~~~~~~~~~~~~~~~~~
+..................
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -466,14 +469,14 @@ the current firewall and not the other ones.
 .. _reference-security-logout-success-handler:
 
 ``path``
-~~~~~~~~
+........
 
 **type**: ``string`` **default**: ``/logout``
 
 The path which triggers logout. You need to set up a route with a matching path.
 
 target
-~~~~~~
+......
 
 **type**: ``string`` **default**: ``/``
 
@@ -482,7 +485,7 @@ starts with ``http://`` or ``https://``) or the route name (otherwise) to
 redirect after logout.
 
 success_handler
-~~~~~~~~~~~~~~~
+...............
 
 .. deprecated:: 5.1
 
@@ -501,14 +504,14 @@ If it is set, the logout ``target`` option will be ignored.
 .. _reference-security-logout-csrf:
 
 csrf_parameter
-~~~~~~~~~~~~~~
+..............
 
 **type**: ``string`` **default**: ``'_csrf_token'``
 
 The name of the parameter that stores the CSRF token value.
 
 csrf_token_generator
-~~~~~~~~~~~~~~~~~~~~
+....................
 
 **type**: ``string`` **default**: ``null``
 
@@ -516,7 +519,7 @@ The ``id`` of the service used to generate the CSRF tokens. Symfony provides a
 default service whose ID is ``security.csrf.token_manager``.
 
 csrf_token_id
-~~~~~~~~~~~~~
+.............
 
 **type**: ``string`` **default**: ``'logout'``
 
