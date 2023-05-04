@@ -62,16 +62,16 @@ directory structure like the one described in :ref:`Symfony Best Practice </best
     │  └─ api/
     │     ├─ config/
     │     │  ├─ bundles.php
-    │	  │  ├─ routes.yaml
-    │	  │  └─ services.yaml
-    │  	  └─ src/
+    │     │  ├─ routes.yaml
+    │     │  └─ services.yaml
+    │     └─ src/
     ├─ bin/
     │  └─ console
     ├─ config/
     ├─ public/
     │  └─ index.php
     ├─ src/
-    │	└─ Kernel.php
+    │  └─ Kernel.php
 
 .. note::
 
