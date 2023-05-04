@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by jmsche at 2023-04-11T13:56:45Z
+
+CI does not know about these "new" functions, a PR was created to address this issue on the corresponding repository: https://github.com/symfony-tools/code-block-checker/pull/48
