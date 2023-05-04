@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-04-20T12:38:23Z
+
+I think we need to adjust the DOCtor RST rule, this should not be activated in a code-block
+
+cc @MrYamous @alamirault
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2023-04-23T14:45:11Z
+
+Shouldn't we use double quotes instead of backticks? I personally feel that reading would be easier then.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-05-04T13:22:31Z
+
+I agree with Christian. After reviewing this, I realized that it's probably better to not add backticks or quotes to some of these items because they can't be mistaken with anything else. I've updated the PR. Thanks.
