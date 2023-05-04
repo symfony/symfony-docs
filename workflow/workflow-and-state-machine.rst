@@ -249,51 +249,28 @@ Below is the configuration for the pull request state machine.
                     ->to(['review']);
         };
 
-In a Symfony application using the
-:ref:`default services.yaml configuration <service-container-services-load-example>`,
-you can get this state machine by injecting the Workflow registry service::
-
-    // ...
-    use App\Entity\PullRequest;
-    use Symfony\Component\Workflow\Registry;
-
-    class SomeService
-    {
-        public function __construct(
-            private Registry $workflows,
-        ) {
-        }
-
-        public function someMethod(PullRequest $pullRequest)
-        {
-            $stateMachine = $this->workflows->get($pullRequest, 'pull_request');
-            $stateMachine->apply($pullRequest, 'wait_for_review');
-            // ...
-        }
-
-        // ...
-    }
-
 Symfony automatically creates a service for each workflow (:class:`Symfony\\Component\\Workflow\\Workflow`)
 or state machine (:class:`Symfony\\Component\\Workflow\\StateMachine`) you
-have defined in your configuration. This means that you can use ``workflow.pull_request``
-or ``state_machine.pull_request`` respectively in your service definitions
-to access the proper service::
+have defined in your configuration. You can use the workflow inside a class by using
+:doc:`service autowiring </service_container/autowiring>` and using
+``camelCased workflow name + Workflow`` as parameter name. If it is a state
+machine type, use ``camelCased workflow name + StateMachine``::
 
     // ...
     use App\Entity\PullRequest;
-    use Symfony\Component\Workflow\StateMachine;
+    use Symfony\Component\Workflow\WorkflowInterface;
 
     class SomeService
     {
         public function __construct(
-            private StateMachine $stateMachine,
+            // Symfony will inject the 'pull_request' state machine configured before
+            private WorkflowInterface $pullRequestWorkflow,
         ) {
         }
 
         public function someMethod(PullRequest $pullRequest)
         {
-            $this->stateMachine->apply($pullRequest, 'wait_for_review', [
+            $this->pullRequestWorkflow->apply($pullRequest, 'wait_for_review', [
                 'log_comment' => 'My logging comment for the wait for review transition.',
             ]);
             // ...
@@ -301,6 +278,11 @@ to access the proper service::
 
         // ...
     }
+
+
+.. versionadded:: 6.2
+
+    All workflows and state machines services are tagged since in Symfony 6.2.
 
 Automatic and Manual Validation
 -------------------------------
