@@ -15,7 +15,7 @@ method::
         // until the current PHP process finishes)
         $defaultLifetime = 0,
 
-        // if ``true``, the values saved in the cache are serialized before storing them
+        // if true, the values saved in the cache are serialized before storing them
         $storeSerialized = true,
 
         // the maximum lifetime (in seconds) of the entire cache (after this time, the

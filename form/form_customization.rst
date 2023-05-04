@@ -87,6 +87,50 @@ control over how each form field is rendered, so you can fully customize them:
     Later in this article you can find the full reference of these Twig
     functions with more usage examples.
 
+.. _reference-forms-twig-field-helpers:
+
+Form Field Helpers
+------------------
+
+The ``form_*()`` helpers shown in the previous section render different parts of
+the form field, including all its HTML elements. Some developers and designers
+struggle with this behavior, because it hides all the HTML elements in form
+themes which are not trivial to customize.
+
+That's why Symfony provides other Twig form helpers that render the value of
+each form field part without adding any HTML around it:
+
+* ``field_name()``
+* ``field_value()``
+* ``field_label()``
+* ``field_help()``
+* ``field_errors()``
+* ``field_choices()`` (an iterator for choice fields; e.g. for ``<select>``)
+
+When using these helpers, you must write all the HTML contents for all form
+fields, so you no longer have to deal with form themes:
+
+.. code-block:: html+twig
+
+    <input
+        name="{{ field_name(form.username) }}"
+        value="{{ field_value(form.username) }}"
+        placeholder="{{ field_label(form.username) }}"
+        class="form-control"
+    />
+
+    <select name="{{ field_name(form.country) }}" class="form-control">
+        <option value="">{{ field_label(form.country) }}</option>
+
+        {% for label, value in field_choices(form.country) %}
+            <option value="{{ value }}">{{ label }}</option>
+        {% endfor %}
+    </select>
+
+.. versionadded:: 5.2
+
+    The ``field_*()`` helpers were introduced in Symfony 5.2.
+
 Form Rendering Variables
 ------------------------
 
