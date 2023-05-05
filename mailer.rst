@@ -286,6 +286,29 @@ the application or when using a self-signed certificate::
 
     $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=0';
 
+Overriding default SMTP authenticators
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, SMTP transports will try to login using all authentication methods
+available on the SMTP server, one after the other. In some cases, it may be useful
+to redefine the supported authentication methods to ensure that the preferred method
+will be used first.
+This can be done from ``EsmtpTransport`` constructor or using the ``setAuthenticators()`` method::
+
+    use Symfony\Component\Mailer\Transport\Smtp\Auth\XOAuth2Authenticator;
+    use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
+
+    $transport = new EsmtpTransport(
+        host: 'oauth-smtp.domain.tld',
+        authenticators: [new XOAuth2Authenticator()]
+    );
+    $transport->setAuthenticators([new XOAuth2Authenticator()]);
+
+    .. versionadded:: 6.3
+
+        The ``$authenticators`` constructor parameter and the ``setAuthenticators()`` method
+        were introduced in Symfony 6.3.
+
 Other Options
 ~~~~~~~~~~~~~
 
