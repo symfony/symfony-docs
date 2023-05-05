@@ -59,7 +59,7 @@ Built-In Environment Variable Processors
 Symfony provides the following env var processors:
 
 ``env(string:FOO)``
-    Casts ``FOO`` to a string:
+    Casts ``FOO`` to a string or null:
 
     .. configuration-block::
 
@@ -104,8 +104,8 @@ Symfony provides the following env var processors:
             };
 
 ``env(bool:FOO)``
-    Casts ``FOO`` to a bool (``true`` values are ``'true'``, ``'on'``, ``'yes'``
-    and all numbers except ``0`` and ``0.0``; everything else is ``false``):
+    Casts ``FOO`` to a bool or null (``true`` values are ``'true'``, ``'on'``, ``'yes'``
+    and all numbers except ``0`` and ``0.0``; everything else is ``false``; except for ``null``, which stays ``null``):
 
     .. configuration-block::
 
@@ -150,8 +150,8 @@ Symfony provides the following env var processors:
             };
 
 ``env(not:FOO)``
-    Casts ``FOO`` to a bool (just as ``env(bool:...)`` does) except it returns the inverted value
-    (falsy values are returned as ``true``, truthy values are returned as ``false``):
+    Casts ``FOO`` to a bool or null (just as ``env(bool:...)`` does) except it returns the inverted value
+    (falsy values are returned as ``true``, truthy values are returned as ``false``, ``null`` stays ``null``):
 
     .. configuration-block::
 
@@ -185,10 +185,10 @@ Symfony provides the following env var processors:
             $container->setParameter('safe_for_production', '%env(not:APP_DEBUG)%');
 
 ``env(int:FOO)``
-    Casts ``FOO`` to an int.
+    Casts ``FOO`` to an int or null.
 
 ``env(float:FOO)``
-    Casts ``FOO`` to a float.
+    Casts ``FOO`` to a float or null.
 
 ``env(const:FOO)``
     Finds the const value named in ``FOO``:
