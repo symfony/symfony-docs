@@ -255,7 +255,7 @@ code in production without a proxy, it becomes trivially easy to abuse your
 system. That's not the case with the ``getClientIp()`` method as you must
 explicitly trust your reverse proxies by calling ``setTrustedProxies()``::
 
-    Request::setTrustedProxies(['10.0.0.1']);
+    Request::setTrustedProxies(['10.0.0.1'], Request::HEADER_X_FORWARDED_FOR);
 
     if ($myIp === $request->getClientIp()) {
         // the client is a known one, so give it some more privilege
