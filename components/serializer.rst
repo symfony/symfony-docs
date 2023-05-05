@@ -1242,11 +1242,11 @@ to ``true``::
     $result = $normalizer->normalize($dummy, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
     // ['bar' => 'notNull']
 
-Preventing ``null`` Value Fallback for Nullable Properties
-----------------------------------------------------------
+Require all Properties
+----------------------
 
 By default, the Serializer will add ``null`` to nullable properties when the parameters for those are not provided.
-You can change this behavior by setting the ``AbstractNormalizer::PREVENT_NULLABLE_FALLBACK`` context option
+You can change this behavior by setting the ``AbstractNormalizer::REQUIRE_ALL_PROPERTIES`` context option
 to ``true``::
 
     class Dummy
@@ -1261,7 +1261,7 @@ to ``true``::
     $data = ['foo' => 'notNull'];
 
     $normalizer = new ObjectNormalizer();
-    $result = $normalizer->denormalize($data, Dummy::class, 'json', [AbstractNormalizer::PREVENT_NULLABLE_FALLBACK => true]);
+    $result = $normalizer->denormalize($data, Dummy::class, 'json', [AbstractNormalizer::REQUIRE_ALL_PROPERTIES => true]);
     // throws Symfony\Component\Serializer\Exception\MissingConstructorArgumentException
 
 .. versionadded:: 6.3
