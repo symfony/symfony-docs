@@ -220,6 +220,6 @@ Symfony code.
 Now that we are confident (again) about the code we have written, we can
 safely think about the next batch of features we want to add to our framework.
 
-.. _`PHPUnit`: https://phpunit.readthedocs.io/en/9.5/
-.. _`test doubles`: https://phpunit.readthedocs.io/en/9.5/test-doubles.html
+.. _`PHPUnit`: https://docs.phpunit.de/en/9.5/
+.. _`test doubles`: https://docs.phpunit.de/en/9.5/test-doubles.html
 .. _`XDebug`: https://xdebug.org/

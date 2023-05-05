@@ -1062,13 +1062,13 @@ not find the SUT:
     </listeners>
 
 .. _`PHPUnit`: https://phpunit.de
-.. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
+.. _`PHPUnit event listener`: https://docs.phpunit.de/en/10.0/extending-phpunit.html#phpunit-s-event-system
 .. _`ErrorHandler component`: https://github.com/symfony/error-handler
-.. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
+.. _`PHPUnit's assertStringMatchesFormat()`: https://docs.phpunit.de/en/9.5/assertions.html#assertstringmatchesformat
 .. _`PHP error handler`: https://www.php.net/manual/en/book.errorfunc.php
-.. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
+.. _`environment variable`: https://docs.phpunit.de/en/9.5/configuration.html#the-env-element
 .. _`@-silencing operator`: https://www.php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
-.. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
-.. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers
+.. _`test listener`: https://docs.phpunit.de/en/9.5/configuration.html#the-extensions-element
+.. _`@covers`: https://docs.phpunit.de/en/9.5/annotations.html#covers
 .. _`PHP namespace resolutions rules`: https://www.php.net/manual/en/language.namespaces.rules.php
