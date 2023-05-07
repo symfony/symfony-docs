@@ -54,6 +54,10 @@ The database connection information is stored as an environment variable called
 
     # to use oracle:
     # DATABASE_URL="oci8://db_user:db_password@127.0.0.1:1521/db_name"
+    
+    #The Connection Query string must contains the exact mysql version as  an example if you have  mysql version 8.0.32 
+    # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=8.0.32"
+    #if you didn`t do that symfony will not create the database for you and you will not have any access
 
 .. caution::
 
