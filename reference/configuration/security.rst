@@ -494,7 +494,7 @@ success_handler
     :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
     instead.
 
-**type**: ``string`` **default**: ``'security.logout.success_handler'``
+**type**: ``string`` **default**: ``security.logout.success_handler``
 
 The service ID used for handling a successful logout. The service must implement
 :class:`Symfony\\Component\\Security\\Http\\Logout\\LogoutSuccessHandlerInterface`.
@@ -506,7 +506,7 @@ If it is set, the logout ``target`` option will be ignored.
 csrf_parameter
 ..............
 
-**type**: ``string`` **default**: ``'_csrf_token'``
+**type**: ``string`` **default**: ``_csrf_token``
 
 The name of the parameter that stores the CSRF token value.
 
@@ -521,7 +521,7 @@ default service whose ID is ``security.csrf.token_manager``.
 csrf_token_id
 .............
 
-**type**: ``string`` **default**: ``'logout'``
+**type**: ``string`` **default**: ``logout``
 
 An arbitrary string used to identify the token (and check its validity afterwards).
 

@@ -30,7 +30,7 @@ Configuration
 excluded_ajax_paths
 ~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'^/((index|app(_[\w]+)?)\.php/)?_wdt'``
+**type**: ``string`` **default**: ``^/((index|app(_[\w]+)?)\.php/)?_wdt``
 
 When the toolbar logs AJAX requests, it matches their URLs against this regular
 expression. If the URL matches, the request is not displayed in the toolbar. This
