@@ -1117,7 +1117,7 @@ Use ``0`` to not limit the duration.
 max_duration
 ............
 
-**type**: ``float`` **default**: 0
+**type**: ``float`` **default**: ``0``
 
 The maximum execution time, in seconds, that the request and the response are
 allowed to take. A value lower than or equal to 0 means it is unlimited.

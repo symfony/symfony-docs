@@ -115,7 +115,7 @@ Options
 ``divisibleBy``
 ~~~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: null
+**type**: ``integer`` **default**: ``null``
 
 .. versionadded:: 5.1
 

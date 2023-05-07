@@ -193,7 +193,7 @@ Options
 ``htmlPattern``
 ~~~~~~~~~~~~~~~
 
-**type**: ``string|boolean`` **default**: null
+**type**: ``string|boolean`` **default**: ``null``
 
 This option specifies the pattern to use in the HTML5 ``pattern`` attribute.
 You usually don't need to specify this option because by default, the constraint
