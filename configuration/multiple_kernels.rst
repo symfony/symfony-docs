@@ -51,14 +51,14 @@ isolated context, but they can share common bundles, configuration, and code if
 desired. The optimal approach will depend on your specific needs and
 requirements, so it's up to you to decide which best suits your project.
 
-First, create a new ``applications`` directory at the root of your project, which will
+First, create a new ``apps`` directory at the root of your project, which will
 hold all the necessary applications. Each application will follow a simplified
 directory structure like the one described in :ref:`Symfony Best Practice </best_practices>`:
 
 .. code-block:: text
 
     your-project/
-    ├─ applications/
+    ├─ apps/
     │  └─ api/
     │     ├─ config/
     │     │  ├─ bundles.php
@@ -77,7 +77,7 @@ directory structure like the one described in :ref:`Symfony Best Practice </best
 
     Note that the ``config/`` and ``src/`` directories at the root of the
     project will represent the shared context among all applications within the
-    ``applications/`` directory. Therefore, you should carefully consider what is
+    ``apps/`` directory. Therefore, you should carefully consider what is
     common and what should be placed in the specific application.
 
 .. tip::
@@ -86,7 +86,7 @@ directory structure like the one described in :ref:`Symfony Best Practice </best
     ``App`` to ``Shared``, as it will make it easier to distinguish and provide
     clearer meaning to this context.
 
-Since the new ``applications/api/src/`` directory will host the PHP code related to the
+Since the new ``apps/api/src/`` directory will host the PHP code related to the
 API, you have to update the ``composer.json`` file to include it in the autoload
 section:
 
@@ -96,7 +96,7 @@ section:
         "autoload": {
             "psr-4": {
                 "Shared\\": "src/",
-                "Api\\": "applications/api/src/"
+                "Api\\": "apps/api/src/"
             }
         }
     }
@@ -135,7 +135,7 @@ resources::
 
         public function getAppConfigDir(): string
         {
-            return $this->getProjectDir().'/applications/'.$this->id.'/config';
+            return $this->getProjectDir().'/apps/'.$this->id.'/config';
         }
 
         public function registerBundles(): iterable
@@ -229,7 +229,7 @@ but it should typically be added to your web server configuration.
 .. caution::
 
     The value of this variable must match the application directory within
-    ``applications/`` as it is used in the Kernel to load the specific application
+    ``apps/`` as it is used in the Kernel to load the specific application
     configuration.
 
 Step 4) Update the Front Controllers
@@ -322,15 +322,15 @@ Let's consider that you need to create another app called ``admin``. If you
 follow the :ref:`Symfony Best Practices </best_practices>`, the shared Kernel
 templates will be located in the ``templates/`` directory at the project's root.
 For admin-specific templates, you can create a new directory
-``applications/admin/templates/`` which you will need to manually configure under the
+``apps/admin/templates/`` which you will need to manually configure under the
 Admin application:
 
 .. code-block:: yaml
 
-    # applications/admin/config/packages/twig.yaml
+    # apps/admin/config/packages/twig.yaml
     twig:
         paths:
-            '%kernel.project_dir%/applications/admin/templates': Admin
+            '%kernel.project_dir%/apps/admin/templates': Admin
 
 Then, use this Twig namespace to reference any template within the Admin
 application only, for example ``@Admin/form/fields.html.twig``.
@@ -345,7 +345,7 @@ default. Within its parent class, ``KernelTestCase``, there is a method called
 the application during tests. However, the current logic of this method doesn't
 include the new application ID argument, so you need to update it::
 
-    // applications/api/tests/ApiTestCase.php
+    // apps/api/tests/ApiTestCase.php
     namespace Api\Tests;
 
     use Shared\Kernel;
@@ -368,7 +368,7 @@ include the new application ID argument, so you need to update it::
     This examples uses a hardcoded application ID value because the tests
     extending this ``ApiTestCase`` class will focus solely on the ``api`` tests.
 
-Now, create a ``tests/`` directory inside the ``applications/api/`` application. Then,
+Now, create a ``tests/`` directory inside the ``apps/api/`` application. Then,
 update both the ``composer.json`` file and ``phpunit.xml`` configuration about
 its existence:
 
@@ -378,7 +378,7 @@ its existence:
         "autoload-dev": {
             "psr-4": {
                 "Shared\\Tests\\": "tests/",
-                "Api\\Tests\\": "applications/api/tests/"
+                "Api\\Tests\\": "apps/api/tests/"
             }
         }
     }
@@ -394,7 +394,7 @@ And, here is the update needed for the ``phpunit.xml`` file:
             <directory>tests</directory>
         </testsuite>
         <testsuite name="api">
-            <directory>applications/api/tests</directory>
+            <directory>apps/api/tests</directory>
         </testsuite>
     </testsuites>
 
@@ -408,7 +408,7 @@ you will have to repeat the step 1 only:
 .. code-block:: text
 
     your-project/
-    ├─ applications/
+    ├─ apps/
     │  ├─ admin/
     │  │  ├─ config/
     │  │  │  ├─ bundles.php
