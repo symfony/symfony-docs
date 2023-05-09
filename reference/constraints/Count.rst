@@ -95,7 +95,7 @@ Options
 ``divisibleBy``
 ~~~~~~~~~~~~~~~
 
-**type**: ``integer`` **default**: null
+**type**: ``integer`` **default**: ``null``
 
 Validates that the number of elements of the given collection is divisible by
 a certain number.
