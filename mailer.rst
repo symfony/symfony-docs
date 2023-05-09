@@ -1034,6 +1034,15 @@ Before signing/encrypting messages, make sure to have:
     When using OpenSSL to generate certificates, make sure to add the
     ``-addtrust emailProtection`` command option.
 
+.. caution::
+
+    Signing and encrypting messages require their contents to be fully rendered.
+    For example, the content of :ref:`templated emails <mailer-twig>` is rendered
+    by a :class:`Symfony\\Component\\Mailer\\EventListener\\MessageListener`.
+    So, if you want to sign and/or encrypt such a message, you need to do it in
+    a :ref:`MessageEvent <messageevent>` listener run after it (you need to set
+    a negative priority to your listener).
+
 Signing Messages
 ~~~~~~~~~~~~~~~~
 
@@ -1514,13 +1523,6 @@ the email is sent::
 .. versionadded:: 6.2
 
     Methods ``addStamp()`` and ``getStamps()`` were introduced in Symfony 6.2.
-
-.. tip::
-
-    When using a ``MessageEvent`` listener to
-    :doc:`sign the email contents <signing-and-encrypting-messages>`, run it as
-    late as possible (e.g. setting a negative priority for it) so the email
-    contents are not set or modified after signing them.
 
 Execute this command to find out which listeners are registered for this event
 and their priorities:
