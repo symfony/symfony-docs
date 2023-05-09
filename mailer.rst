@@ -1046,12 +1046,12 @@ Before signing/encrypting messages, make sure to have:
 
 .. caution::
 
-    These features require messages to be rendered,
-    which is not always immediate.
-    For example, :ref:`templated emails <mailer-twig>` content is generated
+    Signing and encrypting messages require their contents to be fully rendered.
+    For example, the content of :ref:`templated emails <mailer-twig>` is rendered
     by a :class:`Symfony\\Component\\Mailer\\EventListener\\MessageListener`.
-    If you need to sign and/or encrypt such a message, you need to do so in
-    a :ref:`MessageEvent <messageevent>` listener with a negative priority.
+    So, if you want to sign and/or encrypt such a message, you need to do it in
+    a :ref:`MessageEvent <messageevent>` listener run after it (you need to set
+    a negative priority to your listener).
 
 Signing Messages
 ~~~~~~~~~~~~~~~~
