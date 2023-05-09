@@ -59,7 +59,7 @@ PHP package. For example:
     {
         "devDependencies": {
             "...": "",
-            "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets"
+            "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/assets"
         }
     }
 
