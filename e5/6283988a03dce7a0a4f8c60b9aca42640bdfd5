@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-05-08T04:41:44Z
+
+Not sure about the directory. I mean maybe we should keep/allow apps here.
+
+I would not change the director structure just to make a tool happy, but if it doesn't matter and it is just an example and no best practice, we can rename it to applications directory
+
+cc @nicolas-grekas @javiereguiluz
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-05-08T08:37:41Z
+
+:-1: on my side, the current names are better to me.
+
+---------------------------------------------------------------------------
+
+by alamirault at 2023-05-08T11:28:23Z
+
+I reverted `applications` to `apps` and set violations in whitelist.
+
+For doctor-rst, I think exclude all file is not good because it will hide other violations. I created PR https://github.com/OskarStark/doctor-rst/pull/1395 in order to exclude some rules by file when is needed
