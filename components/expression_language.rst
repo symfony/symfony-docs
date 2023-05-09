@@ -235,6 +235,7 @@ method after parsing any expression to get its AST::
     $astAsString = $ast->dump();
 
 .. note::
+
     The :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
     method requires you to be specific about the possible variables and functions.
     If you do not need to specify them (e.g. for evaluating the AST in another
