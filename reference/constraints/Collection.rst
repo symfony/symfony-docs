@@ -323,7 +323,7 @@ Options
 ``allowExtraFields``
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: false
+**type**: ``boolean`` **default**: ``false``
 
 If this option is set to ``false`` and the underlying collection contains
 one or more elements that are not included in the `fields`_ option, a validation
@@ -332,7 +332,7 @@ error will be returned. If set to ``true``, extra fields are OK.
 ``allowMissingFields``
 ~~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: false
+**type**: ``boolean`` **default**: ``false``
 
 If this option is set to ``false`` and one or more fields from the `fields`_
 option are not present in the underlying collection, a validation error
