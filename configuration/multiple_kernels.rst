@@ -164,12 +164,12 @@ resources::
             return ($_SERVER['APP_LOG_DIR'] ?? $this->getProjectDir().'/var/log').'/'.$this->id;
         }
 
-        protected function configureContainer(ContainerConfigurator $container): void
+        protected function configureContainer(ContainerConfigurator $containerConfigurator): void
         {
             // load common config files, such as the framework.yaml, as well as
             // specific configs required exclusively for the app itself
-            $this->doConfigureContainer($container, $this->getSharedConfigDir());
-            $this->doConfigureContainer($container, $this->getAppConfigDir());
+            $this->doConfigureContainer($containerConfigurator, $this->getSharedConfigDir());
+            $this->doConfigureContainer($containerConfigurator, $this->getAppConfigDir());
         }
 
         protected function configureRoutes(RoutingConfigurator $routes): void
@@ -180,16 +180,16 @@ resources::
             $this->doConfigureRoutes($routes, $this->getAppConfigDir());
         }
 
-        private function doConfigureContainer(ContainerConfigurator $container, string $configDir): void
+        private function doConfigureContainer(ContainerConfigurator $containerConfigurator, string $configDir): void
         {
-            $container->import($configDir.'/{packages}/*.{php,yaml}');
-            $container->import($configDir.'/{packages}/'.$this->environment.'/*.{php,yaml}');
+            $containerConfigurator->import($configDir.'/{packages}/*.{php,yaml}');
+            $containerConfigurator->import($configDir.'/{packages}/'.$this->environment.'/*.{php,yaml}');
 
             if (is_file($configDir.'/services.yaml')) {
-                $container->import($configDir.'/services.yaml');
-                $container->import($configDir.'/{services}_'.$this->environment.'.yaml');
+                $containerConfigurator->import($configDir.'/services.yaml');
+                $containerConfigurator->import($configDir.'/{services}_'.$this->environment.'.yaml');
             } else {
-                $container->import($configDir.'/{services}.php');
+                $containerConfigurator->import($configDir.'/{services}.php');
             }
         }
 
