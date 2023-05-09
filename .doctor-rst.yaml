@@ -102,3 +102,17 @@ whitelist:
         - '// bin/console'
         - '.. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket'
         - '..  End to End Tests (E2E)'
+        - 'First, create a new ``apps`` directory at the root of your project, which will' # configuration/multiple_kernels.rst
+        - '├─ apps/' # configuration/multiple_kernels.rst
+        - '``apps/`` directory. Therefore, you should carefully consider what is' # configuration/multiple_kernels.rst
+        - 'Since the new ``apps/api/src/`` directory will host the PHP code related to the' # configuration/multiple_kernels.rst
+        - '"Api\\": "apps/api/src/"' # configuration/multiple_kernels.rst
+        - "return $this->getProjectDir().'/apps/'.$this->id.'/config';" # configuration/multiple_kernels.rst
+        - '``apps/`` as it is used in the Kernel to load the specific application' # configuration/multiple_kernels.rst
+        - '``apps/admin/templates/`` which you will need to manually configure under the' # configuration/multiple_kernels.rst
+        - '# apps/admin/config/packages/twig.yaml' # configuration/multiple_kernels.rst
+        - "'%kernel.project_dir%/apps/admin/templates': Admin" # configuration/multiple_kernels.rst
+        - '// apps/api/tests/ApiTestCase.php' # configuration/multiple_kernels.rst
+        - 'Now, create a ``tests/`` directory inside the ``apps/api/`` application. Then,' # configuration/multiple_kernels.rst
+        - '"Api\\Tests\\": "apps/api/tests/"' # configuration/multiple_kernels.rst
+        - '<directory>apps/api/tests</directory>' # configuration/multiple_kernels.rst
