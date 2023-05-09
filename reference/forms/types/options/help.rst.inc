@@ -1,7 +1,7 @@
 help
 ~~~~
 
-**type**: ``string`` or ``TranslatableMessage`` **default**: null
+**type**: ``string`` or ``TranslatableMessage`` **default**: ``null``
 
 Allows you to define a help message for the form field, which by default is
 rendered below the field::
