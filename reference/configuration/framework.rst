@@ -740,7 +740,7 @@ is disabled. This can be either a template name or the content itself.
 path
 ....
 
-**type**: ``string`` **default**: ``'/_fragment'``
+**type**: ``string`` **default**: ``/_fragment``
 
 The path prefix for fragments. The fragment listener will only be executed
 when the request starts with this path.
@@ -1357,7 +1357,7 @@ requests (and not on the subrequests).
 dsn
 ...
 
-**type**: ``string`` **default**: ``'file:%kernel.cache_dir%/profiler'``
+**type**: ``string`` **default**: ``file:%kernel.cache_dir%/profiler``
 
 The DSN where to store the profiling information.
 
@@ -1553,7 +1553,7 @@ session
 storage_factory_id
 ..................
 
-**type**: ``string`` **default**: ``'session.storage.factory.native'``
+**type**: ``string`` **default**: ``session.storage.factory.native``
 
 The service ID used for creating the ``SessionStorageInterface`` that stores
 the session. This service is available in the Symfony application via the
@@ -1574,7 +1574,7 @@ To see a list of all available storages, run:
 handler_id
 ..........
 
-**type**: ``string`` **default**: ``'session.handler.native_file'``
+**type**: ``string`` **default**: ``session.handler.native_file``
 
 The service id used for session storage. The default value ``'session.handler.native_file'``
 will let Symfony manage the sessions itself using files to store the session metadata.
@@ -1666,7 +1666,7 @@ to the cookie specification.
 cookie_samesite
 ...............
 
-**type**: ``string`` or ``null`` **default**: ``'lax'``
+**type**: ``string`` or ``null`` **default**: ``lax``
 
 It controls the way cookies are sent when the HTTP request did not originate
 from the same domain that is associated with the cookies. Setting this option is
@@ -1701,7 +1701,7 @@ The possible values for this option are:
 cookie_secure
 .............
 
-**type**: ``boolean`` or ``'auto'`` **default**: ``'auto'``
+**type**: ``boolean`` or ``'auto'`` **default**: ``auto``
 
 This determines whether cookies should only be sent over secure connections. In
 addition to ``true`` and ``false``, there's a special ``'auto'`` value that
@@ -2702,7 +2702,7 @@ annotations
 cache
 .....
 
-**type**: ``string`` **default**: ``'php_array'``
+**type**: ``string`` **default**: ``php_array``
 
 This option can be one of the following values:
 
@@ -2722,7 +2722,7 @@ a service id
 file_cache_dir
 ..............
 
-**type**: ``string`` **default**: ``'%kernel.cache_dir%/annotations'``
+**type**: ``string`` **default**: ``%kernel.cache_dir%/annotations``
 
 The directory to store cache files for annotations, in case
 ``annotations.cache`` is set to ``'file'``.
@@ -3493,7 +3493,7 @@ marking_store
 
 Each marking store can define any of these options:
 
-* ``property`` (**type**: ``string`` **default**: ``'marking'``)
+* ``property`` (**type**: ``string`` **default**: ``marking``)
 * ``service`` (**type**: ``string``)
 * ``type`` (**type**: ``string`` **allow value**: ``'method'``)
 
