@@ -343,9 +343,11 @@ and configure the service ID as the ``success_handler``:
 Using OpenID Connect (OIDC)
 ---------------------------
 
-`OpenID Connect (OIDC)`_ is the third generation of OpenID technology and it's a RESTful HTTP API that uses
-JSON as its data format. OpenID Connect is an authentication layer on top of the OAuth 2.0 authorization framework.
-It allows to verify the identity of an end user based on the authentication performed by an authorization server.
+`OpenID Connect (OIDC)`_ is the third generation of OpenID technology and it's a
+RESTful HTTP API that uses JSON as its data format. OpenID Connect is an
+authentication layer on top of the OAuth 2.0 authorization framework. It allows
+to verify the identity of an end user based on the authentication performed by
+an authorization server.
 
 .. caution::
 
@@ -358,15 +360,15 @@ It allows to verify the identity of an end user based on the authentication perf
 
     The ``OidcUserInfoTokenHandler`` class was introduced in Symfony 6.3.
 
-.. note::
+The ``OidcUserInfoTokenHandler`` requires the ``symfony/http-client`` package to
+make the needed HTTP requests. If you haven't installed it yet, run this command:
 
-    The ``OidcUserInfoTokenHandler`` requires ``symfony/http-client`` package:
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    $ composer require symfony/http-client
 
-        $ composer require symfony/http-client
-
-Symfony provides a generic OidcUserInfoTokenHandler to call your OIDC server and retrieve the user info:
+Symfony provides a generic ``OidcUserInfoTokenHandler`` to call your OIDC server
+and retrieve the user info:
 
 .. configuration-block::
 
@@ -422,11 +424,8 @@ Symfony provides a generic OidcUserInfoTokenHandler to call your OIDC server and
             ;
         };
 
-.. tip::
-
-    Following the `OpenID Connect Specification`_, the `sub` claim
-    is used as user identifier by default. To use another claim,
-    specify it on the configuration:
+Following the `OpenID Connect Specification`_, the ``sub`` claim is used as user
+identifier by default. To use another claim, specify it on the configuration:
 
 .. configuration-block::
 
@@ -484,12 +483,9 @@ Symfony provides a generic OidcUserInfoTokenHandler to call your OIDC server and
             ;
         };
 
-.. tip::
-
-    The ``oidc_user_info`` token handler automatically creates
-    an HTTP client with the specified configuration. If you
-    prefer using your own client, you can specify the service
-    name via the ``client`` option:
+The ``oidc_user_info`` token handler automatically creates an HTTP client with
+the specified configuration. If you prefer using your own client, you can
+specify the service name via the ``client`` option:
 
 .. configuration-block::
 
@@ -541,8 +537,9 @@ Symfony provides a generic OidcUserInfoTokenHandler to call your OIDC server and
             ;
         };
 
-By default, the ``OidcUserInfoTokenHandler`` creates an OidcUser with the claims. To create your own User from the
-claims, you must :doc:`create your own UserProvider </security/user_providers>`::
+By default, the ``OidcUserInfoTokenHandler`` creates an ``OidcUser`` with the
+claims. To create your own user object from the claims, you must
+:doc:`create your own UserProvider </security/user_providers>`::
 
     // src/Security/Core/User/OidcUserProvider.php
     use Symfony\Component\Security\Core\User\AttributesBasedUserProviderInterface;
@@ -551,7 +548,7 @@ claims, you must :doc:`create your own UserProvider </security/user_providers>`:
     {
         public function loadUserByIdentifier(string $identifier, array $attributes = []): UserInterface
         {
-            // do some magic
+            // implement your own logic to load and return the user object
         }
     }
 
@@ -562,18 +559,18 @@ claims, you must :doc:`create your own UserProvider </security/user_providers>`:
 
     The ``OidcTokenHandler`` class was introduced in Symfony 6.3.
 
-.. note::
+The ``OidcTokenHandler`` requires ``web-token/jwt-signature``,
+``web-token/jwt-checker`` and ``web-token/jwt-signature-algorithm-ecdsa``
+packages. If you haven't installed them yet, run these commands:
 
-    The ``OidcTokenHandler`` requires ``web-token/jwt-signature``, ``web-token/jwt-checker`` and
-    ``web-token/jwt-signature-algorithm-ecdsa`` packages:
+.. code-block:: terminal
 
-    .. code-block:: terminal
+    $ composer require web-token/jwt-signature
+    $ composer require web-token/jwt-checker
+    $ composer require web-token/jwt-signature-algorithm-ecdsa
 
-        $ composer require web-token/jwt-signature
-        $ composer require web-token/jwt-checker
-        $ composer require web-token/jwt-signature-algorithm-ecdsa
-
-Symfony provides a generic OidcTokenHandler to decode your token, validate it and retrieve the user info from it:
+Symfony provides a generic ``OidcTokenHandler`` to decode your token, validate
+it and retrieve the user info from it:
 
 .. configuration-block::
 
@@ -633,11 +630,9 @@ Symfony provides a generic OidcTokenHandler to decode your token, validate it an
             ;
         };
 
-.. tip::
-
-    Following the `OpenID Connect Specification`_, the `sub` claim
-    is used by default as user identifier. To use another claim,
-    specify it on the configuration:
+Following the `OpenID Connect Specification`_, the ``sub`` claim is used by
+default as user identifier. To use another claim, specify it on the
+configuration:
 
 .. configuration-block::
 
@@ -697,11 +692,8 @@ Symfony provides a generic OidcTokenHandler to decode your token, validate it an
             ;
         };
 
-.. tip::
-
-    The ``oidc`` token handler also check for the token audience.
-    By default, this audience is optional. To enable this check,
-    add the ``audience`` option:
+The ``oidc`` token handler also checks for the token audience. By default, this
+audience is optional. To enable this check, add the ``audience`` option:
 
 .. configuration-block::
 
@@ -761,8 +753,9 @@ Symfony provides a generic OidcTokenHandler to decode your token, validate it an
             ;
         };
 
-By default, the OidcTokenHandler creates an OidcUser with the claims. To create your own User from the claims,
-you must :doc:`create your own UserProvider </security/user_providers>`::
+By default, the ``OidcTokenHandler`` creates an ``OidcUser`` with the claims. To
+create your own User from the claims, you must
+:doc:`create your own UserProvider </security/user_providers>`::
 
     // src/Security/Core/User/OidcUserProvider.php
     use Symfony\Component\Security\Core\User\AttributesBasedUserProviderInterface;
@@ -771,7 +764,7 @@ you must :doc:`create your own UserProvider </security/user_providers>`::
     {
         public function loadUserByIdentifier(string $identifier, array $attributes = []): UserInterface
         {
-            // do some magic
+            // implement your own logic to load and return the user object
         }
     }
 
