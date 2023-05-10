@@ -127,10 +127,6 @@ fields, so you no longer have to deal with form themes:
         {% endfor %}
     </select>
 
-.. versionadded:: 5.2
-
-    The ``field_*()`` helpers were introduced in Symfony 5.2.
-
 Form Rendering Variables
 ------------------------
 
