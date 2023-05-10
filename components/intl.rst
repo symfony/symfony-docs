@@ -402,6 +402,21 @@ platforms::
     Combine this emoji transliterator with the :ref:`Symfony String slugger <string-slugger-emoji>`
     to improve the slugs of contents that include emojis (e.g. for URLs).
 
+The data needed to store the transliteration of all emojis (~5,000) into all
+languages take a considerable disk space. If you need to save disk space (e.g.
+because you deploy to some service with tight size constraints), run this command
+(e.g. as an automated script after ``composer install``) to compress the internal
+Symfony emoji files using the PHP ``zlib`` extension:
+
+.. code-block:: terminal
+
+    # adjust the path to the 'compress' binary based on your application installation
+    $ php ./vendor/symfony/intl/Resources/bin/compress
+
+.. versionadded:: 6.3
+
+    The ``compress`` binary was introduced in Symfony 6.3.
+
 Learn more
 ----------
 
