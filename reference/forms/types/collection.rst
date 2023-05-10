@@ -225,7 +225,7 @@ on whether you are adding a new entry or editing an existing entry::
 entry_type
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'Symfony\Component\Form\Extension\Core\Type\TextType'``
+**type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\TextType``
 
 This is the field type for each item in this collection (e.g. ``TextType``,
 ``ChoiceType``, etc). For example, if you have an array of email addresses,

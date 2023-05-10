@@ -547,7 +547,7 @@ option if you need to use a custom CSRF token manager.
 csrf_parameter
 ..............
 
-**type**: ``string`` **default**: ``'_csrf_token'``
+**type**: ``string`` **default**: ``_csrf_token``
 
 The name of the parameter that stores the CSRF token value.
 
@@ -562,7 +562,7 @@ default service whose ID is ``security.csrf.token_manager``.
 csrf_token_id
 .............
 
-**type**: ``string`` **default**: ``'logout'``
+**type**: ``string`` **default**: ``logout``
 
 An arbitrary string used to identify the token (and check its validity afterwards).
 

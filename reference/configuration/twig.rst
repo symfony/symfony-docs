@@ -41,7 +41,7 @@ autoescape
     This option is deprecated since Symfony 6.1. If required, use the
     ``autoescape_service`` or ``autoescape_service_method`` option instead.
 
-**type**: ``boolean`` or ``string`` **default**: ``'name'``
+**type**: ``boolean`` or ``string`` **default**: ``name``
 
 If set to ``false``, automatic escaping is disabled (you can still escape each content
 individually in the templates).
@@ -88,7 +88,7 @@ called to determine the default escaping applied to the template.
 base_template_class
 ~~~~~~~~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'Twig\Template'``
+**type**: ``string`` **default**: ``Twig\Template``
 
 Twig templates are compiled into PHP classes before using them to render
 contents. This option defines the base class from which all the template classes
@@ -98,7 +98,7 @@ application harder to maintain.
 cache
 ~~~~~
 
-**type**: ``string`` | ``false`` **default**: ``'%kernel.cache_dir%/twig'``
+**type**: ``string`` | ``false`` **default**: ``%kernel.cache_dir%/twig``
 
 Before using the Twig templates to render some contents, they are compiled into
 regular PHP code. Compilation is a costly process, so the result is cached in
@@ -112,7 +112,7 @@ compiled again.
 charset
 ~~~~~~~
 
-**type**: ``string`` **default**: ``'%kernel.charset%'``
+**type**: ``string`` **default**: ``%kernel.charset%``
 
 The charset used by the template files. By default it's the same as the value of
 the :ref:`kernel.charset container parameter <configuration-kernel-charset>`,
@@ -165,7 +165,7 @@ If this option is ``false``, the ``dump()`` function doesn't output any contents
 default_path
 ~~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'%kernel.project_dir%/templates'``
+**type**: ``string`` **default**: ``%kernel.project_dir%/templates``
 
 The path to the directory where Symfony will look for the application Twig
 templates by default. If you store the templates in more than one directory, use
