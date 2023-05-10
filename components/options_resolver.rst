@@ -842,6 +842,29 @@ the option::
 This closure receives as argument the value of the option after validating it
 and before normalizing it when the option is being resolved.
 
+Ignore not defined Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, all options are resolved, validated and an :class:`Symfony\\Component\\OptionsResolver\\Exception\\UndefinedOptionsException`
+is thrown if an unknown option is passed. You can ignore not defined options by using the
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::ignoreUndefined` method::
+
+    // ...
+    $resolver
+        ->setDefined(['hostname'])
+        ->setIgnoreUndefined(true)
+    ;
+
+    // option "version" will be ignored
+    $resolver->resolve([
+        'hostname' => 'acme/package',
+        'version'  => '1.2.3'
+    ]);
+
+.. versionadded:: 6.3
+
+    The ``ignoreUndefined`` method was introduced in Symfony 6.3.
+
 Chaining Option Configurations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
