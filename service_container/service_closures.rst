@@ -77,8 +77,8 @@ argument of type ``service_closure``:
 
         use App\Service\MyService;
 
-        return function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function (ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(MyService::class)
                 ->args([service_closure('mailer')]);
@@ -104,7 +104,7 @@ a service closure by wrapping the service reference into an instance of
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
-    public function process(ContainerBuilder $containerBuilder): void
+    public function process(ContainerBuilder $container): void
     {
         // ...
 

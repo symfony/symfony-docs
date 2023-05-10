@@ -442,8 +442,8 @@ The end user can provide values in any configuration file:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->parameters()
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
                 ->set('acme_blog.author.email', 'fabien@example.com')
             ;
         };

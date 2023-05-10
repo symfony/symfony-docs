@@ -2,8 +2,8 @@ rules:
     american_english: ~
     argument_variable_must_match_type:
         arguments:
-            - { type: 'ContainerBuilder', name: 'containerBuilder' }
-            - { type: 'ContainerConfigurator', name: 'containerConfigurator' }
+            - { type: 'ContainerBuilder', name: 'container' }
+            - { type: 'ContainerConfigurator', name: 'container' }
     avoid_repetetive_words: ~
     blank_line_after_anchor: ~
     blank_line_after_directive: ~

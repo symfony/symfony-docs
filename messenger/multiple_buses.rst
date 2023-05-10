@@ -204,8 +204,8 @@ you can determine the message bus based on an implemented interface:
         use App\MessageHandler\CommandHandlerInterface;
         use App\MessageHandler\QueryHandlerInterface;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             // ...
 
