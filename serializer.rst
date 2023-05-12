@@ -312,7 +312,7 @@ to your class::
         private $name;
 
         /**
-         * @ORM\Column(type="integer")
+         * @ORM\Column(type="text")
          * @Groups({"show_product"})
          */
         private $description;
