@@ -630,7 +630,13 @@ according to the ``multipart/form-data`` content-type. The
 By default, :class:`Symfony\\Component\\Mime\\Part\\Multipart\\FormDataPart`
 will transfer file uploads in binary encoding. But you can enforce Base64::
 
-    $fileField = DataPart::fromPath('/path/to/uploaded/file', null, null, 'base64');
+    $fileField = DataPart::fromPath(
+        path: '/path/to/uploaded/file',
+        encoding: 'base64'
+    );
+
+.. versionadded:: 6.3
+    The `encoding` parameter was introduced in Symfony 6.3.
 
 .. tip::
 
