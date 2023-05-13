@@ -636,6 +636,7 @@ will transfer file uploads in binary encoding. But you can enforce Base64::
     );
 
 .. versionadded:: 6.3
+
     The `encoding` parameter was introduced in Symfony 6.3.
 
 .. tip::
