@@ -110,6 +110,7 @@ Service               Install with
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailersend-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``
+`Redlink`_            ``composer require symfony/redlink-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
 `Sendinblue`_         ``composer require symfony/sendinblue-mailer``
 ===================== ==============================================
@@ -123,6 +124,10 @@ Service               Install with
 .. versionadded:: 6.3
 
     The MailerSend integration was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The Redlink integration was introduced in Symfony 6.4.
 
 .. note::
 
@@ -181,6 +186,7 @@ Provider              SMTP                                          HTTP        
 `Mailjet`_            mailjet+smtp://ACCESS_KEY:SECRET_KEY@default  n/a                                        mailjet+api://ACCESS_KEY:SECRET_KEY@default
 `MailPace`_           mailpace+api://API_TOKEN@default              n/a                                        mailpace+api://API_TOKEN@default
 `Postmark`_           postmark+smtp://ID@default                    n/a                                        postmark+api://KEY@default
+`Redlink`_            n/a                                           n/a                                        redlink+api://API_TOKEN:APP_TOKEN@default
 `Sendgrid`_           sendgrid+smtp://KEY@default                   n/a                                        sendgrid+api://KEY@default
 `Sendinblue`_         sendinblue+smtp://USERNAME:PASSWORD@default   n/a                                        sendinblue+api://KEY@default
 ===================== ============================================  =========================================  ========================================
@@ -1427,6 +1433,7 @@ The following transports currently support tags and metadata:
 * Mailchimp
 * Mailgun
 * Postmark
+* Redlink
 * Sendgrid
 * Sendinblue
 
