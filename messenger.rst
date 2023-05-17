@@ -2510,7 +2510,7 @@ of the process. For each, the event class is the event name:
 
 .. versionadded:: 6.2
 
-    The ``WorkerRateLimitedEvent`` was introduced in Symfony 6.3.
+    The ``WorkerRateLimitedEvent`` was introduced in Symfony 6.2.
 
 Multiple Buses, Command & Event Buses
 -------------------------------------
