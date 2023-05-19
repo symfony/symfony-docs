@@ -31,7 +31,7 @@ To give an Extension the power to do this, it needs to implement
     {
         // ...
 
-        public function prepend(ContainerBuilder $containerBuilder)
+        public function prepend(ContainerBuilder $container)
         {
             // ...
         }
@@ -52,15 +52,15 @@ a configuration setting in multiple bundles as well as disable a flag in multipl
 in case a specific other bundle is not registered::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
-    public function prepend(ContainerBuilder $containerBuilder)
+    public function prepend(ContainerBuilder $container)
     {
         // get all bundles
-        $bundles = $containerBuilder->getParameter('kernel.bundles');
+        $bundles = $container->getParameter('kernel.bundles');
         // determine if AcmeGoodbyeBundle is registered
         if (!isset($bundles['AcmeGoodbyeBundle'])) {
             // disable AcmeGoodbyeBundle in bundles
             $config = ['use_acme_goodbye' => false];
-            foreach ($containerBuilder->getExtensions() as $name => $extension) {
+            foreach ($container->getExtensions() as $name => $extension) {
                 switch ($name) {
                     case 'acme_something':
                     case 'acme_other':
@@ -70,21 +70,21 @@ in case a specific other bundle is not registered::
                         // note that if the user manually configured
                         // use_acme_goodbye to true in config/services.yaml
                         // then the setting would in the end be true and not false
-                        $containerBuilder->prependExtensionConfig($name, $config);
+                        $container->prependExtensionConfig($name, $config);
                         break;
                 }
             }
         }
 
         // get the configuration of AcmeHelloExtension (it's a list of configuration)
-        $configs = $containerBuilder->getExtensionConfig($this->getAlias());
+        $configs = $container->getExtensionConfig($this->getAlias());
 
         // iterate in reverse to preserve the original order after prepending the config
         foreach (array_reverse($configs) as $config) {
             // check if entity_manager_name is set in the "acme_hello" configuration
             if (isset($config['entity_manager_name'])) {
                 // prepend the acme_something settings with the entity_manager_name
-                $containerBuilder->prependExtensionConfig('acme_something', [
+                $container->prependExtensionConfig('acme_something', [
                     'entity_manager_name' => $config['entity_manager_name'],
                 ]);
             }
@@ -141,13 +141,13 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
         // config/packages/acme_something.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->extension('acme_something', [
+        return static function (ContainerConfigurator $container) {
+            $container->extension('acme_something', [
                 // ...
                 'use_acme_goodbye' => false,
                 'entity_manager_name' => 'non_default',
             ]);
-            $containerConfigurator->extension('acme_other', [
+            $container->extension('acme_other', [
                 // ...
                 'use_acme_goodbye' => false,
             ]);

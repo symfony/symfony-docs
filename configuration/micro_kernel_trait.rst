@@ -43,10 +43,10 @@ Next, create an ``index.php`` file that defines the kernel class and runs it::
             ];
         }
 
-        protected function configureContainer(ContainerConfigurator $containerConfigurator): void
+        protected function configureContainer(ContainerConfigurator $container): void
         {
             // PHP equivalent of config/packages/framework.yaml
-            $containerConfigurator->extension('framework', [
+            $container->extension('framework', [
                 'secret' => 'S0ME_SECRET'
             ]);
         }
@@ -88,7 +88,7 @@ that define your bundles, your services and your routes:
 **registerBundles()**
     This is the same ``registerBundles()`` that you see in a normal kernel.
 
-**configureContainer(ContainerConfigurator $containerConfigurator)**
+**configureContainer(ContainerConfigurator $container)**
     This method builds and configures the container. In practice, you will use
     ``extension()`` to configure different bundles (this is the equivalent
     of what you see in a normal ``config/packages/*`` file). You can also register
@@ -191,12 +191,12 @@ hold the kernel. Now it looks like this::
             return $bundles;
         }
 
-        protected function configureContainer(ContainerConfigurator $containerConfigurator): void
+        protected function configureContainer(ContainerConfigurator $container): void
         {
-            $containerConfigurator->import(__DIR__.'/../config/framework.yaml');
+            $container->import(__DIR__.'/../config/framework.yaml');
 
             // register all classes in /src/ as service
-            $containerConfigurator->services()
+            $container->services()
                 ->load('App\\', __DIR__.'/*')
                 ->autowire()
                 ->autoconfigure()
@@ -204,7 +204,7 @@ hold the kernel. Now it looks like this::
 
             // configure WebProfilerBundle only if the bundle is enabled
             if (isset($this->bundles['WebProfilerBundle'])) {
-                $containerConfigurator->extension('web_profiler', [
+                $container->extension('web_profiler', [
                     'toolbar' => true,
                     'intercept_redirects' => false,
                 ]);

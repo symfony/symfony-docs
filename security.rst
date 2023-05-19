@@ -1572,7 +1572,7 @@ and set the ``limiter`` option to its service ID:
         use Symfony\Config\FrameworkConfig;
         use Symfony\Config\SecurityConfig;
 
-        return static function (ContainerBuilder $containerBuilder, FrameworkConfig $framework, SecurityConfig $security) {
+        return static function (ContainerBuilder $container, FrameworkConfig $framework, SecurityConfig $security) {
             $framework->rateLimiter()
                 ->limiter('username_ip_login')
                     ->policy('token_bucket')
@@ -1588,7 +1588,7 @@ and set the ``limiter`` option to its service ID:
                     ->interval('15 minutes')
             ;
 
-            $containerBuilder->register('app.login_rate_limiter', DefaultLoginRateLimiter::class)
+            $container->register('app.login_rate_limiter', DefaultLoginRateLimiter::class)
                 ->setArguments([
                     // 1st argument is the limiter for IP
                     new Reference('limiter.ip_login'),
@@ -2589,8 +2589,8 @@ for these events.
 
             use App\EventListener\LogoutSubscriber;
 
-            return function(ContainerConfigurator $containerConfigurator) {
-                $services = $containerConfigurator->services();
+            return function(ContainerConfigurator $container) {
+                $services = $container->services();
 
                 $services->set(LogoutSubscriber::class)
                     ->tag('kernel.event_subscriber', [

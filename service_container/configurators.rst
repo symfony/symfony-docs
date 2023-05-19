@@ -169,8 +169,8 @@ all the classes are already loaded as services. All you need to do is specify th
         use App\Mail\GreetingCardManager;
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             // Registers all 4 classes as services, including App\Mail\EmailConfigurator
             $services->load('App\\', '../src/*');
@@ -239,8 +239,8 @@ Services can be configured via invokable configurators (replacing the
         use App\Mail\GreetingCardManager;
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             // Registers all 4 classes as services, including App\Mail\EmailConfigurator
             $services->load('App\\', '../src/*');
