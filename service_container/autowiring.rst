@@ -102,8 +102,8 @@ both services:
     .. code-block:: php
 
         // config/services.php
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services()
+        return function(ContainerConfigurator $container) {
+            $services = $container->services()
                 ->defaults()
                     ->autowire()
                     ->autoconfigure()
@@ -239,7 +239,7 @@ adding a service alias:
 
         use App\Util\Rot13Transformer;
 
-        return function(ContainerConfigurator $containerConfigurator) {
+        return function(ContainerConfigurator $container) {
             // ...
 
             // the id is not a class, so it won't be used for autowiring
@@ -347,7 +347,7 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
         use App\Util\Rot13Transformer;
         use App\Util\TransformerInterface;
 
-        return function(ContainerConfigurator $containerConfigurator) {
+        return function(ContainerConfigurator $container) {
             // ...
 
             $services->set(Rot13Transformer::class);
@@ -512,7 +512,7 @@ the injection::
         use App\Util\TransformerInterface;
         use App\Util\UppercaseTransformer;
 
-        return function(ContainerConfigurator $containerConfigurator) {
+        return function(ContainerConfigurator $container) {
             // ...
 
             $services->set(Rot13Transformer::class)->autowire();

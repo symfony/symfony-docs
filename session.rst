@@ -720,8 +720,8 @@ To use it, first register a new handler service with your database credentials:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(PdoSessionHandler::class)
                 ->args([
@@ -830,8 +830,8 @@ passed to the ``PdoSessionHandler`` service:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(PdoSessionHandler::class)
                 ->args([
@@ -1003,8 +1003,8 @@ the MongoDB connection as argument:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(MongoDbSessionHandler::class)
                 ->args([
@@ -1122,8 +1122,8 @@ configure these values with the second argument passed to the
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(MongoDbSessionHandler::class)
                 ->args([

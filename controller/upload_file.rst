@@ -312,8 +312,8 @@ Then, define a service for this class:
 
         use App\Service\FileUploader;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(FileUploader::class)
                 ->arg('$targetDirectory', '%brochures_directory%')

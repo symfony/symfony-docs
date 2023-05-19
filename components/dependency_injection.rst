@@ -45,8 +45,8 @@ You can register this in the container as a service::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $containerBuilder = new ContainerBuilder();
-    $containerBuilder->register('mailer', 'Mailer');
+    $container = new ContainerBuilder();
+    $container->register('mailer', 'Mailer');
 
 An improvement to the class to make it more flexible would be to allow
 the container to set the ``transport`` used. If you change the class
@@ -66,8 +66,8 @@ Then you can set the choice of transport in the container::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $containerBuilder = new ContainerBuilder();
-    $containerBuilder
+    $container = new ContainerBuilder();
+    $container
         ->register('mailer', 'Mailer')
         ->addArgument('sendmail');
 
@@ -81,9 +81,9 @@ the ``Mailer`` service's constructor argument::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $containerBuilder = new ContainerBuilder();
-    $containerBuilder->setParameter('mailer.transport', 'sendmail');
-    $containerBuilder
+    $container = new ContainerBuilder();
+    $container->setParameter('mailer.transport', 'sendmail');
+    $container
         ->register('mailer', 'Mailer')
         ->addArgument('%mailer.transport%');
 
@@ -108,14 +108,14 @@ not exist yet. Use the ``Reference`` class to tell the container to inject the
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
-    $containerBuilder = new ContainerBuilder();
+    $container = new ContainerBuilder();
 
-    $containerBuilder->setParameter('mailer.transport', 'sendmail');
-    $containerBuilder
+    $container->setParameter('mailer.transport', 'sendmail');
+    $container
         ->register('mailer', 'Mailer')
         ->addArgument('%mailer.transport%');
 
-    $containerBuilder
+    $container
         ->register('newsletter_manager', 'NewsletterManager')
         ->addArgument(new Reference('mailer'));
 
@@ -140,14 +140,14 @@ If you do want to though then the container can call the setter method::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Reference;
 
-    $containerBuilder = new ContainerBuilder();
+    $container = new ContainerBuilder();
 
-    $containerBuilder->setParameter('mailer.transport', 'sendmail');
-    $containerBuilder
+    $container->setParameter('mailer.transport', 'sendmail');
+    $container
         ->register('mailer', 'Mailer')
         ->addArgument('%mailer.transport%');
 
-    $containerBuilder
+    $container
         ->register('newsletter_manager', 'NewsletterManager')
         ->addMethodCall('setMailer', [new Reference('mailer')]);
 
@@ -156,11 +156,11 @@ like this::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $containerBuilder = new ContainerBuilder();
+    $container = new ContainerBuilder();
 
     // ...
 
-    $newsletterManager = $containerBuilder->get('newsletter_manager');
+    $newsletterManager = $container->get('newsletter_manager');
 
 Getting Services That Don't Exist
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -224,8 +224,8 @@ Loading an XML config file::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-    $containerBuilder = new ContainerBuilder();
-    $loader = new XmlFileLoader($containerBuilder, new FileLocator(__DIR__));
+    $container = new ContainerBuilder();
+    $loader = new XmlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.xml');
 
 Loading a YAML config file::
@@ -234,8 +234,8 @@ Loading a YAML config file::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-    $containerBuilder = new ContainerBuilder();
-    $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
+    $container = new ContainerBuilder();
+    $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.yaml');
 
 .. note::
@@ -259,8 +259,8 @@ into a separate config file and load it in a similar way::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
-    $containerBuilder = new ContainerBuilder();
-    $loader = new PhpFileLoader($containerBuilder, new FileLocator(__DIR__));
+    $container = new ContainerBuilder();
+    $loader = new PhpFileLoader($container, new FileLocator(__DIR__));
     $loader->load('services.php');
 
 You can now set up the ``newsletter_manager`` and ``mailer`` services using
@@ -313,13 +313,13 @@ config files:
 
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->parameters()
+        return static function (ContainerConfigurator $container) {
+            $container->parameters()
                 // ...
                 ->set('mailer.transport', 'sendmail')
             ;
 
-            $services = $containerConfigurator->services();
+            $services = $container->services();
             $services->set('mailer', 'Mailer')
                 ->args(['%mailer.transport%'])
             ;

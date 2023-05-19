@@ -61,10 +61,10 @@ A very simple extension may just load configuration files into the container::
 
     class AcmeDemoExtension implements ExtensionInterface
     {
-        public function load(array $configs, ContainerBuilder $containerBuilder)
+        public function load(array $configs, ContainerBuilder $container)
         {
             $loader = new XmlFileLoader(
-                $containerBuilder,
+                $container,
                 new FileLocator(__DIR__.'/../Resources/config')
             );
             $loader->load('services.xml');
@@ -114,14 +114,14 @@ are loaded::
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-    $containerBuilder = new ContainerBuilder();
-    $containerBuilder->registerExtension(new AcmeDemoExtension);
+    $container = new ContainerBuilder();
+    $container->registerExtension(new AcmeDemoExtension);
 
-    $loader = new YamlFileLoader($containerBuilder, new FileLocator(__DIR__));
+    $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
     $loader->load('config.yaml');
 
     // ...
-    $containerBuilder->compile();
+    $container->compile();
 
 .. note::
 
@@ -132,7 +132,7 @@ are loaded::
 The values from those sections of the config files are passed into the first
 argument of the ``load()`` method of the extension::
 
-    public function load(array $configs, ContainerBuilder $containerBuilder)
+    public function load(array $configs, ContainerBuilder $container)
     {
         $foo = $configs[0]['foo']; //fooValue
         $bar = $configs[0]['bar']; //barValue
@@ -158,7 +158,7 @@ you could access the config value this way::
     use Symfony\Component\Config\Definition\Processor;
     // ...
 
-    public function load(array $configs, ContainerBuilder $containerBuilder)
+    public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $processor = new Processor();
@@ -219,13 +219,13 @@ The processed config value can now be added as container parameters as if
 it were listed in a ``parameters`` section of the config file but with the
 additional benefit of merging multiple files and validation of the configuration::
 
-    public function load(array $configs, ContainerBuilder $containerBuilder)
+    public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $processor = new Processor();
         $config = $processor->processConfiguration($configuration, $configs);
 
-        $containerBuilder->setParameter('acme_demo.FOO', $config['foo']);
+        $container->setParameter('acme_demo.FOO', $config['foo']);
 
         // ...
     }
@@ -234,14 +234,14 @@ More complex configuration requirements can be catered for in the Extension
 classes. For example, you may choose to load a main service configuration
 file but also load a secondary one only if a certain parameter is set::
 
-    public function load(array $configs, ContainerBuilder $containerBuilder)
+    public function load(array $configs, ContainerBuilder $container)
     {
         $configuration = new Configuration();
         $processor = new Processor();
         $config = $processor->processConfiguration($configuration, $configs);
 
         $loader = new XmlFileLoader(
-            $containerBuilder,
+            $container,
             new FileLocator(__DIR__.'/../Resources/config')
         );
         $loader->load('services.xml');
@@ -263,11 +263,11 @@ file but also load a secondary one only if a certain parameter is set::
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-        $containerBuilder = new ContainerBuilder();
+        $container = new ContainerBuilder();
         $extension = new AcmeDemoExtension();
-        $containerBuilder->registerExtension($extension);
-        $containerBuilder->loadFromExtension($extension->getAlias());
-        $containerBuilder->compile();
+        $container->registerExtension($extension);
+        $container->loadFromExtension($extension->getAlias());
+        $container->compile();
 
 .. note::
 
@@ -292,11 +292,11 @@ method is called by implementing
     {
         // ...
 
-        public function prepend(ContainerBuilder $containerBuilder)
+        public function prepend(ContainerBuilder $container)
         {
             // ...
 
-            $containerBuilder->prependExtensionConfig($name, $config);
+            $container->prependExtensionConfig($name, $config);
 
             // ...
         }
@@ -323,7 +323,7 @@ compilation::
 
     class AcmeDemoExtension implements ExtensionInterface, CompilerPassInterface
     {
-        public function process(ContainerBuilder $containerBuilder)
+        public function process(ContainerBuilder $container)
         {
             // ... do something during the compilation
         }
@@ -377,7 +377,7 @@ class implementing the ``CompilerPassInterface``::
 
     class CustomPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $containerBuilder)
+        public function process(ContainerBuilder $container)
         {
             // ... do something during the compilation
         }
@@ -387,8 +387,8 @@ You then need to register your custom pass with the container::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-    $containerBuilder = new ContainerBuilder();
-    $containerBuilder->addCompilerPass(new CustomPass());
+    $container = new ContainerBuilder();
+    $container->addCompilerPass(new CustomPass());
 
 .. note::
 
@@ -418,7 +418,7 @@ For example, to run your custom pass after the default removal passes have
 been run, use::
 
     // ...
-    $containerBuilder->addCompilerPass(
+    $container->addCompilerPass(
         new CustomPass(),
         PassConfig::TYPE_AFTER_REMOVING
     );
@@ -460,11 +460,11 @@ serves at dumping the compiled container::
         require_once $file;
         $container = new ProjectServiceContainer();
     } else {
-        $containerBuilder = new ContainerBuilder();
+        $container = new ContainerBuilder();
         // ...
-        $containerBuilder->compile();
+        $container->compile();
 
-        $dumper = new PhpDumper($containerBuilder);
+        $dumper = new PhpDumper($container);
         file_put_contents($file, $dumper->dump());
     }
 
@@ -487,11 +487,11 @@ dump it::
         require_once $file;
         $container = new MyCachedContainer();
     } else {
-        $containerBuilder = new ContainerBuilder();
+        $container = new ContainerBuilder();
         // ...
-        $containerBuilder->compile();
+        $container->compile();
 
-        $dumper = new PhpDumper($containerBuilder);
+        $dumper = new PhpDumper($container);
         file_put_contents(
             $file,
             $dumper->dump(['class' => 'MyCachedContainer'])
@@ -519,12 +519,12 @@ application::
         require_once $file;
         $container = new MyCachedContainer();
     } else {
-        $containerBuilder = new ContainerBuilder();
+        $container = new ContainerBuilder();
         // ...
-        $containerBuilder->compile();
+        $container->compile();
 
         if (!$isDebug) {
-            $dumper = new PhpDumper($containerBuilder);
+            $dumper = new PhpDumper($container);
             file_put_contents(
                 $file,
                 $dumper->dump(['class' => 'MyCachedContainer'])
@@ -554,14 +554,14 @@ for these resources and use them as metadata for the cache::
     $containerConfigCache = new ConfigCache($file, $isDebug);
 
     if (!$containerConfigCache->isFresh()) {
-        $containerBuilder = new ContainerBuilder();
+        $container = new ContainerBuilder();
         // ...
-        $containerBuilder->compile();
+        $container->compile();
 
-        $dumper = new PhpDumper($containerBuilder);
+        $dumper = new PhpDumper($container);
         $containerConfigCache->write(
             $dumper->dump(['class' => 'MyCachedContainer']),
-            $containerBuilder->getResources()
+            $container->getResources()
         );
     }
 

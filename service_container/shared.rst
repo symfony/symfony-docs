@@ -33,8 +33,8 @@ in your service definition:
 
         use App\SomeNonSharedService;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(SomeNonSharedService::class)
                 ->share(false);

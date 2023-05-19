@@ -55,8 +55,8 @@ You can also control the ``public`` option on a service-by-service basis:
 
         use App\Service\Foo;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(Foo::class)
                 ->public();
@@ -127,8 +127,8 @@ services.
 
         use App\Mail\PhpMailer;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(PhpMailer::class)
                 ->private();
@@ -269,8 +269,8 @@ The following example shows how to inject an anonymous service into another serv
         use App\AnonymousBar;
         use App\Foo;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(Foo::class)
                 ->args([inline_service(AnonymousBar::class)]);
@@ -320,8 +320,8 @@ Using an anonymous service as a factory looks like this:
         use App\AnonymousBar;
         use App\Foo;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(Foo::class)
                 ->factory([inline_service(AnonymousBar::class), 'constructFoo']);
@@ -366,8 +366,8 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
         use App\Service\OldService;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(OldService::class)
                 ->deprecate(
