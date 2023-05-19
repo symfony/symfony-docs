@@ -242,6 +242,10 @@ method after parsing any expression to get its AST::
     engine or to extract some insight from it) you can use the
     :method:`Symfony\\Component\\ExpressionLanguage\\Parser::parseWithoutContext` method.
 
+        .. versionadded:: 6.4
+        
+            The `parseWithoutContext` method was introduced in Symfony 6.4.
+
 Manipulating the AST
 ~~~~~~~~~~~~~~~~~~~~
 
