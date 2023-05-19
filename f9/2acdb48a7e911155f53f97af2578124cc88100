@@ -1,0 +1,46 @@
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-05-10T06:49:21Z
+
+DOCtor-RST would need to be configured the other way around, asking ppl to rename to `$container`.
+/cc @OskarStark I'm going to need your help on this one :pray:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-05-10T07:44:22Z
+
+You can change it in `.doctor-rst.yaml`:
+```diff
+-- { type: 'ContainerConfigurator', name: 'containerConfigurator' }
++- { type: 'ContainerConfigurator', name: 'container' }
+```
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-05-10T07:46:03Z
+
+Thanks! PR updated.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-05-10T08:35:39Z
+
+I'm still divided about this. I'm all in for as short as possible variable names. But, at the same time, variable names should be precise and self-explanatory.
+
+"Container", "container builder" and "container configurator" are not the same (and they are implemented in three totally different classes). If we have `ContainerBuilder` type-hint, I still think that `$containerBuilder` is the best variable name; if we absolutely want a 1-word variable, it should be `$builder` and not `$container` (because this is not the service container, but an utility to build it).
+
+Let's ask others @symfony/team-symfony-docs Thanks!
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-05-10T08:41:13Z
+
+We're using `$container` in eg compiler passes and DI extensions, and `$container` in PHP config files and this doesn't create any confusion because everyone knows the context when opening those files.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2023-05-10T20:47:31Z
+
+Like I also said in the original issue: to me, this is a non-issue and we should just choose one and use it. As long as it's not an abbreviation (`$c`), it won't matter much and consistency is more important to me than the word.
+
+I think Nicolas makes a good point that we're now inconsistent with the code, which makes it (a) harder to read the code after learning the docs and (b) trigger errors from static analysers which have become very strict with names after the introduction of named parameters. So I think it's indeed good to move to the same naming standard as Symfony code.
