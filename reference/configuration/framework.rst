@@ -3382,8 +3382,8 @@ the `SMTP session`_. This value overrides any other recipient set in the code.
         // config/packages/mailer.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $containerConfigurator): void {
-            $containerConfigurator->extension('framework', [
+        return static function (ContainerConfigurator $container): void {
+            $container->extension('framework', [
                 'mailer' => [
                     'dsn' => 'smtp://localhost:25',
                     'envelope' => [

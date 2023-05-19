@@ -91,8 +91,8 @@ notify Symfony that it is an event listener by using a special "tag":
 
         use App\EventListener\ExceptionListener;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(ExceptionListener::class)
                 ->tag('kernel.event_listener')
@@ -381,9 +381,9 @@ compiler pass ``AddEventAliasesPass``::
 
     class Kernel extends BaseKernel
     {
-        protected function build(ContainerBuilder $containerBuilder)
+        protected function build(ContainerBuilder $container)
         {
-            $containerBuilder->addCompilerPass(new AddEventAliasesPass([
+            $container->addCompilerPass(new AddEventAliasesPass([
                 MyCustomEvent::class => 'my_custom_event',
             ]));
         }

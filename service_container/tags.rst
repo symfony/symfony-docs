@@ -37,8 +37,8 @@ example:
 
         use App\Twig\AppExtension;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(AppExtension::class)
                 ->tag('twig.extension');
@@ -103,8 +103,8 @@ If you want to apply tags automatically for your own services, use the
 
         use App\Security\CustomInterface;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             // this config only applies to the services created by this file
             $services
@@ -143,9 +143,9 @@ In a Symfony application, call this method in your kernel class::
     {
         // ...
 
-        protected function build(ContainerBuilder $containerBuilder): void
+        protected function build(ContainerBuilder $container): void
         {
-            $containerBuilder->registerForAutoconfiguration(CustomInterface::class)
+            $container->registerForAutoconfiguration(CustomInterface::class)
                 ->addTag('app.custom_tag')
             ;
         }
@@ -159,9 +159,9 @@ In a Symfony bundle, call this method in the ``load()`` method of the
     {
         // ...
 
-        public function load(array $configs, ContainerBuilder $containerBuilder): void
+        public function load(array $configs, ContainerBuilder $container): void
         {
-            $containerBuilder->registerForAutoconfiguration(CustomInterface::class)
+            $container->registerForAutoconfiguration(CustomInterface::class)
                 ->addTag('app.custom_tag')
             ;
         }
@@ -196,11 +196,11 @@ method::
     {
         // ...
 
-        protected function build(ContainerBuilder $containerBuilder): void
+        protected function build(ContainerBuilder $container): void
         {
             // ...
 
-            $containerBuilder->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (ChildDefinition $definition, SensitiveElement $attribute, \ReflectionClass $reflector): void {
+            $container->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (ChildDefinition $definition, SensitiveElement $attribute, \ReflectionClass $reflector): void {
                 // Apply the 'app.sensitive_element' tag to all classes with SensitiveElement
                 // attribute, and attach the token value to the tag
                 $definition->addTag('app.sensitive_element', ['token' => $attribute->getToken()]);
@@ -273,8 +273,8 @@ Then, define the chain as a service:
 
         use App\Mail\TransportChain;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(TransportChain::class);
         };
@@ -327,8 +327,8 @@ For example, you may add the following transports as services:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(\MailerSmtpTransport::class)
                 // the param() method was introduced in Symfony 5.2.
@@ -363,17 +363,17 @@ container for any services with the ``app.mail_transport`` tag::
 
     class MailTransportPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $containerBuilder): void
+        public function process(ContainerBuilder $container): void
         {
             // always first check if the primary service is defined
-            if (!$containerBuilder->has(TransportChain::class)) {
+            if (!$container->has(TransportChain::class)) {
                 return;
             }
 
-            $definition = $containerBuilder->findDefinition(TransportChain::class);
+            $definition = $container->findDefinition(TransportChain::class);
 
             // find all service IDs with the app.mail_transport tag
-            $taggedServices = $containerBuilder->findTaggedServiceIds('app.mail_transport');
+            $taggedServices = $container->findTaggedServiceIds('app.mail_transport');
 
             foreach ($taggedServices as $id => $tags) {
                 // add the transport service to the TransportChain service
@@ -400,9 +400,9 @@ or from your kernel::
     {
         // ...
 
-        protected function build(ContainerBuilder $containerBuilder): void
+        protected function build(ContainerBuilder $container): void
         {
-            $containerBuilder->addCompilerPass(new MailTransportPass());
+            $container->addCompilerPass(new MailTransportPass());
         }
     }
 
@@ -495,8 +495,8 @@ To answer this, change the service declaration:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(\MailerSmtpTransport::class)
                 // the param() method was introduced in Symfony 5.2.
@@ -543,7 +543,7 @@ use this, update the compiler::
 
     class TransportCompilerPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $containerBuilder): void
+        public function process(ContainerBuilder $container): void
         {
             // ...
 
@@ -654,8 +654,8 @@ directly via PHP attributes:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(App\Handler\One::class)
                 ->tag('app.handler')
@@ -811,8 +811,8 @@ the number, the earlier the tagged service will be located in the collection:
 
         use App\Handler\One;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(One::class)
                 ->tag('app.handler', ['priority' => 20])
@@ -887,8 +887,8 @@ you can define it in the configuration of the collecting service:
 
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        return function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function (ContainerConfigurator $container) {
+            $services = $container->services();
 
             // ...
 
@@ -975,8 +975,8 @@ indexed by the ``key`` attribute:
         use App\Handler\Two;
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        return function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function (ContainerConfigurator $container) {
+            $services = $container->services();
 
             $services->set(One::class)
                 ->tag('app.handler', ['key' => 'handler_one']);
@@ -1089,8 +1089,8 @@ array element. For example, to retrieve the ``handler_two`` handler::
             use App\HandlerCollection;
             use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-            return function (ContainerConfigurator $containerConfigurator) {
-                $services = $containerConfigurator->services();
+            return function (ContainerConfigurator $container) {
+                $services = $container->services();
 
                 // ...
 

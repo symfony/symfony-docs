@@ -66,7 +66,7 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
 
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $containerConfigurator) {
+        return function(ContainerConfigurator $container) {
             // ...
 
             $services->set(MessageGenerator::class)

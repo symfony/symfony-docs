@@ -98,8 +98,8 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $containerBuilder, FrameworkConfig $framework) {
-                $containerBuilder->setParameter('env(SECRET)', 'some_secret');
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(SECRET)', 'some_secret');
                 $framework->secret(env('SECRET')->string());
             };
 
@@ -144,8 +144,8 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $containerBuilder, FrameworkConfig $framework) {
-                $containerBuilder->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
                 $framework->httpMethodOverride(env('HTTP_METHOD_OVERRIDE')->bool());
             };
 
@@ -231,8 +231,8 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\SecurityConfig;
 
-            return static function (ContainerBuilder $containerBuilder, SecurityConfig $security) {
-                $containerBuilder->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
+            return static function (ContainerBuilder $container, SecurityConfig $security) {
+                $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
                 $security->accessControl()
                     ->path('^/health-check$')
                     ->methods([env('HEALTH_CHECK_METHOD')->const()]);
@@ -282,8 +282,8 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $containerBuilder, FrameworkConfig $framework) {
-                $containerBuilder->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
                 $framework->trustedHosts(env('TRUSTED_HOSTS')->json());
             };
 
@@ -368,8 +368,8 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $containerBuilder, FrameworkConfig $framework) {
-                $containerBuilder->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
+            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+                $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
                 $framework->trustedHosts(env('TRUSTED_HOSTS')->csv());
             };
 

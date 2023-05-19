@@ -127,13 +127,13 @@ configure the behavior of the factory using configuration files::
         // config/packages/uid.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $containerConfigurator): void {
-            $services = $containerConfigurator->services()
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services()
                 ->defaults()
                 ->autowire()
                 ->autoconfigure();
 
-            $containerConfigurator->extension('framework', [
+            $container->extension('framework', [
                 'uid' => [
                     'default_uuid_version' => 6,
                     'name_based_uuid_version' => 5,
@@ -540,7 +540,7 @@ configuration in your application before using these commands:
         use Symfony\Component\Uid\Command\InspectUlidCommand;
         use Symfony\Component\Uid\Command\InspectUuidCommand;
 
-        return static function (ContainerConfigurator $containerConfigurator): void {
+        return static function (ContainerConfigurator $container): void {
             // ...
 
             $services
