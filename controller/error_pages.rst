@@ -114,10 +114,14 @@ store the HTTP status code and message respectively.
     and its required ``getStatusCode()`` method. Otherwise, the ``status_code``
     will default to ``500``.
 
-Additionally you have access to the Exception with ``exception``, which for example
-allows you to output the stack trace using ``{{ exception.traceAsString }}`` or
-access any other method on the object. You should be careful with this though,
-as this is very likely to expose sensitive data.
+Additionally you have access to the Exception with ``exception``.
+This allows you to access any method of :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`.
+For example, if an exception message has been set, using 
+``throw $this->createNotFoundException('The product does not exist');``,
+this can be accessed with ``{{ exception.message }}``.
+You can output the stack trace using ``{{ exception.traceAsString }}`` 
+You should be careful with this though, as it is very likely to expose 
+sensitive data.
 
 .. tip::
 
