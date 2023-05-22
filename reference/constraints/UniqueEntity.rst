@@ -253,10 +253,97 @@ each with a single field.
 
 **type**: ``boolean`` **default**: ``true``
 
+``ignoreNull``
+~~~~~~~~~~~~~~
+
+**type**: ``boolean`` | ``string`` | ``array`` **default**: ``true``
+
 If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.
 If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
+
+In addition to ignoring the ``null`` values of all unique fields, you can also use
+this option to specify one or more fields to only ignore ``null`` values on them:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Doctrine\ORM\Mapping as ORM;
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        #[ORM\Entity]
+        #[UniqueEntity(fields: ['email', 'phoneNumber'], ignoreNull: 'phoneNumber')]
+        class User
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\User:
+            constraints:
+                - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                      fields: ['email', 'phoneNumber']
+                      ignoreNull: 'phoneNumber'
+            properties:
+                # ...
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\User">
+                <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+                    <option name="fields">email</option>
+                    <option name="fields">phoneNumber</option>
+                    <option name="ignore-null">phoneNumber</option>
+                </constraint>
+                <!-- ... -->
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class User
+        {
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addConstraint(new UniqueEntity([
+                    'fields' => ['email', 'phoneNumber'],
+                    'ignoreNull' => 'phoneNumber',
+                ]));
+
+                // ...
+            }
+        }
+
+.. caution::
+
+    If you ``ignoreNull`` on fields that are part of a unique index in your
+    database, you might see insertion errors when your application attempts to
+    persist entities that the ``UniqueEntity`` constraint considers valid.
+
+.. versionadded:: 6.3
+
+    The option to ignore ``null`` values for specific fields was introduced
+    in Symfony 6.3.
 
 ``message``
 ~~~~~~~~~~~
