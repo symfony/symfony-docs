@@ -251,12 +251,17 @@ each with a single field.
 ``ignoreNull``
 ~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``true``
+**type**: ``boolean`` | ``array`` | ``string`` **default**: ``true``
 
 If this option is set to ``true``, then the constraint will allow multiple
 entities to have a ``null`` value for a field without failing validation.
 If set to ``false``, only one ``null`` value is allowed - if a second entity
 also has a ``null`` value, validation would fail.
+
+As of Symfony 6.3, the ``UniqueEntity`` constraint allows you to ignore null
+values on specific fields when checking for uniqueness. This feature can be
+helpful when you want to validate the uniqueness of a combination of fields,
+but want to exclude combinations where one or more of the fields are null.
 
 ``message``
 ~~~~~~~~~~~
