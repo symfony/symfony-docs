@@ -215,8 +215,9 @@ of JavaScript code.
 
 .. tip::
 
-    You can leverage Symfony UX via https://ux.symfony.com/live-component/demos/form-collection-type
-    if you do not want to handle the JavaScript code yourself.
+    Instead of writing the needed JavaScript code yourself, you can use Symfony
+    UX to implement this feature with only PHP and Twig code. See the
+    `Symfony UX Demo of Form Collections`_.
 
 But first, you need to let the form collection know that instead of exactly two,
 it will receive an *unknown* number of tags. Otherwise, you'll see a
@@ -662,3 +663,4 @@ the relationship between the removed ``Tag`` and ``Task`` object.
 .. _`@a2lix/symfony-collection`: https://github.com/a2lix/symfony-collection
 .. _`symfony-collection`: https://github.com/ninsuo/symfony-collection
 .. _`ArrayCollection`: https://www.doctrine-project.org/projects/doctrine-collections/en/1.6/index.html
+.. _`Symfony UX Demo of Form Collections`: https://ux.symfony.com/live-component/demos/form-collection-type
