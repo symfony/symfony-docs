@@ -251,9 +251,8 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(TRUSTED_HOSTS): '["10.0.0.1", "10.0.0.2"]'
-            framework:
-                trusted_hosts: '%env(json:TRUSTED_HOSTS)%'
+                env(ALLOWED_LANGUAGES): '["en","de","es"]'
+                app_allowed_languages: '%env(json:ALLOWED_LANGUAGES)%'
 
         .. code-block:: xml
 
@@ -268,10 +267,9 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <parameters>
-                    <parameter key="env(TRUSTED_HOSTS)">["10.0.0.1", "10.0.0.2"]</parameter>
+                    <parameter key="env(ALLOWED_LANGUAGES)">["en","de","es"]</parameter>
+                    <parameter key="app_allowed_languages">%env(json:ALLOWED_LANGUAGES)%</parameter>
                 </parameters>
-
-                <framework:config trusted-hosts="%env(json:TRUSTED_HOSTS)%"/>
             </container>
 
         .. code-block:: php
@@ -282,9 +280,9 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
-                $container->setParameter('env(TRUSTED_HOSTS)', '["10.0.0.1", "10.0.0.2"]');
-                $framework->trustedHosts(env('TRUSTED_HOSTS')->json());
+            return static function (ContainerBuilder $container) {
+                $container->setParameter('env(ALLOWED_LANGUAGES)', '["en","de","es"]');
+                $container->setParameter('app_allowed_languages', '%env(json:ALLOWED_LANGUAGES)%');
             };
 
 ``env(resolve:FOO)``
@@ -337,9 +335,8 @@ Symfony provides the following env var processors:
 
             # config/packages/framework.yaml
             parameters:
-                env(TRUSTED_HOSTS): "10.0.0.1,10.0.0.2"
-            framework:
-               trusted_hosts: '%env(csv:TRUSTED_HOSTS)%'
+                env(ALLOWED_LANGUAGES): "en,de,es"
+                app_allowed_languages: '%env(csv:ALLOWED_LANGUAGES)%'
 
         .. code-block:: xml
 
@@ -354,10 +351,9 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <parameters>
-                    <parameter key="env(TRUSTED_HOSTS)">10.0.0.1,10.0.0.2</parameter>
+                    <parameter key="env(ALLOWED_LANGUAGES)">en,de,es</parameter>
+                    <parameter key="app_allowed_languages">%env(csv:ALLOWED_LANGUAGES)%</parameter>
                 </parameters>
-
-                <framework:config trusted-hosts="%env(csv:TRUSTED_HOSTS)%"/>
             </container>
 
         .. code-block:: php
@@ -368,9 +364,9 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
-                $container->setParameter('env(TRUSTED_HOSTS)', '10.0.0.1,10.0.0.2');
-                $framework->trustedHosts(env('TRUSTED_HOSTS')->csv());
+            return static function (ContainerBuilder $container) {
+                $container->setParameter('env(ALLOWED_LANGUAGES)', 'en,de,es');
+                $container->setParameter('app_allowed_languages', '%env(csv:ALLOWED_LANGUAGES)%');
             };
 
 ``env(shuffle:FOO)``
