@@ -1027,8 +1027,20 @@ ciphers
 
 **type**: ``string``
 
-A list of the names of the ciphers allowed for the SSL/TLS connections. They
+A list of the names of the ciphers allowed for the TLS connections. They
 can be separated by colons, commas or spaces (e.g. ``'RC4-SHA:TLS13-AES-128-GCM-SHA256'``).
+
+crypto_method
+.............
+
+**type**: ``integer``
+
+The minimum version of TLS to accept. The value must be one of the
+``STREAM_CRYPTO_METHOD_TLSv*_CLIENT`` constants defined by PHP.
+
+.. versionadded:: 6.3
+
+    The ``crypto_method`` option was introduced in Symfony 6.3.
 
 delay
 .....
@@ -1183,7 +1195,7 @@ peer_fingerprint
 
 **type**: ``array``
 
-When negotiating a TLS or SSL connection, the server sends a certificate
+When negotiating a TLS connection, the server sends a certificate
 indicating its identity. A public key is extracted from this certificate and if
 it does not exactly match any of the public keys provided in this option, the
 connection is aborted before sending or receiving any data.
@@ -1265,7 +1277,7 @@ verify_peer
 
 **type**: ``boolean`` **default**: ``true``
 
-If ``true``, the certificate sent by other servers when negotiating a TLS or SSL
+If ``true``, the certificate sent by other servers when negotiating a TLS
 connection is verified for authenticity. Authenticating the certificate is not
 enough to be sure about the server, so you should combine this with the
 ``verify_host`` option.
