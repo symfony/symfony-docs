@@ -1,0 +1,57 @@
+---------------------------------------------------------------------------
+
+by staabm at 2023-05-19T08:08:58Z
+
+👍
+
+ship it :shipit:
+
+---------------------------------------------------------------------------
+
+by staabm at 2023-05-19T08:20:37Z
+
+are these reported DOCtor-RST errors regressions in the tool because of the recent changes?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-05-19T08:26:00Z
+
+> are these reported DOCtor-RST errors regressions in the tool because of the recent changes?
+
+checking right now
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-05-19T08:30:41Z
+
+It looks like, yes
+
+---------------------------------------------------------------------------
+
+by staabm at 2023-05-19T08:43:30Z
+
+could you narrow it to one of the PRs?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-05-19T11:23:27Z
+
+I need to check it next week
+
+---------------------------------------------------------------------------
+
+by staabm at 2023-05-19T18:54:09Z
+
+locally I cannot reproduce the errors. maybe we need to invalidate the CI cache?
+
+---------------------------------------------------------------------------
+
+by staabm at 2023-05-21T05:53:50Z
+
+I was able to narrow it to this PR https://github.com/OskarStark/doctor-rst/pull/1407
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-05-22T07:04:40Z
+
+Thanks @staabm for fixing the regression 👍
