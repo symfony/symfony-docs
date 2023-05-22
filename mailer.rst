@@ -110,6 +110,7 @@ Service               Install with
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailersend-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``
+`Redlink`_            ``composer require symfony/redlink-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
 `Sendinblue`_         ``composer require symfony/sendinblue-mailer``
 ===================== ==============================================
