@@ -607,22 +607,23 @@ A generator or any ``Traversable`` can also be used instead of a closure.
 
         $decodedPayload = $response->toArray();
 
-To submit a form with file uploads, it is your responsibility to encode the body
-according to the ``multipart/form-data`` content-type. The
-:doc:`Symfony Mime </components/mime>` component makes it a few lines of code::
+To submit a form with file uploads, pass the file handle to the ``body`` option::
 
-    use Symfony\Component\Mime\Part\DataPart;
-    use Symfony\Component\Mime\Part\Multipart\FormDataPart;
+    $fileHandle = fopen('/path/to/the/file' 'r');
+    $client->request('POST', 'https://...', ['body' => ['the_file' => $fileHandle]]);
 
-    $formFields = [
-        'regular_field' => 'some value',
-        'file_field' => DataPart::fromPath('/path/to/uploaded/file'),
-    ];
-    $formData = new FormDataPart($formFields);
-    $client->request('POST', 'https://...', [
-        'headers' => $formData->getPreparedHeaders()->toArray(),
-        'body' => $formData->bodyToIterable(),
-    ]);
+By default, this code will populate the filename and content-type with the data
+of the opened file, but you can configure both with the PHP streaming configuration::
+
+    stream_context_set_option($fileHandle, 'http', 'filename', 'the-name.txt');
+    stream_context_set_option($fileHandle, 'http', 'content_type', 'my/content-type');
+
+.. versionadded:: 6.3
+
+    The feature to upload files using handles was introduced in Symfony 6.3.
+    In previous Symfony versions you had to encode the body contents according
+    to the ``multipart/form-data`` content-type using the :doc:`Symfony Mime </components/mime>`
+    component.
 
 .. tip::
 
