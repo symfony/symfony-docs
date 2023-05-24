@@ -57,6 +57,9 @@ HttpKernel
 * :class:`Symfony\\Component\\HttpKernel\\Attribute\\AsPinnedValueResolver`
 * :ref:`Cache <http-cache-expiration-intro>`
 * :ref:`MapDateTime <functionality-shipped-with-the-httpkernel>`
+* :ref:`MapQueryParameter <controller_map-request>`
+* :ref:`MapQueryString <controller_map-request>`
+* :ref:`MapRequestPayload <controller_map-request>`
 * :class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver`
 * :ref:`WithHttpStatus <framework_exceptions>`
 * :ref:`WithLogLevel <framework_exceptions>`
