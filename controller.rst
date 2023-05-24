@@ -430,6 +430,16 @@ attribute in your controller::
         // ...
     }
 
+You can customize the validation groups used during the mapping thanks to the
+``validationGroups`` option::
+
+    public function dashboard(
+        #[MapQueryString(validationGroups: ['strict', 'edit'])] UserDTO $userDto
+    ): Response
+    {
+        // ...
+    }
+
 .. versionadded:: 6.3
 
     The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryString` attribute
@@ -477,6 +487,16 @@ your DTO::
             resolver: App\Resolver\UserDtoResolver
         )]
         UserDTO $userDto
+    ): Response
+    {
+        // ...
+    }
+
+You can also customize the validation groups used as well as supported
+payload formats::
+
+    public function dashboard(
+        #[MapRequestPayload(acceptFormat: 'json', validationGroups: ['strict', 'read'])] UserDTO $userDto
     ): Response
     {
         // ...

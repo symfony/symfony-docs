@@ -114,10 +114,12 @@ store the HTTP status code and message respectively.
     and its required ``getStatusCode()`` method. Otherwise, the ``status_code``
     will default to ``500``.
 
-Additionally you have access to the Exception with ``exception``, which for example
-allows you to output the stack trace using ``{{ exception.traceAsString }}`` or
-access any other method on the object. You should be careful with this though,
-as this is very likely to expose sensitive data.
+Additionally you have access to the :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
+object via the ``exception`` Twig variable. For example, if the exception sets a
+message (e.g. using ``throw $this->createNotFoundException('The product does not exist')``),
+use ``{{ exception.message }}`` to print that message. You can also output the
+stack trace using ``{{ exception.traceAsString }}``, but don't do that for end
+users because the trace contains sensitive data.
 
 .. tip::
 
