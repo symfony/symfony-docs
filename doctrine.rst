@@ -784,13 +784,13 @@ control behavior:
     If true, then when ``findOneBy()`` is used, any values that are
     ``null`` will not be used for the query.
 
-``entityManager``
+``objectManager``
     By default, the ``EntityValueResolver`` uses the *default*
-    entity manager, but you can configure this::
+    object manager, but you can configure this::
 
         #[Route('/product/{id}')]
         public function show(
-            #[MapEntity(entityManager: ['foo'])]
+            #[MapEntity(objectManager: 'foo')]
             Product $product
         ): Response {
         }
