@@ -1876,29 +1876,65 @@ Fetching the User Object
 ------------------------
 
 After authentication, the ``User`` object of the current user can be
-accessed via the ``getUser()`` shortcut in the
-:ref:`base controller <the-base-controller-class-services>`::
+accessed via the :ref:`#[CurrentUser] <controller-value-resolver-current-user>` attribute or ``getUser()`` shortcut in the
+:ref:`base controller <the-base-controller-class-services>`:
 
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+.. configuration-block::
 
-    class ProfileController extends AbstractController
-    {
-        public function index(): Response
+    .. code-block:: php-attributes
+
+        // src/Controller/ProfileController.php
+        namespace App\Controller;
+
+        use App\Entity\User;
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Security\Http\Attribute\CurrentUser;
+
+        class ProfileController extends AbstractController
         {
             // usually you'll want to make sure the user is authenticated first,
             // see "Authorization" below
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
-            // returns your User object, or null if the user is not authenticated
-            // use inline documentation to tell your editor your exact User class
-            /** @var \App\Entity\User $user */
-            $user = $this->getUser();
-
-            // Call whatever methods you've added to your User class
-            // For example, if you added a getFirstName() method, you can use that.
-            return new Response('Well hi there '.$user->getFirstName());
+            #[IsGranted('IS_AUTHENTICATED_FULLY')]
+            public function index(
+                // returns your User object, or null if the user is not authenticated
+                #[CurrentUser] ?User $user
+            ): Response {
+                // Call whatever methods you've added to your User class
+                // For example, if you added a getFirstName() method, you can use that.
+                return new Response('Well hi there '.$user->getFirstName());
+            }
         }
-    }
+
+    .. code-block:: php
+
+        // src/Controller/ProfileController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+        class ProfileController extends AbstractController
+        {
+            public function index(): Response
+            {
+                // usually you'll want to make sure the user is authenticated first,
+                // see "Authorization" below
+                $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+                // returns your User object, or null if the user is not authenticated
+                // use inline documentation to tell your editor your exact User class
+                /** @var \App\Entity\User $user */
+                $user = $this->getUser();
+
+                // Call whatever methods you've added to your User class
+                // For example, if you added a getFirstName() method, you can use that.
+                return new Response('Well hi there '.$user->getFirstName());
+            }
+        }
+
+.. note::
+
+    The ``#[CurrentUser]`` attribute can only be used in controller arguments to
+    retrieve the authenticated user.
 
 Fetching the User from a Service
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -146,6 +146,8 @@ Symfony ships with the following value resolvers in the
 
 In addition, some components, bridges and official bundles provide other value resolvers:
 
+.. _controller-value-resolver-current-user:
+
 :class:`Symfony\\Component\\Security\\Http\\Controller\\UserValueResolver`
     Injects the object that represents the current logged in user if type-hinted
     with ``UserInterface``. You can also type-hint your own ``User`` class but you
