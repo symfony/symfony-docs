@@ -281,7 +281,7 @@ case version of its name suffixed by ``LockFactory``.
 
 For instance, the ``invoice`` lock can be injected by naming the argument
 ``$invoiceLockFactory`` and type-hinting it with
-:class:`Symfony\\Component\\Lock\\LockFactory`:
+:class:`Symfony\\Component\\Lock\\LockFactory`::
 
     // src/Controller/PdfController.php
     namespace App\Controller;
