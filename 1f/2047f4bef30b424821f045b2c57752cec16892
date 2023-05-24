@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by yesdevnull at 2023-05-24T05:01:35Z
+
+Apologies if this should've been tagged with `[DependencyInjection]` and `[HttpKernel]`, I opted to use the documentation-specific location tag.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-05-24T11:12:16Z
+
+Dan, thanks for this contribution.
+
+Before merging this, let me ask @nicolas-grekas because I'm not sure if anything will break when applying this to a parameter used by Symfony itself. Thanks!
