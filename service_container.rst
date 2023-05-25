@@ -1334,6 +1334,130 @@ the closure::
         // services depending on which environment you're on
     };
 
+Generating Adapters for Functional Interfaces
+---------------------------------------------
+
+Functional interfaces are interfaces with a single method.
+They are conceptually very similar to a closure except that their only method
+has a name. Moreover, they can be used as type-hints across your code.
+
+The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
+attribute can be used to generate an adapter for a functional interface.
+Let's say you have the following functional interface::
+
+    // src/Service/MessageFormatterInterface.php
+    namespace App\Service;
+
+    interface MessageFormatterInterface
+    {
+        public function format(string $message, array $parameters): string;
+    }
+
+Now, you can define a service implementing this method, among other util ones::
+
+    // src/Service/MessageFormatterInterface.php
+    namespace App\Service;
+
+    class MessageUtils
+    {
+        // other utils methods...
+
+        public function format($string $message, array $parameters): string
+        {
+            // ...
+        }
+    }
+
+We can now use ``#[AutowireCallable]`` with our ``MessageUtils`` service
+to inject our functional interface implementation::
+
+    namespace App\Service\Mail;
+
+    use App\Service\MessageFormatterInterface;
+    use App\Service\MessageUtils;
+    use Symfony\Component\DependencyInjection\Attribute\AutowireCallable;
+
+    class Mailer
+    {
+        public function __construct(
+            #[AutowireCallable(service: MessageUtils::class, method: 'formatMessage')]
+            private MessageFormatterInterface $formatter
+        ) {
+        }
+
+        public function sendMail($string $message, array $parameters): string
+        {
+            $formattedMessage = $this->formatter->format($message, $parameters);
+
+            // ...
+        }
+    }
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
+    attribute was introduced in Symfony 6.3.
+
+Alternatively, generating an adapter for a functional interface can also
+be done through configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+
+            # ...
+
+            app.message_formatter:
+                class: App\Service\MessageFormatterInterface
+                from_callable: [!service {class: 'App\Service\MessageUtils'}, 'formatMessage']
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <service id="app.message_formatter" class="App\Service\MessageFormatterInterface">
+                    <from-callable method="formatMessage">
+                        <service class="App\Service\MessageUtils"/>
+                    </from-callable>
+                </service>
+
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\MessageFormatterInterface;
+        use App\Service\MessageUtils;
+
+        return function(ContainerConfigurator $container) {
+            // ...
+
+            $container
+                ->set('app.message_formatter', MessageFormatterInterface::class)
+                ->fromCallable([inline_service(MessageUtils::class), 'formatMessage'])
+                ->alias(MessageFormatterInterface::class, 'app.message_formatter')
+            ;
+        };
+
+By doing so, Symfony will generate a class (also called an *adapter*)
+implementing ``MessageFormatterInterface`` that will forward calls of
+``MessageFormatterInterface::format()`` to your underlying service's method
+``MessageUtils::format()``, with all its arguments.
+
 Learn more
 ----------
 
