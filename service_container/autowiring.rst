@@ -643,6 +643,104 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
 
     The ``param`` and ``env`` arguments were introduced in Symfony 6.3.
 
+.. _autowiring_closures:
+
+Generate Closures With Autowiring
+---------------------------------
+
+A **service closure** is an anonymous function that returns a service. This type
+of instanciation is handy when you are dealing with lazy-loading.
+
+Automatically creating a closure encapsulating the service instanciation can be
+done with the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireServiceClosure`
+attribute::
+
+    // src/Service/Remote/MessageFormatter.php
+    namespace App\Service\Remote;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+
+    #[AsAlias('third_party.remote_message_formatter')]
+    class MessageFormatter
+    {
+        public function __construct()
+        {
+            // ...
+        }
+
+        public function format(string $message): string
+        {
+            // ...
+        }
+    }
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use App\Service\Remote\MessageFormatter;
+    use Symfony\Component\DependencyInjection\Attribute\AutowireServiceClosure;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[AutowireServiceClosure('third_party.remote_message_formatter')]
+            \Closure $messageFormatterResolver
+        ) {
+        }
+
+        public function generate(string $message): void
+        {
+            $formattedMessage = ($this->messageFormatterResolver)()->format($message);
+
+            // ...
+        }
+    }
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireServiceClosure`
+    attribute was introduced in Symfony 6.3.
+
+It is common that a service accepts a closure with a specific signature.
+In this case, you can use the
+:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable` attribute
+to generate a closure with the same signature as a specific method of a service. When
+this closure is called, it will pass all its arguments to the underlying service
+function::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutowireCallable;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[AutowireCallable(service: 'third_party.remote_message_formatter', method: 'format')]
+            \Closure $formatCallable
+        ) {
+        }
+
+        public function generate(string $message): void
+        {
+            $formattedMessage = ($this->formatCallable)($message);
+
+            // ...
+        }
+    }
+
+Finally, you can pass the ``lazy: true`` option to the
+:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable`
+attribute. By doing so, the callable will automatically be lazy, which means
+that the encapsulated service will be instantiated **only** at the
+closure's first call.
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
+    attribute was introduced in Symfony 6.3.
+
 .. _autowiring-calls:
 
 Autowiring other Methods (e.g. Setters and Public Typed Properties)
