@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by stof at 2023-05-22T15:49:27Z
+
+this change is correct but it is not specific to databases. Passing a DSN as handler_id is supported in Symfony 4.4+ and supports other kinds of handlers too (if you pass a `redis://` URL, it will create a redis handler).
+See https://github.com/symfony/symfony/pull/34177 for the PR implementing it and https://github.com/symfony/symfony-docs/pull/13227 for the PR documenting it.
+So I'm not sure this should be repeated in this code snippet.
+
+IMO, this PR should focus only on the issue it attempts to fix, i.e. documenting the integration with the doctrine schema tool.
+
+---------------------------------------------------------------------------
+
+by alli83 at 2023-05-23T04:54:57Z
+
+@stof I see, thanks for your feedback ! I'll update it
