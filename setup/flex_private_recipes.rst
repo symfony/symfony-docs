@@ -32,9 +32,9 @@ the **repository name**, select the **Private** radio button, and click the
 Gitlab
 ~~~~~~
 
-Log in to your Gitlab.com account, click the **New project** button, select **Create blank project**, fill in
-the **Project name**, select the **Private** radio button, and click the
-**Create project** button.
+Log in to your Gitlab.com account, click the **New project** button, select
+**Create blank project**, fill in the **Project name**, select the **Private**
+radio button, and click the **Create project** button.
 
 Create Your Private Recipes
 ---------------------------
@@ -184,7 +184,8 @@ The ``index.json`` file has the following format:
     }
 
 Create an entry in ``"recipes"`` for each of your bundle recipes. Replace
-``your-gitlab-account-name``, ``your-gitlab-repository`` and ``your-gitlab-project-id`` with your own details.
+``your-gitlab-account-name``, ``your-gitlab-repository`` and ``your-gitlab-project-id``
+with your own details.
 
 Store Your Recipes in the Private Repository
 --------------------------------------------
