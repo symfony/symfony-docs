@@ -880,7 +880,14 @@ Preparing the Database to Store Sessions
 ........................................
 
 Before storing sessions in the database, you must create the table that stores
-the information. The session handler provides a method called
+the information.
+
+With Doctrine installed, the session table will be automatically generated when
+you run the ``make:migration`` command if the database targeted by doctrine is
+identical to the one used by this component.
+
+Or if you prefer to create the table yourself and the table has not already been
+created, the session handler provides a method called
 :method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler::createTable`
 to set up this table for you according to the database engine used::
 
@@ -890,7 +897,9 @@ to set up this table for you according to the database engine used::
         // the table could not be created for some reason
     }
 
-If you prefer to set up the table yourself, it's recommended to generate an
+If the table already exists an exception will be thrown.
+
+If you would rather set up the table yourself, it's recommended to generate an
 empty database migration with the following command:
 
 .. code-block:: terminal
@@ -903,6 +912,10 @@ file and run the migration with the following command:
 .. code-block:: terminal
 
     $ php bin/console doctrine:migrations:migrate
+
+If needed, you can also add this table to your schema by calling
+:method:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\PdoSessionHandler::configureSchema`
+method in your code.
 
 .. _mysql:
 
