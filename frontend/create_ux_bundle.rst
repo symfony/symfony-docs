@@ -108,7 +108,7 @@ To use your controller in a template (e.g. one defined in your bundle) you can u
         ...
     </div>
 
-Don't forget to add ``symfony/webpack-encore-bundle:^1.12`` as a composer dependency to use
+Don't forget to add ``symfony/stimulus-bundle:^2.9`` as a composer dependency to use
 Twig ``stimulus_*`` functions.
 
 .. tip::
