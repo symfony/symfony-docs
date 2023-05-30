@@ -31,9 +31,9 @@ Dependency Injection
 * :ref:`Autoconfigure <lazy-services_configuration>`
 * :ref:`AutoconfigureTag <di-instanceof>`
 * :ref:`Autowire <autowire-attribute>`
-* :ref:`AutowireCallable <container_closure-as-argument>`
+* :ref:`AutowireCallable <autowiring_closures>`
 * :doc:`AutowireDecorated </service_container/service_decoration>`
-* :doc:`AutowireServiceClosure </service_container/service_closures>`
+* :ref:`AutowireServiceClosure <autowiring_closures>`
 * :ref:`Exclude <service-psr4-loader>`
 * :ref:`TaggedIterator <tags_reference-tagged-services>`
 * :ref:`TaggedLocator <service-subscribers-locators_defining-service-locator>`
