@@ -92,45 +92,13 @@ argument of type ``service_closure``:
 
 .. seealso::
 
+    Service closures can be injected :ref:`by using autowiring <autowiring_closures>`
+    and its dedicated attributes.
+
+.. seealso::
+
     Another way to inject services lazily is via a
     :doc:`service locator </service_container/service_subscribers_locators>`.
-
-Thanks to the
-:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireServiceClosure`
-attribute, defining a service wrapped in a closure can directly be done
-in the service class, without further configuration::
-
-    // src/Service/MyService.php
-    namespace App\Service;
-
-    use Symfony\Component\DependencyInjection\Attribute\AutowireServiceClosure;
-    use Symfony\Component\Mailer\MailerInterface;
-
-    class MyService
-    {
-        public function __construct(
-            #[AutowireServiceClosure('mailer')]
-            private \Closure $mailer
-        ) {
-        }
-
-        public function doSomething(): void
-        {
-            // ...
-
-            $this->getMailer()->send($email);
-        }
-
-        private function getMailer(): MailerInterface
-        {
-            return ($this->mailer)();
-        }
-    }
-
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireServiceClosure`
-    attribute was introduced in Symfony 6.3.
 
 Using a Service Closure in a Compiler Pass
 ------------------------------------------
