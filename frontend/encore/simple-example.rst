@@ -5,10 +5,7 @@ After :doc:`installing Encore </frontend/encore/installation>`, your app already
 has a few files, organized into an ``assets/`` directory:
 
 * ``assets/app.js``
-* ``assets/bootstrap.js``
-* ``assets/controllers.json``
 * ``assets/styles/app.css``
-* ``assets/controllers/hello_controller.js``
 
 With Encore, think of your ``app.js`` file like a standalone JavaScript
 application: it will *require* all of the dependencies it needs (e.g. jQuery or React),
@@ -26,9 +23,6 @@ Encore's job (via Webpack) is simple: to read and follow *all* of the ``import``
 statements and create one final ``app.js`` (and ``app.css``) that contains *everything*
 your app needs. Encore can do a lot more: minify files, pre-process Sass/LESS,
 support React, Vue.js, etc.
-
-The other files - ``bootstrap.js``, ``controllers.json`` and ``hello_controller.js``
-relate to a topic you'll learn about soon: `Stimulus & Symfony UX`_.
 
 Configuring Encore/Webpack
 --------------------------
@@ -222,10 +216,18 @@ easy to attach behavior to HTML. It's powerful, and you will love it! Symfony
 even provides packages to add more features to Stimulus. These are called the
 Symfony UX Packages.
 
-If you followed the setup instructions, you should already have Stimulus installed
-and ready to go! In fact, that's the purpose of the ``assets/bootstrap.js`` file:
-to initialize Stimulus and automatically load any "controllers" from the
-``assets/controllers/`` directory.
+To use Stimulus, first install StimulusBundle:
+
+.. code-block:: terminal
+
+    $ composer require symfony/stimulus-bundle
+
+The Flex recipe should add several files/directories:
+
+* ``assets/bootstrap.js`` - initializes Stimulus;
+* ``assets/controllers/`` - a directory where you'll put your Stimulus controllers;
+* ``assets/controllers.json`` - file that helps load Stimulus controllers form UX
+  packages that you'll install.
 
 Let's look at a simple Stimulus example. In a Twig template, suppose you have:
 
