@@ -85,7 +85,7 @@ adapter (template) they use by using the ``app`` and ``system`` key like:
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->app('cache.adapter.filesystem')
                 ->system('cache.adapter.system')
@@ -163,7 +163,7 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 // Only used with cache.adapter.filesystem
                 ->directory('%kernel.cache_dir%/pools')
@@ -264,7 +264,7 @@ You can also create more customized pools:
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $cache = $framework->cache();
             $cache->defaultMemcachedProvider('memcached://localhost');
 
@@ -444,7 +444,7 @@ and use that when configuring the pool.
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+        return static function (ContainerBuilder $container, FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('cache.my_redis')
                     ->adapters(['cache.adapter.redis'])
@@ -524,7 +524,7 @@ Symfony stores the item automatically in all the missing pools.
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('my_cache_pool')
                     ->defaultLifetime(31536000) // One year
@@ -616,7 +616,7 @@ to enable this feature. This could be added by using the following configuration
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('my_cache_pool')
                     ->tags(true)
@@ -670,7 +670,7 @@ achieved by specifying the adapter.
         // config/packages/cache.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('my_cache_pool')
                     ->tags('tag_pool')

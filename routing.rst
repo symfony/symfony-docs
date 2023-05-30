@@ -2381,7 +2381,7 @@ The solution is to configure the ``default_uri`` option to define the
         // config/packages/routing.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->router()->defaultUri('https://example.org/my/path/');
         };
 

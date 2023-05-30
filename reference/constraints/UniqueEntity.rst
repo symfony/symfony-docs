@@ -169,10 +169,10 @@ Consider this example:
         class Service
         {
             #[ORM\ManyToOne(targetEntity: Host::class)]
-            public $host;
+            public Host $host;
 
             #[ORM\Column(type: 'integer')]
-            public $port;
+            public int $port;
         }
 
     .. code-block:: yaml
@@ -211,15 +211,16 @@ Consider this example:
         // src/Entity/Service.php
         namespace App\Entity;
 
+        use App\Entity\Host;
         use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
         class Service
         {
-            public $host;
-            public $port;
+            public Host $host;
+            public int $port;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new UniqueEntity([
                     'fields' => ['host', 'port'],

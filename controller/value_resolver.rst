@@ -320,7 +320,7 @@ and adding a priority:
 
         use App\ValueResolver\BookingIdValueResolver;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
+        return static function (ContainerConfigurator $containerConfigurator): void {
             $services = $containerConfigurator->services();
 
             $services->set(BookingIdValueResolver::class)

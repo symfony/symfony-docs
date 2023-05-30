@@ -107,7 +107,7 @@ PHP type (including objects)::
 
     class Apple
     {
-        public $variety;
+        public string $variety;
     }
 
     $apple = new Apple();

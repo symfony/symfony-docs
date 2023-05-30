@@ -246,7 +246,7 @@ Below is the configuration for the pull request state machine with styling added
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $pullRequest = $framework->workflows()->workflows('pull_request');
 

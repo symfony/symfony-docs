@@ -184,7 +184,7 @@ that uses this configuration:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->messenger()
                 ->transport('async')
                     ->dsn(env('MESSENGER_TRANSPORT_DSN'))
@@ -246,7 +246,7 @@ you can configure them to be sent to a transport:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->messenger()
                 // async is whatever name you gave your transport above
                 ->routing('App\Message\SmsNotification')->senders(['async'])
@@ -319,7 +319,7 @@ to multiple transports:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
             // route all messages that extend this example base class or interface
             $messenger->routing('App\Message\AbstractAsyncMessage')->senders(['async']);
@@ -452,7 +452,7 @@ transport and "sending" messages there to be handled immediately:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             // ... other transports
@@ -606,7 +606,7 @@ different messages to them. For example:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             $messenger->transport('async_priority_high')
@@ -944,7 +944,7 @@ this is configurable for each transport:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             $messenger->transport('async_priority_high')
@@ -1045,7 +1045,7 @@ be discarded. To avoid this happening, you can instead configure a ``failure_tra
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             // after retrying, messages will be sent to the "failed" transport
@@ -1163,7 +1163,7 @@ override the failure transport for only specific transports:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             // after retrying, messages will be sent to the "failed" transport
@@ -1255,7 +1255,7 @@ options. Options can be passed to the transport via a DSN string or configuratio
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             $messenger->transport('my_transport')
@@ -1674,7 +1674,7 @@ override it in the ``test`` environment to use this transport:
         // config/packages/test/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             $messenger->transport('async_priority_normal')
@@ -1851,7 +1851,7 @@ this globally (or for each transport) to a service that implements
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             $messenger->serializer()
@@ -2099,7 +2099,7 @@ Then, make sure to "route" your message to *both* transports:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             $messenger->transport('async_priority_normal')->dsn('...');
@@ -2301,7 +2301,7 @@ middleware and *only* include your own:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             $bus = $messenger->bus('messenger.bus.default')
@@ -2391,7 +2391,7 @@ may want to use:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             $bus = $messenger->bus('command_bus');
@@ -2457,7 +2457,7 @@ to configure the validation groups.
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $messenger = $framework->messenger();
 
             $bus = $messenger->bus('command_bus');

@@ -1010,7 +1010,7 @@ template fragments. Configure that special URL in the ``fragments`` option:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->fragments()->path('/_fragment');
         };
@@ -1083,7 +1083,7 @@ default content rendering some template:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->fragments()
                 ->hincludeDefaultTemplate('hinclude.html.twig')

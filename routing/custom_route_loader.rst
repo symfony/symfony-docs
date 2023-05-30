@@ -368,7 +368,7 @@ Now define a service for the ``ExtraLoader``:
 
         use App\Routing\ExtraLoader;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(ExtraLoader::class)

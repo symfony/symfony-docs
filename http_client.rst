@@ -122,7 +122,7 @@ You can configure the global options using the ``default_options`` option:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->defaultOptions()
                     ->maxRedirects(7)
@@ -191,7 +191,7 @@ The HTTP client also has one configuration option called
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->maxHostConnections(10)
                 // ...
@@ -274,7 +274,7 @@ autoconfigure the HTTP client based on the requested URL:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // only requests matching scope will use these options
             $framework->httpClient()->scopedClient('github.client')
                 ->scope('https://api\.github\.com')
@@ -431,7 +431,7 @@ each request (which overrides any global authentication):
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()->scopedClient('example_api')
                 ->baseUri('https://example.com/')
                 // HTTP Basic authentication
@@ -533,7 +533,7 @@ Use the ``headers`` option to define the default headers added to all requests:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->defaultOptions()
                     ->header('User-Agent', 'My Fancy App')
@@ -939,7 +939,7 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->defaultOptions()
                     ->httpVersion('2.0')
@@ -1610,11 +1610,10 @@ If you want to extend the behavior of a base HTTP client, you can use
 
     class MyExtendedHttpClient implements HttpClientInterface
     {
-        private $decoratedClient;
-
-        public function __construct(HttpClientInterface $decoratedClient = null)
-        {
-            $this->decoratedClient = $decoratedClient ?? HttpClient::create();
+        public function __construct(
+            private HttpClientInterface $decoratedClient = null
+        ) {
+            $this->decoratedClient ??= HttpClient::create();
         }
 
         public function request(string $method, string $url, array $options = []): ResponseInterface
@@ -1885,7 +1884,7 @@ Then configure Symfony to use your callback:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->httpClient()
                 ->mockResponseFactory(MockClientCallback::class)
             ;

@@ -74,7 +74,7 @@ First, to use SSI, be sure to enable it in your application configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->ssi()
                 ->enabled(true)
             ;

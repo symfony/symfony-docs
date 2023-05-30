@@ -436,7 +436,7 @@ The end user can provide values in any configuration file:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 ->set('acme_blog.author.email', 'fabien@example.com')
             ;

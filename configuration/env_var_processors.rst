@@ -45,7 +45,7 @@ processor to turn the value of the ``HTTP_PORT`` env var into an integer:
 
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->router()
                 ->httpPort('%env(int:HTTP_PORT)%')
                 // or
@@ -98,7 +98,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            return static function (ContainerBuilder $container, FrameworkConfig $framework): void {
                 $container->setParameter('env(SECRET)', 'some_secret');
                 $framework->secret(env('SECRET')->string());
             };
@@ -144,7 +144,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            return static function (ContainerBuilder $container, FrameworkConfig $framework): void {
                 $container->setParameter('env(HTTP_METHOD_OVERRIDE)', 'true');
                 $framework->httpMethodOverride(env('HTTP_METHOD_OVERRIDE')->bool());
             };
@@ -231,7 +231,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\SecurityConfig;
 
-            return static function (ContainerBuilder $container, SecurityConfig $security) {
+            return static function (ContainerBuilder $container, SecurityConfig $security): void {
                 $container->setParameter('env(HEALTH_CHECK_METHOD)', 'Symfony\Component\HttpFoundation\Request::METHOD_HEAD');
                 $security->accessControl()
                     ->path('^/health-check$')
@@ -280,7 +280,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container) {
+            return static function (ContainerBuilder $container): void {
                 $container->setParameter('env(ALLOWED_LANGUAGES)', '["en","de","es"]');
                 $container->setParameter('app_allowed_languages', '%env(json:ALLOWED_LANGUAGES)%');
             };
@@ -364,7 +364,7 @@ Symfony provides the following env var processors:
             use Symfony\Component\DependencyInjection\ContainerBuilder;
             use Symfony\Config\FrameworkConfig;
 
-            return static function (ContainerBuilder $container) {
+            return static function (ContainerBuilder $container): void {
                 $container->setParameter('env(ALLOWED_LANGUAGES)', 'en,de,es');
                 $container->setParameter('app_allowed_languages', '%env(csv:ALLOWED_LANGUAGES)%');
             };
