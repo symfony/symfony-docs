@@ -1686,7 +1686,7 @@ Next, you need to create a route for this URL (but not a controller):
         class SecurityController extends AbstractController
         {
             /**
-             * @Route("/logout", name="app_logout", methods={"GET"})
+             * @Route("/logout", name="app_logout", methods={"POST"})
              */
             public function logout(): void
             {
@@ -1705,7 +1705,7 @@ Next, you need to create a route for this URL (but not a controller):
 
         class SecurityController extends AbstractController
         {
-            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
+            #[Route('/logout', name: 'app_logout', methods: ['POST'])]
             public function logout()
             {
                 // controller can be blank: it will never be called!
@@ -1718,7 +1718,7 @@ Next, you need to create a route for this URL (but not a controller):
         # config/routes.yaml
         app_logout:
             path: /logout
-            methods: GET
+            methods: POST
 
     .. code-block:: xml
 
@@ -1729,7 +1729,7 @@ Next, you need to create a route for this URL (but not a controller):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="app_logout" path="/logout" methods="GET"/>
+            <route id="app_logout" path="/logout" methods="POST"/>
         </routes>
 
     .. code-block:: php
@@ -1739,7 +1739,7 @@ Next, you need to create a route for this URL (but not a controller):
 
         return function (RoutingConfigurator $routes) {
             $routes->add('app_logout', '/logout')
-                ->methods(['GET'])
+                ->methods(['POST'])
             ;
         };
 
