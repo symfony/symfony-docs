@@ -8,7 +8,7 @@ private Symfony Flex recipe repositories, and seamlessly integrate them into the
 This is particularly useful when you have private bundles or packages that must
 perform their own installation tasks. To do this, you need to complete several steps:
 
-* Create a private GitHub repository;
+* Create a private repository;
 * Create your private recipes;
 * Create an index to the recipes;
 * Store your recipes in the private repository;
@@ -16,13 +16,25 @@ perform their own installation tasks. To do this, you need to complete several s
 * Configure your project's ``composer.json`` file; and
 * Install the recipes in your project.
 
-Create a Private GitHub Repository
-----------------------------------
+.. _create-a-private-github-repository
+
+Create a Private Repository
+---------------------------
+
+GitHub
+~~~~~~
 
 Log in to your GitHub.com account, click your account icon in the top-right
 corner, and select **Your Repositories**. Then click the **New** button, fill in
 the **repository name**, select the **Private** radio button, and click the
 **Create Repository** button.
+
+Gitlab
+~~~~~~
+
+Log in to your Gitlab.com account, click the **New project** button, select
+**Create blank project**, fill in the **Project name**, select the **Private**
+radio button, and click the **Create project** button.
 
 Create Your Private Recipes
 ---------------------------
@@ -124,6 +136,9 @@ Create an Index to the Recipes
 The next step is to create an ``index.json`` file, which will contain entries
 for all your private recipes, and other general configuration information.
 
+GitHub
+~~~~~~
+
 The ``index.json`` file has the following format:
 
 .. code-block:: json
@@ -134,11 +149,11 @@ The ``index.json`` file has the following format:
                 "1.0"
             ]
         },
-        "branch": "master",
+        "branch": "main",
         "is_contrib": true,
         "_links": {
             "repository": "github.com/your-github-account-name/your-recipes-repository",
-            "origin_template": "{package}:{version}@github.com/your-github-account-name/your-recipes-repository:master",
+            "origin_template": "{package}:{version}@github.com/your-github-account-name/your-recipes-repository:main",
             "recipe_template": "https://api.github.com/repos/your-github-account-name/your-recipes-repository/contents/{package_dotted}.{version}.json"
         }
     }
@@ -146,14 +161,43 @@ The ``index.json`` file has the following format:
 Create an entry in ``"recipes"`` for each of your bundle recipes. Replace
 ``your-github-account-name`` and ``your-recipes-repository`` with your own details.
 
+Gitlab
+~~~~~~
+
+The ``index.json`` file has the following format:
+
+.. code-block:: json
+
+    {
+        "recipes": {
+            "acme/private-bundle": [
+                "1.0"
+            ]
+        },
+        "branch": "main",
+        "is_contrib": true,
+        "_links": {
+            "repository": "gitlab.com/your-gitlab-account-name/your-recipes-repository",
+            "origin_template": "{package}:{version}@gitlab.com/your-gitlab-account-name/your-recipes-repository:main",
+            "recipe_template": "https://gitlab.com/api/v4/projects/your-gitlab-project-id/repository/files/{package_dotted}.{version}.json/raw?ref=main"
+        }
+    }
+
+Create an entry in ``"recipes"`` for each of your bundle recipes. Replace
+``your-gitlab-account-name``, ``your-gitlab-repository`` and ``your-gitlab-project-id``
+with your own details.
+
 Store Your Recipes in the Private Repository
 --------------------------------------------
 
 Upload the recipe ``.json`` file(s) and the ``index.json`` file into the root
-directory of your private GitHub repository.
+directory of your private repository.
 
 Grant ``composer`` Access to the Private Repository
 ---------------------------------------------------
+
+GitHub
+~~~~~~
 
 In your GitHub account, click your account icon in the top-right corner, select
 ``Settings`` and ``Developer Settings``. Then select ``Personal Access Tokens``.
@@ -168,8 +212,28 @@ computer, and execute the following command:
 
 Replace ``[token]`` with the value of your GitHub personal access token.
 
+Gitlab
+~~~~~~
+
+In your Gitlab account, click your account icon in the top-right corner, select
+``Preferences`` and ``Access Tokens``.
+
+Generate a new personal access token with ``read_api`` and ``read_repository``
+scopes. Copy the access token value, switch to the terminal of your local
+computer, and execute the following command:
+
+.. code-block:: terminal
+
+    $ composer config --global --auth gitlab-oauth.gitlab.com [token]
+
+Replace ``[token]`` with the value of your Gitlab personal access token.
+
+
 Configure Your Project's ``composer.json`` File
 -----------------------------------------------
+
+GitHub
+~~~~~~
 
 Add the following to your project's ``composer.json`` file:
 
@@ -198,6 +262,32 @@ Replace ``your-github-account-name`` and ``your-recipes-repository`` with your o
 
     The ``endpoint`` URL **must** point to ``https://api.github.com/repos`` and
     **not** to ``https://www.github.com``.
+
+Gitlab
+~~~~~~
+
+Add the following to your project's ``composer.json`` file:
+
+.. code-block:: json
+
+    {
+        "extra": {
+            "symfony": {
+                "endpoint": [
+                    "https://gitlab.com/api/v4/projects/your-gitlab-project-id/repository/files/index.json/raw?ref=main",
+                    "flex://defaults"
+                ]
+            }
+        }
+    }
+
+Replace ``your-gitlab-project-id`` with your own details.
+
+.. tip::
+
+    The ``extra.symfony`` key will most probably already exist in your
+    ``composer.json``. In that case, add the ``"endpoint"`` key to the existing
+    ``extra.symfony`` entry.
 
 Install the Recipes in Your Project
 -----------------------------------
