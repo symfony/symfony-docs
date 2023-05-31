@@ -236,12 +236,13 @@ type, which converts to/from UUID objects automatically::
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Bridge\Doctrine\Types\UuidType;
+    use Symfony\Component\Uid\Uuid;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
         #[ORM\Column(type: UuidType::NAME)]
-        private $someProperty;
+        private Uuid $someProperty;
 
         // ...
     }
@@ -265,7 +266,7 @@ entity primary keys::
         #[ORM\Column(type: UuidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-        private $id;
+        private ?Uuid $id;
 
         public function getId(): ?Uuid
         {
@@ -422,12 +423,13 @@ type, which converts to/from ULID objects automatically::
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Bridge\Doctrine\Types\UlidType;
+    use Symfony\Component\Uid\Ulid;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
         #[ORM\Column(type: UlidType::NAME)]
-        private $someProperty;
+        private Ulid $someProperty;
 
         // ...
     }
@@ -451,7 +453,7 @@ entity primary keys::
         #[ORM\Column(type: UlidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
-        private $id;
+        private ?Ulid $id;
 
         public function getId(): ?Ulid
         {
