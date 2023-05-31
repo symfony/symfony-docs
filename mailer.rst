@@ -108,7 +108,7 @@ Service               Install with
 `Mailgun`_            ``composer require symfony/mailgun-mailer``
 `Mailjet`_            ``composer require symfony/mailjet-mailer``
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
-`MailerSend`_         ``composer require symfony/mailersend-mailer``
+`MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
 `Sendinblue`_         ``composer require symfony/sendinblue-mailer``
