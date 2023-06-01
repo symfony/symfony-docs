@@ -69,7 +69,7 @@ service container configuration:
 
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(NewsletterManager::class)
@@ -272,7 +272,7 @@ that accepts the dependency::
 
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(NewsletterManager::class)
@@ -311,7 +311,7 @@ Another possibility is setting public fields of the class directly::
     // ...
     class NewsletterManager
     {
-        public $mailer;
+        public MailerInterface $mailer;
 
         // ...
     }

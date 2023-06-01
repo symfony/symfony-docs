@@ -37,9 +37,9 @@ In this example, the validation metadata is retrieved executing the
 
     class User
     {
-        protected $name;
+        protected string $name;
 
-        public static function loadValidatorMetadata(ClassMetadata $metadata)
+        public static function loadValidatorMetadata(ClassMetadata $metadata): void
         {
             $metadata->addPropertyConstraint('name', new Assert\NotBlank());
             $metadata->addPropertyConstraint('name', new Assert\Length([
@@ -99,7 +99,7 @@ prefixed classes included in doc block comments (``/** ... */``). For example::
         /**
          * @Assert\NotBlank
          */
-        protected $name;
+        protected string $name;
     }
 
 To enable the annotation loader, call the

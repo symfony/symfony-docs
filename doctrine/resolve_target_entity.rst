@@ -65,11 +65,8 @@ An Invoice entity::
     #[ORM\Table(name: 'invoice')]
     class Invoice
     {
-        /**
-         * @var InvoiceSubjectInterface
-         */
         #[ORM\ManyToOne(targetEntity: InvoiceSubjectInterface::class)]
-        protected $subject;
+        protected InvoiceSubjectInterface $subject;
     }
 
 An InvoiceSubjectInterface::

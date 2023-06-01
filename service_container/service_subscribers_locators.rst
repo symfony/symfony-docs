@@ -232,7 +232,7 @@ service type to a service.
 
         use App\CommandBus;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(CommandBus::class)
@@ -379,7 +379,7 @@ or directly via PHP attributes:
 
         use App\CommandBus;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(CommandBus::class)
@@ -458,7 +458,7 @@ other services. To do so, create a new service definition using the
 
         use Symfony\Component\DependencyInjection\ServiceLocator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set('app.command_handler_locator', ServiceLocator::class)
@@ -519,7 +519,7 @@ Now you can inject the service locator in any other services:
 
         use App\CommandBus;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(CommandBus::class)
@@ -627,7 +627,7 @@ of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(App\Handler\One::class)
@@ -734,7 +734,7 @@ attribute to the locator service defining the name of this custom method:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $container->services()
                 ->set(App\HandlerCollection::class)
                     ->args([tagged_locator('app.handler', 'key', 'myOwnMethodName')])

@@ -41,7 +41,7 @@ When overriding an existing definition, the original service is lost:
         use App\Mailer;
         use App\NewMailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Mailer::class);
@@ -112,7 +112,7 @@ but keeps a reference of the old one as ``.inner``:
         use App\DecoratingMailer;
         use App\Mailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Mailer::class);
@@ -200,7 +200,7 @@ automatically changed to ``'.inner'``):
         use App\DecoratingMailer;
         use App\Mailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Mailer::class);
@@ -266,7 +266,7 @@ automatically changed to ``'.inner'``):
             use App\DecoratingMailer;
             use App\Mailer;
 
-            return function(ContainerConfigurator $container) {
+            return function(ContainerConfigurator $container): void {
                 $services = $container->services();
 
                 $services->set(Mailer::class);
@@ -355,7 +355,7 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(\Foo::class);
@@ -442,7 +442,7 @@ ordered services, each one decorating the next:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $container->services()
                 ->stack('decorated_foo_stack', [
                     inline_service(\Baz::class)->args([service('.inner')]),
@@ -525,7 +525,7 @@ advanced example of composition:
         use App\Decorated;
         use App\Decorator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $container->services()
                 ->set('some_decorator', Decorator::class)
 
@@ -657,7 +657,7 @@ Three different behaviors are available:
 
         use Symfony\Component\DependencyInjection\ContainerInterface;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Foo::class);

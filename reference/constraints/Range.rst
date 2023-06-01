@@ -31,7 +31,7 @@ you might add the following:
                 max: 180,
                 notInRangeMessage: 'You must be between {{ min }}cm and {{ max }}cm tall to enter',
             )]
-            protected $height;
+            protected int $height;
         }
 
     .. code-block:: yaml
@@ -74,7 +74,9 @@ you might add the following:
 
         class Participant
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('height', new Assert\Range([
                     'min' => 120,
@@ -107,7 +109,7 @@ date must lie within the current year like this:
                 min: 'first day of January',
                 max: 'first day of January next year',
             )]
-            protected $startDate;
+            protected \DateTimeInterface $startDate;
         }
 
     .. code-block:: yaml
@@ -148,7 +150,9 @@ date must lie within the current year like this:
 
         class Event
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('startDate', new Assert\Range([
                     'min' => 'first day of January',
@@ -175,7 +179,7 @@ dates. If you want to fix the timezone, append it to the date string:
                 min: 'first day of January UTC',
                 max: 'first day of January next year UTC',
             )]
-            protected $startDate;
+            protected \DateTimeInterface $startDate;
         }
 
     .. code-block:: yaml
@@ -216,7 +220,9 @@ dates. If you want to fix the timezone, append it to the date string:
 
         class Event
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('startDate', new Assert\Range([
                     'min' => 'first day of January UTC',
@@ -243,7 +249,7 @@ can check that a delivery date starts within the next five hours like this:
                 min: 'now',
                 max: '+5 hours',
             )]
-            protected $deliveryDate;
+            protected \DateTimeInterface $deliveryDate;
         }
 
     .. code-block:: yaml
@@ -284,7 +290,9 @@ can check that a delivery date starts within the next five hours like this:
 
         class Order
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('deliveryDate', new Assert\Range([
                     'min' => 'now',

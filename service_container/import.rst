@@ -116,7 +116,7 @@ a relative or absolute path to the imported file:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $container->import('services/mailer.php');
             // If you want to import a whole directory:
             $container->import('services/');

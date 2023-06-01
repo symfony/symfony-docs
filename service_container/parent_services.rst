@@ -15,7 +15,7 @@ you may have multiple repository classes which need the
     // ...
     abstract class BaseDoctrineRepository
     {
-        protected $logger;
+        protected LoggerInterface $logger;
 
         public function __construct(
             protected ObjectManager $objectManager,
@@ -118,7 +118,7 @@ avoid duplicated service definitions:
         use App\Repository\DoctrinePostRepository;
         use App\Repository\DoctrineUserRepository;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(BaseDoctrineRepository::class)
@@ -227,7 +227,7 @@ the child class:
         use App\Repository\DoctrineUserRepository;
         // ...
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(BaseDoctrineRepository::class)

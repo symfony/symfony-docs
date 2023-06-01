@@ -118,7 +118,7 @@ services:
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set('app.mysql_lock', MysqlLock::class);
@@ -180,7 +180,7 @@ the generic ``app.lock`` service can be defined as follows:
         use App\Lock\PostgresqlLock;
         use App\Lock\SqliteLock;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set('app.mysql_lock', MysqlLock::class);
@@ -1097,12 +1097,12 @@ required option: ``alias``, which defines the name of the extractor::
 
     class FooExtractor implements ExtractorInterface
     {
-        protected $prefix;
+        protected string $prefix;
 
         /**
          * Extracts translation messages from a template directory to the catalog.
          */
-        public function extract($directory, MessageCatalogue $catalog)
+        public function extract(string $directory, MessageCatalogue $catalog)
         {
             // ...
         }

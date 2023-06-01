@@ -73,7 +73,7 @@ exists in your project::
         private int $age;
         private string $name;
         private bool $sportsperson;
-        private ?\DateTime $createdAt;
+        private ?\DateTimeInterface $createdAt;
 
         // Getters
         public function getAge(): int
@@ -113,7 +113,7 @@ exists in your project::
             $this->sportsperson = $sportsperson;
         }
 
-        public function setCreatedAt(\DateTime $createdAt = null): void
+        public function setCreatedAt(\DateTimeInterface $createdAt = null): void
         {
             $this->createdAt = $createdAt;
         }
@@ -607,11 +607,11 @@ processes::
     class Person
     {
         public function __construct(
-            private $firstName,
+            private string $firstName,
         ) {
         }
 
-        public function getFirstName()
+        public function getFirstName(): string
         {
             return $this->firstName;
         }
@@ -663,7 +663,7 @@ defines a ``Person`` entity with a ``firstName`` property:
         {
             public function __construct(
                 #[SerializedName('customer_name')]
-                private $firstName,
+                private string $firstName,
             ) {
             }
 

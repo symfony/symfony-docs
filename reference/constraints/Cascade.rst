@@ -35,7 +35,7 @@ constraints that are set in the child classes ``BookMetadata`` and
         class BookCollection
         {
             #[Assert\NotBlank]
-            protected $name = '';
+            protected string $name = '';
 
             public BookMetadata $metadata;
 
@@ -76,7 +76,7 @@ constraints that are set in the child classes ``BookMetadata`` and
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Cascade());
             }
