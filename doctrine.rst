@@ -282,7 +282,7 @@ methods:
           // ...
 
     +     #[ORM\Column(type: Types::TEXT)]
-    +     private $description;
+    +     private string $description;
 
           // getDescription() & setDescription() were also added
       }

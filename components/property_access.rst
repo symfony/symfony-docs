@@ -194,7 +194,7 @@ method::
     // ...
     class Person
     {
-        public $name;
+        public string $name;
     }
 
     $person = new Person();
@@ -338,26 +338,26 @@ can use setters, the magic ``__set()`` method or properties to set values::
     // ...
     class Person
     {
-        public $firstName;
-        private $lastName;
-        private $children = [];
+        public string $firstName;
+        private string $lastName;
+        private array $children = [];
 
-        public function setLastName($name)
+        public function setLastName($name): void
         {
             $this->lastName = $name;
         }
 
-        public function getLastName()
+        public function getLastName(): string
         {
             return $this->lastName;
         }
 
-        public function getChildren()
+        public function getChildren(): array
         {
             return $this->children;
         }
 
-        public function __set($property, $value)
+        public function __set($property, $value): void
         {
             $this->$property = $value;
         }
@@ -524,15 +524,15 @@ You can also mix objects and arrays::
     // ...
     class Person
     {
-        public $firstName;
-        private $children = [];
+        public string $firstName;
+        private array $children = [];
 
-        public function setChildren($children)
+        public function setChildren($children): void
         {
             $this->children = $children;
         }
 
-        public function getChildren()
+        public function getChildren(): array
         {
             return $this->children;
         }

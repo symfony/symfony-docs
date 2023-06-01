@@ -174,7 +174,7 @@ enforce different levels of service (free or paid):
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // use 'sliding_window' if you prefer that policy
@@ -415,7 +415,7 @@ You can use the ``cache_pool`` option to override the cache used by a specific l
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // ...
@@ -501,7 +501,7 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // ...

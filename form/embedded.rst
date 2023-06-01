@@ -22,7 +22,7 @@ creating the ``Category`` class::
     class Category
     {
         #[Assert\NotBlank]
-        public $name;
+        public string $name;
     }
 
 Next, add a new ``category`` property to the ``Task`` class::
@@ -35,7 +35,7 @@ Next, add a new ``category`` property to the ``Task`` class::
 
         #[Assert\Type(type: Category::class)]
         #[Assert\Valid]
-        protected $category;
+        protected ?Category $category = null;
 
         // ...
 

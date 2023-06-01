@@ -60,7 +60,7 @@ You can now use it anywhere you need it:
         class User
         {
             #[Assert\PasswordRequirements]
-            public $plainPassword;
+            public string $plainPassword;
         }
 
     .. code-block:: yaml
@@ -96,7 +96,7 @@ You can now use it anywhere you need it:
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('plainPassword', new Assert\PasswordRequirements());
             }

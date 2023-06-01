@@ -86,7 +86,7 @@ First, to use ESI, be sure to enable it in your application configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->esi()
                 ->enabled(true)
             ;
@@ -246,7 +246,7 @@ that must be enabled in your configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->fragments()
                 ->path('/_fragment')

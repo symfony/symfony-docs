@@ -369,7 +369,7 @@ because the configuration started to get bigger:
         // config/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework
                 ->secret('SOME_SECRET')
                 ->profiler()

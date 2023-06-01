@@ -139,7 +139,7 @@ Then, register the class as a service that :doc:`decorates </service_container/s
 
         use App\CacheKernel;
 
-        return function (ContainerConfigurator $container) {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(CacheKernel::class)
