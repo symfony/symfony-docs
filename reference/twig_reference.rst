@@ -330,7 +330,7 @@ absolute URLs instead of relative URLs.
 .. _reference-twig-function-t:
 
 t
-~
+~~~
 
 .. code-block:: twig
 
