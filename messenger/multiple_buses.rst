@@ -81,7 +81,7 @@ an **event bus**. The event bus could have zero or more subscribers.
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // The bus that is going to be injected when injecting MessageBusInterface
             $framework->messenger()->defaultBus('command.bus');
 

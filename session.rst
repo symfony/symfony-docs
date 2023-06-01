@@ -297,7 +297,7 @@ configuration <config-framework-session>` in
         use Symfony\Component\HttpFoundation\Cookie;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->session()
                 // Enables session support. Note that the session will ONLY be started if you read or write from it.
                 // Remove or comment this section to explicitly disable session support.
@@ -371,7 +371,7 @@ session metadata files:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->session()
                 // ...
                 ->handlerId('session.handler.native_file')
@@ -643,7 +643,7 @@ configuration option to tell Symfony to use this service as the session handler:
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->session()
                 ->handlerId(RedisSessionHandler::class)
@@ -720,7 +720,7 @@ To use it, first register a new handler service with your database credentials:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(PdoSessionHandler::class)
@@ -776,7 +776,7 @@ configuration option to tell Symfony to use this service as the session handler:
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->session()
                 ->handlerId(PdoSessionHandler::class)
@@ -830,7 +830,7 @@ passed to the ``PdoSessionHandler`` service:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(PdoSessionHandler::class)
@@ -1003,7 +1003,7 @@ the MongoDB connection as argument:
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(MongoDbSessionHandler::class)
@@ -1051,7 +1051,7 @@ configuration option to tell Symfony to use this service as the session handler:
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->session()
                 ->handlerId(MongoDbSessionHandler::class)
@@ -1122,7 +1122,7 @@ configure these values with the second argument passed to the
 
         use Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(MongoDbSessionHandler::class)
@@ -1520,7 +1520,7 @@ Symfony to use your session handler instead of the default one:
         use App\Session\CustomSessionHandler;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->session()
                 ->handlerId(CustomSessionHandler::class)
@@ -1547,23 +1547,21 @@ library, but you can adapt it to any other library that you may be using::
 
     class EncryptedSessionProxy extends SessionHandlerProxy
     {
-        private $key;
-
-        public function __construct(\SessionHandlerInterface $handler, Key $key)
-        {
-            $this->key = $key;
-
+        public function __construct(
+            private \SessionHandlerInterface $handler,
+            private Key $key
+        ) {
             parent::__construct($handler);
         }
 
-        public function read($id)
+        public function read($id): string
         {
             $data = parent::read($id);
 
             return Crypto::decrypt($data, $this->key);
         }
 
-        public function write($id, $data)
+        public function write($id, $data): string
         {
             $data = Crypto::encrypt($data, $this->key);
 
@@ -1587,16 +1585,14 @@ intercept the session before it is written::
 
     class ReadOnlySessionProxy extends SessionHandlerProxy
     {
-        private $security;
-
-        public function __construct(\SessionHandlerInterface $handler, Security $security)
-        {
-            $this->security = $security;
-
+        public function __construct(
+            private \SessionHandlerInterface $handler,
+            private Security $security
+        ) {
             parent::__construct($handler);
         }
 
-        public function write($id, $data)
+        public function write($id, $data): string
         {
             if ($this->getUser() && $this->getUser()->isGuest()) {
                 return;
@@ -1605,12 +1601,14 @@ intercept the session before it is written::
             return parent::write($id, $data);
         }
 
-        private function getUser()
+        private function getUser(): ?User
         {
             $user = $this->security->getUser();
             if (is_object($user)) {
                 return $user;
             }
+
+            return null;
         }
     }
 
@@ -1658,7 +1656,7 @@ for the ``handler_id``:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->session()
                 ->storageFactoryId('session.storage.factory.php_bridge')
                 ->handlerId(null)
@@ -1718,7 +1716,7 @@ the example below:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->session()
                 ->storageFactoryId('session.storage.factory.php_bridge')
                 ->handlerId('session.storage.native_file')

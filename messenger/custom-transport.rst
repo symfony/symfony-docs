@@ -205,7 +205,7 @@ named transport using your own DSN:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->messenger()
                 ->transport('yours')
                     ->dsn('my-transport://...')

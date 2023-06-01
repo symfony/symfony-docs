@@ -197,7 +197,7 @@ You can do this by defining a new HTML sanitizer in the configuration:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     ->blockElement('h1')
@@ -273,7 +273,7 @@ Safe elements
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // enable either of these
@@ -360,7 +360,7 @@ attributes from the `W3C Standard Proposal`_ are allowed.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // allow the <article> element and 2 attributes
@@ -443,7 +443,7 @@ This can also be used to remove elements from the allow list.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // remove <div>, but process the children
@@ -521,7 +521,7 @@ on all elements allowed *before this setting*.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // allow "src' on <iframe> elements
@@ -607,7 +607,7 @@ This option allows you to disallow attributes that were allowed before.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // allow the "data-attr" on all safe elements...
@@ -685,7 +685,7 @@ element (even if the original one didn't contain a ``rel`` attribute):
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     ->forceAttribute('a', 'rel', 'noopener noreferrer')
@@ -774,7 +774,7 @@ URLs of ``<a>`` elements:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // if `true`, all URLs will be forced using the `https://` scheme (instead
@@ -888,7 +888,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // if `true`, all URLs will be forced using the `https://` scheme (instead
@@ -979,7 +979,7 @@ increase or decrease this limit:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // inputs longer (in characters) than this value will be truncated (default: 20000)
@@ -1053,7 +1053,7 @@ to enable it for an HTML sanitizer:
         use App\Sanitizer\CustomAttributeSanitizer;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     ->withAttributeSanitizer(CustomAttributeSanitizer::class)

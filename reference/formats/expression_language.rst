@@ -54,7 +54,7 @@ to JavaScript::
 
     class Apple
     {
-        public $variety;
+        public string $variety;
     }
 
     $apple = new Apple();
@@ -293,7 +293,7 @@ For example::
 
     class User
     {
-        public $group;
+        public string $group;
     }
 
     $user = new User();
@@ -317,7 +317,7 @@ For example::
 
     class User
     {
-        public $age;
+        public int $age;
     }
 
     $user = new User();

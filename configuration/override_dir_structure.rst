@@ -67,7 +67,7 @@ Console script::
 Web front-controller::
 
     // public/index.php
-    
+
     // ...
     $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'another/custom/path/to/.env';
 
@@ -236,7 +236,7 @@ configuration option to define your own translations directory (use :ref:`framew
         // config/packages/translation.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->translator()
                 ->defaultPath('%kernel.project_dir%/i18n')
             ;

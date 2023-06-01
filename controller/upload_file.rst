@@ -312,7 +312,7 @@ Then, define a service for this class:
 
         use App\Service\FileUploader;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(FileUploader::class)

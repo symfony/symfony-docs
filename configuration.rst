@@ -136,7 +136,7 @@ configuration files, even if they use a different format:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->import('legacy_config.php');
 
             // glob expressions are also supported to load multiple files
@@ -242,7 +242,7 @@ reusable configuration value. By convention, parameters are defined under the
         use App\Entity\BlogPost;
         use App\Enum\PostState;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 // the parameter name is an arbitrary string (the 'app.' prefix is recommended
                 // to better differentiate your parameters from Symfony parameters).
@@ -321,7 +321,7 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
         // config/packages/some_package.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->extension('some_package', [
                 // any string surrounded by two % is replaced by that parameter value
                 'email_address' => '%app.admin_email%',
@@ -358,7 +358,7 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (ContainerConfigurator $container) {
+            return static function (ContainerConfigurator $container): void {
                 $container->parameters()
                     ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
             };
@@ -620,7 +620,7 @@ This example shows how you could configure the application secret using an env v
         // config/packages/framework.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->extension('framework', [
                 // by convention the env var names are always uppercase
                 'secret' => '%env(APP_SECRET)%',
@@ -973,7 +973,7 @@ doesn't work for parameters:
 
         use App\Service\MessageGenerator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 ->set('app.contents_dir', '...');
 
@@ -1030,7 +1030,7 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
 
         use App\Controller\LuckyController;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->services()
                 ->defaults()
                     // pass this value to any $projectDir argument for any service

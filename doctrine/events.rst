@@ -234,7 +234,7 @@ listener in the Symfony application by creating a new service for it and
 
         use App\EventListener\SearchIndexer;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             // listeners are applied by default to all Doctrine connections
@@ -385,7 +385,7 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
         use App\Entity\User;
         use App\EventListener\UserChangedNotifier;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(UserChangedNotifier::class)
@@ -531,7 +531,7 @@ Doctrine connection to use) you must do that in the manual service configuration
 
         use App\EventListener\DatabaseActivitySubscriber;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(DatabaseActivitySubscriber::class)
