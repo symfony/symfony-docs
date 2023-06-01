@@ -887,7 +887,7 @@ you can define it in the configuration of the collecting service:
 
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        return function (ContainerConfigurator $container) {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             // ...
@@ -975,7 +975,7 @@ indexed by the ``key`` attribute:
         use App\Handler\Two;
         use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-        return function (ContainerConfigurator $container) {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(One::class)
@@ -1089,7 +1089,7 @@ array element. For example, to retrieve the ``handler_two`` handler::
             use App\HandlerCollection;
             use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-            return function (ContainerConfigurator $container) {
+            return function (ContainerConfigurator $container): void {
                 $services = $container->services();
 
                 // ...

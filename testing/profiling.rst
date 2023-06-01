@@ -46,7 +46,7 @@ tests significantly. That's why Symfony disables it by default:
         // config/packages/test/web_profiler.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->profiler()
                 ->enabled(true)

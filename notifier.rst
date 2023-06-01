@@ -160,7 +160,7 @@ configure the ``texter_transports``:
         // config/packages/notifier.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->notifier()
                 ->texterTransport('twilio', env('TWILIO_DSN'))
             ;
@@ -297,7 +297,7 @@ Chatters are configured using the ``chatter_transports`` setting:
         // config/packages/notifier.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->notifier()
                 ->chatterTransport('slack', env('SLACK_DSN'))
             ;
@@ -396,7 +396,7 @@ notification emails:
         // config/packages/mailer.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->mailer()
                 ->dsn(env('MAILER_DSN'))
                 ->envelope()
@@ -482,7 +482,7 @@ configure the ``texter_transports``:
         // config/packages/notifier.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->notifier()
                 ->texterTransport('expo', env('EXPO_DSN'))
             ;
@@ -544,7 +544,7 @@ transport:
         // config/packages/notifier.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->notifier()
                 // Send notifications to Slack and use Telegram if
                 // Slack errored
@@ -681,7 +681,7 @@ specify what channels should be used for specific levels (using
         // config/packages/notifier.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->notifier()
                 // Use SMS, Slack and email for urgent notifications

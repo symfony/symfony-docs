@@ -131,7 +131,7 @@ this behavior by using the ``lock`` key like:
         // config/packages/lock.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->lock()
                 ->resource('default', ['flock'])
                 ->resource('default', ['flock:///path/to/file'])
@@ -274,7 +274,7 @@ provides :ref:`named lock <reference-lock-resources-name>`:
         // config/packages/lock.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->lock()
                 ->resource('invoice', ['semaphore', 'redis://r2.docker'])
                 ->resource('report', ['semaphore']);

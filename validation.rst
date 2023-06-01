@@ -36,7 +36,7 @@ your application::
 
     class Author
     {
-        private $name;
+        private string $name;
     }
 
 So far, this is an ordinary class that serves some purpose inside your
@@ -63,7 +63,7 @@ following:
         class Author
         {
             #[Assert\NotBlank]
-            private $name;
+            private string $name;
         }
 
     .. code-block:: yaml
@@ -100,9 +100,9 @@ following:
 
         class Author
         {
-            private $name;
+            private string $name;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('name', new NotBlank());
             }
@@ -136,7 +136,7 @@ returned. Take this simple example from inside a controller::
     use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     // ...
-    public function author(ValidatorInterface $validator)
+    public function author(ValidatorInterface $validator): Response
     {
         $author = new Author();
 
@@ -274,7 +274,7 @@ literature genre mostly associated with the author, which can be set to either
                 choices: ['fiction', 'non-fiction'],
                 message: 'Choose a valid genre.',
             )]
-            private $genre;
+            private string $genre;
 
             // ...
         }
@@ -323,11 +323,11 @@ literature genre mostly associated with the author, which can be set to either
 
         class Author
         {
-            private $genre;
+            private string $genre;
 
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 // ...
 
@@ -358,7 +358,7 @@ options can be specified in this way.
         class Author
         {
             #[Assert\Choice(['fiction', 'non-fiction'])]
-            private $genre;
+            private string $genre;
 
             // ...
         }
@@ -404,9 +404,9 @@ options can be specified in this way.
 
         class Author
         {
-            private $genre;
+            private string $genre;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 // ...
 
@@ -430,7 +430,7 @@ Constraints in Form Classes
 Constraints can be defined while building the form via the ``constraints`` option
 of the form fields::
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('myField', TextType::class, [
@@ -474,7 +474,7 @@ class to have at least 3 characters.
         {
             #[Assert\NotBlank]
             #[Assert\Length(min: 3)]
-            private $firstName;
+            private string $firstName;
         }
 
     .. code-block:: yaml
@@ -517,9 +517,9 @@ class to have at least 3 characters.
 
         class Author
         {
-            private $firstName;
+            private string $firstName;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
                 $metadata->addPropertyConstraint(
@@ -562,7 +562,7 @@ this method must return ``true``:
         class Author
         {
             #[Assert\IsTrue(message: 'The password cannot match your first name')]
-            public function isPasswordSafe()
+            public function isPasswordSafe(): bool
             {
                 // ... return true or false
             }
@@ -605,7 +605,7 @@ this method must return ``true``:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue([
                     'message' => 'The password cannot match your first name',
@@ -615,7 +615,7 @@ this method must return ``true``:
 
 Now, create the ``isPasswordSafe()`` method and include the logic you need::
 
-    public function isPasswordSafe()
+    public function isPasswordSafe(): bool
     {
         return $this->firstName !== $this->password;
     }

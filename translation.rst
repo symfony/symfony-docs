@@ -96,7 +96,7 @@ are located:
         // config/packages/translation.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework
                 ->defaultLocale('en')
@@ -557,7 +557,7 @@ if you're generating translations with specialized programs or teams.
             // config/packages/translation.php
             use Symfony\Config\FrameworkConfig;
 
-            return static function (FrameworkConfig $framework) {
+            return static function (FrameworkConfig $framework): void {
                 $framework->translator()
                     ->paths(['%kernel.project_dir%/custom/path/to/translations'])
                 ;
@@ -914,7 +914,7 @@ the framework:
         // config/packages/translation.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->defaultLocale('en');
         };
 
@@ -975,7 +975,7 @@ checks translation resources for several locales:
            // config/packages/translation.php
            use Symfony\Config\FrameworkConfig;
 
-            return static function (FrameworkConfig $framework) {
+            return static function (FrameworkConfig $framework): void {
                 // ...
                 $framework->translator()
                     ->fallbacks(['en'])

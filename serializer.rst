@@ -28,11 +28,12 @@ you need it or it can be used in a controller::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Serializer\SerializerInterface;
 
     class DefaultController extends AbstractController
     {
-        public function index(SerializerInterface $serializer)
+        public function index(SerializerInterface $serializer): Response
         {
             // keep reading for usage examples
         }
@@ -146,7 +147,7 @@ configuration:
         use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->serializer()
                 ->defaultContext([
                     AbstractObjectNormalizer::ENABLE_MAX_DEPTH => true,
@@ -327,15 +328,15 @@ to your class::
         #[ORM\GeneratedValue]
         #[ORM\Column(type: 'integer')]
         #[Groups(['show_product', 'list_product'])]
-        private $id;
+        private int $id;
 
         #[ORM\Column(type: 'string', length: 255)]
         #[Groups(['show_product', 'list_product'])]
-        private $name;
+        private string $name;
 
         #[ORM\Column(type: 'text')]
         #[Groups(['show_product'])]
-        private $description;
+        private string $description;
     }
 
 You can now choose which groups to use when serializing::
@@ -487,7 +488,7 @@ value:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->serializer()->nameConverter('serializer.name_converter.camel_case_to_snake_case');
         };
 
