@@ -398,15 +398,15 @@ It is also possible to serialize only a set of specific attributes::
 
     class User
     {
-        public $familyName;
-        public $givenName;
-        public $company;
+        public string $familyName;
+        public string $givenName;
+        public string $company;
     }
 
     class Company
     {
-        public $name;
-        public $address;
+        public string $name;
+        public string $address;
     }
 
     $company = new Company();
@@ -529,8 +529,8 @@ Given you have the following object::
 
     class Company
     {
-        public $name;
-        public $address;
+        public string $name;
+        public string $address;
     }
 
 And in the serialized form, all attributes must be prefixed by ``org_`` like
@@ -932,7 +932,7 @@ faster alternative to the
 
         use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->services()
                 // ...
                 ->set('get_set_method_normalizer', GetSetMethodNormalizer::class)

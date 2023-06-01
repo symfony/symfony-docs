@@ -71,7 +71,7 @@ and what headers your reverse proxy uses to send information:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework
                 // the IP address (or range) of your proxy
                 ->trustedProxies('192.0.0.1,10.0.0.0/8')

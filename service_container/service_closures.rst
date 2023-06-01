@@ -79,7 +79,7 @@ argument of type ``service_closure``:
 
         use App\Service\MyService;
 
-        return function (ContainerConfigurator $container) {
+        return function (ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(MyService::class)

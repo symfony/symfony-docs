@@ -313,7 +313,7 @@ config files:
 
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $container) {
+        return static function (ContainerConfigurator $container): void {
             $container->parameters()
                 // ...
                 ->set('mailer.transport', 'sendmail')

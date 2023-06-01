@@ -178,7 +178,7 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
         use App\Asset\VersionStrategy\GulpBusterVersionStrategy;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->assets()
                 ->versionStrategy(GulpBusterVersionStrategy::class)

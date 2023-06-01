@@ -315,7 +315,7 @@ doubling them to prevent Symfony from interpreting them as container parameters)
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->ide('myide://open?url=file://%%f&line=%%l');
         };
 
@@ -444,7 +444,7 @@ performance a bit:
         // config/packages/translation.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->enabledLocales(['en', 'es']);
         };
 
@@ -537,7 +537,7 @@ the application won't respond and the user will receive a 400 response.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->trustedHosts(['^example\.com$', '^example\.org$']);
         };
 
@@ -641,7 +641,7 @@ can also :ref:`disable CSRF protection on individual forms <form-csrf-customizat
 
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->csrfProtection()
                 ->enabled(true)
             ;
@@ -711,7 +711,7 @@ You can also set ``esi`` to ``true`` to enable it:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->esi()->enabled(true);
         };
 
@@ -1469,7 +1469,7 @@ To configure a ``jsonp`` format:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->request()
                 ->format('jsonp', 'application/javascript');
         };
@@ -1823,7 +1823,7 @@ setting the value to ``null``:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->session()
                 ->savePath(null);
         };
@@ -1878,7 +1878,7 @@ Whether to enable the session support in the framework.
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->session()
                 ->enabled(true);
         };
@@ -1935,7 +1935,7 @@ This option allows you to define a base path to be used for assets:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->assets()
                 ->basePath('/images');
@@ -1985,7 +1985,7 @@ collection each time it generates an asset's path:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->assets()
                 ->baseUrls(['http://cdn.example.com/']);
@@ -2035,7 +2035,7 @@ You can group assets into packages, to specify different base URLs for them:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->assets()
                 ->package('avatars')
@@ -2111,7 +2111,7 @@ Now, activate the ``version`` option:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->assets()
                 ->version('v2');
@@ -2239,7 +2239,7 @@ individually for each asset package:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->assets()
                 ->versionStrategy('app.asset.my_versioning_strategy');
@@ -2339,7 +2339,7 @@ package:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->assets()
                 // this manifest is applied to every asset (including packages)
@@ -2680,7 +2680,7 @@ the component will look for additional validation files:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->validation()
                 ->mapping()
                     ->paths(['%kernel.project_dir%/config/validation/']);
@@ -2901,7 +2901,7 @@ This option also accepts a map of PHP errors to log levels:
         use Psr\Log\LogLevel;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->phpErrors()->log(\E_DEPRECATED, LogLevel::ERROR);
             $framework->phpErrors()->log(\E_USER_DEPRECATED, LogLevel::ERROR);
             // ...
@@ -3056,7 +3056,7 @@ To configure a Redis cache pool with a default lifetime of 1 hour, do the follow
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->cache()
                 ->pool('cache.mycache')
                     ->adapters(['cache.adapter.redis'])
@@ -3216,7 +3216,7 @@ the name as key and DSN as value:
         // config/packages/lock.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->lock()
                 ->resource('default', [env('LOCK_DSN')]);
         };
@@ -3296,7 +3296,7 @@ the name as key and DSN as value:
         // config/packages/semaphore.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->semaphore()
                 ->resource('default', ['%env(SEMAPHORE_DSN)%']);
         };
@@ -3474,7 +3474,7 @@ A list of workflows to be created by the framework extension:
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->workflows()
                 ->workflows('my_workflow')
                     // ...
@@ -3634,7 +3634,7 @@ exceptions that match the given exception class:
         use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->exception(BadRequestHttpException::class)
                 ->logLevel('debug')
                 ->statusCode(422)

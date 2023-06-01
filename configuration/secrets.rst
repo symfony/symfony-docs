@@ -309,7 +309,7 @@ The secrets system is enabled by default and some of its behavior can be configu
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->secrets()
                 // ->vaultDirectory('%kernel.project_dir%/config/secrets/%kernel.environment%')
                 // ->localDotenvFile('%kernel.project_dir%/.env.%kernel.environment%.local')

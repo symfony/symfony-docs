@@ -641,7 +641,7 @@ and headers.
         // config/packages/mailer.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $mailer = $framework->mailer();
             $mailer
                 ->envelope()
@@ -1255,7 +1255,7 @@ This can be configured by replacing the ``dsn`` configuration entry with a
         use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->mailer()
                 ->transport('main', env('MAILER_DSN'))
                 ->transport('alternative', env('MAILER_DSN_IMPORTANT'))
@@ -1328,7 +1328,7 @@ you have a transport called ``async``, you can route the message there:
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->messenger()
                 ->transport('async')->dsn(env('MESSENGER_TRANSPORT_DSN'));
 
@@ -1408,7 +1408,7 @@ disable asynchronous delivery.
         // config/packages/mailer.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->mailer()
                 ->messageBus('app.another_bus');
         };
@@ -1722,7 +1722,7 @@ the mailer configuration file (e.g. in the ``dev`` or ``test`` environments):
         // config/packages/mailer.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->mailer()
                 ->dsn('null://null');
@@ -1776,7 +1776,7 @@ a specific address, instead of the *real* address:
         // config/packages/mailer.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->mailer()
                 ->envelope()

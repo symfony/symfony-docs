@@ -42,7 +42,7 @@ as integration of other related components:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->form()->enabled(true);
         };
 
