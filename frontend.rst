@@ -1,20 +1,43 @@
 Managing CSS and JavaScript
 ===========================
 
-.. admonition:: Screencast
-    :class: screencast
+Symfony ships with two different options for handling the CSS and JavaScript in
+your app:
 
-    Do you prefer video tutorials? Check out the `Webpack Encore screencast series`_.
+* :ref:`Webpack Encore <frontend-webpack-encore>` is a powerful tool build with Node
+  on top of `Webpack`_ that allows you to write modern CSS & JavaScript and handle
+  things like JSX (React), Vur or TypeScript. It's the recommended option for
+  new Symfony apps.
 
-Symfony ships with a pure-JavaScript library - called Webpack Encore - that makes
-it a joy to work with CSS and JavaScript. You can use it, use something else, or
-create static CSS and JS files in your ``public/`` directory directly and
-include them in your templates.
+* :ref:`Asset Mapper <frontend-asset-mapper>`, is a production-ready simpler alternative
+  to Webpack Encore that runs entirely in PHP. It's currently experimental.
+
+Overall, `Asset Mapper` is powerful & simpler, but doesn't support certain
+features like JSX or TypeScript:
+
+=========================================  =================  =================
+                                           Encore             AssetMapper
+=========================================  =================  =================
+Production Ready?                          yes                yes
+Stable?                                    yes                experimental
+Requirements                               node               none: pure PHP
+Requires a build step?                     yes                no
+Works in all browsers?                     yes                yes
+Supports :doc:`Stimulus/UX </frontend/ux>` yes                yes
+Supports Sass/Tailwind                     yes                :ref:`yes <asset-mapper-extras>`
+Supports JSX, Vue?                         yes                no
+Supports TypeScript                        yes                no
+=========================================  =================  =================
 
 .. _frontend-webpack-encore:
 
 Webpack Encore
 --------------
+
+.. admonition:: Screencast
+    :class: screencast
+
+    Do you prefer video tutorials? Check out the `Webpack Encore screencast series`_.
 
 `Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your application.
 It *wraps* Webpack, giving you a clean & powerful API for bundling JavaScript modules,
@@ -84,13 +107,33 @@ Full API
 
 * `Full API`_
 
+.. _frontend-asset-mapper:
+
+Asset Mapper
+------------
+
+Asset Mapper is an alternative to Webpack Encore that runs entirely in PHP
+without any complex build steps. It leverages the ``importmap`` feature of
+your browser, which is available in all browsers thanks to a polyfill.
+Asset Mapper is currently experimental.
+
+* :doc:`Install AssetMapper </frontend/asset_mapper/installation>`
+* :doc:`Using AssetMapper </frontend/asset_mapper/usage>`
+* :doc:`Handling CSS </frontend/asset_mapper/css>`
+* :doc:`FAQ & Common Issues </frontend/asset_mapper/faq>`
+
 Symfony UX Components
 ---------------------
+
+* :doc:`/frontend/ux`
 
 .. include:: /frontend/_ux-libraries.rst.inc
 
 Other Front-End Articles
 ------------------------
+
+* :doc:`/frontend/create_ux_bundle`
+* :doc:`/frontend/custom_version_strategy`
 
 .. toctree::
     :hidden:
@@ -99,11 +142,9 @@ Other Front-End Articles
     frontend/encore/installation
     frontend/encore/simple-example
     frontend/encore/*
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
+    frontend/asset_mapper/installation
+    frontend/asset_mapper/usage
+    frontend/asset_mapper/*
     frontend/*
 
 .. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
