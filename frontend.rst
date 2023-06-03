@@ -9,11 +9,11 @@ your app:
   things like JSX (React), Vur or TypeScript. It's the recommended option for
   new Symfony apps.
 
-* :ref:`Asset Mapper <frontend-asset-mapper>`, is a production-ready simpler alternative
+* :ref:`AssetMapper <frontend-asset-mapper>`, is a production-ready simpler alternative
   to Webpack Encore that runs entirely in PHP. It's currently experimental.
 
-Overall, `Asset Mapper` is powerful & simpler, but doesn't support certain
-features like JSX or TypeScript:
+AssetMapper is powerful & simpler, but doesn't support certain features like JSX
+or TypeScript:
 
 =========================================  =================  =================
                                            Encore             AssetMapper
@@ -109,13 +109,13 @@ Full API
 
 .. _frontend-asset-mapper:
 
-Asset Mapper
+AssetMapper
 ------------
 
-Asset Mapper is an alternative to Webpack Encore that runs entirely in PHP
+AssetMapper is an alternative to Webpack Encore that runs entirely in PHP
 without any complex build steps. It leverages the ``importmap`` feature of
 your browser, which is available in all browsers thanks to a polyfill.
-Asset Mapper is currently experimental.
+AssetMapper is currently experimental.
 
 * :doc:`Install AssetMapper </frontend/asset_mapper/installation>`
 * :doc:`Using AssetMapper </frontend/asset_mapper/usage>`

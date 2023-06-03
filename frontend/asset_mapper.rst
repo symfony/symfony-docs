@@ -1,12 +1,12 @@
-Asset Mapper: Simple, Modern CSS & JS Management
+AssetMapper: Simple, Modern CSS & JS Management
 ================================================
 
-Asset Mapper lets you write modern JavaScript and CSS without the complexity
+AssetMapper lets you write modern JavaScript and CSS without the complexity
 of using a bundler. Browsers *already* support modern JavaScript features
 like the ``import`` statement and ES6 classes. With just a little help,
 you can have a production-ready setup without a build system.
 
-Asset Mapper has two main features:
+AssetMapper has two main features:
 
 1. :ref:`Mapping & Versioning Asset <mapping-assets>`: All files inside of ``assets/``
    are made available publicly and **versioned**. For example, you can reference
@@ -61,7 +61,7 @@ the `latest asset-mapper recipe`_ for the exact content of these files.
 Mapping and Referencing Assets
 ------------------------------
 
-Asset mapper works by defining directories/paths of assets that you want to expose
+AssetMapper works by defining directories/paths of assets that you want to expose
 publicly. These assets are then versioned and easy to reference. Thanks to the
 ``asset_mapper.yaml`` file, your app starts with one mapped path: the ``assets/``
 directory.
@@ -129,7 +129,7 @@ To see all of the mapped assets in your app, run:
 
 This will show you all the mapped paths and the assets inside of each:
 
-    Asset Mapper Paths
+    AssetMapper Paths
     ------------------
 
     --------- ------------------
@@ -599,7 +599,7 @@ same way::
 Frequently Asked Questions
 --------------------------
 
-Does Asset Mapper Combine Assets?
+Does AssetMapper Combine Assets?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Nope! But that's because this is no longer necessary!
@@ -613,7 +613,7 @@ all of your other assets.
 
 See :ref:`Optimization <optimization>` for more details.
 
-Does Asset Mapper Minify Assets?
+Does AssetMapper Minify Assets?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Nope! Minifying or compressing assets *is* important, but can easily be
