@@ -1,5 +1,5 @@
-Managing CSS and JavaScript
-===========================
+Symfony Frontend Tools
+======================
 
 Symfony ships with two different options for handling the CSS and JavaScript in
 your app:
