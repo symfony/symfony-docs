@@ -1,25 +1,24 @@
 AssetMapper: Simple, Modern CSS & JS Management
-================================================
+===============================================
 
 AssetMapper lets you write modern JavaScript and CSS without the complexity
 of using a bundler. Browsers *already* support modern JavaScript features
-like the ``import`` statement and ES6 classes. With just a little help,
-you can have a production-ready setup without a build system.
+like the ``import`` statement and ES6 classes. With a little help from
+AssetMapper, you can have a production-ready setup without a build system.
 
 AssetMapper has two main features:
 
-1. :ref:`Mapping & Versioning Asset <mapping-assets>`: All files inside of ``assets/``
+1. :ref:`Mapping & Versioning Assets <mapping-assets>`: All files inside of ``assets/``
    are made available publicly and **versioned**. For example, you can reference
-   an ``assets/styles/app.css`` in a template with ``{{ asset('styles/app.css') }}``.
-    The final URL will include a version hash, like ``/assets/styles/app-3c16d9220694c0e56d8648f25e6035e9.css``.
+   ``assets/styles/app.css`` in a template with ``{{ asset('styles/app.css') }}``.
+   The final URL will include a version hash, like ``/assets/styles/app-3c16d9220694c0e56d8648f25e6035e9.css``.
 
 1. :ref:`Importmaps <importmaps-javascript>`: A native browser feature that makes it easier
    to use the JavaScript ``import`` statement (e.g. ``import { Modal } from 'bootstrap'``)
-   without a build system. It's supported in all browsers (thanks to a polyfill)
+   without a build system. It's supported in all browsers (thanks to a shim)
    and is a W3C standard.
 
-AssetMapper is currently an `experimental`_ component and may change in future
-releases.
+AssetMapper is currently `experimental`_ and may change in future releases.
 
 Installation
 ------------
@@ -36,10 +35,10 @@ and Twig available.
 If you're using :ref:`Symfony Flex <symfony-flex>`, you're done! The recipe just
 added a number of files:
 
-* ``assets/app.js`` Your main JavaScript file
-* ``assets/styles/app.css`` Your main CSS file
-* ``config/packages/asset_mapper.yaml`` Config file where you define your asset "paths"
-* ``importmap.php`` Your importmap config file
+* ``assets/app.js`` Your main JavaScript file;
+* ``assets/styles/app.css`` Your main CSS file;
+* ``config/packages/asset_mapper.yaml`` Where you define your asset "paths";
+* ``importmap.php`` Your importmap config file.
 
 It also *updated* your ``templates/base.html.twig`` file:
 
@@ -92,7 +91,7 @@ deploy, you'll run:
 
 This will physically copy all the files from your mapped directories into
 ``public/assets/`` so that they're served directly by your web server.
-See :ref:`deployment` for more details.
+See :ref:`Deployment <deployment>` for more details.
 
 Paths Inside of CSS Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -129,6 +128,8 @@ To see all of the mapped assets in your app, run:
 
 This will show you all the mapped paths and the assets inside of each:
 
+.. code-block:: text
+
     AssetMapper Paths
     ------------------
 
@@ -147,7 +148,7 @@ This will show you all the mapped paths and the assets inside of each:
      styles/app.css     assets/styles/app.css
      images/duck.png    assets/images/duck.png
 
-The "Logical Path" is the path that to use when referencing the asset, like
+The "Logical Path" is the path to use when referencing the asset, like
 from a template.
 
 .. _importmaps-javascript:
@@ -178,33 +179,33 @@ All modern browsers support the JavaScript `import statement`_ and modern
         }
     }
 
-The ``assets/app.js`` file loaded & executed thanks to the `{{ importmap() }}`
-Twig function (see :ref:`importmap-entry`). So, this code will work!
+The ``assets/app.js`` file is loaded & executed thanks to the ``{{ importmap() }}``
+Twig function (see :ref:`import 'app' <importmap-app-entry>`). So, this code will work!
 
 .. tip::
 
     When importing relative files, be sure to include the ``.js`` extension.
-    Unlike in Node, the extension is required in the browser.
+    Unlike in Node, in the browser environment, the extension is required.
 
 Importing 3rd Party JavaScript Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Suppose you want to use the `bootstrap`_ JavaScript package. Technically,
+Suppose you want to use an `npm package`_, like `bootstrap`_. Technically,
 this can be done by importing its full URL, like from a CDN:
 
 .. code-block:: javascript
 
     import { Alert } from 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/+esm';
 
-But yikes! Needing to include that URL is a total pain. Instead, we can add
+But yikes! Needing to include that URL is a pain! Instead, we can add
 this to our "importmap" via the ``importmap:require`` command. This command can
-be used to download any Node package from `npmjs.com`_.
+be used to download any `npm package`_:
 
 .. code-block:: terminal
 
     $ php bin/console importmap:require bootstrap
 
-This adds the ``bootstrap`` package to an ``importmap.php`` file:
+This adds the ``bootstrap`` package to your ``importmap.php`` file::
 
     // importmap.php
     return [
@@ -215,7 +216,7 @@ This adds the ``bootstrap`` package to an ``importmap.php`` file:
         ],
     ];
 
-Now you import the ``bootstrap`` package like normal:
+Now you can import the ``bootstrap`` package like normal:
 
 .. code-block:: javascript
 
@@ -235,10 +236,10 @@ your repository.
 .. note::
 
     Sometimes, a package - like ``bootstrap`` - will have one or more dependencies,
-    like ``@popperjs/core``. The ``download`` option will download both the main
+    such as ``@popperjs/core``. The ``download`` option will download both the main
     package *and* its dependencies.
 
-To update all of the 3rd party packages in your ``importmap.php`` file, run:
+To update all 3rd party packages in your ``importmap.php`` file, run:
 
 .. code-block:: terminal
 
@@ -248,7 +249,7 @@ How does the importmap Work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 How does this ``importmap.php`` file allow us to import ``bootstrap``? That's
-thanks to the `{{ importmap() }}` Twig function in ``base.html.twig``. This
+thanks to the ``{{ importmap() }}`` Twig function in ``base.html.twig``, which
 outputs an `importmap`_:
 
 .. code-block:: html
@@ -261,8 +262,8 @@ outputs an `importmap`_:
         }
     }</script>
 
-Importmaps are a native browser feature. It works in all browsers thanks to
-a "shim" that's automatically included.
+Importmaps is a native browser feature. It works in all browsers thanks to
+a "shim" file that's included automatically by AssetMapper.
 
 When you import ``bootstrap`` from your JavaScript, the browser will look at
 the ``importmap`` and see that it should fetch the package from the URL.
@@ -294,6 +295,8 @@ a ``<link rel="modulepreload">`` tag is rendered for that entry as well as for
 any relative JavaScript files it imports. This is a performance optimization
 and you can learn more about it in the :ref:`AssetMapper Deployment <deployment>`
 guide.
+
+.. _importmap-app-entry:
 
 The ``importmap()`` function also renders one more line:
 
@@ -641,12 +644,12 @@ to support older browsers. So, it works everywhere.
 Inside your own code, if you're relying on modern `ES6`_ JavaScript features
 like the `class syntax`_, this is supported in all but the oldest browsers.
 If you *do* need to support very old browsers, you should use a tool like
-:doc:`Encore </frontend/encore>` instead of AssetMapper.
+:ref:`Encore <frontend-webpack-encore>` instead of AssetMapper.
 
 Can I Use with Sass or Tailwind?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sure! See :ref:`/frontend/asset_mapper/css_compilers` for details.
+Sure! See :ref:`asset-mapper-tailwind` or :ref:`asset-mapper-sass`.
 
 Can I use with TypeScript, JSX or Vue?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -656,13 +659,15 @@ Probably not.
 TypeScript, by its very nature, requires a build step.
 
 JSX *can* be compiled directly to a native JavaScript file but if you're using a lot of JSX,
-you'll probably want to use a tool like :doc:`Encore </frontend/encore>`.
+you'll probably want to use a tool like :ref:`Encore <frontend-webpack-encore>`.
 See the `UX React Documentation`_ for more details about using with AssetMapper.
 
 Vue files *can* be written in native JavaScript, and those *will* work with
 AssetMapper. But you cannot write single-file components (i.e. ``.vue`` files)
 with AssetMapper, as those must be used in a build system. See the
 `UX Vue.js Documentation`_ for more details about using with AssetMapper.
+
+.. _asset-mapper-tailwind:
 
 Using Tailwind CSS
 ------------------
@@ -730,6 +735,8 @@ point to the new ``build/app.css`` file:
 
 Done! You can choose to ignore the ``assets/build/app.css`` file from Git
 or commit it to ease deployment.
+
+.. _asset-mapper-sass:
 
 Using Sass
 ----------
@@ -970,6 +977,7 @@ This will force the AssetMapper to re-calculate the content of all files.
 .. _experimental: https://symfony.com/doc/current/contributing/code/experimental.html
 .. _import statement: https://caniuse.com/es6-module-dynamic-import
 .. _ES6: https://caniuse.com/es6
+.. _npm package: https://www.npmjs.com
 .. _importmap: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap
 .. _bootstrap: https://www.npmjs.com/package/bootstrap
 .. _es module shim: https://www.npmjs.com/package/es-module-shims
