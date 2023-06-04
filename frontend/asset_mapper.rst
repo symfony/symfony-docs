@@ -67,7 +67,7 @@ directory.
 
 If you create an ``assets/images/duck.png`` file, you can reference it in a template with:
 
-.. code-block:: twig
+.. code-block:: html+twig
 
     <img src="{{ asset('images/duck.png') }}">
 
@@ -118,7 +118,7 @@ for ``duck.png``:
     }
 
 Debugging: Seeing All Mapped Assets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To see all of the mapped assets in your app, run:
 
@@ -188,7 +188,7 @@ Twig function (see :ref:`import 'app' <importmap-app-entry>`). So, this code wil
     Unlike in Node, in the browser environment, the extension is required.
 
 Importing 3rd Party JavaScript Packages
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Suppose you want to use an `npm package`_, like `bootstrap`_. Technically,
 this can be done by importing its full URL, like from a CDN:
@@ -611,7 +611,7 @@ Frequently Asked Questions
 --------------------------
 
 Does AssetMapper Combine Assets?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Nope! But that's because this is no longer necessary!
 
@@ -625,7 +625,7 @@ all of your other assets.
 See :ref:`Optimization <optimization>` for more details.
 
 Does AssetMapper Minify Assets?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Nope! Minifying or compressing assets *is* important, but can easily be
 done by your web server or a service like Cloudflare. See
@@ -665,7 +665,7 @@ If you *do* need to support very old browsers, you should use a tool like
     The ``importmap`` feature **is** shimmed to work in **all** browsers by AssetMapper.
     However, the shim doesn't work with "dynamic" imports:
 
-    .. code-block:: js
+    .. code-block:: javascript
 
         // this works
         import { add } from './math.js';
@@ -832,7 +832,7 @@ This means you can render these assets in your templates using the
     <link rel="stylesheet" href="{{ asset('bundles/babdevpagerfanta/css/pagerfanta.css') }}">
 
 Actually, this path - ``bundles/babdevpagerfanta/css/pagerfanta.css`` - already
-works in apps *without* AssetMapper, because the ``assets:install`` command copies
+works in applications *without* AssetMapper, because the ``assets:install`` command copies
 the assets from bundles into ``public/bundles/``. However, when AssetMapper is
 enabled, the ``pagerfanta.css`` file will automatically  be versioned! It will
 output someting like:
@@ -1016,7 +1016,6 @@ This will force the AssetMapper to re-calculate the content of all files.
 .. _importmap: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap
 .. _bootstrap: https://www.npmjs.com/package/bootstrap
 .. _es module shim: https://www.npmjs.com/package/es-module-shims
-.. _npmjs.com: https://www.npmjs.com/
 .. _jsdelivr.com: https://www.jsdelivr.com/
 .. _highlight.js: https://www.npmjs.com/package/highlight.js
 .. _class syntax: https://caniuse.com/es6-class

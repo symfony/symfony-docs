@@ -6,7 +6,7 @@ Symfony ships with two options for handling the CSS and JavaScript in your app:
 * :ref:`Webpack Encore <frontend-webpack-encore>` is a powerful tool built with Node
   on top of `Webpack`_ that allows you to write modern CSS & JavaScript and handle
   things like JSX (React), Vue or TypeScript. It's the recommended option for
-  new Symfony apps.
+  new Symfony applications.
 
 * :ref:`AssetMapper <frontend-asset-mapper>`, is a production-ready simpler alternative
   to Webpack Encore that runs entirely in PHP. It's currently experimental.
@@ -106,7 +106,7 @@ Full API
 .. _frontend-asset-mapper:
 
 AssetMapper
-------------
+-----------
 
 AssetMapper is an alternative to Webpack Encore that runs entirely in PHP
 without any complex build steps. It leverages the ``importmap`` feature of
@@ -135,8 +135,7 @@ Other Front-End Articles
     frontend/encore/installation
     frontend/encore/simple-example
     frontend/encore/*
-    frontend/asset_mapper/installation
-    frontend/asset_mapper/usage
+    frontend/asset_mapper
     frontend/asset_mapper/*
     frontend/*
 
