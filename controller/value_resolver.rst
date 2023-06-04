@@ -263,12 +263,10 @@ that's why we can assign ``null`` as ``$session``'s default value.
 We target a resolver by passing its name as ``ValueResolver``'s first argument.
 For convenience, built-in resolvers' name are their FQCN.
 
-The ``ValueResolver`` attribute can also be used to disable the targeted resolver
-by passing its ``$disabled`` argument to ``true``, in which case it won't be called.
-This is how :ref:`MapEntity allows to disable the EntityValueResolver
-for a specific controller <doctrine-entity-value-resolver>`.
+A targeted resolver can also be disabled by passing ``ValueResolver``'s ``$disabled``
+argument to ``true``; this is how :ref:`MapEntity allows to disable the
+EntityValueResolver for a specific controller <doctrine-entity-value-resolver>`.
 Yes, ``MapEntity`` extends ``ValueResolver``!
-
 
 Adding a Custom Value Resolver
 ------------------------------
