@@ -272,7 +272,7 @@ the ``importmap`` and see that it should fetch the package from the URL.
 
 But where did the ``/assets/duck.js`` import entry come from? Great question!
 
-The ``app.js`` file above imports ``./duck.js``. When you import a file using a
+The ``assets/app.js`` file above imports ``./duck.js``. When you import a file using a
 relative path, your browser looks for that file relative to the one importing
 it. So, it would look for ``/assets/duck.js``. That URL *would* be correct,
 except that the ``duck.js`` file is versioned. Fortunately, AssetMapper sees that
@@ -292,18 +292,20 @@ an `es module shim`_ and a few other things, like a set of "preloads":
 
 In ``importmap.php``, each entry can have a ``preload`` option. If set to ``true``,
 a ``<link rel="modulepreload">`` tag is rendered for that entry as well as for
-any relative JavaScript files it imports. This is a performance optimization
-and you can learn more about it in the :ref:`AssetMapper Deployment <deployment>`
-guide.
+any JavaScript files it imports (this happens for "relative" - ``./`` or ``../`` -
+imports only). This is a performance optimization and you can learn more about below
+in :ref:`Performance: Add Preloading <performance-preloading>`.
 
 .. _importmap-app-entry:
 
 The ``importmap()`` function also renders one more line:
 
+.. code-block:: html
+
     <script type="module">import 'app';</script>
 
 So far, we've output an ``importmap`` and even hinted to the browser that it
-should preload some files. But we haven't actually told the browser to *load*
+should preload some files. But we haven't actually told the browser to parse
 and execute any JavaScript. This line does that: it imports the ``app`` entry,
 which causes the code in ``assets/app.js`` to be executed.
 
@@ -322,9 +324,12 @@ and a specific language:
     hljs.registerLanguage('javascript', javascript);
     hljs.highlightAll();
 
-In this case, you do *not* want to add the ``highlight.js`` package to your
-``importmap.php`` file. Instead, use ``importmap:require`` and pass it the
-exact paths you need:
+In this case, adding the ``highlight.js`` package to your ``importmap.php`` file
+won't work: whatever your importing - e.g. ``highlight.js/lib/core`` - needs to
+*exactly* match an entry in the ``importmap.php`` file.
+
+Instead, use ``importmap:require`` and pass it the exact paths you need. This
+also shows how you can require multiple packages at once:
 
 .. code-block:: terminal
 
@@ -334,19 +339,19 @@ Handling 3rd-Party CSS
 ----------------------
 
 With the ``importmap:require`` command, we can quickly use any JavaScript
-package. But what about CSS? For example, ``bootstrap`` package also contains CSS
-files.
+package. But what about CSS? For example, the ``bootstrap`` package also contains
+a CSS file.
 
 Including CSS is a bit more manual, but still easy enough. To find the CSS,
 we recommend using `jsdelivr.com`_:
 
-1. Search for the package on `jsdelivr.com`_
+1. Search for the package on `jsdelivr.com`_.
 2. Once on the package page (e.g. https://www.jsdelivr.com/package/npm/bootstrap),
-   sometimes the ``link`` tag to the CSS file you need will already be shown.
+   sometimes the ``link`` tag to the CSS file will already be shown in the "Install" box.
 3. If not, click the "Files" tab and find the CSS file you need. For example,
    the ``bootstrap`` package has a ``dist/css/bootstrap.min.css`` file. If you're
-   not search which file to use, check the ``package.json`` file. Often the
-   this will have a ``main`` or ``style`` key will point to the CSS file.
+   not sure which file to use, check the ``package.json`` file. Often
+   this will have a ``main`` or ``style`` key that points to the CSS file.
 
 Once you have the URL, include it in ``base.html.twig``:
 
@@ -372,7 +377,7 @@ When using a bundler like Encore, you can import CSS from a JavaScript file:
 
 .. code-block:: javascript
 
-    // CAN work, but the CSS load will be lazy/delayed
+    // this CAN work (keep reading), but will be loaded lazily
     import 'swiper/swiper-bundle.min.css';
 
 This *can* work with importmaps, but it should *not* be used for critical CSS
@@ -380,7 +385,7 @@ that needs to be loaded before the page is rendered because the browser
 won't download the CSS until the JavaScript file executed.
 
 However, if you *do* want to lazily-load a CSS file, you an make this work
-by using ``importmap:require`` command and pointing it at a CSS file.
+by using the ``importmap:require`` command and pointing it at a CSS file.
 
 .. code-block:: terminal
 
@@ -392,7 +397,7 @@ when executed, adds the CSS to your page.
 Issues and Debugging
 --------------------
 
-There are a few common errors and problems that you might run into.
+There are a few common errors and problems you might run into.
 
 Missing importmap Entry
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -400,7 +405,7 @@ Missing importmap Entry
 One of the most common errors will come from your browser's console, and
 will something like this:
 
-    Failed to resolve module specifier "bootstrap". Relative references must start
+    Failed to resolve module specifier "    bootstrap". Relative references must start
     with either "/", "./", or "../".
 
 Or:
@@ -409,7 +414,7 @@ Or:
     Relative module specifiers must start with "./", "../" or "/".
 
 This means that, somewhere in your JavaScript, you're importing a 3rd party
-package - e.g. ``import 'bootstrap'``. The browser is trying to find this
+package - e.g. ``import 'bootstrap'``. The browser tries to find this
 package in your ``importmap`` file, but it's not there.
 
 The fix is almost always to add it to your ``importmap``:
@@ -420,7 +425,7 @@ The fix is almost always to add it to your ``importmap``:
 
 .. note::
 
-    Some browsers, like Firefox show *where* this "import" code lives, while
+    Some browsers, like Firefox, show *where* this "import" code lives, while
     others like Chrome currently do not.
 
 404 Not Found for a JavaScript, CSS or Image File
@@ -429,8 +434,8 @@ The fix is almost always to add it to your ``importmap``:
 Sometimes a JavaScript file you're importing (e.g. ``import './duck.js'``),
 or a CSS/image file you're referencing won't be found, and you'll see a 404
 error in your browser's console. You'll also notice that the 404 URL is missing
-the version hash in the filename (e.g. 404 ``/assets/duck.js`` instead of the
-correct ``/assets/duck.1b7a64b3b3d31219c262cf72521a5267.js`` format).
+the version hash in the filename (e.g. a 404 to ``/assets/duck.js`` instead of
+a path like ``/assets/duck.1b7a64b3b3d31219c262cf72521a5267.js``).
 
 This is usually because the path is wrong. If you're referencing the file
 directly in a Twig template:
@@ -439,11 +444,11 @@ directly in a Twig template:
 
         <img src="{{ asset('images/duck.png') }}">
 
-Then the path you pass to ``asset()`` should be the "logical path" to the
+Then the path that you pass ``asset()`` should be the "logical path" to the
 file. Use the ``debug:asset-map`` command to see all valid logical paths
 in your app.
 
-More likely, you're importing the asset from a CSS file (e.g.
+More likely, you're importing the failing asset from a CSS file (e.g.
 ``@import url('other.css')``) or a JavaScript file:
 
 .. code-block:: javascript
@@ -451,10 +456,10 @@ More likely, you're importing the asset from a CSS file (e.g.
     // assets/controllers/farm-controller.js
     import '../farm/chicken.js';
 
-In this case, the path should start with ``./`` or ``../`` and be *relative*
-to the file that's importing it. In the example above, ``../farm/chicken.js``
-would point to ``assets/controllers/farm/chicken.js``. To see a list of *all*
-invalid imports in your app, you can run:
+When doing this, the path should be *relative* to the file that's importing it
+(and, in JavaScript files, should start with ``./`` or ``../``). In this case,
+``../farm/chicken.js`` would point to ``assets/farm/chicken.js``. To
+see a list of *all* invalid imports in your app, run:
 
 .. code-block:: terminal
 
@@ -474,9 +479,9 @@ Missing Asset Warnings on Commented-out Code
 
 AssetMapper looks in your JavaScript files for ``import`` lines so that it can
 :ref:`automatically add them to your importmap <automatic-import-mapping>`.
-This is done via regex and isn't perfect: if you comment-out an import, it
-will still be found and added to your importmap, which doesn't harm anything,
-but could be surprising.
+This is done via regex and works very well, though it isn't perfect. If you
+comment-out an import, it will still be found and added to your importmap. That
+doesn't harm anything, but could be surprising.
 
 If the imported path cannot be found, you'll see warning log when that asset
 is being built, which you can ignore.
@@ -486,19 +491,20 @@ is being built, which you can ignore.
 Deploying AssetMapper
 ---------------------
 
-When you're ready to deploy, just be sure to run this command during
+When you're ready to deploy, just be sure to "compile" your assets during
 deployment:
 
 .. code-block:: terminal
 
     $ php bin/console asset-map:compile
 
-That's it! This will write all your assets into the ``public/assets/` directory,
+That's it! This will write all your assets into the ``public/assets/`` directory,
 along with a few JSON files so that the ``importmap`` can be rendered lightning fast.
 
-But to make sure your site is running fast, be sure that your web server
-(or a proxy) is running HTTP/2, compressing your assets and setting long-lived
-Expires headers. See :ref:`Optimization <optimization>` for more details.
+But to make sure your site is performant, be sure that your web server
+(or a proxy) is running HTTP/2, is compressing your assets and setting
+long-lived Expires headers on them. See :ref:`Optimization <optimization>` for
+more details.
 
 .. _optimization:
 
@@ -506,7 +512,7 @@ Optimizing Performance
 ----------------------
 
 To make your AssetMapper-powered site fly, there are a few things you need to
-do. If you want to take a shortcut, you can use a service like Cloudflare,
+do. If you want to take a shortcut, you can use a service like `Cloudflare`_,
 which will automatically do most of these things for you:
 
 - **Use HTTP/2**: Your web server **must** be running HTTP/2 so the browser
@@ -529,7 +535,9 @@ which will automatically do most of these things for you:
   any web server, but can be easily enabled.
 
 Once you've done these things, you can use a tool like `Lighthouse`_ to
-further test the performance of your.
+validate the performance of your site!
+
+.. _performance-preloading:
 
 Performance: Add Preloading
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -552,8 +560,8 @@ When the browser downloads the page, this happens:
 3. It *then* sees the ``bootstrap`` import and downloads ``assets/bootstrap.js``.
 
 Instead of downloading all 3 files in parallel, the browser is forced to
-download them in a chain. This is hurts performance. To fix this, in
-``importmap.php``, add a ``preload`` key to the ``app`` entry, which
+download them one-by-one as it discovers them. This is hurts performance. To fix
+this, in ``importmap.php``, add a ``preload`` key to the ``app`` entry, which
 points to the ``assets/app.js`` file. Actually, this should already be
 done for you::
 
@@ -576,7 +584,7 @@ a relative path (i.e. starting with ``./`` or ``../``):
     <link rel="preload" href="/assets/duck.js" as="script">
 
 This tells the browser to start downloading both of these files immediately,
-even though it hasn't seen the ``import`` statement for ``assets/duck.js``
+even though it hasn't yet seen the ``import`` statement for ``assets/duck.js``
 
 You'll also want to preload ``bootstrap`` as well, which you can do in the
 same way::
@@ -596,7 +604,7 @@ same way::
     find all of the JavaScript files that it imports using a **relative** path
     and preloads those as well. However, it does not currently do this when
     you import "packages" (e.g. ``bootstrap``). These packages will already
-    live in your ``importmap.php` file, so their preload setting is handled
+    live in your ``importmap.php`` file, so their preload setting is handled
     explicitly in that file.
 
 Frequently Asked Questions
@@ -608,7 +616,7 @@ Does AssetMapper Combine Assets?
 Nope! But that's because this is no longer necessary!
 
 In the past, it was common to combine assets to reduce the number of HTTP
-requests that were made. However, thanks to advances in web servers like
+requests that were made. Thanks to advances in web servers like
 HTTP/2, it's typically not a problem to keep your assets separate and let the
 browser download them in parallel. In fact, by keeping them separate, when
 you update one asset, the browser can continue to use the cached version of
@@ -627,8 +635,8 @@ Is AssetMapper Production Ready? Is it Performant?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Yes! Very! AssetMapper leverages advances in browser technology (like importmaps
-and native ``import`` support) and web (like HTTP/2, which allows assets to be
-downloaded in parallel). See the other questions about minimization and
+and native ``import`` support) and web servers (like HTTP/2, which allows assets
+to be downloaded in parallel). See the other questions about minimization and
 combination and :ref:`Optimization <optimization>` for more details.
 
 The https://ux.symfony.com site runs on AssetMapper and has a 99%
@@ -638,18 +646,43 @@ Does AssetMapper work in All Browser?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Yup! Features like importmaps and the ``import`` statement are supported
-in all modern browsers but AssetMapper ships with an `es module shim`_
-to support older browsers. So, it works everywhere.
+in all modern browsers, but AssetMapper ships with an `es module shim`_
+to support ``importmap`` in old browsers. So, it works everywhere (see note
+below).
 
 Inside your own code, if you're relying on modern `ES6`_ JavaScript features
 like the `class syntax`_, this is supported in all but the oldest browsers.
 If you *do* need to support very old browsers, you should use a tool like
 :ref:`Encore <frontend-webpack-encore>` instead of AssetMapper.
 
+.. note::
+
+    The `import statement`_ can't be polyfilled or shimmed to work on *every*
+    browser. However, only the **oldest** browsers don't support it - basically
+    IE 11 (which is no longer supported by Microsoft and has less than .4%
+    of global usage).
+
+    The ``importmap`` feature **is** shimmed to work in **all** browsers by AssetMapper.
+    However, the shim doesn't work with "dynamic" imports:
+
+    .. code-block:: js
+
+        // this works
+        import { add } from './math.js';
+
+        // this will not work in the oldest browsers
+        import('./math.js').then(({ add }) => {
+            // ...
+        });
+
+    If you want to use dynamic imports and need to support certain older browsers
+    (https://caniuse.com/import-maps), you can use an ``importShim()`` function
+    from the shim: https://www.npmjs.com/package/es-module-shims#user-content-polyfill-edge-case-dynamic-import
+
 Can I Use with Sass or Tailwind?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Sure! See :ref:`asset-mapper-tailwind` or :ref:`asset-mapper-sass`.
+Sure! See :ref:`Using Tailwind CSS <asset-mapper-tailwind>` or :ref:`Using Sass <asset-mapper-sass>`.
 
 Can I use with TypeScript, JSX or Vue?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -672,7 +705,7 @@ with AssetMapper, as those must be used in a build system. See the
 Using Tailwind CSS
 ------------------
 
-The `Tailwind`_ CSS framework can be used inside AssetMapper. First, install
+Want to use the `Tailwind`_ CSS framework in AssetMapper? No problem. First, install
 the ``tailwindcss`` binary. This can be installed via npm (run ``npm --init``
 if you don't already have a ``package.json`` file):
 
@@ -689,7 +722,7 @@ Next, generate the ``tailwind.config.js`` file:
     $ npx tailwindcss init
 
     # or with the standalone binary:
-    ./tailwindcss init
+    $ ./tailwindcss init
 
 Update ``tailwind.config.js`` to point to your template and JavaScript files:
 
@@ -704,36 +737,36 @@ Update ``tailwind.config.js`` to point to your template and JavaScript files:
     +       "./templates/**/*.html.twig",
     +   ],
 
-Then add the base lines to your ``assets/app.css`` file:
+Then add the base lines to your ``assets/styles/app.css`` file:
 
 .. code-block:: css
 
-    /* assets/app.css */
+    /* assets/styles/app.css */
     @tailwind base;
     @tailwind components;
     @tailwind utilities;
 
 Now that Tailwind is setup, run the ``tailwindcss`` binary in "watch" mode
-to build the CSS file to a new ``assets/build/app.css`` path:
+to build the CSS file to a new ``assets/app.built.css`` path:
 
 .. code-block:: terminal
 
-    $ npx tailwindcss build -w assets/styles/app.css -o assets/build/app.css
+    $ npx tailwindcss build -i assets/styles/app.css -o assets/styles/app.built.css --watch
 
     # or with the standalone binary:
-    ./tailwindcss build -w assets/styles.css -o assets/build/app.css
+    $ ./tailwindcss build -i assets/styles/app.css -o assets/styles/app.built.css --watch
 
 Finally, instead of pointing directly to ``styles/app.css`` in your template,
-point to the new ``build/app.css`` file:
+point to the new ``styles/app.built.css`` file:
 
 .. code-block:: diff
 
     {# templates/base.html.twig #}
 
     - <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-    + <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    + <link rel="stylesheet" href="{{ asset('styles/app.built.css') }}">
 
-Done! You can choose to ignore the ``assets/build/app.css`` file from Git
+Done! You can choose to ignore the ``assets/styles/app.built.css`` file from Git
 or commit it to ease deployment.
 
 .. _asset-mapper-sass:
@@ -749,7 +782,7 @@ install it via npm:
 
     $ npm install -D dart-sass
 
-Next, create an ``assets/styles/app.scss`` file and write some code:
+Next, create an ``assets/styles/app.scss`` file and write some dazzling CSS:
 
 .. code-block:: scss
 
@@ -770,7 +803,8 @@ new ``assets/styles/app.css`` path:
     # or with the standalone binary:
     ./sass assets/styles/app.scss assets/styles/app.css --watch
 
-In your template, point directly to the ``styles/app.css`` file:
+In your template, point directly to the ``styles/app.css`` file (``base.html.twig``
+points to ``styles/app.css`` by default):
 
 .. code-block:: html+twig
 
@@ -778,8 +812,8 @@ In your template, point directly to the ``styles/app.css`` file:
     <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 
 Done! You can choose to ignore the ``assets/styles/app.css`` file from Git
-or commit it to ease deployment. To prevent the source `.scss` files from being
-exposed to the public, see :ref:`excluded_patterns`.
+or commit it to ease deployment. To prevent the source ``.scss`` files from being
+exposed to the public, see :ref:`exclude_patterns <excluded_patterns>`.
 
 Third-Party Bundles & Custom Asset Paths
 ----------------------------------------
@@ -800,8 +834,8 @@ This means you can render these assets in your templates using the
 Actually, this path - ``bundles/babdevpagerfanta/css/pagerfanta.css`` - already
 works in apps *without* AssetMapper, because the ``assets:install`` command copies
 the assets from bundles into ``public/bundles/``. However, when AssetMapper is
-enabled, the ``pagerfanta.css`` file will automatically  be versioned. It will
-output like:
+enabled, the ``pagerfanta.css`` file will automatically  be versioned! It will
+output someting like:
 
 .. code-block:: html+twig
 
@@ -844,7 +878,7 @@ This wouldn't work either:
     // assets/app.js
 
     // you cannot reach above assets/
-    import '../vendor/symfony/ux-live-component/assets/dist/live_controller.js
+    import '../vendor/symfony/ux-live-component/assets/dist/live_controller.js';
     // using a logical path won't work either (the "@symfony/ux-live-component" path is added by the LiveComponent library)
     import '@symfony/ux-live-component/live_controller.js';
     // importing like a JavaScript "package" won't work
@@ -860,8 +894,8 @@ For JavaScript files, you can add an entry to your ``importmap`` file:
     $ php bin/console importmap:require @symfony/ux-live-component --path=vendor/symfony/ux-live-component/assets/dist/live_controller.js
 
 Then you can ``import '@symfony/ux-live-component'`` like normal. The ``--path``
-option tells the command to point to a local file instead of a package. And
-in this case, the ``@symfony/ux-live-component`` argument could be anything:
+option tells the command to point to a local file instead of a package.
+In this case, the ``@symfony/ux-live-component`` argument could be anything:
 whatever you use here will be the string that you can use in your ``import``.
 
 If you get an error like this:
@@ -875,6 +909,7 @@ file:
 
 .. code-block:: yaml
 
+    # config/packages/asset_mapper.yaml
     framework:
         asset_mapper:
             paths:
@@ -886,7 +921,7 @@ Then try the command again.
 Configuration Options
 ---------------------
 
-You can see very available configuration option and some info by running:
+You can see every available configuration option and some info by running:
 
 .. code-block:: terminal
 
@@ -958,9 +993,9 @@ When developing your app in debug mode, the AssetMapper will calculate the
 content of each asset file and cache it. Whenever that file changes, AssetMapper
 will automatically re-calculate the content.
 
-The system also accounts for "dependencies": If ``app.css`` has an
-``@import url('other.css')``, then the ``app.css`` file contents will be re-calculated
-whenever ``other.css`` changes. This is because the version hash of ``other.css``
+The system also accounts for "dependencies": If ``app.css`` contains
+``@import url('other.css')``, then the ``app.css`` file contents will also be
+re-calculated whenever ``other.css`` changes. This is because the version hash of ``other.css``
 will change... which will cause the final content of ``app.css`` to change, since
 it includes the final ``other.css`` filename inside.
 
@@ -993,3 +1028,4 @@ This will force the AssetMapper to re-calculate the content of all files.
 .. _Tailwind standalone binary: https://tailwindcss.com/blog/standalone-cli
 .. _download it from the latest GitHub release: https://github.com/sass/dart-sass/releases/latest
 .. _BabdevPagerfantaBundle: https://github.com/BabDev/PagerfantaBundle
+.. _Cloudflare: https://www.cloudflare.com/
