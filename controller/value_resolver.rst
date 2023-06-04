@@ -234,10 +234,10 @@ can be resolved by leveraging the
     namespace App\Controller;
 
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\HttpKernel\Attribute\ValueResolver;
     use Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver;
     use Symfony\Component\Routing\Annotation\Route;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
     class SessionController
     {
@@ -274,9 +274,9 @@ By passing it to ``true``, you can disable the targeted resolver::
 
     use App\ArgumentResolver\EagerValueResolver;
     use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\HttpKernel\Attribute\ValueResolver;
     use Symfony\Component\Routing\Annotation\Route;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
     class SessionController
     {
@@ -414,7 +414,7 @@ but you can set it yourself to change its ``priority`` or ``name`` attributes.
                 <!-- ... -->
 
                 <service id="App\ValueResolver\BookingIdValueResolver">
-                    <tag name="booking_id" priority="150"/>controller.argument_value_resolver</tag>
+                    <tag name="booking_id" priority="150">controller.argument_value_resolver</tag>
                 </service>
             </services>
 
