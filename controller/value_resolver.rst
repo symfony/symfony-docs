@@ -435,7 +435,7 @@ your resolver. Otherwise it will default to the service's id.
 ``controller.targeted_value_resolver``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Set this tag if you want your resolver to be called only if it is pinned by a
+Set this tag if you want your resolver to be called only if it is targeted by a
 ``ValueResolver`` attribute. Like ``controller.argument_value_resolver``, you
 can customize the name by which your resolver can be targeted.
 
@@ -455,7 +455,7 @@ to your resolver and pass your custom name as its first argument::
         // ...
     }
 
-You can then pass this name as ``ValueResolver``'s first argument to pin your resolver::
+You can then pass this name as ``ValueResolver``'s first argument to target your resolver::
 
     // src/Controller/BookingController.php
     namespace App\Controller;
