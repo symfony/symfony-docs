@@ -218,8 +218,8 @@ Managing Value Resolvers
 
 For each argument, every resolver tagged with ``controller.argument_value_resolver``
 will be called until one provides a value. The order in which they are called depends
-on their priority. For example, the ``SessionValueResolver`` (priority 50) will be
-called before the ``DefaultValueResolver`` (priority -100) which allows to write e.g.
+on their priority. For example, the ``SessionValueResolver`` will be called before the
+``DefaultValueResolver`` because its priority is higher. This allows to write e.g.
 ``SessionInterface $session = null`` to get the session if there is one, or ``null``
 if there is none.
 
