@@ -223,12 +223,13 @@ on their priority. For example, the ``SessionValueResolver`` will be called befo
 ``SessionInterface $session = null`` to get the session if there is one, or ``null``
 if there is none.
 
-But what if you *know* there will be a session? In that case every resolver running
-before ``SessionValueResolver`` is useless. Worse, some of these could actually
-provide a value before ``SessionValueResolver`` has a chance to (don't worry though,
-this won't happen with built-in resolvers). Since Symfony 6.3, this kind of issue
-can be resolved by leveraging the
-:class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver` attribute::
+In that specific case, you don't need any resolver running before
+``SessionValueResolver``, so skipping them would not only improve performance,
+but also prevent one of them providing a value before ``SessionValueResolver``
+has a chance to.
+
+The :class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver` attribute lets you
+do this by "targeting" the resolver you want::
 
     // src/Controller/SessionController.php
     namespace App\Controller;
@@ -244,7 +245,7 @@ can be resolved by leveraging the
         #[Route('/')]
         public function __invoke(
             #[ValueResolver(SessionValueResolver::class)]
-            SessionInterface $session
+            SessionInterface $session = null
         ): Response
         {
             // ...
@@ -255,40 +256,19 @@ can be resolved by leveraging the
 
     The ``ValueResolver`` attribute was introduced in Symfony 6.3.
 
-You can target a resolver by passing its name (more on that later) as ``ValueResolver``'s
-first argument. For convenience, built-in resolvers' name are their FQCN.
+In the example above, the ``SessionValueResolver`` will be called first because it is
+targeted. The ``DefaultValueResolver`` will be called next if no value has been provided;
+that's why we can assign ``null`` as ``$session``'s default value.
 
-By default, a targeted resolver is "pinned" to the argument holding the
-``ValueResolver`` attribute, meaning that only it will be called to provide a value,
-and that it will have to.
+We target a resolver by passing its name as ``ValueResolver``'s first argument.
+For convenience, built-in resolvers' name are their FQCN.
 
-In the above example the ``DefaultValueResolver`` would never be called, so adding a
-default value to ``$session`` would be useless. If we need one, then it is fine not
-to use ``ValueResolver``.
-But then, what if we want to prevent an hypothetic ``EagerValueResolver`` to provide a
-value before ``SessionValueResolver``? Time to use ``ValueResolver``'s second argument!
-By passing it to ``true``, you can disable the targeted resolver::
+The ``ValueResolver`` attribute can also be used to disable the targeted resolver
+by passing its ``$disabled`` argument to ``true``, in which case it won't be called.
+This is how :ref:`MapEntity allows to disable the EntityValueResolver
+for a specific controller <doctrine-entity-value-resolver>`.
+Yes, ``MapEntity`` extends ``ValueResolver``!
 
-    // src/Controller/SessionController.php
-    namespace App\Controller;
-
-    use App\ArgumentResolver\EagerValueResolver;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\HttpFoundation\Session\SessionInterface;
-    use Symfony\Component\HttpKernel\Attribute\ValueResolver;
-    use Symfony\Component\Routing\Annotation\Route;
-
-    class SessionController
-    {
-        #[Route('/')]
-        public function __invoke(
-            #[ValueResolver(EagerValueResolver::class, disabled: true)]
-            SessionInterface $session = null
-        ): Response
-        {
-            // ...
-        }
-    }
 
 Adding a Custom Value Resolver
 ------------------------------
