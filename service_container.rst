@@ -1313,14 +1313,15 @@ Let's say you have the following functional interface::
         public function format(string $message, array $parameters): string;
     }
 
-Now, you can define a service implementing this method, among other util ones::
+You also have a service that defines many methods and one of them is the same
+``format()`` method of the previous interface::
 
     // src/Service/MessageFormatterInterface.php
     namespace App\Service;
 
     class MessageUtils
     {
-        // other utils methods...
+        // other methods...
 
         public function format($string $message, array $parameters): string
         {
@@ -1328,8 +1329,8 @@ Now, you can define a service implementing this method, among other util ones::
         }
     }
 
-We can now use ``#[AutowireCallable]`` with our ``MessageUtils`` service
-to inject our functional interface implementation::
+Thanks to the ``#[AutowireCallable]`` attribute, you can now inject this
+``MessageUtils`` service as a functional interface implementation::
 
     namespace App\Service\Mail;
 
@@ -1358,8 +1359,8 @@ to inject our functional interface implementation::
     The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
     attribute was introduced in Symfony 6.3.
 
-Alternatively, generating an adapter for a functional interface can also
-be done through configuration:
+Instead of using the ``#[AutowireCallable]`` attribute, you can also generate
+an adapter for a functional interface through configuration:
 
 .. configuration-block::
 
