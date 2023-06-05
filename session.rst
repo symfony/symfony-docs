@@ -517,6 +517,8 @@ a Symfony service for the connection to the Redis server:
 
 .. configuration-block::
 
+    .. code-block:: yaml
+
         # config/services.yaml
         services:
             # ...
