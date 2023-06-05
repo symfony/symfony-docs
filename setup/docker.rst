@@ -52,3 +52,10 @@ then it can automatically detect your Docker services and expose them as environ
 variables. See :ref:`symfony-server-docker`.
 
 .. _`https://github.com/dunglas/symfony-docker`: https://github.com/dunglas/symfony-docker
+
+Symfony development with Docker
+--------------------------------------------
+
+You can also use `https://github.com/jabranr/symfony-docker` for Symfony local development using Docker. It has out of the box support for Xdebug and a choice of running Symfony with Apache or PHP-FPM/Nginx.
+
+.. _`https://github.com/jabranr/symfony-docker`: https://github.com/jabranr/symfony-docker
