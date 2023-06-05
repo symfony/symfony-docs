@@ -25,7 +25,7 @@ Basic Usage
         class Journal
         {
             #[Assert\Issn]
-            protected $issn;
+            protected string $issn;
         }
 
     .. code-block:: yaml
@@ -61,7 +61,9 @@ Basic Usage
 
         class Journal
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('issn', new Assert\Issn());
             }

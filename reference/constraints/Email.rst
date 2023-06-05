@@ -27,7 +27,7 @@ Basic Usage
             #[Assert\Email(
                 message: 'The email {{ value }} is not a valid email.',
             )]
-            protected $email;
+            protected string $email;
         }
 
     .. code-block:: yaml
@@ -66,7 +66,9 @@ Basic Usage
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('email', new Assert\Email([
                     'message' => 'The email "{{ value }}" is not a valid email.',

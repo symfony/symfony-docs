@@ -48,7 +48,7 @@ between all of the rows in your user table:
         {
             #[ORM\Column(name: 'email', type: 'string', length: 255, unique: true)]
             #[Assert\Email]
-            protected $email;
+            protected string $email;
         }
 
     .. code-block:: yaml
@@ -91,7 +91,9 @@ between all of the rows in your user table:
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new UniqueEntity([
                     'fields' => 'email',

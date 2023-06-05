@@ -25,7 +25,7 @@ Basic Usage
         class UnitAccount
         {
             #[Assert\Isin]
-            protected $isin;
+            protected string $isin;
         }
 
     .. code-block:: yaml
@@ -61,7 +61,9 @@ Basic Usage
 
         class UnitAccount
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('isin', new Assert\Isin());
             }

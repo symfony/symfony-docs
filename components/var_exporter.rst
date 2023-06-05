@@ -50,10 +50,10 @@ following class hierarchy::
 
     abstract class AbstractClass
     {
-        protected $foo;
-        private $bar;
+        protected int $foo;
+        private int $bar;
 
-        protected function setBar($bar)
+        protected function setBar($bar): void
         {
             $this->bar = $bar;
         }

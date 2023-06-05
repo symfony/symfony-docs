@@ -55,7 +55,7 @@ You can also control the ``public`` option on a service-by-service basis:
 
         use App\Service\Foo;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Foo::class)
@@ -127,7 +127,7 @@ services.
 
         use App\Mail\PhpMailer;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(PhpMailer::class)
@@ -269,7 +269,7 @@ The following example shows how to inject an anonymous service into another serv
         use App\AnonymousBar;
         use App\Foo;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Foo::class)
@@ -320,7 +320,7 @@ Using an anonymous service as a factory looks like this:
         use App\AnonymousBar;
         use App\Foo;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(Foo::class)
@@ -366,7 +366,7 @@ or you decided not to maintain it anymore), you can deprecate its definition:
 
         use App\Service\OldService;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(OldService::class)

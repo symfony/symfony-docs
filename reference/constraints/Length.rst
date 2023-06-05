@@ -32,7 +32,7 @@ and ``50``, you might add the following:
                 minMessage: 'Your first name must be at least {{ limit }} characters long',
                 maxMessage: 'Your first name cannot be longer than {{ limit }} characters',
             )]
-            protected $firstName;
+            protected string $firstName;
         }
 
 
@@ -82,7 +82,9 @@ and ``50``, you might add the following:
 
         class Participant
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\Length([
                     'min' => 2,

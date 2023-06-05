@@ -28,7 +28,7 @@ is a negative number or equal to zero:
         class UnderGroundGarage
         {
             #[Assert\NegativeOrZero]
-            protected $level;
+            protected int $level;
         }
 
     .. code-block:: yaml
@@ -64,7 +64,9 @@ is a negative number or equal to zero:
 
         class UnderGroundGarage
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('level', new Assert\NegativeOrZero());
             }

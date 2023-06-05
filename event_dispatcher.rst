@@ -91,7 +91,7 @@ notify Symfony that it is an event listener by using a special "tag":
 
         use App\EventListener\ExceptionListener;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(ExceptionListener::class)
