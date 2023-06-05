@@ -2,6 +2,7 @@ AssetMapper: Simple, Modern CSS & JS Management
 ===============================================
 
 .. versionadded:: 6.3
+
     The AssetMapper component was introduced as an
     :doc:`experimental feature </contributing/code/experimental>` in
     Symfony 6.3.
@@ -1016,7 +1017,6 @@ re-calculated when you expect it to, you can run:
 This will force the AssetMapper component to re-calculate the content of all files.
 
 .. _latest asset-mapper recipe: https://github.com/symfony/recipes/tree/main/symfony/asset-mapper
-.. _experimental: https://symfony.com/doc/current/contributing/code/experimental.html
 .. _import statement: https://caniuse.com/es6-module-dynamic-import
 .. _ES6: https://caniuse.com/es6
 .. _npm package: https://www.npmjs.com
