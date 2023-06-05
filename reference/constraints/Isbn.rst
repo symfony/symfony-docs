@@ -31,7 +31,7 @@ on an object that will contain an ISBN.
                 type: Assert\Isbn::ISBN_10,
                 message: 'This value is not valid.',
             )]
-            protected $isbn;
+            protected string $isbn;
         }
 
     .. code-block:: yaml
@@ -72,7 +72,9 @@ on an object that will contain an ISBN.
 
         class Book
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('isbn', new Assert\Isbn([
                     'type' => Assert\Isbn::ISBN_10,

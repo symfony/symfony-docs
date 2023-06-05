@@ -74,7 +74,7 @@ create its object:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerStaticFactory;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(NewsletterManager::class)
@@ -156,7 +156,7 @@ You can omit the class on the factory declaration:
 
         use App\Email\NewsletterManager;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             // Note that we are not using service()
@@ -218,7 +218,7 @@ Configuration of the service container then looks like this:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             // first, create a service for the factory
@@ -296,7 +296,7 @@ method name:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(NewsletterManager::class)
@@ -432,7 +432,7 @@ previous examples takes the ``templating`` service as an argument:
         use App\Email\NewsletterManager;
         use App\Email\NewsletterManagerFactory;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(NewsletterManager::class)

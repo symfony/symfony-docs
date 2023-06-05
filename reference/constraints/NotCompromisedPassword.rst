@@ -28,7 +28,7 @@ The following constraint ensures that the ``rawPassword`` property of the
         class User
         {
             #[Assert\NotCompromisedPassword]
-            protected $rawPassword;
+            protected string $rawPassword;
         }
 
     .. code-block:: yaml
@@ -64,7 +64,9 @@ The following constraint ensures that the ``rawPassword`` property of the
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('rawPassword', new Assert\NotCompromisedPassword());
             }

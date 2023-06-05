@@ -372,9 +372,9 @@ then its dump representation::
 
     class PropertyExample
     {
-        public $publicProperty = 'The `+` prefix denotes public properties,';
-        protected $protectedProperty = '`#` protected ones and `-` private ones.';
-        private $privateProperty = 'Hovering a property shows a reminder.';
+        public string $publicProperty = 'The `+` prefix denotes public properties,';
+        protected string $protectedProperty = '`#` protected ones and `-` private ones.';
+        private string $privateProperty = 'Hovering a property shows a reminder.';
     }
 
     $var = new PropertyExample();
@@ -391,7 +391,7 @@ then its dump representation::
 
     class DynamicPropertyExample
     {
-        public $declaredProperty = 'This property is declared in the class definition';
+        public string $declaredProperty = 'This property is declared in the class definition';
     }
 
     $var = new DynamicPropertyExample();
@@ -404,7 +404,7 @@ then its dump representation::
 
     class ReferenceExample
     {
-        public $info = "Circular and sibling references are displayed as `#number`.\nHovering them highlights all instances in the same dump.\n";
+        public string $info = "Circular and sibling references are displayed as `#number`.\nHovering them highlights all instances in the same dump.\n";
     }
     $var = new ReferenceExample();
     $var->aCircularReference = $var;

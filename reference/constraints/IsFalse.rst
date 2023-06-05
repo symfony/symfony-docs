@@ -21,11 +21,11 @@ but is most commonly useful in the latter case. For example, suppose that
 you want to guarantee that some ``state`` property is *not* in a dynamic
 ``invalidStates`` array. First, you'd create a "getter" method::
 
-    protected $state;
+    protected string $state;
 
-    protected $invalidStates = [];
+    protected array $invalidStates = [];
 
-    public function isStateInvalid()
+    public function isStateInvalid(): bool
     {
         return in_array($this->state, $this->invalidStates);
     }
@@ -47,7 +47,7 @@ method returns **false**:
             #[Assert\IsFalse(
                 message: "You've entered an invalid state."
             )]
-            public function isStateInvalid()
+            public function isStateInvalid(): bool
             {
                 // ...
             }
@@ -89,14 +89,16 @@ method returns **false**:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addGetterConstraint('stateInvalid', new Assert\IsFalse([
                     'message' => "You've entered an invalid state.",
                 ]));
             }
 
-            public function isStateInvalid()
+            public function isStateInvalid(): bool
             {
                 // ...
             }

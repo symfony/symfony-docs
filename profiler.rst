@@ -545,7 +545,7 @@ you'll need to configure the data collector explicitly:
 
         use App\DataCollector\RequestCollector;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(RequestCollector::class)

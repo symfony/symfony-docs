@@ -31,19 +31,19 @@ the named CSS colors:
         class Bulb
         {
             #[Assert\CssColor]
-            protected $defaultColor;
+            protected string $defaultColor;
 
             #[Assert\CssColor(
                 formats: Assert\CssColor::HEX_LONG,
                 message: 'The accent color must be a 6-character hexadecimal color.',
             )]
-            protected $accentColor;
+            protected string $accentColor;
 
             #[Assert\CssColor(
                 formats: [Assert\CssColor::BASIC_NAMED_COLORS, Assert\CssColor::EXTENDED_NAMED_COLORS],
                 message: 'The color '{{ value }}' is not a valid CSS color name.',
             )]
-            protected $currentColor;
+            protected string $currentColor;
         }
 
     .. code-block:: yaml
@@ -104,7 +104,9 @@ the named CSS colors:
 
         class Bulb
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('defaultColor', new Assert\CssColor());
 

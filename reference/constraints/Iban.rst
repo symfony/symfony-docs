@@ -32,7 +32,7 @@ will contain an International Bank Account Number.
             #[Assert\Iban(
                 message: 'This is not a valid International Bank Account Number (IBAN).',
             )]
-            protected $bankAccountNumber;
+            protected string $bankAccountNumber;
         }
 
     .. code-block:: yaml
@@ -73,9 +73,9 @@ will contain an International Bank Account Number.
 
         class Transaction
         {
-            protected $bankAccountNumber;
+            // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('bankAccountNumber', new Assert\Iban([
                     'message' => 'This is not a valid International Bank Account Number (IBAN).',

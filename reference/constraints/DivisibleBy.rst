@@ -35,12 +35,12 @@ The following constraints ensure that:
         class Item
         {
             #[Assert\DivisibleBy(0.25)]
-            protected $weight;
+            protected float $weight;
 
             #[Assert\DivisibleBy(
                 value: 5,
             )]
-            protected $quantity;
+            protected int $quantity;
         }
 
     .. code-block:: yaml
@@ -86,7 +86,9 @@ The following constraints ensure that:
 
         class Item
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('weight', new Assert\DivisibleBy(0.25));
 

@@ -29,7 +29,7 @@ class were not strictly equal to ``null``, you would:
         class Author
         {
             #[Assert\NotNull]
-            protected $firstName;
+            protected string $firstName;
         }
 
     .. code-block:: yaml
@@ -65,7 +65,9 @@ class were not strictly equal to ``null``, you would:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotNull());
             }

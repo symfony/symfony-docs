@@ -43,8 +43,9 @@ following ``Task`` class::
 
     class Task
     {
-        protected $task;
-        protected $dueDate;
+        protected string $task;
+
+        protected ?\DateTimeInterface $dueDate;
 
         public function getTask(): string
         {
@@ -56,12 +57,12 @@ following ``Task`` class::
             $this->task = $task;
         }
 
-        public function getDueDate(): ?\DateTime
+        public function getDueDate(): ?\DateTimeInterface
         {
             return $this->dueDate;
         }
 
-        public function setDueDate(?\DateTime $dueDate): void
+        public function setDueDate(?\DateTimeInterface $dueDate): void
         {
             $this->dueDate = $dueDate;
         }
@@ -128,7 +129,7 @@ use the ``createFormBuilder()`` helper::
             // creates a task object and initializes some data for this example
             $task = new Task();
             $task->setTask('Write a blog post');
-            $task->setDueDate(new \DateTime('tomorrow'));
+            $task->setDueDate(new \DateTimeImmutable('tomorrow'));
 
             $form = $this->createFormBuilder($task)
                 ->add('task', TextType::class)
@@ -209,7 +210,7 @@ use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
             // creates a task object and initializes some data for this example
             $task = new Task();
             $task->setTask('Write a blog post');
-            $task->setDueDate(new \DateTime('tomorrow'));
+            $task->setDueDate(new \DateTimeImmutable('tomorrow'));
 
             $form = $this->createForm(TaskType::class, $task);
 
@@ -471,7 +472,7 @@ to a class. You can add them either to the entity class or to the form class.
 
 To see the first approach - adding constraints to the entity - in action,
 add the validation constraints, so that the ``task`` field cannot be empty,
-and the ``dueDate`` field cannot be empty, and must be a valid ``DateTime``
+and the ``dueDate`` field cannot be empty, and must be a valid ``DateTimeImmutable``
 object.
 
 .. configuration-block::
@@ -486,11 +487,11 @@ object.
         class Task
         {
             #[Assert\NotBlank]
-            public $task;
+            public string $task;
 
             #[Assert\NotBlank]
-            #[Assert\Type(\DateTime::class)]
-            protected $dueDate;
+            #[Assert\Type(\DateTimeInterface::class)]
+            protected \DateTimeInterface $dueDate;
         }
 
     .. code-block:: yaml
@@ -502,7 +503,7 @@ object.
                     - NotBlank: ~
                 dueDate:
                     - NotBlank: ~
-                    - Type: \DateTime
+                    - Type: \DateTimeInterface
 
     .. code-block:: xml
 
@@ -519,7 +520,7 @@ object.
                 </property>
                 <property name="dueDate">
                     <constraint name="NotBlank"/>
-                    <constraint name="Type">\DateTime</constraint>
+                    <constraint name="Type">\DateTimeInterface</constraint>
                 </property>
             </class>
         </constraint-mapping>
@@ -544,7 +545,7 @@ object.
                 $metadata->addPropertyConstraint('dueDate', new NotBlank());
                 $metadata->addPropertyConstraint(
                     'dueDate',
-                    new Type(\DateTime::class)
+                    new Type(\DateTimeInterface::class)
                 );
             }
         }
