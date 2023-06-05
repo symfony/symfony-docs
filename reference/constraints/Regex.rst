@@ -29,7 +29,7 @@ more word characters at the beginning of your string:
         class Author
         {
             #[Assert\Regex('/^\w+/')]
-            protected $description;
+            protected string $description;
         }
 
     .. code-block:: yaml
@@ -67,7 +67,9 @@ more word characters at the beginning of your string:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('description', new Assert\Regex([
                     'pattern' => '/^\w+/',
@@ -96,7 +98,7 @@ it a custom message:
                 match: false,
                 message: 'Your name cannot contain a number',
             )]
-            protected $firstName;
+            protected string $firstName;
         }
 
     .. code-block:: yaml
@@ -139,7 +141,9 @@ it a custom message:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\Regex([
                     'pattern' => '/\d/',
@@ -187,7 +191,7 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
                 pattern: '/^[a-z]+$/i',
                 htmlPattern: '^[a-zA-Z]+$'
             )]
-            protected $name;
+            protected string $name;
         }
 
     .. code-block:: yaml
@@ -228,7 +232,9 @@ need to specify the HTML5 compatible pattern in the ``htmlPattern`` option:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('name', new Assert\Regex([
                     'pattern' => '/^[a-z]+$/i',

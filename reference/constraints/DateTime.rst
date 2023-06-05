@@ -28,7 +28,7 @@ Basic Usage
              * @var string A "Y-m-d H:i:s" formatted value
              */
             #[Assert\DateTime]
-            protected $createdAt;
+            protected string $createdAt;
         }
 
     .. code-block:: yaml
@@ -67,9 +67,9 @@ Basic Usage
            /**
             * @var string A "Y-m-d H:i:s" formatted value
             */
-            protected $createdAt;
+            protected string $createdAt;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('createdAt', new Assert\DateTime());
             }

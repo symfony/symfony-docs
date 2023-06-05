@@ -43,7 +43,7 @@ the user's current password:
             #[SecurityAssert\UserPassword(
                 message: 'Wrong value for your current password',
             )]
-            protected $oldPassword;
+            protected string $oldPassword;
         }
 
     .. code-block:: yaml
@@ -84,7 +84,9 @@ the user's current password:
 
         class ChangePassword
         {
-            public static function loadValidatorData(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorData(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint(
                     'oldPassword',

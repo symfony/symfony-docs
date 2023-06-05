@@ -33,14 +33,14 @@ would be a ``file`` type. The ``Author`` class might look as follows::
 
     class Author
     {
-        protected $headshot;
+        protected File $headshot;
 
-        public function setHeadshot(File $file = null)
+        public function setHeadshot(File $file = null): void
         {
             $this->headshot = $file;
         }
 
-        public function getHeadshot()
+        public function getHeadshot(): File
         {
             return $this->headshot;
         }
@@ -56,6 +56,7 @@ that it is between a certain size, add the following:
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use Symfony\Component\HttpFoundation\File\File;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -66,7 +67,7 @@ that it is between a certain size, add the following:
                 minHeight: 200,
                 maxHeight: 400,
             )]
-            protected $headshot;
+            protected File $headshot;
         }
 
     .. code-block:: yaml
@@ -111,7 +112,9 @@ that it is between a certain size, add the following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('headshot', new Assert\Image([
                     'minWidth' => 200,
@@ -136,6 +139,7 @@ following code:
         // src/Entity/Author.php
         namespace App\Entity;
 
+        use Symfony\Component\HttpFoundation\File\File;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -144,7 +148,7 @@ following code:
                 allowLandscape: false,
                 allowPortrait: false,
             )]
-            protected $headshot;
+            protected File $headshot;
         }
 
     .. code-block:: yaml
@@ -179,7 +183,9 @@ following code:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('headshot', new Assert\Image([
                     'allowLandscape' => false,

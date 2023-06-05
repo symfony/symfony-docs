@@ -46,7 +46,7 @@ You can use ``#[HasNamedArguments]`` to make some constraint options required::
     #[\Attribute]
     class ContainsAlphanumeric extends Constraint
     {
-        public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
+        public string $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
 
         #[HasNamedArguments]
         public function __construct(

@@ -37,7 +37,7 @@ example:
 
         use App\Twig\AppExtension;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(AppExtension::class)
@@ -103,7 +103,7 @@ If you want to apply tags automatically for your own services, use the
 
         use App\Security\CustomInterface;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             // this config only applies to the services created by this file
@@ -273,7 +273,7 @@ Then, define the chain as a service:
 
         use App\Mail\TransportChain;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(TransportChain::class);
@@ -327,7 +327,7 @@ For example, you may add the following transports as services:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(\MailerSmtpTransport::class)
@@ -495,7 +495,7 @@ To answer this, change the service declaration:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(\MailerSmtpTransport::class)
@@ -654,7 +654,7 @@ directly via PHP attributes:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(App\Handler\One::class)
@@ -811,7 +811,7 @@ the number, the earlier the tagged service will be located in the collection:
 
         use App\Handler\One;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             $services->set(One::class)

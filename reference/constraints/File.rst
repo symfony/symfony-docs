@@ -38,14 +38,14 @@ type. The ``Author`` class might look as follows::
 
     class Author
     {
-        protected $bioFile;
+        protected File $bioFile;
 
-        public function setBioFile(File $file = null)
+        public function setBioFile(File $file = null): void
         {
             $this->bioFile = $file;
         }
 
-        public function getBioFile()
+        public function getBioFile(): File
         {
             return $this->bioFile;
         }
@@ -70,7 +70,7 @@ below a certain file size and a valid PDF, add the following:
                 extensions: ['pdf'],
                 extensionsMessage: 'Please upload a valid PDF',
             )]
-            protected $bioFile;
+            protected File $bioFile;
         }
 
     .. code-block:: yaml
@@ -115,7 +115,9 @@ below a certain file size and a valid PDF, add the following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('bioFile', new Assert\File([
                     'maxSize' => '1024k',

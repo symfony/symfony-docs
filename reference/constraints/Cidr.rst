@@ -27,7 +27,7 @@ Basic Usage
         class NetworkSettings
         {
             #[Assert\Cidr]
-            protected $cidrNotation;
+            protected string $cidrNotation;
         }
 
     .. code-block:: yaml
@@ -63,7 +63,9 @@ Basic Usage
 
         class NetworkSettings
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('cidrNotation', new Assert\Cidr());
             }

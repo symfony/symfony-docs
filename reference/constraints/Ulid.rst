@@ -24,7 +24,7 @@ Basic Usage
         class File
         {
             #[Assert\Ulid]
-            protected $identifier;
+            protected string $identifier;
         }
 
     .. code-block:: yaml
@@ -60,6 +60,8 @@ Basic Usage
 
         class File
         {
+            // ...
+
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
                 $metadata->addPropertyConstraint('identifier', new Assert\Ulid());

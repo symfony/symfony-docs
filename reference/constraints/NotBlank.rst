@@ -30,7 +30,7 @@ class were not blank, you could do the following:
         class Author
         {
             #[Assert\NotBlank]
-            protected $firstName;
+            protected string $firstName;
         }
 
     .. code-block:: yaml
@@ -66,7 +66,9 @@ class were not blank, you could do the following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
             }

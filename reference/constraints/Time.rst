@@ -31,7 +31,7 @@ of the day when the event starts:
              * @var string A "H:i:s" formatted value
              */
             #[Assert\Time]
-            protected $startsAt;
+            protected string $startsAt;
         }
 
     .. code-block:: yaml
@@ -70,9 +70,9 @@ of the day when the event starts:
            /**
             * @var string A "H:i:s" formatted value
             */
-            protected $startsAt;
+            protected string $startsAt;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('startsAt', new Assert\Time());
             }
