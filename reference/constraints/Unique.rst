@@ -43,7 +43,7 @@ strings:
         class Person
         {
             #[Assert\Unique]
-            protected $contactEmails;
+            protected array $contactEmails;
         }
 
     .. code-block:: yaml
@@ -79,7 +79,9 @@ strings:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('contactEmails', new Assert\Unique());
             }
@@ -119,7 +121,7 @@ collection::
         class Poi
         {
             #[Assert\Unique(fields=['latitude', 'longitude'])]
-            protected $coordinates;
+            protected array $coordinates;
         }
 
     .. code-block:: yaml
@@ -161,7 +163,9 @@ collection::
 
         class Poi
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('coordinates', new Assert\Unique([
                     'fields' => ['latitude', 'longitude'],

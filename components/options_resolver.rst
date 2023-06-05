@@ -23,7 +23,7 @@ Imagine you have a ``Mailer`` class which has four options: ``host``,
 
     class Mailer
     {
-        protected $options;
+        protected array $options;
 
         public function __construct(array $options = [])
         {
@@ -37,7 +37,7 @@ check which options are set::
     class Mailer
     {
         // ...
-        public function sendMail($from, $to)
+        public function sendMail($from, $to): void
         {
             $mail = ...;
 
@@ -908,9 +908,9 @@ can change your code to do the configuration only once per class::
     // ...
     class Mailer
     {
-        private static $resolversByClass = [];
+        private static array $resolversByClass = [];
 
-        protected $options;
+        protected array $options;
 
         public function __construct(array $options = [])
         {
@@ -926,7 +926,7 @@ can change your code to do the configuration only once per class::
             $this->options = self::$resolversByClass[$class]->resolve($options);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
         }
@@ -941,9 +941,9 @@ method ``clearOptionsConfig()`` and call it periodically::
     // ...
     class Mailer
     {
-        private static $resolversByClass = [];
+        private static array $resolversByClass = [];
 
-        public static function clearOptionsConfig()
+        public static function clearOptionsConfig(): void
         {
             self::$resolversByClass = [];
         }

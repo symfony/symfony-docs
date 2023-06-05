@@ -32,12 +32,12 @@ The following constraints ensure that:
         class Person
         {
             #[Assert\LessThan(5)]
-            protected $siblings;
+            protected int $siblings;
 
             #[Assert\LessThan(
                 value: 80,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -83,7 +83,9 @@ The following constraints ensure that:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('siblings', new Assert\LessThan(5));
 
@@ -112,7 +114,7 @@ that a date must be in the past like this:
         class Person
         {
             #[Assert\LessThan('today')]
-            protected $dateOfBirth;
+            protected \DateTimeInterface $dateOfBirth;
         }
 
     .. code-block:: yaml
@@ -148,7 +150,9 @@ that a date must be in the past like this:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThan('today'));
             }
@@ -169,7 +173,7 @@ dates. If you want to fix the timezone, append it to the date string:
         class Person
         {
             #[Assert\LessThan('today UTC')]
-            protected $dateOfBirth;
+            protected \DateTimeInterface $dateOfBirth;
         }
 
     .. code-block:: yaml
@@ -205,7 +209,9 @@ dates. If you want to fix the timezone, append it to the date string:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('age', new Assert\LessThan('today UTC'));
             }
@@ -226,7 +232,7 @@ can check that a person must be at least 18 years old like this:
         class Person
         {
             #[Assert\LessThan('-18 years')]
-            protected $dateOfBirth;
+            protected \DateTimeInterface $dateOfBirth;
         }
 
     .. code-block:: yaml
@@ -262,7 +268,9 @@ can check that a person must be at least 18 years old like this:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('dateOfBirth', new Assert\LessThan('-18 years'));
             }

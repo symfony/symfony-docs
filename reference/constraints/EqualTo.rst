@@ -35,12 +35,12 @@ and that the ``age`` is ``20``, you could do the following:
         class Person
         {
             #[Assert\EqualTo('Mary')]
-            protected $firstName;
+            protected string $firstName;
 
             #[Assert\EqualTo(
                 value: 20,
             )]
-            protected $age;
+            protected int $age;
         }
 
     .. code-block:: yaml
@@ -86,7 +86,9 @@ and that the ``age`` is ``20``, you could do the following:
 
         class Person
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('firstName', new Assert\EqualTo('Mary'));
 

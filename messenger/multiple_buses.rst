@@ -222,7 +222,7 @@ you can determine the message bus based on an implemented interface:
         use App\MessageHandler\CommandHandlerInterface;
         use App\MessageHandler\QueryHandlerInterface;
 
-        return function(ContainerConfigurator $container) {
+        return function(ContainerConfigurator $container): void {
             $services = $container->services();
 
             // ...

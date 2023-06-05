@@ -33,19 +33,19 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
         class Author
         {
             #[Assert\Type(Address::class)]
-            protected $emailAddress;
+            protected Address $emailAddress;
 
             #[Assert\Type('string')]
-            protected $firstName;
+            protected string $firstName;
 
             #[Assert\Type(
                 type: 'integer',
                 message: 'The value {{ value }} is not a valid {{ type }}.',
             )]
-            protected $age;
+            protected int $age;
 
             #[Assert\Type(type: ['alpha', 'digit'])]
-            protected $accessCode;
+            protected string $accessCode;
         }
 
     .. code-block:: yaml
@@ -115,7 +115,9 @@ This will check if ``emailAddress`` is an instance of ``Symfony\Component\Mime\A
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('emailAddress', new Assert\Type(Address::class));
 

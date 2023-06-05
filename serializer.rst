@@ -176,7 +176,7 @@ You can also specify the context on a per-property basis::
             /**
              * @Context({ DateTimeNormalizer::FORMAT_KEY = 'Y-m-d' })
              */
-            public $createdAt;
+            public \DateTimeInterface $createdAt;
 
             // ...
         }
@@ -191,7 +191,7 @@ You can also specify the context on a per-property basis::
         class Person
         {
             #[Context([DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'])]
-            public $createdAt;
+            public \DateTimeInterface $createdAt;
 
             // ...
         }
@@ -234,7 +234,7 @@ Use the options to specify context specific to normalization or denormalization:
             normalizationContext: [DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'],
             denormalizationContext: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339],
         )]
-        public $createdAt;
+        public \DateTimeInterface $createdAt;
 
         // ...
     }
@@ -255,7 +255,7 @@ You can also restrict the usage of a context to some groups::
             context: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339_EXTENDED],
             groups: ['extended'],
         )]
-        public $createdAt;
+        public \DateTimeInterface $createdAt;
 
         // ...
     }

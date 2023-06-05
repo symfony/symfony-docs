@@ -24,7 +24,7 @@ Basic Usage
         class User
         {
             #[Assert\Country]
-            protected $country;
+            protected string $country;
         }
 
     .. code-block:: yaml
@@ -60,7 +60,9 @@ Basic Usage
 
         class User
         {
-            public static function loadValidationMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidationMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('country', new Assert\Country());
             }

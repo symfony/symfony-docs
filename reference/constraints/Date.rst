@@ -25,7 +25,7 @@ Basic Usage
         class Author
         {
             #[Assert\Date]
-            protected $birthday;
+            protected string $birthday;
         }
 
     .. code-block:: yaml
@@ -64,9 +64,9 @@ Basic Usage
            /**
             * @var string A "Y-m-d" formatted value
             */
-            protected $birthday;
+            protected string $birthday;
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('birthday', new Assert\Date());
             }
