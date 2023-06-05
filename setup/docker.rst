@@ -56,6 +56,4 @@ variables. See :ref:`symfony-server-docker`.
 Symfony development with Docker
 --------------------------------------------
 
-You can also use `https://github.com/jabranr/symfony-docker` for Symfony local development using Docker. It has out of the box support for Xdebug and a choice of running Symfony with Apache or PHP-FPM/Nginx.
-
-.. _`https://github.com/jabranr/symfony-docker`: https://github.com/jabranr/symfony-docker
+You can use `https://github.com/jabranr/symfony-docker` for Symfony local development using Docker. It has out of the box support for Xdebug and a choice of running Symfony with Apache or PHP-FPM/Nginx.
