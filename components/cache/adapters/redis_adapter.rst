@@ -218,7 +218,7 @@ Available Options
     ``error``, ``distribute`` or ``slaves``.  For ``\Predis\ClientInterface`` valid options are ``slaves``
     or ``distribute``.
 
-``ssl`` (type: ``bool``, default: ``null``)
+``ssl`` (type: ``array``, default: ``null``)
     SSL context options. See `php.net/context.ssl`_ for more information.
 
 .. note::
