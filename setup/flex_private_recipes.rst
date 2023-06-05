@@ -16,7 +16,7 @@ perform their own installation tasks. To do this, you need to complete several s
 * Configure your project's ``composer.json`` file; and
 * Install the recipes in your project.
 
-.. _create-a-private-github-repository
+.. _create-a-private-github-repository:
 
 Create a Private Repository
 ---------------------------
