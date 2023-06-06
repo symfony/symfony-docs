@@ -58,8 +58,8 @@ Throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
 There isn't any practical difference between formats. In fact, Symfony
-transforms and caches all of them into PHP before running the application, so
-there's not even any performance difference between them.
+transforms all of them into PHP and caches them before running the application,
+so there's not even any performance difference.
 
 YAML is used by default when installing packages because it's concise and very
 readable. These are the main advantages and disadvantages of each format:
