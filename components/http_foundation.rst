@@ -629,8 +629,6 @@ represented by a PHP callable instead of a string::
         // disables FastCGI buffering in nginx only for this response
         $response->headers->set('X-Accel-Buffering', 'no');
 
-.. _component-http-foundation-serving-files:
-
 Streaming a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -639,94 +637,79 @@ Streaming a JSON Response
     The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` class was
     introduced in Symfony 6.3.
 
-The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` allows an API to
-return a lot of data as JSON and keep the used resources low by make usage of Generators.
+The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` allows to
+stream large JSON responses using PHP generators to keep the used resources low.
 
-It expects an array which represents the JSON structure and the list which should be
-streamed are represented in the array as ``\Generator``. It also supports any kind of
-Traversable containing JSON serializable data for a good developer experience,
-but for keep the resources usage as low as possible, it is recommended to use ``\Generators``,
-as they the advantages that only the current returned data need to be keep in memory.
-
-The response will stream the JSON with generators in to most efficient way and keep resources as low as possible::
+The class constructor expects an array which represents the JSON structure and
+includes the list of contents to stream. In addition to PHP generators, which are
+recommended to minimize memory usage, it also supports any kind of PHP Traversable
+containing JSON serializable data::
 
     use Symfony\Component\HttpFoundation\StreamedJsonResponse;
 
-    function loadArticles(): \Generator { // any method or function returning a Generator
+    // any method or function returning a PHP Generator
+    function loadArticles(): \Generator {
          yield ['title' => 'Article 1'];
          yield ['title' => 'Article 2'];
          yield ['title' => 'Article 3'];
     };
 
     $response = new StreamedJsonResponse(
-        // json structure with generators in which will be streamed as a list
+        // JSON structure with generators in which will be streamed as a list
         [
             '_embedded' => [
-                'articles' => loadArticles(), // any \Generator can be used which will be streamed as list of data
+                'articles' => loadArticles(),
             ],
         ],
     );
 
-.. tip::
+When loading data via Doctrine, you can use the ``toIterable()`` method to
+fetch results row by row and minimize resources consumption.
+See the `Doctrine Batch processing`_ documentation for more::
 
-    If loading data via doctrine the ``toIterable`` method of ``Doctrine`` can be
-    used to keep the resources low and fetch only row by row.
-    See the `Doctrine Batch processing`_ documentation for more::
-
-        public function __invoke(): Response
-        {
-            return new StreamedJsonResponse(
-                [
-                    '_embedded' => [
-                        'articles' => $this->loadArticles(),
-                    ],
-                ],
-            );
-        }
-
-        public function loadArticles(): \Generator
-        {
-            $queryBuilder = $entityManager->createQueryBuilder();
-            $queryBuilder->from(Article::class, 'article');
-            $queryBuilder->select('article.id')
-                ->addSelect('article.title')
-                ->addSelect('article.description');
-
-            return $queryBuilder->getQuery()->toIterable();
-        }
-
-.. tip::
-
-    If you have a lot of data to be returned you may want to call the
-    PHP `flush <https://www.php.net/manual/en/function.flush.php>`__ method between
-    to flush the response after every specific count of items::
-
-        public function __invoke(): Response
-        {
-            return new StreamedJsonResponse([
+    public function __invoke(): Response
+    {
+        return new StreamedJsonResponse(
+            [
                 '_embedded' => [
                     'articles' => $this->loadArticles(),
                 ],
-            ]);
-        }
+            ],
+        );
+    }
 
-        public function loadArticles(): \Generator
-        {
-            $queryBuilder = $entityManager->createQueryBuilder();
-            $queryBuilder->from(Article::class, 'article');
-            $queryBuilder->select('article.id')
-                ->addSelect('article.title')
-                ->addSelect('article.description');
+    public function loadArticles(): \Generator
+    {
+        // get the $entityManager somehow (e.g. via constructor injection)
+        $entityManager = ...
 
-            $count = 0;
-            foreach ($queryBuilder->getQuery()->toIterable() as $article) {
-                yield $article;
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->from(Article::class, 'article');
+        $queryBuilder->select('article.id')
+            ->addSelect('article.title')
+            ->addSelect('article.description');
 
-                if (++$count % 100 === 0) {
-                    flush();
-                }
+        return $queryBuilder->getQuery()->toIterable();
+    }
+
+If you return a lot of data, consider calling the :phpfunction:`flush` function
+after some specific item count to send the contents to the browser::
+
+    public function loadArticles(): \Generator
+    {
+        // ...
+
+        $count = 0;
+        foreach ($queryBuilder->getQuery()->toIterable() as $article) {
+            yield $article;
+
+            if (0 === ++$count % 100) {
+                flush();
             }
         }
+    }
+
+.. _component-http-foundation-serving-files:
 
 Serving Files
 ~~~~~~~~~~~~~
