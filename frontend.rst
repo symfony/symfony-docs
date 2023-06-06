@@ -25,14 +25,14 @@ Requires a build step?                      yes                no
 Works in all browsers?                      yes                yes
 Supports :doc:`Stimulus/UX </frontend/ux>`  yes                yes
 Supports Sass/Tailwind                      yes                :ref:`yes <asset-mapper-tailwind>`
-Supports JSX, Vue components?               yes                no**
+Supports React, Vue, Svelte?                yes                yes**
 Supports TypeScript                         yes                no**
 ==========================================  =================  ======================================================
 
-** You *can* technically use things JSX, Vue or TypeScript with AssetMapper, but
-   with some caveats: you'll need to use their native tools for pre-compilation
-   and some things (like Vue single-file components) cannot be compiled down to
-   pure JavaScript that can be executed by a browser.
+** Using JSX (React), Vue or TypeScript with AssetMapper is possible, but you'll
+   need to use their native tools for pre-compilation. Also, some features (like
+   Vue single-file components) cannot be compiled down to pure JavaScript that can
+   be executed by a browser.
 
 .. _frontend-webpack-encore:
 
