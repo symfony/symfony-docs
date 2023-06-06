@@ -631,6 +631,103 @@ represented by a PHP callable instead of a string::
 
 .. _component-http-foundation-serving-files:
 
+Streaming a JSON Response
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` class was
+    introduced in Symfony 6.3.
+
+The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` allows an API to
+return a lot of data as JSON and keep the used resources low by make usage of Generators.
+
+It expects an array which represents the JSON structure and the list which should be
+streamed are represented in the array as ``\Generator``. It also supports any kind of
+Traversable containing JSON serializable data for a good developer experience,
+but for keep the resources usage as low as possible, it is recommended to use ``\Generators``,
+as they the advantages that only the current returned data need to be keep in memory.
+
+The response will stream the JSON with generators in to most efficient way and keep resources as low as possible::
+
+    use Symfony\Component\HttpFoundation\StreamedJsonResponse;
+
+    function loadArticles(): \Generator { // any method or function returning a Generator
+         yield ['title' => 'Article 1'];
+         yield ['title' => 'Article 2'];
+         yield ['title' => 'Article 3'];
+    };
+
+    $response = new StreamedJsonResponse(
+        // json structure with generators in which will be streamed as a list
+        [
+            '_embedded' => [
+                'articles' => loadArticles(), // any \Generator can be used which will be streamed as list of data
+            ],
+        ],
+    );
+
+.. tip::
+
+    If loading data via doctrine the ``toIterable`` method of ``Doctrine`` can be
+    used to keep the resources low and fetch only row by row.
+    See the `Doctrine Batch processing`_ documentation for more::
+
+        public function __invoke(): Response
+        {
+            return new StreamedJsonResponse(
+                [
+                    '_embedded' => [
+                        'articles' => $this->loadArticles(),
+                    ],
+                ],
+            );
+        }
+
+        public function loadArticles(): \Generator
+        {
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder->from(Article::class, 'article');
+            $queryBuilder->select('article.id')
+                ->addSelect('article.title')
+                ->addSelect('article.description');
+
+            return $queryBuilder->getQuery()->toIterable();
+        }
+
+.. tip::
+
+    If you have a lot of data to be returned you may want to call the
+    PHP `flush <https://www.php.net/manual/en/function.flush.php>`__ method between
+    to flush the response after every specific count of items::
+
+        public function __invoke(): Response
+        {
+            return new StreamedJsonResponse([
+                '_embedded' => [
+                    'articles' => $this->loadArticles(),
+                ],
+            ]);
+        }
+
+        public function loadArticles(): \Generator
+        {
+            $queryBuilder = $entityManager->createQueryBuilder();
+            $queryBuilder->from(Article::class, 'article');
+            $queryBuilder->select('article.id')
+                ->addSelect('article.title')
+                ->addSelect('article.description');
+
+            $count = 0;
+            foreach ($queryBuilder->getQuery()->toIterable() as $article) {
+                yield $article;
+
+                if (++$count % 100 === 0) {
+                    flush();
+                }
+            }
+        }
+
 Serving Files
 ~~~~~~~~~~~~~
 
@@ -866,3 +963,4 @@ Learn More
 .. _`JSON Hijacking`: https://haacked.com/archive/2009/06/25/json-hijacking.aspx/
 .. _OWASP guidelines: https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html#always-return-json-with-an-object-on-the-outside
 .. _RFC 8674: https://tools.ietf.org/html/rfc8674
+.. _Doctrine Batch processing: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/batch-processing.html#iterating-results
