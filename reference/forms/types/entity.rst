@@ -253,6 +253,8 @@ Doctrine's Array Collection.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
+.. include:: /reference/forms/types/options/placeholder_attr.rst.inc
+
 ``preferred_choices``
 ~~~~~~~~~~~~~~~~~~~~~
 

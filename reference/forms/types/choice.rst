@@ -196,6 +196,8 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
+.. include:: /reference/forms/types/options/placeholder_attr.rst.inc
+
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 Overridden Options
@@ -294,6 +296,8 @@ Field Variables
 +----------------------------+--------------+-------------------------------------------------------------------+
 | placeholder                | ``mixed``    | The empty value if not already in the list, otherwise             |
 |                            |              | ``null``.                                                         |
++----------------------------+--------------+-------------------------------------------------------------------+
+| placeholder_attr           | ``array``    | The value of the `placeholder_attr`_ option.                      |
 +----------------------------+--------------+-------------------------------------------------------------------+
 | choice_translation_domain  | ``mixed``    | ``boolean``, ``null`` or ``string`` to determine if the value     |
 |                            |              | should be translated.                                             |
