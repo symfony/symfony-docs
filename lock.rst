@@ -50,6 +50,7 @@ this behavior by using the ``lock`` key like:
             lock: ['memcached://m1.docker', 'memcached://m2.docker']
             lock: 'redis://r1.docker'
             lock: ['redis://r1.docker', 'redis://r2.docker']
+            lock: 'rediss://r1.docker?ssl[verify_peer]=1&ssl[cafile]=...'
             lock: 'zookeeper://z1.docker'
             lock: 'zookeeper://z1.docker,z2.docker'
             lock: 'zookeeper://localhost01,localhost02:2181'
