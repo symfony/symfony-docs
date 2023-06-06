@@ -293,6 +293,7 @@ get logged on the server as well as the emails being sent:
             ;
 
             $monolog->handler('group')
+                ->type('group')
                 ->members(['streamed', 'deduplicated'])
             ;
 
