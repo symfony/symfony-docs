@@ -94,6 +94,9 @@ PHP versions you can use annotations. To do this, install the annotations packag
 .. code-block:: terminal
 
     $ composer require annotations
+    
+In the config file **config/routes.yaml** change the controllers::type property
+to *annotation*.
 
 You can now add your route directly *above* the controller:
 
