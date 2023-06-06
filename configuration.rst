@@ -309,8 +309,6 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             # any string surrounded by two % is replaced by that parameter value
             email_address: '%app.admin_email%'
 
-            # ...
-
     .. code-block:: xml
 
         <!-- config/packages/some_package.xml -->
@@ -333,13 +331,17 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
 
         // config/packages/some_package.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
         return static function (ContainerConfigurator $container): void {
             $container->extension('some_package', [
-                // any string surrounded by two % is replaced by that parameter value
-                'email_address' => '%app.admin_email%',
+                // when using the param() function, you only have to pass the parameter name...
+                'email_address' => param('app.admin_email'),
 
-                // ...
+                // ... but if you prefer it, you can also pass the name as a string
+                // surrounded by two % (same as in YAML and XML formats) and Symfony will
+                // replace it by that parameter value
+                'email_address' => '%app.admin_email%',
             ]);
         };
 
