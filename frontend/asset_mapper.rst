@@ -369,8 +369,8 @@ Once you have the URL, include it in ``base.html.twig``:
     {% endblock %}
 
 If you'd rather download the CSS file and include it locally, you can do that.
-For example, you could download it to ``assets/vendor/bootstrap.min.css`` and
-then include it with:
+For example, you could manually download, save it to ``assets/vendor/bootstrap.min.css``
+and then include it with:
 
 .. code-block:: html+twig
 
