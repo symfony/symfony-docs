@@ -994,6 +994,68 @@ rendered by the ``{{ importmap() }}`` Twig function:
             importmap_script_attributes:
                 crossorigin: 'anonymous'
 
+Page-Specific CSS & JavaScript
+------------------------------
+
+Sometimes you may choose to include CSS or JavaScript files only on certain
+pages. To add a CSS file to a specific page, create the file, then add a
+``link`` tag to it like normal:
+
+.. code-block:: html+twig
+
+    {# templates/products/checkout.html.twig #}
+
+    {% block stylesheets %}
+        {{ parent() }}
+
+        <link rel="stylesheet" href="{{ asset('styles/checkout.css') }}">
+    {% endblock %}
+
+For JavaScript, first create the new file (e.g. ``assets/checkout.js``). Then,
+add a ``script``` tag that imports it:
+
+.. code-block:: html+twig
+
+    {# templates/products/checkout.html.twig #}
+
+    {% block javascripts %}
+        {{ parent() }}
+
+        <script type="module">
+            import '{{ asset('checkout.js') }}';
+        </script>
+    {% endblock %}
+
+This instructs your browser to download and execute the file.
+
+In this setup, the normal ``app.js`` file will be executed first and *then*
+``checkout.js``. If, for some reason, you want to execute *only* ``checkout.js``
+and *not* ``app.js``, override the ``javascript`` block entirely and render
+``checkout.js`` through the ``importmap()`` function:
+
+.. code-block:: html+twig
+
+    {# templates/products/checkout.html.twig #}
+
+    {% block javascripts %}
+        <script type="module">
+            {{ importmap(asset('checkout.js')) }}
+        </script>
+    {% endblock %}
+
+The important thing is that the ``importmap()`` function must be called exactly
+*one* time on each page. It outputs the ``importmap`` and also adds a
+``<script type="module">`` tag that loads the ``app.js`` file or whatever path
+you pass to ``importmap()``.
+
+.. note::
+
+    If you look at the source of your page, by default, the ``<script type="module">``
+    from ``importmap()`` will contain ``import 'app';`` - not something like
+    ``import ``/assets/app-4e986c1a2318dd050b1d47.js``. Both would work - but
+    because ``app`` appears in your ``importmap.php``, the browser will read ``app``
+    from the ``importmap`` on the page and ultimately load ``/assets/app-4e986c1a2318dd050b1d47.js``
+
 The AssetMapper Component Caching System in dev
 -----------------------------------------------
 
