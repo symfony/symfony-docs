@@ -1004,7 +1004,6 @@ pages. To add a CSS file to a specific page, create the file, then add a
 .. code-block:: html+twig
 
     {# templates/products/checkout.html.twig #}
-
     {% block stylesheets %}
         {{ parent() }}
 
@@ -1017,7 +1016,6 @@ add a ``script``` tag that imports it:
 .. code-block:: html+twig
 
     {# templates/products/checkout.html.twig #}
-
     {% block javascripts %}
         {{ parent() }}
 
@@ -1036,7 +1034,6 @@ and *not* ``app.js``, override the ``javascript`` block entirely and render
 .. code-block:: html+twig
 
     {# templates/products/checkout.html.twig #}
-
     {% block javascripts %}
         <script type="module">
             {{ importmap(asset('checkout.js')) }}
