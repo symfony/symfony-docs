@@ -15,19 +15,19 @@ fast frontend, *and* enjoy the process:
 * :ref:`AssetMapper <frontend-asset-mapper>`, is a production-ready simpler alternative
   to Webpack Encore that runs entirely in PHP. It's currently experimental.
 
-==========================================  =================  ======================================================
-                                            Encore             AssetMapper
-==========================================  =================  ======================================================
-Production Ready?                           yes                yes
-Stable?                                     yes                :doc:`experimental </contributing/code/experimental>`
-Requirements                                node               none: pure PHP
-Requires a build step?                      yes                no
-Works in all browsers?                      yes                yes
-Supports :doc:`Stimulus/UX </frontend/ux>`  yes                yes
-Supports Sass/Tailwind                      yes                :ref:`yes <asset-mapper-tailwind>`
-Supports React, Vue, Svelte?                yes                yes**
-Supports TypeScript                         yes                no**
-==========================================  =================  ======================================================
+================================  =================  ======================================================
+                                  Encore             AssetMapper
+================================  =================  ======================================================
+Production Ready?                 yes                yes
+Stable?                           yes                :doc:`experimental </contributing/code/experimental>`
+Requirements                      node               none: pure PHP
+Requires a build step?            yes                no
+Works in all browsers?            yes                yes
+Supports `Stimulus/UX`_           yes                yes
+Supports Sass/Tailwind            yes                :ref:`yes <asset-mapper-tailwind>`
+Supports React, Vue, Svelte?      yes                yes**
+Supports TypeScript               yes                no**
+================================  =================  ======================================================
 
 ** Using JSX (React), Vue or TypeScript with AssetMapper is possible, but you'll
    need to use their native tools for pre-compilation. Also, some features (like
@@ -123,12 +123,11 @@ AssetMapper is currently :doc:`experimental </contributing/code/experimental>`.
 
 :doc:`Read the AssetMapper Documentation </frontend/asset_mapper>`
 
-Symfony UX Components
----------------------
+Stimulus & Symfony UX Components
+--------------------------------
 
-* :doc:`/frontend/ux`
-
-.. include:: /frontend/_ux-libraries.rst.inc
+To learn about Stimulus & the UX Components, see:
+the `StimulusBundle Documentation`_
 
 Other Front-End Articles
 ------------------------
@@ -153,3 +152,5 @@ Other Front-End Articles
 .. _`Symfony`: https://symfony.com/
 .. _`Full API`: https://github.com/symfony/webpack-encore/blob/master/index.js
 .. _`Webpack Encore screencast series`: https://symfonycasts.com/screencast/webpack-encore
+.. _StimulusBundle Documentation: https://symfony.com/bundles/StimulusBundle/current/index.html
+.. _Stimulus/UX: https://symfony.com/bundles/StimulusBundle/current/index.html
