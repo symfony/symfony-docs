@@ -1,0 +1,74 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-06-04T14:44:29Z
+
+This is ready to go! About the Code Blocks failure - I've added https://github.com/symfony-tools/symfony-application/pull/16 - but it looks like it's using the 5.4 version of the app, and I'm not sure why.
+
+---------------------------------------------------------------------------
+
+by wolviey at 2023-06-05T09:56:25Z
+
+I really like all the hard work on assetmapper . its really great, just i wonder is there a way to extend functionality of assetmapper like some php handlers ? i didnt see it in documentation, missed out or not a functionality yet ?
+
+---------------------------------------------------------------------------
+
+by Hanmac at 2023-06-05T12:23:39Z
+
+general question about the AssetMapper stuff
+if for example i have some sass/scss stuff, but i don't want to use NoteJS and Webcore,
+the AssetMapper could still be helpful for me, right?
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-06-05T14:28:51Z
+
+Tweaks handled! Thank you for the HUGE review on a big document (and very fast) ❤️
+
+> @wolviey: i wonder is there a way to extend functionality of assetmapper like some php handlers
+
+What kind of extending are you imagining? There is an "asset compiler" system where you can parse and modify the contents of any file in asset mapper. It's a bit more advanced, so I didn't document it on this first pass. You can also decorate a "public path resolver" to change the final, public paths of files.
+
+> @Hanmac: i have some sass/scss stuff, but i don't want to use NoteJS and Webcore, the AssetMapper could still be helpful for me, right?
+
+Yes :). This is in the new docs. Fortunately, you can download a standalone `dart-sass` binary to compile your Sass code, which doesn't require Node or Webpack. I think we could make the process of executing this binary even easier, but it's straightforward and (hopefully) well-documented in this new doc.
+
+---------------------------------------------------------------------------
+
+by wolviey at 2023-06-05T16:39:22Z
+
+> > @wolviey: i wonder is there a way to extend functionality of assetmapper like some php handlers
+>
+> What kind of extending are you imagining? There is an "asset compiler" system where you can parse and modify the contents of any file in asset mapper. It's a bit more advanced, so I didn't document it on this first pass. You can also decorate a "public path resolver" to change the final, public paths of files.
+>
+
+Thanks for awesome documentation and good work, easy to read and understandable. Thought things like, people can have tools for custom optimizations on css or js for special to their projects, I wondered is't possible to use assetmapper with custom optimization tools at compile time.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-06-05T19:55:10Z
+
+> Thanks for awesome documentation and good work, easy to read and understandable. Thought things like, people can have tools for custom optimizations on css or js for special to their projects, I wondered is't possible to use assetmapper with custom optimization tools at compile time.
+
+The answer is probably yes, and it would be by creating an asset compiler (you can see a few in core - one for js files and 2 for CSS files). With these, you could take the source of a file and change it - like minifying it (not, while that’s possible, that’s better left to the server). In practice, I don’t know yet how useful this stuff will be for that purpose… we’ll see what people come up with. And we may need to add even more hook points depending on what people want to do.
+
+---------------------------------------------------------------------------
+
+by wolviey at 2023-06-05T20:32:24Z
+
+> > Thanks for awesome documentation and good work, easy to read and understandable. Thought things like, people can have tools for custom optimizations on css or js for special to their projects, I wondered is't possible to use assetmapper with custom optimization tools at compile time.
+>
+> The answer is probably yes, and it would be by creating an asset compiler (you can see a few in core - one for js files and 2 for CSS files). With these, you could take the source of a file and change it - like minifying it (not, while that’s possible, that’s better left to the server). In practice, I don’t know yet how useful this stuff will be for that purpose… we’ll see what people come up with. And we may need to add even more hook points depending on what people want to do.
+
+Thank you so much for showing way of do this. :) At my side, i have my own typescripts and i like to compile them before deploy automatically. normally i do it with script. collecting all typescripts compile them. some optimizations with css (minification removing unused stuff etc) html and js afterwards and publish the latest html css and js files. what assetmapper give duplicate of this work and also in better some places. thats why i thought it can be good idea to merge them (need to check possible or not) . at server every request doing minification even with locks scary for my part when there can be 1000 page request same time. i prefer to do it offline before deployment. And assetmapper really make this things more less config necessary way. i hope there will more hook points :) Assetmapper Itself is great idea honestly.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-06-06T11:08:27Z
+
+I think this is ready to go :)
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-06-06T18:13:19Z
+
+FYI - this is still ready to go, but I also added a new section about page-specific JavaScript, per @bendavies question on Slack :)
