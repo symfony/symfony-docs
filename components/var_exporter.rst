@@ -199,8 +199,8 @@ LazyGhostTrait
 
 Ghost objects are empty objects, which see their properties populated the first
 time any method is called. Thanks to :class:`Symfony\\Component\\VarExporter\\LazyGhostTrait`,
-the implementation of the lazy mechanism is eased. In the following example, we are
-defining the ``$hash`` property as lazy. We also declare that the ``MyLazyObject::computeHash()``
+the implementation of the lazy mechanism is eased. In the following example, the
+``$hash`` property is defined as lazy. Also, the ``MyLazyObject::computeHash()``
 method should be called only when ``$hash``'s value need to be known::
 
     namespace App\Hash;
@@ -269,12 +269,12 @@ convert non-lazy classes to lazy ones::
         $instance->validateHash();
     });
 
-While you never query ``$processor->hash`` value, heavy methods will never be triggered.
-But still, the ``$processor`` object exists and can be used in your code, passed to
-methods, functions, etc.
+While you never query ``$processor->hash`` value, heavy methods will never be
+triggered. But still, the ``$processor`` object exists and can be used in your
+code, passed to methods, functions, etc.
 
-Additionally and by adding two arguments to initializer function, it is possible to initialize
-properties one-by-one::
+Additionally and by adding two arguments to the initializer function, it is
+possible to initialize properties one-by-one::
 
     $processor = LazyHashProcessor::createLazyGhost(initializer: function (HashProcessor $instance, string $propertyName, ?string $propertyScope): mixed {
         if (HashProcessor::class === $propertyScope && 'hash' === $propertyName) {
@@ -284,9 +284,9 @@ properties one-by-one::
         // Then you can add more logic for the other properties
     });
 
-Ghost objects unfortunately can't work with abstract classes but also internal PHP classes.
-Nevertheless, the VarExporter component covers this need with the help of to
-:ref:`Virtual Proxies <var-exporter_virtual-proxies>`.
+Ghost objects unfortunately can't work with abstract classes or internal PHP
+classes. Nevertheless, the VarExporter component covers this need with the help
+of :ref:`Virtual Proxies <var-exporter_virtual-proxies>`.
 
 .. versionadded:: 6.2
 
@@ -301,9 +301,9 @@ The purpose of virtual proxies in the same one as
 :ref:`ghost objects <var-exporter_ghost-objects>`, but their internal behavior is
 totally different. Where ghost objects requires to extend a base class, virtual
 proxies take advantage of the **Liskov Substitution principle**. This principle
-describes that if two objects are implementing the same interface, you can swap between
-the different implementations without breaking your application. This is what virtual
-proxies take advantage of. To use virtual proxies, you may use
+describes that if two objects are implementing the same interface, you can swap
+between the different implementations without breaking your application. This is
+what virtual proxies take advantage of. To use virtual proxies, you may use
 :class:`Symfony\\Component\\VarExporter\\ProxyHelper` to generate proxy's class
 code::
 
@@ -353,9 +353,9 @@ code::
         return $instance;
     });
 
-Just like ghost objects, while you never query ``$processor->hash``, its value will not be computed.
-The main difference with ghost objects is that this time, we created a proxy of an abstract class.
-This also works with internal PHP class.
+Just like ghost objects, while you never query ``$processor->hash``, its value
+will not be computed. The main difference with ghost objects is that this time,
+a proxy of an abstract class was created. This also works with internal PHP class.
 
 .. versionadded:: 6.2
 
