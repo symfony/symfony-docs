@@ -334,6 +334,12 @@ t
 Creates a ``Translatable`` object that can be passed to the
 :ref:`trans filter <reference-twig-filter-trans>`.
 
+importmap
+~~~~~~~~~
+
+Outputs the ``importmap`` & a few other items when using
+:doc:`the Asset component </frontend/asset_mapper>`.
+
 Form Related Functions
 ~~~~~~~~~~~~~~~~~~~~~~
 
