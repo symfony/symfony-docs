@@ -164,20 +164,49 @@ transport, but you can force to use one:
 This table shows the full list of available DSN formats for each third
 party provider:
 
-===================== ==================================================== =========================================== ========================================
-Provider              SMTP                                                 HTTP                                        API
-===================== ==================================================== =========================================== ========================================
-`Amazon SES`_         ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
-`Google Gmail`_       gmail+smtp://USERNAME:APP-PASSWORD@default           n/a                                         n/a
-`Infobip`_            infobip+smtp://KEY@default                           n/a                                         infobip+api://KEY@BASE_URL
-`Mailchimp Mandrill`_ mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
-`Mailgun`_            mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
-`Mailjet`_            mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
-`MailPace`_           mailpace+api://API_TOKEN@default                     n/a                                         mailpace+api://API_TOKEN@default
-`Postmark`_           postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
-`Sendgrid`_           sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
-`Sendinblue`_         sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
-===================== ==================================================== =========================================== ========================================
++------------------------+-----------------------------------------------------+
+| Provider               | Formats                                             |
++========================+=====================================================+
+| `Amazon SES`_          | - SMTP ses+smtp://USERNAME:PASSWORD@default         |
+|                        | - HTTP ses+https://ACCESS_KEY:SECRET_KEY@default    |
+|                        | - API ses+api://ACCESS_KEY:SECRET_KEY@default       |
++------------------------+-----------------------------------------------------+
+| `Google Gmail`_        | - SMTP gmail+smtp://USERNAME:APP-PASSWORD@default   |
+|                        | - HTTP n/a                                          |
+|                        | - API n/a                                           |
++------------------------+-----------------------------------------------------+
+| `Infobip`_             | - SMTP infobip+smtp://KEY@default                   |
+|                        | - HTTP n/a                                          |
+|                        | - API infobip+api://KEY@BASE_URL                    |
++------------------------+-----------------------------------------------------+
+| `Mailchimp Mandrill`_  | - SMTP mandrill+smtp://USERNAME:PASSWORD@default    |
+|                        | - HTTP mandrill+https://KEY@default                 |
+|                        | - API mandrill+api://KEY@default                    |
++------------------------+-----------------------------------------------------+
+| `Mailgun`_             | - SMTP mailgun+smtp://USERNAME:PASSWORD@default     |
+|                        | - HTTP mailgun+https://KEY:DOMAIN@default           |
+|                        | - API mailgun+api://KEY:DOMAIN@default              |
++------------------------+-----------------------------------------------------+
+| `Mailjet`_             | - SMTP mailjet+smtp://ACCESS_KEY:SECRET_KEY@default |
+|                        | - HTTP n/a                                          |
+|                        | - API mailjet+api://ACCESS_KEY:SECRET_KEY@default   |
++------------------------+-----------------------------------------------------+
+| `MailPace`_            | - SMTP mailpace+api://API_TOKEN@default             |
+|                        | - HTTP n/a                                          |
+|                        | - API mailpace+api://API_TOKEN@default              |
++------------------------+-----------------------------------------------------+
+| `Postmark`_            | - SMTP postmark+smtp://ID@default                   |
+|                        | - HTTP n/a                                          |
+|                        | - API postmark+api://KEY@default                    |
++------------------------+-----------------------------------------------------+
+| `Sendgrid`_            | - SMTP sendgrid+smtp://KEY@default                  |
+|                        | - HTTP n/a                                          |
+|                        | - API sendgrid+api://KEY@default                    |
++------------------------+-----------------------------------------------------+
+| `Sendinblue`_          | - SMTP sendinblue+smtp://USERNAME:PASSWORD@default  |
+|                        | - HTTP n/a                                          |
+|                        | - API sendinblue+api://KEY@default                  |
++------------------------+-----------------------------------------------------+
 
 .. caution::
 
