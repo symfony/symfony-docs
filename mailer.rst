@@ -199,6 +199,12 @@ Provider              SMTP                                                 HTTP 
 
 .. note::
 
+    Besides SMTP, many 3rd party transports offer a web API to send emails.
+    To do so, you have to install (additionally to the bridge)
+    the HttpClient component via ``composer require symfony/http-client``.
+
+.. note::
+
     To use Google Gmail, you must have a Google Account with 2-Step-Verification (2FA)
     enabled and you must use `App Password`_ to authenticate. Also note that Google
     revokes your App Passwords when you change your Google Account password and then
