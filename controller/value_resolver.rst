@@ -242,7 +242,7 @@ values. That's why you must always return an array, even for single values::
 
     class BookingIdValueResolver implements ValueResolverInterface
     {
-        public function resolve(Request $request, ArgumentMetadata $argument): array
+        public function resolve(Request $request, ArgumentMetadata $argument): iterable
         {
             // get the argument type (e.g. BookingId)
             $argumentType = $argument->getType();
