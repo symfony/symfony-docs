@@ -721,7 +721,7 @@ First, install the ``tailwindcss`` binary. This can be installed via npm (run
 
     $ npm install -D tailwindcss
 
-Of you can install the `Tailwind standalone binary`_, which does not require Node.
+Or you can install the `Tailwind standalone binary`_, which does not require Node.
 
 Next, generate the ``tailwind.config.js`` file:
 
