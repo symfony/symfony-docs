@@ -706,10 +706,6 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
 Retry Failed Requests
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.3
-
-    The ``max_retries`` feature was added in Symfony 6.3.
-
 Sometimes, requests fail because of network issues or temporary server errors.
 Symfony's HttpClient allows to retry failed requests automatically using the
 :ref:`retry_failed option <reference-http-client-retry-failed>`.
@@ -718,8 +714,12 @@ By default, failed requests are retried up to 3 times, with an exponential delay
 between retries (first retry = 1 second; third retry: 4 seconds) and only for
 the following HTTP status codes: ``423``, ``425``, ``429``, ``502`` and ``503``
 when using any HTTP method and ``500``, ``504``, ``507`` and ``510`` when using
-an HTTP `idempotent method`_. Use the ``max_retries`` setting to configure the amount
-of times a request is retried.
+an HTTP `idempotent method`_. Use the ``max_retries`` setting to configure the
+amount of times a request is retried.
+
+.. versionadded:: 6.4
+
+    The ``max_retries`` options was introduced in Symfony 6.4.
 
 Check out the full list of configurable :ref:`retry_failed options <reference-http-client-retry-failed>`
 to learn how to tweak each of them to fit your application needs.
