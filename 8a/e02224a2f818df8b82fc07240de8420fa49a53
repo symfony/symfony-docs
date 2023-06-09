@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-05-30T11:16:09Z
+
+Antoine, thanks for this contribution. However, a few years ago we decided to no longer use short pages in the docs (they may look convenient to document things ... but they are confusing and cumbersome for readers, which are continuously moving from one page to another).
+
+Removing a service from the container looks like a basic feature of it, so maybe we could move this to a new section in the main `/service_container.rst` article. Thanks.
