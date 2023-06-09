@@ -706,9 +706,9 @@ making a request. Use the ``max_redirects`` setting to configure this behavior
 Retry Failed Requests
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.3
+.. versionadded:: 6.4
 
-    The ``max_retries`` feature was added in Symfony 6.3.
+    The ``max_retries`` feature was added in Symfony 6.4.
 
 Sometimes, requests fail because of network issues or temporary server errors.
 Symfony's HttpClient allows to retry failed requests automatically using the
