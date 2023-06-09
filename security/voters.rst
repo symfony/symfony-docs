@@ -476,6 +476,6 @@ However, you can change this behavior by specifying the message and status code 
 
 .. tip::
 
-    If the status code is different than 403, a
+    If the status code is different than 403, an
     :class:`Symfony\\Component\\HttpKernel\\Exception\\HttpException`
-    will be throw instead.
+    will be thrown instead.
