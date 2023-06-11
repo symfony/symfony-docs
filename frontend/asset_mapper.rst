@@ -391,7 +391,7 @@ This *can* work with importmaps, but it should *not* be used for critical CSS
 that needs to be loaded before the page is rendered because the browser
 won't download the CSS until the JavaScript file executed.
 
-However, if you *do* want to lazily-load a CSS file, you an make this work
+However, if you *do* want to lazily-load a CSS file, you can make this work
 by using the ``importmap:require`` command and pointing it at a CSS file.
 
 .. code-block:: terminal
