@@ -695,8 +695,9 @@ Set the ``label`` option on fields to define their labels explicitly::
 Changing the Action and HTTP Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, a form will be submitted via an HTTP POST request to the same
-URL under which the form was rendered. When building the form in the controller,
+By default, the ``<form>`` tag is rendered with a ``method="post"`` attribute,
+and no ``action`` attribute. This means that the form is submitted via an HTTP
+POST request to the same URL under which it was rendered. When building the form,
 use the ``setAction()`` and ``setMethod()`` methods to change this::
 
     // src/Controller/TaskController.php
