@@ -190,6 +190,14 @@ Structure
 
 * Exception and error messages must start with a capital letter and finish with a dot ``.``;
 
+* Exception, error and deprecation messages containing a class name must
+  use ``get_debug_type()`` instead of ``::class`` to retrieve it:
+
+  .. code-block:: diff
+
+    - throw new \Exception(sprintf('Command "%s" failed.', $command::class));
+    + throw new \Exception(sprintf('Command "%s" failed.', get_debug_type($command)));
+
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
   which return or throw something;
 
