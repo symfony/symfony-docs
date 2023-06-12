@@ -648,7 +648,7 @@ Form Login
 
 Most websites have a login form where users authenticate using an
 identifier (e.g. email address or username) and a password. This
-functionality is provided by the *form login authenticator*.
+functionality is provided by the built-in :class:`Symfony\\Component\\Security\\Http\Authenticator\\FormLoginAuthenticator`.
 
 First, create a controller for the login form:
 
@@ -679,7 +679,7 @@ First, create a controller for the login form:
         }
     }
 
-Then, enable the form login authenticator using the ``form_login`` setting:
+Then, enable the ``FormLoginAuthenticator`` using the ``form_login`` setting:
 
 .. configuration-block::
 
@@ -772,8 +772,8 @@ Edit the login controller to render the login form:
           }
       }
 
-Don't let this controller confuse you. Its job is only to *render* the form:
-the ``form_login`` authenticator will handle the form *submission* automatically.
+Don't let this controller confuse you. Its job is only to *render* the form.
+The ``FormLoginAuthenticator`` will handle the form *submission* automatically.
 If the user submits an invalid email or password, that authenticator will store
 the error and redirect back to this controller, where we read the error (using
 ``AuthenticationUtils``) so that it can be displayed back to the user.
@@ -845,7 +845,7 @@ To review the whole process:
 #. The ``/login`` page renders login form via the route and controller created
    in this example;
 #. The user submits the login form to ``/login``;
-#. The security system (i.e. the ``form_login`` authenticator) intercepts the
+#. The security system (i.e. the ``FormLoginAuthenticator``) intercepts the
    request, checks the user's submitted credentials, authenticates the user if
    they are correct, and sends the user back to the login form if they are not.
 
