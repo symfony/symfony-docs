@@ -443,10 +443,6 @@ information from annotations of properties and methods, such as ``@var``,
     $phpStanExtractor = new PhpStanExtractor();
     $phpStanExtractor->getTypesFromConstructor(Foo::class, 'bar');
 
-.. versionadded:: 6.1
-
-    The ``PhpStanExtractor`` was introduced in Symfony 6.1.
-
 SerializerExtractor
 ~~~~~~~~~~~~~~~~~~~
 
