@@ -285,6 +285,55 @@ Symfony provides the following env var processors:
                 $container->setParameter('app_allowed_languages', '%env(json:ALLOWED_LANGUAGES)%');
             };
 
+
+``env(list:FOO)``
+    Decodes the content of ``FOO`` using the ``json`` by wrapping the value with with hooks (``[${FOO}]``).
+    It returns either an array or ``null``:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(VALUES): '1,2,4,8,16'
+                values: '%env(list:VALUES)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(VALUES)">1,2,4,8,16</parameter>
+                    <parameter key="values">%env(list:VALUES)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container): void {
+                $container->setParameter('env(VALUES)', '1,2,4,8,16');
+                $container->setParameter('values', '%env(list:VALUES)%');
+            };
+
+    .. versionadded:: 6.4
+
+        The ``env(list:...)`` env var processor was introduced in Symfony 6.4.
+
 ``env(resolve:FOO)``
     If the content of ``FOO`` includes container parameters (with the syntax
     ``%parameter_name%``), it replaces the parameters by their values:
