@@ -287,7 +287,7 @@ Symfony provides the following env var processors:
 
 
 ``env(list:FOO)``
-    Decodes the content of ``FOO`` using the ``json`` by wrapping the value with with hooks (``[${FOO}]``).
+    Decodes the content of ``FOO`` using the ``json`` processor by wrapping the value with hooks (``[${FOO}]``).
     It returns either an array or ``null``:
 
     .. configuration-block::
