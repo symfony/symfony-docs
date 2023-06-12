@@ -1,0 +1,26 @@
+---------------------------------------------------------------------------
+
+by carsonbot at 2023-06-09T19:45:34Z
+
+Hey!
+
+Oh no, it looks like you have made this PR towards a branch that is not maintained anymore. :/
+Could you update the [PR base branch](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/changing-the-base-branch-of-a-pull-request) to target one of these branches instead? 5.4, 6.2, 6.3, 6.4, 7.0.
+
+Cheers!
+
+Carsonbot
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2023-06-10T11:22:35Z
+
+Nice catch, i think it can be rebased on 5.4 :)
+
+---------------------------------------------------------------------------
+
+by colinodell at 2023-06-10T12:53:52Z
+
+> i think it can be rebased on 5.4
+
+This section of the documentation wasn't added until 6.1: https://github.com/symfony/symfony-docs/pull/16955#issuecomment-1180411002  I'm not sure why that decision was made, so I'm hesitant to backport this to 5.4.
