@@ -1819,7 +1819,7 @@ You can logout user programmatically using the ``logout()`` method of the
         }
     }
 
-The user will be logout from the firewall of the request. If the request is
+The user will be logged out from the firewall of the request. If the request is
 not behind a firewall a ``\LogicException`` will be thrown.
 
 Customizing Logout
