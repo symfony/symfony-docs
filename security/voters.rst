@@ -98,6 +98,7 @@ code like this:
         // src/Controller/PostController.php
 
         // ...
+        use App\Security\PostVoter;
 
         class PostController extends AbstractController
         {
@@ -105,7 +106,7 @@ code like this:
             public function show(Post $post): Response
             {
                 // check for "view" access: calls all voters
-                $this->denyAccessUnlessGranted('PostVoter::VIEW', $post);
+                $this->denyAccessUnlessGranted(PostVoter::VIEW, $post);
 
                 // ...
             }
