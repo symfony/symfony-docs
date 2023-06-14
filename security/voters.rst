@@ -105,7 +105,7 @@ code like this:
             public function show(Post $post): Response
             {
                 // check for "view" access: calls all voters
-                $this->denyAccessUnlessGranted('view', $post);
+                $this->denyAccessUnlessGranted('PostVoter::VIEW', $post);
 
                 // ...
             }
@@ -114,7 +114,7 @@ code like this:
             public function edit(Post $post): Response
             {
                 // check for "edit" access: calls all voters
-                $this->denyAccessUnlessGranted('edit', $post);
+                $this->denyAccessUnlessGranted(PostVoter::EDIT, $post);
 
                 // ...
             }
