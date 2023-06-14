@@ -78,7 +78,7 @@ code like this:
         {
             #[Route('/posts/{id}', name: 'post_show')]
             // check for "view" access: calls all voters
-            #[IsGranted('show', 'post')]
+            #[IsGranted('view', 'post')]
             public function show(Post $post): Response
             {
                 // ...
