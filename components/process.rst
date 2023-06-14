@@ -113,11 +113,6 @@ You can configure the options passed to the ``other_options`` argument of
     // this option allows a subprocess to continue running after the main script exited
     $process->setOptions(['create_new_console' => true]);
 
-.. note::
-
-    The ``create_new_console`` option is only available on Windows!
-
-
 Using Features From the OS Shell
 --------------------------------
 
