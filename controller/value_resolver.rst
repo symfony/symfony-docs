@@ -213,6 +213,61 @@ PSR-7 Objects Resolver:
     :class:`Psr\\Http\\Message\\RequestInterface` or :class:`Psr\\Http\\Message\\MessageInterface`.
     It requires installing :doc:`the PSR-7 Bridge </components/psr7>` component.
 
+Managing Value Resolvers
+------------------------
+
+For each argument, every resolver tagged with ``controller.argument_value_resolver``
+will be called until one provides a value. The order in which they are called depends
+on their priority. For example, the ``SessionValueResolver`` will be called before the
+``DefaultValueResolver`` because its priority is higher. This allows to write e.g.
+``SessionInterface $session = null`` to get the session if there is one, or ``null``
+if there is none.
+
+In that specific case, you don't need any resolver running before
+``SessionValueResolver``, so skipping them would not only improve performance,
+but also prevent one of them providing a value before ``SessionValueResolver``
+has a chance to.
+
+The :class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver` attribute lets you
+do this by "targeting" the resolver you want::
+
+    // src/Controller/SessionController.php
+    namespace App\Controller;
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
+    use Symfony\Component\HttpKernel\Attribute\ValueResolver;
+    use Symfony\Component\HttpKernel\Controller\ArgumentResolver\SessionValueResolver;
+    use Symfony\Component\Routing\Annotation\Route;
+
+    class SessionController
+    {
+        #[Route('/')]
+        public function __invoke(
+            #[ValueResolver(SessionValueResolver::class)]
+            SessionInterface $session = null
+        ): Response
+        {
+            // ...
+        }
+    }
+
+.. versionadded:: 6.3
+
+    The ``ValueResolver`` attribute was introduced in Symfony 6.3.
+
+In the example above, the ``SessionValueResolver`` will be called first because it is
+targeted. The ``DefaultValueResolver`` will be called next if no value has been provided;
+that's why we can assign ``null`` as ``$session``'s default value.
+
+We target a resolver by passing its name as ``ValueResolver``'s first argument.
+For convenience, built-in resolvers' name are their FQCN.
+
+A targeted resolver can also be disabled by passing ``ValueResolver``'s ``$disabled``
+argument to ``true``; this is how :ref:`MapEntity allows to disable the
+EntityValueResolver for a specific controller <doctrine-entity-value-resolver>`.
+Yes, ``MapEntity`` extends ``ValueResolver``!
+
 Adding a Custom Value Resolver
 ------------------------------
 
@@ -297,8 +352,13 @@ When those requirements are met, the method creates a new instance of the
 custom value object and returns it as the value for this argument.
 
 That's it! Now all you have to do is add the configuration for the service
-container. This can be done by tagging the service with ``controller.argument_value_resolver``
-and adding a priority:
+container. This can be done by adding one of the following tags to your value resolver.
+
+``controller.argument_value_resolver``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This tag is automatically added to every service implementing ``ValueResolverInterface``,
+but you can set it yourself to change its ``priority`` or ``name`` attributes.
 
 .. configuration-block::
 
@@ -313,7 +373,9 @@ and adding a priority:
 
             App\ValueResolver\BookingIdValueResolver:
                 tags:
-                    - { name: controller.argument_value_resolver, priority: 150 }
+                    - controller.argument_value_resolver:
+                        name: booking_id
+                        priority: 150
 
     .. code-block:: xml
 
@@ -330,7 +392,7 @@ and adding a priority:
                 <!-- ... -->
 
                 <service id="App\ValueResolver\BookingIdValueResolver">
-                    <tag name="controller.argument_value_resolver" priority="150"/>
+                    <tag name="booking_id" priority="150">controller.argument_value_resolver</tag>
                 </service>
             </services>
 
@@ -347,7 +409,7 @@ and adding a priority:
             $services = $containerConfigurator->services();
 
             $services->set(BookingIdValueResolver::class)
-                ->tag('controller.argument_value_resolver', ['priority' => 150])
+                ->tag('controller.argument_value_resolver', ['name' => 'booking_id', 'priority' => 150])
             ;
         };
 
@@ -364,3 +426,51 @@ command to see which argument resolvers are present and in which order they run:
 .. code-block:: terminal
 
     $ php bin/console debug:container debug.argument_resolver.inner --show-arguments
+
+You can also configure the name passed to the ``ValueResolver`` attribute to target
+your resolver. Otherwise it will default to the service's id.
+
+``controller.targeted_value_resolver``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Set this tag if you want your resolver to be called only if it is targeted by a
+``ValueResolver`` attribute. Like ``controller.argument_value_resolver``, you
+can customize the name by which your resolver can be targeted.
+
+As an alternative, you can add the
+:class:`Symfony\\Component\\HttpKernel\\Attribute\\AsTargetedValueResolver` attribute
+to your resolver and pass your custom name as its first argument::
+
+    // src/ValueResolver/IdentifierValueResolver.php
+    namespace App\ValueResolver;
+
+    use Symfony\Component\HttpKernel\Attribute\AsTargetedValueResolver;
+    use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
+
+    #[AsTargetedValueResolver('booking_id')]
+    class BookingIdValueResolver implements ValueResolverInterface
+    {
+        // ...
+    }
+
+You can then pass this name as ``ValueResolver``'s first argument to target your resolver::
+
+    // src/Controller/BookingController.php
+    namespace App\Controller;
+
+    use App\Reservation\BookingId;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\ValueResolver;
+
+    class BookingController
+    {
+        public function index(#[ValueResolver('booking_id')] BookingId $id): Response
+        {
+            // ... do something with $id
+        }
+    }
+
+.. versionadded:: 6.3
+
+    The ``controller.targeted_value_resolver`` tag and ``AsTargetedValueResolver``
+    attribute were introduced in Symfony 6.3.
