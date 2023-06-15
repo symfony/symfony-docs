@@ -731,7 +731,8 @@ URLs of ``<a>`` elements:
                         allowed_link_schemes: ['http', 'https', 'mailto']
 
                         # specifies the allowed hosts, the attribute will be dropped if the
-                        # URL contains a different host
+                        # URL contains a different host. Subdomains are allowed: e.g. the following
+                        # config would also allow 'www.symfony.com', 'live.symfony.com', etc.
                         allowed_link_hosts: ['symfony.com']
 
                         # whether to allow relative links (i.e. URLs without scheme and host)
@@ -765,7 +766,8 @@ URLs of ``<a>`` elements:
                     <allowed-link-scheme>mailto</allowed-link-scheme>
 
                     <!-- specifies the allowed hosts, the attribute will be dropped if the
-                         URL contains a different host -->
+                         URL contains a different host. Subdomains are allowed: e.g. the following
+                         config would also allow 'www.symfony.com', 'live.symfony.com', etc. -->
                     <allowed-link-host>symfony.com</allowed-link-host>
                 </framework:html-sanitizer>
             </framework:config>
@@ -789,7 +791,8 @@ URLs of ``<a>`` elements:
                     ->allowedLinkSchemes(['http', 'https', 'mailto'])
 
                     // specifies the allowed hosts, the attribute will be dropped if the
-                    // URL contains a different host
+                    // URL contains a different host. Subdomains are allowed: e.g. the following
+                    // config would also allow 'www.symfony.com', 'live.symfony.com', etc.
                     ->allowedLinkHost('symfony.com')
 
                     // whether to allow relative links (i.e. URLs without scheme and host)
@@ -814,8 +817,8 @@ URLs of ``<a>`` elements:
                 ->allowedLinkSchemes(['http', 'https', 'mailto'])
 
                 // specifies the allowed hosts, the attribute will be dropped if the
-                // URL contains a different host
-                ->allowedLinkHosts(['symfony.com'])
+                // URL contains a different host which is not a subdomain of the allowed host
+                ->allowedLinkHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
 
                 // whether to allow relative links (i.e. URLs without scheme and host)
                 ->allowRelativeLinks()
@@ -849,8 +852,8 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                         allowed_media_schemes: ['http', 'https', 'mailto']
 
                         # specifies the allowed hosts, the attribute will be dropped if the URL
-                        # contains a different host
-                        allowed_media_hosts: ['symfony.com']
+                        # contains a different host which is not a subdomain of the allowed host
+                        allowed_media_hosts: ['symfony.com'] # Also allows any subdomain (i.e. www.symfony.com)
 
                         # whether to allow relative URLs (i.e. URLs without scheme and host)
                         allow_relative_medias: true
@@ -883,7 +886,8 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                     <allowed-media-scheme>mailto</allowed-media-scheme>
 
                     <!-- specifies the allowed hosts, the attribute will be dropped if the URL
-                         contains a different host -->
+                         contains a different host which is not a subdomain of the allowed host.
+                         Also allows any subdomain (i.e. www.symfony.com) -->
                     <allowed-media-host>symfony.com</allowed-media-host>
                 </framework:html-sanitizer>
             </framework:config>
@@ -907,8 +911,8 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                     ->allowedMediaSchemes(['http', 'https', 'mailto'])
 
                     // specifies the allowed hosts, the attribute will be dropped if the URL
-                    // contains a different host
-                    ->allowedMediaHost('symfony.com')
+                    // contains a different host which is not a subdomain of the allowed host
+                    ->allowedMediaHost('symfony.com') // Also allows any subdomain (i.e. www.symfony.com)
 
                     // whether to allow relative URLs (i.e. URLs without scheme and host)
                     ->allowRelativeMedias(true)
@@ -932,8 +936,8 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                 ->allowedMediaSchemes(['http', 'https', 'mailto'])
 
                 // specifies the allowed hosts, the attribute will be dropped if the URL
-                // contains a different host
-                ->allowedMediaHosts(['symfony.com'])
+                // contains a different host which is not a subdomain of the allowed host
+                ->allowedMediaHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
 
                 // whether to allow relative URLs (i.e. URLs without scheme and host)
                 ->allowRelativeMedias()
