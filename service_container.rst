@@ -412,7 +412,7 @@ example, suppose you want to make the admin email configurable:
           public function __construct(
               private MessageGenerator $messageGenerator,
               private MailerInterface $mailer,
-    +        private string $adminEmail,)
+    +        private string $adminEmail
           ) {
           }
 
