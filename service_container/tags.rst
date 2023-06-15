@@ -872,7 +872,7 @@ array element. For example, to retrieve the ``handler_two`` handler::
 .. tip::
 
     Just like the priority, you can also implement a static
-    ``getDefaultIndexName()`` method in the handlers and omit the
+    ``getDefaultIndexName()`` method in the handlers and set ``index_by`` to ``index`` in config then omit the
     index attribute (``key``)::
 
         // src/Handler/One.php
