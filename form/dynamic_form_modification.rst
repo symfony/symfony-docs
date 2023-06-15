@@ -447,7 +447,7 @@ The type would now look like::
     class SportMeetupType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options): void
-        {          
+        {
             $builder
                 ->add('sport', EntityType::class, [
                     'class' => Sport::class,
@@ -488,7 +488,7 @@ The type would now look like::
                 }
             );
             
-            // by default, action does not appear in the form tag
+            // by default, action does not appear in the <form> tag
             // you can set this value by passing the controller route
             $builder->setAction($options['action']);
         }
@@ -546,7 +546,7 @@ field according to the current selection in the ``sport`` field:
 .. code-block:: html+twig
 
     {# templates/meetup/create.html.twig #}
-    {{ form_start(form, { 'attr' : { 'id' : 'supply_history_form' } }) }}
+    {{ form_start(form, { attr: { id: 'supply_history_form' } }) }}
         {{ form_row(form.sport) }}    {# <select id="meetup_sport" ... #}
         {{ form_row(form.position) }} {# <select id="meetup_position" ... #}
         {# ... #}
@@ -568,12 +568,14 @@ field according to the current selection in the ``sport`` field:
           });
 
           const text = await req.text();
+
           return text;
         };
 
         const parseTextToHtml = (text) => {
           const parser = new DOMParser();
           const html = parser.parseFromString(text, 'text/html');
+
           return html;
         };
 
@@ -581,6 +583,7 @@ field according to the current selection in the ``sport`` field:
           const requestBody = e.target.getAttribute('name') + '=' + e.target.value;
           const updateFormResponse = await updateForm(requestBody, form.getAttribute('action'), form.getAttribute('method'));
           const html = parseTextToHtml(updateFormResponse);
+
           const new_form_select_position = html.getElementById('meetup_position');
           form_select_position.innerHTML = new_form_select_position.innerHTML;
         };
