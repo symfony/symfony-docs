@@ -997,7 +997,7 @@ with the ``default_index_method`` attribute on the tagged argument:
                     <!-- use getIndex() instead of getDefaultIndexName() -->
                     <argument type="tagged_iterator"
                         tag="app.handler"
-                        default-index-method="someFunctionName"
+                        default-index-method="getIndex"
                     />
                 </service>
             </services>
