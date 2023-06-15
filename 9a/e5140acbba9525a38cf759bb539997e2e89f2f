@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-06-08T15:30:38Z
+
+I like the simplification. Thanks for that!
+
+But we tend to avoid super short documents ... and this one is now 54-line long. Maybe it's too short? Would it make sense to combine it with some other article? Moreover, there are many concepts floating around front-end: Stimulus, UX, AssetMapper, Webpack Encore, etc. So, having many small documents could be confusing to readers. Thanks.
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-06-13T16:54:19Z
+
+Ready to go - I agree on removing the UX page entirely... I was also pondering that. It's done now - with a redirection to the StimulusBundle docs.
