@@ -228,8 +228,8 @@ In that specific case, you don't need any resolver running before
 but also prevent one of them providing a value before ``SessionValueResolver``
 has a chance to.
 
-The :class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver` attribute lets you
-do this by "targeting" the resolver you want::
+The :class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver` attribute
+lets you do this by "targeting" the resolver you want::
 
     // src/Controller/SessionController.php
     namespace App\Controller;
@@ -256,11 +256,11 @@ do this by "targeting" the resolver you want::
 
     The ``ValueResolver`` attribute was introduced in Symfony 6.3.
 
-In the example above, the ``SessionValueResolver`` will be called first because it is
-targeted. The ``DefaultValueResolver`` will be called next if no value has been provided;
-that's why we can assign ``null`` as ``$session``'s default value.
+In the example above, the ``SessionValueResolver`` will be called first because
+it is targeted. The ``DefaultValueResolver`` will be called next if no value has
+been provided; that's why you can assign ``null`` as ``$session``'s default value.
 
-We target a resolver by passing its name as ``ValueResolver``'s first argument.
+You can target a resolver by passing its name as ``ValueResolver``'s first argument.
 For convenience, built-in resolvers' name are their FQCN.
 
 A targeted resolver can also be disabled by passing ``ValueResolver``'s ``$disabled``
