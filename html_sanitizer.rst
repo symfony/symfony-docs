@@ -722,7 +722,7 @@ URLs of ``<a>`` elements:
                         # ...
 
                         # if `true`, all URLs using the `http://` scheme will be converted to
-                        # using the `https://` scheme instead. `http` still needs to be allowed
+                        # use the `https://` scheme instead. `http` still needs to be allowed
                         # in `allowed_link_schemes`
                         force_https_urls: true
 
@@ -750,7 +750,7 @@ URLs of ``<a>`` elements:
 
             <framework:config>
                 <!-- force-https-urls: if `true`, all URLs using the `http://` scheme will be
-                                       converted to using the `https://` scheme instead.
+                                       converted to use the `https://` scheme instead.
                                        `http` still needs to be allowed in `allowed-link-scheme` -->
                 <!-- allow-relative-links: whether to allow relative links (i.e. URLs without
                                            scheme and host) -->
@@ -780,7 +780,7 @@ URLs of ``<a>`` elements:
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // if `true`, all URLs using the `http://` scheme will be converted to
-                    // using the `https://` scheme instead. `http` still needs to be
+                    // use the `https://` scheme instead. `http` still needs to be
                     // allowed in `allowedLinkSchemes`
                     ->forceHttpsUrls(true)
 
@@ -805,7 +805,7 @@ URLs of ``<a>`` elements:
         $postSanitizer = new HtmlSanitizer(
             (new HtmlSanitizerConfig())
                 // if `true`, all URLs using the `http://` scheme will be converted to
-                // using the `https://` scheme instead. `http` still needs to be
+                // use the `https://` scheme instead. `http` still needs to be
                 // allowed in `allowedLinkSchemes`
                 ->forceHttpsUrls()
 
@@ -840,7 +840,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                         # ...
 
                         # if `true`, all URLs using the `http://` scheme will be converted to
-                        # using the `https://` scheme instead. `http` still needs to be allowed
+                        # use the `https://` scheme instead. `http` still needs to be allowed
                         # in `allowed_media_schemes`
                         force_https_urls: true
 
@@ -868,7 +868,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 
             <framework:config>
                 <!-- force-https-urls: if `true`, all URLs using the `http://` scheme will be
-                                       converted to using the `https://` scheme instead. `http`
+                                       converted to use the `https://` scheme instead. `http`
                                        still needs to be allowed in `allowed-media-scheme` -->
                 <!-- allow-relative-medias: whether to allow relative URLs (i.e. URLs without
                                            scheme and host) -->
@@ -898,7 +898,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // if `true`, all URLs using the `http://` scheme will be converted to
-                    // using the `https://` scheme instead. `http` still needs to be
+                    // use the `https://` scheme instead. `http` still needs to be
                     // allowed in `allowedMediaSchemes`
                     ->forceHttpsUrls(true)
 
@@ -923,7 +923,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
         $postSanitizer = new HtmlSanitizer(
             (new HtmlSanitizerConfig())
                 // if `true`, all URLs using the `http://` scheme will be converted to
-                // using the `https://` scheme instead. `http` still needs to be
+                // use the `https://` scheme instead. `http` still needs to be
                 // allowed in `allowedMediaSchemes`
                 ->forceHttpsUrls()
 
