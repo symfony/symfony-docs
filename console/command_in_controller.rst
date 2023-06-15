@@ -42,6 +42,8 @@ Imagine you want to run the ``debug:twig`` from inside your controller::
                 'fooArgument' => 'barValue',
                 // (optional) pass options to the command
                 '--bar' => 'fooValue',
+                // (optional) pass options without value
+                '--baz' => true,
             ]);
 
             // You can use NullOutput() if you don't need the output
@@ -59,9 +61,10 @@ Imagine you want to run the ``debug:twig`` from inside your controller::
 Showing Colorized Command Output
 --------------------------------
 
-By telling the ``BufferedOutput`` it is decorated via the second parameter,
-it will return the Ansi color-coded content. The `SensioLabs AnsiToHtml converter`_
-can be used to convert this to colorful HTML.
+By telling the :class:`Symfony\\Component\\Console\\Output\\BufferedOutput`
+it is decorated via the second parameter, it will return the Ansi color-coded
+content. The `SensioLabs AnsiToHtml converter`_ can be used to convert this to
+colorful HTML.
 
 First, require the package:
 
