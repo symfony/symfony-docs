@@ -731,8 +731,9 @@ URLs of ``<a>`` elements:
                         allowed_link_schemes: ['http', 'https', 'mailto']
 
                         # specifies the allowed hosts, the attribute will be dropped if the
-                        # URL contains a different host which is not a subdomain of the allowed host
-                        allowed_link_hosts: ['symfony.com'] # also allows any subdomain (i.e. www.symfony.com)
+                        # URL contains a different host. Subdomains are allowed: e.g. the following
+                        # config would also allow 'www.symfony.com', 'live.symfony.com', etc.
+                        allowed_link_hosts: ['symfony.com']
 
                         # whether to allow relative links (i.e. URLs without scheme and host)
                         allow_relative_links: true
@@ -765,8 +766,8 @@ URLs of ``<a>`` elements:
                     <allowed-link-scheme>mailto</allowed-link-scheme>
 
                     <!-- specifies the allowed hosts, the attribute will be dropped if the
-                         URL contains a different host which is not a subdomain of the allowed host
-                         Also allows any subdomain (i.e. www.symfony.com) -->
+                         URL contains a different host. Subdomains are allowed: e.g. the following
+                         config would also allow 'www.symfony.com', 'live.symfony.com', etc. -->
                     <allowed-link-host>symfony.com</allowed-link-host>
                 </framework:html-sanitizer>
             </framework:config>
@@ -790,8 +791,9 @@ URLs of ``<a>`` elements:
                     ->allowedLinkSchemes(['http', 'https', 'mailto'])
 
                     // specifies the allowed hosts, the attribute will be dropped if the
-                    // URL contains a different host which is not a subdomain of the allowed host
-                    ->allowedLinkHost('symfony.com') // Also allows any subdomain (i.e. www.symfony.com)
+                    // URL contains a different host. Subdomains are allowed: e.g. the following
+                    // config would also allow 'www.symfony.com', 'live.symfony.com', etc.
+                    ->allowedLinkHost('symfony.com')
 
                     // whether to allow relative links (i.e. URLs without scheme and host)
                     ->allowRelativeLinks(true)
