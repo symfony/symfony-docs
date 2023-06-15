@@ -921,9 +921,21 @@ array element. For example, to retrieve the ``handler_two`` handler::
 
 .. tip::
 
-    Just like the priority, you can also implement a static
-    ``getDefaultIndexName()`` method in the handlers and omit the
+    Just like the priority, if you set the attribute (``index_by``) on the :tagged_iterator, you can also implement a static
+    ``getDefault(``index_by``)Name()`` method in the handlers and omit the
     index attribute (``key``)::
+        
+
+        .. code-block:: yaml
+        
+        # config/services.yaml
+            services:
+                # ...
+
+                App\HandlerCollection:
+                    arguments: [!tagged_iterator { tag: 'app.handler', index_by: 'handler' }]
+                    
+    .. code-block:: php
 
         // src/Handler/One.php
         namespace App\Handler;
@@ -931,7 +943,7 @@ array element. For example, to retrieve the ``handler_two`` handler::
         class One
         {
             // ...
-            public static function getDefaultIndexName(): string
+            public static function getDefaultHandlerName(): string
             {
                 return 'handler_one';
             }
