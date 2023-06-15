@@ -268,10 +268,8 @@ via Ajax - those will instantly work: no need to reinitialize anything.
 Ready to learn more about Stimulus?
 
 * Read the `Stimulus Documentation`_
-* Find out more about how the :doc:`Symfony UX system works </frontend/ux>`
-* See a :ref:`list of all Symfony UX packages <ux-packages-list>`
-* Learn more about the `Symfony Stimulus Bridge`_ - including the superpower of
-  making your controllers load lazily!
+* Learn more about `StimulusBundle & the UX System`_
+* Browse `all the Symfony UX packages`_
 
   .. admonition:: Screencast
       :class: screencast
@@ -480,7 +478,8 @@ Encore supports many more features! For a full list of what you can do, see
 .. _`WebpackEncoreBundle Configuration`: https://github.com/symfony/webpack-encore-bundle#configuration
 .. _`Stimulus`: https://stimulus.hotwired.dev/
 .. _`Stimulus Documentation`: https://stimulus.hotwired.dev/handbook/introduction
-.. _`Symfony Stimulus Bridge`: https://github.com/symfony/stimulus-bridge
+.. _StimulusBundle & the UX System: https://symfony.com/bundles/StimulusBundle/current/index.html
+.. _all the Symfony UX packages: https://symfony.com/bundles/StimulusBundle/current/index.html#ux-packages
 .. _`Turbo`: https://turbo.hotwired.dev/
 .. _`symfony/ux-turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
 .. _`Stimulus Screencast`: https://symfonycasts.com/screencast/stimulus
