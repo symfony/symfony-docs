@@ -919,109 +919,110 @@ array element. For example, to retrieve the ``handler_two`` handler::
         }
     }
 
-.. tip::
+You can omit the index attribute (``key`` in the previous example) by setting
+the ``index_by`` attribute on the ``tagged_iterator`` tag. In this case, you
+must define a static method whose name follows the pattern:
+``getDefault<CamelCase index_by value>Name``.
 
-    Just like the priority, if you set the attribute (``index_by``) on the :tagged_iterator, you can also implement a static
-    ``getDefault(``index_by``)Name()`` method in the handlers and omit the
-    index attribute (``key``)::
-        
+For example, if ``index_by`` is ``handler``, the method name must be
+``getDefaultHandlerName()``:
 
-        .. code-block:: yaml
-        
-        # config/services.yaml
-            services:
-                # ...
+.. code-block:: yaml
 
-                App\HandlerCollection:
-                    arguments: [!tagged_iterator { tag: 'app.handler', index_by: 'handler' }]
-                    
-    .. code-block:: php
+    # config/services.yaml
+        services:
+            # ...
 
-        // src/Handler/One.php
-        namespace App\Handler;
+            App\HandlerCollection:
+                arguments: [!tagged_iterator { tag: 'app.handler', index_by: 'handler' }]
 
-        class One
+.. code-block:: php
+
+    // src/Handler/One.php
+    namespace App\Handler;
+
+    class One
+    {
+        // ...
+        public static function getDefaultHandlerName(): string
         {
-            // ...
-            public static function getDefaultHandlerName(): string
-            {
-                return 'handler_one';
+            return 'handler_one';
+        }
+    }
+
+You also can define the name of the static method to implement on each service
+with the ``default_index_method`` attribute on the tagged argument:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/HandlerCollection.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+        class HandlerCollection
+        {
+            public function __construct(
+                #[TaggedIterator('app.handler', defaultIndexMethod: 'getIndex')]
+                iterable $handlers
+            ) {
             }
         }
 
-    You also can define the name of the static method to implement on each service
-    with the ``default_index_method`` attribute on the tagged argument:
+    .. code-block:: yaml
 
-    .. configuration-block::
+        # config/services.yaml
+        services:
+            # ...
 
-        .. code-block:: php-attributes
+            App\HandlerCollection:
+                # use getIndex() instead of getDefaultIndexName()
+                arguments: [!tagged_iterator { tag: 'app.handler', default_index_method: 'getIndex' }]
 
-            // src/HandlerCollection.php
-            namespace App;
+    .. code-block:: xml
 
-            use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
 
-            class HandlerCollection
-            {
-                public function __construct(
-                    #[TaggedIterator('app.handler', defaultIndexMethod: 'getIndex')]
-                    iterable $handlers
-                ) {
-                }
-            }
+            <services>
+                <!-- ... -->
 
-        .. code-block:: yaml
+                <service id="App\HandlerCollection">
+                    <!-- use getIndex() instead of getDefaultIndexName() -->
+                    <argument type="tagged_iterator"
+                        tag="app.handler"
+                        default-index-method="someFunctionName"
+                    />
+                </service>
+            </services>
+        </container>
 
-            # config/services.yaml
-            services:
-                # ...
+    .. code-block:: php
 
-                App\HandlerCollection:
-                    # use getIndex() instead of getDefaultIndexName()
-                    arguments: [!tagged_iterator { tag: 'app.handler', default_index_method: 'getIndex' }]
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        .. code-block:: xml
+        use App\HandlerCollection;
+        use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 
-            <!-- config/services.xml -->
-            <?xml version="1.0" encoding="UTF-8" ?>
-            <container xmlns="http://symfony.com/schema/dic/services"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xsi:schemaLocation="http://symfony.com/schema/dic/services
-                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+        return function (ContainerConfigurator $container) {
+            $services = $container->services();
 
-                <services>
-                    <!-- ... -->
+            // ...
 
-                    <service id="App\HandlerCollection">
-                        <!-- use getIndex() instead of getDefaultIndexName() -->
-                        <argument type="tagged_iterator"
-                            tag="app.handler"
-                            default-index-method="someFunctionName"
-                        />
-                    </service>
-                </services>
-            </container>
-
-        .. code-block:: php
-
-            // config/services.php
-            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-            use App\HandlerCollection;
-            use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
-
-            return function (ContainerConfigurator $container) {
-                $services = $container->services();
-
-                // ...
-
-                // use getIndex() instead of getDefaultIndexName()
-                $services->set(HandlerCollection::class)
-                    ->args([
-                        tagged_iterator('app.handler', null, 'getIndex'),
-                    ])
-                ;
-            };
+            // use getIndex() instead of getDefaultIndexName()
+            $services->set(HandlerCollection::class)
+                ->args([
+                    tagged_iterator('app.handler', null, 'getIndex'),
+                ])
+            ;
+        };
 
 .. _tags_as-tagged-item:
 
