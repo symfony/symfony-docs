@@ -721,8 +721,9 @@ URLs of ``<a>`` elements:
                     app.post_sanitizer:
                         # ...
 
-                        # if `true`, all URLs will be forced using the `https://` scheme (instead
-                        # of e.g. `http://` or `mailto:`)
+                        # if `true`, all URLs using the `http://` scheme will be converted to
+                        # using the `https://` scheme instead. `http` still needs to be allowed
+                        # in `allowed_link_schemes`
                         force_https_urls: true
 
                         # specifies the allowed URL schemes. If the URL has a different scheme, the
@@ -748,8 +749,9 @@ URLs of ``<a>`` elements:
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <!-- force-https-urls: if `true`, all URLs will be forced using the `https://`
-                                       scheme (instead of e.g. `http://` or `mailto:`) -->
+                <!-- force-https-urls: if `true`, all URLs using the `http://` scheme will be
+                                       converted to using the `https://` scheme instead.
+                                       `http` still needs to be allowed in `allowed-link-scheme` -->
                 <!-- allow-relative-links: whether to allow relative links (i.e. URLs without
                                            scheme and host) -->
                 <framework:html-sanitizer
@@ -777,8 +779,9 @@ URLs of ``<a>`` elements:
         return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
-                    // if `true`, all URLs will be forced using the `https://` scheme (instead
-                    // of e.g. `http://` or `mailto:`)
+                    // if `true`, all URLs using the `http://` scheme will be converted to
+                    // using the `https://` scheme instead. `http` still needs to be
+                    // allowed in `allowedLinkSchemes`
                     ->forceHttpsUrls(true)
 
                     // specifies the allowed URL schemes. If the URL has a different scheme, the
@@ -801,8 +804,9 @@ URLs of ``<a>`` elements:
 
         $postSanitizer = new HtmlSanitizer(
             (new HtmlSanitizerConfig())
-                // if `true`, all URLs will be forced using the `https://` scheme (instead
-                // of e.g. `http://` or `mailto:`)
+                // if `true`, all URLs using the `http://` scheme will be converted to
+                // using the `https://` scheme instead. `http` still needs to be
+                // allowed in `allowedLinkSchemes`
                 ->forceHttpsUrls()
 
                 // specifies the allowed URL schemes. If the URL has a different scheme, the
@@ -835,8 +839,9 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                     app.post_sanitizer:
                         # ...
 
-                        # if `true`, all URLs will be forced using the `https://` scheme (instead
-                        # of e.g. `http://` or `data:`)
+                        # if `true`, all URLs using the `http://` scheme will be converted to
+                        # using the `https://` scheme instead. `http` still needs to be allowed
+                        # in `allowed_media_schemes`
                         force_https_urls: true
 
                         # specifies the allowed URL schemes. If the URL has a different scheme, the
@@ -862,8 +867,9 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
                 http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config>
-                <!-- force-https-urls: if `true`, all URLs will be forced using the `https://`
-                                       scheme (instead of e.g. `http://` or `data:`) -->
+                <!-- force-https-urls: if `true`, all URLs using the `http://` scheme will be
+                                       converted to using the `https://` scheme instead. `http`
+                                       still needs to be allowed in `allowed-media-scheme` -->
                 <!-- allow-relative-medias: whether to allow relative URLs (i.e. URLs without
                                            scheme and host) -->
                 <framework:html-sanitizer
@@ -891,8 +897,9 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
         return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
-                    // if `true`, all URLs will be forced using the `https://` scheme (instead
-                    // of e.g. `http://` or `data:`)
+                    // if `true`, all URLs using the `http://` scheme will be converted to
+                    // using the `https://` scheme instead. `http` still needs to be
+                    // allowed in `allowedMediaSchemes`
                     ->forceHttpsUrls(true)
 
                     // specifies the allowed URL schemes. If the URL has a different scheme, the
@@ -915,8 +922,9 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 
         $postSanitizer = new HtmlSanitizer(
             (new HtmlSanitizerConfig())
-                // if `true`, all URLs will be forced using the `https://` scheme (instead
-                // of e.g. `http://` or `data:`)
+                // if `true`, all URLs using the `http://` scheme will be converted to
+                // using the `https://` scheme instead. `http` still needs to be
+                // allowed in `allowedMediaSchemes`
                 ->forceHttpsUrls()
 
                 // specifies the allowed URL schemes. If the URL has a different scheme, the
