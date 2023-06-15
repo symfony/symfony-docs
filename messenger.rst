@@ -259,6 +259,10 @@ matched under ``routing`` will still be handled immediately, i.e. synchronously.
 
 .. note::
 
+    You may use a partial PHP namespace like ``'App\Message\*'`` to match all
+    the messages within the matching namespace. The only requirement is that the
+    ``'*'`` wildcard has to be placed at the end of the namespace.
+
     You may use ``'*'`` as the message class. This will act as a default routing
     rule for any message not matched under ``routing``. This is useful to ensure
     no message is handled synchronously by default.
