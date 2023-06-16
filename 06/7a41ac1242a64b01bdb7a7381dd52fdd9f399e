@@ -1,0 +1,5 @@
+---------------------------------------------------------------------------
+
+by phansys at 2023-06-14T21:46:10Z
+
+I think this change is fine. I recently faced an issue regarding the absence of the "E" on the `variables_order` setting and I spent quite a bit of time debugging to reach the same conclusion than I now found in this PR.
