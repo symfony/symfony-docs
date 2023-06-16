@@ -50,8 +50,7 @@ Dump the Service Container into a Single File
 
 Symfony compiles the :doc:`service container </service_container>` into multiple
 small files by default. Set this parameter to ``true`` to compile the entire
-container into a single file, which could improve performance when using
-"class preloading" in PHP 7.4 or newer versions:
+container into a single file, which could improve performance:
 
 .. configuration-block::
 
@@ -92,36 +91,6 @@ OPcache stores the compiled PHP files to avoid having to recompile them for
 every request. There are some `byte code caches`_ available, but as of PHP
 5.5, PHP comes with `OPcache`_ built-in. For older versions, the most widely
 used byte code cache is `APC`_.
-
-.. _performance-use-preloading:
-
-Use the OPcache class preloading
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Starting from PHP 7.4, OPcache can compile and load classes at start-up and
-make them available to all requests until the server is restarted, improving
-performance significantly.
-
-During container compilation (e.g. when running the ``cache:clear`` command),
-Symfony generates a file with the list of classes to preload in the
-``var/cache/`` directory. Rather than use this file directly, use the
-``config/preload.php`` file that is created when
-:doc:`using Symfony Flex in your project </setup/flex>`:
-
-.. code-block:: ini
-
-    ; php.ini
-    opcache.preload=/path/to/project/config/preload.php
-
-    ; required for opcache.preload:
-    opcache.preload_user=www-data
-
-If this file is missing, run this command to update the Symfony Flex recipe:
-``composer recipes:update symfony/framework-bundle``.
-
-Use the :ref:`container.preload <dic-tags-container-preload>` and
-:ref:`container.no_preload <dic-tags-container-nopreload>` service tags to define
-which classes should or should not be preloaded by PHP.
 
 .. _performance-configure-opcache:
 
