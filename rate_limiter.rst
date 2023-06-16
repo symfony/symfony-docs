@@ -35,7 +35,8 @@ Fixed Window Rate Limiter
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This is the simplest technique and it's based on setting a limit for a given
-interval of time.
+interval of time (e.g. 5,000 requests per hour or 3 login attempts every 15
+minutes).
 
 In the diagram below, the limit is set to "5 tokens per hour". Each window
 starts at the first hit (i.e. 10:15, 11:30 and 12:30). As soon as there are
