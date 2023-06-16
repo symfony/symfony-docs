@@ -86,7 +86,7 @@ itself when being accessed for the first time). The same happens when calling
 To check if your lazy service works you can check the interface of the received object::
 
     dump(class_implements($service));
-    // the output should include "Symfony\Component\VarExporter\LazyGhostObjectInterface"
+    // the output should include "Symfony\Component\VarExporter\LazyObjectInterface"
 
 You can also configure your service's laziness thanks to the
 :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Autoconfigure` attribute.
