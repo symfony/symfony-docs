@@ -792,7 +792,9 @@ the right situation:
   but the overrides only apply to one environment.
 
 *Real* environment variables always win over env vars created by any of the
-``.env`` files.
+``.env`` files. This behavior depends on
+`variables_order <http://php.net/manual/en/ini.core.php#ini.variables-order>`_ to
+contain an ``E`` to expose the ``$_ENV`` superglobal.
 
 The ``.env`` and ``.env.<environment>`` files should be committed to the
 repository because they are the same for all developers and machines. However,
