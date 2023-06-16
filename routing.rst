@@ -1628,8 +1628,8 @@ Use the ``RedirectController`` to redirect to other routes and URLs:
                 keepRequestMethod: true
                 # add this to remove all original route attributes when redirecting
                 ignoreAttributes: true
-                # or specify which attributes to ignore
-                # ignoreAttributes: [ offset, limit ]
+                # or specify which attributes to ignore:
+                # ignoreAttributes: ['offset', 'limit']
 
         legacy_doc:
             path: /legacy/doc
