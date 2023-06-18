@@ -331,7 +331,6 @@ For example, you may add the following transports as services:
             $services = $container->services();
 
             $services->set(\MailerSmtpTransport::class)
-                // the param() method was introduced in Symfony 5.2.
                 ->args([param('mailer_host')])
                 ->tag('app.mail_transport')
             ;
@@ -499,7 +498,6 @@ To answer this, change the service declaration:
             $services = $container->services();
 
             $services->set(\MailerSmtpTransport::class)
-                // the param() method was introduced in Symfony 5.2.
                 ->args([param('mailer_host')])
                 ->tag('app.mail_transport', ['alias' => 'smtp'])
             ;

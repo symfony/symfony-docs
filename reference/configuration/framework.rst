@@ -2332,7 +2332,7 @@ package:
 
     If you request an asset that is *not found* in the ``manifest.json`` file, the original -
     *unmodified* - asset path will be returned.
-    Since Symfony 5.4, you can set ``strict_mode`` to ``true`` to get an exception when an asset is *not found*.
+    You can set ``strict_mode`` to ``true`` to get an exception when an asset is *not found*.
 
 .. note::
 
