@@ -24,6 +24,7 @@ for maximum performance:
   #. :ref:`Don't check PHP files timestamps <performance-dont-check-timestamps>`
   #. :ref:`Configure the PHP realpath Cache <performance-configure-realpath-cache>`
   #. :ref:`Optimize Composer Autoloader <performance-optimize-composer-autoloader>`
+  #. :ref:`Use NVMe disks <performance-use-nvme-disks>`
 
 .. _performance-install-apcu-polyfill:
 
@@ -218,6 +219,15 @@ deployment process too):
 * ``--classmap-authoritative`` creates a class map for PSR-0 and PSR-4 compatible classes
   used in your application and prevents Composer from scanning the file system for
   classes that are not found in the class map. (see: `Composer's autoloader optimization`_).
+
+.. _performance-optimize-use-nvme-disks:
+
+Use NVMe Disks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+NVMe is an updated version of the solid-state drive. The difference is that it skips the SATA route and connects directly with the CPU bus on the computer's motherboard. Typically, NVMe stands for Non-Volatile Memory Express. The critical factor to note is the "e", which stands for "express". This refers to the Peripheral Component Interconnect Express (PCIe) bus. The PCIe ensures higher data transfer and lower latency rates.
+
+It's also vital to note that NVMe disks have a read and write speeds averaging 4000 MB/s. That is 10 times faster than a standard SSD.
 
 Disable Dumping the Container as XML in Debug Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
