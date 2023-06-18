@@ -223,7 +223,7 @@ deployment process too):
 .. _performance-optimize-use-nvme-disks:
 
 Use NVMe Disks
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~
 
 NVMe is an updated version of the solid-state drive. The difference is that it skips the SATA route and connects directly with the CPU bus on the computer's motherboard. Typically, NVMe stands for Non-Volatile Memory Express. The critical factor to note is the "e", which stands for "express". This refers to the Peripheral Component Interconnect Express (PCIe) bus. The PCIe ensures higher data transfer and lower latency rates.
 
