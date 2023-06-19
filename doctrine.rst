@@ -998,8 +998,8 @@ In addition, you can query directly with SQL if you need to::
                 WHERE p.price > :price
                 ORDER BY p.price ASC
                 ';
-            $stmt = $conn->prepare($sql);
-            $resultSet = $stmt->executeQuery(['price' => $price]);
+
+            $resultSet = $conn->executeQuery($sql, ['price' => $price]);
 
             // returns an array of arrays (i.e. a raw data set)
             return $resultSet->fetchAllAssociative();
