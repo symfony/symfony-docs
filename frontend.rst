@@ -5,10 +5,10 @@ Symfony gives you the flexibility to choose any front-end tools you want. This c
 be dead-simple - like putting CSS & JS directly in the ``public/`` directory - or
 more advanced - like scaffolding your front-end with a tool like Next.js.
 
-However, Symfony *does* come with two powerful option to help you build a modern,
+However, Symfony *does* come with two powerful options to help you build a modern,
 fast frontend, *and* enjoy the process:
 
-* :ref:`Webpack Encore <frontend-webpack-encore>` is a powerful tool built with Node
+* :ref:`Webpack Encore <frontend-webpack-encore>` is a powerful tool built with `Node.js`_
   on top of `Webpack`_ that allows you to write modern CSS & JavaScript and handle
   things like JSX (React), Vue or TypeScript.
 
@@ -20,19 +20,19 @@ fast frontend, *and* enjoy the process:
 ================================  =================  ======================================================
 Production Ready?                 yes                yes
 Stable?                           yes                :doc:`experimental </contributing/code/experimental>`
-Requirements                      node               none: pure PHP
+Requirements                      Node.js            none: pure PHP
 Requires a build step?            yes                no
 Works in all browsers?            yes                yes
 Supports `Stimulus/UX`_           yes                yes
 Supports Sass/Tailwind            yes                :ref:`yes <asset-mapper-tailwind>`
-Supports React, Vue, Svelte?      yes                yes**
-Supports TypeScript               yes                no**
+Supports React, Vue, Svelte?      yes                yes [#1]_
+Supports TypeScript               yes                no [#1]_
 ================================  =================  ======================================================
 
-** Using JSX (React), Vue or TypeScript with AssetMapper is possible, but you'll
-   need to use their native tools for pre-compilation. Also, some features (like
-   Vue single-file components) cannot be compiled down to pure JavaScript that can
-   be executed by a browser.
+.. [#1] Using JSX (React), Vue or TypeScript with AssetMapper is possible, but you'll
+        need to use their native tools for pre-compilation. Also, some features (like
+        Vue single-file components) cannot be compiled down to pure JavaScript that can
+        be executed by a browser.
 
 .. _frontend-webpack-encore:
 
@@ -147,6 +147,7 @@ Other Front-End Articles
 
 .. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
 .. _`Webpack`: https://webpack.js.org/
+.. _`Node.js`: https://nodejs.org/
 .. _`Webpacker`: https://github.com/rails/webpacker
 .. _`Mix`: https://laravel.com/docs/mix
 .. _`Symfony`: https://symfony.com/
