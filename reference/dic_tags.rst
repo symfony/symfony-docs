@@ -953,22 +953,6 @@ This tag is used to automatically register :ref:`expression function providers
 component. Using these providers, you can add custom functions to the security
 expression language.
 
-security.remember_me_aware
---------------------------
-
-**Purpose**: To allow remember me authentication
-
-This tag is used internally to allow remember-me authentication to work.
-If you have a custom authentication method where a user can be remember-me
-authenticated, then you may need to use this tag.
-
-If your custom authentication factory extends
-:class:`Symfony\\Bundle\\SecurityBundle\\DependencyInjection\\Security\\Factory\\AbstractFactory`
-and your custom authentication listener extends
-:class:`Symfony\\Component\\Security\\Http\\Firewall\\AbstractAuthenticationListener`,
-then your custom authentication listener will automatically have this tag
-applied and it will function automatically.
-
 security.voter
 --------------
 
