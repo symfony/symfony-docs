@@ -1069,7 +1069,7 @@ unused translation messages templates:
 
     The extractors can't find messages translated outside templates (like form
     labels or controllers) unless using :ref:`translatable-objects` or calling
-    the ``trans()`` method on a translator (since Symfony 5.3). Dynamic
+    the ``trans()`` method on a translator. Dynamic
     translations using variables or expressions in templates are not
     detected either:
 
