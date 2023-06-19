@@ -208,8 +208,7 @@ available in the ``configure()`` method::
 Registering the Command
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In PHP 8 and newer versions, you can register the command by adding the
-``AsCommand`` attribute to it::
+You can register the command by adding the ``AsCommand`` attribute to it::
 
     // src/Command/CreateUserCommand.php
     namespace App\Command;
