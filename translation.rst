@@ -943,8 +943,8 @@ the framework:
             $framework->defaultLocale('en');
         };
 
-This ``default_locale`` is also relevant for the translator, as we will see
-in the next section.
+This ``default_locale`` is also relevant for the translator, as shown in the
+next section.
 
 .. _translation-fallback:
 
