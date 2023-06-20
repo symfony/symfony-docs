@@ -41,7 +41,7 @@ compact block collections and multi-document files.
 Real Parser
 ~~~~~~~~~~~
 
-It sports a real parser and is able to parse a large subset of the YAML
+It supports a real parser and is able to parse a large subset of the YAML
 specification, for all your configuration needs. It also means that the parser
 is pretty robust, easy to understand, and simple enough to extend.
 
