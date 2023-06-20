@@ -238,8 +238,8 @@ each time you ask for it.
 Limiting Services to a specific Symfony Environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you are using PHP 8.0 or later, you can use the ``#[When]`` PHP
-attribute to only register the class as a service in some environments::
+You can use the ``#[When]`` attribute to only register the class
+as a service in some environments::
 
     use Symfony\Component\DependencyInjection\Attribute\When;
 
