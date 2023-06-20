@@ -65,7 +65,7 @@ a relative/absolute URL or a Symfony route name:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')
@@ -123,7 +123,7 @@ previously requested URL and always redirect to the default page:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')
@@ -211,7 +211,7 @@ parameter is included in the request, you may use the value of the
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')
@@ -278,7 +278,7 @@ option to define a new target via a relative/absolute URL or a Symfony route nam
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')
@@ -355,7 +355,7 @@ redirects can be customized using the  ``target_path_parameter`` and
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->firewall('main')

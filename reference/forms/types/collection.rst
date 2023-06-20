@@ -160,7 +160,7 @@ the value is removed from the collection. For example::
 
     $builder->add('users', CollectionType::class, [
         // ...
-        'delete_empty' => function (User $user = null) {
+        'delete_empty' => function (User $user = null): bool {
             return null === $user || empty($user->getFirstName());
         },
     ]);

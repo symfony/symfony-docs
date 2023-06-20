@@ -1535,12 +1535,12 @@ Then you're ready to go::
     $request = $httpClient->createRequest('GET', 'https://my.api.com/');
     $promise = $httpClient->sendAsyncRequest($request)
         ->then(
-            function (ResponseInterface $response) {
+            function (ResponseInterface $response): ResponseInterface {
                 echo 'Got status '.$response->getStatusCode();
 
                 return $response;
             },
-            function (\Throwable $exception) {
+            function (\Throwable $exception): never {
                 echo 'Error: '.$exception->getMessage();
 
                 throw $exception;
@@ -1656,7 +1656,7 @@ processing the stream of chunks as they come back from the network::
         {
             // process and/or change the $method, $url and/or $options as needed
 
-            $passthru = function (ChunkInterface $chunk, AsyncContext $context) {
+            $passthru = function (ChunkInterface $chunk, AsyncContext $context): \Generator {
                 // do what you want with chunks, e.g. split them
                 // in smaller chunks, group them, skip some, etc.
 
@@ -1746,7 +1746,7 @@ responses dynamically when it's called::
     use Symfony\Component\HttpClient\MockHttpClient;
     use Symfony\Component\HttpClient\Response\MockResponse;
 
-    $callback = function ($method, $url, $options) {
+    $callback = function ($method, $url, $options): MockResponse {
         return new MockResponse('...');
     };
 
@@ -1757,13 +1757,13 @@ You can also pass a list of callbacks if you need to perform specific
 assertions on the request before returning the mocked response::
 
     $expectedRequests = [
-        function ($method, $url, $options) {
+        function ($method, $url, $options): MockResponse {
             $this->assertSame('GET', $method);
             $this->assertSame('https://example.com/api/v1/customer', $url);
 
             return new MockResponse('...');
         },
-        function ($method, $url, $options) {
+        function ($method, $url, $options): MockResponse {
             $this->assertSame('POST', $method);
             $this->assertSame('https://example.com/api/v1/customer/1/products', $url);
 
@@ -1807,7 +1807,7 @@ The responses provided to the mock client don't have to be instances of
 
 However, using ``MockResponse`` allows simulating chunked responses and timeouts::
 
-    $body = function () {
+    $body = function (): \Generator {
         yield 'hello';
         // empty strings are turned into timeouts so that they are easy to test
         yield '';

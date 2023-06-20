@@ -20,7 +20,7 @@ it is possible to remove this need by declaring a single command application::
         ->setVersion('1.0.0') // Optional
         ->addArgument('foo', InputArgument::OPTIONAL, 'The directory')
         ->addOption('bar', null, InputOption::VALUE_REQUIRED)
-        ->setCode(function (InputInterface $input, OutputInterface $output) {
+        ->setCode(function (InputInterface $input, OutputInterface $output): int {
             // output arguments and options
         })
         ->run();

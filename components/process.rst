@@ -189,7 +189,7 @@ anonymous function to the
     use Symfony\Component\Process\Process;
 
     $process = new Process(['ls', '-lsa']);
-    $process->run(function ($type, $buffer) {
+    $process->run(function ($type, $buffer): void {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
         } else {
@@ -267,7 +267,7 @@ in the output and its type::
     $process = new Process(['ls', '-lsa']);
     $process->start();
 
-    $process->wait(function ($type, $buffer) {
+    $process->wait(function ($type, $buffer): void {
         if (Process::ERR === $type) {
             echo 'ERR > '.$buffer;
         } else {
@@ -286,7 +286,7 @@ process and checks its output to wait until its fully initialized::
     // ... do other things
 
     // waits until the given anonymous function returns true
-    $process->waitUntil(function ($type, $output) {
+    $process->waitUntil(function ($type, $output): bool {
         return $output === 'Ready. Waiting for commands...';
     });
 

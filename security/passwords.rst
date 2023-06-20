@@ -71,7 +71,7 @@ optionally some *algorithm options*:
         use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             // auto hasher with default options for the User class (and children)
@@ -179,7 +179,7 @@ Further in this article, you can find a
             use App\Entity\User;
             use Symfony\Config\SecurityConfig;
 
-            return static function (SecurityConfig $security) {
+            return static function (SecurityConfig $security): void {
                 // ...
 
                 // Use your user class name here
@@ -369,7 +369,7 @@ on the new hasher to point to the old, legacy hasher(s):
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->passwordHasher('legacy')
                 ->algorithm('sha256')
@@ -588,7 +588,7 @@ cost. This can be done with named hashers:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->passwordHasher('harsh')
                 ->algorithm('auto')
@@ -685,7 +685,7 @@ you must register a service for it in order to use it as a named hasher:
         use App\Security\Hasher\MyCustomPasswordHasher;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->passwordHasher('app_hasher')
                 ->id(MyCustomPasswordHasher::class)
@@ -903,7 +903,7 @@ Now, define a password hasher using the ``id`` setting:
         use App\Security\Hasher\CustomVerySecureHasher;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->passwordHasher('app_hasher')
                 // the service ID of your custom hasher (the FQCN using the default services.yaml)

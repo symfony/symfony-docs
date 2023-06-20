@@ -139,7 +139,7 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
         // config/packages/doctrine.php
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $doctrine->dbal()
                 ->connection('default')
                     ->password(env('DATABASE_PASSWORD'))

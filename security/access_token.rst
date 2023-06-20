@@ -64,7 +64,7 @@ digital signature, etc.).
         use App\Security\AccessTokenHandler;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->accessToken()
                     ->tokenHandler(AccessTokenHandler::class)
@@ -193,7 +193,7 @@ You can also create a custom extractor. The class must implement
         use App\Security\CustomTokenExtractor;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->accessToken()
                     ->tokenHandler(AccessTokenHandler::class)
@@ -252,7 +252,7 @@ important**: the first in the list is called first.
         use App\Security\CustomTokenExtractor;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->accessToken()
                     ->tokenHandler(AccessTokenHandler::class)
@@ -326,7 +326,7 @@ and configure the service ID as the ``success_handler``:
         use App\Security\Authentication\AuthenticationSuccessHandler;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->accessToken()
                     ->tokenHandler(AccessTokenHandler::class)

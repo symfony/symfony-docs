@@ -104,7 +104,7 @@ mapping types, read Doctrine's `Custom Mapping Types`_ section of their document
         use App\Type\CustomSecond;
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $dbal = $doctrine->dbal();
             $dbal->type('custom_first')->class(CustomFirst::class);
             $dbal->type('custom_second')->class(CustomSecond::class);
@@ -153,7 +153,7 @@ mapping type:
         // config/packages/doctrine.php
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $dbalDefault = $doctrine->dbal()
                 ->connection('default');
             $dbalDefault->mappingType('enum', 'string');

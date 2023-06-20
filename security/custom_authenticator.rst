@@ -120,7 +120,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
         use App\Security\ApiKeyAuthenticator;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->enableAuthenticatorManager(true);
             // ....
 
@@ -239,7 +239,7 @@ using :ref:`the user provider <security-user-providers>`::
                 // ...
 
                 return new Passport(
-                    new UserBadge($email, function (string $userIdentifier) {
+                    new UserBadge($email, function (string $userIdentifier): ?User {
                         return $this->userRepository->findOneBy(['email' => $userIdentifier]);
                     }),
                     $credentials
@@ -269,7 +269,7 @@ The following credential classes are supported by default:
             // If this function returns anything else than `true`, the credentials
             // are marked as invalid.
             // The $credentials parameter is equal to the next argument of this class
-            function ($credentials, UserInterface $user) {
+            function (string $credentials, UserInterface $user): bool {
                 return $user->getApiToken() === $credentials;
             },
 

@@ -353,7 +353,7 @@ directory instead:
 
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $emDefault = $doctrine->orm()->entityManager('default');
 
             $emDefault->autoMapping(true);
@@ -413,7 +413,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $emDefault = $doctrine->orm()->entityManager('default');
 
             $emDefault->autoMapping(true);

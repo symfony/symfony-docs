@@ -89,7 +89,7 @@ want to use another theme for all the forms of your app, configure it in the
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes([
                 'bootstrap_5_horizontal_layout.html.twig',
             ]);
@@ -514,7 +514,7 @@ you want to apply the theme globally to all forms, define the
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes([
                 'form/my_theme.html.twig',
             ]);

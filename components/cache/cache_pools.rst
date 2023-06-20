@@ -38,7 +38,7 @@ and deleting cache items using only two methods and a callback::
     $cache = new FilesystemAdapter();
 
     // The callable will only be executed on a cache miss.
-    $value = $cache->get('my_cache_key', function (ItemInterface $item) {
+    $value = $cache->get('my_cache_key', function (ItemInterface $item): string {
         $item->expiresAfter(3600);
 
         // ... do some HTTP request or heavy computations

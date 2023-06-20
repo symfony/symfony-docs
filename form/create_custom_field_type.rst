@@ -395,7 +395,7 @@ rest of files):
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes([
                 'form/custom_types.html.twig',
                 '...',

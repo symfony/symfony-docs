@@ -244,7 +244,7 @@ Consider the following routing configuration:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('blog_index', '/')
                 ->controller([BlogController::class, 'index'])
             ;
@@ -432,7 +432,7 @@ inside the main Twig configuration file:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->global('ga_tracking')->value('UA-xxxxx-x');
@@ -491,7 +491,7 @@ in container parameters <service-container-parameters>`:
         use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->global('uuid')->value(service('App\Generator\UuidGenerator'));
@@ -709,7 +709,7 @@ provided by Symfony:
         use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('acme_privacy', '/privacy')
                 ->controller(TemplateController::class)
                 ->defaults([
@@ -1321,7 +1321,7 @@ the ``value`` is the Twig namespace, which is explained later:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             // directories are relative to the project root dir (but you
@@ -1377,7 +1377,7 @@ configuration to define a namespace for each template directory:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->path('email/default/templates', 'email');

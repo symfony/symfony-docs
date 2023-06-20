@@ -62,7 +62,7 @@ under the firewall. You must configure a ``check_route`` and
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -126,7 +126,7 @@ intercept requests to this route:
         use App\Controller\DefaultController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             // ...
             $routes->add('login_check', '/login_check');
         };
@@ -364,7 +364,7 @@ seconds). You can customize this using the ``lifetime`` option:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -449,7 +449,7 @@ You can add more properties to the ``hash`` by using the
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -521,7 +521,7 @@ cache. Enable this support by setting the ``max_uses`` option:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -594,7 +594,7 @@ the authenticator only handle HTTP POST methods:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -740,7 +740,7 @@ Then, configure this service ID as the ``success_handler``:
         use App\Security\Authentication\AuthenticationSuccessHandler;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')

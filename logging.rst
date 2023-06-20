@@ -156,7 +156,7 @@ to write logs using the :phpfunction:`syslog` function:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             // this "file_log" key could be anything
             $monolog->handler('file_log')
                 ->type('stream')
@@ -255,7 +255,7 @@ one of the messages reaches an ``action_level``. Take this example:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('filter_for_errors')
                 ->type('fingers_crossed')
                 // if *one* log is error or higher, pass *all* to file_log
@@ -350,7 +350,7 @@ option of your handler to ``rotating_file``:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('main')
                 ->type('rotating_file')
                 ->path('%kernel.logs_dir%/%kernel.environment%.log')

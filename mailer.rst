@@ -813,7 +813,7 @@ image files as usual. First, to simplify things, define a Twig namespace called
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             // point this wherever your images live
@@ -922,7 +922,7 @@ called ``styles`` that points to the directory where ``email.css`` lives:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             // point this wherever your css files live

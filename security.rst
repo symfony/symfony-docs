@@ -272,7 +272,7 @@ for a user provider in your security configuration:
         use App\Entity\User;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->provider('app_user_provider')
@@ -402,7 +402,7 @@ have done this for you:
         use App\Entity\User;
         use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             // Use native password hasher, which auto-selects and migrates the best
@@ -535,7 +535,7 @@ will be able to authenticate (e.g. login form, API token, etc).
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('dev')
                 ->pattern('^/(_(profiler|wdt)|css|images|js)/')
@@ -735,7 +735,7 @@ Then, enable the form login authenticator using the ``form_login`` setting:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $mainFirewall = $security->firewall('main');

@@ -169,7 +169,7 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
         'source' => new SourceContextProvider(),
     ]);
 
-    VarDumper::setHandler(function ($var) use ($cloner, $dumper) {
+    VarDumper::setHandler(function (mixed $var) use ($cloner, $dumper): ?string {
         $dumper->dump($cloner->cloneVar($var));
     });
 
@@ -481,7 +481,7 @@ like this::
     use Symfony\Component\VarDumper\Dumper\HtmlDumper;
     use Symfony\Component\VarDumper\VarDumper;
 
-    VarDumper::setHandler(function ($var) {
+    VarDumper::setHandler(function (mixed $var): ?string {
         $cloner = new VarCloner();
         $dumper = 'cli' === PHP_SAPI ? new CliDumper() : new HtmlDumper();
 
@@ -599,7 +599,7 @@ For example, to get a dump as a string in a variable, you can do::
 
     $dumper->dump(
         $cloner->cloneVar($variable),
-        function ($line, $depth) use (&$output) {
+        function (int $line, int $depth) use (&$output): void {
             // A negative depth means "end of dump"
             if ($depth >= 0) {
                 // Adds a two spaces indentation to the line

@@ -10,7 +10,7 @@ The following example shows a typical usage of the cache::
     use Symfony\Contracts\Cache\ItemInterface;
 
     // The callable will only be executed on a cache miss.
-    $value = $pool->get('my_cache_key', function (ItemInterface $item) {
+    $value = $pool->get('my_cache_key', function (ItemInterface $item): string {
         $item->expiresAfter(3600);
 
         // ... do some HTTP request or heavy computations
@@ -557,13 +557,13 @@ the same key could be invalidated with one function call::
 
         public function someMethod()
         {
-            $value0 = $this->myCachePool->get('item_0', function (ItemInterface $item) {
+            $value0 = $this->myCachePool->get('item_0', function (ItemInterface $item): string {
                 $item->tag(['foo', 'bar']);
 
                 return 'debug';
             });
 
-            $value1 = $this->myCachePool->get('item_1', function (ItemInterface $item) {
+            $value1 = $this->myCachePool->get('item_1', function (ItemInterface $item): string {
                 $item->tag('foo');
 
                 return 'debug';

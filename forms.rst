@@ -352,7 +352,7 @@ can set this option to generate forms compatible with the Bootstrap 5 CSS framew
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes(['bootstrap_5_layout.html.twig']);
 
             // ...

@@ -111,7 +111,7 @@ The following configuration code shows how you can configure two entity managers
         // config/packages/doctrine.php
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             // Connections:
             $doctrine->dbal()
                 ->connection('default')
@@ -120,7 +120,7 @@ The following configuration code shows how you can configure two entity managers
                 ->connection('customer')
                 ->url(env('CUSTOMER_DATABASE_URL')->resolve());
             $doctrine->dbal()->defaultConnection('default');
-            
+
             // Entity Managers:
             $doctrine->orm()->defaultEntityManager('default');
             $defaultEntityManager = $doctrine->orm()->entityManager('default');

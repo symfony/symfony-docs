@@ -16,7 +16,7 @@ register an event listener to the ``FormEvents::PRE_SUBMIT`` event as follows::
     use Symfony\Component\Form\FormEvent;
     use Symfony\Component\Form\FormEvents;
 
-    $listener = function (FormEvent $event) {
+    $listener = function (FormEvent $event): void {
         // ...
     };
 
