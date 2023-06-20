@@ -168,7 +168,7 @@ In a Symfony bundle, call this method in the ``load()`` method of the
     }
 
 Autoconfiguration registering is not limited to interfaces. It is possible
-to use PHP 8 attributes to autoconfigure services by using the
+to use PHP attributes to autoconfigure services by using the
 :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
 method::
 
