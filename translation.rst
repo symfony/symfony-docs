@@ -918,6 +918,9 @@ the framework:
             $framework->defaultLocale('en');
         };
 
+This ``default_locale`` is also relevant for the translator, as we will see
+in the next section.
+
 .. _translation-fallback:
 
 Fallback Translation Locales
@@ -938,7 +941,8 @@ checks translation resources for several locales:
    (Spanish) translation resource (e.g. ``messages.es.yaml``);
 
 #. If the translation still isn't found, Symfony uses the ``fallbacks`` option,
-   which can be configured as follows:
+   which can be configured as follows. When this option is not defined, it
+   defaults to the ``default_locale`` setting mentioned in the previous section.
 
    .. configuration-block::
 
