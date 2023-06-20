@@ -243,6 +243,18 @@ Symfony doesn't handle any signal received by the command (not even ``SIGKILL``,
 ``SIGTERM``, etc). This behavior is intended, as it gives you the flexibility to
 handle all signals e.g. to do some tasks before terminating the command.
 
+.. tip::
+
+    If you need to fetch the signal name from its integer value (e.g. for logging),
+    you can use the
+    :method:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap::getSignalName`
+    method.
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap` class was
+    introduced in Symfony 6.4.
+
 .. deprecated:: 6.3
 
     In Symfony versions previous to 6.3, all signals (except ``SIGUSR1`` and
