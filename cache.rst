@@ -107,6 +107,7 @@ The Cache component comes with a series of adapters pre-configured:
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
 * :doc:`cache.adapter.array </components/cache/adapters/array_cache_adapter>`
 * :doc:`cache.adapter.doctrine </components/cache/adapters/doctrine_adapter>`
+* :doc:`cache.adapter.doctrine_dbal </components/cache/adapters/pdo_doctrine_dbal_adapter>`
 * :doc:`cache.adapter.filesystem </components/cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </components/cache/adapters/memcached_adapter>`
 * :doc:`cache.adapter.pdo </components/cache/adapters/pdo_doctrine_dbal_adapter>`
@@ -117,6 +118,10 @@ The Cache component comes with a series of adapters pre-configured:
 .. versionadded:: 5.2
 
     ``cache.adapter.redis_tag_aware`` has been introduced in Symfony 5.2.
+
+.. versionadded:: 5.4
+
+    ``cache.adapter.doctrine_dbal`` has been introduced in Symfony 5.4.
 
 Some of these adapters could be configured via shortcuts. Using these shortcuts
 will create pools with service IDs that follow the pattern ``cache.[type]``.
@@ -140,6 +145,8 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 default_memcached_provider: 'memcached://localhost'
                 # service: cache.pdo
                 default_pdo_provider: 'doctrine.dbal.default_connection'
+                # service: cache.doctrine_dbal
+                default_doctrine_dbal_provider: 'doctrine.dbal.default_connection'
 
     .. code-block:: xml
 
@@ -160,6 +167,7 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 default_redis_provider: Service: cache.redis
                 default_memcached_provider: Service: cache.memcached
                 default_pdo_provider: Service: cache.pdo
+                default_doctrine_dbal_provider: Service: cache.doctrine_dbal
                 -->
                 <!-- "directory" attribute is only used with cache.adapter.filesystem -->
                 <framework:cache directory="%kernel.cache_dir%/pools"
@@ -168,6 +176,7 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                     default_redis_provider="redis://localhost"
                     default_memcached_provider="memcached://localhost"
                     default_pdo_provider="doctrine.dbal.default_connection"
+                    default_doctrine_dbal_provider="doctrine.dbal.default_connection"
                 />
             </framework:config>
         </container>
@@ -191,6 +200,8 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 ->defaultMemcachedProvider('memcached://localhost')
                 // Service: cache.pdo
                 ->defaultPdoProvider('doctrine.dbal.default_connection')
+                // Service: cache.doctrine_dbal
+                ->defaultDoctrineDbalProvider('doctrine.dbal.default_connection')
             ;
         };
 
