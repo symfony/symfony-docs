@@ -46,7 +46,7 @@ logging these HTTP codes based on the MonologBundle configuration:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $mainHandler = $monolog->handler('main')
                 // ...
                 ->type('fingers_crossed')

@@ -85,7 +85,7 @@ can add some configuration that looks like this:
         // config/packages/acme_social.php
         use Symfony\Config\AcmeSocialConfig;
 
-        return static function (AcmeSocialConfig $acmeSocial) {
+        return static function (AcmeSocialConfig $acmeSocial): void {
             $acmeSocial->twitter()
                 ->clientId(123)
                 ->clientSecret('your_secret');
@@ -394,7 +394,7 @@ logic to the bundle class directly::
         // config/definition.php
         use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 
-        return static function (DefinitionConfigurator $definition) {
+        return static function (DefinitionConfigurator $definition): void {
             $definition->rootNode()
                 ->children()
                     ->scalarNode('foo')->defaultValue('bar')->end()

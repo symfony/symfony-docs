@@ -854,7 +854,7 @@ A better policy is to include the locale in the URL using the
         use App\Controller\ContactController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('contact', '/{_locale}/contact')
                 ->controller([ContactController::class, 'index'])
                 ->requirements([

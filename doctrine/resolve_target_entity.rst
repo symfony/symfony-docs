@@ -131,7 +131,7 @@ about the replacement:
         use App\Model\InvoiceSubjectInterface;
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $orm = $doctrine->orm();
             // ...
             $orm->resolveTargetEntity(InvoiceSubjectInterface::class, Customer::class);

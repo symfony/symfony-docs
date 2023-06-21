@@ -491,7 +491,7 @@ files directly in the ``config/packages/`` directory.
             use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
             use Symfony\Config\WebpackEncoreConfig;
 
-            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container) {
+            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container): void {
                 $webpackEncore
                     ->outputPath('%kernel.project_dir%/public/build')
                     ->strictMode(true)
@@ -1094,7 +1094,7 @@ namespace ``Symfony\Config``::
     // config/packages/security.php
     use Symfony\Config\SecurityConfig;
 
-    return static function (SecurityConfig $security) {
+    return static function (SecurityConfig $security): void {
         $security->firewall('main')
             ->pattern('^/*')
             ->lazy(true)

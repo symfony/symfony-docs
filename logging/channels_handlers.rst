@@ -77,7 +77,7 @@ can do it in any (or all) environments:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('security')
                 ->type('stream')
                 ->path('%kernel.logs_dir%/security.log')
@@ -158,7 +158,7 @@ You can also configure additional channels without the need to tag your services
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->channels(['foo', 'bar', 'foo_bar']);
         };
 

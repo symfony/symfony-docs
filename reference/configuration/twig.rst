@@ -226,7 +226,7 @@ The value of this option can be a regular expression, a glob, or a string:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->fileNamePattern([
                 '*.twig',
                 'specific_file.html',
@@ -277,7 +277,7 @@ all the forms of the application:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes([
                 'bootstrap_5_layout.html.twig',
                 'form/my_theme.html.twig',
@@ -412,7 +412,7 @@ the directory defined in the :ref:`default_path option <config-twig-default-path
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->path('email/default/templates', null);

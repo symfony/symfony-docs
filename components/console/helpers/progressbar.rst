@@ -336,7 +336,7 @@ that displays the number of remaining steps::
 
     ProgressBar::setPlaceholderFormatterDefinition(
         'remaining_steps',
-        function (ProgressBar $progressBar, OutputInterface $output) {
+        function (ProgressBar $progressBar, OutputInterface $output): int {
             return $progressBar->getMaxSteps() - $progressBar->getProgress();
         }
     );

@@ -100,7 +100,7 @@ a service like: ``App\Controller\HelloController::index``:
         use App\Controller\HelloController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('hello', '/hello')
                 ->controller([HelloController::class, 'index'])
                 ->methods(['GET'])

@@ -16,7 +16,7 @@ more control::
             'no' => false,
             'maybe' => null,
         ],
-        'choice_label' => function ($choice, $key, $value) {
+        'choice_label' => function ($choice, string $key, mixed $value): TranslatableMessage|string {
             if (true === $choice) {
                 return 'Definitely!';
             }

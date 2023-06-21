@@ -723,7 +723,7 @@ When serializing, you can set a callback to format a specific object property::
     $encoder = new JsonEncoder();
 
     // all callback parameters are optional (you can omit the ones you don't use)
-    $dateCallback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+    $dateCallback = function (object $innerObject, object $outerObject, string $attributeName, string $format = null, array $context = []): string {
         return $innerObject instanceof \DateTime ? $innerObject->format(\DateTime::ISO8601) : '';
     };
 
@@ -1381,7 +1381,7 @@ having unique identifiers::
 
     $encoder = new JsonEncoder();
     $defaultContext = [
-        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (object $object, string $format, array $context): string {
             return $object->getName();
         },
     ];
@@ -1519,7 +1519,7 @@ having unique identifiers::
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
     // all callback parameters are optional (you can omit the ones you don't use)
-    $maxDepthHandler = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+    $maxDepthHandler = function (object $innerObject, object $outerObject, string $attributeName, string $format = null, array $context = []): string {
         return '/foos/'.$innerObject->id;
     };
 

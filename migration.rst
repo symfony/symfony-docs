@@ -458,10 +458,10 @@ which script to call and wrap the output in a response class::
 
     class LegacyController
     {
-        public function loadLegacyScript(string $requestPath, string $legacyScript)
+        public function loadLegacyScript(string $requestPath, string $legacyScript): StreamedResponse
         {
             return new StreamedResponse(
-                function () use ($requestPath, $legacyScript) {
+                function () use ($requestPath, $legacyScript): string {
                     $_SERVER['PHP_SELF'] = $requestPath;
                     $_SERVER['SCRIPT_NAME'] = $requestPath;
                     $_SERVER['SCRIPT_FILENAME'] = $legacyScript;

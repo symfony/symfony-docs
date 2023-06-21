@@ -89,7 +89,7 @@ Now, configure this service ID as the entry point for the firewall:
         use App\Security\AuthenticationEntryPoint;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 // ....
                 ->entryPoint(AuthenticationEntryPoint::class)
@@ -165,7 +165,7 @@ configure it under your firewall:
         use App\Security\AccessDeniedHandler;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 // ....
                 ->accessDeniedHandler(AccessDeniedHandler::class)

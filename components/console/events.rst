@@ -33,7 +33,7 @@ dispatched. Listeners receive a
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleCommandEvent;
 
-    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event): void {
         // gets the input instance
         $input = $event->getInput();
 
@@ -64,7 +64,7 @@ C/C++ standard::
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleCommandEvent;
 
-    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::COMMAND, function (ConsoleCommandEvent $event): void {
         // gets the command to be executed
         $command = $event->getCommand();
 
@@ -97,7 +97,7 @@ Listeners receive a
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleErrorEvent;
 
-    $dispatcher->addListener(ConsoleEvents::ERROR, function (ConsoleErrorEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::ERROR, function (ConsoleErrorEvent $event): void {
         $output = $event->getOutput();
 
         $command = $event->getCommand();
@@ -131,7 +131,7 @@ Listeners receive a
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 
-    $dispatcher->addListener(ConsoleEvents::TERMINATE, function (ConsoleTerminateEvent $event) {
+    $dispatcher->addListener(ConsoleEvents::TERMINATE, function (ConsoleTerminateEvent $event): void {
         // gets the output
         $output = $event->getOutput();
 
@@ -170,11 +170,11 @@ Listeners receive a
     use Symfony\Component\Console\ConsoleEvents;
     use Symfony\Component\Console\Event\ConsoleSignalEvent;
 
-    $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
-       
+    $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event): void {
+
         // gets the signal number
         $signal = $event->getHandlingSignal();
-        
+
         if (\SIGINT === $signal) {
             echo "bye bye!";
         }

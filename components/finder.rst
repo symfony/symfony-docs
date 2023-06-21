@@ -351,7 +351,7 @@ Sort the results by name, extension, size or type (directories first, then files
     function (e.g. ``file1.txt``, ``file10.txt``, ``file2.txt``). Pass ``true``
     as its argument to use PHP's `natural sort order`_ algorithm instead (e.g.
     ``file1.txt``, ``file2.txt``, ``file10.txt``).
-    
+
     The ``sortByCaseInsensitiveName()`` method uses the case insensitive
     :phpfunction:`strcasecmp` PHP function. Pass ``true`` as its argument to use
     PHP's case insensitive `natural sort order`_ algorithm instead (i.e. the
@@ -367,7 +367,7 @@ Sort the files and directories by the last accessed, changed or modified time::
 
 You can also define your own sorting algorithm with the ``sort()`` method::
 
-    $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b) {
+    $finder->sort(function (\SplFileInfo $a, \SplFileInfo $b): int {
         return strcmp($a->getRealPath(), $b->getRealPath());
     });
 
