@@ -250,10 +250,10 @@ handle all signals e.g. to do some tasks before terminating the command.
     :method:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap::getSignalName`
     method.
 
-.. versionadded:: 6.4
+    .. versionadded:: 6.4
 
-    The :class:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap` class was
-    introduced in Symfony 6.4.
+        The :class:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap` class was
+        introduced in Symfony 6.4.
 
 .. deprecated:: 6.3
 
