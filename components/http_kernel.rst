@@ -263,6 +263,13 @@ on the request's information.
        is passed to it. This step is also specific to the  :class:`Symfony\\Bundle\\FrameworkBundle\\Controller\\ControllerResolver`
        sub-class used by the Symfony Framework.
 
+.. deprecated:: 6.4
+
+    :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareInterface` and
+    :class:`Symfony\\Component\\DependencyInjection\\ContainerAwareTrait` are
+    deprecated since Symfony 6.4. Dependency injection should be used instead to
+    access the service container.
+
 .. _component-http-kernel-kernel-controller:
 
 3) The ``kernel.controller`` Event
