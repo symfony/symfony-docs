@@ -32,7 +32,7 @@ example).  You can also define whole logic inline by using a ``Closure``::
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'validation_groups' => function (FormInterface $form) {
+            'validation_groups' => function (FormInterface $form): array {
                 $data = $form->getData();
 
                 if (Client::TYPE_PERSON == $data->getType()) {
@@ -56,7 +56,7 @@ of the entity as well you have to adjust the option as follows::
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'validation_groups' => function (FormInterface $form) {
+            'validation_groups' => function (FormInterface $form): array {
                 $data = $form->getData();
 
                 if (Client::TYPE_PERSON == $data->getType()) {

@@ -63,7 +63,7 @@ if the request path matches the configured ``pattern``.
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ....
 
             $security->firewall('secured_area')
@@ -122,7 +122,7 @@ only initialize if the host from the request matches against the configuration.
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ....
 
             $security->firewall('secured_area')
@@ -182,7 +182,7 @@ the provided HTTP methods.
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ....
 
             $security->firewall('secured_area')
@@ -241,7 +241,7 @@ If the above options don't fit your needs you can configure any service implemen
         use App\Security\CustomRequestMatcher;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ....
 
             $security->firewall('secured_area')

@@ -117,7 +117,7 @@ the registration of a listener for the ``response`` event::
     use Symfony\Component\EventDispatcher\EventDispatcher;
 
     $dispatcher = new EventDispatcher();
-    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event) {
+    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event): void {
         $response = $event->getResponse();
 
         if ($response->isRedirection()
@@ -156,7 +156,7 @@ So far so good, but let's add another listener on the same event. Let's say
 that we want to set the ``Content-Length`` of the Response if it is not already
 set::
 
-    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event) {
+    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event): void {
         $response = $event->getResponse();
         $headers = $response->headers;
 
@@ -174,7 +174,7 @@ a positive number; negative numbers can be used for low priority listeners.
 Here, we want the ``Content-Length`` listener to be executed last, so change
 the priority to ``-255``::
 
-    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event) {
+    $dispatcher->addListener('response', function (Simplex\ResponseEvent $event): void {
         $response = $event->getResponse();
         $headers = $response->headers;
 

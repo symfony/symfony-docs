@@ -63,7 +63,7 @@ You can configure this using the ``entry_point`` setting:
         use App\Security\SocialConnectAuthenticator;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->enableAuthenticatorManager(true);
             // ....
 
@@ -154,7 +154,7 @@ split the configuration into two separate firewalls:
         use App\Security\LoginFormAuthenticator;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $apiFirewall = $security->firewall('api');
             $apiFirewall
                 ->pattern('^/api')

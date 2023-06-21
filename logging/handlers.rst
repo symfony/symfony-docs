@@ -123,7 +123,7 @@ Then reference it in the Monolog configuration:
         use Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler;
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('es')
                 ->type('service')
                 ->id(ElasticsearchLogstashHandler::class)

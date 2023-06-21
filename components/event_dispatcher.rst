@@ -147,7 +147,7 @@ The ``addListener()`` method takes up to three arguments:
 
         use Symfony\Contracts\EventDispatcher\Event;
 
-        $dispatcher->addListener('acme.foo.action', function (Event $event) {
+        $dispatcher->addListener('acme.foo.action', function (Event $event): void {
             // will be executed when the acme.foo.action event is dispatched
         });
 

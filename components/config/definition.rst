@@ -765,7 +765,7 @@ By changing a string value into an associative array with ``name`` as the key::
             ->arrayNode('connection')
                 ->beforeNormalization()
                     ->ifString()
-                    ->then(function ($v) { return ['name' => $v]; })
+                    ->then(function (string $v): array { return ['name' => $v]; })
                 ->end()
                 ->children()
                     ->scalarNode('name')->isRequired()->end()

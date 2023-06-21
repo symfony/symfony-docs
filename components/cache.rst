@@ -65,7 +65,7 @@ generate and return the value::
     use Symfony\Contracts\Cache\ItemInterface;
 
     // The callable will only be executed on a cache miss.
-    $value = $cache->get('my_cache_key', function (ItemInterface $item) {
+    $value = $cache->get('my_cache_key', function (ItemInterface $item): string {
         $item->expiresAfter(3600);
 
         // ... do some HTTP request or heavy computations
@@ -115,7 +115,7 @@ recompute::
     use Symfony\Contracts\Cache\ItemInterface;
 
     $beta = 1.0;
-    $value = $cache->get('my_cache_key', function (ItemInterface $item) {
+    $value = $cache->get('my_cache_key', function (ItemInterface $item): string {
         $item->expiresAfter(3600);
         $item->tag(['tag_0', 'tag_1']);
 

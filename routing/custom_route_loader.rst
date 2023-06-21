@@ -83,7 +83,7 @@ Symfony provides several route loaders for the most common needs:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             // loads routes from the given routing file stored in some bundle
             $routes->import('@AcmeBundle/Resources/config/routing.yaml');
 
@@ -175,7 +175,7 @@ Take these lines from the ``routes.yaml``:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('../src/Controller', 'attribute');
         };
 
@@ -229,7 +229,7 @@ and configure the service and method to call:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('admin_route_loader::loadRoutes', 'service');
         };
 
@@ -413,7 +413,7 @@ What remains to do is adding a few lines to the routing configuration:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('.', 'extra');
         };
 

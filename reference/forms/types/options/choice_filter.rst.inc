@@ -37,7 +37,7 @@ define a callable that takes each choice as the only argument and must return
                 ->add('country', CountryType::class, [
                     // if the AddressType "allowed_countries" option is passed,
                     // use it to create a filter
-                    'choice_filter' => $allowedCountries ? function ($countryCode) use ($allowedCountries) {
+                    'choice_filter' => $allowedCountries ? function ($countryCode) use ($allowedCountries): bool {
                         return in_array($countryCode, $allowedCountries, true);
                     } : null,
 
@@ -69,7 +69,7 @@ The option can be a callable or a property path when choices are objects::
         'choice_filter' => $allowedCountries ? ChoiceList::filter(
             // pass the type as first argument
             $this,
-            function ($countryCode) use ($allowedCountries) {
+            function (string $countryCode) use ($allowedCountries): bool {
                 return in_array($countryCode, $allowedCountries, true);
             },
             // pass the option that makes the filter "vary" to compute a unique hash

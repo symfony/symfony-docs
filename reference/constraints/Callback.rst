@@ -237,7 +237,7 @@ constructor of the Callback constraint::
     {
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
-            $callback = function ($object, ExecutionContextInterface $context, $payload) {
+            $callback = function ($object, ExecutionContextInterface $context, $payload): void {
                 // ...
             };
 

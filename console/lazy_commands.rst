@@ -15,10 +15,11 @@ which will be responsible for returning ``Command`` instances::
 
     use App\Command\HeavyCommand;
     use Symfony\Component\Console\Application;
+    use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
 
     $commandLoader = new FactoryCommandLoader([
-        'app:heavy' => function () { return new HeavyCommand(); },
+        'app:heavy' => function (): Command { return new HeavyCommand(); },
     ]);
 
     $application = new Application();
@@ -45,10 +46,11 @@ The :class:`Symfony\\Component\\Console\\CommandLoader\\FactoryCommandLoader`
 class provides a way of getting commands lazily loaded as it takes an
 array of ``Command`` factories as its only constructor argument::
 
+    use Symfony\Component\Console\Command\Command;
     use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
 
     $commandLoader = new FactoryCommandLoader([
-        'app:foo' => function () { return new FooCommand(); },
+        'app:foo' => function (): Command { return new FooCommand(); },
         'app:bar' => [BarCommand::class, 'create'],
     ]);
 

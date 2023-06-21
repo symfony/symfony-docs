@@ -337,7 +337,7 @@ To achieve this, use the 5th argument of ``addArgument()``/``addOption``::
                     InputArgument::IS_ARRAY,
                     'Who do you want to greet (separate multiple names with a space)?',
                     null,
-                    function (CompletionInput $input) {
+                    function (CompletionInput $input): array {
                         // the value the user already typed, e.g. when typing "app:greet Fa" before
                         // pressing Tab, this will contain "Fa"
                         $currentValue = $input->getCompletionValue();
