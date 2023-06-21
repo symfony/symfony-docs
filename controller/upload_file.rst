@@ -211,21 +211,6 @@ You can use the following code to link to the PDF brochure of a product:
 
     <a href="{{ asset('uploads/brochures/' ~ product.brochureFilename) }}">View brochure (PDF)</a>
 
-.. tip::
-
-    When creating a form to edit an already persisted item, the file form type
-    still expects a :class:`Symfony\\Component\\HttpFoundation\\File\\File`
-    instance. As the persisted entity now contains only the relative file path,
-    you first have to concatenate the configured upload path with the stored
-    filename and create a new ``File`` class::
-
-        use Symfony\Component\HttpFoundation\File\File;
-        // ...
-
-        $product->setBrochureFilename(
-            new File($this->getParameter('brochures_directory').'/'.$product->getBrochureFilename())
-        );
-
 Creating an Uploader Service
 ----------------------------
 
