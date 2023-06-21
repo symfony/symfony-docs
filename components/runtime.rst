@@ -393,8 +393,8 @@ the `PSR-15`_ interfaces for HTTP request handling.
 However, a ReactPHP application will need some special logic to *run*. That logic
 is added in a new class implementing :class:`Symfony\\Component\\Runtime\\RunnerInterface`::
 
-    use Psr\Http\Message\ServerRequestInterface;
     use Psr\Http\Message\ResponseInterface;
+    use Psr\Http\Message\ServerRequestInterface;
     use Psr\Http\Server\RequestHandlerInterface;
     use React\EventLoop\Factory as ReactFactory;
     use React\Http\Server as ReactHttpServer;
