@@ -315,7 +315,7 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
     }
 
     // in a service
-    public function __construct(CacheInterface $customThingCache)
+    public function __construct(private CacheInterface $customThingCache)
     {
         // ...
     }
