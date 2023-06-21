@@ -58,7 +58,7 @@ the `query_builder`_ option::
 
     $builder->add('users', EntityType::class, [
         'class' => User::class,
-        'query_builder' => function (EntityRepository $er) {
+        'query_builder' => function (EntityRepository $er): QueryBuilder {
             return $er->createQueryBuilder('u')
                 ->orderBy('u.username', 'ASC');
         },
@@ -124,7 +124,7 @@ method. You can also pass a callback function for more control::
 
     $builder->add('category', EntityType::class, [
         'class' => Category::class,
-        'choice_label' => function ($category) {
+        'choice_label' => function (Category $category): string {
             return $category->getDisplayName();
         }
     ]);

@@ -15,7 +15,7 @@ If you pass a callable, it will receive one argument: the choice itself. When us
 the :doc:`/reference/forms/types/entity`, the argument will be the entity object
 for each choice or ``null`` in a placeholder is used, which you need to handle::
 
-    'choice_value' => function (?MyOptionEntity $entity) {
+    'choice_value' => function (?MyOptionEntity $entity): string {
         return $entity ? $entity->getId() : '';
     },
 

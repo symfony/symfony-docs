@@ -93,7 +93,7 @@ creating that particular field is delegated to an event listener::
         {
             $builder->add('price');
 
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 // ... adding the name field if needed
             });
         }
@@ -109,7 +109,7 @@ the event listener might look like the following::
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $product = $event->getData();
             $form = $event->getForm();
 
@@ -220,7 +220,7 @@ Using an event listener, your form might look like this::
                 ->add('subject', TextType::class)
                 ->add('body', TextareaType::class)
             ;
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
                 // ... add a choice list of friends of the current application user
             });
         }
@@ -282,7 +282,7 @@ security helper to fill in the listener logic::
                 );
             }
 
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user) {
+            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($user): void {
                 if (null !== $event->getData()->getFriend()) {
                     // we don't need to add the friend field because
                     // the message will be addressed to a fixed friend
@@ -294,7 +294,7 @@ security helper to fill in the listener logic::
                 $formOptions = [
                     'class' => User::class,
                     'choice_label' => 'fullName',
-                    'query_builder' => function (UserRepository $userRepository) use ($user) {
+                    'query_builder' => function (UserRepository $userRepository) use ($user): void {
                         // call a method on your repository that returns the query builder
                         // return $userRepository->createFriendsQueryBuilder($user);
                     },
@@ -392,7 +392,7 @@ sport like this::
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) {
+                function (FormEvent $event): void {
                     $form = $event->getForm();
 
                     // this would be your entity, i.e. SportMeetup
@@ -455,7 +455,7 @@ The type would now look like::
                 ])
             ;
 
-            $formModifier = function (FormInterface $form, Sport $sport = null) {
+            $formModifier = function (FormInterface $form, Sport $sport = null): void {
                 $positions = null === $sport ? [] : $sport->getAvailablePositions();
 
                 $form->add('position', EntityType::class, [
@@ -467,7 +467,7 @@ The type would now look like::
 
             $builder->addEventListener(
                 FormEvents::PRE_SET_DATA,
-                function (FormEvent $event) use ($formModifier) {
+                function (FormEvent $event) use ($formModifier): void {
                     // this would be your entity, i.e. SportMeetup
                     $data = $event->getData();
 
@@ -477,7 +477,7 @@ The type would now look like::
 
             $builder->get('sport')->addEventListener(
                 FormEvents::POST_SUBMIT,
-                function (FormEvent $event) use ($formModifier) {
+                function (FormEvent $event) use ($formModifier): void {
                     // It's important here to fetch $event->getForm()->getData(), as
                     // $event->getData() will get you the client data (that is, the ID)
                     $sport = $event->getForm()->getData();

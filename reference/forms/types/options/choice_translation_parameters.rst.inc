@@ -54,7 +54,7 @@ You can specify the placeholder values as follows::
             'form.order.yes' => true,
             'form.order.no' => false,
         ],
-        'choice_translation_parameters' => function ($choice, $key, $value) {
+        'choice_translation_parameters' => function ($choice, string $key, mixed $value): array {
             if (false === $choice) {
                 return [];
             }

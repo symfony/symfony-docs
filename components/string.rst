@@ -352,7 +352,7 @@ Methods to Search and Replace
     // replaces all occurrences of the given regular expression
     u('(+1) 206-555-0100')->replaceMatches('/[^A-Za-z0-9]++/', ''); // '12065550100'
     // you can pass a callable as the second argument to perform advanced replacements
-    u('123')->replaceMatches('/\d/', function ($match) {
+    u('123')->replaceMatches('/\d/', function (string $match): string {
         return '['.$match[0].']';
     }); // result = '[1][2][3]'
 
@@ -461,7 +461,7 @@ class that allows to store a string whose value is only generated when you need 
 
     use Symfony\Component\String\LazyString;
 
-    $lazyString = LazyString::fromCallable(function () {
+    $lazyString = LazyString::fromCallable(function (): string {
         // Compute the string value...
         $value = ...;
 
@@ -518,7 +518,7 @@ that only includes safe ASCII characters::
     // $slug = '10-percent-or-5-euro'
 
     // for more dynamic substitutions, pass a PHP closure instead of an array
-    $slugger = new AsciiSlugger('en', function ($string, $locale) {
+    $slugger = new AsciiSlugger('en', function (string $string, string $locale): string {
         return str_replace('❤️', 'love', $string);
     });
 

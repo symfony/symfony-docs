@@ -370,7 +370,7 @@ For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
 
     // ...
-    $resolver->setAllowedValues('transport', function ($value) {
+    $resolver->setAllowedValues('transport', function (string $value): bool {
         // return true or false
     });
 
@@ -412,7 +412,7 @@ option. You can configure a normalizer by calling
         {
             // ...
 
-            $resolver->setNormalizer('host', function (Options $options, $value) {
+            $resolver->setNormalizer('host', function (Options $options, string $value): string {
                 if ('http://' !== substr($value, 0, 7)) {
                     $value = 'http://'.$value;
                 }
@@ -433,7 +433,7 @@ if you need to use other options during normalization::
         public function configureOptions(OptionsResolver $resolver)
         {
             // ...
-            $resolver->setNormalizer('host', function (Options $options, $value) {
+            $resolver->setNormalizer('host', function (Options $options, string $value): string {
                 if ('http://' !== substr($value, 0, 7) && 'https://' !== substr($value, 0, 8)) {
                     if ('ssl' === $options['encryption']) {
                         $value = 'https://'.$value;
@@ -475,7 +475,7 @@ these options, you can return the desired default value::
             // ...
             $resolver->setDefault('encryption', null);
 
-            $resolver->setDefault('port', function (Options $options) {
+            $resolver->setDefault('port', function (Options $options): int {
                 if ('ssl' === $options['encryption']) {
                     return 465;
                 }
@@ -518,7 +518,7 @@ the closure::
         {
             parent::configureOptions($resolver);
 
-            $resolver->setDefault('host', function (Options $options, $previousValue) {
+            $resolver->setDefault('host', function (Options $options, string $previousValue): string {
                 if ('ssl' === $options['encryption']) {
                     return 'secure.example.org';
                 }
@@ -654,7 +654,7 @@ default value::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver) {
+            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver): void {
                 $spoolResolver->setDefaults([
                     'type' => 'file',
                     'path' => '/path/to/spool',
@@ -690,7 +690,7 @@ to the closure to access to them::
         public function configureOptions(OptionsResolver $resolver)
         {
             $resolver->setDefault('sandbox', false);
-            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver, Options $parent) {
+            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver, Options $parent): void {
                 $spoolResolver->setDefaults([
                     'type' => $parent['sandbox'] ? 'memory' : 'file',
                     // ...
@@ -713,13 +713,13 @@ In same way, parent options can access to the nested options as normal arrays::
 
         public function configureOptions(OptionsResolver $resolver)
         {
-            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver) {
+            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver): void {
                 $spoolResolver->setDefaults([
                     'type' => 'file',
                     // ...
                 ]);
             });
-            $resolver->setDefault('profiling', function (Options $options) {
+            $resolver->setDefault('profiling', function (Options $options): void {
                 return 'file' === $options['spool']['type'];
             });
         }
@@ -740,7 +740,7 @@ with ``host``, ``database``, ``user`` and ``password`` each.
 
 The best way to implement this is to define the ``connections`` option as prototype::
 
-    $resolver->setDefault('connections', function (OptionsResolver $connResolver) {
+    $resolver->setDefault('connections', function (OptionsResolver $connResolver): void {
         $connResolver
             ->setPrototype(true)
             ->setRequired(['host', 'database'])
@@ -820,7 +820,7 @@ the option::
         ->setDefault('encryption', null)
         ->setDefault('port', null)
         ->setAllowedTypes('port', ['null', 'int'])
-        ->setDeprecated('port', 'acme/package', '1.2', function (Options $options, $value) {
+        ->setDeprecated('port', 'acme/package', '1.2', function (Options $options, ?int $value): string {
             if (null === $value) {
                 return 'Passing "null" to option "port" is deprecated, pass an integer instead.';
             }

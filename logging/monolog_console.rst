@@ -117,7 +117,7 @@ The Monolog console handler is enabled by default:
         // config/packages/dev/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('console')
                 ->type('console')
                 ->processPsr3Messages(false)

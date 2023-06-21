@@ -348,7 +348,7 @@ security configuration:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->accessDecisionManager()
                 ->strategy('unanimous')
                 ->allowIfAllAbstain(false)
@@ -395,7 +395,7 @@ option to use a custom service (your service must implement the
         use App\Security\MyCustomAccessDecisionStrategy;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->accessDecisionManager()
                 ->strategyService(MyCustomAccessDecisionStrategy::class)
                 // ...
@@ -442,7 +442,7 @@ must implement the :class:`Symfony\\Component\\Security\\Core\\Authorization\\Ac
         use App\Security\MyCustomAccessDecisionManager;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->accessDecisionManager()
                 ->service(MyCustomAccessDecisionManager::class)
                 // ...

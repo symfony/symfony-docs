@@ -905,7 +905,7 @@ dispatched. Listeners receive a
 
     use Symfony\Component\Notifier\Event\MessageEvent;
 
-    $dispatcher->addListener(MessageEvent::class, function (MessageEvent $event) {
+    $dispatcher->addListener(MessageEvent::class, function (MessageEvent $event): void {
         // gets the message instance
         $message = $event->getMessage();
 
@@ -928,7 +928,7 @@ Listeners receive a
 
     use Symfony\Component\Notifier\Event\FailedMessageEvent;
 
-    $dispatcher->addListener(FailedMessageEvent::class, function (FailedMessageEvent $event) {
+    $dispatcher->addListener(FailedMessageEvent::class, function (FailedMessageEvent $event): void {
         // gets the message instance
         $message = $event->getMessage();
 
@@ -951,7 +951,7 @@ is dispatched. Listeners receive a
 
     use Symfony\Component\Notifier\Event\SentMessageEvent;
 
-    $dispatcher->addListener(SentMessageEvent::class, function (SentMessageEvent $event) {
+    $dispatcher->addListener(SentMessageEvent::class, function (SentMessageEvent $event): void {
         // gets the message instance
         $message = $event->getOriginalMessage();
 
