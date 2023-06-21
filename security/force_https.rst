@@ -51,7 +51,7 @@ access control:
             // config/packages/security.php
             use Symfony\Config\SecurityConfig;
 
-            return static function (SecurityConfig $security) {
+            return static function (SecurityConfig $security): void {
                 // ....
 
                 $security->accessControl()

@@ -150,7 +150,7 @@ Finally, set the formatter to be used on whatever handler you want:
         // config/packages/prod/monolog.php
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('main')
                 ->type('stream')
                 ->path('%kernel.logs_dir%/%kernel.environment%.log')

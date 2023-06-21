@@ -190,7 +190,7 @@ for multiple directories):
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->defaultPath('%kernel.project_dir%/resources/views');
         };
 

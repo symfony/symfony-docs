@@ -280,7 +280,7 @@ using the special ``when@`` keyword:
 
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework, ContainerConfigurator $container) {
+        return static function (FrameworkConfig $framework, ContainerConfigurator $container): void {
             $framework->router()
                 ->utf8(true)
             ;

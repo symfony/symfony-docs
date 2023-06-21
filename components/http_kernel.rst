@@ -637,7 +637,7 @@ else that can be used to create a working example::
 
     $routes = new RouteCollection();
     $routes->add('hello', new Route('/hello/{name}', [
-        '_controller' => function (Request $request) {
+        '_controller' => function (Request $request): Response {
             return new Response(
                 sprintf("Hello %s", $request->get('name'))
             );

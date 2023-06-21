@@ -27,7 +27,7 @@ to look like this::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context) {
+    return function (array $context): Kernel {
         return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
     };
 
@@ -61,7 +61,7 @@ To make a console application, the bootstrap code would look like::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context) {
+    return function (array $context): Application {
         $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
 
         // returning an "Application" makes the Runtime run a Console
@@ -112,12 +112,13 @@ Resolvable Arguments
 The closure returned from the front-controller may have zero or more arguments::
 
     // public/index.php
+    use Symfony\Bundle\FrameworkBundle\Console\Application;
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (InputInterface $input, OutputInterface $output) {
+    return function (InputInterface $input, OutputInterface $output): Application {
         // ...
     };
 
@@ -162,7 +163,7 @@ a number of different applications are supported::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function () {
+    return static function (): Kernel {
         return new Kernel('prod', false);
     };
 
@@ -181,7 +182,7 @@ The ``SymfonyRuntime`` can handle these applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
+        return static function (): Response {
             return new Response('Hello world');
         };
 
@@ -195,8 +196,8 @@ The ``SymfonyRuntime`` can handle these applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function (Command $command) {
-            $command->setCode(function (InputInterface $input, OutputInterface $output) {
+        return static function (Command $command): Command {
+            $command->setCode(static function (InputInterface $input, OutputInterface $output): void {
                 $output->write('Hello World');
             });
 
@@ -214,9 +215,9 @@ The ``SymfonyRuntime`` can handle these applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function (array $context) {
+        return static function (array $context): Application {
             $command = new Command('hello');
-            $command->setCode(function (InputInterface $input, OutputInterface $output) {
+            $command->setCode(static function (InputInterface $input, OutputInterface $output): void {
                 $output->write('Hello World');
             });
 
@@ -239,7 +240,7 @@ applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
+        return static function (): RunnerInterface {
             return new class implements RunnerInterface {
                 public function run(): int
                 {
@@ -257,8 +258,8 @@ applications:
         // public/index.php
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
-            $app = function() {
+        return static function (): callable {
+            $app = static function(): int {
                 echo 'Hello World';
 
                 return 0;
@@ -273,7 +274,7 @@ applications:
 
         require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-        return function () {
+        return function (): void {
             echo 'Hello world';
         };
 
@@ -392,6 +393,7 @@ the `PSR-15`_ interfaces for HTTP request handling.
 However, a ReactPHP application will need some special logic to *run*. That logic
 is added in a new class implementing :class:`Symfony\\Component\\Runtime\\RunnerInterface`::
 
+    use Psr\Http\Message\ResponseInterface;
     use Psr\Http\Message\ServerRequestInterface;
     use Psr\Http\Server\RequestHandlerInterface;
     use React\EventLoop\Factory as ReactFactory;
@@ -415,7 +417,7 @@ is added in a new class implementing :class:`Symfony\\Component\\Runtime\\Runner
             // configure ReactPHP to correctly handle the PSR-15 application
             $server = new ReactHttpServer(
                 $loop,
-                function (ServerRequestInterface $request) use ($application) {
+                function (ServerRequestInterface $request) use ($application): ResponseInterface {
                     return $application->handle($request);
                 }
             );
@@ -462,7 +464,7 @@ The end user will now be able to create front controller like::
 
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-    return function (array $context) {
+    return function (array $context): SomeCustomPsr15Application {
         return new SomeCustomPsr15Application();
     };
 

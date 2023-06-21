@@ -69,7 +69,7 @@ Our code is now much more concise and surprisingly more robust and more
 powerful than ever. For instance, use the built-in ``ErrorListener`` to
 make your error management configurable::
 
-    $errorHandler = function (Symfony\Component\ErrorHandler\Exception\FlattenException $exception) {
+    $errorHandler = function (Symfony\Component\ErrorHandler\Exception\FlattenException $exception): Response {
         $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
         return new Response($msg, $exception->getStatusCode());

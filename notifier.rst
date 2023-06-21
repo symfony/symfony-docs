@@ -82,6 +82,7 @@ Service             Package                                DSN
 `OrangeSms`_        ``symfony/orange-sms-notifier``        ``orange-sms://CLIENT_ID:CLIENT_SECRET@default?from=FROM&sender_name=SENDER_NAME``
 `OvhCloud`_         ``symfony/ovh-cloud-notifier``         ``ovhcloud://APPLICATION_KEY:APPLICATION_SECRET@default?consumer_key=CONSUMER_KEY&service_name=SERVICE_NAME``
 `Plivo`_            ``symfony/plivo-notifier``             ``plivo://AUTH_ID:AUTH_TOKEN@default?from=FROM``
+`Redlink`_          ``symfony/redlink-notifier``           ``redlink://API_KEY:APP_KEY@default?from=SENDER_NAME&version=API_VERSION``
 `RingCentral`_      ``symfony/ring-central-notifier``      ``ringcentral://API_TOKEN@default?from=FROM``
 `Sendberry`_        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
 `Sendinblue`_       ``symfony/sendinblue-notifier``        ``sendinblue://API_KEY@default?sender=PHONE``
@@ -115,6 +116,10 @@ Service             Package                                DSN
     The Bandwith, iSendPro, Plivo, RingCentral, SimpleTextin and Termii integrations
     were introduced in Symfony 6.3.
     The ``from`` option in ``Smsapi`` DSN is optional since Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The Redlink integration was introduced in Symfony 6.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -910,7 +915,7 @@ dispatched. Listeners receive a
 
     use Symfony\Component\Notifier\Event\MessageEvent;
 
-    $dispatcher->addListener(MessageEvent::class, function (MessageEvent $event) {
+    $dispatcher->addListener(MessageEvent::class, function (MessageEvent $event): void {
         // gets the message instance
         $message = $event->getMessage();
 
@@ -933,7 +938,7 @@ Listeners receive a
 
     use Symfony\Component\Notifier\Event\FailedMessageEvent;
 
-    $dispatcher->addListener(FailedMessageEvent::class, function (FailedMessageEvent $event) {
+    $dispatcher->addListener(FailedMessageEvent::class, function (FailedMessageEvent $event): void {
         // gets the message instance
         $message = $event->getMessage();
 
@@ -956,7 +961,7 @@ is dispatched. Listeners receive a
 
     use Symfony\Component\Notifier\Event\SentMessageEvent;
 
-    $dispatcher->addListener(SentMessageEvent::class, function (SentMessageEvent $event) {
+    $dispatcher->addListener(SentMessageEvent::class, function (SentMessageEvent $event): void {
         // gets the message instance
         $message = $event->getOriginalMessage();
 
@@ -1011,6 +1016,7 @@ is dispatched. Listeners receive a
 .. _`PagerDuty`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/PagerDuty/README.md
 .. _`Plivo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Plivo/README.md
 .. _`Pushover`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Pushover/README.md
+.. _`Redlink`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Redlink/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`RingCentral`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RingCentral/README.md
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md

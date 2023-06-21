@@ -48,7 +48,7 @@ configure your handler to use it:
         // config/packages/prod/monolog.php (and/or config/packages/dev/monolog.php)
         use Symfony\Config\MonologConfig;
 
-        return static function (MonologConfig $monolog) {
+        return static function (MonologConfig $monolog): void {
             $monolog->handler('file')
                 ->type('stream')
                 ->level('debug')

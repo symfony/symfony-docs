@@ -204,7 +204,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     ]));
     $formEngine = new TwigRendererEngine([$defaultFormTheme], $twig);
     $twig->addRuntimeLoader(new FactoryRuntimeLoader([
-        FormRenderer::class => function () use ($formEngine, $csrfManager) {
+        FormRenderer::class => function () use ($formEngine, $csrfManager): FormRenderer {
             return new FormRenderer($formEngine, $csrfManager);
         },
     ]));

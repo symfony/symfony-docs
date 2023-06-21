@@ -275,7 +275,7 @@ User Input Methods
     In case you need to validate the given value, pass a callback validator as
     the third argument::
 
-        $io->ask('Number of workers to start', '1', function ($number) {
+        $io->ask('Number of workers to start', '1', function (string $number): int {
             if (!is_numeric($number)) {
                 throw new \RuntimeException('You must type a number.');
             }
@@ -292,7 +292,7 @@ User Input Methods
     In case you need to validate the given value, pass a callback validator as
     the second argument::
 
-        $io->askHidden('What is your password?', function ($password) {
+        $io->askHidden('What is your password?', function (string $password): string {
             if (empty($password)) {
                 throw new \RuntimeException('Password cannot be empty.');
             }

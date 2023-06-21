@@ -184,7 +184,7 @@ use the ``ldap`` user provider.
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->provider('ldap_users')
                 ->ldap()
                     ->service(Ldap::class)
@@ -406,7 +406,7 @@ Configuration example for form login
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->formLoginLdap()
                     ->service(Ldap::class)
@@ -460,7 +460,7 @@ Configuration example for HTTP Basic
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->stateless(true)
                 ->formLoginLdap()
@@ -520,7 +520,7 @@ Configuration example for form login and query_string
         use Symfony\Component\Ldap\Ldap;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->stateless(true)
                 ->formLoginLdap()
