@@ -114,10 +114,6 @@ If you use annotations instead of attributes, it's also required to call
         ->addDefaultDoctrineAnnotationReader() // add this only when using annotations
         ->getValidator();
 
-.. deprecated:: 6.4
-
-    Annotations are deprecated since Symfony 6.4, use attributes instead.
-
 To disable the annotation loader after it was enabled, call
 :method:`Symfony\\Component\\Validator\\ValidatorBuilder::disableAnnotationMapping`.
 

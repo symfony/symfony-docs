@@ -15,7 +15,7 @@ There are different ways to listen to these Doctrine events:
 
 * **Lifecycle callbacks**, they are defined as public methods on the entity classes and
   they are called when the events are triggered;
-* **Lifecycle listeners and subscribers**, they are classes with callback
+* **Lifecycle listeners**, they are classes with callback
   methods for one or more events and they are called for all entities;
 * **Entity listeners**, they are similar to lifecycle listeners, but they are
   called only for the entities of a certain class.
@@ -25,7 +25,7 @@ These are the **drawbacks and advantages** of each one:
 * Callbacks have better performance because they only apply to a single entity
   class, but you can't reuse the logic for different entities and they don't
   have access to :doc:`Symfony services </service_container>`;
-* Lifecycle listeners and subscribers can reuse logic among different entities
+* Lifecycle listeners can reuse logic among different entities
   and can access Symfony services but their performance is worse because they
   are called for all entities;
 * Entity listeners have the same advantages of lifecycle listeners and they have
@@ -37,7 +37,7 @@ to learn everything about them.
 
 .. seealso::
 
-    This article covers listeners and subscribers for Doctrine ORM. If you are
+    This article covers listeners for Doctrine ORM. If you are
     using ODM for MongoDB, read the `DoctrineMongoDBBundle documentation`_.
 
 Doctrine Lifecycle Callbacks
@@ -109,11 +109,6 @@ define a callback for the ``prePersist`` Doctrine event:
 
 Doctrine Lifecycle Listeners
 ----------------------------
-
-.. deprecated:: 6.3
-
-    Lifecycle subscribers are deprecated starting from Symfony 6.3 and will be
-    removed in Symfony 7.0. Use lifecycle listeners instead.
 
 Lifecycle listeners are defined as PHP classes that listen to a single Doctrine
 event on all the application entities. For example, suppose that you want to
@@ -201,7 +196,7 @@ listener in the Symfony application by creating a new service for it and
                         # this is the only required option for the lifecycle listener tag
                         event: 'postPersist'
 
-                        # listeners can define their priority in case multiple subscribers or listeners are associated
+                        # listeners can define their priority in case listeners are associated
                         # to the same event (default priority = 0; higher numbers = listener is run earlier)
                         priority: 500
 
@@ -219,7 +214,7 @@ listener in the Symfony application by creating a new service for it and
 
                 <!--
                     * 'event' is the only required option that defines the lifecycle listener
-                    * 'priority': used when multiple subscribers or listeners are associated to the same event
+                    * 'priority': used when multiple listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
                 -->
@@ -248,7 +243,7 @@ listener in the Symfony application by creating a new service for it and
                     // this is the only required option for the lifecycle listener tag
                     'event' => 'postPersist',
 
-                    // listeners can define their priority in case multiple subscribers or listeners are associated
+                    // listeners can define their priority in case multiple listeners are associated
                     // to the same event (default priority = 0; higher numbers = listener is run earlier)
                     'priority' => 500,
 
@@ -261,12 +256,6 @@ listener in the Symfony application by creating a new service for it and
 .. versionadded:: 2.7.2
 
     The `AsDoctrineListener`_ attribute was introduced in DoctrineBundle 2.7.2.
-
-.. tip::
-
-    Symfony loads (and instantiates) Doctrine listeners only when the related
-    Doctrine event is actually fired; whereas Doctrine subscribers are always
-    loaded (and instantiated) by Symfony, making them less performant.
 
 .. tip::
 
@@ -413,148 +402,6 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
                 ])
             ;
         };
-
-Doctrine Lifecycle Subscribers
-------------------------------
-
-Lifecycle subscribers are defined as PHP classes that implement the
-``Doctrine\Common\EventSubscriber`` interface and which listen to one or more
-Doctrine events on all the application entities. For example, suppose that you
-want to log all the database activity. To do so, define a subscriber for the
-``postPersist``, ``postRemove`` and ``postUpdate`` Doctrine events::
-
-    // src/EventListener/DatabaseActivitySubscriber.php
-    namespace App\EventListener;
-
-    use App\Entity\Product;
-    use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
-    use Doctrine\ORM\Event\PostPersistEventArgs;
-    use Doctrine\ORM\Event\PostRemoveEventArgs;
-    use Doctrine\ORM\Event\PostUpdateEventArgs;
-    use Doctrine\ORM\Events;
-
-    class DatabaseActivitySubscriber implements EventSubscriberInterface
-    {
-        // this method can only return the event names; you cannot define a
-        // custom method name to execute when each event triggers
-        public function getSubscribedEvents(): array
-        {
-            return [
-                Events::postPersist,
-                Events::postRemove,
-                Events::postUpdate,
-            ];
-        }
-
-        // callback methods must be called exactly like the events they listen to;
-        // they receive an argument of type Post*EventArgs, which gives you access
-        // to both the entity object of the event and the entity manager itself
-        public function postPersist(PostPersistEventArgs $args): void
-        {
-            $this->logActivity('persist', $args->getObject());
-        }
-
-        public function postRemove(PostRemoveEventArgs $args): void
-        {
-            $this->logActivity('remove', $args->getObject());
-        }
-
-        public function postUpdate(PostUpdateEventArgs $args): void
-        {
-            $this->logActivity('update', $args->getObject());
-        }
-
-        private function logActivity(string $action, mixed $entity): void
-        {
-            // if this subscriber only applies to certain entity types,
-            // add some code to check the entity type as early as possible
-            if (!$entity instanceof Product) {
-                return;
-            }
-
-            // ... get the entity information and log it somehow
-        }
-    }
-
-.. note::
-
-    In previous Doctrine versions, instead of ``Post*EventArgs`` classes, you had
-    to use ``LifecycleEventArgs``, which was deprecated in Doctrine ORM 2.14.
-
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
-and DoctrineBundle 2.1 (released May 25, 2020) or newer, this example will already
-work! Otherwise, :ref:`create a service <service-container-creating-service>` for this
-subscriber and :doc:`tag it </service_container/tags>` with ``doctrine.event_subscriber``.
-
-If you need to configure some option of the subscriber (e.g. its priority or
-Doctrine connection to use) you must do that in the manual service configuration:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\EventListener\DatabaseActivitySubscriber:
-                tags:
-                    - name: 'doctrine.event_subscriber'
-
-                      # subscribers can define their priority in case multiple subscribers or listeners are associated
-                      # to the same event (default priority = 0; higher numbers = listener is run earlier)
-                      priority: 500
-
-                      # you can also restrict listeners to a specific Doctrine connection
-                      connection: 'default'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-            <services>
-                <!-- ... -->
-
-                <!--
-                    * 'priority': used when multiple subscribers or listeners are associated to the same event
-                    *             (default priority = 0; higher numbers = listener is run earlier)
-                    * 'connection': restricts the listener to a specific Doctrine connection
-                -->
-                <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber" priority="500" connection="default"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\EventListener\DatabaseActivitySubscriber;
-
-        return static function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(DatabaseActivitySubscriber::class)
-                ->tag('doctrine.event_subscriber'[
-                    // subscribers can define their priority in case multiple subscribers or listeners are associated
-                    // to the same event (default priority = 0; higher numbers = listener is run earlier)
-                    'priority' => 500,
-
-                    // you can also restrict listeners to a specific Doctrine connection
-                    'connection' => 'default',
-                ])
-            ;
-        };
-
-.. tip::
-
-    Symfony loads (and instantiates) Doctrine subscribers whenever the
-    application executes; whereas Doctrine listeners are only loaded when the
-    related event is actually fired, making them more performant.
 
 .. _`Doctrine`: https://www.doctrine-project.org/
 .. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events

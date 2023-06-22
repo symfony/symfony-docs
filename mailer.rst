@@ -581,12 +581,6 @@ Alternatively you can attach contents from a stream by passing it directly to th
         ->addPart(new DataPart(fopen('/path/to/documents/contract.doc', 'r')))
     ;
 
-.. deprecated:: 6.2
-
-    In Symfony versions previous to 6.2, the methods ``attachFromPath()`` and
-    ``attach()`` could be used to add attachments. These methods have been
-    deprecated and replaced with ``addPart()``.
-
 Embedding Images
 ~~~~~~~~~~~~~~~~
 
@@ -627,12 +621,6 @@ images inside the HTML contents::
 .. versionadded:: 6.1
 
     The support of embedded images as HTML backgrounds was introduced in Symfony 6.1.
-
-.. deprecated:: 6.2
-
-    In Symfony versions previous to 6.2, the methods ``embedFromPath()`` and
-    ``embed()`` could be used to embed images. These methods have been deprecated
-    and replaced with ``addPart()`` together with inline ``DataPart`` objects.
 
 .. _mailer-configure-email-globally:
 
@@ -1561,7 +1549,7 @@ Here's an example of making one available to download::
         {
             $message = (new DraftEmail())
                 ->html($this->renderView(/* ... */))
-                ->attach(/* ... */)
+                ->addPart(/* ... */)
             ;
 
             $response = new Response($message->toString());

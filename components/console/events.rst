@@ -255,16 +255,6 @@ handle all signals e.g. to do some tasks before terminating the command.
         The :class:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap` class was
         introduced in Symfony 6.4.
 
-.. deprecated:: 6.3
-
-    In Symfony versions previous to 6.3, all signals (except ``SIGUSR1`` and
-    ``SIGUSR2``) would terminate the script by calling ``exit(0)``. Starting
-    from Symfony 6.3, no more signal is automatically calling ``exit(0)``.
-
-.. deprecated:: 6.3
-
-    Not returning a value in ``handleSignal()`` is deprecated since Symfony 6.3.
-
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
 .. _`Signals`: https://en.wikipedia.org/wiki/Signal_(IPC)
 .. _`constants of the PCNTL PHP extension`: https://www.php.net/manual/en/pcntl.constants.php

@@ -5,11 +5,6 @@ Attributes are the successor of annotations since PHP 8. Attributes are native
 to the language and Symfony takes full advantage of them across the framework
 and its different components.
 
-.. deprecated:: 6.4
-
-    Annotations across the framework are deprecated since Symfony 6.4, you must
-    only use attributes instead.
-
 Doctrine Bridge
 ~~~~~~~~~~~~~~~
 

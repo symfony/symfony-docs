@@ -333,7 +333,7 @@ Array Operators
 * ``in`` (contain)
 * ``not in`` (does not contain)
 
-For example::
+These operators are using strict comparison. For example::
 
     class User
     {

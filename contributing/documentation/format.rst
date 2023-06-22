@@ -216,7 +216,7 @@ If you are documenting a brand new feature, a change or a deprecation that's
 been made in Symfony, you should precede your description of the change with
 the corresponding directive and a short description:
 
-For a new feature or a behavior change use the ``.. versionadded:: 6.x``
+For a new feature or a behavior change use the ``.. versionadded:: 7.x``
 directive:
 
 .. code-block:: rst
@@ -243,12 +243,12 @@ For a deprecation use the ``.. deprecated:: 6.x`` directive:
 
         ... ... ... was deprecated in Symfony 6.2.
 
-Whenever a new major version of Symfony is released (e.g. 6.0, 7.0, etc), a new
+Whenever a new major version of Symfony is released (e.g. 7.0, 8.0, etc), a new
 branch of the documentation is created from the ``x.4`` branch of the previous
 major version. At this point, all the ``versionadded`` and ``deprecated`` tags
 for Symfony versions that have a lower major version will be removed. For
-example, if Symfony 6.0 were released today, 5.0 to 5.4 ``versionadded`` and
-``deprecated`` tags would be removed from the new ``6.0`` branch.
+example, if Symfony 7.0 were released today, 6.0 to 6.4 ``versionadded`` and
+``deprecated`` tags would be removed from the new ``7.0`` branch.
 
 .. _reStructuredText: https://docutils.sourceforge.io/rst.html
 .. _Sphinx: https://www.sphinx-doc.org/
