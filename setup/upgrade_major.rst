@@ -54,6 +54,12 @@ And sometimes, the warning may come from a third-party library or bundle
 that you're using. If that's true, there's a good chance that those deprecations
 have already been updated. In that case, upgrade the library to fix them.
 
+.. tip::
+
+    `Rector`_ is a third-party project that automates the upgrading and
+    refactoring of PHP projects. Rector includes some rules to fix certain
+    Symfony deprecations automatically.
+
 Once all the deprecation warnings are gone, you can upgrade with a lot
 more confidence.
 
@@ -314,3 +320,4 @@ Classes in the ``vendor/`` directory are always ignored.
        Now, you can safely allow ``^6.0`` for the Symfony dependencies.
 
 .. _`PHP CS Fixer`: https://github.com/friendsofphp/php-cs-fixer
+.. _`Rector`: https://github.com/rectorphp/rector
