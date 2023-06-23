@@ -1,9 +1,9 @@
 The VarDumper Component
 =======================
 
-    The VarDumper component provides mechanisms for extracting the state out of
-    any PHP variables. Built on top, it provides a better ``dump()`` function
-    that you can use instead of :phpfunction:`var_dump`.
+The VarDumper component provides mechanisms for extracting the state out of
+any PHP variables. Built on top, it provides a better ``dump()`` function
+that you can use instead of :phpfunction:`var_dump`.
 
 Installation
 ------------

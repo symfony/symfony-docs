@@ -1,9 +1,16 @@
 The EventDispatcher Component
 =============================
 
-    The EventDispatcher component provides tools that allow your application
-    components to communicate with each other by dispatching events and
-    listening to them.
+.. caution::
+
+    This article explains how to define and handle events in any PHP application
+    using the EventDispatcher component. If you are working on a Symfony application,
+    you don't have to do most of the things explained here.
+    Instead, read the explanation of :doc:`this other article </event_dispatcher>`.
+
+The EventDispatcher component provides tools that allow your application
+components to communicate with each other by dispatching events and
+listening to them.
 
 Introduction
 ------------
@@ -53,12 +60,6 @@ Installation
 
 Usage
 -----
-
-.. seealso::
-
-    This article explains how to use the EventDispatcher features as an
-    independent component in any PHP application. Read the :doc:`/event_dispatcher`
-    article to learn about how to use it in Symfony applications.
 
 Events
 ~~~~~~

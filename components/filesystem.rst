@@ -1,8 +1,8 @@
 The Filesystem Component
 ========================
 
-    The Filesystem component provides platform-independent utilities for
-    filesystem operations and for file/directory paths manipulation.
+The Filesystem component provides platform-independent utilities for
+filesystem operations and for file/directory paths manipulation.
 
 Installation
 ------------

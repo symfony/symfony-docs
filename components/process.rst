@@ -1,7 +1,7 @@
 The Process Component
 =====================
 
-    The Process component executes commands in sub-processes.
+The Process component executes commands in sub-processes.
 
 Installation
 ------------

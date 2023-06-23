@@ -1,9 +1,9 @@
 The PHPUnit Bridge
 ==================
 
-    The PHPUnit Bridge provides utilities to report legacy tests and usage of
-    deprecated code and helpers for mocking native functions related to time,
-    DNS and class existence.
+The PHPUnit Bridge provides utilities to report legacy tests and usage of
+deprecated code and helpers for mocking native functions related to time,
+DNS and class existence.
 
 It comes with the following features:
 

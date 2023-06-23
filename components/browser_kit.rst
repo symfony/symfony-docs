@@ -1,8 +1,16 @@
 The BrowserKit Component
 ========================
 
-    The BrowserKit component simulates the behavior of a web browser, allowing
-    you to make requests, click on links and submit forms programmatically.
+.. caution::
+
+    This article explains how to make HTTP requests and interact with links and
+    forms programmatically in any PHP application using the BrowserKit component.
+    If you are working on a Symfony application (e.g. creating tests), you don't
+    have to do most of the things explained here. Instead, read the explanation of
+    :ref:`this other article <application-tests>`.
+
+The BrowserKit component simulates the behavior of a web browser, allowing
+you to make requests, click on links and submit forms programmatically.
 
 Installation
 ------------
@@ -15,12 +23,6 @@ Installation
 
 Basic Usage
 -----------
-
-.. seealso::
-
-    This article explains how to use the BrowserKit features as an independent
-    component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
-    article to learn about how to use it in Symfony applications.
 
 Creating a Client
 ~~~~~~~~~~~~~~~~~

@@ -1,8 +1,15 @@
 The Workflow Component
 ======================
 
-    The Workflow component provides tools for managing a workflow or finite
-    state machine.
+.. caution::
+
+    This article explains how to create workflows and state machines in any PHP application
+    using the Workflow component. If you are working on a Symfony application, you
+    don't have to do any of the things explained here. Instead, read the explanation
+    of :doc:`this other article </workflow>`.
+
+The Workflow component provides tools for managing a workflow or finite
+state machine.
 
 Installation
 ------------

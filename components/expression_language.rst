@@ -1,9 +1,17 @@
 The ExpressionLanguage Component
 ================================
 
-    The ExpressionLanguage component provides an engine that can compile and
-    evaluate expressions. An expression is a one-liner that returns a value
-    (mostly, but not limited to, Booleans).
+.. caution::
+
+    This article explains how to define and evaluate expressions in any PHP application
+    using the ExpressionLanguage component. If you are working on a Symfony application,
+    you don't have to do most of the things explained here.
+    Instead, read the expression syntax reference in :doc:`this other article <//reference/formats/expression_language>`,
+    which also shows how to use these expresssions in security, services and routes.
+
+The ExpressionLanguage component provides an engine that can compile and
+evaluate expressions. An expression is a one-liner that returns a value
+(mostly, but not limited to, Booleans).
 
 Installation
 ------------

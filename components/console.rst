@@ -1,8 +1,15 @@
 The Console Component
 =====================
 
-    The Console component eases the creation of beautiful and testable command
-    line interfaces.
+.. caution::
+
+    This article explains how to create console applications and commands in
+    any PHP application using the Console component. If you are working on a
+    Symfony application, you don't have to do most of the things explained here.
+    Instead, read the explanation of :doc:`this other article </console>`.
+
+The Console component eases the creation of beautiful and testable command
+line interfaces.
 
 The Console component allows you to create command-line commands. Your console
 commands can be used for any recurring task, such as cronjobs, imports, or
@@ -19,12 +26,6 @@ Installation
 
 Creating a Console Application
 ------------------------------
-
-.. seealso::
-
-    This article explains how to use the Console features as an independent
-    component in any PHP application. Read the :doc:`/console` article to
-    learn about how to use it in Symfony applications.
 
 First, you need to create a PHP script to define the console application::
 

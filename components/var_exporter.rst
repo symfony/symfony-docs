@@ -1,9 +1,9 @@
 The VarExporter Component
 =========================
 
-    The VarExporter component exports any serializable PHP data structure to
-    plain PHP code and allows to instantiate and populate objects without
-    calling their constructors.
+The VarExporter component exports any serializable PHP data structure to
+plain PHP code and allows to instantiate and populate objects without
+calling their constructors.
 
 Installation
 ------------

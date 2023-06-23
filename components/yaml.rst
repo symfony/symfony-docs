@@ -1,7 +1,7 @@
 The Yaml Component
 ==================
 
-    The Yaml component loads and dumps YAML files.
+The Yaml component loads and dumps YAML files.
 
 What is It?
 -----------

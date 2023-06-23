@@ -3,11 +3,18 @@
 The Cache Component
 ===================
 
-    The Cache component provides features covering simple to advanced caching needs.
-    It natively implements `PSR-6`_ and the `Cache Contracts`_ for greatest
-    interoperability. It is designed for performance and resiliency, ships with
-    ready to use adapters for the most common caching backends. It enables tag-based
-    invalidation and cache stampede protection via locking and early expiration.
+.. caution::
+
+    This article explains how to cache contents in any PHP application using the
+    Cache component. If you are working on a Symfony application, you don't have
+    to do most of the things explained here. Instead, read the explanation of
+    :doc:`this other article </cache>`.
+
+The Cache component provides features covering simple to advanced caching needs.
+It natively implements `PSR-6`_ and the `Cache Contracts`_ for greatest
+interoperability. It is designed for performance and resiliency, ships with
+ready to use adapters for the most common caching backends. It enables tag-based
+invalidation and cache stampede protection via locking and early expiration.
 
 .. tip::
 

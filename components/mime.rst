@@ -1,8 +1,15 @@
 The Mime Component
 ==================
 
-    The Mime component allows manipulating the MIME messages used to send emails
-    and provides utilities related to MIME types.
+.. caution::
+
+    This article explains how to create MIME messages (i.e. emails) in any PHP application
+    using the Mime component. If you are working on a Symfony application (e.g. to
+    create and send emails), you don't have to do any of the things explained here.
+    Instead, read the explanation of :doc:`this other article </mailer>`.
+
+The Mime component allows manipulating the MIME messages used to send emails
+and provides utilities related to MIME types.
 
 Installation
 ------------

@@ -1,7 +1,14 @@
 The Form Component
 ==================
 
-    The Form component allows you to create, process and reuse forms.
+.. caution::
+
+    This article explains how to create and process web forms in any PHP application
+    using the Form component. If you are working on a Symfony application, you don't
+    have to do any of the things explained here. Instead, read the explanation of
+    :doc:`this other article </form>`.
+
+The Form component allows you to create, process and reuse forms.
 
 The Form component is a tool to help you solve the problem of allowing end-users
 to interact with the data and modify the data in your application. And though
@@ -20,12 +27,6 @@ Installation
 
 Configuration
 -------------
-
-.. seealso::
-
-    This article explains how to use the Form features as an independent
-    component in any PHP application. Read the :doc:`/forms` article to learn
-    about how to use it in Symfony applications.
 
 In Symfony, forms are represented by objects and these objects are built
 by using a *form factory*. Building a form factory is done with the factory

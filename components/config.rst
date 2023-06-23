@@ -1,9 +1,16 @@
 The Config Component
 ====================
 
-    The Config component provides several classes to help you find, load,
-    combine, fill and validate configuration values of any kind, whatever
-    their source may be (YAML, XML, INI files, or for instance a database).
+.. caution::
+
+    This article explains how to define configuration trees in any PHP application
+    using the Config component. If you are working on a Symfony application, you
+    don't have to do any of this to configure your application. Instead, read the
+    explanation of :doc:`this other article </configuration>`.
+
+The Config component provides several classes to help you find, load,
+combine, fill and validate configuration values of any kind, whatever
+their source may be (YAML, XML, INI files, or for instance a database).
 
 Installation
 ------------

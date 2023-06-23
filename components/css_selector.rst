@@ -1,7 +1,14 @@
 The CssSelector Component
 =========================
 
-    The CssSelector component converts CSS selectors to `XPath`_ expressions.
+.. caution::
+
+    This article explains how to transform CSS selectors to XPath expressions
+    in any PHP application using the CssSelector component. If you are working on
+    a Symfony application (e.g. to create tests), you don't have to do any of the
+    things explained here. Instead, read the explanation of :ref:`this other article <application-tests>`.
+
+The CssSelector component converts CSS selectors to `XPath`_ expressions.
 
 Installation
 ------------
@@ -14,12 +21,6 @@ Installation
 
 Usage
 -----
-
-.. seealso::
-
-    This article explains how to use the CssSelector features as an independent
-    component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
-    article to learn about how to use it when creating Symfony tests.
 
 Why Use CSS selectors?
 ~~~~~~~~~~~~~~~~~~~~~~

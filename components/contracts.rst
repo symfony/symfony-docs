@@ -1,9 +1,9 @@
 The Contracts Component
 =======================
 
-    The Contracts component provides a set of abstractions extracted out of the
-    Symfony components. They can be used to build on semantics that the Symfony
-    components proved useful - and that already have battle-tested implementations.
+The Contracts component provides a set of abstractions extracted out of the
+Symfony components. They can be used to build on semantics that the Symfony
+components proved useful - and that already have battle-tested implementations.
 
 Installation
 ------------

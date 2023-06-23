@@ -496,6 +496,7 @@ Empty the database and reload *all* the fixture classes with:
 For more information, read the `DoctrineFixturesBundle documentation`_.
 
 .. _functional-tests:
+.. _application-tests:
 
 Application Tests
 -----------------

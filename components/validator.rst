@@ -1,8 +1,15 @@
 The Validator Component
 =======================
 
-    The Validator component provides tools to validate values following the
-    `JSR-303 Bean Validation specification`_.
+.. caution::
+
+    This article explains how to validate objects in any PHP application using the
+    Validator component. If you are working on a Symfony application, you don't
+    have to do any of the things explained here. Instead, read the explanation of
+    :doc:`this other article </validation>`.
+
+The Validator component provides tools to validate values following the
+`JSR-303 Bean Validation specification`_.
 
 Installation
 ------------
@@ -15,12 +22,6 @@ Installation
 
 Usage
 -----
-
-.. seealso::
-
-    This article explains how to use the Validator features as an independent
-    component in any PHP application. Read the :doc:`/validation` article to
-    learn about how to validate data and entities in Symfony applications.
 
 The Validator component behavior is based on two concepts:
 

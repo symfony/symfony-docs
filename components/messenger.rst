@@ -1,17 +1,18 @@
 The Messenger Component
 =======================
 
-    The Messenger component helps applications send and receive messages to/from
-    other applications or via message queues.
+.. caution::
 
-    The component is greatly inspired by Matthias Noback's series of
-    `blog posts about command buses`_ and the `SimpleBus project`_.
+    This article explains how to create buses and dispatch messages in any PHP application
+    using the Messenger component. If you are working on a Symfony application, you don't
+    have to do any of the things explained here. Instead, read the explanation of
+    :doc:`this other article </messenger>`.
 
-.. seealso::
+The Messenger component helps applications send and receive messages to/from
+other applications or via message queues.
 
-    This article explains how to use the Messenger features as an independent
-    component in any PHP application. Read the :doc:`/messenger` article to
-    learn about how to use it in Symfony applications.
+The component is greatly inspired by Matthias Noback's series of
+`blog posts about command buses`_ and the `SimpleBus project`_.
 
 Installation
 ------------

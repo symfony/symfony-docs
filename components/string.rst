@@ -1,8 +1,8 @@
 The String Component
 ====================
 
-    The String component provides a single object-oriented API to work with
-    three "unit systems" of strings: bytes, code points and grapheme clusters.
+The String component provides a single object-oriented API to work with
+three "unit systems" of strings: bytes, code points and grapheme clusters.
 
 Installation
 ------------

@@ -1,8 +1,8 @@
 The PropertyInfo Component
 ==========================
 
-    The PropertyInfo component allows you to get information
-    about class properties by using different sources of metadata.
+The PropertyInfo component allows you to get information
+about class properties by using different sources of metadata.
 
 While the :doc:`PropertyAccess component </components/property_access>`
 allows you to read and write values to/from objects and arrays, the PropertyInfo

@@ -1,7 +1,14 @@
 The DomCrawler Component
 ========================
 
-    The DomCrawler component eases DOM navigation for HTML and XML documents.
+.. caution::
+
+    This article explains how to traverse and filter DOM documents in any PHP
+    application using the DomCrawler component. If you are working on a Symfony
+    application (e.g. to create tests), you don't have to do any of the things
+    explained here. Instead, read the explanation of :ref:`this other article <application-tests>`.
+
+The DomCrawler component eases DOM navigation for HTML and XML documents.
 
 .. note::
 
@@ -19,12 +26,6 @@ Installation
 
 Usage
 -----
-
-.. seealso::
-
-    This article explains how to use the DomCrawler features as an independent
-    component in any PHP application. Read the :ref:`Symfony Functional Tests <functional-tests>`
-    article to learn about how to use it when creating Symfony tests.
 
 The :class:`Symfony\\Component\\DomCrawler\\Crawler` class provides methods
 to query and manipulate HTML and XML documents.

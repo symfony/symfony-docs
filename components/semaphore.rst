@@ -1,8 +1,8 @@
 The Semaphore Component
 =======================
 
-    The Semaphore Component manages `semaphores`_, a mechanism to provide
-    exclusive access to a shared resource.
+The Semaphore Component manages `semaphores`_, a mechanism to provide
+exclusive access to a shared resource.
 
 Installation
 ------------

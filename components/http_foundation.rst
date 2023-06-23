@@ -1,8 +1,16 @@
 The HttpFoundation Component
 ============================
 
-    The HttpFoundation component defines an object-oriented layer for the HTTP
-    specification.
+.. seealso::
+
+    This article explains how to create and work with HTTP requests and responses
+    in any PHP application using the HttpFoundation component. If you are working
+    on a Symfony application, everything is already configured for you and ready
+    to use, so you don't have to do any of the things explained here. Instead,
+    read the explanation of :doc:`this other article </controller>`.
+
+The HttpFoundation component defines an object-oriented layer for the HTTP
+specification.
 
 In PHP, the request is represented by some global variables (``$_GET``,
 ``$_POST``, ``$_FILES``, ``$_COOKIE``, ``$_SESSION``, ...) and the response is
@@ -19,13 +27,6 @@ Installation
     $ composer require symfony/http-foundation
 
 .. include:: /components/require_autoload.rst.inc
-
-.. seealso::
-
-    This article explains how to use the HttpFoundation features as an
-    independent component in any PHP application. In Symfony applications
-    everything is already configured and ready to use. Read the :doc:`/controller`
-    article to learn about how to use these features when creating controllers.
 
 .. _component-http-foundation-request:
 

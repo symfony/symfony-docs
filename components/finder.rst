@@ -1,8 +1,8 @@
 The Finder Component
 ====================
 
-    The Finder component finds files and directories based on different criteria
-    (name, file size, modification time, etc.) via an intuitive fluent interface.
+The Finder component finds files and directories based on different criteria
+(name, file size, modification time, etc.) via an intuitive fluent interface.
 
 Installation
 ------------

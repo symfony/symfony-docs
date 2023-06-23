@@ -1,8 +1,15 @@
 The Asset Component
 ===================
 
-    The Asset component manages URL generation and versioning of web assets such
-    as CSS stylesheets, JavaScript files and image files.
+.. caution::
+
+    This article explains how to manage web assets in any PHP application using
+    the Asset component. If you are working on a Symfony application, you don't
+    have to do most of the things explained here. Instead, read the explanation
+    of :ref:`this other article <templates-link-to-assets>`.
+
+The Asset component manages URL generation and versioning of web assets such
+as CSS stylesheets, JavaScript files and image files.
 
 In the past, it was common for web applications to hard-code the URLs of web assets.
 For example:

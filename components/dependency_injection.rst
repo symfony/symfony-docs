@@ -1,9 +1,16 @@
 The DependencyInjection Component
 =================================
 
-    The DependencyInjection component implements a `PSR-11`_ compatible service
-    container that allows you to standardize and centralize the way objects are
-    constructed in your application.
+.. caution::
+
+    This article explains how to define services and use a service container in
+    any PHP application using the DependencyInjection component. If you are working
+    on a Symfony application, you don't have to do any of the things explained here.
+    Instead, read the explanation of :doc:`this other article </service_container>`.
+
+The DependencyInjection component implements a `PSR-11`_ compatible service
+container that allows you to standardize and centralize the way objects are
+constructed in your application.
 
 For an introduction to Dependency Injection and service containers see
 :doc:`/service_container`.
@@ -19,12 +26,6 @@ Installation
 
 Basic Usage
 -----------
-
-.. seealso::
-
-    This article explains how to use the DependencyInjection features as an
-    independent component in any PHP application. Read the :doc:`/service_container`
-    article to learn about how to use it in Symfony applications.
 
 You might have a class like the following ``Mailer`` that
 you want to make available as a service::

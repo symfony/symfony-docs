@@ -1,8 +1,8 @@
 The UID Component
 =================
 
-    The UID component provides utilities to work with `unique identifiers`_ (UIDs)
-    such as UUIDs and ULIDs.
+The UID component provides utilities to work with `unique identifiers`_ (UIDs)
+such as UUIDs and ULIDs.
 
 Installation
 ------------

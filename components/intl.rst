@@ -1,7 +1,14 @@
 The Intl Component
 ==================
 
-    This component provides access to the localization data of the `ICU library`_.
+.. caution::
+
+    This article explains how to access ICU data (e.g. country names, currency
+    names, etc.) in different languages in any PHP application. If you are working
+    on a Symfony application and want to internationalize it, read the explanation of
+    :doc:`this other article </translation>`.
+
+This component provides access to the localization data of the `ICU library`_.
 
 .. caution::
 
@@ -9,12 +16,6 @@ The Intl Component
     other locales, you should `install the intl extension`_. There is no conflict
     between the two because, even if you use the extension, this package can still
     be useful to access the ICU data.
-
-.. seealso::
-
-    This article explains how to use the Intl features as an independent component
-    in any PHP application. Read the :doc:`/translation` article to learn about
-    how to internationalize and manage the user locale in Symfony applications.
 
 Installation
 ------------
