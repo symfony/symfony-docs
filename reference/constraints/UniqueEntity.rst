@@ -254,11 +254,6 @@ each with a single field.
 ``ignoreNull``
 ~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``true``
-
-``ignoreNull``
-~~~~~~~~~~~~~~
-
 **type**: ``boolean`` | ``string`` | ``array`` **default**: ``true``
 
 If this option is set to ``true``, then the constraint will allow multiple
