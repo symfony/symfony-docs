@@ -63,8 +63,6 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/empty_data_description.rst.inc
 
-.. _reference-form-option-error-bubbling:
-
 ``is_empty_callback``
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -72,6 +70,7 @@ The actual default value of this option depends on other field options:
 
 This callable takes form data and returns whether value is considered empty.
 
+.. _reference-form-option-error-bubbling:
 
 .. include:: /reference/forms/types/options/error_bubbling.rst.inc
 
