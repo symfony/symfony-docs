@@ -341,6 +341,47 @@ also shows how you can require multiple packages at once:
 
     $ php bin/console importmap:require highlight.js/lib/core highlight.js/lib/languages/javascript
 
+Global Variables like jQuery
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You might be accustomed to relying on global variables - like jQuery's ``$``
+variable:
+
+.. code-block:: javascript
+
+    // assets/app.js
+    import 'jquery';
+
+    // app.js or any other file
+    $('.something').hide(); // WILL NOT WORK!
+
+But in a module environment (like with AssetMapper), when you import
+a library like ``jquery``, it does *not* create a global variable. Instead, you
+should import it and set it to a variable in *every* file you need it:
+
+.. code-block:: javascript
+
+    import $ from 'jquery';
+    $('.something').hide();
+
+You can even do this from an inline script tag:
+
+.. code-block:: html
+
+    <script type="module">
+        import $ from 'jquery';
+        $('.something').hide();
+    </script>
+
+If you *do* need something to become a global variable, you do it manually
+from inside ``app.js``:
+
+.. code-block:: javascript
+
+    import $ from 'jquery';
+    // things on "window" become global variables
+    window.$ = $;
+
 Handling 3rd-Party CSS
 ----------------------
 
@@ -712,6 +753,11 @@ component.
 
 Using Tailwind CSS
 ------------------
+
+.. seealso::
+
+    Check out `symfonycasts/tailwind-bundle`_ for an even easier way to use
+    Tailwind with Symfony.
 
 Want to use the `Tailwind`_ CSS framework with the AssetMapper component? No problem.
 First, install the ``tailwindcss`` binary. This can be installed via npm (run
@@ -1095,3 +1141,4 @@ This will force the AssetMapper component to re-calculate the content of all fil
 .. _BabdevPagerfantaBundle: https://github.com/BabDev/PagerfantaBundle
 .. _Cloudflare: https://www.cloudflare.com/
 .. _EasyAdminBundle: https://github.com/EasyCorp/EasyAdminBundle
+.. _symfonycasts/tailwind-bundle: https://github.com/SymfonyCasts/tailwind-bundle
