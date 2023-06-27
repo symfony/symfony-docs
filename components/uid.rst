@@ -94,10 +94,10 @@ configure the behavior of the factory using configuration files::
         # config/packages/uid.yaml
         framework:
             uid:
-                default_uuid_version: 6
+                default_uuid_version: 7
                 name_based_uuid_version: 5
                 name_based_uuid_namespace: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
-                time_based_uuid_version: 6
+                time_based_uuid_version: 7
                 time_based_uuid_node: 121212121212
 
     .. code-block:: xml
@@ -113,10 +113,10 @@ configure the behavior of the factory using configuration files::
 
             <framework:config>
                 <framework:uid
-                    default_uuid_version="6"
+                    default_uuid_version="7"
                     name_based_uuid_version="5"
                     name_based_uuid_namespace="6ba7b810-9dad-11d1-80b4-00c04fd430c8"
-                    time_based_uuid_version="6"
+                    time_based_uuid_version="7"
                     time_based_uuid_node="121212121212"
                 />
             </framework:config>
@@ -135,10 +135,10 @@ configure the behavior of the factory using configuration files::
 
             $container->extension('framework', [
                 'uid' => [
-                    'default_uuid_version' => 6,
+                    'default_uuid_version' => 7,
                     'name_based_uuid_version' => 5,
                     'name_based_uuid_namespace' => '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
-                    'time_based_uuid_version' => 6,
+                    'time_based_uuid_version' => 7,
                     'time_based_uuid_node' => 121212121212,
                 ],
             ]);
@@ -160,7 +160,7 @@ on the configuration you defined::
 
         public function generate(): void
         {
-            // This creates a UUID of the version given in the configuration file (v6 by default)
+            // This creates a UUID of the version given in the configuration file (v7 by default)
             $uuid = $this->uuidFactory->create();
 
             $nameBasedUuid = $this->uuidFactory->nameBased(/** ... */);
