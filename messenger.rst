@@ -2271,7 +2271,7 @@ for each bus looks like this:
 
 #. ``handle_message`` - calls the message handler(s) for the given message.
 
-#. ``auto_stamp_middleware`` - add stamps to envelope from ``AutoStamp`` attribute on message.
+#. ``auto_stamp_middleware`` - add stamps to envelope from ``StampInterface`` attributes on message.
 
 .. note::
 
