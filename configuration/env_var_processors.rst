@@ -787,7 +787,7 @@ Symfony provides the following env var processors:
         The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.
 
 ``env(defined:NO_FOO)``
-    Evaluates to ``true`` if the env var exists and its value is from ``''``
+    Evaluates to ``true`` if the env var exists and its value is not ``''``
     (an empty string) or ``null``; it returns ``false`` otherwise.
 
     .. configuration-block::
