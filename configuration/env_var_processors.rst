@@ -787,7 +787,8 @@ Symfony provides the following env var processors:
         The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.
 
 ``env(defined:NO_FOO)``
-    Evaluates to ``true`` if the env var is defined (ie: different from ``''`` or ``null``), ``false`` otherwise.
+    Evaluates to ``true`` if the env var exists and its value is from ``''``
+    (an empty string) or ``null``; it returns ``false`` otherwise.
 
     .. configuration-block::
 
@@ -795,7 +796,7 @@ Symfony provides the following env var processors:
 
             # config/services.yaml
             parameters:
-                typed_env: '%env(defined:NO_FOO)%'
+                typed_env: '%env(defined:FOO)%'
 
         .. code-block:: xml
 
@@ -810,14 +811,14 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <parameters>
-                    <parameter key="typed_env"'%env(defined:NO_FOO)%</parameter>
+                    <parameter key="typed_env"'%env(defined:FOO)%</parameter>
                 </parameters>
             </container>
 
         .. code-block:: php
 
             // config/services.php
-            $container->setParameter('typed_env', '%env(defined:NO_FOO)%');
+            $container->setParameter('typed_env', '%env(defined:FOO)%');
 
     .. versionadded:: 6.4
 
