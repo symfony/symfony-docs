@@ -786,6 +786,43 @@ Symfony provides the following env var processors:
 
         The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.
 
+``env(defined:NO_FOO)``
+    Evaluates to ``true`` if the env var is defined (ie: different from ``''`` or ``null``), ``false`` otherwise.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            parameters:
+                typed_env: '%env(defined:NO_FOO)%'
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="typed_env"'%env(defined:NO_FOO)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/services.php
+            $container->setParameter('typed_env', '%env(defined:NO_FOO)%');
+
+    .. versionadded:: 6.4
+
+        The ``env(defined:...)`` env var processor was introduced in Symfony 6.4.
+
 It is also possible to combine any number of processors:
 
 .. configuration-block::
