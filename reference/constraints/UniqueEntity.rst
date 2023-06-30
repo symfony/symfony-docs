@@ -103,6 +103,29 @@ between all of the rows in your user table:
             }
         }
 
+        // src/Form/Type/UserType.php
+        namespace App\Form\Type;
+
+        // ...
+        // DON'T forget the following use statement!!!
+        use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+        class UserType extends AbstractType
+        {
+            // ...
+
+            public function configureOptions(OptionsResolver $resolver): void
+            {
+                $resolver->setDefaults([
+                    // ...
+                    'data_class' => User::class,
+                    'constraints' => [
+                        new UniqueEntity(fields: ['email']),
+                    ],
+                ]);
+            }
+        }
+
 .. caution::
 
     This constraint doesn't provide any protection against `race conditions`_.
