@@ -2429,8 +2429,8 @@ locale.
             resource: '../../src/Controller/'
             type: annotation
             host:
-                en: 'https://www.example.com'
-                nl: 'https://www.example.nl'
+                en: 'www.example.com'
+                nl: 'www.example.nl'
 
     .. code-block:: xml
 
@@ -2441,8 +2441,8 @@ locale.
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
             <import resource="../../src/Controller/" type="annotation">
-                <host locale="en">https://www.example.com</host>
-                <host locale="nl">https://www.example.nl</host>
+                <host locale="en">www.example.com</host>
+                <host locale="nl">www.example.nl</host>
             </import>
         </routes>
 
@@ -2453,8 +2453,8 @@ locale.
         return function (RoutingConfigurator $routes) {
             $routes->import('../../src/Controller/', 'annotation')
                 ->host([
-                    'en' => 'https://www.example.com',
-                    'nl' => 'https://www.example.nl',
+                    'en' => 'www.example.com',
+                    'nl' => 'www.example.nl',
                 ])
             ;
         };
