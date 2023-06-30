@@ -146,13 +146,12 @@ You can optionally define a description, help message and the
     // ...
     class CreateUserCommand extends Command
     {
-        // the command description shown when running "php bin/console list"
-        protected static $defaultDescription = 'Creates a new user.';
-
         // ...
         protected function configure(): void
         {
             $this
+                // the command description shown when running "php bin/console list"
+                ->setDescription('Creates a new user.')
                 // the command help shown when running the command with the "--help" option
                 ->setHelp('This command allows you to create a user...')
             ;
@@ -161,15 +160,16 @@ You can optionally define a description, help message and the
 
 .. tip::
 
-    Defining the ``$defaultDescription`` static property instead of using the
-    ``setDescription()`` method allows to get the command description without
+    Using the ``#[AsCommand]`` attribute to define a description instead of
+    using the ``setDescription()`` method allows to get the command description without
     instantiating its class. This makes the ``php bin/console list`` command run
     much faster.
 
     If you want to always run the ``list`` command fast, add the ``--short`` option
     to it (``php bin/console list --short``). This will avoid instantiating command
     classes, but it won't show any description for commands that use the
-    ``setDescription()`` method instead of the static property.
+    ``setDescription()`` method instead of the attribute to define the command
+    description.
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
@@ -216,8 +216,6 @@ You can register the command by adding the ``AsCommand`` attribute to it::
     use Symfony\Component\Console\Attribute\AsCommand;
     use Symfony\Component\Console\Command\Command;
 
-    // the "name" and "description" arguments of AsCommand replace the
-    // static $defaultName and $defaultDescription properties
     #[AsCommand(
         name: 'app:create-user',
         description: 'Creates a new user.',
