@@ -147,6 +147,7 @@ Symfony Docker Integration
 If you'd like to use Docker with Symfony, see :doc:`/setup/docker`.
 
 .. _symfony-flex:
+.. _flex-quick-intro:
 
 Installing Packages
 -------------------
