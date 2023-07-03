@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-06-30T13:54:22Z
+
+I like this ... but maybe we should update first the previous versions to mark these two properties as deprecated?
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-06-30T14:19:05Z
+
+Yes! Done here :slightly_smiling_face: https://github.com/symfony/symfony-docs/pull/18474
