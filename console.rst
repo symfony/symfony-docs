@@ -171,6 +171,12 @@ You can optionally define a description, help message and the
     classes, but it won't show any description for commands that use the
     ``setDescription()`` method instead of the static property.
 
+.. deprecated:: 6.1
+
+    The static property ``$defaultDescription`` was deprecated in Symfony 6.1.
+    Declare your command description with the ``#[AsCommand]`` attribute
+    instead.
+
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
 first and then call to the parent constructor, to make those properties
@@ -233,6 +239,11 @@ If you can't use PHP attributes, register the command as a service and
 :doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+
+.. deprecated:: 6.1
+
+    The static property ``$defaultName`` was deprecated in Symfony 6.1.
+    Declare your command name with the ``#[AsCommand]`` attribute instead.
 
 Running the Command
 ~~~~~~~~~~~~~~~~~~~
