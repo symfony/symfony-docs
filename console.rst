@@ -174,8 +174,8 @@ You can optionally define a description, help message and the
 .. deprecated:: 6.1
 
     The static property ``$defaultDescription`` was deprecated in Symfony 6.1.
-    Declare your command description with the ``#[AsCommand]`` attribute
-    instead.
+    Instead, use the ``#[AsCommand]`` attribute to define the optional command
+    description.
 
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
@@ -243,7 +243,7 @@ this is already done for you, thanks to :ref:`autoconfiguration <services-autoco
 .. deprecated:: 6.1
 
     The static property ``$defaultName`` was deprecated in Symfony 6.1.
-    Declare your command name with the ``#[AsCommand]`` attribute instead.
+    Define your command name with the ``#[AsCommand]`` attribute instead.
 
 Running the Command
 ~~~~~~~~~~~~~~~~~~~
