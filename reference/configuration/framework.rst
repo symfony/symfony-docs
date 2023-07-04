@@ -171,6 +171,11 @@ bootstrap the Symfony framework on a cache hit.
 
     The ``terminate_on_cache_hit`` option was introduced in Symfony 6.2.
 
+.. deprecated:: 6.2
+
+    Setting the ``terminate_on_cache_hit`` option to ``true`` was deprecated in
+    Symfony 6.2 and the option will be removed in Symfony 7.0.
+
  .. _configuration-framework-http_method_override:
 
 http_method_override
