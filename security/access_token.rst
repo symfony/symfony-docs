@@ -380,9 +380,7 @@ and retrieve the user info:
                 main:
                     access_token:
                         token_handler:
-                            oidc_user_info:
-                                client:
-                                    base_uri: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
+                            oidc_user_info: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
 
     .. code-block:: xml
 
@@ -399,11 +397,7 @@ and retrieve the user info:
             <config>
                 <firewall name="main">
                     <access-token>
-                        <token-handler>
-                            <oidc-user-info>
-                                <client base-uri="https://www.example.com/realms/demo/protocol/openid-connect/userinfo"/>
-                            </oidc-user-info>
-                        </token-handler>
+                        <token-handler oidc-user-info="https://www.example.com/realms/demo/protocol/openid-connect/userinfo"/>
                     </access-token>
                 </firewall>
             </config>
@@ -418,9 +412,7 @@ and retrieve the user info:
             $security->firewall('main')
                 ->accessToken()
                     ->tokenHandler()
-                        ->oidcUserInfo()
-                            ->client()
-                                ->baseUri('https://www.example.com/realms/demo/protocol/openid-connect/userinfo')
+                        ->oidcUserInfo('https://www.example.com/realms/demo/protocol/openid-connect/userinfo')
             ;
         };
 
@@ -439,8 +431,7 @@ identifier by default. To use another claim, specify it on the configuration:
                         token_handler:
                             oidc_user_info:
                                 claim: email
-                                client:
-                                    base_uri: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
+                                base_uri: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
 
     .. code-block:: xml
 
@@ -458,9 +449,7 @@ identifier by default. To use another claim, specify it on the configuration:
                 <firewall name="main">
                     <access-token>
                         <token-handler>
-                            <oidc-user-info claim="email">
-                                <client base-uri="https://www.example.com/realms/demo/protocol/openid-connect/userinfo"/>
-                            </oidc-user-info>
+                            <oidc-user-info claim="email" base-uri="https://www.example.com/realms/demo/protocol/openid-connect/userinfo"/>
                         </token-handler>
                     </access-token>
                 </firewall>
@@ -478,13 +467,12 @@ identifier by default. To use another claim, specify it on the configuration:
                     ->tokenHandler()
                         ->oidcUserInfo()
                             ->claim('email')
-                            ->client()
-                                ->baseUri('https://www.example.com/realms/demo/protocol/openid-connect/userinfo')
+                            ->baseUri('https://www.example.com/realms/demo/protocol/openid-connect/userinfo')
             ;
         };
 
 The ``oidc_user_info`` token handler automatically creates an HTTP client with
-the specified configuration. If you prefer using your own client, you can
+the specified ``base_uri``. If you prefer using your own client, you can
 specify the service name via the ``client`` option:
 
 .. configuration-block::
@@ -583,11 +571,14 @@ it and retrieve the user info from it:
                     access_token:
                         token_handler:
                             oidc:
-                                signature:
-                                    # Algorithm used to sign the JWS
-                                    algorithm: 'HS256'
-                                    # A JSON-encoded JWK
-                                    key: '{"kty":"...","k":"..."}'
+                                # Algorithm used to sign the JWS
+                                algorithm: 'ES256'
+                                # A JSON-encoded JWK
+                                key: '{"kty":"...","k":"..."}'
+                                # Audience (`aud` claim): required for validation purpose
+                                audience: 'api-example'
+                                # Issuers (`iss` claim): required for validation purpose
+                                issuers: ['https://oidc.example.com']
 
     .. code-block:: xml
 
@@ -605,8 +596,12 @@ it and retrieve the user info from it:
                 <firewall name="main">
                     <access-token>
                         <token-handler>
-                            <oidc>
-                                <signature algorithm="HS256" key="{'kty':'...','k':'...'}"/>
+                            <!-- Algorithm used to sign the JWS -->
+                            <!-- A JSON-encoded JWK -->
+                            <!-- Audience (`aud` claim): required for validation purpose -->
+                            <oidc algorithm="ES256" key="{'kty':'...','k':'...'}" audience="api-example">
+                                <!-- Issuers (`iss` claim): required for validation purpose -->
+                                <issuer>https://oidc.example.com</issuer>
                             </oidc>
                         </token-handler>
                     </access-token>
@@ -624,9 +619,14 @@ it and retrieve the user info from it:
                 ->accessToken()
                     ->tokenHandler()
                         ->oidc()
-                            ->signature()
-                                ->algorithm('HS256')
-                                ->key('{"kty":"...","k":"..."}')
+                            // Algorithm used to sign the JWS
+                            ->algorithm('ES256')
+                            // A JSON-encoded JWK
+                            ->key('{"kty":"...","k":"..."}')
+                            // Audience (`aud` claim): required for validation purpose
+                            ->audience('api-example')
+                            // Issuers (`iss` claim): required for validation purpose
+                            ->issuers(['https://oidc.example.com'])
             ;
         };
 
@@ -646,9 +646,10 @@ configuration:
                         token_handler:
                             oidc:
                                 claim: email
-                                signature:
-                                    algorithm: 'HS256'
-                                    key: '{"kty":"...","k":"..."}'
+                                algorithm: 'ES256'
+                                key: '{"kty":"...","k":"..."}'
+                                audience: 'api-example'
+                                issuers: ['https://oidc.example.com']
 
     .. code-block:: xml
 
@@ -666,8 +667,8 @@ configuration:
                 <firewall name="main">
                     <access-token>
                         <token-handler>
-                            <oidc claim="email">
-                                <signature algorithm="HS256" key="{'kty':'...','k':'...'}"/>
+                            <oidc claim="email" algorithm="ES256" key="{'kty':'...','k':'...'}" audience="api-example">
+                                <issuer>https://oidc.example.com</issuer>
                             </oidc>
                         </token-handler>
                     </access-token>
@@ -686,70 +687,10 @@ configuration:
                     ->tokenHandler()
                         ->oidc()
                             ->claim('email')
-                            ->signature()
-                                ->algorithm('HS256')
-                                ->key('{"kty":"...","k":"..."}')
-            ;
-        };
-
-The ``oidc`` token handler also checks for the token audience. By default, this
-audience is optional. To enable this check, add the ``audience`` option:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/packages/security.yaml
-        security:
-            firewalls:
-                main:
-                    access_token:
-                        token_handler:
-                            oidc:
-                                audience: 'My audience'
-                                signature:
-                                    algorithm: 'HS256'
-                                    key: '{"kty":"...","k":"..."}'
-
-    .. code-block:: xml
-
-        <!-- config/packages/security.xml -->
-        <?xml version="1.0" encoding="UTF-8"?>
-        <srv:container xmlns="http://symfony.com/schema/dic/security"
-            xmlns:srv="http://symfony.com/schema/dic/services"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="http://symfony.com/schema/dic/services
-                https://symfony.com/schema/dic/services/services-1.0.xsd
-                http://symfony.com/schema/dic/security
-                https://symfony.com/schema/dic/security/security-1.0.xsd">
-
-            <config>
-                <firewall name="main">
-                    <access-token>
-                        <token-handler>
-                            <oidc audience="My audience">
-                                <signature algorithm="HS256" key="{'kty':'...','k':'...'}"/>
-                            </oidc>
-                        </token-handler>
-                    </access-token>
-                </firewall>
-            </config>
-        </srv:container>
-
-    .. code-block:: php
-
-        // config/packages/security.php
-        use Symfony\Config\SecurityConfig;
-
-        return static function (SecurityConfig $security) {
-            $security->firewall('main')
-                ->accessToken()
-                    ->tokenHandler()
-                        ->oidc()
-                            ->audience('My audience')
-                            ->signature()
-                                ->algorithm('HS256')
-                                ->key('{"kty":"...","k":"..."}')
+                            ->algorithm('ES256')
+                            ->key('{"kty":"...","k":"..."}')
+                            ->audience('api-example')
+                            ->issuers(['https://oidc.example.com'])
             ;
         };
 
