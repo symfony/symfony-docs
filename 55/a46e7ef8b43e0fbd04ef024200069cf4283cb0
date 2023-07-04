@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-04-25T06:33:03Z
+
+Would you open a PR against 5.4 branch for `and links to push bridges' README`?
+
+That would be helpful
+
+---------------------------------------------------------------------------
+
+by mikaelkael at 2023-04-25T07:15:54Z
+
+> Would you open a PR against 5.4 branch for `and links to push bridges' README`?
+>
+> That would be helpful
+
+Only against 5.4 branch? Not 6.x other versions ?
+
+---------------------------------------------------------------------------
+
+by mikaelkael at 2023-04-26T06:50:42Z
+
+@OskarStark : I will review this PR after merge of https://github.com/symfony/symfony-docs/pull/18257 to only have addition of Ntfy bridge (not all bridges links)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-04-26T07:25:09Z
+
+Rebase unlocked ✅
+
+Thank you for the other Pr's 🙏
+
+---------------------------------------------------------------------------
+
+by mikaelkael at 2023-05-29T10:30:32Z
+
+@OskarStark : doc PR against 6.4, code rebased for 6.4 and recipes added :blush:
