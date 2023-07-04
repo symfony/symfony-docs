@@ -369,6 +369,12 @@ template access to the collected information::
         {
             return $this->data['acceptable_content_types'];
         }
+
+        public function getSomeObject()
+        {
+            // use the cloneVar() method to dump collected data in the profiler
+             return $this->cloneVar($this->data['method']);
+        }
     }
 
 In the simplest case, you want to display the information in the toolbar
@@ -472,6 +478,11 @@ must also define additional blocks:
                 <td>{{ type }}</td>
             </tr>
             {% endfor %}
+
+            {# use the profiler_dump() function to render the contents of dumped objects #}
+            <tr>
+                {{ profiler_dump(collector.someObject) }}
+            </tr>
         </table>
     {% endblock %}
 
