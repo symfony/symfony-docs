@@ -290,11 +290,6 @@ string will be replaced by the value of the ``uid_key`` configuration value
 (by default, ``sAMAccountName``), and the ``{user_identifier}`` string will be
 replaced by the user identified you are trying to load.
 
-.. deprecated:: 6.2
-
-    Starting from Symfony 6.2, the ``{username}`` string was deprecated in favor
-    of ``{user_identifier}``.
-
 For example, with a ``uid_key`` of ``uid``, and if you are trying to
 load the user ``fabpot``, the final string will be: ``(uid=fabpot)``.
 
