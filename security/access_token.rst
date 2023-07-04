@@ -381,8 +381,7 @@ and retrieve the user info:
                     access_token:
                         token_handler:
                             oidc_user_info:
-                                client:
-                                    base_uri: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
+                                base_uri: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
 
     .. code-block:: xml
 
@@ -439,8 +438,7 @@ identifier by default. To use another claim, specify it on the configuration:
                         token_handler:
                             oidc_user_info:
                                 claim: email
-                                client:
-                                    base_uri: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
+                                base_uri: https://www.example.com/realms/demo/protocol/openid-connect/userinfo
 
     .. code-block:: xml
 
