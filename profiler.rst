@@ -361,10 +361,9 @@ template access to the collected information::
             return $this->data['acceptable_content_types'];
         }
 
-        // In case you want to dump collected data in the profiler
-        // you can leverage this function
-        public function getObject()
+        public function getSomeObject()
         {
+            // use the cloneVar() method to dump collected data in the profiler
              return $this->cloneVar($this->data['method']);
         }
     }
@@ -471,9 +470,9 @@ must also define additional blocks:
             </tr>
             {% endfor %}
 
-            {# In case of specific object, you can leverage the profiler_dump() function #}
+            {# use the profiler_dump() function to render the contents of dumped objects #}
             <tr>
-                {{ profiler_dump(collector.object) }}
+                {{ profiler_dump(collector.someObject) }}
             </tr>
         </table>
     {% endblock %}
