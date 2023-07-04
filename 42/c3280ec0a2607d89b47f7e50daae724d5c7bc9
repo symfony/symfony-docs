@@ -1,0 +1,39 @@
+---------------------------------------------------------------------------
+
+by vincentchalamon at 2023-05-31T07:57:04Z
+
+@nicolas-grekas are you aware of this issue?
+
+![image](https://github.com/symfony/symfony-docs/assets/407859/3a495cad-8f2f-43d2-907e-330b84c88102)
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-05-31T07:58:20Z
+
+Needs a fix indeed...
+
+---------------------------------------------------------------------------
+
+by vincentchalamon at 2023-05-31T08:11:57Z
+
+OK found it: `security.access_token_handler.oidc.signature` is declared as an abstract service AND a factory, but I don't think it's possible to combine both as an _abstract factory_:
+```php
+->set('security.access_token_handler.oidc.signature', Algorithm::class)
+    ->abstract()
+    ->factory([SignatureAlgorithmFactory::class, 'create'])
+    ->args([
+        abstract_arg('signature algorithm'),
+    ])
+
+->set('security.access_token_handler.oidc.signature.ES256', ES256::class)
+    ->parent('security.access_token_handler.oidc.signature')
+    ->args(['index_0' => 'ES256'])
+```
+
+@nicolas-grekas is there any way to declare an _abstract factory_, or should I call the factory on each service declaration?
+
+---------------------------------------------------------------------------
+
+by nicolas-grekas at 2023-05-31T08:14:41Z
+
+Strange, I would expect this to work. I can have a look a bit later.
