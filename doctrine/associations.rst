@@ -228,7 +228,7 @@ class that will hold these objects:
             }
 
             /**
-             * @return Collection|Product[]
+             * @return Collection<int, Product>
              */
             public function getProducts(): Collection
             {
