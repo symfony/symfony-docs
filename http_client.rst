@@ -891,6 +891,17 @@ a client that eases the use of URI templates, as described in the `RFC 6570`_::
         ],
     ]);
 
+Before using URI templates in your applications, you must install a third-party
+package that expands those URI templates to turn them into URLs:
+
+.. code-block:: terminal
+
+    $ composer require league/uri
+
+    # Symfony also supports the following URI template packages:
+    # composer require guzzlehttp/uri-template
+    # composer require rize/uri-template
+
 When using this client in the framework context, all existing HTTP clients
 are decorated by the :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient`.
 This means that URI template feature is enabled by default for all HTTP clients
@@ -945,11 +956,6 @@ of your application:
 If you want to define your own logic to handle variables of URI templates, you
 can do so by redefining the ``http_client.uri_template_expander`` alias. Your
 service must be invokable.
-
-.. note::
-
-    Support for URI template requires a vendor or to pass your own expander
-    ``\Closure`` implementation to expand the URI.
 
 .. versionadded:: 6.3
 
