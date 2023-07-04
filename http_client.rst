@@ -946,6 +946,11 @@ If you want to define your own logic to handle variables of URI templates, you
 can do so by redefining the ``http_client.uri_template_expander`` alias. Your
 service must be invokable.
 
+.. note::
+
+    Support for URI template requires a vendor or to pass your own expander
+    ``\Closure`` implementation to expand the URI.
+
 .. versionadded:: 6.3
 
     The :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient` was
