@@ -311,8 +311,6 @@ command will generate a nice skeleton to get you started::
          *
          * If your firewall is "stateless: true" (for a pure API), this
          * method is not called.
-         *
-         * @return UserInterface
          */
         public function refreshUser(UserInterface $user): UserInterface
         {

@@ -90,7 +90,7 @@ wherever you need a query bus behavior instead of the ``MessageBusInterface``::
          *
          * @return mixed The handler returned value
          */
-        public function query($query)
+        public function query($query): mixed
         {
             return $this->handle($query);
         }

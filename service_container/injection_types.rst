@@ -180,8 +180,9 @@ In order to use this type of injection, don't forget to configure it:
 .. note::
 
     If you decide to use autowiring, this type of injection requires
-    that you add a ``@return static`` docblock in order for the container
-    to be capable of registering the method.
+    that you add a ``@return static`` docblock or the ``static`` return
+    type in order for the container to be capable of registering
+    the method.
 
 This approach is useful if you need to configure your service according to your needs,
 so, here's the advantages of immutable-setters:
