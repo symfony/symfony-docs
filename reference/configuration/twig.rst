@@ -33,37 +33,6 @@ compiled again automatically.
 
 .. _config-twig-autoescape:
 
-autoescape
-~~~~~~~~~~
-
-.. deprecated:: 6.1
-
-    This option is deprecated since Symfony 6.1. If required, use the
-    ``autoescape_service`` or ``autoescape_service_method`` option instead.
-
-**type**: ``boolean`` or ``string`` **default**: ``name``
-
-If set to ``false``, automatic escaping is disabled (you can still escape each content
-individually in the templates).
-
-.. caution::
-
-    Setting this option to ``false`` is dangerous and it will make your
-    application vulnerable to `XSS attacks`_ because most third-party bundles
-    assume that auto-escaping is enabled and they don't escape contents
-    themselves.
-
-If set to a string, the template contents are escaped using the strategy with
-that name. Allowed values are ``html``, ``js``, ``css``, ``url``, ``html_attr``
-and ``name``. The default value is ``name``. This strategy escapes contents
-according to the template name extension (e.g. it uses ``html`` for ``*.html.twig``
-templates and ``js`` for ``*.js.twig`` templates).
-
-.. tip::
-
-    See `autoescape_service`_ and `autoescape_service_method`_ to define your
-    own escaping strategy.
-
 autoescape_service
 ~~~~~~~~~~~~~~~~~~
 
