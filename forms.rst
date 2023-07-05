@@ -282,13 +282,6 @@ Now that the form has been created, the next step is to render it::
 Internally, the ``render()`` method calls ``$form->createView()`` to
 transform the form into a *form view* instance.
 
-.. deprecated:: 6.2
-
-    Prior to Symfony 6.2, you had to use ``$this->render(..., ['form' => $form->createView()])``
-    or the ``renderForm()`` method to render the form. The ``renderForm()``
-    method is deprecated in favor of directly passing the ``FormInterface``
-    instance to ``render()``.
-
 Then, use some :ref:`form helper functions <reference-form-twig-functions>` to
 render the form contents:
 
