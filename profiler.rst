@@ -373,7 +373,7 @@ template access to the collected information::
         public function getSomeObject()
         {
             // use the cloneVar() method to dump collected data in the profiler
-             return $this->cloneVar($this->data['method']);
+            return $this->cloneVar($this->data['method']);
         }
     }
 
