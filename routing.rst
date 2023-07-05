@@ -2617,6 +2617,49 @@ defined as annotations:
     :doc:`another way to enforce HTTP or HTTPS </security/force_https>`
     via the ``requires_channel`` setting.
 
+Signing URIs
+~~~~~~~~~~~~
+
+A signed URI is an URI that includes a hash value that depends on the contents of
+the URI. This way, you can later check the integrity of the signed URI by
+recomputing its hash value and comparing it with the hash included in the URI.
+
+Symfony provides a utility to sign URIs via the :class:`Symfony\\Component\\HttpKernel\\UriSigner`
+service, which you can inject in your services or controllers::
+
+    // src/Service/SomeService.php
+    namespace App\Service;
+
+    use Symfony\Component\HttpKernel\UriSigner;
+
+    class SomeService
+    {
+        public function __construct(
+            private UriSigner $uriSigner,
+        ) {
+        }
+
+        public function someMethod()
+        {
+            // ...
+
+            // generate a URL youself or get it somehow...
+            $url = 'https://example.com/foo/bar?sort=desc';
+
+            // sign the URL (it adds a query parameter called '_hash')
+            $signedUrl = $this->uriSigner->sign($url);
+            // $url = 'https://example.com/foo/bar?sort=desc&_hash=e4a21b9'
+
+            // check the URL signature
+            $uriSignatureIsValid = $this->uriSigner->check($signedUrl);
+            // $uriSignatureIsValid = true
+
+            // if you have access to the current Request object, you can use this
+            // other method to pass the entire Request object instead of the URI:
+            $uriSignatureIsValid = $this->uriSigner->checkRequest($request);
+        }
+    }
+
 Troubleshooting
 ---------------
 
