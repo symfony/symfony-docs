@@ -120,7 +120,7 @@ collection::
 
         class Poi
         {
-            #[Assert\Unique(fields=['latitude', 'longitude'])]
+            #[Assert\Unique(fields: ['latitude', 'longitude'])]
             protected array $coordinates;
         }
 
