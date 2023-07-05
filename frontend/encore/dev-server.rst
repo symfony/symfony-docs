@@ -58,7 +58,6 @@ method in your ``webpack.config.js`` file:
         })
     ;
 
-
 Enabling HTTPS using the Symfony Web Server
 -------------------------------------------
 
@@ -83,6 +82,19 @@ server SSL certificate:
     +             }
     +         }
     +     })
+
+.. note::
+
+    If you are using Node.js 17 or newer, you have to run the ``dev-server`` command with the
+    ``--openssl-legacy-provider`` option:
+
+    .. code-block:: terminal
+
+        # if you use the Yarn package manager
+        $ NODE_OPTIONS=--openssl-legacy-provider yarn encore dev-server
+
+        # if you use the npm package manager
+        $ NODE_OPTIONS=--openssl-legacy-provider npm run dev-server
 
 CORS Issues
 -----------
