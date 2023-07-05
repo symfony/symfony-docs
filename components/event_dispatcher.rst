@@ -317,7 +317,7 @@ of the event to dispatch::
     // creates the OrderPlacedEvent and dispatches it
     $event = new OrderPlacedEvent($order);
 
-    //The event name is now optional in the dispatch() method, so you can pass just the event object
+    // The event name is now optional in the dispatch() method, so you can pass just the event object
     $dispatcher->dispatch($event);
 
 Notice that the special ``OrderPlacedEvent`` object is created and passed to
