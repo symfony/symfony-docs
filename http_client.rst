@@ -1670,7 +1670,7 @@ that requires HTTPlug dependencies::
     }
 
 Because :class:`Symfony\\Component\\HttpClient\\HttplugClient` implements the
-three interfaces,you can use it this way::
+three interfaces, you can use it this way::
 
     use Symfony\Component\HttpClient\HttplugClient;
 
