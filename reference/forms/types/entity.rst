@@ -53,6 +53,7 @@ the `query_builder`_ option::
 
     use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
+    use Doctrine\ORM\QueryBuilder;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     // ...
 
