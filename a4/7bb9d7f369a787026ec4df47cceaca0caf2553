@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by stof at 2023-07-04T14:21:36Z
+
+I would not put that as the first content in the section, especially given that the code snippet below already uses the attribute.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-07-04T15:31:52Z
+
+OK, I've removed the first deprecation notice and left the second one.
+
+Thanks for the reviews.
