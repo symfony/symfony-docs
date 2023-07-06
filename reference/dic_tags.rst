@@ -333,9 +333,16 @@ controller.argument_value_resolver
 **Purpose**: Register a value resolver for controller arguments such as ``Request``
 
 Value resolvers implement the
-:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ValueResolverInterface`
 and are used to resolve argument values for controllers as described here:
 :doc:`/controller/argument_value_resolver`.
+
+.. versionadded:: 6.2
+
+    The ``ValueResolverInterface`` was introduced in Symfony 6.2. Prior to
+    6.2, you had to use the
+    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`,
+    which defines different methods.
 
 data_collector
 --------------
