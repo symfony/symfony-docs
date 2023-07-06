@@ -62,23 +62,21 @@ so that the ``number()`` method is called when a user browses to it. This associ
 is defined with the ``#[Route]`` attribute (in PHP, `attributes`_ are used to add
 metadata to code):
 
-.. configuration-block::
+.. code-block:: diff
 
-    .. code-block:: php-attributes
+      // src/Controller/LuckyController.php
 
-        // src/Controller/LuckyController.php
+      // ...
+    + use Symfony\Component\Routing\Annotation\Route;
 
-        // ...
-        + use Symfony\Component\Routing\Annotation\Route;
-
-        class LuckyController
-        {
-        +   #[Route('/lucky/number')]
-            public function number(): Response
-            {
-                // this looks exactly the same
-            }
-        }
+      class LuckyController
+      {
+    +     #[Route('/lucky/number')]
+          public function number(): Response
+          {
+              // this looks exactly the same
+          }
+      }
 
 That's it! If you are using Symfony web server, try it out by going to: http://localhost:8000/lucky/number
 
