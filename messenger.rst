@@ -1718,12 +1718,6 @@ during a request::
         }
     }
 
-.. versionadded:: 6.3
-
-    The namespace of the ``InMemoryTransport`` class changed in Symfony 6.3 from
-    ``Symfony\Component\Messenger\Transport\InMemoryTransport`` to
-    ``Symfony\Component\Messenger\Transport\InMemory\InMemoryTransport``.
-
 The transport has a number of options:
 
 ``serialize`` (boolean, default: ``false``)
@@ -2019,12 +2013,6 @@ A single handler class can handle multiple messages. For that add the
             // ...
         }
     }
-
-.. deprecated:: 6.2
-
-    Implementing the :class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface`
-    is another way to handle multiple messages with one handler class. This
-    interface was deprecated in Symfony 6.2.
 
 Binding Handlers to Different Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

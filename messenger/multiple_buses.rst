@@ -133,9 +133,6 @@ you can restrict each handler to a specific bus using the ``messenger.message_ha
         services:
             App\MessageHandler\SomeCommandHandler:
                 tags: [{ name: messenger.message_handler, bus: command.bus }]
-                # prevent handlers from being registered twice (or you can remove
-                # the MessageHandlerInterface that autoconfigure uses to find handlers)
-                autoconfigure: false
 
     .. code-block:: xml
 
