@@ -483,8 +483,8 @@ driverOptions  Array of driver options for `MongoDBClient::__construct`_
 
 .. deprecated:: 6.3
 
-    The "gcProbablity" option (notice the typo in its name) is deprecated since
-    Symfony 6.3, use the "gcProbability" option instead.
+    The ``gcProbablity`` option (notice the typo in its name) is deprecated since
+    Symfony 6.3, use the ``gcProbability`` option instead.
 
 When the first parameter is a:
 
