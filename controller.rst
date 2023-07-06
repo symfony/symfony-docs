@@ -448,6 +448,11 @@ You can customize the validation groups used during the mapping thanks to the
 Mapping Request Payload
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+.. note::
+
+    This extractor depends on the `phpstan/phpdoc-parser`_ and
+    `phpdocumentor/type-resolver`_ libraries.
+
 When creating an API and dealing with other HTTP methods than ``GET`` (like
 ``POST`` or ``PUT``), user's data are not stored in the query string
 but directly in the request payload, like this:
