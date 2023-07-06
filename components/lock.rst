@@ -460,7 +460,7 @@ avoid stalled locks::
 
     $mongo = 'mongodb://localhost/database?collection=lock';
     $options = [
-        'gcProbablity' => 0.001,
+        'gcProbability' => 0.001,
         'database' => 'myapp',
         'collection' => 'lock',
         'uriOptions' => [],
@@ -470,15 +470,21 @@ avoid stalled locks::
 
 The ``MongoDbStore`` takes the following ``$options`` (depending on the first parameter type):
 
-=============  ================================================================================================
-Option         Description
-=============  ================================================================================================
-gcProbablity   Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
+==============  ================================================================================================
+Option          Description
+==============  ================================================================================================
+gcProbability  Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
+gcProbablity   Same as ``gcProbability``, see the deprecation note below
 database       The name of the database
 collection     The name of the collection
 uriOptions     Array of URI options for `MongoDBClient::__construct`_
 driverOptions  Array of driver options for `MongoDBClient::__construct`_
 =============  ================================================================================================
+
+.. deprecated:: 6.3
+
+    The ``gcProbablity`` option (notice the typo in its name) is deprecated since
+    Symfony 6.3, use the ``gcProbability`` option instead.
 
 When the first parameter is a:
 
@@ -879,7 +885,7 @@ about `Expire Data from Collections by Setting TTL`_ in MongoDB.
 .. tip::
 
     ``MongoDbStore`` will attempt to automatically create a TTL index. It's
-    recommended to set constructor option ``gcProbablity`` to ``0.0`` to
+    recommended to set constructor option ``gcProbability`` to ``0.0`` to
     disable this behavior if you have manually dealt with TTL index creation.
 
 .. caution::
