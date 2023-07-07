@@ -622,6 +622,7 @@ This allows you to create all types of requests you can think of:
     Also, it means that entities loaded by Doctrine repositories will
     be "detached", so they will need to be refreshed by the manager or
     queried again from a repository.
+    You can disable this behavior by calling the :method:`disableReboot() <Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot>` method.
 
 Browsing the Site
 .................
