@@ -34,7 +34,7 @@ To install the AssetMapper component, run:
 
     $ composer require symfony/asset-mapper symfony/asset symfony/twig-pack
 
-In addition to ``symfony/asset-mapper`, this also makes sure that you have the
+In addition to ``symfony/asset-mapper``, this also makes sure that you have the
 :doc:`Asset Component </components/asset>` and Twig available.
 
 If you're using :ref:`Symfony Flex <symfony-flex>`, you're done! The recipe just
