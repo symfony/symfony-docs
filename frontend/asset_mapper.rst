@@ -289,14 +289,15 @@ Preloading and Initializing "app.js"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the importmap, the ``{{ importmap() }}`` Twig function also renders
-an `ES module shim`_. You can disable this in your ``config/packages/asset_mapper.yaml``
+an `ES module shim`_ by default. You can configure this in your ``config/packages/asset_mapper.yaml``
 configuration file:
 
 .. code-block:: yaml
 
     framework:
         asset_mapper:
-            importmap_polyfill: false
+            importmap_polyfill: false # disable the shim ...
+            # importmap_polyfill: 'https://...' # ... or pass some custom URL
 
 In ``importmap.php``, each entry can have a ``preload`` option. If set to ``true``,
 a ``<link rel="modulepreload">`` tag is rendered for that entry as well as for
