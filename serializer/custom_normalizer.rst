@@ -30,7 +30,7 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
         ) {
         }
 
-        public function normalize($topic, string $format = null, array $context = [])
+        public function normalize($topic, string $format = null, array $context = []): array
         {
             $data = $this->normalizer->normalize($topic, $format, $context);
 
@@ -42,9 +42,16 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
             return $data;
         }
 
-        public function supportsNormalization($data, string $format = null, array $context = [])
+        public function supportsNormalization($data, string $format = null, array $context = []): bool
         {
             return $data instanceof Topic;
+        }
+
+        public function getSupportedTypes(?string $format): array
+        {
+            return [
+                Topic::class => true,
+            ];
         }
     }
 
