@@ -187,6 +187,11 @@ The **default value** is:
 * ``false``, if you've created a new Symfony application or updated the Symfony
   Flex recipes. This is also the default value starting from Symfony 7.0.
 
+.. deprecated:: 6.1
+
+    Not setting a value explicitly for this option is deprecated since Symfony 6.1
+    because the default value will change to ``false`` in Symfony 7.0.
+
 .. seealso::
 
     :ref:`Changing the Action and HTTP Method <forms-change-action-method>` of
@@ -209,7 +214,6 @@ The **default value** is:
         Request::enableHttpMethodParameterOverride(); // <-- add this line
         $request = Request::createFromGlobals();
         // ...
-
 
  .. _configuration-framework-http_method_override:
 
