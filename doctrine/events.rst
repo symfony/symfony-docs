@@ -110,6 +110,11 @@ define a callback for the ``prePersist`` Doctrine event:
 Doctrine Lifecycle Listeners
 ----------------------------
 
+.. deprecated:: 6.3
+
+    Lifecycle subscribers are deprecated starting from Symfony 6.3 and will be
+    removed in Symfony 7.0. Use lifecycle listeners instead.
+
 Lifecycle listeners are defined as PHP classes that listen to a single Doctrine
 event on all the application entities. For example, suppose that you want to
 update some search index whenever a new entity is persisted in the database. To
