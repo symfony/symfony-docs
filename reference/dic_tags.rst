@@ -1071,22 +1071,15 @@ file
 
 When executing the ``translation:extract`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony Framework
-has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a PHP
-extractor to find and extract translation keys from Twig templates and PHP files.
+has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` to find and
+extract translation keys from Twig templates.
 
-Symfony includes two PHP extractors: :class:`Symfony\\Component\\Translation\\Extractor\\PhpExtractor`
-and :class:`Symfony\\Component\\Translation\\Extractor\\PhpAstExtractor`. The
-first one is simple but doesn't require to install any packages; the second one
-is much more advanced, but requires to install this dependency in your project:
+If you also want to find and extract translation keys from PHP files, install
+the following dependency to activate the :class:`Symfony\\Component\\Translation\\Extractor\\PhpAstExtractor`:
 
 .. code-block:: terminal
 
     $ composer require nikic/php-parser
-
-.. deprecated:: 6.2
-
-    The ``PhpExtractor`` class is deprecated since Symfony 6.2. The ``PhpAstExtractor``
-    class will be the only PHP extractor available starting from Symfony 7.0.
 
 You can create your own extractor by creating a class that implements
 :class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface`
