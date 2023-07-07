@@ -267,9 +267,9 @@ outputs an `importmap`_:
         }
     }</script>
 
-Importmaps is a native browser feature. It works in all browsers thanks to
+Import maps are a native browser feature. They work in all browsers thanks to
 a "shim" file that's included automatically by the AssetMapper component
-(all *modern* browsers `support it natively <https://caniuse.com/import-maps>`_).
+(all *modern* browsers `support them natively <https://caniuse.com/import-maps>`_).
 
 When you import ``bootstrap`` from your JavaScript, the browser will look at
 the ``importmap`` and see that it should fetch the package from the URL.
