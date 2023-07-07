@@ -289,7 +289,7 @@ Preloading and Initializing "app.js"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the importmap, the ``{{ importmap() }}`` Twig function also renders
-an `es module shim`_ and a few other things, like a set of "preloads":
+an `ES module shim`_ and a few other things, like a set of "preloads":
 
 .. code-block:: html
 
@@ -1127,7 +1127,7 @@ This will force the AssetMapper component to re-calculate the content of all fil
 .. _npm package: https://www.npmjs.com
 .. _importmap: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap
 .. _bootstrap: https://www.npmjs.com/package/bootstrap
-.. _es module shim: https://www.npmjs.com/package/es-module-shims
+.. _ES module shim: https://www.npmjs.com/package/es-module-shims
 .. _jsdelivr.com: https://www.jsdelivr.com/
 .. _highlight.js: https://www.npmjs.com/package/highlight.js
 .. _class syntax: https://caniuse.com/es6-class
