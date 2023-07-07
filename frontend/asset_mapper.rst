@@ -294,8 +294,9 @@ configuration file:
 
 .. code-block:: yaml
 
-    asset_mapper:
-        importmap_polyfill: false
+    framework:
+        asset_mapper:
+            importmap_polyfill: false
 
 In ``importmap.php``, each entry can have a ``preload`` option. If set to ``true``,
 a ``<link rel="modulepreload">`` tag is rendered for that entry as well as for
