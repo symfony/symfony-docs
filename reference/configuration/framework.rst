@@ -172,25 +172,13 @@ Cache-Control extension (see RFC 5861).
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: (see explanation below)
+**type**: ``boolean`` **default**: ``false``
 
 This determines whether the ``_method`` request parameter is used as the
 intended HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
 method gets called automatically. It becomes the service container parameter
 named ``kernel.http_method_override``.
-
-The **default value** is:
-
-* ``true``, if you have an existing application that you've upgraded from an older
-  Symfony version without resyncing the :doc:`Symfony Flex </setup/flex>` recipes;
-* ``false``, if you've created a new Symfony application or updated the Symfony
-  Flex recipes. This is also the default value starting from Symfony 7.0.
-
-.. deprecated:: 6.1
-
-    Not setting a value explicitly for this option is deprecated since Symfony 6.1
-    because the default value will change to ``false`` in Symfony 7.0.
 
 .. seealso::
 
