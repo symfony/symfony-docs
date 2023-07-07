@@ -470,9 +470,9 @@ avoid stalled locks::
 
 The ``MongoDbStore`` takes the following ``$options`` (depending on the first parameter type):
 
-==============  ================================================================================================
-Option          Description
-==============  ================================================================================================
+=============  ================================================================================================
+Option         Description
+=============  ================================================================================================
 gcProbability  Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
 gcProbablity   Same as ``gcProbability``, see the deprecation note below
 database       The name of the database
