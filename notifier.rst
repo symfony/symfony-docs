@@ -85,7 +85,6 @@ Service             Package                                DSN
 `Redlink`_          ``symfony/redlink-notifier``           ``redlink://API_KEY:APP_KEY@default?from=SENDER_NAME&version=API_VERSION``
 `RingCentral`_      ``symfony/ring-central-notifier``      ``ringcentral://API_TOKEN@default?from=FROM``
 `Sendberry`_        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
-`Sendinblue`_       ``symfony/sendinblue-notifier``        ``sendinblue://API_KEY@default?sender=PHONE``
 `Sms77`_            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
 `SimpleTextin`_     ``symfony/simple-textin-notifier``     ``simpletextin://API_KEY@default?from=FROM``
 `Sinch`_            ``symfony/sinch-notifier``             ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
@@ -1024,7 +1023,6 @@ is dispatched. Listeners receive a
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
 .. _`SMSFactor`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsFactor/README.md
 .. _`Sendberry`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendberry/README.md
-.. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendinblue/README.md
 .. _`SimpleTextin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SimpleTextin/README.md
 .. _`Sinch`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sinch/README.md
 .. _`Slack`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Slack/README.md

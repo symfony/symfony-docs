@@ -402,4 +402,3 @@ attribute or method doesn't exist. If set to ``false`` these errors are ignored
 and the non-existing values are replaced by ``null``.
 
 .. _`the optimizer extension`: https://twig.symfony.com/doc/3.x/api.html#optimizer-extension
-.. _`XSS attacks`: https://en.wikipedia.org/wiki/Cross-site_scripting
