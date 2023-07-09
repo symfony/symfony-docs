@@ -21,7 +21,7 @@ tutorial and the `reStructuredText Reference`_.
     If you are familiar with Markdown, be careful as things are sometimes very
     similar but different:
 
-    * Lists starts at the beginning of a line (no indentation is allowed);
+    * Lists start at the beginning of a line (no indentation is allowed);
     * Inline code blocks use double-ticks (````like this````).
 
 Sphinx

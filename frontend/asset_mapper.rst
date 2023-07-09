@@ -693,7 +693,7 @@ Does the AssetMapper Component work in All Browsers?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Yup! Features like importmaps and the ``import`` statement are supported
-in all modern browsers, but the AssetMapper component ships with an `es module shim`_
+in all modern browsers, but the AssetMapper component ships with an `ES module shim`_
 to support ``importmap`` in old browsers. So, it works everywhere (see note
 below).
 
