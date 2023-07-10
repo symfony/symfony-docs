@@ -2196,11 +2196,15 @@ test it in a real application::
         }
     }
 
-Testing using HAR files
+Testing Using HAR Files
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-The previous example can also be achieved using `HAR`_ files. You can export those files from all modern browsers (from the network tab) &
-HTTP Clients. First, do the HTTP request(s) you want to test in your favorite HTTP Client / Browser, then store generated ``.har`` file somewhere in your application::
+Modern browsers (via their network tab) and HTTP clients allow to export the
+information of one or more HTTP requests using the `HAR`_ (HTTP Archive) format.
+You can use those ``.har`` files to perform tests with Symfony's HTTP Client.
+
+First, use a browser or HTTP client to perform the HTTP request(s) you want to
+test. Then, save that information as a ``.har`` file somewhere in your application::
 
     // ExternalArticleServiceTest.php
     use PHPUnit\Framework\TestCase;
@@ -2225,11 +2229,11 @@ HTTP Clients. First, do the HTTP request(s) you want to test in your favorite HT
         }
     }
 
-
-If your service does multiple requests or if your `.har` file contains multiple request / response pairs,
-the :class:`Symfony\\Component\\HttpClient\\Test\\HarFileResponseFactory` will find the associated response based on
-the request method, url and body (if any). Note that **this doesn't work** if the request body or uri is random / always changing
-(if it contains current date or random UUID(s) for example).
+If your service performs multiple requests or if your ``.har`` file contains multiple
+request/response pairs, the :class:`Symfony\\Component\\HttpClient\\Test\\HarFileResponseFactory`
+will find the associated response based on the request method, URL and body (if any).
+Note that **this won't work** if the request body or URI is random / always
+changing (e.g. if it contains current date or random UUIDs).
 
 .. versionadded:: 7.0
 
