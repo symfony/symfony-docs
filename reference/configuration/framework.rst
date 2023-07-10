@@ -2511,6 +2511,65 @@ enabled
 validation
 ~~~~~~~~~~
 
+.. _reference-validation-auto-mapping:
+
+auto_mapping
+............
+
+**type**: ``array`` **default**: ``[]``
+
+Defines the Doctrine entities that will be introspected to add
+:ref:`automatic validation constraints <automatic_object_validation>` to them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            validation:
+                auto_mapping:
+                    # an empty array means that all entities that belong to that
+                    # namespace will add automatic validation
+                    'App\Entity\': []
+                    'Foo\': ['Foo\Some\Entity', 'Foo\Another\Entity']
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:validation>
+                    <framework:auto-mapping>
+                        <framework:service namespace="App\Entity\"/>
+
+                        <framework:service namespace="Foo\">Foo\Some\Entity</framework:service>
+                        <framework:service namespace="Foo\">Foo\Another\Entity</framework:service>
+                    </framework:auto-mapping>
+                </framework:validation>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->validation()
+                ->autoMapping()
+                    ->paths([
+                        'App\\Entity\\' => [],
+                        'Foo\\' => ['Foo\\Some\\Entity', 'Foo\\Another\\Entity'],
+                    ]);
+        };
+
 .. _reference-validation-enabled:
 
 enabled
