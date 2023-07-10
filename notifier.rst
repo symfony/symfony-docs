@@ -121,11 +121,6 @@ Service             Package                                DSN
 
     The `Redlink`_ and `Brevo`_ integrations were introduced in Symfony 6.4.
 
-.. deprecated:: 6.4
-
-    The `Sendinblue`_ integration is deprecated since
-    Symfony 6.4, use the `Brevo`_ integration instead.
-
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
 
