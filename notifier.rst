@@ -62,6 +62,7 @@ Service             Package                                DSN
 `AllMySms`_         ``symfony/all-my-sms-notifier``        ``allmysms://LOGIN:APIKEY@default?from=FROM``
 `AmazonSns`_        ``symfony/amazon-sns-notifier``        ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 `Bandwidth`_        ``symfony/bandwidth-notifier``         ``bandwidth://USERNAME:PASSWORD@default?from=FROM&account_id=ACCOUNT_ID&application_id=APPLICATION_ID&priority=PRIORITY``
+`Brevo`_            ``symfony/brevo-notifier``             ``brevo://API_KEY@default?sender=SENDER``
 `Clickatell`_       ``symfony/clickatell-notifier``        ``clickatell://ACCESS_TOKEN@default?from=FROM``
 `ContactEveryone`_  ``symfony/contact-everyone-notifier``  ``contact-everyone://TOKEN@default?&diffusionname=DIFFUSION_NAME&category=CATEGORY``
 `Esendex`_          ``symfony/esendex-notifier``           ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
@@ -119,7 +120,12 @@ Service             Package                                DSN
 
 .. versionadded:: 6.4
 
-    The Redlink integration was introduced in Symfony 6.4.
+    The `Redlink`_ and `Brevo`_ integrations were introduced in Symfony 6.4.
+
+.. deprecated:: 6.4
+
+    The `Sendinblue`_ integration is deprecated since
+    Symfony 6.4, use the `Brevo`_ integration instead.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -979,6 +985,7 @@ is dispatched. Listeners receive a
 .. _`AllMySms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AllMySms/README.md
 .. _`AmazonSns`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AmazonSns/README.md
 .. _`Bandwidth`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Bandwidth/README.md
+.. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Brevo/README.md
 .. _`Chatwork`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Chatwork/README.md
 .. _`Clickatell`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Clickatell/README.md
 .. _`ContactEveryone`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/ContactEveryone/README.md
