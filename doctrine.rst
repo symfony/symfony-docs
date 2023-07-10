@@ -420,8 +420,12 @@ is smart enough to know if it should INSERT or UPDATE your entity.
 Validating Objects
 ------------------
 
-:doc:`The Symfony validator </validation>` reuses Doctrine metadata to perform
-some basic validation tasks::
+:doc:`The Symfony validator </validation>` can reuse Doctrine metadata to perform
+some basic validation tasks. First, add or configure the
+:ref:`auto_mapping option <reference-validation-auto-mapping>` to define which
+entities should be introspected by Symfony to add automatic validation constraints.
+
+Consider the following controller code::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -455,9 +459,11 @@ some basic validation tasks::
     }
 
 Although the ``Product`` entity doesn't define any explicit
-:doc:`validation configuration </validation>`, Symfony introspects the Doctrine
-mapping configuration to infer some validation rules. For example, given that
-the ``name`` property can't be ``null`` in the database, a
+:doc:`validation configuration </validation>`, if the ``auto_mapping`` option
+includes it in the list of entities to introspect, Symfony will infer some
+validation rules for it and will apply them.
+
+For example, given that the ``name`` property can't be ``null`` in the database, a
 :doc:`NotNull constraint </reference/constraints/NotNull>` is added automatically
 to the property (if it doesn't contain that constraint already).
 
