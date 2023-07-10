@@ -2196,6 +2196,45 @@ test it in a real application::
         }
     }
 
+Testing using HAR files
+~~~~~~~~~~~~~~~~~~~~~~~
+
+The previous example can also be achieved using `HAR`_ files. You can export those files from all modern browsers (from the network tab) &
+HTTP Clients. First, do the HTTP request(s) you want to test in your favorite HTTP Client / Browser, then store generated ``.har`` file somewhere in your application::
+
+    // ExternalArticleServiceTest.php
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\HttpClient\MockHttpClient;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    final class ExternalArticleServiceTest extends TestCase
+    {
+        public function testSubmitData(): void
+        {
+            // Arrange
+            $fixtureDir = sprintf('%s/tests/fixtures/HTTP', static::getContainer()->getParameter('kernel.project_dir'));
+            $factory = new HarFileResponseFactory("$fixtureDir/example.com_archive.har");
+            $httpClient = new MockHttpClient($factory, 'https://example.com');
+            $service = new ExternalArticleService($httpClient);
+
+            // Act
+            $responseData = $service->createArticle($requestData);
+
+            // Assert
+            self::assertSame($responseData, 'the expected response');
+        }
+    }
+
+
+If your service does multiple requests or if your `.har` file contains multiple request / response pairs,
+the :class:`Symfony\\Component\\HttpClient\\Test\\HarFileResponseFactory` will find the associated response based on
+the request method, url and body (if any). Note that **this doesn't work** if the request body or uri is random / always changing
+(if it contains current date or random UUID(s) for example).
+
+.. versionadded:: 7.0
+
+    The ``HarFileResponseFactory`` was introduced in Symfony 7.0.
+
 Testing Network Transport Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2262,3 +2301,4 @@ you to do so, by yielding the exception from its body::
 .. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods
 .. _`SSRF`: https://portswigger.net/web-security/ssrf
 .. _`RFC 6570`: https://www.rfc-editor.org/rfc/rfc6570
+.. _`HAR`: https://w3c.github.io/web-performance/specs/HAR/Overview.html
