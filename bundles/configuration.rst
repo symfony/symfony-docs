@@ -458,7 +458,7 @@ the extension. You might want to change this to a more professional URL::
     {
         // ...
 
-        public function getNamespace()
+        public function getNamespace(): string
         {
             return 'http://acme_company.com/schema/dic/hello';
         }
@@ -490,7 +490,7 @@ can place it anywhere you like. You should return this path as the base path::
     {
         // ...
 
-        public function getXsdValidationBasePath()
+        public function getXsdValidationBasePath(): string
         {
             return __DIR__.'/../Resources/config/schema';
         }

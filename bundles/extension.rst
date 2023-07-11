@@ -34,7 +34,7 @@ This is how the extension of an AcmeHelloBundle should look like::
 
     class AcmeHelloExtension extends Extension
     {
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $container): void
         {
             // ... you'll load the files here later
         }

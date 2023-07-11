@@ -31,7 +31,7 @@ To give an Extension the power to do this, it needs to implement
     {
         // ...
 
-        public function prepend(ContainerBuilder $container)
+        public function prepend(ContainerBuilder $container): void
         {
             // ...
         }

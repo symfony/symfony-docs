@@ -135,7 +135,7 @@ And set it in the constructor of ``Configuration`` via the ``Extension`` class::
     {
         // ...
 
-        public function getConfiguration(array $config, ContainerBuilder $container)
+        public function getConfiguration(array $config, ContainerBuilder $container): Configuration
         {
             return new Configuration($container->getParameter('kernel.debug'));
         }
