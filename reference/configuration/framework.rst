@@ -24,6 +24,8 @@ configured under the ``framework`` key in your application configuration.
 Configuration
 -------------
 
+.. _configuration-framework-secret:
+
 secret
 ~~~~~~
 
@@ -490,6 +492,8 @@ If ``true``, Symfony adds a ``X-Robots-Tag: noindex`` HTTP tag to all responses
 `X-Robots-Tag HTTP header`_ tells search engines to not index your web site.
 This option is a protection measure in case you accidentally publish your site
 in debug mode.
+
+.. _configuration-framework-trusted-hosts:
 
 trusted_hosts
 ~~~~~~~~~~~~~
