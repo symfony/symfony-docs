@@ -761,7 +761,7 @@ to inject the ``logger`` service, and decide to use setter-injection:
 
         class Rot13Transformer
         {
-            private $logger;
+            private LoggerInterface $logger;
 
             #[Required]
             public function setLogger(LoggerInterface $logger): void

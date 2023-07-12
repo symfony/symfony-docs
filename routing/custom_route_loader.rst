@@ -278,7 +278,7 @@ you do. The resource name itself is not actually used in the example::
 
     class ExtraLoader extends Loader
     {
-        private $isLoaded = false;
+        private bool $isLoaded = false;
 
         public function load($resource, string $type = null)
         {
