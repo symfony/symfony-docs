@@ -115,7 +115,7 @@ by cloning the original service, this approach allows you to make a service immu
 
     class NewsletterManager
     {
-        private $mailer;
+        private MailerInterface $mailer;
 
         /**
          * @return static
@@ -222,7 +222,7 @@ that accepts the dependency::
     // ...
     class NewsletterManager
     {
-        private $mailer;
+        private MailerInterface $mailer;
 
         #[Required]
         public function setMailer(MailerInterface $mailer): void

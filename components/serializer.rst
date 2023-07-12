@@ -244,9 +244,9 @@ Assume you have the following plain-old-PHP object::
 
     class MyObj
     {
-        public $foo;
+        public string $foo;
 
-        private $bar;
+        private string $bar;
 
         public function getBar()
         {
@@ -303,10 +303,10 @@ Then, create your groups definition:
         class MyObj
         {
             #[Groups(['group1', 'group2'])]
-            public $foo;
+            public string $foo;
 
             #[Groups(['group4'])]
-            public $anotherProperty;
+            public string $anotherProperty;
 
             #[Groups(['group3'])]
             public function getBar() // is* methods are also supported
@@ -449,10 +449,10 @@ Option 1: Using ``@Ignore`` Annotation
 
         class MyClass
         {
-            public $foo;
+            public string $foo;
 
             #[Ignore]
-            public $bar;
+            public string $bar;
         }
 
     .. code-block:: yaml
@@ -1229,8 +1229,8 @@ You can change this behavior by setting the ``AbstractObjectNormalizer::SKIP_NUL
 to ``true``::
 
     $dummy = new class {
-        public $foo;
-        public $bar = 'notNull';
+        public ?string $foo = null;
+        public string $bar = 'notNull';
     };
 
     $normalizer = new ObjectNormalizer();
@@ -1305,8 +1305,8 @@ Circular references are common when dealing with entity relations::
 
     class Organization
     {
-        private $name;
-        private $members;
+        private string $name;
+        private array $members;
 
         public function setName($name)
         {
@@ -1331,10 +1331,10 @@ Circular references are common when dealing with entity relations::
 
     class Member
     {
-        private $name;
-        private $organization;
+        private string $name;
+        private Organization $organization;
 
-        public function setName($name)
+        public function setName(string $name)
         {
             $this->name = $name;
         }
@@ -1404,12 +1404,12 @@ structure::
 
     class MyObj
     {
-        public $foo;
+        public string $foo;
 
         /**
          * @var self
          */
-        public $child;
+        public MyObj $child;
     }
 
     $level1 = new MyObj();
@@ -1437,7 +1437,7 @@ Here, we set it to 2 for the ``$child`` property:
         class MyObj
         {
             #[MaxDepth(2)]
-            public $child;
+            public MyObj $child;
 
             // ...
         }
@@ -1499,10 +1499,10 @@ having unique identifiers::
 
     class Foo
     {
-        public $id;
+        public int $id;
 
         #[MaxDepth(1)]
-        public $child;
+        public MyObj $child;
     }
 
     $level1 = new Foo();
@@ -1598,8 +1598,8 @@ context option::
     class MyObj
     {
         public function __construct(
-            private $foo,
-            private $bar,
+            private string $foo,
+            private string $bar,
         ) {
         }
     }
@@ -1638,8 +1638,8 @@ parameter of the ``ObjectNormalizer``::
 
     class ObjectOuter
     {
-        private $inner;
-        private $date;
+        private ObjectInner $inner;
+        private \DateTimeInterface $date;
 
         public function getInner()
         {
@@ -1664,8 +1664,8 @@ parameter of the ``ObjectNormalizer``::
 
     class ObjectInner
     {
-        public $foo;
-        public $bar;
+        public string $foo;
+        public string $bar;
     }
 
     $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());

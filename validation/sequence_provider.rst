@@ -23,10 +23,10 @@ username and the password are different only if all other validation passes
         class User implements UserInterface
         {
             #[Assert\NotBlank]
-            private $username;
+            private string $username;
 
             #[Assert\NotBlank]
-            private $password;
+            private string $password;
 
             #[Assert\IsTrue(
                 message: 'The password cannot match your username',
@@ -180,13 +180,13 @@ entity and a new constraint group called ``Premium``:
         class User
         {
             #[Assert\NotBlank]
-            private $name;
+            private string $name;
 
             #[Assert\CardScheme(
                 schemes: [Assert\CardScheme::VISA],
                 groups: ['Premium'],
             )]
-            private $creditCard;
+            private string $creditCard;
 
             // ...
         }
@@ -241,8 +241,8 @@ entity and a new constraint group called ``Premium``:
 
         class User
         {
-            private $name;
-            private $creditCard;
+            private string $name;
+            private string $creditCard;
 
             // ...
 

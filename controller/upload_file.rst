@@ -22,7 +22,7 @@ add a PDF brochure for each product. To do so, add a new property called
         // ...
 
         #[ORM\Column(type: 'string')]
-        private $brochureFilename;
+        private string $brochureFilename;
 
         public function getBrochureFilename(): string
         {
@@ -238,7 +238,7 @@ logic to a separate service::
     class FileUploader
     {
         public function __construct(
-            private $targetDirectory,
+            private string $targetDirectory,
             private SluggerInterface $slugger,
         ) {
         }
