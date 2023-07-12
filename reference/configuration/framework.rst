@@ -58,7 +58,7 @@ handle_all_throwables
 **type**: ``boolean`` **default**: ``false``
 
 If set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
-thrown by the application and will turn them into HTTP reponses.
+thrown by the application and will turn them into HTTP responses.
 
 Starting from Symfony 7.0, the default value of this option will be ``true``.
 
