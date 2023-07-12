@@ -154,7 +154,7 @@ automatically changed to ``'.inner'``):
         {
             public function __construct(
                 #[MapDecorated]
-                private $inner,
+                private object $inner,
             ) {
             }
 

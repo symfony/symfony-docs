@@ -99,7 +99,7 @@ field those errors should be attributed::
     class Author
     {
         // ...
-        private $firstName;
+        private string $firstName;
 
         public function validate(ExecutionContextInterface $context, $payload)
         {

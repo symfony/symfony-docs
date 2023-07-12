@@ -431,7 +431,7 @@ information from annotations of properties and methods, such as ``@var``,
          * @param string $bar
          */
         public function __construct(
-            private $bar,
+            private string $bar,
         ) {
         }
     }
