@@ -408,7 +408,7 @@ class implementing the ``CompilerPassInterface``::
 
     class CustomPass implements CompilerPassInterface
     {
-        public function process(ContainerBuilder $container)
+        public function process(ContainerBuilder $container): void
         {
             // ... do something during the compilation
         }

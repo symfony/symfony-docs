@@ -47,10 +47,12 @@ The example above could then be rewritten as::
         ) {
         }
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             $this->logger->debug('Some info');
             $this->logger->notice('Some more info');
+
+            return Command::SUCCESS;
         }
     }
 

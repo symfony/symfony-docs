@@ -1464,7 +1464,7 @@ event::
         ) {
         }
 
-        public function onInteractiveLogin(InteractiveLoginEvent $event)
+        public function onInteractiveLogin(InteractiveLoginEvent $event): void
         {
             $user = $event->getAuthenticationToken()->getUser();
 
@@ -1473,7 +1473,7 @@ event::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',
