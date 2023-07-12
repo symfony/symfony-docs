@@ -51,7 +51,7 @@ that constructor with no arguments::
     class BlogType extends AbstractType
     {
         public function __construct(
-            private $someDependency,
+            private object $someDependency,
         ) {
         }
         // ...

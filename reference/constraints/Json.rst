@@ -28,7 +28,7 @@ The ``Json`` constraint can be applied to a property or a "getter" method:
             #[Assert\Json(
                 message: "You've entered an invalid Json."
             )]
-            private $chapters;
+            private string $chapters;
         }
 
     .. code-block:: yaml

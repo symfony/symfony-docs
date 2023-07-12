@@ -23,7 +23,7 @@ You start defining a ``NewsletterManager`` class like this::
 
     class NewsletterManager implements EmailFormatterAwareInterface
     {
-        private $enabledFormatters;
+        private array $enabledFormatters;
 
         public function setEnabledFormatters(array $enabledFormatters): void
         {
@@ -40,7 +40,7 @@ and also a ``GreetingCardManager`` class::
 
     class GreetingCardManager implements EmailFormatterAwareInterface
     {
-        private $enabledFormatters;
+        private array $enabledFormatters;
 
         public function setEnabledFormatters(array $enabledFormatters): void
         {

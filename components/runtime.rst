@@ -440,7 +440,7 @@ always using this ``ReactPHPRunner``::
 
     class ReactPHPRuntime extends GenericRuntime
     {
-        private $port;
+        private int $port;
 
         public function __construct(array $options)
         {

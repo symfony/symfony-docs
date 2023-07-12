@@ -203,7 +203,7 @@ every day::
 
     class DateVersionStrategy implements VersionStrategyInterface
     {
-        private $version;
+        private \DateTimeInterface $version;
 
         public function __construct()
         {
