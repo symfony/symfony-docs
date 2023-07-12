@@ -572,7 +572,7 @@ commands to learn about all their options):
     # generate 1 ULID with a specific timestamp
     $ php bin/console ulid:generate --time="2021-02-02 14:00:00"
 
-    # generate 2 ULIDs and ouput them in RFC4122 format
+    # generate 2 ULIDs and output them in RFC4122 format
     $ php bin/console ulid:generate --count=2 --format=rfc4122
 
 In addition to generating new UIDs, you can also inspect them with the following
