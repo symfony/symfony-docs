@@ -329,6 +329,12 @@ it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
 
+.. versionadded:: 6.4
+
+Since Symfony 6.4, a filter can prune directories early, pass ``true`` as the second
+parameter for the ``filter()`` method and when the Closure returns ``false`` the deeper
+levels will not be traversed.
+
 Sorting Results
 ---------------
 
