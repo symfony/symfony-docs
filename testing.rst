@@ -1039,6 +1039,11 @@ Mailer Assertions
     Asserts that the subject of the given email does (not) contain the
     expected subject.
 
+.. versionadded:: 6.4
+
+    The ``assertEmailSubjectContains()`` and ``assertEmailSubjectNotContains()``
+    assertions were introduced in Symfony 6.4.
+
 Notifier Assertions
 ...................
 
