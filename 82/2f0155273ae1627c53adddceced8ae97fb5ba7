@@ -1,0 +1,18 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-06-14T10:42:56Z
+
+@l-vo I'm sorry it took us so long to review this.
+
+The font used in diagrams is called "PT Sans Narrow", which is free and open source.
+
+You can get the font and check other important things about diagrams, here:
+https://github.com/symfony/symfony-docs/tree/6.4/_images/sources#readme
+
+Thanks!
+
+---------------------------------------------------------------------------
+
+by l-vo at 2023-06-23T09:43:34Z
+
+@javiereguiluz thank you 🙂 I totally missed this page of documentation. I updated the graph with the right font (that is not the same as the original one but I guess the "official" font was not chosen at the time the graph was created).
