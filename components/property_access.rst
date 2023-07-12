@@ -135,7 +135,7 @@ it with ``get``. So the actual method becomes ``getFirstName()``::
     // ...
     class Person
     {
-        private $firstName = 'Wouter';
+        private string $firstName = 'Wouter';
 
         public function getFirstName()
         {
@@ -157,8 +157,8 @@ getters, this means that you can do something like this::
     // ...
     class Person
     {
-        private $author = true;
-        private $children = [];
+        private bool $author = true;
+        private array $children = [];
 
         public function isAuthor()
         {
@@ -250,7 +250,7 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
     // ...
     class Person
     {
-        private $children = [
+        private array $children = [
             'Wouter' => [...],
         ];
 
@@ -280,7 +280,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
     // ...
     class Person
     {
-        private $children = [
+        private array $children = [
             'wouter' => [...],
         ];
 
@@ -379,7 +379,7 @@ see `Enable other Features`_::
     // ...
     class Person
     {
-        private $children = [];
+        private array $children = [];
 
         public function __call($name, $args)
         {
@@ -422,7 +422,7 @@ properties through *adder* and *remover* methods::
         /**
          * @var string[]
          */
-        private $children = [];
+        private array $children = [];
 
         public function getChildren(): array
         {

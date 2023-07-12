@@ -26,9 +26,9 @@ properties::
 
     class BlogPost
     {
-        private $category;
+        private string $category;
 
-        private $isTechnicalPost;
+        private bool $isTechnicalPost;
 
         // ...
 
@@ -155,7 +155,7 @@ assert that the expression must return ``true`` for validation to fail.
                     "this.getCategory() in ['php', 'symfony'] or value == false",
                     message: 'If this is a tech post, the category should be either php or symfony!',
                 )]
-                private $isTechnicalPost;
+                private bool $isTechnicalPost;
 
                 // ...
             }
@@ -298,7 +298,7 @@ type (numeric, boolean, strings, null, etc.)
                 'value + error_margin < threshold',
                 values: ['error_margin' => 0.25, 'threshold' => 1.5],
             )]
-            private $metric;
+            private float $metric;
 
             // ...
         }

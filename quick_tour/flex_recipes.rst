@@ -200,13 +200,13 @@ rich API for a ``product`` table? Create a ``Product`` entity and give it the
         #[ORM\Id]
         #[ORM\GeneratedValue(strategy: 'AUTO')]
         #[ORM\Column(type: 'integer')]
-        private $id;
+        private int $id;
 
         #[ORM\Column(type: 'string')]
-        private $name;
+        private string $name;
 
         #[ORM\Column(type: 'integer')]
-        private $price;
+        private int $price;
 
         // ...
     }

@@ -49,10 +49,7 @@ short example containing most features described below::
     {
         public const SOME_CONST = 42;
 
-        /**
-         * @var string
-         */
-        private $fooBar;
+        private string $fooBar;
 
         /**
          * @param $dummy some argument description

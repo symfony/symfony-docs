@@ -101,11 +101,10 @@ be injected with this parameter via the extension as follows::
 
     class Configuration implements ConfigurationInterface
     {
-        private $debug;
+        private bool $debug;
 
-        public function __construct($debug)
+        public function __construct(private bool $debug)
         {
-            $this->debug = (bool) $debug;
         }
 
         public function getConfigTreeBuilder()

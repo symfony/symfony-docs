@@ -154,7 +154,7 @@ make sure the ``FormRegistry`` uses the created instance::
 
     class TestedTypeTest extends TypeTestCase
     {
-        private $objectManager;
+        private MockObject|ObjectManager $objectManager;
 
         protected function setUp(): void
         {

@@ -17,7 +17,7 @@ the ``Author`` class has at least 3 characters::
 
     class Author
     {
-        private $firstName;
+        private string $firstName;
 
         public static function loadValidatorMetadata(ClassMetadata $metadata)
         {
