@@ -1,0 +1,60 @@
+---------------------------------------------------------------------------
+
+by wouterj at 2022-01-19T16:48:51Z
+
+Hi!
+
+This command is a bit special, as we need to register it first (see the PR description in https://github.com/symfony/symfony/pull/42610#issue-973109927):
+
+> The command is not registered by default. In order to enable it, one must add it to their `services.yaml` file:
+>
+> ```yaml
+> services:
+>     Symfony\Component\Dotenv\Command\DotenvDumpCommand:
+>         - '%kernel.project_dir%/.env'
+>         - '%kernel.environment%'
+> ```
+
+I think we should document this only once, in the configuration article. And then in the deployments article, we should only add a small tip like: "If Composer is not available during deployment, you can also use the `dotenv:dump` command. Read ... for more information."
+
+---------------------------------------------------------------------------
+
+by mertingen at 2022-01-19T17:39:09Z
+
+Hi,
+
+If I get the PR description without changing it and put it into the configuration documentation directly, do you mind? Because it is really good enough explicit.
+
+I'll add the following tip in the deployment but how can I handle "read ... for more information"? Should I give the "configuration" page URL directly there?
+
+"If Composer is not available during deployment, you can also use the dotenv:dump command. Read ... for more information."
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-01-20T14:28:20Z
+
+> If I get the PR description without changing it and put it into the configuration documentation directly, do you mind? Because it is really good enough explicit.
+
+Fine by me (I would replace "one must" with "you must" though).
+
+> I'll add the following tip in the deployment but how can I handle "read ... for more information"? Should I give the "configuration" page URL directly there?
+
+You can use `` :ref:`configuration-env-var-in-prod` `` to link directly to the correct section in the configuration page.
+
+---------------------------------------------------------------------------
+
+by mertingen at 2022-01-20T23:16:47Z
+
+hi @wouterj
+
+Thanks for the answer. I have got a quick question regarding **deployment.rst**. We edited it like the image.
+
+![43434](https://user-images.githubusercontent.com/15813184/150437178-79172f6c-33fe-4796-be5b-eca3480d846e.jpg)
+
+Should we add **composer** tip here? Because we already recommend using dotenv command for dumping.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2022-01-25T13:59:27Z
+
+I think we can keep composer at first, and then reference the configuration section to say "if you don't have composer, use this command". Anyway, feel free to update the PR as you like it best. We can apply little reorganizations during the merge, if we think something else is better.
