@@ -1488,6 +1488,9 @@ redeliver_timeout   Timeout before retrying a message      3600
                     message) - in seconds.
 auto_setup          Whether the table should be created
                     automatically during send / get.       true
+batch_size          How many messages a consumer will      1
+                    pull in one go from the queue and,
+                    before pulling more messages.
 ==================  =====================================  ======================
 
 .. note::
