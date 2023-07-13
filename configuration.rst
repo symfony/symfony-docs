@@ -1092,7 +1092,7 @@ parameters at once by type-hinting any of its constructor arguments with the
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // get any container parameter from $this->params, which stores all of them
             $sender = $this->params->get('mailer_sender');

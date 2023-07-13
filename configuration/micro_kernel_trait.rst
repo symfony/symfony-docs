@@ -247,7 +247,7 @@ Now it looks like this::
             return $bundles;
         }
 
-        protected function build(ContainerBuilder $containerBuilder)
+        protected function build(ContainerBuilder $containerBuilder): void
         {
             $containerBuilder->registerExtension(new AppExtension());
         }

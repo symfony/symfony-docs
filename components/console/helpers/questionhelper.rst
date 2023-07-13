@@ -488,7 +488,7 @@ from the command line, you need to set the inputs that the command expects::
     use Symfony\Component\Console\Tester\CommandTester;
 
     // ...
-    public function testExecute()
+    public function testExecute(): void
     {
         // ...
         $commandTester = new CommandTester($command);

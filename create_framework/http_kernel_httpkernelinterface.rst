@@ -76,7 +76,7 @@ to cache a response for 10 seconds, use the ``Response::setTtl()`` method::
     // example.com/src/Calendar/Controller/LeapYearController.php
 
     // ...
-    public function index(Request $request, $year)
+    public function index(Request $request, int $year): Response
     {
         $leapYear = new LeapYear();
         if ($leapYear->isLeapYear($year)) {

@@ -111,7 +111,7 @@ short example containing most features described below::
         /**
          * Performs some basic operations for a given value.
          */
-        private function performOperations(mixed $value = null, bool $theSwitch = false)
+        private function performOperations(mixed $value = null, bool $theSwitch = false): void
         {
             if (!$theSwitch) {
                 return;

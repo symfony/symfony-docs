@@ -489,7 +489,7 @@ console::
 
     class CreateUserCommandTest extends KernelTestCase
     {
-        public function testExecute()
+        public function testExecute(): void
         {
             $kernel = self::bootKernel();
             $application = new Application($kernel);

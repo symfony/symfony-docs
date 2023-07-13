@@ -183,7 +183,7 @@ The ``Configuration`` class to handle the sample configuration looks like::
 
     class Configuration implements ConfigurationInterface
     {
-        public function getConfigTreeBuilder()
+        public function getConfigTreeBuilder(): TreeBuilder
         {
             $treeBuilder = new TreeBuilder('acme_social');
 
@@ -217,7 +217,7 @@ force validation (e.g. if an additional option was passed, an exception will be
 thrown)::
 
     // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
 
@@ -259,7 +259,7 @@ In your extension, you can load this and dynamically set its arguments::
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader($container, new FileLocator(dirname(__DIR__).'/Resources/config'));
         $loader->load('services.xml');
@@ -288,7 +288,7 @@ In your extension, you can load this and dynamically set its arguments::
         class AcmeHelloExtension extends ConfigurableExtension
         {
             // note that this method is called loadInternal and not load
-            protected function loadInternal(array $mergedConfig, ContainerBuilder $container)
+            protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
             {
                 // ...
             }
@@ -304,7 +304,7 @@ In your extension, you can load this and dynamically set its arguments::
     (e.g. by overriding configurations and using :phpfunction:`isset` to check
     for the existence of a value). Be aware that it'll be very hard to support XML::
 
-        public function load(array $configs, ContainerBuilder $container)
+        public function load(array $configs, ContainerBuilder $container): void
         {
             $config = [];
             // let resources override the previous set value
@@ -458,7 +458,7 @@ the extension. You might want to change this to a more professional URL::
     {
         // ...
 
-        public function getNamespace()
+        public function getNamespace(): string
         {
             return 'http://acme_company.com/schema/dic/hello';
         }
@@ -490,7 +490,7 @@ can place it anywhere you like. You should return this path as the base path::
     {
         // ...
 
-        public function getXsdValidationBasePath()
+        public function getXsdValidationBasePath(): string
         {
             return __DIR__.'/../Resources/config/schema';
         }

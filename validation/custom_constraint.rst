@@ -67,7 +67,7 @@ class is specified by the constraint's ``validatedBy()`` method, which
 has this default logic::
 
     // in the base Symfony\Component\Validator\Constraint class
-    public function validatedBy()
+    public function validatedBy(): string
     {
         return static::class.'Validator';
     }
@@ -359,16 +359,17 @@ class to simplify writing unit tests for your custom constraints::
 
     use App\Validator\ContainsAlphanumeric;
     use App\Validator\ContainsAlphanumericValidator;
+    use Symfony\Component\Validator\ConstraintValidatorInterface;
     use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
     class ContainsAlphanumericValidatorTest extends ConstraintValidatorTestCase
     {
-        protected function createValidator()
+        protected function createValidator(): ConstraintValidatorInterface
         {
             return new ContainsAlphanumericValidator();
         }
 
-        public function testNullIsValid()
+        public function testNullIsValid(): void
         {
             $this->validator->validate(null, new ContainsAlphanumeric());
 
@@ -378,7 +379,7 @@ class to simplify writing unit tests for your custom constraints::
         /**
          * @dataProvider provideInvalidConstraints
          */
-        public function testTrueIsInvalid(ContainsAlphanumeric $constraint)
+        public function testTrueIsInvalid(ContainsAlphanumeric $constraint): void
         {
             $this->validator->validate('...', $constraint);
 

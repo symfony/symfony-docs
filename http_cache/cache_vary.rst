@@ -42,7 +42,7 @@ attribute::
 
         #[Cache(vary: ['Accept-Encoding'])]
         #[Cache(vary: ['Accept-Encoding', 'User-Agent'])]
-        public function index()
+        public function index(): Response
         {
             // ...
         }

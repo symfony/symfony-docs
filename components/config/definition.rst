@@ -54,7 +54,7 @@ implements the :class:`Symfony\\Component\\Config\\Definition\\ConfigurationInte
 
     class DatabaseConfiguration implements ConfigurationInterface
     {
-        public function getConfigTreeBuilder()
+        public function getConfigTreeBuilder(): TreeBuilder
         {
             $treeBuilder = new TreeBuilder('database');
 
@@ -568,7 +568,9 @@ be large and you may want to split it up into sections. You can do this
 by making a section a separate node and then appending it into the main
 tree with ``append()``::
 
-    public function getConfigTreeBuilder()
+    use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('database');
 
@@ -597,7 +599,7 @@ tree with ``append()``::
         return $treeBuilder;
     }
 
-    public function addParametersNode()
+    public function addParametersNode(): NodeDefinition
     {
         $treeBuilder = new TreeBuilder('parameters');
 

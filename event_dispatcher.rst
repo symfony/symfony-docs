@@ -732,7 +732,7 @@ this::
             return $this->message;
         }
 
-        public function setMessage(string $message)
+        public function setMessage(string $message): void
         {
             $this->message = $message;
         }
@@ -757,7 +757,7 @@ And the ``AfterSendMailEvent`` even like this::
             return $this->returnValue;
         }
 
-        public function setReturnValue(mixed $returnValue)
+        public function setReturnValue(mixed $returnValue): void
         {
             $this->returnValue = $returnValue;
         }
