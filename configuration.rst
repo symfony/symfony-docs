@@ -827,24 +827,27 @@ the easiest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
 To improve performance, you can optionally run the ``dotenv:dump`` command (available
-in :ref:`Symfony Flex <symfony-flex>` 1.2 or later). The command is not registered by default. 
-In order to enable it, you must add it to their services.yaml file:
+in :ref:`Symfony Flex <symfony-flex>` 1.2 or later). The command is not registered
+by default, so you must register first in your services:
 
 .. code-block:: yaml
 
+    # config/services.yaml
     services:
         Symfony\Component\Dotenv\Command\DotenvDumpCommand:
             - '%kernel.project_dir%/.env'
             - '%kernel.environment%'
 
-On PHP >= 8, the two arguments can be removed when autoconfiguration is enabled (which is the default):
+In PHP >= 8, you can remove the the two arguments when autoconfiguration is enabled
+(which is the default):
 
 .. code-block:: yaml
 
+    # config/services.yaml
     services:
         Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
         
-Running command:
+Then, run the command:
 
 .. code-block:: terminal
 

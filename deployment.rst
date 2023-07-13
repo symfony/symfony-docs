@@ -154,14 +154,17 @@ most natural in your hosting environment.
 
     .. code-block:: terminal
 
-        $ php bin/console dotenv:dump prod
+        $ composer dump-env prod
 
-    The generated file will contain all the configurations stored in ``.env``. If you
+    The generated file will contain all the configuration stored in ``.env``. If you
     want to rely only on environment variables, generate one without any values using:
 
     .. code-block:: terminal
 
-        $ php bin/console dotenv:dump prod --empty
+        $ composer dump-env prod --empty
+
+    If you don't have Composer installed on the production server, use instead
+    :ref:`the dotenv:dump Symfony command <configuration-env-var-in-prod>`.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
