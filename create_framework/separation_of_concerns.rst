@@ -34,7 +34,7 @@ request handling logic into its own ``Simplex\Framework`` class::
         ) {
         }
 
-        public function handle(Request $request)
+        public function handle(Request $request): Response
         {
             $this->matcher->getContext()->fromRequest($request);
 
@@ -102,7 +102,7 @@ Move the controller to ``Calendar\Controller\LeapYearController``::
 
     class LeapYearController
     {
-        public function index(Request $request, $year)
+        public function index(Request $request, int $year): Response
         {
             $leapYear = new LeapYear();
             if ($leapYear->isLeapYear($year)) {
@@ -120,7 +120,7 @@ And move the ``is_leap_year()`` function to its own class too::
 
     class LeapYear
     {
-        public function isLeapYear($year = null)
+        public function isLeapYear(int $year = null): bool
         {
             if (null === $year) {
                 $year = date('Y');

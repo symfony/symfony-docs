@@ -13,7 +13,7 @@ calls need to be wrapped in conditions. For example::
     use Symfony\Component\Console\Input\InputInterface;
     use Symfony\Component\Console\Output\OutputInterface;
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($output->isDebug()) {
             $output->writeln('Some info');
@@ -22,6 +22,8 @@ calls need to be wrapped in conditions. For example::
         if ($output->isVerbose()) {
             $output->writeln('Some more info');
         }
+
+        // ...
     }
 
 Instead of using these semantic methods to test for each of the verbosity

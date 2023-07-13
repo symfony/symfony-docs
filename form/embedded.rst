@@ -44,7 +44,7 @@ Next, add a new ``category`` property to the ``Task`` class::
             return $this->category;
         }
 
-        public function setCategory(?Category $category)
+        public function setCategory(?Category $category): void
         {
             $this->category = $category;
         }

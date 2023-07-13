@@ -1402,7 +1402,7 @@ render the email before calling ``$mailer->send($email)``::
     use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Mime\BodyRendererInterface;
 
-    public function action(MailerInterface $mailer, BodyRendererInterface $bodyRenderer)
+    public function action(MailerInterface $mailer, BodyRendererInterface $bodyRenderer): void
     {
         $email = (new TemplatedEmail())
             ->htmlTemplate($template)
@@ -1843,7 +1843,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 
     class MailControllerTest extends WebTestCase
     {
-        public function testMailIsSentAndContentIsOk()
+        public function testMailIsSentAndContentIsOk(): void
         {
             $client = static::createClient();
             $client->request('GET', '/mail/send');

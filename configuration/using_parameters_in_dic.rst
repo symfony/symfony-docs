@@ -107,7 +107,7 @@ be injected with this parameter via the extension as follows::
         {
         }
 
-        public function getConfigTreeBuilder()
+        public function getConfigTreeBuilder(): TreeBuilder
         {
             $treeBuilder = new TreeBuilder('my_bundle');
 

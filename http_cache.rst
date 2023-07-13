@@ -213,9 +213,8 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
 
         // src/Controller/BlogController.php
         use Symfony\Component\HttpFoundation\Response;
-        // ...
 
-        public function index()
+        public function index(): Response
         {
             // somehow create a Response object, like by rendering a template
             $response = $this->render('blog/index.html.twig', []);

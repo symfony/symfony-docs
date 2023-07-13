@@ -26,8 +26,9 @@ Logging a Message
 To log a message, inject the default logger in your controller or service::
 
     use Psr\Log\LoggerInterface;
+    // ...
 
-    public function index(LoggerInterface $logger)
+    public function index(LoggerInterface $logger): Response
     {
         $logger->info('I just got the logger');
         $logger->error('An error occurred');

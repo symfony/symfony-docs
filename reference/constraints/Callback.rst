@@ -39,7 +39,7 @@ Configuration
         class Author
         {
             #[Assert\Callback]
-            public function validate(ExecutionContextInterface $context, $payload)
+            public function validate(ExecutionContextInterface $context, $payload): void
             {
                 // ...
             }
@@ -75,12 +75,12 @@ Configuration
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Callback('validate'));
             }
 
-            public function validate(ExecutionContextInterface $context, $payload)
+            public function validate(ExecutionContextInterface $context, $payload): void
             {
                 // ...
             }

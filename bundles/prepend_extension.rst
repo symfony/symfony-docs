@@ -52,7 +52,7 @@ a configuration setting in multiple bundles as well as disable a flag in multipl
 in case a specific other bundle is not registered::
 
     // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         // get all bundles
         $bundles = $container->getParameter('kernel.bundles');

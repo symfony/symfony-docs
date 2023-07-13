@@ -179,6 +179,7 @@ send SMS messages::
     // src/Controller/SecurityController.php
     namespace App\Controller;
 
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Notifier\Message\SmsMessage;
     use Symfony\Component\Notifier\TexterInterface;
     use Symfony\Component\Routing\Annotation\Route;
@@ -186,7 +187,7 @@ send SMS messages::
     class SecurityController
     {
         #[Route('/login/success')]
-        public function loginSuccess(TexterInterface $texter)
+        public function loginSuccess(TexterInterface $texter): Response
         {
             $sms = new SmsMessage(
                 // the phone number to send the SMS message to
@@ -317,6 +318,7 @@ you to send messages to chat services::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Notifier\ChatterInterface;
     use Symfony\Component\Notifier\Message\ChatMessage;
     use Symfony\Component\Routing\Annotation\Route;
@@ -326,7 +328,7 @@ you to send messages to chat services::
         /**
          * @Route("/checkout/thankyou")
          */
-        public function thankyou(ChatterInterface $chatter)
+        public function thankyou(ChatterInterface $chatter): Response
         {
             $message = (new ChatMessage('You got a new invoice for 15 EUR.'))
                 // if not set explicitly, the message is sent to the
@@ -578,6 +580,7 @@ To send a notification, autowire the
     // src/Controller/InvoiceController.php
     namespace App\Controller;
 
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Notifier\Notification\Notification;
     use Symfony\Component\Notifier\NotifierInterface;
     use Symfony\Component\Notifier\Recipient\Recipient;
@@ -585,7 +588,7 @@ To send a notification, autowire the
     class InvoiceController extends AbstractController
     {
         #[Route('/invoice/create')]
-        public function create(NotifierInterface $notifier)
+        public function create(NotifierInterface $notifier): Response
         {
             // ...
 
@@ -712,7 +715,7 @@ sent using the Slack transport::
     class InvoiceController extends AbstractController
     {
         #[Route('/invoice/create')]
-        public function invoice(NotifierInterface $notifier)
+        public function invoice(NotifierInterface $notifier): Response
         {
             // ...
 
@@ -747,7 +750,7 @@ very high and the recipient has a phone number::
         ) {
         }
 
-        public function getChannels(RecipientInterface $recipient)
+        public function getChannels(RecipientInterface $recipient): array
         {
             if (
                 $this->price > 10000

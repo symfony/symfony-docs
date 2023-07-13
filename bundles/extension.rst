@@ -90,7 +90,7 @@ For instance, assume you have a file called ``services.xml`` in the
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
     // ...
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new XmlFileLoader(
             $container,
@@ -167,7 +167,7 @@ they are compiled when generating the application cache to improve the overall
 performance. Define the list of annotated classes to compile in the
 ``addAnnotatedClassesToCompile()`` method::
 
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         // ...
 

@@ -120,7 +120,7 @@ class to help you creating and booting the kernel in your tests using
 
     class NewsletterGeneratorTest extends KernelTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             self::bootKernel();
 
@@ -254,7 +254,7 @@ the container is returned by ``static::getContainer()``::
 
     class NewsletterGeneratorTest extends KernelTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             // (1) boot the Symfony kernel
             self::bootKernel();
@@ -295,7 +295,7 @@ concrete one::
 
     class NewsletterGeneratorTest extends KernelTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             // ... same bootstrap as the section above
 
@@ -433,7 +433,7 @@ instance, to load ``Product`` objects into Doctrine, use::
 
     class ProductFixture extends Fixture
     {
-        public function load(ObjectManager $manager)
+        public function load(ObjectManager $manager): void
         {
             $product = new Product();
             $product->setName('Priceless widget');
@@ -650,7 +650,7 @@ to simulate a login request::
     {
         // ...
 
-        public function testVisitingWhileLoggedIn()
+        public function testVisitingWhileLoggedIn(): void
         {
             $client = static::createClient();
             $userRepository = static::getContainer()->get(UserRepository::class);

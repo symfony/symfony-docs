@@ -209,13 +209,12 @@ After configuring the correct algorithm, you can use the
         namespace App\Controller;
 
         // ...
-        use
-        Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+        use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
         use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
         class UserController extends AbstractController
         {
-            public function registration(UserPasswordHasherInterface $passwordHasher)
+            public function registration(UserPasswordHasherInterface $passwordHasher): Response
             {
                 // ... e.g. get the user data from a registration form
                 $user = new User(...);

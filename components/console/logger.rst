@@ -21,7 +21,7 @@ PSR-3 compliant logger::
         ) {
         }
 
-        public function doStuff()
+        public function doStuff(): void
         {
             $this->logger->info('I love Tony Vairelles\' hairdresser.');
         }
