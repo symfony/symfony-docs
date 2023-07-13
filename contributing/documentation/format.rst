@@ -124,6 +124,31 @@ Markup Format        Use It to Display
 ``php-standalone``   PHP code to be used in any PHP application using standalone Symfony components
 ===================  ==============================================================================
 
+Display Tabs
+~~~~~~~~~~~~
+
+It is possible to display tabs in the documentation. Even though their display
+looks like configuration blocks, tabs can contain any type of content:
+
+.. code-block:: rst
+
+    .. tabs:: UX Installation
+
+        .. tab:: Webpack Encore
+
+            Introduction to Webpack
+
+            .. code-block:: yaml
+
+                webpack:
+                    # ...
+
+        .. tab:: AssetMapper
+
+            Introduction to AssetMapper
+
+            Something else about AssetMapper
+
 Adding Links
 ~~~~~~~~~~~~
 
