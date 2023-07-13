@@ -289,7 +289,7 @@ Preloading and Initializing "app.js"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the importmap, the ``{{ importmap() }}`` Twig function also renders
-an `ES module shim`_ (see the :ref:`config-importmap-polyfill <polyfill config>` and
+an `ES module shim`_ (see the :ref:`config-importmap-polyfill <polyfill config>`) and
 a few other things, like a set of "preloads":
 
 .. code-block:: html
@@ -1034,7 +1034,7 @@ you expect are being included in the asset map.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configure the polyfill for older browsers. Default is `ES module shim`_. You can pass
-any URL to be included, or `false` to disable the polyfill.
+any URL to be included, or ``false`` to disable the polyfill.
 
 .. code-block:: yaml
 
