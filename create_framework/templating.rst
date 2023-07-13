@@ -38,7 +38,7 @@ that renders a template when there is no specific logic. To keep the same
 template as before, request attributes are extracted before the template is
 rendered::
 
-    function render_template($request)
+    function render_template(Request $request): Response
     {
         extract($request->attributes->all(), EXTR_SKIP);
         ob_start();
@@ -106,7 +106,7 @@ Here is the updated and improved version of our framework::
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing;
 
-    function render_template($request)
+    function render_template(Request $request): Response
     {
         extract($request->attributes->all(), EXTR_SKIP);
         ob_start();
@@ -145,7 +145,7 @@ framework does not need to be modified in any way, create a new
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing;
 
-    function is_leap_year($year = null)
+    function is_leap_year(int $year = null): bool
     {
         if (null === $year) {
             $year = date('Y');

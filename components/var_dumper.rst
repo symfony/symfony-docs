@@ -294,7 +294,7 @@ Example::
     {
         use VarDumperTestTrait;
 
-        protected function setUp()
+        protected function setUp(): void
         {
             $casters = [
                 \DateTimeInterface::class => static function (\DateTimeInterface $date, array $a, Stub $stub): array {
@@ -311,7 +311,7 @@ Example::
             $this->setUpVarDumper($casters, $flags);
         }
 
-        public function testWithDumpEquals()
+        public function testWithDumpEquals(): void
         {
             $testedVar = [123, 'foo'];
 
@@ -797,7 +797,7 @@ Here is a simple caster not doing anything::
 
     use Symfony\Component\VarDumper\Cloner\Stub;
 
-    function myCaster($object, $array, Stub $stub, $isNested, $filter)
+    function myCaster(mixed $object, array $array, Stub $stub, bool $isNested, int $filter): array
     {
         // ... populate/alter $array to your needs
 
@@ -861,7 +861,7 @@ that holds a file name or a URL, you can wrap them in a ``LinkStub`` to tell
     use Symfony\Component\VarDumper\Caster\LinkStub;
     use Symfony\Component\VarDumper\Cloner\Stub;
 
-    function ProductCaster(Product $object, $array, Stub $stub, $isNested, $filter = 0)
+    function ProductCaster(Product $object, array $array, Stub $stub, bool $isNested, int $filter = 0): array
     {
         $array['brochure'] = new LinkStub($array['brochure']);
 

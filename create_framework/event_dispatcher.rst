@@ -53,7 +53,7 @@ the Response instance::
         ) {
         }
 
-        public function handle(Request $request)
+        public function handle(Request $request): Response
         {
             $this->matcher->getContext()->fromRequest($request);
 
@@ -95,12 +95,12 @@ now dispatched::
         ) {
         }
 
-        public function getResponse()
+        public function getResponse(): Response
         {
             return $this->response;
         }
 
-        public function getRequest()
+        public function getRequest(): Request
         {
             return $this->request;
         }
@@ -195,7 +195,7 @@ Let's refactor the code a bit by moving the Google listener to its own class::
 
     class GoogleListener
     {
-        public function onResponse(ResponseEvent $event)
+        public function onResponse(ResponseEvent $event): void
         {
             $response = $event->getResponse();
 
@@ -217,7 +217,7 @@ And do the same with the other listener::
 
     class ContentLengthListener
     {
-        public function onResponse(ResponseEvent $event)
+        public function onResponse(ResponseEvent $event): void
         {
             $response = $event->getResponse();
             $headers = $response->headers;
@@ -259,7 +259,7 @@ look at the new version of the ``GoogleListener``::
     {
         // ...
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return ['response' => 'onResponse'];
         }
@@ -276,7 +276,7 @@ And here is the new version of ``ContentLengthListener``::
     {
         // ...
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return ['response' => ['onResponse', -255]];
         }

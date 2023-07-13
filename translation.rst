@@ -120,7 +120,7 @@ controller::
     // ...
     use Symfony\Contracts\Translation\TranslatorInterface;
 
-    public function index(TranslatorInterface $translator)
+    public function index(TranslatorInterface $translator): Response
     {
         $translated = $translator->trans('Symfony is great');
 
@@ -749,7 +749,7 @@ is stored in the request and is accessible via the ``Request`` object::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function index(Request $request)
+    public function index(Request $request): void
     {
         $locale = $request->getLocale();
     }
@@ -758,7 +758,7 @@ To set the user's locale, you may want to create a custom event listener so
 that it's set before any other parts of the system (i.e. the translator) need
 it::
 
-        public function onKernelRequest(RequestEvent $event)
+        public function onKernelRequest(RequestEvent $event): void
         {
             $request = $event->getRequest();
 
@@ -819,8 +819,9 @@ A better policy is to include the locale in the URL using the
                     '_locale' => 'en|fr|de',
                 ],
             )]
-            public function contact()
+            public function contact(): Response
             {
+                // ...
             }
         }
 
@@ -1021,7 +1022,7 @@ of:
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // you can get the current application locale like this:
             $currentLocale = $this->localeSwitcher->getLocale();

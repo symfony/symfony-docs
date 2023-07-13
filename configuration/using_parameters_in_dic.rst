@@ -107,7 +107,7 @@ be injected with this parameter via the extension as follows::
         {
         }
 
-        public function getConfigTreeBuilder()
+        public function getConfigTreeBuilder(): TreeBuilder
         {
             $treeBuilder = new TreeBuilder('my_bundle');
 
@@ -134,7 +134,7 @@ And set it in the constructor of ``Configuration`` via the ``Extension`` class::
     {
         // ...
 
-        public function getConfiguration(array $config, ContainerBuilder $container)
+        public function getConfiguration(array $config, ContainerBuilder $container): Configuration
         {
             return new Configuration($container->getParameter('kernel.debug'));
         }

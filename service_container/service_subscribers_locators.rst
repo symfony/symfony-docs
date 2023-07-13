@@ -34,7 +34,7 @@ to handle their respective command when it is asked for::
         ) {
         }
 
-        public function handle(Command $command)
+        public function handle(Command $command): mixed
         {
             $commandClass = get_class($command);
 
@@ -92,7 +92,7 @@ in the service subscriber::
             ];
         }
 
-        public function handle(Command $command)
+        public function handle(Command $command): mixed
         {
             $commandClass = get_class($command);
 
@@ -638,7 +638,7 @@ Inside this locator you can retrieve services by index using the value of the
 
     class HandlerCollection
     {
-        public function getHandlerTwo(ContainerInterface $locator)
+        public function getHandlerTwo(ContainerInterface $locator): mixed
         {
             return $locator->get('handler_two');
         }
@@ -757,7 +757,7 @@ services based on type-hinted helper methods::
     {
         use ServiceSubscriberTrait;
 
-        public function doSomething()
+        public function doSomething(): void
         {
             // $this->router() ...
             // $this->logger() ...
@@ -819,7 +819,7 @@ and compose your services with them::
     {
         use ServiceSubscriberTrait, LoggerAware, RouterAware;
 
-        public function doSomething()
+        public function doSomething(): void
         {
             // $this->router() ...
             // $this->logger() ...
@@ -865,7 +865,7 @@ Here's an example::
     {
         use ServiceSubscriberTrait;
 
-        public function doSomething()
+        public function doSomething(): void
         {
             // $this->environment() ...
             // $this->router() ...

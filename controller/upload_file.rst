@@ -58,7 +58,7 @@ so Symfony doesn't try to get/set its value from the related entity::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -327,9 +327,10 @@ Now you're ready to use this service in the controller::
 
     use App\Service\FileUploader;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     // ...
-    public function new(Request $request, FileUploader $fileUploader)
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         // ...
 

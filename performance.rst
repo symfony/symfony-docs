@@ -250,7 +250,7 @@ and Symfony will inject the ``debug.stopwatch`` service::
         ) {
         }
 
-        public function export()
+        public function export(): void
         {
             // the argument is the name of the "profiling event"
             $this->stopwatch->start('export-data');

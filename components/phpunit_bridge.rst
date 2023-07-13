@@ -418,7 +418,7 @@ times (order matters)::
         /**
          * @group legacy
          */
-        public function testDeprecatedCode()
+        public function testDeprecatedCode(): void
         {
             // test some code that triggers the following deprecation:
             // trigger_deprecation('vendor-name/package-name', '5.1', 'This "Foo" method is deprecated.');
@@ -504,7 +504,7 @@ If you have this kind of time-related tests::
 
     class MyTest extends TestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             $stopwatch = new Stopwatch();
 
@@ -575,7 +575,7 @@ test::
      */
     class MyTest extends TestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             $stopwatch = new Stopwatch();
 
@@ -603,7 +603,7 @@ different class, do it explicitly using ``ClockMock::register(MyClass::class)``:
 
     class MyClass
     {
-        public function getTimeInHours()
+        public function getTimeInHours(): void
         {
             return time() / 3600;
         }
@@ -621,7 +621,7 @@ different class, do it explicitly using ``ClockMock::register(MyClass::class)``:
      */
     class MyTest extends TestCase
     {
-        public function testGetTimeInHours()
+        public function testGetTimeInHours(): void
         {
             ClockMock::register(MyClass::class);
 
@@ -669,7 +669,7 @@ associated to a valid host::
 
     class MyTest extends TestCase
     {
-        public function testEmail()
+        public function testEmail(): void
         {
             $validator = new DomainValidator(['checkDnsRecord' => true]);
             $isValid = $validator->validate('example.com');
@@ -691,7 +691,7 @@ the data you expect to get for the given hosts::
      */
     class DomainValidatorTest extends TestCase
     {
-        public function testEmails()
+        public function testEmails(): void
         {
             DnsMock::withMockedHosts([
                 'example.com' => [['type' => 'A', 'ip' => '1.2.3.4']],
@@ -761,7 +761,7 @@ are installed during tests) would look like::
 
     class MyClassTest extends TestCase
     {
-        public function testHello()
+        public function testHello(): void
         {
             $class = new MyClass();
             $result = $class->hello(); // "The dependency behavior."
@@ -782,7 +782,7 @@ classes, interfaces and/or traits for the code to run::
     {
         // ...
 
-        public function testHelloDefault()
+        public function testHelloDefault(): void
         {
             ClassExistsMock::register(MyClass::class);
             ClassExistsMock::withMockedClasses([DependencyClass::class => false]);
@@ -940,7 +940,7 @@ Consider the following example::
 
     class Bar
     {
-        public function barMethod()
+        public function barMethod(): string
         {
             return 'bar';
         }
@@ -953,7 +953,7 @@ Consider the following example::
         ) {
         }
 
-        public function fooMethod()
+        public function fooMethod(): string
         {
             $this->bar->barMethod();
 
@@ -963,7 +963,7 @@ Consider the following example::
 
     class FooTest extends PHPUnit\Framework\TestCase
     {
-        public function test()
+        public function test(): void
         {
             $bar = new Bar();
             $foo = new Foo($bar);

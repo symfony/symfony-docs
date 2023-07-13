@@ -109,7 +109,7 @@ Example
     {
         // ...
 
-        public function foo($bar)
+        public function foo($bar): mixed
         {
             // set foo with a value of bar
             $foo = ...;
