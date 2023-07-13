@@ -163,19 +163,8 @@ most natural in your hosting environment.
 
         $ composer dump-env prod --empty
 
-    If ``composer`` is not installed on your server, you can generate this optimized
-    file with a command provided by Symfony itself, which you must register in
-    your application before using it:
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
-
-    .. code-block:: terminal
-
-        $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
+    If you don't have Composer installed on the production server, use instead
+    :ref:`the dotenv:dump Symfony command <configuration-env-var-in-prod>`.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
