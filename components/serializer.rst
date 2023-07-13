@@ -865,7 +865,9 @@ The Serializer component provides several built-in normalizers:
     Normalizes errors according to the API Problem spec `RFC 7807`_.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\CustomNormalizer`
-    Normalizes a PHP object using an object that implements :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`.
+    Normalizes a PHP object using an object that implements :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`
+    and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizableInterface`.
+    This service should be registered and tagging with :ref:`serializer.normalizer <reference-dic-tags-serializer-normalizer>` to be used with Symfony serializer.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`
     This normalizer converts objects that implement
