@@ -2318,7 +2318,7 @@ the :class:`Symfony\\Component\\Routing\\Generator\\UrlGeneratorInterface` class
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // ...
 
@@ -2668,7 +2668,7 @@ service, which you can inject in your services or controllers::
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // ...
 

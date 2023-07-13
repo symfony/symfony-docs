@@ -157,7 +157,7 @@ you can access it using the ``getConnection()`` method and the name of the conne
 
     class SomeController
     {
-        public function someMethod(ManagerRegistry $doctrine)
+        public function someMethod(ManagerRegistry $doctrine): void
         {
             $connection = $doctrine->getConnection('customer');
             $result = $connection->fetchAll('SELECT name FROM customer');

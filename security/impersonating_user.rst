@@ -168,7 +168,7 @@ the impersonator user::
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // ...
 

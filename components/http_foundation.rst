@@ -921,7 +921,7 @@ methods. You can inject this as a service anywhere in your application::
         ) {
         }
 
-        public function normalize($user)
+        public function normalize($user): array
         {
             return [
                 'avatar' => $this->urlHelper->getAbsoluteUrl($user->avatar()->path()),

@@ -194,7 +194,7 @@ disable validating:
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Traverse(false));
             }

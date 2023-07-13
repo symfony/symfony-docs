@@ -135,7 +135,7 @@ class in your controllers to manage the profiler programmatically::
     {
         // ...
 
-        public function someMethod(?Profiler $profiler)
+        public function someMethod(?Profiler $profiler): Response
         {
             // $profiler won't be set if your environment doesn't have the profiler (like prod, by default)
             if (null !== $profiler) {
@@ -239,7 +239,7 @@ event::
 
         // ...
 
-        public function onKernelResponse(ResponseEvent $event)
+        public function onKernelResponse(ResponseEvent $event): void
         {
             if (!$this->kernel->isDebug()) {
                 return;
@@ -283,7 +283,7 @@ request::
 
     class RequestCollector extends AbstractDataCollector
     {
-        public function collect(Request $request, Response $response, \Throwable $exception = null)
+        public function collect(Request $request, Response $response, \Throwable $exception = null): void
         {
             $this->data = [
                 'method' => $request->getMethod(),
@@ -350,6 +350,7 @@ template access to the collected information::
     namespace App\DataCollector;
 
     use Symfony\Bundle\FrameworkBundle\DataCollector\AbstractDataCollector;
+    use Symfony\Component\VarDumper\Cloner\Data;
 
     class RequestCollector extends AbstractDataCollector
     {
@@ -360,17 +361,17 @@ template access to the collected information::
             return 'data_collector/template.html.twig';
         }
 
-        public function getMethod()
+        public function getMethod(): string
         {
             return $this->data['method'];
         }
 
-        public function getAcceptableContentTypes()
+        public function getAcceptableContentTypes(): array
         {
             return $this->data['acceptable_content_types'];
         }
 
-        public function getSomeObject()
+        public function getSomeObject(): Data
         {
             // use the cloneVar() method to dump collected data in the profiler
             return $this->cloneVar($this->data['method']);

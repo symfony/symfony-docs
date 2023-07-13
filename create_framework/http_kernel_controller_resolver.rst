@@ -10,7 +10,7 @@ class::
 
     class LeapYearController
     {
-        public function index($request)
+        public function index($request): Response
         {
             if (is_leap_year($request->attributes->get('year'))) {
                 return new Response('Yep, this is a leap year!');
@@ -112,26 +112,26 @@ More interesting, ``getArguments()`` is also able to inject any Request
 attribute; if the argument has the same name as the corresponding
 attribute::
 
-    public function index($year)
+    public function index(int $year)
 
 You can also inject the Request and some attributes at the same time (as the
 matching is done on the argument name or a type hint, the arguments order does
 not matter)::
 
-    public function index(Request $request, $year)
+    public function index(Request $request, int $year)
 
-    public function index($year, Request $request)
+    public function index(int $year, Request $request)
 
 Finally, you can also define default values for any argument that matches an
 optional attribute of the Request::
 
-    public function index($year = 2012)
+    public function index(int $year = 2012)
 
 Let's inject the ``$year`` request attribute for our controller::
 
     class LeapYearController
     {
-        public function index($year)
+        public function index(int $year): Response
         {
             if (is_leap_year($year)) {
                 return new Response('Yep, this is a leap year!');
@@ -165,7 +165,7 @@ Let's conclude with the new version of our framework::
     use Symfony\Component\HttpKernel;
     use Symfony\Component\Routing;
 
-    function render_template(Request $request)
+    function render_template(Request $request): Response
     {
         extract($request->attributes->all(), EXTR_SKIP);
         ob_start();

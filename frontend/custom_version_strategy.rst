@@ -63,7 +63,7 @@ version string::
             $this->format = $format ?: '%s?%s';
         }
 
-        public function getVersion(string $path)
+        public function getVersion(string $path): string
         {
             if (!is_array($this->hashes)) {
                 $this->hashes = $this->loadManifest();
@@ -72,7 +72,7 @@ version string::
             return $this->hashes[$path] ?? '';
         }
 
-        public function applyVersion(string $path)
+        public function applyVersion(string $path): string
         {
             $version = $this->getVersion($path);
 
@@ -83,7 +83,7 @@ version string::
             return sprintf($this->format, $path, $version);
         }
 
-        private function loadManifest()
+        private function loadManifest(): array
         {
             return json_decode(file_get_contents($this->manifestPath), true);
         }

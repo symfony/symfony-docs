@@ -423,7 +423,7 @@ service class::
 
     class MyClearer implements CacheClearerInterface
     {
-        public function clear(string $cacheDirectory)
+        public function clear(string $cacheDirectory): void
         {
             // clear your cache
         }
@@ -490,7 +490,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 
     class MyCustomWarmer implements CacheWarmerInterface
     {
-        public function warmUp($cacheDirectory)
+        public function warmUp($cacheDirectory): array
         {
             // ... do some sort of operations to "warm" your cache
 
@@ -506,7 +506,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
             return $filesAndClassesToPreload;
         }
 
-        public function isOptional()
+        public function isOptional(): bool
         {
             return true;
         }
@@ -642,12 +642,12 @@ the :class:`Symfony\\Contracts\\Translation\\LocaleAwareInterface` interface::
 
     class MyCustomLocaleHandler implements LocaleAwareInterface
     {
-        public function setLocale($locale)
+        public function setLocale(string $locale): void
         {
             $this->locale = $locale;
         }
 
-        public function getLocale()
+        public function getLocale(): string
         {
             return $this->locale;
         }
@@ -1106,7 +1106,7 @@ required option: ``alias``, which defines the name of the extractor::
         /**
          * Extracts translation messages from a template directory to the catalog.
          */
-        public function extract(string $directory, MessageCatalogue $catalog)
+        public function extract(string $directory, MessageCatalogue $catalog): void
         {
             // ...
         }
@@ -1114,7 +1114,7 @@ required option: ``alias``, which defines the name of the extractor::
         /**
          * Sets the prefix that should be used for new found messages.
          */
-        public function setPrefix(string $prefix)
+        public function setPrefix(string $prefix): void
         {
             $this->prefix = $prefix;
         }

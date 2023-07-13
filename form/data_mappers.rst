@@ -189,7 +189,7 @@ fields and only one of them needs to be mapped in some special way or you only
 need to change how it's written into the underlying object. In that case, register
 a PHP callable that is able to write or read to/from that specific object::
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         // ...
 

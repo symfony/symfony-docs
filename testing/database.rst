@@ -29,7 +29,7 @@ Suppose the class you want to test looks like this::
         ) {
         }
 
-        public function calculateTotalSalary($id)
+        public function calculateTotalSalary(int $id): int
         {
             $employeeRepository = $this->objectManager
                 ->getRepository(Employee::class);
@@ -53,7 +53,7 @@ constructor, you can pass a mock object within a test::
 
     class SalaryCalculatorTest extends TestCase
     {
-        public function testCalculateTotalSalary()
+        public function testCalculateTotalSalary(): void
         {
             $employee = new Employee();
             $employee->setSalary(1000);
@@ -109,7 +109,7 @@ so, get the entity manager via the service container as follows::
                 ->getManager();
         }
 
-        public function testSearchByName()
+        public function testSearchByName(): void
         {
             $product = $this->entityManager
                 ->getRepository(Product::class)

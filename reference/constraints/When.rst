@@ -128,7 +128,7 @@ One way to accomplish this is with the When constraint:
 
         class Discount
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('value', new Assert\GreaterThan(0));
                 $metadata->addPropertyConstraint('value', new Assert\When([
@@ -198,7 +198,7 @@ validation based on its value:
             private ?string $type;
             // ...
 
-            public function doComplexValidation(ExecutionContextInterface $context, $payload)
+            public function doComplexValidation(ExecutionContextInterface $context, $payload): void
             {
                 // ...
             }
@@ -250,7 +250,7 @@ validation based on its value:
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('type', new Assert\When([
                     'expression' => 'value == "percent"',
@@ -260,7 +260,7 @@ validation based on its value:
                 ]));
             }
 
-            public function doComplexValidation(ExecutionContextInterface $context, $payload)
+            public function doComplexValidation(ExecutionContextInterface $context, $payload): void
             {
                 // ...
             }
