@@ -86,7 +86,7 @@ exists in your project::
             return $this->name;
         }
 
-        public function getCreatedAt()
+        public function getCreatedAt(): ?\DateTimeInterface
         {
             return $this->createdAt;
         }
@@ -248,12 +248,12 @@ Assume you have the following plain-old-PHP object::
 
         private string $bar;
 
-        public function getBar()
+        public function getBar(): string
         {
             return $this->bar;
         }
 
-        public function setBar($bar)
+        public function setBar($bar): string
         {
             return $this->bar = $bar;
         }
@@ -1308,22 +1308,22 @@ Circular references are common when dealing with entity relations::
         private string $name;
         private array $members;
 
-        public function setName($name)
+        public function setName($name): void
         {
             $this->name = $name;
         }
 
-        public function getName()
+        public function getName(): string
         {
             return $this->name;
         }
 
-        public function setMembers(array $members)
+        public function setMembers(array $members): void
         {
             $this->members = $members;
         }
 
-        public function getMembers()
+        public function getMembers(): array
         {
             return $this->members;
         }
@@ -1334,22 +1334,22 @@ Circular references are common when dealing with entity relations::
         private string $name;
         private Organization $organization;
 
-        public function setName(string $name)
+        public function setName(string $name): void
         {
             $this->name = $name;
         }
 
-        public function getName()
+        public function getName(): string
         {
             return $this->name;
         }
 
-        public function setOrganization(Organization $organization)
+        public function setOrganization(Organization $organization): void
         {
             $this->organization = $organization;
         }
 
-        public function getOrganization()
+        public function getOrganization(): Organization
         {
             return $this->organization;
         }
@@ -1641,24 +1641,24 @@ parameter of the ``ObjectNormalizer``::
         private ObjectInner $inner;
         private \DateTimeInterface $date;
 
-        public function getInner()
+        public function getInner(): ObjectInner
         {
             return $this->inner;
         }
 
-        public function setInner(ObjectInner $inner)
+        public function setInner(ObjectInner $inner): void
         {
             $this->inner = $inner;
         }
 
-        public function setDate(\DateTimeInterface $date)
-        {
-            $this->date = $date;
-        }
-
-        public function getDate()
+        public function getDate(): \DateTimeInterface
         {
             return $this->date;
+        }
+
+        public function setDate(\DateTimeInterface $date): void
+        {
+            $this->date = $date;
         }
     }
 

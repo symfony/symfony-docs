@@ -126,7 +126,7 @@ it was only optional then you could use setter injection instead::
     {
         private \Mailer $mailer;
 
-        public function setMailer(\Mailer $mailer)
+        public function setMailer(\Mailer $mailer): void
         {
             $this->mailer = $mailer;
         }

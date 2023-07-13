@@ -99,7 +99,7 @@ user registers and when a user updates their contact information later:
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('email', new Assert\Email([
                     'groups' => ['registration'],

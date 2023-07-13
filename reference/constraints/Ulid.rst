@@ -62,7 +62,7 @@ Basic Usage
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('identifier', new Assert\Ulid());
             }

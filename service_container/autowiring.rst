@@ -689,7 +689,7 @@ typed properties:
             #[Required]
             public LoggerInterface $logger;
 
-            public function transform($value)
+            public function transform($value): void
             {
                 $this->logger->info('Transforming '.$value);
                 // ...

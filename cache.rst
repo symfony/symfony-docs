@@ -307,9 +307,10 @@ with either :class:`Symfony\\Contracts\\Cache\\CacheInterface` or
 ``Psr\Cache\CacheItemPoolInterface``::
 
     use Symfony\Contracts\Cache\CacheInterface;
+    // ...
 
     // from a controller method
-    public function listProducts(CacheInterface $customThingCache)
+    public function listProducts(CacheInterface $customThingCache): Response
     {
         // ...
     }
@@ -555,7 +556,7 @@ the same key could be invalidated with one function call::
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             $value0 = $this->myCachePool->get('item_0', function (ItemInterface $item): string {
                 $item->tag(['foo', 'bar']);

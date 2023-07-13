@@ -49,7 +49,7 @@ if you type-hint an argument with :class:`Symfony\\Component\\HttpFoundation\\Re
                 // $this->session = $requestStack->getSession();
             }
 
-            public function someMethod()
+            public function someMethod(): void
             {
                 $session = $this->requestStack->getSession();
 
@@ -1319,7 +1319,7 @@ can determine the correct locale however you want::
         ) {
         }
 
-        public function onKernelRequest(RequestEvent $event)
+        public function onKernelRequest(RequestEvent $event): void
         {
             $request = $event->getRequest();
             if (!$request->hasPreviousSession()) {
@@ -1335,7 +1335,7 @@ can determine the correct locale however you want::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 // must be registered before (i.e. with a higher priority than) the default Locale listener
@@ -1410,7 +1410,7 @@ Remember, to get the user's locale, always use the :method:`Request::getLocale
     // from a controller...
     use Symfony\Component\HttpFoundation\Request;
 
-    public function index(Request $request)
+    public function index(Request $request): void
     {
         $locale = $request->getLocale();
     }
@@ -1451,7 +1451,7 @@ event::
         ) {
         }
 
-        public function onInteractiveLogin(InteractiveLoginEvent $event)
+        public function onInteractiveLogin(InteractiveLoginEvent $event): void
         {
             $user = $event->getAuthenticationToken()->getUser();
 
@@ -1460,7 +1460,7 @@ event::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',

@@ -32,7 +32,7 @@ username and the password are different only if all other validation passes
                 message: 'The password cannot match your username',
                 groups: ['Strict'],
             )]
-            public function isPasswordSafe()
+            public function isPasswordSafe(): bool
             {
                 return ($this->username !== $this->password);
             }
@@ -99,7 +99,7 @@ username and the password are different only if all other validation passes
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('username', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('password', new Assert\NotBlank());
@@ -151,7 +151,7 @@ You can also define a group sequence in the ``validation_groups`` form option::
     class MyType extends AbstractType
     {
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'validation_groups' => new GroupSequence(['First', 'Second']),
@@ -246,7 +246,7 @@ entity and a new constraint group called ``Premium``:
 
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('name', new Assert\NotBlank());
                 $metadata->addPropertyConstraint('creditCard', new Assert\CardScheme([
@@ -337,7 +337,7 @@ provides a sequence of groups to be validated:
         {
             // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->setGroupSequenceProvider(true);
                 // ...

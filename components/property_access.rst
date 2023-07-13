@@ -120,7 +120,7 @@ it with ``get``. So the actual method becomes ``getFirstName()``::
     {
         private string $firstName = 'Wouter';
 
-        public function getFirstName()
+        public function getFirstName(): string
         {
             return $this->firstName;
         }
@@ -143,12 +143,12 @@ getters, this means that you can do something like this::
         private bool $author = true;
         private array $children = [];
 
-        public function isAuthor()
+        public function isAuthor(): bool
         {
             return $this->author;
         }
 
-        public function hasChildren()
+        public function hasChildren(): bool
         {
             return 0 !== count($this->children);
         }
@@ -237,7 +237,7 @@ The ``getValue()`` method can also use the magic ``__get()`` method::
             'Wouter' => [...],
         ];
 
-        public function __get($id)
+        public function __get($id): mixed
         {
             return $this->children[$id];
         }
@@ -267,7 +267,7 @@ enable this feature by using :class:`Symfony\\Component\\PropertyAccess\\Propert
             'wouter' => [...],
         ];
 
-        public function __call($name, $args)
+        public function __call($name, $args): mixed
         {
             $property = lcfirst(substr($name, 3));
             if ('get' === substr($name, 0, 3)) {
@@ -364,7 +364,7 @@ see `Enable other Features`_::
     {
         private array $children = [];
 
-        public function __call($name, $args)
+        public function __call($name, $args): mixed
         {
             $property = lcfirst(substr($name, 3));
             if ('get' === substr($name, 0, 3)) {

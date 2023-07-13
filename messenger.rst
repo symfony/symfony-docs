@@ -96,11 +96,12 @@ You're ready! To dispatch the message (and call the handler), inject the
 
     use App\Message\SmsNotification;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Messenger\MessageBusInterface;
 
     class DefaultController extends AbstractController
     {
-        public function index(MessageBusInterface $bus)
+        public function index(MessageBusInterface $bus): Response
         {
             // will cause the SmsNotificationHandler to be called
             $bus->dispatch(new SmsNotification('Look! I created a message!'));
@@ -392,7 +393,7 @@ Then, in your handler, you can query for a fresh object::
         ) {
         }
 
-        public function __invoke(NewUserWelcomeEmail $welcomeEmail)
+        public function __invoke(NewUserWelcomeEmail $welcomeEmail): void
         {
             $user = $this->userRepository->find($welcomeEmail->getUserId());
 
@@ -1697,7 +1698,7 @@ during a request::
 
     class DefaultControllerTest extends WebTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             $client = static::createClient();
             // ...
@@ -1900,7 +1901,7 @@ You can configure your handler by passing options to the attribute::
     #[AsMessageHandler(fromTransport: 'async', priority: 10)]
     class SmsNotificationHandler
     {
-        public function __invoke(SmsNotification $message)
+        public function __invoke(SmsNotification $message): void
         {
             // ...
         }
@@ -1994,13 +1995,13 @@ A single handler class can handle multiple messages. For that add the
     class SmsNotificationHandler
     {
         #[AsMessageHandler]
-        public function handleSmsNotification(SmsNotification $message)
+        public function handleSmsNotification(SmsNotification $message): void
         {
             // ...
         }
 
         #[AsMessageHandler]
-        public function handleOtherSmsNotification(OtherSmsNotification $message)
+        public function handleOtherSmsNotification(OtherSmsNotification $message): void
         {
             // ...
         }
@@ -2039,7 +2040,7 @@ To do this, add the ``from_transport`` option to each handler. For example::
     #[AsMessageHandler(fromTransport: 'image_transport')]
     class ThumbnailUploadedImageHandler
     {
-        public function __invoke(UploadedImage $uploadedImage)
+        public function __invoke(UploadedImage $uploadedImage): void
         {
             // do some thumbnailing
         }
@@ -2146,7 +2147,7 @@ provided in order to ease the declaration of these special handlers::
     {
         use BatchHandlerTrait;
 
-        public function __invoke(MyMessage $message, Acknowledger $ack = null)
+        public function __invoke(MyMessage $message, Acknowledger $ack = null): mixed
         {
             return $this->handle($message, $ack);
         }
@@ -2201,7 +2202,7 @@ to your message::
     use Symfony\Component\Messenger\MessageBusInterface;
     use Symfony\Component\Messenger\Stamp\DelayStamp;
 
-    public function index(MessageBusInterface $bus)
+    public function index(MessageBusInterface $bus): void
     {
         $bus->dispatch(new SmsNotification('...'), [
             // wait 5 seconds before processing

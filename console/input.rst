@@ -386,7 +386,7 @@ to help you unit test the completion logic::
 
     class GreetCommandTest extends TestCase
     {
-        public function testComplete()
+        public function testComplete(): void
         {
             $application = new Application();
             $application->add(new GreetCommand());

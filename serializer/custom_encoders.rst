@@ -25,22 +25,22 @@ create your own encoder that uses the
 
     class YamlEncoder implements EncoderInterface, DecoderInterface
     {
-        public function encode($data, string $format, array $context = [])
+        public function encode($data, string $format, array $context = []): string
         {
             return Yaml::dump($data);
         }
 
-        public function supportsEncoding(string $format, array $context = [])
+        public function supportsEncoding(string $format, array $context = []): bool
         {
             return 'yaml' === $format;
         }
 
-        public function decode(string $data, string $format, array $context = [])
+        public function decode(string $data, string $format, array $context = []): array
         {
             return Yaml::parse($data);
         }
 
-        public function supportsDecoding(string $format, array $context = [])
+        public function supportsDecoding(string $format, array $context = []): bool
         {
             return 'yaml' === $format;
         }

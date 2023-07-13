@@ -19,7 +19,7 @@ the ``Author`` class has at least 3 characters::
     {
         private string $firstName;
 
-        public static function loadValidatorMetadata(ClassMetadata $metadata)
+        public static function loadValidatorMetadata(ClassMetadata $metadata): void
         {
             $metadata->addPropertyConstraint('firstName', new Assert\NotBlank());
             $metadata->addPropertyConstraint(
@@ -40,7 +40,7 @@ Suppose that, for security reasons, you want to validate that a password field
 doesn't match the first name of the user. First, create a public method called
 ``isPasswordSafe()`` to define this custom validation logic::
 
-    public function isPasswordSafe()
+    public function isPasswordSafe(): bool
     {
         return $this->firstName !== $this->password;
     }
@@ -53,7 +53,7 @@ Then, add the Validator component configuration to the class::
 
     class Author
     {
-        public static function loadValidatorMetadata(ClassMetadata $metadata)
+        public static function loadValidatorMetadata(ClassMetadata $metadata): void
         {
             $metadata->addGetterConstraint('passwordSafe', new Assert\IsTrue([
                 'message' => 'The password cannot match your first name',
@@ -74,7 +74,7 @@ validation logic::
         // ...
         use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-        public function validate(ExecutionContextInterface $context)
+        public function validate(ExecutionContextInterface $context): void
         {
             // ...
         }
@@ -87,7 +87,7 @@ Then, add the Validator component configuration to the class::
 
     class Author
     {
-        public static function loadValidatorMetadata(ClassMetadata $metadata)
+        public static function loadValidatorMetadata(ClassMetadata $metadata): void
         {
             $metadata->addConstraint(new Assert\Callback('validate'));
         }

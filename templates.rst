@@ -580,7 +580,7 @@ to define the template to render::
     class ProductController extends AbstractController
     {
         #[Template('product/index.html.twig')]
-        public function index()
+        public function index(): array
         {
             // ...
 
@@ -618,7 +618,7 @@ the :class:`Twig\\Environment` class::
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // ...
 
@@ -1449,14 +1449,14 @@ Create a class that extends ``AbstractExtension`` and fill in the logic::
 
     class AppExtension extends AbstractExtension
     {
-        public function getFilters()
+        public function getFilters(): array
         {
             return [
                 new TwigFilter('price', [$this, 'formatPrice']),
             ];
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
@@ -1476,14 +1476,14 @@ If you want to create a function instead of a filter, define the
 
     class AppExtension extends AbstractExtension
     {
-        public function getFunctions()
+        public function getFunctions(): array
         {
             return [
                 new TwigFunction('area', [$this, 'calculateArea']),
             ];
         }
 
-        public function calculateArea(int $width, int $length)
+        public function calculateArea(int $width, int $length): int
         {
             return $width * $length;
         }
@@ -1541,7 +1541,7 @@ callable defined in ``getFilters()``::
 
     class AppExtension extends AbstractExtension
     {
-        public function getFilters()
+        public function getFilters(): array
         {
             return [
                 // the logic of this filter is now implemented in a different class
@@ -1567,7 +1567,7 @@ previous ``formatPrice()`` method::
             // extensions, you'll need to inject services using this constructor
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;

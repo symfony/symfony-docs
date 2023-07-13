@@ -22,7 +22,7 @@ Have a look at the following command that has three options::
     #[AsCommand(name: 'demo:args', description: 'Describe args behaviors')]
     class DemoArgsCommand extends Command
     {
-        protected function configure()
+        protected function configure(): void
         {
             $this
                 ->setDefinition(
@@ -34,7 +34,7 @@ Have a look at the following command that has three options::
                 );
         }
 
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             // ...
         }
