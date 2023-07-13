@@ -579,7 +579,7 @@ be included in the resolved options if it was actually passed to
         }
 
         // ...
-        public function sendMail(string from, string $to): void
+        public function sendMail(string $from, string $to): void
         {
             if (array_key_exists('port', $this->options)) {
                 echo 'Set!';
