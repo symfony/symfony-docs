@@ -838,7 +838,7 @@ by default, so you must register first in your services:
             - '%kernel.project_dir%/.env'
             - '%kernel.environment%'
 
-In PHP >= 8, you can remove the the two arguments when autoconfiguration is enabled
+In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
 (which is the default):
 
 .. code-block:: yaml
@@ -846,7 +846,7 @@ In PHP >= 8, you can remove the the two arguments when autoconfiguration is enab
     # config/services.yaml
     services:
         Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
-        
+
 Then, run the command:
 
 .. code-block:: terminal
