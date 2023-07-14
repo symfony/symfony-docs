@@ -101,3 +101,5 @@ Other Constraints
 * :doc:`Collection </reference/constraints/Collection>`
 * :doc:`Count </reference/constraints/Count>`
 * :doc:`UniqueEntity </reference/constraints/UniqueEntity>`
+* :doc:`EnableAutoMapping </reference/constraints/EnableAutoMapping>`
+* :doc:`DisableAutoMapping </reference/constraints/DisableAutoMapping>`
