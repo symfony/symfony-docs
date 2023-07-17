@@ -22,34 +22,6 @@ metadata:
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        // src/Model/BookCollection.php
-        namespace App\Model;
-
-        use App\Model\Author;
-        use App\Model\BookMetadata;
-        use Doctrine\ORM\Mapping as ORM;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        /**
-         * @Assert\EnableAutoMapping
-         */
-        class BookCollection
-        {
-            /**
-             * @ORM\Column(nullable=false)
-             */
-            protected $name = '';
-
-            /**
-             * @ORM\ManyToOne(targetEntity=Author::class)
-             */
-            public Author $author;
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         // src/Model/BookCollection.php
