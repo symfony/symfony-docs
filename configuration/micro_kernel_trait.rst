@@ -55,7 +55,7 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
                 ]);
             }
 
-            #[Route('/random/{limit}', name='random_number')]
+            #[Route('/random/{limit}', name:'random_number')]
             public function randomNumber(int $limit): JsonResponse
             {
                 return new JsonResponse([
