@@ -301,6 +301,8 @@ This option is ``false`` by default and it's considered a legacy option. It was
 only useful in previous Symfony versions, when it was recommended to use bundles
 to organize the application code.
 
+.. _doctrine_auto-mapping:
+
 Custom Mapping Entities in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
