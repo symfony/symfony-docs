@@ -80,6 +80,8 @@ Validation Constraints Reference
    constraints/Traverse
    constraints/CssColor
    constraints/Cascade
+   constraints/EnableAutoMapping
+   constraints/DisableAutoMapping
    constraints/NoSuspiciousCharacters
 
 The Validator is designed to validate objects against *constraints*.
