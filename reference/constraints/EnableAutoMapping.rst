@@ -1,12 +1,11 @@
 EnableAutoMapping
 =================
 
-This constraint allows to enable Doctrine's ``auto_mapping`` on a class or a
-property. You can read more about it
-:ref:`here <doctrine_auto-mapping>`. Automapping allows to determine
-validation rules based on Doctrine's annotations and attributes. You may
-use this constraint when automapping is globally disabled, but you still want
-to enable this feature for a class or a property specifically.
+This constraint allows to enable :ref:`Doctrine's auto mapping <doctrine_auto-mapping>`
+on a class or a property. Automapping allows to determine validation rules based
+on Doctrine's annotations and attributes. You may use this constraint when
+automapping is globally disabled, but you still want to enable this feature for
+a class or a property specifically.
 
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
