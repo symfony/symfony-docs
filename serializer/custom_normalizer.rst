@@ -63,8 +63,8 @@ a service and :doc:`tagged </service_container/tags>` with ``serializer.normaliz
 If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is done automatically!
 
-Performance
------------
+Performance of Normalizers/Denormalizers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To figure which normalizer (or denormalizer) must be used to handle an object,
 the :class:`Symfony\\Component\\Serializer\\Serializer` class will call the
@@ -72,39 +72,10 @@ the :class:`Symfony\\Component\\Serializer\\Serializer` class will call the
 (or :method:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface::supportsDenormalization`)
 of all registered normalizers (or denormalizers) in a loop.
 
-The result of these methods can vary depending on the object to serialize, the
-format and the context. That's why the result **is not cached** by default and
-can result in a significant performance bottleneck.
-
-However, most normalizers (and denormalizers) always return the same result when
-the object's type and the format are the same, so the result can be cached. To
-do so, make those normalizers (and denormalizers) implement the
-:class:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface`
-and return ``true`` when
-:method:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface::hasCacheableSupportsMethod`
-is called.
-
-.. note::
-
-    All built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`
-    as well the ones included in `API Platform`_ natively implement this interface.
-
-.. deprecated:: 6.3
-
-    The :class:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface`
-    interface is deprecated since Symfony 6.3. You should implement the
-    ``getSupportedTypes()`` method instead, as shown in the section below.
-
-Improving Performance of Normalizers/Denormalizers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.3
-
-    The ``getSupportedTypes()`` method was introduced in Symfony 6.3.
-
-Both :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
+Additionally, both
+:class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
 and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`
-contain a new method ``getSupportedTypes()``. This method allows normalizers or
+contain the ``getSupportedTypes()`` method. This method allows normalizers or
 denormalizers to declare the type of objects they can handle, and whether they
 are cacheable. With this info, even if the ``supports*()`` call is not cacheable,
 the Serializer can skip a ton of method calls to ``supports*()`` improving
@@ -148,5 +119,3 @@ Here is an example of how to use the ``getSupportedTypes()`` method::
 
 Note that ``supports*()`` method implementations should not assume that
 ``getSupportedTypes()`` has been called before.
-
-.. _`API Platform`: https://api-platform.com
