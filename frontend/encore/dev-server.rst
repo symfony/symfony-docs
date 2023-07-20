@@ -128,6 +128,34 @@ your page. HMR works automatically with CSS (as long as you're using the
 ``dev-server`` and Encore 1.0 or higher) but only works with some JavaScript
 (like :doc:`Vue.js </frontend/encore/vuejs>`).
 
+Live Reloading when changing PHP / Twig Files
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+To utilize the HMR superpower along with live reload for your PHP code and
+templates, set the following options:
+
+
+.. code-block:: javascript
+
+    // webpack.config.js
+    // ...
+
+    Encore
+        // ...
+
+        .configureDevServerOptions(options => {
+            options.liveReload = true;
+            options.static = {
+                watch: false
+            };
+            options.watchFiles = {
+                paths: ['src/**/*.php', 'templates/**/*'],
+            };
+        })
+
+The ``static.watch`` option is required to disable the default reloading of
+files from the static directory, as those files are already handled by HMR.
+
 .. versionadded:: 1.0.0
 
     Before Encore 1.0, you needed to pass a ``--hot`` flag at the command line
