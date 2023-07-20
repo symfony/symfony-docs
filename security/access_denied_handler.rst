@@ -23,6 +23,8 @@ This interface has one method (``start()``) that is called whenever an
 unauthenticated user tries to access a protected resource::
 
     // src/Security/AuthenticationEntryPoint.php
+    namespace App\Security;
+
     use Symfony\Component\HttpFoundation\RedirectResponse;
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
@@ -36,14 +38,14 @@ unauthenticated user tries to access a protected resource::
             private UrlGeneratorInterface $urlGenerator,
         ) {
         }
-    
+
         public function start(Request $request, AuthenticationException $authException = null): RedirectResponse
         {
             // add a custom flash message and redirect to the login page
             /** @var FlashBagInterface */
             $flashBag = $request->getSession()->getBag('flashes');
             $flashBag->add('note', 'You have to login in order to access this page.');
-    
+
             return new RedirectResponse($this->urlGenerator->generate('coregenionShop_loginMain'));
         }
     }
