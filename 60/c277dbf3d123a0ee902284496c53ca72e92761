@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-07-10T09:52:51Z
+
+Thanks for this proposal.
+
+Before merging, let's ping some JavaScript expert (like @stof or @weaverryan) to see if they can review these changes. Thanks!
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-07-10T17:47:13Z
+
+I've never considered having the browser "live reload" when you change PHP or Twig files. Is that a common thing people want/do?
+
+---------------------------------------------------------------------------
+
+by ne0-cz at 2023-07-10T20:01:58Z
+
+I don't really know what people want/do, I can only speak about my experience - a full-stack developer.
+
+When I work on some JS-related feature I'll be definitely editing both the JS files and Twig templates. And since the JS changes are automatically updated in the browser without needing to manually reload it, I'm used to the same behavior even with template changes.
+
+The `static.watch` option wasn't easy to figure out. This is exactly the place that'd help me solve it..
