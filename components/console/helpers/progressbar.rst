@@ -97,6 +97,12 @@ The progress will then be displayed as a throbber:
      1/3 [=========>------------------]  33%
      3/3 [============================] 100%
 
+.. tip::
+
+    An alternative to this is to use a
+    :doc:`/components/console/helpers/progressindicator` instead of a
+    progress bar.
+
 Whenever your task is finished, don't forget to call
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::finish` to ensure
 that the progress bar display is refreshed with a 100% completion.
