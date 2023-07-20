@@ -48,10 +48,12 @@ A) The ``FormEvents::PRE_SET_DATA`` Event
 .........................................
 
 The ``FormEvents::PRE_SET_DATA`` event is dispatched at the beginning of the
-``Form::setData()`` method. It can be used to:
-
-* Modify the data given during pre-population;
-* Modify a form depending on the pre-populated data (adding or removing fields dynamically).
+``Form::setData()`` method. It is used to modify the data given during
+pre-population with
+:method:`FormEvent::setData() <Symfony\\Component\\Form\\FormEvent::setData>`.
+The method :method:`Form::setData() <Symfony\\Component\\Form\\Form::setData>`
+is locked since the event is dispatched from it and will throw an exception
+if called from a listener.
 
 ===============  ========
 Data Type        Value
@@ -66,13 +68,6 @@ View data        ``null``
     See all form events at a glance in the
     :ref:`Form Events Information Table <component-form-event-table>`.
 
-.. caution::
-
-    During ``FormEvents::PRE_SET_DATA``,
-    :method:`Form::setData() <Symfony\\Component\\Form\\Form::setData>`
-    is locked and will throw an exception if used. If you wish to modify
-    data, you should use
-    :method:`FormEvent::setData() <Symfony\\Component\\Form\\FormEvent::setData>`
     instead.
 
 .. sidebar:: ``FormEvents::PRE_SET_DATA`` in the Form component
@@ -88,8 +83,8 @@ B) The ``FormEvents::POST_SET_DATA`` Event
 
 The ``FormEvents::POST_SET_DATA`` event is dispatched at the end of the
 :method:`Form::setData() <Symfony\\Component\\Form\\Form::setData>`
-method. This event is mostly here for reading data after having pre-populated
-the form.
+method. This event can be used to modify a form depending on the populated data
+(adding or removing fields dynamically).
 
 ===============  ====================================================
 Data Type        Value
