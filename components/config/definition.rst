@@ -865,3 +865,8 @@ Otherwise the result is a clean array of configuration values::
         $databaseConfiguration,
         $configs
     );
+
+.. caution::
+
+    When processing the configuration tree, the processor assumes that the top
+    level array key (which matches the extension name) is already stripped off.
