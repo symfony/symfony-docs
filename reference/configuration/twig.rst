@@ -54,7 +54,7 @@ autoescape_service_method
 If ``autoescape_service`` option is defined, then this option defines the method
 called to determine the default escaping applied to the template.
 
-If the service defined in ``autoescape_service`` in invocable (i.e. it defines
+If the service defined in ``autoescape_service`` is invocable (i.e. it defines
 the `__invoke() PHP magic method`_) you can omit this option.
 
 .. versionadded:: 6.4
