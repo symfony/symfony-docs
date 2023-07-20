@@ -46,7 +46,7 @@ unauthenticated user tries to access a protected resource::
             $flashBag = $request->getSession()->getBag('flashes');
             $flashBag->add('note', 'You have to login in order to access this page.');
 
-            return new RedirectResponse($this->urlGenerator->generate('coregenionShop_loginMain'));
+            return new RedirectResponse($this->urlGenerator->generate('security_login'));
         }
     }
 
