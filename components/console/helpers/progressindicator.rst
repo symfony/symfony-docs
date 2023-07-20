@@ -1,13 +1,13 @@
 Progress Indicator
 ==================
 
-When executing longer-running commands without knowing if the the processing
-is nearly done or not, it may be helpful to show that something is actually
-happening and that updates as your command runs.
+Progress indicators are useful to let users know that a command isn't stalled.
+Unlike :doc:`progress bars </components/console/helpers/progressbar>`, these
+indicators are used when the command duration is indeterminate (e.g. long-running
+commands, unquantifiable tasks, etc.)
 
-To do so, use the
-:class:`Symfony\\Component\\Console\\Helper\\ProgressIndicator` and advance the
-progress as the command executes::
+They work by instantiating the :class:`Symfony\\Component\\Console\\Helper\\ProgressIndicator`
+class and advancing the progress as the command executes::
 
     use Symfony\Component\Console\Helper\ProgressIndicator;
 
@@ -57,10 +57,9 @@ level of verbosity of the ``OutputInterface`` instance:
      / Processing... (1 sec, 6.0 MiB)
      - Processing... (1 sec, 6.0 MiB)
 
-.. note::
+.. tip::
 
-    If you call a command with the quiet flag (``-q``), the progress indicator won't
-    be displayed.
+    Call a command with the quiet flag (``-q``) to not display any progress indicator.
 
 Instead of relying on the verbosity mode of the current command, you can also
 force a format via the second argument of the ``ProgressIndicator``
@@ -108,8 +107,7 @@ built-in placeholders:
 * ``memory``: The current memory usage;
 * ``message``: used to display arbitrary messages in the progress indicator.
 
-If you want to customize a placeholder, for example the ``message`` one, here
-is how you should do this::
+For example, this is how you can customize the ``message`` placeholder::
 
     ProgressIndicator::setPlaceholderFormatterDefinition(
         'message',
