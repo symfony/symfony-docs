@@ -870,3 +870,9 @@ Otherwise the result is a clean array of configuration values::
         $databaseConfiguration,
         $configs
     );
+
+.. caution::
+
+    When processing the configuration tree, the processor assumes the top level 
+    array key is already stripped off. If you want a root name, you should
+    add it to your tree builder as an array node.
