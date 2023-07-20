@@ -123,8 +123,8 @@ Event Listeners                                      ``src/EventListener/``
 Configuration (routes, services, etc.)               ``config/``
 Web Assets (CSS, JS, images)                         ``public/``
 Translation files                                    ``translations/``
-Validation (when not using annotations)              ``config/validation/``
-Serialization (when not using annotations)           ``config/serialization/``
+Validation (when not using attributes)               ``config/validation/``
+Serialization (when not using attributes)            ``config/serialization/``
 Templates                                            ``templates/``
 Unit and Functional Tests                            ``tests/``
 ===================================================  ========================================
@@ -163,7 +163,7 @@ If the bundle includes Doctrine ORM entities and/or ODM documents, it's
 recommended to define their mapping using XML files stored in
 ``config/doctrine/``. This allows to override that mapping using the
 :doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
-This is not possible when using annotations/attributes to define the mapping.
+This is not possible when using attributes to define the mapping.
 
 Tests
 -----

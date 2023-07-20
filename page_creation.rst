@@ -55,7 +55,7 @@ random) number and prints it. To do that, create a "Controller" class and a
         }
     }
 
-.. _annotation-routes:
+.. _attribute-routes:
 
 Now you need to associate this controller function with a public URL (e.g. ``/lucky/number``)
 so that the ``number()`` method is called when a user browses to it. This association

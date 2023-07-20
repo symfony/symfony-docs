@@ -5,6 +5,11 @@ Attributes are the successor of annotations since PHP 8. Attributes are native
 to the language and Symfony takes full advantage of them across the framework
 and its different components.
 
+.. deprecated:: 6.4
+
+    Annotations across the framework are deprecated since Symfony 6.4, you must
+    only use attributes instead.
+
 Doctrine Bridge
 ~~~~~~~~~~~~~~~
 
@@ -78,14 +83,14 @@ Security
 ~~~~~~~~
 
 * :ref:`CurrentUser <security-json-login>`
-* :ref:`IsGranted <security-securing-controller-annotations>`
+* :ref:`IsGranted <security-securing-controller-attributes>`
 
 Serializer
 ~~~~~~~~~~
 
 * :ref:`Context <serializer_serializer-context>`
 * :ref:`DiscriminatorMap <serializer_interfaces-and-abstract-classes>`
-* :ref:`Groups <component-serializer-attributes-groups-annotations>`
+* :ref:`Groups <component-serializer-attributes-groups-attributes>`
 * :ref:`Ignore <serializer_ignoring-attributes>`
 * :ref:`MaxDepth <serializer_handling-serialization-depth>`
 * :ref:`SerializedName <serializer_name-conversion>`

@@ -193,7 +193,7 @@ add/remove fields, add/remove methods or update configuration.
 
 Doctrine supports a wide variety of field types, each with their own options.
 To see a full list, check out `Doctrine's Mapping Types documentation`_.
-If you want to use XML instead of annotations, add ``type: xml`` and
+If you want to use XML instead of attributes, add ``type: xml`` and
 ``dir: '%kernel.project_dir%/config/doctrine'`` to the entity mappings in your
 ``config/packages/doctrine.yaml`` file.
 
@@ -746,7 +746,7 @@ the default convention.
 MapEntity Options
 ~~~~~~~~~~~~~~~~~
 
-A number of options are available on the ``MapEntity`` annotation to
+A number of options are available on the ``MapEntity`` attribute to
 control behavior:
 
 ``id``

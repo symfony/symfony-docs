@@ -274,6 +274,10 @@ One of ``annotation`` (for PHP annotations; it's the default value),
 ``attribute`` (for PHP attributes), ``xml``, ``yml``, ``php`` or
 ``staticphp``. This specifies which type of metadata type your mapping uses.
 
+.. deprecated:: 6.4
+
+    Annotations are deprecated since Symfony 6.4, use attributes instead.
+
 See `Doctrine Metadata Drivers`_ for more information about this option.
 
 ``dir``
@@ -385,7 +389,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
                     mappings:
                         # ...
                         SomeEntityNamespace:
-                            type: annotation
+                            type: attribute
                             dir: '%kernel.project_dir%/src/Entity'
                             is_bundle: false
                             prefix: App\Entity
@@ -403,7 +407,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
             <doctrine:config>
                 <doctrine:orm>
                     <mapping name="SomeEntityNamespace"
-                        type="annotation"
+                        type="attribute"
                         dir="%kernel.project_dir%/src/Entity"
                         is-bundle="false"
                         prefix="App\Entity"
@@ -422,7 +426,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
             $emDefault->autoMapping(true);
             $emDefault->mapping('SomeEntityNamespace')
-                ->type('annotation')
+                ->type('attribute')
                 ->dir('%kernel.project_dir%/src/Entity')
                 ->isBundle(false)
                 ->prefix('App\Entity')
@@ -446,14 +450,14 @@ configuration format. The bundle will stop as soon as it locates one.
 
 If it wasn't possible to determine a configuration format for a bundle,
 the DoctrineBundle will check if there is an ``Entity`` folder in the bundle's
-root directory. If the folder exist, Doctrine will fall back to using an
-annotation driver.
+root directory. If the folder exist, Doctrine will fall back to using
+attributes.
 
 Default Value of Dir
 ....................
 
 If ``dir`` is not specified, then its default value depends on which configuration
-driver is being used. For drivers that rely on the PHP files (annotation,
+driver is being used. For drivers that rely on the PHP files (attribute,
 ``staticphp``) it will be ``[Bundle]/Entity``. For drivers that are using
 configuration files (XML, YAML, ...) it will be
 ``[Bundle]/Resources/config/doctrine``.

@@ -91,7 +91,7 @@ From the perspective of the ``Product`` entity, this is a many-to-one relationsh
 From the perspective of the ``Category`` entity, this is a one-to-many relationship.
 
 To map this, first create a ``category`` property on the ``Product`` class with
-the ``ManyToOne`` annotation. You can do this by hand, or by using the ``make:entity``
+the ``ManyToOne`` attribute. You can do this by hand, or by using the ``make:entity``
 command, which will ask you several questions about your relationship. If you're
 not sure of the answer, don't worry! You can always change the settings later:
 
