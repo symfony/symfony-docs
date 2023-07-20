@@ -31,7 +31,7 @@ unauthenticated user tries to access a protected resource::
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
     use Symfony\Component\Security\Core\Exception\AuthenticationException;
     use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
-    
+
     class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
     {
         public function __construct(
