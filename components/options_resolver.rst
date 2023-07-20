@@ -945,12 +945,11 @@ method ``clearOptionsConfig()`` and call it periodically::
 That's it! You now have all the tools and knowledge needed to process
 options in your code.
 
-Get More Insights
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Getting More Insights
+~~~~~~~~~~~~~~~~~~~~~
 
-The `OptionsResolverIntrospector` inspect options definitions inside an `OptionsResolver` instance.
-
-method::
+Use the ``OptionsResolverIntrospector`` to inspect the options definitions
+inside an ``OptionsResolver`` instance::
 
    use Symfony\Component\OptionsResolver\Debug\OptionsResolverIntrospector;
    use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -963,5 +962,3 @@ method::
 
     $introspector = new OptionsResolverIntrospector($resolver);
     $introspector->getDefault('host'); // Retrieves "smtp.example.org"
-
-
