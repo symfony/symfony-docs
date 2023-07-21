@@ -207,9 +207,6 @@ Doctrine supports several metadata formats, but it's recommended to use PHP
 attributes because they are by far the most convenient and agile way of setting
 up and looking for mapping information.
 
-If your PHP version doesn't support attributes yet, use annotations, which is
-similar but requires installing some extra dependencies in your project.
-
 Controllers
 -----------
 
