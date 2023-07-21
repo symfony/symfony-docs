@@ -740,6 +740,16 @@ Clear all cache pools:
 
     The ``--all`` option was introduced in Symfony 6.3.
 
+Clear all cache pools except some:
+
+.. code-block:: terminal
+
+    $ php bin/console cache:pool:clear --all --exclude=my_cache_pool --exclude=another_cache_pool
+
+.. versionadded:: 6.4
+
+    The ``--exclude`` option was introduced in Symfony 6.4.
+
 Clear all caches everywhere:
 
 .. code-block:: terminal
