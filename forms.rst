@@ -461,7 +461,8 @@ Before using validation, add support for it in your application:
     $ composer require symfony/validator
 
 Validation is done by adding a set of rules, called (validation) constraints,
-to a class. You can add them either to the entity class or to the form class.
+to a class. You can add them either to the entity class or by using the
+:ref:`constraints option <reference-form-option-constraints>` of form types.
 
 To see the first approach - adding constraints to the entity - in action,
 add the validation constraints, so that the ``task`` field cannot be empty,
@@ -567,9 +568,9 @@ object.
 That's it! If you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
-To see the second approach - adding constraints to the form - and to
-learn more about the validation constraints, please refer to the
-:doc:`Symfony validation documentation </validation>`.
+To see the second approach - adding constraints to the form - please refer to
+this :ref:`section <form-option-constraints>`.
+Both approaches can be used together.
 
 Form Validation Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~
