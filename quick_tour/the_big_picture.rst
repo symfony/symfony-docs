@@ -135,13 +135,8 @@ Try the page out by going to ``http://localhost:8000/hello/Symfony``. You should
 see: Hello Symfony! The value of the ``{name}`` in the URL is available as a ``$name``
 argument in your controller.
 
-But this can be even simpler! So let's install annotations support:
-
-.. code-block:: terminal
-
-    $ composer require annotations
-
-Now, comment-out the YAML route by adding the ``#`` character:
+But this can be even simpler! Comment-out the YAML route by adding the
+``#`` character:
 
 .. code-block:: yaml
 

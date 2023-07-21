@@ -2317,6 +2317,7 @@ will happen:
    :ref:`customize <controller-error-pages-by-status-code>`).
 
 .. _security-securing-controller-annotations:
+.. _security-securing-controller-attributes:
 
 Another way to secure one or more controller actions is to use the ``#[IsGranted()]`` attribute.
 In the following example, all controller actions will require the
