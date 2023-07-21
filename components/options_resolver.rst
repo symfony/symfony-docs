@@ -936,8 +936,8 @@ Getting More Insights
 Use the ``OptionsResolverIntrospector`` to inspect the options definitions
 inside an ``OptionsResolver`` instance::
 
-   use Symfony\Component\OptionsResolver\Debug\OptionsResolverIntrospector;
-   use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\OptionsResolver\Debug\OptionsResolverIntrospector;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
 
     $resolver = new OptionsResolver();
     $resolver->setDefaults([
