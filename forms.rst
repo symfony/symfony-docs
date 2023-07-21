@@ -568,9 +568,8 @@ object.
 That's it! If you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
-To see the second approach - adding constraints to the form - please refer to
-this :ref:`section <form-option-constraints>`.
-Both approaches can be used together.
+To see the second approach - adding constraints to the form - refer to
+:ref:`this section <form-option-constraints>`. Both approaches can be used together.
 
 Form Validation Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~
