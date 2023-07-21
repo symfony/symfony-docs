@@ -223,6 +223,7 @@ controllers shouldn't contain any business logic. Controllers should contain
 nothing more than a few lines of *glue-code*, so you are not coupling the
 important parts of your application.
 
+.. _best-practice-controller-annotations:
 .. _best-practice-controller-attributes:
 
 Use Attributes to Configure Routing, Caching, and Security

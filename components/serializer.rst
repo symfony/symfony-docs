@@ -288,6 +288,7 @@ for each format:
 
     $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
 
+.. _component-serializer-attributes-groups-annotations:
 .. _component-serializer-attributes-groups-attributes:
 
 Then, create your groups definition:
