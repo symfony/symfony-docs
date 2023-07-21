@@ -288,7 +288,7 @@ for each format:
 
     $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
 
-.. _component-serializer-attributes-groups-annotations:
+.. _component-serializer-attributes-groups-attributes:
 
 Then, create your groups definition:
 
@@ -436,8 +436,8 @@ Ignoring Attributes
 All attributes are included by default when serializing objects. There are two
 options to ignore some of those attributes.
 
-Option 1: Using ``@Ignore`` Annotation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Option 1: Using ``#[Ignore]`` Attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. configuration-block::
 

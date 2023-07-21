@@ -131,7 +131,7 @@ What is a Custom Route Loader
 A custom route loader enables you to generate routes based on some
 conventions, patterns or integrations. An example for this use-case is the
 `OpenAPI-Symfony-Routing`_ library where routes are generated based on
-OpenAPI/Swagger annotations. Another example is the `SonataAdminBundle`_ that
+OpenAPI/Swagger attributes. Another example is the `SonataAdminBundle`_ that
 creates routes based on CRUD conventions.
 
 Loading Routes

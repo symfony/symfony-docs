@@ -72,7 +72,7 @@ so Symfony doesn't try to get/set its value from the related entity::
                     // every time you edit the Product details
                     'required' => false,
 
-                    // unmapped fields can't define their validation using annotations
+                    // unmapped fields can't define their validation using attributes
                     // in the associated entity, so you can use the PHP constraint classes
                     'constraints' => [
                         new File([
