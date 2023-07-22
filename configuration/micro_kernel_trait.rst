@@ -55,6 +55,13 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
                 ]);
             }
 
+            protected function configureRoutes(RoutingConfigurator $routes): void
+            {
+                if (false !== ($fileName = (new \ReflectionObject($this))->getFileName())) {
+                    $routes->import($fileName, 'annotation');
+                }
+            }
+
             #[Route('/random/{limit}', name: 'random_number')]
             public function randomNumber(int $limit): JsonResponse
             {
