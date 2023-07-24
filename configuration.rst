@@ -75,7 +75,11 @@ readable. These are the main advantages and disadvantages of each format:
 
     By default Symfony loads the configuration files defined in YAML and PHP
     formats. If you define configuration in XML format, update the
-    ``src/Kernel.php`` file to add support for the ``.xml`` file extension.
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait::configureContainer`
+    and/or
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait::configureRoutes`
+    methods in the ``src/Kernel.php`` file to add support for the ``.xml`` file
+    extension.
 
     .. versionadded:: 6.1
 
@@ -855,7 +859,7 @@ In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
     # config/services.yaml
     services:
         Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
-        
+
 Then, run the command:
 
 .. code-block:: terminal
