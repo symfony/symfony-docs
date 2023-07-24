@@ -55,6 +55,15 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
         }
     }
 
+.. deprecated:: 6.4
+
+    Injecting an ``ObjectNormalizer`` in your custom normalizer is deprecated
+    since Symfony 6.4. Implement the
+    :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerAwareInterface`
+    and use the the
+    :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerAwareTrait` instead
+    to inject the ``$normalizer`` property.
+
 Registering it in your Application
 ----------------------------------
 
