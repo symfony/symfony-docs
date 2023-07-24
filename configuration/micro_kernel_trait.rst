@@ -124,7 +124,7 @@ events directly from the kernel, again it will be registered automatically::
 
         public function onKernelException(ExceptionEvent $event): void
         {
-            if ($event->getException() instanceof Danger) {
+            if ($event->getThrowable() instanceof Danger) {
                 $event->setResponse(new Response('It\'s dangerous to go alone. Take this ⚔'));
             }
         }
