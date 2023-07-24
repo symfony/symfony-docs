@@ -217,7 +217,7 @@ provide a callback function to dynamically generate suggestions::
             // where files and dirs can be found
             $foundFilesAndDirs = @scandir($inputPath) ?: [];
 
-            return array_map(function (string $dirOrFile) use ($inputPath): void {
+            return array_map(function (string $dirOrFile) use ($inputPath): string {
                 return $inputPath.$dirOrFile;
             }, $foundFilesAndDirs);
         };
@@ -462,7 +462,7 @@ You can also use a validator with a hidden question::
         $question->setNormalizer(function (?string $value): string {
             return $value ?? '';
         });
-        $question->setValidator(function (string $value): void {
+        $question->setValidator(function (string $value): string {
             if ('' === trim($value)) {
                 throw new \Exception('The password cannot be empty');
             }
