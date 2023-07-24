@@ -2231,9 +2231,9 @@ the :class:`Symfony\\Component\\HttpClient\\Test\\HarFileResponseFactory` will f
 the request method, url and body (if any). Note that **this doesn't work** if the request body or uri is random / always changing
 (if it contains current date or random UUID(s) for example).
 
-.. versionadded:: 7.0
+.. versionadded:: 6.4
 
-    The ``HarFileResponseFactory`` was introduced in Symfony 7.0.
+    The ``HarFileResponseFactory`` was introduced in Symfony 6.4.
 
 Testing Network Transport Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
