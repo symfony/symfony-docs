@@ -2235,9 +2235,9 @@ will find the associated response based on the request method, URL and body (if 
 Note that **this won't work** if the request body or URI is random / always
 changing (e.g. if it contains current date or random UUIDs).
 
-.. versionadded:: 7.0
+.. versionadded:: 6.4
 
-    The ``HarFileResponseFactory`` was introduced in Symfony 7.0.
+    The ``HarFileResponseFactory`` was introduced in Symfony 6.4.
 
 Testing Network Transport Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
