@@ -1315,10 +1315,6 @@ adapted to the format required by GitHub, but you can force that format too:
 Pseudo-localization translator
 ------------------------------
 
-.. versionadded:: 5.2
-
-    The pseudolocalization translator was introduced in Symfony 5.2.
-
 .. note::
 
     The pseudolocalization translator is meant to be used for development only.
