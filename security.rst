@@ -2417,7 +2417,7 @@ want to include extra details only for users that have a ``ROLE_SALES_ADMIN`` ro
     +     ) {
     +     }
 
-          public function generateReport()
+          public function generateReport(): void
           {
               $salesData = [];
 

@@ -154,7 +154,7 @@ automatically changed to ``'.inner'``):
         {
             public function __construct(
                 #[AutowireDecorated]
-                private $inner,
+                private object $inner,
             ) {
             }
 

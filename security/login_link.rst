@@ -93,7 +93,7 @@ intercept requests to this route:
         class SecurityController extends AbstractController
         {
             #[Route('/login_check', name: 'login_check')]
-            public function check()
+            public function check(): never
             {
                 throw new \LogicException('This code should never be reached');
             }
@@ -149,13 +149,14 @@ this interface::
     use App\Repository\UserRepository;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
     class SecurityController extends AbstractController
     {
         #[Route('/login', name: 'login')]
-        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
+        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request): Response
         {
             // check if login form is submitted
             if ($request->isMethod('POST')) {
@@ -226,7 +227,7 @@ number::
     class SecurityController extends AbstractController
     {
         #[Route('/login', name: 'login')]
-        public function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
+        public function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request): Response
         {
             if ($request->isMethod('POST')) {
                 $email = $request->request->get('email');
@@ -615,7 +616,7 @@ user create this POST request (e.g. by clicking a button)::
     class SecurityController extends AbstractController
     {
         #[Route('/login_check', name: 'login_check')]
-        public function check(Request $request)
+        public function check(Request $request): Response
         {
             // get the login link query parameters
             $expires = $request->query->get('expires');
@@ -773,7 +774,7 @@ features such as the locale used to generate the link::
     class SecurityController extends AbstractController
     {
         #[Route('/login', name: 'login')]
-        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request)
+        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request): Response
         {
             // check if login form is submitted
             if ($request->isMethod('POST')) {

@@ -26,18 +26,18 @@ properties::
 
     class BlogPost
     {
-        private $category;
+        private string $category;
 
-        private $isTechnicalPost;
+        private bool $isTechnicalPost;
 
         // ...
 
-        public function getCategory()
+        public function getCategory(): string
         {
             return $this->category;
         }
 
-        public function setIsTechnicalPost($isTechnicalPost)
+        public function setIsTechnicalPost(bool $isTechnicalPost): void
         {
             $this->isTechnicalPost = $isTechnicalPost;
         }
@@ -109,7 +109,7 @@ One way to accomplish this is with the Expression constraint:
 
         class BlogPost
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Expression([
                     'expression' => 'this.getCategory() in ["php", "symfony"] or !this.isTechnicalPost()',
@@ -155,7 +155,7 @@ assert that the expression must return ``true`` for validation to fail.
                     "this.getCategory() in ['php', 'symfony'] or value == false",
                     message: 'If this is a tech post, the category should be either php or symfony!',
                 )]
-                private $isTechnicalPost;
+                private bool $isTechnicalPost;
 
                 // ...
             }
@@ -202,7 +202,7 @@ assert that the expression must return ``true`` for validation to fail.
 
             class BlogPost
             {
-                public static function loadValidatorMetadata(ClassMetadata $metadata)
+                public static function loadValidatorMetadata(ClassMetadata $metadata): void
                 {
                     $metadata->addPropertyConstraint('isTechnicalPost', new Assert\Expression([
                         'expression' => 'this.getCategory() in ["php", "symfony"] or value == false',
@@ -298,7 +298,7 @@ type (numeric, boolean, strings, null, etc.)
                 'value + error_margin < threshold',
                 values: ['error_margin' => 0.25, 'threshold' => 1.5],
             )]
-            private $metric;
+            private float $metric;
 
             // ...
         }
@@ -346,7 +346,7 @@ type (numeric, boolean, strings, null, etc.)
 
         class Analysis
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('metric', new Assert\Expression([
                     'expression' => 'value + error_margin < threshold',

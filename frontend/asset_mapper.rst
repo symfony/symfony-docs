@@ -34,7 +34,7 @@ To install the AssetMapper component, run:
 
     $ composer require symfony/asset-mapper symfony/asset symfony/twig-pack
 
-In addition to ``symfony/asset-mapper`, this also makes sure that you have the
+In addition to ``symfony/asset-mapper``, this also makes sure that you have the
 :doc:`Asset Component </components/asset>` and Twig available.
 
 If you're using :ref:`Symfony Flex <symfony-flex>`, you're done! The recipe just
@@ -267,9 +267,9 @@ outputs an `importmap`_:
         }
     }</script>
 
-Importmaps is a native browser feature. It works in all browsers thanks to
+Import maps are a native browser feature. They work in all browsers thanks to
 a "shim" file that's included automatically by the AssetMapper component
-(all *modern* browsers `support it natively <https://caniuse.com/import-maps>`_).
+(all *modern* browsers `support them natively <https://caniuse.com/import-maps>`_).
 
 When you import ``bootstrap`` from your JavaScript, the browser will look at
 the ``importmap`` and see that it should fetch the package from the URL.
@@ -289,7 +289,8 @@ Preloading and Initializing "app.js"
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the importmap, the ``{{ importmap() }}`` Twig function also renders
-an `es module shim`_ and a few other things, like a set of "preloads":
+an `ES module shim`_ (see the :ref:`polyfill config <config-importmap-polyfill>`) and
+a few other things, like a set of "preloads":
 
 .. code-block:: html
 
@@ -693,7 +694,7 @@ Does the AssetMapper Component work in All Browsers?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Yup! Features like importmaps and the ``import`` statement are supported
-in all modern browsers, but the AssetMapper component ships with an `es module shim`_
+in all modern browsers, but the AssetMapper component ships with an `ES module shim`_
 to support ``importmap`` in old browsers. So, it works everywhere (see note
 below).
 
@@ -1027,6 +1028,21 @@ This is a list of glob patterns that will be excluded from the asset map:
 You can use the ``debug:asset-map`` command to double-check that the files
 you expect are being included in the asset map.
 
+.. _config-importmap-polyfill:
+
+``framework.asset_mapper.importmap_polyfill``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Configure the polyfill for older browsers. Default is `ES module shim`_. You can pass
+any URL to be included, or ``false`` to disable the polyfill.
+
+.. code-block:: yaml
+
+    framework:
+        asset_mapper:
+            importmap_polyfill: false # disable the shim ...
+            # importmap_polyfill: 'https://...' # ... or pass some custom URL
+
 ``framework.asset_mapper.importmap_script_attributes``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1127,7 +1143,7 @@ This will force the AssetMapper component to re-calculate the content of all fil
 .. _npm package: https://www.npmjs.com
 .. _importmap: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap
 .. _bootstrap: https://www.npmjs.com/package/bootstrap
-.. _es module shim: https://www.npmjs.com/package/es-module-shims
+.. _ES module shim: https://www.npmjs.com/package/es-module-shims
 .. _jsdelivr.com: https://www.jsdelivr.com/
 .. _highlight.js: https://www.npmjs.com/package/highlight.js
 .. _class syntax: https://caniuse.com/es6-class

@@ -55,7 +55,7 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
                 ]);
             }
 
-            #[Route('/random/{limit}', name='random_number')]
+            #[Route('/random/{limit}', name: 'random_number')]
             public function randomNumber(int $limit): JsonResponse
             {
                 return new JsonResponse([
@@ -178,7 +178,7 @@ events directly from the kernel, again it will be registered automatically::
 
         public function onKernelException(ExceptionEvent $event): void
         {
-            if ($event->getException() instanceof Danger) {
+            if ($event->getThrowable() instanceof Danger) {
                 $event->setResponse(new Response('It\'s dangerous to go alone. Take this ⚔'));
             }
         }
@@ -247,7 +247,7 @@ Now it looks like this::
             return $bundles;
         }
 
-        protected function build(ContainerBuilder $containerBuilder)
+        protected function build(ContainerBuilder $containerBuilder): void
         {
             $containerBuilder->registerExtension(new AppExtension());
         }

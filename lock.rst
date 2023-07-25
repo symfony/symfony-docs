@@ -174,12 +174,13 @@ To lock the default resource, autowire the lock factory using
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
         #[Route('/download/terms-of-use.pdf')]
-        public function downloadPdf(LockFactory $factory, MyPdfGeneratorService $pdf)
+        public function downloadPdf(LockFactory $factory, MyPdfGeneratorService $pdf): Response
         {
             $lock = $factory->createLock('pdf-creation');
             $lock->acquire(true);
@@ -213,12 +214,13 @@ processes asking for the same ``$version``::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
         #[Route('/download/{version}/terms-of-use.pdf')]
-        public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf)
+        public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf): Response
         {
             $lock = $lockFactory->createLock('pdf-creation-'.$version);
             $lock->acquire(true);
@@ -293,12 +295,13 @@ For instance, the ``invoice`` lock can be injected by naming the argument
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
         #[Route('/download/terms-of-use.pdf')]
-        public function downloadPdf(LockFactory $invoiceLockFactory, MyPdfGeneratorService $pdf)
+        public function downloadPdf(LockFactory $invoiceLockFactory, MyPdfGeneratorService $pdf): Response
         {
             // ...
         }

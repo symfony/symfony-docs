@@ -17,7 +17,7 @@ example::
 
     class MessageGenerator
     {
-        private $logger;
+        private LoggerInterface $logger;
 
         public function setLogger(LoggerInterface $logger): void
         {
@@ -84,7 +84,7 @@ instead of mutating the object they were called on::
 
     class MessageGenerator
     {
-        private $logger;
+        private LoggerInterface $logger;
 
         public function withLogger(LoggerInterface $logger): self
         {

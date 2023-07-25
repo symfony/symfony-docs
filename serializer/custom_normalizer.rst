@@ -30,7 +30,7 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
         ) {
         }
 
-        public function normalize($topic, string $format = null, array $context = [])
+        public function normalize($topic, string $format = null, array $context = []): array
         {
             $data = $this->normalizer->normalize($topic, $format, $context);
 
@@ -42,7 +42,7 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
             return $data;
         }
 
-        public function supportsNormalization($data, string $format = null, array $context = [])
+        public function supportsNormalization($data, string $format = null, array $context = []): bool
         {
             return $data instanceof Topic;
         }
@@ -81,6 +81,12 @@ is called.
 
     All built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`
     as well the ones included in `API Platform`_ natively implement this interface.
+
+.. deprecated:: 6.3
+
+    The :class:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface`
+    interface is deprecated since Symfony 6.3. You should implement the
+    ``getSupportedTypes()`` method instead, as shown in the section below.
 
 Improving Performance of Normalizers/Denormalizers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

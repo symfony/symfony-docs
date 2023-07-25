@@ -21,7 +21,7 @@ tutorial and the `reStructuredText Reference`_.
     If you are familiar with Markdown, be careful as things are sometimes very
     similar but different:
 
-    * Lists starts at the beginning of a line (no indentation is allowed);
+    * Lists start at the beginning of a line (no indentation is allowed);
     * Inline code blocks use double-ticks (````like this````).
 
 Sphinx
@@ -123,6 +123,31 @@ Markup Format        Use It to Display
 ``php-symfony``      PHP code example when using the Symfony framework
 ``php-standalone``   PHP code to be used in any PHP application using standalone Symfony components
 ===================  ==============================================================================
+
+Displaying Tabs
+~~~~~~~~~~~~~~~
+
+It is possible to display tabs in the documentation. They look similar to
+configuration blocks when rendered, but tabs can hold any type of content:
+
+.. code-block:: rst
+
+    .. tabs:: UX Installation
+
+        .. tab:: Webpack Encore
+
+            Introduction to Webpack
+
+            .. code-block:: yaml
+
+                webpack:
+                    # ...
+
+        .. tab:: AssetMapper
+
+            Introduction to AssetMapper
+
+            Something else about AssetMapper
 
 Adding Links
 ~~~~~~~~~~~~

@@ -1656,26 +1656,24 @@ Let's say you want to instantiate a class with the following constructor,
 that requires HTTPlug dependencies::
 
     use Http\Client\HttpClient;
-    use Http\Message\RequestFactory;
     use Http\Message\StreamFactory;
 
     class SomeSdk
     {
         public function __construct(
             HttpClient $httpClient,
-            RequestFactory $requestFactory,
             StreamFactory $streamFactory
         )
         // [...]
     }
 
-Because :class:`Symfony\\Component\\HttpClient\\HttplugClient` implements the
-three interfaces,you can use it this way::
+Because :class:`Symfony\\Component\\HttpClient\\HttplugClient` implements these
+interfaces,you can use it this way::
 
     use Symfony\Component\HttpClient\HttplugClient;
 
     $httpClient = new HttplugClient();
-    $apiClient = new SomeSdk($httpClient, $httpClient, $httpClient);
+    $apiClient = new SomeSdk($httpClient, $httpClient);
 
 If you'd like to work with promises, :class:`Symfony\\Component\\HttpClient\\HttplugClient`
 also implements the ``HttpAsyncClient`` interface. To use it, you need to install the

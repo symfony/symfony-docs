@@ -189,8 +189,10 @@ of the main page::
         // ...
         class NewsController extends AbstractController
         {
-            public function latest($maxPerPage)
+            public function latest(int $maxPerPage): Response
             {
+                // ...
+
                 // sets to public and adds some expiration
                 $response->setSharedMaxAge(60);
 

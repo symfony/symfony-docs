@@ -157,7 +157,7 @@ you can access it using the ``getConnection()`` method and the name of the conne
 
     class SomeController
     {
-        public function someMethod(ManagerRegistry $doctrine)
+        public function someMethod(ManagerRegistry $doctrine): void
         {
             $connection = $doctrine->getConnection('customer');
             $result = $connection->fetchAll('SELECT name FROM customer');
@@ -300,6 +300,8 @@ to be used in DQL queries or for Repository access.
 This option is ``false`` by default and it's considered a legacy option. It was
 only useful in previous Symfony versions, when it was recommended to use bundles
 to organize the application code.
+
+.. _doctrine_auto-mapping:
 
 Custom Mapping Entities in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

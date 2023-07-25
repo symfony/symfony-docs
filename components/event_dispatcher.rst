@@ -162,7 +162,7 @@ the ``Event`` object as the single argument::
     {
         // ...
 
-        public function onFooAction(Event $event)
+        public function onFooAction(Event $event): void
         {
             // ... do something
         }
@@ -349,7 +349,7 @@ Take the following example of a subscriber that subscribes to the
 
     class StoreSubscriber implements EventSubscriberInterface
     {
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 KernelEvents::RESPONSE => [
@@ -360,17 +360,17 @@ Take the following example of a subscriber that subscribes to the
             ];
         }
 
-        public function onKernelResponsePre(ResponseEvent $event)
+        public function onKernelResponsePre(ResponseEvent $event): void
         {
             // ...
         }
 
-        public function onKernelResponsePost(ResponseEvent $event)
+        public function onKernelResponsePost(ResponseEvent $event): void
         {
             // ...
         }
 
-        public function onStoreOrder(OrderPlacedEvent $event)
+        public function onStoreOrder(OrderPlacedEvent $event): void
         {
             // ...
         }
@@ -415,7 +415,7 @@ inside a listener via the
 
     use Acme\Store\Event\OrderPlacedEvent;
 
-    public function onStoreOrder(OrderPlacedEvent $event)
+    public function onStoreOrder(OrderPlacedEvent $event): void
     {
         // ...
 
@@ -458,7 +458,7 @@ is dispatched, are passed as arguments to the listener::
 
     class MyListener
     {
-        public function myEventListener(Event $event, string $eventName, EventDispatcherInterface $dispatcher)
+        public function myEventListener(Event $event, string $eventName, EventDispatcherInterface $dispatcher): void
         {
             // ... do something with the event name
         }

@@ -14,8 +14,8 @@ parameter::
     class ValidationGroupResolver
     {
         public function __construct(
-            private $service1,
-            private $service2,
+            private object $service1,
+            private object $service2,
         ) {
         }
 
