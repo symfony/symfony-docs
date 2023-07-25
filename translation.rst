@@ -1314,6 +1314,132 @@ adapted to the format required by GitHub, but you can force that format too:
 
         $ php vendor/bin/yaml-lint translations/
 
+Pseudo-localization translator
+------------------------------
+
+.. note::
+
+    The pseudolocalization translator is meant to be used for development only.
+
+The following image shows the main menu of the interface of a popular Internet
+service:
+
+.. image:: /_images/translation/pseudolocalization-interface-original.png
+
+This other image shows the same menu when the user switches the language to
+Spanish. Unexpectedly, some text is cut and other contents are so long that
+they overflow and you can't see them:
+
+.. image:: /_images/translation/pseudolocalization-interface-translated.png
+
+These kind of errors are very common, because different languages can be longer
+or shorter than the original application language. Another common issue is to
+only check if the application works when using basic accented letters, instead
+of checking for more complex characters such as the ones found in Polish,
+Czech, etc.
+
+These problems can be solved with `pseudolocalization`_, a software testing method
+used for testing internationalization. In this method, instead of translating
+the text of the software into a foreign language, the textual elements of an
+application are replaced with an altered version of the original language.
+
+For example, ``Account Settings`` is *translated* as ``[!!! Àççôûñţ
+Šéţţîñĝš !!!]``. First, the original text is expanded in length with characters
+like ``[!!! !!!]`` to test the application when using languages more verbose
+than the original one. This solves the first problem.
+
+In addition, the original characters are replaced by similar but accented
+characters. This makes the text highly readable, while allowing to test the
+application with all kinds of accented and special characters. This solves the
+second problem.
+
+Full support for pseudolocalization was added to help you debug
+internationalization issues in your applications. You can enable and configure
+it in the translator configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/translation.yaml
+        framework:
+            translator:
+                pseudo_localization:
+                    # replace characters by their accented version
+                    accents: true
+                    # wrap strings with brackets
+                    brackets: true
+                    # controls how many extra characters are added to make text longer
+                    expansion_factor: 1.4
+                    # maintain the original HTML tags of the translated contents
+                    parse_html: true
+                    # also translate the contents of these HTML attributes
+                    localizable_html_attributes: ['title']
+
+    .. code-block:: xml
+
+        <!-- config/packages/translation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:translator>
+                    <!-- accents: replace characters by their accented version -->
+                    <!-- brackets: wrap strings with brackets -->
+                    <!-- expansion_factor: controls how many extra characters are added to make text longer -->
+                    <!-- parse_html: maintain the original HTML tags of the translated contents -->
+                    <framework:pseudo-localization
+                        accents="true"
+                        brackets="true"
+                        expansion_factor="1.4"
+                        parse_html="true"
+                    >
+                        <!-- also translate the contents of these HTML attributes -->
+                        <framework:localizable-html-attribute>title</framework:localizable-html-attribute>
+                    </framework:pseudo-localization>
+                </framework:translator>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/translation.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            // ...
+            $framework
+                ->translator()
+                    ->pseudoLocalization()
+                        // replace characters by their accented version
+                        ->accents(true)
+                        // wrap strings with brackets
+                        ->brackets(true)
+                        // controls how many extra characters are added to make text longer
+                        ->expansionFactor(1.4)
+                        // maintain the original HTML tags of the translated contents
+                        ->parseHtml(true)
+                        // also translate the contents of these HTML attributes
+                        ->localizableHtmlAttributes(['title'])
+            ;
+        };
+
+That's all. The application will now start displaying those strange, but
+readable, contents to help you internationalize it. See for example the
+difference in the `Symfony Demo`_ application. This is the original page:
+
+.. image:: /_images/translation/pseudolocalization-symfony-demo-disabled.png
+
+And this is the same page with pseudolocalization enabled:
+
+.. image:: /_images/translation/pseudolocalization-symfony-demo-enabled.png
+
 Summary
 -------
 
@@ -1351,3 +1477,5 @@ Learn more
 .. _`Machine object format`: https://www.gnu.org/software/gettext/manual/html_node/MO-Files.html
 .. _`QT Translations TS XML`: https://doc.qt.io/qt-5/linguist-ts-file-format.html
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
+.. _`pseudolocalization`: https://en.wikipedia.org/wiki/Pseudolocalization
+.. _`Symfony Demo`: https://github.com/symfony/demo
