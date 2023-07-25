@@ -62,6 +62,7 @@ Service             Package                                DSN
 `AllMySms`_         ``symfony/all-my-sms-notifier``        ``allmysms://LOGIN:APIKEY@default?from=FROM``
 `AmazonSns`_        ``symfony/amazon-sns-notifier``        ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
 `Bandwidth`_        ``symfony/bandwidth-notifier``         ``bandwidth://USERNAME:PASSWORD@default?from=FROM&account_id=ACCOUNT_ID&application_id=APPLICATION_ID&priority=PRIORITY``
+`Brevo`_            ``symfony/brevo-notifier``             ``brevo://API_KEY@default?sender=SENDER``
 `Clickatell`_       ``symfony/clickatell-notifier``        ``clickatell://ACCESS_TOKEN@default?from=FROM``
 `ContactEveryone`_  ``symfony/contact-everyone-notifier``  ``contact-everyone://TOKEN@default?&diffusionname=DIFFUSION_NAME&category=CATEGORY``
 `Esendex`_          ``symfony/esendex-notifier``           ``esendex://USER_NAME:PASSWORD@default?accountreference=ACCOUNT_REFERENCE&from=FROM``
@@ -119,7 +120,12 @@ Service             Package                                DSN
 
 .. versionadded:: 6.4
 
-    The Redlink integration was introduced in Symfony 6.4.
+    The `Redlink`_ and `Brevo`_ integrations were introduced in Symfony 6.4.
+
+.. deprecated:: 6.4
+
+    The `Sendinblue`_ integration is deprecated since
+    Symfony 6.4, use the `Brevo`_ integration instead.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -179,6 +185,7 @@ send SMS messages::
     // src/Controller/SecurityController.php
     namespace App\Controller;
 
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Notifier\Message\SmsMessage;
     use Symfony\Component\Notifier\TexterInterface;
     use Symfony\Component\Routing\Annotation\Route;
@@ -186,8 +193,12 @@ send SMS messages::
     class SecurityController
     {
         #[Route('/login/success')]
-        public function loginSuccess(TexterInterface $texter)
+        public function loginSuccess(TexterInterface $texter): Response
         {
+            $options = (new ProviderOptions())
+                ->setPriority('high')
+            ;
+
             $sms = new SmsMessage(
                 // the phone number to send the SMS message to
                 '+1411111111',
@@ -195,6 +206,8 @@ send SMS messages::
                 'A new login was detected!',
                 // optionally, you can override default "from" defined in transports
                 '+1422222222',
+                // you can also add options object implementing MessageOptionsInterface
+                $options
             );
 
             $sentMessage = $texter->send($sms);
@@ -206,6 +219,10 @@ send SMS messages::
 .. versionadded:: 6.2
 
     The 3rd argument of ``SmsMessage`` (``$from``) was introduced in Symfony 6.2.
+
+.. versionadded:: 6.3
+
+    The 4th argument of ``SmsMessage`` (``$options``) was introduced in Symfony 6.3.
 
 The ``send()`` method returns a variable of type
 :class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
@@ -317,6 +334,7 @@ you to send messages to chat services::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Notifier\ChatterInterface;
     use Symfony\Component\Notifier\Message\ChatMessage;
     use Symfony\Component\Routing\Annotation\Route;
@@ -326,7 +344,7 @@ you to send messages to chat services::
         /**
          * @Route("/checkout/thankyou")
          */
-        public function thankyou(ChatterInterface $chatter)
+        public function thankyou(ChatterInterface $chatter): Response
         {
             $message = (new ChatMessage('You got a new invoice for 15 EUR.'))
                 // if not set explicitly, the message is sent to the
@@ -578,6 +596,7 @@ To send a notification, autowire the
     // src/Controller/InvoiceController.php
     namespace App\Controller;
 
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Notifier\Notification\Notification;
     use Symfony\Component\Notifier\NotifierInterface;
     use Symfony\Component\Notifier\Recipient\Recipient;
@@ -585,7 +604,7 @@ To send a notification, autowire the
     class InvoiceController extends AbstractController
     {
         #[Route('/invoice/create')]
-        public function create(NotifierInterface $notifier)
+        public function create(NotifierInterface $notifier): Response
         {
             // ...
 
@@ -712,7 +731,7 @@ sent using the Slack transport::
     class InvoiceController extends AbstractController
     {
         #[Route('/invoice/create')]
-        public function invoice(NotifierInterface $notifier)
+        public function invoice(NotifierInterface $notifier): Response
         {
             // ...
 
@@ -747,7 +766,7 @@ very high and the recipient has a phone number::
         ) {
         }
 
-        public function getChannels(RecipientInterface $recipient)
+        public function getChannels(RecipientInterface $recipient): array
         {
             if (
                 $this->price > 10000
@@ -979,6 +998,7 @@ is dispatched. Listeners receive a
 .. _`AllMySms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AllMySms/README.md
 .. _`AmazonSns`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AmazonSns/README.md
 .. _`Bandwidth`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Bandwidth/README.md
+.. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Brevo/README.md
 .. _`Chatwork`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Chatwork/README.md
 .. _`Clickatell`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Clickatell/README.md
 .. _`ContactEveryone`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/ContactEveryone/README.md

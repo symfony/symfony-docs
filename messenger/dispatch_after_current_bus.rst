@@ -60,7 +60,7 @@ using the ``DispatchAfterCurrentBusMiddleware`` and adding a
         ) {
         }
 
-        public function __invoke(RegisterUser $command)
+        public function __invoke(RegisterUser $command): void
         {
             $user = new User($command->getUuid(), $command->getName(), $command->getEmail());
             $this->em->persist($user);
@@ -97,7 +97,7 @@ using the ``DispatchAfterCurrentBusMiddleware`` and adding a
         ) {
         }
 
-        public function __invoke(UserRegistered $event)
+        public function __invoke(UserRegistered $event): void
         {
             $user = $this->em->getRepository(User::class)->find($event->getUuid());
 

@@ -713,7 +713,7 @@ look like this::
     use Symfony\Component\HttpKernel\Event\RequestEvent;
     // ...
 
-    public function onKernelRequest(RequestEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         if (!$event->isMainRequest()) {
             return;

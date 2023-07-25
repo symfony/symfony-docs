@@ -31,7 +31,7 @@ you want to make available as a service::
 
     class Mailer
     {
-        private $transport;
+        private string $transport;
 
         public function __construct()
         {
@@ -55,7 +55,7 @@ so this is passed into the constructor::
     class Mailer
     {
         public function __construct(
-            private $transport,
+            private string $transport,
         ) {
         }
 
@@ -124,9 +124,9 @@ it was only optional then you could use setter injection instead::
 
     class NewsletterManager
     {
-        private $mailer;
+        private \Mailer $mailer;
 
-        public function setMailer(\Mailer $mailer)
+        public function setMailer(\Mailer $mailer): void
         {
             $this->mailer = $mailer;
         }

@@ -229,12 +229,7 @@ To begin with, define the ``TransportChain`` class::
 
     class TransportChain
     {
-        private $transports;
-
-        public function __construct()
-        {
-            $this->transports = [];
-        }
+        private array $transports = [];
 
         public function addTransport(\MailerTransport $transport): void
         {
@@ -423,12 +418,7 @@ To begin with, change the ``TransportChain`` class::
 
     class TransportChain
     {
-        private $transports;
-
-        public function __construct()
-        {
-            $this->transports = [];
-        }
+        private array $transports = [];
 
         public function addTransport(\MailerTransport $transport, $alias): void
         {

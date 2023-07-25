@@ -10,13 +10,13 @@ entities, a ``Company`` and a ``Customer``::
 
     class Company
     {
-        private $name;
-        private $website;
+        private string $name;
+        private string $website;
 
-        private $address;
-        private $zipcode;
-        private $city;
-        private $country;
+        private string $address;
+        private string $zipcode;
+        private string $city;
+        private string $country;
     }
 
 .. code-block:: php
@@ -26,13 +26,13 @@ entities, a ``Company`` and a ``Customer``::
 
     class Customer
     {
-        private $firstName;
-        private $lastName;
+        private string $firstName;
+        private string $lastName;
 
-        private $address;
-        private $zipcode;
-        private $city;
-        private $country;
+        private string  $address;
+        private string $zipcode;
+        private string $city;
+        private string $country;
     }
 
 As you can see, each entity shares a few of the same fields: ``address``,

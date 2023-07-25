@@ -38,7 +38,7 @@ This method accepts a request and should return a response::
 
     class Client extends AbstractBrowser
     {
-        protected function doRequest($request)
+        protected function doRequest($request): Response
         {
             // ... convert request into a response
 

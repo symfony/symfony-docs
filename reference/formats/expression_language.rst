@@ -77,7 +77,7 @@ JavaScript::
 
     class Robot
     {
-        public function sayHi($times)
+        public function sayHi(int $times): string
         {
             $greetings = [];
             for ($i = 0; $i < $times; $i++) {

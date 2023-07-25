@@ -54,7 +54,7 @@ Passing a subject::
 
     class FooListener
     {
-        public function handler(GenericEvent $event)
+        public function handler(GenericEvent $event): void
         {
             if ($event->getSubject() instanceof Foo) {
                 // ...
@@ -75,7 +75,7 @@ access the event arguments::
 
     class FooListener
     {
-        public function handler(GenericEvent $event)
+        public function handler(GenericEvent $event): void
         {
             if (isset($event['type']) && 'foo' === $event['type']) {
                 // ... do something
@@ -94,7 +94,7 @@ Filtering data::
 
     class FooListener
     {
-        public function filter(GenericEvent $event)
+        public function filter(GenericEvent $event): void
         {
             $event['data'] = strtolower($event['data']);
         }

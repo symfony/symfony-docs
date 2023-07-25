@@ -23,14 +23,14 @@ user registers and when a user updates their contact information later:
         class User implements UserInterface
         {
             #[Assert\Email(groups: ['registration'])]
-            private $email;
+            private string $email;
 
             #[Assert\NotBlank(groups: ['registration'])]
             #[Assert\Length(min: 7, groups: ['registration'])]
-            private $password;
+            private string $password;
 
             #[Assert\Length(min: 2)]
-            private $city;
+            private string $city;
         }
 
     .. code-block:: yaml
@@ -99,7 +99,7 @@ user registers and when a user updates their contact information later:
 
         class User
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('email', new Assert\Email([
                     'groups' => ['registration'],

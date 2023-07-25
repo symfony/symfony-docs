@@ -410,7 +410,7 @@ component::
     {
         // ...
 
-        public function load($resource, $type = null)
+        public function load($resource, $type = null): RouteCollection
         {
             $collection = new RouteCollection();
             $finder = new Finder();
