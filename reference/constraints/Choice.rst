@@ -119,7 +119,7 @@ you can access those choices for validation or for building a select form elemen
 
     class Author
     {
-        public static function getGenres()
+        public static function getGenres(): array
         {
             return ['fiction', 'non-fiction'];
         }

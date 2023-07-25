@@ -423,7 +423,7 @@ service class::
 
     class MyClearer implements CacheClearerInterface
     {
-        public function clear(string $cacheDirectory)
+        public function clear(string $cacheDirectory): void
         {
             // clear your cache
         }
@@ -490,7 +490,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 
     class MyCustomWarmer implements CacheWarmerInterface
     {
-        public function warmUp($cacheDirectory)
+        public function warmUp($cacheDirectory): array
         {
             // ... do some sort of operations to "warm" your cache
 
@@ -506,7 +506,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
             return $filesAndClassesToPreload;
         }
 
-        public function isOptional()
+        public function isOptional(): bool
         {
             return true;
         }
@@ -642,12 +642,12 @@ the :class:`Symfony\\Contracts\\Translation\\LocaleAwareInterface` interface::
 
     class MyCustomLocaleHandler implements LocaleAwareInterface
     {
-        public function setLocale($locale)
+        public function setLocale(string $locale): void
         {
             $this->locale = $locale;
         }
 
-        public function getLocale()
+        public function getLocale(): string
         {
             return $this->locale;
         }
@@ -1071,9 +1071,15 @@ file
 
 When executing the ``translation:extract`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony Framework
-has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a
-:class:`Symfony\\Component\\Translation\\Extractor\\PhpExtractor`, which
-help to find and extract translation keys from Twig templates and PHP files.
+has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` to find and
+extract translation keys from Twig templates.
+
+If you also want to find and extract translation keys from PHP files, install
+the following dependency to activate the :class:`Symfony\\Component\\Translation\\Extractor\\PhpAstExtractor`:
+
+.. code-block:: terminal
+
+    $ composer require nikic/php-parser
 
 You can create your own extractor by creating a class that implements
 :class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface`
@@ -1093,7 +1099,7 @@ required option: ``alias``, which defines the name of the extractor::
         /**
          * Extracts translation messages from a template directory to the catalog.
          */
-        public function extract(string $directory, MessageCatalogue $catalog)
+        public function extract(string $directory, MessageCatalogue $catalog): void
         {
             // ...
         }
@@ -1101,7 +1107,7 @@ required option: ``alias``, which defines the name of the extractor::
         /**
          * Sets the prefix that should be used for new found messages.
          */
-        public function setPrefix(string $prefix)
+        public function setPrefix(string $prefix): void
         {
             $this->prefix = $prefix;
         }

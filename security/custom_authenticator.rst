@@ -105,7 +105,7 @@ The authenticator can be enabled using the ``custom_authenticators`` setting:
                 http://symfony.com/schema/dic/security
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
-            <config enable-authenticator-manager="true">
+            <config>
                 <!-- ... -->
 
                 <firewall name="main">

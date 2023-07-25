@@ -42,7 +42,7 @@ You can configure this using the ``entry_point`` setting:
                 http://symfony.com/schema/dic/security
                 https://symfony.com/schema/dic/security/security-1.0.xsd">
 
-            <config enable-authenticator-manager="true">
+            <config>
                 <!-- ... -->
 
                 <!-- entry-point: configure the form authentication as the entry

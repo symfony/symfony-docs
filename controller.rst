@@ -63,7 +63,7 @@ Mapping a URL to a Controller
 
 In order to *view* the result of this controller, you need to map a URL to it via
 a route. This was done above with the ``#[Route('/lucky/number/{max}')]``
-:ref:`route attribute <annotation-routes>`.
+:ref:`route attribute <attribute-routes>`.
 
 To see your page, go to this URL in your browser: http://localhost:8000/lucky/number/100
 

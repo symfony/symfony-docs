@@ -1,4 +1,4 @@
-**type**: ``string`` **default**: ``choice``
+**type**: ``string`` **default**: ``single_text``
 
 The basic way in which this field should be rendered. Can be one of the
 following:
@@ -10,3 +10,8 @@ following:
 
 * ``single_text``: renders a single input of type ``date``. User's input
   is validated based on the `format`_ option.
+
+.. deprecated:: 6.3
+
+    Not setting a value explicitly for this option is deprecated since Symfony 6.3
+    because the default value will change to ``single_text`` in Symfony 7.0.

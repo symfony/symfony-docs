@@ -33,37 +33,6 @@ compiled again automatically.
 
 .. _config-twig-autoescape:
 
-autoescape
-~~~~~~~~~~
-
-.. deprecated:: 6.1
-
-    This option is deprecated since Symfony 6.1. If required, use the
-    ``autoescape_service`` or ``autoescape_service_method`` option instead.
-
-**type**: ``boolean`` or ``string`` **default**: ``name``
-
-If set to ``false``, automatic escaping is disabled (you can still escape each content
-individually in the templates).
-
-.. caution::
-
-    Setting this option to ``false`` is dangerous and it will make your
-    application vulnerable to `XSS attacks`_ because most third-party bundles
-    assume that auto-escaping is enabled and they don't escape contents
-    themselves.
-
-If set to a string, the template contents are escaped using the strategy with
-that name. Allowed values are ``html``, ``js``, ``css``, ``url``, ``html_attr``
-and ``name``. The default value is ``name``. This strategy escapes contents
-according to the template name extension (e.g. it uses ``html`` for ``*.html.twig``
-templates and ``js`` for ``*.js.twig`` templates).
-
-.. tip::
-
-    See `autoescape_service`_ and `autoescape_service_method`_ to define your
-    own escaping strategy.
-
 autoescape_service
 ~~~~~~~~~~~~~~~~~~
 
@@ -84,6 +53,14 @@ autoescape_service_method
 
 If ``autoescape_service`` option is defined, then this option defines the method
 called to determine the default escaping applied to the template.
+
+If the service defined in ``autoescape_service`` is invocable (i.e. it defines
+the `__invoke() PHP magic method`_) you can omit this option.
+
+.. versionadded:: 6.4
+
+    The feature to use invocable services to omit this option was introduced in
+    Symfony 6.4.
 
 base_template_class
 ~~~~~~~~~~~~~~~~~~~
@@ -433,4 +410,4 @@ attribute or method doesn't exist. If set to ``false`` these errors are ignored
 and the non-existing values are replaced by ``null``.
 
 .. _`the optimizer extension`: https://twig.symfony.com/doc/3.x/api.html#optimizer-extension
-.. _`XSS attacks`: https://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`__invoke() PHP magic method`: https://www.php.net/manual/en/language.oop5.magic.php#object.invoke

@@ -103,6 +103,7 @@ via a third-party provider:
 Service               Install with
 ===================== ==============================================
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
+`Brevo`_              ``composer require symfony/brevo-mailer``
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailchimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``
@@ -111,7 +112,6 @@ Service               Install with
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
-`Sendinblue`_         ``composer require symfony/sendinblue-mailer``
 ===================== ==============================================
 
 .. versionadded:: 6.2
@@ -123,6 +123,11 @@ Service               Install with
 .. versionadded:: 6.3
 
     The MailerSend integration was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The ``Brevo`` integration was renamed in Symfony 6.4 (in previous
+    Symfony versions it was called ``Sendinblue``).
 
 .. note::
 
@@ -176,6 +181,10 @@ party provider:
 |                        | - HTTP ses+https://ACCESS_KEY:SECRET_KEY@default    |
 |                        | - API ses+api://ACCESS_KEY:SECRET_KEY@default       |
 +------------------------+-----------------------------------------------------+
+| `Brevo`_               | - SMTP brevo+smtp://USERNAME:PASSWORD@default       |
+|                        | - HTTP n/a                                          |
+|                        | - API brevo+api://KEY@default                       |
++------------------------+-----------------------------------------------------+
 | `Google Gmail`_        | - SMTP gmail+smtp://USERNAME:APP-PASSWORD@default   |
 |                        | - HTTP n/a                                          |
 |                        | - API n/a                                           |
@@ -211,10 +220,6 @@ party provider:
 | `Sendgrid`_            | - SMTP sendgrid+smtp://KEY@default                  |
 |                        | - HTTP n/a                                          |
 |                        | - API sendgrid+api://KEY@default                    |
-+------------------------+-----------------------------------------------------+
-| `Sendinblue`_          | - SMTP sendinblue+smtp://USERNAME:PASSWORD@default  |
-|                        | - HTTP n/a                                          |
-|                        | - API sendinblue+api://KEY@default                  |
 +------------------------+-----------------------------------------------------+
 
 .. versionadded:: 6.3
@@ -1397,7 +1402,7 @@ render the email before calling ``$mailer->send($email)``::
     use Symfony\Component\Mailer\MailerInterface;
     use Symfony\Component\Mime\BodyRendererInterface;
 
-    public function action(MailerInterface $mailer, BodyRendererInterface $bodyRenderer)
+    public function action(MailerInterface $mailer, BodyRendererInterface $bodyRenderer): void
     {
         $email = (new TemplatedEmail())
             ->htmlTemplate($template)
@@ -1501,11 +1506,11 @@ If your transport does not support tags and metadata, they will be added as cust
 
 The following transports currently support tags and metadata:
 
+* Brevo
 * Mailchimp
 * Mailgun
 * Postmark
 * Sendgrid
-* Sendinblue
 
 The following transports only support tags:
 
@@ -1838,7 +1843,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 
     class MailControllerTest extends WebTestCase
     {
-        public function testMailIsSentAndContentIsOk()
+        public function testMailIsSentAndContentIsOk(): void
         {
             $client = static::createClient();
             $client->request('GET', '/mail/send');
@@ -1855,6 +1860,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 
 .. _`Amazon SES`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Amazon/README.md
 .. _`App Password`: https://support.google.com/accounts/answer/185833
+.. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Brevo/README.md
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`DKIM`: https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
 .. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
@@ -1876,4 +1882,3 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
 .. _`SendGrid`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/README.md
-.. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendinblue/README.md

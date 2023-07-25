@@ -25,7 +25,7 @@ is used to specify many different cache directives::
         // ...
 
         #[Cache(public: true, maxage: 600)]
-        public function index()
+        public function index(): Response
         {
             // ...
         }
@@ -72,7 +72,7 @@ the ``setExpires()`` ``Response`` method::
         // ...
 
         #[Cache(expires: '+600 seconds')]
-        public function index()
+        public function index(): Response
         {
             // ...
         }

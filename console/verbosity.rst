@@ -69,7 +69,7 @@ level. For example::
                 OutputInterface::VERBOSITY_VERBOSE
             );
 
-            return 0;
+            return Command::SUCCESS;
         }
     }
 

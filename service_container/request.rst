@@ -19,7 +19,7 @@ method::
         ) {
         }
 
-        public function anyMethod()
+        public function anyMethod(): void
         {
             $request = $this->requestStack->getCurrentRequest();
             // ... do something with the request

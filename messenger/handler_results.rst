@@ -50,7 +50,7 @@ handler is registered. The ``HandleTrait`` can be used in any class that has a
         ) {
         }
 
-        public function __invoke()
+        public function __invoke(): void
         {
             $result = $this->query(new ListItemsQuery(/* ... */));
 

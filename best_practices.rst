@@ -207,9 +207,6 @@ Doctrine supports several metadata formats, but it's recommended to use PHP
 attributes because they are by far the most convenient and agile way of setting
 up and looking for mapping information.
 
-If your PHP version doesn't support attributes yet, use annotations, which is
-similar but requires installing some extra dependencies in your project.
-
 Controllers
 -----------
 
@@ -227,11 +224,12 @@ nothing more than a few lines of *glue-code*, so you are not coupling the
 important parts of your application.
 
 .. _best-practice-controller-annotations:
+.. _best-practice-controller-attributes:
 
-Use Attributes or Annotations to Configure Routing, Caching, and Security
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use Attributes to Configure Routing, Caching, and Security
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using attributes or annotations for routing, caching, and security simplifies
+Using attributes for routing, caching, and security simplifies
 configuration. You don't need to browse several files created with different
 formats (YAML, XML, PHP): all the configuration is just where you  require it,
 and it only uses one format.
@@ -411,7 +409,7 @@ checks that all application URLs load successfully::
         /**
          * @dataProvider urlProvider
          */
-        public function testPageIsSuccessful($url)
+        public function testPageIsSuccessful($url): void
         {
             $client = self::createClient();
             $client->request('GET', $url);
@@ -419,7 +417,7 @@ checks that all application URLs load successfully::
             $this->assertResponseIsSuccessful();
         }
 
-        public function urlProvider()
+        public function urlProvider(): \Generator
         {
             yield ['/'];
             yield ['/posts'];

@@ -131,7 +131,7 @@ What is a Custom Route Loader
 A custom route loader enables you to generate routes based on some
 conventions, patterns or integrations. An example for this use-case is the
 `OpenAPI-Symfony-Routing`_ library where routes are generated based on
-OpenAPI/Swagger annotations. Another example is the `SonataAdminBundle`_ that
+OpenAPI/Swagger attributes. Another example is the `SonataAdminBundle`_ that
 creates routes based on CRUD conventions.
 
 Loading Routes
@@ -278,9 +278,9 @@ you do. The resource name itself is not actually used in the example::
 
     class ExtraLoader extends Loader
     {
-        private $isLoaded = false;
+        private bool $isLoaded = false;
 
-        public function load($resource, string $type = null)
+        public function load($resource, string $type = null): RouteCollection
         {
             if (true === $this->isLoaded) {
                 throw new \RuntimeException('Do not add the "extra" loader twice');
@@ -307,7 +307,7 @@ you do. The resource name itself is not actually used in the example::
             return $routes;
         }
 
-        public function supports($resource, string $type = null)
+        public function supports($resource, string $type = null): bool
         {
             return 'extra' === $type;
         }
@@ -324,7 +324,7 @@ have to create an ``extra()`` method in the ``ExtraController``::
 
     class ExtraController extends AbstractController
     {
-        public function extra($parameter)
+        public function extra(mixed $parameter): Response
         {
             return new Response($parameter);
         }
@@ -452,7 +452,7 @@ configuration file - you can call the
 
     class AdvancedLoader extends Loader
     {
-        public function load($resource, string $type = null)
+        public function load($resource, string $type = null): RouteCollection
         {
             $routes = new RouteCollection();
 
@@ -466,7 +466,7 @@ configuration file - you can call the
             return $routes;
         }
 
-        public function supports($resource, string $type = null)
+        public function supports($resource, string $type = null): bool
         {
             return 'advanced_extra' === $type;
         }

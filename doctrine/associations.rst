@@ -91,7 +91,7 @@ From the perspective of the ``Product`` entity, this is a many-to-one relationsh
 From the perspective of the ``Category`` entity, this is a one-to-many relationship.
 
 To map this, first create a ``category`` property on the ``Product`` class with
-the ``ManyToOne`` annotation. You can do this by hand, or by using the ``make:entity``
+the ``ManyToOne`` attribute. You can do this by hand, or by using the ``make:entity``
 command, which will ask you several questions about your relationship. If you're
 not sure of the answer, don't worry! You can always change the settings later:
 
@@ -148,7 +148,7 @@ the ``Product`` entity (and getter & setter methods):
             // ...
 
             #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
-            private $category;
+            private Category $category;
 
             public function getCategory(): ?Category
             {
@@ -220,7 +220,7 @@ class that will hold these objects:
             // ...
 
             #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
-            private $products;
+            private array $products;
 
             public function __construct()
             {
@@ -588,7 +588,7 @@ that behavior, use the `orphanRemoval`_ option inside ``Category``:
         // ...
 
         #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category', orphanRemoval: true)]
-        private $products;
+        private array $products;
 
 
 Thanks to this, if the ``Product`` is removed from the ``Category``, it will be

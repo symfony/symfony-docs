@@ -24,6 +24,8 @@ configured under the ``framework`` key in your application configuration.
 Configuration
 -------------
 
+.. _configuration-framework-secret:
+
 secret
 ~~~~~~
 
@@ -56,7 +58,7 @@ handle_all_throwables
 **type**: ``boolean`` **default**: ``false``
 
 If set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
-thrown by the application and will turn them into HTTP reponses.
+thrown by the application and will turn them into HTTP responses.
 
 Starting from Symfony 7.0, the default value of this option will be ``true``.
 
@@ -167,46 +169,18 @@ which the cache can serve a stale response when an error is encountered
 (default: 60). This setting is overridden by the stale-if-error HTTP
 Cache-Control extension (see RFC 5861).
 
-terminate_on_cache_hit
-......................
-
-**type**: ``boolean`` **default**: ``true``
-
-If ``true``, the :ref:`kernel.terminate <component-http-kernel-kernel-terminate>`
-event is dispatched even when the cache is hit.
-
-Unless your application needs to process events on cache hits, it's recommended
-to set this to ``false`` to improve performance, because it avoids having to
-bootstrap the Symfony framework on a cache hit.
-
-.. versionadded:: 6.2
-
-    The ``terminate_on_cache_hit`` option was introduced in Symfony 6.2.
-
-.. deprecated:: 6.2
-
-    Setting the ``terminate_on_cache_hit`` option to ``true`` was deprecated in
-    Symfony 6.2 and the option will be removed in Symfony 7.0.
-
  .. _configuration-framework-http_method_override:
 
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: (see explanation below)
+**type**: ``boolean`` **default**: ``false``
 
 This determines whether the ``_method`` request parameter is used as the
 intended HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
 method gets called automatically. It becomes the service container parameter
 named ``kernel.http_method_override``.
-
-The **default value** is:
-
-* ``true``, if you have an existing application that you've upgraded from an older
-  Symfony version without resyncing the :doc:`Symfony Flex </setup/flex>` recipes;
-* ``false``, if you've created a new Symfony application or updated the Symfony
-  Flex recipes. This is also the default value starting from Symfony 7.0.
 
 .. seealso::
 
@@ -230,7 +204,6 @@ The **default value** is:
         Request::enableHttpMethodParameterOverride(); // <-- add this line
         $request = Request::createFromGlobals();
         // ...
-
 
  .. _configuration-framework-http_method_override:
 
@@ -486,6 +459,8 @@ If ``true``, Symfony adds a ``X-Robots-Tag: noindex`` HTTP tag to all responses
 `X-Robots-Tag HTTP header`_ tells search engines to not index your web site.
 This option is a protection measure in case you accidentally publish your site
 in debug mode.
+
+.. _configuration-framework-trusted-hosts:
 
 trusted_hosts
 ~~~~~~~~~~~~~
@@ -2540,6 +2515,65 @@ enabled
 validation
 ~~~~~~~~~~
 
+.. _reference-validation-auto-mapping:
+
+auto_mapping
+............
+
+**type**: ``array`` **default**: ``[]``
+
+Defines the Doctrine entities that will be introspected to add
+:ref:`automatic validation constraints <automatic_object_validation>` to them:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            validation:
+                auto_mapping:
+                    # an empty array means that all entities that belong to that
+                    # namespace will add automatic validation
+                    'App\Entity\': []
+                    'Foo\': ['Foo\Some\Entity', 'Foo\Another\Entity']
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:validation>
+                    <framework:auto-mapping>
+                        <framework:service namespace="App\Entity\"/>
+
+                        <framework:service namespace="Foo\">Foo\Some\Entity</framework:service>
+                        <framework:service namespace="Foo\">Foo\Another\Entity</framework:service>
+                    </framework:auto-mapping>
+                </framework:validation>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->validation()
+                ->autoMapping()
+                    ->paths([
+                        'App\\Entity\\' => [],
+                        'Foo\\' => ['Foo\\Some\\Entity', 'Foo\\Another\\Entity'],
+                    ]);
+        };
+
 .. _reference-validation-enabled:
 
 enabled
@@ -2624,12 +2658,7 @@ constraint verifies the submitted string entropy is matching the minimum entropy
 email_validation_mode
 .....................
 
-**type**: ``string`` **default**: ``loose``
-
-.. deprecated:: 6.2
-
-    The ``loose`` default value is deprecated since Symfony 6.2. Starting from
-    Symfony 7.0, the default value of this option will be ``html5``.
+**type**: ``string`` **default**: ``html5``
 
 Sets the default value for the
 :ref:`"mode" option of the Email validator <reference-constraint-email-mode>`.

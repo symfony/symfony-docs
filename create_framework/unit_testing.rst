@@ -87,7 +87,7 @@ We are now ready to write our first test::
 
     class FrameworkTest extends TestCase
     {
-        public function testNotFoundHandling()
+        public function testNotFoundHandling(): void
         {
             $framework = $this->getFrameworkForException(new ResourceNotFoundException());
 
@@ -96,7 +96,7 @@ We are now ready to write our first test::
             $this->assertEquals(404, $response->getStatusCode());
         }
 
-        private function getFrameworkForException($exception)
+        private function getFrameworkForException($exception): Framework
         {
             $matcher = $this->createMock(Routing\Matcher\UrlMatcherInterface::class);
 
@@ -137,7 +137,7 @@ either in the test or in the framework code!
 
 Adding a unit test for any exception thrown in a controller::
 
-    public function testErrorHandling()
+    public function testErrorHandling(): void
     {
         $framework = $this->getFrameworkForException(new \RuntimeException());
 
@@ -154,7 +154,7 @@ Response::
     use Symfony\Component\HttpKernel\Controller\ControllerResolver;
     // ...
 
-    public function testControllerResponse()
+    public function testControllerResponse(): void
     {
         $matcher = $this->createMock(Routing\Matcher\UrlMatcherInterface::class);
 

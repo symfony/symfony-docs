@@ -65,13 +65,13 @@ What other possible classes or interfaces could you use? Find out by running:
       # this is just a *small* sample of the output...
 
       Describes a logger instance.
-      Psr\Log\LoggerInterface (monolog.logger)
+      Psr\Log\LoggerInterface - alias:monolog.logger
 
       Request stack that controls the lifecycle of requests.
-      Symfony\Component\HttpFoundation\RequestStack (request_stack)
+      Symfony\Component\HttpFoundation\RequestStack - alias:request_stack
 
       RouterInterface is the interface that all Router classes must implement.
-      Symfony\Component\Routing\RouterInterface (router.default)
+      Symfony\Component\Routing\RouterInterface - alias:router.default
 
       [...]
 
@@ -175,7 +175,7 @@ that extends ``AbstractExtension``::
         ) {
         }
 
-        public function getFilters()
+        public function getFilters(): array
         {
             return [
                 new TwigFilter('greet', [$this, 'greetUser']),

@@ -56,29 +56,28 @@ random) number and prints it. To do that, create a "Controller" class and a
     }
 
 .. _annotation-routes:
+.. _attribute-routes:
 
 Now you need to associate this controller function with a public URL (e.g. ``/lucky/number``)
 so that the ``number()`` method is called when a user browses to it. This association
 is defined with the ``#[Route]`` attribute (in PHP, `attributes`_ are used to add
 metadata to code):
 
-.. configuration-block::
+.. code-block:: diff
 
-    .. code-block:: php-attributes
+      // src/Controller/LuckyController.php
 
-        // src/Controller/LuckyController.php
+      // ...
+    + use Symfony\Component\Routing\Annotation\Route;
 
-        // ...
-        + use Symfony\Component\Routing\Annotation\Route;
-
-        class LuckyController
-        {
-        +   #[Route('/lucky/number')]
-            public function number(): Response
-            {
-                // this looks exactly the same
-            }
-        }
+      class LuckyController
+      {
+    +     #[Route('/lucky/number')]
+          public function number(): Response
+          {
+              // this looks exactly the same
+          }
+      }
 
 That's it! If you are using Symfony web server, try it out by going to: http://localhost:8000/lucky/number
 
