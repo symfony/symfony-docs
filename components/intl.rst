@@ -179,6 +179,33 @@ You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 
     $alpha2Code = Countries::getAlpha2Code($alpha3Code);
 
+Numeric Country Codes
+~~~~~~~~~~~~~~~~~~~~~
+
+The :class:`Symfony\\Component\\Intl\\Countries` class also provides access to the
+numeric country codes according to the `ISO 3166-1 numeric`_ list::
+
+    use Symfony\Component\Intl\Countries;
+
+    \Locale::setDefault('en');
+
+    $numericCodes = Countries::getNumericCodes();
+    // ('alpha2Code' => 'numericCode')
+    // => ['AA' => '958', 'AD' => '020', ...]
+
+    $numericCode = Countries::getNumericCode('FR');
+    // => '250'
+
+    $alpha2 = Countries::getAlpha2FromNumeric('250');
+    // => 'FR'
+
+    $exists = Countries::numericCodeExists('250');
+    // => true
+
+.. versionadded:: 6.4
+
+    The support for numeric country codes was introduced in Symfony 6.4.
+
 Locales
 ~~~~~~~
 
@@ -435,6 +462,7 @@ Learn more
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 .. _`ISO 3166-1 alpha-3`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3
+.. _`ISO 3166-1 numeric`: https://en.wikipedia.org/wiki/ISO_3166-1_numeric
 .. _`UTC/GMT time offsets`: https://en.wikipedia.org/wiki/List_of_UTC_time_offsets
 .. _`daylight saving time (DST)`: https://en.wikipedia.org/wiki/Daylight_saving_time
 .. _`ISO 639-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_639-1
