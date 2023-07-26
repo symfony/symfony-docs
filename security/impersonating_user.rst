@@ -459,3 +459,40 @@ Symfony will automatically discover your service and call ``onSwitchUser`` whene
 a switch user occurs.
 
 For more details about event subscribers, see :doc:`/event_dispatcher`.
+
+Impersonate Across two or more firewalls (UserProviders)
+--------------------------------------------------------
+
+If you need to user switching across many UserProviders, you can create merged UserProvider. 
+And then you can use impersonate users across many UserProviders (from User to Contact, in example):
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+            providers:
+                user_provider:
+                    entity:
+                      class: App\Entity\User
+                      property: username
+                player_provider:
+                    entity:
+                        class: App\Entity\Contact
+                        property: contactId
+                app_users:
+                    chain:
+                        providers: ['user_provider', 'player_provider']
+
+            firewalls:
+                admin:
+                    pattern: ^/admin
+                    provider: app_users
+                    # ...
+                    switch_user: true
+                player:
+                    pattern: ^/player
+                    provider: player_provider
+                    # ...
