@@ -1470,7 +1470,7 @@ disable asynchronous delivery.
     method was made public in Symfony 6.1.
 
 You can also select the transport by adding an ``X-Bus-Transport`` header (which
-will be remove automatically from the final message)::
+will be removed automatically from the final message)::
 
     // Use the bus transport "app.another_bus":
     $email->getHeaders()->addTextHeader('X-Bus-Transport', 'app.another_bus');
