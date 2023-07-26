@@ -463,7 +463,7 @@ For more details about event subscribers, see :doc:`/event_dispatcher`.
 Impersonate Across two or more firewalls (UserProviders)
 --------------------------------------------------------
 
-If you need to user switching across many UserProviders, you can create merged UserProvider. 
+If you need to user switching across many UserProviders, you can create merged UserProvider.
 And then you can use impersonate users across many UserProviders (from User to Contact, in example):
 
 .. configuration-block::
