@@ -1,4 +1,4 @@
-nsl.. _framework-bundle-configuration:
+.. _framework-bundle-configuration:
 
 Framework Configuration Reference (FrameworkBundle)
 ===================================================
@@ -25,7 +25,7 @@ Configuration
 -------------
 
 .. _configuration-framework-secret:
-a
+
 secret
 ~~~~~~
 
