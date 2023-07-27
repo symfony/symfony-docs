@@ -13,6 +13,17 @@ type guessers.
     * :class:`Symfony\\Bridge\\Doctrine\\Form\\DoctrineOrmTypeGuesser`
       provided by the Doctrine bridge.
 
+Guessers are used only in the following cases:
+
+* Using
+  :method:`Symfony\\Component\\Form\\FormFactoryInterface::createForProperty`
+  or
+  :method:`Symfony\\Component\\Form\\FormFactoryInterface::createBuilderForProperty`;
+* Calling :method:`Symfony\\Component\\Form\\FormInterface::add` or
+  :method:`Symfony\\Component\\Form\\FormBuilderInterface::create` or
+  :method:`Symfony\\Component\\Form\\FormBuilderInterface::add` without an
+  explicit type, in a context where the parent form has defined a data class.
+
 Create a PHPDoc Type Guesser
 ----------------------------
 
@@ -70,7 +81,7 @@ The ``TypeGuess`` constructor requires three options:
 
 * The type name (one of the :doc:`form types </reference/forms/types>`);
 * Additional options (for instance, when the type is ``entity``, you also
-  want to set the ``class`` option). If no types are guessed, this should be
+  want to set the ``class`` option). If no options are guessed, this should be
   set to an empty array;
 * The confidence that the guessed type is correct. This can be one of the
   constants of the :class:`Symfony\\Component\\Form\\Guess\\Guess` class:
@@ -153,11 +164,11 @@ set.
 
 .. caution::
 
-    You should be very careful using the ``guessPattern()`` method. When the
-    type is a float, you cannot use it to determine a min or max value of the
-    float (e.g. you want a float to be greater than ``5``, ``4.512313`` is not valid
-    but ``length(4.512314) > length(5)`` is, so the pattern will succeed). In
-    this case, the value should be set to ``null`` with a ``MEDIUM_CONFIDENCE``.
+    You should be very careful using the ``guessMaxLength()`` method. When the
+    type is a float, you cannot determine a length (e.g. you want a float to be
+    less than ``5``, ``5.512313`` is not valid but
+    ``length(5.512314) > length(5)`` is, so the pattern will succeed). In this
+    case, the value should be set to ``null`` with a ``MEDIUM_CONFIDENCE``.
 
 Registering a Type Guesser
 --------------------------
