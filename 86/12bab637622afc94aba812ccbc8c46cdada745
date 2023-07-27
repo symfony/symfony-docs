@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by derrabus at 2023-07-24T15:00:54Z
+
+Code PR has been merged.
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2023-07-26T14:42:32Z
+
+We also need a `versionadded` directive which explains that you can use this feature since Symfony 6.4.
+
+---------------------------------------------------------------------------
+
+by Seb33300 at 2023-07-27T07:53:51Z
+
+Added
