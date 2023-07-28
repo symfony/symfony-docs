@@ -421,12 +421,9 @@ Finally, you need a front controller to boot and run the application. Create a
 
     // public/index.php
     use App\Kernel;
-    use Doctrine\Common\Annotations\AnnotationRegistry;
     use Symfony\Component\HttpFoundation\Request;
 
-    $loader = require __DIR__.'/../vendor/autoload.php';
-    // auto-load annotations
-    AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+    require __DIR__.'/../vendor/autoload.php';
 
     $kernel = new Kernel('dev', true);
     $request = Request::createFromGlobals();
