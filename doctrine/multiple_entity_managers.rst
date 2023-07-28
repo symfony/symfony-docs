@@ -216,7 +216,7 @@ the default entity manager (i.e. ``default``) is returned::
     }
 
 Entity managers also benefit from :ref:`autowiring aliases <service-autowiring-alias>`
-when the :ref:`framework bundle <framework-bundle-configuration>` is used. For
+when the :doc:`framework bundle </reference/configuration/framework>` is used. For
 example, to inject the ``customer`` entity manager, type-hint your method with
 ``EntityManagerInterface $customerEntityManager``.
 
