@@ -163,7 +163,7 @@ when all items are successfully deleted)::
 
     If the cache component is used inside a Symfony application, you can remove
     items from cache pools using the following commands (which reside within
-    the :ref:`framework bundle <framework-bundle-configuration>`):
+    the :doc:`framework bundle </reference/configuration/framework>`):
 
     To remove *one specific item* from the *given pool*:
 
@@ -242,7 +242,7 @@ silently ignored)::
 
     If the cache component is used inside a Symfony application, you can prune
     *all items* from *all pools* using the following command (which resides within
-    the :ref:`framework bundle <framework-bundle-configuration>`):
+    the :doc:`framework bundle </reference/configuration/framework>`):
 
     .. code-block:: terminal
 
