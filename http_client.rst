@@ -1362,7 +1362,7 @@ The component is interoperable with four different abstractions for HTTP
 clients: `Symfony Contracts`_, `PSR-18`_, `HTTPlug`_ v1/v2 and native PHP streams.
 If your application uses libraries that need any of them, the component is compatible
 with all of them. They also benefit from :ref:`autowiring aliases <service-autowiring-alias>`
-when the :ref:`framework bundle <framework-bundle-configuration>` is used.
+when the :doc:`framework bundle </reference/configuration/framework>` is used.
 
 If you are writing or maintaining a library that makes HTTP requests, you can
 decouple it from any specific HTTP client implementations by coding against

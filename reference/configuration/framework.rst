@@ -1,5 +1,3 @@
-.. _framework-bundle-configuration:
-
 Framework Configuration Reference (FrameworkBundle)
 ===================================================
 
