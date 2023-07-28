@@ -199,6 +199,14 @@ If you want to use XML instead of annotations, add ``type: xml`` and
 
 .. caution::
 
+    If you're creating Relationship datatypes, don't include "_id" at the end of a field, since Doctrine does that for you, otherwise it might lead to
+    problems later on.
+
+..
+
+
+.. caution::
+
     Be careful not to use reserved SQL keywords as your table or column names
     (e.g. ``GROUP`` or ``USER``). See Doctrine's `Reserved SQL keywords documentation`_
     for details on how to escape these. Or, change the table name with
