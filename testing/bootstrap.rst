@@ -25,14 +25,12 @@ You can modify this file to add custom logic:
           (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
       }
 
-    + if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
-    +     // executes the "php bin/console cache:clear" command
-    +     passthru(sprintf(
-    +         'APP_ENV=%s php "%s/../bin/console" cache:clear --no-warmup',
-    +         $_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'],
-    +         __DIR__
-    +     ));
-    + }
+    + // executes the "php bin/console cache:clear" command
+    + passthru(sprintf(
+    +   'APP_ENV=%s php "%s/../bin/console" cache:clear --no-warmup',
+    +   $_ENV['APP_ENV'],
+    +   __DIR__
+    + ));
 
 .. note::
 
@@ -48,22 +46,3 @@ You can modify this file to add custom logic:
         >
             <!-- ... -->
         </phpunit>
-
-Now, you can update the ``phpunit.xml.dist`` file to declare the custom
-environment variable introduced to ``tests/bootstrap.php``:
-
-.. code-block:: xml
-
-    <!-- phpunit.xml.dist -->
-    <?xml version="1.0" encoding="UTF-8" ?>
-    <phpunit>
-        <php>
-            <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test"/>
-            <!-- ... -->
-        </php>
-
-        <!-- ... -->
-    </phpunit>
-
-Now, when running ``vendor/bin/phpunit``, the cache will be cleared
-automatically by the bootstrap file before running all tests.
