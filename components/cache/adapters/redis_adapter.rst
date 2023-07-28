@@ -239,7 +239,12 @@ try to add data when no memory is available. An example setting could look as fo
 Working with Tags
 -----------------
 
-In order to use tag-based invalidation, you can wrap your adapter in :class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`, but when Redis is used as backend, it's often more interesting to use the dedicated :class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag invalidation logic is implemented in Redis itself, this adapter offers better performance when using tag-based invalidation::
+In order to use tag-based invalidation, you can wrap your adapter in
+:class:`Symfony\\Component\\Cache\\Adapter\\TagAwareAdapter`. However, when Redis
+is used as backend, it's often more interesting to use the dedicated
+:class:`Symfony\\Component\\Cache\\Adapter\\RedisTagAwareAdapter`. Since tag
+invalidation logic is implemented in Redis itself, this adapter offers better
+performance when using tag-based invalidation::
 
     use Symfony\Component\Cache\Adapter\RedisAdapter;
     use Symfony\Component\Cache\Adapter\RedisTagAwareAdapter;
@@ -249,7 +254,9 @@ In order to use tag-based invalidation, you can wrap your adapter in :class:`Sym
 
 .. note::
 
-    When using RedisTagAwareAdapter, in order to maintain relationships between tags and cache items, you have to use either ``noeviction`` or ``volatile-*`` in the Redis ``maxmemory-policy`` eviction policy.
+    When using RedisTagAwareAdapter, in order to maintain relationships between
+    tags and cache items, you have to use either ``noeviction`` or ``volatile-*``
+    in the Redis ``maxmemory-policy`` eviction policy.
 
 Read more about this topic in the official `Redis LRU Cache Documentation`_.
 
