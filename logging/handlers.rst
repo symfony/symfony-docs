@@ -73,14 +73,14 @@ To use it, declare it as a service:
 
         // optionally, configure the handler using the constructor arguments (shown values are default)
         $container->register(ElasticsearchLogstashHandler::class)
-            ->setArguments(
+            ->setArguments([
                 '$endpoint' => "http://127.0.0.1:9200",
                 '$index' => "monolog",
                 '$client' => null,
                 '$level' => Logger::DEBUG,
                 '$bubble' => true,
                 '$elasticsearchVersion' => '1.0.0',
-            )
+            ])
         ;
 
 Then reference it in the Monolog configuration:
