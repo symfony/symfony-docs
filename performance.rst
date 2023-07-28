@@ -60,7 +60,7 @@ container into a single file, which could improve performance when using
         # config/services.yaml
         parameters:
             # ...
-            .container.dumper.inline_factories: true
+            container.dumper.inline_factories: true
 
     .. code-block:: xml
 
@@ -72,7 +72,7 @@ container into a single file, which could improve performance when using
 
             <parameters>
                 <!-- ... -->
-                <parameter key=".container.dumper.inline_factories">true</parameter>
+                <parameter key="container.dumper.inline_factories">true</parameter>
             </parameters>
         </container>
 
@@ -81,7 +81,7 @@ container into a single file, which could improve performance when using
         // config/services.php
 
         // ...
-        $container->parameters()->set('.container.dumper.inline_factories', true);
+        $container->parameters()->set('container.dumper.inline_factories', true);
 
 .. _performance-use-opcache:
 
