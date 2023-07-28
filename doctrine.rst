@@ -198,8 +198,8 @@ If you want to use XML instead of annotations, add ``type: xml`` and
 ``config/packages/doctrine.yaml`` file.
 
 .. caution::
-    If you're creating Relationship datatypes, don't include "_id" at the end of a field, since Doctrine does that for you, otherwise it might lead to     
-    problems later on.
+If you're creating Relationship datatypes, don't include "_id" at the end of a field, since Doctrine does that for you, otherwise it might lead to     
+problems later on.
 .. 
 
 .. caution::
