@@ -167,6 +167,11 @@ follows:
     ``'draft'`` or ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``
     instead of ``'to_review'``.
 
+.. versionadded:: 6.4
+
+    Since Symfony 6.4, the ``type`` option under ``marking_store`` can be
+    omitted when the ``property`` option is explicitly set.
+
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
     // src/Entity/BlogPost.php
