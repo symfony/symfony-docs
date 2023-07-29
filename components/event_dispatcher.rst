@@ -182,7 +182,6 @@ determine which instance is passed.
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
         use Symfony\Component\EventDispatcher\EventDispatcher;
 
@@ -213,7 +212,6 @@ determine which instance is passed.
         use Symfony\Component\DependencyInjection\Compiler\PassConfig;
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-        use Symfony\Component\DependencyInjection\Reference;
         use Symfony\Component\EventDispatcher\DependencyInjection\AddEventAliasesPass;
         use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
         use Symfony\Component\EventDispatcher\EventDispatcher;

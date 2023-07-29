@@ -803,10 +803,7 @@ You can also use the ``bind`` keyword to bind specific arguments by name or type
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Controller\LuckyController;
         use Psr\Log\LoggerInterface;
-        use Symfony\Component\DependencyInjection\Definition;
-        use Symfony\Component\DependencyInjection\Reference;
 
         return function(ContainerConfigurator $container) {
             $services = $container->services()
