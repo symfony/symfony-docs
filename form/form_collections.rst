@@ -17,7 +17,7 @@ Let's start by creating a ``Task`` entity::
     class Task
     {
         protected string $description;
-        protected ArrayCollection $tags;
+        protected Collection $tags;
 
         public function __construct()
         {
@@ -466,7 +466,7 @@ you will learn about next!).
             // ...
 
             #[ORM\ManyToMany(targetEntity: Tag::class, cascade: ['persist'])]
-            protected array $tags;
+            protected Collection $tags;
 
         .. code-block:: yaml
 
