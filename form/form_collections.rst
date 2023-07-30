@@ -466,7 +466,7 @@ you will learn about next!).
             // ...
 
             #[ORM\ManyToMany(targetEntity: Tag::class, cascade: ['persist'])]
-            protected array $tags;
+            protected Collection $tags;
 
         .. code-block:: yaml
 
