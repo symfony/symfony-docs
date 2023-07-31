@@ -215,6 +215,7 @@ Finally, you can use aggregated functions:
 * ``finite-number``: ``is_int || is_float && is_finite``
 
 .. versionadded:: 6.4
+
     ``number``, ``finite-float`` and ``finite-number`` were introduced in Symfony 6.4.
 
 .. _built-in PHP extension: https://www.php.net/book.ctype
