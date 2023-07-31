@@ -11,7 +11,6 @@ Let's start by creating a ``Task`` entity::
     // src/Entity/Task.php
     namespace App\Entity;
 
-    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
 
     class Task
