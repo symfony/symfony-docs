@@ -111,6 +111,7 @@ Service               Install with
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``
+`Scaleway`_           ``composer require symfony/scaleway-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
 ===================== ==============================================
 
@@ -126,8 +127,8 @@ Service               Install with
 
 .. versionadded:: 6.4
 
-    The ``Brevo`` integration was renamed in Symfony 6.4 (in previous
-    Symfony versions it was called ``Sendinblue``).
+    The ``Brevo`` (in previous Symfony versions it was called ``Sendinblue``)
+    and ``Scaleway`` integrations were introduced in Symfony 6.4.
 
 .. note::
 
@@ -161,7 +162,7 @@ how to deliver messages via SendGrid. The *only* part you need to change is the
 Each provider has different environment variables that the Mailer uses to
 configure the *actual* protocol, address and authentication for delivery. Some
 also have options that can be configured with query parameters at the end of the
-``MAILER_DSN`` - like ``?region=`` for Amazon SES or Mailgun. Some providers support
+``MAILER_DSN`` - like ``?region=`` for Amazon SES, Mailgun or Scaleway. Some providers support
 sending via ``http``, ``api`` or ``smtp``. Symfony chooses the best available
 transport, but you can force to use one:
 
@@ -216,6 +217,10 @@ party provider:
 | `Postmark`_            | - SMTP postmark+smtp://ID@default                   |
 |                        | - HTTP n/a                                          |
 |                        | - API postmark+api://KEY@default                    |
++------------------------+-----------------------------------------------------+
+| `Scaleway`_            | - SMTP scaleway+smtp://PROJECT_ID:API_KEY@default   |
+|                        | - HTTP n/a                                          |
+|                        | - API scaleway+api://PROJECT_ID:API_KEY@default     |
 +------------------------+-----------------------------------------------------+
 | `Sendgrid`_            | - SMTP sendgrid+smtp://KEY@default                  |
 |                        | - HTTP n/a                                          |
@@ -1881,4 +1886,5 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Postmark`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
+.. _`Scaleway`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Scaleway/README.md
 .. _`SendGrid`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/README.md
