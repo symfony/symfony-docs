@@ -563,8 +563,8 @@ don't accidentally block Symfony's dev tools - which live under URLs like
 
 .. tip::
 
-    Instead of creating one long regex to match all routes you want, you're
-    also able to use an array of simpler regexes to match routes:
+    When matching several routes, instead of creating a long regex you can also
+    use an array of simpler regexes to match each route:
 
     .. configuration-block::
 
@@ -608,7 +608,7 @@ don't accidentally block Symfony's dev tools - which live under URLs like
 
     .. versionadded:: 6.4
 
-        The possibility to use an array of regex was introduced in Symfony 6.4.
+        The feature to use an array of regex was introduced in Symfony 6.4.
 
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
 it matches *all* URLs). A firewall can have many modes of authentication,
