@@ -208,5 +208,15 @@ Also, you can use ``ctype_*()`` functions from corresponding
 Make sure that the proper :phpfunction:`locale <setlocale>` is set before
 using one of these.
 
+Finally, you can use aggregated functions:
+
+* ``number``: ``is_int || is_float && !is_nan``
+* ``finite-float``: ``is_float && is_finite``
+* ``finite-number``: ``is_int || is_float && is_finite``
+
+.. versionadded:: 6.4
+
+    ``number``, ``finite-float`` and ``finite-number`` were introduced in Symfony 6.4.
+
 .. _built-in PHP extension: https://www.php.net/book.ctype
 .. _a list of ctype functions: https://www.php.net/ref.ctype
