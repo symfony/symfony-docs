@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by guillaume-a at 2023-07-06T20:06:18Z
+
+This PR should fix CI / Build : https://github.com/symfony/symfony-docs/pull/18529
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-07-12T06:06:17Z
+
+IsFinite != Finite
+
+---------------------------------------------------------------------------
+
+by guillaume-a at 2023-07-13T15:43:00Z
+
+@OskarStark you're right, I renamed the Validator `IsFinite`
+
+---------------------------------------------------------------------------
+
+by guillaume-a at 2023-07-31T06:56:10Z
+
+I've re write the doc according to all changes done in the initial ticket.
+No more `IsFinite` constraint, just some new entries in `Type` constraint.
