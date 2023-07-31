@@ -846,7 +846,7 @@ In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
     # config/services.yaml
     services:
         Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
-        
+
 Then, run the command:
 
 .. code-block:: terminal
@@ -1063,8 +1063,6 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
 
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Controller\LuckyController;
 
         return static function (ContainerConfigurator $container) {
             $container->services()

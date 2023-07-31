@@ -139,7 +139,6 @@ After creating the strategy PHP class, register it as a Symfony service.
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Asset\VersionStrategy\GulpBusterVersionStrategy;
-        use Symfony\Component\DependencyInjection\Definition;
 
         return function(ContainerConfigurator $container) {
             $services = $container->services();
