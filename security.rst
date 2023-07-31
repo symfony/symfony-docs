@@ -561,6 +561,55 @@ The ``dev`` firewall is really a fake firewall: it makes sure that you
 don't accidentally block Symfony's dev tools - which live under URLs like
 ``/_profiler`` and ``/_wdt``.
 
+.. tip::
+
+    Instead of creating one long regex to match all routes you want, you're
+    also able to use an array of simpler regexes to match routes:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/security.yaml
+            security:
+                # ...
+                firewalls:
+                    dev:
+                        pattern:
+                            - ^/_profiler/
+                            - ^/_wdt/
+                            - ^/css/
+                            - ^/images/
+                            - ^/js/
+            # ...
+
+        .. code-block:: php
+
+            // config/packages/security.php
+            use Symfony\Config\SecurityConfig;
+
+            return static function (SecurityConfig $security): void {
+                // ...
+                $security->firewall('dev')
+                    ->pattern([
+                        '^/_profiler/',
+                        '^/_wdt/',
+                        '^/css/',
+                        '^/images/',
+                        '^/js/',
+                    ])
+                    ->security(false)
+                ;
+
+                // ...
+            };
+
+    This feature is not supported by the XML configuration format.
+
+    .. versionadded:: 6.4
+
+        The possibility to use an array of regex was introduced in Symfony 6.4.
+
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
 it matches *all* URLs). A firewall can have many modes of authentication,
 in other words, it enables many ways to ask the question "Who are you?".
