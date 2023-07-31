@@ -1080,8 +1080,6 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Controller\LuckyController;
-
         return static function (ContainerConfigurator $container): void {
             $container->services()
                 ->defaults()
