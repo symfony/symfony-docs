@@ -428,7 +428,7 @@ Encore. When you do, you'll see an error!
 .. code-block:: terminal
 
     >   Error: Install sass-loader & sass to use enableSassLoader()
-    >     yarn add sass-loader@^12.0.0 sass --dev
+    >     yarn add sass-loader@^13.0.0 sass --dev
 
 Encore supports many features. But, instead of forcing all of them on you, when
 you need a feature, Encore will tell you what you need to install. Run:
@@ -436,11 +436,11 @@ you need a feature, Encore will tell you what you need to install. Run:
 .. code-block:: terminal
 
     # if you use the Yarn package manager
-    $ yarn add sass-loader@^12.0.0 sass --dev
+    $ yarn add sass-loader@^13.0.0 sass --dev
     $ yarn encore dev --watch
 
     # if you use the npm package manager
-    $ npm install sass-loader@^12.0.0 sass --save-dev
+    $ npm install sass-loader@^13.0.0 sass --save-dev
     $ npm run watch
 
 Your app now supports Sass. Encore also supports LESS and Stylus. See
