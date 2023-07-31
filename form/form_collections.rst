@@ -11,13 +11,12 @@ Let's start by creating a ``Task`` entity::
     // src/Entity/Task.php
     namespace App\Entity;
 
-    use Doctrine\Common\Collections\ArrayCollection;
     use Doctrine\Common\Collections\Collection;
 
     class Task
     {
         protected string $description;
-        protected ArrayCollection $tags;
+        protected Collection $tags;
 
         public function __construct()
         {
@@ -466,7 +465,7 @@ you will learn about next!).
             // ...
 
             #[ORM\ManyToMany(targetEntity: Tag::class, cascade: ['persist'])]
-            protected array $tags;
+            protected Collection $tags;
 
         .. code-block:: yaml
 
