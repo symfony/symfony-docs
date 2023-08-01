@@ -507,7 +507,7 @@ done by passing a special form "view" object to your template (notice the
     {{ form_start(form) }}
         {{ form_widget(form) }}
 
-        <input type="submit"/>
+        <input type="submit">
     {{ form_end(form) }}
 
 .. image:: /_images/form/simple-form.png
