@@ -694,10 +694,10 @@ kernel.reset
 
 **Purpose**: Clean up services between requests
 
-During the ``kernel.terminate`` event, Symfony looks for any service tagged
-with the ``kernel.reset`` tag to reinitialize their state. This is done by
-calling to the method whose name is configured in the ``method`` argument of
-the tag.
+In all main requests (not :ref:`sub-requests <http-kernel-sub-requests>`) except
+the first one, Symfony looks for any service tagged with the ``kernel.reset`` tag
+to reinitialize their state. This is done by calling to the method whose name is
+configured in the ``method`` argument of the tag.
 
 This is mostly useful when running your projects in application servers that
 reuse the Symfony application between requests to improve performance. This tag
