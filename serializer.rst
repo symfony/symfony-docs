@@ -295,7 +295,7 @@ Using Serialization Groups Attributes
 -------------------------------------
 
 You can add :ref:`#[Groups] attributes <component-serializer-attributes-groups-attributes>`
-to your class::
+to your class properties::
 
     // src/Entity/Product.php
     namespace App\Entity;
@@ -321,7 +321,37 @@ to your class::
         private string $description;
     }
 
-You can now choose which groups to use when serializing::
+You can also use the ``#[Groups]`` attribute on class level::
+
+    #[ORM\Entity]
+    #[Groups(['show_product'])]
+    class Product
+    {
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column(type: 'integer')]
+        #[Groups(['list_product'])]
+        private int $id;
+
+        #[ORM\Column(type: 'string', length: 255)]
+        #[Groups(['list_product'])]
+        private string $name;
+
+        #[ORM\Column(type: 'text')]
+        private string $description;
+    }
+
+In this example, the ``id`` and the ``name`` properties belong to the
+``show_product`` and ``list_product`` groups. The ``description`` property
+only belongs to the ``show_product`` group.
+
+.. versionadded:: 6.4
+
+    The support of the ``#[Groups]`` attribute on class level was
+    introduced in Symfony 6.4.
+
+Now that your groups are defined, you can choose which groups to use when
+serializing::
 
     use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 
