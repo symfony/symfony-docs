@@ -533,12 +533,12 @@ To work with multi-dimensional fields:
 .. code-block:: html
 
     <form>
-        <input name="multi[]"/>
-        <input name="multi[]"/>
-        <input name="multi[dimensional]"/>
-        <input name="multi[dimensional][]" value="1"/>
-        <input name="multi[dimensional][]" value="2"/>
-        <input name="multi[dimensional][]" value="3"/>
+        <input name="multi[]">
+        <input name="multi[]">
+        <input name="multi[dimensional]">
+        <input name="multi[dimensional][]" value="1">
+        <input name="multi[dimensional][]" value="2">
+        <input name="multi[dimensional][]" value="3">
     </form>
 
 Pass an array of values::
