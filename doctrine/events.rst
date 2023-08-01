@@ -260,8 +260,7 @@ listener in the Symfony application by creating a new service for it and
 
 .. versionadded:: 2.7.2
 
-    The :class:`Doctrine\\Bundle\\DoctrineBundle\\Attribute\\AsDoctrineListener`
-    attribute was introduced in DoctrineBundle 2.7.2.
+    The `AsDoctrineListener`_ attribute was introduced in DoctrineBundle 2.7.2.
 
 .. tip::
 
@@ -561,3 +560,4 @@ Doctrine connection to use) you must do that in the manual service configuration
 .. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events
 .. _`official docs about Doctrine events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html
 .. _`DoctrineMongoDBBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
+.. _`AsDoctrineListener`: https://github.com/doctrine/DoctrineBundle/blob/2.10.x/Attribute/AsDoctrineListener.php
