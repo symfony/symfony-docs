@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by lyrixx at 2023-08-01T08:37:25Z
+
+Can you add a note about the context: Context is not supported with property.
+
+So, if one want to use the context, they must use a public method.
+
+But the following code works:
+```php
+class S
+{
+
+  public $marking; // Used for reading
+  private $context;
+
+  public function setMarking($marking, $context) { // used for setting
+     ...
+  }
+}
+```
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-08-01T08:46:37Z
+
+Pushed a new version, what do you think? :slightly_smiling_face:
