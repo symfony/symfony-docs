@@ -264,7 +264,7 @@ You can find a list of existing mime types on the `IANA website`_.
 
     When using this constraint on a :doc:`FileType field </reference/forms/types/file>`,
     the value of the ``mimeTypes`` option is also used in the ``accept``
-    attribute of the related ``<input type="file"/>`` HTML element.
+    attribute of the related ``<input type="file">`` HTML element.
 
     This behavior is applied only when using :ref:`form type guessing <form-type-guessing>`
     (i.e. the form type is not defined explicitly in the ``->add()`` method of

@@ -121,7 +121,7 @@ checkbox must have a name of ``_remember_me``:
         {# ... your form fields #}
 
         <label>
-            <input type="checkbox" name="_remember_me" checked/>
+            <input type="checkbox" name="_remember_me" checked>
             Keep me logged in
         </label>
 
