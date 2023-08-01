@@ -101,4 +101,18 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
+``withSeconds``
+~~~~~~~~~~~
+
+**type**: ``bool`` **default**: ``true``
+
+This option allows you to specify whether the time should include seconds.
+
+=========  ===============================  ==============  ================
+Option     Pattern                          Correct value   Incorrect value
+=========  ===============================  ==============  ================
+``true``   ``/^(\d{2}):(\d{2}):(\d{2})$/``  ``12:00:00``    ``12:00``
+``false``  ``/^(\d{2}):(\d{2})$/``          ``12:00``       ``12:00:00``
+=========  ===============================  ==============  ================
+
 .. include:: /reference/constraints/_payload-option.rst.inc
