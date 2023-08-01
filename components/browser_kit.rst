@@ -112,6 +112,28 @@ provides access to the link properties (e.g. ``$link->getMethod()``,
     $link = $crawler->selectLink('Go elsewhere...')->link();
     $client->click($link);
 
+The :method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::click` and
+:method:`Symfony\\Component\\BrowserKit\\AbstractBrowser::clickLink` methods
+can take an optional ``serverParameters`` argument. This
+parameter allows to send additional information like headers when clicking
+on a link::
+
+    use Acme\Client;
+
+    $client = new Client();
+    $client->request('GET', '/product/123');
+
+    // works both with `click()`...
+    $link = $crawler->selectLink('Go elsewhere...')->link();
+    $client->click($link, ['X-Custom-Header' => 'Some data']);
+
+    // ... and `clickLink()`
+    $crawler = $client->clickLink('Go elsewhere...', ['X-Custom-Header' => 'Some data']);
+
+.. versionadded:: 6.4
+
+    The ``serverParameters`` parameter was introduced in Symfony 6.4.
+
 Submitting Forms
 ~~~~~~~~~~~~~~~~
 
