@@ -430,9 +430,8 @@ attribute in your controller::
         // ...
     }
 
-You can customize the validation groups used during the mapping thanks to the
-``validationGroups`` option, but also the HTTP status to return if the
-validation fails::
+You can customize the validation groups used during the mapping and also the
+HTTP status to return if the validation fails::
 
     use Symfony\Component\HttpFoundation\Response;
 
