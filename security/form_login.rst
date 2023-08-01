@@ -157,8 +157,8 @@ Defining the redirect URL via POST using a hidden form field:
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
-        <input type="hidden" name="_target_path" value="{{ path('account') }}"/>
-        <input type="submit" name="login"/>
+        <input type="hidden" name="_target_path" value="{{ path('account') }}">
+        <input type="submit" name="login">
     </form>
 
 Using the Referring URL
@@ -301,8 +301,8 @@ This option can also be set via the ``_failure_path`` request parameter:
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
-        <input type="hidden" name="_failure_path" value="{{ path('forgot_password') }}"/>
-        <input type="submit" name="login"/>
+        <input type="hidden" name="_failure_path" value="{{ path('forgot_password') }}">
+        <input type="submit" name="login">
     </form>
 
 Customizing the Target and Failure Request Parameters
@@ -380,7 +380,7 @@ are now fully customized:
     <form action="{{ path('login') }}" method="post">
         {# ... #}
 
-        <input type="hidden" name="go_to" value="{{ path('dashboard') }}"/>
-        <input type="hidden" name="back_to" value="{{ path('forgot_password') }}"/>
-        <input type="submit" name="login"/>
+        <input type="hidden" name="go_to" value="{{ path('dashboard') }}">
+        <input type="hidden" name="back_to" value="{{ path('forgot_password') }}">
+        <input type="submit" name="login">
     </form>

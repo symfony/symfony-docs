@@ -2,7 +2,7 @@ RangeType Field
 ===============
 
 The ``RangeType`` field is a slider that is rendered using the HTML5
-``<input type="range"/>`` tag.
+``<input type="range">`` tag.
 
 +---------------------------+---------------------------------------------------------------------+
 | Rendered as               | ``input`` ``range`` field (slider in HTML5 supported browser)       |
