@@ -196,8 +196,8 @@ The configured property will be used via its implemented getter/setter methods b
         }
     }
 
-It is also possible to use public properties to be used by the marking
-store. The above class would become the following::
+It is also possible to use public properties for the marking store. The above
+class would become the following::
 
     // src/Entity/BlogPost.php
     namespace App\Entity;
@@ -210,8 +210,8 @@ store. The above class would become the following::
         public string $content;
     }
 
-When using public properties, context is not supported. In order
-to support it, you must declare a setter to write your property::
+When using public properties, context is not supported. In order to support it,
+you must declare a setter to write your property::
 
     // src/Entity/BlogPost.php
     namespace App\Entity;
@@ -223,13 +223,13 @@ to support it, you must declare a setter to write your property::
 
         public function setCurrentPlace(string $currentPlace, array $context = []): void
         {
-            // Assign the property and so something with `$context`
+            // assign the property and do something with the context
         }
     }
 
 .. versionadded:: 6.4
 
-    The support of using public properties instead of getter/setter methods
+    The feature to use public properties instead of getter/setter methods
     and private properties was introduced in Symfony 6.4.
 
 .. note::
