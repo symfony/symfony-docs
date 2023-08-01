@@ -190,11 +190,47 @@ The configured property will be used via its implemented getter/setter methods b
             return $this->currentPlace;
         }
 
-        public function setCurrentPlace($currentPlace, $context = []): void
+        public function setCurrentPlace(string $currentPlace, array $context = []): void
         {
             $this->currentPlace = $currentPlace;
         }
     }
+
+It is also possible to use public properties to be used by the marking
+store. The above class would become the following::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    class BlogPost
+    {
+        // the configured marking store property must be declared
+        public string $currentPlace;
+        public string $title;
+        public string $content;
+    }
+
+When using public properties, context is not supported. In order
+to support it, you must declare a setter to write your property::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    class BlogPost
+    {
+        public string $currentPlace;
+        // ...
+
+        public function setCurrentPlace(string $currentPlace, array $context = []): void
+        {
+            // Assign the property and so something with `$context`
+        }
+    }
+
+.. versionadded:: 6.4
+
+    The support of using public properties instead of getter/setter methods
+    and private properties was introduced in Symfony 6.4.
 
 .. note::
 
