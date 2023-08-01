@@ -117,7 +117,7 @@ fields, so you no longer have to deal with form themes:
         value="{{ field_value(form.username) }}"
         placeholder="{{ field_label(form.username) }}"
         class="form-control"
-    />
+    >
 
     <select name="{{ field_name(form.country) }}" class="form-control">
         <option value="">{{ field_label(form.country) }}</option>

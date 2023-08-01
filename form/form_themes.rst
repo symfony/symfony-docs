@@ -213,7 +213,7 @@ upon the form themes enabled in your app):
 
 .. code-block:: html
 
-    <input type="number" id="form_age" name="form[age]" required="required" value="33"/>
+    <input type="number" id="form_age" name="form[age]" required="required" value="33">
 
 Symfony uses a Twig block called ``integer_widget`` to render that field. This
 is because the field type is ``integer`` and you're rendering its ``widget`` (as
