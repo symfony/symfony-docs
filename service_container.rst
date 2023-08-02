@@ -837,15 +837,16 @@ argument for *any* service defined in this file! You can bind arguments by name
 The ``bind`` config can also be applied to specific services or when loading many
 services at once (i.e. :ref:`service-psr4-loader`).
 
-Abstract service arguments
+Abstract Service Arguments
 --------------------------
 
-Sometimes, when defining services in your Symfony applications, there are arguments
-that can't be added in config files. The reason is that their values can only be
-calculated at runtime in a :doc:`compiler pass </service_container/compiler_passes>`
+Sometimes, the values of some service arguments can't be defined in the
+configuration files because they are calculated at runtime using a
+:doc:`compiler pass </service_container/compiler_passes>`
 or :doc:`bundle extension </bundles/extension>`.
 
-If value is not replaced a ``RuntimeException`` would be thrown.
+In those cases, you can use the ``abstract`` argument type to define at least
+the name of the argument and some short description about its purpose:
 
 .. configuration-block::
 
@@ -899,9 +900,13 @@ If value is not replaced a ``RuntimeException`` would be thrown.
             // ...
         };
 
-In this case, if you don't replace the value, ``RuntimeException`` will be thrown
-with message ``Argument "$rootNamespace" of service "App\Service\MyService" is
-abstract: should be defined by Pass.``
+If you don't replace the value of an abstract argument during runtime, a
+``RuntimeException`` will be thrown with a message like
+``Argument "$rootNamespace" of service "App\Service\MyService" is abstract: should be defined by Pass.``
+
+.. versionadded:: 5.1
+
+    The abstract service arguments were introduced in Symfony 5.1.
 
 .. _services-autowire:
 
