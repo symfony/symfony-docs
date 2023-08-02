@@ -991,10 +991,6 @@ If you don't replace the value of an abstract argument during runtime, a
 ``RuntimeException`` will be thrown with a message like
 ``Argument "$rootNamespace" of service "App\Service\MyService" is abstract: should be defined by Pass.``
 
-.. versionadded:: 5.1
-
-    The abstract service arguments were introduced in Symfony 5.1.
-
 .. _services-autowire:
 
 The autowire Option
