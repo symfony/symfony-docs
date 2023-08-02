@@ -837,6 +837,72 @@ argument for *any* service defined in this file! You can bind arguments by name
 The ``bind`` config can also be applied to specific services or when loading many
 services at once (i.e. :ref:`service-psr4-loader`).
 
+Abstract service arguments
+--------------------------
+
+Sometimes, when defining services in your Symfony applications, there are arguments
+that can't be added in config files. The reason is that their values can only be
+calculated at runtime in a :doc:`compiler pass </service_container/compiler_passes>`
+or :doc:`bundle extension </bundles/extension>`.
+
+If value is not replaced a ``RuntimeException`` would be thrown.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\Service\MyService:
+                arguments:
+                    $rootNamespace: !abstract 'should be defined by Pass'
+
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Service\MyService" class="App\Service\MyService">
+                    <argument key="$rootNamespace" type="abstract">should be defined by Pass</argument>
+                </service>
+
+                <!-- ... -->
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Service\MyService;
+        use Psr\Log\LoggerInterface;
+        use Symfony\Component\DependencyInjection\Definition;
+        use Symfony\Component\DependencyInjection\Reference;
+
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
+
+            $services->set(MyService::class)
+                ->arg('$rootNamespace', abstract_arg('should be defined by Pass'))
+            ;
+
+            // ...
+        };
+
+In this case, if you don't replace the value, ``RuntimeException`` will be thrown
+with message ``Argument "$rootNamespace" of service "App\Service\MyService" is
+abstract: should be defined by Pass.``
+
 .. _services-autowire:
 
 The autowire Option
