@@ -182,8 +182,16 @@ You may convert codes between two-letter alpha2 and three-letter alpha3 codes::
 Numeric Country Codes
 ~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`Symfony\\Component\\Intl\\Countries` class also provides access to the
-numeric country codes according to the `ISO 3166-1 numeric`_ list::
+The `ISO 3166-1 numeric`_ standard defines three-digit country codes to represent
+countries, dependent territories, and special areas of geographical interest.
+
+The main advantage over the ISO 3166-1 alphabetic codes (alpha-2 and alpha-3) is
+that these numeric codes are independent from the writing system. The alphabetic
+codes use the 26-letter English alphabet, which might be unavailable or difficult
+to use for people and systems using non-Latin scripts (e.g. Arabic or Japanese).
+
+The :class:`Symfony\\Component\\Intl\\Countries` class provides access to these
+numeric country codes::
 
     use Symfony\Component\Intl\Countries;
 
