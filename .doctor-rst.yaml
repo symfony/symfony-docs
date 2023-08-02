@@ -103,6 +103,5 @@ whitelist:
         - '.. versionadded:: 0.2' # MercureBundle
         - '.. versionadded:: 3.6' # MonologBundle
         - '.. versionadded:: 3.8' # MonologBundle
-        - '// bin/console'
         - '.. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket'
         - '..  End to End Tests (E2E)'
