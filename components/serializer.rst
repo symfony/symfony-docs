@@ -1001,17 +1001,17 @@ context to pass in these options using the key ``json_encode_options`` or
 
 These are the options available:
 
-=============================== =====================================================  ================================
-Option                           Description                                            Default
-=============================== =====================================================  ================================
-``json_decode_associative``     If set to true returns the result as an array,         ``false``
-                                returns a nested ``stdClass`` hierarchy otherwise.     ``false``
-``json_decode_detailed_errors`` If set to true, exceptions thrown on parsing of JSON   ``false``
-                                are more specific. Requires `seld/jsonlint`_ package.
-``json_encode_options``         `$flags`_ passed to `json_decode`_ function            ``0``
-``json_decode_options``         `$flags`_ passed to `json_encode`_ function            ``\JSON_PRESERVE_ZERO_FRACTION``
-``json_decode_recursion_depth`` Sets maximum recursion depth                           ``512``
-=============================== =====================================================  ================================
+===============================  ========================================================  ================================
+Option                           Description                                               Default
+===============================  ========================================================  ================================
+``json_decode_associative``      If set to true returns the result as an array,            ``false``
+                                 returns a nested ``stdClass`` hierarchy otherwise.        ``false``
+``json_decode_detailed_errors``  If set to true, exceptions thrown on parsing of JSON      ``false``
+                                 are more specific. Requires `seld/jsonlint`_ package.
+``json_encode_options``          `$flags`_ passed to :phpfunction:`json_decode`_ function  ``0``
+``json_decode_options``          `$flags`_ passed to :phpfunction:`json_encode`_ function  ``\JSON_PRESERVE_ZERO_FRACTION``
+``json_decode_recursion_depth``  Sets maximum recursion depth                              ``512``
+===============================  ========================================================  ================================
 
 .. versionadded:: 6.4
 
@@ -1847,6 +1847,4 @@ Learn more
 .. _`PHP reflection`: https://php.net/manual/en/book.reflection.php
 .. _`data URI`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
 .. _seld/jsonlint: https://github.com/Seldaek/jsonlint
-.. _json_decode: https://www.php.net/manual/en/function.json-decode.php
-.. _json_encode: https://www.php.net/manual/en/function.json-encode.php
 .. _$flags: https://www.php.net/manual/en/json.constants.php
