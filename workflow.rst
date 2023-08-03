@@ -275,28 +275,6 @@ machine type, use ``camelCased workflow name + StateMachine``::
         }
     }
 
-Alternatively, use the registry::
-
-    use App\Entity\BlogPost;
-    use Symfony\Component\Workflow\Registry;
-
-    class MyClass
-    {
-        private $workflowRegistry;
-
-        public function __construct(Registry $workflowRegistry)
-        {
-            $this->workflowRegistry = $workflowRegistry;
-        }
-
-        public function toReview(BlogPost $post)
-        {
-            $blogPublishingWorkflow = $this->workflowRegistry->get($post);
-
-            // ...
-        }
-    }
-
 .. tip::
 
     You can find the list of available workflow services with the
@@ -1051,7 +1029,7 @@ In a :ref:`flash message <flash-messages>` in your controller::
 
     // $transition = ...; (an instance of Transition)
 
-    // $workflow is a Workflow instance retrieved from the Registry or injected directly (see above)
+    // $workflow is an injected Workflow instance
     $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
     $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 
