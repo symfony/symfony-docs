@@ -203,8 +203,9 @@ This shortcoming has been solved through the introduction of
 :class:`Symfony\\Component\\Cache\\PruneableInterface`, which defines the abstract method
 :method:`Symfony\\Component\\Cache\\PruneableInterface::prune`. The
 :ref:`ChainAdapter <component-cache-chain-adapter>`,
+:ref:`DoctrineDbalAdapter <doctrine-dbal-adapter>`, and
 :ref:`FilesystemAdapter <component-cache-filesystem-adapter>`,
-:ref:`PdoAdapter <pdo-doctrine-adapter>`, and
+:ref:`PdoAdapter <pdo-adapter>`, and
 :ref:`PhpFilesAdapter <component-cache-files-adapter>` all implement this new interface,
 allowing manual removal of stale cache items::
 
