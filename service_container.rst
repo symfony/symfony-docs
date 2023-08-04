@@ -694,6 +694,12 @@ But, you can control this and pass in a different logger:
 This tells the container that the ``$logger`` argument to ``__construct`` should use
 service whose id is ``monolog.logger.request``.
 
+For a list of possible logger services that can be used with autowiring, run:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:autowiring logger
+
 .. _container-debug-container:
 
 For a full list of *all* possible services in the container, run:
