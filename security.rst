@@ -1710,6 +1710,7 @@ You can log in a user programmatically using the ``login()`` method of the
 
     use App\Security\Authenticator\ExampleAuthenticator;
     use Symfony\Bundle\SecurityBundle\Security;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 
     class SecurityController
     {
@@ -1727,8 +1728,11 @@ You can log in a user programmatically using the ``login()`` method of the
             // ...or the service id of custom authenticators
             $security->login($user, ExampleAuthenticator::class);
 
-            // you can also log in on a different firewall
+            // you can also log in on a different firewall...
             $security->login($user, 'form_login', 'other_firewall');
+
+            // ...and add badges
+            $security->login($user, 'form_login', 'other_firewall', [(new RememberMeBadge())->enable()]);
 
             // use the redirection logic applied to regular login
             $redirectResponse = $security->login($user);
@@ -1742,6 +1746,10 @@ You can log in a user programmatically using the ``login()`` method of the
 .. versionadded:: 6.3
 
     The feature to use a custom redirection logic was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The feature to add badges was introduced in Symfony 6.4.
 
 .. _security-logging-out:
 
