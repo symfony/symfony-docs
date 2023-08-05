@@ -67,7 +67,7 @@ Console script::
 Web front-controller::
 
     // public/index.php
-    
+
     // ...
     $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'another/custom/path/to/.env';
 
@@ -109,8 +109,8 @@ In this code, ``$this->environment`` is the current environment (i.e. ``dev``).
 In this case you have changed the location of the cache directory to
 ``var/{environment}/cache/``.
 
-You can also change the cache directory defining an environment variable named
-``APP_CACHE_DIR`` whose value is the full path of the cache folder.
+You can also change the cache directory by defining an environment variable
+named ``APP_CACHE_DIR`` whose value is the full path of the cache folder.
 
 .. caution::
 
