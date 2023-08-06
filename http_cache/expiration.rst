@@ -92,7 +92,7 @@ The resulting HTTP header will look like this:
 
 .. note::
 
-    The ``expires` option and the ``setExpires()`` method automatically convert
+    The ``expires`` option and the ``setExpires()`` method automatically convert
     the date to the GMT timezone as required by the specification.
 
 Note that in HTTP versions before 1.1 the origin server wasn't required to
