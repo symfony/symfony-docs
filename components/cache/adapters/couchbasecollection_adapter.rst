@@ -1,5 +1,3 @@
-.. _couchbase-collection-adapter:
-
 Couchbase Collection Cache Adapter
 ==================================
 
@@ -8,8 +6,8 @@ Couchbase Collection Cache Adapter
     The Couchbase Collection adapter was introduced in Symfony 5.4.
 
 This adapter stores the values in-memory using one (or more) `Couchbase server`_
-instances. Unlike the :ref:`APCu adapter <apcu-adapter>`, and similarly to the
-:ref:`Memcached adapter <memcached-adapter>`, it is not limited to the current server's
+instances. Unlike the :doc:`APCu adapter </components/cache/adapters/apcu_adapter>`, and similarly to the
+:doc:`Memcached adapter </components/cache/adapters/memcached_adapter>`, it is not limited to the current server's
 shared memory; you can store contents independent of your PHP environment.
 The ability to utilize a cluster of servers to provide redundancy and/or fail-over
 is also available.

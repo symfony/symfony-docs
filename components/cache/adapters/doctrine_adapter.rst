@@ -1,5 +1,3 @@
-.. _doctrine-adapter:
-
 Doctrine Cache Adapter
 ======================
 
