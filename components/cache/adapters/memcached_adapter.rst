@@ -1,11 +1,9 @@
-.. _memcached-adapter:
-
 Memcached Cache Adapter
 =======================
 
 This adapter stores the values in-memory using one (or more) `Memcached server`_
-instances. Unlike the :ref:`APCu adapter <apcu-adapter>`, and similarly to the
-:ref:`Redis adapter <redis-adapter>`, it is not limited to the current server's
+instances. Unlike the :doc:`APCu adapter </components/cache/adapters/apcu_adapter>`, and similarly to the
+:doc:`Redis adapter </components/cache/adapters/redis_adapter>`, it is not limited to the current server's
 shared memory; you can store contents independent of your PHP environment.
 The ability to utilize a cluster of servers to provide redundancy and/or fail-over
 is also available.

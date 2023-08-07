@@ -1,5 +1,3 @@
-.. _doctrine-dbal-adapter:
-
 Doctrine DBAL Cache Adapter
 ===========================
 

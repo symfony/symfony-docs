@@ -146,19 +146,19 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
         >
             <framework:config>
                 <!--
-                default_doctrine_dbal_provider: Service: cache.doctrine_dbal
-                default_psr6_provider: Service: cache.psr6
-                default_redis_provider: Service: cache.redis
-                default_memcached_provider: Service: cache.memcached
-                default_pdo_provider: Service: cache.pdo
+                default-doctrine-dbal-provider: Service: cache.doctrine_dbal
+                default-psr6-provider: Service: cache.psr6
+                default-redis-provider: Service: cache.redis
+                default-memcached-provider: Service: cache.memcached
+                default-pdo-provider: Service: cache.pdo
                 -->
                 <!-- "directory" attribute is only used with cache.adapter.filesystem -->
                 <framework:cache directory="%kernel.cache_dir%/pools"
-                    default_doctrine_dbal_provider="doctrine.dbal.default_connection"
-                    default_psr6_provider="app.my_psr6_service"
-                    default_redis_provider="redis://localhost"
-                    default_memcached_provider="memcached://localhost"
-                    default_pdo_provider="pgsql:host=localhost"
+                    default-doctrine-dbal-provider="doctrine.dbal.default_connection"
+                    default-psr6-provider="app.my_psr6_service"
+                    default-redis-provider="redis://localhost"
+                    default-memcached-provider="memcached://localhost"
+                    default-pdo-provider="pgsql:host=localhost"
                 />
             </framework:config>
         </container>

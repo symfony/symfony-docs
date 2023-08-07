@@ -1,5 +1,3 @@
-.. _component-cache-chain-adapter:
-
 Chain Cache Adapter
 ===================
 
