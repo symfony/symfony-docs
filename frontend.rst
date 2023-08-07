@@ -13,13 +13,13 @@ fast frontend, *and* enjoy the process:
   things like JSX (React), Vue or TypeScript.
 
 * :ref:`AssetMapper <frontend-asset-mapper>`, is a production-ready simpler alternative
-  to Webpack Encore that runs entirely in PHP. It's currently experimental.
+  to Webpack Encore that runs entirely in PHP.
 
 ================================  =================  ======================================================
                                   Encore             AssetMapper
 ================================  =================  ======================================================
 Production Ready?                 yes                yes
-Stable?                           yes                :doc:`experimental </contributing/code/experimental>`
+Stable?                           yes                yes
 Requirements                      Node.js            none: pure PHP
 Requires a build step?            yes                no
 Works in all browsers?            yes                yes
@@ -121,7 +121,6 @@ AssetMapper
 AssetMapper is an alternative to Webpack Encore that runs entirely in PHP
 without any complex build steps. It leverages the ``importmap`` feature of
 your browser, which is available in all browsers thanks to a polyfill.
-AssetMapper is currently :doc:`experimental </contributing/code/experimental>`.
 
 :doc:`Read the AssetMapper Documentation </frontend/asset_mapper>`
 
