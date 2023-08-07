@@ -982,9 +982,15 @@ Crawler Assertions
 ``assertSelectorTextContains(string $selector, string $text, string $message = '')``/``assertSelectorTextNotContains(string $selector, string $text, string $message = '')``
     Asserts that the first element matching the given selector does (not)
     contain the expected text.
+``assertAnySelectorTextContains(string $selector, string $text, string $message = '')``/``assertAnySelectorTextNotContains(string $selector, string $text, string $message = '')``
+    Asserts that any element matching the given selector does (not)
+    contain the expected text.
 ``assertSelectorTextSame(string $selector, string $text, string $message = '')``
     Asserts that the contents of the first element matching the given
     selector does equal the expected text.
+``assertAnySelectorTextSame(string $selector, string $text, string $message = '')``
+    Asserts that the any element matching the given selector does equal the
+    expected text.
 ``assertPageTitleSame(string $expectedTitle, string $message = '')``
     Asserts that the ``<title>`` element is equal to the given title.
 ``assertPageTitleContains(string $expectedTitle, string $message = '')``
@@ -1001,6 +1007,11 @@ Crawler Assertions
 .. versionadded:: 6.3
 
     The ``assertSelectorCount()`` method was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The ``assertAnySelectorTextContains()``, ``assertAnySelectorTextNotContains()``
+    and ``assertAnySelectorTextSame()`` were introduced in Symfony 6.4.
 
 .. _mailer-assertions:
 
