@@ -1,9 +1,7 @@
-.. _component-cache-files-adapter:
-
 PHP Files Cache Adapter
 =======================
 
-Similarly to :ref:`Filesystem Adapter <component-cache-filesystem-adapter>`, this cache
+Similarly to :doc:`Filesystem Adapter </components/cache/adapters/filesystem_adapter>`, this cache
 implementation writes cache entries out to disk, but unlike the Filesystem cache adapter,
 the PHP Files cache adapter writes and reads back these cache files *as native PHP code*.
 For example, caching the value ``['my', 'cached', 'array']`` will write out a cache

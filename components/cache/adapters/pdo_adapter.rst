@@ -1,5 +1,3 @@
-.. _pdo-adapter:
-
 PDO Cache Adapter
 =================
 

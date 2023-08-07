@@ -192,7 +192,7 @@ Pruning Cache Items
 -------------------
 
 Some cache pools do not include an automated mechanism for pruning expired cache items.
-For example, the :ref:`FilesystemAdapter <component-cache-filesystem-adapter>` cache
+For example, the :doc:`FilesystemAdapter </components/cache/adapters/filesystem_adapter>` cache
 does not remove expired cache items *until an item is explicitly requested and determined to
 be expired*, for example, via a call to ``Psr\Cache\CacheItemPoolInterface::getItem``.
 Under certain workloads, this can cause stale cache entries to persist well past their
@@ -202,11 +202,11 @@ expired cache items.
 This shortcoming has been solved through the introduction of
 :class:`Symfony\\Component\\Cache\\PruneableInterface`, which defines the abstract method
 :method:`Symfony\\Component\\Cache\\PruneableInterface::prune`. The
-:ref:`ChainAdapter <component-cache-chain-adapter>`,
-:ref:`DoctrineDbalAdapter <doctrine-dbal-adapter>`, and
-:ref:`FilesystemAdapter <component-cache-filesystem-adapter>`,
-:ref:`PdoAdapter <pdo-adapter>`, and
-:ref:`PhpFilesAdapter <component-cache-files-adapter>` all implement this new interface,
+:doc:`ChainAdapter </components/cache/adapters/chain_adapter>`,
+:doc:`DoctrineDbalAdapter </components/cache/adapters/doctrine_dbal_adapter>`, and
+:doc:`FilesystemAdapter </components/cache/adapters/filesystem_adapter>`,
+:doc:`PdoAdapter </components/cache/adapters/pdo_adapter>`, and
+:doc:`PhpFilesAdapter </components/cache/adapters/php_files_adapter>` all implement this new interface,
 allowing manual removal of stale cache items::
 
     use Symfony\Component\Cache\Adapter\FilesystemAdapter;
@@ -215,7 +215,7 @@ allowing manual removal of stale cache items::
     // ... do some set and get operations
     $cache->prune();
 
-The :ref:`ChainAdapter <component-cache-chain-adapter>` implementation does not directly
+The :doc:`ChainAdapter </components/cache/adapters/chain_adapter>` implementation does not directly
 contain any pruning logic itself. Instead, when calling the chain adapter's
 :method:`Symfony\\Component\\Cache\\Adapter\\ChainAdapter::prune` method, the call is delegated to all
 its compatible cache adapters (and those that do not implement ``PruneableInterface`` are
