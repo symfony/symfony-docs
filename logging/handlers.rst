@@ -31,7 +31,7 @@ To use it, declare it as a service:
             Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler: ~
 
             # optionally, configure the handler using the constructor arguments (shown values are default)
-            Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler: ~
+            Symfony\Bridge\Monolog\Handler\ElasticsearchLogstashHandler:
                 arguments:
                     $endpoint: "http://127.0.0.1:9200"
                     $index: "monolog"
