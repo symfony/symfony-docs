@@ -603,6 +603,10 @@ Lokalise              ``composer require symfony/lokalise-translation-provider``
 Phrase                ``composer require symfony/phrase-translation-provider``
 ====================  ===========================================================
 
+.. versionadded:: 6.4
+
+    The ``Phrase`` translation provider was introduced in Symfony 6.4.
+
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
 use Loco. First, install it:
