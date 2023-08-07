@@ -1006,8 +1006,8 @@ Option                           Description                                    
 ===============================  ==========================================================================================================  ================================
 ``json_decode_associative``      If set to true returns the result as an array, returns a nested ``stdClass`` hierarchy otherwise.           ``false``
 ``json_decode_detailed_errors``  If set to true, exceptions thrown on parsing of JSON are more specific. Requires `seld/jsonlint`_ package.  ``false``
-``json_encode_options``          `$flags`_ passed to :phpfunction:`json_decode`_ function.                                                   ``0``
-``json_decode_options``          `$flags`_ passed to :phpfunction:`json_encode`_ function.                                                   ``\JSON_PRESERVE_ZERO_FRACTION``
+``json_encode_options``          `$flags`_ passed to :phpfunction:`json_decode` function.                                                    ``0``
+``json_decode_options``          `$flags`_ passed to :phpfunction:`json_encode` function.                                                    ``\JSON_PRESERVE_ZERO_FRACTION``
 ``json_decode_recursion_depth``  Sets maximum recursion depth.                                                                               ``512``
 ===============================  ==========================================================================================================  ================================
 
