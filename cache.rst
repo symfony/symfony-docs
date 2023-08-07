@@ -101,7 +101,6 @@ The Cache component comes with a series of adapters pre-configured:
 
 * :doc:`cache.adapter.apcu </components/cache/adapters/apcu_adapter>`
 * :doc:`cache.adapter.array </components/cache/adapters/array_cache_adapter>`
-* :doc:`cache.adapter.doctrine </components/cache/adapters/doctrine_adapter>` (deprecated)
 * :doc:`cache.adapter.doctrine_dbal </components/cache/adapters/doctrine_dbal_adapter>`
 * :doc:`cache.adapter.filesystem </components/cache/adapters/filesystem_adapter>`
 * :doc:`cache.adapter.memcached </components/cache/adapters/memcached_adapter>`
