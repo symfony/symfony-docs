@@ -349,10 +349,6 @@ authentication layer on top of the OAuth 2.0 authorization framework. It allows
 to verify the identity of an end user based on the authentication performed by
 an authorization server.
 
-.. caution::
-
-    This feature is experimental and could change or be removed at any time without prior notice.
-
 1) Configure the OidcUserInfoTokenHandler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

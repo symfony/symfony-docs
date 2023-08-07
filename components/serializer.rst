@@ -1001,17 +1001,15 @@ context to pass in these options using the key ``json_encode_options`` or
 
 These are the options available:
 
-===============================  ========================================================  ================================
-Option                           Description                                               Default
-===============================  ========================================================  ================================
-``json_decode_associative``      If set to true returns the result as an array,            ``false``
-                                 returns a nested ``stdClass`` hierarchy otherwise.        ``false``
-``json_decode_detailed_errors``  If set to true, exceptions thrown on parsing of JSON      ``false``
-                                 are more specific. Requires `seld/jsonlint`_ package.
-``json_encode_options``          `$flags`_ passed to :phpfunction:`json_decode`_ function  ``0``
-``json_decode_options``          `$flags`_ passed to :phpfunction:`json_encode`_ function  ``\JSON_PRESERVE_ZERO_FRACTION``
-``json_decode_recursion_depth``  Sets maximum recursion depth                              ``512``
-===============================  ========================================================  ================================
+===============================  =========================================================================================================== ================================
+Option                           Description                                                                                                 Default
+===============================  ==========================================================================================================  ================================
+``json_decode_associative``      If set to true returns the result as an array, returns a nested ``stdClass`` hierarchy otherwise.           ``false``
+``json_decode_detailed_errors``  If set to true, exceptions thrown on parsing of JSON are more specific. Requires `seld/jsonlint`_ package.  ``false``
+``json_encode_options``          `$flags`_ passed to :phpfunction:`json_decode`_ function.                                                   ``0``
+``json_decode_options``          `$flags`_ passed to :phpfunction:`json_encode`_ function.                                                   ``\JSON_PRESERVE_ZERO_FRACTION``
+``json_decode_recursion_depth``  Sets maximum recursion depth.                                                                               ``512``
+===============================  ==========================================================================================================  ================================
 
 .. versionadded:: 6.4
 
