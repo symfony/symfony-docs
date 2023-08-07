@@ -23,7 +23,7 @@ This value is also exposed via the :method:`Symfony\\Component\\HttpKernel\\Kern
 method of the kernel class, which you can override to return a different value.
 
 You can also change the build directory by defining an environment variable
-named ``APP_BUILD_DIR`` whose value is the full path of the build folder.
+named ``APP_BUILD_DIR`` whose value is the absolute path of the build folder.
 
 .. versionadded:: 6.4
 
