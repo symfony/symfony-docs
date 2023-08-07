@@ -53,3 +53,4 @@ your code.
     class instance), the connection will be lazy-loaded when needed.
 
 .. _`DSN`: https://php.net/manual/pdo.drivers.php
+.. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
