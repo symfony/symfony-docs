@@ -600,6 +600,7 @@ Provider              Install with
 Crowdin               ``composer require symfony/crowdin-translation-provider``
 Loco (localise.biz)   ``composer require symfony/loco-translation-provider``
 Lokalise              ``composer require symfony/lokalise-translation-provider``
+Phrase                ``composer require symfony/phrase-translation-provider``
 ====================  ===========================================================
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
@@ -689,6 +690,14 @@ configure the ``providers`` option:
             ],
         ]);
 
+.. important::
+
+    If you use Phrase as a provider you must configure a user agent in your dsn. See
+    `Identification via User-Agent`_ for reasoning and some examples.
+
+    Also make the locale _names_ in Phrase should be as defined in RFC4646 (e.g. pt-BR rather than pt_BR).
+    Not doing so will result in Phrase creating a new locale for the imported keys.
+
 .. tip::
 
     If you use Lokalise as a provider and a locale format following the `ISO
@@ -697,6 +706,12 @@ configure the ``providers`` option:
     default value (which follow the `ISO 639-1`_ succeeded by a sub-code in
     capital letters that specifies the national variety (e.g. "GB" or "US"
     according to `ISO 3166-1 alpha-2`_)).
+
+.. tip::
+
+    The Phrase provider uses Phrase's tag feature to map translations to Symfony's translation
+    domains. If you need some assistance with organising your tags in Phrase, you might want
+    to consider the `Phrase Tag Bundle`_ which provides some commands helping you with that.
 
 Pushing and Pulling Translations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1479,3 +1494,5 @@ Learn more
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
 .. _`pseudolocalization`: https://en.wikipedia.org/wiki/Pseudolocalization
 .. _`Symfony Demo`: https://github.com/symfony/demo
+.. _`Identification via User-Agent`: https://developers.phrase.com/api/#overview--identification-via-user-agent
+.. _`Phrase Tag Bundle`: https://github.com/wickedOne/phrase-tag-bundle
