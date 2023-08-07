@@ -984,7 +984,7 @@ Crawler Assertions
     contain the expected text.
 ``assertSelectorTextSame(string $selector, string $text, string $message = '')``
     Asserts that the contents of the first element matching the given
-    selector does (not) equal the expected text.
+    selector does equal the expected text.
 ``assertPageTitleSame(string $expectedTitle, string $message = '')``
     Asserts that the ``<title>`` element is equal to the given title.
 ``assertPageTitleContains(string $expectedTitle, string $message = '')``
