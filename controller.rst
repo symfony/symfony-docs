@@ -559,11 +559,6 @@ Learn more about Controllers
 ----------------------------
 
 .. toctree::
-    :hidden:
-
-    templates
-
-.. toctree::
     :maxdepth: 1
     :glob:
 
