@@ -410,6 +410,50 @@ instead::
     );
     $process->run();
 
+Executing a PHP child processes with the same configuration
+-----------------------------------------------------------
+
+.. versionadded:: 6.4
+
+    The ``PhpSubprocess`` helper was added in Symfony 6.4.
+
+When you start a PHP process, it's started using its default ``ini`` settings. Let's assume you have a configured
+``memory_limit`` of ``256M`` in your `php.ini` and you want to disable it when running your ``bin/console`` script to access
+the Symfony console without any memory limit. You can then dynamically override it using the ``-d`` command line option
+like so: ``php -d memory_limit=-1 bin/console app:my-command``.
+
+Problem solved. However, let's assume you have an ``app:my-command`` that itself again, starts a PHP child process::
+
+    use Symfony\Component\Process\Process;
+
+    class MyCommand extends Command
+    {
+        protected function execute(InputInterface $input, OutputInterface $output): int
+        {
+            $childProcess = new Process(['bin/console', 'cache:pool:prune']);
+        }
+    }
+
+What happens now is that PHP will start the ``bin/console cache:pool:prune`` command with a ``memory_limit`` of ``256M``. That's
+because this is your ``ini`` setting.
+
+If you want to make sure that the child processes inherit the dynamically adjusted configuration as well, there is only one
+way to do that: You have to write a temporary ``ini`` file with all the current settings and start the child process using
+``php -c temporary.ini bin/console cache:pool:prune``.
+
+Doing this yourself can be cumbersome but don't worry, Symfony's got you covered! All you need to do is replace the
+usage of ``Process`` with :class:`Symfony\\Component\\Process\\PhpSubprocess`::
+
+    use Symfony\Component\Process\PhpSubprocess;
+
+    class MyCommand extends Command
+    {
+        protected function execute(InputInterface $input, OutputInterface $output): int
+        {
+            $childProcess = new PhpSubprocess(['bin/console', 'cache:pool:prune']);
+        }
+    }
+
 Process Timeout
 ---------------
 
