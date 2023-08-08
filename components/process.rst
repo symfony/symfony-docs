@@ -410,19 +410,22 @@ instead::
     );
     $process->run();
 
-Executing a PHP child processes with the same configuration
------------------------------------------------------------
+Executing a PHP Child Process with the Same Configuration
+---------------------------------------------------------
 
 .. versionadded:: 6.4
 
-    The ``PhpSubprocess`` helper was added in Symfony 6.4.
+    The ``PhpSubprocess`` helper was introduced in Symfony 6.4.
 
-When you start a PHP process, it's started using its default ``ini`` settings. Let's assume you have a configured
-``memory_limit`` of ``256M`` in your `php.ini` and you want to disable it when running your ``bin/console`` script to access
-the Symfony console without any memory limit. You can then dynamically override it using the ``-d`` command line option
-like so: ``php -d memory_limit=-1 bin/console app:my-command``.
+When you start a PHP process, it uses the default configuration defined in
+your ``php.ini`` file. You can bypass these options with the ``-d`` command line
+option. For example, if ``memory_limit`` is set to ``256M``, you can disable this
+memory limit when running some command like this:
+``php -d memory_limit=-1 bin/console app:my-command``.
 
-Problem solved. However, let's assume you have an ``app:my-command`` that itself again, starts a PHP child process::
+However, if you run the command via the Symfony ``Process`` class, PHP will use
+the settings defined in the ``php.ini`` file. You can solve this issue by using
+the :class:`Symfony\\Component\\Process\\PhpSubprocess` class to run the command::
 
     use Symfony\Component\Process\Process;
 
@@ -430,26 +433,13 @@ Problem solved. However, let's assume you have an ``app:my-command`` that itself
     {
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
+            // the memory_limit (and any other config option) of this command is
+            // the one defined in php.ini instead of the new values (optionally)
+            // passed via the '-d' command option
             $childProcess = new Process(['bin/console', 'cache:pool:prune']);
-        }
-    }
 
-What happens now is that PHP will start the ``bin/console cache:pool:prune`` command with a ``memory_limit`` of ``256M``. That's
-because this is your ``ini`` setting.
-
-If you want to make sure that the child processes inherit the dynamically adjusted configuration as well, there is only one
-way to do that: You have to write a temporary ``ini`` file with all the current settings and start the child process using
-``php -c temporary.ini bin/console cache:pool:prune``.
-
-Doing this yourself can be cumbersome but don't worry, Symfony's got you covered! All you need to do is replace the
-usage of ``Process`` with :class:`Symfony\\Component\\Process\\PhpSubprocess`::
-
-    use Symfony\Component\Process\PhpSubprocess;
-
-    class MyCommand extends Command
-    {
-        protected function execute(InputInterface $input, OutputInterface $output): int
-        {
+            // the memory_limit (and any other config option) of this command takes
+            // into account the values (optionally) passed via the '-d' command option
             $childProcess = new PhpSubprocess(['bin/console', 'cache:pool:prune']);
         }
     }
