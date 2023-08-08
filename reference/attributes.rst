@@ -117,6 +117,17 @@ Each validation constraint comes with a PHP attribute. See
 
 * :doc:`HasNamedArgument </validation/custom_constraint>`
 
+Workflow
+~~~~~~~~
+
+* :ref:`AsAnnounceListener <workflow_using-events>`
+* :ref:`AsCompletedListener <workflow_using-events>`
+* :ref:`AsEnterListener <workflow_using-events>`
+* :ref:`AsEnteredListener <workflow_using-events>`
+* :ref:`AsGuardListener <workflow_using-events>`
+* :ref:`AsLeaveListener <workflow_using-events>`
+* :ref:`AsTransitionListener <workflow_using-events>`
+
 .. _`AsEntityAutocompleteField`: https://symfony.com/bundles/ux-autocomplete/current/index.html#usage-in-a-form-with-ajax
 .. _`AsLiveComponent`: https://symfony.com/bundles/ux-live-component/current/index.html
 .. _`AsTwigComponent`: https://symfony.com/bundles/ux-twig-component/current/index.html

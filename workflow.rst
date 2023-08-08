@@ -361,6 +361,8 @@ name.
     You can find the list of available workflow services with the
     ``php bin/console debug:autowiring workflow`` command.
 
+.. _workflow_using-events:
+
 Using Events
 ------------
 
@@ -518,6 +520,40 @@ it via the marking::
 
     // contains the new value
     $marking->getContext();
+
+It is also possible to listen to these events by declaring event listeners
+with the following attributes:
+
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsAnnounceListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsCompletedListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsEnterListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsEnteredListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsGuardListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsLeaveListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsTransitionListener`
+
+These attributes do work like the
+:class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener`
+attributes::
+
+    class ArticleWorkflowEventListener
+    {
+        #[AsTransitionListener(workflow: 'my-workflow', transition: 'published')]
+        public function onPublishedTransition(TransitionEvent $event): void
+        {
+            // ...
+        }
+
+        // ...
+    }
+
+You may refer to the documentation about
+:ref:`defining event listeners with PHP attributes <event-dispatcher_event-listener-attributes>`
+for further use.
+
+.. versionadded:: 6.4
+
+    The workflow event attributes were introduced in Symfony 6.4.
 
 .. _workflow-usage-guard-events:
 
