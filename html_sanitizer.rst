@@ -370,7 +370,7 @@ attributes from the `W3C Standard Proposal`_ are allowed.
                     ->allowElement('img', 'src')
 
                     // allow the <h1> element with all safe attributes
-                    ->allowElement('h1')
+                    ->allowElement('h1', '*')
             ;
         };
 
@@ -611,14 +611,13 @@ This option allows you to disallow attributes that were allowed before.
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
                     // allow the "data-attr" on all safe elements...
-                    ->allowAttribute('data-attr')
-                        ->element('*')
+                    ->allowAttribute('data-attr', '*')
 
                     // ...except for the <section> element
                     ->dropAttribute('data-attr', ['section'])
 
                     // disallows "style' on any allowed element
-                    ->dropAttribute('style')
+                    ->dropAttribute('style', '*')
             ;
         };
 
@@ -630,13 +629,13 @@ This option allows you to disallow attributes that were allowed before.
         $postSanitizer = new HtmlSanitizer(
             (new HtmlSanitizerConfig())
                 // allow the "data-attr" on all safe elements...
-                ->allowAttribute('data-attr')
+                ->allowAttribute('data-attr', '*')
 
                 // ...except for the <section> element
                 ->dropAttribute('data-attr', ['section'])
 
                 // disallows "style' on any allowed element
-                ->dropAttribute('style')
+                ->dropAttribute('style', '*')
         );
 
 Force Attribute Values
@@ -688,7 +687,7 @@ element (even if the original one didn't contain a ``rel`` attribute):
         return static function (FrameworkConfig $framework): void {
             $framework->htmlSanitizer()
                 ->sanitizer('app.post_sanitizer')
-                    ->forceAttribute('a', 'rel', 'noopener noreferrer')
+                    ->forceAttribute('a', ['rel' => 'noopener noreferrer'])
             ;
         };
 
@@ -793,7 +792,7 @@ URLs of ``<a>`` elements:
                     // specifies the allowed hosts, the attribute will be dropped if the
                     // URL contains a different host. Subdomains are allowed: e.g. the following
                     // config would also allow 'www.symfony.com', 'live.symfony.com', etc.
-                    ->allowedLinkHost('symfony.com')
+                    ->allowedLinkHosts(['symfony.com'])
 
                     // whether to allow relative links (i.e. URLs without scheme and host)
                     ->allowRelativeLinks(true)
@@ -912,7 +911,7 @@ the HTML sanitizer: ``src``, ``href``, ``lowsrc``, ``background`` and ``ping``.
 
                     // specifies the allowed hosts, the attribute will be dropped if the URL
                     // contains a different host which is not a subdomain of the allowed host
-                    ->allowedMediaHost('symfony.com') // Also allows any subdomain (i.e. www.symfony.com)
+                    ->allowedMediaHosts(['symfony.com']) // Also allows any subdomain (i.e. www.symfony.com)
 
                     // whether to allow relative URLs (i.e. URLs without scheme and host)
                     ->allowRelativeMedias(true)
