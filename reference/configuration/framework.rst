@@ -1541,6 +1541,40 @@ If the charset of your application is UTF-8 (as defined in the
 recommended setting it to ``true``. This will make non-UTF8 URLs to generate 404
 errors.
 
+secrets
+~~~~~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true``
+
+Whether to enable or not secrets managements.
+
+decryption_env_var
+..................
+
+**type**: ``string`` **default**: ``base64:default::SYMFONY_DECRYPTION_SECRET``
+
+The env var name that contains the vault decryption secret. By default, this
+value will be decoded from base64.
+
+local_dotenv_file
+.................
+
+**type**: ``string`` **default**: ``%kernel.project_dir%/.env.%kernel.environment%.local``
+
+The path to the local ``.env`` file. This file must contain the vault
+decryption key, given by the ``decryption_env_var`` option.
+
+vault_directory
+...............
+
+**type**: ``string`` **default**: ``%kernel.project_dir%/config/secrets/%kernel.runtime_environment%``
+
+The directory to store the secret vault. By default, the path uses the current
+environment.
+
 .. _config-framework-session:
 
 session
@@ -1873,6 +1907,16 @@ use_cookies
 This specifies if the session ID is stored on the client side using cookies or
 not. By default, it will use the value defined in the ``php.ini`` with the
 ``session.use_cookies`` directive.
+
+ssi
+~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable or not SSI support in your application.
 
 assets
 ~~~~~~
@@ -3391,6 +3435,21 @@ header name and value the header value.
 .. seealso::
 
     For more information, see :ref:`Configuring Emails Globally <mailer-configure-email-globally>`
+
+messenger
+~~~~~~~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true``
+
+Whether to enable or not Messenger.
+
+.. seealso::
+
+    For more details, see the :doc:`Messenger component </messenger>`
+    documentation.
 
 web_link
 ~~~~~~~~
