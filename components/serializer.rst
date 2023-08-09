@@ -882,6 +882,20 @@ The Serializer component provides several built-in normalizers:
     Also it can denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
     or :class:`Symfony\\Component\\Uid\\Ulid`. The format does not matter.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\TranslatableNormalizer`
+    This normalizer converts objects that implement
+    :class:`Symfony\\Contracts\\Translation\\TranslatableInterface` into
+    translated strings, using the
+    :method:`Symfony\\Contracts\\Translation\\TranslatableInterface::trans`
+    method. You can define the locale to use to translate the object by
+    setting the ``TranslatableNormalizer::NORMALIZATION_LOCALE_KEY`` serializer
+    context option.
+
+    .. versionadded:: 6.4
+
+        The :class:`Symfony\\Component\\Serializer\\Normalizer\\TranslatableNormalizer`
+        was introduced in Symfony 6.4.
+
 .. note::
 
     You can also create your own Normalizer to use another structure. Read more at
