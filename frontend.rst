@@ -136,13 +136,9 @@ Other Front-End Articles
 * :doc:`/frontend/custom_version_strategy`
 
 .. toctree::
-    :hidden:
+    :maxdepth: 1
     :glob:
 
-    frontend/encore/installation
-    frontend/encore/simple-example
-    frontend/encore/*
-    frontend/asset_mapper
     frontend/*
 
 .. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore

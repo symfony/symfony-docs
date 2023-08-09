@@ -2732,11 +2732,6 @@ Learn more about Routing
 ------------------------
 
 .. toctree::
-    :hidden:
-
-    controller
-
-.. toctree::
     :maxdepth: 1
     :glob:
 
