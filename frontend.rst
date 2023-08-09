@@ -93,15 +93,6 @@ Other Front-End Articles
 ------------------------
 
 .. toctree::
-    :hidden:
-    :glob:
-
-    frontend/assetic/index
-    frontend/encore/installation
-    frontend/encore/simple-example
-    frontend/encore/*
-
-.. toctree::
     :maxdepth: 1
     :glob:
 
