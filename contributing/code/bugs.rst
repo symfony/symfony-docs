@@ -14,9 +14,8 @@ Before submitting a bug:
 * Double-check the official :doc:`documentation </index>` to see if you're not misusing the
   framework;
 
-* Ask for assistance on `Stack Overflow`_, on the #support channel of
-  `the Symfony Slack`_ or on the ``#symfony`` `IRC channel`_ if you're not sure if
-  your issue really is a bug.
+* Ask for assistance on `Stack Overflow`_ or on the #support channel of
+  `the Symfony Slack`_  if you're not sure if your issue really is a bug.
 
 If your problem definitely looks like a bug, report it using the official bug
 `tracker`_ and follow some basic rules:
@@ -48,7 +47,6 @@ If your problem definitely looks like a bug, report it using the official bug
 * *(optional)* Attach a :doc:`patch <pull_requests>`.
 
 .. _`Stack Overflow`: https://stackoverflow.com/questions/tagged/symfony
-.. _IRC channel: https://symfony.com/irc
 .. _the Symfony Slack: https://symfony.com/slack-invite
 .. _tracker: https://github.com/symfony/symfony/issues
 .. _<details> HTML tag: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details
