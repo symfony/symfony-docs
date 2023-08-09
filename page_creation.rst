@@ -292,11 +292,6 @@ Go Deeper with HTTP & Framework Fundamentals
 --------------------------------------------
 
 .. toctree::
-    :hidden:
-
-    routing
-
-.. toctree::
     :maxdepth: 1
     :glob:
 

@@ -302,11 +302,6 @@ Learn More
 ----------
 
 .. toctree::
-    :hidden:
-
-    page_creation
-
-.. toctree::
     :maxdepth: 1
     :glob:
 
