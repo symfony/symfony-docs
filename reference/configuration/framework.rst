@@ -1579,6 +1579,41 @@ The directory where routing information will be cached. Can be set to
 
     The ``cache_dir`` setting was introduced in Symfony 6.2.
 
+secrets
+~~~~~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true``
+
+Whether to enable or not secrets managements.
+
+decryption_env_var
+..................
+
+**type**: ``string`` **default**: ``base64:default::SYMFONY_DECRYPTION_SECRET``
+
+The env var name that contains the vault decryption secret. By default, this
+value will be decoded from base64.
+
+local_dotenv_file
+.................
+
+**type**: ``string`` **default**: ``%kernel.project_dir%/.env.%kernel.environment%.local``
+
+The path to the local ``.env`` file. This file must contain the vault
+decryption key, given by the ``decryption_env_var`` option.
+
+vault_directory
+...............
+
+**type**: ``string`` **default**: ``%kernel.project_dir%/config/secrets/%kernel.runtime_environment%``
+
+The directory to store the secret vault. By default, the path includes the value
+of the :ref:`kernel.runtime_environment <configuration-kernel-runtime-environment>`
+parameter.
+
 .. _config-framework-session:
 
 session
@@ -1902,6 +1937,16 @@ use_cookies
 This specifies if the session ID is stored on the client side using cookies or
 not. By default, it will use the value defined in the ``php.ini`` with the
 ``session.use_cookies`` directive.
+
+ssi
+~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``false``
+
+Whether to enable or not SSI support in your application.
 
 assets
 ~~~~~~
@@ -2794,31 +2839,6 @@ annotation changes). For performance reasons, it is recommended to disable
 debug mode in production, which will happen automatically if you use the
 default value.
 
-
-secrets
-~~~~~~~
-
-decryption_env_var
-..................
-
-**type**: ``string`` **default**: ``base64:default::SYMFONY_DECRYPTION_SECRET``
-
-The environment variable that contains the decryption key.
-
-local_dotenv_file
-.................
-
-**type**: ``string`` **default**: ``%kernel.project_dir%/.env.%kernel.environment%.local``
-
-Path to an dotenv file that holds secrets. This is primarily used for testing.
-
-vault_directory
-...............
-
-**type**: ``string`` **default**: ``%kernel.project_dir%/config/secrets/%kernel.environment%``
-
-The directory where the vault of secrets is stored.
-
 .. _configuration-framework-serializer:
 
 serializer
@@ -3497,6 +3517,21 @@ header name and value the header value.
 .. seealso::
 
     For more information, see :ref:`Configuring Emails Globally <mailer-configure-email-globally>`
+
+messenger
+~~~~~~~~~
+
+enabled
+.......
+
+**type**: ``boolean`` **default**: ``true``
+
+Whether to enable or not Messenger.
+
+.. seealso::
+
+    For more details, see the :doc:`Messenger component </messenger>`
+    documentation.
 
 web_link
 ~~~~~~~~

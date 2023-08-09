@@ -220,7 +220,7 @@ class that will hold these objects:
             // ...
 
             #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
-            private array $products;
+            private Collection $products;
 
             public function __construct()
             {
