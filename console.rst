@@ -461,7 +461,7 @@ command:
     This method is executed after ``initialize()`` and before ``execute()``.
     Its purpose is to check if some of the options/arguments are missing
     and interactively ask the user for those values. This is the last place
-    where you can ask for missing required options/arguments, this method is
+    where you can ask for missing required options/arguments. This method is
     called before validating the input.
     Note that it will not be called when the command is run without interaction
     (e.g. when passing the ``--no-interaction`` global option flag).
