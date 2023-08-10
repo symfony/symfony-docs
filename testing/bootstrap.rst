@@ -46,3 +46,6 @@ You can modify this file to add custom logic:
         >
             <!-- ... -->
         </phpunit>
+
+Now, when running ``vendor/bin/phpunit``, the cache will be cleared
+automatically by the bootstrap file before running all tests.
