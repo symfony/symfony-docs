@@ -214,7 +214,7 @@ setup:
 * :ref:`Compile your assets <asset-mapper-deployment>` if you're using the AssetMapper component
 * Pushing assets to a CDN
 * On a shared hosting platform using the Apache web server, you may need to
-  install the :ref:`symfony/apache-pack package <web-server-apache-mod-php>`
+  install the `symfony/apache-pack`_ package
 * etc.
 
 Application Lifecycle: Continuous Integration, QA, etc.
@@ -269,3 +269,4 @@ Learn More
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`Platform.sh`: https://symfony.com/cloud
 .. _`Symfony CLI`: https://symfony.com/download
+.. _`symfony/apache-pack`: https://packagist.org/packages/symfony/apache-pack
