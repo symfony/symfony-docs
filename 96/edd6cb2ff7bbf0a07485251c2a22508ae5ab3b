@@ -1,0 +1,40 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-07-28T08:09:22Z
+
+I see this might look a bit confusing, but in this very same example, we include the following a few lines above:
+
+```php
+if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
+```
+
+So, I think this might be correct. But it's true that it can be confusing because "Bootstrap" looks like something related to the Bootstrap CSS framework instead of the Symfony bootstrap process 🤔
+
+---------------------------------------------------------------------------
+
+by dellamowica at 2023-07-28T16:24:52Z
+
+yes it's a bit confusing, like why clearing the cache of another environnement than the testing environnement :D
+I understood that BOOTSTRAP_CLEAR_CACHE_ENV was more like a boolean toggling a clear cache during tests if set in the phpunit.xml file
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-08-09T15:57:06Z
+
+I'm not sure what to do here. Let's ask @wouterj to see if he can come up with a better name or has any other suggestion. Thanks!
+
+---------------------------------------------------------------------------
+
+by wouterj at 2023-08-09T20:29:08Z
+
+I'm fine with not using the custom variable here. Using a different environment for the application is not that common, so let's make the example easier (if you need advanced stuff, you can probably come up with the solution yourself).
+
+But this means we must also remove the if statement lines, and lines 51 - 67 (where we talk about configuring the custom env var).
+
+Can you update this PR with these changes, @dellamowica? (you can do so by creating a new commit on your [`patch-1` branch](https://github.com/dellamowica/symfony-docs/tree/patch-1))
+
+---------------------------------------------------------------------------
+
+by dellamowica at 2023-08-10T15:36:39Z
+
+done ;-)
