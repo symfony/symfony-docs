@@ -21,9 +21,9 @@ email for confirmation):
   production (including the web profiler or anything enabled when ``APP_DEBUG``
   is set to ``true`` or ``APP_ENV`` set to anything but ``prod``);
 
-* Any security issues found in classes provided to help fo testing that should
+* Any security issues found in classes provided to help for testing that should
   never be used in production (like for instance mock classes that contain
-  ``Mock`` in their name);
+  ``Mock`` in their name or classes in the ``Test`` namespace);
 
 * Any fix that can be classified as **security hardening** like route
   enumeration, login throttling bypasses, denial of service attacks, timing
