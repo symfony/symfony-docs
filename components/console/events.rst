@@ -17,7 +17,8 @@ the wheel, it uses the Symfony EventDispatcher component to do the work::
 .. caution::
 
     Console events are only triggered by the main command being executed.
-    Commands called by the main command will not trigger any event.
+    Commands called by the main command will not trigger any event, unless
+    run by the application itself, see :doc:`/console/calling_commands`.
 
 The ``ConsoleEvents::COMMAND`` Event
 ------------------------------------
@@ -171,10 +172,10 @@ Listeners receive a
     use Symfony\Component\Console\Event\ConsoleSignalEvent;
 
     $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
-       
+
         // gets the signal number
         $signal = $event->getHandlingSignal();
-        
+
         if (\SIGINT === $signal) {
             echo "bye bye!";
         }
