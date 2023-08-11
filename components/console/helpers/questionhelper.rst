@@ -15,6 +15,11 @@ first argument, an :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance as the second argument and a
 :class:`Symfony\\Component\\Console\\Question\\Question` as last argument.
 
+.. note::
+
+    As an alternative, consider using the
+    :ref:`SymfonyStyle <symfony-style-questions>` to ask questions.
+
 Asking the User for Confirmation
 --------------------------------
 
@@ -82,9 +87,9 @@ if you want to know a bundle name, you can add this to your command::
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
 
         $bundleName = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the bundleName
-        
+
         return Command::SUCCESS;
     }
 
@@ -120,7 +125,7 @@ from a predefined list::
         $output->writeln('You have just selected: '.$color);
 
         // ... do something with the color
-        
+
         return Command::SUCCESS;
     }
 
@@ -162,7 +167,7 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
 
         $colors = $helper->ask($input, $output, $question);
         $output->writeln('You have just selected: ' . implode(', ', $colors));
-        
+
         return Command::SUCCESS;
     }
 
@@ -191,9 +196,9 @@ will be autocompleted as the user types::
         $question->setAutocompleterValues($bundles);
 
         $bundleName = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the bundleName
-        
+
         return Command::SUCCESS;
     }
 
@@ -230,9 +235,9 @@ provide a callback function to dynamically generate suggestions::
         $question->setAutocompleterCallback($callback);
 
         $filePath = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the filePath
-        
+
         return Command::SUCCESS;
     }
 
@@ -254,9 +259,9 @@ You can also specify if you want to not trim the answer by setting it directly w
         $question->setTrimmable(false);
         // if the users inputs 'elsa ' it will not be trimmed and you will get 'elsa ' as value
         $name = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the name
-        
+
         return Command::SUCCESS;
     }
 
@@ -285,9 +290,9 @@ the response to a question should allow multiline answers by passing ``true`` to
         $question->setMultiline(true);
 
         $answer = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the answer
-        
+
         return Command::SUCCESS;
     }
 
@@ -313,9 +318,9 @@ convenient for passwords::
         $question->setHiddenFallback(false);
 
         $password = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the password
-        
+
         return Command::SUCCESS;
     }
 
@@ -347,7 +352,7 @@ convenient for passwords::
             QuestionHelper::disableStty();
 
             // ...
-            
+
             return Command::SUCCESS;
         }
 
@@ -376,9 +381,9 @@ method::
         });
 
         $bundleName = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the bundleName
-        
+
         return Command::SUCCESS;
     }
 
@@ -420,9 +425,9 @@ method::
         $question->setMaxAttempts(2);
 
         $bundleName = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the bundleName
-        
+
         return Command::SUCCESS;
     }
 
@@ -482,9 +487,9 @@ You can also use a validator with a hidden question::
         $question->setMaxAttempts(20);
 
         $password = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the password
-        
+
         return Command::SUCCESS;
     }
 
