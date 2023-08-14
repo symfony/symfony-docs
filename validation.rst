@@ -730,6 +730,27 @@ constraint that's applied to the class itself. When that class is validated,
 methods specified by that constraint are simply executed so that each can
 provide more custom validation.
 
+Validating Object With Inheritance
+----------------------------------
+
+When you validate an object that extends another class, the validator
+automatically validates constraints defined in the parent class as well.
+
+.. caution::
+
+    Note that overriding a property with others constraints in a child class
+    will not remove the constraints defined in the parent class on that same
+    property.
+    Instead, the constraints will be merged for that property.
+    This is related to Java Language Specification.
+
+.. tip::
+
+    If you want to override constraints defined in the parent class, you should
+    define them in a different validation group instead and validate the object
+    with that group.
+    See :doc:`Validation Groups </validation/groups>` for more information.
+
 Debugging the Constraints
 -------------------------
 
