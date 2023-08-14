@@ -1443,7 +1443,7 @@ Thanks to the ``#[AutowireCallable]`` attribute, you can now inject this
         ) {
         }
 
-        public function sendMail($string $message, array $parameters): string
+        public function sendMail(string $message, array $parameters): string
         {
             $formattedMessage = $this->formatter->format($message, $parameters);
 
