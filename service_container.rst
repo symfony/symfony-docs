@@ -346,8 +346,8 @@ made. To do that, you create a new class::
 
     class SiteUpdateManager
     {
-        private $messageGenerator;
-        private $mailer;
+        private MessageGenerator $messageGenerator;
+        private MailerInterface $mailer;
 
         public function __construct(MessageGenerator $messageGenerator, MailerInterface $mailer)
         {
