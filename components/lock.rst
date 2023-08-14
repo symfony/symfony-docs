@@ -513,13 +513,12 @@ MongoDB Connection String:
 PdoStore
 ~~~~~~~~
 
-The PdoStore saves locks in an SQL database. It is identical to DoctrineDbalStore
-but requires a `PDO`_ connection or a `Data Source Name (DSN)`_. This store does
-not support blocking, and expects a TTL to avoid stalled locks::
+The PdoStore saves locks in an SQL database. It requires a `PDO`_ connection or a `Data Source Name (DSN)`_. This store does not
+support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\PdoStore;
 
-    // a PDO or DSN for lazy connecting through PDO
+    // a PDO instance or DSN for lazy connecting through PDO
     $databaseConnectionOrDSN = 'mysql:host=127.0.0.1;dbname=app';
     $store = new PdoStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
 
@@ -579,9 +578,8 @@ the :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::save` method.
 PostgreSqlStore
 ~~~~~~~~~~~~~~~
 
-The PostgreSqlStore and DoctrineDbalPostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL.
-It is identical to DoctrineDbalPostgreSqlStore but requires `PDO`_ connection or
-a `Data Source Name (DSN)`_. It supports native blocking, as well as sharing
+The PostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL. It requires a
+`PDO`_ connection or a `Data Source Name (DSN)`_. It supports native blocking, as well as sharing
 locks::
 
     use Symfony\Component\Lock\Store\PostgreSqlStore;
