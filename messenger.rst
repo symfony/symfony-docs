@@ -2553,7 +2553,7 @@ Then your handler will look like this::
 
     use App\Message\SmsNotification;
 
-    class SmsNotificationHandler
+    final class SmsNotificationHandler
     {
         public function __invoke(SmsNotification $message, mixed $additionalArgument)
         {
