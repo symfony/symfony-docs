@@ -69,6 +69,7 @@ Service             Package                                DSN
 `FakeSms`_          ``symfony/fake-sms-notifier``          ``fakesms+email://MAILER_SERVICE_ID?to=TO&from=FROM`` or ``fakesms+logger://default``
 `FreeMobile`_       ``symfony/free-mobile-notifier``       ``freemobile://LOGIN:API_KEY@default?phone=PHONE``
 `GatewayApi`_       ``symfony/gateway-api-notifier``       ``gatewayapi://TOKEN@default?from=FROM``
+`GoIP`_             ``symfony/goip-notifier``              ``goip://USERNAME:PASSWORD@HOST:80?sim_slot=SIM_SLOT``
 `Infobip`_          ``symfony/infobip-notifier``           ``infobip://AUTH_TOKEN@HOST?from=FROM``
 `Iqsms`_            ``symfony/iqsms-notifier``             ``iqsms://LOGIN:PASSWORD@default?from=FROM``
 `iSendPro`_         ``symfony/isendpro-notifier``          ``isendpro://ACCOUNT_KEY_ID@default?from=FROM&no_stop=NO_STOP&sandbox=SANDBOX``
@@ -459,7 +460,7 @@ Service          Package                               DSN
 
 .. versionadded:: 6.4
 
-    The Novu and Ntfy integrations were introduced in Symfony 6.4.
+    The Novu, Ntfy and GoIP integrations were introduced in Symfony 6.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -1006,6 +1007,7 @@ is dispatched. Listeners receive a
 .. _`FreeMobile`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/FreeMobile/README.md
 .. _`GatewayApi`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GatewayApi/README.md
 .. _`Gitter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Gitter/README.md
+.. _`GoIP`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GoIP/README.md
 .. _`GoogleChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/GoogleChat/README.md
 .. _`Infobip`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Infobip/README.md
 .. _`Iqsms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Iqsms/README.md
