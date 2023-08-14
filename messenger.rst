@@ -2643,6 +2643,59 @@ of the process. For each, the event class is the event name:
 
     The ``WorkerRateLimitedEvent`` was introduced in Symfony 6.2.
 
+Additional Handler Arguments
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It's possible to have messenger pass additional data to the message handler
+using the :class:`Symfony\\Component\\Messenger\\Stamp\\HandlerArgumentsStamp`.
+Add this stamp to the envelope in a middleware and fill it with any additional
+data you want to have available in the handler::
+
+    // src/Messenger/AdditionalArgumentMiddleware.php
+    namespace App\Messenger;
+
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
+    use Symfony\Component\Messenger\Middleware\StackInterface;
+    use Symfony\Component\Messenger\Stamp\HandlerArgumentsStamp;
+
+    final class AdditionalArgumentMiddleware implements MiddlewareInterface
+    {
+        public function handle(Envelope $envelope, StackInterface $stack): Envelope
+        {
+            $envelope = $envelope->with(new HandlerArgumentsStamp([
+                $this->resolveAdditionalArgument($envelope->getMessage()),
+            ]));
+
+            return $stack->next()->handle($envelope, $stack);
+        }
+
+        private function resolveAdditionalArgument(object $message): mixed
+        {
+            // ...
+        }
+    }
+
+Then your handler will look like this::
+
+    // src/MessageHandler/SmsNotificationHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\SmsNotification;
+
+    final class SmsNotificationHandler
+    {
+        public function __invoke(SmsNotification $message, mixed $additionalArgument)
+        {
+            // ...
+        }
+    }
+
+.. versionadded:: 6.2
+
+    The :class:`Symfony\\Component\\Messenger\\Stamp\\HandlerArgumentsStamp`
+    was introduced in Symfony 6.2.
+
 Multiple Buses, Command & Event Buses
 -------------------------------------
 
