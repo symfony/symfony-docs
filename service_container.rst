@@ -1286,7 +1286,9 @@ admin email. In this case, each needs to have a unique service id:
 In this case, *two* services are registered: ``site_update_manager.superadmin``
 and ``site_update_manager.normal_users``. Thanks to the alias, if you type-hint
 ``SiteUpdateManager`` the first (``site_update_manager.superadmin``) will be passed.
-If you want to pass the second, you'll need to :ref:`manually wire the service <services-wire-specific-service>`.
+
+If you want to pass the second, you'll need to :ref:`manually wire the service <services-wire-specific-service>`
+or to create a named ref:`autowiring alias <autowiring-alias>`.
 
 .. caution::
 
