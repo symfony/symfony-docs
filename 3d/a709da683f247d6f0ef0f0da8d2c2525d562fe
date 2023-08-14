@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by alexislefebvre at 2022-08-15T09:42:20Z
+
+Can you please add an example of code?
+
+I think it also need a note to say that it was added since Symfony 6.2.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2022-10-24T06:35:45Z
+
+friendly ping @enumag
+
+---------------------------------------------------------------------------
+
+by enumag at 2022-11-04T09:15:03Z
+
+Code sample and version note added.
