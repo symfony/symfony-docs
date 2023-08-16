@@ -211,12 +211,6 @@ automatically changed to ``'.inner'``):
                 ->args([service('.inner')]);
         };
 
-.. deprecated:: 6.3
-
-    The ``#[MapDecorated]`` attribute is deprecated since Symfony 6.3.
-    Instead, use the
-    :class:`#[AutowireDecorated] <Symfony\\Component\\DependencyInjection\\Attribute\\AutowireDecorated>` attribute.
-
 .. tip::
 
     The visibility of the decorated ``App\Mailer`` service (which is an alias
