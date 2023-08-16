@@ -238,6 +238,18 @@ Access the attribute value of the first node of the current selection::
 
     $class = $crawler->filterXPath('//body/p')->attr('class');
 
+.. tip::
+
+    You can define the default value to use if the node or attribute is empty
+    by using the second argument of the ``attr()`` method::
+
+        $class = $crawler->filterXPath('//body/p')->attr('class', 'my-default-class');
+
+    .. versionadded:: 6.4
+
+        The possibility to specify a default value to the ``attr()`` method
+        was introduced in Symfony 6.4.
+
 Extract attribute and/or node values from the list of nodes::
 
     $attributes = $crawler
