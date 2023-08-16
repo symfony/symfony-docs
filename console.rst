@@ -28,12 +28,23 @@ the ``list`` command to view all available commands in the application:
       cache:clear                                Clear the cache
     ...
 
+.. note::
+
+    ``list`` is the default command, so running ``php bin/console`` is the same.
+
 If you find the command you need, you can run it with the ``--help`` option
 to view the command's documentation:
 
 .. code-block:: terminal
 
     $ php bin/console assets:install --help
+
+.. note::
+
+    ``--help`` is one of the built-in global options from the Console component,
+    which are available for all commands, including those you can create.
+    To learn more about them, you can read
+    :ref:`this section <console-global-options>`.
 
 APP_ENV & APP_DEBUG
 ~~~~~~~~~~~~~~~~~~~
