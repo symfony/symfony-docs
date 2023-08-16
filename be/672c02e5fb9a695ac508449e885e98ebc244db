@@ -1,0 +1,28 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-06-22T15:08:53Z
+
+See my explanation in
+* https://github.com/symfony/symfony-docs/pull/18449
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-08-14T08:14:36Z
+
+I changed my mind for the deprecations and would like to merge this PR.
+
+Can you please rebase and make the CI green? Feel free to ping me afterwards 😄
+
+Thank you
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-08-16T07:10:16Z
+
+@OskarStark rebase done :slightly_smiling_face: Should I make the same for https://github.com/symfony/symfony-docs/pull/18449 or do you prefer to keep it on hold?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-08-16T07:50:16Z
+
+Let's keep that one on hold 👍🏻
