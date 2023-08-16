@@ -363,14 +363,10 @@ Another possibility is setting public fields of the class directly::
         };
 
 There are mainly only disadvantages to using property injection, it is similar
-to setter injection but with these additional important problems:
+to setter injection but with this additional important problem:
 
 * You cannot control when the dependency is set at all, it can be changed
   at any point in the object's lifetime.
-
-* You cannot use type hinting so you cannot be sure what dependency is injected
-  except by writing into the class code to explicitly test the class instance
-  before using it.
 
 But, it is useful to know that this can be done with the service container,
 especially if you are working with code that is out of your control, such
