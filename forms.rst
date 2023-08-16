@@ -962,6 +962,7 @@ Form Themes and Customization:
 
     /form/bootstrap4
     /form/bootstrap5
+    /form/tailwindcss
     /form/form_customization
     /form/form_themes
 
