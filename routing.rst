@@ -2613,7 +2613,7 @@ defined as annotations:
             resource: '../../src/Controller/'
             type: attribute
             defaults:
-                schemes: [https]
+            schemes: [https]
 
     .. code-block:: xml
 
@@ -2624,9 +2624,7 @@ defined as annotations:
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="../../src/Controller/" type="attribute">
-                <default key="schemes">HTTPS</default>
-            </import>
+            <import resource="../../src/Controller/" type="attribute" schemes="https"/>
         </routes>
 
     .. code-block:: php
