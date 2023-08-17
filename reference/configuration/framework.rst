@@ -2915,21 +2915,21 @@ This option also accepts a map of PHP errors to log levels:
         framework:
             php_errors:
                 log:
-                    '!php/const \E_DEPRECATED': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_USER_DEPRECATED': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_NOTICE': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_USER_NOTICE': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_STRICT': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_WARNING': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_USER_WARNING': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_COMPILE_WARNING': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_CORE_WARNING': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_USER_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_RECOVERABLE_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_COMPILE_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_PARSE': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_CORE_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_DEPRECATED: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_USER_DEPRECATED: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_NOTICE: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_USER_NOTICE: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_STRICT: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_WARNING: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_USER_WARNING: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_COMPILE_WARNING: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_CORE_WARNING: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_USER_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_RECOVERABLE_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_COMPILE_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_PARSE: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_CORE_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
 
     .. code-block:: xml
 
