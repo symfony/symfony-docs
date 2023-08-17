@@ -88,30 +88,24 @@ The AnnotationLoader
 
 At last, the component provides an
 :class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AnnotationLoader` to get
-the metadata from the annotations of the class. Annotations are defined as ``@``
-prefixed classes included in doc block comments (``/** ... */``). For example::
+the metadata from the attributes of the class::
 
     use Symfony\Component\Validator\Constraints as Assert;
     // ...
 
     class User
     {
-        /**
-         * @Assert\NotBlank
-         */
+        #[Assert\NotBlank]
         protected string $name;
     }
 
 To enable the annotation loader, call the
-:method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping` method.
-If you use annotations instead of attributes, it's also required to call
-``addDefaultDoctrineAnnotationReader()`` to use Doctrine's annotation reader::
+:method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping` method::
 
     use Symfony\Component\Validator\Validation;
 
     $validator = Validation::createValidatorBuilder()
         ->enableAnnotationMapping()
-        ->addDefaultDoctrineAnnotationReader() // add this only when using annotations
         ->getValidator();
 
 To disable the annotation loader after it was enabled, call
@@ -133,7 +127,6 @@ multiple mappings::
 
     $validator = Validation::createValidatorBuilder()
         ->enableAnnotationMapping(true)
-        ->addDefaultDoctrineAnnotationReader()
         ->addMethodMapping('loadValidatorMetadata')
         ->addXmlMapping('validator/validation.xml')
         ->getValidator();
