@@ -254,7 +254,7 @@ your ``index.php`` front controller. If you renamed the directory, you're fine.
 But if you moved it in some way, you may need to modify these paths inside those
 files::
 
-    require_once __DIR__.'/../path/to/vendor/autoload.php';
+    require_once __DIR__.'/../path/to/vendor/autoload_runtime.php';
 
 You also need to change the ``extra.public-dir`` option in the ``composer.json``
 file:
