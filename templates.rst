@@ -604,6 +604,52 @@ to define the template to render::
 
     The ``#[Template()]`` attribute was introduced in Symfony 6.2.
 
+The ``AbstractController`` also provides the
+:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlock`
+and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlockView`
+methods::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
+
+    class ProductController extends AbstractController
+    {
+        // ...
+
+        public function price(): Response
+        {
+            // ...
+
+            // the `renderBlock()` method returns a `Response` object with the
+            // block contents
+            return $this->renderBlock('product/index.html.twig', 'price_block', [
+                // ...
+            ]);
+
+            // the `renderBlockView()` method only returns the contents created by the
+            // template block, so you can use those contents later in a `Response` object
+            $contents = $this->renderBlockView('product/index.html.twig', 'price_block', [
+                // ...
+            ]);
+
+            return new Response($contents);
+        }
+    }
+
+This might come handy when dealing with blocks in
+:ref:`templates inheritance <template_inheritance-layouts>` or when using
+`Turbo Streams`_.
+
+.. versionadded:: 6.4
+
+    The
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlock` and
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlockView`
+    methods were introduced in Symfony 6.4.
+
 Rendering a Template in Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1131,6 +1177,8 @@ Use the ``attributes`` option to define the value of hinclude.js options:
        set this option to 'true' to run that JavaScript code #}
     {{ render_hinclude(controller('...'), {attributes: {evaljs: 'true'}}) }}
 
+.. _template_inheritance-layouts:
+
 Template Inheritance and Layouts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1614,3 +1662,4 @@ for this class and :doc:`tag your service </service_container/tags>` with ``twig
 .. _`official Twig extensions`: https://github.com/twigphp?q=extra
 .. _`global variables`: https://twig.symfony.com/doc/3.x/advanced.html#id1
 .. _`hinclude.js`: https://mnot.github.io/hinclude/
+.. _`Turbo Streams`: https://symfony.com/bundles/ux-turbo/current/index.html
