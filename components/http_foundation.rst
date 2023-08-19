@@ -160,6 +160,13 @@ has some methods to filter the input values:
         in Symfony 7.0. You can use the ``FILTER_NULL_ON_FAILURE`` flag to keep
         ignoring them.
 
+:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::match`
+    Checks whether a parameter matches a regular expression.
+
+.. versionadded:: 6.4
+
+    The ``ParameterBag::match()`` method was introduced in Symfony 6.4.
+
 All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
 exist::
