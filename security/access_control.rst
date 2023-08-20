@@ -118,8 +118,8 @@ Take the following ``access_control`` entries as an example:
         use Symfony\Component\DependencyInjection\ContainerBuilder;
         use Symfony\Config\SecurityConfig;
 
-        return static function (ContainerBuilder $containerBuilder, SecurityConfig $security) {
-            $containerBuilder->setParameter('env(TRUSTED_IPS)', '10.0.0.1, 10.0.0.2');
+        return static function (ContainerBuilder $container, SecurityConfig $security): void {
+            $container->setParameter('env(TRUSTED_IPS)', '10.0.0.1, 10.0.0.2');
             // ...
 
             $security->accessControl()
@@ -314,7 +314,7 @@ pattern so that it is only accessible by requests from the local server itself:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->accessControl()
@@ -402,7 +402,7 @@ key:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->accessControl()
@@ -480,7 +480,7 @@ access those URLs via a specific port. This could be useful for example for
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->accessControl()
@@ -534,7 +534,7 @@ the user will be redirected to ``https``:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
 
             $security->accessControl()

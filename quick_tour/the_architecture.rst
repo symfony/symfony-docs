@@ -175,7 +175,7 @@ that extends ``AbstractExtension``::
         ) {
         }
 
-        public function getFilters()
+        public function getFilters(): array
         {
             return [
                 new TwigFilter('greet', [$this, 'greetUser']),
@@ -280,12 +280,12 @@ using the special ``when@`` keyword:
 
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework, ContainerConfigurator $containerConfigurator) {
+        return static function (FrameworkConfig $framework, ContainerConfigurator $container): void {
             $framework->router()
                 ->utf8(true)
             ;
 
-            if ('prod' === $containerConfigurator->env()) {
+            if ('prod' === $container->env()) {
                 $framework->router()
                     ->strictRequirements(null)
                 ;

@@ -81,7 +81,7 @@ an **event bus**. The event bus could have zero or more subscribers.
         // config/packages/messenger.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // The bus that is going to be injected when injecting MessageBusInterface
             $framework->messenger()->defaultBus('command.bus');
 
@@ -222,8 +222,8 @@ you can determine the message bus based on an implemented interface:
         use App\MessageHandler\CommandHandlerInterface;
         use App\MessageHandler\QueryHandlerInterface;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             // ...
 
@@ -277,7 +277,7 @@ You can also restrict the list to a specific bus by providing its name as an arg
 
 .. tip::
 
-    Since Symfony 5.1, the command will also show the PHPDoc description of
+    The command will also show the PHPDoc description of
     the message and handler classes.
 
 .. _article about CQRS: https://martinfowler.com/bliki/CQRS.html

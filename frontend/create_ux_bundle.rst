@@ -70,22 +70,22 @@ In this case, the file located at ``[assets directory]/dist/controller.js`` will
 
     1. Add the following to your ``package.json`` file:
 
-    .. code-block:: json
+       .. code-block:: json
 
-        {
-            "scripts": {
-                "build": "babel src --extensions .ts -d dist"
-            },
-            "devDependencies": {
-                "@babel/cli": "^7.20.7",
-                "@babel/core": "^7.20.12",
-                "@babel/plugin-proposal-class-properties": "^7.18.6",
-                "@babel/preset-env": "^7.20.2",
-                "@babel/preset-typescript": "^7.18.6",
-                "@hotwired/stimulus": "^3.2.1",
-                "typescript": "^4.9.5"
-            }
-        }
+           {
+               "scripts": {
+                   "build": "babel src --extensions .ts -d dist"
+               },
+               "devDependencies": {
+                   "@babel/cli": "^7.20.7",
+                   "@babel/core": "^7.20.12",
+                   "@babel/plugin-proposal-class-properties": "^7.18.6",
+                   "@babel/preset-env": "^7.20.2",
+                   "@babel/preset-typescript": "^7.18.6",
+                   "@hotwired/stimulus": "^3.2.1",
+                   "typescript": "^4.9.5"
+               }
+           }
 
     2. Run either ``npm install`` or ``yarn install`` to install the new dependencies.
 
@@ -108,7 +108,7 @@ To use your controller in a template (e.g. one defined in your bundle) you can u
         ...
     </div>
 
-Don't forget to add ``symfony/webpack-encore-bundle:^1.12`` as a composer dependency to use
+Don't forget to add ``symfony/stimulus-bundle:^2.9`` as a composer dependency to use
 Twig ``stimulus_*`` functions.
 
 .. tip::

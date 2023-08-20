@@ -10,7 +10,7 @@ address. From inside a controller, it looks like this::
     use Symfony\Component\Validator\Validator\ValidatorInterface;
 
     // ...
-    public function addEmail($email, ValidatorInterface $validator)
+    public function addEmail(string $email, ValidatorInterface $validator): void
     {
         $emailConstraint = new Assert\Email();
         // all constraint "options" can be set this way

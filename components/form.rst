@@ -204,7 +204,7 @@ to bootstrap or access Twig and add the :class:`Symfony\\Bridge\\Twig\\Extension
     ]));
     $formEngine = new TwigRendererEngine([$defaultFormTheme], $twig);
     $twig->addRuntimeLoader(new FactoryRuntimeLoader([
-        FormRenderer::class => function () use ($formEngine, $csrfManager) {
+        FormRenderer::class => function () use ($formEngine, $csrfManager): FormRenderer {
             return new FormRenderer($formEngine, $csrfManager);
         },
     ]));
@@ -392,10 +392,11 @@ is created from the form factory.
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
         use Symfony\Component\HttpFoundation\Request;
+        use Symfony\Component\HttpFoundation\Response;
 
         class TaskController extends AbstractController
         {
-            public function new(Request $request)
+            public function new(Request $request): Response
             {
                 // createFormBuilder is a shortcut to get the "form factory"
                 // and then call "createBuilder()" on it
@@ -451,10 +452,11 @@ an "edit" form), pass in the default data when creating your form builder:
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\HttpFoundation\Response;
 
         class DefaultController extends AbstractController
         {
-            public function new(Request $request)
+            public function new(Request $request): Response
             {
                 $defaults = [
                     'dueDate' => new \DateTime('tomorrow'),
@@ -507,7 +509,7 @@ done by passing a special form "view" object to your template (notice the
     {{ form_start(form) }}
         {{ form_widget(form) }}
 
-        <input type="submit"/>
+        <input type="submit">
     {{ form_end(form) }}
 
 .. image:: /_images/form/simple-form.png
@@ -536,10 +538,11 @@ by :method:`Symfony\\Component\\Form\\Form::handleRequest` to determine whether 
 
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Form\Extension\Core\Type\FormType;
+        use Symfony\Component\HttpFoundation\Response;
 
         class DefaultController extends AbstractController
         {
-            public function search()
+            public function search(): Response
             {
                 $formBuilder = $this->createFormBuilder(null, [
                     'action' => '/search',
@@ -581,10 +584,11 @@ method:
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\HttpFoundation\Response;
 
         class TaskController extends AbstractController
         {
-            public function new(Request $request)
+            public function new(Request $request): Response
             {
                 $form = $this->createFormBuilder()
                     ->add('task', TextType::class)
@@ -676,12 +680,13 @@ option when building each field:
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\Form\Extension\Core\Type\DateType;
         use Symfony\Component\Form\Extension\Core\Type\TextType;
+        use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Validator\Constraints\NotBlank;
         use Symfony\Component\Validator\Constraints\Type;
 
         class DefaultController extends AbstractController
         {
-            public function new(Request $request)
+            public function new(Request $request): Response
             {
                 $form = $this->createFormBuilder()
                     ->add('task', TextType::class, [

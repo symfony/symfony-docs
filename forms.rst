@@ -43,8 +43,9 @@ following ``Task`` class::
 
     class Task
     {
-        protected $task;
-        protected $dueDate;
+        protected string $task;
+
+        protected ?\DateTimeInterface $dueDate;
 
         public function getTask(): string
         {
@@ -56,12 +57,12 @@ following ``Task`` class::
             $this->task = $task;
         }
 
-        public function getDueDate(): ?\DateTime
+        public function getDueDate(): ?\DateTimeInterface
         {
             return $this->dueDate;
         }
 
-        public function setDueDate(?\DateTime $dueDate): void
+        public function setDueDate(?\DateTimeInterface $dueDate): void
         {
             $this->dueDate = $dueDate;
         }
@@ -128,7 +129,7 @@ use the ``createFormBuilder()`` helper::
             // creates a task object and initializes some data for this example
             $task = new Task();
             $task->setTask('Write a blog post');
-            $task->setDueDate(new \DateTime('tomorrow'));
+            $task->setDueDate(new \DateTimeImmutable('tomorrow'));
 
             $form = $this->createFormBuilder($task)
                 ->add('task', TextType::class)
@@ -209,7 +210,7 @@ use the ``createForm()`` helper (otherwise, use the ``create()`` method of the
             // creates a task object and initializes some data for this example
             $task = new Task();
             $task->setTask('Write a blog post');
-            $task->setDueDate(new \DateTime('tomorrow'));
+            $task->setDueDate(new \DateTimeImmutable('tomorrow'));
 
             $form = $this->createForm(TaskType::class, $task);
 
@@ -352,7 +353,7 @@ can set this option to generate forms compatible with the Bootstrap 5 CSS framew
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->formThemes(['bootstrap_5_layout.html.twig']);
 
             // ...
@@ -467,11 +468,12 @@ Before using validation, add support for it in your application:
     $ composer require symfony/validator
 
 Validation is done by adding a set of rules, called (validation) constraints,
-to a class. You can add them either to the entity class or to the form class.
+to a class. You can add them either to the entity class or by using the
+:ref:`constraints option <reference-form-option-constraints>` of form types.
 
 To see the first approach - adding constraints to the entity - in action,
 add the validation constraints, so that the ``task`` field cannot be empty,
-and the ``dueDate`` field cannot be empty, and must be a valid ``DateTime``
+and the ``dueDate`` field cannot be empty, and must be a valid ``DateTimeImmutable``
 object.
 
 .. configuration-block::
@@ -486,11 +488,11 @@ object.
         class Task
         {
             #[Assert\NotBlank]
-            public $task;
+            public string $task;
 
             #[Assert\NotBlank]
-            #[Assert\Type(\DateTime::class)]
-            protected $dueDate;
+            #[Assert\Type(\DateTimeInterface::class)]
+            protected \DateTimeInterface $dueDate;
         }
 
     .. code-block:: yaml
@@ -502,7 +504,7 @@ object.
                     - NotBlank: ~
                 dueDate:
                     - NotBlank: ~
-                    - Type: \DateTime
+                    - Type: \DateTimeInterface
 
     .. code-block:: xml
 
@@ -519,7 +521,7 @@ object.
                 </property>
                 <property name="dueDate">
                     <constraint name="NotBlank"/>
-                    <constraint name="Type">\DateTime</constraint>
+                    <constraint name="Type">\DateTimeInterface</constraint>
                 </property>
             </class>
         </constraint-mapping>
@@ -544,7 +546,7 @@ object.
                 $metadata->addPropertyConstraint('dueDate', new NotBlank());
                 $metadata->addPropertyConstraint(
                     'dueDate',
-                    new Type(\DateTime::class)
+                    new Type(\DateTimeInterface::class)
                 );
             }
         }
@@ -552,9 +554,8 @@ object.
 That's it! If you re-submit the form with invalid data, you'll see the
 corresponding errors printed out with the form.
 
-To see the second approach - adding constraints to the form - and to
-learn more about the validation constraints, please refer to the
-:doc:`Symfony validation documentation </validation>`.
+To see the second approach - adding constraints to the form - refer to
+:ref:`this section <form-option-constraints>`. Both approaches can be used together.
 
 Other Common Form Features
 --------------------------
@@ -694,8 +695,9 @@ Set the ``label`` option on fields to define their labels explicitly::
 Changing the Action and HTTP Method
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-By default, a form will be submitted via an HTTP POST request to the same
-URL under which the form was rendered. When building the form in the controller,
+By default, the ``<form>`` tag is rendered with a ``method="post"`` attribute,
+and no ``action`` attribute. This means that the form is submitted via an HTTP
+POST request to the same URL under which it was rendered. When building the form,
 use the ``setAction()`` and ``setMethod()`` methods to change this::
 
     // src/Controller/TaskController.php
@@ -967,6 +969,7 @@ Form Themes and Customization:
 
     /form/bootstrap4
     /form/bootstrap5
+    /form/tailwindcss
     /form/form_customization
     /form/form_themes
 

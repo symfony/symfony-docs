@@ -44,7 +44,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
 
     class TestedTypeTest extends TypeTestCase
     {
-        public function testSubmitValidData()
+        public function testSubmitValidData(): void
         {
             $formData = [
                 'test' => 'test',
@@ -68,7 +68,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
             $this->assertEquals($expected, $model);
         }
 
-        public function testCustomFormView()
+        public function testCustomFormView(): void
         {
             $formData = new TestObject();
             // ... prepare the data as you need
@@ -154,7 +154,7 @@ make sure the ``FormRegistry`` uses the created instance::
 
     class TestedTypeTest extends TypeTestCase
     {
-        private $objectManager;
+        private MockObject|ObjectManager $objectManager;
 
         protected function setUp(): void
         {
@@ -164,7 +164,7 @@ make sure the ``FormRegistry`` uses the created instance::
             parent::setUp();
         }
 
-        protected function getExtensions()
+        protected function getExtensions(): array
         {
             // create a type instance with the mocked dependencies
             $type = new TestedType($this->objectManager);
@@ -175,7 +175,7 @@ make sure the ``FormRegistry`` uses the created instance::
             ];
         }
 
-        public function testSubmitValidData()
+        public function testSubmitValidData(): void
         {
             // ...
 
@@ -210,7 +210,7 @@ allows you to return a list of extensions to register::
 
     class TestedTypeTest extends TypeTestCase
     {
-        protected function getExtensions()
+        protected function getExtensions(): array
         {
             $validator = Validation::createValidator();
 
@@ -241,4 +241,4 @@ guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestC
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
 
-.. _`PHPUnit data providers`: https://phpunit.readthedocs.io/en/9.5/writing-tests-for-phpunit.html#data-providers
+.. _`PHPUnit data providers`: https://docs.phpunit.de/en/9.6/writing-tests-for-phpunit.html#data-providers

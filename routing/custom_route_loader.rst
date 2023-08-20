@@ -83,7 +83,7 @@ Symfony provides several route loaders for the most common needs:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             // loads routes from the given routing file stored in some bundle
             $routes->import('@AcmeBundle/Resources/config/routing.yaml');
 
@@ -175,7 +175,7 @@ Take these lines from the ``routes.yaml``:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('../src/Controller', 'attribute');
         };
 
@@ -229,7 +229,7 @@ and configure the service and method to call:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('admin_route_loader::loadRoutes', 'service');
         };
 
@@ -278,9 +278,9 @@ you do. The resource name itself is not actually used in the example::
 
     class ExtraLoader extends Loader
     {
-        private $isLoaded = false;
+        private bool $isLoaded = false;
 
-        public function load($resource, string $type = null)
+        public function load($resource, string $type = null): RouteCollection
         {
             if (true === $this->isLoaded) {
                 throw new \RuntimeException('Do not add the "extra" loader twice');
@@ -307,7 +307,7 @@ you do. The resource name itself is not actually used in the example::
             return $routes;
         }
 
-        public function supports($resource, string $type = null)
+        public function supports($resource, string $type = null): bool
         {
             return 'extra' === $type;
         }
@@ -324,7 +324,7 @@ have to create an ``extra()`` method in the ``ExtraController``::
 
     class ExtraController extends AbstractController
     {
-        public function extra($parameter)
+        public function extra(mixed $parameter): Response
         {
             return new Response($parameter);
         }
@@ -368,8 +368,8 @@ Now define a service for the ``ExtraLoader``:
 
         use App\Routing\ExtraLoader;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(ExtraLoader::class)
                 ->tag('routing.loader')
@@ -413,7 +413,7 @@ What remains to do is adding a few lines to the routing configuration:
         // config/routes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return static function (RoutingConfigurator $routes): void {
             $routes->import('.', 'extra');
         };
 
@@ -452,7 +452,7 @@ configuration file - you can call the
 
     class AdvancedLoader extends Loader
     {
-        public function load($resource, string $type = null)
+        public function load($resource, string $type = null): RouteCollection
         {
             $routes = new RouteCollection();
 
@@ -466,7 +466,7 @@ configuration file - you can call the
             return $routes;
         }
 
-        public function supports($resource, string $type = null)
+        public function supports($resource, string $type = null): bool
         {
             return 'advanced_extra' === $type;
         }

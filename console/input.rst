@@ -337,7 +337,7 @@ To achieve this, use the 5th argument of ``addArgument()``/``addOption``::
                     InputArgument::IS_ARRAY,
                     'Who do you want to greet (separate multiple names with a space)?',
                     null,
-                    function (CompletionInput $input) {
+                    function (CompletionInput $input): array {
                         // the value the user already typed, e.g. when typing "app:greet Fa" before
                         // pressing Tab, this will contain "Fa"
                         $currentValue = $input->getCompletionValue();
@@ -378,7 +378,7 @@ Testing the Completion script
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The Console component comes with a special
-:class:`Symfony\\Component\\Console\\Tester\\CommandCompletionTester`` class
+:class:`Symfony\\Component\\Console\\Tester\\CommandCompletionTester` class
 to help you unit test the completion logic::
 
     // ...
@@ -386,7 +386,7 @@ to help you unit test the completion logic::
 
     class GreetCommandTest extends TestCase
     {
-        public function testComplete()
+        public function testComplete(): void
         {
             $application = new Application();
             $application->add(new GreetCommand());
@@ -406,5 +406,27 @@ to help you unit test the completion logic::
             $this->assertSame(['Fabien', 'Fabrice'], $suggestions);
         }
     }
+
+.. _console-global-options:
+
+Command Global Options
+----------------------
+
+The Console component adds some predefined options to all commands:
+
+* ``--verbose``: sets the verbosity level (e.g. ``1`` the default, ``2`` and
+  ``3``, or you can use respective shortcuts ``-v``, ``-vv`` and ``-vvv``)
+* ``--quiet``: disables output and interaction
+* ``--no-interaction``: disables interaction
+* ``--version``: outputs the version number of the console application
+* ``--help``: displays the command help
+* ``--ansi|--no-ansi``: whether to force of disable coloring the output
+
+When using the ``FrameworkBundle``, two more options are predefined:
+
+* ``--env``: sets the Kernel configuration environment (defaults to ``APP_ENV``)
+* ``--no-debug``: disables Kernel debug (defaults to ``APP_DEBUG``)
+
+So your custom commands can use them too out-of-the-box.
 
 .. _`docopt standard`: http://docopt.org/

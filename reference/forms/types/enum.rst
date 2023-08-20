@@ -142,6 +142,8 @@ If you return ``null``, the option won't be grouped.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
+.. include:: /reference/forms/types/options/placeholder_attr.rst.inc
+
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 .. include:: /reference/forms/types/options/choice_type_trim.rst.inc

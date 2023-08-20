@@ -25,7 +25,7 @@ is used to specify many different cache directives::
         // ...
 
         #[Cache(public: true, maxage: 600)]
-        public function index()
+        public function index(): Response
         {
             // ...
         }
@@ -72,7 +72,7 @@ the ``setExpires()`` ``Response`` method::
         // ...
 
         #[Cache(expires: '+600 seconds')]
-        public function index()
+        public function index(): Response
         {
             // ...
         }
@@ -92,7 +92,7 @@ The resulting HTTP header will look like this:
 
 .. note::
 
-    The ``expires` option and the ``setExpires()`` method automatically convert
+    The ``expires`` option and the ``setExpires()`` method automatically convert
     the date to the GMT timezone as required by the specification.
 
 Note that in HTTP versions before 1.1 the origin server wasn't required to

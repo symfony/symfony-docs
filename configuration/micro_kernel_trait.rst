@@ -47,15 +47,15 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
                 ];
             }
 
-            protected function configureContainer(ContainerConfigurator $containerConfigurator): void
+            protected function configureContainer(ContainerConfigurator $container): void
             {
                 // PHP equivalent of config/packages/framework.yaml
-                $containerConfigurator->extension('framework', [
+                $container->extension('framework', [
                     'secret' => 'S0ME_SECRET'
                 ]);
             }
 
-            #[Route('/random/{limit}', name='random_number')]
+            #[Route('/random/{limit}', name: 'random_number')]
             public function randomNumber(int $limit): JsonResponse
             {
                 return new JsonResponse([
@@ -93,10 +93,10 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
                 ];
             }
 
-            protected function configureContainer(ContainerConfigurator $containerConfigurator): void
+            protected function configureContainer(ContainerConfigurator $container): void
             {
                 // PHP equivalent of config/packages/framework.yaml
-                $containerConfigurator->extension('framework', [
+                $container->extension('framework', [
                     'secret' => 'S0ME_SECRET'
                 ]);
             }
@@ -142,7 +142,7 @@ that define your bundles, your services and your routes:
 **registerBundles()**
     This is the same ``registerBundles()`` that you see in a normal kernel.
 
-**configureContainer(ContainerConfigurator $containerConfigurator)**
+**configureContainer(ContainerConfigurator $container)**
     This method builds and configures the container. In practice, you will use
     ``extension()`` to configure different bundles (this is the equivalent
     of what you see in a normal ``config/packages/*`` file). You can also register
@@ -178,7 +178,7 @@ events directly from the kernel, again it will be registered automatically::
 
         public function onKernelException(ExceptionEvent $event): void
         {
-            if ($event->getException() instanceof Danger) {
+            if ($event->getThrowable() instanceof Danger) {
                 $event->setResponse(new Response('It\'s dangerous to go alone. Take this ⚔'));
             }
         }
@@ -247,17 +247,17 @@ Now it looks like this::
             return $bundles;
         }
 
-        protected function build(ContainerBuilder $containerBuilder)
+        protected function build(ContainerBuilder $containerBuilder): void
         {
             $containerBuilder->registerExtension(new AppExtension());
         }
 
-        protected function configureContainer(ContainerConfigurator $containerConfigurator): void
+        protected function configureContainer(ContainerConfigurator $container): void
         {
-            $containerConfigurator->import(__DIR__.'/../config/framework.yaml');
+            $container->import(__DIR__.'/../config/framework.yaml');
 
             // register all classes in /src/ as service
-            $containerConfigurator->services()
+            $container->services()
                 ->load('App\\', __DIR__.'/*')
                 ->autowire()
                 ->autoconfigure()
@@ -265,7 +265,7 @@ Now it looks like this::
 
             // configure WebProfilerBundle only if the bundle is enabled
             if (isset($this->bundles['WebProfilerBundle'])) {
-                $containerConfigurator->extension('web_profiler', [
+                $container->extension('web_profiler', [
                     'toolbar' => true,
                     'intercept_redirects' => false,
                 ]);
@@ -369,7 +369,7 @@ because the configuration started to get bigger:
         // config/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework
                 ->secret('SOME_SECRET')
                 ->profiler()
@@ -421,12 +421,9 @@ Finally, you need a front controller to boot and run the application. Create a
 
     // public/index.php
     use App\Kernel;
-    use Doctrine\Common\Annotations\AnnotationRegistry;
     use Symfony\Component\HttpFoundation\Request;
 
-    $loader = require __DIR__.'/../vendor/autoload.php';
-    // auto-load annotations
-    AnnotationRegistry::registerLoader([$loader, 'loadClass']);
+    require __DIR__.'/../vendor/autoload.php';
 
     $kernel = new Kernel('dev', true);
     $request = Request::createFromGlobals();

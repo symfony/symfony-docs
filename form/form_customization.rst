@@ -117,7 +117,7 @@ fields, so you no longer have to deal with form themes:
         value="{{ field_value(form.username) }}"
         placeholder="{{ field_label(form.username) }}"
         class="form-control"
-    />
+    >
 
     <select name="{{ field_name(form.country) }}" class="form-control">
         <option value="">{{ field_label(form.country) }}</option>
@@ -126,10 +126,6 @@ fields, so you no longer have to deal with form themes:
             <option value="{{ value }}">{{ label }}</option>
         {% endfor %}
     </select>
-
-.. versionadded:: 5.2
-
-    The ``field_*()`` helpers were introduced in Symfony 5.2.
 
 Form Rendering Variables
 ------------------------

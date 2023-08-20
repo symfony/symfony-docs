@@ -39,7 +39,7 @@ Configuration
         class Author
         {
             #[Assert\Callback]
-            public function validate(ExecutionContextInterface $context, $payload)
+            public function validate(ExecutionContextInterface $context, mixed $payload): void
             {
                 // ...
             }
@@ -75,12 +75,12 @@ Configuration
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Callback('validate'));
             }
 
-            public function validate(ExecutionContextInterface $context, $payload)
+            public function validate(ExecutionContextInterface $context, mixed $payload): void
             {
                 // ...
             }
@@ -99,9 +99,9 @@ field those errors should be attributed::
     class Author
     {
         // ...
-        private $firstName;
+        private string $firstName;
 
-        public function validate(ExecutionContextInterface $context, $payload)
+        public function validate(ExecutionContextInterface $context, mixed $payload): void
         {
             // somehow you have an array of "fake names"
             $fakeNames = [/* ... */];
@@ -121,13 +121,13 @@ Static Callbacks
 You can also use the constraint with static methods. Since static methods don't
 have access to the object instance, they receive the object as the first argument::
 
-    public static function validate($object, ExecutionContextInterface $context, $payload)
+    public static function validate(mixed $value, ExecutionContextInterface $context, mixed $payload): void
     {
         // somehow you have an array of "fake names"
         $fakeNames = [/* ... */];
 
         // check if the name is actually a fake name
-        if (in_array($object->getFirstName(), $fakeNames)) {
+        if (in_array($value->getFirstName(), $fakeNames)) {
             $context->buildViolation('This name sounds totally fake!')
                 ->atPath('firstName')
                 ->addViolation()
@@ -149,7 +149,7 @@ Suppose your validation function is ``Acme\Validator::validate()``::
 
     class Validator
     {
-        public static function validate($object, ExecutionContextInterface $context, $payload)
+        public static function validate(mixed $value, ExecutionContextInterface $context, mixed $payload): void
         {
             // ...
         }
@@ -206,7 +206,7 @@ You can then use the following configuration to invoke this validator:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addConstraint(new Assert\Callback([
                     Validator::class,
@@ -235,9 +235,9 @@ constructor of the Callback constraint::
 
     class Author
     {
-        public static function loadValidatorMetadata(ClassMetadata $metadata)
+        public static function loadValidatorMetadata(ClassMetadata $metadata): void
         {
-            $callback = function ($object, ExecutionContextInterface $context, $payload) {
+            $callback = function (mixed $value, ExecutionContextInterface $context, mixed $payload): void {
                 // ...
             };
 

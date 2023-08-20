@@ -82,9 +82,9 @@ if you want to know a bundle name, you can add this to your command::
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
 
         $bundleName = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the bundleName
-        
+
         return Command::SUCCESS;
     }
 
@@ -120,7 +120,7 @@ from a predefined list::
         $output->writeln('You have just selected: '.$color);
 
         // ... do something with the color
-        
+
         return Command::SUCCESS;
     }
 
@@ -158,7 +158,7 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
 
         $colors = $helper->ask($input, $output, $question);
         $output->writeln('You have just selected: ' . implode(', ', $colors));
-        
+
         return Command::SUCCESS;
     }
 
@@ -187,9 +187,9 @@ will be autocompleted as the user types::
         $question->setAutocompleterValues($bundles);
 
         $bundleName = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the bundleName
-        
+
         return Command::SUCCESS;
     }
 
@@ -217,7 +217,7 @@ provide a callback function to dynamically generate suggestions::
             // where files and dirs can be found
             $foundFilesAndDirs = @scandir($inputPath) ?: [];
 
-            return array_map(function ($dirOrFile) use ($inputPath) {
+            return array_map(function (string $dirOrFile) use ($inputPath): string {
                 return $inputPath.$dirOrFile;
             }, $foundFilesAndDirs);
         };
@@ -226,9 +226,9 @@ provide a callback function to dynamically generate suggestions::
         $question->setAutocompleterCallback($callback);
 
         $filePath = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the filePath
-        
+
         return Command::SUCCESS;
     }
 
@@ -250,9 +250,9 @@ You can also specify if you want to not trim the answer by setting it directly w
         $question->setTrimmable(false);
         // if the users inputs 'elsa ' it will not be trimmed and you will get 'elsa ' as value
         $name = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the name
-        
+
         return Command::SUCCESS;
     }
 
@@ -276,9 +276,9 @@ the response to a question should allow multiline answers by passing ``true`` to
         $question->setMultiline(true);
 
         $answer = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the answer
-        
+
         return Command::SUCCESS;
     }
 
@@ -304,9 +304,9 @@ convenient for passwords::
         $question->setHiddenFallback(false);
 
         $password = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the password
-        
+
         return Command::SUCCESS;
     }
 
@@ -338,7 +338,7 @@ convenient for passwords::
             QuestionHelper::disableStty();
 
             // ...
-            
+
             return Command::SUCCESS;
         }
 
@@ -361,15 +361,15 @@ method::
         $helper = $this->getHelper('question');
 
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
-        $question->setNormalizer(function ($value) {
+        $question->setNormalizer(function (string $value): string {
             // $value can be null here
             return $value ? trim($value) : '';
         });
 
         $bundleName = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the bundleName
-        
+
         return Command::SUCCESS;
     }
 
@@ -399,7 +399,7 @@ method::
         $helper = $this->getHelper('question');
 
         $question = new Question('Please enter the name of the bundle', 'AcmeDemoBundle');
-        $question->setValidator(function ($answer) {
+        $question->setValidator(function (string $answer): string {
             if (!is_string($answer) || 'Bundle' !== substr($answer, -6)) {
                 throw new \RuntimeException(
                     'The name of the bundle should be suffixed with \'Bundle\''
@@ -411,9 +411,9 @@ method::
         $question->setMaxAttempts(2);
 
         $bundleName = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the bundleName
-        
+
         return Command::SUCCESS;
     }
 
@@ -459,10 +459,10 @@ You can also use a validator with a hidden question::
         $helper = $this->getHelper('question');
 
         $question = new Question('Please enter your password');
-        $question->setNormalizer(function ($value) {
+        $question->setNormalizer(function (?string $value): string {
             return $value ?? '';
         });
-        $question->setValidator(function ($value) {
+        $question->setValidator(function (string $value): string {
             if ('' === trim($value)) {
                 throw new \Exception('The password cannot be empty');
             }
@@ -473,9 +473,9 @@ You can also use a validator with a hidden question::
         $question->setMaxAttempts(20);
 
         $password = $helper->ask($input, $output, $question);
-        
+
         // ... do something with the password
-        
+
         return Command::SUCCESS;
     }
 
@@ -488,7 +488,7 @@ from the command line, you need to set the inputs that the command expects::
     use Symfony\Component\Console\Tester\CommandTester;
 
     // ...
-    public function testExecute()
+    public function testExecute(): void
     {
         // ...
         $commandTester = new CommandTester($command);

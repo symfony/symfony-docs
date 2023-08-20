@@ -23,7 +23,7 @@ Imagine you have a ``Mailer`` class which has four options: ``host``,
 
     class Mailer
     {
-        protected $options;
+        protected array $options;
 
         public function __construct(array $options = [])
         {
@@ -37,7 +37,7 @@ check which options are set::
     class Mailer
     {
         // ...
-        public function sendMail($from, $to)
+        public function sendMail($from, $to): void
         {
             $mail = ...;
 
@@ -121,7 +121,7 @@ code::
     {
         // ...
 
-        public function sendMail($from, $to)
+        public function sendMail($from, $to): void
         {
             $mail = ...;
             $mail->setHost($this->options['host']);
@@ -147,7 +147,7 @@ It's a good practice to split the option configuration into a separate method::
             $this->options = $resolver->resolve($options);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 'host'       => 'smtp.example.org',
@@ -166,7 +166,7 @@ than processing options. Second, sub-classes may now override the
     // ...
     class GoogleMailer extends Mailer
     {
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             parent::configureOptions($resolver);
 
@@ -189,7 +189,7 @@ For example, to make the ``host`` option required, you can do::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->setRequired('host');
@@ -213,7 +213,7 @@ one required option::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->setRequired(['host', 'username', 'password']);
@@ -228,7 +228,7 @@ retrieve the names of all required options::
     // ...
     class GoogleMailer extends Mailer
     {
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             parent::configureOptions($resolver);
 
@@ -251,7 +251,7 @@ been set::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->setRequired('host');
@@ -261,7 +261,7 @@ been set::
     // ...
     class GoogleMailer extends Mailer
     {
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             parent::configureOptions($resolver);
 
@@ -296,7 +296,7 @@ correctly. To validate the types of the options, call
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
 
@@ -347,7 +347,7 @@ to verify that the passed option contains one of these values::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->setDefault('transport', 'sendmail');
@@ -370,7 +370,7 @@ For options with more complicated validation schemes, pass a closure which
 returns ``true`` for acceptable values and ``false`` for invalid values::
 
     // ...
-    $resolver->setAllowedValues('transport', function ($value) {
+    $resolver->setAllowedValues('transport', function (string $value): bool {
         // return true or false
     });
 
@@ -408,11 +408,11 @@ option. You can configure a normalizer by calling
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
 
-            $resolver->setNormalizer('host', function (Options $options, $value) {
+            $resolver->setNormalizer('host', function (Options $options, string $value): string {
                 if ('http://' !== substr($value, 0, 7)) {
                     $value = 'http://'.$value;
                 }
@@ -430,10 +430,10 @@ if you need to use other options during normalization::
     class Mailer
     {
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
-            $resolver->setNormalizer('host', function (Options $options, $value) {
+            $resolver->setNormalizer('host', function (Options $options, string $value): string {
                 if ('http://' !== substr($value, 0, 7) && 'https://' !== substr($value, 0, 8)) {
                     if ('ssl' === $options['encryption']) {
                         $value = 'https://'.$value;
@@ -470,12 +470,12 @@ these options, you can return the desired default value::
     class Mailer
     {
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->setDefault('encryption', null);
 
-            $resolver->setDefault('port', function (Options $options) {
+            $resolver->setDefault('port', function (Options $options): int {
                 if ('ssl' === $options['encryption']) {
                     return 465;
                 }
@@ -502,7 +502,7 @@ the closure::
     class Mailer
     {
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->setDefaults([
@@ -514,11 +514,11 @@ the closure::
 
     class GoogleMailer extends Mailer
     {
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             parent::configureOptions($resolver);
 
-            $resolver->setDefault('host', function (Options $options, $previousValue) {
+            $resolver->setDefault('host', function (Options $options, string $previousValue): string {
                 if ('ssl' === $options['encryption']) {
                     return 'secure.example.org';
                 }
@@ -545,14 +545,14 @@ from the default::
     class Mailer
     {
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->setDefault('port', 25);
         }
 
         // ...
-        public function sendMail($from, $to)
+        public function sendMail(string $from, string $to): void
         {
             // Is this the default value or did the caller of the class really
             // set the port to 25?
@@ -572,14 +572,14 @@ be included in the resolved options if it was actually passed to
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->setDefined('port');
         }
 
         // ...
-        public function sendMail($from, $to)
+        public function sendMail(string $from, string $to): void
         {
             if (array_key_exists('port', $this->options)) {
                 echo 'Set!';
@@ -606,7 +606,7 @@ options in one go::
     class Mailer
     {
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->setDefined(['port', 'encryption']);
@@ -622,7 +622,7 @@ let you find out which options are defined::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             parent::configureOptions($resolver);
 
@@ -652,9 +652,9 @@ default value::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
-            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver) {
+            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver): void {
                 $spoolResolver->setDefaults([
                     'type' => 'file',
                     'path' => '/path/to/spool',
@@ -664,7 +664,7 @@ default value::
             });
         }
 
-        public function sendMail($from, $to)
+        public function sendMail(string $from, string $to): void
         {
             if ('memory' === $this->options['spool']['type']) {
                 // ...
@@ -687,10 +687,10 @@ to the closure to access to them::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefault('sandbox', false);
-            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver, Options $parent) {
+            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver, Options $parent): void {
                 $spoolResolver->setDefaults([
                     'type' => $parent['sandbox'] ? 'memory' : 'file',
                     // ...
@@ -711,15 +711,15 @@ In same way, parent options can access to the nested options as normal arrays::
     {
         // ...
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
-            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver) {
+            $resolver->setDefault('spool', function (OptionsResolver $spoolResolver): void {
                 $spoolResolver->setDefaults([
                     'type' => 'file',
                     // ...
                 ]);
             });
-            $resolver->setDefault('profiling', function (Options $options) {
+            $resolver->setDefault('profiling', function (Options $options): void {
                 return 'file' === $options['spool']['type'];
             });
         }
@@ -740,7 +740,7 @@ with ``host``, ``database``, ``user`` and ``password`` each.
 
 The best way to implement this is to define the ``connections`` option as prototype::
 
-    $resolver->setDefault('connections', function (OptionsResolver $connResolver) {
+    $resolver->setDefault('connections', function (OptionsResolver $connResolver): void {
         $connResolver
             ->setPrototype(true)
             ->setRequired(['host', 'database'])
@@ -820,7 +820,7 @@ the option::
         ->setDefault('encryption', null)
         ->setDefault('port', null)
         ->setAllowedTypes('port', ['null', 'int'])
-        ->setDeprecated('port', 'acme/package', '1.2', function (Options $options, $value) {
+        ->setDeprecated('port', 'acme/package', '1.2', function (Options $options, ?int $value): string {
             if (null === $value) {
                 return 'Passing "null" to option "port" is deprecated, pass an integer instead.';
             }
@@ -842,6 +842,30 @@ the option::
 This closure receives as argument the value of the option after validating it
 and before normalizing it when the option is being resolved.
 
+Ignore not defined Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, all options are resolved and validated, resulting in a
+:class:`Symfony\\Component\\OptionsResolver\\Exception\\UndefinedOptionsException`
+if an unknown option is passed. You can ignore not defined options by using the
+:method:`Symfony\\Component\\OptionsResolver\\OptionsResolver::ignoreUndefined` method::
+
+    // ...
+    $resolver
+        ->setDefined(['hostname'])
+        ->setIgnoreUndefined(true)
+    ;
+
+    // option "version" will be ignored
+    $resolver->resolve([
+        'hostname' => 'acme/package',
+        'version'  => '1.2.3'
+    ]);
+
+.. versionadded:: 6.3
+
+    The ``ignoreUndefined()`` method was introduced in Symfony 6.3.
+
 Chaining Option Configurations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -856,7 +880,7 @@ method::
     class InvoiceMailer
     {
         // ...
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
             $resolver->define('host')
@@ -884,9 +908,9 @@ can change your code to do the configuration only once per class::
     // ...
     class Mailer
     {
-        private static $resolversByClass = [];
+        private static array $resolversByClass = [];
 
-        protected $options;
+        protected array $options;
 
         public function __construct(array $options = [])
         {
@@ -902,7 +926,7 @@ can change your code to do the configuration only once per class::
             $this->options = self::$resolversByClass[$class]->resolve($options);
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             // ...
         }
@@ -917,9 +941,9 @@ method ``clearOptionsConfig()`` and call it periodically::
     // ...
     class Mailer
     {
-        private static $resolversByClass = [];
+        private static array $resolversByClass = [];
 
-        public static function clearOptionsConfig()
+        public static function clearOptionsConfig(): void
         {
             self::$resolversByClass = [];
         }
@@ -929,3 +953,21 @@ method ``clearOptionsConfig()`` and call it periodically::
 
 That's it! You now have all the tools and knowledge needed to process
 options in your code.
+
+Getting More Insights
+~~~~~~~~~~~~~~~~~~~~~
+
+Use the ``OptionsResolverIntrospector`` to inspect the options definitions
+inside an ``OptionsResolver`` instance::
+
+    use Symfony\Component\OptionsResolver\Debug\OptionsResolverIntrospector;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+
+    $resolver = new OptionsResolver();
+    $resolver->setDefaults([
+        'host' => 'smtp.example.org',
+        'port' => 25,
+    ]);
+
+    $introspector = new OptionsResolverIntrospector($resolver);
+    $introspector->getDefault('host'); // Retrieves "smtp.example.org"

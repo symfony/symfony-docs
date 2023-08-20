@@ -54,7 +54,7 @@ to JavaScript::
 
     class Apple
     {
-        public $variety;
+        public string $variety;
     }
 
     $apple = new Apple();
@@ -77,7 +77,7 @@ JavaScript::
 
     class Robot
     {
-        public function sayHi($times)
+        public function sayHi(int $times): string
         {
             $greetings = [];
             for ($i = 0; $i < $times; $i++) {
@@ -337,7 +337,7 @@ For example::
 
     class User
     {
-        public $group;
+        public string $group;
     }
 
     $user = new User();
@@ -368,7 +368,7 @@ For example::
 
     class User
     {
-        public $age;
+        public int $age;
     }
 
     $user = new User();

@@ -45,7 +45,7 @@ The new bundle is called AcmeTestBundle, where the ``Acme`` portion is an exampl
 name that should be replaced by some "vendor" name that represents you or your
 organization (e.g. AbcTestBundle for some company named ``Abc``).
 
-Start by adding creating a new class called ``AcmeTestBundle``::
+Start by creating a new class called ``AcmeTestBundle``::
 
     // src/AcmeTestBundle.php
     namespace Acme\TestBundle;

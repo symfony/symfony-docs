@@ -111,7 +111,7 @@ that will do the required processing for your message::
 
     class MyMessageHandler
     {
-        public function __invoke(MyMessage $message)
+        public function __invoke(MyMessage $message): void
         {
             // Message processing...
         }

@@ -67,7 +67,7 @@ Console script::
 Web front-controller::
 
     // public/index.php
-    
+
     // ...
     $_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = 'another/custom/path/to/.env';
 
@@ -109,8 +109,8 @@ In this code, ``$this->environment`` is the current environment (i.e. ``dev``).
 In this case you have changed the location of the cache directory to
 ``var/{environment}/cache/``.
 
-You can also change the cache directory defining an environment variable named
-``APP_CACHE_DIR`` whose value is the full path of the cache folder.
+You can also change the cache directory by defining an environment variable
+named ``APP_CACHE_DIR`` whose value is the full path of the cache folder.
 
 .. caution::
 
@@ -190,7 +190,7 @@ for multiple directories):
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->defaultPath('%kernel.project_dir%/resources/views');
         };
 
@@ -236,7 +236,7 @@ configuration option to define your own translations directory (use :ref:`framew
         // config/packages/translation.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->translator()
                 ->defaultPath('%kernel.project_dir%/i18n')
             ;
@@ -254,7 +254,7 @@ your ``index.php`` front controller. If you renamed the directory, you're fine.
 But if you moved it in some way, you may need to modify these paths inside those
 files::
 
-    require_once __DIR__.'/../path/to/vendor/autoload.php';
+    require_once __DIR__.'/../path/to/vendor/autoload_runtime.php';
 
 You also need to change the ``extra.public-dir`` option in the ``composer.json``
 file:

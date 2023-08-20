@@ -110,6 +110,11 @@ define a callback for the ``prePersist`` Doctrine event:
 Doctrine Lifecycle Listeners
 ----------------------------
 
+.. deprecated:: 6.3
+
+    Lifecycle subscribers are deprecated starting from Symfony 6.3 and will be
+    removed in Symfony 7.0. Use lifecycle listeners instead.
+
 Lifecycle listeners are defined as PHP classes that listen to a single Doctrine
 event on all the application entities. For example, suppose that you want to
 update some search index whenever a new entity is persisted in the database. To
@@ -234,8 +239,8 @@ listener in the Symfony application by creating a new service for it and
 
         use App\EventListener\SearchIndexer;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services();
 
             // listeners are applied by default to all Doctrine connections
             $services->set(SearchIndexer::class)
@@ -255,8 +260,7 @@ listener in the Symfony application by creating a new service for it and
 
 .. versionadded:: 2.7.2
 
-    The :class:`Doctrine\\Bundle\\DoctrineBundle\\Attribute\\AsDoctrineListener`
-    attribute was introduced in DoctrineBundle 2.7.2.
+    The `AsDoctrineListener`_ attribute was introduced in DoctrineBundle 2.7.2.
 
 .. tip::
 
@@ -385,8 +389,8 @@ with the ``doctrine.orm.entity_listener`` tag as follows:
         use App\Entity\User;
         use App\EventListener\UserChangedNotifier;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(UserChangedNotifier::class)
                 ->tag('doctrine.orm.entity_listener', [
@@ -531,8 +535,8 @@ Doctrine connection to use) you must do that in the manual service configuration
 
         use App\EventListener\DatabaseActivitySubscriber;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(DatabaseActivitySubscriber::class)
                 ->tag('doctrine.event_subscriber'[
@@ -556,3 +560,4 @@ Doctrine connection to use) you must do that in the manual service configuration
 .. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events
 .. _`official docs about Doctrine events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html
 .. _`DoctrineMongoDBBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineMongoDBBundle/index.html
+.. _`AsDoctrineListener`: https://github.com/doctrine/DoctrineBundle/blob/2.10.x/Attribute/AsDoctrineListener.php

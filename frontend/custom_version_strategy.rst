@@ -63,7 +63,7 @@ version string::
             $this->format = $format ?: '%s?%s';
         }
 
-        public function getVersion(string $path)
+        public function getVersion(string $path): string
         {
             if (!is_array($this->hashes)) {
                 $this->hashes = $this->loadManifest();
@@ -72,7 +72,7 @@ version string::
             return $this->hashes[$path] ?? '';
         }
 
-        public function applyVersion(string $path)
+        public function applyVersion(string $path): string
         {
             $version = $this->getVersion($path);
 
@@ -83,7 +83,7 @@ version string::
             return sprintf($this->format, $path, $version);
         }
 
-        private function loadManifest()
+        private function loadManifest(): array
         {
             return json_decode(file_get_contents($this->manifestPath), true);
         }
@@ -128,10 +128,9 @@ After creating the strategy PHP class, register it as a Symfony service.
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         use App\Asset\VersionStrategy\GulpBusterVersionStrategy;
-        use Symfony\Component\DependencyInjection\Definition;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(GulpBusterVersionStrategy::class)
                 ->args(
@@ -178,7 +177,7 @@ the :ref:`version_strategy <reference-assets-version-strategy>` option:
         use App\Asset\VersionStrategy\GulpBusterVersionStrategy;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->assets()
                 ->versionStrategy(GulpBusterVersionStrategy::class)

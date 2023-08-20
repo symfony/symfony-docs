@@ -31,9 +31,9 @@ Dependency Injection
 * :ref:`Autoconfigure <lazy-services_configuration>`
 * :ref:`AutoconfigureTag <di-instanceof>`
 * :ref:`Autowire <autowire-attribute>`
-* :ref:`AutowireCallable <container_closure-as-argument>`
+* :ref:`AutowireCallable <autowiring_closures>`
 * :doc:`AutowireDecorated </service_container/service_decoration>`
-* :doc:`AutowireServiceClosure </service_container/service_closures>`
+* :ref:`AutowireServiceClosure <autowiring_closures>`
 * :ref:`Exclude <service-psr4-loader>`
 * :ref:`TaggedIterator <tags_reference-tagged-services>`
 * :ref:`TaggedLocator <service-subscribers-locators_defining-service-locator>`
@@ -54,10 +54,13 @@ HttpKernel
 ~~~~~~~~~~
 
 * :doc:`AsController </controller/service>`
-* :class:`Symfony\\Component\\HttpKernel\\Attribute\\AsPinnedValueResolver`
+* :ref:`AsTargetedValueResolver <controller-targeted-value-resolver>`
 * :ref:`Cache <http-cache-expiration-intro>`
 * :ref:`MapDateTime <functionality-shipped-with-the-httpkernel>`
-* :class:`Symfony\\Component\\HttpKernel\\Attribute\\ValueResolver`
+* :ref:`MapQueryParameter <controller_map-request>`
+* :ref:`MapQueryString <controller_map-request>`
+* :ref:`MapRequestPayload <controller_map-request>`
+* :ref:`ValueResolver <managing-value-resolvers>`
 * :ref:`WithHttpStatus <framework_exceptions>`
 * :ref:`WithLogLevel <framework_exceptions>`
 

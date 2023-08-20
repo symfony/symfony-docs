@@ -44,11 +44,11 @@ squares).
     <object data="_images/rate_limiter/fixed_window.svg" type="image/svg+xml"></object>
 
 Its main drawback is that resource usage is not evenly distributed in time and
-it can overload the server at the window edges. In the previous example,
+it can overload the server at the window edges. In this example,
 there were 6 accepted requests between 11:00 and 12:00.
 
 This is more significant with bigger limits. For instance, with 5,000 requests
-per hour, a user could make the 4,999 requests in the last minute of some
+per hour, a user could make 4,999 requests in the last minute of some
 hour and another 5,000 requests during the first minute of the next hour,
 making 9,999 requests in total in two minutes and possibly overloading the
 server. These periods of excessive usage are called "bursts".
@@ -174,7 +174,7 @@ enforce different levels of service (free or paid):
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // use 'sliding_window' if you prefer that policy
@@ -222,6 +222,7 @@ the number of requests to the API::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\HttpKernel\Exception\TooManyRequestsHttpException;
     use Symfony\Component\RateLimiter\RateLimiterFactory;
 
@@ -229,7 +230,7 @@ the number of requests to the API::
     {
         // if you're using service autowiring, the variable name must be:
         // "rate limiter name" (in camelCase) + "Limiter" suffix
-        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter)
+        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter): Response
         {
             // create a limiter based on a unique identifier of the client
             // (e.g. the client's IP address, a username/email, an API key, etc.)
@@ -271,11 +272,12 @@ using the ``reserve()`` method::
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\RateLimiter\RateLimiterFactory;
 
     class ApiController extends AbstractController
     {
-        public function registerUser(Request $request, RateLimiterFactory $authenticatedApiLimiter)
+        public function registerUser(Request $request, RateLimiterFactory $authenticatedApiLimiter): Response
         {
             $apiKey = $request->headers->get('apikey');
             $limiter = $authenticatedApiLimiter->create($apiKey);
@@ -334,7 +336,7 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
 
     class ApiController extends AbstractController
     {
-        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter)
+        public function index(Request $request, RateLimiterFactory $anonymousApiLimiter): Response
         {
             $limiter = $anonymousApiLimiter->create($request->getClientIp());
             $limit = $limiter->consume();
@@ -415,7 +417,7 @@ You can use the ``cache_pool`` option to override the cache used by a specific l
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // ...
@@ -501,7 +503,7 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
         // config/packages/rate_limiter.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->rateLimiter()
                 ->limiter('anonymous_api')
                     // ...

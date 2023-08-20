@@ -244,7 +244,7 @@ Consider the following routing configuration:
         use App\Controller\BlogController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('blog_index', '/')
                 ->controller([BlogController::class, 'index'])
             ;
@@ -438,7 +438,7 @@ inside the main Twig configuration file:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->global('ga_tracking')->value('UA-xxxxx-x');
@@ -497,7 +497,7 @@ in container parameters <service-container-parameters>`:
         use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->global('uuid')->value(service('App\Generator\UuidGenerator'));
@@ -586,7 +586,7 @@ to define the template to render::
     class ProductController extends AbstractController
     {
         #[Template('product/index.html.twig')]
-        public function index()
+        public function index(): array
         {
             // ...
 
@@ -624,7 +624,7 @@ the :class:`Twig\\Environment` class::
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // ...
 
@@ -715,7 +715,7 @@ provided by Symfony:
         use Symfony\Bundle\FrameworkBundle\Controller\TemplateController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('acme_privacy', '/privacy')
                 ->controller(TemplateController::class)
                 ->defaults([
@@ -1024,7 +1024,7 @@ template fragments. Configure that special URL in the ``fragments`` option:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->fragments()->path('/_fragment');
         };
@@ -1097,7 +1097,7 @@ default content rendering some template:
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework->fragments()
                 ->hincludeDefaultTemplate('hinclude.html.twig')
@@ -1335,7 +1335,7 @@ the ``value`` is the Twig namespace, which is explained later:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             // directories are relative to the project root dir (but you
@@ -1391,7 +1391,7 @@ configuration to define a namespace for each template directory:
         // config/packages/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             // ...
 
             $twig->path('email/default/templates', 'email');
@@ -1463,14 +1463,14 @@ Create a class that extends ``AbstractExtension`` and fill in the logic::
 
     class AppExtension extends AbstractExtension
     {
-        public function getFilters()
+        public function getFilters(): array
         {
             return [
                 new TwigFilter('price', [$this, 'formatPrice']),
             ];
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;
@@ -1490,14 +1490,14 @@ If you want to create a function instead of a filter, define the
 
     class AppExtension extends AbstractExtension
     {
-        public function getFunctions()
+        public function getFunctions(): array
         {
             return [
                 new TwigFunction('area', [$this, 'calculateArea']),
             ];
         }
 
-        public function calculateArea(int $width, int $length)
+        public function calculateArea(int $width, int $length): int
         {
             return $width * $length;
         }
@@ -1555,7 +1555,7 @@ callable defined in ``getFilters()``::
 
     class AppExtension extends AbstractExtension
     {
-        public function getFilters()
+        public function getFilters(): array
         {
             return [
                 // the logic of this filter is now implemented in a different class
@@ -1581,7 +1581,7 @@ previous ``formatPrice()`` method::
             // extensions, you'll need to inject services using this constructor
         }
 
-        public function formatPrice($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
+        public function formatPrice(float $number, int $decimals = 0, string $decPoint = '.', string $thousandsSep = ','): string
         {
             $price = number_format($number, $decimals, $decPoint, $thousandsSep);
             $price = '$'.$price;

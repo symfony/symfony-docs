@@ -122,7 +122,7 @@ follows:
         use App\Entity\BlogPost;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             $blogPublishing
                 ->type('workflow') // or 'state_machine'
@@ -175,17 +175,17 @@ The configured property will be used via its implemented getter/setter methods b
     class BlogPost
     {
         // the configured marking store property must be declared
-        private $currentPlace;
-        private $title;
-        private $content;
+        private string $currentPlace;
+        private string $title;
+        private string $content;
 
         // getter/setter methods must exist for property access by the marking store
-        public function getCurrentPlace()
+        public function getCurrentPlace(): string
         {
             return $this->currentPlace;
         }
 
-        public function setCurrentPlace($currentPlace, $context = [])
+        public function setCurrentPlace($currentPlace, $context = []): void
         {
             $this->currentPlace = $currentPlace;
         }
@@ -261,7 +261,7 @@ machine type, use ``camelCased workflow name + StateMachine``::
         ) {
         }
 
-        public function toReview(BlogPost $post)
+        public function toReview(BlogPost $post): void
         {
             // Update the currentState on the post
             try {
@@ -451,7 +451,7 @@ workflow leaves a place::
         ) {
         }
 
-        public function onLeave(Event $event)
+        public function onLeave(Event $event): void
         {
             $this->logger->alert(sprintf(
                 'Blog post (id: "%s") performed transition "%s" from "%s" to "%s"',
@@ -462,7 +462,7 @@ workflow leaves a place::
             ));
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 'workflow.blog_publishing.leave' => 'onLeave',
@@ -505,7 +505,7 @@ missing a title::
 
     class BlogPostReviewSubscriber implements EventSubscriberInterface
     {
-        public function guardReview(GuardEvent $event)
+        public function guardReview(GuardEvent $event): void
         {
             /** @var BlogPost $post */
             $post = $event->getSubject();
@@ -516,7 +516,7 @@ missing a title::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 'workflow.blog_publishing.guard.to_review' => ['guardReview'],
@@ -578,7 +578,7 @@ to :ref:`Guard events <workflow-usage-guard-events>`, which are always fired:
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
 
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
@@ -752,7 +752,7 @@ transition. The value of this option is any valid expression created with the
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             // ... previous configuration
 
@@ -797,7 +797,7 @@ place::
 
     class BlogPostPublishSubscriber implements EventSubscriberInterface
     {
-        public function guardPublish(GuardEvent $event)
+        public function guardPublish(GuardEvent $event): void
         {
             $eventTransition = $event->getTransition();
             $hourLimit = $event->getMetadata('hour_limit', $eventTransition);
@@ -812,7 +812,7 @@ place::
             $event->addTransitionBlocker(new TransitionBlocker($explanation , '0'));
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return [
                 'workflow.blog_publishing.guard.publish' => ['guardPublish'],
@@ -963,7 +963,7 @@ be only the title of the workflow or very complex objects:
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $blogPublishing = $framework->workflows()->workflows('blog_publishing');
             // ... previous configuration
 
@@ -1006,7 +1006,7 @@ Then you can access this metadata in your controller as follows::
     use Symfony\Component\Workflow\WorkflowInterface;
     // ...
 
-    public function myAction(WorkflowInterface $blogPublishingWorkflow, BlogPost $post)
+    public function myAction(WorkflowInterface $blogPublishingWorkflow, BlogPost $post): Response
     {
         $title = $blogPublishingWorkflow
             ->getMetadataStore()
@@ -1042,7 +1042,7 @@ In a :ref:`flash message <flash-messages>` in your controller::
 
     // $transition = ...; (an instance of Transition)
 
-    // $workflow is a Workflow instance retrieved from the Registry or injected directly (see above)
+    // $workflow is an injected Workflow instance
     $title = $workflow->getMetadataStore()->getMetadata('title', $transition);
     $this->addFlash('info', "You have successfully applied the transition with title: '$title'");
 

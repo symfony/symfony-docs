@@ -17,7 +17,7 @@ example::
 
     class MessageGenerator
     {
-        private $logger;
+        private LoggerInterface $logger;
 
         public function setLogger(LoggerInterface $logger): void
         {
@@ -66,7 +66,7 @@ To configure the container to call the ``setLogger`` method, use the ``calls`` k
 
         use App\Service\MessageGenerator;
 
-        return function(ContainerConfigurator $containerConfigurator) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             $services->set(MessageGenerator::class)
@@ -84,7 +84,7 @@ instead of mutating the object they were called on::
 
     class MessageGenerator
     {
-        private $logger;
+        private LoggerInterface $logger;
 
         public function withLogger(LoggerInterface $logger): self
         {
@@ -145,11 +145,8 @@ The configuration to tell the container it should do so would be like:
     If autowire is enabled, you can also use attributes; with the previous
     example it would be::
 
-        /**
-         * @return static
-         */
         #[Required]
-        public function withLogger(LoggerInterface $logger)
+        public function withLogger(LoggerInterface $logger): static
         {
             $new = clone $this;
             $new->logger = $logger;
@@ -157,8 +154,7 @@ The configuration to tell the container it should do so would be like:
             return $new;
         }
 
-    You can also leverage the PHP 8 ``static`` return type instead of the
-    ``@return static`` annotation. If you don't want a method with a
-    PHP 8 ``static`` return type and a ``#[Required]`` attribute to behave as
-    a wither, you can add a ``@return $this`` annotation to disable the
-    *returns clone* feature.
+    If you don't want a method with a ``static`` return type and
+    a ``#[Required]`` attribute to behave as a wither, you can
+    add a ``@return $this`` annotation to disable the *returns clone*
+    feature.

@@ -109,7 +109,9 @@ The following block shows all possible configuration keys:
     version).
 
     If you are running a MariaDB database, you must prefix the ``server_version``
-    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.4.14``).
+    value with ``mariadb-`` (e.g. ``server_version: mariadb-10.4.14``). This will
+    change in Doctrine DBAL 4.x, where you must define the version as output by
+    the server (e.g. ``10.4.14-MariaDB``).
 
     Always wrap the server version number with quotes to parse it as a string
     instead of a float number. Otherwise, the floating-point representation
@@ -155,7 +157,7 @@ you can access it using the ``getConnection()`` method and the name of the conne
 
     class SomeController
     {
-        public function someMethod(ManagerRegistry $doctrine)
+        public function someMethod(ManagerRegistry $doctrine): void
         {
             $connection = $doctrine->getConnection('customer');
             $result = $connection->fetchAll('SELECT name FROM customer');
@@ -299,6 +301,8 @@ This option is ``false`` by default and it's considered a legacy option. It was
 only useful in previous Symfony versions, when it was recommended to use bundles
 to organize the application code.
 
+.. _doctrine_auto-mapping:
+
 Custom Mapping Entities in a Bundle
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -353,7 +357,7 @@ directory instead:
 
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $emDefault = $doctrine->orm()->entityManager('default');
 
             $emDefault->autoMapping(true);
@@ -413,7 +417,7 @@ namespace in the ``src/Entity`` directory and gives them an ``App`` alias
 
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $emDefault = $doctrine->orm()->entityManager('default');
 
             $emDefault->autoMapping(true);

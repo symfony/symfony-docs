@@ -139,7 +139,7 @@ If you stored a ``DATABASE_PASSWORD`` secret, you can reference it by:
         // config/packages/doctrine.php
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             $doctrine->dbal()
                 ->connection('default')
                     ->password(env('DATABASE_PASSWORD'))
@@ -309,7 +309,7 @@ The secrets system is enabled by default and some of its behavior can be configu
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->secrets()
                 // ->vaultDirectory('%kernel.project_dir%/config/secrets/%kernel.environment%')
                 // ->localDotenvFile('%kernel.project_dir%/.env.%kernel.environment%.local')

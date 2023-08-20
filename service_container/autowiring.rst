@@ -102,8 +102,8 @@ both services:
     .. code-block:: php
 
         // config/services.php
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services()
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services()
                 ->defaults()
                     ->autowire()
                     ->autoconfigure()
@@ -239,7 +239,7 @@ adding a service alias:
 
         use App\Util\Rot13Transformer;
 
-        return function(ContainerConfigurator $containerConfigurator) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             // the id is not a class, so it won't be used for autowiring
@@ -347,7 +347,7 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
         use App\Util\Rot13Transformer;
         use App\Util\TransformerInterface;
 
-        return function(ContainerConfigurator $containerConfigurator) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             $services->set(Rot13Transformer::class);
@@ -416,6 +416,8 @@ from the type to the correct service id (see :ref:`autowiring-interface-alias`).
 Additionally, you can define several named autowiring aliases if you want to use
 one implementation in some cases, and another implementation in some
 other cases.
+
+.. _autowiring-alias:
 
 For instance, you may want to use the ``Rot13Transformer``
 implementation by default when the ``TransformerInterface`` interface is
@@ -512,7 +514,7 @@ the injection::
         use App\Util\TransformerInterface;
         use App\Util\UppercaseTransformer;
 
-        return function(ContainerConfigurator $containerConfigurator) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             $services->set(Rot13Transformer::class)->autowire();
@@ -643,6 +645,104 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
 
     The ``param`` and ``env`` arguments were introduced in Symfony 6.3.
 
+.. _autowiring_closures:
+
+Generate Closures With Autowiring
+---------------------------------
+
+A **service closure** is an anonymous function that returns a service. This type
+of instanciation is handy when you are dealing with lazy-loading.
+
+Automatically creating a closure encapsulating the service instanciation can be
+done with the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireServiceClosure`
+attribute::
+
+    // src/Service/Remote/MessageFormatter.php
+    namespace App\Service\Remote;
+
+    use Symfony\Component\DependencyInjection\Attribute\AsAlias;
+
+    #[AsAlias('third_party.remote_message_formatter')]
+    class MessageFormatter
+    {
+        public function __construct()
+        {
+            // ...
+        }
+
+        public function format(string $message): string
+        {
+            // ...
+        }
+    }
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use App\Service\Remote\MessageFormatter;
+    use Symfony\Component\DependencyInjection\Attribute\AutowireServiceClosure;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[AutowireServiceClosure('third_party.remote_message_formatter')]
+            \Closure $messageFormatterResolver
+        ) {
+        }
+
+        public function generate(string $message): void
+        {
+            $formattedMessage = ($this->messageFormatterResolver)()->format($message);
+
+            // ...
+        }
+    }
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireServiceClosure`
+    attribute was introduced in Symfony 6.3.
+
+It is common that a service accepts a closure with a specific signature.
+In this case, you can use the
+:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable` attribute
+to generate a closure with the same signature as a specific method of a service. When
+this closure is called, it will pass all its arguments to the underlying service
+function::
+
+    // src/Service/MessageGenerator.php
+    namespace App\Service;
+
+    use Symfony\Component\DependencyInjection\Attribute\AutowireCallable;
+
+    class MessageGenerator
+    {
+        public function __construct(
+            #[AutowireCallable(service: 'third_party.remote_message_formatter', method: 'format')]
+            \Closure $formatCallable
+        ) {
+        }
+
+        public function generate(string $message): void
+        {
+            $formattedMessage = ($this->formatCallable)($message);
+
+            // ...
+        }
+    }
+
+Finally, you can pass the ``lazy: true`` option to the
+:class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable`
+attribute. By doing so, the callable will automatically be lazy, which means
+that the encapsulated service will be instantiated **only** at the
+closure's first call.
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
+    attribute was introduced in Symfony 6.3.
+
 .. _autowiring-calls:
 
 Autowiring other Methods (e.g. Setters and Public Typed Properties)
@@ -663,7 +763,7 @@ to inject the ``logger`` service, and decide to use setter-injection:
 
         class Rot13Transformer
         {
-            private $logger;
+            private LoggerInterface $logger;
 
             #[Required]
             public function setLogger(LoggerInterface $logger): void
@@ -699,7 +799,7 @@ typed properties:
             #[Required]
             public LoggerInterface $logger;
 
-            public function transform($value)
+            public function transform($value): void
             {
                 $this->logger->info('Transforming '.$value);
                 // ...

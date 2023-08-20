@@ -21,7 +21,7 @@ PSR-3 compliant logger::
         ) {
         }
 
-        public function doStuff()
+        public function doStuff(): void
         {
             $this->logger->info('I love Tony Vairelles\' hairdresser.');
         }
@@ -44,12 +44,14 @@ You can rely on the logger to use this dependency inside a command::
     )]
     class MyCommand extends Command
     {
-        protected function execute(InputInterface $input, OutputInterface $output)
+        protected function execute(InputInterface $input, OutputInterface $output): int
         {
             $logger = new ConsoleLogger($output);
 
             $myDependency = new MyDependency($logger);
             $myDependency->doStuff();
+
+            // ...
         }
     }
 

@@ -163,19 +163,8 @@ most natural in your hosting environment.
 
         $ composer dump-env prod --empty
 
-    If ``composer`` is not installed on your server, you can generate this optimized
-    file with a command provided by Symfony itself, which you must register in
-    your application before using it:
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
-
-    .. code-block:: terminal
-
-        $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
+    If you don't have Composer installed on the production server, use instead
+    :ref:`the dotenv:dump Symfony command <configuration-env-var-in-prod>`.
 
 C) Install/Update your Vendors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -222,9 +211,10 @@ setup:
 * Add/edit CRON jobs
 * Restarting your workers
 * :ref:`Building and minifying your assets <how-do-i-deploy-my-encore-assets>` with Webpack Encore
+* :ref:`Compile your assets <asset-mapper-deployment>` if you're using the AssetMapper component
 * Pushing assets to a CDN
 * On a shared hosting platform using the Apache web server, you may need to
-  install the :ref:`symfony/apache-pack package <web-server-apache-mod-php>`
+  install the `symfony/apache-pack`_ package
 * etc.
 
 Application Lifecycle: Continuous Integration, QA, etc.
@@ -279,3 +269,4 @@ Learn More
 .. _`Git Tagging`: https://git-scm.com/book/en/v2/Git-Basics-Tagging
 .. _`Platform.sh`: https://symfony.com/cloud
 .. _`Symfony CLI`: https://symfony.com/download
+.. _`symfony/apache-pack`: https://packagist.org/packages/symfony/apache-pack

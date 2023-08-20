@@ -34,7 +34,7 @@ the option. Symfony will then pass the form when calling it::
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'validation_groups' => function (FormInterface $form) {
+            'validation_groups' => function (FormInterface $form): array {
                 $entity = $form->getData();
 
                 return $entity->isUser() ? ['User'] : ['Company'];

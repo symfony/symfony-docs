@@ -62,7 +62,7 @@ under the firewall. You must configure a ``check_route`` and
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -93,7 +93,7 @@ intercept requests to this route:
         class SecurityController extends AbstractController
         {
             #[Route('/login_check', name: 'login_check')]
-            public function check()
+            public function check(): never
             {
                 throw new \LogicException('This code should never be reached');
             }
@@ -126,7 +126,7 @@ intercept requests to this route:
         use App\Controller\DefaultController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             // ...
             $routes->add('login_check', '/login_check');
         };
@@ -149,13 +149,14 @@ this interface::
     use App\Repository\UserRepository;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     use Symfony\Component\Security\Http\LoginLink\LoginLinkHandlerInterface;
 
     class SecurityController extends AbstractController
     {
         #[Route('/login', name: 'login')]
-        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
+        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request): Response
         {
             // check if login form is submitted
             if ($request->isMethod('POST')) {
@@ -226,7 +227,7 @@ number::
     class SecurityController extends AbstractController
     {
         #[Route('/login', name: 'login')]
-        public function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request)
+        public function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request): Response
         {
             if ($request->isMethod('POST')) {
                 $email = $request->request->get('email');
@@ -364,7 +365,7 @@ seconds). You can customize this using the ``lifetime`` option:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -449,7 +450,7 @@ You can add more properties to the ``hash`` by using the
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -521,7 +522,7 @@ cache. Enable this support by setting the ``max_uses`` option:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -594,7 +595,7 @@ the authenticator only handle HTTP POST methods:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -615,7 +616,7 @@ user create this POST request (e.g. by clicking a button)::
     class SecurityController extends AbstractController
     {
         #[Route('/login_check', name: 'login_check')]
-        public function check(Request $request)
+        public function check(Request $request): Response
         {
             // get the login link query parameters
             $expires = $request->query->get('expires');
@@ -740,7 +741,7 @@ Then, configure this service ID as the ``success_handler``:
         use App\Security\Authentication\AuthenticationSuccessHandler;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             $security->firewall('main')
                 ->loginLink()
                     ->checkRoute('login_check')
@@ -773,7 +774,7 @@ features such as the locale used to generate the link::
     class SecurityController extends AbstractController
     {
         #[Route('/login', name: 'login')]
-        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request)
+        public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, Request $request): Response
         {
             // check if login form is submitted
             if ($request->isMethod('POST')) {

@@ -105,7 +105,7 @@ is the service id of your user checker:
         use App\Security\UserChecker;
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 ->pattern('^/')
@@ -244,7 +244,7 @@ Once your checker services are tagged, next you will need configure your firewal
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('api')
                 ->pattern('^/api')

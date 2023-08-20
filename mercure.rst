@@ -628,7 +628,7 @@ You can instead make use of the ``MockHub`` class::
 
     class MessageControllerTest extends TestCase
     {
-        public function testPublishing()
+        public function testPublishing(): void
         {
             $hub = new MockHub('https://internal/.well-known/mercure', new StaticTokenProvider('foo'), function(Update $update): string {
                 // $this->assertTrue($update->isPrivate());

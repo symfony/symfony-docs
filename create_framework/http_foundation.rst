@@ -61,7 +61,7 @@ unit test for the above code::
 
     class IndexTest extends TestCase
     {
-        public function testHello()
+        public function testHello(): void
         {
             $_GET['name'] = 'Fabien';
 

@@ -28,12 +28,23 @@ the ``list`` command to view all available commands in the application:
       cache:clear                                Clear the cache
     ...
 
+.. note::
+
+    ``list`` is the default command, so running ``php bin/console`` is the same.
+
 If you find the command you need, you can run it with the ``--help`` option
 to view the command's documentation:
 
 .. code-block:: terminal
 
     $ php bin/console assets:install --help
+
+.. note::
+
+    ``--help`` is one of the built-in global options from the Console component,
+    which are available for all commands, including those you can create.
+    To learn more about them, you can read
+    :ref:`this section <console-global-options>`.
 
 APP_ENV & APP_DEBUG
 ~~~~~~~~~~~~~~~~~~~
@@ -171,6 +182,12 @@ You can optionally define a description, help message and the
     classes, but it won't show any description for commands that use the
     ``setDescription()`` method instead of the static property.
 
+.. deprecated:: 6.1
+
+    The static property ``$defaultDescription`` was deprecated in Symfony 6.1.
+    Instead, use the ``#[AsCommand]`` attribute to define the optional command
+    description.
+
 The ``configure()`` method is called automatically at the end of the command
 constructor. If your command defines its own constructor, set the properties
 first and then call to the parent constructor, to make those properties
@@ -208,8 +225,7 @@ available in the ``configure()`` method::
 Registering the Command
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In PHP 8 and newer versions, you can register the command by adding the
-``AsCommand`` attribute to it::
+You can register the command by adding the ``AsCommand`` attribute to it::
 
     // src/Command/CreateUserCommand.php
     namespace App\Command;
@@ -234,6 +250,11 @@ If you can't use PHP attributes, register the command as a service and
 :doc:`tag it </service_container/tags>` with the ``console.command`` tag. If you're using the
 :ref:`default services.yaml configuration <service-container-services-load-example>`,
 this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+
+.. deprecated:: 6.1
+
+    The static property ``$defaultName`` was deprecated in Symfony 6.1.
+    Define your command name with the ``#[AsCommand]`` attribute instead.
 
 Running the Command
 ~~~~~~~~~~~~~~~~~~~
@@ -452,8 +473,10 @@ command:
     This method is executed after ``initialize()`` and before ``execute()``.
     Its purpose is to check if some of the options/arguments are missing
     and interactively ask the user for those values. This is the last place
-    where you can ask for missing options/arguments. After this command,
-    missing options/arguments will result in an error.
+    where you can ask for missing required options/arguments. This method is
+    called before validating the input.
+    Note that it will not be called when the command is run without interaction
+    (e.g. when passing the ``--no-interaction`` global option flag).
 
 :method:`Symfony\\Component\\Console\\Command\\Command::execute` *(required)*
     This method is executed after ``interact()`` and ``initialize()``.
@@ -479,7 +502,7 @@ console::
 
     class CreateUserCommandTest extends KernelTestCase
     {
-        public function testExecute()
+        public function testExecute(): void
         {
             $kernel = self::bootKernel();
             $application = new Application($kernel);
@@ -569,6 +592,7 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/questionhelper`: interactively ask the user for information
 * :doc:`/components/console/helpers/formatterhelper`: customize the output colorization
 * :doc:`/components/console/helpers/progressbar`: shows a progress bar
+* :doc:`/components/console/helpers/progressindicator`: shows a progress indicator
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
 * :doc:`/components/console/helpers/debug_formatter`: provides functions to
   output debug information when running an external program

@@ -50,7 +50,7 @@ handler is registered. The ``HandleTrait`` can be used in any class that has a
         ) {
         }
 
-        public function __invoke()
+        public function __invoke(): void
         {
             $result = $this->query(new ListItemsQuery(/* ... */));
 
@@ -90,7 +90,7 @@ wherever you need a query bus behavior instead of the ``MessageBusInterface``::
          *
          * @return mixed The handler returned value
          */
-        public function query($query)
+        public function query($query): mixed
         {
             return $this->handle($query);
         }

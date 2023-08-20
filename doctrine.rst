@@ -282,7 +282,7 @@ methods:
           // ...
 
     +     #[ORM\Column(type: Types::TEXT)]
-    +     private $description;
+    +     private string $description;
 
           // getDescription() & setDescription() were also added
       }
@@ -395,13 +395,13 @@ Take a look at the previous example in more detail:
   the controller method. This object is responsible for saving objects to, and
   fetching objects from, the database.
 
-* **lines 17-20** In this section, you instantiate and work with the ``$product``
+* **lines 15-18** In this section, you instantiate and work with the ``$product``
   object like any other normal PHP object.
 
-* **line 23** The ``persist($product)`` call tells Doctrine to "manage" the
+* **line 21** The ``persist($product)`` call tells Doctrine to "manage" the
   ``$product`` object. This does **not** cause a query to be made to the database.
 
-* **line 26** When the ``flush()`` method is called, Doctrine looks through
+* **line 24** When the ``flush()`` method is called, Doctrine looks through
   all of the objects that it's managing to see if they need to be persisted
   to the database. In this example, the ``$product`` object's data doesn't
   exist in the database, so the entity manager executes an ``INSERT`` query,
@@ -420,8 +420,12 @@ is smart enough to know if it should INSERT or UPDATE your entity.
 Validating Objects
 ------------------
 
-:doc:`The Symfony validator </validation>` reuses Doctrine metadata to perform
-some basic validation tasks::
+:doc:`The Symfony validator </validation>` can reuse Doctrine metadata to perform
+some basic validation tasks. First, add or configure the
+:ref:`auto_mapping option <reference-validation-auto-mapping>` to define which
+entities should be introspected by Symfony to add automatic validation constraints.
+
+Consider the following controller code::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -455,9 +459,11 @@ some basic validation tasks::
     }
 
 Although the ``Product`` entity doesn't define any explicit
-:doc:`validation configuration </validation>`, Symfony introspects the Doctrine
-mapping configuration to infer some validation rules. For example, given that
-the ``name`` property can't be ``null`` in the database, a
+:doc:`validation configuration </validation>`, if the ``auto_mapping`` option
+includes it in the list of entities to introspect, Symfony will infer some
+validation rules for it and will apply them.
+
+For example, given that the ``name`` property can't be ``null`` in the database, a
 :doc:`NotNull constraint </reference/constraints/NotNull>` is added automatically
 to the property (if it doesn't contain that constraint already).
 
@@ -784,13 +790,13 @@ control behavior:
     If true, then when ``findOneBy()`` is used, any values that are
     ``null`` will not be used for the query.
 
-``entityManager``
+``objectManager``
     By default, the ``EntityValueResolver`` uses the *default*
-    entity manager, but you can configure this::
+    object manager, but you can configure this::
 
         #[Route('/product/{id}')]
         public function show(
-            #[MapEntity(entityManager: ['foo'])]
+            #[MapEntity(objectManager: 'foo')]
             Product $product
         ): Response {
         }
@@ -813,6 +819,7 @@ with any PHP model::
 
     use App\Entity\Product;
     use App\Repository\ProductRepository;
+    use Doctrine\ORM\EntityManagerInterface;
     use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Routing\Annotation\Route;
     // ...
@@ -997,8 +1004,8 @@ In addition, you can query directly with SQL if you need to::
                 WHERE p.price > :price
                 ORDER BY p.price ASC
                 ';
-            $stmt = $conn->prepare($sql);
-            $resultSet = $stmt->executeQuery(['price' => $price]);
+
+            $resultSet = $conn->executeQuery($sql, ['price' => $price]);
 
             // returns an array of arrays (i.e. a raw data set)
             return $resultSet->fetchAllAssociative();

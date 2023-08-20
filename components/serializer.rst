@@ -73,7 +73,7 @@ exists in your project::
         private int $age;
         private string $name;
         private bool $sportsperson;
-        private ?\DateTime $createdAt;
+        private ?\DateTimeInterface $createdAt;
 
         // Getters
         public function getAge(): int
@@ -86,7 +86,7 @@ exists in your project::
             return $this->name;
         }
 
-        public function getCreatedAt()
+        public function getCreatedAt(): ?\DateTimeInterface
         {
             return $this->createdAt;
         }
@@ -113,7 +113,7 @@ exists in your project::
             $this->sportsperson = $sportsperson;
         }
 
-        public function setCreatedAt(\DateTime $createdAt = null): void
+        public function setCreatedAt(\DateTimeInterface $createdAt = null): void
         {
             $this->createdAt = $createdAt;
         }
@@ -244,16 +244,16 @@ Assume you have the following plain-old-PHP object::
 
     class MyObj
     {
-        public $foo;
+        public string $foo;
 
-        private $bar;
+        private string $bar;
 
-        public function getBar()
+        public function getBar(): string
         {
             return $this->bar;
         }
 
-        public function setBar($bar)
+        public function setBar($bar): string
         {
             return $this->bar = $bar;
         }
@@ -303,10 +303,10 @@ Then, create your groups definition:
         class MyObj
         {
             #[Groups(['group1', 'group2'])]
-            public $foo;
+            public string $foo;
 
             #[Groups(['group4'])]
-            public $anotherProperty;
+            public string $anotherProperty;
 
             #[Groups(['group3'])]
             public function getBar() // is* methods are also supported
@@ -398,15 +398,15 @@ It is also possible to serialize only a set of specific attributes::
 
     class User
     {
-        public $familyName;
-        public $givenName;
-        public $company;
+        public string $familyName;
+        public string $givenName;
+        public string $company;
     }
 
     class Company
     {
-        public $name;
-        public $address;
+        public string $name;
+        public string $address;
     }
 
     $company = new Company();
@@ -449,10 +449,10 @@ Option 1: Using ``@Ignore`` Annotation
 
         class MyClass
         {
-            public $foo;
+            public string $foo;
 
             #[Ignore]
-            public $bar;
+            public string $bar;
         }
 
     .. code-block:: yaml
@@ -529,8 +529,8 @@ Given you have the following object::
 
     class Company
     {
-        public $name;
-        public $address;
+        public string $name;
+        public string $address;
     }
 
 And in the serialized form, all attributes must be prefixed by ``org_`` like
@@ -607,11 +607,11 @@ processes::
     class Person
     {
         public function __construct(
-            private $firstName,
+            private string $firstName,
         ) {
         }
 
-        public function getFirstName()
+        public function getFirstName(): string
         {
             return $this->firstName;
         }
@@ -663,7 +663,7 @@ defines a ``Person`` entity with a ``firstName`` property:
         {
             public function __construct(
                 #[SerializedName('customer_name')]
-                private $firstName,
+                private string $firstName,
             ) {
             }
 
@@ -723,7 +723,7 @@ When serializing, you can set a callback to format a specific object property::
     $encoder = new JsonEncoder();
 
     // all callback parameters are optional (you can omit the ones you don't use)
-    $dateCallback = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+    $dateCallback = function (object $innerObject, object $outerObject, string $attributeName, string $format = null, array $context = []): string {
         return $innerObject instanceof \DateTime ? $innerObject->format(\DateTime::ISO8601) : '';
     };
 
@@ -932,8 +932,8 @@ faster alternative to the
 
         use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->services()
+        return static function (ContainerConfigurator $container): void {
+            $container->services()
                 // ...
                 ->set('get_set_method_normalizer', GetSetMethodNormalizer::class)
                     ->tag('serializer.normalizer')
@@ -1237,8 +1237,8 @@ You can change this behavior by setting the ``AbstractObjectNormalizer::SKIP_NUL
 to ``true``::
 
     $dummy = new class {
-        public $foo;
-        public $bar = 'notNull';
+        public ?string $foo = null;
+        public string $bar = 'notNull';
     };
 
     $normalizer = new ObjectNormalizer();
@@ -1313,25 +1313,25 @@ Circular references are common when dealing with entity relations::
 
     class Organization
     {
-        private $name;
-        private $members;
+        private string $name;
+        private array $members;
 
-        public function setName($name)
+        public function setName($name): void
         {
             $this->name = $name;
         }
 
-        public function getName()
+        public function getName(): string
         {
             return $this->name;
         }
 
-        public function setMembers(array $members)
+        public function setMembers(array $members): void
         {
             $this->members = $members;
         }
 
-        public function getMembers()
+        public function getMembers(): array
         {
             return $this->members;
         }
@@ -1339,25 +1339,25 @@ Circular references are common when dealing with entity relations::
 
     class Member
     {
-        private $name;
-        private $organization;
+        private string $name;
+        private Organization $organization;
 
-        public function setName($name)
+        public function setName(string $name): void
         {
             $this->name = $name;
         }
 
-        public function getName()
+        public function getName(): string
         {
             return $this->name;
         }
 
-        public function setOrganization(Organization $organization)
+        public function setOrganization(Organization $organization): void
         {
             $this->organization = $organization;
         }
 
-        public function getOrganization()
+        public function getOrganization(): Organization
         {
             return $this->organization;
         }
@@ -1389,7 +1389,7 @@ having unique identifiers::
 
     $encoder = new JsonEncoder();
     $defaultContext = [
-        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+        AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function (object $object, string $format, array $context): string {
             return $object->getName();
         },
     ];
@@ -1412,12 +1412,12 @@ structure::
 
     class MyObj
     {
-        public $foo;
+        public string $foo;
 
         /**
          * @var self
          */
-        public $child;
+        public MyObj $child;
     }
 
     $level1 = new MyObj();
@@ -1445,7 +1445,7 @@ Here, we set it to 2 for the ``$child`` property:
         class MyObj
         {
             #[MaxDepth(2)]
-            public $child;
+            public MyObj $child;
 
             // ...
         }
@@ -1507,10 +1507,10 @@ having unique identifiers::
 
     class Foo
     {
-        public $id;
+        public int $id;
 
         #[MaxDepth(1)]
-        public $child;
+        public MyObj $child;
     }
 
     $level1 = new Foo();
@@ -1527,7 +1527,7 @@ having unique identifiers::
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
     // all callback parameters are optional (you can omit the ones you don't use)
-    $maxDepthHandler = function ($innerObject, $outerObject, string $attributeName, string $format = null, array $context = []) {
+    $maxDepthHandler = function (object $innerObject, object $outerObject, string $attributeName, string $format = null, array $context = []): string {
         return '/foos/'.$innerObject->id;
     };
 
@@ -1606,8 +1606,8 @@ context option::
     class MyObj
     {
         public function __construct(
-            private $foo,
-            private $bar,
+            private string $foo,
+            private string $bar,
         ) {
         }
     }
@@ -1646,34 +1646,34 @@ parameter of the ``ObjectNormalizer``::
 
     class ObjectOuter
     {
-        private $inner;
-        private $date;
+        private ObjectInner $inner;
+        private \DateTimeInterface $date;
 
-        public function getInner()
+        public function getInner(): ObjectInner
         {
             return $this->inner;
         }
 
-        public function setInner(ObjectInner $inner)
+        public function setInner(ObjectInner $inner): void
         {
             $this->inner = $inner;
         }
 
-        public function setDate(\DateTimeInterface $date)
-        {
-            $this->date = $date;
-        }
-
-        public function getDate()
+        public function getDate(): \DateTimeInterface
         {
             return $this->date;
+        }
+
+        public function setDate(\DateTimeInterface $date): void
+        {
+            $this->date = $date;
         }
     }
 
     class ObjectInner
     {
-        public $foo;
-        public $bar;
+        public string $foo;
+        public string $bar;
     }
 
     $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());

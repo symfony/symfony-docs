@@ -33,7 +33,7 @@ value is ``0000-00-00``. To do that you'll first have to create your normalizer:
     {
         use DenormalizerAwareTrait;
 
-        public function denormalize($data, string $type, string $format = null, array $context = [])
+        public function denormalize($data, string $type, string $format = null, array $context = []): mixed
         {
             if ('0000-00-00' === $data) {
                 return null;
@@ -44,7 +44,7 @@ value is ``0000-00-00``. To do that you'll first have to create your normalizer:
             return $this->denormalizer->denormalize($data, $type, $format, $context);
         }
 
-        public function supportsDenormalization($data, string $type, string $format = null, array $context = [])
+        public function supportsDenormalization($data, string $type, string $format = null, array $context = []): bool
         {
             return true === ($context['zero_datetime_to_null'] ?? false)
                 && is_a($type, \DateTimeInterface::class, true);

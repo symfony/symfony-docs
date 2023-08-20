@@ -418,7 +418,7 @@ times (order matters)::
         /**
          * @group legacy
          */
-        public function testDeprecatedCode()
+        public function testDeprecatedCode(): void
         {
             // test some code that triggers the following deprecation:
             // trigger_deprecation('vendor-name/package-name', '5.1', 'This "Foo" method is deprecated.');
@@ -504,7 +504,7 @@ If you have this kind of time-related tests::
 
     class MyTest extends TestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             $stopwatch = new Stopwatch();
 
@@ -530,7 +530,7 @@ Clock Mocking
 
 The :class:`Symfony\\Bridge\\PhpUnit\\ClockMock` class provided by this bridge
 allows you to mock the PHP's built-in time functions ``time()``, ``microtime()``,
-``sleep()``, ``usleep()``, ``gmdate()``, and ``hrtime()`. Additionally the
+``sleep()``, ``usleep()``, ``gmdate()``, and ``hrtime()``. Additionally the
 function ``date()`` is mocked so it uses the mocked time if no timestamp is
 specified.
 
@@ -575,7 +575,7 @@ test::
      */
     class MyTest extends TestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             $stopwatch = new Stopwatch();
 
@@ -603,7 +603,7 @@ different class, do it explicitly using ``ClockMock::register(MyClass::class)``:
 
     class MyClass
     {
-        public function getTimeInHours()
+        public function getTimeInHours(): void
         {
             return time() / 3600;
         }
@@ -621,7 +621,7 @@ different class, do it explicitly using ``ClockMock::register(MyClass::class)``:
      */
     class MyTest extends TestCase
     {
-        public function testGetTimeInHours()
+        public function testGetTimeInHours(): void
         {
             ClockMock::register(MyClass::class);
 
@@ -669,7 +669,7 @@ associated to a valid host::
 
     class MyTest extends TestCase
     {
-        public function testEmail()
+        public function testEmail(): void
         {
             $validator = new DomainValidator(['checkDnsRecord' => true]);
             $isValid = $validator->validate('example.com');
@@ -691,7 +691,7 @@ the data you expect to get for the given hosts::
      */
     class DomainValidatorTest extends TestCase
     {
-        public function testEmails()
+        public function testEmails(): void
         {
             DnsMock::withMockedHosts([
                 'example.com' => [['type' => 'A', 'ip' => '1.2.3.4']],
@@ -766,7 +766,7 @@ are installed during tests) would look like::
 
     class MyClassTest extends TestCase
     {
-        public function testHello()
+        public function testHello(): void
         {
             $class = new MyClass();
             $result = $class->hello(); // "The dependency behavior."
@@ -787,7 +787,7 @@ classes, interfaces and/or traits for the code to run::
     {
         // ...
 
-        public function testHelloDefault()
+        public function testHelloDefault(): void
         {
             ClassExistsMock::register(MyClass::class);
             ClassExistsMock::withMockedClasses([DependencyClass::class => false]);
@@ -959,7 +959,7 @@ Consider the following example::
 
     class Bar
     {
-        public function barMethod()
+        public function barMethod(): string
         {
             return 'bar';
         }
@@ -972,7 +972,7 @@ Consider the following example::
         ) {
         }
 
-        public function fooMethod()
+        public function fooMethod(): string
         {
             $this->bar->barMethod();
 
@@ -982,7 +982,7 @@ Consider the following example::
 
     class FooTest extends PHPUnit\Framework\TestCase
     {
-        public function test()
+        public function test(): void
         {
             $bar = new Bar();
             $foo = new Foo($bar);
@@ -1051,13 +1051,13 @@ not find the SUT:
     </listeners>
 
 .. _`PHPUnit`: https://phpunit.de
-.. _`PHPUnit event listener`: https://phpunit.de/manual/current/en/extending-phpunit.html#extending-phpunit.PHPUnit_Framework_TestListener
+.. _`PHPUnit event listener`: https://docs.phpunit.de/en/10.0/extending-phpunit.html#phpunit-s-event-system
 .. _`ErrorHandler component`: https://github.com/symfony/error-handler
-.. _`PHPUnit's assertStringMatchesFormat()`: https://phpunit.de/manual/current/en/appendixes.assertions.html#appendixes.assertions.assertStringMatchesFormat
+.. _`PHPUnit's assertStringMatchesFormat()`: https://docs.phpunit.de/en/9.6/assertions.html#assertstringmatchesformat
 .. _`PHP error handler`: https://www.php.net/manual/en/book.errorfunc.php
-.. _`environment variable`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.php-ini-constants-variables
+.. _`environment variable`: https://docs.phpunit.de/en/9.6/configuration.html#the-env-element
 .. _`@-silencing operator`: https://www.php.net/manual/en/language.operators.errorcontrol.php
 .. _`Travis CI`: https://travis-ci.org/
-.. _`test listener`: https://phpunit.de/manual/current/en/appendixes.configuration.html#appendixes.configuration.test-listeners
-.. _`@covers`: https://phpunit.de/manual/current/en/appendixes.annotations.html#appendixes.annotations.covers
+.. _`test listener`: https://docs.phpunit.de/en/9.6/configuration.html#the-extensions-element
+.. _`@covers`: https://docs.phpunit.de/en/9.6/annotations.html#covers
 .. _`PHP namespace resolutions rules`: https://www.php.net/manual/en/language.namespaces.rules.php

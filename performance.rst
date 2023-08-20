@@ -60,7 +60,7 @@ container into a single file, which could improve performance when using
         # config/services.yaml
         parameters:
             # ...
-            container.dumper.inline_factories: true
+            .container.dumper.inline_factories: true
 
     .. code-block:: xml
 
@@ -72,7 +72,7 @@ container into a single file, which could improve performance when using
 
             <parameters>
                 <!-- ... -->
-                <parameter key="container.dumper.inline_factories">true</parameter>
+                <parameter key=".container.dumper.inline_factories">true</parameter>
             </parameters>
         </container>
 
@@ -81,9 +81,14 @@ container into a single file, which could improve performance when using
         // config/services.php
 
         // ...
-        $container->parameters()->set('container.dumper.inline_factories', true);
+        $container->parameters()->set('.container.dumper.inline_factories', true);
 
 .. _performance-use-opcache:
+
+.. tip::
+
+    The ``.`` prefix denotes a parameter that is only used during compilation of the container.
+    See :ref:`Configuration Parameters <configuration-parameters>` for more details.
 
 Use the OPcache Byte Code Cache
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -296,7 +301,7 @@ and Symfony will inject the ``debug.stopwatch`` service::
         ) {
         }
 
-        public function export()
+        public function export(): void
         {
             // the argument is the name of the "profiling event"
             $this->stopwatch->start('export-data');

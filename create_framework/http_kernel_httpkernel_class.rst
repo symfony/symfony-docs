@@ -69,7 +69,7 @@ Our code is now much more concise and surprisingly more robust and more
 powerful than ever. For instance, use the built-in ``ErrorListener`` to
 make your error management configurable::
 
-    $errorHandler = function (Symfony\Component\ErrorHandler\Exception\FlattenException $exception) {
+    $errorHandler = function (Symfony\Component\ErrorHandler\Exception\FlattenException $exception): Response {
         $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
         return new Response($msg, $exception->getStatusCode());
@@ -96,7 +96,7 @@ The error controller reads as follows::
 
     class ErrorController
     {
-        public function exception(FlattenException $exception)
+        public function exception(FlattenException $exception): Response
         {
             $msg = 'Something went wrong! ('.$exception->getMessage().')';
 
@@ -133,7 +133,7 @@ instead of a full Response object::
 
     class LeapYearController
     {
-        public function index($year)
+        public function index(int $year): string
         {
             $leapYear = new LeapYear();
             if ($leapYear->isLeapYear($year)) {
@@ -158,7 +158,7 @@ only if needed::
 
     class StringResponseListener implements EventSubscriberInterface
     {
-        public function onView(ViewEvent $event)
+        public function onView(ViewEvent $event): void
         {
             $response = $event->getControllerResult();
 
@@ -167,7 +167,7 @@ only if needed::
             }
         }
 
-        public static function getSubscribedEvents()
+        public static function getSubscribedEvents(): array
         {
             return ['kernel.view' => 'onView'];
         }

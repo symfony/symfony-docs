@@ -104,7 +104,7 @@ Use the ``framework.http_cache`` option to enable the proxy for the
         // config/packages/framework.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework, string $env) {
+        return static function (FrameworkConfig $framework, string $env): void {
             if ('prod' === $env) {
                 $framework->httpCache()->enabled(true);
             }
@@ -213,9 +213,8 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
 
         // src/Controller/BlogController.php
         use Symfony\Component\HttpFoundation\Response;
-        // ...
 
-        public function index()
+        public function index(): Response
         {
             // somehow create a Response object, like by rendering a template
             $response = $this->render('blog/index.html.twig', []);

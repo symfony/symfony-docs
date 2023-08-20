@@ -1,10 +1,8 @@
-.. _component-cache-filesystem-adapter:
-
 Filesystem Cache Adapter
 ========================
 
 This adapter offers improved application performance for those who cannot install
-tools like :ref:`APCu <apcu-adapter>` or :ref:`Redis <redis-adapter>` in their
+tools like :doc:`APCu </components/cache/adapters/apcu_adapter>` or :doc:`Redis </components/cache/adapters/redis_adapter>` in their
 environment. It stores the cache item expiration and content as regular files in
 a collection of directories on a locally mounted filesystem.
 
@@ -39,9 +37,10 @@ and cache root path as constructor parameters::
 
     The overhead of filesystem IO often makes this adapter one of the *slower*
     choices. If throughput is paramount, the in-memory adapters
-    (:ref:`Apcu <apcu-adapter>`, :ref:`Memcached <memcached-adapter>`, and
-    :ref:`Redis <redis-adapter>`) or the database adapters
-    (:ref:`PDO <pdo-doctrine-adapter>`) are recommended.
+    (:doc:`Apcu </components/cache/adapters/apcu_adapter>`, :doc:`Memcached </components/cache/adapters/memcached_adapter>`,
+    and :doc:`Redis </components/cache/adapters/redis_adapter>`) or the database adapters
+    (:doc:`Doctrine DBAL </components/cache/adapters/doctrine_dbal_adapter>`, :doc:`PDO </components/cache/adapters/pdo_adapter>`)
+    are recommended.
 
 .. note::
 

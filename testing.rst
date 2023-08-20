@@ -120,7 +120,7 @@ class to help you creating and booting the kernel in your tests using
 
     class NewsletterGeneratorTest extends KernelTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             self::bootKernel();
 
@@ -187,7 +187,7 @@ code to production:
         // config/packages/test/twig.php
         use Symfony\Config\TwigConfig;
 
-        return static function (TwigConfig $twig) {
+        return static function (TwigConfig $twig): void {
             $twig->strictVariables(true);
         };
 
@@ -254,7 +254,7 @@ the container is returned by ``static::getContainer()``::
 
     class NewsletterGeneratorTest extends KernelTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             // (1) boot the Symfony kernel
             self::bootKernel();
@@ -295,7 +295,7 @@ concrete one::
 
     class NewsletterGeneratorTest extends KernelTestCase
     {
-        public function testSomething()
+        public function testSomething(): void
         {
             // ... same bootstrap as the section above
 
@@ -433,7 +433,7 @@ instance, to load ``Product`` objects into Doctrine, use::
 
     class ProductFixture extends Fixture
     {
-        public function load(ObjectManager $manager)
+        public function load(ObjectManager $manager): void
         {
             $product = new Product();
             $product->setName('Priceless widget');
@@ -582,6 +582,7 @@ This allows you to create all types of requests you can think of:
     Also, it means that entities loaded by Doctrine repositories will
     be "detached", so they will need to be refreshed by the manager or
     queried again from a repository.
+    You can disable this behavior by calling the :method:`disableReboot() <Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot>` method.
 
 Browsing the Site
 .................
@@ -649,7 +650,7 @@ to simulate a login request::
     {
         // ...
 
-        public function testVisitingWhileLoggedIn()
+        public function testVisitingWhileLoggedIn(): void
         {
             $client = static::createClient();
             $userRepository = static::getContainer()->get(UserRepository::class);
@@ -926,10 +927,10 @@ Response Assertions
     Asserts the response is a redirect response (optionally, you can check
     the target location and status code).
 ``assertResponseHasHeader(string $headerName, string $message = '')``/``assertResponseNotHasHeader(string $headerName, string $message = '')``
-    Asserts the given header is (not) available on the response.
+    Asserts the given header is (not) available on the response, e.g. ``assertResponseHasHeader('content-type');``.
 ``assertResponseHeaderSame(string $headerName, string $expectedValue, string $message = '')``/``assertResponseHeaderNotSame(string $headerName, string $expectedValue, string $message = '')``
     Asserts the given header does (not) contain the expected value on the
-    response.
+    response, e.g. ``assertResponseHeaderSame('content-type', 'application/octet-stream');``.
 ``assertResponseHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``/``assertResponseNotHasCookie(string $name, string $path = '/', string $domain = null, string $message = '')``
     Asserts the given cookie is present in the response (optionally
     checking for a specific cookie path or domain).
@@ -983,7 +984,7 @@ Crawler Assertions
     contain the expected text.
 ``assertSelectorTextSame(string $selector, string $text, string $message = '')``
     Asserts that the contents of the first element matching the given
-    selector does (not) equal the expected text.
+    selector does equal the expected text.
 ``assertPageTitleSame(string $expectedTitle, string $message = '')``
     Asserts that the ``<title>`` element is equal to the given title.
 ``assertPageTitleContains(string $expectedTitle, string $message = '')``
@@ -1084,13 +1085,13 @@ Learn more
     /components/css_selector
 
 .. _`PHPUnit`: https://phpunit.de/
-.. _`documentation`: https://phpunit.readthedocs.io/
-.. _`Writing Tests for PHPUnit`: https://phpunit.readthedocs.io/en/9.5/writing-tests-for-phpunit.html
-.. _`PHPUnit documentation`: https://phpunit.readthedocs.io/en/9.5/configuration.html
+.. _`documentation`: https://docs.phpunit.de/
+.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/9.6/writing-tests-for-phpunit.html
+.. _`PHPUnit documentation`: https://docs.phpunit.de/en/9.6/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
 .. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`PHPUnit Assertion`: https://phpunit.readthedocs.io/en/9.5/assertions.html
+.. _`PHPUnit Assertion`: https://docs.phpunit.de/en/9.6/assertions.html
 .. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18

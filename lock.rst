@@ -50,6 +50,7 @@ this behavior by using the ``lock`` key like:
             lock: ['memcached://m1.docker', 'memcached://m2.docker']
             lock: 'redis://r1.docker'
             lock: ['redis://r1.docker', 'redis://r2.docker']
+            lock: 'rediss://r1.docker?ssl[verify_peer]=1&ssl[cafile]=...'
             lock: 'zookeeper://z1.docker'
             lock: 'zookeeper://z1.docker,z2.docker'
             lock: 'zookeeper://localhost01,localhost02:2181'
@@ -131,7 +132,7 @@ this behavior by using the ``lock`` key like:
         // config/packages/lock.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->lock()
                 ->resource('default', ['flock'])
                 ->resource('default', ['flock:///path/to/file'])
@@ -173,12 +174,13 @@ To lock the default resource, autowire the lock factory using
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
         #[Route('/download/terms-of-use.pdf')]
-        public function downloadPdf(LockFactory $factory, MyPdfGeneratorService $pdf)
+        public function downloadPdf(LockFactory $factory, MyPdfGeneratorService $pdf): Response
         {
             $lock = $factory->createLock('pdf-creation');
             $lock->acquire(true);
@@ -212,12 +214,13 @@ processes asking for the same ``$version``::
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
         #[Route('/download/{version}/terms-of-use.pdf')]
-        public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf)
+        public function downloadPdf($version, LockFactory $lockFactory, MyPdfGeneratorService $pdf): Response
         {
             $lock = $lockFactory->createLock('pdf-creation-'.$version);
             $lock->acquire(true);
@@ -274,7 +277,7 @@ provides :ref:`named lock <reference-lock-resources-name>`:
         // config/packages/lock.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->lock()
                 ->resource('invoice', ['semaphore', 'redis://r2.docker'])
                 ->resource('report', ['semaphore']);
@@ -292,12 +295,13 @@ For instance, the ``invoice`` lock can be injected by naming the argument
     namespace App\Controller;
 
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\HttpFoundation\Response;
     use Symfony\Component\Lock\LockFactory;
 
     class PdfController extends AbstractController
     {
         #[Route('/download/terms-of-use.pdf')]
-        public function downloadPdf(LockFactory $invoiceLockFactory, MyPdfGeneratorService $pdf)
+        public function downloadPdf(LockFactory $invoiceLockFactory, MyPdfGeneratorService $pdf): Response
         {
             // ...
         }

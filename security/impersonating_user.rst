@@ -54,7 +54,7 @@ listener:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -113,7 +113,7 @@ as the value to the current URL:
 
             // config/packages/security.php
             use Symfony\Config\SecurityConfig;
-            return static function (SecurityConfig $security) {
+            return static function (SecurityConfig $security): void {
                 // ...
                 $security->firewall('main')
                     // ...
@@ -168,7 +168,7 @@ the impersonator user::
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // ...
 
@@ -229,7 +229,7 @@ also adjust the query parameter name via the ``parameter`` setting:
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -291,7 +291,7 @@ This feature allows you to control the redirection target route via ``target_rou
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...
@@ -347,7 +347,7 @@ be called):
         // config/packages/security.php
         use Symfony\Config\SecurityConfig;
 
-        return static function (SecurityConfig $security) {
+        return static function (SecurityConfig $security): void {
             // ...
             $security->firewall('main')
                 // ...

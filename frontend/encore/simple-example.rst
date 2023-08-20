@@ -5,10 +5,7 @@ After :doc:`installing Encore </frontend/encore/installation>`, your app already
 has a few files, organized into an ``assets/`` directory:
 
 * ``assets/app.js``
-* ``assets/bootstrap.js``
-* ``assets/controllers.json``
 * ``assets/styles/app.css``
-* ``assets/controllers/hello_controller.js``
 
 With Encore, think of your ``app.js`` file like a standalone JavaScript
 application: it will *require* all of the dependencies it needs (e.g. jQuery or React),
@@ -26,9 +23,6 @@ Encore's job (via Webpack) is simple: to read and follow *all* of the ``import``
 statements and create one final ``app.js`` (and ``app.css``) that contains *everything*
 your app needs. Encore can do a lot more: minify files, pre-process Sass/LESS,
 support React, Vue.js, etc.
-
-The other files - ``bootstrap.js``, ``controllers.json`` and ``hello_controller.js``
-relate to a topic you'll learn about soon: `Stimulus & Symfony UX`_.
 
 Configuring Encore/Webpack
 --------------------------
@@ -222,10 +216,18 @@ easy to attach behavior to HTML. It's powerful, and you will love it! Symfony
 even provides packages to add more features to Stimulus. These are called the
 Symfony UX Packages.
 
-If you followed the setup instructions, you should already have Stimulus installed
-and ready to go! In fact, that's the purpose of the ``assets/bootstrap.js`` file:
-to initialize Stimulus and automatically load any "controllers" from the
-``assets/controllers/`` directory.
+To use Stimulus, first install StimulusBundle:
+
+.. code-block:: terminal
+
+    $ composer require symfony/stimulus-bundle
+
+The Flex recipe should add several files/directories:
+
+* ``assets/bootstrap.js`` - initializes Stimulus;
+* ``assets/controllers/`` - a directory where you'll put your Stimulus controllers;
+* ``assets/controllers.json`` - file that helps load Stimulus controllers form UX
+  packages that you'll install.
 
 Let's look at a simple Stimulus example. In a Twig template, suppose you have:
 
@@ -266,10 +268,8 @@ via Ajax - those will instantly work: no need to reinitialize anything.
 Ready to learn more about Stimulus?
 
 * Read the `Stimulus Documentation`_
-* Find out more about how the :doc:`Symfony UX system works </frontend/ux>`
-* See a :ref:`list of all Symfony UX packages <ux-packages-list>`
-* Learn more about the `Symfony Stimulus Bridge`_ - including the superpower of
-  making your controllers load lazily!
+* Learn more about `StimulusBundle & the UX System`_
+* Browse `all the Symfony UX packages`_
 
   .. admonition:: Screencast
       :class: screencast
@@ -428,7 +428,7 @@ Encore. When you do, you'll see an error!
 .. code-block:: terminal
 
     >   Error: Install sass-loader & sass to use enableSassLoader()
-    >     yarn add sass-loader@^12.0.0 sass --dev
+    >     yarn add sass-loader@^13.0.0 sass --dev
 
 Encore supports many features. But, instead of forcing all of them on you, when
 you need a feature, Encore will tell you what you need to install. Run:
@@ -436,11 +436,11 @@ you need a feature, Encore will tell you what you need to install. Run:
 .. code-block:: terminal
 
     # if you use the Yarn package manager
-    $ yarn add sass-loader@^12.0.0 sass --dev
+    $ yarn add sass-loader@^13.0.0 sass --dev
     $ yarn encore dev --watch
 
     # if you use the npm package manager
-    $ npm install sass-loader@^12.0.0 sass --save-dev
+    $ npm install sass-loader@^13.0.0 sass --save-dev
     $ npm run watch
 
 Your app now supports Sass. Encore also supports LESS and Stylus. See
@@ -478,7 +478,8 @@ Encore supports many more features! For a full list of what you can do, see
 .. _`WebpackEncoreBundle Configuration`: https://github.com/symfony/webpack-encore-bundle#configuration
 .. _`Stimulus`: https://stimulus.hotwired.dev/
 .. _`Stimulus Documentation`: https://stimulus.hotwired.dev/handbook/introduction
-.. _`Symfony Stimulus Bridge`: https://github.com/symfony/stimulus-bridge
+.. _StimulusBundle & the UX System: https://symfony.com/bundles/StimulusBundle/current/index.html
+.. _all the Symfony UX packages: https://symfony.com/bundles/StimulusBundle/current/index.html#ux-packages
 .. _`Turbo`: https://turbo.hotwired.dev/
 .. _`symfony/ux-turbo`: https://symfony.com/bundles/ux-turbo/current/index.html
 .. _`Stimulus Screencast`: https://symfonycasts.com/screencast/stimulus

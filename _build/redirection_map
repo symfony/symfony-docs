@@ -561,3 +561,4 @@
 /frontend/assetic /frontend
 /frontend/assetic/index /frontend
 /controller/argument_value_resolver /controller/value_resolver
+/frontend/ux https://symfony.com/bundles/StimulusBundle/current/index.html

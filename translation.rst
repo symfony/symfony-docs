@@ -96,7 +96,7 @@ are located:
         // config/packages/translation.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             // ...
             $framework
                 ->defaultLocale('en')
@@ -120,7 +120,7 @@ controller::
     // ...
     use Symfony\Contracts\Translation\TranslatorInterface;
 
-    public function index(TranslatorInterface $translator)
+    public function index(TranslatorInterface $translator): Response
     {
         $translated = $translator->trans('Symfony is great');
 
@@ -557,7 +557,7 @@ if you're generating translations with specialized programs or teams.
             // config/packages/translation.php
             use Symfony\Config\FrameworkConfig;
 
-            return static function (FrameworkConfig $framework) {
+            return static function (FrameworkConfig $framework): void {
                 $framework->translator()
                     ->paths(['%kernel.project_dir%/custom/path/to/translations'])
                 ;
@@ -749,7 +749,7 @@ is stored in the request and is accessible via the ``Request`` object::
 
     use Symfony\Component\HttpFoundation\Request;
 
-    public function index(Request $request)
+    public function index(Request $request): void
     {
         $locale = $request->getLocale();
     }
@@ -758,7 +758,7 @@ To set the user's locale, you may want to create a custom event listener so
 that it's set before any other parts of the system (i.e. the translator) need
 it::
 
-        public function onKernelRequest(RequestEvent $event)
+        public function onKernelRequest(RequestEvent $event): void
         {
             $request = $event->getRequest();
 
@@ -819,8 +819,9 @@ A better policy is to include the locale in the URL using the
                     '_locale' => 'en|fr|de',
                 ],
             )]
-            public function contact()
+            public function contact(): Response
             {
+                // ...
             }
         }
 
@@ -854,7 +855,7 @@ A better policy is to include the locale in the URL using the
         use App\Controller\ContactController;
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes) {
+        return function (RoutingConfigurator $routes): void {
             $routes->add('contact', '/{_locale}/contact')
                 ->controller([ContactController::class, 'index'])
                 ->requirements([
@@ -914,9 +915,12 @@ the framework:
         // config/packages/translation.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $framework->defaultLocale('en');
         };
+
+This ``default_locale`` is also relevant for the translator, as shown in the
+next section.
 
 .. _translation-fallback:
 
@@ -938,7 +942,8 @@ checks translation resources for several locales:
    (Spanish) translation resource (e.g. ``messages.es.yaml``);
 
 #. If the translation still isn't found, Symfony uses the ``fallbacks`` option,
-   which can be configured as follows:
+   which can be configured as follows. When this option is not defined, it
+   defaults to the ``default_locale`` setting mentioned in the previous section.
 
    .. configuration-block::
 
@@ -975,7 +980,7 @@ checks translation resources for several locales:
            // config/packages/translation.php
            use Symfony\Config\FrameworkConfig;
 
-            return static function (FrameworkConfig $framework) {
+            return static function (FrameworkConfig $framework): void {
                 // ...
                 $framework->translator()
                     ->fallbacks(['en'])
@@ -1019,7 +1024,7 @@ of:
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // you can get the current application locale like this:
             $currentLocale = $this->localeSwitcher->getLocale();
@@ -1071,7 +1076,7 @@ unused translation messages templates:
 
     The extractors can't find messages translated outside templates (like form
     labels or controllers) unless using :ref:`translatable-objects` or calling
-    the ``trans()`` method on a translator (since Symfony 5.3). Dynamic
+    the ``trans()`` method on a translator. Dynamic
     translations using variables or expressions in templates are not
     detected either:
 
@@ -1309,6 +1314,132 @@ adapted to the format required by GitHub, but you can force that format too:
 
         $ php vendor/bin/yaml-lint translations/
 
+Pseudo-localization translator
+------------------------------
+
+.. note::
+
+    The pseudolocalization translator is meant to be used for development only.
+
+The following image shows the main menu of the interface of a popular Internet
+service:
+
+.. image:: /_images/translation/pseudolocalization-interface-original.png
+
+This other image shows the same menu when the user switches the language to
+Spanish. Unexpectedly, some text is cut and other contents are so long that
+they overflow and you can't see them:
+
+.. image:: /_images/translation/pseudolocalization-interface-translated.png
+
+These kind of errors are very common, because different languages can be longer
+or shorter than the original application language. Another common issue is to
+only check if the application works when using basic accented letters, instead
+of checking for more complex characters such as the ones found in Polish,
+Czech, etc.
+
+These problems can be solved with `pseudolocalization`_, a software testing method
+used for testing internationalization. In this method, instead of translating
+the text of the software into a foreign language, the textual elements of an
+application are replaced with an altered version of the original language.
+
+For example, ``Account Settings`` is *translated* as ``[!!! Àççôûñţ
+Šéţţîñĝš !!!]``. First, the original text is expanded in length with characters
+like ``[!!! !!!]`` to test the application when using languages more verbose
+than the original one. This solves the first problem.
+
+In addition, the original characters are replaced by similar but accented
+characters. This makes the text highly readable, while allowing to test the
+application with all kinds of accented and special characters. This solves the
+second problem.
+
+Full support for pseudolocalization was added to help you debug
+internationalization issues in your applications. You can enable and configure
+it in the translator configuration:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/translation.yaml
+        framework:
+            translator:
+                pseudo_localization:
+                    # replace characters by their accented version
+                    accents: true
+                    # wrap strings with brackets
+                    brackets: true
+                    # controls how many extra characters are added to make text longer
+                    expansion_factor: 1.4
+                    # maintain the original HTML tags of the translated contents
+                    parse_html: true
+                    # also translate the contents of these HTML attributes
+                    localizable_html_attributes: ['title']
+
+    .. code-block:: xml
+
+        <!-- config/packages/translation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:translator>
+                    <!-- accents: replace characters by their accented version -->
+                    <!-- brackets: wrap strings with brackets -->
+                    <!-- expansion_factor: controls how many extra characters are added to make text longer -->
+                    <!-- parse_html: maintain the original HTML tags of the translated contents -->
+                    <framework:pseudo-localization
+                        accents="true"
+                        brackets="true"
+                        expansion_factor="1.4"
+                        parse_html="true"
+                    >
+                        <!-- also translate the contents of these HTML attributes -->
+                        <framework:localizable-html-attribute>title</framework:localizable-html-attribute>
+                    </framework:pseudo-localization>
+                </framework:translator>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/translation.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            // ...
+            $framework
+                ->translator()
+                    ->pseudoLocalization()
+                        // replace characters by their accented version
+                        ->accents(true)
+                        // wrap strings with brackets
+                        ->brackets(true)
+                        // controls how many extra characters are added to make text longer
+                        ->expansionFactor(1.4)
+                        // maintain the original HTML tags of the translated contents
+                        ->parseHtml(true)
+                        // also translate the contents of these HTML attributes
+                        ->localizableHtmlAttributes(['title'])
+            ;
+        };
+
+That's all. The application will now start displaying those strange, but
+readable, contents to help you internationalize it. See for example the
+difference in the `Symfony Demo`_ application. This is the original page:
+
+.. image:: /_images/translation/pseudolocalization-symfony-demo-disabled.png
+
+And this is the same page with pseudolocalization enabled:
+
+.. image:: /_images/translation/pseudolocalization-symfony-demo-enabled.png
+
 Summary
 -------
 
@@ -1346,3 +1477,5 @@ Learn more
 .. _`Machine object format`: https://www.gnu.org/software/gettext/manual/html_node/MO-Files.html
 .. _`QT Translations TS XML`: https://doc.qt.io/qt-5/linguist-ts-file-format.html
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
+.. _`pseudolocalization`: https://en.wikipedia.org/wiki/Pseudolocalization
+.. _`Symfony Demo`: https://github.com/symfony/demo

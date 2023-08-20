@@ -32,13 +32,13 @@ If your valid choice list is simple, you can pass them in directly via the
 
         class Author
         {
-            const GENRES = ['fiction', 'non-fiction'];
+            public const GENRES = ['fiction', 'non-fiction'];
 
             #[Assert\Choice(['New York', 'Berlin', 'Tokyo'])]
-            protected $city;
+            protected string $city;
 
             #[Assert\Choice(choices: Author::GENRES, message: 'Choose a valid genre.')]
-            protected $genre;
+            protected string $genre;
         }
 
     .. code-block:: yaml
@@ -91,7 +91,9 @@ If your valid choice list is simple, you can pass them in directly via the
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint(
                     'city',
@@ -117,7 +119,7 @@ you can access those choices for validation or for building a select form elemen
 
     class Author
     {
-        public static function getGenres()
+        public static function getGenres(): array
         {
             return ['fiction', 'non-fiction'];
         }
@@ -138,7 +140,7 @@ constraint.
         class Author
         {
             #[Assert\Choice(callback: 'getGenres')]
-            protected $genre;
+            protected string $genre;
         }
 
     .. code-block:: yaml
@@ -176,9 +178,9 @@ constraint.
 
         class Author
         {
-            protected $genre;
+            // ...
 
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('genre', new Assert\Choice([
                     'callback' => 'getGenres',
@@ -202,7 +204,7 @@ you can pass the class name and the method as an array.
         class Author
         {
             #[Assert\Choice(callback: [Genre::class, 'getGenres'])]
-            protected $genre;
+            protected string $genre;
         }
 
     .. code-block:: yaml
@@ -244,7 +246,9 @@ you can pass the class name and the method as an array.
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('genre', new Assert\Choice([
                     'callback' => [Genre::class, 'getGenres'],

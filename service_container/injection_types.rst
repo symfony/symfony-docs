@@ -69,8 +69,8 @@ service container configuration:
 
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(NewsletterManager::class)
                 ->args(service('mailer'));
@@ -115,7 +115,7 @@ by cloning the original service, this approach allows you to make a service immu
 
     class NewsletterManager
     {
-        private $mailer;
+        private MailerInterface $mailer;
 
         /**
          * @return static
@@ -180,8 +180,9 @@ In order to use this type of injection, don't forget to configure it:
 .. note::
 
     If you decide to use autowiring, this type of injection requires
-    that you add a ``@return static`` docblock in order for the container
-    to be capable of registering the method.
+    that you add a ``@return static`` docblock or the ``static`` return
+    type in order for the container to be capable of registering
+    the method.
 
 This approach is useful if you need to configure your service according to your needs,
 so, here's the advantages of immutable-setters:
@@ -221,7 +222,7 @@ that accepts the dependency::
     // ...
     class NewsletterManager
     {
-        private $mailer;
+        private MailerInterface $mailer;
 
         #[Required]
         public function setMailer(MailerInterface $mailer): void
@@ -272,8 +273,8 @@ that accepts the dependency::
 
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(NewsletterManager::class)
                 ->call('setMailer', [service('mailer')]);
@@ -311,7 +312,7 @@ Another possibility is setting public fields of the class directly::
     // ...
     class NewsletterManager
     {
-        public $mailer;
+        public MailerInterface $mailer;
 
         // ...
     }
@@ -354,22 +355,18 @@ Another possibility is setting public fields of the class directly::
 
         use App\Mail\NewsletterManager;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set('app.newsletter_manager', NewsletterManager::class)
                 ->property('mailer', service('mailer'));
         };
 
 There are mainly only disadvantages to using property injection, it is similar
-to setter injection but with these additional important problems:
+to setter injection but with this additional important problem:
 
 * You cannot control when the dependency is set at all, it can be changed
   at any point in the object's lifetime.
-
-* You cannot use type hinting so you cannot be sure what dependency is injected
-  except by writing into the class code to explicitly test the class instance
-  before using it.
 
 But, it is useful to know that this can be done with the service container,
 especially if you are working with code that is out of your control, such

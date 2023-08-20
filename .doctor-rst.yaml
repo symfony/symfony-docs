@@ -2,8 +2,8 @@ rules:
     american_english: ~
     argument_variable_must_match_type:
         arguments:
-            - { type: 'ContainerBuilder', name: 'containerBuilder' }
-            - { type: 'ContainerConfigurator', name: 'containerConfigurator' }
+            - { type: 'ContainerBuilder', name: 'container' }
+            - { type: 'ContainerConfigurator', name: 'container' }
     avoid_repetetive_words: ~
     blank_line_after_anchor: ~
     blank_line_after_directive: ~
@@ -34,6 +34,7 @@ rules:
     no_brackets_in_method_directive: ~
     no_composer_req: ~
     no_directive_after_shorthand: ~
+    no_duplicate_use_statements: ~
     no_explicit_use_of_code_block_php: ~
     no_inheritdoc: ~
     no_merge_conflict: ~
@@ -76,6 +77,10 @@ rules:
     deprecated_directive_min_version:
         min_version: '6.0'
 
+exclude_rule_for_file:
+    - path: configuration/multiple_kernels.rst
+      rule_name: replacement
+
 # do not report as violation
 whitelist:
     regex:
@@ -99,6 +104,5 @@ whitelist:
         - '.. versionadded:: 0.2' # MercureBundle
         - '.. versionadded:: 3.6' # MonologBundle
         - '.. versionadded:: 3.8' # MonologBundle
-        - '// bin/console'
         - '.. _`a feature to test applications using Mercure`: https://github.com/symfony/panther#creating-isolated-browsers-to-test-apps-using-mercure-or-websocket'
         - '..  End to End Tests (E2E)'

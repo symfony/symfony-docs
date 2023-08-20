@@ -194,7 +194,7 @@ Below is the configuration for the pull request state machine.
         // config/packages/workflow.php
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework) {
+        return static function (FrameworkConfig $framework): void {
             $pullRequest = $framework->workflows()->workflows('pull_request');
 
             $pullRequest
@@ -268,7 +268,7 @@ machine type, use ``camelCased workflow name + StateMachine``::
         ) {
         }
 
-        public function someMethod(PullRequest $pullRequest)
+        public function someMethod(PullRequest $pullRequest): void
         {
             $this->pullRequestWorkflow->apply($pullRequest, 'wait_for_review', [
                 'log_comment' => 'My logging comment for the wait for review transition.',

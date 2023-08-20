@@ -65,7 +65,7 @@ what's going on and if the tests are broken because of the new code.
     to see colored test results.
 
 .. _`install Composer`: https://getcomposer.org/download/
-.. _Cmder: https://cmder.net/
+.. _Cmder: https://cmder.app/
 .. _ConEmu: https://conemu.github.io/
 .. _ANSICON: https://github.com/adoxa/ansicon/releases
 .. _Mintty: https://mintty.github.io/

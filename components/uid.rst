@@ -94,10 +94,10 @@ configure the behavior of the factory using configuration files::
         # config/packages/uid.yaml
         framework:
             uid:
-                default_uuid_version: 6
+                default_uuid_version: 7
                 name_based_uuid_version: 5
                 name_based_uuid_namespace: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
-                time_based_uuid_version: 6
+                time_based_uuid_version: 7
                 time_based_uuid_node: 121212121212
 
     .. code-block:: xml
@@ -113,10 +113,10 @@ configure the behavior of the factory using configuration files::
 
             <framework:config>
                 <framework:uid
-                    default_uuid_version="6"
+                    default_uuid_version="7"
                     name_based_uuid_version="5"
                     name_based_uuid_namespace="6ba7b810-9dad-11d1-80b4-00c04fd430c8"
-                    time_based_uuid_version="6"
+                    time_based_uuid_version="7"
                     time_based_uuid_node="121212121212"
                 />
             </framework:config>
@@ -127,18 +127,18 @@ configure the behavior of the factory using configuration files::
         // config/packages/uid.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $containerConfigurator): void {
-            $services = $containerConfigurator->services()
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services()
                 ->defaults()
                 ->autowire()
                 ->autoconfigure();
 
-            $containerConfigurator->extension('framework', [
+            $container->extension('framework', [
                 'uid' => [
-                    'default_uuid_version' => 6,
+                    'default_uuid_version' => 7,
                     'name_based_uuid_version' => 5,
                     'name_based_uuid_namespace' => '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
-                    'time_based_uuid_version' => 6,
+                    'time_based_uuid_version' => 7,
                     'time_based_uuid_node' => 121212121212,
                 ],
             ]);
@@ -160,7 +160,7 @@ on the configuration you defined::
 
         public function generate(): void
         {
-            // This creates a UUID of the version given in the configuration file (v6 by default)
+            // This creates a UUID of the version given in the configuration file (v7 by default)
             $uuid = $this->uuidFactory->create();
 
             $nameBasedUuid = $this->uuidFactory->nameBased(/** ... */);
@@ -236,12 +236,13 @@ type, which converts to/from UUID objects automatically::
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Bridge\Doctrine\Types\UuidType;
+    use Symfony\Component\Uid\Uuid;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
         #[ORM\Column(type: UuidType::NAME)]
-        private $someProperty;
+        private Uuid $someProperty;
 
         // ...
     }
@@ -265,7 +266,7 @@ entity primary keys::
         #[ORM\Column(type: UuidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.uuid_generator')]
-        private $id;
+        private ?Uuid $id;
 
         public function getId(): ?Uuid
         {
@@ -422,12 +423,13 @@ type, which converts to/from ULID objects automatically::
 
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Bridge\Doctrine\Types\UlidType;
+    use Symfony\Component\Uid\Ulid;
 
     #[ORM\Entity(repositoryClass: ProductRepository::class)]
     class Product
     {
         #[ORM\Column(type: UlidType::NAME)]
-        private $someProperty;
+        private Ulid $someProperty;
 
         // ...
     }
@@ -451,7 +453,7 @@ entity primary keys::
         #[ORM\Column(type: UlidType::NAME, unique: true)]
         #[ORM\GeneratedValue(strategy: 'CUSTOM')]
         #[ORM\CustomIdGenerator(class: 'doctrine.ulid_generator')]
-        private $id;
+        private ?Ulid $id;
 
         public function getId(): ?Ulid
         {
@@ -540,7 +542,7 @@ configuration in your application before using these commands:
         use Symfony\Component\Uid\Command\InspectUlidCommand;
         use Symfony\Component\Uid\Command\InspectUuidCommand;
 
-        return static function (ContainerConfigurator $containerConfigurator): void {
+        return static function (ContainerConfigurator $container): void {
             // ...
 
             $services

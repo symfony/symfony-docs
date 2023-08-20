@@ -69,7 +69,7 @@ A custom process callback can be passed as the fourth argument. Refer to the
 
     use Symfony\Component\Process\Process;
 
-    $helper->run($output, $process, 'The process failed :(', function ($type, $data) {
+    $helper->run($output, $process, 'The process failed :(', function (string $type, string $data): void {
         if (Process::ERR === $type) {
             // ... do something with the stderr output
         } else {

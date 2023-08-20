@@ -244,7 +244,7 @@ application::
     use Shared\Kernel;
     // ...
 
-    return function (array $context) {
+    return function (array $context): Kernel {
         return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG'], $context['APP_ID']);
     };
 
@@ -259,7 +259,7 @@ the application ID to run under CLI context::
     use Shared\Kernel;
     // ...
 
-    return function (InputInterface $input, array $context) {
+    return function (InputInterface $input, array $context): Application {
         $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG'], $input->getParameterOption(['--id', '-i'], $context['APP_ID']));
 
         $application = new Application($kernel);

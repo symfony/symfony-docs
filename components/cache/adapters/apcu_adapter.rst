@@ -1,5 +1,3 @@
-.. _apcu-adapter:
-
 APCu Cache Adapter
 ==================
 

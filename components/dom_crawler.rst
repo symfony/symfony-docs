@@ -89,9 +89,9 @@ An anonymous function can be used to filter with more complex criteria::
 
     $crawler = $crawler
         ->filter('body > p')
-        ->reduce(function (Crawler $node, $i) {
+        ->reduce(function (Crawler $node, $i): bool {
             // filters every other node
-            return ($i % 2) == 0;
+            return ($i % 2) === 0;
         });
 
 To remove a node, the anonymous function must return ``false``.
@@ -255,7 +255,7 @@ Call an anonymous function on each node of the list::
     use Symfony\Component\DomCrawler\Crawler;
     // ...
 
-    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i) {
+    $nodeValues = $crawler->filter('p')->each(function (Crawler $node, $i): string {
         return $node->text();
     });
 
@@ -265,7 +265,7 @@ The result is an array of values returned by the anonymous function calls.
 When using nested crawler, beware that ``filterXPath()`` is evaluated in the
 context of the crawler::
 
-    $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i) {
+    $crawler->filterXPath('parent')->each(function (Crawler $parentCrawler, $i): avoid {
         // DON'T DO THIS: direct child can not be found
         $subCrawler = $parentCrawler->filterXPath('sub-tag/sub-child-tag');
 
@@ -533,12 +533,12 @@ To work with multi-dimensional fields:
 .. code-block:: html
 
     <form>
-        <input name="multi[]"/>
-        <input name="multi[]"/>
-        <input name="multi[dimensional]"/>
-        <input name="multi[dimensional][]" value="1"/>
-        <input name="multi[dimensional][]" value="2"/>
-        <input name="multi[dimensional][]" value="3"/>
+        <input name="multi[]">
+        <input name="multi[]">
+        <input name="multi[dimensional]">
+        <input name="multi[dimensional][]" value="1">
+        <input name="multi[dimensional][]" value="2">
+        <input name="multi[dimensional][]" value="3">
     </form>
 
 Pass an array of values::

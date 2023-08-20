@@ -148,7 +148,7 @@ the ``Product`` entity (and getter & setter methods):
             // ...
 
             #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
-            private $category;
+            private Category $category;
 
             public function getCategory(): ?Category
             {
@@ -220,7 +220,7 @@ class that will hold these objects:
             // ...
 
             #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category')]
-            private $products;
+            private Collection $products;
 
             public function __construct()
             {
@@ -228,7 +228,7 @@ class that will hold these objects:
             }
 
             /**
-             * @return Collection|Product[]
+             * @return Collection<int, Product>
              */
             public function getProducts(): Collection
             {
@@ -588,7 +588,7 @@ that behavior, use the `orphanRemoval`_ option inside ``Category``:
         // ...
 
         #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category', orphanRemoval: true)]
-        private $products;
+        private array $products;
 
 
 Thanks to this, if the ``Product`` is removed from the ``Category``, it will be

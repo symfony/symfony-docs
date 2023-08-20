@@ -160,7 +160,7 @@ the value is removed from the collection. For example::
 
     $builder->add('users', CollectionType::class, [
         // ...
-        'delete_empty' => function (User $user = null) {
+        'delete_empty' => function (User $user = null): bool {
             return null === $user || empty($user->getFirstName());
         },
     ]);
@@ -225,7 +225,7 @@ on whether you are adding a new entry or editing an existing entry::
 entry_type
 ~~~~~~~~~~
 
-**type**: ``string`` **default**: ``'Symfony\Component\Form\Extension\Core\Type\TextType'``
+**type**: ``string`` **default**: ``Symfony\Component\Form\Extension\Core\Type\TextType``
 
 This is the field type for each item in this collection (e.g. ``TextType``,
 ``ChoiceType``, etc). For example, if you have an array of email addresses,

@@ -49,10 +49,7 @@ short example containing most features described below::
     {
         public const SOME_CONST = 42;
 
-        /**
-         * @var string
-         */
-        private $fooBar;
+        private string $fooBar;
 
         /**
          * @param $dummy some argument description
@@ -114,7 +111,7 @@ short example containing most features described below::
         /**
          * Performs some basic operations for a given value.
          */
-        private function performOperations(mixed $value = null, bool $theSwitch = false)
+        private function performOperations(mixed $value = null, bool $theSwitch = false): void
         {
             if (!$theSwitch) {
                 return;
@@ -189,6 +186,14 @@ Structure
     + Expected "foo" option to be one of ...
 
 * Exception and error messages must start with a capital letter and finish with a dot ``.``;
+
+* Exception, error and deprecation messages containing a class name must
+  use ``get_debug_type()`` instead of ``::class`` to retrieve it:
+
+  .. code-block:: diff
+
+    - throw new \Exception(sprintf('Command "%s" failed.', $command::class));
+    + throw new \Exception(sprintf('Command "%s" failed.', get_debug_type($command)));
 
 * Do not use ``else``, ``elseif``, ``break`` after ``if`` and ``case`` conditions
   which return or throw something;

@@ -55,7 +55,7 @@ to another service: ``App\Mailer``. One way to do this is with an expression:
         use App\Mail\MailerConfiguration;
         use App\Mailer;
 
-        return function(ContainerConfigurator $containerConfigurator) {
+        return function(ContainerConfigurator $container): void {
             // ...
 
             $services->set(MailerConfiguration::class);
@@ -116,8 +116,8 @@ via a ``container`` variable. Here's another example:
 
         use App\Mailer;
 
-        return function(ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(Mailer::class)
                 ->args([expr("container.hasParameter('some_param') ? parameter('some_param') : 'default_value'")]);

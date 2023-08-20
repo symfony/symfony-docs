@@ -38,14 +38,14 @@ type. The ``Author`` class might look as follows::
 
     class Author
     {
-        protected $bioFile;
+        protected File $bioFile;
 
-        public function setBioFile(File $file = null)
+        public function setBioFile(File $file = null): void
         {
             $this->bioFile = $file;
         }
 
-        public function getBioFile()
+        public function getBioFile(): File
         {
             return $this->bioFile;
         }
@@ -70,7 +70,7 @@ below a certain file size and a valid PDF, add the following:
                 extensions: ['pdf'],
                 extensionsMessage: 'Please upload a valid PDF',
             )]
-            protected $bioFile;
+            protected File $bioFile;
         }
 
     .. code-block:: yaml
@@ -115,7 +115,9 @@ below a certain file size and a valid PDF, add the following:
 
         class Author
         {
-            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
             {
                 $metadata->addPropertyConstraint('bioFile', new Assert\File([
                     'maxSize' => '1024k',
@@ -262,7 +264,7 @@ You can find a list of existing mime types on the `IANA website`_.
 
     When using this constraint on a :doc:`FileType field </reference/forms/types/file>`,
     the value of the ``mimeTypes`` option is also used in the ``accept``
-    attribute of the related ``<input type="file"/>`` HTML element.
+    attribute of the related ``<input type="file">`` HTML element.
 
     This behavior is applied only when using :ref:`form type guessing <form-type-guessing>`
     (i.e. the form type is not defined explicitly in the ``->add()`` method of

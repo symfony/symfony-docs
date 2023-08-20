@@ -30,7 +30,7 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
         ) {
         }
 
-        public function normalize($topic, string $format = null, array $context = [])
+        public function normalize($topic, string $format = null, array $context = []): array
         {
             $data = $this->normalizer->normalize($topic, $format, $context);
 
@@ -42,7 +42,7 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
             return $data;
         }
 
-        public function supportsNormalization($data, string $format = null, array $context = [])
+        public function supportsNormalization($data, string $format = null, array $context = []): bool
         {
             return $data instanceof Topic;
         }
@@ -82,5 +82,64 @@ is called.
     All built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`
     as well the ones included in `API Platform`_ natively implement this interface.
 
-.. _`API Platform`: https://api-platform.com
+.. deprecated:: 6.3
 
+    The :class:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface`
+    interface is deprecated since Symfony 6.3. You should implement the
+    ``getSupportedTypes()`` method instead, as shown in the section below.
+
+Improving Performance of Normalizers/Denormalizers
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.3
+
+    The ``getSupportedTypes()`` method was introduced in Symfony 6.3.
+
+Both :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerInterface`
+and :class:`Symfony\\Component\\Serializer\\Normalizer\\DenormalizerInterface`
+contain a new method ``getSupportedTypes()``. This method allows normalizers or
+denormalizers to declare the type of objects they can handle, and whether they
+are cacheable. With this info, even if the ``supports*()`` call is not cacheable,
+the Serializer can skip a ton of method calls to ``supports*()`` improving
+performance substantially in some cases.
+
+The ``getSupportedTypes()`` method should return an array where the keys
+represent the supported types, and the values indicate whether the result of
+the ``supports*()`` method call can be cached or not. The format of the
+returned array is as follows:
+
+#. The special key ``object`` can be used to indicate that the normalizer or
+   denormalizer supports any classes or interfaces.
+#. The special key ``*`` can be used to indicate that the normalizer or
+   denormalizer might support any types.
+#. The other keys in the array should correspond to specific types that the
+   normalizer or denormalizer supports.
+#. The values associated with each type should be a boolean indicating if the
+   result of the ``supports*()`` method call for that type can be cached or not.
+   A value of ``true`` means that the result is cacheable, while ``false`` means
+   that the result is not cacheable.
+#. A ``null`` value for a type means that the normalizer or denormalizer does
+   not support that type.
+
+Here is an example of how to use the ``getSupportedTypes()`` method::
+
+    use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+
+    class MyNormalizer implements NormalizerInterface
+    {
+        // ...
+
+        public function getSupportedTypes(?string $format): array
+        {
+            return [
+                'object' => null,             // Doesn't support any classes or interfaces
+                '*' => false,                 // Supports any other types, but the result is not cacheable
+                MyCustomClass::class => true, // Supports MyCustomClass and result is cacheable
+            ];
+        }
+    }
+
+Note that ``supports*()`` method implementations should not assume that
+``getSupportedTypes()`` has been called before.
+
+.. _`API Platform`: https://api-platform.com

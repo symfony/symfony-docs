@@ -606,7 +606,7 @@ represented by a PHP callable instead of a string::
     use Symfony\Component\HttpFoundation\StreamedResponse;
 
     $response = new StreamedResponse();
-    $response->setCallback(function () {
+    $response->setCallback(function (): void {
         var_dump('Hello World');
         flush();
         sleep(2);
@@ -628,6 +628,86 @@ represented by a PHP callable instead of a string::
 
         // disables FastCGI buffering in nginx only for this response
         $response->headers->set('X-Accel-Buffering', 'no');
+
+Streaming a JSON Response
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` class was
+    introduced in Symfony 6.3.
+
+The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` allows to
+stream large JSON responses using PHP generators to keep the used resources low.
+
+The class constructor expects an array which represents the JSON structure and
+includes the list of contents to stream. In addition to PHP generators, which are
+recommended to minimize memory usage, it also supports any kind of PHP Traversable
+containing JSON serializable data::
+
+    use Symfony\Component\HttpFoundation\StreamedJsonResponse;
+
+    // any method or function returning a PHP Generator
+    function loadArticles(): \Generator {
+         yield ['title' => 'Article 1'];
+         yield ['title' => 'Article 2'];
+         yield ['title' => 'Article 3'];
+    };
+
+    $response = new StreamedJsonResponse(
+        // JSON structure with generators in which will be streamed as a list
+        [
+            '_embedded' => [
+                'articles' => loadArticles(),
+            ],
+        ],
+    );
+
+When loading data via Doctrine, you can use the ``toIterable()`` method to
+fetch results row by row and minimize resources consumption.
+See the `Doctrine Batch processing`_ documentation for more::
+
+    public function __invoke(): Response
+    {
+        return new StreamedJsonResponse(
+            [
+                '_embedded' => [
+                    'articles' => $this->loadArticles(),
+                ],
+            ],
+        );
+    }
+
+    public function loadArticles(): \Generator
+    {
+        // get the $entityManager somehow (e.g. via constructor injection)
+        $entityManager = ...
+
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->from(Article::class, 'article');
+        $queryBuilder->select('article.id')
+            ->addSelect('article.title')
+            ->addSelect('article.description');
+
+        return $queryBuilder->getQuery()->toIterable();
+    }
+
+If you return a lot of data, consider calling the :phpfunction:`flush` function
+after some specific item count to send the contents to the browser::
+
+    public function loadArticles(): \Generator
+    {
+        // ...
+
+        $count = 0;
+        foreach ($queryBuilder->getQuery()->toIterable() as $article) {
+            yield $article;
+
+            if (0 === ++$count % 100) {
+                flush();
+            }
+        }
+    }
 
 .. _component-http-foundation-serving-files:
 
@@ -841,7 +921,7 @@ methods. You can inject this as a service anywhere in your application::
         ) {
         }
 
-        public function normalize($user)
+        public function normalize($user): array
         {
             return [
                 'avatar' => $this->urlHelper->getAbsoluteUrl($user->avatar()->path()),
@@ -866,3 +946,4 @@ Learn More
 .. _`JSON Hijacking`: https://haacked.com/archive/2009/06/25/json-hijacking.aspx/
 .. _OWASP guidelines: https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html#always-return-json-with-an-object-on-the-outside
 .. _RFC 8674: https://tools.ietf.org/html/rfc8674
+.. _Doctrine Batch processing: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/batch-processing.html#iterating-results

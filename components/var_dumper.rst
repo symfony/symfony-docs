@@ -144,8 +144,8 @@ the :ref:`dump_destination option <configuration-debug-dump_destination>` of the
         // config/packages/debug.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->extension('debug', [
+        return static function (ContainerConfigurator $container): void {
+            $container->extension('debug', [
                 'dump_destination' => 'tcp://%env(VAR_DUMPER_SERVER)%',
             ]);
         };
@@ -169,7 +169,7 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
         'source' => new SourceContextProvider(),
     ]);
 
-    VarDumper::setHandler(function ($var) use ($cloner, $dumper) {
+    VarDumper::setHandler(function (mixed $var) use ($cloner, $dumper): ?string {
         $dumper->dump($cloner->cloneVar($var));
     });
 
@@ -294,7 +294,7 @@ Example::
     {
         use VarDumperTestTrait;
 
-        protected function setUp()
+        protected function setUp(): void
         {
             $casters = [
                 \DateTimeInterface::class => static function (\DateTimeInterface $date, array $a, Stub $stub): array {
@@ -311,7 +311,7 @@ Example::
             $this->setUpVarDumper($casters, $flags);
         }
 
-        public function testWithDumpEquals()
+        public function testWithDumpEquals(): void
         {
             $testedVar = [123, 'foo'];
 
@@ -372,9 +372,9 @@ then its dump representation::
 
     class PropertyExample
     {
-        public $publicProperty = 'The `+` prefix denotes public properties,';
-        protected $protectedProperty = '`#` protected ones and `-` private ones.';
-        private $privateProperty = 'Hovering a property shows a reminder.';
+        public string $publicProperty = 'The `+` prefix denotes public properties,';
+        protected string $protectedProperty = '`#` protected ones and `-` private ones.';
+        private string $privateProperty = 'Hovering a property shows a reminder.';
     }
 
     $var = new PropertyExample();
@@ -391,7 +391,7 @@ then its dump representation::
 
     class DynamicPropertyExample
     {
-        public $declaredProperty = 'This property is declared in the class definition';
+        public string $declaredProperty = 'This property is declared in the class definition';
     }
 
     $var = new DynamicPropertyExample();
@@ -404,7 +404,7 @@ then its dump representation::
 
     class ReferenceExample
     {
-        public $info = "Circular and sibling references are displayed as `#number`.\nHovering them highlights all instances in the same dump.\n";
+        public string $info = "Circular and sibling references are displayed as `#number`.\nHovering them highlights all instances in the same dump.\n";
     }
     $var = new ReferenceExample();
     $var->aCircularReference = $var;
@@ -481,7 +481,7 @@ like this::
     use Symfony\Component\VarDumper\Dumper\HtmlDumper;
     use Symfony\Component\VarDumper\VarDumper;
 
-    VarDumper::setHandler(function ($var) {
+    VarDumper::setHandler(function (mixed $var): ?string {
         $cloner = new VarCloner();
         $dumper = 'cli' === PHP_SAPI ? new CliDumper() : new HtmlDumper();
 
@@ -599,7 +599,7 @@ For example, to get a dump as a string in a variable, you can do::
 
     $dumper->dump(
         $cloner->cloneVar($variable),
-        function ($line, $depth) use (&$output) {
+        function (int $line, int $depth) use (&$output): void {
             // A negative depth means "end of dump"
             if ($depth >= 0) {
                 // Adds a two spaces indentation to the line
@@ -797,7 +797,7 @@ Here is a simple caster not doing anything::
 
     use Symfony\Component\VarDumper\Cloner\Stub;
 
-    function myCaster($object, $array, Stub $stub, $isNested, $filter)
+    function myCaster(mixed $object, array $array, Stub $stub, bool $isNested, int $filter): array
     {
         // ... populate/alter $array to your needs
 
@@ -861,7 +861,7 @@ that holds a file name or a URL, you can wrap them in a ``LinkStub`` to tell
     use Symfony\Component\VarDumper\Caster\LinkStub;
     use Symfony\Component\VarDumper\Cloner\Stub;
 
-    function ProductCaster(Product $object, $array, Stub $stub, $isNested, $filter = 0)
+    function ProductCaster(Product $object, array $array, Stub $stub, bool $isNested, int $filter = 0): array
     {
         $array['brochure'] = new LinkStub($array['brochure']);
 

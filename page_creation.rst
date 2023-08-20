@@ -7,13 +7,13 @@ Create your First Page in Symfony
 Creating a new page - whether it's an HTML page or a JSON endpoint - is a
 two-step process:
 
-#. **Create a route**: A route is the URL (e.g. ``/about``) to your page and
-   points to a controller;
-
 #. **Create a controller**: A controller is the PHP function you write that
    builds the page. You take the incoming request information and use it to
    create a Symfony ``Response`` object, which can hold HTML content, a JSON
-   string or even a binary file like an image or PDF.
+   string or even a binary file like an image or PDF;
+
+#. **Create a route**: A route is the URL (e.g. ``/about``) to your page and
+   points to a controller.
 
 .. admonition:: Screencast
     :class: screencast
@@ -55,20 +55,36 @@ random) number and prints it. To do that, create a "Controller" class and a
         }
     }
 
+.. _annotation-routes:
+
 Now you need to associate this controller function with a public URL (e.g. ``/lucky/number``)
 so that the ``number()`` method is called when a user browses to it. This association
-is defined by creating a **route** in the ``config/routes.yaml`` file:
+is defined with the ``#[Route]`` attribute (in PHP, `attributes`_ are used to add
+metadata to code):
 
-.. code-block:: yaml
+.. code-block:: diff
 
-    # config/routes.yaml
+      // src/Controller/LuckyController.php
 
-    # the "app_lucky_number" route name is not important yet
-    app_lucky_number:
-        path: /lucky/number
-        controller: App\Controller\LuckyController::number
+      // ...
+    + use Symfony\Component\Routing\Annotation\Route;
+
+      class LuckyController
+      {
+    +     #[Route('/lucky/number')]
+          public function number(): Response
+          {
+              // this looks exactly the same
+          }
+      }
 
 That's it! If you are using Symfony web server, try it out by going to: http://localhost:8000/lucky/number
+
+.. tip::
+
+    Symfony recommends defining routes as attributes to have the controller code
+    and its route configuration at the same location. However, if you prefer, you can
+    :doc:`define routes in separate files </routing>` using YAML, XML and PHP formats.
 
 If you see a lucky number being printed back to you, congratulations! But before
 you run off to play the lottery, check out how this works. Remember the two steps
@@ -81,61 +97,6 @@ to create a page?
 #. *Create a route*: In ``config/routes.yaml``, the route defines the URL to your
    page (``path``) and what ``controller`` to call. You'll learn more about :doc:`routing </routing>`
    in its own section, including how to make *variable* URLs.
-
-.. _annotation-routes:
-
-Annotation Routes
------------------
-
-Instead of defining your route in YAML, Symfony also allows you to use *annotation*
-or *attribute* routes. Attributes are built-in in PHP starting from PHP 8. In earlier
-PHP versions you can use annotations. To do this, install the annotations package:
-
-.. code-block:: terminal
-
-    $ composer require annotations
-
-You can now add your route directly *above* the controller:
-
-.. configuration-block::
-
-    .. code-block:: php-attributes
-
-        // src/Controller/LuckyController.php
-
-        // ...
-        + use Symfony\Component\Routing\Annotation\Route;
-
-        class LuckyController
-        {
-        +   #[Route('/lucky/number')]
-            public function number(): Response
-            {
-                // this looks exactly the same
-            }
-        }
-
-That's it! The page - http://localhost:8000/lucky/number will work exactly
-like before! Annotations/attributes are the recommended way to configure routes.
-
-.. _flex-quick-intro:
-
-Auto-Installing Recipes with Symfony Flex
------------------------------------------
-
-You may not have noticed, but when you ran ``composer require annotations``, two
-special things happened, both thanks to a powerful Composer plugin called
-:ref:`Flex <symfony-flex>`.
-
-First, ``annotations`` isn't a real package name: it's an *alias* (i.e. shortcut)
-that Flex resolves to ``sensio/framework-extra-bundle``.
-
-Second, after this package was downloaded, Flex runs a *recipe*, which is a
-set of automated instructions that tell Symfony how to integrate an external
-package. `Flex recipes`_ exist for many packages and have the ability
-to do a lot, like adding configuration files, creating directories, updating ``.gitignore``
-and adding a new config to your ``.env`` file. Flex *automates* the installation of
-packages so you can get back to coding.
 
 The bin/console Command
 -----------------------
@@ -330,11 +291,6 @@ Go Deeper with HTTP & Framework Fundamentals
 --------------------------------------------
 
 .. toctree::
-    :hidden:
-
-    routing
-
-.. toctree::
     :maxdepth: 1
     :glob:
 
@@ -343,4 +299,4 @@ Go Deeper with HTTP & Framework Fundamentals
 .. _`Twig`: https://twig.symfony.com
 .. _`Composer`: https://getcomposer.org
 .. _`Harmonious Development with Symfony`: https://symfonycasts.com/screencast/symfony/setup
-.. _`Flex recipes`: https://github.com/symfony/recipes/blob/flex/main/RECIPES.md
+.. _`attributes`: https://www.php.net/manual/en/language.attributes.overview.php

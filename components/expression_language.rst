@@ -107,7 +107,7 @@ PHP type (including objects)::
 
     class Apple
     {
-        public $variety;
+        public string $variety;
     }
 
     $apple = new Apple();
@@ -284,9 +284,9 @@ Example::
     use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
     $expressionLanguage = new ExpressionLanguage();
-    $expressionLanguage->register('lowercase', function ($str) {
+    $expressionLanguage->register('lowercase', function ($str): string {
         return sprintf('(is_string(%1$s) ? strtolower(%1$s) : %1$s)', $str);
-    }, function ($arguments, $str) {
+    }, function ($arguments, $str): string {
         if (!is_string($str)) {
             return $str;
         }
@@ -322,12 +322,12 @@ register::
 
     class StringExpressionLanguageProvider implements ExpressionFunctionProviderInterface
     {
-        public function getFunctions()
+        public function getFunctions(): array
         {
             return [
-                new ExpressionFunction('lowercase', function ($str) {
+                new ExpressionFunction('lowercase', function ($str): string {
                     return sprintf('(is_string(%1$s) ? strtolower(%1$s) : %1$s)', $str);
-                }, function ($arguments, $str) {
+                }, function ($arguments, $str): string {
                     if (!is_string($str)) {
                         return $str;
                     }

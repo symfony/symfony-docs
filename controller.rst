@@ -336,6 +336,177 @@ object. To access it in your controller, add it as an argument and
 :ref:`Keep reading <request-object-info>` for more information about using the
 Request object.
 
+.. _controller_map-request:
+
+Automatic Mapping Of The Request
+--------------------------------
+
+It is possible to automatically map request's payload and/or query parameters to
+your controller's action arguments with attributes.
+
+Mapping Query Parameters Individually
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Let's say a user sends you a request with the following query string:
+``https://example.com/dashboard?firstName=John&lastName=Smith&age=27``.
+Thanks to the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryParameter`
+attribute, arguments of your controller's action can be automatically fulfilled::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+
+    // ...
+
+    public function dashboard(
+        #[MapQueryParameter] string $firstName,
+        #[MapQueryParameter] string $lastName,
+        #[MapQueryParameter] int $age,
+    ): Response
+    {
+        // ...
+    }
+
+``#[MapQueryParameter]`` can take an optional argument called ``filter``. You can use the
+`Validate Filters`_ constants defined in PHP::
+
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+
+    // ...
+
+    public function dashboard(
+        #[MapQueryParameter(filter: \FILTER_VALIDATE_REGEXP, options: ['regexp' => '/^\w++$/'])] string $firstName,
+        #[MapQueryParameter] string $lastName,
+        #[MapQueryParameter(filter: \FILTER_VALIDATE_INT)] int $age,
+    ): Response
+    {
+        // ...
+    }
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryParameter` attribute
+    was introduced in Symfony 6.3.
+
+Mapping The Whole Query String
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Another possibility is to map the entire query string into an object that will hold
+available query parameters. Let's say you declare the following DTO with its
+optional validation constraints::
+
+    namespace App\Model;
+
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class UserDTO
+    {
+        public function __construct(
+            #[Assert\NotBlank]
+            public string $firstName,
+
+            #[Assert\NotBlank]
+            public string $lastName,
+
+            #[Assert\GreaterThan(18)]
+            public int $age,
+        ) {
+        }
+    }
+
+You can then use the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryString`
+attribute in your controller::
+
+    use App\Model\UserDto;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapQueryString;
+
+    // ...
+
+    public function dashboard(
+        #[MapQueryString] UserDTO $userDto
+    ): Response
+    {
+        // ...
+    }
+
+You can customize the validation groups used during the mapping thanks to the
+``validationGroups`` option::
+
+    public function dashboard(
+        #[MapQueryString(validationGroups: ['strict', 'edit'])] UserDTO $userDto
+    ): Response
+    {
+        // ...
+    }
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryString` attribute
+    was introduced in Symfony 6.3.
+
+Mapping Request Payload
+~~~~~~~~~~~~~~~~~~~~~~~
+
+When creating an API and dealing with other HTTP methods than ``GET`` (like
+``POST`` or ``PUT``), user's data are not stored in the query string
+but directly in the request payload, like this:
+
+.. code-block:: json
+
+    {
+        "firstName": "John",
+        "lastName": "Smith",
+        "age": 28
+    }
+
+In this case, it is also possible to directly map this payload to your DTO by
+using the :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestPayload`
+attribute::
+
+    use App\Model\UserDto;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+
+    // ...
+
+    public function dashboard(
+        #[MapRequestPayload] UserDTO $userDto
+    ): Response
+    {
+        // ...
+    }
+
+This attribute allows you to customize the serialization context as well
+as the class responsible of doing the mapping between the request and
+your DTO::
+
+    public function dashboard(
+        #[MapRequestPayload(
+            serializationContext: ['...'],
+            resolver: App\Resolver\UserDtoResolver
+        )]
+        UserDTO $userDto
+    ): Response
+    {
+        // ...
+    }
+
+You can also customize the validation groups used as well as supported
+payload formats::
+
+    public function dashboard(
+        #[MapRequestPayload(acceptFormat: 'json', validationGroups: ['strict', 'read'])] UserDTO $userDto
+    ): Response
+    {
+        // ...
+    }
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestPayload` attribute
+    was introduced in Symfony 6.3.
+
 Managing the Session
 --------------------
 
@@ -589,11 +760,6 @@ Learn more about Controllers
 ----------------------------
 
 .. toctree::
-    :hidden:
-
-    templates
-
-.. toctree::
     :maxdepth: 1
     :glob:
 
@@ -604,3 +770,4 @@ Learn more about Controllers
 .. _`Early hints`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/103
 .. _`SAPI`: https://www.php.net/manual/en/function.php-sapi-name.php
 .. _`FrankenPHP`: https://frankenphp.dev
+.. _`Validate Filters`: https://www.php.net/manual/en/filter.filters.validate.php

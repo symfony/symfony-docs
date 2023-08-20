@@ -58,8 +58,8 @@ Throughout the Symfony documentation, all configuration examples will be
 shown in these three formats.
 
 There isn't any practical difference between formats. In fact, Symfony
-transforms and caches all of them into PHP before running the application, so
-there's not even any performance difference between them.
+transforms all of them into PHP and caches them before running the application,
+so there's not even any performance difference.
 
 YAML is used by default when installing packages because it's concise and very
 readable. These are the main advantages and disadvantages of each format:
@@ -75,7 +75,11 @@ readable. These are the main advantages and disadvantages of each format:
 
     By default Symfony loads the configuration files defined in YAML and PHP
     formats. If you define configuration in XML format, update the
-    ``src/Kernel.php`` file to add support for the ``.xml`` file extension.
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait::configureContainer`
+    and/or
+    :method:`Symfony\\Bundle\\FrameworkBundle\\Kernel\\MicroKernelTrait::configureRoutes`
+    methods in the ``src/Kernel.php`` file to add support for the ``.xml`` file
+    extension.
 
     .. versionadded:: 6.1
 
@@ -136,17 +140,17 @@ configuration files, even if they use a different format:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->import('legacy_config.php');
+        return static function (ContainerConfigurator $container): void {
+            $container->import('legacy_config.php');
 
             // glob expressions are also supported to load multiple files
-            $containerConfigurator->import('/etc/myapp/*.yaml');
+            $container->import('/etc/myapp/*.yaml');
 
             // the third optional argument of import() is 'ignore_errors'
             // 'ignore_errors' set to 'not_found' silently discards errors if the loaded file doesn't exist
-            $containerConfigurator->import('my_config_file.yaml', null, 'not_found');
+            $container->import('my_config_file.yaml', null, 'not_found');
             // 'ignore_errors' set to true silently discards all errors (including invalid code and not found)
-            $containerConfigurator->import('my_config_file.yaml', null, true);
+            $container->import('my_config_file.yaml', null, true);
         };
 
         // ...
@@ -242,8 +246,8 @@ reusable configuration value. By convention, parameters are defined under the
         use App\Entity\BlogPost;
         use App\Enum\PostState;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->parameters()
+        return static function (ContainerConfigurator $container): void {
+            $container->parameters()
                 // the parameter name is an arbitrary string (the 'app.' prefix is recommended
                 // to better differentiate your parameters from Symfony parameters).
                 ->set('app.admin_email', 'something@example.com')
@@ -309,8 +313,6 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             # any string surrounded by two % is replaced by that parameter value
             email_address: '%app.admin_email%'
 
-            # ...
-
     .. code-block:: xml
 
         <!-- config/packages/some_package.xml -->
@@ -333,13 +335,17 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
 
         // config/packages/some_package.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->extension('some_package', [
-                // any string surrounded by two % is replaced by that parameter value
+        return static function (ContainerConfigurator $container): void {
+            $container->extension('some_package', [
+                // when using the param() function, you only have to pass the parameter name...
+                'email_address' => param('app.admin_email'),
+
+                // ... but if you prefer it, you can also pass the name as a string
+                // surrounded by two % (same as in YAML and XML formats) and Symfony will
+                // replace it by that parameter value
                 'email_address' => '%app.admin_email%',
-
-                // ...
             ]);
         };
 
@@ -371,8 +377,8 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             // config/services.php
             namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-            return static function (ContainerConfigurator $containerConfigurator) {
-                $containerConfigurator->parameters()
+            return static function (ContainerConfigurator $container): void {
+                $container->parameters()
                     ->set('url_pattern', 'http://symfony.com/?foo=%%s&amp;bar=%%d');
             };
 
@@ -513,7 +519,7 @@ files directly in the ``config/packages/`` directory.
             use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
             use Symfony\Config\WebpackEncoreConfig;
 
-            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $containerConfigurator) {
+            return static function (WebpackEncoreConfig $webpackEncore, ContainerConfigurator $container): void {
                 $webpackEncore
                     ->outputPath('%kernel.project_dir%/public/build')
                     ->strictMode(true)
@@ -521,12 +527,12 @@ files directly in the ``config/packages/`` directory.
                 ;
 
                 // cache is enabled only in the "prod" environment
-                if ('prod' === $containerConfigurator->env()) {
+                if ('prod' === $container->env()) {
                     $webpackEncore->cache(true);
                 }
 
                 // disable strict mode only in the "test" environment
-                if ('test' === $containerConfigurator->env()) {
+                if ('test' === $container->env()) {
                     $webpackEncore->strictMode(false);
                 }
             };
@@ -644,7 +650,7 @@ This example shows how you could configure the application secret using an env v
         // config/packages/framework.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
+        return static function (ContainerConfigurator $container): void {
             $container->extension('framework', [
                 // by convention the env var names are always uppercase
                 'secret' => '%env(APP_SECRET)%',
@@ -814,7 +820,9 @@ the right situation:
   but the overrides only apply to one environment.
 
 *Real* environment variables always win over env vars created by any of the
-``.env`` files.
+``.env`` files. This behavior depends on
+`variables_order <http://php.net/manual/en/ini.core.php#ini.variables-order>`_ to
+contain an ``E`` to expose the ``$_ENV`` superglobal.
 
 The ``.env`` and ``.env.<environment>`` files should be committed to the
 repository because they are the same for all developers and machines. However,
@@ -831,13 +839,33 @@ In production, the ``.env`` files are also parsed and loaded on each request. So
 the easiest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
-To improve performance, you can optionally run the ``dump-env`` command (available
-in :ref:`Symfony Flex <symfony-flex>` 1.2 or later):
+To improve performance, you can optionally run the ``dotenv:dump`` command (available
+in :ref:`Symfony Flex <symfony-flex>` 1.2 or later). The command is not registered
+by default, so you must register first in your services:
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        Symfony\Component\Dotenv\Command\DotenvDumpCommand:
+            - '%kernel.project_dir%/.env'
+            - '%kernel.environment%'
+
+In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
+(which is the default):
+
+.. code-block:: yaml
+
+    # config/services.yaml
+    services:
+        Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
+
+Then, run the command:
 
 .. code-block:: terminal
 
     # parses ALL .env files and dumps their final values to .env.local.php
-    $ composer dump-env prod
+    $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
 
 After running this command, Symfony will load the ``.env.local.php`` file to
 get the environment variables and will not spend time parsing the ``.env`` files.
@@ -997,8 +1025,8 @@ doesn't work for parameters:
 
         use App\Service\MessageGenerator;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->parameters()
+        return static function (ContainerConfigurator $container): void {
+            $container->parameters()
                 ->set('app.contents_dir', '...');
 
             $container->services()
@@ -1052,10 +1080,8 @@ whenever a service/controller defines a ``$projectDir`` argument, use this:
         // config/services.php
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        use App\Controller\LuckyController;
-
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $containerConfigurator->services()
+        return static function (ContainerConfigurator $container): void {
+            $container->services()
                 ->defaults()
                     // pass this value to any $projectDir argument for any service
                     // that's created in this file (including controller arguments)
@@ -1088,7 +1114,7 @@ parameters at once by type-hinting any of its constructor arguments with the
         ) {
         }
 
-        public function someMethod()
+        public function someMethod(): void
         {
             // get any container parameter from $this->params, which stores all of them
             $sender = $this->params->get('mailer_sender');
@@ -1114,7 +1140,7 @@ namespace ``Symfony\Config``::
     // config/packages/security.php
     use Symfony\Config\SecurityConfig;
 
-    return static function (SecurityConfig $security) {
+    return static function (SecurityConfig $security): void {
         $security->firewall('main')
             ->pattern('^/*')
             ->lazy(true)

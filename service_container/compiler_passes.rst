@@ -22,9 +22,9 @@ Compiler passes are registered in the ``build()`` method of the application kern
 
         // ...
 
-        protected function build(ContainerBuilder $containerBuilder): void
+        protected function build(ContainerBuilder $container): void
         {
-            $containerBuilder->addCompilerPass(new CustomPass());
+            $container->addCompilerPass(new CustomPass());
         }
     }
 
@@ -50,14 +50,14 @@ and process the services inside the ``process()`` method::
 
         // ...
 
-        public function process(ContainerBuilder $containerBuilder): void
+        public function process(ContainerBuilder $container): void
         {
             // in this method you can manipulate the service container:
             // for example, changing some container service:
-            $containerBuilder->getDefinition('app.some_private_service')->setPublic(true);
+            $container->getDefinition('app.some_private_service')->setPublic(true);
 
             // or processing tagged services:
-            foreach ($containerBuilder->findTaggedServiceIds('some_tag') as $id => $tags) {
+            foreach ($container->findTaggedServiceIds('some_tag') as $id => $tags) {
                 // ...
             }
         }
@@ -79,11 +79,11 @@ method in the extension)::
 
     class MyBundle extends Bundle
     {
-        public function build(ContainerBuilder $containerBuilder): void
+        public function build(ContainerBuilder $container): void
         {
-            parent::build($containerBuilder);
+            parent::build($container);
 
-            $containerBuilder->addCompilerPass(new CustomPass());
+            $container->addCompilerPass(new CustomPass());
         }
     }
 

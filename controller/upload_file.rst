@@ -22,7 +22,7 @@ add a PDF brochure for each product. To do so, add a new property called
         // ...
 
         #[ORM\Column(type: 'string')]
-        private $brochureFilename;
+        private string $brochureFilename;
 
         public function getBrochureFilename(): string
         {
@@ -58,7 +58,7 @@ so Symfony doesn't try to get/set its value from the related entity::
 
     class ProductType extends AbstractType
     {
-        public function buildForm(FormBuilderInterface $builder, array $options)
+        public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
                 // ...
@@ -238,7 +238,7 @@ logic to a separate service::
     class FileUploader
     {
         public function __construct(
-            private $targetDirectory,
+            private string $targetDirectory,
             private SluggerInterface $slugger,
         ) {
         }
@@ -312,8 +312,8 @@ Then, define a service for this class:
 
         use App\Service\FileUploader;
 
-        return static function (ContainerConfigurator $containerConfigurator) {
-            $services = $containerConfigurator->services();
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services();
 
             $services->set(FileUploader::class)
                 ->arg('$targetDirectory', '%brochures_directory%')
@@ -327,9 +327,10 @@ Now you're ready to use this service in the controller::
 
     use App\Service\FileUploader;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Response;
 
     // ...
-    public function new(Request $request, FileUploader $fileUploader)
+    public function new(Request $request, FileUploader $fileUploader): Response
     {
         // ...
 

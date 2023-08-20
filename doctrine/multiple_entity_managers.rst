@@ -43,7 +43,6 @@ The following configuration code shows how you can configure two entity managers
                         mappings:
                             Main:
                                 is_bundle: false
-                                type: annotation
                                 dir: '%kernel.project_dir%/src/Entity/Main'
                                 prefix: 'App\Entity\Main'
                                 alias: Main
@@ -52,7 +51,6 @@ The following configuration code shows how you can configure two entity managers
                         mappings:
                             Customer:
                                 is_bundle: false
-                                type: annotation
                                 dir: '%kernel.project_dir%/src/Entity/Customer'
                                 prefix: 'App\Entity\Customer'
                                 alias: Customer
@@ -85,7 +83,6 @@ The following configuration code shows how you can configure two entity managers
                         <doctrine:mapping
                             name="Main"
                             is_bundle="false"
-                            type="annotation"
                             dir="%kernel.project_dir%/src/Entity/Main"
                             prefix="App\Entity\Main"
                             alias="Main"
@@ -96,7 +93,6 @@ The following configuration code shows how you can configure two entity managers
                         <doctrine:mapping
                             name="Customer"
                             is_bundle="false"
-                            type="annotation"
                             dir="%kernel.project_dir%/src/Entity/Customer"
                             prefix="App\Entity\Customer"
                             alias="Customer"
@@ -111,7 +107,7 @@ The following configuration code shows how you can configure two entity managers
         // config/packages/doctrine.php
         use Symfony\Config\DoctrineConfig;
 
-        return static function (DoctrineConfig $doctrine) {
+        return static function (DoctrineConfig $doctrine): void {
             // Connections:
             $doctrine->dbal()
                 ->connection('default')
@@ -120,14 +116,13 @@ The following configuration code shows how you can configure two entity managers
                 ->connection('customer')
                 ->url(env('CUSTOMER_DATABASE_URL')->resolve());
             $doctrine->dbal()->defaultConnection('default');
-            
+
             // Entity Managers:
             $doctrine->orm()->defaultEntityManager('default');
             $defaultEntityManager = $doctrine->orm()->entityManager('default');
             $defaultEntityManager->connection('default');
             $defaultEntityManager->mapping('Main')
                 ->isBundle(false)
-                ->type('annotation')
                 ->dir('%kernel.project_dir%/src/Entity/Main')
                 ->prefix('App\Entity\Main')
                 ->alias('Main');
@@ -135,7 +130,6 @@ The following configuration code shows how you can configure two entity managers
             $customerEntityManager->connection('customer');
             $customerEntityManager->mapping('Customer')
                 ->isBundle(false)
-                ->type('annotation')
                 ->dir('%kernel.project_dir%/src/Entity/Customer')
                 ->prefix('App\Entity\Customer')
                 ->alias('Customer')
@@ -222,7 +216,7 @@ the default entity manager (i.e. ``default``) is returned::
     }
 
 Entity managers also benefit from :ref:`autowiring aliases <service-autowiring-alias>`
-when the :ref:`framework bundle <framework-bundle-configuration>` is used. For
+when the :doc:`framework bundle </reference/configuration/framework>` is used. For
 example, to inject the ``customer`` entity manager, type-hint your method with
 ``EntityManagerInterface $customerEntityManager``.
 

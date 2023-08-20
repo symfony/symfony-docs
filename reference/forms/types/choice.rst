@@ -73,21 +73,21 @@ method::
         // a callback to return the label for a given choice
         // if a placeholder is used, its empty value (null) may be passed but
         // its label is defined by its own "placeholder" option
-        'choice_label' => function (?Category $category) {
+        'choice_label' => function (?Category $category): string {
             return $category ? strtoupper($category->getName()) : '';
         },
         // returns the html attributes for each option input (may be radio/checkbox)
-        'choice_attr' => function (?Category $category) {
+        'choice_attr' => function (?Category $category): array {
             return $category ? ['class' => 'category_'.strtolower($category->getName())] : [];
         },
         // every option can use a string property path or any callable that get
         // passed each choice as argument, but it may not be needed
-        'group_by' => function () {
+        'group_by' => function (): string {
             // randomly assign things into 2 groups
-            return rand(0, 1) == 1 ? 'Group A' : 'Group B';
+            return rand(0, 1) === 1 ? 'Group A' : 'Group B';
         },
         // a callback to return whether a category is preferred
-        'preferred_choices' => function (?Category $category) {
+        'preferred_choices' => function (?Category $category): bool {
             return $category && 100 < $category->getArticleCounts();
         },
     ]);
@@ -196,6 +196,8 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
 
+.. include:: /reference/forms/types/options/placeholder_attr.rst.inc
+
 .. include:: /reference/forms/types/options/preferred_choices.rst.inc
 
 Overridden Options
@@ -294,6 +296,8 @@ Field Variables
 +----------------------------+--------------+-------------------------------------------------------------------+
 | placeholder                | ``mixed``    | The empty value if not already in the list, otherwise             |
 |                            |              | ``null``.                                                         |
++----------------------------+--------------+-------------------------------------------------------------------+
+| placeholder_attr           | ``array``    | The value of the `placeholder_attr`_ option.                      |
 +----------------------------+--------------+-------------------------------------------------------------------+
 | choice_translation_domain  | ``mixed``    | ``boolean``, ``null`` or ``string`` to determine if the value     |
 |                            |              | should be translated.                                             |
