@@ -27,7 +27,7 @@ You can install the Scheduler component with:
 Register a Schedule provider
 ----------------------------
 
-A Schedule provider is a class defining your schedule : which messages should 
+A Schedule provider is a class defining your schedule : which messages should
 be processed depending a trigger you choose::
 
     namespace App\Schedule;
@@ -71,7 +71,7 @@ your own trigger for your app.
 Every
 ~~~~~
 
-This trigger allows you to define you schedule with frequency as text, using
+This trigger allows you to define your schedule with frequency as text, using
 intervals or relative date format allowed by PHP::
 
     RecurringMessage::every('10 seconds', $msg);
@@ -93,7 +93,7 @@ option::
     $from = new \DateTimeImmutable('13:47', new \DateTimeZone('Europe/Paris'));
     RecurringMessage::every('first day of month', $msg, from: $from);
 
-If your schedule do not need to run indefinitely, you can use `until` option
+If your schedule does not need to run indefinitely, you can use the `until` option
 to let the Component know when the trigger should stop::
 
     RecurringMessage::every('monday', $msg, until: '2023-06-12');
@@ -101,7 +101,7 @@ to let the Component know when the trigger should stop::
 Cron
 ~~~~
 
-This trigger can be configured following same rules as the eponymous Unix
+This trigger can be configured following the same rules as the eponymous Unix
 utility::
 
     // trigger every hour
@@ -113,7 +113,7 @@ utility::
 .. note::
 
     The minimal interval allowed with cron is 1 minute.
-    
+
 Hashed expressions
 ~~~~
 
@@ -124,7 +124,7 @@ This trigger can be configured by hashed expressions::
 
     // trigger every week
     RecurringMessage::cron('#weekly', $msg);
-    
+
     // trigger every day
     RecurringMessage::cron('#daily', $msg);
 
@@ -153,23 +153,23 @@ Also by using ``MessageGenerator`` we can generate some messages::
     $iterator = $scheduler->getMessages();
 
 And use it for some logic like this::
-    
+
     $context->triggeredAt; //22:13:00
 
     $context->nextTriggerAt; //22:14:00
-    
+
     $iterator->next();
-    
+
     $context->triggeredAt; //22:14:00
 
     $context->nextTriggerAt; //22:16:00
-    
-Also you can use some another triggers: ``CallbackTrigger, CronExpressionTrigger, DateIntervalTrigger, DatePeriodTrigger, ExcludeTimeTrigger``
+
+You can also use some another triggers: ``CallbackTrigger, CronExpressionTrigger, DateIntervalTrigger, DatePeriodTrigger, ExcludeTimeTrigger``
 
 Define your own trigger
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-By implementing the TriggerInterface your can create your own trigger using
+By implementing the TriggerInterface, you can create your own trigger using
 ``getNextRunDate`` method::
 
     final class CustomTrigger implements TriggerInterface
