@@ -944,7 +944,7 @@ have synchronized clocks.
 PostgreSqlStore
 ~~~~~~~~~~~~~~~
 
-The PdoStore relies on the `Advisory Locks`_ properties of the PostgreSQL
+The PostgreSqlStore relies on the `Advisory Locks`_ properties of the PostgreSQL
 database. That means that by using :ref:`PostgreSqlStore <lock-store-pgsql>`
 the locks will be automatically released at the end of the session in case the
 client cannot unlock for any reason.
