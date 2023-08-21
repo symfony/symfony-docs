@@ -561,6 +561,55 @@ The ``dev`` firewall is really a fake firewall: it makes sure that you
 don't accidentally block Symfony's dev tools - which live under URLs like
 ``/_profiler`` and ``/_wdt``.
 
+.. tip::
+
+    When matching several routes, instead of creating a long regex you can also
+    use an array of simpler regexes to match each route:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/security.yaml
+            security:
+                # ...
+                firewalls:
+                    dev:
+                        pattern:
+                            - ^/_profiler/
+                            - ^/_wdt/
+                            - ^/css/
+                            - ^/images/
+                            - ^/js/
+            # ...
+
+        .. code-block:: php
+
+            // config/packages/security.php
+            use Symfony\Config\SecurityConfig;
+
+            return static function (SecurityConfig $security): void {
+                // ...
+                $security->firewall('dev')
+                    ->pattern([
+                        '^/_profiler/',
+                        '^/_wdt/',
+                        '^/css/',
+                        '^/images/',
+                        '^/js/',
+                    ])
+                    ->security(false)
+                ;
+
+                // ...
+            };
+
+    This feature is not supported by the XML configuration format.
+
+    .. versionadded:: 6.4
+
+        The feature to use an array of regex was introduced in Symfony 6.4.
+
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
 it matches *all* URLs). A firewall can have many modes of authentication,
 in other words, it enables many ways to ask the question "Who are you?".
@@ -1661,6 +1710,7 @@ You can log in a user programmatically using the ``login()`` method of the
 
     use App\Security\Authenticator\ExampleAuthenticator;
     use Symfony\Bundle\SecurityBundle\Security;
+    use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 
     class SecurityController
     {
@@ -1678,8 +1728,11 @@ You can log in a user programmatically using the ``login()`` method of the
             // ...or the service id of custom authenticators
             $security->login($user, ExampleAuthenticator::class);
 
-            // you can also log in on a different firewall
+            // you can also log in on a different firewall...
             $security->login($user, 'form_login', 'other_firewall');
+
+            // ...and add badges
+            $security->login($user, 'form_login', 'other_firewall', [(new RememberMeBadge())->enable()]);
 
             // use the redirection logic applied to regular login
             $redirectResponse = $security->login($user);
@@ -1693,6 +1746,10 @@ You can log in a user programmatically using the ``login()`` method of the
 .. versionadded:: 6.3
 
     The feature to use a custom redirection logic was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The feature to add badges was introduced in Symfony 6.4.
 
 .. _security-logging-out:
 
@@ -2317,6 +2374,7 @@ will happen:
    :ref:`customize <controller-error-pages-by-status-code>`).
 
 .. _security-securing-controller-annotations:
+.. _security-securing-controller-attributes:
 
 Another way to secure one or more controller actions is to use the ``#[IsGranted()]`` attribute.
 In the following example, all controller actions will require the

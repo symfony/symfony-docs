@@ -15,7 +15,7 @@ Creating Routes
 Routes can be configured in YAML, XML, PHP or using attributes.
 All formats provide the same features and performance, so choose
 your favorite.
-:ref:`Symfony recommends attributes <best-practice-controller-annotations>`
+:ref:`Symfony recommends attributes <best-practice-controller-attributes>`
 because it's convenient to put the route and controller in the same place.
 
 Creating Routes as Attributes
@@ -744,7 +744,7 @@ visit ``/blog/1``, it will match. But if they visit ``/blog``, it will **not**
 match. As soon as you add a parameter to a route, it must have a value.
 
 You can make ``blog_list`` once again match when the user visits ``/blog`` by
-adding a default value for the ``{page}`` parameter. When using annotations or attributes,
+adding a default value for the ``{page}`` parameter. When using attributes,
 default values are defined in the arguments of the controller action. In the
 other configuration formats they are defined with the ``defaults`` option:
 
@@ -901,7 +901,7 @@ Symfony evaluates routes in the order they are defined. If the path of a route
 matches many different patterns, it might prevent other routes from being
 matched. In YAML and XML you can move the route definitions up or down in the
 configuration file to control their priority. In routes defined as PHP
-annotations or attributes this is much harder to do, so you can set the
+attributes this is much harder to do, so you can set the
 optional ``priority`` parameter in those routes to control their priority:
 
 .. configuration-block::
@@ -1425,10 +1425,10 @@ when importing the routes.
 
     .. code-block:: yaml
 
-        # config/routes/annotations.yaml
+        # config/routes/attributes.yaml
         controllers:
             resource: '../../src/Controller/'
-            type: annotation
+            type: attribute
             # this is added to the beginning of all imported route URLs
             prefix: '/blog'
             # this is added to the beginning of all imported route names
@@ -1441,12 +1441,12 @@ when importing the routes.
             # Uncomment this option to make that URL "/blog" instead
             # trailing_slash_on_root: false
 
-            # you can optionally exclude some files/subdirectories when loading annotations
+            # you can optionally exclude some files/subdirectories when loading attributes
             # exclude: '../../src/Controller/{DebugEmailController}.php'
 
     .. code-block:: xml
 
-        <!-- config/routes/annotations.xml -->
+        <!-- config/routes/attributes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1456,10 +1456,10 @@ when importing the routes.
             <!--
                 the 'prefix' value is added to the beginning of all imported route URLs
                 the 'name-prefix' value is added to the beginning of all imported route names
-                the 'exclude' option defines the files or subdirectories ignored when loading annotations
+                the 'exclude' option defines the files or subdirectories ignored when loading attributes
             -->
             <import resource="../../src/Controller/"
-                type="annotation"
+                type="attribute"
                 prefix="/blog"
                 name-prefix="blog_"
                 exclude="../../src/Controller/{DebugEmailController}.php">
@@ -1469,7 +1469,7 @@ when importing the routes.
 
             <!-- An imported route with an empty URL will become "/blog/"
                  Uncomment this option to make that URL "/blog" instead -->
-            <import resource="../../src/Controller/" type="annotation"
+            <import resource="../../src/Controller/" type="attribute"
                     prefix="/blog"
                     trailing-slash-on-root="false">
                     <!-- ... -->
@@ -1478,16 +1478,16 @@ when importing the routes.
 
     .. code-block:: php
 
-        // config/routes/annotations.php
+        // config/routes/attributes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return static function (RoutingConfigurator $routes): void {
             $routes->import(
                     '../../src/Controller/',
-                    'annotation',
+                    'attribute',
                     false,
                     // the optional fourth argument is used to exclude some files
-                    // or subdirectories when loading annotations
+                    // or subdirectories when loading attributes
                     '../../src/Controller/{DebugEmailController}.php'
                 )
                 // this is added to the beginning of all imported route URLs
@@ -1509,7 +1509,7 @@ In this example, the route of the ``index()`` action will be called ``blog_index
 and its URL will be ``/blog/{_locale}``. The route of the ``show()`` action will be called
 ``blog_show`` and its URL will be ``/blog/{_locale}/posts/{slug}``. Both routes
 will also validate that the ``_locale`` parameter matches the regular expression
-defined in the class annotation.
+defined in the class attribute.
 
 .. note::
 
@@ -1517,23 +1517,23 @@ defined in the class annotation.
     slash to it. In the previous example, an empty path prefixed with ``/blog``
     will result in the ``/blog/`` URL. If you want to avoid this behavior, set
     the ``trailing_slash_on_root`` option to ``false`` (this option is not
-    available when using PHP attributes or annotations):
+    available when using PHP attributes):
 
     .. configuration-block::
 
         .. code-block:: yaml
 
-            # config/routes/annotations.yaml
+            # config/routes/attributes.yaml
             controllers:
                 resource: '../../src/Controller/'
-                type:     annotation
+                type:     attribute
                 prefix:   '/blog'
                 trailing_slash_on_root: false
                 # ...
 
         .. code-block:: xml
 
-            <!-- config/routes/annotations.xml -->
+            <!-- config/routes/attributes.xml -->
             <?xml version="1.0" encoding="UTF-8" ?>
             <routes xmlns="http://symfony.com/schema/routing"
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -1541,7 +1541,7 @@ defined in the class annotation.
                     https://symfony.com/schema/routing/routing-1.0.xsd">
 
                 <import resource="../../src/Controller/"
-                    type="annotation"
+                    type="attribute"
                     prefix="/blog"
                     name-prefix="blog_"
                     trailing-slash-on-root="false"
@@ -1552,11 +1552,11 @@ defined in the class annotation.
 
         .. code-block:: php
 
-            // config/routes/annotations.php
+            // config/routes/attributes.php
             use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
             return static function (RoutingConfigurator $routes): void {
-                $routes->import('../../src/Controller/', 'annotation')
+                $routes->import('../../src/Controller/', 'attribute')
                     // the second argument is the $trailingSlashOnRoot option
                     ->prefix('/blog', false)
 
@@ -2061,24 +2061,24 @@ with a locale. This can be done by defining a different prefix for each locale
 
     .. code-block:: yaml
 
-        # config/routes/annotations.yaml
+        # config/routes/attributes.yaml
         controllers:
             resource: '../../src/Controller/'
-            type: annotation
+            type: attribute
             prefix:
                 en: '' # don't prefix URLs for English, the default locale
                 nl: '/nl'
 
     .. code-block:: xml
 
-        <!-- config/routes/annotations.xml -->
+        <!-- config/routes/attributes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="../../src/Controller/" type="annotation">
+            <import resource="../../src/Controller/" type="attribute">
                 <!-- don't prefix URLs for English, the default locale -->
                 <prefix locale="en"></prefix>
                 <prefix locale="nl">/nl</prefix>
@@ -2087,11 +2087,11 @@ with a locale. This can be done by defining a different prefix for each locale
 
     .. code-block:: php
 
-        // config/routes/annotations.php
+        // config/routes/attributes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return static function (RoutingConfigurator $routes): void {
-            $routes->import('../../src/Controller/', 'annotation')
+            $routes->import('../../src/Controller/', 'attribute')
                 ->prefix([
                     // don't prefix URLs for English, the default locale
                     'en' => '',
@@ -2108,23 +2108,23 @@ locale.
 
     .. code-block:: yaml
 
-        # config/routes/annotations.yaml
+        # config/routes/attributes.yaml
         controllers:
             resource: '../../src/Controller/'
-            type: annotation
+            type: attribute
             host:
                 en: 'www.example.com'
                 nl: 'www.example.nl'
 
     .. code-block:: xml
 
-        <!-- config/routes/annotations.xml -->
+        <!-- config/routes/attributes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
-            <import resource="../../src/Controller/" type="annotation">
+            <import resource="../../src/Controller/" type="attribute">
                 <host locale="en">www.example.com</host>
                 <host locale="nl">www.example.nl</host>
             </import>
@@ -2132,10 +2132,10 @@ locale.
 
     .. code-block:: php
 
-        // config/routes/annotations.php
+        // config/routes/attributes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
         return static function (RoutingConfigurator $routes): void {
-            $routes->import('../../src/Controller/', 'annotation')
+            $routes->import('../../src/Controller/', 'attribute')
                 ->host([
                     'en' => 'www.example.com',
                     'nl' => 'www.example.nl',
@@ -2608,31 +2608,32 @@ defined as annotations:
 
     .. code-block:: yaml
 
-        # config/routes/annotations.yaml
+        # config/routes/attributes.yaml
         controllers:
             resource: '../../src/Controller/'
-            type: annotation
+            type: attribute
+            defaults:
             schemes: [https]
 
     .. code-block:: xml
 
-        <!-- config/routes/annotations.xml -->
+        <!-- config/routes/attributes.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <import resource="../../src/Controller/" type="annotation" schemes="https"/>
+            <import resource="../../src/Controller/" type="attribute" schemes="https"/>
         </routes>
 
     .. code-block:: php
 
-        // config/routes/annotations.php
+        // config/routes/attributes.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
         return static function (RoutingConfigurator $routes): void {
-            $routes->import('../../src/Controller/', 'annotation')
+            $routes->import('../../src/Controller/', 'attribute')
                 ->schemes(['https'])
             ;
         };
@@ -2669,7 +2670,7 @@ service, which you can inject in your services or controllers::
         {
             // ...
 
-            // generate a URL youself or get it somehow...
+            // generate a URL yourself or get it somehow...
             $url = 'https://example.com/foo/bar?sort=desc';
 
             // sign the URL (it adds a query parameter called '_hash')

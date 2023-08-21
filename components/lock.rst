@@ -470,16 +470,16 @@ avoid stalled locks::
 
 The ``MongoDbStore`` takes the following ``$options`` (depending on the first parameter type):
 
-=============  ================================================================================================
-Option         Description
-=============  ================================================================================================
-gcProbability  Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
-gcProbablity   Same as ``gcProbability``, see the deprecation note below
-database       The name of the database
-collection     The name of the collection
-uriOptions     Array of URI options for `MongoDBClient::__construct`_
-driverOptions  Array of driver options for `MongoDBClient::__construct`_
-=============  ================================================================================================
+==============  ================================================================================================
+Option          Description
+==============  ================================================================================================
+gcProbability   Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
+gcProbablity    Same as ``gcProbability``, see the deprecation note below
+database        The name of the database
+collection      The name of the collection
+uriOptions      Array of URI options for `MongoDBClient::__construct`_
+driverOptions   Array of driver options for `MongoDBClient::__construct`_
+=============   ================================================================================================
 
 .. deprecated:: 6.3
 

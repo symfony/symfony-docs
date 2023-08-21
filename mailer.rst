@@ -103,6 +103,7 @@ via a third-party provider:
 Service               Install with
 ===================== ==============================================
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
+`Brevo`_              ``composer require symfony/brevo-mailer``
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailchimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``
@@ -110,8 +111,8 @@ Service               Install with
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``
+`Scaleway`_           ``composer require symfony/scaleway-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
-`Sendinblue`_         ``composer require symfony/sendinblue-mailer``
 ===================== ==============================================
 
 .. versionadded:: 6.2
@@ -123,6 +124,11 @@ Service               Install with
 .. versionadded:: 6.3
 
     The MailerSend integration was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The ``Brevo`` (in previous Symfony versions it was called ``Sendinblue``)
+    and ``Scaleway`` integrations were introduced in Symfony 6.4.
 
 .. note::
 
@@ -156,7 +162,7 @@ how to deliver messages via SendGrid. The *only* part you need to change is the
 Each provider has different environment variables that the Mailer uses to
 configure the *actual* protocol, address and authentication for delivery. Some
 also have options that can be configured with query parameters at the end of the
-``MAILER_DSN`` - like ``?region=`` for Amazon SES or Mailgun. Some providers support
+``MAILER_DSN`` - like ``?region=`` for Amazon SES, Mailgun or Scaleway. Some providers support
 sending via ``http``, ``api`` or ``smtp``. Symfony chooses the best available
 transport, but you can force to use one:
 
@@ -175,6 +181,10 @@ party provider:
 | `Amazon SES`_          | - SMTP ses+smtp://USERNAME:PASSWORD@default         |
 |                        | - HTTP ses+https://ACCESS_KEY:SECRET_KEY@default    |
 |                        | - API ses+api://ACCESS_KEY:SECRET_KEY@default       |
++------------------------+-----------------------------------------------------+
+| `Brevo`_               | - SMTP brevo+smtp://USERNAME:PASSWORD@default       |
+|                        | - HTTP n/a                                          |
+|                        | - API brevo+api://KEY@default                       |
 +------------------------+-----------------------------------------------------+
 | `Google Gmail`_        | - SMTP gmail+smtp://USERNAME:APP-PASSWORD@default   |
 |                        | - HTTP n/a                                          |
@@ -208,13 +218,13 @@ party provider:
 |                        | - HTTP n/a                                          |
 |                        | - API postmark+api://KEY@default                    |
 +------------------------+-----------------------------------------------------+
+| `Scaleway`_            | - SMTP scaleway+smtp://PROJECT_ID:API_KEY@default   |
+|                        | - HTTP n/a                                          |
+|                        | - API scaleway+api://PROJECT_ID:API_KEY@default     |
++------------------------+-----------------------------------------------------+
 | `Sendgrid`_            | - SMTP sendgrid+smtp://KEY@default                  |
 |                        | - HTTP n/a                                          |
 |                        | - API sendgrid+api://KEY@default                    |
-+------------------------+-----------------------------------------------------+
-| `Sendinblue`_          | - SMTP sendinblue+smtp://USERNAME:PASSWORD@default  |
-|                        | - HTTP n/a                                          |
-|                        | - API sendinblue+api://KEY@default                  |
 +------------------------+-----------------------------------------------------+
 
 .. versionadded:: 6.3
@@ -1501,11 +1511,11 @@ If your transport does not support tags and metadata, they will be added as cust
 
 The following transports currently support tags and metadata:
 
+* Brevo
 * Mailchimp
 * Mailgun
 * Postmark
 * Sendgrid
-* Sendinblue
 
 The following transports only support tags:
 
@@ -1855,6 +1865,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 
 .. _`Amazon SES`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Amazon/README.md
 .. _`App Password`: https://support.google.com/accounts/answer/185833
+.. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Brevo/README.md
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`DKIM`: https://en.wikipedia.org/wiki/DomainKeys_Identified_Mail
 .. _`download the foundation-emails.css file`: https://github.com/foundation/foundation-emails/blob/develop/dist/foundation-emails.css
@@ -1875,5 +1886,5 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Postmark`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
+.. _`Scaleway`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Scaleway/README.md
 .. _`SendGrid`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendgrid/README.md
-.. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Sendinblue/README.md

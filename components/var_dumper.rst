@@ -461,6 +461,24 @@ then its dump representation::
 
 .. image:: /_images/components/var_dumper/09-cut.png
 
+.. code-block:: php
+
+    class Foo
+    {
+        // $foo is uninitialized, which is different from being null
+        private int|float $foo;
+        public ?string $baz = null;
+    }
+
+    $var = new Foo();
+    dump($var);
+
+.. image:: /_images/components/var_dumper/10-uninitialized.png
+
+.. versionadded:: 6.4
+
+    Displaying uninitialized variables information was introduced in Symfony 6.4.
+
 .. _var-dumper-advanced:
 
 Advanced Usage

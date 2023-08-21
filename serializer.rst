@@ -75,6 +75,7 @@ As well as the following normalizers:
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ConstraintViolationListNormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\ProblemNormalizer`
 * :class:`Symfony\\Component\\Serializer\\Normalizer\\BackedEnumNormalizer`
+* :class:`Symfony\\Component\\Serializer\\Normalizer\\TranslatableNormalizer`
 
 Other :ref:`built-in normalizers <component-serializer-normalizers>` and
 custom normalizers and/or encoders can also be loaded by tagging them as
@@ -164,23 +165,6 @@ You can also specify the context on a per-property basis::
 
 .. configuration-block::
 
-    .. code-block:: php-annotations
-
-        namespace App\Model;
-
-        use Symfony\Component\Serializer\Annotation\Context;
-        use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
-
-        class Person
-        {
-            /**
-             * @Context({ DateTimeNormalizer::FORMAT_KEY = 'Y-m-d' })
-             */
-            public \DateTimeInterface $createdAt;
-
-            // ...
-        }
-
     .. code-block:: php-attributes
 
         namespace App\Model;
@@ -260,7 +244,7 @@ You can also restrict the usage of a context to some groups::
         // ...
     }
 
-The attribute/annotation can be repeated as much as needed on a single property.
+The attribute can be repeated as much as needed on a single property.
 Context without group is always applied first. Then context for the matching
 groups are merged in the provided order.
 
@@ -306,14 +290,13 @@ To create a more complex (de)serialization context, you can chain them using the
 You can also :doc:`create your context builders </serializer/custom_context_builders>`
 to have autocompletion, validation, and documentation for your custom context values.
 
-.. _serializer-using-serialization-groups-annotations:
 .. _serializer-using-serialization-groups-attributes:
 
 Using Serialization Groups Attributes
 -------------------------------------
 
-You can add :ref:`#[Groups] attributes <component-serializer-attributes-groups-annotations>`
-to your class::
+You can add :ref:`#[Groups] attributes <component-serializer-attributes-groups-attributes>`
+to your class properties::
 
     // src/Entity/Product.php
     namespace App\Entity;
@@ -339,7 +322,37 @@ to your class::
         private string $description;
     }
 
-You can now choose which groups to use when serializing::
+You can also use the ``#[Groups]`` attribute on class level::
+
+    #[ORM\Entity]
+    #[Groups(['show_product'])]
+    class Product
+    {
+        #[ORM\Id]
+        #[ORM\GeneratedValue]
+        #[ORM\Column(type: 'integer')]
+        #[Groups(['list_product'])]
+        private int $id;
+
+        #[ORM\Column(type: 'string', length: 255)]
+        #[Groups(['list_product'])]
+        private string $name;
+
+        #[ORM\Column(type: 'text')]
+        private string $description;
+    }
+
+In this example, the ``id`` and the ``name`` properties belong to the
+``show_product`` and ``list_product`` groups. The ``description`` property
+only belongs to the ``show_product`` group.
+
+.. versionadded:: 6.4
+
+    The support of the ``#[Groups]`` attribute on class level was
+    introduced in Symfony 6.4.
+
+Now that your groups are defined, you can choose which groups to use when
+serializing::
 
     use Symfony\Component\Serializer\Context\Normalizer\ObjectNormalizerContextBuilder;
 
@@ -373,22 +386,6 @@ To map nested properties, use the ``SerializedPath`` configuration to define
 their paths using a :doc:`valid PropertyAccess syntax </components/property_access>`:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        namespace App\Model;
-
-        use Symfony\Component\Serializer\Annotation\SerializedPath;
-
-        class Person
-        {
-            /**
-             * @SerializedPath("[profile][information][birthday]")
-             */
-            private string $birthday;
-
-            // ...
-        }
 
     .. code-block:: php-attributes
 
@@ -442,7 +439,7 @@ object::
     $person = $normalizer->denormalize($data, Person::class, 'any');
     $person->getBirthday(); // 01-01-1970
 
-When using annotations or attributes, the ``SerializedPath`` can either
+When using attributes, the ``SerializedPath`` can either
 be set on the property or the associated _getter_ method. The ``SerializedPath``
 cannot be used in combination with a ``SerializedName`` for the same property.
 

@@ -714,7 +714,12 @@ By default, failed requests are retried up to 3 times, with an exponential delay
 between retries (first retry = 1 second; third retry: 4 seconds) and only for
 the following HTTP status codes: ``423``, ``425``, ``429``, ``502`` and ``503``
 when using any HTTP method and ``500``, ``504``, ``507`` and ``510`` when using
-an HTTP `idempotent method`_.
+an HTTP `idempotent method`_. Use the ``max_retries`` setting to configure the
+amount of times a request is retried.
+
+.. versionadded:: 6.4
+
+    The ``max_retries`` options was introduced in Symfony 6.4.
 
 Check out the full list of configurable :ref:`retry_failed options <reference-http-client-retry-failed>`
 to learn how to tweak each of them to fit your application needs.
@@ -2191,6 +2196,49 @@ test it in a real application::
         }
     }
 
+Testing Using HAR Files
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Modern browsers (via their network tab) and HTTP clients allow to export the
+information of one or more HTTP requests using the `HAR`_ (HTTP Archive) format.
+You can use those ``.har`` files to perform tests with Symfony's HTTP Client.
+
+First, use a browser or HTTP client to perform the HTTP request(s) you want to
+test. Then, save that information as a ``.har`` file somewhere in your application::
+
+    // ExternalArticleServiceTest.php
+    use PHPUnit\Framework\TestCase;
+    use Symfony\Component\HttpClient\MockHttpClient;
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    final class ExternalArticleServiceTest extends TestCase
+    {
+        public function testSubmitData(): void
+        {
+            // Arrange
+            $fixtureDir = sprintf('%s/tests/fixtures/HTTP', static::getContainer()->getParameter('kernel.project_dir'));
+            $factory = new HarFileResponseFactory("$fixtureDir/example.com_archive.har");
+            $httpClient = new MockHttpClient($factory, 'https://example.com');
+            $service = new ExternalArticleService($httpClient);
+
+            // Act
+            $responseData = $service->createArticle($requestData);
+
+            // Assert
+            self::assertSame($responseData, 'the expected response');
+        }
+    }
+
+If your service performs multiple requests or if your ``.har`` file contains multiple
+request/response pairs, the :class:`Symfony\\Component\\HttpClient\\Test\\HarFileResponseFactory`
+will find the associated response based on the request method, URL and body (if any).
+Note that **this won't work** if the request body or URI is random / always
+changing (e.g. if it contains current date or random UUIDs).
+
+.. versionadded:: 6.4
+
+    The ``HarFileResponseFactory`` was introduced in Symfony 6.4.
+
 Testing Network Transport Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2257,3 +2305,4 @@ you to do so, by yielding the exception from its body::
 .. _`idempotent method`: https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol#Idempotent_methods
 .. _`SSRF`: https://portswigger.net/web-security/ssrf
 .. _`RFC 6570`: https://www.rfc-editor.org/rfc/rfc6570
+.. _`HAR`: https://w3c.github.io/web-performance/specs/HAR/Overview.html

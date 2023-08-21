@@ -114,7 +114,7 @@ will allow alternate input formats like:
 ``versions``
 ~~~~~~~~~~~~
 
-**type**: ``int[]`` **default**: ``[1,2,3,4,5,6,7,8]``
+**type**: ``int[]|int`` **default**: ``[1,2,3,4,5,6,7,8]``
 
 This option can be used to only allow specific `UUID versions`_ (by default, all
 of them are allowed). Valid versions are 1 - 8. Instead of using numeric values,
@@ -132,6 +132,11 @@ you can also use the following PHP constants to refer to each UUID version:
 .. versionadded:: 6.2
 
     UUID versions 7 and 8 were introduced in Symfony 6.2.
+
+.. versionadded:: 6.4
+
+    Using a single integer instead of an integer array for this option
+    was introduced in Symfony 6.4.
 
 .. _`Universally unique identifier (UUID)`: https://en.wikipedia.org/wiki/Universally_unique_identifier
 .. _`RFC 4122`: https://tools.ietf.org/html/rfc4122

@@ -51,17 +51,38 @@ these values as ``<input type="checkbox">`` or ``<input type="radio">``.
 
 The label displayed in the ``<option>`` elements of the ``<select>`` is the enum
 name. PHP defines some strict rules for these names (e.g. they can't contain
-dots or spaces). If you need more flexibility for these labels, use the
-``choice_label`` option and define a function that returns the custom label::
+dots or spaces). If you need more flexibility for these labels, your enum can
+implement ``TranslatableInterface`` to translate or display custom labels::
 
-    ->add('textAlign', EnumType::class, [
-        'class' => TextAlign::class,
-        'choice_label' => fn ($choice) => match ($choice) {
-            TextAlign::Left => 'text_align.left.label',
-            TextAlign::Center => 'text_align.center.label',
-            TextAlign::Right  => 'text_align.right.label',
-        },
-    ]);
+    // src/Config/TextAlign.php
+    namespace App\Config;
+
+    use Symfony\Contracts\Translation\TranslatableInterface;
+    use Symfony\Contracts\Translation\TranslatorInterface;
+
+    enum TextAlign: string implements TranslatableInterface
+    {
+        case Left = 'Left aligned';
+        case Center = 'Center aligned';
+        case Right = 'Right aligned';
+
+        public function trans(TranslatorInterface $translator, string $locale = null): string
+        {
+            // Translate enum from name (Left, Center or Right)
+            return $translator->trans($this->name, locale: $locale);
+
+            // Translate enum using custom labels
+            return match ($this) {
+                self::Left  => $translator->trans('text_align.left.label', locale: $locale),
+                self::Center => $translator->trans('text_align.center.label', locale: $locale),
+                self::Right  => $translator->trans('text_align.right.label', locale: $locale),
+            };
+        }
+    }
+
+.. versionadded:: 6.4
+
+    Support for ``TranslatableInterface`` was introduced in Symfony 6.4.
 
 Field Options
 -------------

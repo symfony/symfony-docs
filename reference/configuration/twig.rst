@@ -85,6 +85,14 @@ autoescape_service_method
 If ``autoescape_service`` option is defined, then this option defines the method
 called to determine the default escaping applied to the template.
 
+If the service defined in ``autoescape_service`` is invocable (i.e. it defines
+the `__invoke() PHP magic method`_) you can omit this option.
+
+.. versionadded:: 6.4
+
+    The feature to use invocable services to omit this option was introduced in
+    Symfony 6.4.
+
 base_template_class
 ~~~~~~~~~~~~~~~~~~~
 
@@ -434,3 +442,4 @@ and the non-existing values are replaced by ``null``.
 
 .. _`the optimizer extension`: https://twig.symfony.com/doc/3.x/api.html#optimizer-extension
 .. _`XSS attacks`: https://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`__invoke() PHP magic method`: https://www.php.net/manual/en/language.oop5.magic.php#object.invoke

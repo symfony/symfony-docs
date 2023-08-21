@@ -224,11 +224,12 @@ nothing more than a few lines of *glue-code*, so you are not coupling the
 important parts of your application.
 
 .. _best-practice-controller-annotations:
+.. _best-practice-controller-attributes:
 
-Use Attributes or Annotations to Configure Routing, Caching, and Security
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Use Attributes to Configure Routing, Caching, and Security
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Using attributes or annotations for routing, caching, and security simplifies
+Using attributes for routing, caching, and security simplifies
 configuration. You don't need to browse several files created with different
 formats (YAML, XML, PHP): all the configuration is just where you  require it,
 and it only uses one format.

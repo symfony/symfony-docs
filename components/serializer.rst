@@ -289,6 +289,7 @@ for each format:
     $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
 
 .. _component-serializer-attributes-groups-annotations:
+.. _component-serializer-attributes-groups-attributes:
 
 Then, create your groups definition:
 
@@ -436,8 +437,8 @@ Ignoring Attributes
 All attributes are included by default when serializing objects. There are two
 options to ignore some of those attributes.
 
-Option 1: Using ``@Ignore`` Annotation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Option 1: Using ``#[Ignore]`` Attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. configuration-block::
 
@@ -881,6 +882,20 @@ The Serializer component provides several built-in normalizers:
     Also it can denormalize ``uuid`` or ``ulid`` strings to :class:`Symfony\\Component\\Uid\\Uuid`
     or :class:`Symfony\\Component\\Uid\\Ulid`. The format does not matter.
 
+:class:`Symfony\\Component\\Serializer\\Normalizer\\TranslatableNormalizer`
+    This normalizer converts objects that implement
+    :class:`Symfony\\Contracts\\Translation\\TranslatableInterface` into
+    translated strings, using the
+    :method:`Symfony\\Contracts\\Translation\\TranslatableInterface::trans`
+    method. You can define the locale to use to translate the object by
+    setting the ``TranslatableNormalizer::NORMALIZATION_LOCALE_KEY`` serializer
+    context option.
+
+    .. versionadded:: 6.4
+
+        The :class:`Symfony\\Component\\Serializer\\Normalizer\\TranslatableNormalizer`
+        was introduced in Symfony 6.4.
+
 .. note::
 
     You can also create your own Normalizer to use another structure. Read more at
@@ -997,6 +1012,22 @@ context to pass in these options using the key ``json_encode_options`` or
 ``json_decode_options`` respectively::
 
     $this->serializer->serialize($data, 'json', ['json_encode_options' => \JSON_PRESERVE_ZERO_FRACTION]);
+
+These are the options available:
+
+===============================  =========================================================================================================== ================================
+Option                           Description                                                                                                 Default
+===============================  ==========================================================================================================  ================================
+``json_decode_associative``      If set to true returns the result as an array, returns a nested ``stdClass`` hierarchy otherwise.           ``false``
+``json_decode_detailed_errors``  If set to true, exceptions thrown on parsing of JSON are more specific. Requires `seld/jsonlint`_ package.  ``false``
+``json_encode_options``          `$flags`_ passed to :phpfunction:`json_decode` function.                                                    ``0``
+``json_decode_options``          `$flags`_ passed to :phpfunction:`json_encode` function.                                                    ``\JSON_PRESERVE_ZERO_FRACTION``
+``json_decode_recursion_depth``  Sets maximum recursion depth.                                                                               ``512``
+===============================  ==========================================================================================================  ================================
+
+.. versionadded:: 6.4
+
+    The support of ``json_decode_detailed_errors`` was introduced in Symfony 6.4.
 
 The ``CsvEncoder``
 ~~~~~~~~~~~~~~~~~~
@@ -1827,3 +1858,5 @@ Learn more
 .. _`RFC 4122`: https://tools.ietf.org/html/rfc4122
 .. _`PHP reflection`: https://php.net/manual/en/book.reflection.php
 .. _`data URI`: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs
+.. _seld/jsonlint: https://github.com/Seldaek/jsonlint
+.. _$flags: https://www.php.net/manual/en/json.constants.php

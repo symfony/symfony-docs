@@ -410,6 +410,40 @@ instead::
     );
     $process->run();
 
+Executing a PHP Child Process with the Same Configuration
+---------------------------------------------------------
+
+.. versionadded:: 6.4
+
+    The ``PhpSubprocess`` helper was introduced in Symfony 6.4.
+
+When you start a PHP process, it uses the default configuration defined in
+your ``php.ini`` file. You can bypass these options with the ``-d`` command line
+option. For example, if ``memory_limit`` is set to ``256M``, you can disable this
+memory limit when running some command like this:
+``php -d memory_limit=-1 bin/console app:my-command``.
+
+However, if you run the command via the Symfony ``Process`` class, PHP will use
+the settings defined in the ``php.ini`` file. You can solve this issue by using
+the :class:`Symfony\\Component\\Process\\PhpSubprocess` class to run the command::
+
+    use Symfony\Component\Process\Process;
+
+    class MyCommand extends Command
+    {
+        protected function execute(InputInterface $input, OutputInterface $output): int
+        {
+            // the memory_limit (and any other config option) of this command is
+            // the one defined in php.ini instead of the new values (optionally)
+            // passed via the '-d' command option
+            $childProcess = new Process(['bin/console', 'cache:pool:prune']);
+
+            // the memory_limit (and any other config option) of this command takes
+            // into account the values (optionally) passed via the '-d' command option
+            $childProcess = new PhpSubprocess(['bin/console', 'cache:pool:prune']);
+        }
+    }
+
 Process Timeout
 ---------------
 

@@ -30,7 +30,7 @@ an array containing all matches.
 Resource Loaders
 ----------------
 
-For each type of resource (YAML, XML, annotation, etc.) a loader must be
+For each type of resource (YAML, XML, attributes, etc.) a loader must be
 defined. Each loader should implement
 :class:`Symfony\\Component\\Config\\Loader\\LoaderInterface` or extend the
 abstract :class:`Symfony\\Component\\Config\\Loader\\FileLoader` class,

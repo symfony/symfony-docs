@@ -101,4 +101,22 @@ Parameter        Description
 ``{{ label }}``  Corresponding form field label
 ===============  ==============================================================
 
+``withSeconds``
+~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``true``
+
+This option allows you to specify whether the time should include seconds.
+
+=========  ===============================  ==============  ================
+Option     Pattern                          Correct value   Incorrect value
+=========  ===============================  ==============  ================
+``true``   ``/^(\d{2}):(\d{2}):(\d{2})$/``  ``12:00:00``    ``12:00``
+``false``  ``/^(\d{2}):(\d{2})$/``          ``12:00``       ``12:00:00``
+=========  ===============================  ==============  ================
+
+.. versionadded:: 6.4
+
+    The ``withSeconds`` option was introduced in Symfony 6.4.
+
 .. include:: /reference/constraints/_payload-option.rst.inc

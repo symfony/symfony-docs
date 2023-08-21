@@ -167,6 +167,11 @@ follows:
     ``'draft'`` or ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``
     instead of ``'to_review'``.
 
+.. versionadded:: 6.4
+
+    Since Symfony 6.4, the ``type`` option under ``marking_store`` can be
+    omitted when the ``property`` option is explicitly set.
+
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
     // src/Entity/BlogPost.php
@@ -185,11 +190,47 @@ The configured property will be used via its implemented getter/setter methods b
             return $this->currentPlace;
         }
 
-        public function setCurrentPlace($currentPlace, $context = []): void
+        public function setCurrentPlace(string $currentPlace, array $context = []): void
         {
             $this->currentPlace = $currentPlace;
         }
     }
+
+It is also possible to use public properties for the marking store. The above
+class would become the following::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    class BlogPost
+    {
+        // the configured marking store property must be declared
+        public string $currentPlace;
+        public string $title;
+        public string $content;
+    }
+
+When using public properties, context is not supported. In order to support it,
+you must declare a setter to write your property::
+
+    // src/Entity/BlogPost.php
+    namespace App\Entity;
+
+    class BlogPost
+    {
+        public string $currentPlace;
+        // ...
+
+        public function setCurrentPlace(string $currentPlace, array $context = []): void
+        {
+            // assign the property and do something with the context
+        }
+    }
+
+.. versionadded:: 6.4
+
+    The feature to use public properties instead of getter/setter methods
+    and private properties was introduced in Symfony 6.4.
 
 .. note::
 
@@ -319,6 +360,8 @@ name.
 
     You can find the list of available workflow services with the
     ``php bin/console debug:autowiring workflow`` command.
+
+.. _workflow_using-events:
 
 Using Events
 ------------
@@ -477,6 +520,40 @@ it via the marking::
 
     // contains the new value
     $marking->getContext();
+
+It is also possible to listen to these events by declaring event listeners
+with the following attributes:
+
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsAnnounceListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsCompletedListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsEnterListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsEnteredListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsGuardListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsLeaveListener`
+* :class:`Symfony\\Component\\Workflow\\Attribute\\AsTransitionListener`
+
+These attributes do work like the
+:class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener`
+attributes::
+
+    class ArticleWorkflowEventListener
+    {
+        #[AsTransitionListener(workflow: 'my-workflow', transition: 'published')]
+        public function onPublishedTransition(TransitionEvent $event): void
+        {
+            // ...
+        }
+
+        // ...
+    }
+
+You may refer to the documentation about
+:ref:`defining event listeners with PHP attributes <event-dispatcher_event-listener-attributes>`
+for further use.
+
+.. versionadded:: 6.4
+
+    The workflow event attributes were introduced in Symfony 6.4.
 
 .. _workflow-usage-guard-events:
 

@@ -271,9 +271,13 @@ You can also pass custom variables using the `values`_ option.
 ``constraints``
 ~~~~~~~~~~~~~~~
 
-**type**: ``array``
+**type**: ``array|Constraint``
 
-The constraints that are applied if the expression returns true.
+One or multiple constraints that are applied if the expression returns true.
+
+.. versionadded:: 6.4
+
+    Passing a single ``Constraint`` instead of an array was introduced in Symfony 6.4.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 

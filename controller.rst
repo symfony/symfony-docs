@@ -63,7 +63,7 @@ Mapping a URL to a Controller
 
 In order to *view* the result of this controller, you need to map a URL to it via
 a route. This was done above with the ``#[Route('/lucky/number/{max}')]``
-:ref:`route attribute <annotation-routes>`.
+:ref:`route attribute <attribute-routes>`.
 
 To see your page, go to this URL in your browser: http://localhost:8000/lucky/number/100
 
@@ -430,20 +430,33 @@ attribute in your controller::
         // ...
     }
 
-You can customize the validation groups used during the mapping thanks to the
-``validationGroups`` option::
+You can customize the validation groups used during the mapping and also the
+HTTP status to return if the validation fails::
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    // ...
 
     public function dashboard(
-        #[MapQueryString(validationGroups: ['strict', 'edit'])] UserDTO $userDto
+        #[MapQueryString(
+            validationGroups: ['strict', 'edit'],
+            validationFailedStatusCode: Response::HTTP_UNPROCESSABLE_ENTITY
+        )] UserDTO $userDto
     ): Response
     {
         // ...
     }
 
+The default status code returned if the validation fails is 404.
+
 .. versionadded:: 6.3
 
     The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryString` attribute
     was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The ``validationFailedStatusCode`` parameter was introduced in Symfony 6.4.
 
 Mapping Request Payload
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -492,20 +505,34 @@ your DTO::
         // ...
     }
 
-You can also customize the validation groups used as well as supported
-payload formats::
+You can also customize the validation groups used, the status code to return if
+the validation fails as well as supported payload formats::
+
+    use Symfony\Component\HttpFoundation\Response;
+
+    // ...
 
     public function dashboard(
-        #[MapRequestPayload(acceptFormat: 'json', validationGroups: ['strict', 'read'])] UserDTO $userDto
+        #[MapRequestPayload(
+            acceptFormat: 'json',
+            validationGroups: ['strict', 'read'],
+            validationFailedStatusCode: Response::HTTP_NOT_FOUND
+        )] UserDTO $userDto
     ): Response
     {
         // ...
     }
 
+The default status code returned if the validation fails is 422.
+
 .. versionadded:: 6.3
 
     The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestPayload` attribute
     was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The ``validationFailedStatusCode`` parameter was introduced in Symfony 6.4.
 
 Managing the Session
 --------------------

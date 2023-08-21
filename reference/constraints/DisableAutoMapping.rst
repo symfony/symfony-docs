@@ -3,7 +3,7 @@ DisableAutoMapping
 
 This constraint allows to disable :ref:`Doctrine's auto mapping <doctrine_auto-mapping>`
 on a class or a property. Automapping allows to determine validation rules based
-on Doctrine's annotations and attributes. You may use this constraint when
+on Doctrine's attributes. You may use this constraint when
 automapping is globally enabled, but you still want to disable this feature for
 a class or a property specifically.
 

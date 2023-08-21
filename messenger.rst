@@ -1897,6 +1897,136 @@ on a case-by-case basis via the :class:`Symfony\\Component\\Messenger\\Stamp\\Se
     provides that control. See `SymfonyCasts' message serializer tutorial`_ for
     details.
 
+Running Commands And External Processes
+---------------------------------------
+
+Trigger a Command
+~~~~~~~~~~~~~~~~~
+
+It is possible to trigger any command by dispatching a
+:class:`Symfony\\Component\\Console\\Messenger\\RunCommandMessage`. Symfony
+will take care of handling this message and execute the command passed
+to the message parameter::
+
+    use Symfony\Component\Console\Messenger\RunCommandMessage;
+    use Symfony\Component\Messenger\MessageBusInterface;
+
+    class CleanUpService
+    {
+        public function __construct(private readonly MessageBusInterface $bus)
+        {
+        }
+
+        public function cleanUp(): void
+        {
+            // Long task with some caching...
+
+            // Once finished, dispatch some clean up commands
+            $this->bus->dispatch(new RunCommandMessage('app:my-cache:clean-up --dir=var/temp'));
+            $this->bus->dispatch(new RunCommandMessage('cache:clear'));
+        }
+    }
+
+You can configure the behavior in the case of something going wrong during command
+execution. To do so, you can use the ``throwOnFailure`` and ``catchExceptions``
+parameters when creating your instance of
+:class:`Symfony\\Component\\Console\\Messenger\\RunCommandMessage`.
+
+Once handled, the handler will return a
+:class:`Symfony\\Component\\Console\\Messenger\\RunCommandContext` which
+contains many useful information such as the exit code or the output of the
+process. You can refer to the page dedicated on
+:doc:`handler results </messenger/handler_results>` for more information.
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Component\\Console\\Messenger\\RunCommandMessage`
+    and :class:`Symfony\\Component\\Console\\Messenger\\RunCommandContext`
+    classes were introduced in Symfony 6.4.
+
+Trigger An External Process
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Messenger comes with a handy helper to run external processes by
+dispatching a message. This takes advantages of the
+:doc:`Process component </components/process>`. By dispatching a
+:class:`Symfony\\Component\\Process\\Messenger\\RunProcessMessage`, Messenger
+will take care of creating a new process with the parameters you passed::
+
+    use Symfony\Component\Messenger\MessageBusInterface;
+    use Symfony\Component\Process\Messenger\RunProcessMessage;
+
+    class CleanUpService
+    {
+        public function __construct(private readonly MessageBusInterface $bus)
+        {
+        }
+
+        public function cleanUp(): void
+        {
+            $this->bus->dispatch(new RunProcessMessage(['rm', '-rf', 'var/log/temp/*'], cwd: '/my/custom/working-dir'));
+
+            // ...
+        }
+    }
+
+Once handled, the handler will return a
+:class:`Symfony\\Component\\Process\\Messenger\\RunProcessContext` which
+contains many useful information such as the exit code or the output of the
+process. You can refer to the page dedicated on
+:doc:`handler results </messenger/handler_results>` for more information.
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Component\\Process\\Messenger\\RunProcessMessage`
+    and :class:`Symfony\\Component\\Process\\Messenger\\RunProcessContext`
+    classes were introduced in Symfony 6.4.
+
+Pinging A Webservice
+--------------------
+
+Sometimes, you may need to regularly ping a webservice to get its status, e.g.
+is it up or down. It is possible to do so by dispatching a
+:class:`Symfony\\Component\\HttpClient\\Messenger\\PingWebhookMessage`::
+
+    use Symfony\Component\HttpClient\Messenger\RPingWebhookMessage;
+    use Symfony\Component\Messenger\MessageBusInterface;
+
+    class LivenessService
+    {
+        public function __construct(private readonly MessageBusInterface $bus)
+        {
+        }
+
+        public function ping(): void
+        {
+            // An HttpExceptionInterface is thrown on 3xx/4xx/5xx
+            $this->bus->dispatch(new PingWebhookMessage('GET', 'https://example.com/status');
+
+            // Ping, but does not throw on 3xx/4xx/5xx
+            $this->bus->dispatch(new PingWebhookMessage('GET', 'https://example.com/status', throw: false);
+
+            // Any valid HttpClientInterface option can be used
+            $this->bus->dispatch(new PingWebhookMessage('POST', 'https://example.com/status', [
+                'headers' => [
+                    'Authorization' => 'Bearer ...'
+                ],
+                'json' => [
+                    'data' => 'some-data',
+                ],
+            ]));
+        }
+    }
+
+The handler will return a
+:class:`Symfony\\Contracts\\HttpClient\\ResponseInterface`, allowing you to
+gather and process information returned by the HTTP request.
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Component\\HttpClient\\Messenger\\PingWebhookMessage`
+    class was introduced in Symfony 6.4.
+
 Customizing Handlers
 --------------------
 

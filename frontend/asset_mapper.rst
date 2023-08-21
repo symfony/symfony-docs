@@ -3,9 +3,7 @@ AssetMapper: Simple, Modern CSS & JS Management
 
 .. versionadded:: 6.3
 
-    The AssetMapper component was introduced as an
-    :doc:`experimental feature </contributing/code/experimental>` in
-    Symfony 6.3.
+    The AssetMapper component was introduced in Symfony 6.3.
 
 The AssetMapper component lets you write modern JavaScript and CSS without the complexity
 of using a bundler. Browsers *already* support many modern JavaScript features
