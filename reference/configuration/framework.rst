@@ -53,12 +53,10 @@ out all the application users.
 handle_all_throwables
 ~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
-If set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
+Set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
 thrown by the application and will turn them into HTTP responses.
-
-Starting from Symfony 7.0, the default value of this option will be ``true``.
 
 .. versionadded:: 6.2
 
@@ -1641,11 +1639,13 @@ To see a list of all available storages, run:
 handler_id
 ..........
 
-**type**: ``string`` **default**: ``session.handler.native_file``
+**type**: ``string`` or ``null`` **default**: ``null``
 
 The service id used for session storage. The default value ``'session.handler.native_file'``
-will let Symfony manage the sessions itself using files to store the session metadata.
-Set it to ``null`` to use the native PHP session mechanism.
+will let Symfony manage the sessions itself using files to store the session metadata when
+`framework.session.save_path` is set or `null`
+
+The default value ``null`` is to use the native PHP session mechanism.
 You can also :ref:`store sessions in a database <session-database>`.
 
 .. _name:
@@ -1831,7 +1831,7 @@ This option is related to the `session.sid_bits_per_character PHP option`_.
 save_path
 .........
 
-**type**: ``string`` **default**: ``%kernel.cache_dir%/sessions``
+**type**: ``string`` or ``null`` **default**: ``%kernel.cache_dir%/sessions``
 
 This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the session files are created.
@@ -2734,12 +2734,7 @@ constraint verifies the submitted string entropy is matching the minimum entropy
 email_validation_mode
 .....................
 
-**type**: ``string`` **default**: ``loose``
-
-.. deprecated:: 6.2
-
-    The ``loose`` default value is deprecated since Symfony 6.2. Starting from
-    Symfony 7.0, the default value of this option will be ``html5``.
+**type**: ``string`` **default**: ``html5``
 
 Sets the default value for the
 :ref:`"mode" option of the Email validator <reference-constraint-email-mode>`.
@@ -2932,7 +2927,7 @@ php_errors
 log
 ...
 
-**type**: ``boolean|int`` **default**: ``%kernel.debug%``
+**type**: ``boolean|int`` **default**: ``true``
 
 Use the application logger instead of the PHP logger for logging PHP errors.
 When an integer value is used, it also sets the log level. Those integer

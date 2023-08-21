@@ -108,9 +108,6 @@ Parameter        Description
 
 This option defines the pattern used to validate the email address. Valid values are:
 
-* ``loose`` uses a simple regular expression (just checks that at least one ``@``
-  character is present, etc.). This validation is too simple and it's recommended
-  to use one of the other modes instead;
 * ``html5`` uses the regular expression of the `HTML5 email input element`_,
   except it enforces a tld to be present.
 * ``html5-allow-no-tld`` uses exactly the same regular expression as the `HTML5 email input element`_,
@@ -132,11 +129,6 @@ This option defines the pattern used to validate the email address. Valid values
 The default value used by this option is set in the
 :ref:`framework.validation.email_validation_mode <reference-validation-email_validation_mode>`
 configuration option.
-
-.. deprecated:: 6.2
-
-    The ``loose`` value is deprecated since Symfony 6.2. Starting from
-    Symfony 7.0, the default value of this option will be ``html5``.
 
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
