@@ -931,17 +931,6 @@ To improve performance, you can optionally run the ``dump-env`` Composer command
 
         # config/services.yaml
         services:
-            Symfony\Component\Dotenv\Command\DotenvDumpCommand:
-                - '%kernel.project_dir%/.env'
-                - '%kernel.environment%'
-
-    In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
-    (which is the default):
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
             Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
 
     Then, run the command:
