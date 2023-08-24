@@ -459,7 +459,7 @@ It is also possible to serialize only a set of specific attributes::
 Only attributes that are not ignored (see below) are available.
 If some serialization groups are set, only attributes allowed by those groups can be used.
 
-As for groups, attributes can be selected during both the serialization and deserialization process.
+As for groups, attributes can be selected during both the serialization and deserialization processes.
 
 .. _serializer_ignoring-attributes:
 
