@@ -400,7 +400,7 @@ It is also possible to serialize only a set of specific attributes::
     {
         public string $familyName;
         public string $givenName;
-        public string $company;
+        public Company $company;
     }
 
     class Company
