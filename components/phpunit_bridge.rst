@@ -325,6 +325,10 @@ It's also possible to change verbosity per deprecation type. For example, using
 ``quiet[]=indirect&quiet[]=other`` will hide details for deprecations of types
 "indirect" and "other".
 
+Note that `quiet` hides details for the specified deprecation types, but will
+not change the outcome in terms of exit code. That's what :ref:`max <making-tests-fail>` is for, and both
+settings are orthogonal.
+
 .. versionadded:: 5.1
 
     The ``quiet`` option was introduced in Symfony 5.1.
