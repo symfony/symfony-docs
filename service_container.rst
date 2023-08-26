@@ -1420,7 +1420,7 @@ You also have a service that defines many methods and one of them is the same
     {
         // other methods...
 
-        public function format($string $message, array $parameters): string
+        public function formatMessage($string $message, array $parameters): string
         {
             // ...
         }
