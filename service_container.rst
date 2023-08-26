@@ -1514,7 +1514,7 @@ an adapter for a functional interface through configuration:
 By doing so, Symfony will generate a class (also called an *adapter*)
 implementing ``MessageFormatterInterface`` that will forward calls of
 ``MessageFormatterInterface::format()`` to your underlying service's method
-``MessageUtils::format()``, with all its arguments.
+``MessageUtils::formatMessage()``, with all its arguments.
 
 Learn more
 ----------
