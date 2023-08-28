@@ -89,7 +89,7 @@ Annotation Routes
 
 Instead of defining your route in YAML, Symfony also allows you to use *annotation*
 or *attribute* routes. Attributes are built-in in PHP starting from PHP 8. In earlier
-PHP versions you can use annotations. To do this, install the annotations package:
+PHP versions you can use annotations, which require installing this package:
 
 .. code-block:: terminal
 
@@ -108,9 +108,9 @@ You can now add your route directly *above* the controller:
 
         class LuckyController
         {
-        +   /**
-        +    * @Route("/lucky/number")
-        +    */
+            /**
+             * @Route("/lucky/number")
+             */
             public function number(): Response
             {
                 // this looks exactly the same
@@ -122,11 +122,11 @@ You can now add your route directly *above* the controller:
         // src/Controller/LuckyController.php
 
         // ...
-        + use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class LuckyController
         {
-        +   #[Route('/lucky/number')]
+            #[Route('/lucky/number')]
             public function number(): Response
             {
                 // this looks exactly the same
