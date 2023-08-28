@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-08-14T08:08:29Z
+
+@r1n0x can you find out, since when this is possible? Do you have a PR or is it here since the beginning? IN this case we must target `5.4` branch, but we can handle that for you while merging.
+
+Thanks
+
+---------------------------------------------------------------------------
+
+by r1n0x at 2023-08-21T20:29:03Z
+
+@OskarStark As far as I could find, it may be there from the beginnings of Doctrine transport - here's a link https://github.com/symfony/messenger/commit/7234411650555c52f15226faf2e9c22010c5cf85
+That would be messenger 4.3
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-08-28T09:07:38Z
+
+Lets merge it in `5.4` then, thanks 👍
