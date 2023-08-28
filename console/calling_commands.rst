@@ -8,13 +8,13 @@ or if you want to create a "meta" command that runs a bunch of other commands
 changed on the production servers: clearing the cache, generating Doctrine
 proxies, dumping web assets, ...).
 
-Use the :method:`Symfony\\Component\\Console\\Application::find` method to
-find the command you want to run by passing the command name. Then, create a
-new :class:`Symfony\\Component\\Console\\Input\\ArrayInput` with the
-arguments and options you want to pass to the command.
+Use the :method:`Symfony\\Component\\Console\\Application::doRun`. Then, create
+a new :class:`Symfony\\Component\\Console\\Input\\ArrayInput` with the
+arguments and options you want to pass to the command. The command name must be
+the first argument.
 
-Eventually, calling the ``run()`` method actually runs the command and returns
-the returned code from the command (return value from command's ``execute()``
+Eventually, calling the ``doRun()`` method actually runs the command and returns
+the returned code from the command (return value from command ``execute()``
 method)::
 
     // ...
@@ -29,15 +29,14 @@ method)::
 
         protected function execute(InputInterface $input, OutputInterface $output): int
         {
-            $command = $this->getApplication()->find('demo:greet');
-
-            $arguments = [
+            $greetInput = new ArrayInput([
+                // the command name is passed as first argument
+                'command' => 'demo:greet',
                 'name'    => 'Fabien',
                 '--yell'  => true,
-            ];
+            ]);
 
-            $greetInput = new ArrayInput($arguments);
-            $returnCode = $command->run($greetInput, $output);
+            $returnCode = $this->getApplication()->doRun($greetInput, $output);
 
             // ...
         }
@@ -47,7 +46,16 @@ method)::
 
     If you want to suppress the output of the executed command, pass a
     :class:`Symfony\\Component\\Console\\Output\\NullOutput` as the second
-    argument to ``$command->run()``.
+    argument to ``$application->doRun()``.
+
+.. note::
+
+    Using ``doRun()`` instead of ``run()`` prevents autoexiting and allows to
+    return the exit code instead.
+
+    Also, using ``$this->getApplication()->doRun()`` instead of
+    ``$this->getApplication()->find('demo:greet')->run()`` will allow proper
+    events to be dispatched for that inner command as well.
 
 .. caution::
 
