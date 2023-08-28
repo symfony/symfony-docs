@@ -297,6 +297,82 @@ This is done by having ``getSubscribedServices()`` return an array of
 
     The above example requires using ``3.2`` version or newer of ``symfony/service-contracts``.
 
+.. _service-locator_autowire-locator:
+
+The AutowireLocator attribute
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Another way to define a service locator is to use the
+:class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
+attribute::
+
+    // src/CommandBus.php
+    namespace App;
+
+    use App\CommandHandler\BarHandler;
+    use App\CommandHandler\FooHandler;
+    use Psr\Container\ContainerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
+
+    class CommandBus
+    {
+        public function __construct(
+            #[AutowireLocator(FooHandler::class, BarHandler::class)]
+            private ContainerInterface $locator,
+        ) {
+        }
+
+        public function handle(Command $command): mixed
+        {
+            $commandClass = get_class($command);
+
+            if ($this->locator->has($commandClass)) {
+                $handler = $this->locator->get($commandClass);
+
+                return $handler->handle($command);
+            }
+        }
+    }
+
+Just like with the ``getSubscribedServices()`` method, it is possible
+to define aliased services thanks to named arguments, as well as optional
+services::
+
+    // src/CommandBus.php
+    namespace App;
+
+    use App\CommandHandler\BarHandler;
+    use App\CommandHandler\BazHandler;
+    use App\CommandHandler\FooHandler;
+    use Psr\Container\ContainerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
+
+    class CommandBus
+    {
+        public function __construct(
+            #[AutowireLocator(
+                fooHandlerAlias: FooHandler::class,
+                barHandlerAlias: BarHandler::class,
+                optionalBazHandlerAlias: '?'.BazHandler::class
+            )]
+            private ContainerInterface $locator,
+        ) {
+        }
+
+        public function handle(Command $command): mixed
+        {
+            $fooHandler = $this->locator->get('fooHandlerAlias');
+
+            // ...
+        }
+    }
+
+.. versionadded:: 6.4
+
+    The
+    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
+    attribute was introduced in Symfony 6.4.
+
 .. _service-subscribers-locators_defining-service-locator:
 
 Defining a Service Locator

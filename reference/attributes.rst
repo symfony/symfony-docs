@@ -33,6 +33,7 @@ Dependency Injection
 * :ref:`Autowire <autowire-attribute>`
 * :ref:`AutowireCallable <autowiring_closures>`
 * :doc:`AutowireDecorated </service_container/service_decoration>`
+* :ref:`AutowireLocator <service-locator_autowire-locator>`
 * :ref:`AutowireServiceClosure <autowiring_closures>`
 * :ref:`Exclude <service-psr4-loader>`
 * :ref:`TaggedIterator <tags_reference-tagged-services>`
