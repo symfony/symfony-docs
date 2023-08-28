@@ -215,6 +215,8 @@ message, enclosed with ``/``. For example, with:
 `PHPUnit`_ will stop your test suite once a deprecation notice is triggered whose
 message contains the ``"foobar"`` string.
 
+.. _making-tests-fail:
+
 Making Tests Fail
 ~~~~~~~~~~~~~~~~~
 
@@ -348,6 +350,10 @@ deprecations and where they arise. If this is too much for you, you can use
 It's also possible to change verbosity per deprecation type. For example, using
 ``quiet[]=indirect&quiet[]=other`` will hide details for deprecations of types
 "indirect" and "other".
+
+The ``quiet`` option hides details for the specified deprecation types, but will
+not change the outcome in terms of exit code. That's what :ref:`max <making-tests-fail>`
+is for, and both settings are orthogonal.
 
 Disabling the Deprecation Helper
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
