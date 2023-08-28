@@ -1426,6 +1426,14 @@ The format is ``doctrine://<connection_name>``, in case you have multiple connec
 and want to use one other than the "default". The transport will automatically create
 a table named ``messenger_messages``.
 
+If you want to change the default table name, pass a custom table name in the
+DSN by using the ``table_name`` option:
+
+.. code-block:: env
+
+    # .env
+    MESSENGER_TRANSPORT_DSN=doctrine://default?table_name=your_custom_table_name
+
 Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 :ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
 
