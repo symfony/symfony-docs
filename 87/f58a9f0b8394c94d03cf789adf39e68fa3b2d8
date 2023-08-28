@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by ppelisset at 2023-08-17T16:18:59Z
+
+The CI seems to be in error because in the code block checker, the parsing of Yaml is done without the Yaml::PARSE_CONSTANT flag, unlike what is done when parsing Yaml files in the Configuration Loader.
+
+In code-block-checker :
+https://github.com/symfony-tools/code-block-checker/blob/main/src/Service/CodeValidator/YamlValidator.php#L22
+
+In Symfony YamlLoader :
+https://github.com/symfony/symfony/blob/6.4/src/Symfony/Component/DependencyInjection/Loader/YamlFileLoader.php#L778
+
+---------------------------------------------------------------------------
+
+by ppelisset at 2023-08-17T17:19:03Z
+
+I just submit a small PR in code-block-checker to fix the problem: https://github.com/symfony-tools/code-block-checker/pull/49
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-08-20T18:06:46Z
+
+I released the code block checker 0.3.0, can you please rebase your PR, to verify the CI is back green? Thanks
+
+---------------------------------------------------------------------------
+
+by ppelisset at 2023-08-21T09:10:01Z
+
+I've just done it, everything seems to be fine now.
