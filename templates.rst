@@ -604,7 +604,7 @@ to define the template to render::
 
     The ``#[Template()]`` attribute was introduced in Symfony 6.2.
 
-The ``AbstractController`` also provides the
+The :ref:`base AbstractController <the-base-controller-classes-services>` also provides the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlock`
 and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlockView`
 methods::
