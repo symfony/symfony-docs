@@ -1608,10 +1608,80 @@ handler_id
 
 **type**: ``string`` **default**: ``session.handler.native_file``
 
-The service id used for session storage. The default value ``'session.handler.native_file'``
+The service id or DSN used for session storage. The default value ``'session.handler.native_file'``
 will let Symfony manage the sessions itself using files to store the session metadata.
 Set it to ``null`` to use the native PHP session mechanism.
-You can also :ref:`store sessions in a database <session-database>`.
+It is possible to :ref:`store sessions in a database <session-database>`,
+and also to configure the session handler with a DSN:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            session:
+                # a few possible examples
+                handler_id: 'redis://localhost'
+                handler_id: '%env(REDIS_URL)%'
+                handler_id: '%env(DATABASE_URL)%'
+                handler_id: 'file://%kernel.project_dir%/var/sessions'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <!-- a few possible examples -->
+                <framework:session enabled="true"
+                    handler-id="redis://localhost"
+                    handler-id="%env(REDIS_URL)%"
+                    handler-id="%env(DATABASE_URL)%"
+                    handler-id="file://%kernel.project_dir%/var/sessions"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            // ...
+
+            $framework->session()
+                // a few possible examples
+                ->handlerId('redis://localhost')
+                ->handlerId(env('REDIS_URL'))
+                ->handlerId(env('DATABASE_URL'))
+                ->handlerId('file://%kernel.project_dir%/var/sessions');
+        };
+
+.. note::
+
+    Supported DSN protocols are the following:
+
+    * ``file``
+    * ``redis``
+    * ``rediss`` (Redis over TLS)
+    * ``memcached`` (requires :doc:`symfony/cache </components/cache>`)
+    * ``pdo_oci`` (requires :doc:`doctrine/dbal </doctrine/dbal>`)
+    * ``mssql``
+    * ``mysql``
+    * ``mysql2``
+    * ``pgsql``
+    * ``postgres``
+    * ``postgresql``
+    * ``sqlsrv``
+    * ``sqlite``
+    * ``sqlite3``
 
 .. _name:
 
