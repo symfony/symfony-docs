@@ -559,7 +559,8 @@ result of rendering some template) or PHP resources::
 File Attachments
 ~~~~~~~~~~~~~~~~
 
-Use the ``addPart()`` method with a ``BodyFile`` to add files that exist on your file system::
+Use the ``addPart()`` method with a ``File`` to add files that exist on your
+file system::
 
     use Symfony\Component\Mime\Part\DataPart;
     use Symfony\Component\Mime\Part\File;
@@ -574,7 +575,8 @@ Use the ``addPart()`` method with a ``BodyFile`` to add files that exist on your
         ->addPart(new DataPart(new File('/path/to/documents/contract.doc'), 'Contract', 'application/msword'))
     ;
 
-Alternatively you can attach contents from a stream by passing it directly to the ``DataPart`` ::
+Alternatively you can attach contents from a stream by passing it directly to
+the ``DataPart``::
 
     $email = (new Email())
         // ...
@@ -617,10 +619,6 @@ images inside the HTML contents::
         // use the same syntax for images included as HTML background images
         ->html('... <div background="cid:footer-signature"> ... </div> ...')
     ;
-
-.. versionadded:: 6.1
-
-    The support of embedded images as HTML backgrounds was introduced in Symfony 6.1.
 
 .. _mailer-configure-email-globally:
 
