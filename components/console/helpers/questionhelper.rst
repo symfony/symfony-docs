@@ -15,6 +15,11 @@ first argument, an :class:`Symfony\\Component\\Console\\Output\\OutputInterface`
 instance as the second argument and a
 :class:`Symfony\\Component\\Console\\Question\\Question` as last argument.
 
+.. note::
+
+    As an alternative, consider using the
+    :ref:`SymfonyStyle <symfony-style-questions>` to ask questions.
+
 Asking the User for Confirmation
 --------------------------------
 
