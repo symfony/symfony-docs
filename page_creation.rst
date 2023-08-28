@@ -104,7 +104,7 @@ You can now add your route directly *above* the controller:
         // src/Controller/LuckyController.php
 
         // ...
-        + use Symfony\Component\Routing\Annotation\Route;
+        use Symfony\Component\Routing\Annotation\Route;
 
         class LuckyController
         {
