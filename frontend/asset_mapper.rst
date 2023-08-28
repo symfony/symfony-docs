@@ -238,6 +238,10 @@ directory and not commit it to your repository. Therefore, you'll need to run th
 ``php bin/console importmap:install`` command to download the files on other
 computers if some files are missing.
 
+.. versionadded:: 6.4
+
+    The ``importmap:install`` command was introduced in Symfony 6.4.
+
 .. note::
 
     Sometimes, a package - like ``bootstrap`` - will have one or more dependencies,
