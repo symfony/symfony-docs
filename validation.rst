@@ -638,6 +638,20 @@ constraint that's applied to the class itself. When that class is validated,
 methods specified by that constraint are simply executed so that each can
 provide more custom validation.
 
+Validating Object With Inheritance
+----------------------------------
+
+When you validate an object that extends another class, the validator
+automatically validates constraints defined in the parent class as well.
+
+**The constraints defined in the parent properties will be applied to the child
+properties even if the child properties override those constraints**. Symfony
+will always merge the parent constraints for each property.
+
+You can't change this behavior, but you can overcome it by defining the parent
+and the child contraints in different :doc:`validation groups </validation/groups>`
+and then select the appropriate group when validating each object.
+
 Debugging the Constraints
 -------------------------
 
