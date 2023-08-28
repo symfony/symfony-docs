@@ -216,7 +216,7 @@ allows you to return a list of extensions to register::
 
             // or if you also need to read constraints from annotations
             $validator = Validation::createValidatorBuilder()
-                ->enableAnnotationMapping(true)
+                ->enableAttributeMapping()
                 ->getValidator();
 
             return [

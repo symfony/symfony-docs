@@ -2636,7 +2636,19 @@ enable_annotations
 
 **type**: ``boolean`` **default**: ``true``
 
-If this option is enabled, validation constraints can be defined using annotations or attributes.
+If this option is enabled, validation constraints can be defined using annotations or `PHP attributes`_.
+
+.. deprecated:: 6.4
+
+    This option is deprecated since Symfony 6.4, use the ``enable_attributes``
+    option instead.
+
+enable_attributes
+.................
+
+**type**: ``boolean`` **default**: ``true``
+
+If this option is enabled, validation constraints can be defined using `PHP attributes`_.
 
 translation_domain
 ..................
@@ -2823,6 +2835,18 @@ enable_annotations
 **type**: ``boolean`` **default**: ``true``
 
 If this option is enabled, serialization groups can be defined using annotations or attributes.
+
+.. deprecated:: 6.4
+
+    This option is deprecated since Symfony 6.4, use the ``enable_attributes``
+    option instead.
+
+enable_attributes
+.................
+
+**type**: ``boolean`` **default**: ``true``
+
+If this option is enabled, serialization groups can be defined using `PHP attributes`_.
 
 .. seealso::
 
@@ -3788,3 +3812,4 @@ the ``#[WithLogLevel]`` attribute::
 .. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers
 .. _`Link HTTP header`: https://tools.ietf.org/html/rfc5988
 .. _`SMTP session`: https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol#SMTP_transport_example
+.. _`PHP attributes`: https://www.php.net/manual/en/language.attributes.overview.php
