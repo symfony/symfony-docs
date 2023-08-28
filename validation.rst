@@ -736,20 +736,13 @@ Validating Object With Inheritance
 When you validate an object that extends another class, the validator
 automatically validates constraints defined in the parent class as well.
 
-.. caution::
+**The constraints defined in the parent properties will be applied to the child
+properties even if the child properties override those constraints**. Symfony
+will always merge the parent constraints for each property.
 
-    Note that overriding a property with others constraints in a child class
-    will not remove the constraints defined in the parent class on that same
-    property.
-    Instead, the constraints will be merged for that property.
-    This is related to Java Language Specification.
-
-.. tip::
-
-    If you want to override constraints defined in the parent class, you should
-    define them in a different validation group instead and validate the object
-    with that group.
-    See :doc:`Validation Groups </validation/groups>` for more information.
+You can't change this behavior, but you can overcome it by defining the parent
+and the child contraints in different :doc:`validation groups </validation/groups>`
+and then select the appropriate group when validating each object.
 
 Debugging the Constraints
 -------------------------
