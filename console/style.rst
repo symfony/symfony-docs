@@ -96,6 +96,8 @@ Titling Methods
 
         // ...
 
+.. _symfony-style-content:
+
 Content Methods
 ~~~~~~~~~~~~~~~
 
@@ -215,6 +217,8 @@ Admonition Methods
             'Aenean sit amet arcu vitae sem faucibus porta',
         ]);
 
+.. _symfony-style-progressbar:
+
 Progress Bar Methods
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -258,6 +262,8 @@ Progress Bar Methods
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createProgressBar`
     Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
     styled according to the Symfony Style Guide.
+
+.. _symfony-style-questions:
 
 User Input Methods
 ~~~~~~~~~~~~~~~~~~
@@ -330,6 +336,8 @@ User Input Methods
 .. versionadded:: 6.2
 
     The ``multiSelect`` option of ``choice()`` was introduced in Symfony 6.2.
+
+.. _symfony-style-blocks:
 
 Result Methods
 ~~~~~~~~~~~~~~

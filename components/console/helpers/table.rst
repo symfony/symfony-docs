@@ -14,6 +14,11 @@ When building a console application it may be useful to display tabular data:
     | 80-902734-1-6 | And Then There Were None | Agatha Christie  |
     +---------------+--------------------------+------------------+
 
+.. note::
+
+    As an alternative, consider using the
+    :ref:`SymfonyStyle <symfony-style-content>` to display a table.
+
 To display a table, use :class:`Symfony\\Component\\Console\\Helper\\Table`,
 set the headers, set the rows and then render the table::
 
@@ -38,7 +43,7 @@ set the headers, set the rows and then render the table::
                 ])
             ;
             $table->render();
-            
+
             return Command::SUCCESS;
         }
     }
@@ -435,7 +440,7 @@ The only requirement to append rows is that the table must be rendered inside a
             $table->render();
 
             $table->appendRow(['Symfony']);
-            
+
             return Command::SUCCESS;
         }
     }
