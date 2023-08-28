@@ -96,6 +96,8 @@ Titling Methods
 
         // ...
 
+.. _symfony-style-content:
+
 Content Methods
 ~~~~~~~~~~~~~~~
 
@@ -219,6 +221,8 @@ Admonition Methods
             'Aenean sit amet arcu vitae sem faucibus porta',
         ]);
 
+.. _symfony-style-progressbar:
+
 Progress Bar Methods
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -266,6 +270,8 @@ Progress Bar Methods
 :method:`Symfony\\Component\\Console\\Style\\SymfonyStyle::createProgressBar`
     Creates an instance of :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
     styled according to the Symfony Style Guide.
+
+.. _symfony-style-questions:
 
 User Input Methods
 ~~~~~~~~~~~~~~~~~~
@@ -328,6 +334,8 @@ User Input Methods
     hit the <Enter> key to select that value::
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], 'queue1');
+
+.. _symfony-style-blocks:
 
 Result Methods
 ~~~~~~~~~~~~~~
