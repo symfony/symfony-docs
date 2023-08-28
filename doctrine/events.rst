@@ -173,7 +173,7 @@ listener in the Symfony application by creating a new service for it and
 
     .. code-block:: php-attributes
 
-        // src/App/EventListener/SearchIndexer.php
+        // src/EventListener/SearchIndexer.php
         namespace App\EventListener;
 
         use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
