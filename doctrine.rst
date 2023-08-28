@@ -536,7 +536,7 @@ and injected by the dependency injection container::
     class ProductController extends AbstractController
     {
         #[Route('/product/{id}', name: 'product_show')]
-        public function show(int $id, ProductRepository $productRepository): Response
+        public function show(ProductRepository $productRepository, int $id): Response
         {
             $product = $productRepository
                 ->find($id);
