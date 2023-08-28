@@ -13,7 +13,13 @@ in the default helper set and you can get it by calling
 
 The methods return a string, which you'll usually render to the console by
 passing it to the
-:method:`OutputInterface::writeln <Symfony\\Component\\Console\\Output\\OutputInterface::writeln>` method.
+:method:`OutputInterface::writeln <Symfony\\Component\\Console\\Output\\OutputInterface::writeln>`
+method.
+
+.. note::
+
+    As an alternative, consider using the
+    :ref:`SymfonyStyle <symfony-style-blocks>` to display stylized blocks.
 
 Print Messages in a Section
 ---------------------------

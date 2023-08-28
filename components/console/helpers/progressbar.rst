@@ -6,6 +6,11 @@ information, which updates as your command runs:
 
 .. image:: /_images/components/console/progressbar.gif
 
+.. note::
+
+    As an alternative, consider using the
+    :ref:`SymfonyStyle <symfony-style-progressbar>` to display a progress bar.
+
 To display progress details, use the
 :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`, pass it a total
 number of units, and advance the progress as the command executes::
