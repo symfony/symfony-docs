@@ -1445,13 +1445,13 @@ a table named ``messenger_messages``.
     The ability to automatically generate a migration for the ``messenger_messages``
     table was introduced in Symfony 5.1 and DoctrineBundle 2.1.
 
-If you would like to change the name of the default table you can pass it in the DSN
-settings by using the ``table_name`` option.
+If you want to change the default table name, pass a custom table name in the
+DSN by using the ``table_name`` option:
 
 .. code-block:: env
 
     # .env
-    MESSENGER_TRANSPORT_DSN=doctrine://default?table_name=your_table_name
+    MESSENGER_TRANSPORT_DSN=doctrine://default?table_name=your_custom_table_name
 
 Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 :ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
