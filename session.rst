@@ -1657,12 +1657,6 @@ Then, register the ``SodiumMarshaller`` service using this key:
     This will encrypt the values of the cache items, but not the cache keys. Be
     careful not to leak sensitive data in the keys.
 
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`
-    and :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MarshallingSessionHandler`
-    classes were introduced in Symfony 5.1.
-
 Read-only Guest Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
