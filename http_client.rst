@@ -854,10 +854,10 @@ To leverage all these design benefits, the cURL extension is needed.
 Enabling cURL Support
 ~~~~~~~~~~~~~~~~~~~~~
 
-This component supports the native PHP streams, ``amphp/http-client`` and cURL to
-make the HTTP requests. Although they are interchangeable and provide the
-same features, including concurrent requests, HTTP/2 is only supported when
-using cURL or ``amphp/http-client``.
+This component can make HTTP requests using native PHP streams and the
+``amphp/http-client`` and cURL libraries. Although they are interchangeable and
+provide the same features, including concurrent requests, HTTP/2 is only supported
+when using cURL or ``amphp/http-client``.
 
 .. note::
 
