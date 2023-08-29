@@ -2523,8 +2523,10 @@ method) or globally with these configuration parameters:
     .. code-block:: php
 
         // config/services.php
-        $container->setParameter('router.request_context.scheme', 'https');
-        $container->setParameter('asset.request_context.secure', true);
+        $container->parameters()
+            ->set('router.request_context.scheme', 'https')
+            ->set('asset.request_context.secure', true)
+        ;
 
 Outside of console commands, use the ``schemes`` option to define the scheme of
 each route explicitly:
