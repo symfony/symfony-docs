@@ -1468,6 +1468,85 @@ library, but you can adapt it to any other library that you may be using::
         }
     }
 
+Another possibility to encrypt session data is to decorate the
+``session.marshaller`` service, which points out to
+:class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MarshallingSessionHandler`.
+You can decorate this handler with a marshaller that uses encryption,
+like the :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`.
+
+First, you need to generate a secure key and add it to your :doc:`secret
+store </configuration/secrets>` as ``SESSION_DECRYPTION_FILE``:
+
+.. code-block:: terminal
+
+    $ php -r 'echo base64_encode(sodium_crypto_box_keypair());'
+
+Then, register the ``SodiumMarshaller`` service using this key:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+
+            # ...
+            Symfony\Component\Cache\Marshaller\SodiumMarshaller:
+                decorates: 'session.marshaller'
+                arguments:
+                    - ['%env(file:resolve:SESSION_DECRYPTION_FILE)%']
+                    - '@Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd"
+        >
+            <services>
+                <service id="Symfony\Component\Cache\Marshaller\SodiumMarshaller" decorates="session.marshaller">
+                    <argument type="collection">
+                        <argument>env(file:resolve:SESSION_DECRYPTION_FILE)</argument>
+                    </argument>
+                    <argument type="service" id="Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        use Symfony\Component\Cache\Marshaller\SodiumMarshaller;
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+        // ...
+
+        return function(ContainerConfigurator $container) {
+            $services = $container->services();
+
+            // ...
+
+            $services->set(SodiumMarshaller::class)
+                ->decorate('session.marshaller')
+                ->args([
+                    [env('file:resolve:SESSION_DECRYPTION_FILE')],
+                    service(SodiumMarshaller::class.'.inner'),
+                ]);
+        };
+
+.. caution::
+
+    This will encrypt the values of the cache items, but not the cache keys. Be
+    careful not to leak sensitive data in the keys.
+
+.. versionadded:: 5.1
+
+    The :class:`Symfony\\Component\\Cache\\Marshaller\\SodiumMarshaller`
+    and :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MarshallingSessionHandler`
+    classes were introduced in Symfony 5.1.
+
 Read-only Guest Sessions
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
