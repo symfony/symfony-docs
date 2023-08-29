@@ -212,8 +212,8 @@ You can also specify the context on a per-property basis::
         App\Model\Person:
             attributes:
                 createdAt:
-                    context:
-                        datetime_format: 'Y-m-d'
+                    contexts:
+                        - { context: { datetime_format: 'Y-m-d' } }
 
     .. code-block:: xml
 
