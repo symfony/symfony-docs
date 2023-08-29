@@ -985,10 +985,6 @@ when using cURL or ``amphp/http-client``.
     To use the :class:`Symfony\\Component\\HttpClient\\AmpHttpClient`, the
     `amphp/http-client`_ package must be installed.
 
-.. versionadded:: 5.1
-
-    Integration with ``amphp/http-client`` was introduced in Symfony 5.1.
-
 The :method:`Symfony\\Component\\HttpClient\\HttpClient::create` method
 selects the cURL transport if the `cURL PHP extension`_ is enabled. It falls
 back to ``AmpHttpClient`` if cURL couldn't be found or is too old. Finally, if
