@@ -77,6 +77,7 @@ commands support name and option completion, and some can even complete
 values.
 
 .. image:: /_images/components/console/completion.gif
+    :alt: The terminal completes the command name "secrets:remove" and the argument "SOME_OTHER_SECRET".
 
 First, make sure you installed and setup the "bash completion" package for
 your OS (typically named ``bash-completion``). Then, install the Symfony

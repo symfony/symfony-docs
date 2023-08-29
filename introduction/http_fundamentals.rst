@@ -17,8 +17,11 @@ HTTP (Hypertext Transfer Protocol) is a text language that allows two machines
 to communicate with each other. For example, when checking for the latest
 `xkcd`_ comic, the following (approximate) conversation takes place:
 
-.. image:: /_images/http/xkcd-full.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/http/xkcd-full.svg" type="image/svg+xml"
+        alt="A sequence diagram showing the browser sending &quot;Can I see today's comic?&quot; to the xkcd server. The server prepares the page's HTML and sents it back to the browser."
+    ></object>
 
 HTTP is the term used to describe this text-based language. The goal of
 your server is *always* to understand text requests and return text responses.
@@ -38,8 +41,11 @@ and then waits for the response.
 Take a look at the first part of the interaction (the request) between a
 browser and the xkcd web server:
 
-.. image:: /_images/http/xkcd-request.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/http/xkcd-request.svg" type="image/svg+xml"
+        alt="A sequence diagram showing the request from browser to the xkcd server."
+    ></object>
 
 In HTTP-speak, this HTTP request would actually look something like this:
 
@@ -100,8 +106,11 @@ client needs (via the URI) and what the client wants to do with that resource
 prepares the resource and returns it in an HTTP response. Consider the response
 from the xkcd web server:
 
-.. image:: /_images/http/xkcd-full.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/http/xkcd-full.svg" type="image/svg+xml"
+        alt="The full sequence diagram with the xkcd server sending the page's HTML back to the browser."
+    ></object>
 
 Translated into HTTP, the response sent back to the browser will look something
 like this:
@@ -346,7 +355,9 @@ to do:
 
 .. raw:: html
 
-    <object data="../_images/http/request-flow.svg" type="image/svg+xml"></object>
+    <object data="../_images/http/request-flow.svg" type="image/svg+xml"
+        alt="A flow diagram visualizing the request-response flow. Each step is written out in text in the next section."
+    ></object>
 
 Incoming requests are interpreted by the :doc:`Routing component </routing>` and
 passed to PHP functions that return ``Response`` objects.

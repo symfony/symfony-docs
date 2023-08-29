@@ -511,7 +511,7 @@ done by passing a special form "view" object to your template (notice the
     {{ form_end(form) }}
 
 .. image:: /_images/form/simple-form.png
-    :align: center
+    :alt: An HTML form showing a text box labelled "Task", three select boxes for a year, month and day labelled "Due date" and a button labelled "Create Task".
 
 That's it! By printing ``form_widget(form)``, each field in the form is
 rendered, along with a label and error message (if there is one). While this is

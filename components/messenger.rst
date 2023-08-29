@@ -27,7 +27,9 @@ Concepts
 
 .. raw:: html
 
-    <object data="../_images/components/messenger/overview.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/messenger/overview.svg" type="image/svg+xml"
+        alt="A flow diagram visualizing how each concept relates to eachother. Each concept is described in the subsequent text."
+    ></object>
 
 **Sender**:
    Responsible for serializing and sending messages to *something*. This

@@ -590,7 +590,7 @@ website. If you visit your homepage right now, you *will* have access and
 you'll see that you're visiting a page behind the firewall in the toolbar:
 
 .. image:: /_images/security/anonymous_wdt.png
-   :align: center
+   :alt: The Symfony profiler toolbar where the Security information shows "Authenticated: no" and "Firewall name: main"
 
 Visiting a URL under a firewall doesn't necessarily require you to be authenticated
 (e.g. the login form has to be accessible or some parts of your application
@@ -2603,7 +2603,9 @@ Authentication Events
 
 .. raw:: html
 
-    <object data="./_images/security/security_events.svg" type="image/svg+xml"></object>
+    <object data="../_images/security/security_events.svg" type="image/svg+xml"
+        alt="A flow diagram showing the authentication events that are described in this section in a request-response cycle."
+    ></object>
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\CheckPassportEvent`
     Dispatched after the authenticator created the :ref:`security passport <security-passport>`.

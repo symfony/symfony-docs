@@ -247,7 +247,9 @@ In both cases, the ``field-part`` can be any of these valid form field parts:
 
 .. raw:: html
 
-    <object data="../_images/form/form-field-parts.svg" type="image/svg+xml"></object>
+    <object data="../_images/form/form-field-parts.svg" type="image/svg+xml"
+        alt="A wireframe showing all form field parts: form_row, form_label, form_widget, form_help and form_errors."
+    ></object>
 
 Fragment Naming for All Fields of the Same Type
 ...............................................
