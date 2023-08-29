@@ -980,15 +980,24 @@ To leverage all these design benefits, the cURL extension is needed.
 Enabling cURL Support
 ~~~~~~~~~~~~~~~~~~~~~
 
-This component supports both the native PHP streams and cURL to make the HTTP
-requests. Although both are interchangeable and provide the same features,
-including concurrent requests, HTTP/2 is only supported when using cURL.
+This component can make HTTP requests using native PHP streams and the
+``amphp/http-client`` and cURL libraries. Although they are interchangeable and
+provide the same features, including concurrent requests, HTTP/2 is only supported
+when using cURL or ``amphp/http-client``.
+
+.. note::
+
+    To use the :class:`Symfony\\Component\\HttpClient\\AmpHttpClient`, the
+    `amphp/http-client`_ package must be installed.
 
 The :method:`Symfony\\Component\\HttpClient\\HttpClient::create` method
-selects the cURL transport if the `cURL PHP extension`_ is enabled and falls
-back to PHP streams otherwise. If you prefer to select the transport
-explicitly, use the following classes to create the client::
+selects the cURL transport if the `cURL PHP extension`_ is enabled. It falls
+back to ``AmpHttpClient`` if cURL couldn't be found or is too old. Finally, if
+``AmpHttpClient`` is not available, it falls back to PHP streams.
+If you prefer to select the transport explicitly, use the following classes
+to create the client::
 
+    use Symfony\Component\HttpClient\AmpHttpClient;
     use Symfony\Component\HttpClient\CurlHttpClient;
     use Symfony\Component\HttpClient\NativeHttpClient;
 
@@ -998,9 +1007,12 @@ explicitly, use the following classes to create the client::
     // uses the cURL PHP extension
     $client = new CurlHttpClient();
 
+    // uses the client from the `amphp/http-client` package
+    $client = new AmpHttpClient();
+
 When using this component in a full-stack Symfony application, this behavior is
 not configurable and cURL will be used automatically if the cURL PHP extension
-is installed and enabled. Otherwise, the native PHP streams will be used.
+is installed and enabled, and will fall back as explained above.
 
 Configuring CurlHttpClient Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1050,7 +1062,7 @@ HTTP/2 Support
 When requesting an ``https`` URL, HTTP/2 is enabled by default if one of the
 following tools is installed:
 
-* The `libcurl`_ package version 7.36 or higher;
+* The `libcurl`_ package version 7.36 or higher, used with PHP >= 7.2.17 / 7.3.4;
 * The `amphp/http-client`_ Packagist package version 4.2 or higher.
 
 To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
@@ -1100,9 +1112,9 @@ To force HTTP/2 for ``http`` URLs, you need to enable it explicitly via the
 
         $client = HttpClient::create(['http_version' => '2.0']);
 
-Support for HTTP/2 PUSH works out of the box when libcurl >= 7.61 is used with
-PHP >= 7.2.17 / 7.3.4: pushed responses are put into a temporary cache and are
-used when a subsequent request is triggered for the corresponding URLs.
+Support for HTTP/2 PUSH works out of the box when using a compatible client:
+pushed responses are put into a temporary cache and are used when a
+subsequent request is triggered for the corresponding URLs.
 
 Processing Responses
 --------------------
