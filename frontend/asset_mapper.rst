@@ -233,8 +233,14 @@ If you want to download the package locally, use the ``--download`` option:
     $ php bin/console importmap:require bootstrap --download
 
 This will download the package into an ``assets/vendor/`` directory and update
-the ``importmap.php`` file to point to it. You *should* commit this file to
-your repository.
+the ``importmap.php`` file to point to it. It's recommended to ignore this
+directory and not commit it to your repository. Therefore, you'll need to run the
+``php bin/console importmap:install`` command to download the files on other
+computers if some files are missing.
+
+.. versionadded:: 6.4
+
+    The ``importmap:install`` command was introduced in Symfony 6.4.
 
 .. note::
 

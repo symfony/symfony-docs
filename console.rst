@@ -577,6 +577,12 @@ registers an :doc:`event subscriber </event_dispatcher>` to listen to the
 :ref:`ConsoleEvents::TERMINATE event <console-events-terminate>` and adds a log
 message whenever a command doesn't finish with the ``0`` `exit status`_.
 
+Using Events And Handling Signals
+---------------------------------
+
+When a command is running, many events are dispatched, one of them allows to
+react to signals, read more in :doc:`this section </components/console/events>`.
+
 Learn More
 ----------
 
@@ -596,6 +602,7 @@ tools capable of helping you with different tasks:
 * :doc:`/components/console/helpers/table`: displays tabular data as a table
 * :doc:`/components/console/helpers/debug_formatter`: provides functions to
   output debug information when running an external program
+* :doc:`/components/console/helpers/processhelper`: allows to run processes using ``DebugFormatterHelper``
 * :doc:`/components/console/helpers/cursor`: allows to manipulate the cursor in the terminal
 
 .. _`exit status`: https://en.wikipedia.org/wiki/Exit_status

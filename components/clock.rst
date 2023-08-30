@@ -63,12 +63,26 @@ The Clock component also provides the ``now()`` function::
     // Get the current time as a DateTimeImmutable instance
     $now = now();
 
+The ``now()`` function takes an optional ``modifier`` argument
+which will be applied to the current time::
+
+    $later = now('+3 hours');
+
+    $yesterday = now('-1 day');
+
+You can use any string `accepted by the DateTime constructor`_.
+
 Later on this page you can learn how to use this clock in your services and tests.
 
 .. versionadded:: 6.3
 
     The :class:`Symfony\\Component\\Clock\\Clock` class and ``now()`` function
     were introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The ``modifier`` argument of the ``now()`` function was introduced in
+    Symfony 6.4.
 
 Available Clocks Implementations
 --------------------------------
@@ -252,3 +266,4 @@ control on your time-sensitive code's behavior.
     The :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait` was introduced in Symfony 6.3.
 
 .. _`PSR-20`: https://www.php-fig.org/psr/psr-20/
+.. _`accepted by the DateTime constructor`: https://www.php.net/manual/en/datetime.formats.php

@@ -559,7 +559,8 @@ result of rendering some template) or PHP resources::
 File Attachments
 ~~~~~~~~~~~~~~~~
 
-Use the ``addPart()`` method with a ``BodyFile`` to add files that exist on your file system::
+Use the ``addPart()`` method with a ``File`` to add files that exist on your
+file system::
 
     use Symfony\Component\Mime\Part\DataPart;
     use Symfony\Component\Mime\Part\File;
@@ -574,7 +575,8 @@ Use the ``addPart()`` method with a ``BodyFile`` to add files that exist on your
         ->addPart(new DataPart(new File('/path/to/documents/contract.doc'), 'Contract', 'application/msword'))
     ;
 
-Alternatively you can attach contents from a stream by passing it directly to the ``DataPart`` ::
+Alternatively you can attach contents from a stream by passing it directly to
+the ``DataPart``::
 
     $email = (new Email())
         // ...
@@ -583,9 +585,9 @@ Alternatively you can attach contents from a stream by passing it directly to th
 
 .. deprecated:: 6.2
 
-    In Symfony versions previous to 6.2, the methods ``attachFromPath()`` and
-    ``attach()`` could be used to add attachments. These methods have been
-    deprecated and replaced with ``addPart()``.
+    In Symfony versions previous to 6.2, the method ``attachPart()`` could be
+    used to add attachments. This method has been deprecated and replaced
+    with ``addPart()``.
 
 Embedding Images
 ~~~~~~~~~~~~~~~~
@@ -626,13 +628,8 @@ images inside the HTML contents::
 
 .. versionadded:: 6.1
 
-    The support of embedded images as HTML backgrounds was introduced in Symfony 6.1.
-
-.. deprecated:: 6.2
-
-    In Symfony versions previous to 6.2, the methods ``embedFromPath()`` and
-    ``embed()`` could be used to embed images. These methods have been deprecated
-    and replaced with ``addPart()`` together with inline ``DataPart`` objects.
+    The support of embedded images as HTML backgrounds was introduced in Symfony
+    6.1.
 
 .. _mailer-configure-email-globally:
 

@@ -1646,7 +1646,77 @@ The session handler configured by php.ini is used, unless option
 `framework.session.save_path` is used, in which case the default is to store sessions
 using the native file session handler.
 
-You can also :ref:`store sessions in a database <session-database>`.
+It is possible to :ref:`store sessions in a database <session-database>`,
+and also to configure the session handler with a DSN:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            session:
+                # a few possible examples
+                handler_id: 'redis://localhost'
+                handler_id: '%env(REDIS_URL)%'
+                handler_id: '%env(DATABASE_URL)%'
+                handler_id: 'file://%kernel.project_dir%/var/sessions'
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+            <framework:config>
+                <!-- a few possible examples -->
+                <framework:session enabled="true"
+                    handler-id="redis://localhost"
+                    handler-id="%env(REDIS_URL)%"
+                    handler-id="%env(DATABASE_URL)%"
+                    handler-id="file://%kernel.project_dir%/var/sessions"/>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            // ...
+
+            $framework->session()
+                // a few possible examples
+                ->handlerId('redis://localhost')
+                ->handlerId(env('REDIS_URL'))
+                ->handlerId(env('DATABASE_URL'))
+                ->handlerId('file://%kernel.project_dir%/var/sessions');
+        };
+
+.. note::
+
+    Supported DSN protocols are the following:
+
+    * ``file``
+    * ``redis``
+    * ``rediss`` (Redis over TLS)
+    * ``memcached`` (requires :doc:`symfony/cache </components/cache>`)
+    * ``pdo_oci`` (requires :doc:`doctrine/dbal </doctrine/dbal>`)
+    * ``mssql``
+    * ``mysql``
+    * ``mysql2``
+    * ``pgsql``
+    * ``postgres``
+    * ``postgresql``
+    * ``sqlsrv``
+    * ``sqlite``
+    * ``sqlite3``
 
 .. _name:
 
@@ -2669,7 +2739,19 @@ enable_annotations
 
 **type**: ``boolean`` **default**: ``true``
 
-If this option is enabled, validation constraints can be defined using annotations or attributes.
+If this option is enabled, validation constraints can be defined using annotations or `PHP attributes`_.
+
+.. deprecated:: 6.4
+
+    This option is deprecated since Symfony 6.4, use the ``enable_attributes``
+    option instead.
+
+enable_attributes
+.................
+
+**type**: ``boolean`` **default**: ``true``
+
+If this option is enabled, validation constraints can be defined using `PHP attributes`_.
 
 translation_domain
 ..................
@@ -2857,6 +2939,18 @@ enable_annotations
 
 If this option is enabled, serialization groups can be defined using annotations or attributes.
 
+.. deprecated:: 6.4
+
+    This option is deprecated since Symfony 6.4, use the ``enable_attributes``
+    option instead.
+
+enable_attributes
+.................
+
+**type**: ``boolean`` **default**: ``true``
+
+If this option is enabled, serialization groups can be defined using `PHP attributes`_.
+
 .. seealso::
 
     For more information, see :ref:`serializer-using-serialization-groups-attributes`.
@@ -2943,21 +3037,21 @@ This option also accepts a map of PHP errors to log levels:
         framework:
             php_errors:
                 log:
-                    '!php/const \E_DEPRECATED': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_USER_DEPRECATED': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_NOTICE': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_USER_NOTICE': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_STRICT': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_WARNING': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_USER_WARNING': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_COMPILE_WARNING': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_CORE_WARNING': !php/const Psr\Log\LogLevel::ERROR
-                    '!php/const \E_USER_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_RECOVERABLE_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_COMPILE_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_PARSE': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
-                    '!php/const \E_CORE_ERROR': !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_DEPRECATED: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_USER_DEPRECATED: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_NOTICE: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_USER_NOTICE: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_STRICT: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_WARNING: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_USER_WARNING: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_COMPILE_WARNING: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_CORE_WARNING: !php/const Psr\Log\LogLevel::ERROR
+                    !php/const \E_USER_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_RECOVERABLE_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_COMPILE_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_PARSE: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
+                    !php/const \E_CORE_ERROR: !php/const Psr\Log\LogLevel::CRITICAL
 
     .. code-block:: xml
 
@@ -3821,3 +3915,4 @@ the ``#[WithLogLevel]`` attribute::
 .. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers
 .. _`Link HTTP header`: https://tools.ietf.org/html/rfc5988
 .. _`SMTP session`: https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol#SMTP_transport_example
+.. _`PHP attributes`: https://www.php.net/manual/en/language.attributes.overview.php

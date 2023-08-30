@@ -271,11 +271,13 @@ callback method:
 * A closure.
 
 Concrete callbacks receive an :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
-instance as only argument.
+instance as the first argument and the :ref:`payload option <reference-constraints-payload>`
+as the second argument.
 
-Static or closure callbacks receive the validated object as the first argument
-and the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
-instance as the second argument.
+Static or closure callbacks receive the validated object as the first argument,
+the :class:`Symfony\\Component\\Validator\\Context\\ExecutionContextInterface`
+instance as the second argument and the :ref:`payload option <reference-constraints-payload>`
+as the third argument.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 

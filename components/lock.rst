@@ -142,9 +142,9 @@ pass ``true`` as the argument of the ``acquire()`` method. This is called a
 lock is acquired::
 
     use Symfony\Component\Lock\LockFactory;
-    use Symfony\Component\Lock\Store\RedisStore;
+    use Symfony\Component\Lock\Store\FlockStore;
 
-    $store = new RedisStore(new \Predis\Client('tcp://localhost:6379'));
+    $store = new FlockStore('/var/stores');
     $factory = new LockFactory($store);
 
     $lock = $factory->createLock('pdf-creation');
@@ -927,7 +927,7 @@ have synchronized clocks.
 PostgreSqlStore
 ~~~~~~~~~~~~~~~
 
-The PdoStore relies on the `Advisory Locks`_ properties of the PostgreSQL
+The PostgreSqlStore relies on the `Advisory Locks`_ properties of the PostgreSQL
 database. That means that by using :ref:`PostgreSqlStore <lock-store-pgsql>`
 the locks will be automatically released at the end of the session in case the
 client cannot unlock for any reason.
