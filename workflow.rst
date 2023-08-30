@@ -466,6 +466,12 @@ The context is accessible in all events except for the ``workflow.guard`` events
     // in an event listener (workflow.guard events)
     $context = $event->getContext(); // returns ['context']
 
+.. deprecated:: 6.4
+
+    Gathering events context is deprecated since Symfony 6.4 and the
+    :method:`Symfony\\Component\\Workflow\\Event::getContext` method will be
+    removed in Symfony 7.0.
+
 .. note::
 
     The leaving and entering events are triggered even for transitions that stay
