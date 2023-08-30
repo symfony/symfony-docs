@@ -517,6 +517,45 @@ To answer this, change the service declaration:
 
 .. tip::
 
+    In XML and YAML format, you may provide the tag an attribute called ``name``.
+    When doing so, this is the syntax you should follow:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                MailerSmtpTransport:
+                    arguments: ['%mailer_host%']
+                    tags:
+                        - app.mail_transport: { name: 'arbitrary-value', alias: 'smtp' }
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <service id="MailerSmtpTransport">
+                        <argument>%mailer_host%</argument>
+
+                        <tag name="arbitrary-value" alias="smtp">app.mail_transport</tag>
+                    </service>
+                </services>
+            </container>
+
+    .. versionadded:: 5.1
+
+        The possibility to add the ``name`` attribute to a tag in XML and YAML
+        formats was introduced in Symfony 5.1.
+
+.. tip::
+
     In YAML format, you may provide the tag as a simple string as long as
     you don't need to specify additional attributes. The following definitions
     are equivalent.
