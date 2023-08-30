@@ -142,9 +142,9 @@ pass ``true`` as the argument of the ``acquire()`` method. This is called a
 lock is acquired::
 
     use Symfony\Component\Lock\LockFactory;
-    use Symfony\Component\Lock\Store\RedisStore;
+    use Symfony\Component\Lock\Store\FlockStore;
 
-    $store = new RedisStore(new \Predis\Client('tcp://localhost:6379'));
+    $store = new FlockStore('/var/stores');
     $factory = new LockFactory($store);
 
     $lock = $factory->createLock('pdf-creation');
