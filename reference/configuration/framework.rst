@@ -1641,11 +1641,11 @@ handler_id
 
 **type**: ``string`` or ``null`` **default**: ``null``
 
-The service id used for session storage. The default value ``'session.handler.native_file'``
-will let Symfony manage the sessions itself using files to store the session metadata when
-`framework.session.save_path` is set or `null`
+By default at `null` if `framework.session.save_path` is not set.
+The session handler configured by php.ini is used, unless option
+`framework.session.save_path` is used, in which case the default is to store sessions
+using the native file session handler.
 
-The default value ``null`` is to use the native PHP session mechanism.
 You can also :ref:`store sessions in a database <session-database>`.
 
 .. _name:
