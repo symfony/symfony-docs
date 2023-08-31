@@ -517,8 +517,9 @@ To answer this, change the service declaration:
 
 .. tip::
 
-    In XML and YAML format, you may provide the tag an attribute called ``name``.
-    When doing so, this is the syntax you should follow:
+    The ``name`` attribute is used by default to define the name of the tag.
+    If you want to add a ``name`` attribute to some tag in XML or YAML formats,
+    you need to use this special syntax:
 
     .. configuration-block::
 
@@ -529,6 +530,9 @@ To answer this, change the service declaration:
                 MailerSmtpTransport:
                     arguments: ['%mailer_host%']
                     tags:
+                        # this is a tag called 'app.mail_transport'
+                        - { name: 'app.mail_transport', alias: 'smtp' }
+                        # this is a tag called 'app.mail_transport' with two attributes ('name' and 'alias')
                         - app.mail_transport: { name: 'arbitrary-value', alias: 'smtp' }
 
         .. code-block:: xml
@@ -543,7 +547,9 @@ To answer this, change the service declaration:
                 <services>
                     <service id="MailerSmtpTransport">
                         <argument>%mailer_host%</argument>
-
+                        <!-- this is a tag called 'app.mail_transport' -->
+                        <tag name="app.mail_transport" alias="sendmail"/>
+                        <!-- this is a tag called 'app.mail_transport' with two attributes ('name' and 'alias') -->
                         <tag name="arbitrary-value" alias="smtp">app.mail_transport</tag>
                     </service>
                 </services>
