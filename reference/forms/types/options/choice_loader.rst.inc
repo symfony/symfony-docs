@@ -26,14 +26,13 @@ This will cause the call of ``StaticClass::getConstants()`` to not happen if the
 request is redirected and if there is no pre set or submitted data. Otherwise
 the choice options would need to be resolved thus triggering the callback.
 
-If the ``CallbackChoiceLoader`` doesn't fit your needs and you want to create
-your own loader, you can either create a loader by implementing the
+If the built-in ``CallbackChoiceLoader`` doesn't fit your needs, you can create
+your own loader by implementing the
 :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
 or by extending the
 :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\AbstractChoiceLoader`.
-This abstract class allows to save some boilerplate by implementing some
-of the :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\ChoiceLoaderInterface`
-methods. Thus, you'll only have to implement the
+This abstract class saves you some boilerplate by implementing some methods of
+the interface so you'll only have to implement the
 :method:`Symfony\\Component\\Form\\ChoiceList\\Loader\\AbstractChoiceLoader::loadChoices`
 method to have a fully functional choice loader.
 
