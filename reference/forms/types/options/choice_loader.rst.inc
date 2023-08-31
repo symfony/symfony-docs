@@ -36,11 +36,6 @@ the interface so you'll only have to implement the
 :method:`Symfony\\Component\\Form\\ChoiceList\\Loader\\AbstractChoiceLoader::loadChoices`
 method to have a fully functional choice loader.
 
-.. versionadded:: 5.1
-
-    The :class:`Symfony\\Component\\Form\\ChoiceList\\Loader\\AbstractChoiceLoader`
-    class was introduced in Symfony 5.1.
-
 When you're defining a custom choice type that may be reused in many fields
 (like entries of a collection) or reused in multiple forms at once, you
 should use the :class:`Symfony\\Component\\Form\\ChoiceList\\ChoiceList`
