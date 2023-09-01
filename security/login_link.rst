@@ -272,6 +272,7 @@ This will send an email like this to the user:
 
 .. image:: /_images/security/login_link_email.png
    :align: center
+   :alt: A default Symfony e-mail containing the text "Click on the button below to confirm you want to sign in" and the button with the login link.
 
 .. tip::
 

@@ -8,7 +8,7 @@ the results of running ``figlet symfony``, it might output something like
 this:
 
 .. image:: /_images/components/console/debug_formatter.png
-   :align: center
+    :alt: Console output, with the first line showing "RUN Running figlet", followed by lines showing the output of the command prefixed with "OUT" and "RES Finished the command" as last line in the output.
 
 Using the debug_formatter
 -------------------------

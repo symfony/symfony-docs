@@ -25,11 +25,13 @@ Examples
 The simplest workflow looks like this. It contains two places and one transition.
 
 .. image:: /_images/components/workflow/simple.png
+    :alt: A simple state diagram showing a single transition between two places.
 
 Workflows could be more complicated when they describe a real business case. The
 workflow below describes the process to fill in a job application.
 
 .. image:: /_images/components/workflow/job_application.png
+    :alt: A complex state diagram showing many places with multiple possible transitions between them.
 
 When you fill in a job application in this example there are 4 to 7 steps
 depending on the job you are applying for. Some jobs require personality
@@ -63,6 +65,7 @@ pull request. At any time, you can also "update" the pull request, which
 will result in another continuous integration run.
 
 .. image:: /_images/components/workflow/pull_request.png
+    :alt: A state diagram for the pull request process described previously.
 
 Below is the configuration for the pull request state machine.
 

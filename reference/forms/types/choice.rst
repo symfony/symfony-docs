@@ -41,7 +41,7 @@ end users and the array values are the internal values used in the form field::
 This will create a ``select`` drop-down like this:
 
 .. image:: /_images/reference/form/choice-example1.png
-   :align: center
+    :alt: A choice list form input with the options "Maybe", "Yes" and "No".
 
 If the user selects ``No``, the form will return ``false`` for this field. Similarly,
 if the starting data for this field is ``true``, then ``Yes`` will be auto-selected.
@@ -137,7 +137,7 @@ by passing a multi-dimensional ``choices`` array::
     ]);
 
 .. image:: /_images/reference/form/choice-example4.png
-   :align: center
+    :alt: A choice list with the options "Yes" and "No" grouped under "Main Statuses" and the options "Backordered" and "Discontinued" under "Out of Stock Statuses".
 
 To get fancier, use the `group_by`_ option instead.
 

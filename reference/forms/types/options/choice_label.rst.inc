@@ -40,7 +40,7 @@ This method is called for *each* choice, passing you the ``$choice`` and
 This will give you:
 
 .. image:: /_images/reference/form/choice-example2.png
-   :align: center
+    :alt: A choice list with the options "Definitely!", "NO" and "MAYBE".
 
 If your choice values are objects, then ``choice_label`` can also be a
 :ref:`property path <reference-form-option-property-path>`. Imagine you have some

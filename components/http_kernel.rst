@@ -72,7 +72,9 @@ and ends with a :class:`Symfony\\Component\\HttpFoundation\\Response`.
 
 .. raw:: html
 
-    <object data="../_images/components/http_kernel/http-workflow.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/http_kernel/http-workflow.svg" type="image/svg+xml"
+        alt="A flow diagram showing all HTTP Kernel events in the Request-Response lifecycle. Each event is numbered 1 to 8 and described in detail in the following subsections."
+    ></object>
 
 The exact details of this workflow are the key to understanding how the kernel
 (and the Symfony Framework or any other library that uses the kernel) works.
@@ -511,7 +513,9 @@ to the exception.
 
 .. raw:: html
 
-    <object data="../_images/components/http_kernel/http-workflow-exception.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/http_kernel/http-workflow-exception.svg" type="image/svg+xml"
+        alt="The HTTP KErnel flow diagram showing how exceptions bypass all further steps and are directly transformed to responses."
+    ></object>
 
 Each listener to this event is passed a :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
 object, which you can use to access the original exception via the
@@ -670,7 +674,9 @@ your controller).
 
 .. raw:: html
 
-    <object data="../_images/components/http_kernel/http-workflow-subrequest.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/http_kernel/http-workflow-subrequest.svg" type="image/svg+xml"
+        alt="The HTTP Kernel flow diagram with a sub request from a controller starting the lifecycle at step 1 again and feeding the sub Response content back into the controller."
+    ></object>
 
 To execute a sub request, use ``HttpKernel::handle()``, but change the second
 argument as follows::

@@ -8,15 +8,20 @@ In order to do so, the Serializer component follows the following schema.
 
 .. raw:: html
 
-    <object data="../_images/components/serializer/serializer_workflow.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/serializer/serializer_workflow.svg" type="image/svg+xml"
+        alt="A flow diagram showing how objects are serialized/deserialized. This is described in the subsequent paragraph."
+    ></object>
 
-As you can see in the picture above, an array is used as an intermediary between
-objects and serialized contents. This way, encoders will only deal with turning
-specific **formats** into **arrays** and vice versa. The same way, Normalizers
-will deal with turning specific **objects** into **arrays** and vice versa.
+When (de)serializing objects, the Serializer uses an array as the intermediary
+between objects and serialized contents. Encoders will only deal with
+turning specific **formats** into **arrays** and vice versa. The same way,
+normalizers will deal with turning specific **objects** into **arrays** and
+vice versa. The Serializer deals with calling the normalizers and encoders
+when serializing objects or deserializing formats.
 
-Serialization is a complex topic. This component may not cover all your use cases out of the box,
-but it can be useful for developing tools to serialize and deserialize your objects.
+Serialization is a complex topic. This component may not cover all your use
+cases out of the box, but it can be useful for developing tools to
+serialize and deserialize your objects.
 
 Installation
 ------------
