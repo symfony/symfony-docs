@@ -483,6 +483,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/10-uninitialized.png
+    :alt: Dump output where the uninitialized property is represented by a question mark followed by the type definition.
 
 .. versionadded:: 6.4
 
