@@ -582,6 +582,13 @@ attribute like this::
         }
     }
 
+.. note::
+
+    Some IDEs will show an error when using the ``#[Target]`` as in the previous example:
+    *"Attribute cannot be applied to a property because it does not contain the 'Attribute::TARGET_PROPERTY' flag"*.
+    The reason is that thanks to `PHP constructor promotion`_ this constructor
+    argument is both a parameter and a class property. You can safely ignore this error message.
+
 .. versionadded:: 5.3
 
     The ``#[Target]`` attribute was introduced in Symfony 5.3.
@@ -737,3 +744,4 @@ over all code.
 
 .. _ROT13: https://en.wikipedia.org/wiki/ROT13
 .. _service definition prototype: https://symfony.com/blog/new-in-symfony-3-3-psr-4-based-service-discovery
+.. _`PHP constructor promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion

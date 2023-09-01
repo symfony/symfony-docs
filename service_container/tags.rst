@@ -717,6 +717,14 @@ directly via PHP attributes:
             ;
         };
 
+.. note::
+
+    Some IDEs will show an error when using the ``#[TaggedIterator]`` together
+    with the `PHP constructor promotion`_:
+    *"Attribute cannot be applied to a property because it does not contain the 'Attribute::TARGET_PROPERTY' flag"*.
+    The reason is that those constructor arguments are both parameters and class
+    properties. You can safely ignore this error message.
+
 .. versionadded:: 5.3
 
     The ``#[TaggedIterator]`` attribute was introduced in Symfony 5.3 and requires PHP 8.
@@ -1092,3 +1100,5 @@ be used directly on the class of the service you want to configure::
 .. versionadded:: 5.3
 
     The ``#[AsTaggedItem]`` attribute was introduced in Symfony 5.3.
+
+.. _`PHP constructor promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion
