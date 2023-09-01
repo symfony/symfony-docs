@@ -161,9 +161,21 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
 #. :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`,
    an internal stamp when a message fails due to an exception in the handler.
 
+.. note::
+
+    The :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp` stamp
+    contains a :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException`,
+    which is a representation of the exception that made the message failed. This
+    exception can be retrieved with the
+    :method:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp::getFlattenException`
+    method. This exception is normalized thanks to the
+    :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Normalizer\\FlattenExceptionNormalizer`
+    which helps error reporting in the Messenger context.
+
 .. versionadded:: 5.2
 
-    The ``ErrorDetailsStamp`` stamp was introduced in Symfony 5.2.
+    The ``ErrorDetailsStamp`` stamp and the ``FlattenExceptionNormalizer``
+    were introduced in Symfony 5.2.
 
 Instead of dealing directly with the messages in the middleware you receive the envelope.
 Hence you can inspect the envelope content and its stamps, or add any::
