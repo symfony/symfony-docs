@@ -1155,6 +1155,10 @@ following methods::
     // returns detailed logs about the requests and responses of the HTTP transaction
     $httpLogs = $response->getInfo('debug');
 
+    // the special "pause_handler" info item is a callable that allows to delay the request
+    // for a given number of seconds; this allows you to delay retries, throttle streams, etc.
+    $response->getInfo('pause_handler')(2);
+
 .. note::
 
     ``$response->toStream()`` is part of :class:`Symfony\\Component\\HttpClient\\Response\\StreamableInterface`.
