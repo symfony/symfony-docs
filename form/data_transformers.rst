@@ -439,7 +439,7 @@ types of underlying data.
 
 .. raw:: html
 
-    <object data="../_images/form/data-transformer-types.svg" type="image/svg+xml"
+    <object data="/_images/form/data-transformer-types.svg" type="image/svg+xml"
         alt="Flow diagram with the Model transformer between Model and Norm data, and the View transformer between Norm and View data. This is described in detail below the diagram."
     ></object>
 
