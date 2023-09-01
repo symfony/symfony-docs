@@ -40,8 +40,8 @@ using a deprecated feature. When visiting your application in the
 in your browser, these notices are shown in the web dev toolbar:
 
 .. image:: /_images/install/deprecations-in-profiler.png
-   :align: center
-   :class: with-browser
+    :alt: The Logs page of the Symfony Profiler showing the deprecation notices.
+    :class: with-browser
 
 Ultimately, you should aim to stop using the deprecated functionality.
 Sometimes the warning might tell you exactly what to change.

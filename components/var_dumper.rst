@@ -350,6 +350,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/01-simple.png
+    :alt: Dump output showing the array with length five and all keys and values.
 
 .. note::
 
@@ -367,6 +368,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/02-multi-line-str.png
+    :alt: Dump output showing the string on multiple lines in between three quotes.
 
 .. code-block:: php
 
@@ -381,6 +383,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/03-object.png
+    :alt: Dump output showing the PropertyExample object and all three properties with their values.
 
 .. note::
 
@@ -399,6 +402,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/04-dynamic-property.png
+    :alt: Dump output showing the DynamicPropertyExample object and both declared and undeclared properties with their values.
 
 .. code-block:: php
 
@@ -411,6 +415,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/05-soft-ref.png
+    :alt: Dump output showing the "aCircularReference" property value referencing the parent object, instead of showing all properties again.
 
 .. code-block:: php
 
@@ -424,6 +429,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/06-constants.png
+    :alt: Dump output with the "E_WARNING" constant shown as value of "severity".
 
 .. code-block:: php
 
@@ -437,6 +443,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/07-hard-ref.png
+    :alt: Dump output showing the referenced arrays.
 
 .. code-block:: php
 
@@ -447,6 +454,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/08-virtual-property.png
+    :alt: Dump output of the ArrayObject.
 
 .. code-block:: php
 
@@ -460,6 +468,7 @@ then its dump representation::
     dump($var);
 
 .. image:: /_images/components/var_dumper/09-cut.png
+    :alt: Dump output where the children of the Container object are hidden.
 
 .. _var-dumper-advanced:
 

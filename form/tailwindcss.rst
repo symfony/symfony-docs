@@ -9,7 +9,7 @@ classes so out of the box, your forms will look decent. Customization is almost 
 going to be required so this theme makes that easy.
 
 .. image:: /_images/form/tailwindcss-form.png
-   :align: center
+    :alt: An HTML form showing a range of form types styled using TailwindCSS.
 
 To use, first be sure you have installed and integrated `Tailwind CSS`_ and the
 `form plugin`_. Follow their respective documentation to install both packages.

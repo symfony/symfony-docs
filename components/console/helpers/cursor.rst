@@ -6,7 +6,7 @@ cursor position in a console command. This allows you to write on any position
 of the output:
 
 .. image:: /_images/components/console/cursor.gif
-   :align: center
+    :alt: A command outputs on various positions on the screen, eventually drawing the letters "SF".
 
 .. code-block:: php
 

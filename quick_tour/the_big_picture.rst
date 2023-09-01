@@ -52,8 +52,8 @@ it as follows:
 Try your new app by going to ``http://localhost:8000`` in a browser!
 
 .. image:: /_images/quick_tour/no_routes_page.png
-   :align: center
-   :class: with-browser
+    :alt: The default Symfony welcome page.
+    :class: with-browser
 
 Fundamentals: Route, Controller, Response
 -----------------------------------------

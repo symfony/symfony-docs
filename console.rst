@@ -81,6 +81,7 @@ terminal. All commands support name and option completion, and some can
 even complete values.
 
 .. image:: /_images/components/console/completion.gif
+    :alt: The terminal completes the command name "secrets:remove" and the argument "SOME_OTHER_SECRET".
 
 First, you have to install the completion script *once*. Run
 ``bin/console completion --help`` for the installation instructions for

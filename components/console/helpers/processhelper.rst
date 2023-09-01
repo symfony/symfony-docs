@@ -19,14 +19,17 @@ a very verbose verbosity (e.g. ``-vv``)::
 will result in this output:
 
 .. image:: /_images/components/console/process-helper-verbose.png
+    :alt: Console output showing two lines: "RUN 'figlet' 'Symfony'" and "RES Command ran successfully".
 
 It will result in more detailed output with debug verbosity (e.g. ``-vvv``):
 
 .. image:: /_images/components/console/process-helper-debug.png
+    :alt: In between the command line and the result line, the command's output is now shown prefixed by "OUT".
 
 In case the process fails, debugging is easier:
 
 .. image:: /_images/components/console/process-helper-error-debug.png
+    :alt: The last line shows "RES 127 Command dit not run successfully", and the output lines show more the error information from the command.
 
 Arguments
 ---------
