@@ -165,8 +165,8 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
 
     The :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp` stamp
     contains a :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException`,
-    which is a representation of the exception that made the message failed. This
-    exception can be retrieved with the
+    which is a representation of the exception that made the message fail. You can
+    get this exception with the
     :method:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp::getFlattenException`
     method. This exception is normalized thanks to the
     :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Normalizer\\FlattenExceptionNormalizer`
