@@ -69,7 +69,7 @@ Running a Mercure Hub
 
 .. raw:: html
 
-    <object data="../_images/mercure/hub.svg" type="image/svg+xml"
+    <object data="/_images/mercure/hub.svg" type="image/svg+xml"
         alt="Flow diagram showing a Symfony app communicating with the Mercure Hub using a POST request, and the Mercure Hub using SSE to communicate to the clients."
     ></object>
 
@@ -335,7 +335,7 @@ in a ``Link`` HTTP header.
 
 .. raw:: html
 
-    <object data="../_images/mercure/discovery.svg" type="image/svg+xml"
+    <object data="/_images/mercure/discovery.svg" type="image/svg+xml"
         alt="Flow diagram showing the Link response header set by the Symfony app to respond to an API request for a book with ID 1."
     ></object>
 

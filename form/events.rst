@@ -38,7 +38,7 @@ be updated:
 
 .. raw:: html
 
-    <object data="../_images/form/form_workflow.svg" type="image/svg+xml"
+    <object data="/_images/form/form_workflow.svg" type="image/svg+xml"
         alt="A generic flow diagram showing the two phases. These are
         described in the next subsections."
     ></object>
@@ -48,7 +48,7 @@ be updated:
 
 .. raw:: html
 
-    <object data="../_images/form/form_prepopulation_workflow.svg" type="image/svg+xml"
+    <object data="/_images/form/form_prepopulation_workflow.svg" type="image/svg+xml"
         alt="A flow diagram showing the two events that are dispatched during pre-population."
     ></object>
 
@@ -123,7 +123,7 @@ View data        Normalized data transformed using a view transformer
 
 .. raw:: html
 
-    <object data="../_images/form/form_submission_workflow.svg" type="image/svg+xml"
+    <object data="/_images/form/form_submission_workflow.svg" type="image/svg+xml"
         alt="A flow diagram showing the three events that are dispatched when handling form submissions."
     ></object>
 

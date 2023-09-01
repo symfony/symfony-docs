@@ -166,12 +166,12 @@ Images and Diagrams
 
 .. code-block:: text
 
-    .. image:: _images/example-screenshot.png
+    .. image:: /_images/example-screenshot.png
         :alt: Some concise description of the screenshot.
 
     .. raw:: html
 
-        <object data="_images/example-diagram.svg" type="image/svg+xml"
+        <object data="/_images/example-diagram.svg" type="image/svg+xml"
             alt="Some concise description."
         ></object>
 

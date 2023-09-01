@@ -94,7 +94,7 @@ following set of fields as the "postal address":
 
 .. raw:: html
 
-    <object data="../_images/form/form-custom-type-postal-address.svg" type="image/svg+xml"
+    <object data="/_images/form/form-custom-type-postal-address.svg" type="image/svg+xml"
         alt="A wireframe of the custom field type, showing five text inputs: two address lines, the City, the State and the ZIP code."
     ></object>
 
@@ -436,7 +436,7 @@ are some examples of Twig block names for the postal address type:
 
 .. raw:: html
 
-    <object data="../_images/form/form-custom-type-postal-address-fragment-names.svg" type="image/svg+xml"
+    <object data="/_images/form/form-custom-type-postal-address-fragment-names.svg" type="image/svg+xml"
         alt="The wireframe with some block names highlighted, these are also listed below the image."
     ></object>
 

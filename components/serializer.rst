@@ -8,7 +8,7 @@ In order to do so, the Serializer component follows the following schema.
 
 .. raw:: html
 
-    <object data="../_images/components/serializer/serializer_workflow.svg" type="image/svg+xml"
+    <object data="/_images/components/serializer/serializer_workflow.svg" type="image/svg+xml"
         alt="A flow diagram showing how objects are serialized/deserialized. This is described in the subsequent paragraph."
     ></object>
 

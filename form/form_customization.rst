@@ -51,7 +51,7 @@ customized using other Twig functions, as illustrated in the following diagram:
 
 .. raw:: html
 
-    <object data="../_images/form/form-field-parts.svg" type="image/svg+xml"
+    <object data="/_images/form/form-field-parts.svg" type="image/svg+xml"
         alt="Wireframe showing all functions in a form row, which are mentioned directly below."
     ></object>
 
