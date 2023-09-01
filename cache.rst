@@ -850,10 +850,6 @@ cache items encrypted with the old key have expired, you can completely remove
 Computing Cache Values Asynchronously
 -------------------------------------
 
-.. versionadded:: 5.2
-
-    The feature to compute cache values asynchronously was introduced in Symfony 5.2.
-
 The Cache component uses the `probabilistic early expiration`_ algorithm to
 protect against the :ref:`cache stampede <cache_stampede-prevention>` problem.
 This means that some cache items are elected for early-expiration while they are
