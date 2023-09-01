@@ -440,8 +440,11 @@ In the above example, the transformer was used as a "model" transformer.
 In fact, there are two different types of transformers and three different
 types of underlying data.
 
-.. image:: /_images/form/data-transformer-types.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/form/data-transformer-types.svg" type="image/svg+xml"
+        alt="Flow diagram with the Model transformer between Model and Norm data, and the View transformer between Norm and View data. This is described in detail below the diagram."
+    ></object>
 
 In any form, the three different types of data are:
 
@@ -481,7 +484,7 @@ To use the view transformer, call ``addViewTransformer()``.
     data. So your model transformer cannot reduce the number of items within the
     Collection (i.e. filtering out some items), as in that case the collection
     ends up with some empty children.
-    
+
     A possible workaround for that limitation could be not using the underlying
     object directly, but a DTO (Data Transfer Object) instead, that implements
     the transformation of such incompatible data structures.

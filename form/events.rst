@@ -29,16 +29,28 @@ register an event listener to the ``FormEvents::PRE_SUBMIT`` event as follows::
 The Form Workflow
 -----------------
 
+In the lifecycle of a form, there are two moments where the form data can
+be updated:
+
+1. During **pre-population** (``setData()``) when building the form;
+2. When handling **form submission** (``handleRequest()``) to update the
+   form data based on the values the user entered.
+
 .. raw:: html
 
-    <object data="../_images/form/form_workflow.svg" type="image/svg+xml"></object>
+    <object data="../_images/form/form_workflow.svg" type="image/svg+xml"
+        alt="A generic flow diagram showing the two phases. These are
+        described in the next subsections."
+    ></object>
 
 1) Pre-populating the Form (``FormEvents::PRE_SET_DATA`` and ``FormEvents::POST_SET_DATA``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
 
-    <object data="../_images/form/form_prepopulation_workflow.svg" type="image/svg+xml"></object>
+    <object data="../_images/form/form_prepopulation_workflow.svg" type="image/svg+xml"
+        alt="A flow diagram showing the two events that are dispatched during pre-population."
+    ></object>
 
 Two events are dispatched during pre-population of a form, when
 :method:`Form::setData() <Symfony\\Component\\Form\\Form::setData>`
@@ -111,7 +123,9 @@ View data        Normalized data transformed using a view transformer
 
 .. raw:: html
 
-    <object data="../_images/form/form_submission_workflow.svg" type="image/svg+xml"></object>
+    <object data="../_images/form/form_submission_workflow.svg" type="image/svg+xml"
+        alt="A flow diagram showing the three events that are dispatched when handling form submissions."
+    ></object>
 
 Three events are dispatched when
 :method:`Form::handleRequest() <Symfony\\Component\\Form\\Form::handleRequest>`

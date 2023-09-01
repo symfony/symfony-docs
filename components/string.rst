@@ -48,7 +48,7 @@ The following image displays the bytes, code points and grapheme clusters for
 the same word written in English (``hello``) and Hindi (``नमस्ते``):
 
 .. image:: /_images/components/string/bytes-points-graphemes.png
-   :align: center
+    :alt: Each letter in "hello" is made up of one byte, one code point and one grapheme cluster. In the Hindi translation, the first two letters ("नम") take up three bytes, one code point and one grapheme cluster. The last letters ("स्ते") each take up six bytes, two code points and one grapheme cluster.
 
 Usage
 -----

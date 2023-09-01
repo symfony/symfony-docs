@@ -25,8 +25,8 @@ toolbar injected at the bottom of your pages to open the web interface of the
 Symfony Profiler, which will look like this:
 
 .. image:: /_images/profiler/web-interface.png
-   :align: center
-   :class: with-browser
+    :alt: The Symfony Web profiler page.
+    :class: with-browser
 
 .. note::
 
@@ -199,13 +199,13 @@ event::
     use Symfony\Component\HttpKernel\KernelInterface;
 
     // ...
-    
+
     class MySubscriber implements EventSubscriberInterface
     {
         public function __construct(private KernelInterface $kernel)
         {
         }
-        
+
         // ...
 
         public function onKernelResponse(ResponseEvent $event)

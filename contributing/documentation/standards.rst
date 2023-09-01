@@ -146,6 +146,36 @@ Files and Directories
       ├─ vendor/
       └─ ...
 
+Images and Diagrams
+-------------------
+
+* **Diagrams** must adhere to the Symfony docs style. These are created
+  using the Dia_ application, to make sure everyone can edit them. See the
+  `README on GitHub`_ for instructions on how to create them.
+* All images and diagrams must contain **alt descriptions**:
+
+  * Keep the descriptions concise, do not duplicate information surrounding
+    the figure;
+  * Describe complex diagrams in text surrounding the diagram instead of
+    the alt description. In these cases, alt descriptions must describe
+    where the longer description can be found (e.g. "These elements are
+    described further in the next sections");
+  * Start descriptions with a capital letter and end with a period;
+  * Do not start with "A screenshot of", "Diagram of", etc. except when
+    it's useful to know the exact type (e.g. a specific diagram type).
+
+.. code-block:: text
+
+    .. image:: _images/example-screenshot.png
+        :alt: Some concise description of the screenshot.
+
+    .. raw:: html
+
+        <object data="_images/example-diagram.svg" type="image/svg+xml"
+            alt="Some concise description."
+        ></object>
+
+
 English Language Standards
 --------------------------
 
@@ -201,4 +231,6 @@ In addition, documentation follows these rules:
 .. _`American English Oxford Dictionary`: https://www.lexico.com/definition/american_english
 .. _`headings and titles`: https://en.wikipedia.org/wiki/Letter_case#Headings_and_publication_titles
 .. _`Serial (Oxford) Commas`: https://en.wikipedia.org/wiki/Serial_comma
+.. _`Dia`: http://dia-installer.de/
+.. _`README on GitHub`: https://github.com/symfony/symfony-docs/blob/6.4/_images/sources/README.md
 .. _`nosism`: https://en.wikipedia.org/wiki/Nosism

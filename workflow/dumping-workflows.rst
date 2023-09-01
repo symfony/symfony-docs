@@ -36,14 +36,17 @@ to dump it as an image:
 The DOT image will look like this:
 
 .. image:: /_images/components/workflow/blogpost.png
+    :alt: A state diagram of the Symfony workflow created by DOT.
 
 The Mermaid image will look like this:
 
 .. image:: /_images/components/workflow/blogpost_mermaid.png
+    :alt: A state diagram of the Symfony workflow created by Mermaid.
 
 The PlantUML image will look like this:
 
 .. image:: /_images/components/workflow/blogpost_puml.png
+    :alt: A state diagram of the Symfony workflow created by PlantUML.
 
 If you are creating workflows outside of a Symfony application, use the
 ``GraphvizDumper`` or ``StateMachineGraphvizDumper`` class to create the DOT
@@ -316,6 +319,7 @@ Below is the configuration for the pull request state machine with styling added
 The PlantUML image will look like this:
 
 .. image:: /_images/components/workflow/pull_request_puml_styled.png
+    :alt: A state diagram created by PlantUML with custom transition colors and descriptions.
 
 .. _`Graphviz`: https://www.graphviz.org
 .. _`Mermaid CLI`: https://github.com/mermaid-js/mermaid-cli

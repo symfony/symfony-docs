@@ -91,8 +91,8 @@ Several things need to be paid attention to when picking a stack trace
 from your development environment through a web browser:
 
 1. Are there several exceptions? If yes, the most interesting one is
-   often exception 1/n which, is shown *last* in the example below (it
-   is the one marked as an exception [1/2]).
+   often exception 1/n which, is shown *last* in the default exception page
+   (it is the one marked as ``exception [1/2]`` in the below example).
 2. Under the "Stack Traces" tab, you will find exceptions in plain
    text, so that you can easily share them in e.g. bug reports. Make
    sure to **remove any sensitive information** before doing so.
@@ -102,8 +102,8 @@ from your development environment through a web browser:
    are getting, but are not what the term "stack trace" refers to.
 
 .. image:: /_images/contributing/code/stack-trace.gif
-   :align: center
-   :class: with-browser
+    :alt: The default Symfony exception page with the "Exceptions", "Logs" and "Stack Traces" tabs.
+    :class: with-browser
 
 Since stack traces may contain sensitive data, they should not be
 exposed in production. Getting a stack trace from your production
