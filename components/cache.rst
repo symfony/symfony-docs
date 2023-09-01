@@ -90,6 +90,8 @@ generate and return the value::
     Use cache tags to delete more than one key at the time. Read more at
     :doc:`/components/cache/cache_invalidation`.
 
+.. _cache_stampede-prevention:
+
 Stampede Prevention
 ~~~~~~~~~~~~~~~~~~~
 

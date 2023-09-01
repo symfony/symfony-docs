@@ -837,3 +837,149 @@ When configuring multiple keys, the first key will be used for reading and
 writing, and the additional key(s) will only be used for reading. Once all
 cache items encrypted with the old key have expired, you can completely remove
 ``OLD_CACHE_DECRYPTION_KEY``.
+
+Computing Cache Values Asynchronously
+-------------------------------------
+
+.. versionadded:: 5.2
+
+    Computing cache values asynchronously with the Messenger
+    in a worker was introduced in Symfony 5.2.
+
+Combined with the :doc:`Messenger component docs </components/messenger>`, the
+Cache component allows you to compute and refresh cache values asynchronously.
+
+The :class:`Symfony\\Contracts\\Cache\\CacheInterface` enables
+`probabilistic early expiration`_, which means that sometimes, items are
+elected for early-expiration while they are still fresh. You can learn more
+about it in the :ref:`cache stampede prevention <cache_stampede-prevention>`
+section.
+
+Under classical circumstances, expired cache items are computed synchronously.
+However, with a bit of additional configuration, values computation can be
+delegated to a background worker. In this case, when an item is queried,
+its cached value is immediately returned and a
+:class:`Symfony\\Component\\Cache\\Messenger\\EarlyExpirationMessage` is
+dispatched through a Messenger bus. When this message is handled by a
+message consumer, the refreshed cache value is computed asynchronously.
+The next time the item is queried, the refreshed value will be fresh
+and returned.
+
+First, let's declare a service that will compute the item's value::
+
+    // src/Cache/CacheComputation.php
+    namespace App\Cache;
+
+    use Symfony\Contracts\Cache\ItemInterface;
+
+    class CacheComputation
+    {
+        public function compute(ItemInterface $item): string
+        {
+            $item->expiresAfter(5);
+
+            return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+        }
+    }
+
+Now, we can create a controller that will query this item::
+
+    // src/Controller/CacheController.php
+    namespace App\Controller;
+
+    use App\Cache\CacheComputation;
+    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+    use Symfony\Component\Routing\Annotation\Route;
+    use Symfony\Contracts\Cache\CacheInterface;
+    use Symfony\Contracts\Cache\ItemInterface;
+
+    class CacheController extends AbstractController
+    {
+        /**
+         * @Route("/cache", name="cache")
+         */
+        public function index(CacheInterface $asyncCache): Response
+        {
+            // we give to the cache the service method that refreshes the item
+            $cachedValue = $cache->get('my_value', [CacheComputation::class, 'compute'])
+
+            // ...
+        }
+    }
+
+Finally, we configure a new cache pool called ``async.cache`` that will use a
+message bus to compute values in a worker:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        framework:
+            cache:
+                pools:
+                    async.cache:
+                        messenger_bus: async_bus
+
+            messenger:
+                transports:
+                    async_bus: '%env(MESSENGER_TRANSPORT_DSN)%'
+                routing:
+                    Symfony\Component\Cache\Messenger\Message\EarlyExpirationMessage: async_bus
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:framework="http://symfony.com/schema/dic/symfony"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+            <framework:config>
+                <framework:cache>
+                    <framework:pool name="async.cache" early-expiration-message-bus="async_bus"/>
+                </framework:cache>
+
+                <framework:messenger>
+                    <framework:transport name="async_bus">%env(MESSENGER_TRANSPORT_DSN)%</framework:transport>
+                    <framework:routing message-class="Symfony\Component\Cache\Messenger\Message\EarlyExpirationMessage">
+                        <framework:sender service="async_bus"/>
+                    </framework:routing>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/framework/framework.php
+        use function Symfony\Component\DependencyInjection\Loader\Configurator\env;
+        use Symfony\Component\Cache\Messenger\EarlyExpirationMessage;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $framework->cache()
+                ->pool('async.cache')
+                    ->earlyExpirationMessageBus('async_bus');
+
+            $framework->messenger()
+                ->transport('async_bus')
+                    ->dsn(env('MESSENGER_TRANSPORT_DSN'))
+                ->routing(EarlyExpirationMessage::class)
+                    ->senders(['async_bus']);
+        };
+
+You can now start the consumer:
+
+.. code-block:: terminal
+
+    $ php bin/console messenger:consume async_bus
+
+That's it! Now, whenever an item is queried from this cache pool, its cached
+value will be immediately returned. If it is elected for early-expiration, a message is sent
+through to bus to schedule a background computation to refresh the value.
+
+.. _`probabilistic early expiration`: https://en.wikipedia.org/wiki/Cache_stampede#Probabilistic_early_expiration
