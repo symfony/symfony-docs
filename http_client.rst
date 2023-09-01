@@ -1044,7 +1044,7 @@ following methods::
     $httpLogs = $response->getInfo('debug');
 
     // the special "pause_handler" info item is a callable that allows to delay the request
-    // this helps implement delayed retries or throttling streams for example
+    // for a given number of seconds; this allows you to delay retries, throttle streams, etc.
     $response->getInfo('pause_handler')(2);
 
 .. note::
