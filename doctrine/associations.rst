@@ -348,7 +348,7 @@ relationship for you:
 
 .. raw:: html
 
-    <object data="../_images/doctrine/mapping_relations.svg" type="image/svg+xml"
+    <object data="/_images/doctrine/mapping_relations.svg" type="image/svg+xml"
         alt="Doctrine mapping associated Product and Category entities to a product and category database table"
     ></object>
 
@@ -398,7 +398,7 @@ you.
 
 .. raw:: html
 
-    <object data="../_images/doctrine/mapping_relations_proxy.svg" type="image/svg+xml"
+    <object data="/_images/doctrine/mapping_relations_proxy.svg" type="image/svg+xml"
         alt="Doctrine only querying Category data when needed"
     ></object>
 
