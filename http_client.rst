@@ -1164,10 +1164,6 @@ following methods::
     about the response. Some of them might not be known yet (e.g. ``http_code``)
     when you'll call it.
 
-.. versionadded:: 5.2
-
-    The ``pause_handler`` info item was introduced in Symfony 5.2.
-
 .. _http-client-streaming-responses:
 
 Streaming Responses
