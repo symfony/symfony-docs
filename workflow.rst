@@ -189,6 +189,9 @@ The configured property will be used via its implemented getter/setter methods b
         {
             $this->currentPlace = $currentPlace;
         }
+
+        // you don't need to set the initial marking in the constructor or any other method;
+        // this is configured in the workflow with the 'initial_marking' option
     }
 
 .. note::
@@ -225,6 +228,8 @@ what actions are allowed on a blog post::
     use Symfony\Component\Workflow\Exception\LogicException;
 
     $post = new BlogPost();
+    // you don't need to set the initial marking with code; this is configured
+    // in the workflow with the 'initial_marking' option
 
     $workflow = $this->container->get('workflow.blog_publishing');
     $workflow->can($post, 'publish'); // False
