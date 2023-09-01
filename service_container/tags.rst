@@ -541,11 +541,6 @@ To answer this, change the service declaration:
                 </services>
             </container>
 
-    .. versionadded:: 5.1
-
-        The possibility to add the ``name`` attribute to a tag in XML and YAML
-        formats was introduced in Symfony 5.1.
-
 .. tip::
 
     In YAML format, you may provide the tag as a simple string as long as

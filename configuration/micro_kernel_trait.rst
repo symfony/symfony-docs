@@ -166,12 +166,6 @@ be automatically registered as an extension. You can learn more about it in
 the dedicated section about
 :ref:`managing configuration with extensions <components-dependency-injection-extension>`.
 
-.. versionadded:: 5.2
-
-    The automatic registration of the kernel as an extension when implementing the
-    :class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`
-    was introduced in Symfony 5.2.
-
 It is also possible to implement the ``EventSubscriberInterface`` to handle
 events directly from the kernel, again it will be registered automatically::
 
