@@ -922,7 +922,7 @@ a message bus to compute values in a worker:
             cache:
                 pools:
                     async.cache:
-                        messenger_bus: async_bus
+                        early_expiration_message_bus: async_bus
 
             messenger:
                 transports:
