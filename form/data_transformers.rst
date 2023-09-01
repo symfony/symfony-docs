@@ -437,8 +437,11 @@ In the above example, the transformer was used as a "model" transformer.
 In fact, there are two different types of transformers and three different
 types of underlying data.
 
-.. image:: /_images/form/data-transformer-types.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/form/data-transformer-types.svg" type="image/svg+xml"
+        alt="Flow diagram with the Model transformer between Model and Norm data, and the View transformer between Norm and View data. This is described in detail below the diagram."
+    ></object>
 
 In any form, the three different types of data are:
 

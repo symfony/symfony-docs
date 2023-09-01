@@ -1340,16 +1340,17 @@ Pseudo-localization translator
 
     The pseudolocalization translator is meant to be used for development only.
 
-The following image shows the main menu of the interface of a popular Internet
-service:
+The following image shows a typical menu on a webpage:
 
 .. image:: /_images/translation/pseudolocalization-interface-original.png
+    :alt: A menu showing multiple items nicely aligned next to eachother.
 
 This other image shows the same menu when the user switches the language to
 Spanish. Unexpectedly, some text is cut and other contents are so long that
 they overflow and you can't see them:
 
 .. image:: /_images/translation/pseudolocalization-interface-translated.png
+    :alt: In Spanish, some menu items contain more letters which result in them being cut.
 
 These kind of errors are very common, because different languages can be longer
 or shorter than the original application language. Another common issue is to
@@ -1454,10 +1455,14 @@ readable, contents to help you internationalize it. See for example the
 difference in the `Symfony Demo`_ application. This is the original page:
 
 .. image:: /_images/translation/pseudolocalization-symfony-demo-disabled.png
+    :alt: The Symfony demo login page.
+    :class: with-browser
 
 And this is the same page with pseudolocalization enabled:
 
 .. image:: /_images/translation/pseudolocalization-symfony-demo-enabled.png
+    :alt: The Symfony demo login page with pseudolocalization.
+    :class: with-browser
 
 Summary
 -------

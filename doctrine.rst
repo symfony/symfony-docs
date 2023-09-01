@@ -185,8 +185,11 @@ objects to a ``product`` table in your database. Each property in the ``Product`
 entity can be mapped to a column in that table. This is usually done with attributes:
 the ``#[ORM\Column(...)]`` comments that you see above each property:
 
-.. image:: /_images/doctrine/mapping_single_entity.png
-   :align: center
+.. raw:: html
+
+    <object data="../_images/doctrine/mapping_single_entity.svg" type="image/svg+xml"
+        alt="Doctrine mapping between properties of a Product PHP object and the data in the product database table"
+    ></object>
 
 The ``make:entity`` command is a tool to make life easier. But this is *your* code:
 add/remove fields, add/remove methods or update configuration.
@@ -589,8 +592,8 @@ the :ref:`doctrine-queries` section.
     will display the number of queries and the time it took to execute them:
 
     .. image:: /_images/doctrine/doctrine_web_debug_toolbar.png
-       :align: center
-       :class: with-browser
+        :alt: The web dev toolbar showing the Doctrine item.
+        :class: with-browser
 
     If the number of database queries is too high, the icon will turn yellow to
     indicate that something may not be correct. Click on the icon to open the

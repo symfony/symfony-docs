@@ -94,7 +94,9 @@ following set of fields as the "postal address":
 
 .. raw:: html
 
-    <object data="../_images/form/form-custom-type-postal-address.svg" type="image/svg+xml"></object>
+    <object data="../_images/form/form-custom-type-postal-address.svg" type="image/svg+xml"
+        alt="A wireframe of the custom field type, showing five text inputs: two address lines, the City, the State and the ZIP code."
+    ></object>
 
 As explained above, form types are PHP classes that implement
 :class:`Symfony\\Component\\Form\\FormTypeInterface`, although it's more
@@ -430,12 +432,23 @@ second part of the Twig block name (e.g. ``_row``) defines which form type part
 is being rendered (row, widget, help, errors, etc.)
 
 The article about form themes explains the
-:ref:`form fragment naming rules <form-fragment-naming>` in detail. The
-following diagram shows some of the Twig block names defined in this example:
+:ref:`form fragment naming rules <form-fragment-naming>` in detail. These
+are some examples of Twig block names for the postal address type:
 
 .. raw:: html
 
-    <object data="../_images/form/form-custom-type-postal-address-fragment-names.svg" type="image/svg+xml"></object>
+    <object data="../_images/form/form-custom-type-postal-address-fragment-names.svg" type="image/svg+xml"
+        alt="The wireframe with some block names highlighted, these are also listed below the image."
+    ></object>
+
+``postal_address_row``
+    The full form type block.
+``postal_address_addressLine1_help``
+    The help message block below the first address line.
+``postal_address_state_widget``
+    The text input widget for the State field.
+``postal_address_zipCode_label``
+    The label block of the ZIP Code field.
 
 .. caution::
 

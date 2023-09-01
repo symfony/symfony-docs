@@ -35,7 +35,7 @@ This groups the dates that are within 3 days into "Soon" and everything else int
 a "Later" ``<optgroup>``:
 
 .. image:: /_images/reference/form/choice-example5.png
-   :align: center
+    :alt: A choice list with "now" and "tomorrow" grouped under "Soon", and "1 week" and "1 month" grouped under "Later".
 
 If you return ``null``, the option won't be grouped. You can also pass a string
 "property path" that will be called to get the group. See the `choice_label`_ for

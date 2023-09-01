@@ -39,7 +39,9 @@ Use the following snippet to embed the diagram in the docs:
 ```
 .. raw:: html
 
-    <object data="../_images/<folder-name>/<diagram-file-name>.svg" type="image/svg+xml"></object>
+    <object data="../_images/<folder-name>/<diagram-file-name>.svg" type="image/svg+xml"
+        alt="<alt description>"
+    ></object>
 ```
 
 ### Reasoning
