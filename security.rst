@@ -2603,7 +2603,7 @@ Authentication Events
 
 .. raw:: html
 
-    <object data="/_images/security/security_events.svg" type="image/svg+xml"
+    <object data="_images/security/security_events.svg" type="image/svg+xml"
         alt="A flow diagram showing the authentication events that are described in this section in a request-response cycle."
     ></object>
 

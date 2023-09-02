@@ -187,7 +187,7 @@ the ``#[ORM\Column(...)]`` comments that you see above each property:
 
 .. raw:: html
 
-    <object data="/_images/doctrine/mapping_single_entity.svg" type="image/svg+xml"
+    <object data="_images/doctrine/mapping_single_entity.svg" type="image/svg+xml"
         alt="Doctrine mapping between properties of a Product PHP object and the data in the product database table"
     ></object>
 

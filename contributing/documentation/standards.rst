@@ -171,7 +171,7 @@ Images and Diagrams
 
     .. raw:: html
 
-        <object data="/_images/example-diagram.svg" type="image/svg+xml"
+        <object data="_images/example-diagram.svg" type="image/svg+xml"
             alt="Some concise description."
         ></object>
 
