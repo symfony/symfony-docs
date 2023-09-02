@@ -19,7 +19,7 @@ to communicate with each other. For example, when checking for the latest
 
 .. raw:: html
 
-    <object data="/_images/http/xkcd-full.svg" type="image/svg+xml"
+    <object data="../_images/http/xkcd-full.svg" type="image/svg+xml"
         alt="A sequence diagram showing the browser sending &quot;Can I see today's comic?&quot; to the xkcd server. The server prepares the page's HTML and sents it back to the browser."
     ></object>
 
@@ -43,7 +43,7 @@ browser and the xkcd web server:
 
 .. raw:: html
 
-    <object data="/_images/http/xkcd-request.svg" type="image/svg+xml"
+    <object data="../_images/http/xkcd-request.svg" type="image/svg+xml"
         alt="A sequence diagram showing the request from browser to the xkcd server."
     ></object>
 
@@ -108,7 +108,7 @@ from the xkcd web server:
 
 .. raw:: html
 
-    <object data="/_images/http/xkcd-full.svg" type="image/svg+xml"
+    <object data="../_images/http/xkcd-full.svg" type="image/svg+xml"
         alt="The full sequence diagram with the xkcd server sending the page's HTML back to the browser."
     ></object>
 
@@ -355,7 +355,7 @@ to do:
 
 .. raw:: html
 
-    <object data="/_images/http/request-flow.svg" type="image/svg+xml"
+    <object data="../_images/http/request-flow.svg" type="image/svg+xml"
         alt="A flow diagram visualizing the request-response flow. Each step is written out in text in the next section."
     ></object>
 
