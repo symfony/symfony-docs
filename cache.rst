@@ -898,9 +898,7 @@ In the following example, the value is requested from a controller::
 
     class CacheController extends AbstractController
     {
-        /**
-         * @Route("/cache", name="cache")
-         */
+        #[Route('/cache', name: 'cache')]
         public function index(CacheInterface $asyncCache): Response
         {
             // pass to the cache the service method that refreshes the item
