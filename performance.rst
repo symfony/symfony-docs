@@ -224,7 +224,7 @@ Profiling with Blackfire
 
 `Blackfire`_ is the best tool to profile and optimize performance of Symfony
 applications during development, test and production. It's a commercial service,
-but provides a `Blackfire demonstration`_.
+but provides a `full-featured demo`_.
 
 Profiling with Symfony Stopwatch
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -353,6 +353,6 @@ Learn more
 .. _`cachetool`: https://github.com/gordalina/cachetool
 .. _`open_basedir`: https://www.php.net/manual/ini.core.php#ini.open-basedir
 .. _`Blackfire`: https://blackfire.io/docs/introduction?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=performance
-.. _`Blackfire demonstration`: https://demo.blackfire.io?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=performance
+.. _`full-featured demo`: https://demo.blackfire.io?utm_source=symfony&utm_medium=symfonycom_docs&utm_campaign=performance
 .. _`Stopwatch component`: https://symfony.com/components/Stopwatch
 .. _`real-world stopwatch`: https://en.wikipedia.org/wiki/Stopwatch
