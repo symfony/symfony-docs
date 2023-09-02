@@ -616,10 +616,26 @@ images inside the HTML contents::
         ->html('... <div background="cid:footer-signature"> ... </div> ...')
     ;
 
+You can also use :method:`DataPart::setContentId() <Symfony\\Component\\Mime\\Part\\DataPart::setContentId>` method to
+define value and use it as ``cid`` reference::
+
+    $part = new DataPart(new File('/path/to/images/signature.gif'));
+    $part->setContentId('footer-signature');
+
+    $email = (new Email())
+        // ...
+        ->addPart($part->asInline())
+        ->html('... <img src="cid:footer-signature"> ...')
+    ;
+
 .. versionadded:: 6.1
 
     The support of embedded images as HTML backgrounds was introduced in Symfony
     6.1.
+
+.. versionadded:: 6.3
+
+    The support of custom ``cid`` for embedded images was introduced in Symfony 6.3.
 
 .. _mailer-configure-email-globally:
 
