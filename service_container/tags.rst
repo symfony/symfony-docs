@@ -214,10 +214,64 @@ method::
         }
     }
 
+To go even further, the ``SensitiveElement`` attribute can be updated to be
+usable on methods::
+
+    // src/Attribute/SensitiveElement.php
+    namespace App\Attribute;
+
+    #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
+    class SensitiveElement
+    {
+        // ...
+    }
+
+We should now update the call to
+:method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
+to support ``ReflectionMethod``::
+
+    // src/Kernel.php
+    use App\Attribute\SensitiveElement;
+
+    class Kernel extends BaseKernel
+    {
+        // ...
+
+        protected function build(ContainerBuilder $container): void
+        {
+            // ...
+
+            $container->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (
+                ChildDefinition $definition,
+                SensitiveElement $attribute,
+                // we update the union type to support multiple type of reflection
+                // you can also use the "\Reflector" interface
+                \ReflectionClass|\ReflectionMethod $reflector): void {
+                    if ($reflection instanceof \ReflectionMethod) {
+                        // ...
+                    }
+                }
+            );
+        }
+    }
+
+.. tip::
+
+    You can also define an attribute to be usable on properties and parameters with
+    ``Attribute::TARGET_PROPERTY`` and ``Attribute::TARGET_PARAMETER``, then support
+    ``ReflectionProperty`` and ``ReflectionParameter`` in your
+    :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
+    callable.
+
 .. versionadded:: 5.3
 
     The :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
     method was introduced in Symfony 5.3.
+
+.. versionadded:: 5.4
+
+    The support for autoconfigurable methods, properties and parameters was
+    introduced in Symfony 5.4.
 
 Creating custom Tags
 --------------------
