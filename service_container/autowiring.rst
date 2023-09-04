@@ -584,7 +584,7 @@ attribute like this::
 
 .. note::
 
-    Some IDEs will show an error when using the ``#[Target]`` as in the previous example:
+    Some IDEs will show an error when using ``#[Target]`` as in the previous example:
     *"Attribute cannot be applied to a property because it does not contain the 'Attribute::TARGET_PROPERTY' flag"*.
     The reason is that thanks to `PHP constructor promotion`_ this constructor
     argument is both a parameter and a class property. You can safely ignore this error message.

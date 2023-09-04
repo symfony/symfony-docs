@@ -719,7 +719,7 @@ directly via PHP attributes:
 
 .. note::
 
-    Some IDEs will show an error when using the ``#[TaggedIterator]`` together
+    Some IDEs will show an error when using ``#[TaggedIterator]`` together
     with the `PHP constructor promotion`_:
     *"Attribute cannot be applied to a property because it does not contain the 'Attribute::TARGET_PROPERTY' flag"*.
     The reason is that those constructor arguments are both parameters and class
