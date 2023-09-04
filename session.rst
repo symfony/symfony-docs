@@ -670,8 +670,8 @@ and only the first one stored the CSRF token in the session.
 .. tip::
 
     When using Redis with a DSN in the
-    :ref:`handler_id <config-framework-session-handler-id>` config option, the
-    latter can contain the ``prefix`` and ``ttl`` options as query string parameters.
+    :ref:`handler_id <config-framework-session-handler-id>` config option, you can
+    add the ``prefix`` and ``ttl`` options as query string parameters in the DSN.
 
     .. versionadded:: 5.4
 
