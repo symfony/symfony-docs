@@ -616,8 +616,8 @@ images inside the HTML contents::
         ->html('... <div background="cid:footer-signature"> ... </div> ...')
     ;
 
-You can also use :method:`DataPart::setContentId() <Symfony\\Component\\Mime\\Part\\DataPart::setContentId>` method to
-define value and use it as ``cid`` reference::
+You can also use the :method:`DataPart::setContentId() <Symfony\\Component\\Mime\\Part\\DataPart::setContentId>`
+method to define a custom Content-ID for the image and use it as its ``cid`` reference::
 
     $part = new DataPart(new File('/path/to/images/signature.gif'));
     $part->setContentId('footer-signature');
