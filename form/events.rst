@@ -220,6 +220,35 @@ View data        Normalized data transformed using a view transformer
     subscribes to the ``FormEvents::POST_SUBMIT`` event in order to
     automatically validate the denormalized object.
 
+3) Validating the Form (``ValidatorFormEvents::PRE_VALIDATE`` and ``ValidatorFormEvents::POST_VALIDATE``)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Form validation is triggered by the ``FormEvents::POST_SUBMIT`` event of the root form.
+Two events are dispatched when Form validation is triggered:
+``ValidatorFormEvents::PRE_VALIDATE``, ``ValidatorFormEvents::POST_VALIDATE``.
+
+A) The ``ValidatorFormEvents::PRE_VALIDATE`` Event
+..................................................
+
+The ``ValidatorFormEvents::PRE_VALIDATE`` event is dispatched at the beginning of the
+Form validation.
+
+.. seealso::
+
+    See all form events at a glance in the
+    :ref:`Form Events Information Table <component-form-event-table>`.
+
+B) The ``ValidatorFormEvents::POST_VALIDATE`` Event
+...................................................
+
+The ``ValidatorFormEvents::POST_VALIDATE`` event is dispatched after the
+the entire form has been validated.
+
+.. seealso::
+
+    See all form events at a glance in the
+    :ref:`Form Events Information Table <component-form-event-table>`.
+
 Registering Event Listeners or Event Subscribers
 ------------------------------------------------
 
@@ -236,15 +265,17 @@ processed.
 
 .. _component-form-event-table:
 
-======================  =============================  ===============
-Name                    ``FormEvents`` Constant        Event's Data
-======================  =============================  ===============
-``form.pre_set_data``   ``FormEvents::PRE_SET_DATA``   Model data
-``form.post_set_data``  ``FormEvents::POST_SET_DATA``  Model data
-``form.pre_submit``     ``FormEvents::PRE_SUBMIT``     Request data
-``form.submit``         ``FormEvents::SUBMIT``         Normalized data
-``form.post_submit``    ``FormEvents::POST_SUBMIT``    View data
-======================  =============================  ===============
+======================  ======================================  ===============
+Name                    ``FormEvents`` Constant                  Event's Data
+======================  ======================================  ===============
+``form.pre_set_data``   ``FormEvents::PRE_SET_DATA``            Model data
+``form.post_set_data``  ``FormEvents::POST_SET_DATA``           Model data
+``form.pre_submit``     ``FormEvents::PRE_SUBMIT``              Request data
+``form.submit``         ``FormEvents::SUBMIT``                  Normalized data
+``form.post_submit``    ``FormEvents::POST_SUBMIT``             View data
+``form.pre_validate``   ``ValidatorFormEvents::PRE_VALIDATE``   View data
+``form.post_validate``  ``ValidatorFormEvents::POST_VALIDATE``  View data
+======================  ======================================  ===============
 
 Event Listeners
 ~~~~~~~~~~~~~~~
