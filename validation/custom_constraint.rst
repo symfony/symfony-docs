@@ -233,11 +233,11 @@ then your validator is already registered as a service and :doc:`tagged </servic
 with the necessary ``validator.constraint_validator``. This means you can
 :ref:`inject services or configuration <services-constructor-injection>` like any other service.
 
-Constraint Validators with custom options
+Constraint Validators with Custom Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Define public properties on the constraint class for the desired configuration
-options:
+If you want to add some configuration options to your custom constraint, first
+define those options as public properties on the constraint class:
 
 .. configuration-block::
 
@@ -338,13 +338,14 @@ options:
             }
         }
 
-Inside the validator, options can be accessed quite simple::
+Then, inside the validator class you can access these options directly via the
+constraint class passes to the ``validate()`` method::
 
     class FooValidator extends ConstraintValidator
     {
         public function validate($value, Constraint $constraint)
         {
-            // Access the option of the constraint
+            // access any option of the constraint
             if ($constraint->optionalBarOption) {
                 // ...
             }
@@ -353,8 +354,8 @@ Inside the validator, options can be accessed quite simple::
         }
     }
 
-Custom options can be passed to the constraints like for the ones provided by Symfony
-itself:
+When using this constraint in your own application, you can pass the value of
+the custom options like you pass any other option in built-in constraints:
 
 .. configuration-block::
 
