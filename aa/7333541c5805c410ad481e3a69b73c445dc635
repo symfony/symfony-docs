@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-09-03T07:00:34Z
+
+We should check if there is an open bug report for some major IDE, e.g. PHPStorm and link it
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-09-04T06:10:16Z
+
+There is a bug report for PhpStorm (here: https://youtrack.jetbrains.com/issue/WI-59609).
+
+But, as you can read, they say that they do the same as PHP and don't know how to solve this or even if it can be solved. Because of this, I guess it will happen to all IDEs, so I'd prefer to not link to a specific IDE. Thanks.
