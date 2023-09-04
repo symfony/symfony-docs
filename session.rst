@@ -664,6 +664,12 @@ and only the first one stored the CSRF token in the session.
     replace ``RedisSessionHandler`` by
     :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`.
 
+.. tip::
+
+    When using Redis with a DSN in the
+    :ref:`handler_id <config-framework-session-handler-id>` config option, you can
+    add the ``prefix`` and ``ttl`` options as query string parameters in the DSN.
+
 .. _session-database-pdo:
 
 Store Sessions in a Relational Database (MariaDB, MySQL, PostgreSQL)
