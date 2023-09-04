@@ -221,106 +221,50 @@ Constraint Validators with Custom Options
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to add some configuration options to your custom constraint, first
-define those options as public properties on the constraint class:
+define those options as public properties on the constraint class::
 
-.. configuration-block::
+    // src/Validator/Foo.php
+    namespace App\Validator;
 
-    .. code-block:: php-annotations
+    use Symfony\Component\Validator\Constraint;
 
-        // src/Validator/Foo.php
-        namespace App\Validator;
+    #[\Attribute]
+    class Foo extends Constraint
+    {
+        public $mandatoryFooOption;
+        public $message = 'This value is invalid';
+        public $optionalBarOption = false;
 
-        use Symfony\Component\Validator\Constraint;
-
-        /**
-         * @Annotation
-         */
-        class Foo extends Constraint
-        {
-            public $mandatoryFooOption;
-            public $message = 'This value is invalid';
-            public $optionalBarOption = false;
-
-            public function __construct(
-                $mandatoryFooOption,
-                string $message = null,
-                bool $optionalBarOption = null,
-                array $groups = null,
-                $payload = null,
-                array $options = []
-            ) {
-                if (\is_array($mandatoryFooOption)) {
-                    $options = array_merge($mandatoryFooOption, $options);
-                } elseif (null !== $mandatoryFooOption) {
-                    $options['value'] = $mandatoryFooOption;
-                }
-
-                parent::__construct($options, $groups, $payload);
-
-                $this->message = $message ?? $this->message;
-                $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
+        public function __construct(
+            $mandatoryFooOption,
+            string $message = null,
+            bool $optionalBarOption = null,
+            array $groups = null,
+            $payload = null,
+            array $options = []
+        ) {
+            if (\is_array($mandatoryFooOption)) {
+                $options = array_merge($mandatoryFooOption, $options);
+            } elseif (null !== $mandatoryFooOption) {
+                $options['value'] = $mandatoryFooOption;
             }
 
-            public function getDefaultOption()
-            {
-                // If no associative array is passed to the constructor this
-                // property is set instead.
+            parent::__construct($options, $groups, $payload);
 
-                return 'mandatoryFooOption';
-            }
-
-            public function getRequiredOptions()
-            {
-                // return names of options which must be set.
-
-                return ['mandatoryFooOption'];
-            }
+            $this->message = $message ?? $this->message;
+            $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
         }
 
-    .. code-block:: php-attributes
-
-        // src/Validator/Foo.php
-        namespace App\Validator;
-
-        use Symfony\Component\Validator\Constraint;
-
-        #[\Attribute]
-        class Foo extends Constraint
+        public function getDefaultOption()
         {
-            public $mandatoryFooOption;
-            public $message = 'This value is invalid';
-            public $optionalBarOption = false;
-
-            public function __construct(
-                $mandatoryFooOption,
-                string $message = null,
-                bool $optionalBarOption = null,
-                array $groups = null,
-                $payload = null,
-                array $options = []
-            ) {
-                if (\is_array($mandatoryFooOption)) {
-                    $options = array_merge($mandatoryFooOption, $options);
-                } elseif (null !== $mandatoryFooOption) {
-                    $options['value'] = $mandatoryFooOption;
-                }
-
-                parent::__construct($options, $groups, $payload);
-
-                $this->message = $message ?? $this->message;
-                $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
-            }
-
-            public function getDefaultOption()
-            {
-                return 'mandatoryFooOption';
-            }
-
-            public function getRequiredOptions()
-            {
-                return ['mandatoryFooOption'];
-            }
+            return 'mandatoryFooOption';
         }
+
+        public function getRequiredOptions()
+        {
+            return ['mandatoryFooOption'];
+        }
+    }
 
 Then, inside the validator class you can access these options directly via the
 constraint class passes to the ``validate()`` method::
@@ -342,30 +286,6 @@ When using this constraint in your own application, you can pass the value of
 the custom options like you pass any other option in built-in constraints:
 
 .. configuration-block::
-
-    .. code-block:: php-annotations
-
-        // src/Entity/AcmeEntity.php
-        namespace App\Entity;
-
-        use App\Validator as AcmeAssert;
-        use Symfony\Component\Validator\Constraints as Assert;
-
-        class AcmeEntity
-        {
-            // ...
-
-            /**
-             * @Assert\NotBlank
-             * @AcmeAssert\Foo(
-             *     mandatoryFooOption="bar",
-             *     optionalBarOption=true
-             * )
-             */
-            protected $name;
-
-            // ...
-        }
 
     .. code-block:: php-attributes
 
