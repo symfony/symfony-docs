@@ -1411,6 +1411,17 @@ your Envelope::
     of the stop conditions is reached. Thus, the worker's stop logic cannot be reached if it
     is stuck in a blocking call.
 
+.. caution::
+
+    In scenarios facing socket exceptions or "high connection churn"
+    (distinguished by the rapid creation and deletion of connections), the use of `AMQProxy`_ could be beneficial.
+    This tool functions as a gateway between Symfony Messenger and AMQP server,
+    assisting in maintaining stable connections and considerably minimizing overheads. Consequently,
+    AMQProxy not only heightens the dependability of your setup but also brings about
+    significant performance enhancements in PHP applications.
+
+    For a comprehensive understanding of this topic, kindly refer to the `RabbitMQ docs`_ as a reference.
+
 Doctrine Transport
 ~~~~~~~~~~~~~~~~~~
 
@@ -2600,3 +2611,5 @@ Learn more
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
 .. _`FIFO queue`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
 .. _`LISTEN/NOTIFY`: https://www.postgresql.org/docs/current/sql-notify.html
+.. _`AMQProxy`: https://github.com/cloudamqp/amqproxy
+.. _`RabbitMQ docs`: https://www.rabbitmq.com/connections.html#high-connection-churn
