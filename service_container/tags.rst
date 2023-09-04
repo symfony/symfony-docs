@@ -699,6 +699,14 @@ directly via PHP attributes:
             ;
         };
 
+.. note::
+
+    Some IDEs will show an error when using ``#[TaggedIterator]`` together
+    with the `PHP constructor promotion`_:
+    *"Attribute cannot be applied to a property because it does not contain the 'Attribute::TARGET_PROPERTY' flag"*.
+    The reason is that those constructor arguments are both parameters and class
+    properties. You can safely ignore this error message.
+
 If for some reason you need to exclude one or more services when using a tagged
 iterator, add the ``exclude`` option:
 
@@ -1162,3 +1170,5 @@ be used directly on the class of the service you want to configure::
     {
         // ...
     }
+
+.. _`PHP constructor promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion
