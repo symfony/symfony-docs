@@ -1624,8 +1624,8 @@ persistent_id            String, if null connection is          null
 retry_interval           Int, value in milliseconds             ``0``
 read_timeout             Float, value in seconds                ``0``
                          default indicates unlimited
-timeout                  Float, value in seconds                ``0``
-                         default indicates unlimited
+timeout                  Connection timeout. Float, value in    ``0``
+                         seconds default indicates unlimited
 sentinel_master          String, if null or empty Sentinel      null
                          support is disabled
 =======================  =====================================  =================================
