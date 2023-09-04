@@ -670,11 +670,6 @@ and only the first one stored the CSRF token in the session.
     :ref:`handler_id <config-framework-session-handler-id>` config option, you can
     add the ``prefix`` and ``ttl`` options as query string parameters in the DSN.
 
-    .. versionadded:: 5.4
-
-        The support for ``prefix`` and ``ttl`` options in a Redis DSN was
-        introduced in Symfony 5.4.
-
 .. _session-database-pdo:
 
 Store Sessions in a Relational Database (MariaDB, MySQL, PostgreSQL)
