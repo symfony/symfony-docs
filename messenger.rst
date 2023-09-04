@@ -1405,6 +1405,14 @@ your Envelope::
     of the stop conditions is reached. Thus, the worker's stop logic cannot be reached if it
     is stuck in a blocking call.
 
+.. tip::
+
+    If your application faces socket exceptions or `high connection churn`_
+    (shown by the rapid creation and deletion of connections), consider using
+    `AMQProxy`_. This tool works as a gateway between Symfony Messenger and AMQP server,
+    maintaining stable connections and minimizing overheads (which also improves
+    the overall performance).
+
 Doctrine Transport
 ~~~~~~~~~~~~~~~~~~
 
@@ -2712,3 +2720,5 @@ Learn more
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
 .. _`FIFO queue`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
 .. _`LISTEN/NOTIFY`: https://www.postgresql.org/docs/current/sql-notify.html
+.. _`AMQProxy`: https://github.com/cloudamqp/amqproxy
+.. _`high connection churn`: https://www.rabbitmq.com/connections.html#high-connection-churn
