@@ -400,6 +400,11 @@ After that, you can create the test database and all tables using:
 
 .. tip::
 
+    You can run these commands to create the database during the
+    :doc:`test bootstrap process <testing/bootstrap>`.
+
+.. tip::
+
     A common practice is to append the ``_test`` suffix to the original
     database names in tests. If the database name in production is called
     ``project_acme`` the name of the testing database could be
