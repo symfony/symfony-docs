@@ -104,23 +104,12 @@ and you can also :doc:`create your own form types </form/create_custom_field_typ
 
         $ php bin/console debug:form
 
-    If you pass a form type as the first argument, the command shows the options
-    defined for that type, its parents and its extensions.
-    For built-in types the short classname is enough, however other types
-    require the FQCN:
-
-    .. code-block:: terminal
-
+        # pass the form type FQCN to only show the options for that type, its parents and extensions.
+        # For built-in types, you can pass the short classname instead of the FQCN
         $ php bin/console debug:form BirthdayType
 
-    If you pass both a form type class and an option name, the command displays
-    the full definition of the given option:
-
-    .. code-block:: terminal
-
+        # pass also an option name to only display the full definition of that option
         $ php bin/console debug:form BirthdayType label_attr
-
-    You can see all the command options by running ``--help``.
 
 Building Forms
 --------------
