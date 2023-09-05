@@ -152,9 +152,10 @@ starting with ``symfony/`` to the new major version:
     +         "symfony/console": "6.0.*",
               "...": "...",
 
-              "...": "A few libraries starting with
-                      symfony/ follow their own versioning scheme. You
-                      do not need to update these versions: you can
+              "...": "A few libraries starting with symfony/ follow their own
+                      versioning scheme (e.g. symfony/polyfill-[...],
+                      symfony/ux-[...], symfony/[...]-bundle).
+                      You do not need to update these versions: you can
                       upgrade them independently whenever you want",
               "symfony/monolog-bundle": "^3.5",
           },
