@@ -755,120 +755,15 @@ component.
 Using Tailwind CSS
 ------------------
 
-.. seealso::
-
-    Check out `symfonycasts/tailwind-bundle`_ for an even easier way to use
-    Tailwind with Symfony.
-
-Want to use the `Tailwind`_ CSS framework with the AssetMapper component? No problem.
-First, install the ``tailwindcss`` binary. This can be installed via npm (run
-``npm --init`` if you don't already have a ``package.json`` file):
-
-.. code-block:: terminal
-
-    $ npm install -D tailwindcss
-
-Or you can install the `Tailwind standalone binary`_, which does not require Node.
-
-Next, generate the ``tailwind.config.js`` file:
-
-.. code-block:: terminal
-
-    $ npx tailwindcss init
-
-    # or with the standalone binary:
-    $ ./tailwindcss init
-
-Update ``tailwind.config.js`` to point to your template and JavaScript files:
-
-.. code-block:: diff
-
-    // tailwind.config.js
-    // ....
-
-    -   content: [],
-    +   content: [
-    +       "./assets/**/*.js",
-    +       "./templates/**/*.html.twig",
-    +   ],
-
-Then add the base lines to your ``assets/styles/app.css`` file:
-
-.. code-block:: css
-
-    /* assets/styles/app.css */
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-
-Now that Tailwind is setup, run the ``tailwindcss`` binary in "watch" mode
-to build the CSS file to a new ``assets/app.built.css`` path:
-
-.. code-block:: terminal
-
-    $ npx tailwindcss build -i assets/styles/app.css -o assets/styles/app.built.css --watch
-
-    # or with the standalone binary:
-    $ ./tailwindcss build -i assets/styles/app.css -o assets/styles/app.built.css --watch
-
-Finally, instead of pointing directly to ``styles/app.css`` in your template,
-point to the new ``styles/app.built.css`` file:
-
-.. code-block:: diff
-
-    {# templates/base.html.twig #}
-
-    - <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-    + <link rel="stylesheet" href="{{ asset('styles/app.built.css') }}">
-
-Done! You can choose to ignore the ``assets/styles/app.built.css`` file from Git
-or commit it to ease deployment.
+To use the `Tailwind`_ CSS framework with the AssetMapper component, check out
+`symfonycasts/tailwind-bundle`_.
 
 .. _asset-mapper-sass:
 
 Using Sass
 ----------
 
-To use Sass with the AssetMapper component, install the sass binary. You can
-`download it from the latest GitHub release`_ (does not require Node) or
-install it via npm:
-
-.. code-block:: terminal
-
-    $ npm install -D dart-sass
-
-Next, create an ``assets/styles/app.scss`` file and write some dazzling CSS:
-
-.. code-block:: scss
-
-    /* assets/styles/app.scss */
-    $primary-color: skyblue;
-
-    body {
-        background: $primary-color;
-    }
-
-Then, run the ``dart-sass`` binary in "watch" mode to build the CSS file to a
-new ``assets/styles/app.css`` path:
-
-.. code-block:: terminal
-
-    $ npx dart-sass assets/styles/app.scss assets/styles/app.css --watch
-
-    # or with the standalone binary:
-    ./sass assets/styles/app.scss assets/styles/app.css --watch
-
-In your template, point directly to the ``styles/app.css`` file (``base.html.twig``
-points to ``styles/app.css`` by default):
-
-.. code-block:: html+twig
-
-    {# templates/base.html.twig #}
-    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-
-Done! You can choose to ignore the ``assets/styles/app.css`` file from Git
-or commit it to ease deployment. To prevent the source ``.scss`` files from being
-exposed to the public, see :ref:`exclude_patterns <excluded_patterns>`.
+To use Sass with AssetMapper component, check out `symfonycasts/sass-bundle`_.
 
 Third-Party Bundles & Custom Asset Paths
 ----------------------------------------
@@ -1152,9 +1047,8 @@ This will force the AssetMapper component to re-calculate the content of all fil
 .. _auto minify: https://developers.cloudflare.com/support/speed/optimization-file-size/using-cloudflare-auto-minify/
 .. _Lighthouse: https://developers.google.com/web/tools/lighthouse
 .. _Tailwind: https://tailwindcss.com/
-.. _Tailwind standalone binary: https://tailwindcss.com/blog/standalone-cli
-.. _download it from the latest GitHub release: https://github.com/sass/dart-sass/releases/latest
 .. _BabdevPagerfantaBundle: https://github.com/BabDev/PagerfantaBundle
 .. _Cloudflare: https://www.cloudflare.com/
 .. _EasyAdminBundle: https://github.com/EasyCorp/EasyAdminBundle
-.. _symfonycasts/tailwind-bundle: https://github.com/SymfonyCasts/tailwind-bundle
+.. _symfonycasts/tailwind-bundle: https://symfony.com/bundles/TailwindBundle/current/index.html
+.. _symfonycasts/sass-bundle: https://symfony.com/bundles/SassBundle/current/index.html
