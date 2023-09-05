@@ -2258,11 +2258,6 @@ that defines only one route. Consider the following class::
 
 Symfony will add a route alias named ``App\Controller\MainController::homepage``.
 
-.. versionadded:: 6.4
-
-    The automatic declaration of route aliases based on FQCNs was introduced in
-    Symfony 6.4.
-
 Generating URLs in Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
