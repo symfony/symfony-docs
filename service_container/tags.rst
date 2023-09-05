@@ -214,8 +214,8 @@ method::
         }
     }
 
-To go even further, the ``SensitiveElement`` attribute can be updated to be
-usable on methods::
+You can also make attributes usable on methods. To do so, update the previous
+example and add ``Attribute::TARGET_METHOD`::
 
     // src/Attribute/SensitiveElement.php
     namespace App\Attribute;
@@ -226,9 +226,8 @@ usable on methods::
         // ...
     }
 
-We should now update the call to
-:method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
-to support ``ReflectionMethod``::
+Then, update the :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
+call to support ``ReflectionMethod``::
 
     // src/Kernel.php
     use App\Attribute\SensitiveElement;
@@ -244,7 +243,7 @@ to support ``ReflectionMethod``::
             $container->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (
                 ChildDefinition $definition,
                 SensitiveElement $attribute,
-                // we update the union type to support multiple type of reflection
+                // update the union type to support multiple types of reflection
                 // you can also use the "\Reflector" interface
                 \ReflectionClass|\ReflectionMethod $reflector): void {
                     if ($reflection instanceof \ReflectionMethod) {
@@ -258,7 +257,7 @@ to support ``ReflectionMethod``::
 .. tip::
 
     You can also define an attribute to be usable on properties and parameters with
-    ``Attribute::TARGET_PROPERTY`` and ``Attribute::TARGET_PARAMETER``, then support
+    ``Attribute::TARGET_PROPERTY`` and ``Attribute::TARGET_PARAMETER``; then support
     ``ReflectionProperty`` and ``ReflectionParameter`` in your
     :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
     callable.
