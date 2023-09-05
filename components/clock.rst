@@ -268,12 +268,10 @@ control on your time-sensitive code's behavior.
 Exceptions Management
 ---------------------
 
-The Clock component takes full advantage of `the new DateTime exceptions`_
-introduced in PHP 8.3: ``DateMalformedStringException`` and
-``DateInvalidTimeZoneException``. These exceptions will be thrown
-respectively when a invalid string is passed to a clock (e.g. when
-creating a clock or modifying a ``MockClock``) and when an invalid timezone is
-used::
+The Clock component takes full advantage of some `PHP DateTime exceptions`_.
+If you pass an invalid string to the clock (e.g. when creating a clock or
+modifying a ``MockClock``) you'll get a ``DateMalformedStringException``. If you
+pass an invalid timezone, you'll get a ``DateInvalidTimeZoneException``::
 
     $userInput = 'invalid timezone';
 
@@ -283,9 +281,9 @@ used::
         // ...
     }
 
-Thanks to the `symfony/polyfill-php83`_ dependency required by the Clock
-component, you don't even need to run PHP 8.3 to enjoy these new explicit
-and consistent exceptions when using the Clock component.
+These exceptions are available starting from PHP 8.3. However, thanks to the
+`symfony/polyfill-php83`_ dependency required by the Clock component, you can
+use them even if your project doesn't use PHP 8.3 yet.
 
 .. versionadded:: 6.4
 
@@ -294,5 +292,5 @@ and consistent exceptions when using the Clock component.
 
 .. _`PSR-20`: https://www.php-fig.org/psr/psr-20/
 .. _`accepted by the DateTime constructor`: https://www.php.net/manual/en/datetime.formats.php
-.. _`the new DateTime exceptions`: https://wiki.php.net/rfc/datetime-exceptions
+.. _`PHP DateTime exceptions`: https://wiki.php.net/rfc/datetime-exceptions
 .. _`symfony/polyfill-php83`: https://github.com/symfony/polyfill-php83
