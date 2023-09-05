@@ -2701,18 +2701,6 @@ settings is configured.
 
 .. _reference-validation-enable_annotations:
 
-enable_annotations
-..................
-
-**type**: ``boolean`` **default**: ``true``
-
-If this option is enabled, validation constraints can be defined using annotations or `PHP attributes`_.
-
-.. deprecated:: 6.4
-
-    This option is deprecated since Symfony 6.4, use the ``enable_attributes``
-    option instead.
-
 enable_attributes
 .................
 
@@ -2898,18 +2886,6 @@ enabled
 Whether to enable the ``serializer`` service or not in the service container.
 
 .. _reference-serializer-enable_annotations:
-
-enable_annotations
-..................
-
-**type**: ``boolean`` **default**: ``true``
-
-If this option is enabled, serialization groups can be defined using annotations or attributes.
-
-.. deprecated:: 6.4
-
-    This option is deprecated since Symfony 6.4, use the ``enable_attributes``
-    option instead.
 
 enable_attributes
 .................
