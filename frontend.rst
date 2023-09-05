@@ -1,5 +1,5 @@
-Introduction
-============
+Front-end Tools: Handling CSS & JavaScript
+==========================================
 
 Symfony gives you the flexibility to choose any front-end tools you want. This could
 be dead-simple - like putting CSS & JS directly in the ``public/`` directory - or
@@ -25,14 +25,11 @@ Requires a build step?            yes                no
 Works in all browsers?            yes                yes
 Supports `Stimulus/UX`_           yes                yes
 Supports Sass/Tailwind            yes                :ref:`yes <asset-mapper-tailwind>`
-Supports React, Vue, Svelte?      yes                yes :ref:`[1] <note-1>`
-Supports TypeScript               yes                no :ref:`[1] <note-1>`
+Supports React, Vue, Svelte?      yes                yes :ref:`[1] <ux-note-1>`
+Supports TypeScript               yes                no :ref:`[1] <ux-note-1>`
 ================================  =================  ======================================================
 
-Notes
-~~~~~
-
-.. _note-1:
+.. _ux-note-1:
 
 **[1]** Using JSX (React), Vue or TypeScript with AssetMapper is possible, but you'll
 need to use their native tools for pre-compilation. Also, some features (like
