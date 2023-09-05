@@ -2236,10 +2236,10 @@ For that reason each route has an internal name that must be unique in the
 application. If you don't set the route name explicitly with the ``name``
 option, Symfony generates an automatic name based on the controller and action.
 
-Symfony declares aliases based on the FQCN if the target class has an
+Symfony declares route aliases based on the FQCN if the target class has an
 ``__invoke()`` method that adds a route **and** if the target class added
-one route exactly. Symfony also automatically adds a alias for every method
-that defines only one route. This means that for the following class::
+one route exactly. Symfony also automatically adds an alias for every method
+that defines only one route. Consider the following class::
 
         // src/Controller/MainController.php
         namespace App\Controller;
@@ -2256,12 +2256,11 @@ that defines only one route. This means that for the following class::
             }
         }
 
-An alias named ``App\Controller\MainController::homepage`` will be declared in
-the router.
+Symfony will add a route alias named ``App\Controller\MainController::homepage``.
 
 .. versionadded:: 6.4
 
-    The automatic declaration of aliases based on FQCNs was introduced in
+    The automatic declaration of route aliases based on FQCNs was introduced in
     Symfony 6.4.
 
 Generating URLs in Controllers
