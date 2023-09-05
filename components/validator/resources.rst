@@ -83,52 +83,6 @@ configure the locations of these files::
     :method:`Symfony\\Component\\Validator\\ValidatorBuilder::addXmlMappings`
     to configure an array of file paths.
 
-The AnnotationLoader
---------------------
-
-.. deprecated:: 6.4
-
-    The :class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AnnotationLoader`
-    is deprecated since Symfony 6.4, use the
-    :class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AttributeLoader`
-    instead.
-
-The component provides an
-:class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AnnotationLoader` to get
-the metadata from the attributes of the class::
-
-    use Symfony\Component\Validator\Constraints as Assert;
-    // ...
-
-    class User
-    {
-        #[Assert\NotBlank]
-        protected string $name;
-    }
-
-To enable the annotation loader, call the
-:method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping` method::
-
-    use Symfony\Component\Validator\Validation;
-
-    $validator = Validation::createValidatorBuilder()
-        ->enableAnnotationMapping()
-        ->getValidator();
-
-To disable the annotation loader after it was enabled, call
-:method:`Symfony\\Component\\Validator\\ValidatorBuilder::disableAnnotationMapping`.
-
-.. deprecated:: 6.4
-
-    The :method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAnnotationMapping`
-    and :method:`Symfony\\Component\\Validator\\ValidatorBuilder::disableAnnotationMapping`
-    methods are deprecated since Symfony 6.4, use the
-    :method:`Symfony\\Component\\Validator\\ValidatorBuilder::enableAttributeMapping`
-    and :method:`Symfony\\Component\\Validator\\ValidatorBuilder::disableAttributeMapping`
-    methods instead.
-
-.. include:: /_includes/_annotation_loader_tip.rst.inc
-
 The AttributeLoader
 -------------------
 
