@@ -95,6 +95,33 @@ much easier to implement.
 There are tens of :doc:`form types provided by Symfony </reference/forms/types>`
 and you can also :doc:`create your own form types </form/create_custom_field_type>`.
 
+.. tip::
+
+    You can use the ``debug:form`` to list all the available types, type
+    extensions and type guessers in your application:
+
+    .. code-block:: terminal
+
+        $ php bin/console debug:form
+
+    If you pass a form type as the first argument, the command shows the options
+    defined for that type, its parents and its extensions.
+    For built-in types the short classname is enough, however other types
+    require the FQCN:
+
+    .. code-block:: terminal
+
+        $ php bin/console debug:form BirthdayType
+
+    If you pass both a form type class and an option name, the command displays
+    the full definition of the given option:
+
+    .. code-block:: terminal
+
+        $ php bin/console debug:form BirthdayType label_attr
+
+    You can see all the command options by running ``--help``.
+
 Building Forms
 --------------
 
