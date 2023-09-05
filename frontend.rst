@@ -140,12 +140,6 @@ Other Front-End Articles
 * :doc:`/frontend/create_ux_bundle`
 * :doc:`/frontend/custom_version_strategy`
 
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    frontend/*
-
 .. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
 .. _`Webpack`: https://webpack.js.org/
 .. _`Node.js`: https://nodejs.org/
