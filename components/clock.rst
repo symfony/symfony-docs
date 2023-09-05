@@ -265,5 +265,32 @@ control on your time-sensitive code's behavior.
 
     The :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait` was introduced in Symfony 6.3.
 
+Exceptions Management
+---------------------
+
+The Clock component takes full advantage of some `PHP DateTime exceptions`_.
+If you pass an invalid string to the clock (e.g. when creating a clock or
+modifying a ``MockClock``) you'll get a ``DateMalformedStringException``. If you
+pass an invalid timezone, you'll get a ``DateInvalidTimeZoneException``::
+
+    $userInput = 'invalid timezone';
+
+    try {
+        $clock = Clock::get()->withTimeZone($userInput);
+    } catch (\DateInvalidTimeZoneException $exception) {
+        // ...
+    }
+
+These exceptions are available starting from PHP 8.3. However, thanks to the
+`symfony/polyfill-php83`_ dependency required by the Clock component, you can
+use them even if your project doesn't use PHP 8.3 yet.
+
+.. versionadded:: 6.4
+
+    The support for ``DateMalformedStringException`` and
+    ``DateInvalidTimeZoneException`` was introduced in Symfony 6.4.
+
 .. _`PSR-20`: https://www.php-fig.org/psr/psr-20/
 .. _`accepted by the DateTime constructor`: https://www.php.net/manual/en/datetime.formats.php
+.. _`PHP DateTime exceptions`: https://wiki.php.net/rfc/datetime-exceptions
+.. _`symfony/polyfill-php83`: https://github.com/symfony/polyfill-php83
