@@ -208,6 +208,54 @@ method::
         }
     }
 
+You can also make attributes usable on methods. To do so, update the previous
+example and add ``Attribute::TARGET_METHOD`::
+
+    // src/Attribute/SensitiveElement.php
+    namespace App\Attribute;
+
+    #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
+    class SensitiveElement
+    {
+        // ...
+    }
+
+Then, update the :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
+call to support ``ReflectionMethod``::
+
+    // src/Kernel.php
+    use App\Attribute\SensitiveElement;
+
+    class Kernel extends BaseKernel
+    {
+        // ...
+
+        protected function build(ContainerBuilder $container): void
+        {
+            // ...
+
+            $container->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (
+                ChildDefinition $definition,
+                SensitiveElement $attribute,
+                // update the union type to support multiple types of reflection
+                // you can also use the "\Reflector" interface
+                \ReflectionClass|\ReflectionMethod $reflector): void {
+                    if ($reflection instanceof \ReflectionMethod) {
+                        // ...
+                    }
+                }
+            );
+        }
+    }
+
+.. tip::
+
+    You can also define an attribute to be usable on properties and parameters with
+    ``Attribute::TARGET_PROPERTY`` and ``Attribute::TARGET_PARAMETER``; then support
+    ``ReflectionProperty`` and ``ReflectionParameter`` in your
+    :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
+    callable.
+
 Creating custom Tags
 --------------------
 
