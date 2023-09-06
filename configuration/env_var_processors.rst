@@ -190,6 +190,12 @@ Symfony provides the following env var processors:
 ``env(float:FOO)``
     Casts ``FOO`` to a float.
 
+``env(date_time:FOO)``
+    Casts ``FOO`` to a \DateTime.
+
+``env(date_time_immutable:FOO)``
+    Casts ``FOO`` to a \DateTimeImmutable.
+
 ``env(const:FOO)``
     Finds the const value named in ``FOO``:
 
