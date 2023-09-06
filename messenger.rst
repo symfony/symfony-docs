@@ -2451,10 +2451,6 @@ may want to use:
                 ->arguments(['custom']);
         };
 
-.. versionadded:: 5.4
-
-    The ``doctrine_open_transaction_logger`` middleware was introduced in Symfony 5.4.
-
 Other Middlewares
 ~~~~~~~~~~~~~~~~~
 
