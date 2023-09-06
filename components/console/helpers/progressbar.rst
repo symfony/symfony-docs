@@ -44,6 +44,14 @@ number of units, and advance the progress as the command executes::
     ``$progress->advance()`` with a negative value. For example, if you call
     ``$progress->advance(-2)`` then it will regress the progress bar 2 steps.
 
+.. note::
+
+    By default, the progress bar helper uses the error output (``stderr``) as
+    its default output. This behavior can be changed by passing an instance of
+    :class:`Symfony\\Component\\Console\\Output\\StreamOutput` to the
+    :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
+    constructor.
+
 Instead of advancing the bar by a number of steps (with the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::advance` method),
 you can also set the current progress by calling the
