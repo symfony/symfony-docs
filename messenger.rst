@@ -2428,7 +2428,10 @@ a message is received via the worker (for messages that were sent to a transport
 to be handled asynchronously). Keep this in mind if you create your own middleware.
 
 You can add your own middleware to this list, or completely disable the default
-middleware and *only* include your own:
+middleware and *only* include your own.
+
+If a middleware service is abstract, you can configure its constructor's arguments
+and a different instance will be created per bus.
 
 .. configuration-block::
 
@@ -2442,9 +2445,11 @@ middleware and *only* include your own:
                         # disable the default middleware
                         default_middleware: false
 
-                        # and/or add your own
                         middleware:
-                            # service ids that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
+                            # use and configure parts of the default middleware you want
+                            - 'add_bus_name_stamp_middleware': ['messenger.bus.default']
+
+                            # add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
                             - 'App\Middleware\MyMiddleware'
                             - 'App\Middleware\AnotherMiddleware'
 
@@ -2464,11 +2469,17 @@ middleware and *only* include your own:
             <framework:config>
                 <framework:messenger>
                     <!-- default-middleware: disable the default middleware -->
-                    <framework:bus name="messenger.bus.default" default-middleware="false"/>
+                    <framework:bus name="messenger.bus.default" default-middleware="false">
 
-                    <!-- and/or add your own -->
-                    <framework:middleware id="App\Middleware\MyMiddleware"/>
-                    <framework:middleware id="App\Middleware\AnotherMiddleware"/>
+                        <!-- use and configure parts of the default middleware you want -->
+                        <framework:middleware id="add_bus_name_stamp_middleware">
+                            <framework:argument>messenger.bus.default</framework:argument>
+                        </framework:middleware>
+
+                        <!-- add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface -->
+                        <framework:middleware id="App\Middleware\MyMiddleware"/>
+                        <framework:middleware id="App\Middleware\AnotherMiddleware"/>
+                    </framework:bus>
                 </framework:messenger>
             </framework:config>
         </container>
@@ -2482,15 +2493,15 @@ middleware and *only* include your own:
             $messenger = $framework->messenger();
 
             $bus = $messenger->bus('messenger.bus.default')
-                ->defaultMiddleware(false);
+                ->defaultMiddleware(false); // disable the default middleware
+
+            // use and configure parts of the default middleware you want
+            $bus->middleware()->id('add_bus_name_stamp_middleware')->arguments(['messenger.bus.default']);
+
+            // add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
             $bus->middleware()->id('App\Middleware\MyMiddleware');
             $bus->middleware()->id('App\Middleware\AnotherMiddleware');
         };
-
-.. note::
-
-    If a middleware service is abstract, a different instance of the service will
-    be created per bus.
 
 .. _middleware-doctrine:
 
