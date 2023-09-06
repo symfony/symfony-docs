@@ -31,6 +31,14 @@ In case the process fails, debugging is easier:
 .. image:: /_images/components/console/process-helper-error-debug.png
     :alt: The last line shows "RES 127 Command dit not run successfully", and the output lines show more the error information from the command.
 
+.. note::
+
+    By default, the process helper uses the error output (``stderr``) as
+    its default output. This behavior can be changed by passing an instance of
+    :class:`Symfony\\Component\\Console\\Output\\StreamOutput` to the
+    :method:`Symfony\\Component\\Console\\Helper\\ProcessHelper::run`
+    method.
+
 Arguments
 ---------
 
