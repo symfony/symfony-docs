@@ -122,8 +122,8 @@ Doctrine ORM entities                                ``src/Entity/``
 Doctrine ODM documents                               ``src/Document/``
 Event Listeners                                      ``src/EventListener/``
 Configuration (routes, services, etc.)               ``config/``
-Web Assets (CSS, JS, images)                         ``public/``
-Web Assets not meant to be publicly available        ``assets/``
+Web Assets (compiled CSS and JS, images)             ``public/``
+Web Asset sources (``.scss``, ``.ts``, Stimulus)     ``assets/``
 Translation files                                    ``translations/``
 Validation (when not using annotations)              ``config/validation/``
 Serialization (when not using annotations)           ``config/serialization/``

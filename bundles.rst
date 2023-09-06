@@ -84,7 +84,7 @@ between all Symfony bundles. It follows a set of conventions, but is flexible
 to be adjusted if needed:
 
 ``Controller/``
-    Contains the controllers of the bundle (e.g. ``RandomController.php``).
+    the controllers of the bundle (e.g. ``RandomController.php``).
 
 ``DependencyInjection/``
     Holds certain Dependency Injection Extension classes, which may import service
@@ -98,9 +98,9 @@ to be adjusted if needed:
     Holds templates organized by controller name (e.g. ``Random/index.html.twig``).
 
 ``Resources/public/``
-    Contains web assets (images, stylesheets, etc) and is copied or symbolically
-    linked into the project ``public/`` directory via the ``assets:install`` console
-    command.
+    Contains web assets (images, compiled CSS nad JavaScript files, etc.) and is
+    copied or symbolically linked into the project ``public/`` directory via the
+    ``assets:install`` console command.
 
 ``Tests/``
     Holds all tests for the bundle.
