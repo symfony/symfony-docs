@@ -2508,6 +2508,9 @@ may want to use:
                             # in any handler will cause a rollback
                             - doctrine_transaction
 
+                            # logs an error when a Doctrine transaction was opened but not closed
+                            - doctrine_open_transaction_logger
+
                             # or pass a different entity manager to any
                             #- doctrine_transaction: ['custom']
 
@@ -2529,6 +2532,7 @@ may want to use:
                         <framework:middleware id="doctrine_transaction"/>
                         <framework:middleware id="doctrine_ping_connection"/>
                         <framework:middleware id="doctrine_close_connection"/>
+                        <framework:middleware id="doctrine_open_transaction_logger"/>
 
                         <!-- or pass a different entity manager to any -->
                         <!--
@@ -2553,6 +2557,7 @@ may want to use:
             $bus->middleware()->id('doctrine_transaction');
             $bus->middleware()->id('doctrine_ping_connection');
             $bus->middleware()->id('doctrine_close_connection');
+            $bus->middleware()->id('doctrine_open_transaction_logger');
             // Using another entity manager
             $bus->middleware()->id('doctrine_transaction')
                 ->arguments(['custom']);
