@@ -2441,8 +2441,7 @@ may want to use:
                             # in any handler will cause a rollback
                             - doctrine_transaction
 
-                            # Log an error when a Doctrine transaction was opened but
-                            # did not closed
+                            # logs an error when a Doctrine transaction was opened but not closed
                             - doctrine_open_transaction_logger
 
                             # or pass a different entity manager to any
@@ -2496,6 +2495,10 @@ may want to use:
             $bus->middleware()->id('doctrine_transaction')
                 ->arguments(['custom']);
         };
+
+.. versionadded:: 5.4
+
+    The ``doctrine_open_transaction_logger`` middleware was introduced in Symfony 5.4.
 
 Other Middlewares
 ~~~~~~~~~~~~~~~~~
