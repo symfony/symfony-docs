@@ -63,6 +63,7 @@ The following is the recommended directory structure of an AcmeBlogBundle:
 .. code-block:: text
 
     <your-bundle>/
+    ├── assets/
     ├── config/
     ├── docs/
     │   └─ index.md
@@ -122,6 +123,7 @@ Doctrine ODM documents                               ``src/Document/``
 Event Listeners                                      ``src/EventListener/``
 Configuration (routes, services, etc.)               ``config/``
 Web Assets (CSS, JS, images)                         ``public/``
+Web Assets not meant to be publicly available        ``assets/``
 Translation files                                    ``translations/``
 Validation (when not using annotations)              ``config/validation/``
 Serialization (when not using annotations)           ``config/serialization/``
