@@ -403,12 +403,14 @@ Check out the Symfony config reference to learn more about the other available
     ``session.auto_start = 1`` This directive should be turned off in
     ``php.ini``, in the web server directives or in ``.htaccess``.
 
-Session cookie is available in the ``Response`` object. It's useful in the CLI context
-or php runtime with runners like Roadrunner or Swoole.
+The session cookie is also available in :ref:`the Response object <component-http-foundation-response>`.
+This is useful to get that cookie in the CLI context or when using PHP runners
+like Roadrunner or Swoole.
 
 .. versionadded:: 5.4
 
-    Accessing to the session cookie in the ``Response`` object was introduced in Symfony 5.4.
+    Accessing to the session cookie in the ``Response`` object was introduced
+    in Symfony 5.4.
 
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
