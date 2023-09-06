@@ -113,6 +113,11 @@ If you want to apply tags automatically for your own services, use the
                     ->tag('app.custom_tag');
         };
 
+.. caution::
+
+    If you're using PHP configuration, you need to call ``instanceof`` before
+    any service registration to make sure tags are correctly applied.
+
 It is also possible to use the ``#[AutoconfigureTag]`` attribute directly on the
 base class or interface::
 
