@@ -98,7 +98,7 @@ to be adjusted if needed:
     Holds templates organized by controller name (e.g. ``Random/index.html.twig``).
 
 ``Resources/public/``
-    Contains web assets (images, compiled CSS nad JavaScript files, etc.) and is
+    Contains web assets (images, compiled CSS and JavaScript files, etc.) and is
     copied or symbolically linked into the project ``public/`` directory via the
     ``assets:install`` console command.
 
