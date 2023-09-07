@@ -1834,7 +1834,7 @@ Next, you need to create a route for this URL (but not a controller):
 
         class SecurityController extends AbstractController
         {
-            #[Route('/logout', name: 'app_logout', methods: ['POST'])]
+            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
             public function logout(): never
             {
                 // controller can be blank: it will never be called!
