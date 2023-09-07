@@ -52,7 +52,14 @@ use SymfonyDocsBuilder\DocBuilder;
             foreach (new RegexIterator($iterator, '/^.+\.html$/i', RegexIterator::GET_MATCH) as $match) {
                 $htmlFilePath = array_shift($match);
                 $htmlContents = file_get_contents($htmlFilePath);
-                file_put_contents($htmlFilePath, str_replace('<head>', '<head><base href="/">', $htmlContents));
+
+                $htmlRelativeFilePath = str_replace($outputDir.'/', '', $htmlFilePath);
+                $subdirLevel = substr_count($htmlRelativeFilePath, '/');
+                $baseHref = str_repeat('../', $subdirLevel);
+
+                $htmlContents = str_replace('<head>', '<head><base href="'.$baseHref.'">', $htmlContents);
+                $htmlContents = str_replace('<img src="/_images/', '<img src="_images/', $htmlContents);
+                file_put_contents($htmlFilePath, $htmlContents);
             }
 
             foreach (new RegexIterator($iterator, '/^.+\.css/i', RegexIterator::GET_MATCH) as $match) {
