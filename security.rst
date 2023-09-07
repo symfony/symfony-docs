@@ -1847,7 +1847,7 @@ Next, you need to create a route for this URL (but not a controller):
         # config/routes.yaml
         app_logout:
             path: /logout
-            methods: POST
+            methods: GET
 
     .. code-block:: xml
 
@@ -1858,7 +1858,7 @@ Next, you need to create a route for this URL (but not a controller):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="app_logout" path="/logout" methods="POST"/>
+            <route id="app_logout" path="/logout" methods="GET"/>
         </routes>
 
     .. code-block:: php
@@ -1868,7 +1868,7 @@ Next, you need to create a route for this URL (but not a controller):
 
         return function (RoutingConfigurator $routes): void {
             $routes->add('app_logout', '/logout')
-                ->methods(['POST'])
+                ->methods(['GET'])
             ;
         };
 
