@@ -404,11 +404,6 @@ The session cookie is also available in :ref:`the Response object <component-htt
 This is useful to get that cookie in the CLI context or when using PHP runners
 like Roadrunner or Swoole.
 
-.. versionadded:: 5.4
-
-    Accessing to the session cookie in the ``Response`` object was introduced
-    in Symfony 5.4.
-
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
