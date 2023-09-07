@@ -22,8 +22,26 @@ in method parameters:
         # controllers are imported separately to make sure services can be injected
         # as action arguments even if you don't extend any base controller class
         App\Controller\:
-           resource: '../src/Controller/'
-           tags: ['controller.service_arguments']
+            resource: '../src/Controller/'
+            tags: ['controller.service_arguments']
+
+.. note::
+
+    If you don't use either :doc:`autowiring </service_container/autowiring>`
+    or :ref:`autoconfiguration <services-autoconfigure>`, you'll need to apply
+    other tags and make some method calls to register your controllers as services:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+
+        # this extended configuration is only required when not using autowiring/autoconfiguration,
+        # which is uncommon and not recommended
+        App\Controller\:
+            resource: '../src/Controller/'
+            tags: ['controller.service_arguments', 'container.service_subscriber']
+            calls:
+                - setContainer: ['@service_container']
 
 If you prefer, you can use the ``#[AsController]`` PHP attribute to automatically
 apply the ``controller.service_arguments`` tag to your controller services::
