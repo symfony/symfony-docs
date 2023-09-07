@@ -874,7 +874,7 @@ The Serializer component provides several built-in normalizers:
     Normalizes a PHP object using an object that implements :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`
-    This normalizer converts objects that implement
+    This normalizer converts objects that extend
     :class:`Symfony\\Component\\Uid\\AbstractUid` into strings.
     The default normalization format for objects that implement :class:`Symfony\\Component\\Uid\\Uuid`
     is the `RFC 4122`_ format (example: ``d9e7a184-5d5b-11ea-a62a-3499710062d0``).
