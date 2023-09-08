@@ -442,6 +442,12 @@ the database::
         }
     }
 
+.. note::
+
+    If your user class is a Doctrine entity and you hash user passwords, the
+    repository class related to the user class must implement the
+    :class:`Symfony\\Component\\Security\\Core\\User\\PasswordUpgraderInterface`.
+
 .. tip::
 
     The ``make:registration-form`` maker command can help you set-up the
