@@ -122,7 +122,8 @@ is capable of sending messages (e.g. to a queueing system) and then
 .. note::
 
     If you want to use a transport that's not supported, check out the
-    `Enqueue's transport`_, which supports things like Kafka and Google Pub/Sub.
+    `Enqueue's transport`_, which backs services like Kafka and Google
+    Pub/Sub.
 
 A transport is registered using a "DSN". Thanks to Messenger's Flex recipe, your
 ``.env`` file already has a few examples.
