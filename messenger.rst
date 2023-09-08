@@ -391,6 +391,8 @@ Then, in your handler, you can query for a fresh object::
 
 This guarantees the entity contains fresh data.
 
+.. _messenger-handling-messages-synchronously:
+
 Handling Messages Synchronously
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
