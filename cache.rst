@@ -50,6 +50,8 @@ of:
     Redis and Memcached are examples of such adapters. If a DSN is used as the
     provider then a service is automatically created.
 
+.. _cache-app-system:
+
 There are two pools that are always enabled by default. They are ``cache.app`` and
 ``cache.system``. The system cache is used for things like annotations, serializer,
 and validation. The ``cache.app`` can be used in your code. You can configure which
@@ -118,6 +120,13 @@ The Cache component comes with a series of adapters pre-configured:
 .. versionadded:: 5.2
 
     ``cache.adapter.redis_tag_aware`` has been introduced in Symfony 5.2.
+
+.. note::
+
+    There's also a special ``cache.adapter.system`` adapter. It's recommended to
+    use it for the :ref:`system cache <cache-app-system>`. This adapter uses some
+    logic to dynamically select the best possible storage based on your system
+    (either PHP files or APCu).
 
 Some of these adapters could be configured via shortcuts. Using these shortcuts
 will create pools with service IDs that follow the pattern ``cache.[type]``.
