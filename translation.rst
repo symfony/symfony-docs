@@ -568,16 +568,15 @@ Translations of Doctrine Entities
 Unlike the contents of templates, it's not practical to translate the contents
 stored in Doctrine Entities using translation catalogs. Instead, use the
 Doctrine `Translatable Extension`_ or the `Translatable Behavior`_. For more
-information, see the documentation for these libraries.
+information, read the documentation of those libraries.
 
 Custom Translation Resources
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If your translations use a format not supported by Symfony or you store them
-in not using Doctrine entities, you need to provide a custom class implementing
-the :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface`
-interface. See the :ref:`dic-tags-translation-loader` tag for more
-information.
+in a special way (e.g. not using files or Doctrine entities), you need to provide
+a custom class implementing the :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface`
+interface. See the :ref:`dic-tags-translation-loader` tag for more information.
 
 .. _translation-providers:
 
