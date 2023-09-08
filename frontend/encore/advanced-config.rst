@@ -148,6 +148,65 @@ functions to specify which build to use:
     {{ encore_entry_script_tags('mobile', null, 'secondConfig') }}
     {{ encore_entry_link_tags('mobile', null, 'secondConfig') }}
 
+Avoid missing CSS when render multiples html
+--------------------------------------------
+
+When you need to generate two templates in the same request, such as two emails, you should call the reset method on
+the ``EntrypointLookupInterface`` interface.
+
+To do this, inject the ``EntrypointLookupInterface`` interface
+
+.. code-block:: php
+
+    public function __construct(EntrypointLookupInterface $entryPointLookup) {}
+
+    public function send() {
+        $this->twig->render($emailOne);
+        $this->entryPointLookup->reset();
+        $this->render($emailTwo);
+    }
+
+If you are using multiple webpack configurations, for example, one for the admin and one for emails, you will need to
+inject the correct ``EntrypointLookupInterface`` service. To achieve this, you should search for the service
+using the following command:
+
+.. code-block:: terminal
+
+    # if you are using symfony CLI
+    $ symfony console debug:container entrypoint_lookup
+
+    # You will see a result similar to this:
+    Select one of the following services to display its information:
+    [0] webpack_encore.entrypoint_lookup_collection
+    [1] webpack_encore.entrypoint_lookup.cache_warmer
+    [2] webpack_encore.entrypoint_lookup[_default]
+    [3] webpack_encore.entrypoint_lookup[admin]
+    [4] webpack_encore.entrypoint_lookup[email]
+
+The service we are interested in is ``webpack_encore.entrypoint_lookup[email]``.
+
+To inject this service into your class, we will use the bind method:
+
+.. code-block:: yaml
+
+    services:
+        _defaults
+            bind:
+                Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface $entryPointLookupEmail: '@webpack_encore.entrypoint_lookup[email]'
+
+
+Now you can inject your service into your class:
+
+.. code-block:: php
+
+    public function __construct(EntrypointLookupInterface $entryPointLookupEmail) {}
+
+    public function send() {
+        $this->twig->render($emailOne);
+        $this->entryPointLookupEmail->reset();
+        $this->render($emailTwo);
+    }
+
 Generating a Webpack Configuration Object without using the Command-Line Interface
 ----------------------------------------------------------------------------------
 
