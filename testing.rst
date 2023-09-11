@@ -579,15 +579,55 @@ This allows you to create all types of requests you can think of:
     :ref:`framework.test <reference-framework-test>` option is enabled).
     This means you can override the service entirely if you need to.
 
-.. caution::
+Multiple Requests in One Test
+.............................
 
-    Before each request, the client reboots the kernel, recreating
-    the container from scratch.
-    This ensures that every requests are "isolated" using "new" service objects.
-    Also, it means that entities loaded by Doctrine repositories will
-    be "detached", so they will need to be refreshed by the manager or
-    queried again from a repository.
-    You can disable this behavior by calling the :method:`disableReboot() <Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot>` method.
+After making a request, subsequent requests will make the client reboot the kernel.
+This recreates the container from scratch to ensures that requests are isolated
+and use new service objects each time. This behavior can have some unexpected
+consequences: for example, the security token will be cleared, Doctrine entities
+will be detached, etc.
+
+First, you can call the client's :method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot`
+method to reset the kernel instead of rebooting it. In practice, Symfony
+will call the ``reset()`` method of every service tagged with ``kernel.reset``.
+However, this will **also** clear the security token, detach Doctrine entities, etc.
+
+In order to solve this issue, create a :doc:`compiler pass </service_container/compiler_passes>`
+to remove the ``kernel.reset`` tag from some services in your test environment::
+
+    // src/Kernel.php
+    namespace App;
+
+    use App\DependencyInjection\Compiler\CustomPass;
+    use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+
+    class Kernel extends BaseKernel
+    {
+        use MicroKernelTrait;
+
+        // ...
+
+        protected function build(ContainerBuilder $container): void
+        {
+            if ('test' === $this->environment) {
+                $container->addCompilerPass(new class() implements CompilerPassInterface {
+                    public function process(ContainerBuilder $container): void
+                    {
+                        // prevents the security token to be cleared
+                        $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
+
+                        // prevents Doctrine entities to be detached
+                        $container->getDefinition('doctrine')->clearTag('kernel.reset');
+
+                        // ...
+                    }
+                });
+            }
+        }
+    }
 
 Browsing the Site
 .................
