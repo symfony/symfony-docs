@@ -1456,6 +1456,13 @@ Internally, Symfony uses the :doc:`Rate Limiter component </rate_limiter>`
 which by default uses Symfony's cache to store the previous login attempts.
 However, you can implement a :ref:`custom storage <rate-limiter-storage>`.
 
+In order to work, the Rate Limiter component must be installed in your
+application by running the following command:
+
+.. code-block:: terminal
+
+    $ composer require symfony/rate-limiter
+
 Login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
 failed requests for ``IP address``. The second limit protects against an
