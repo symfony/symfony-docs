@@ -622,22 +622,19 @@ This allows you to create all types of requests you can think of:
 Multiple Requests in One Test
 .............................
 
-After you send one request, subsequent ones will make the client reboot
-the kernel, recreating the container from scratch.
-This ensures that requests are "isolated" using "new" service objects.
-However, this can cause some unexpected behaviors. For example, the
-security token will be cleared, Doctrine entities will be "detached"…
+After making a request, subsequent requests will make the client reboot the kernel.
+This recreates the container from scratch to ensures that requests are isolated
+and use new service objects each time. This behavior can have some unexpected
+consequences: for example, the security token will be cleared, Doctrine entities
+will be detached, etc.
 
-Calling the client's
-:method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot`
-method is the first step to work around this, as this will reset the kernel
-instead of rebooting it. Now, resetting the kernel will call the ``reset()``
-method of every ``kernel.reset`` tagged service, which will **also** clear
-the security token, detach entities and so on.
+First, you can call the client's :method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot`
+method to reset the kernel instead of rebooting it. In practice, Symfony
+will call the ``reset()`` method of every service tagged with ``kernel.reset``.
+However, this will **also** clear the security token, detach Doctrine entities, etc.
 
-As such, the next step is to create a
-:doc:`compiler pass </service_container/compiler_passes>` to remove the
-``kernel.reset`` tag from these services in your test environment::
+In order to solve this issue, create a :doc:`compiler pass </service_container/compiler_passes>`
+to remove the ``kernel.reset`` tag from some services in your test environment::
 
     // src/Kernel.php
     namespace App;
@@ -651,7 +648,7 @@ As such, the next step is to create a
     {
         use MicroKernelTrait;
 
-        // …
+        // ...
 
         protected function build(ContainerBuilder $container): void
         {
@@ -662,10 +659,10 @@ As such, the next step is to create a
                         // prevents the security token to be cleared
                         $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
 
-                        // prevents entities to be detached
+                        // prevents Doctrine entities to be detached
                         $container->getDefinition('doctrine')->clearTag('kernel.reset');
 
-                        // …
+                        // ...
                     }
                 });
             }
