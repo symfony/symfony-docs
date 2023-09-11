@@ -599,6 +599,15 @@ The values of these options are resolved at runtime (only once per request, to
 not impact performance) so you can change the application behavior without having
 to clear the cache.
 
+.. note::
+
+    Environment variables are designed to store information that can
+    dynamically change in a production environment, such as an API
+    key that may have an expiration date. This information could be updated
+    without having to redeploy the application. Thus, not everything is a good
+    candidate for env vars, and
+    :ref:`parameters <configuration-parameters>` should be used in other cases.
+
 This example shows how you could configure the application secret using an env var:
 
 .. configuration-block::
