@@ -1367,8 +1367,15 @@ Limiting Login Attempts
 
     Login throttling was introduced in Symfony 5.2.
 
-Symfony provides basic protection against `brute force login attacks`_.
-You must enable this using the ``login_throttling`` setting:
+Symfony provides basic protection against `brute force login attacks`_ thanks to
+the :doc:`Rate Limiter component </rate_limiter>`. If you haven't used this
+component in your application yet, install it before using this feature:
+
+.. code-block:: terminal
+
+    $ composer require symfony/rate-limiter
+
+Then, enable this feature using the ``login_throttling`` setting:
 
 .. configuration-block::
 
@@ -1452,16 +1459,8 @@ You must enable this using the ``login_throttling`` setting:
 
     The ``login_throttling.interval`` option was introduced in Symfony 5.3.
 
-Internally, Symfony uses the :doc:`Rate Limiter component </rate_limiter>`
-which by default uses Symfony's cache to store the previous login attempts.
-However, you can implement a :ref:`custom storage <rate-limiter-storage>`.
-
-In order to work, the Rate Limiter component must be installed in your
-application by running the following command:
-
-.. code-block:: terminal
-
-    $ composer require symfony/rate-limiter
+The Rate Limiter component uses by default the Symfony cache to store the previous
+login attempts. However, you can implement a :ref:`custom storage <rate-limiter-storage>`.
 
 Login attempts are limited on ``max_attempts`` (default: 5)
 failed requests for ``IP address + username`` and ``5 * max_attempts``
