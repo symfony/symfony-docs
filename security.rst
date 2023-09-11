@@ -1465,8 +1465,15 @@ Enable remote user authentication using the ``remote_user`` key:
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony provides basic protection against `brute force login attacks`_.
-You must enable this using the ``login_throttling`` setting:
+Symfony provides basic protection against `brute force login attacks`_ thanks to
+the :doc:`Rate Limiter component </rate_limiter>`. If you haven't used this
+component in your application yet, install it before using this feature:
+
+.. code-block:: terminal
+
+    $ composer require symfony/rate-limiter
+
+Then, enable this feature using the ``login_throttling`` setting:
 
 .. configuration-block::
 
