@@ -619,15 +619,58 @@ This allows you to create all types of requests you can think of:
     :ref:`framework.test <reference-framework-test>` option is enabled).
     This means you can override the service entirely if you need to.
 
-.. caution::
+Multiple Requests in One Test
+.............................
 
-    Before each request, the client reboots the kernel, recreating
-    the container from scratch.
-    This ensures that every requests are "isolated" using "new" service objects.
-    Also, it means that entities loaded by Doctrine repositories will
-    be "detached", so they will need to be refreshed by the manager or
-    queried again from a repository.
-    You can disable this behavior by calling the :method:`disableReboot() <Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot>` method.
+After you send one request, subsequent ones will make the client reboot
+the kernel, recreating the container from scratch.
+This ensures that requests are "isolated" using "new" service objects.
+However, this can cause some unexpected behaviors. For example, the
+security token will be cleared, Doctrine entities will be "detached"…
+
+Calling the client's
+:method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot`
+method is the first step to work around this, as this will reset the kernel
+instead of rebooting it. Now, resetting the kernel will call the ``reset()``
+method of every ``kernel.reset`` tagged service, which will **also** clear
+the security token, detach entities and so on.
+
+As such, the next step is to create a
+:doc:`compiler pass </service_container/compiler_passes>` to remove the
+``kernel.reset`` tag from these services in your test environment::
+
+    // src/Kernel.php
+    namespace App;
+
+    use App\DependencyInjection\Compiler\CustomPass;
+    use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+
+    class Kernel extends BaseKernel
+    {
+        use MicroKernelTrait;
+
+        // …
+
+        protected function build(ContainerBuilder $container): void
+        {
+            if ('test' === $this->environment) {
+                $container->addCompilerPass(new class() implements CompilerPassInterface {
+                    public function process(ContainerBuilder $container): void
+                    {
+                        // prevents the security token to be cleared
+                        $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
+
+                        // prevents entities to be detached
+                        $container->getDefinition('doctrine')->clearTag('kernel.reset');
+
+                        // …
+                    }
+                });
+            }
+        }
+    }
 
 Browsing the Site
 .................
