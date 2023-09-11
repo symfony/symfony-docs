@@ -2608,6 +2608,50 @@ Messenger gives you a single message bus service by default. But, you can config
 as many as you want, creating "command", "query" or "event" buses and controlling
 their middleware. See :doc:`/messenger/multiple_buses`.
 
+Redispatching a Message
+-----------------------
+
+It you want to redispatch a message (using the same transport and envelope), create
+a new :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` and dispatch
+it through your bus. Reusing the same ``SmsNotification`` example shown earlier::
+
+    // src/MessageHandler/SmsNotificationHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\SmsNotification;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+    use Symfony\Component\Messenger\MessageBusInterface;
+    use Symfony\Component\Messenger\Message\RedispatchMessage;
+
+    #[AsMessageHandler]
+    class SmsNotificationHandler
+    {
+        public function __construct(private MessageBusInterface $bus)
+        {
+        }
+
+        public function __invoke(SmsNotification $message): void
+        {
+            // do something with the message
+            // then redispatch it based on your own logic
+
+            if ($needsRedispatch) {
+                $this->bus->dispatch(new RedispatchMessage($message));
+            }
+        }
+    }
+
+The built-in :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+will take care of this message to redispatch it through the same bus it was
+dispatched at first. You can also use the second argument of the ``RedispatchMessage``
+constructor to provide transports to use when redispatching the message.
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage`
+    and :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+    classes were introduced in Symfony 6.3.
+
 Learn more
 ----------
 
