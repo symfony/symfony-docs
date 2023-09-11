@@ -2741,11 +2741,9 @@ their middleware. See :doc:`/messenger/multiple_buses`.
 Redispatching a Message
 -----------------------
 
-It may occur that you dispatch a message and for some reason, wants to
-redispatch it through the same transport with the same envelope. To do so, you
-can create a new
-:class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` and dispatch
-it through your bus. Let's do this with the ``SmsNotification`` seen earlier::
+It you want to redispatch a message (using the same transport and envelope), create
+a new :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` and dispatch
+it through your bus. Reusing the same ``SmsNotification`` example shown earlier::
 
     // src/MessageHandler/SmsNotificationHandler.php
     namespace App\MessageHandler;
@@ -2773,12 +2771,10 @@ it through your bus. Let's do this with the ``SmsNotification`` seen earlier::
         }
     }
 
-The built-in
-:class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler` will
-take care of this message and redispatch it through the same bus it's been
-dispatched at first. You can also use the second argument of the
-``RedispatchMessage`` constructor to provide transports to use when
-redispatching the message.
+The built-in :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+will take care of this message to redispatch it through the same bus it was
+dispatched at first. You can also use the second argument of the ``RedispatchMessage``
+constructor to provide transports to use when redispatching the message.
 
 .. versionadded:: 6.3
 
