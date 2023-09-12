@@ -1,0 +1,45 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-08-30T07:53:19Z
+
+There are many occurrences of `setParameter()` in the docs. Also, I see this method defined in the container interface:
+
+https://github.com/symfony/symfony/blob/73a6b4b8ad315d294fe18c03012019694863daa9/src/Symfony/Component/DependencyInjection/ContainerInterface.php#L71
+
+And in the container implementation:
+
+https://github.com/symfony/symfony/blob/73a6b4b8ad315d294fe18c03012019694863daa9/src/Symfony/Component/DependencyInjection/Container.php#L133-L136
+
+So maybe there's a confusion? Why do you say that this method doesn't exist? Thanks!
+
+---------------------------------------------------------------------------
+
+by kaznovac at 2023-08-30T13:53:04Z
+
+That's not the `Container` class being passed to the php configuration closures.
+
+This one is: https://github.com/symfony/symfony/blob/a0fb29ec8b434f3b1cadfb93419d569805891d99/src/Symfony/Component/DependencyInjection/Loader/Configurator/ContainerConfigurator.php
+See the `PhpFileLoader` (particularly the `executeCallback` method):
+https://github.com/symfony/symfony/blob/a0fb29ec8b434f3b1cadfb93419d569805891d99/src/Symfony/Component/DependencyInjection/Loader/PhpFileLoader.php
+
+That being the case I could say that all of the mentions to use the `setParameter` method in the php configuration are if fact incorrect.
+
+How would you like to proceed?
+I'd like to merge this one and open the ticket for fixing the others when I or someone else has time to donate
+
+---------------------------------------------------------------------------
+
+by kaznovac at 2023-09-09T16:07:56Z
+
+@javiereguiluz the entry doc for configuring symfony has the correct information (just select the PHP format)
+https://symfony.com/doc/current/configuration.html
+
+how should we proceed?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-09-12T09:41:21Z
+
+Yes, it looks like the right class is `Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;` as you said.
+
+So, let's merge this PR and we can fix the others in a different PR. Thanks!
