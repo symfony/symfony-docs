@@ -351,7 +351,7 @@ redirected to the ``default_target_path`` to avoid a redirection loop.
 **Options Related to Logout Configuration**
 
 delete_cookies
-~~~~~~~~~~~~~~
+..............
 
 **type**: ``array`` **default**: ``[]``
 
@@ -425,8 +425,9 @@ user logs out::
             ],
         ]);
 
+
 clear_site_data
-~~~~~~~~~~~~~~~
+...............
 
 **type**: ``array`` **default**: ``[]``
 
@@ -498,7 +499,7 @@ It's also possible to use ``*`` as a wildcard for all directives:
     The ``clear_site_data`` option was introduced in Symfony 6.3.
 
 invalidate_session
-~~~~~~~~~~~~~~~~~~
+..................
 
 **type**: ``boolean`` **default**: ``true``
 
@@ -511,14 +512,14 @@ option to ``false`` in every firewall and the user will only be logged out from
 the current firewall and not the other ones.
 
 ``path``
-~~~~~~~~
+........
 
 **type**: ``string`` **default**: ``/logout``
 
 The path which triggers logout. You need to set up a route with a matching path.
 
 target
-~~~~~~
+......
 
 **type**: ``string`` **default**: ``/``
 
@@ -529,7 +530,7 @@ redirect after logout.
 .. _reference-security-logout-csrf:
 
 enable_csrf
-~~~~~~~~~~~
+...........
 
 **type**: ``boolean`` **default**: ``null``
 
@@ -542,14 +543,14 @@ option if you need to use a custom CSRF token manager.
     The ``enable_csrf`` option was introduced in Symfony 6.2.
 
 csrf_parameter
-~~~~~~~~~~~~~~
+..............
 
 **type**: ``string`` **default**: ``'_csrf_token'``
 
 The name of the parameter that stores the CSRF token value.
 
 csrf_token_manager
-~~~~~~~~~~~~~~~~~~
+..................
 
 **type**: ``string`` **default**: ``null``
 
