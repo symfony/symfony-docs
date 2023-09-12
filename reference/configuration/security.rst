@@ -428,8 +428,9 @@ user logs out::
             ],
         ]);
 
+
 clear_site_data
-~~~~~~~~~~~~~~~
+...............
 
 **type**: ``array`` **default**: ``[]``
 
