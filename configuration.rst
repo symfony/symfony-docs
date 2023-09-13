@@ -877,7 +877,7 @@ get the environment variables and will not spend time parsing the ``.env`` files
 
 .. tip::
 
-    Update your deployment tools/workflow to run the ``dump-env`` command after
+    Update your deployment tools/workflow to run the ``dotenv:dump`` command after
     each deploy to improve the application performance.
 
 .. _configuration-secrets:
