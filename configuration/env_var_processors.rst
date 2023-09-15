@@ -191,10 +191,108 @@ Symfony provides the following env var processors:
     Casts ``FOO`` to a float.
 
 ``env(date_time:FOO)``
-    Casts ``FOO`` to a \DateTime.
+    Casts ``FOO`` to a \DateTimeImmutable class instance. ``FOO`` can be any valid \DateTimeImmutable constructor argument like ``2023-09-15 12:34:56`` or ``now``.
 
-``env(date_time_immutable:FOO)``
-    Casts ``FOO`` to a \DateTimeImmutable.
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(DATE_TIME): '2023-09-15 12:34:56'
+                date_time_immutable_object: '%env(date_time:DATE_TIME)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.yaml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:security="http://symfony.com/schema/dic/security"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/security
+                    https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(DATE_TIME)">2023-09-15 12:34:56</parameter>
+                    <parameter key="date_time_immutable_object">%env(date_time:DATE_TIME)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+            return static function (ContainerBuilder $container): void {
+                $container->setParameter('env(DATE_TIME)', '2023-09-15 12:34:56');
+                $container->setParameter('date_time_immutable_object', '%env(date_time:DATE_TIME)%');
+            };
+
+    .. versionadded:: 6.4
+
+        The ``env(date_time:...)`` env var processor was introduced in Symfony 6.4.
+
+``env(date_time_format:FOO:BAR)``
+    Casts ``BAR`` to formatted date time string using format defined in parameter ``FOO``.
+    This processor should be used in conjunction with ``env(date_time:FOO)``.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(DATE_TIME): 'now'
+
+                date_time_format: 'Y-m-d H:i:s'
+                formatted_date_time_string: '%env(date_time_format:date_time_format:date_time:DATE_TIME)%'
+
+                current_date_format: 'Y-m-d'
+                today_dir_path: '/path/to/today/dir/%env(date_time_format:current_date_format:date_time:DATE_TIME)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.yaml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:security="http://symfony.com/schema/dic/security"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/security
+                    https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(DATE_TIME)">now</parameter>
+
+                    <parameter key="date_time_format">Y-m-d H:i:s</parameter>
+                    <parameter key="formatted_date_time_string">%env(date_time_format:date_time_format:date_time:DATE_TIME)%</parameter>
+
+                    <parameter key="current_date_format">Y-m-d</parameter>
+                    <parameter key="today_dir_path">/path/to/today/dir/%env(date_time_format:current_date_format:date_time:DATE_TIME)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+
+            return static function (ContainerBuilder $container): void {
+                $container->setParameter('env(DATE_TIME)', 'now');
+
+                $container->setParameter('date_time_format', 'Y-m-d H:i:s');
+                $container->setParameter('formatted_date_time_string', '%env(date_time_format:date_time_format:date_time:DATE_TIME)%');
+
+                $container->setParameter('current_date_format', 'Y-m-d');
+                $container->setParameter('today_dir_path', '/path/to/today/dir/%env(date_time_format:current_date_format:date_time:DATE_TIME)%');
+            };
+
+    .. versionadded:: 6.4
+
+        The ``env(date_time_format:...)`` env var processor was introduced in Symfony 6.4.
 
 ``env(const:FOO)``
     Finds the const value named in ``FOO``:
