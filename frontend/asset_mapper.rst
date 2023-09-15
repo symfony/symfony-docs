@@ -248,11 +248,15 @@ computers if some files are missing.
     such as ``@popperjs/core``. The ``download`` option will download both the main
     package *and* its dependencies.
 
-To update all 3rd party packages in your ``importmap.php`` file, run:
+To update third-party packages in your ``importmap.php`` file, run:
 
 .. code-block:: terminal
 
+    # updates all packages
     $ php bin/console importmap:update
+
+    # updates only the given list of packages
+    $ php bin/console importmap:update bootstrap lodash
 
 How does the importmap Work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~

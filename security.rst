@@ -442,6 +442,12 @@ the database::
         }
     }
 
+.. note::
+
+    If your user class is a Doctrine entity and you hash user passwords, the
+    Doctrine repository class related to the user class must implement the
+    :class:`Symfony\\Component\\Security\\Core\\User\\PasswordUpgraderInterface`.
+
 .. tip::
 
     The ``make:registration-form`` maker command can help you set-up the
@@ -1459,8 +1465,15 @@ Enable remote user authentication using the ``remote_user`` key:
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony provides basic protection against `brute force login attacks`_.
-You must enable this using the ``login_throttling`` setting:
+Symfony provides basic protection against `brute force login attacks`_ thanks to
+the :doc:`Rate Limiter component </rate_limiter>`. If you haven't used this
+component in your application yet, install it before using this feature:
+
+.. code-block:: terminal
+
+    $ composer require symfony/rate-limiter
+
+Then, enable this feature using the ``login_throttling`` setting:
 
 .. configuration-block::
 
@@ -1834,7 +1847,7 @@ Next, you need to create a route for this URL (but not a controller):
 
         class SecurityController extends AbstractController
         {
-            #[Route('/logout', name: 'app_logout', methods: ['POST'])]
+            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
             public function logout(): never
             {
                 // controller can be blank: it will never be called!
@@ -1847,7 +1860,7 @@ Next, you need to create a route for this URL (but not a controller):
         # config/routes.yaml
         app_logout:
             path: /logout
-            methods: POST
+            methods: GET
 
     .. code-block:: xml
 
@@ -1858,7 +1871,7 @@ Next, you need to create a route for this URL (but not a controller):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="app_logout" path="/logout" methods="POST"/>
+            <route id="app_logout" path="/logout" methods="GET"/>
         </routes>
 
     .. code-block:: php
@@ -1868,7 +1881,7 @@ Next, you need to create a route for this URL (but not a controller):
 
         return function (RoutingConfigurator $routes): void {
             $routes->add('app_logout', '/logout')
-                ->methods(['POST'])
+                ->methods(['GET'])
             ;
         };
 

@@ -122,7 +122,8 @@ is capable of sending messages (e.g. to a queueing system) and then
 .. note::
 
     If you want to use a transport that's not supported, check out the
-    `Enqueue's transport`_, which supports things like Kafka and Google Pub/Sub.
+    `Enqueue's transport`_, which backs services like Kafka and Google
+    Pub/Sub.
 
 A transport is registered using a "DSN". Thanks to Messenger's Flex recipe, your
 ``.env`` file already has a few examples.
@@ -402,6 +403,8 @@ Then, in your handler, you can query for a fresh object::
     }
 
 This guarantees the entity contains fresh data.
+
+.. _messenger-handling-messages-synchronously:
 
 Handling Messages Synchronously
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2428,7 +2431,10 @@ a message is received via the worker (for messages that were sent to a transport
 to be handled asynchronously). Keep this in mind if you create your own middleware.
 
 You can add your own middleware to this list, or completely disable the default
-middleware and *only* include your own:
+middleware and *only* include your own.
+
+If a middleware service is abstract, you can configure its constructor's arguments
+and a different instance will be created per bus.
 
 .. configuration-block::
 
@@ -2442,9 +2448,11 @@ middleware and *only* include your own:
                         # disable the default middleware
                         default_middleware: false
 
-                        # and/or add your own
                         middleware:
-                            # service ids that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
+                            # use and configure parts of the default middleware you want
+                            - 'add_bus_name_stamp_middleware': ['messenger.bus.default']
+
+                            # add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
                             - 'App\Middleware\MyMiddleware'
                             - 'App\Middleware\AnotherMiddleware'
 
@@ -2464,11 +2472,17 @@ middleware and *only* include your own:
             <framework:config>
                 <framework:messenger>
                     <!-- default-middleware: disable the default middleware -->
-                    <framework:bus name="messenger.bus.default" default-middleware="false"/>
+                    <framework:bus name="messenger.bus.default" default-middleware="false">
 
-                    <!-- and/or add your own -->
-                    <framework:middleware id="App\Middleware\MyMiddleware"/>
-                    <framework:middleware id="App\Middleware\AnotherMiddleware"/>
+                        <!-- use and configure parts of the default middleware you want -->
+                        <framework:middleware id="add_bus_name_stamp_middleware">
+                            <framework:argument>messenger.bus.default</framework:argument>
+                        </framework:middleware>
+
+                        <!-- add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface -->
+                        <framework:middleware id="App\Middleware\MyMiddleware"/>
+                        <framework:middleware id="App\Middleware\AnotherMiddleware"/>
+                    </framework:bus>
                 </framework:messenger>
             </framework:config>
         </container>
@@ -2482,15 +2496,15 @@ middleware and *only* include your own:
             $messenger = $framework->messenger();
 
             $bus = $messenger->bus('messenger.bus.default')
-                ->defaultMiddleware(false);
+                ->defaultMiddleware(false); // disable the default middleware
+
+            // use and configure parts of the default middleware you want
+            $bus->middleware()->id('add_bus_name_stamp_middleware')->arguments(['messenger.bus.default']);
+
+            // add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
             $bus->middleware()->id('App\Middleware\MyMiddleware');
             $bus->middleware()->id('App\Middleware\AnotherMiddleware');
         };
-
-.. note::
-
-    If a middleware service is abstract, a different instance of the service will
-    be created per bus.
 
 .. _middleware-doctrine:
 
@@ -2526,6 +2540,9 @@ may want to use:
                             # in any handler will cause a rollback
                             - doctrine_transaction
 
+                            # logs an error when a Doctrine transaction was opened but not closed
+                            - doctrine_open_transaction_logger
+
                             # or pass a different entity manager to any
                             #- doctrine_transaction: ['custom']
 
@@ -2547,6 +2564,7 @@ may want to use:
                         <framework:middleware id="doctrine_transaction"/>
                         <framework:middleware id="doctrine_ping_connection"/>
                         <framework:middleware id="doctrine_close_connection"/>
+                        <framework:middleware id="doctrine_open_transaction_logger"/>
 
                         <!-- or pass a different entity manager to any -->
                         <!--
@@ -2571,6 +2589,7 @@ may want to use:
             $bus->middleware()->id('doctrine_transaction');
             $bus->middleware()->id('doctrine_ping_connection');
             $bus->middleware()->id('doctrine_close_connection');
+            $bus->middleware()->id('doctrine_open_transaction_logger');
             // Using another entity manager
             $bus->middleware()->id('doctrine_transaction')
                 ->arguments(['custom']);
@@ -2718,6 +2737,50 @@ Multiple Buses, Command & Event Buses
 Messenger gives you a single message bus service by default. But, you can configure
 as many as you want, creating "command", "query" or "event" buses and controlling
 their middleware. See :doc:`/messenger/multiple_buses`.
+
+Redispatching a Message
+-----------------------
+
+It you want to redispatch a message (using the same transport and envelope), create
+a new :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` and dispatch
+it through your bus. Reusing the same ``SmsNotification`` example shown earlier::
+
+    // src/MessageHandler/SmsNotificationHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\SmsNotification;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+    use Symfony\Component\Messenger\Message\RedispatchMessage;
+    use Symfony\Component\Messenger\MessageBusInterface;
+
+    #[AsMessageHandler]
+    class SmsNotificationHandler
+    {
+        public function __construct(private MessageBusInterface $bus)
+        {
+        }
+
+        public function __invoke(SmsNotification $message): void
+        {
+            // do something with the message
+            // then redispatch it based on your own logic
+
+            if ($needsRedispatch) {
+                $this->bus->dispatch(new RedispatchMessage($message));
+            }
+        }
+    }
+
+The built-in :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+will take care of this message to redispatch it through the same bus it was
+dispatched at first. You can also use the second argument of the ``RedispatchMessage``
+constructor to provide transports to use when redispatching the message.
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage`
+    and :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+    classes were introduced in Symfony 6.3.
 
 Learn more
 ----------

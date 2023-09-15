@@ -21,18 +21,19 @@ If you're making a relatively small change - like fixing a typo or rewording
 something - the easiest way to contribute is directly on GitHub! You can do this
 while you're reading the Symfony documentation.
 
-**Step 1.** Click on the **edit this page** button on the upper right corner
+**Step 1.** Click on the **edit this page** button on the top of the page
 and you'll be redirected to GitHub:
 
 .. image:: /_images/contributing/docs-github-edit-page.png
     :alt: The "Edit this page" button is located directly below the first heading.
     :class: with-browser
 
-**Step 2.** Edit the contents, describe your changes and click on the
-**Propose file change** button.
+**Step 2.** If this is your first contribution, you have to fork the repository.
+Then, edit the contents, preview your changes (with the button at the top left)
+and click on the **Commit changes...** button. In the popup, describe your changes
+and click on **Propose changes** button.
 
-**Step 3.** GitHub will now create a branch and a commit for your changes
-(forking the repository first if this is your first contribution) and it will
+**Step 3.** GitHub will now create a branch and a commit for your changes and it will
 also display a preview of your changes:
 
 .. image:: /_images/contributing/docs-github-create-pr.png

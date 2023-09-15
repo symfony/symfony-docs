@@ -606,10 +606,15 @@ different scenarios: staging, quality assurance, client review, etc.)
 Configuration Based on Environment Variables
 --------------------------------------------
 
-Using `environment variables`_ (or "env vars" for short) is a common practice to
-configure options that depend on where the application is run (e.g. the database
-credentials are usually different in production versus your local machine). If
-the values are sensitive, you can even :doc:`encrypt them as secrets </configuration/secrets>`.
+Using `environment variables`_ (or "env vars" for short) is a common practice to:
+
+* Configure options that depend on where the application is run (e.g. the database
+  credentials are usually different in production versus your local machine);
+* Configure options that can change dynamically in a production environment (e.g.
+  to update the value of an expired API key without having to redeploy the entire
+  application).
+
+In other cases, it's recommended to keep using :ref:`configuration parameters <configuration-parameters>`.
 
 Use the special syntax ``%env(ENV_VAR_NAME)%`` to reference environment variables.
 The values of these options are resolved at runtime (only once per request, to
@@ -872,7 +877,7 @@ get the environment variables and will not spend time parsing the ``.env`` files
 
 .. tip::
 
-    Update your deployment tools/workflow to run the ``dump-env`` command after
+    Update your deployment tools/workflow to run the ``dotenv:dump`` command after
     each deploy to improve the application performance.
 
 .. _configuration-secrets:

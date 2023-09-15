@@ -244,6 +244,13 @@ in your expression:
 * ``value``: The value of the property being validated (only available when
   the constraint is applied directly to a property);
 
+You also have access to the ``is_valid()`` function in your expression. This function
+checks that the data passed to function doesn't raise any validation violation.
+
+.. versionadded:: 6.4
+
+    The ``is_valid()`` expression function was introduced in Symfony 6.4.
+
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
