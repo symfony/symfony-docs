@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-09-18T08:16:00Z
+
+I haven't tested this myself, but current docs look OK to me. Looking at the code:
+
+https://github.com/symfony/doctrine-bridge/blob/65d82374b47880b4ba1a11e1704aa68e7f76b88b/Messenger/DoctrineOpenTransactionLoggerMiddleware.php#L42-L46
+
+The logger middleware checks if a transaction is open. So, if we run it before the transaction middleware, there will never be an open transaction. If we run it afterwards, we'll see if there's still an open transaction, right?
+
+---------------------------------------------------------------------------
+
+by lruozzi9 at 2023-09-18T08:48:16Z
+
+Hi @javiereguiluz! You're right but the order in definition must be reversed. Middlewares are invoked sequentially as they are defined and the next middleware is invoked from the inside of the current middleware. This means that after the message handling the middleware will be closed in reverse.
+To better explain I make a simple example of the stack trace. The first one is with the current doc definition:
+
+1. `DoctrineTransactionMiddleware::31` -> `$stack->next()->handle($envelope, $stack);` (the transaction has been started)
+2. `DoctrineOpenTransactionLoggerMiddleware::40` -> `$stack->next()->handle($envelope, $stack);`
+3. Now the message handler is invoked and run.
+4. `DoctrineOpenTransactionLoggerMiddleware::42` -> `if ($entityManager->getConnection()->isTransactionActive()) {` (yes! Here the transaction is still opened so it logs an error)
+5. `DoctrineTransactionMiddleware` -> If the message handler has been completed without errors the transaction will be committed, otherwise it will be rolled back. Anyway, here the transaction will be closed)
+
+The right path should be:
+
+1. `DoctrineOpenTransactionLoggerMiddleware::40` -> `$stack->next()->handle($envelope, $stack);`
+2. `DoctrineTransactionMiddleware::31` -> `$stack->next()->handle($envelope, $stack);` (the transaction has been started)
+4. Now the message handler is invoked and run.
+5. `DoctrineTransactionMiddleware` -> If the message handler has been completed without errors the transaction will be committed, otherwise it will be rolled back. Anyway, here the transaction will be closed)
+6. `DoctrineOpenTransactionLoggerMiddleware::42` -> `if ($entityManager->getConnection()->isTransactionActive()) {` (no! Here the transaction is now closed and any error will be logged!)
