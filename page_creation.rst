@@ -80,6 +80,7 @@ metadata to code):
       }
 
 That's it! If you are using Symfony web server, try it out by going to: http://localhost:8000/lucky/number
+To start the symfony webserver, cd to your project directory and type symfony server:start
 
 .. tip::
 
