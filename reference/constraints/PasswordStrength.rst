@@ -128,7 +128,7 @@ The default message supplied when the password does not reach the minimum requir
     class User
     {
         #[Assert\PasswordStrength([
-            'message' => 'Le mot de passe est trop faible. Veuillez utiliser un mot de passe plus fort.'
+            'message' => 'The password strength is too low. Please use a stronger password.'
         ])]
         protected $rawPassword;
     }
