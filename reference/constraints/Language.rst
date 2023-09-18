@@ -72,14 +72,16 @@ Basic Usage
 Options
 -------
 
-alpha3
-~~~~~~
+``alpha3``
+~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
 
 If this option is ``true``, the constraint checks that the value is a
 `ISO 639-2 (2T)`_ three-letter code (e.g. French = ``fra``) instead of the default
 `ISO 639-1`_ two-letter code (e.g. French = ``fr``).
+
+.. include:: /reference/constraints/_caseInsensitive-option.rst.inc
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
