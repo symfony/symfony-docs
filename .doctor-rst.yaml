@@ -80,6 +80,8 @@ rules:
 exclude_rule_for_file:
     - path: configuration/multiple_kernels.rst
       rule_name: replacement
+    - path: page_creation.rst
+      rule_name: no_php_open_tag_in_code_block_php_directive
 
 # do not report as violation
 whitelist:
