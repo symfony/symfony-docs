@@ -13,23 +13,20 @@ on other common tasks (e.g. ``loadClassMetadata``, ``onClear``).
 
 There are different ways to listen to these Doctrine events:
 
-* **Lifecycle callbacks**, they are defined as public methods on the entity classes and
-  they are called when the events are triggered;
-* **Lifecycle listeners and subscribers**, they are classes with callback
-  methods for one or more events and they are called for all entities;
-* **Entity listeners**, they are similar to lifecycle listeners, but they are
-  called only for the entities of a certain class.
+* **Lifecycle callbacks**, they are defined as public methods on the entity classes.
+  They can't use services, so they are intended for **very simple logic** related
+  to a single entity;
+* **Entity listeners**, they are defined as classes with callback methods for the
+  events you want to respond to. They can use services, but they are only called
+  for the entities of a certain class, so they are ideal for **complex event logic
+  related to a single entity**;
+* **Lifecycle listeners**, they are similar to entity listeners but their event
+  methods are called for all entities, not only those of a certain type. They are
+  ideal to **share event logic between entities**.
 
-These are the **drawbacks and advantages** of each one:
-
-* Callbacks have better performance because they only apply to a single entity
-  class, but you can't reuse the logic for different entities and they don't
-  have access to :doc:`Symfony services </service_container>`;
-* Lifecycle listeners and subscribers can reuse logic among different entities
-  and can access Symfony services but their performance is worse because they
-  are called for all entities;
-* Entity listeners have the same advantages of lifecycle listeners and they have
-  better performance because they only apply to a single entity class.
+The performance of each type of listener depends on how many entities applies to:
+lifecycle callbacks are faster than entity listeners, which in turn are faster
+than lifecycle listeners.
 
 This article only explains the basics about Doctrine events when using them
 inside a Symfony application. Read the `official docs about Doctrine events`_
@@ -105,15 +102,151 @@ define a callback for the ``prePersist`` Doctrine event:
     useful information such as the current entity manager (e.g. the ``preUpdate``
     callback receives a ``PreUpdateEventArgs $event`` argument).
 
+Doctrine Entity Listeners
+-------------------------
+
+Entity listeners are defined as PHP classes that listen to a single Doctrine
+event on a single entity class. For example, suppose that you want to send some
+notifications whenever a ``User`` entity is modified in the database.
+
+First, define a PHP class that handles the ``postUpdate`` Doctrine event::
+
+    // src/EventListener/UserChangedNotifier.php
+    namespace App\EventListener;
+
+    use App\Entity\User;
+    use Doctrine\ORM\Event\PostUpdateEventArgs;
+
+    class UserChangedNotifier
+    {
+        // the entity listener methods receive two arguments:
+        // the entity instance and the lifecycle event
+        public function postUpdate(User $user, PostUpdateEventArgs $event): void
+        {
+            // ... do something to notify the changes
+        }
+    }
+
+Then, add the ``#[AsEntityListener]`` attribute to the class to enable it as
+a Doctrine entity listener in your application::
+
+        // src/EventListener/UserChangedNotifier.php
+        namespace App\EventListener;
+
+        // ...
+        use App\Entity\User;
+        use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+        use Doctrine\ORM\Events;
+
+        #[AsEntityListener(event: Events::postUpdate, method: 'postUpdate', entity: User::class)]
+        class UserChangedNotifier
+        {
+            // ...
+        }
+
+Alternatively, if you prefer to not use PHP attributes, you must
+configure a service for the entity listener and :doc:`tag it </service_container/tags>`
+with the ``doctrine.orm.entity_listener`` tag as follows:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            App\EventListener\UserChangedNotifier:
+                tags:
+                    -
+                        # these are the options required to define the entity listener
+                        name: 'doctrine.orm.entity_listener'
+                        event: 'postUpdate'
+                        entity: 'App\Entity\User'
+
+                        # these are other options that you may define if needed
+
+                        # set the 'lazy' option to TRUE to only instantiate listeners when they are used
+                        # lazy: true
+
+                        # set the 'entity_manager' option if the listener is not associated to the default manager
+                        # entity_manager: 'custom'
+
+                        # by default, Symfony looks for a method called after the event (e.g. postUpdate())
+                        # if it doesn't exist, it tries to execute the '__invoke()' method, but you can
+                        # configure a custom method name with the 'method' option
+                        # method: 'checkUserChanges'
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
+            <services>
+                <!-- ... -->
+
+                <service id="App\EventListener\UserChangedNotifier">
+                    <!--
+                        * These are the options required to define the entity listener:
+                        *   * name
+                        *   * event
+                        *   * entity
+                        *
+                        * These are other options that you may define if needed:
+                        *   * lazy: if TRUE, listeners are only instantiated when they are used
+                        *   * entity_manager: define it if the listener is not associated to the default manager
+                        *   * method: by default, Symfony looks for a method called after the event (e.g. postUpdate())
+                        *           if it doesn't exist, it tries to execute the '__invoke()' method, but
+                        *           you can configure a custom method name with the 'method' option
+                    -->
+                    <tag name="doctrine.orm.entity_listener"
+                        event="postUpdate"
+                        entity="App\Entity\User"
+                        lazy="true"
+                        entity_manager="custom"
+                        method="checkUserChanges"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\Entity\User;
+        use App\EventListener\UserChangedNotifier;
+
+        return static function (ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            $services->set(UserChangedNotifier::class)
+                ->tag('doctrine.orm.entity_listener', [
+                    // These are the options required to define the entity listener:
+                    'event' => 'postUpdate',
+                    'entity' => User::class,
+
+                    // These are other options that you may define if needed:
+
+                    // set the 'lazy' option to TRUE to only instantiate listeners when they are used
+                    // 'lazy' => true,
+
+                    // set the 'entity_manager' option if the listener is not associated to the default manager
+                    // 'entity_manager' => 'custom',
+
+                    // by default, Symfony looks for a method called after the event (e.g. postUpdate())
+                    // if it doesn't exist, it tries to execute the '__invoke()' method, but you can
+                    // configure a custom method name with the 'method' option
+                    // 'method' => 'checkUserChanges',
+                ])
+            ;
+        };
+
 .. _doctrine-lifecycle-listener:
 
 Doctrine Lifecycle Listeners
 ----------------------------
-
-.. deprecated:: 6.3
-
-    Lifecycle subscribers are deprecated starting from Symfony 6.3 and will be
-    removed in Symfony 7.0. Use lifecycle listeners instead.
 
 Lifecycle listeners are defined as PHP classes that listen to a single Doctrine
 event on all the application entities. For example, suppose that you want to
@@ -273,288 +406,16 @@ listener in the Symfony application by creating a new service for it and
     The value of the ``connection`` option can also be a
     :ref:`configuration parameter <configuration-parameters>`.
 
-Doctrine Entity Listeners
--------------------------
-
-Entity listeners are defined as PHP classes that listen to a single Doctrine
-event on a single entity class. For example, suppose that you want to send some
-notifications whenever a ``User`` entity is modified in the database.
-
-First, define a PHP class that handles the ``postUpdate`` Doctrine event::
-
-    // src/EventListener/UserChangedNotifier.php
-    namespace App\EventListener;
-
-    use App\Entity\User;
-    use Doctrine\ORM\Event\PostUpdateEventArgs;
-
-    class UserChangedNotifier
-    {
-        // the entity listener methods receive two arguments:
-        // the entity instance and the lifecycle event
-        public function postUpdate(User $user, PostUpdateEventArgs $event): void
-        {
-            // ... do something to notify the changes
-        }
-    }
-
-Then, add the ``#[AsEntityListener]`` attribute to the class to enable it as
-a Doctrine entity listener in your application::
-
-        // src/EventListener/UserChangedNotifier.php
-        namespace App\EventListener;
-
-        // ...
-        use App\Entity\User;
-        use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
-        use Doctrine\ORM\Events;
-
-        #[AsEntityListener(event: Events::postUpdate, method: 'postUpdate', entity: User::class)]
-        class UserChangedNotifier
-        {
-            // ...
-        }
-
-Alternatively, if you prefer to not use PHP attributes, you must
-configure a service for the entity listener and :doc:`tag it </service_container/tags>`
-with the ``doctrine.orm.entity_listener`` tag as follows:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\EventListener\UserChangedNotifier:
-                tags:
-                    -
-                        # these are the options required to define the entity listener
-                        name: 'doctrine.orm.entity_listener'
-                        event: 'postUpdate'
-                        entity: 'App\Entity\User'
-
-                        # these are other options that you may define if needed
-
-                        # set the 'lazy' option to TRUE to only instantiate listeners when they are used
-                        # lazy: true
-
-                        # set the 'entity_manager' option if the listener is not associated to the default manager
-                        # entity_manager: 'custom'
-
-                        # by default, Symfony looks for a method called after the event (e.g. postUpdate())
-                        # if it doesn't exist, it tries to execute the '__invoke()' method, but you can
-                        # configure a custom method name with the 'method' option
-                        # method: 'checkUserChanges'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-            <services>
-                <!-- ... -->
-
-                <service id="App\EventListener\UserChangedNotifier">
-                    <!--
-                        * These are the options required to define the entity listener:
-                        *   * name
-                        *   * event
-                        *   * entity
-                        *
-                        * These are other options that you may define if needed:
-                        *   * lazy: if TRUE, listeners are only instantiated when they are used
-                        *   * entity_manager: define it if the listener is not associated to the default manager
-                        *   * method: by default, Symfony looks for a method called after the event (e.g. postUpdate())
-                        *           if it doesn't exist, it tries to execute the '__invoke()' method, but
-                        *           you can configure a custom method name with the 'method' option
-                    -->
-                    <tag name="doctrine.orm.entity_listener"
-                        event="postUpdate"
-                        entity="App\Entity\User"
-                        lazy="true"
-                        entity_manager="custom"
-                        method="checkUserChanges"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\Entity\User;
-        use App\EventListener\UserChangedNotifier;
-
-        return static function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(UserChangedNotifier::class)
-                ->tag('doctrine.orm.entity_listener', [
-                    // These are the options required to define the entity listener:
-                    'event' => 'postUpdate',
-                    'entity' => User::class,
-
-                    // These are other options that you may define if needed:
-
-                    // set the 'lazy' option to TRUE to only instantiate listeners when they are used
-                    // 'lazy' => true,
-
-                    // set the 'entity_manager' option if the listener is not associated to the default manager
-                    // 'entity_manager' => 'custom',
-
-                    // by default, Symfony looks for a method called after the event (e.g. postUpdate())
-                    // if it doesn't exist, it tries to execute the '__invoke()' method, but you can
-                    // configure a custom method name with the 'method' option
-                    // 'method' => 'checkUserChanges',
-                ])
-            ;
-        };
-
 Doctrine Lifecycle Subscribers
 ------------------------------
 
-Lifecycle subscribers are defined as PHP classes that implement the
-``Doctrine\Common\EventSubscriber`` interface and which listen to one or more
-Doctrine events on all the application entities. For example, suppose that you
-want to log all the database activity. To do so, define a subscriber for the
-``postPersist``, ``postRemove`` and ``postUpdate`` Doctrine events::
+.. deprecated:: 6.3
 
-    // src/EventListener/DatabaseActivitySubscriber.php
-    namespace App\EventListener;
+    Lifecycle subscribers are deprecated starting from Symfony 6.3.
 
-    use App\Entity\Product;
-    use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
-    use Doctrine\ORM\Event\PostPersistEventArgs;
-    use Doctrine\ORM\Event\PostRemoveEventArgs;
-    use Doctrine\ORM\Event\PostUpdateEventArgs;
-    use Doctrine\ORM\Events;
-
-    class DatabaseActivitySubscriber implements EventSubscriberInterface
-    {
-        // this method can only return the event names; you cannot define a
-        // custom method name to execute when each event triggers
-        public function getSubscribedEvents(): array
-        {
-            return [
-                Events::postPersist,
-                Events::postRemove,
-                Events::postUpdate,
-            ];
-        }
-
-        // callback methods must be called exactly like the events they listen to;
-        // they receive an argument of type Post*EventArgs, which gives you access
-        // to both the entity object of the event and the entity manager itself
-        public function postPersist(PostPersistEventArgs $args): void
-        {
-            $this->logActivity('persist', $args->getObject());
-        }
-
-        public function postRemove(PostRemoveEventArgs $args): void
-        {
-            $this->logActivity('remove', $args->getObject());
-        }
-
-        public function postUpdate(PostUpdateEventArgs $args): void
-        {
-            $this->logActivity('update', $args->getObject());
-        }
-
-        private function logActivity(string $action, mixed $entity): void
-        {
-            // if this subscriber only applies to certain entity types,
-            // add some code to check the entity type as early as possible
-            if (!$entity instanceof Product) {
-                return;
-            }
-
-            // ... get the entity information and log it somehow
-        }
-    }
-
-.. note::
-
-    In previous Doctrine versions, instead of ``Post*EventArgs`` classes, you had
-    to use ``LifecycleEventArgs``, which was deprecated in Doctrine ORM 2.14.
-
-If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`
-and DoctrineBundle 2.1 (released May 25, 2020) or newer, this example will already
-work! Otherwise, :ref:`create a service <service-container-creating-service>` for this
-subscriber and :doc:`tag it </service_container/tags>` with ``doctrine.event_subscriber``.
-
-If you need to configure some option of the subscriber (e.g. its priority or
-Doctrine connection to use) you must do that in the manual service configuration:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            # ...
-
-            App\EventListener\DatabaseActivitySubscriber:
-                tags:
-                    - name: 'doctrine.event_subscriber'
-
-                      # subscribers can define their priority in case multiple subscribers or listeners are associated
-                      # to the same event (default priority = 0; higher numbers = listener is run earlier)
-                      priority: 500
-
-                      # you can also restrict listeners to a specific Doctrine connection
-                      connection: 'default'
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <?xml version="1.0" encoding="UTF-8" ?>
-        <container xmlns="http://symfony.com/schema/dic/services"
-            xmlns:doctrine="http://symfony.com/schema/dic/doctrine">
-            <services>
-                <!-- ... -->
-
-                <!--
-                    * 'priority': used when multiple subscribers or listeners are associated to the same event
-                    *             (default priority = 0; higher numbers = listener is run earlier)
-                    * 'connection': restricts the listener to a specific Doctrine connection
-                -->
-                <service id="App\EventListener\DatabaseActivitySubscriber">
-                    <tag name="doctrine.event_subscriber" priority="500" connection="default"/>
-                </service>
-            </services>
-        </container>
-
-    .. code-block:: php
-
-        // config/services.php
-        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
-
-        use App\EventListener\DatabaseActivitySubscriber;
-
-        return static function (ContainerConfigurator $container): void {
-            $services = $container->services();
-
-            $services->set(DatabaseActivitySubscriber::class)
-                ->tag('doctrine.event_subscriber'[
-                    // subscribers can define their priority in case multiple subscribers or listeners are associated
-                    // to the same event (default priority = 0; higher numbers = listener is run earlier)
-                    'priority' => 500,
-
-                    // you can also restrict listeners to a specific Doctrine connection
-                    'connection' => 'default',
-                ])
-            ;
-        };
-
-.. tip::
-
-    Symfony loads (and instantiates) Doctrine subscribers whenever the
-    application executes; whereas Doctrine listeners are only loaded when the
-    related event is actually fired, making them more performant.
+This was another way of listening to events provided by Doctrine. However, they
+were deprecated in Symfony 6.3 and it's no longer recommended to use them.
+Instead, use any of the other alternatives shown above.
 
 .. _`Doctrine`: https://www.doctrine-project.org/
 .. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events
