@@ -2620,8 +2620,8 @@ it through your bus. Reusing the same ``SmsNotification`` example shown earlier:
 
     use App\Message\SmsNotification;
     use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-    use Symfony\Component\Messenger\MessageBusInterface;
     use Symfony\Component\Messenger\Message\RedispatchMessage;
+    use Symfony\Component\Messenger\MessageBusInterface;
 
     #[AsMessageHandler]
     class SmsNotificationHandler
