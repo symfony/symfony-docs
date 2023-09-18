@@ -2517,13 +2517,13 @@ may want to use:
                             # instead of keeping them open forever
                             - doctrine_close_connection
 
+                            # logs an error when a Doctrine transaction was opened but not closed
+                            - doctrine_open_transaction_logger
+
                             # wraps all handlers in a single Doctrine transaction
                             # handlers do not need to call flush() and an error
                             # in any handler will cause a rollback
                             - doctrine_transaction
-
-                            # logs an error when a Doctrine transaction was opened but not closed
-                            - doctrine_open_transaction_logger
 
                             # or pass a different entity manager to any
                             #- doctrine_transaction: ['custom']

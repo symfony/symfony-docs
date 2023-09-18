@@ -80,7 +80,8 @@ metadata to code):
           }
       }
 
-That's it! If you are using Symfony web server, try it out by going to: http://localhost:8000/lucky/number
+That's it! If you are using :doc:`the Symfony web server </setup/symfony_server>`,
+try it out by going to: http://localhost:8000/lucky/number
 
 .. tip::
 
