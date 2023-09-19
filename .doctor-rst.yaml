@@ -82,6 +82,8 @@ exclude_rule_for_file:
       rule_name: replacement
     - path: page_creation.rst
       rule_name: no_php_open_tag_in_code_block_php_directive
+    - path: frontend/create_ux_bundle.rst
+      rule_name: argument_variable_must_match_type
 
 # do not report as violation
 whitelist:
