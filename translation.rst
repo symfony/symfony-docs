@@ -84,10 +84,9 @@ are located:
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config default-locale="en">
-                <framework:translator>
-                    <framework:default-path>'%kernel.project_dir%/translations'</framework:default-path>
-                    <!-- ... -->
-                </framework:translator>
+                <framework:translator
+                    default-path="%kernel.project_dir%/translations"
+                />
             </framework:config>
         </container>
 
