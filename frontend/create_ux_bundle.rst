@@ -22,8 +22,8 @@ Your ``composer.json`` file must have the ``symfony-ux`` keyword:
 Assets location
 ---------------
 
-Your assets must be located in one of the following directories, with a ``package.json`` file so Flex can handle it
-during install/update:
+Your assets must be located in one of the following directories, with a
+``package.json`` file so Flex can handle it during install/update:
 
 * ``/assets`` (recommended)
 * ``/Resources/assets``
@@ -32,9 +32,9 @@ during install/update:
 package.json file
 -----------------
 
-Your ``package.json`` file must contain a ``symfony`` config with controllers defined, and also add required packages
-to the ``peerDependencies`` and ``importmap`` (the list of packages in ``importmap`` should be the same as the ones
-in ``peerDependencies``):
+Your ``package.json`` file must contain a ``symfony`` config with controllers defined,
+and also add required packages to the ``peerDependencies`` and ``importmap`` (the list
+of packages in ``importmap`` should be the same as the ones in ``peerDependencies``):
 
 .. code-block:: json
 
@@ -68,8 +68,8 @@ In this case, the file located at ``[assets directory]/dist/controller.js`` will
 
 .. tip::
 
-    You can either write raw JS in this ``dist/controller.js`` file, or you can e.g. write your controller with
-    TypeScript and transpile it to JavaScript.
+    You can either write raw JS in this ``dist/controller.js`` file, or you can
+    e.g. write your controller with TypeScript and transpile it to JavaScript.
 
     Here is an example to do so:
 
@@ -92,7 +92,8 @@ In this case, the file located at ``[assets directory]/dist/controller.js`` will
                }
            }
 
-    2. Add the following to your ``babel.config.js`` file (should be located next to your ``package.json`` file):
+    2. Add the following to your ``babel.config.js`` file (should be located next
+       to your ``package.json`` file):
 
        .. code-block:: javascript
 
@@ -113,7 +114,8 @@ In this case, the file located at ``[assets directory]/dist/controller.js`` will
 
     4. Write your Stimulus controller with TypeScript in ``src/controller.ts``.
 
-    5. Run ``npm run build`` or ``yarn run build`` to transpile your TypeScript controller into JavaScript.
+    5. Run ``npm run build`` or ``yarn run build`` to transpile your TypeScript
+       controller into JavaScript.
 
 To use your controller in a template (e.g. one defined in your bundle) you can use it like this:
 
@@ -160,8 +162,9 @@ autoimport          List of files to be imported with the controller. Useful e.g
 Specifics for Asset Mapper
 --------------------------
 
-To make your bundle's assets work with Asset Mapper, you must add the ``importmap`` config like above in your
-``package.json`` file, and prepend some configuration to the container::
+To make your bundle's assets work with AssetMapper, you must add the ``importmap``
+config like above in your ``package.json`` file, and prepend some configuration
+to the container::
 
     namespace Acme\FeatureBundle;
 
