@@ -694,7 +694,7 @@ attribute::
     {
         public function __construct(
             #[AutowireServiceClosure('third_party.remote_message_formatter')]
-            \Closure $messageFormatterResolver
+            private \Closure $messageFormatterResolver
         ) {
         }
 
