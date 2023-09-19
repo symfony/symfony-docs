@@ -1443,7 +1443,8 @@ when importing the routes.
             # trailing_slash_on_root: false
 
             # you can optionally exclude some files/subdirectories when loading attributes
-            # exclude: '../../src/Controller/{DebugEmailController}.php'
+            # (the value must be a string or an array of PHP glob patterns)
+            # exclude: '../../src/Controller/{Debug*Controller.php}'
 
     .. code-block:: xml
 
@@ -1458,12 +1459,13 @@ when importing the routes.
                 the 'prefix' value is added to the beginning of all imported route URLs
                 the 'name-prefix' value is added to the beginning of all imported route names
                 the 'exclude' option defines the files or subdirectories ignored when loading attributes
+                (the value must be a PHP glob pattern and you can repeat this option any number of times)
             -->
             <import resource="../../src/Controller/"
                 type="attribute"
                 prefix="/blog"
                 name-prefix="blog_"
-                exclude="../../src/Controller/{DebugEmailController}.php">
+                exclude="../../src/Controller/{Debug*Controller.php}">
                 <!-- these requirements are added to all imported routes -->
                 <requirement key="_locale">en|es|fr</requirement>
             </import>
@@ -1489,7 +1491,8 @@ when importing the routes.
                     false,
                     // the optional fourth argument is used to exclude some files
                     // or subdirectories when loading attributes
-                    '../../src/Controller/{DebugEmailController}.php'
+                    // (the value must be a string or an array of PHP glob patterns)
+                    '../../src/Controller/{Debug*Controller.php}'
                 )
                 // this is added to the beginning of all imported route URLs
                 ->prefix('/blog')
