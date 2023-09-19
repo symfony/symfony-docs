@@ -717,12 +717,20 @@ You can pass any
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` instance to
 ``loginUser()``. This method creates a special
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\TestBrowserToken` object and
-stores in the session of the test client.
+stores in the session of the test client. If you need to define custom
+attributes in this token, you can use the ``tokenAttributes`` argument of the
+:method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser` method.
 
 .. note::
 
     By design, the ``loginUser()`` method doesn't work when using stateless firewalls.
     Instead, add the appropriate token/header in each ``request()`` call.
+
+.. versionadded:: 6.4
+
+    The ``tokenAttributes`` argument of the
+    :method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser` method
+    was introduced in Symfony 6.4.
 
 Making AJAX Requests
 ....................
