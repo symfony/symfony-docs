@@ -41,7 +41,16 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
         class ContainsAlphanumeric extends Constraint
         {
             public $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-            public $mode = 'strict'; // If the constraint has configuration options, define them as public properties
+            public $mode = 'strict';
+
+            // all configurable options must be passed to the constructor
+            public function __construct(string $mode = null, string $message = null, array $groups = null, $payload = null)
+            {
+                parent::__construct([], $groups, $payload);
+
+                $this->mode = $mode ?? $this->mode;
+                $this->message = $message ?? $this->message;
+            }
         }
 
 Add ``@Annotation`` or ``#[\Attribute]`` to the constraint class if you want to
