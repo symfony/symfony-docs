@@ -236,7 +236,49 @@ The following loaders are configurable with ``configureLoaderRule()``:
   - ``typescript`` (alias ``ts``)
   - ``handlebars``
 
+Configuring Aliases When Importing or Requiring Modules
+-------------------------------------------------------
+
+The `Webpack resolve.alias option`_ allows to create aliases to simplify the
+``import`` or ``require`` of certain modules (e.g. by aliasing commonly used ``src/``
+folders). In Webpack Encore you can use this option via the ``addAliases()`` method:
+
+.. code-block:: javascript
+
+    Encore.addAliases({
+        Utilities: path.resolve(__dirname, 'src/utilities/'),
+        Templates: path.resolve(__dirname, 'src/templates/')
+    })
+
+With the above config, you could now import certain modules more concisely:
+
+.. code-block:: diff
+
+    -import Utility from '../../utilities/utility';
+    +import Utility from 'Utilities/utility';
+
+Excluding Some Dependencies from Output Bundles
+-----------------------------------------------
+
+The `Webpack externals option`_ allows to prevent bundling of certain imported
+packages and instead retrieve those external dependencies at runtime. This feature
+is mostly useful for JavaScript library developers, so you probably won't need it.
+
+In Webpack Encore you can use this option via the ``addExternals()`` method:
+
+.. code-block:: javascript
+
+    // this won't include jQuery and React in the output bundles generated
+    // by Webpack Encore. You'll need to load those dependencies yourself
+    // (e.g with a `<script>` tag) to make the application or website work.
+    Encore.addExternals({
+        jquery: 'jQuery',
+        react: 'react'
+    })
+
 .. _`configuration options`: https://webpack.js.org/configuration/
 .. _`array of configurations`: https://webpack.js.org/configuration/configuration-types/#exporting-multiple-configurations
 .. _`Karma`: https://karma-runner.github.io
 .. _`Watching Options`: https://webpack.js.org/configuration/watch/#watchoptions
+.. _`Webpack resolve.alias option`: https://webpack.js.org/configuration/resolve/#resolvealias
+.. _`Webpack externals option`: https://webpack.js.org/configuration/externals/
