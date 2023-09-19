@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by jmsche at 2023-08-16T13:26:44Z
+
+Hmm Doctor RST asked me to rename `$builder` to `$container`, so I did, but now it wants me to also rename `$configurator` to `$container`... This won't work.
+
+The Code Blocks workflow complains about `Symfony\Component\AssetMapper\AssetMapperInterface` not being available, but I guess I should add this component to https://github.com/symfony-tools/symfony-application?
