@@ -28,6 +28,14 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
             public string $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
             // If the constraint has configuration options, define them as public properties
             public string $mode = 'strict';
+
+            public function __construct(string $mode = null, string $message = null, array $groups = null, $payload = null)
+            {
+                parent::__construct([], $groups, $payload);
+
+                $this->mode = $mode ?? $this->mode;
+                $this->message = $message ?? $this->message;
+            }
         }
 
     .. code-block:: php-attributes
