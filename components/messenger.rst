@@ -146,7 +146,7 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
    to delay handling of an asynchronous message.
 #. :class:`Symfony\\Component\\Messenger\\Stamp\\DispatchAfterCurrentBusStamp`,
    to make the message be handled after the current bus has executed. Read more
-   at :doc:`/messenger/dispatch_after_current_bus`.
+   at :ref:`messenger-transactional-messages`.
 #. :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp`,
    a stamp that marks the message as handled by a specific handler.
    Allows accessing the handler returned value and the handler name.

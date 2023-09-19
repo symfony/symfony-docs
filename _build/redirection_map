@@ -562,3 +562,6 @@
 /frontend/assetic/index /frontend
 /controller/argument_value_resolver /controller/value_resolver
 /frontend/ux https://symfony.com/bundles/StimulusBundle/current/index.html
+/messenger/handler_results /messenger#messenger-getting-handler-results
+/messenger/dispatch_after_current_bus /messenger#messenger-transactional-messages
+/messenger/multiple_buses /messenger#messenger-multiple-buses
