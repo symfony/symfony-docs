@@ -248,6 +248,31 @@ The attribute can be repeated as much as needed on a single property.
 Context without group is always applied first. Then context for the matching
 groups are merged in the provided order.
 
+If you don't want to put the same context on multiple properties, it is
+possible to use the ``#[Context]`` attribute directly on your class::
+
+    namespace App\Model;
+
+    use Symfony\Component\Serializer\Annotation\Context;
+    use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+
+    #[Context([DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339])]
+    #[Context(
+        context: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339_EXTENDED],
+        groups: ['extended'],
+    )]
+    class Person
+    {
+        // ...
+    }
+
+The defined context will apply on all the properties of your class.
+
+.. versionadded:: 6.4
+
+    The support of the ``#[Context]`` attribute on classes was introduced in
+    Symfony 6.4.
+
 .. _serializer-using-context-builders:
 
 Using Context Builders
