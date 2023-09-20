@@ -844,33 +844,43 @@ In production, the ``.env`` files are also parsed and loaded on each request. So
 the easiest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
-To improve performance, you can optionally run the ``dotenv:dump`` command (available
-in :ref:`Symfony Flex <symfony-flex>` 1.2 or later). The command is not registered
-by default, so you must register first in your services:
-
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        Symfony\Component\Dotenv\Command\DotenvDumpCommand:
-            - '%kernel.project_dir%/.env'
-            - '%kernel.environment%'
-
-In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
-(which is the default):
-
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
-
-Then, run the command:
+To improve performance, you can optionally run the ``dump-env`` Composer command:
 
 .. code-block:: terminal
 
     # parses ALL .env files and dumps their final values to .env.local.php
-    $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
+    $ composer dump-env prod
+
+.. sidebar:: Dumping Environment Variables without Composer
+
+    If you don't have Composer installed in production, you can use the
+    ``dotenv:dump`` command instead (available in :ref:`Symfony Flex <symfony-flex>`
+    1.2 or later). The command is not registered by default, so you must register
+    first in your services:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Component\Dotenv\Command\DotenvDumpCommand:
+                - '%kernel.project_dir%/.env'
+                - '%kernel.environment%'
+
+    In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
+    (which is the default):
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
+
+    Then, run the command:
+
+    .. code-block:: terminal
+
+        # parses ALL .env files and dumps their final values to .env.local.php
+        $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
 
 After running this command, Symfony will load the ``.env.local.php`` file to
 get the environment variables and will not spend time parsing the ``.env`` files.
