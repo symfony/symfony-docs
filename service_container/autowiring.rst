@@ -719,7 +719,7 @@ to generate a closure with the same signature as a specific method of a service.
 this closure is called, it will pass all its arguments to the underlying service
 function.  If the closure needs to be called more than once, the service instance
 is reused for repeated calls.  Unlike a service closure, this will not
-create extra instances of a non-shared service.
+create extra instances of a non-shared service::
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
