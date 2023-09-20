@@ -658,7 +658,8 @@ Generate Closures With Autowiring
 ---------------------------------
 
 A **service closure** is an anonymous function that returns a service. This type
-of instanciation is handy when you are dealing with lazy-loading.
+of instanciation is handy when you are dealing with lazy-loading.  It is also
+useful for non-shared service dependencies.
 
 Automatically creating a closure encapsulating the service instanciation can be
 done with the
@@ -716,7 +717,9 @@ In this case, you can use the
 :class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable` attribute
 to generate a closure with the same signature as a specific method of a service. When
 this closure is called, it will pass all its arguments to the underlying service
-function::
+function.  If the closure needs to be called more than once, the service instance
+is reused for repeated calls.  Unlike a service closure, this will not
+create extra instances of a non-shared service.
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
@@ -727,7 +730,7 @@ function::
     {
         public function __construct(
             #[AutowireCallable(service: 'third_party.remote_message_formatter', method: 'format')]
-            \Closure $formatCallable
+            private \Closure $formatCallable
         ) {
         }
 
