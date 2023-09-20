@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-09-13T14:16:58Z
+
+Félix, thanks for this contribution! I have two comments:
+
+* There's no need to define each option in a separate file and then include those files. We only do that when some option is used in more than one form type.
+* Since this is related to a form type defined in a project different than Symfony framework, I'm not sure about adding this doc there.
+
+Of course we should mention and link to the UX TogglePassword type from this article ... but maybe it's better to explain all this in the documentation of that type. This would make maintenance easier for all.
+
+Specifically, this doc should be included in https://symfony.com/bundles/ux-toggle-password/current/index.html
+
+But first, let's ask Ryan (ping @weaverryan) about the best way to proceed here. Thanks!
+
+---------------------------------------------------------------------------
+
+by feymo at 2023-09-13T14:32:20Z
+
+Thanks @javiereguiluz & @weaverryan for your feedbacks ! It makes perfect sense, i'll update asap the PR following your suggestions 🙏🏼 👍🏼
