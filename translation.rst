@@ -762,6 +762,15 @@ now use the following commands to push (upload) and pull (download) translations
     # check out the command help to see its options (format, domains, locales, intl-icu, etc.)
     $ php bin/console translation:pull --help
 
+    # the "--as-tree" option will write YAML messages as a tree-like structure instead
+    # of flat keys
+    $ php bin/console translation:pull loco --force --as-tree
+
+.. versionadded:: 6.4
+
+    The ``--as-tree`` option of the ``translation:pull`` command was introduced
+    in Symfony 6.4.
+
 .. _translation-locale:
 
 Handling the User's Locale
