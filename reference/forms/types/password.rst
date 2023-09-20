@@ -69,6 +69,13 @@ object.
             'mapped' => false,
         ]);
 
+``toggle``
+~~~~~~~~~~
+**type**: ``boolean`` **requires**: `symfony/ux-toggle-password`_
+
+Adds "Show"/"Hide" links to the field which toggle the password field to plaintext when clicked.
+See `symfony/ux-toggle-password`_ for more details.
+
 Overridden Options
 ------------------
 
@@ -122,3 +129,5 @@ The default value is ``''`` (the empty string).
 .. include:: /reference/forms/types/options/required.rst.inc
 
 .. include:: /reference/forms/types/options/row_attr.rst.inc
+
+.. _`symfony/ux-toggle-password`: https://symfony.com/bundles/ux-toggle-password/current/index.html
