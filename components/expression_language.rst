@@ -22,8 +22,8 @@ How can the Expression Language Help Me?
 ----------------------------------------
 
 The purpose of the component is to allow users to use expressions inside
-configuration for more complex logic. For some examples, the Symfony Framework
-uses expressions in security, for validation rules and in route matching.
+configuration for more complex logic. For example, the Symfony Framework uses
+expressions in security, for validation rules and in route matching.
 
 Besides using the component in the framework itself, the ExpressionLanguage
 component is a perfect candidate for the foundation of a *business rule engine*.
@@ -43,9 +43,10 @@ way without using PHP and without introducing security problems:
     # Send an alert when
     product.stock < 15
 
-Expressions can be seen as a very restricted PHP sandbox and are immune to
-external injections as you must explicitly declare which variables are available
-in an expression.
+Expressions can be seen as a very restricted PHP sandbox and are less vulnerable
+to external injections because you must explicitly declare which variables are
+available in an expression (but you should still sanitize any data given by end
+users and passed to expressions).
 
 Usage
 -----
