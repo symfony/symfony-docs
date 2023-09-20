@@ -507,12 +507,15 @@ will share identical locators among all the services referencing them::
 Indexing the Collection of Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Services passed to the service locator can define their own index using an
-arbitrary attribute whose name is defined as ``index_by`` in the service locator.
+By default, services passed to the service locator are indexed using their service
+IDs. You can change this behavior with two options of the tagged locator (``index_by``
+and ``default_index_method``) which can be used independently or combined.
 
-In the following example, the ``App\Handler\HandlerCollection`` locator receives
-all services tagged with ``app.handler`` and they are indexed using the value
-of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
+The ``index_by`` / ``indexAttribute`` Option
+............................................
+
+This option defines the name of the option/attribute that stores the value used
+to index the services:
 
 .. configuration-block::
 
@@ -592,12 +595,13 @@ of the ``key`` tag attribute (as defined in the ``index_by`` locator option):
 
             $services->set(App\Handler\HandlerCollection::class)
                 // inject all services tagged with app.handler as first argument
-                ->args([tagged_locator('app.handler', 'key')])
+                ->args([tagged_locator('app.handler', indexAttribute: 'key')])
             ;
         };
 
-Inside this locator you can retrieve services by index using the value of the
-``key`` attribute. For example, to get the ``App\Handler\Two`` service::
+In this example, the ``index_by`` option is ``key``. All services define that
+option/attribute, so that will be the value used to index the services. For example,
+to get the ``App\Handler\Two`` service::
 
     // src/Handler/HandlerCollection.php
     namespace App\Handler;
@@ -608,31 +612,25 @@ Inside this locator you can retrieve services by index using the value of the
     {
         public function __construct(ServiceLocator $locator)
         {
+            // this value is defined in the `key` option of the service
             $handlerTwo = $locator->get('handler_two');
         }
 
         // ...
     }
 
-Instead of defining the index in the service definition, you can return its
-value in a method called ``getDefaultIndexName()`` inside the class associated
-to the service::
+If some service doesn't define the option/attribute configured in ``index_by``,
+Symfony applies this fallback process:
 
-    // src/Handler/One.php
-    namespace App\Handler;
+#. If the service class defines a static method called ``getDefault<CamelCase index_by value>Name``
+   (in this example, ``getDefaultKeyName()``), call it and use the returned value;
+#. Otherwise, fall back to the default behavior and use the service ID.
 
-    class One
-    {
-        public static function getDefaultIndexName(): string
-        {
-            return 'handler_one';
-        }
+The ``default_index_method`` Option
+...................................
 
-        // ...
-    }
-
-If you prefer to use another method name, add a ``default_index_method``
-attribute to the locator service defining the name of this custom method:
+This option defines the name of the service class method that will be called to
+get the value used to index the services:
 
 .. configuration-block::
 
@@ -647,7 +645,7 @@ attribute to the locator service defining the name of this custom method:
         class CommandBus
         {
             public function __construct(
-                #[TaggedLocator('app.handler', 'key', defaultIndexMethod: 'myOwnMethodName')]
+                #[TaggedLocator('app.handler', defaultIndexMethod: 'getLocatorKey')]
                 ServiceLocator $locator
             ) {
             }
@@ -659,8 +657,9 @@ attribute to the locator service defining the name of this custom method:
         services:
             # ...
 
-            App\HandlerCollection:
-                arguments: [!tagged_locator { tag: 'app.handler', index_by: 'key', default_index_method: 'myOwnMethodName' }]
+            App\Handler\HandlerCollection:
+                # inject all services tagged with app.handler as first argument
+                arguments: [!tagged_locator { tag: 'app.handler', default_index_method: 'getLocatorKey' }]
 
     .. code-block:: xml
 
@@ -672,11 +671,11 @@ attribute to the locator service defining the name of this custom method:
                 https://symfony.com/schema/dic/services/services-1.0.xsd">
 
             <services>
-
                 <!-- ... -->
 
                 <service id="App\HandlerCollection">
-                    <argument type="tagged_locator" tag="app.handler" index-by="key" default-index-method="myOwnMethodName"/>
+                    <!-- inject all services tagged with app.handler as first argument -->
+                    <argument type="tagged_locator" tag="app.handler" default-index-method="getLocatorKey"/>
                 </service>
             </services>
         </container>
@@ -687,17 +686,27 @@ attribute to the locator service defining the name of this custom method:
         namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
         return function(ContainerConfigurator $container) {
-            $container->services()
-                ->set(App\HandlerCollection::class)
-                    ->args([tagged_locator('app.handler', 'key', 'myOwnMethodName')])
+            $services = $container->services();
+            // ...
+
+            $services->set(App\Handler\HandlerCollection::class)
+                // inject all services tagged with app.handler as first argument
+                ->args([tagged_locator('app.handler', defaultIndexMethod: 'getLocatorKey')])
             ;
         };
 
-.. note::
+If some service class doesn't define the method configured in ``default_index_method``,
+Symfony will fall back to using the service ID as its index inside the locator.
 
-    Since code should not be responsible for defining how the locators are
-    going to be used, a configuration key (``key`` in the example above) must
-    be set so the custom method may be called as a fallback.
+Combining the ``index_by`` and ``default_index_method`` Options
+...............................................................
+
+You can combine both options in the same locator. Symfony will process them in
+the following order:
+
+#. If the service defines the option/attribute configured in ``index_by``, use it;
+#. If the service class defines the method configured in ``default_index_method``, use it;
+#. Otherwise, fall back to using the service ID as its index inside the locator.
 
 .. _service-subscribers-service-subscriber-trait:
 

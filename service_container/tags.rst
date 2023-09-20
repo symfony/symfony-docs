@@ -922,12 +922,15 @@ you can define it in the configuration of the collecting service:
 Tagged Services with Index
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to retrieve a specific service within the injected collection
-you can use the ``index_by`` and ``default_index_method`` options of the
-argument in combination with ``!tagged_iterator``.
+By default, tagged services are indexed using their service IDs. You can change
+this behavior with two options of the tagged iterator (``index_by`` and
+``default_index_method``) which can be used independently or combined.
 
-Using the previous example, this service configuration creates a collection
-indexed by the ``key`` attribute:
+The ``index_by`` / ``indexAttribute`` Option
+............................................
+
+This option defines the name of the option/attribute that stores the value used
+to index the services:
 
 .. configuration-block::
 
@@ -1012,10 +1015,9 @@ indexed by the ``key`` attribute:
             ;
         };
 
-After compilation the ``HandlerCollection`` is able to iterate over your
-application handlers. To retrieve a specific service from the iterator, call the
-``iterator_to_array()`` function and then use the ``key`` attribute to get the
-array element. For example, to retrieve the ``handler_two`` handler::
+In this example, the ``index_by`` option is ``key``. All services define that
+option/attribute, so that will be the value used to index the services. For example,
+to get the ``App\Handler\Two`` service::
 
     // src/Handler/HandlerCollection.php
     namespace App\Handler;
@@ -1026,43 +1028,23 @@ array element. For example, to retrieve the ``handler_two`` handler::
         {
             $handlers = $handlers instanceof \Traversable ? iterator_to_array($handlers) : $handlers;
 
+            // this value is defined in the `key` option of the service
             $handlerTwo = $handlers['handler_two'];
         }
     }
 
-You can omit the index attribute (``key`` in the previous example) by setting
-the ``index_by`` attribute on the ``tagged_iterator`` tag. In this case, you
-must define a static method whose name follows the pattern:
-``getDefault<CamelCase index_by value>Name``.
+If some service doesn't define the option/attribute configured in ``index_by``,
+Symfony applies this fallback process:
 
-For example, if ``index_by`` is ``handler``, the method name must be
-``getDefaultHandlerName()``:
+#. If the service class defines a static method called ``getDefault<CamelCase index_by value>Name``
+   (in this example, ``getDefaultKeyName()``), call it and use the returned value;
+#. Otherwise, fall back to the default behavior and use the service ID.
 
-.. code-block:: yaml
+The ``default_index_method`` Option
+...................................
 
-    # config/services.yaml
-        services:
-            # ...
-
-            App\HandlerCollection:
-                arguments: [!tagged_iterator { tag: 'app.handler', index_by: 'handler' }]
-
-.. code-block:: php
-
-    // src/Handler/One.php
-    namespace App\Handler;
-
-    class One
-    {
-        // ...
-        public static function getDefaultHandlerName(): string
-        {
-            return 'handler_one';
-        }
-    }
-
-You also can define the name of the static method to implement on each service
-with the ``default_index_method`` attribute on the tagged argument:
+This option defines the name of the service class method that will be called to
+get the value used to index the services:
 
 .. configuration-block::
 
@@ -1089,7 +1071,6 @@ with the ``default_index_method`` attribute on the tagged argument:
             # ...
 
             App\HandlerCollection:
-                # use getIndex() instead of getDefaultIndexName()
                 arguments: [!tagged_iterator { tag: 'app.handler', default_index_method: 'getIndex' }]
 
     .. code-block:: xml
@@ -1105,7 +1086,6 @@ with the ``default_index_method`` attribute on the tagged argument:
                 <!-- ... -->
 
                 <service id="App\HandlerCollection">
-                    <!-- use getIndex() instead of getDefaultIndexName() -->
                     <argument type="tagged_iterator"
                         tag="app.handler"
                         default-index-method="getIndex"
@@ -1127,13 +1107,25 @@ with the ``default_index_method`` attribute on the tagged argument:
 
             // ...
 
-            // use getIndex() instead of getDefaultIndexName()
             $services->set(HandlerCollection::class)
                 ->args([
                     tagged_iterator('app.handler', null, 'getIndex'),
                 ])
             ;
         };
+
+If some service class doesn't define the method configured in ``default_index_method``,
+Symfony will fall back to using the service ID as its index inside the tagged services.
+
+Combining the ``index_by`` and ``default_index_method`` Options
+...............................................................
+
+You can combine both options in the same collection of tagged services. Symfony
+will process them in the following order:
+
+#. If the service defines the option/attribute configured in ``index_by``, use it;
+#. If the service class defines the method configured in ``default_index_method``, use it;
+#. Otherwise, fall back to using the service ID as its index inside the tagged services collection.
 
 .. _tags_as-tagged-item:
 
