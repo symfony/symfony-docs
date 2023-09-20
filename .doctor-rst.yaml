@@ -36,6 +36,7 @@ rules:
     no_directive_after_shorthand: ~
     no_duplicate_use_statements: ~
     no_explicit_use_of_code_block_php: ~
+    no_footnotes: ~
     no_inheritdoc: ~
     no_merge_conflict: ~
     no_namespace_after_use_statements: ~
