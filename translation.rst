@@ -1072,7 +1072,7 @@ of:
 
             // you can also run some code with a certain locale, without
             // changing the locale for the rest of the application
-            $this->localeSwitcher->runWithLocale('es', function() {
+            $this->localeSwitcher->runWithLocale('es', function(string $locale) {
 
                 // e.g. render here some Twig templates using 'es' (Spanish) locale
 
