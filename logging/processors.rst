@@ -265,8 +265,8 @@ the ``monolog.processor`` tag:
 Registering Processors per Channel
 ----------------------------------
 
-You can register a processor per channel using the ``channel`` option of
-the ``monolog.processor`` tag:
+By default, processors are applied to all channels. Add the ``channel`` option
+to the ``monolog.processor`` tag to only apply a processor for the given channel:
 
 .. configuration-block::
 
@@ -276,7 +276,7 @@ the ``monolog.processor`` tag:
         services:
             App\Logger\SessionRequestProcessor:
                 tags:
-                    - { name: monolog.processor, channel: main }
+                    - { name: monolog.processor, channel: 'app' }
 
     .. code-block:: xml
 
@@ -292,7 +292,7 @@ the ``monolog.processor`` tag:
 
             <services>
                 <service id="App\Logger\SessionRequestProcessor">
-                    <tag name="monolog.processor" channel="main"/>
+                    <tag name="monolog.processor" channel="app"/>
                 </service>
             </services>
         </container>
@@ -304,7 +304,7 @@ the ``monolog.processor`` tag:
         // ...
         $container
             ->register(SessionRequestProcessor::class)
-            ->addTag('monolog.processor', ['channel' => 'main']);
+            ->addTag('monolog.processor', ['channel' => 'app']);
 
 .. _`Monolog`: https://github.com/Seldaek/monolog
 .. _`built-in Monolog processors`: https://github.com/Seldaek/monolog/tree/main/src/Monolog/Processor
