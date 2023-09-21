@@ -1078,9 +1078,24 @@ of:
 
             });
 
+            // you can optionally declare an argument in your callback to receive the
+            // injected locale
+            $this->localeSwitcher->runWithLocale('es', function(string $locale) {
+
+                // here, the $locale argument will be set to 'es'
+
+            });
+
             // ...
         }
     }
+
+.. versionadded:: 6.4
+
+    The support of declaring an argument in the callback to inject the locale
+    being used in the
+    :method:`Symfony\\Component\\Translation\\LocaleSwitcher::runWithLocale`
+    method was introduced in Symfony 6.4.
 
 When using :ref:`autowiring <services-autowire>`, type-hint any controller or
 service argument with the :class:`Symfony\\Component\\Translation\\LocaleSwitcher`
