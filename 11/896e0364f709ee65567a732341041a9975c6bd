@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-09-21T08:17:45Z
+
+cc @alamirault could be spotted by DOCtor, right?
+
+---------------------------------------------------------------------------
+
+by alamirault at 2023-09-21T09:57:10Z
+
+> cc @alamirault could be spotted by DOCtor, right?
+
+I created PR https://github.com/OskarStark/doctor-rst/pull/1519, there are 3 occurrences of this mistake here (but we can fix it when we will upgrade doctor-rst)
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-09-21T12:08:23Z
+
+I released 1.51.0
