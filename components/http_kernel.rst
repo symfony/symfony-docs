@@ -734,19 +734,17 @@ Locating Resources
 ------------------
 
 The HttpKernel component is responsible of the bundle mechanism used in Symfony
-applications. The key feature of the bundles is that they allow to override any
-resource used by the application (config files, templates, controllers,
-translation files, etc.)
+applications. One of the key features of the bundles is that you can use logic
+paths instead of physical paths to refer to any of their resources (config files,
+templates, controllers, translation files, etc.)
 
-This overriding mechanism works because resources are referenced not by their
-physical path but by their logical path. For example, the ``services.xml`` file
-stored in the ``Resources/config/`` directory of a bundle called FooBundle is
-referenced as ``@FooBundle/Resources/config/services.xml``. This logical path
-will work when the application overrides that file and even if you change the
-directory of FooBundle.
+This allows to import resources even if you don't know where in the filesystem a
+bundle will be installed. For example, the ``services.xml`` file stored in the
+``Resources/config/`` directory of a bundle called FooBundle can be referenced as
+``@FooBundle/Resources/config/services.xml`` instead of ``__DIR__/Resources/config/services.xml``.
 
-The HttpKernel component provides a method called :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
-which can be used to transform logical paths into physical paths::
+This is possible thanks to the :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
+method provided by the kernel, which transforms logical paths into physical paths::
 
     $path = $kernel->locateResource('@FooBundle/Resources/config/services.xml');
 
