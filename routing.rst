@@ -841,9 +841,9 @@ other configuration formats they are defined with the ``defaults`` option:
         class BlogController extends AbstractController
         {
             /**
-             * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"})
+             * @Route("/blog/{page}", name="blog_list", requirements={"page"="\d+"}, defaults={"page"=1})
              */
-            public function list(int $page = 1): Response
+            public function list(int $page): Response
             {
                 // ...
             }
@@ -860,8 +860,8 @@ other configuration formats they are defined with the ``defaults`` option:
 
         class BlogController extends AbstractController
         {
-            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'])]
-            public function list(int $page = 1): Response
+            #[Route('/blog/{page}', name: 'blog_list', requirements: ['page' => '\d+'], defaults: ['page' => 1])]
+            public function list(int $page): Response
             {
                 // ...
             }
