@@ -920,7 +920,7 @@ all configured texter and chatter transports only in the ``dev`` (and/or
 Using Events
 ------------
 
-The :class:`Symfony\\Component\\Notifier\\Transport`` class of the Notifier component
+The :class:`Symfony\\Component\\Notifier\\Transport` class of the Notifier component
 allows you to optionally hook into the lifecycle via events.
 
 The ``MessageEvent::class`` Event
