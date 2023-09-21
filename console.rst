@@ -378,6 +378,11 @@ Output sections let you manipulate the Console output in advanced ways, such as
 are updated independently and :ref:`appending rows to tables <console-modify-rendered-tables>`
 that have already been rendered.
 
+.. caution::
+
+    Terminals only allow overwriting the visible content, so you must take into
+    account the console height when trying to write/overwrite section contents.
+
 Console Input
 -------------
 
