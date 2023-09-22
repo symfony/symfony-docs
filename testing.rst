@@ -244,7 +244,7 @@ Retrieving Services in the Test
 
 In your integration tests, you often need to fetch the service from the
 service container to call a specific method. After booting the kernel,
-the container is returned by ``static::getContainer()``::
+the container is returned by ``static::$container``::
 
     // tests/Service/NewsletterGeneratorTest.php
     namespace App\Tests\Service;
@@ -259,8 +259,8 @@ the container is returned by ``static::getContainer()``::
             // (1) boot the Symfony kernel
             self::bootKernel();
 
-            // (2) use static::getContainer() to access the service container
-            $container = static::getContainer();
+            // (2) use static::$container to access the service container
+            $container = static::$container;
 
             // (3) run some service & test the result
             $newsletterGenerator = $container->get(NewsletterGenerator::class);
@@ -270,7 +270,7 @@ the container is returned by ``static::getContainer()``::
         }
     }
 
-The container from ``static::getContainer()`` is actually a special test container.
+The container from ``static::$container`` is actually a special test container.
 It gives you access to both the public services and the non-removed
 :ref:`private services <container-public>`.
 
@@ -698,7 +698,7 @@ to simulate a login request::
         public function testVisitingWhileLoggedIn(): void
         {
             $client = static::createClient();
-            $userRepository = static::getContainer()->get(UserRepository::class);
+            $userRepository = static::$container->get(UserRepository::class);
 
             // retrieve the test user
             $testUser = $userRepository->findOneByEmail('john.doe@example.com');
