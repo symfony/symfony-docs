@@ -685,6 +685,56 @@ To define the value of an env var, you have several options:
 * :ref:`Encrypt the value as a secret <configuration-secrets>`;
 * Set the value as a real environment variable in your shell or your web server.
 
+If your application tries to use an env var that hasn't been defined, you'll see
+an exception. You can prevent that by defining a default value for the env var.
+To do so, define a parameter with the same name as the env var using this syntax:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        parameters:
+            # if the SECRET env var value is not defined anywhere, Symfony uses this value
+            env(SECRET): 'some_secret'
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <parameters>
+                <!-- if the SECRET env var value is not defined anywhere, Symfony uses this value -->
+                <parameter key="env(SECRET)">some_secret</parameter>
+            </parameters>
+
+            <!-- ... -->
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            // if the SECRET env var value is not defined anywhere, Symfony uses this value
+            $container->setParameter('env(SECRET)', 'some_secret');
+
+            // ...
+        };
+
 .. tip::
 
     Some hosts - like Platform.sh - offer easy `utilities to manage env vars`_
