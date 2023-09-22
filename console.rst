@@ -582,11 +582,6 @@ even the color mode being used. You have access to such information thanks to th
     // changes the color mode
     $colorMode = $terminal->setColorMode(AnsiColorMode::Ansi24);
 
-.. versionadded:: 6.2
-
-    The support for setting and getting the current color mode was introduced
-    in Symfony 6.2.
-
 Logging Command Errors
 ----------------------
 
