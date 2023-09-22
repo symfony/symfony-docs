@@ -674,9 +674,9 @@ To define the value of an env var, you have several options:
 * :ref:`Encrypt the value as a secret <configuration-secrets>`;
 * Set the value as a real environment variable in your shell or your web server.
 
-It is possible to define an env var default value by defining a parameter with
-the same name. In the following example, we define a default value for the
-``SECRET`` env var if it has not been defined anywhere:
+If your application tries to use an env var that hasn't been defined, you'll see
+an exception. You can prevent that by defining a default value for the env var.
+To do so, define a parameter with the same name as the env var using this syntax:
 
 .. configuration-block::
 
@@ -684,6 +684,7 @@ the same name. In the following example, we define a default value for the
 
         # config/packages/framework.yaml
         parameters:
+            # if the SECRET env var value is not defined anywhere, Symfony uses this value
             env(SECRET): 'some_secret'
 
         # ...
@@ -701,6 +702,7 @@ the same name. In the following example, we define a default value for the
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <parameters>
+                <!-- if the SECRET env var value is not defined anywhere, Symfony uses this value -->
                 <parameter key="env(SECRET)">some_secret</parameter>
             </parameters>
 
@@ -716,6 +718,7 @@ the same name. In the following example, we define a default value for the
         use Symfony\Config\FrameworkConfig;
 
         return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            // if the SECRET env var value is not defined anywhere, Symfony uses this value
             $container->setParameter('env(SECRET)', 'some_secret');
 
             // ...
