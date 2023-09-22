@@ -1925,7 +1925,7 @@ Once handled, the handler will return a
 :class:`Symfony\\Component\\Console\\Messenger\\RunCommandContext` which
 contains many useful information such as the exit code or the output of the
 process. You can refer to the page dedicated on
-:doc:`handler results </messenger/handler_results>` for more information.
+:ref:`handler results <messenger-getting-handler-results>` for more information.
 
 .. versionadded:: 6.4
 
@@ -1963,7 +1963,7 @@ Once handled, the handler will return a
 :class:`Symfony\\Component\\Process\\Messenger\\RunProcessContext` which
 contains many useful information such as the exit code or the output of the
 process. You can refer to the page dedicated on
-:doc:`handler results </messenger/handler_results>` for more information.
+:ref:`handler results <messenger-getting-handler-results>` for more information.
 
 .. versionadded:: 6.4
 
