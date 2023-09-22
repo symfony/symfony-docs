@@ -1620,7 +1620,7 @@ sentinel_master          String, if null or empty Sentinel      null
 
 .. versionadded:: 6.4
 
-    Support for the multiple redis sentinel hosts DNS was introduced in Symfony 6.4.
+    Support for the multiple Redis Sentinel hosts DNS was introduced in Symfony 6.4.
 
 .. caution::
 
