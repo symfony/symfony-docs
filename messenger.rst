@@ -1362,6 +1362,11 @@ The transport has a number of options:
                                               greater seconds. May be fractional.
 ``retry``
 ``sasl_method``
+``transactional``                             Whether publishing to the queue should be wrapped  ``false``
+                                              in a transaction. Every dispatched message is
+                                              wrapped in a separate transaction. Makes Messenger
+                                              throw exception, if message wasn't delivered to
+                                              the exchange.
 ``connection_name``                           For custom connection names (requires at least
                                               version 1.10 of the PHP AMQP extension)
 ``verify``                                    Enable or disable peer verification. If peer
