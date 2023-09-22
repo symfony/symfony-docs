@@ -674,6 +674,53 @@ To define the value of an env var, you have several options:
 * :ref:`Encrypt the value as a secret <configuration-secrets>`;
 * Set the value as a real environment variable in your shell or your web server.
 
+It is possible to define an env var default value by defining a parameter with
+the same name. In the following example, we define a default value for the
+``SECRET`` env var if it has not been defined anywhere:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        parameters:
+            env(SECRET): 'some_secret'
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <parameters>
+                <parameter key="env(SECRET)">some_secret</parameter>
+            </parameters>
+
+            <!-- ... -->
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            $container->setParameter('env(SECRET)', 'some_secret');
+
+            // ...
+        };
+
 .. tip::
 
     Some hosts - like Platform.sh - offer easy `utilities to manage env vars`_
