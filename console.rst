@@ -582,6 +582,24 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
     :class:`Symfony\\Component\\Console\\Application`
     and extend the normal ``\PHPUnit\Framework\TestCase``.
 
+When testing your commands, it could be useful to understand how your command
+reacts on different settings like the width and the height of the terminal.
+Thanks to the :class:`Symfony\\Component\\Console\\Terminal` class, you can
+have access to such information::
+
+    use Symfony\Component\Console\Terminal;
+
+    $terminal = new Terminal();
+
+    // access to number of lines available
+    $height = $terminal->getHeight();
+
+    // access to number of columns available
+    $width = $terminal->getWidth();
+
+By default, the ``Terminal`` class uses the values of the
+``LINES`` and ``COLUMNS`` system environment variables.
+
 Logging Command Errors
 ----------------------
 
