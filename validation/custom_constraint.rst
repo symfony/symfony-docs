@@ -504,7 +504,7 @@ A class constraint validator must be applied to the class itself:
 Testing Custom Constraints
 --------------------------
 
-Use the :class:`Symfony\\Component\\Validator\\Test\\ConstraintValidatorTestCase``
+Use the :class:`Symfony\\Component\\Validator\\Test\\ConstraintValidatorTestCase`
 class to simplify writing unit tests for your custom constraints::
 
     // tests/Validator/ContainsAlphanumericValidatorTest.php

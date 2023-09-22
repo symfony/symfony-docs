@@ -1463,7 +1463,7 @@ installed in your application::
     // this won't hit the network if the resource is already in the cache
     $response = $client->request('GET', 'https://example.com/cacheable-resource');
 
-:class:`Symfony\\Component\\HttpClient\\CachingHttpClient`` accepts a third argument
+:class:`Symfony\\Component\\HttpClient\\CachingHttpClient` accepts a third argument
 to set the options of the :class:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache`.
 
 Consuming Server-Sent Events
