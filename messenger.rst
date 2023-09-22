@@ -1565,6 +1565,8 @@ The Redis transport DSN may looks like this:
     MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
+    # Multiple Redis Sentinel Hosts Example
+    MESSENGER_TRANSPORT_DSN=redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&sentinel_master=db
 
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
@@ -1615,6 +1617,10 @@ sentinel_master          String, if null or empty Sentinel      null
 
     The ``persistent_id``, ``retry_interval``, ``read_timeout``, ``timeout``, and
     ``sentinel_master`` options were introduced in Symfony 6.1.
+
+.. versionadded:: 6.4
+
+    Support for the multiple redis sentinel hosts DNS was introduced in Symfony 6.4.
 
 .. caution::
 
