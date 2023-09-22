@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-09-22T07:55:49Z
+
+Can we add a versionadded?
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-09-22T08:23:11Z
+
+Actually, the Terminal class seems to be present since at least 3.4
