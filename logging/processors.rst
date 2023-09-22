@@ -37,7 +37,7 @@ using a processor::
             try {
                 $session = $this->requestStack->getSession();
             } catch (SessionNotFoundException $e) {
-                return;
+                return $record;
             }
             if (!$session->isStarted()) {
                 return $record;
