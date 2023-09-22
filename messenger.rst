@@ -1392,6 +1392,10 @@ The transport has a number of options:
 ``exchange[type]``                            Type of exchange                                   ``fanout``
 ============================================  =================================================  ===================================
 
+.. versionadded:: 6.4
+
+    The ``transactional`` option was introduced in Symfony 6.4.
+
 .. versionadded:: 6.1
 
     The ``connection_name`` option was introduced in Symfony 6.1.
