@@ -132,6 +132,11 @@ and :class:`Symfony\\Component\\Messenger\\Bridge\\Doctrine\\Transport\\Doctrine
 Register your Factory
 ---------------------
 
+Before using your factory, you must register it. If you're using the
+:ref:`default services.yaml configuration <service-container-services-load-example>`,
+this is already done for you, thanks to :ref:`autoconfiguration <services-autoconfigure>`.
+Otherwise, add the following:
+
 .. configuration-block::
 
     .. code-block:: yaml
