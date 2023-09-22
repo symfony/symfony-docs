@@ -561,6 +561,32 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
     :class:`Symfony\\Component\\Console\\Application`
     and extend the normal ``\PHPUnit\Framework\TestCase``.
 
+When testing your commands, it could be useful to understand how your command
+reacts on different settings like the width and the height of the terminal, or
+even the color mode being used. You have access to such information thanks to the
+:class:`Symfony\\Component\\Console\\Terminal` class:
+
+    use Symfony\Component\Console\Terminal;
+
+    $terminal = new Terminal();
+
+    // gets the number of lines available
+    $height = $terminal->getHeight();
+
+    // gets the number of columns available
+    $width = $terminal->getWidth();
+
+    // gets the color mode
+    $colorMode = $terminal->getColorMode();
+
+    // changes the color mode
+    $colorMode = $terminal->setColorMode(AnsiColorMode::Ansi24);
+
+.. versionadded:: 6.2
+
+    The support for setting and getting the current color mode was introduced
+    in Symfony 6.2.
+
 Logging Command Errors
 ----------------------
 
