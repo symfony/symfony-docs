@@ -190,6 +190,28 @@ If you want to modify that title, use this alternative syntax:
 
         :doc:`environments`
 
+It is also possible to link to a specific section, instead of a whole page.
+First, define a target above section you will link to:
+
+.. code-block:: rst
+
+    # /service_container/autowiring.rst
+
+    # Define the target
+    .. _autowiring-calls:
+
+    Autowiring other Methods (e.g. Setters and Public Typed Properties)
+    -------------------------------------------------------------------
+    [section content ...]
+
+Then create reference to link to that section from another file:
+
+.. code-block:: rst
+
+    # /reference/attributes.rst
+
+    :ref:`Required <autowiring-calls>`
+
 **Links to the API** follow a different syntax, where you must specify the type
 of the linked resource (``class`` or ``method``):
 
