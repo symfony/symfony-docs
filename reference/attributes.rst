@@ -111,7 +111,7 @@ Validator
 Each validation constraint comes with a PHP attribute. See
 :doc:`/reference/constraints` for a full list of validation constraints.
 
-* :doc:`HasNamedArgument </validation/custom_constraint>`
+* :doc:`HasNamedArguments </validation/custom_constraint>`
 
 Workflow
 ~~~~~~~~
