@@ -1233,9 +1233,10 @@ This is the name that's used to determine which dumper should be used.
 translation.provider_factory
 ----------------------------
 
-**Purpose**: To register a factory creating custom Translation Provider
+**Purpose**: to register a factory related to custom translation providers
 
-Register your factory as a service and tag it with ``translation.provider_factory``:
+When creating custom :ref:`translation providers <translation-providers>`, you
+must register your factory as a service and tag it with ``translation.provider_factory``:
 
 .. configuration-block::
 
@@ -1269,8 +1270,6 @@ Register your factory as a service and tag it with ``translation.provider_factor
             ->register(CustomProviderFactory::class)
             ->addTag('translation.provider_factory')
         ;
-
-For more details, see :ref:`translation providers <translation-providers>`.
 
 .. _reference-dic-tags-twig-extension:
 
