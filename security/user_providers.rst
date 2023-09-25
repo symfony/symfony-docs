@@ -77,24 +77,15 @@ the user provider uses :doc:`Doctrine </doctrine>` to retrieve them.
         use App\Entity\User;
         use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'providers' => [
-                'users' => [
-                    'entity' => [
-                        // the class of the entity that represents users
-                        'class'    => User::class,
-                        // the property to query by - e.g. email, username, etc
-                        'property' => 'email',
-
-                        // optional: if you're using multiple Doctrine entity
-                        // managers, this option defines which one to use
-                        //'manager_name' => 'customer',
-                    ],
-                ],
-            ],
-
+        return static function (SecurityConfig $security): void {
             // ...
-        ]);
+
+            $security->provider('app_user_provider')
+                ->entity()
+                    ->class(User::class)
+                    ->property('email')
+            ;
+        };
 
 .. _authenticating-someone-with-a-custom-entity-provider:
 
@@ -174,18 +165,16 @@ To finish this, remove the ``property`` key from the user provider in
 
         // config/packages/security.php
         use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
 
-        $container->loadFromExtension('security', [
-            'providers' => [
-                'users' => [
-                    'entity' => [
-                        'class' => User::class,
-                    ],
-                ],
-            ],
-
+        return static function (SecurityConfig $security): void {
             // ...
-        ]);
+
+            $security->provider('app_user_provider')
+                ->entity()
+                    ->class(User::class)
+            ;
+        };
 
 Now, whenever Symfony uses the user provider, the ``loadUserByIdentifier()``
 method on your ``UserRepository`` will be called.
@@ -206,18 +195,67 @@ including their passwords. Make sure the passwords are hashed properly. See
 After setting up hashing, you can configure all the user information in
 ``security.yaml``:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/security.yaml
-    security:
-        providers:
-            backend_users:
-                memory:
-                    users:
-                        john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
-                        jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+    .. code-block:: yaml
 
-        # ...
+        # config/packages/security.yaml
+        security:
+            providers:
+                backend_users:
+                    memory:
+                        users:
+                            john_admin: { password: '$2y$13$jxGxc ... IuqDju', roles: ['ROLE_ADMIN'] }
+                            jane_admin: { password: '$2y$13$PFi1I ... rGwXCZ', roles: ['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'] }
+
+            # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xmlns:srv="http://symfony.com/schema/dic/services"
+                       xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <provider name="app_user_provider2">
+                    <memory>
+                        <user identifier="john_admin" password="$2y$13$jxGxc ... IuqDju" roles="ROLE_ADMIN"/>
+                        <user identifier="jane_admin" password="$2y$13$PFi1I ... rGwXCZ" roles="ROLE_ADMIN, ROLE_SUPER_ADMIN"/>
+                    </memory>
+                </provider>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            // ...
+
+            $memoryProvider = $security->provider('app_user_provider')->memory();
+            $memoryProvider
+                ->user('john_admin')
+                    ->password('$2y$13$jxGxc ... IuqDju')
+                    ->roles(['ROLE_ADMIN'])
+            ;
+
+            $memoryProvider
+                ->user('jane_admin')
+                ->password('$2y$13$PFi1I ... rGwXCZ')
+                ->roles(['ROLE_ADMIN', 'ROLE_SUPER_ADMIN'])
+            ;
+        };
 
 .. caution::
 
@@ -235,27 +273,99 @@ providers are configured is important because Symfony will look for users
 starting from the first provider and will keep looking for in the other
 providers until the user is found:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/security.yaml
-    security:
-        # ...
-        providers:
-            backend_users:
-                ldap:
-                    # ...
+    .. code-block:: yaml
 
-            legacy_users:
-                entity:
-                    # ...
+        # config/packages/security.yaml
+        security:
+            # ...
+            providers:
+                backend_users:
+                    ldap:
+                        # ...
 
-            users:
-                entity:
-                    # ...
+                legacy_users:
+                    entity:
+                        # ...
 
-            all_users:
-                chain:
-                    providers: ['legacy_users', 'users', 'backend_users']
+                users:
+                    entity:
+                        # ...
+
+                all_users:
+                    chain:
+                        providers: ['legacy_users', 'users', 'backend_users']
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xmlns:srv="http://symfony.com/schema/dic/services"
+                       xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <provider name="backend_users">
+                    <ldap service="..." base-dn="..."/>
+                </provider>
+
+                <provider name="legacy_users">
+                    <entity>
+                        <!-- ... -->
+                    </entity>
+                </provider>
+
+                <provider name="users">
+                    <entity>
+                        <!-- ... -->
+                    </entity>
+                </provider>
+
+                <provider name="all_users">
+                    <chain>
+                        <provider>backend_users</provider>
+                        <provider>legacy_users</provider>
+                        <provider>users</provider>
+                    </chain>
+                </provider>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Entity\User;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            // ...
+
+            $backendProvider = $security->provider('backend_users')
+                ->ldap()
+                // ...
+            ;
+
+            $legacyProvider = $security->provider('legacy_users')
+                ->entity()
+                // ...
+            ;
+
+            $userProvider = $security->provider('users')
+                ->entity()
+                // ...
+            ;
+
+            $allProviders = $security->provider('all_users')->chain()
+                ->providers([$backendProvider, $legacyProvider, $userProvider])
+            ;
+        };
 
 .. _security-custom-user-provider:
 
@@ -346,14 +456,52 @@ Most of the work is already done! Read the comments in the code and update the
 TODO sections to finish the user provider. When you're done, tell Symfony about
 the user provider by adding it in ``security.yaml``:
 
-.. code-block:: yaml
+.. configuration-block::
 
-    # config/packages/security.yaml
-    security:
-        providers:
-            # the name of your user provider can be anything
-            your_custom_user_provider:
-                id: App\Security\UserProvider
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            providers:
+                # the name of your user provider can be anything
+                your_custom_user_provider:
+                    id: App\Security\UserProvider
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xmlns:srv="http://symfony.com/schema/dic/services"
+                       xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <provider name="your_custom_user_provider" id="App\Security\UserProvider">
+                    <!-- ... -->
+                </provider>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use App\Security\UserProvider;
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            // ...
+
+             $customProvider = $security->provider('your_custom_user_provider')
+                ->id(UserProvider::class)
+                // ...
+            ;
+        };
 
 Lastly, update the ``config/packages/security.yaml`` file to set the
 ``provider`` key to ``your_custom_user_provider`` in all the firewalls which
