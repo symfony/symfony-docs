@@ -1228,6 +1228,50 @@ This is the name that's used to determine which dumper should be used.
         $container->register(JsonFileDumper::class)
             ->addTag('translation.dumper', ['alias' => 'json']);
 
+.. _reference-dic-tags-translation-provider-factory:
+
+translation.provider_factory
+----------------------------
+
+**Purpose**: To register a factory creating custom Translation Provider
+
+Register your factory as a service and tag it with ``translation.provider_factory``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        services:
+            App\Translation\CustomProviderFactory:
+                tags:
+                    - { name: translation.provider_factory }
+
+    .. code-block:: xml
+
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\Translation\CustomProviderFactory">
+                    <tag name="translation.provider_factory"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        use App\Translation\CustomProviderFactory;
+
+        $container
+            ->register(CustomProviderFactory::class)
+            ->addTag('translation.provider_factory')
+        ;
+
+For more details, see :ref:`translation providers <translation-providers>`.
+
 .. _reference-dic-tags-twig-extension:
 
 twig.extension
