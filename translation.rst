@@ -743,6 +743,19 @@ now use the following commands to push (upload) and pull (download) translations
     # check out the command help to see its options (format, domains, locales, intl-icu, etc.)
     $ php bin/console translation:pull --help
 
+Creating Custom Providers
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to using Symfony's built-in translation providers, you can create
+your own providers. To do so, you need to create two classes:
+
+#. The first class must implement :class:`Symfony\\Component\\Translation\\Provider\\ProviderInterface`;
+#. The second class needs to be a factory which will create instances of the first class. It must implement
+:class:`Symfony\\Component\\Translation\\Provider\\ProviderFactoryInterface` (you can extend :class:`Symfony\\Component\\Translation\\Provider\\AbstractProviderFactory` to simplify its creation).
+
+After creating these two classes, you need to register your factory as a service
+and tag it with :ref:`translation.provider_factory <reference-dic-tags-translation-provider-factory>`.
+
 .. _translation-locale:
 
 Handling the User's Locale
