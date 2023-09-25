@@ -110,18 +110,25 @@ The current list of supported formats are the following:
 ===================  ==============================================================================
 Markup Format        Use It to Display
 ===================  ==============================================================================
-``html``             HTML
-``xml``              XML
-``php``              PHP
-``yaml``             YAML
-``twig``             Pure Twig markup
-``html+twig``        Twig markup blended with HTML
+``caddy``            Caddy web server configuration
+``env``              Bash files (like ``.env`` files)
 ``html+php``         PHP code blended with HTML
+``html+twig``        Twig markup blended with HTML
+``html``             HTML
 ``ini``              INI
 ``php-annotations``  PHP Annotations
 ``php-attributes``   PHP Attributes
-``php-symfony``      PHP code example when using the Symfony framework
 ``php-standalone``   PHP code to be used in any PHP application using standalone Symfony components
+``php-symfony``      PHP code example when using the Symfony framework
+``php``              PHP
+``rst``              reStructuredText markup
+``terminal``         Renders the contents as a console terminal (use it to show which commands to run)
+``twig``             Pure Twig markup
+``varnish3``         Varnish Cache 3 configuration
+``varnish4``         Varnish Cache 4 configuration
+``vcl``              Varnish Configuration Language
+``xml``              XML
+``yaml``             YAML
 ===================  ==============================================================================
 
 Displaying Tabs
@@ -190,21 +197,22 @@ If you want to modify that title, use this alternative syntax:
 
         :doc:`environments`
 
-It is also possible to link to a specific section, instead of a whole page.
-First, define a target above section you will link to:
+**Links to specific page sections** follow a different syntax. First, define a
+target above section you will link to (syntax: ``.. _`` + target name + ``:``):
 
 .. code-block:: rst
 
     # /service_container/autowiring.rst
 
-    # Define the target
+    # define the target
     .. _autowiring-calls:
 
     Autowiring other Methods (e.g. Setters and Public Typed Properties)
     -------------------------------------------------------------------
-    [section content ...]
 
-Then create reference to link to that section from another file:
+    // section content ...
+
+Then, use the ``:ref::`` directive to link to that section from another file:
 
 .. code-block:: rst
 
