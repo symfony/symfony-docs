@@ -532,5 +532,5 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
 .. _`Apache mod_ratelimit`: https://httpd.apache.org/docs/current/mod/mod_ratelimit.html
 .. _`NGINX rate limiting`: https://www.nginx.com/blog/rate-limiting-nginx/
 .. _`token bucket algorithm`: https://en.wikipedia.org/wiki/Token_bucket
-.. _`PHP date relative formats`: https://www.php.net/datetime.formats.relative
+.. _`PHP date relative formats`: https://www.php.net/manual/en/datetime.formats.php#datetime.formats.relative
 .. _`Race conditions`: https://en.wikipedia.org/wiki/Race_condition
