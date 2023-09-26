@@ -49,7 +49,7 @@ Using a Custom Query for the Entities
 
 If you want to create a custom query to use when fetching the entities
 (e.g. you only want to return some entities, or need to order them), use
-the `query_builder`_ option::
+the `query_builder`_ option. Please note, that `query_builder` is used to compose data, not fetch real final results::
 
     use App\Entity\User;
     use Doctrine\ORM\EntityRepository;
