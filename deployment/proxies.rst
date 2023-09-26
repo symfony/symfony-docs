@@ -139,14 +139,14 @@ In this case, you'll need to - *very carefully* - trust *all* proxies.
 #. Once you've guaranteed that traffic will only come from your trusted reverse
    proxies, configure Symfony to *always* trust incoming request:
 
-    .. code-block:: yaml
+   .. code-block:: yaml
 
-        # config/packages/framework.yaml
-        framework:
-            # ...
-            # trust *all* requests (the 'REMOTE_ADDR' string is replaced at
-            # run time by $_SERVER['REMOTE_ADDR'])
-            trusted_proxies: '127.0.0.1,REMOTE_ADDR'
+       # config/packages/framework.yaml
+       framework:
+           # ...
+           # trust *all* requests (the 'REMOTE_ADDR' string is replaced at
+           # run time by $_SERVER['REMOTE_ADDR'])
+           trusted_proxies: '127.0.0.1,REMOTE_ADDR'
 
 That's it! It's critical that you prevent traffic from all non-trusted sources.
 If you allow outside traffic, they could "spoof" their true IP address and
