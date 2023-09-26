@@ -203,7 +203,7 @@ named ``kernel.http_method_override``.
         $request = Request::createFromGlobals();
         // ...
 
- .. _configuration-framework-http_method_override:
+.. _configuration-framework-http_method_override:
 
 trust_x_sendfile_type_header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
