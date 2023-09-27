@@ -50,7 +50,7 @@ method that fits most use-cases::
             }
 
             // implement your own logic to get the user identifier from `$apiToken`
-            // e.g. by finding one user in database by its API key
+            // e.g. by looking up a user in the database using its API key
             $userIdentifier = /** ... */;
 
             return new SelfValidatingPassport(new UserBadge($userIdentifier));
