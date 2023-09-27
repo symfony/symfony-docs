@@ -49,7 +49,11 @@ method that fits most use-cases::
                 throw new CustomUserMessageAuthenticationException('No API token provided');
             }
 
-            return new SelfValidatingPassport(new UserBadge($apiToken));
+            // implement your own logic to get the user identifier from `$apiToken`
+            // e.g. by looking up a user in the database using its API key
+            $userIdentifier = /** ... */;
+
+            return new SelfValidatingPassport(new UserBadge($userIdentifier));
         }
 
         public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
