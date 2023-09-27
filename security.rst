@@ -2722,5 +2722,4 @@ Authorization (Denying Access)
 .. _`SymfonyCastsVerifyEmailBundle`: https://github.com/symfonycasts/verify-email-bundle
 .. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication
 .. _`Login CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
-.. _`SensitiveParameter PHP attribute`: https://wiki.php.net/rfc/redact_parameters_in_back_traces
 .. _`PHP date relative formats`: https://www.php.net/manual/en/datetime.formats.php#datetime.formats.relative
