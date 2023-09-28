@@ -334,6 +334,20 @@ the application or when using a self-signed certificate::
 
     $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=0';
 
+TLS Peer Fingerprint Verification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Additional fingerprint verification can be enforced with the ``peer_fingerprint``
+option. This is especially useful when a self-signed certificate is used and
+disabling ``verify_peer`` is needed, but security is still desired. Fingerprint
+may be specified as SHA1 or MD5 hash::
+
+    $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
+
+.. versionadded:: 6.4
+
+    The ``peer_fingerprint`` option was introduced in Symfony 6.4.
+
 Overriding default SMTP authenticators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
