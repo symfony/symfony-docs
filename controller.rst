@@ -502,6 +502,26 @@ payload formats::
         // ...
     }
 
+Make sure to install `phpstan/phpdoc-parser`_ and `phpdocumentor/type-resolver`_
+if you want to map a nested array of specific DTOs::
+
+    public function dashboard(
+        #[MapRequestPayload()] EmployeesDTO $employeesDto
+    ): Response
+    {
+        // ...
+    }
+
+    final class EmployeesDTO
+    {
+        /**
+         * @param UserDTO[] $users
+         */
+        public function __construct(
+            public readonly array $users = []
+        ) {}
+    }
+
 .. versionadded:: 6.3
 
     The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestPayload` attribute
@@ -771,3 +791,5 @@ Learn more about Controllers
 .. _`SAPI`: https://www.php.net/manual/en/function.php-sapi-name.php
 .. _`FrankenPHP`: https://frankenphp.dev
 .. _`Validate Filters`: https://www.php.net/manual/en/filter.filters.validate.php
+.. _`phpstan/phpdoc-parser`: https://packagist.org/packages/phpstan/phpdoc-parser
+.. _`phpdocumentor/type-resolver`: https://packagist.org/packages/phpdocumentor/type-resolver
