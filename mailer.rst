@@ -340,7 +340,7 @@ TLS Peer Fingerprint Verification
 Additional fingerprint verification can be enforced with the ``peer_fingerprint``
 option. This is especially useful when a self-signed certificate is used and
 disabling ``verify_peer`` is needed, but security is still desired. Fingerprint
-may be specified in sha1 (40 characters) or md5 (32 characters)::
+may be specified as SHA1 or MD5 hash::
 
     $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
 
