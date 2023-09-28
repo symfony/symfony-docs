@@ -344,6 +344,9 @@ may be specified in sha1 (40 characters) or md5 (32 characters)::
 
     $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
 
+.. versionadded:: 6.4
+
+    The ``peer_fingerprint`` option was introduced in Symfony 6.4.
 
 Overriding default SMTP authenticators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
