@@ -30,6 +30,8 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
+.. _clock_usage:
+
 Usage
 -----
 
@@ -60,7 +62,7 @@ The Clock component also provides the ``now()`` function::
 
     use function Symfony\Component\Clock\now;
 
-    // Get the current time as a DateTimeImmutable instance
+    // Get the current time as a DatePoint instance
     $now = now();
 
 The ``now()`` function takes an optional ``modifier`` argument
@@ -73,6 +75,9 @@ which will be applied to the current time::
 You can use any string `accepted by the DateTime constructor`_.
 
 Later on this page you can learn how to use this clock in your services and tests.
+When using the Clock component, you manipulate
+:class:`Symfony\\Component\\Clock\\DatePoint` instances. You can learn more
+about it in :ref:`the dedicated section <clock_date-point>`.
 
 .. versionadded:: 6.3
 
@@ -207,6 +212,54 @@ being in a month or another.
 
     The :class:`Symfony\\Component\\Clock\\ClockAwareTrait` was introduced in Symfony 6.3.
 
+.. _clock_date-point:
+
+The ``DatePoint`` Class
+-----------------------
+
+The Clock component uses a special :class:`Symfony\\Component\\Clock\\DatePoint`
+class. This is a small wrapper on top of PHP's :phpclass:`DateTimeImmutable`.
+You can use it seamlessly everywhere a :phpclass:`DateTimeImmutable` or
+:phpclass:`DateTimeInterface` is expected. The ``DatePoint`` object fetches the
+date and time from the :class:`Symfony\\Component\\Clock\\Clock` class. This means
+that if you did any changes to the clock as stated in the
+:ref:`usage section <clock_usage>`, it will be reflected when creating a new
+``DatePoint``. You can also create a new ``DatePoint`` instance directly, for
+instance when using it as a default value::
+
+    use Symfony\Component\Clock\DatePoint;
+
+    class Post
+    {
+        public function __construct(
+            // ...
+            private \DateTimeImmutable $createdAt = new DatePoint(),
+        ) {
+        }
+    }
+
+The constructor also allows setting a timezone or custom referenced date::
+
+    // you can specify a timezone
+    $withTimezone = new DatePoint(timezone: new \DateTimezone('UTC'));
+
+    // you can also create a DatePoint from a reference date
+    $referenceDate = new \DateTimeImmutable();
+    $relativeDate = new DatePoint('+1month', reference: $referenceDate);
+
+.. note::
+
+    In addition ``DatePoint`` offers stricter return types and provides consistent
+    error handling across versions of PHP, thanks to polyfilling `PHP 8.3's behavior`_
+    on the topic.
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Component\\Clock\\DatePoint` class was introduced
+    in Symfony 6.4.
+
+.. _clock_writing-tests:
+
 Writing Time-Sensitive Tests
 ----------------------------
 
@@ -294,3 +347,4 @@ use them even if your project doesn't use PHP 8.3 yet.
 .. _`accepted by the DateTime constructor`: https://www.php.net/manual/en/datetime.formats.php
 .. _`PHP DateTime exceptions`: https://wiki.php.net/rfc/datetime-exceptions
 .. _`symfony/polyfill-php83`: https://github.com/symfony/polyfill-php83
+.. _`PHP 8.3's behavior`: https://wiki.php.net/rfc/datetime-exceptions
