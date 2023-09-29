@@ -248,6 +248,7 @@ The constructor also allows setting a timezone or custom referenced date::
     $relativeDate = new DatePoint('+1month', reference: $referenceDate);
 
 .. note::
+
     In addition ``DatePoint`` offers stricter return types and provides consistent
     error handling across versions of PHP, thanks to polyfilling `PHP 8.3's behavior`_
     on the topic.
