@@ -79,14 +79,21 @@ look for tokens based on some criteria::
     // gets the latest 10 tokens
     $tokens = $profiler->find('', '', 10, '', '', '');
 
-    // gets the latest 10 tokens for all URL containing /admin/
+    // gets the latest 10 tokens for all URLs containing /admin/
     $tokens = $profiler->find('', '/admin/', 10, '', '', '');
+
+    // gets the latest 10 tokens for all URLs not containing /api/
+    $tokens = $profiler->find('', '!/api/', 10, '', '', '');
 
     // gets the latest 10 tokens for local POST requests
     $tokens = $profiler->find('127.0.0.1', '', 10, 'POST', '', '');
 
     // gets the latest 10 tokens for requests that happened between 2 and 4 days ago
     $tokens = $profiler->find('', '', 10, '', '4 days ago', '2 days ago');
+
+.. versionadded:: 6.4
+
+    Prefixing the URL filter with a ``!`` symbol to negate the query was introduced in Symfony 6.4.
 
 Data Collectors
 ---------------
