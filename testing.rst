@@ -978,7 +978,8 @@ Response Assertions
     Asserts a specific HTTP status code.
 ``assertResponseRedirects(string $expectedLocation = null, int $expectedCode = null, string $message = '')``
     Asserts the response is a redirect response (optionally, you can check
-    the target location and status code).
+    the target location and status code). The excepted location can be either
+    an absolute or a relative path.
 ``assertResponseHasHeader(string $headerName, string $message = '')``/``assertResponseNotHasHeader(string $headerName, string $message = '')``
     Asserts the given header is (not) available on the response, e.g. ``assertResponseHasHeader('content-type');``.
 ``assertResponseHeaderSame(string $headerName, string $expectedValue, string $message = '')``/``assertResponseHeaderNotSame(string $headerName, string $expectedValue, string $message = '')``
@@ -995,6 +996,10 @@ Response Assertions
     is the same as the expected value.
 ``assertResponseIsUnprocessable(string $message = '')``
     Asserts the response is unprocessable (HTTP status is 422)
+
+.. versionadded:: 6.4
+    The support for relative path in ``assertResponseRedirects()`` was introduced
+    in Symfony 6.4.
 
 Request Assertions
 ..................
