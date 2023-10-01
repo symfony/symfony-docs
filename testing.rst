@@ -998,6 +998,7 @@ Response Assertions
     Asserts the response is unprocessable (HTTP status is 422)
 
 .. versionadded:: 6.4
+
     The support for relative path in ``assertResponseRedirects()`` was introduced
     in Symfony 6.4.
 
