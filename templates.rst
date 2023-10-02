@@ -383,7 +383,7 @@ gives you access to these variables:
 ``app.locale``
     The locale used in the current :ref:`locale switcher <locale-switcher>` context.
 ``app.enabled_locales``
-    The locales enabled in the application
+    The locales enabled in the application.
 
 .. versionadded:: 6.2
 
