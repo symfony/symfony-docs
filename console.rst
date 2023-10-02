@@ -577,7 +577,7 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
 When testing your commands, it could be useful to understand how your command
 reacts on different settings like the width and the height of the terminal, or
 even the color mode being used. You have access to such information thanks to the
-:class:`Symfony\\Component\\Console\\Terminal` class:
+:class:`Symfony\\Component\\Console\\Terminal` class::
 
     use Symfony\Component\Console\Terminal;
 
