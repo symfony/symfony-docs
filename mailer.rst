@@ -806,12 +806,20 @@ for Twig templates::
         // path of the Twig template to render
         ->htmlTemplate('emails/signup.html.twig')
 
+        // change locale used in the template, e.g. to match user's locale
+        ->locale('de')
+
         // pass variables (name => value) to the template
         ->context([
             'expiration_date' => new \DateTime('+7 days'),
             'username' => 'foo',
         ])
     ;
+
+.. versionadded:: 6.4
+
+    The :method:`Symfony\\Bridge\\Twig\\Mime\\TemplatedEmail::locale` method
+    was introduced in Symfony 6.4.
 
 Then, create the template:
 

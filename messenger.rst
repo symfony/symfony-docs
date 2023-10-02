@@ -1102,9 +1102,17 @@ to retry them:
     # remove messages without retrying them and show each message before removing it
     $ php bin/console messenger:failed:remove 20 30 --show-messages
 
+    # remove all messages in the failure transport
+    $ php bin/console messenger:failed:remove --all
+
 .. versionadded:: 6.2
 
     The ``--class-filter`` and ``--stats`` options were introduced in Symfony 6.2.
+
+.. versionadded:: 6.4
+
+    The ``--all`` option was introduced in Symfony 6.4.
+
 
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
