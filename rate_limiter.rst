@@ -320,6 +320,11 @@ processes by reserving unused tokens.
             $limit->wait();
         } while (!$limit->isAccepted());
 
+.. versionadded:: 6.4
+
+    The support for the ``reserve()`` method for the ``SlidingWindow`` strategy
+    was introduced in Symfony 6.4.
+
 Exposing the Rate Limiter Status
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -348,7 +353,7 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
             $limit = $limiter->consume();
             $headers = [
                 'X-RateLimit-Remaining' => $limit->getRemainingTokens(),
-                'X-RateLimit-Retry-After' => $limit->getRetryAfter()->getTimestamp(),
+                'X-RateLimit-Retry-After' => $limit->calculateTimeForTokens(1, 1),
                 'X-RateLimit-Limit' => $limit->getLimit(),
             ];
 
@@ -364,6 +369,19 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
             return $response;
         }
     }
+
+.. versionadded:: 6.4
+
+    The :method:`Symfony\\Component\\RateLimiter\\Policy\\SlidingWindow::calculateTimeForTokens`
+    method was introduced in Symfony 6.4.
+
+.. deprecated:: 6.4
+
+    The :method:`Symfony\\Component\\RateLimiter\\Policy\\SlidingWindow::getRetryAfter`
+    method is deprecated since Symfony 6.4. Prior to this version, the
+    ``getRetryAfter()`` method must be used instead of the
+    :method:`Symfony\\Component\\RateLimiter\\Policy\\SlidingWindow::calculateTimeForTokens`
+    method.
 
 .. _rate-limiter-storage:
 
