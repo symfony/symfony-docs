@@ -382,6 +382,8 @@ gives you access to these variables:
     empty array if no request is available (equivalent to ``app.request.attributes.get('_route_params')``)
 ``app.locale``
     The locale used in the current :ref:`locale switcher <locale-switcher>` context.
+``app.enabled_locales``
+    The locales enabled in the application
 
 .. versionadded:: 6.2
 
@@ -391,6 +393,10 @@ gives you access to these variables:
 .. versionadded:: 6.3
 
     The ``app.locale`` variable was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The ``app.enabled_locales`` variable was introduced in Symfony 6.4.
 
 In addition to the global ``app`` variable injected by Symfony, you can also
 inject variables automatically to all Twig templates as explained in the next
