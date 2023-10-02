@@ -462,6 +462,15 @@ route details:
     |             | utf8: true                                              |
     +-------------+---------------------------------------------------------+
 
+.. tip::
+
+    Use the ``--show-aliases`` option to show all available aliases for a given
+    route.
+
+.. versionadded:: 6.4
+
+    The ``--show-aliases`` option was introduced in Symfony 6.4.
+
 The other command is called ``router:match`` and it shows which route will match
 the given URL. It's useful to find out why some URL is not executing the
 controller action that you expect:
