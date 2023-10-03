@@ -2830,3 +2830,4 @@ Authorization (Denying Access)
 .. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication
 .. _`Login CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
 .. _`PHP date relative formats`: https://www.php.net/manual/en/datetime.formats.php#datetime.formats.relative
+.. _`SensitiveParameter PHP attribute`: https://www.php.net/manual/en/class.sensitiveparameter.php
