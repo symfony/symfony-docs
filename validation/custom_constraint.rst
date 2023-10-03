@@ -121,12 +121,14 @@ The validator class only has one required method ``validate()``::
                 // ...
             }
 
-            if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
-                // the argument must be a string or an object implementing __toString()
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ string }}', $value)
-                    ->addViolation();
+            if (preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
+                return;
             }
+
+            // the argument must be a string or an object implementing __toString()
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ string }}', $value)
+                ->addViolation();
         }
     }
 
@@ -547,3 +549,4 @@ class to simplify writing unit tests for your custom constraints::
             // ...
         }
     }
+
