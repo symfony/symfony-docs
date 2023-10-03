@@ -242,7 +242,7 @@ Checking for Roles inside a Voter
 
 What if you want to call ``isGranted()`` from *inside* your voter - e.g. you want
 to see if the current user has ``ROLE_SUPER_ADMIN``. That's possible by injecting
-the :class:`Symfony\\Component\\Security\\Core\\Security`
+the :class:`Symfony\\Bundle\\SecurityBundle\\Security`
 into your voter. You can use this to, for example, *always* allow access to a user
 with ``ROLE_SUPER_ADMIN``::
 
