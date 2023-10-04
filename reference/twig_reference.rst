@@ -305,7 +305,7 @@ Generates a URL that you can visit to
     The ``impersonation_path()`` function was introduced in Symfony 6.4.
 
 impersonation_url
-~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 .. code-block:: twig
 
