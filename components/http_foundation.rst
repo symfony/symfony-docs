@@ -709,14 +709,14 @@ after some specific item count to send the contents to the browser::
         }
     }
 
-You also have the possibility to directly pass any iterable to
-``StreamedJsonResponse``, including generators::
+Alternatively, you can also pass any iterable to ``StreamedJsonResponse``,
+including generators::
 
     public function loadArticles(): \Generator
     {
-         yield ['title' => 'Article 1'];
-         yield ['title' => 'Article 2'];
-         yield ['title' => 'Article 3'];
+        yield ['title' => 'Article 1'];
+        yield ['title' => 'Article 2'];
+        yield ['title' => 'Article 3'];
     }
 
     public function __invoke(): Response
@@ -728,8 +728,7 @@ You also have the possibility to directly pass any iterable to
 
 .. versionadded:: 6.4
 
-    The support for any iterable in ``StreamedJsonResponse`` was introduced in
-    Symfony 6.4.
+    The ``StreamedJsonResponse`` support of iterables was introduced in Symfony 6.4.
 
 .. _component-http-foundation-serving-files:
 
