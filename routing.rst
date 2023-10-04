@@ -2724,12 +2724,6 @@ service, which you can inject in your services or controllers::
         }
     }
 
-.. versionadded:: 6.4
-
-    The namespace of the ``UriSigner`` class changed in Symfony 6.4 from
-    ``Symfony\Component\HttpKernel\UriSigner`` to
-    ``Symfony\Component\HttpFoundation\UriSigner``.
-
 Troubleshooting
 ---------------
 
