@@ -375,14 +375,6 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
     The :method:`Symfony\\Component\\RateLimiter\\Policy\\SlidingWindow::calculateTimeForTokens`
     method was introduced in Symfony 6.4.
 
-.. deprecated:: 6.4
-
-    The :method:`Symfony\\Component\\RateLimiter\\Policy\\SlidingWindow::getRetryAfter`
-    method is deprecated since Symfony 6.4. Prior to this version, the
-    ``getRetryAfter()`` method must be used instead of the
-    :method:`Symfony\\Component\\RateLimiter\\Policy\\SlidingWindow::calculateTimeForTokens`
-    method.
-
 .. _rate-limiter-storage:
 
 Storing Rate Limiter State
