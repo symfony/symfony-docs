@@ -240,11 +240,11 @@ guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestC
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
 
-If you want to test the themes of your forms, you may want to make your test extends the
-:class:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase` class. This saves a lot of
-boilerplate and code duplication by implementing the
+When testing the themes of your forms, consider making your test extend the
+:class:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase` class. This saves a lot
+of boilerplate and code duplication by implementing the
 :class:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase` methods for you.
-All that's left to do is to implement the
+All you need to do is to implement the
 :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getTemplatePaths`, the
 :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getTwigExtensions` and
 the :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getThemes` methods.
