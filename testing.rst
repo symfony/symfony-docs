@@ -1144,6 +1144,33 @@ Notifier Assertions
 
     The Notifier assertions were introduced in Symfony 6.2.
 
+HttpClient Assertions
+.....................
+
+.. tip::
+
+    For all the following assertions, ``$client->enableProfiler()`` must be
+    called before the code that will trigger HTTP request(s).
+
+``assertHttpClientRequest(string $expectedUrl, string $expectedMethod = 'GET', string|array $expectedBody = null, array $expectedHeaders = [], string $httpClientId = 'http_client')``
+    Asserts that the given URL has been called using, if specified,
+    the given method body and headers. By default it will check on the HttpClient,
+    but you can also pass a specific HttpClient ID.
+    (It will succeed if the request has been called multiple times.)
+
+``assertNotHttpClientRequest(string $unexpectedUrl, string $expectedMethod = 'GET', string $httpClientId = 'http_client')``
+    Asserts that the given URL has not been called using GET or the specified method.
+    By default it will check on the HttpClient, but a HttpClient id can be specified.
+
+``assertHttpClientRequestCount(int $count, string $httpClientId = 'http_client')``
+    Asserts that the given number of requests has been made on the HttpClient.
+    By default it will check on the HttpClient, but you can also pass a specific
+    HttpClient ID.
+
+.. versionadded:: 6.4
+
+    The HttpClient assertions were introduced in Symfony 6.4.
+
 .. TODO
 ..  End to End Tests (E2E)
 ..  ----------------------
