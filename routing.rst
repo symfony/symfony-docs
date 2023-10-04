@@ -2688,13 +2688,13 @@ A signed URI is an URI that includes a hash value that depends on the contents o
 the URI. This way, you can later check the integrity of the signed URI by
 recomputing its hash value and comparing it with the hash included in the URI.
 
-Symfony provides a utility to sign URIs via the :class:`Symfony\\Component\\HttpKernel\\UriSigner`
+Symfony provides a utility to sign URIs via the :class:`Symfony\\Component\\HttpFoundation\\UriSigner`
 service, which you can inject in your services or controllers::
 
     // src/Service/SomeService.php
     namespace App\Service;
 
-    use Symfony\Component\HttpKernel\UriSigner;
+    use Symfony\Component\HttpFoundation\UriSigner;
 
     class SomeService
     {
@@ -2723,6 +2723,12 @@ service, which you can inject in your services or controllers::
             $uriSignatureIsValid = $this->uriSigner->checkRequest($request);
         }
     }
+
+.. versionadded:: 6.4
+
+    The namespace of the ``UriSigner`` class changed in Symfony 6.4 from
+    ``Symfony\Component\HttpKernel\UriSigner`` to
+    ``Symfony\Component\HttpFoundation\UriSigner``.
 
 Troubleshooting
 ---------------
