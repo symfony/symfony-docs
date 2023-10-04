@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-09-30T06:40:54Z
+
+Maybe a versionadded directive should be added to reflect to new behavior in 6.4 🙂
+
+---------------------------------------------------------------------------
+
+by jbtronics at 2023-09-30T18:55:52Z
+
+Added an versionAdded block, to explicitly mention the behavior change. @alexandre-daubois
