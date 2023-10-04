@@ -1611,16 +1611,15 @@ and set the ``limiter`` option to its service ID:
 Customize Successful and Failed Authentication Behavior
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to customize the success or failure handling process, instead of
-overwriting the respective listeners globally, you can set custom success
-failure handlers by implementing the
+If you want to customize how the successful or failed authentication process is
+handled, you don't have to overwrite the respective listeners globally. Instead,
+you can set custom success failure handlers by implementing the
 :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationSuccessHandlerInterface`
 or the
 :class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
 
-If you want more information about this, you can have a look at the section
-about
-:ref:`customizing your success handler <login-link_customize-success-handler>`.
+Read :ref:`how to customize your success handler <login-link_customize-success-handler>`
+for more information about this.
 
 .. _security-logging-out:
 
