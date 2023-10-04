@@ -17,6 +17,6 @@
         "php": ">=8.1",
         "symfony/console": "^6.2",
         "symfony/process": "^6.2",
-        "symfony-tools/docs-builder": "^0.20"
+        "symfony-tools/docs-builder": "^0.21"
     }
 }
