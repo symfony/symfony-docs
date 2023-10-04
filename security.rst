@@ -1701,6 +1701,19 @@ and set the ``limiter`` option to its service ID:
             ;
         };
 
+Customize Successful and Failed Authentication Behavior
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to customize how the successful or failed authentication process is
+handled, you don't have to overwrite the respective listeners globally. Instead,
+you can set custom success failure handlers by implementing the
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationSuccessHandlerInterface`
+or the
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
+
+Read :ref:`how to customize your success handler <login-link_customize-success-handler>`
+for more information about this.
+
 Login Programmatically
 ----------------------
 
@@ -2840,7 +2853,7 @@ Frequently Asked Questions
     Sometimes authentication may be successful, but after redirecting, you're
     logged out immediately due to a problem loading the ``User`` from the session.
     To see if this is an issue, check your log file (``var/log/dev.log``) for
-    the log message:
+    the log message.
 
 **Cannot refresh token because user has changed**
     If you see this, there are two possible causes. First, there may be a problem

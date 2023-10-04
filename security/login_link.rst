@@ -668,6 +668,8 @@ from the first hash value and the ``kernel.secret`` container parameter. This
 allows Symfony to sign this final hash, which is contained in the login URL.
 The final hash is also a Base64 encoded SHA-256 hash.
 
+.. _login-link_customize-success-handler:
+
 Customizing the Success Handler
 -------------------------------
 
