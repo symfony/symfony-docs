@@ -188,6 +188,8 @@ correct types will be assigned to the model.
 
 .. include:: /reference/forms/types/options/choice_value.rst.inc
 
+.. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
+
 .. include:: /reference/forms/types/options/expanded.rst.inc
 
 .. include:: /reference/forms/types/options/group_by.rst.inc
