@@ -1047,8 +1047,8 @@ HTTP Compression
 
 The HTTP header ``Accept-Encoding: gzip`` is added automatically if:
 
-* When using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
-* When using the native HTTP client: `Zlib PHP extension`_ is installed
+* using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
+* using the native HTTP client: `Zlib PHP extension`_ is installed
 
 If the server does respond with a gzipped response, it's decoded transparently.
 To disable HTTP compression, send an ``Accept-Encoding: identity`` HTTP header.
