@@ -159,6 +159,8 @@ This callback will group choices in 3 categories: ``Upper``, ``Lower`` and ``Oth
 
 If you return ``null``, the option won't be grouped.
 
+.. include:: /reference/forms/types/options/duplicate_preferred_choices.rst.inc
+
 .. include:: /reference/forms/types/options/multiple.rst.inc
 
 .. include:: /reference/forms/types/options/placeholder.rst.inc
