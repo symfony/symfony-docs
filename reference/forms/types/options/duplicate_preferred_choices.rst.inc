@@ -3,10 +3,9 @@
 
 **type**: ``boolean`` **default**: ``true``
 
-When using the ``preferred_choices`` option, the selected choices are displayed
-twice by default: at the top of your list and in the complete list. You can
-change this behavior: when setting this option to ``false``, preferred choices
-will only be displayed at the top of the list.
+When using the ``preferred_choices`` option, those preferred choices are displayed
+twice by default: at the top of the list and in the full list below. Set this
+option to ``false``, to only display preferred choices at the top of the list::
 
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     // ...
