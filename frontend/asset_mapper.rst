@@ -1043,30 +1043,41 @@ This will force the AssetMapper component to re-calculate the content of all fil
 Run Security Audits on Your Dependencies
 ----------------------------------------
 
-Just like ``npm`` and ``yarn``, the AssetMapper component comes bundled with a
-command allowing you to quickly have a look at security vulnerability advisories
-that may exist in the dependencies you're using in your application:
+Similar to ``npm`` and ``yarn``, the AssetMapper component comes bundled with a
+command that checks security vulnerabilities in the dependencies of your application:
 
 .. code-block:: terminal
 
     $ php bin/console importmap:audit
 
-This command will result in an output similar to this:
+    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
+    Severity  Title                                          Package    Version  Patched in  More info
+    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
+    Medium    jQuery Cross Site Scripting vulnerability      jquery     3.3.1    3.5.0       https://api.github.com/advisories/GHSA-257q-pV89-V3xv
+    Medium    Potential XSS vulnerability in jQuery          jquery     3.3.1    3.5.0       https://api.github.com/advisories/GHSA-jpcq-cgw6-v4j6
+    Medium    Potential XSS vulnerability in jQuery          jquery     3.3.1    3.5.0       https://api.github.com/advisories/GHSA-gxr4-xjj5-5px2
+    Medium    XSS in jQuery as used in Drupal, etc.          jquery     3.3.1    3.4.0       https://api.github.com/advisories/GHSA-6c3j-c64m-qhgg
+    Medium    Prototype Pollution in jQuery                  jquery     3.3.1    3.4.0       https://api.github.com/advisories/GHSA-wV67-q8rr-grjp
+    High      Prototype Pollution in JSON5 via Parse Method  json5      1.0.0    1.0.2       https://api.github.com/advisories/GHSA-9c47-m6qq-7p4h
+    Medium    semver vulnerable to RegExp Denial of Service  semver     4.3.0    5.7.2       https://api.github.com/advisories/GHSA-c2qf-rxjj-qqgw
+    High      RegExp Denial of Service in sever              semver     4.3.0    4.3.2       https://api.github.com/advisories/GHSA-X6fg-f45m-jf5g
+    Critical  Prototype Pollution in minimist                minimist   1.1.3    1.2.6       https://api.github.com/advisories/GHSA-xvch-5gv4-984h
+    Medium    Prototype Pollution in minimist                minimist   1.1.3    1.2.3       https://api.github.com/advisories/GHSA-vh95-rmgr-6w4m
+    Medium    ESLint dependencies are vulnerable             minimist   1.1.3    1.2.2       https://api.github.com/advisories/GHSA-7fhm-mqm4-2wp7
+    Medium    Bootstrap Vulnerable to Cross-Site Scripting   bootstrap  4.1.3    4.3.1       https://api.github.com/advisories/GHSA-9v3M-8fp8-mi99
+    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
 
-.. image:: /_images/components/assetmapper/01-importmap-audit.png
-    :alt: Console output showing a table of security vulnerabilities that exist
-    in the dependencies used in the application.
-
-Additionally, the command takes a ``--format`` option to chose in which format
-the output should be. The values supported by this options are the following:
-
-* ``txt``
-* ``json``
+    7 packages found: 7 audited / 0 skipped
+    12 vulnerabilities found: 1 Critical / 2 High / 9 Medium
 
 The command will return the ``0`` exit code if no vulnerability is found, or
 the ``-1`` exit code otherwise. This means that you can seamlessly integrate this
-command as part of your CI to be warned anytime a new vulnerability is found
-in the packages you use.
+command as part of your CI to be warned anytime a new vulnerability is found.
+
+.. tip::
+
+    The command takes a ``--format`` option to choose the output format between
+    ``txt`` and ``json``.
 
 .. versionadded:: 6.4
 
