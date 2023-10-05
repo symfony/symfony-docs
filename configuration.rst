@@ -1009,6 +1009,74 @@ environment variables, with their values, referenced in Symfony's container conf
     # run this command to show all the details for a specific env var:
     $ php bin/console debug:container --env-var=FOO
 
+Creating Your Own Logic To Load Env Vars
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can implement your own logic to load environment variables if the default
+Symfony behavior doesn't fit your needs. To do so, create a service whose class
+implements :class:`Symfony\\Component\\DependencyInjection\\EnvVarLoaderInterface`.
+
+.. note::
+
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+    the autoconfiguration feature will enable and tag thise service automatically.
+    Otherwise, you need to register and :doc:`tag your service </service_container/tags>`
+    with the ``container.env_var_loader`` tag.
+
+Let's say you have a JSON file named ``env.json`` containing your environment
+variables:
+
+.. code-block:: json
+
+    {
+        "vars": {
+            "APP_ENV": "prod",
+            "APP_DEBUG": false
+        }
+    }
+
+You can define a class like the following ``JsonEnvVarLoader`` to populate the
+environment variables from the file::
+
+    namespace App\DependencyInjection;
+
+    use Symfony\Component\DependencyInjection\EnvVarLoaderInterface;
+
+    final class JsonEnvVarLoader implements EnvVarLoaderInterface
+    {
+        private const ENV_VARS_FILE = 'env.json';
+
+        public function loadEnvVars(): array
+        {
+            $fileName = __DIR__.\DIRECTORY_SEPARATOR.self::ENV_VARS_FILE;
+            if (!is_file($fileName)) {
+                // throw an exception or just ignore this loader, depending on your needs
+            }
+
+            $content = json_decode(file_get_contents($fileName), true);
+
+            return $content['vars'];
+        }
+    }
+
+That's it! Now the application will look for a ``env.json`` file in the
+current directory to populate environment variables (in addition to the
+already existing ``.env`` files).
+
+.. tip::
+
+    If you want an env var to have a value on a certain environment but to fallback
+    on loaders on another environment, assign an empty value to the env var for
+    the environment you want to use loaders:
+
+    .. code-block:: bash
+
+        # .env (or .env.local)
+        APP_ENV=prod
+
+        # .env.prod (or .env.local.prod) - this will fallback on the loaders you defined
+        APP_ENV=
+
 .. _configuration-accessing-parameters:
 
 Accessing Configuration Parameters
