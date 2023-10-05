@@ -1040,6 +1040,38 @@ re-calculated when you expect it to, you can run:
 
 This will force the AssetMapper component to re-calculate the content of all files.
 
+Run Security Audits on Your Dependencies
+----------------------------------------
+
+Just like ``npm`` and ``yarn``, the AssetMapper component comes bundled with a
+command allowing you to quickly have a look at security vulnerability advisories
+that may exist in the dependencies you're using in your application:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:audit
+
+This command will result in an output similar to this:
+
+.. image:: /_images/components/assetmapper/01-importmap-audit.png
+    :alt: Console output showing a table of security vulnerabilities that exist
+    in the dependencies used in the application.
+
+Additionally, the command takes a ``--format`` option to chose in which format
+the output should be. The values supported by this options are the following:
+
+* ``txt``
+* ``json``
+
+The command will return the ``0`` exit code if no vulnerability is found, or
+the ``-1`` exit code otherwise. This means that you can seamlessly integrate this
+command as part of your CI to be warned anytime a new vulnerability is found
+in the packages you use.
+
+.. versionadded:: 6.4
+
+    The ``importmap:audit`` command was introduced in Symfony 6.4.
+
 .. _latest asset-mapper recipe: https://github.com/symfony/recipes/tree/main/symfony/asset-mapper
 .. _import statement: https://caniuse.com/es6-module-dynamic-import
 .. _ES6: https://caniuse.com/es6
