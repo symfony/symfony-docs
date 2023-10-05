@@ -993,20 +993,19 @@ environment variables, with their values, referenced in Symfony's container conf
     # run this command to show all the details for a specific env var:
     $ php bin/console debug:container --env-var=FOO
 
-Create Your Own Logic To Load Env Vars
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Creating Your Own Logic To Load Env Vars
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can implement your own logic to load environment variables in your
-application if the default behavior doesn't exactly fit your needs. This
-can be done by implementing the
-:class:`Symfony\\Component\\DependencyInjection\\EnvVarLoaderInterface`.
+You can implement your own logic to load environment variables if the default
+Symfony behavior doesn't fit your needs. To do so, create a service whose class
+implements :class:`Symfony\\Component\\DependencyInjection\\EnvVarLoaderInterface`.
 
 .. note::
 
-    When using autoconfiguration, implementing the interface is the only
-    required step. Otherwise, you have to manually add the
-    ``container.env_var_loader`` tag to your class. You can learn more about
-    it in :doc:`the dedicated page </service_container/tags>`.
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+    the autoconfiguration feature will enable and tag thise service automatically.
+    Otherwise, you need to register and :doc:`tag your service </service_container/tags>`
+    with the ``container.env_var_loader`` tag.
 
 Let's say you have a JSON file named ``env.json`` containing your environment
 variables:
@@ -1020,14 +1019,14 @@ variables:
         }
     }
 
-We can create a new class named ``JsonEnvVarLoader`` to populate our environment
-variables from the file::
+You can define a class like the following ``JsonEnvVarLoader`` to populate the
+environment variables from the file::
 
     namespace App\DependencyInjection;
 
     use Symfony\Component\DependencyInjection\EnvVarLoaderInterface;
 
-    class JsonEnvVarLoader implements EnvVarLoaderInterface
+    final class JsonEnvVarLoader implements EnvVarLoaderInterface
     {
         private const ENV_VARS_FILE = 'env.json';
 
@@ -1035,7 +1034,7 @@ variables from the file::
         {
             $fileName = __DIR__.\DIRECTORY_SEPARATOR.self::ENV_VARS_FILE;
             if (!is_file($fileName)) {
-                // throw an error or just ignore this loader, depending on your needs
+                // throw an exception or just ignore this loader, depending on your needs
             }
 
             $content = json_decode(file_get_contents($fileName), true);
@@ -1044,9 +1043,9 @@ variables from the file::
         }
     }
 
-That's it! Now the application will look at a ``env.json`` file in the
-current directory to populate environment variables, additionally to the
-already existing ``.env`` files.
+That's it! Now the application will look for a ``env.json`` file in the
+current directory to populate environment variables (in addition to the
+already existing ``.env`` files).
 
 .. tip::
 
