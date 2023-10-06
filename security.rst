@@ -2666,11 +2666,6 @@ You can use ``IS_AUTHENTICATED`` anywhere roles are used: like
 user that has logged in will have this. Actually, there are some special attributes
 like this:
 
-* ``IS_AUTHENTICATED_REMEMBERED``: *all* logged in users have this, even
-  if they are logged in because of a "remember me cookie". Even if you don't
-  use the :doc:`remember me functionality </security/remember_me>`,
-  you can use this to check if the user is logged in.
-
 * ``IS_AUTHENTICATED_FULLY``: This is similar to ``IS_AUTHENTICATED_REMEMBERED``,
   but stronger. Users who are logged in only because of a "remember me cookie"
   will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
@@ -2682,6 +2677,15 @@ like this:
 * ``IS_IMPERSONATOR``: When the current user is
   :doc:`impersonating </security/impersonating_user>` another user in this
   session, this attribute will match.
+
+.. note::
+
+    All logged in users also have an attribute called ``IS_AUTHENTICATED_REMEMBERED``,
+    even if the application doesn't use the Remember Me feature. This attribute
+    exists for backward-compatibility reasons with Symfony versions prior to 6.4.
+
+    This attribute behaves the same as ``IS_AUTHENTICATED``. That's why in modern
+    Symfony applications it's recommended to no longer use ``IS_AUTHENTICATED_REMEMBERED``.
 
 .. _user_session_refresh:
 
