@@ -2678,15 +2678,6 @@ like this:
   :doc:`impersonating </security/impersonating_user>` another user in this
   session, this attribute will match.
 
-.. note::
-
-    All logged in users also have an attribute called ``IS_AUTHENTICATED_REMEMBERED``,
-    even if the application doesn't use the Remember Me feature. This attribute
-    exists for backward-compatibility reasons with Symfony versions prior to 6.4.
-
-    This attribute behaves the same as ``IS_AUTHENTICATED``. That's why in modern
-    Symfony applications it's recommended to no longer use ``IS_AUTHENTICATED_REMEMBERED``.
-
 .. _user_session_refresh:
 
 Understanding how Users are Refreshed from the Session
