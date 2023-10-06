@@ -269,8 +269,8 @@ Read more about this topic in the official `Redis LRU Cache Documentation`_.
 .. _`Data Source Name (DSN)`: https://en.wikipedia.org/wiki/Data_source_name
 .. _`Redis server`: https://redis.io/
 .. _`Redis`: https://github.com/phpredis/phpredis
-.. _`RedisArray`: https://github.com/phpredis/phpredis/blob/master/arrays.markdown#readme
-.. _`RedisCluster`: https://github.com/phpredis/phpredis/blob/master/cluster.markdown#readme
+.. _`RedisArray`: https://github.com/phpredis/phpredis/blob/develop/arrays.md
+.. _`RedisCluster`: https://github.com/phpredis/phpredis/blob/develop/cluster.md
 .. _`Relay`: https://relay.so/
 .. _`Predis`: https://packagist.org/packages/predis/predis
 .. _`Predis Connection Parameters`: https://github.com/nrk/predis/wiki/Connection-Parameters#list-of-connection-parameters
