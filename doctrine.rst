@@ -746,6 +746,23 @@ In the example above, the ``$product`` argument is handled automatically,
 but ``$comment`` is configured with the attribute since they cannot both follow
 the default convention.
 
+If you need to get other information from the request to query the database, you
+can also access to the request in your expression thanks to the ``request``
+variable. Let's say you pass the page limit of a list in a query parameter::
+
+    #[Route('/product/{id}/comments')]
+    public function show(
+        Product $product,
+        #[MapEntity(expr: 'repository.findBy(["product_id" => id], null, request.query.get("limit", 10)')]
+        iterable $comments
+    ): Response {
+    }
+
+.. versionadded:: 6.4
+
+    The support for the ``request`` variable in expressions was introduced
+    in Symfony 6.4.
+
 MapEntity Options
 ~~~~~~~~~~~~~~~~~
 
