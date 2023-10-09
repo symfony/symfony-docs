@@ -19,10 +19,11 @@ It comes with the following features:
 * Provides a ``ClockMock``, ``DnsMock`` and ``ClassExistsMock`` classes for tests
   sensitive to time, network or class existence;
 
-* Provides a modified version of PHPUnit that allows 1. separating the
-  dependencies of your app from those of phpunit to prevent any unwanted
-  constraints to apply; 2. running tests in parallel when a test suite is split
-  in several phpunit.xml files; 3. recording and replaying skipped tests;
+* Provides a modified version of PHPUnit that allows:
+
+  #. separating the dependencies of your app from those of phpunit to prevent any unwanted constraints to apply;
+  #. running tests in parallel when a test suite is split in several phpunit.xml files;
+  #. recording and replaying skipped tests;
 
 * It allows to create tests that are compatible with multiple PHPUnit versions
   (because it provides polyfills for missing methods, namespaced aliases for
