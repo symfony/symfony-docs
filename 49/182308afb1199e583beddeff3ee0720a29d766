@@ -1,0 +1,27 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-10-06T06:17:25Z
+
+> Additionally, when passing an array of services, you can use SubscribedService's in order to add other DI attributes.
+
+I don't get it 😄 Can you add an example or provide a PR? Thanks
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-10-06T10:27:25Z
+
+SubscribedService added
+
+---------------------------------------------------------------------------
+
+by kbond at 2023-10-09T14:06:16Z
+
+> I don't get it 😄 Can you add an example or provide a PR? Thanks
+
+A bit contrived but here's an example: https://github.com/symfony/symfony/blob/3147082e35faadd873a801a4011bc8cbb79807e0/src/Symfony/Component/DependencyInjection/Tests/Fixtures/AutowireLocatorConsumer.php#L26
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-10-10T12:35:02Z
+
+Ready to merge from my side
