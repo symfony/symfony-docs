@@ -134,4 +134,5 @@ precision (default ``1``) of the result::
     $formatter->truncate(172799, 4); // 1 day, 23 hrs, 59 mins, 59 secs
 
 .. versionadded:: 6.4
+
     The support for exact times were introduced in Symfony 6.4.
