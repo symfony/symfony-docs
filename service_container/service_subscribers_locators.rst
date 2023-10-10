@@ -298,9 +298,10 @@ This is done by having ``getSubscribedServices()`` return an array of
     The above example requires using ``3.2`` version or newer of ``symfony/service-contracts``.
 
 .. _service-locator_autowire-locator:
+.. _service-locator_autowire-iterator:
 
-The AutowireLocator attribute
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The AutowireLocator and AutowireIterator Attributes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Another way to define a service locator is to use the
 :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
@@ -317,8 +318,11 @@ attribute::
     class CommandBus
     {
         public function __construct(
-            #[AutowireLocator(FooHandler::class, BarHandler::class)]
-            private ContainerInterface $locator,
+            #[AutowireLocator([
+                FooHandler::class,
+                BarHandler::class,
+            ])]
+            private ContainerInterface $handlers,
         ) {
         }
 
@@ -326,8 +330,8 @@ attribute::
         {
             $commandClass = get_class($command);
 
-            if ($this->locator->has($commandClass)) {
-                $handler = $this->locator->get($commandClass);
+            if ($this->handlers->has($commandClass)) {
+                $handler = $this->handlers->get($commandClass);
 
                 return $handler->handle($command);
             }
@@ -335,8 +339,10 @@ attribute::
     }
 
 Just like with the ``getSubscribedServices()`` method, it is possible
-to define aliased services thanks to named arguments, as well as optional
-services::
+to define aliased services thanks to the array keys, as well as optional
+services, plus you can nest it with
+:class:`Symfony\\Contracts\\Service\\Attribute\\SubscribedService`
+attribute::
 
     // src/CommandBus.php
     namespace App;
@@ -345,23 +351,25 @@ services::
     use App\CommandHandler\BazHandler;
     use App\CommandHandler\FooHandler;
     use Psr\Container\ContainerInterface;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
     use Symfony\Component\DependencyInjection\Attribute\AutowireLocator;
+    use Symfony\Contracts\Service\Attribute\SubscribedService;
 
     class CommandBus
     {
         public function __construct(
-            #[AutowireLocator(
-                fooHandlerAlias: FooHandler::class,
-                barHandlerAlias: BarHandler::class,
-                optionalBazHandlerAlias: '?'.BazHandler::class
-            )]
-            private ContainerInterface $locator,
+            #[AutowireLocator([
+                'foo' => FooHandler::class,
+                'bar' => new SubscribedService(type: 'string', attributes: new Autowire('%some.parameter%')),
+                'optionalBaz' => '?'.BazHandler::class,
+            ])]
+            private ContainerInterface $handlers,
         ) {
         }
 
         public function handle(Command $command): mixed
         {
-            $fooHandler = $this->locator->get('fooHandlerAlias');
+            $fooHandler = $this->handlers->get('foo');
 
             // ...
         }
@@ -372,6 +380,20 @@ services::
     The
     :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
     attribute was introduced in Symfony 6.4.
+
+.. note::
+
+    To receive an iterable instead of a service locator, you can switch the
+    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
+    attribute to
+    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireIterator`
+    attribute.
+
+    .. versionadded:: 6.4
+
+        The
+        :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireIterator`
+        attribute was introduced in Symfony 6.4.
 
 .. _service-subscribers-locators_defining-service-locator:
 
