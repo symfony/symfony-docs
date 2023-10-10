@@ -243,8 +243,9 @@ current progress of the bar. Here is a list of the built-in placeholders:
 * ``memory``: The current memory usage;
 * ``message``: used to display arbitrary messages in the progress bar (as explained later).
 
-The time fields ``elapsed``, ``remaining`` and ``estimated`` are displayed with a precision of 2.
-That means `172799` seconds are displayed as ``1 day, 23 hrs`` instead of ``1 day, 23 hrs, 59 mins, 59 secs``.
+The time fields ``elapsed``, ``remaining`` and ``estimated`` are displayed with
+a precision of 2. That means ``172799`` seconds are displayed as
+``1 day, 23 hrs`` instead of ``1 day, 23 hrs, 59 mins, 59 secs``.
 
 For instance, here is how you could set the format to be the same as the
 ``debug`` one::
