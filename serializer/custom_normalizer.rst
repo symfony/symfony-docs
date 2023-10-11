@@ -48,10 +48,10 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
         }
     }
 
-.. deprecated:: 6.4
+.. deprecated:: 6.1
 
     Injecting an ``ObjectNormalizer`` in your custom normalizer is deprecated
-    since Symfony 6.4. Implement the
+    since Symfony 6.1. Implement the
     :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerAwareInterface`
     and use the
     :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizerAwareTrait` instead
