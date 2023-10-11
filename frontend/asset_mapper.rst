@@ -248,7 +248,7 @@ computers if some files are missing.
     such as ``@popperjs/core``. The ``download`` option will download both the main
     package *and* its dependencies.
 
-You can check for available updates for your third-party packages by running :
+You can check for available updates for your third-party packages by running:
 
 .. code-block:: terminal
 
