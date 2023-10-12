@@ -341,7 +341,7 @@ somewhat like this::
         }
 
 
-        public static function handleRequest(Request $request, Response $response, string $publicDirectory): ?string
+        public static function handleRequest(Request $request, Response $response, string $publicDirectory): void
         {
             $legacyScriptFilename = LegacyBridge::getLegacyScript($request);
 
@@ -461,7 +461,7 @@ which script to call and wrap the output in a response class::
         public function loadLegacyScript(string $requestPath, string $legacyScript): StreamedResponse
         {
             return new StreamedResponse(
-                function () use ($requestPath, $legacyScript): string {
+                function () use ($requestPath, $legacyScript): void {
                     $_SERVER['PHP_SELF'] = $requestPath;
                     $_SERVER['SCRIPT_NAME'] = $requestPath;
                     $_SERVER['SCRIPT_FILENAME'] = $legacyScript;
