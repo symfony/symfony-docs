@@ -19,6 +19,8 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
 
     use App\Entity\Topic;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+    use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+    use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
     use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
