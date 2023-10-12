@@ -1,0 +1,24 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-10-12T11:53:39Z
+
+Should target 5.4 branch, right?
+
+---------------------------------------------------------------------------
+
+by gpetraroli at 2023-10-12T12:00:17Z
+
+Only 6.3 doc is concerned I think
+
+---------------------------------------------------------------------------
+
+by artyuum at 2023-10-12T13:29:24Z
+
+@gpetraroli there is another type error here (in case you want to fix that as well), the function return type is set as `string` but it's not returning anything:
+https://github.com/symfony/symfony-docs/blob/b3d1030ff27376bdfc06841557280791e2e70bfd/migration.rst?plain=1#L463-L473
+
+---------------------------------------------------------------------------
+
+by gpetraroli at 2023-10-12T13:38:26Z
+
+Thank you, I will
