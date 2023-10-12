@@ -22,6 +22,8 @@ normalization process::
 
     use App\Entity\Topic;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+    use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
+    use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
     use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
     class TopicNormalizer implements NormalizerInterface, NormalizerAwareInterface
