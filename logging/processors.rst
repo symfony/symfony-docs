@@ -20,10 +20,11 @@ using a processor::
     namespace App\Logger;
 
     use Monolog\LogRecord;
+    use Monolog\Processor\ProcessorInterface;
     use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
     use Symfony\Component\HttpFoundation\RequestStack;
 
-    class SessionRequestProcessor
+    class SessionRequestProcessor implements ProcessorInterface
     {
         public function __construct(
             private RequestStack $requestStack
