@@ -132,7 +132,7 @@ work:
   branch (you can find them on the `Symfony releases page`_). E.g. if you
   found a bug introduced in ``v5.1.10``, you need to work on ``5.4``.
 
-* ``6.3``, if you are adding a new feature.
+* ``6.4``, if you are adding a new feature.
 
   The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
   (5.0, 6.0, etc.) comes out every two years. Because of the
