@@ -152,6 +152,17 @@ Listeners receive a
     It is then dispatched just after the ``ConsoleEvents::ERROR`` event.
     The exit code received in this case is the exception code.
 
+    Additionally, the event is dispatched when the command is being exited on
+    a signal. You can learn more about signals in the
+    :ref:`the dedicated section <console-events_signal>`.
+
+    .. versionadded:: 6.4
+
+        The dispatching of the ``ConsoleEvents::TERMINATE`` event on exit
+        signal was introduced in Symfony 6.4.
+
+.. _console-events_signal:
+
 The ``ConsoleEvents::SIGNAL`` Event
 -----------------------------------
 
