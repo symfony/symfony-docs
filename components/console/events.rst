@@ -158,7 +158,7 @@ Listeners receive a
 
     .. versionadded:: 6.4
 
-        The dispatching of the ``ConsoleEvents::TERMINATE`` event on exit
+        Dispatching the ``ConsoleEvents::TERMINATE`` event on exit
         signal was introduced in Symfony 6.4.
 
 .. _console-events_signal:
