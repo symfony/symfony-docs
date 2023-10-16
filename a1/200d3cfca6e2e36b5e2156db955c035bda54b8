@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-10-16T06:41:01Z
+
+I like this! Thanks Alexander:
+
+I've checked and no URL will be broken by this change ... the slug of this anchor won't change after updating this because we remove characters like `@`, `#` and `[`:
+
+![](https://github.com/symfony/symfony-docs/assets/73419/b5dbf7fc-f423-4843-9d03-be12b691374d)
