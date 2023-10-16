@@ -229,10 +229,6 @@ command:
 
     You can read more about this attribute in :ref:`autowire-attribute`.
 
-    .. versionadded:: 6.1
-
-        The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
-
 Like with all services, you can also use regular
 :ref:`constructor injection <services-constructor-injection>` in your
 controllers.
@@ -383,11 +379,6 @@ attribute, arguments of your controller's action can be automatically fulfilled:
         // ...
     }
 
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryParameter` attribute
-    was introduced in Symfony 6.3.
-
 Mapping The Whole Query String
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -448,15 +439,6 @@ HTTP status to return if the validation fails::
     }
 
 The default status code returned if the validation fails is 404.
-
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryString` attribute
-    was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The ``validationFailedStatusCode`` parameter was introduced in Symfony 6.4.
 
 Mapping Request Payload
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -545,15 +527,6 @@ if you want to map a nested array of specific DTOs::
             public readonly array $users = []
         ) {}
     }
-
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapRequestPayload` attribute
-    was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The ``validationFailedStatusCode`` parameter was introduced in Symfony 6.4.
 
 Managing the Session
 --------------------
@@ -727,11 +700,6 @@ The ``file()`` helper provides some arguments to configure its behavior::
 
 Sending Early Hints
 ~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.3
-
-    The Early Hints helper of the ``AbstractController`` was introduced
-    in Symfony 6.3.
 
 `Early hints`_ tell the browser to start downloading some assets even before the
 application sends the response content. This improves perceived performance

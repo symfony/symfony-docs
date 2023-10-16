@@ -354,12 +354,6 @@ To achieve this, use the 5th argument of ``addArgument()``/``addOption``::
         }
     }
 
-.. versionadded:: 6.1
-
-    The argument to ``addOption()``/``addArgument()`` was introduced in
-    Symfony 6.1. Prior to this version, you had to override the
-    ``complete()`` method of the command.
-
 That's all you need! Assuming users "Fabien" and "Fabrice" exist, pressing
 tab after typing ``app:greet Fa`` will give you these names as a suggestion.
 

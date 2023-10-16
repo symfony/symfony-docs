@@ -485,10 +485,6 @@ then its dump representation::
 .. image:: /_images/components/var_dumper/10-uninitialized.png
     :alt: Dump output where the uninitialized property is represented by a question mark followed by the type definition.
 
-.. versionadded:: 6.4
-
-    Displaying uninitialized variables information was introduced in Symfony 6.4.
-
 .. _var-dumper-advanced:
 
 Advanced Usage

@@ -862,10 +862,6 @@ if an unknown option is passed. You can ignore not defined options by using the
         'version'  => '1.2.3'
     ]);
 
-.. versionadded:: 6.3
-
-    The ``ignoreUndefined()`` method was introduced in Symfony 6.3.
-
 Chaining Option Configurations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

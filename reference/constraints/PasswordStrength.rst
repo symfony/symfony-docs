@@ -1,10 +1,6 @@
 PasswordStrength
 ================
 
-.. versionadded:: 6.3
-
-    The ``PasswordStrength`` constraint was introduced in Symfony 6.3.
-
 Validates that the given password has reached the minimum strength required by
 the constraint. The strengh of the password is not evaluated with a set of
 predefined rules (include a number, use lowercase and uppercase characters,

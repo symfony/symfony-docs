@@ -1,10 +1,6 @@
 The Clock Component
 ===================
 
-.. versionadded:: 6.2
-
-    The Clock component was introduced in Symfony 6.2
-
 The Clock component decouples applications from the system clock. This allows
 you to fix time to improve testability of time-sensitive logic.
 
@@ -78,16 +74,6 @@ Later on this page you can learn how to use this clock in your services and test
 When using the Clock component, you manipulate
 :class:`Symfony\\Component\\Clock\\DatePoint` instances. You can learn more
 about it in :ref:`the dedicated section <clock_date-point>`.
-
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\Clock\\Clock` class and ``now()`` function
-    were introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The ``modifier`` argument of the ``now()`` function was introduced in
-    Symfony 6.4.
 
 Available Clocks Implementations
 --------------------------------
@@ -208,10 +194,6 @@ you can set the current time arbitrarily without having to change your service c
 This will help you test every case of your method without the need of actually
 being in a month or another.
 
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\Clock\\ClockAwareTrait` was introduced in Symfony 6.3.
-
 .. _clock_date-point:
 
 The ``DatePoint`` Class
@@ -252,11 +234,6 @@ The constructor also allows setting a timezone or custom referenced date::
     In addition ``DatePoint`` offers stricter return types and provides consistent
     error handling across versions of PHP, thanks to polyfilling `PHP 8.3's behavior`_
     on the topic.
-
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Component\\Clock\\DatePoint` class was introduced
-    in Symfony 6.4.
 
 .. _clock_writing-tests:
 
@@ -314,10 +291,6 @@ By combining the :class:`Symfony\\Component\\Clock\\ClockAwareTrait` and
 :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait`, you have full
 control on your time-sensitive code's behavior.
 
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\Clock\\Test\\ClockSensitiveTrait` was introduced in Symfony 6.3.
-
 Exceptions Management
 ---------------------
 
@@ -337,11 +310,6 @@ pass an invalid timezone, you'll get a ``DateInvalidTimeZoneException``::
 These exceptions are available starting from PHP 8.3. However, thanks to the
 `symfony/polyfill-php83`_ dependency required by the Clock component, you can
 use them even if your project doesn't use PHP 8.3 yet.
-
-.. versionadded:: 6.4
-
-    The support for ``DateMalformedStringException`` and
-    ``DateInvalidTimeZoneException`` was introduced in Symfony 6.4.
 
 .. _`PSR-20`: https://www.php-fig.org/psr/psr-20/
 .. _`accepted by the DateTime constructor`: https://www.php.net/manual/en/datetime.formats.php

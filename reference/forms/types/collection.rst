@@ -200,10 +200,6 @@ prototype_options
 
 **type**: ``array`` **default**: ``[]``
 
-.. versionadded:: 6.1
-
-    The ``prototype_options`` option was introduced in Symfony 6.1.
-
 This is the array that's passed to the form type specified in the `entry_type`_
 option when creating its prototype. It allows to have different options depending
 on whether you are adding a new entry or editing an existing entry::

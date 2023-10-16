@@ -56,11 +56,6 @@ Start by creating a new class called ``AcmeTestBundle``::
     {
     }
 
-.. versionadded:: 6.1
-
-    The :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` was
-    introduced in Symfony 6.1.
-
 .. caution::
 
     If your bundle must be compatible with previous Symfony versions you have to

@@ -75,10 +75,6 @@ Symfony ships with the following value resolvers in the
     The example above allows requesting only ``/cards/D`` and ``/cards/S``
     URLs and leads to 404 Not Found response in two other cases.
 
-    .. versionadded:: 6.1
-
-        The ``BackedEnumValueResolver`` and ``EnumRequirement`` were introduced in Symfony 6.1.
-
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
 
@@ -97,16 +93,6 @@ Symfony ships with the following value resolvers in the
         This. gives your full control over the date and time values the controller
         receives when testing your application and using the
         :class:`Symfony\\Component\\Clock\\MockClock` implementation.
-
-    .. versionadded:: 6.1
-
-        The ``DateTimeValueResolver`` and the ``MapDateTime`` attribute were
-        introduced in Symfony 6.1.
-
-    .. versionadded:: 6.3
-
-        The use of the :doc:`Clock component </components/clock>` to generate the
-        ``DateTimeInterface`` object was introduced in Symfony 6.3.
 
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestValueResolver`
     Injects the current ``Request`` if type-hinted with ``Request`` or a class
@@ -147,10 +133,6 @@ Symfony ships with the following value resolvers in the
             }
         }
 
-    .. versionadded:: 6.1
-
-        The ``UidValueResolver`` was introduced in Symfony 6.1.
-
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\VariadicValueResolver`
     Verifies if the request data is an array and will add all of them to the
     argument list. When the action is called, the last (variadic) argument will
@@ -176,10 +158,6 @@ In addition, some components, bridges and official bundles provide other value r
     If the argument is not nullable and there is no logged in token, an ``HttpException``
     with status code 401 is thrown by the resolver to prevent access to the controller.
 
-    .. versionadded:: 6.3
-
-        The ``SecurityTokenValueResolver`` was introduced in Symfony 6.3.
-
 :class:`Symfony\\Bridge\\Doctrine\\ArgumentResolver\\EntityValueResolver`
     Automatically query for an entity and pass it as an argument to your controller.
 
@@ -202,10 +180,6 @@ In addition, some components, bridges and official bundles provide other value r
 
     To learn more about the use of the ``EntityValueResolver``, see the dedicated
     section :ref:`Automatically Fetching Objects <doctrine-entity-value-resolver>`.
-
-    .. versionadded:: 6.2
-
-        The ``EntityValueResolver`` was introduced in Symfony 6.2.
 
 PSR-7 Objects Resolver:
     Injects a Symfony HttpFoundation ``Request`` object created from a PSR-7 object
@@ -252,10 +226,6 @@ lets you do this by "targeting" the resolver you want::
         }
     }
 
-.. versionadded:: 6.3
-
-    The ``ValueResolver`` attribute was introduced in Symfony 6.3.
-
 In the example above, the ``SessionValueResolver`` will be called first because
 it is targeted. The ``DefaultValueResolver`` will be called next if no value has
 been provided; that's why you can assign ``null`` as ``$session``'s default value.
@@ -288,13 +258,6 @@ object whenever a controller argument has a type implementing
             // ... do something with $id
         }
     }
-
-.. versionadded:: 6.2
-
-    The ``ValueResolverInterface`` was introduced in Symfony 6.2. Prior to
-    6.2, you had to use the
-    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`,
-    which defines different methods.
 
 Adding a new value resolver requires creating a class that implements
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ValueResolverInterface`
@@ -469,8 +432,3 @@ You can then pass this name as ``ValueResolver``'s first argument to target your
             // ... do something with $id
         }
     }
-
-.. versionadded:: 6.3
-
-    The ``controller.targeted_value_resolver`` tag and ``AsTargetedValueResolver``
-    attribute were introduced in Symfony 6.3.

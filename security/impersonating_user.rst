@@ -242,10 +242,6 @@ also adjust the query parameter name via the ``parameter`` setting:
 Redirecting to a Specific Target Route
 --------------------------------------
 
-.. versionadded:: 6.2
-
-    The ``target_route`` configuration option was introduced in Symfony 6.2.
-
 .. note::
 
     It works only in a stateful firewall.

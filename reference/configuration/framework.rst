@@ -60,10 +60,6 @@ thrown by the application and will turn them into HTTP responses.
 
 Starting from Symfony 7.0, the default value of this option will be ``true``.
 
-.. versionadded:: 6.2
-
-    The ``handle_all_throwables`` option was introduced in Symfony 6.2.
-
 .. _configuration-framework-http_cache:
 
 http_cache
@@ -123,10 +119,6 @@ skip_response_headers
 
 Set of response headers that will never be cached even when the response is cacheable
 and public.
-
-.. versionadded:: 6.3
-
-    The ``skip_response_headers`` option was introduced in Symfony 6.3.
 
 allow_reload
 ............
@@ -209,10 +201,6 @@ trust_x_sendfile_type_header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
-
-.. versionadded:: 6.1
-
-    The ``trust_x_sendfile_type_header`` option was introduced in Symfony 6.1.
 
 ``X-Sendfile`` is a special HTTP header that tells web servers to replace the
 response contents by the file that is defined in that header. This improves
@@ -299,10 +287,6 @@ Since every developer uses a different IDE, the recommended way to enable this
 feature is to configure it on a system level. First, you can define this option
 in the ``SYMFONY_IDE`` environment variable, which Symfony reads automatically
 when ``framework.ide`` config is not set.
-
-.. versionadded:: 6.1
-
-    ``SYMFONY_IDE`` environment variable support was introduced in Symfony 6.1.
 
 Another alternative is to set the ``xdebug.file_link_format`` option in your
 ``php.ini`` configuration file. The format to use is the same as for the
@@ -1016,10 +1000,6 @@ crypto_method
 The minimum version of TLS to accept. The value must be one of the
 ``STREAM_CRYPTO_METHOD_TLSv*_CLIENT`` constants defined by PHP.
 
-.. versionadded:: 6.3
-
-    The ``crypto_method`` option was introduced in Symfony 6.3.
-
 delay
 .....
 
@@ -1044,10 +1024,6 @@ extra
 
 Arbitrary additional data to pass to the HTTP client for further use.
 This can be particularly useful when :ref:`decorating an existing client <extensibility>`.
-
-.. versionadded:: 6.3
-
-    The ``extra`` option has been introduced in Symfony 6.3.
 
 .. _http-headers:
 
@@ -1263,10 +1239,6 @@ enough to be sure about the server, so you should combine this with the
 html_sanitizer
 ~~~~~~~~~~~~~~
 
-.. versionadded:: 6.1
-
-    The HTML sanitizer configuration was introduced in Symfony 6.1.
-
 The ``html_sanitizer`` option (and its children) are used to configure
 custom HTML sanitizers. Read more about the options in the
 :ref:`HTML sanitizer documentation <html-sanitizer-configuration>`.
@@ -1356,10 +1328,6 @@ collect_serializer_data
 Set this option to ``true`` to enable the serializer data collector and its
 profiler panel. When this option is ``true``, all normalizers and encoders are
 decorated by traceable implementations that collect profiling information about them.
-
-.. versionadded:: 6.1
-
-    The ``collect_serializer_data`` option was introduced in Symfony 6.1.
 
 rate_limiter
 ~~~~~~~~~~~~
@@ -1541,10 +1509,6 @@ cache_dir
 
 The directory where routing information will be cached. Can be set to
 ``~`` (``null``) to disable route caching.
-
-.. versionadded:: 6.2
-
-    The ``cache_dir`` setting was introduced in Symfony 6.2.
 
 secrets
 ~~~~~~~
@@ -3374,10 +3338,6 @@ Name of the lock you want to create.
 semaphore
 ~~~~~~~~~
 
-.. versionadded:: 6.1
-
-    The ``semaphore`` option was introduced in Symfony 6.1.
-
 **type**: ``string`` | ``array``
 
 The default semaphore adapter. Store's DSN are also allowed.
@@ -3824,10 +3784,6 @@ to the ``#[WithHttpStatus]`` attribute on the exception class::
     {
     }
 
-.. versionadded:: 6.3
-
-    The ``#[WithHttpStatus]`` attribute was introduced in Symfony 6.3.
-
 It is also possible to map a log level on a custom exception class using
 the ``#[WithLogLevel]`` attribute::
 
@@ -3840,10 +3796,6 @@ the ``#[WithLogLevel]`` attribute::
     class CustomException extends \Exception
     {
     }
-
-.. versionadded:: 6.3
-
-    The ``#[WithLogLevel]`` attribute was introduced in Symfony 6.3.
 
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning

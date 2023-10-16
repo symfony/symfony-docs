@@ -130,10 +130,6 @@ on a link::
     // ... and `clickLink()`
     $crawler = $client->clickLink('Go elsewhere...', ['X-Custom-Header' => 'Some data']);
 
-.. versionadded:: 6.4
-
-    The ``serverParameters`` parameter was introduced in Symfony 6.4.
-
 Submitting Forms
 ~~~~~~~~~~~~~~~~
 
@@ -402,10 +398,6 @@ to call ``json_decode()`` explicitly::
     $browser->request('GET', 'https://api.foo.com');
     $response = $browser->getResponse()->toArray();
     // $response is a PHP array of the decoded JSON contents
-
-.. versionadded:: 6.1
-
-    The ``toArray()`` method was introduced in Symfony 6.1.
 
 Learn more
 ----------

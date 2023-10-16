@@ -291,10 +291,6 @@ Here is a summary that should help you pick the right configuration:
 Ignoring Deprecations
 .....................
 
-.. versionadded:: 6.1
-
-    The ``ignoreFile`` feature was introduced in Symfony 6.1.
-
 If your application has some deprecations that you can't fix for some reasons,
 you can tell Symfony to ignore them.
 
@@ -541,10 +537,6 @@ allows you to mock the PHP's built-in time functions ``time()``, ``microtime()``
 function ``date()`` is mocked so it uses the mocked time if no timestamp is
 specified.
 
-.. versionadded:: 6.2
-
-    Support for mocking the ``hrtime()`` function was introduced in Symfony 6.2.
-
 Other functions with an optional timestamp parameter that defaults to ``time()``
 will still use the system time instead of the mocked time. This means that you
 may need to change some code in your tests. For example, instead of ``new DateTime()``,
@@ -741,10 +733,6 @@ reason, this component also provides mocks for these PHP functions:
 * :phpfunction:`trait_exists`
 * :phpfunction:`enum_exists`
 
-.. versionadded:: 6.3
-
-    The ``enum_exists`` function was introduced in Symfony 6.3.
-
 Use Case
 ~~~~~~~~
 
@@ -815,10 +803,6 @@ To register an enumeration and mock :phpfunction:`enum_exists`,
 PHP 8.1 and later, calling ``class_exists`` on a enum will return ``true``.
 That's why calling ``ClassExistsMock::withMockedEnums()`` will also register the enum
 as a mocked class.
-
-.. versionadded:: 6.3
-
-    The ``enum_exists`` function was introduced in Symfony 6.3.
 
 Troubleshooting
 ---------------

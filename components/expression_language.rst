@@ -92,10 +92,6 @@ can chain multiple coalescing operators.
 * ``foo[3] ?? 'no'``
 * ``foo.baz ?? foo['baz'] ?? 'no'``
 
-.. versionadded:: 6.2
-
-    The null-coalescing operator was introduced in Symfony 6.2.
-
 Passing in Variables
 --------------------
 

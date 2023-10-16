@@ -606,10 +606,6 @@ the :ref:`doctrine-queries` section.
 Automatically Fetching Objects (EntityValueResolver)
 ----------------------------------------------------
 
-.. versionadded:: 6.2
-
-    Entity Value Resolver was introduced in Symfony 6.2.
-
 .. versionadded:: 2.7.1
 
     Autowiring of the ``EntityValueResolver`` was introduced in DoctrineBundle 2.7.1.
@@ -757,11 +753,6 @@ variable. Let's say you pass the page limit of a list in a query parameter::
         iterable $comments
     ): Response {
     }
-
-.. versionadded:: 6.4
-
-    The support for the ``request`` variable in expressions was introduced
-    in Symfony 6.4.
 
 MapEntity Options
 ~~~~~~~~~~~~~~~~~

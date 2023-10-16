@@ -41,10 +41,6 @@ as the second and third parameters::
         $defaultLifetime = 0
     );
 
-.. versionadded:: 6.3
-
-    Support for `Relay`_ was introduced in Symfony 6.3.
-
 Configure the Connection
 ------------------------
 
@@ -162,10 +158,6 @@ array of ``key => value`` pairs representing option names and their respective v
 
 Available Options
 ~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.3
-
-    ``\Relay\Relay`` support was introduced in Symfony 6.3.
 
 ``class`` (type: ``string``, default: ``null``)
     Specifies the connection library to return, either ``\Redis``, ``\Relay\Relay`` or ``\Predis\Client``.

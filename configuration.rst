@@ -81,10 +81,6 @@ readable. These are the main advantages and disadvantages of each format:
     methods in the ``src/Kernel.php`` file to add support for the ``.xml`` file
     extension.
 
-    .. versionadded:: 6.1
-
-        The automatic loading of PHP configuration files was introduced in Symfony 6.1.
-
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -292,14 +288,6 @@ reusable configuration value. By convention, parameters are defined under the
             something@example.com
         </parameter>
 
-.. versionadded:: 6.2
-
-    Passing an enum case as a service parameter was introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The ``trim`` attribute was introduced in Symfony 6.3.
-
 Once defined, you can reference this parameter value from any other
 configuration file using a special syntax: wrap the parameter name in two ``%``
 (e.g. ``%app.admin_email%``):
@@ -394,10 +382,6 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
     ``.mailer.transport``), are available only during the container compilation.
     They are useful when working with :ref:`Compiler Passes </service_container/compiler_passes>`
     to declare some temporary parameters that won't be available later in the application.
-
-.. versionadded:: 6.3
-
-    Compile-time parameters were introduced in Symfony 6.3.
 
 .. seealso::
 
@@ -983,10 +967,6 @@ Use the ``debug:dotenv`` command to understand how Symfony parses the different
 
     # look for a specific variable passing its full or partial name as an argument
     $ php bin/console debug:dotenv foo
-
-.. versionadded:: 6.2
-
-    The option to pass variable names to ``debug:dotenv`` was introduced in Symfony 6.2.
 
 Additionally, and regardless of how you set environment variables, you can see all
 environment variables, with their values, referenced in Symfony's container configuration:

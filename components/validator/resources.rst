@@ -86,11 +86,6 @@ configure the locations of these files::
 The AttributeLoader
 -------------------
 
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AttributeLoader`
-    was introduced in Symfony 6.4.
-
 The component provides an
 :class:`Symfony\\Component\\Validator\\Mapping\\Loader\\AttributeLoader` to get
 the metadata from the attributes of the class. For example::

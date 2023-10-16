@@ -1,10 +1,6 @@
 AssetMapper: Simple, Modern CSS & JS Management
 ===============================================
 
-.. versionadded:: 6.3
-
-    The AssetMapper component was introduced in Symfony 6.3.
-
 The AssetMapper component lets you write modern JavaScript and CSS without the complexity
 of using a bundler. Browsers *already* support many modern JavaScript features
 like the ``import`` statement and ES6 classes. And the HTTP/2 protocol means that
@@ -238,10 +234,6 @@ directory and not commit it to your repository. Therefore, you'll need to run th
 ``php bin/console importmap:install`` command to download the files on other
 computers if some files are missing.
 
-.. versionadded:: 6.4
-
-    The ``importmap:install`` command was introduced in Symfony 6.4.
-
 .. note::
 
     Sometimes, a package - like ``bootstrap`` - will have one or more dependencies,
@@ -257,10 +249,6 @@ You can check for available updates for your third-party packages by running:
 
     # check for updates for the given list of packages
     $ php bin/console importmap:outdated bootstrap lodash
-
-.. versionadded:: 6.4
-
-    The ``importmap:outdated`` command was introduced in Symfony 6.4.
 
 To update third-party packages in your ``importmap.php`` file, run:
 
@@ -680,11 +668,6 @@ same way::
 If the :doc:`WebLink Component </web_link>` is available in your application,
 Symfony will add a ``Link`` header in the response to preload the CSS files.
 
-.. versionadded:: 6.4
-
-    Automatic preloading of CSS files when WebLink is available was
-    introduced in Symfony 6.4.
-
 Frequently Asked Questions
 --------------------------
 
@@ -1100,10 +1083,6 @@ command as part of your CI to be warned anytime a new vulnerability is found.
 
     The command takes a ``--format`` option to choose the output format between
     ``txt`` and ``json``.
-
-.. versionadded:: 6.4
-
-    The ``importmap:audit`` command was introduced in Symfony 6.4.
 
 .. _latest asset-mapper recipe: https://github.com/symfony/recipes/tree/main/symfony/asset-mapper
 .. _import statement: https://caniuse.com/es6-module-dynamic-import

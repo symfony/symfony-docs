@@ -57,11 +57,6 @@ called to determine the default escaping applied to the template.
 If the service defined in ``autoescape_service`` is invocable (i.e. it defines
 the `__invoke() PHP magic method`_) you can omit this option.
 
-.. versionadded:: 6.4
-
-    The feature to use invocable services to omit this option was introduced in
-    Symfony 6.4.
-
 base_template_class
 ~~~~~~~~~~~~~~~~~~~
 
@@ -154,10 +149,6 @@ file_name_pattern
 ~~~~~~~~~~~~~~~~~
 
 **type**: ``string`` or ``array`` of ``string`` **default**: ``[]``
-
-.. versionadded:: 6.1
-
-    The ``file_name_pattern`` option was introduced in Symfony 6.1.
 
 Some applications store their front-end assets in the same directory as Twig
 templates. The ``lint:twig`` command filters those files to only lint the ones
@@ -288,10 +279,6 @@ html_to_text_converter
 ......................
 
 **type**: ``string`` **default**: ````
-
-.. versionadded:: 6.2
-
-    The ``html_to_text_converter`` option was introduced in Symfony 6.2.
 
 The service implementing
 :class:`Symfony\\Component\\Mime\\HtmlToTextConverter\\HtmlToTextConverterInterface`

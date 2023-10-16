@@ -56,10 +56,6 @@ Any hex color is supported for foreground and background colors. Besides that, t
     the nearest color depending on the terminal capabilities. E.g. ``#c0392b`` is
     degraded to ``#d75f5f`` in 256-color terminals and to ``red`` in 8-color terminals.
 
-    .. versionadded:: 6.2
-
-        The support for 256-color terminals was introduced in Symfony 6.2.
-
 And available options are: ``bold``, ``underscore``, ``blink``, ``reverse``
 (enables the "reverse video" mode where the background and foreground colors
 are swapped) and ``conceal`` (sets the foreground color to transparent, making

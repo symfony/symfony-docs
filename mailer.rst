@@ -115,21 +115,6 @@ Service               Install with
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
 ===================== ==============================================
 
-.. versionadded:: 6.2
-
-    The Infobip integration was introduced in Symfony 6.2 and the ``MailPace``
-    integration was renamed in Symfony 6.2 (in previous Symfony versions it was
-    called ``OhMySMTP``).
-
-.. versionadded:: 6.3
-
-    The MailerSend integration was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The ``Brevo`` (in previous Symfony versions it was called ``Sendinblue``)
-    and ``Scaleway`` integrations were introduced in Symfony 6.4.
-
 .. note::
 
     As a convenience, Symfony also provides support for Gmail (``composer
@@ -226,10 +211,6 @@ party provider:
 |                        | - HTTP n/a                                          |
 |                        | - API sendgrid+api://KEY@default                    |
 +------------------------+-----------------------------------------------------+
-
-.. versionadded:: 6.3
-
-    The ``sandbox`` option in ``Mailjet`` API was introduced in Symfony 6.3.
 
 .. caution::
 
@@ -344,10 +325,6 @@ may be specified as SHA1 or MD5 hash::
 
     $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
 
-.. versionadded:: 6.4
-
-    The ``peer_fingerprint`` option was introduced in Symfony 6.4.
-
 Overriding default SMTP authenticators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -372,11 +349,6 @@ This can be done from ``EsmtpTransport`` constructor or using the
 
     // Option 2: call a method to redefine the authenticators
     $transport->setAuthenticators([new XOAuth2Authenticator()]);
-
-.. versionadded:: 6.3
-
-    The ``$authenticators`` constructor parameter and the ``setAuthenticators()``
-    method were introduced in Symfony 6.3.
 
 Other Options
 ~~~~~~~~~~~~~
@@ -412,10 +384,6 @@ Other Options
     The number of messages to send per second (0 to disable this limitation)::
 
         $dsn = 'smtps://smtp.example.com?max_per_second=2'
-
-    .. versionadded:: 6.2
-
-        The ``max_per_second`` option was introduced in Symfony 6.2.
 
 Creating & Sending Messages
 ---------------------------
@@ -815,11 +783,6 @@ for Twig templates::
             'username' => 'foo',
         ])
     ;
-
-.. versionadded:: 6.4
-
-    The :method:`Symfony\\Bridge\\Twig\\Mime\\TemplatedEmail::locale` method
-    was introduced in Symfony 6.4.
 
 Then, create the template:
 
@@ -1414,11 +1377,6 @@ the "rendering" of the email (computed headers, body rendering, ...) is also
 deferred and will only happen just before the email is sent by the Messenger
 handler.
 
-.. versionadded:: 6.2
-
-    The following example about rendering the email before calling
-    ``$mailer->send($email)`` works as of Symfony 6.2.
-
 When sending an email asynchronously, its instance must be serializable.
 This is always the case for :class:`Symfony\\Bridge\\Twig\\Mime\\Email`
 instances, but when sending a
@@ -1492,21 +1450,12 @@ disable asynchronous delivery.
     an open connection to the SMTP server in between sending emails.
     You can do so by using the ``stop()`` method.
 
-.. versionadded:: 6.1
-
-    The :method:`Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport::stop`
-    method was made public in Symfony 6.1.
-
 You can also select the transport by adding an ``X-Bus-Transport`` header (which
 will be removed automatically from the final message)::
 
     // Use the bus transport "app.another_bus":
     $email->getHeaders()->addTextHeader('X-Bus-Transport', 'app.another_bus');
     $mailer->send($email);
-
-.. versionadded:: 6.2
-
-    The ``X-Bus-Transport`` header support was introduced in Symfony 6.2.
 
 Adding Tags and Metadata to Emails
 ----------------------------------
@@ -1549,16 +1498,8 @@ The following transports only support metadata:
 * Amazon SES (note that Amazon refers to this feature as "tags", but Symfony
   calls it "metadata" because it contains a key and a value)
 
-.. versionadded:: 6.1
-
-    Metadata support for Amazon SES was introduced in Symfony 6.1.
-
 Draft Emails
 ------------
-
-.. versionadded:: 6.1
-
-    ``Symfony\Component\Mime\DraftEmail`` was introduced in 6.1.
 
 :class:`Symfony\\Component\\Mime\\DraftEmail` is a special instance of
 :class:`Symfony\\Component\\Mime\\Email`. Its purpose is to build up an email
@@ -1631,10 +1572,6 @@ the email is sent::
         $event->addStamp(new SomeMessengerStamp());
     }
 
-.. versionadded:: 6.2
-
-    Methods ``addStamp()`` and ``getStamps()`` were introduced in Symfony 6.2.
-
 If you want to stop the Message from being sent, call ``reject()`` (it will
 also stop the event propagation)::
 
@@ -1644,10 +1581,6 @@ also stop the event propagation)::
     {
         $event->reject();
     }
-
-.. versionadded:: 6.3
-
-    The ``reject()`` method was introduced in Symfony 6.3.
 
 Execute this command to find out which listeners are registered for this event
 and their priorities:
@@ -1660,10 +1593,6 @@ SentMessageEvent
 ~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\SentMessageEvent`
-
-.. versionadded:: 6.2
-
-    The ``SentMessageEvent`` event was introduced in Symfony 6.2.
 
 ``SentMessageEvent`` allows you to act on the :class:`Symfony\\Component\\\Mailer\\\SentMessage`
 class to access the original message (``getOriginalMessage()``) and some debugging
@@ -1695,10 +1624,6 @@ FailedMessageEvent
 ~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\FailedMessageEvent`
-
-.. versionadded:: 6.2
-
-    The ``FailedMessageEvent`` event was introduced in Symfony 6.2.
 
 ``FailedMessageEvent`` allows acting on the the initial message in case of a failure::
 
@@ -1748,10 +1673,6 @@ to test if sending emails works correctly:
 
 This command bypasses the :doc:`Messenger bus </messenger>`, if configured, to
 ease testing emails even when the Messenger consumer is not running.
-
-.. versionadded:: 6.2
-
-    The ``mailer:test`` command was introduced in Symfony 6.2.
 
 Disabling Delivery
 ~~~~~~~~~~~~~~~~~~

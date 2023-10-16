@@ -80,10 +80,6 @@ implement ``TranslatableInterface`` to translate or display custom labels::
         }
     }
 
-.. versionadded:: 6.4
-
-    Support for ``TranslatableInterface`` was introduced in Symfony 6.4.
-
 Field Options
 -------------
 

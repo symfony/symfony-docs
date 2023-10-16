@@ -177,10 +177,6 @@ populated by using the special ``"\0"`` property name to define their internal v
         "\0" => [$inputArray],
     ]);
 
-.. versionadded:: 6.2
-
-    The :class:`Symfony\\Component\\VarExporter\\Hydrator` was introduced in Symfony 6.2.
-
 Creating Lazy Objects
 ---------------------
 
@@ -288,10 +284,6 @@ Ghost objects unfortunately can't work with abstract classes or internal PHP
 classes. Nevertheless, the VarExporter component covers this need with the help
 of :ref:`Virtual Proxies <var-exporter_virtual-proxies>`.
 
-.. versionadded:: 6.2
-
-    The :class:`Symfony\\Component\\VarExporter\\LazyGhostTrait` was introduced in Symfony 6.2.
-
 .. _var-exporter_virtual-proxies:
 
 LazyProxyTrait
@@ -356,11 +348,6 @@ code::
 Just like ghost objects, while you never query ``$processor->hash``, its value
 will not be computed. The main difference with ghost objects is that this time,
 a proxy of an abstract class was created. This also works with internal PHP class.
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\\Component\\VarExporter\\LazyProxyTrait` and
-    :class:`Symfony\\Component\\VarExporter\\ProxyHelper` were introduced in Symfony 6.2.
 
 .. _`OPcache`: https://www.php.net/opcache
 .. _`PSR-2`: https://www.php-fig.org/psr/psr-2/

@@ -320,11 +320,6 @@ concrete one::
 No further configuration in required, as the test service container is a special one
 that allows you to interact with private services and aliases.
 
-.. versionadded:: 6.3
-
-    The possibility to set a private service with the test service container
-    without declaring a public alias for it was introduced in Symfony 6.3.
-
 .. _testing-databases:
 
 Configuring a Database for Tests
@@ -726,12 +721,6 @@ attributes in this token, you can use the ``tokenAttributes`` argument of the
     By design, the ``loginUser()`` method doesn't work when using stateless firewalls.
     Instead, add the appropriate token/header in each ``request()`` call.
 
-.. versionadded:: 6.4
-
-    The ``tokenAttributes`` argument of the
-    :method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser` method
-    was introduced in Symfony 6.4.
-
 Making AJAX Requests
 ....................
 
@@ -997,11 +986,6 @@ Response Assertions
 ``assertResponseIsUnprocessable(string $message = '')``
     Asserts the response is unprocessable (HTTP status is 422)
 
-.. versionadded:: 6.4
-
-    The support for relative path in ``assertResponseRedirects()`` was introduced
-    in Symfony 6.4.
-
 Request Assertions
 ..................
 
@@ -1063,15 +1047,6 @@ Crawler Assertions
     Asserts that value of the field of the first form matching the given
     selector does (not) equal the expected value.
 
-.. versionadded:: 6.3
-
-    The ``assertSelectorCount()`` method was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The ``assertAnySelectorTextContains()``, ``assertAnySelectorTextNotContains()``
-    and ``assertAnySelectorTextSame()`` were introduced in Symfony 6.4.
-
 .. _mailer-assertions:
 
 Mailer Assertions
@@ -1109,11 +1084,6 @@ Mailer Assertions
     Asserts that the subject of the given email does (not) contain the
     expected subject.
 
-.. versionadded:: 6.4
-
-    The ``assertEmailSubjectContains()`` and ``assertEmailSubjectNotContains()``
-    assertions were introduced in Symfony 6.4.
-
 Notifier Assertions
 ...................
 
@@ -1140,10 +1110,6 @@ Notifier Assertions
     Asserts that the name of the transport for the given notification
     is not the same as the given text.
 
-.. versionadded:: 6.2
-
-    The Notifier assertions were introduced in Symfony 6.2.
-
 HttpClient Assertions
 .....................
 
@@ -1166,10 +1132,6 @@ HttpClient Assertions
     Asserts that the given number of requests has been made on the HttpClient.
     By default it will check on the HttpClient, but you can also pass a specific
     HttpClient ID.
-
-.. versionadded:: 6.4
-
-    The HttpClient assertions were introduced in Symfony 6.4.
 
 .. TODO
 ..  End to End Tests (E2E)

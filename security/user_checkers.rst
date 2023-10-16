@@ -117,10 +117,6 @@ is the service id of your user checker:
 Using Multiple User Checkers
 ----------------------------
 
-.. versionadded:: 6.2
-
-    The ``ChainUserChecker`` class was added in Symfony 6.2.
-
 It is common for applications to have multiple authentication entry points (such as
 traditional form based login and an API) which may have unique checker rules for each
 entry point as well as common rules for all entry points. To allow using multiple user

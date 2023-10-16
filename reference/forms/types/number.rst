@@ -60,10 +60,6 @@ include an `inputmode HTML attribute`_ which depends on the value of this option
 If the ``scale`` value is ``0``, ``inputmode`` will be ``numeric``; if ``scale``
 is set to any value greater than ``0``, ``inputmode`` will be ``decimal``.
 
-.. versionadded:: 6.1
-
-   The automatic addition of the ``inputmode`` attribute was introduced in Symfony 6.1.
-
 Overridden Options
 ------------------
 

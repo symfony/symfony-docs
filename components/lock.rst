@@ -553,11 +553,6 @@ the command:
 
     $ php bin/console make:migration
 
-.. versionadded:: 6.3
-
-    The automatic table generation when running the ``make:migration`` command
-    was introduced in Symfony 6.3.
-
 If you prefer to create the table yourself and it has not already been created, you can
 create this table explicitly by calling the
 :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::createTable` method.
@@ -609,10 +604,6 @@ store locks and does not expire.
 
 RedisStore
 ~~~~~~~~~~
-
-.. versionadded:: 6.3
-
-    ``\Relay\Relay`` support was introduced in Symfony 6.3.
 
 The RedisStore saves locks on a Redis server, it requires a Redis connection
 implementing the ``\Redis``, ``\RedisArray``, ``\RedisCluster``, ``\Relay\Relay`` or

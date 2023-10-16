@@ -251,34 +251,34 @@ directive:
 
 .. code-block:: rst
 
-    .. versionadded:: 6.2
+    .. versionadded:: 7.2
 
-        ... ... ... was introduced in Symfony 6.2.
+        ... ... ... was introduced in Symfony 7.2.
 
 If you are documenting a behavior change, it may be helpful to *briefly*
 describe how the behavior has changed:
 
 .. code-block:: rst
 
-    .. versionadded:: 6.2
+    .. versionadded:: 7.2
 
-       ... ... ... was introduced in Symfony 6.2. Prior to this,
+       ... ... ... was introduced in Symfony 7.2. Prior to this,
        ... ... ... ... ... ... ... ... .
 
-For a deprecation use the ``.. deprecated:: 6.x`` directive:
+For a deprecation use the ``.. deprecated:: 7.x`` directive:
 
 .. code-block:: rst
 
-    .. deprecated:: 6.2
+    .. deprecated:: 7.2
 
-        ... ... ... was deprecated in Symfony 6.2.
+        ... ... ... was deprecated in Symfony 7.2.
 
-Whenever a new major version of Symfony is released (e.g. 7.0, 8.0, etc), a new
+Whenever a new major version of Symfony is released (e.g. 8.0, 9.0, etc), a new
 branch of the documentation is created from the ``x.4`` branch of the previous
 major version. At this point, all the ``versionadded`` and ``deprecated`` tags
 for Symfony versions that have a lower major version will be removed. For
-example, if Symfony 7.0 were released today, 6.0 to 6.4 ``versionadded`` and
-``deprecated`` tags would be removed from the new ``7.0`` branch.
+example, if Symfony 8.0 were released today, 7.0 to 7.4 ``versionadded`` and
+``deprecated`` tags would be removed from the new ``8.0`` branch.
 
 .. _reStructuredText: https://docutils.sourceforge.io/rst.html
 .. _Sphinx: https://www.sphinx-doc.org/

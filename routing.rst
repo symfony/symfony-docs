@@ -48,10 +48,6 @@ classes declared in the ``App\Controller`` namespace and stored in the
 act as a controller too, which is especially useful for small applications that
 use Symfony as a microframework.
 
-.. versionadded:: 6.2
-
-    The feature to import routes from a PSR-4 namespace root was introduced in Symfony 6.2.
-
 Suppose you want to define a route for the ``/blog`` URL in your application. To
 do so, create a :doc:`controller class </controller>` like the following:
 
@@ -374,10 +370,6 @@ can use any of these variables created by Symfony:
     An array of matched :ref:`route parameters <routing-route-parameters>` for
     the current route.
 
-.. versionadded:: 6.1
-
-    The ``params`` variable was introduced in Symfony 6.1.
-
 You can also use these functions:
 
 ``env(string $name)``
@@ -407,11 +399,6 @@ You can also use these functions:
         #[Route(condition: "service('route_checker').check(request)")]
         // Or without alias:
         #[Route(condition: "service('App\\\Service\\\RouteChecker').check(request)")]
-
-.. versionadded:: 6.1
-
-    The ``service(string $alias)`` function and ``#[AsRoutingConditionService]``
-    attribute were introduced in Symfony 6.1.
 
 Behind the scenes, expressions are compiled down to raw PHP. Because of this,
 using the ``condition`` key causes no extra overhead beyond the time it takes
@@ -466,10 +453,6 @@ route details:
 
     Use the ``--show-aliases`` option to show all available aliases for a given
     route.
-
-.. versionadded:: 6.4
-
-    The ``--show-aliases`` option was introduced in Symfony 6.4.
 
 The other command is called ``router:match`` and it shows which route will match
 the given URL. It's useful to find out why some URL is not executing the
@@ -663,10 +646,6 @@ URL                       Route          Parameters
     The :class:`Symfony\\Component\\Routing\\Requirement\\Requirement` enum
     contains a collection of commonly used regular-expression constants such as
     digits, dates and UUIDs which can be used as route parameter requirements.
-
-    .. versionadded:: 6.1
-
-        The ``Requirement`` enum was introduced in Symfony 6.1.
 
 .. tip::
 
@@ -956,12 +935,6 @@ A common routing need is to convert the value stored in some parameter (e.g. an
 integer acting as the user ID) into another value (e.g. the object that
 represents the user). This feature is called a "param converter".
 
-.. versionadded:: 6.2
-
-    Starting from Symfony 6.2, route param conversion is a built-in feature.
-    In previous Symfony versions you had to install the package
-    ``sensio/framework-extra-bundle`` before using this feature.
-
 Now, keep the previous route configuration, but change the arguments of the
 controller action. Instead of ``string $slug``, add ``BlogPost $post``::
 
@@ -997,10 +970,6 @@ database queries used to fetch the object from the route parameter.
 
 Backed Enum Parameters
 ~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.3
-
-    The support of ``\BackedEnum`` as route parameters was introduced Symfony 6.3.
 
 You can use PHP `backed enumerations`_ as route parameters because Symfony will
 convert them automatically to their scalar values.
@@ -1621,13 +1590,6 @@ the current route and its attributes:
 
     {% set route_name = app.current_route %}
     {% set route_parameters = app.current_route_parameters %}
-
-.. versionadded:: 6.2
-
-    The ``app.current_route`` and ``app.current_route_parameters`` variables
-    were introduced in Symfony 6.2.
-    Before you had to access ``_route`` and ``_route_params`` request
-    attributes using ``app.request.attributes.get()``.
 
 Special Routes
 --------------

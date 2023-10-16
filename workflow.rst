@@ -168,11 +168,6 @@ follows:
     ``'draft'`` or ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``
     instead of ``'to_review'``.
 
-.. versionadded:: 6.4
-
-    Since Symfony 6.4, the ``type`` option under ``marking_store`` can be
-    omitted when the ``property`` option is explicitly set.
-
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
     // src/Entity/BlogPost.php
@@ -230,11 +225,6 @@ you must declare a setter to write your property::
             // assign the property and do something with the context
         }
     }
-
-.. versionadded:: 6.4
-
-    The feature to use public properties instead of getter/setter methods
-    and private properties was introduced in Symfony 6.4.
 
 .. note::
 
@@ -341,16 +331,6 @@ attribute::
 
 This allows you to decorrelate the argument name of any implementation
 name.
-
-.. versionadded:: 6.2
-
-    All workflows and state machines services are tagged since in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    Injecting a workflow with only its name and
-    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target` was
-    introduced in Symfony 6.3.
 
 .. tip::
 
@@ -547,10 +527,6 @@ attributes::
 You may refer to the documentation about
 :ref:`defining event listeners with PHP attributes <event-dispatcher_event-listener-attributes>`
 for further use.
-
-.. versionadded:: 6.4
-
-    The workflow event attributes were introduced in Symfony 6.4.
 
 .. _workflow-usage-guard-events:
 

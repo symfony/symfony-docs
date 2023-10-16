@@ -611,10 +611,6 @@ logic about those arguments::
         }
     }
 
-.. versionadded:: 6.1
-
-    The ``#[Autowire]`` attribute was introduced in Symfony 6.1.
-
 The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-parameters>`,
 :doc:`complex expressions </service_container/expression_language>` and even
 :ref:`environment variables <config-env-vars>`::
@@ -647,10 +643,6 @@ The ``#[Autowire]`` attribute can also be used for :ref:`parameters <service-par
         }
         // ...
     }
-
-.. versionadded:: 6.3
-
-    The ``param`` and ``env`` arguments were introduced in Symfony 6.3.
 
 .. _autowiring_closures:
 
@@ -707,11 +699,6 @@ attribute::
         }
     }
 
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireServiceClosure`
-    attribute was introduced in Symfony 6.3.
-
 It is common that a service accepts a closure with a specific signature.
 In this case, you can use the
 :class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable` attribute
@@ -747,11 +734,6 @@ Finally, you can pass the ``lazy: true`` option to the
 attribute. By doing so, the callable will automatically be lazy, which means
 that the encapsulated service will be instantiated **only** at the
 closure's first call.
-
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
-    attribute was introduced in Symfony 6.3.
 
 .. _autowiring-calls:
 

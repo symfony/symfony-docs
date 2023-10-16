@@ -102,26 +102,6 @@ Service             Package                                DSN
 `Yunpian`_          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@default``
 ==================  =====================================  ===========================================================================
 
-.. versionadded:: 6.1
-
-    The 46elks, OrangeSms, KazInfoTeh and Sendberry integrations were introduced in Symfony 6.1.
-    The ``no_stop_clause`` option in ``OvhCloud`` DSN was introduced in Symfony 6.1.
-    The ``test`` option in ``Smsapi`` DSN was introduced in Symfony 6.1.
-
-.. versionadded:: 6.2
-
-    The ContactEveryone and SMSFactor integrations were introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The Bandwith, iSendPro, Plivo, RingCentral, SimpleTextin and Termii integrations
-    were introduced in Symfony 6.3.
-    The ``from`` option in ``Smsapi`` DSN is optional since Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The `Redlink`_ and `Brevo`_ integrations were introduced in Symfony 6.4.
-
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
 
@@ -211,14 +191,6 @@ send SMS messages::
         }
     }
 
-.. versionadded:: 6.2
-
-    The 3rd argument of ``SmsMessage`` (``$from``) was introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The 4th argument of ``SmsMessage`` (``$options``) was introduced in Symfony 6.3.
-
 The ``send()`` method returns a variable of type
 :class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
 information such as the message ID and the original message contents.
@@ -262,14 +234,6 @@ Service                                  Package                               D
 `Zendesk`_                               ``symfony/zendesk-notifier``          ``zendesk://EMAIL:TOKEN@SUBDOMAIN``
 `Zulip`_                                 ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ======================================   ====================================  =============================================================================
-
-.. versionadded:: 6.2
-
-    The Zendesk and Chatwork integration were introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The LINE Notify, Mastodon and Twitter integrations were introduced in Symfony 6.3.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
@@ -449,18 +413,6 @@ Service          Package                               DSN
 `PagerDuty`_     ``symfony/pager-duty-notifier``       ``pagerduty://TOKEN@SUBDOMAIN``
 `Pushover`_      ``symfony/pushover-notifier``         ``pushover://USER_KEY:APP_TOKEN@default``
 ===============  ====================================  ==============================================================================
-
-.. versionadded:: 6.1
-
-    The Engagespot integration was introduced in Symfony 6.1.
-
-.. versionadded:: 6.3
-
-    The PagerDuty and Pushover integrations were introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The Novu, Ntfy and GoIP integrations were introduced in Symfony 6.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -823,10 +775,6 @@ also exists to modify messages sent to those channels.
 Customize Browser Notifications (Flash Messages)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.1
-
-    Support for customizing importance levels was introduced in Symfony 6.1.
-
 The default behavior for browser channel notifications is to add a
 :ref:`flash message <flash-messages>` with ``notification`` as its key.
 
@@ -885,11 +833,6 @@ You can benefit from this class by using it directly or extending the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`.
 
 See :ref:`testing documentation <notifier-assertions>` for the list of available assertions.
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\NotificationAssertionsTrait`
-    was introduced in Symfony 6.2.
 
 Disabling Delivery
 ------------------

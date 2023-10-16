@@ -320,10 +320,6 @@ In your extension, you can load this and dynamically set its arguments::
 Using the AbstractBundle Class
 ------------------------------
 
-.. versionadded:: 6.1
-
-    The ``AbstractBundle`` class was introduced in Symfony 6.1.
-
 As an alternative, instead of creating an extension and configuration class as
 shown in the previous section, you can also extend
 :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` to add this

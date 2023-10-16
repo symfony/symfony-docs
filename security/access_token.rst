@@ -352,10 +352,6 @@ an authorization server.
 1) Configure the OidcUserInfoTokenHandler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.3
-
-    The ``OidcUserInfoTokenHandler`` class was introduced in Symfony 6.3.
-
 The ``OidcUserInfoTokenHandler`` requires the ``symfony/http-client`` package to
 make the needed HTTP requests. If you haven't installed it yet, run this command:
 
@@ -538,10 +534,6 @@ claims. To create your own user object from the claims, you must
 
 2) Configure the OidcTokenHandler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.3
-
-    The ``OidcTokenHandler`` class was introduced in Symfony 6.3.
 
 The ``OidcTokenHandler`` requires ``web-token/jwt-signature``,
 ``web-token/jwt-checker`` and ``web-token/jwt-signature-algorithm-ecdsa``

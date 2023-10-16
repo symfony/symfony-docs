@@ -145,11 +145,6 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getString`
     Returns the parameter value as a string;
 
-.. versionadded:: 6.3
-
-    The ``ParameterBag::getEnum()`` and ``ParameterBag::getString()`` methods
-    were introduced in Symfony 6.3.
-
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
     If invalid values are found, a
@@ -219,11 +214,6 @@ which returns an instance of :class:`Symfony\\Component\\HttpFoundation\\InputBa
 wrapping this data::
 
     $data = $request->getPayload();
-
-.. versionadded:: 6.3
-
-    The :method:`Symfony\\Component\\HttpFoundation\\Request::getPayload`
-    method was introduced in Symfony 6.3.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -388,10 +378,6 @@ use the ``isPrivateIp()`` method from the
     $ipv6 = '2a01:198:603:10:396e:4789:8e99:890f';
     $isPrivate = IpUtils::isPrivateIp($ipv6);
     // $isPrivate = false
-
-.. versionadded:: 6.3
-
-    The ``isPrivateIp()`` method was introduced in Symfony 6.3.
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
@@ -562,11 +548,6 @@ call::
         'etag'             => 'abcdef',
     ]);
 
-.. versionadded:: 6.1
-
-    The ``stale_if_error`` and ``stale_while_revalidate`` options were
-    introduced in Symfony 6.1.
-
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
 :method:`Symfony\\Component\\HttpFoundation\\Response::isNotModified`
@@ -629,11 +610,6 @@ represented by a PHP callable instead of a string::
 Streaming a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` class was
-    introduced in Symfony 6.3.
-
 The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` allows to
 stream large JSON responses using PHP generators to keep the used resources low.
 
@@ -646,9 +622,9 @@ containing JSON serializable data::
 
     // any method or function returning a PHP Generator
     function loadArticles(): \Generator {
-         yield ['title' => 'Article 1'];
-         yield ['title' => 'Article 2'];
-         yield ['title' => 'Article 3'];
+        yield ['title' => 'Article 1'];
+        yield ['title' => 'Article 2'];
+        yield ['title' => 'Article 3'];
     };
 
     $response = new StreamedJsonResponse(
@@ -722,10 +698,6 @@ including generators::
 
         return new StreamedJsonResponse(loadArticles());
     }
-
-.. versionadded:: 6.4
-
-    The ``StreamedJsonResponse`` support of iterables was introduced in Symfony 6.4.
 
 .. _component-http-foundation-serving-files:
 
