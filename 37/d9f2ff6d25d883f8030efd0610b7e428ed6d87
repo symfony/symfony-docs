@@ -1,0 +1,29 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-06-22T15:08:19Z
+
+I would keep this PR on hold and only do this change close to a 7.0 release because we have a lot of merge conflicts with no reason in between
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-06-22T15:27:41Z
+
+@OskarStark alright got it, thanks!
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-10-16T08:53:48Z
+
+I rebased on 7.0. As feature freeze is now here, I think it's safe to update this PR now :slightly_smiling_face:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-10-16T10:53:16Z
+
+Please update `.doctor-rst.yaml` file too
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-10-16T11:57:02Z
+
+Here you go :)
