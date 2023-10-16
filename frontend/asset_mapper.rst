@@ -677,8 +677,8 @@ same way::
     live in your ``importmap.php`` file, so their preload setting is handled
     explicitly in that file.
 
-For used CSS files, a "preload" tag will automatically be rendered onto your page
-when the :doc:`WebLink Component </web_link>` is available.
+If the :doc:`WebLink Component </web_link>` is available in your application,
+Symfony will add a ``Link`` header in the response to preload the CSS files.
 
 .. versionadded:: 6.4
 
