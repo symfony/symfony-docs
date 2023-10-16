@@ -137,8 +137,6 @@ For performance, Encore does not process libraries inside ``node_modules/`` thro
 Babel. But, you can change that via the ``configureBabel()`` method. See
 :doc:`/frontend/encore/babel` for details.
 
-.. _`rsync`: https://rsync.samba.org/
-
 How Do I Integrate my Encore Configuration with my IDE?
 -------------------------------------------------------
 
@@ -168,8 +166,6 @@ running it (e.g. when executing ``yarn encore dev``). Fix this issue calling to
 
     // ... the rest of the Encore configuration
 
-.. _`Webpack integration in PhpStorm`: https://www.jetbrains.com/help/phpstorm/using-webpack.html
-
 My Tests are Failing Because of ``entrypoints.json`` File
 ---------------------------------------------------------
 
@@ -194,3 +190,6 @@ functions to trigger exceptions when there's no ``entrypoints.json`` file):
     webpack_encore:
         strict_mode: false
         # ...
+
+.. _`rsync`: https://rsync.samba.org/
+.. _`Webpack integration in PhpStorm`: https://www.jetbrains.com/help/phpstorm/using-webpack.html
