@@ -618,13 +618,6 @@ of the opened file, but you can configure both with the PHP streaming configurat
     stream_context_set_option($fileHandle, 'http', 'filename', 'the-name.txt');
     stream_context_set_option($fileHandle, 'http', 'content_type', 'my/content-type');
 
-.. versionadded:: 6.3
-
-    The feature to upload files using handles was introduced in Symfony 6.3.
-    In previous Symfony versions you had to encode the body contents according
-    to the ``multipart/form-data`` content-type using the :doc:`Symfony Mime </components/mime>`
-    component.
-
 .. tip::
 
     When using multidimensional arrays the :class:`Symfony\\Component\\Mime\\Part\\Multipart\\FormDataPart`
@@ -717,10 +710,6 @@ when using any HTTP method and ``500``, ``504``, ``507`` and ``510`` when using
 an HTTP `idempotent method`_. Use the ``max_retries`` setting to configure the
 amount of times a request is retried.
 
-.. versionadded:: 6.4
-
-    The ``max_retries`` options was introduced in Symfony 6.4.
-
 Check out the full list of configurable :ref:`retry_failed options <reference-http-client-retry-failed>`
 to learn how to tweak each of them to fit your application needs.
 
@@ -739,10 +728,6 @@ each retry.
 
 Retry Over Several Base URIs
 ............................
-
-.. versionadded:: 6.3
-
-    The multiple ``base_uri`` feature was added in Symfony 6.3.
 
 The ``RetryableHttpClient`` can be configured to use multiple base URIs. This
 feature provides increased flexibility and reliability for making HTTP
@@ -961,11 +946,6 @@ of your application:
 If you want to define your own logic to handle variables of URI templates, you
 can do so by redefining the ``http_client.uri_template_expander`` alias. Your
 service must be invokable.
-
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\HttpClient\\UriTemplateHttpClient` was
-    introduced in Symfony 6.3.
 
 Performance
 -----------
@@ -1525,10 +1505,6 @@ to wrap your HTTP client, open a connection to a server that responds with a
     use the :method:`Symfony\\Component\\HttpClient\\Chunk\\ServerSentEvent::getArrayData`
     method to directly get the decoded JSON as array.
 
-.. versionadded:: 6.3
-
-    The ``ServerSentEvent::getArrayData()`` method was introduced in Symfony 6.3.
-
 Interoperability
 ----------------
 
@@ -1646,10 +1622,6 @@ You can also pass a set of default options to your client thanks to the
 
     // ...
 
-.. versionadded:: 6.2
-
-    The ``Psr18Client::withOptions()`` method was introduced in Symfony 6.2.
-
 HTTPlug
 ~~~~~~~
 
@@ -1750,10 +1722,6 @@ You can also pass a set of default options to your client thanks to the
     $request = $httpClient->createRequest('GET', '/');
 
     // ...
-
-.. versionadded:: 6.2
-
-    The ``HttplugClient::withOptions()`` method was introduced in Symfony 6.2.
 
 Native PHP Streams
 ~~~~~~~~~~~~~~~~~~
@@ -2096,10 +2064,6 @@ You can use :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse` 
         'foo' => 'bar',
     ]);
 
-.. versionadded:: 6.3
-
-    The ``JsonMockResponse`` was introduced in Symfony 6.3.
-
 Testing Request Data
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -2251,10 +2215,6 @@ will find the associated response based on the request method, URL and body (if 
 Note that **this won't work** if the request body or URI is random / always
 changing (e.g. if it contains current date or random UUIDs).
 
-.. versionadded:: 6.4
-
-    The ``HarFileResponseFactory`` was introduced in Symfony 6.4.
-
 Testing Network Transport Exceptions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2300,12 +2260,6 @@ you to do so, by yielding the exception from its body::
             }
         }
     }
-
-.. versionadded:: 6.1
-
-    Being allowed to pass an exception directly to the body of a
-    :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` was
-    introduced in Symfony 6.1.
 
 .. _`cURL PHP extension`: https://www.php.net/curl
 .. _`Zlib PHP extension`: https://www.php.net/zlib

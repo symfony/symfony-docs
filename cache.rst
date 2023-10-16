@@ -745,19 +745,11 @@ Clear all cache pools:
 
     $ php bin/console cache:pool:clear --all
 
-.. versionadded:: 6.3
-
-    The ``--all`` option was introduced in Symfony 6.3.
-
 Clear all cache pools except some:
 
 .. code-block:: terminal
 
     $ php bin/console cache:pool:clear --all --exclude=my_cache_pool --exclude=another_cache_pool
-
-.. versionadded:: 6.4
-
-    The ``--exclude`` option was introduced in Symfony 6.4.
 
 Clear all caches everywhere:
 
@@ -766,10 +758,6 @@ Clear all caches everywhere:
     $ php bin/console cache:pool:clear cache.global_clearer
 
 Clear cache by tag(s):
-
-.. versionadded:: 6.1
-
-    The ``cache:pool:invalidate-tags`` command was introduced in Symfony 6.1.
 
 .. code-block:: terminal
 

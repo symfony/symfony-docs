@@ -67,14 +67,6 @@ command, for instance:
 Console Completion
 ~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.1
-
-    Console completion for Fish was introduced in Symfony 6.1.
-
-.. versionadded:: 6.2
-
-    Console completion for Zsh was introduced in Symfony 6.2.
-
 If you are using the Bash, Zsh or Fish shell, you can install Symfony's
 completion script to get auto completion when typing commands in the
 terminal. All commands support name and option completion, and some can
@@ -355,10 +347,6 @@ method, which returns an instance of
 .. note::
 
     A new line is appended automatically when displaying information in a section.
-
-.. versionadded:: 6.2
-
-    The feature to limit the height of a console section was introduced in Symfony 6.2.
 
 Output sections let you manipulate the Console output in advanced ways, such as
 :ref:`displaying multiple progress bars <console-multiple-progress-bars>` which

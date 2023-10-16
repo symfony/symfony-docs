@@ -15,7 +15,3 @@ Use this to add additional HTML attributes to the placeholder choice::
             ['title' => 'Choose an option'],
         ],
     ]);
-
-.. versionadded:: 6.3
-
-    The ``placeholder_attr`` option was introduced in Symfony 6.3.

@@ -272,10 +272,6 @@ Parameter          Description
 ``{{ pattern }}``  The expected matching pattern
 =================  ==============================================================
 
-.. versionadded:: 6.3
-
-   The ``{{ pattern }}`` parameter was introduced in 6.3.
-
 ``pattern``
 ~~~~~~~~~~~
 

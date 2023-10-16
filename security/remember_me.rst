@@ -152,10 +152,6 @@ you can add a ``_remember_me`` key to the body of your POST request.
     Optionally, you can configure a custom name for this key using the
     ``name`` setting under the ``remember_me`` section of your firewall.
 
-.. versionadded:: 6.3
-
-    The JSON login ``_remember_me`` option was introduced in Symfony 6.3.
-
 Always activating Remember Me
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

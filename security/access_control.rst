@@ -33,14 +33,6 @@ options are used for matching:
 * ``attributes``: an array, which can be used to specify one or more :ref:`request attributes <accessing-request-data>` that must match exactly
 * ``route``: a route name
 
-.. versionadded:: 6.1
-
-    The ``request_matcher`` option was introduced in Symfony 6.1.
-
-.. versionadded:: 6.2
-
-    The ``route`` and ``attributes`` options were introduced in Symfony 6.2.
-
 Take the following ``access_control`` entries as an example:
 
 .. configuration-block::

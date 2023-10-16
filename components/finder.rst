@@ -340,11 +340,6 @@ Sort the results by name, extension, size or type (directories first, then files
     $finder->sortBySize();
     $finder->sortByType();
 
-.. versionadded:: 6.2
-
-    The ``sortByCaseInsensitiveName()``, ``sortByExtension()`` and ``sortBySize()``
-    methods were introduced in Symfony 6.2.
-
 .. tip::
 
     By default, the ``sortByName()`` method uses the :phpfunction:`strcmp` PHP

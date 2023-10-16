@@ -37,10 +37,6 @@ entered into the box, set this to false and submit the form.
 
 **type**: ``string`` **default**: ``null``
 
-.. versionadded:: 6.2
-
-    The ``hash_property_path`` option was introduced in Symfony 6.2.
-
 If set, the password will be hashed using the
 :doc:`PasswordHasher component </security/passwords>` and stored in the
 property defined by the given :doc:`PropertyAccess expression </components/property_access>`.

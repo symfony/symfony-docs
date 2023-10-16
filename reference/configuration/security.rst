@@ -497,10 +497,6 @@ It's also possible to use ``*`` as a wildcard for all directives:
             ],
         ]);
 
-.. versionadded:: 6.3
-
-    The ``clear_site_data`` option was introduced in Symfony 6.3.
-
 invalidate_session
 ..................
 
@@ -540,10 +536,6 @@ enable_csrf
 Set this option to ``true`` to enable CSRF protection in the logout process
 using Symfony's default CSRF token manager. Set also the ``csrf_token_manager``
 option if you need to use a custom CSRF token manager.
-
-.. versionadded:: 6.2
-
-    The ``enable_csrf`` option was introduced in Symfony 6.2.
 
 csrf_parameter
 ..............
@@ -807,10 +799,6 @@ user_identifier
 
 **type**: ``string`` **default**: ``emailAddress``
 
-.. versionadded:: 6.3
-
-    The ``user_identifier`` option was introduced in Symfony 6.3.
-
 The value of this option tells Symfony which parameter to use to find the user
 identifier in the "distinguished name".
 
@@ -1012,10 +1000,6 @@ the session must not be used when authenticating users:
 
 Routes under this firewall will be :ref:`configured stateless <stateless-routing>`
 when they are not explicitly configured stateless or not.
-
-.. versionadded:: 6.3
-
-    Stateless firewall marking routes stateless was introduced in Symfony 6.3.
 
 User Checkers
 ~~~~~~~~~~~~~

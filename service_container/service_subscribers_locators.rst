@@ -247,10 +247,6 @@ service type to a service.
 Add Dependency Injection Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.2
-
-    The ability to add attributes was introduced in Symfony 6.2.
-
 As an alternate to aliasing services in your configuration, you can also configure
 the following dependency injection attributes in the ``getSubscribedServices()``
 method directly:
@@ -375,12 +371,6 @@ attribute::
         }
     }
 
-.. versionadded:: 6.4
-
-    The
-    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
-    attribute was introduced in Symfony 6.4.
-
 .. note::
 
     To receive an iterable instead of a service locator, you can switch the
@@ -388,12 +378,6 @@ attribute::
     attribute to
     :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireIterator`
     attribute.
-
-    .. versionadded:: 6.4
-
-        The
-        :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireIterator`
-        attribute was introduced in Symfony 6.4.
 
 .. _service-subscribers-locators_defining-service-locator:
 
@@ -938,10 +922,6 @@ and compose your services with them::
 
 ``SubscribedService`` Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.2
-
-    The ability to add attributes was introduced in Symfony 6.2.
 
 You can use the ``attributes`` argument of ``SubscribedService`` to add any
 of the following dependency injection attributes:

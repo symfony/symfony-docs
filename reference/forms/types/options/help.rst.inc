@@ -19,8 +19,3 @@ rendered below the field::
             'help' => new TranslatableMessage('order.status', ['%order_id%' => $order->getId()], 'store'),
         ])
     ;
-
-.. versionadded:: 6.2
-
-    The support for ``TranslatableInterface`` objects as help contents was
-    introduced in Symfony 6.2.

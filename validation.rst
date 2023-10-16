@@ -203,10 +203,6 @@ Inside the template, you can output the list of errors exactly as needed:
     object allows you, among other things, to get the constraint that caused this
     violation thanks to the ``ConstraintViolation::getConstraint()`` method.
 
-.. versionadded:: 6.3
-
-    The ``ConstraintViolation::getConstraint()`` method was introduced in Symfony 6.3.
-
 Validation Callables
 ~~~~~~~~~~~~~~~~~~~~
 

@@ -361,11 +361,6 @@ this option to specify one or more fields to only ignore ``null`` values on them
     database, you might see insertion errors when your application attempts to
     persist entities that the ``UniqueEntity`` constraint considers valid.
 
-.. versionadded:: 6.3
-
-    The option to ignore ``null`` values for specific fields was introduced
-    in Symfony 6.3.
-
 ``message``
 ~~~~~~~~~~~
 

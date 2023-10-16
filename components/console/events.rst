@@ -156,11 +156,6 @@ Listeners receive a
     a signal. You can learn more about signals in the
     :ref:`the dedicated section <console-events_signal>`.
 
-    .. versionadded:: 6.4
-
-        Dispatching the ``ConsoleEvents::TERMINATE`` event on exit
-        signal was introduced in Symfony 6.4.
-
 .. _console-events_signal:
 
 The ``ConsoleEvents::SIGNAL`` Event
@@ -206,11 +201,6 @@ method::
     $dispatcher->addListener(ConsoleEvents::SIGNAL, function (ConsoleSignalEvent $event) {
         $event->abortExit();
     });
-
-.. versionadded:: 6.3
-
-    The ``setExitCode()``, ``getExitCode()`` and ``abortExit()`` methods were introduced
-    in Symfony 6.3.
 
 .. tip::
 
@@ -261,11 +251,6 @@ handle all signals e.g. to do some tasks before terminating the command.
     you can use the
     :method:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap::getSignalName`
     method.
-
-    .. versionadded:: 6.4
-
-        The :class:`Symfony\\Component\\Console\\SignalRegistry\\SignalMap` class was
-        introduced in Symfony 6.4.
 
 .. _`reserved exit codes`: https://www.tldp.org/LDP/abs/html/exitcodes.html
 .. _`Signals`: https://en.wikipedia.org/wiki/Signal_(IPC)

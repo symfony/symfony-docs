@@ -210,10 +210,6 @@ numeric country codes::
     $exists = Countries::numericCodeExists('250');
     // => true
 
-.. versionadded:: 6.4
-
-    The support for numeric country codes was introduced in Symfony 6.4.
-
 Locales
 ~~~~~~~
 
@@ -397,10 +393,6 @@ to catching the exception, you can also check if a given timezone ID is valid::
 Emoji Transliteration
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.2
-
-    The Emoji transliteration feature was introduced in Symfony 6.2.
-
 The ``EmojiTransliterator`` class provides a utility to translate emojis into
 their textual representation in all languages based on the `Unicode CLDR dataset`_::
 
@@ -447,10 +439,6 @@ Symfony emoji data files using the PHP ``zlib`` extension:
 
     # adjust the path to the 'compress' binary based on your application installation
     $ php ./vendor/symfony/intl/Resources/bin/compress
-
-.. versionadded:: 6.3
-
-    The ``compress`` binary was introduced in Symfony 6.3.
 
 Learn more
 ----------

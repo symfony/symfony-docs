@@ -385,19 +385,6 @@ gives you access to these variables:
 ``app.enabled_locales``
     The locales enabled in the application.
 
-.. versionadded:: 6.2
-
-    The ``app.current_route`` and ``app.current_route_parameters`` variables
-    were introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The ``app.locale`` variable was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The ``app.enabled_locales`` variable was introduced in Symfony 6.4.
-
 In addition to the global ``app`` variable injected by Symfony, you can also
 inject variables automatically to all Twig templates as explained in the next
 section.
@@ -606,10 +593,6 @@ to define the template to render::
         }
     }
 
-.. versionadded:: 6.2
-
-    The ``#[Template()]`` attribute was introduced in Symfony 6.2.
-
 The :ref:`base AbstractController <the-base-controller-classes-services>` also provides the
 :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlock`
 and :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlockView`
@@ -648,13 +631,6 @@ methods::
 This might come handy when dealing with blocks in
 :ref:`templates inheritance <template_inheritance-layouts>` or when using
 `Turbo Streams`_.
-
-.. versionadded:: 6.4
-
-    The
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlock` and
-    :method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\AbstractController::renderBlockView`
-    methods were introduced in Symfony 6.4.
 
 Rendering a Template in Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -906,10 +882,6 @@ depending on your needs:
             {{ article.title }}
         </a>
     {% endfor %}
-
-.. versionadded:: 6.3
-
-    The option to use named arguments in ``dump()`` was introduced in Symfony 6.3.
 
 To avoid leaking sensitive information, the ``dump()`` function/tag is only
 available in the ``dev`` and ``test`` :ref:`configuration environments <configuration-environments>`.

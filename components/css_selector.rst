@@ -94,10 +94,6 @@ Pseudo-classes are partially supported:
   ``li:first-of-type``) but not with the ``*`` selector).
 * Supported: ``*:only-of-type``, ``*:scope``.
 
-.. versionadded:: 6.3
-
-    The support for ``*:scope`` was introduced in Symfony 6.3.
-
 Learn more
 ----------
 

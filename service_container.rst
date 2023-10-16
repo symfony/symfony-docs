@@ -816,10 +816,6 @@ Our configuration looks like this:
     Closures can be injected :ref:`by using autowiring <autowiring_closures>`
     and its dedicated attributes.
 
-.. versionadded:: 6.1
-
-    The ``closure`` argument type was introduced in Symfony 6.1.
-
 .. _services-binding:
 
 Binding Arguments by Name or Type
@@ -1168,11 +1164,6 @@ key. For example, the default Symfony configuration contains this:
     may use the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Exclude`
     attribute directly on your class to exclude it.
 
-    .. versionadded:: 6.3
-
-        The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Exclude`
-        attribute was introduced in Symfony 6.3.
-
 This can be used to quickly make many classes available as services and apply some
 default configuration. The ``id`` of each service is its fully-qualified class name.
 You can override any service that's imported by using its id (class name) below
@@ -1450,11 +1441,6 @@ Thanks to the ``#[AutowireCallable]`` attribute, you can now inject this
             // ...
         }
     }
-
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
-    attribute was introduced in Symfony 6.3.
 
 Instead of using the ``#[AutowireCallable]`` attribute, you can also generate
 an adapter for a functional interface through configuration:

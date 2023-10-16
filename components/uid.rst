@@ -70,10 +70,6 @@ to create each type of UUID::
     // UUIDv8 uniqueness will be implementation-specific and SHOULD NOT be assumed.
     $uuid = Uuid::v8();
 
-.. versionadded:: 6.2
-
-    UUID versions 7 and 8 were introduced in Symfony 6.2.
-
 If your UUID value is already generated in another format, use any of the
 following methods to create a ``Uuid`` object from it::
 
@@ -184,10 +180,6 @@ Use these methods to transform the UUID object into different bases::
     $uuid->toRfc4122(); // string(36) "d9e7a184-5d5b-11ea-a62a-3499710062d0"
     $uuid->toHex();     // string(34) "0xd9e7a1845d5b11eaa62a3499710062d0"
 
-.. versionadded:: 6.2
-
-    The ``toHex()`` method was introduced in Symfony 6.2.
-
 Working with UUIDs
 ~~~~~~~~~~~~~~~~~~
 
@@ -246,10 +238,6 @@ type, which converts to/from UUID objects automatically::
 
         // ...
     }
-
-.. versionadded:: 6.2
-
-    The ``UuidType::NAME`` constant was introduced in Symfony 6.2.
 
 There's also a Doctrine generator to help auto-generate UUID values for the
 entity primary keys::
@@ -387,10 +375,6 @@ Use these methods to transform the ULID object into different bases::
     $ulid->toRfc4122(); // string(36) "0171069d-593d-97d3-8b3e-23d06de5b308"
     $ulid->toHex();     // string(34) "0x0171069d593d97d38b3e23d06de5b308"
 
-.. versionadded:: 6.2
-
-    The ``toHex()`` method was introduced in Symfony 6.2.
-
 Working with ULIDs
 ~~~~~~~~~~~~~~~~~~
 
@@ -433,10 +417,6 @@ type, which converts to/from ULID objects automatically::
 
         // ...
     }
-
-.. versionadded:: 6.2
-
-    The ``UlidType::NAME`` constant was introduced in Symfony 6.2.
 
 There's also a Doctrine generator to help auto-generate ULID values for the
 entity primary keys::

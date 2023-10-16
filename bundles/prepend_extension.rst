@@ -154,10 +154,6 @@ registered and the ``entity_manager_name`` setting for ``acme_hello`` is set to
 Prepending Extension in the Bundle Class
 ----------------------------------------
 
-.. versionadded:: 6.1
-
-    The ``AbstractBundle`` class was introduced in Symfony 6.1.
-
 You can also append or prepend extension configuration directly in your
 Bundle class if you extend from the :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle`
 class and define the :method:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle::prependExtension`

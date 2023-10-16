@@ -261,10 +261,6 @@ in performance, you can stop generating the file as follows:
         // ...
         $container->parameters()->set('debug.container.dump', false);
 
-.. versionadded:: 6.3
-
-    The ``debug.container.dump`` option was introduced in Symfony 6.3.
-
 .. _profiling-applications:
 
 Profiling Symfony Applications

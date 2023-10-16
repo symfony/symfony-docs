@@ -157,10 +157,6 @@ configuration:
             ;
         };
 
-.. versionadded:: 6.2
-
-    The option to configure YAML indentation was introduced in Symfony 6.2.
-
 You can also specify the context on a per-property basis::
 
 .. configuration-block::
@@ -267,18 +263,10 @@ all the properties of the class::
         // ...
     }
 
-.. versionadded:: 6.4
-
-    The ``#[Context]`` attribute was introduced in Symfony 6.4.
-
 .. _serializer-using-context-builders:
 
 Using Context Builders
 ----------------------
-
-.. versionadded:: 6.1
-
-    Context builders were introduced in Symfony 6.1.
 
 To define the (de)serialization context, you can use "context builders", which
 are objects that help you to create that context by providing autocompletion,
@@ -369,11 +357,6 @@ In this example, the ``id`` and the ``name`` properties belong to the
 ``show_product`` and ``list_product`` groups. The ``description`` property
 only belongs to the ``show_product`` group.
 
-.. versionadded:: 6.4
-
-    The support of the ``#[Groups]`` attribute on class level was
-    introduced in Symfony 6.4.
-
 Now that your groups are defined, you can choose which groups to use when
 serializing::
 
@@ -443,10 +426,6 @@ their paths using a :doc:`valid PropertyAccess syntax </components/property_acce
                 <attribute name="dob" serialized-path="[profile][information][birthday]"/>
             </class>
         </serializer>
-
-.. versionadded:: 6.2
-
-    The option to configure a ``SerializedPath`` was introduced in Symfony 6.2.
 
 Using the configuration from above, denormalizing with a metadata-aware
 normalizer will write the ``birthday`` field from ``$data`` onto the ``Person``
@@ -550,11 +529,6 @@ given class:
         |          |   "denormalizationContexts" => []                          |
         |          | ]                                                          |
         +----------+------------------------------------------------------------+
-
-.. versionadded:: 6.3
-
-    The debug:serializer`` command was introduced in Symfony 6.3.
-
 
 Going Further with the Serializer
 ---------------------------------

@@ -283,10 +283,6 @@ machine type, use ``camelCased workflow name + StateMachine``::
     }
 
 
-.. versionadded:: 6.2
-
-    All workflows and state machines services are tagged since in Symfony 6.2.
-
 Automatic and Manual Validation
 -------------------------------
 

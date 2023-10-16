@@ -21,11 +21,6 @@ The component supports:
 * **null** - ``null``
 * **exponential** - also known as scientific (e.g. ``1.99E+3`` or ``1e-2``)
 
-.. versionadded:: 6.1
-
-    Support for decimals without leading zeros and underscore separators were
-    introduced in Symfony 6.1.
-
 .. caution::
 
     A backslash (``\``) must be escaped by 4 backslashes (``\\\\``) in a string
@@ -114,10 +109,6 @@ operator)::
     $expressionLanguage->evaluate('fruit?.color', ['fruit' => '...'])
     $expressionLanguage->evaluate('fruit?.getStock()', ['fruit' => '...'])
 
-.. versionadded:: 6.1
-
-    The null safe operator was introduced in Symfony 6.1.
-
 .. _component-expression-functions:
 
 Working with Functions
@@ -175,10 +166,6 @@ This function will return the case of an enumeration::
     ));
 
 This will print out ``true``.
-
-.. versionadded:: 6.3
-
-    The ``enum()`` function was introduced in Symfony 6.3.
 
 .. tip::
 
@@ -254,11 +241,6 @@ Comparison Operators
 * ``contains``
 * ``starts with``
 * ``ends with``
-
-.. versionadded:: 6.1
-
-    The ``contains``, ``starts with`` and ``ends with`` operators were introduced
-    in Symfony 6.1.
 
 .. tip::
 

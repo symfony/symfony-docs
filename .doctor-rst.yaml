@@ -68,16 +68,16 @@ rules:
 
     #   master
     versionadded_directive_major_version:
-        major_version: 6
+        major_version: 7
 
     versionadded_directive_min_version:
-        min_version: '6.0'
+        min_version: '7.0'
 
     deprecated_directive_major_version:
-        major_version: 6
+        major_version: 7
 
     deprecated_directive_min_version:
-        min_version: '6.0'
+        min_version: '7.0'
 
 exclude_rule_for_file:
     - path: configuration/multiple_kernels.rst

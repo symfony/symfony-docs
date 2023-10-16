@@ -468,12 +468,6 @@ You can also manually hash a password by running:
 Read more about all available hashers and password migration in
 :doc:`security/passwords`.
 
-.. versionadded:: 6.2
-
-    In applications using Symfony 6.2 and PHP 8.2 or newer, the
-    `SensitiveParameter PHP attribute`_ is applied to all plain passwords and
-    sensitive tokens so they don't appear in stack traces.
-
 .. _firewalls-authentication:
 .. _a-authentication-firewalls:
 
@@ -612,10 +606,6 @@ don't accidentally block Symfony's dev tools - which live under URLs like
 
     This feature is not supported by the XML configuration format.
 
-    .. versionadded:: 6.4
-
-        The feature to use an array of regex was introduced in Symfony 6.4.
-
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
 it matches *all* URLs). A firewall can have many modes of authentication,
 in other words, it enables many ways to ask the question "Who are you?".
@@ -679,10 +669,6 @@ use the :class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
             // ...
         }
     }
-
-.. versionadded:: 6.2
-
-    The ``getFirewallConfig()`` method was introduced in Symfony 6.2.
 
 .. _security-authenticators:
 
@@ -1717,17 +1703,6 @@ for more information about this.
 Login Programmatically
 ----------------------
 
-.. versionadded:: 6.2
-
-    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
-    class was introduced in Symfony 6.2. Prior to 6.2, it was called
-    ``Symfony\Component\Security\Core\Security``.
-
-.. versionadded:: 6.2
-
-    The :method:`Symfony\\Bundle\\SecurityBundle\\Security::login`
-    method was introduced in Symfony 6.2.
-
 You can log in a user programmatically using the ``login()`` method of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
 
@@ -1768,14 +1743,6 @@ You can log in a user programmatically using the ``login()`` method of the
             // return new RedirectResponse('...');
         }
     }
-
-.. versionadded:: 6.3
-
-    The feature to use a custom redirection logic was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The feature to add badges was introduced in Symfony 6.4.
 
 .. _security-logging-out:
 
@@ -1903,17 +1870,6 @@ Symfony will un-authenticate the current user and redirect them.
 
 Logout programmatically
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
-    class was introduced in Symfony 6.2. Prior to 6.2, it was called
-    ``Symfony\Component\Security\Core\Security``.
-
-.. versionadded:: 6.2
-
-    The :method:`Symfony\\Bundle\\SecurityBundle\\Security::logout`
-    method was introduced in Symfony 6.2.
 
 You can logout user programmatically using the ``logout()`` method of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
@@ -2048,12 +2004,6 @@ If you need to get the logged in user from a service, use the
             // ...
         }
     }
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\\Bundle\\SecurityBundle\\Security` class
-    was introduced in Symfony 6.2. In previous Symfony versions this class was
-    defined in ``Symfony\Component\Security\Core\Security``.
 
 Fetch the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2453,15 +2403,6 @@ that is thrown with the ``exceptionCode`` argument::
     {
         // ...
     }
-
-.. versionadded:: 6.2
-
-    The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The ``exceptionCode`` argument of the ``#[IsGranted()]`` attribute was
-    introduced in Symfony 6.3.
 
 .. _security-template:
 
@@ -2896,4 +2837,3 @@ Authorization (Denying Access)
 .. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication
 .. _`Login CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
 .. _`PHP date relative formats`: https://www.php.net/manual/en/datetime.formats.php#datetime.formats.relative
-.. _`SensitiveParameter PHP attribute`: https://www.php.net/manual/en/class.sensitiveparameter.php

@@ -17,10 +17,6 @@ key in your application configuration.
     # environment variables with their actual values
     $ php bin/console debug:config --resolve-env framework
 
-.. versionadded:: 6.2
-
-    The ``--resolve-env`` option was introduced in Symfony 6.2.
-
 .. note::
 
     When using XML, you must use the ``http://symfony.com/schema/dic/debug``

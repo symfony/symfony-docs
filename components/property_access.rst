@@ -89,11 +89,6 @@ You can also use multi dimensional arrays::
 
     Right square brackets ``]`` don't need to be escaped in array keys.
 
-    .. versionadded:: 6.3
-
-        Escaping dots and left square brackets in a property path was
-        introduced in Symfony 6.3.
-
 Reading from Objects
 --------------------
 
@@ -235,10 +230,6 @@ is to mark all nullable properties with the nullsafe operator (``?``)::
     // If a property marked with the nullsafe operator is null, the expression is
     // no longer evaluated and null is returned immediately without throwing an exception
     var_dump($propertyAccessor->getValue($comment, 'person?.firstname')); // null
-
-.. versionadded:: 6.2
-
-    The ``?`` nullsafe operator was introduced in Symfony 6.2.
 
 .. _components-property-access-magic-get:
 

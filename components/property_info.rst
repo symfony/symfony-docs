@@ -229,12 +229,6 @@ works. It assumes camel case style method names following `PSR-1`_. For example,
 both ``myProperty`` and ``my_property`` properties are readable if there's a
 ``getMyProperty()`` method and writable if there's a ``setMyProperty()`` method.
 
-.. versionadded:: 6.4
-
-    In Symfony versions prior to 6.4, snake case properties (e.g. ``my_property``)
-    were not writable by camel case methods (e.g. ``setMyProperty()``). You had
-    to define method names with underscores (e.g. ``setMy_property()``).
-
 .. _property-info-initializable:
 
 Property Initializable Information

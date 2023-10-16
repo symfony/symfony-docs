@@ -346,10 +346,6 @@ official YAML specification but are useful in Symfony applications:
           # ... or you can also use "->value" to directly use the value of a BackedEnum case
           operator_type: !php/enum App\Operator\Enum\Type::Or->value
 
-.. versionadded:: 6.2
-
-    The ``!php/enum`` tag was introduced in Symfony 6.2.
-
 Unsupported YAML Features
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 

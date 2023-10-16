@@ -116,10 +116,6 @@ This option defines the pattern used to validate the email address. Valid values
   `egulias/email-validator`_ library (which is already installed when using
   :doc:`Symfony Mailer </mailer>`; otherwise, you must install it separately).
 
-.. versionadded:: 6.2
-
-   The ``html5-allow-no-tld`` mode was introduced in 6.2.
-
 .. tip::
 
     The possible values of this option are also defined as PHP constants of

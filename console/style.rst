@@ -333,10 +333,6 @@ User Input Methods
 
         $io->choice('Select the queue to analyze', ['queue1', 'queue2', 'queue3'], multiSelect: true);
 
-.. versionadded:: 6.2
-
-    The ``multiSelect`` option of ``choice()`` was introduced in Symfony 6.2.
-
 .. _symfony-style-blocks:
 
 Result Methods
@@ -444,10 +440,6 @@ If you prefer to wrap all contents, including URLs, use this method::
             // ...
         }
     }
-
-.. versionadded:: 6.2
-
-    The ``setAllowCutUrls()`` method was introduced in Symfony 6.2.
 
 Defining your Own Styles
 ------------------------

@@ -69,10 +69,6 @@ that starting point::
     // displays the progress bar starting at 25 completed units
     $progressBar->start(null, 25);
 
-.. versionadded:: 6.2
-
-    The option to start a progress bar at a certain point was introduced in Symfony 6.2.
-
 .. tip::
 
     If your platform doesn't support ANSI codes, updates to the progress
@@ -374,10 +370,6 @@ with the ``setPlaceholderFormatter`` method::
     $progressBar->setPlaceholderFormatter('countdown', function (ProgressBar $progressBar) {
         return $progressBar->getMaxSteps() - $progressBar->getProgress();
     });
-
-.. versionadded:: 6.3
-
-    The ``setPlaceholderFormatter()`` method was introduced in Symfony 6.3.
 
 Custom Messages
 ~~~~~~~~~~~~~~~

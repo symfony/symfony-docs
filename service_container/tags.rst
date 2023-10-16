@@ -550,10 +550,6 @@ To answer this, change the service declaration:
             ;
         };
 
-.. versionadded:: 6.2
-
-    Support for attributes as array was introduced in Symfony 6.2.
-
 .. tip::
 
     The ``name`` attribute is used by default to define the name of the tag.
@@ -846,15 +842,6 @@ iterator, add the ``exclude`` option:
 
     In the case the referencing service is itself tagged with the tag being used in the tagged
     iterator, it is automatically excluded from the injected iterable.
-
-.. versionadded:: 6.1
-
-    The ``exclude`` option was introduced in Symfony 6.1.
-
-.. versionadded:: 6.3
-
-    The automatic exclusion of the referencing service in the injected iterable was
-    introduced in Symfony 6.3.
 
 .. seealso::
 

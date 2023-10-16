@@ -1,10 +1,6 @@
 HTML Sanitizer
 ==============
 
-.. versionadded:: 6.1
-
-    The HTML Sanitizer component was introduced in Symfony 6.1.
-
 The HTML Sanitizer component aims at sanitizing/cleaning untrusted HTML
 code (e.g. created by a WYSIWYG editor in the browser) into HTML that can
 be trusted. It is based on the `HTML Sanitizer W3C Standard Proposal`_.

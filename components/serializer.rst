@@ -712,10 +712,6 @@ automatically detect and use it to serialize related attributes.
 The ``ObjectNormalizer`` also takes care of methods starting with ``has``, ``get``,
 and ``can``.
 
-.. versionadded:: 6.1
-
-    The support of canners (methods prefixed by ``can``) was introduced in Symfony 6.1.
-
 Using Callbacks to Serialize Properties with Object Instances
 -------------------------------------------------------------
 
@@ -811,11 +807,6 @@ The Serializer component provides several built-in normalizers:
     combine the following values: ``PropertyNormalizer::NORMALIZE_PUBLIC``,
     ``PropertyNormalizer::NORMALIZE_PROTECTED`` or ``PropertyNormalizer::NORMALIZE_PRIVATE``.
 
-    .. versionadded:: 6.2
-
-        The ``PropertyNormalizer::NORMALIZE_VISIBILITY`` context option and its
-        values were introduced in Symfony 6.2.
-
 :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
     This normalizer works with classes that implement :phpclass:`JsonSerializable`.
 
@@ -851,10 +842,6 @@ The Serializer component provides several built-in normalizers:
 
     By default, an exception is thrown when data is not a valid backed enumeration. If you
     want ``null`` instead, you can set the ``BackedEnumNormalizer::ALLOW_INVALID_VALUES`` option.
-
-    .. versionadded:: 6.3
-
-        The ``BackedEnumNormalizer::ALLOW_INVALID_VALUES`` context option was introduced in Symfony 6.3.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer`
     This normalizer works with classes that implement
@@ -895,11 +882,6 @@ The Serializer component provides several built-in normalizers:
     method. You can define the locale to use to translate the object by
     setting the ``TranslatableNormalizer::NORMALIZATION_LOCALE_KEY`` serializer
     context option.
-
-    .. versionadded:: 6.4
-
-        The :class:`Symfony\\Component\\Serializer\\Normalizer\\TranslatableNormalizer`
-        was introduced in Symfony 6.4.
 
 .. note::
 
@@ -1029,10 +1011,6 @@ Option                           Description                                    
 ``json_decode_options``          `$flags`_ passed to :phpfunction:`json_encode` function.                                                    ``\JSON_PRESERVE_ZERO_FRACTION``
 ``json_decode_recursion_depth``  Sets maximum recursion depth.                                                                               ``512``
 ===============================  ==========================================================================================================  ================================
-
-.. versionadded:: 6.4
-
-    The support of ``json_decode_detailed_errors`` was introduced in Symfony 6.4.
 
 The ``CsvEncoder``
 ~~~~~~~~~~~~~~~~~~
@@ -1251,10 +1229,6 @@ you can use "context builders" to define the context using a fluent interface::
         ->withDelimiter(';');
 
     $serializer->serialize($something, 'csv', $contextBuilder->toArray());
-
-.. versionadded:: 6.1
-
-    Context builders were introduced in Symfony 6.1.
 
 .. note::
 

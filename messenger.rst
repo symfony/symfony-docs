@@ -71,10 +71,6 @@ message class (or a message interface)::
     methods. You may use the attribute on as many methods in a single class as you
     like, allowing you to group the handling of multiple related types of messages.
 
-.. versionadded:: 6.1
-
-    Support for ``#[AsMessageHandler]`` on methods was introduced in Symfony 6.1.
-
 Thanks to :ref:`autoconfiguration <services-autoconfigure>` and the ``SmsNotification``
 type-hint, Symfony knows that this handler should be called when an ``SmsNotification``
 message is dispatched. Most of the time, this is all you need to do. But you can
@@ -348,11 +344,6 @@ to multiple transports:
     the envelope of the message. This stamp takes an array of transport
     name as its only argument. For more information about stamps, see
     `Envelopes & Stamps`_.
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\\Component\\Messenger\\Stamp\\TransportNamesStamp`
-    stamp was introduced in Symfony 6.2.
 
 Doctrine Entities in Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -684,10 +675,6 @@ of some or all transports:
     In order for this command to work, the configured transport's receiver must implement
     :class:`Symfony\\Component\\Messenger\\Transport\\Receiver\\MessageCountAwareInterface`.
 
-.. versionadded:: 6.2
-
-    The ``messenger:stats`` command was introduced in Symfony 6.2.
-
 .. _messenger-supervisor:
 
 Supervisor Configuration
@@ -768,10 +755,6 @@ message before terminating.
 However, you might prefer to use different POSIX signals for graceful shutdown.
 You can override default ones by setting the ``framework.messenger.stop_worker_on_signals``
 configuration option.
-
-.. versionadded:: 6.3
-
-    The ``framework.messenger.stop_worker_on_signals`` option was introduced in Symfony 6.3.
 
 In some cases the ``SIGTERM`` signal is sent by Supervisor itself (e.g. stopping
 a Docker container having Supervisor as its entrypoint). In these cases you
@@ -985,10 +968,6 @@ this is configurable for each transport:
     the serialized form of the message is saved, which prevents to serialize it
     again if the message is later retried.
 
-    .. versionadded:: 6.1
-
-        The ``SerializedMessageStamp`` class was introduced in Symfony 6.1.
-
 Avoiding Retrying
 ~~~~~~~~~~~~~~~~~
 
@@ -1104,15 +1083,6 @@ to retry them:
 
     # remove all messages in the failure transport
     $ php bin/console messenger:failed:remove --all
-
-.. versionadded:: 6.2
-
-    The ``--class-filter`` and ``--stats`` options were introduced in Symfony 6.2.
-
-.. versionadded:: 6.4
-
-    The ``--all`` option was introduced in Symfony 6.4.
-
 
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
@@ -1389,10 +1359,6 @@ The transport has a number of options:
 ``exchange[type]``                            Type of exchange                                   ``fanout``
 ============================================  =================================================  ===================================
 
-.. versionadded:: 6.1
-
-    The ``connection_name`` option was introduced in Symfony 6.1.
-
 You can also configure AMQP-specific settings on your message by adding
 :class:`Symfony\\Component\\Messenger\\Bridge\\Amqp\\Transport\\AmqpStamp` to
 your Envelope::
@@ -1615,15 +1581,6 @@ sentinel_master          String, if null or empty Sentinel      null
                          support is disabled
 =======================  =====================================  =================================
 
-.. versionadded:: 6.1
-
-    The ``persistent_id``, ``retry_interval``, ``read_timeout``, ``timeout``, and
-    ``sentinel_master`` options were introduced in Symfony 6.1.
-
-.. versionadded:: 6.4
-
-    Support for the multiple Redis Sentinel hosts DNS was introduced in Symfony 6.4.
-
 .. caution::
 
     There should never be more than one ``messenger:consume`` command running with the same
@@ -1782,10 +1739,6 @@ The transport has a number of options:
 ``wait_time``           `Long polling`_ duration in seconds     20
 ======================  ======================================  ===================================
 
-.. versionadded:: 6.1
-
-    The ``session_token`` option was introduced in Symfony 6.1.
-
 .. note::
 
     The ``wait_time`` parameter defines the maximum duration Amazon SQS should
@@ -1929,12 +1882,6 @@ contains many useful information such as the exit code or the output of the
 process. You can refer to the page dedicated on
 :ref:`handler results <messenger-getting-handler-results>` for more information.
 
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Component\\Console\\Messenger\\RunCommandMessage`
-    and :class:`Symfony\\Component\\Console\\Messenger\\RunCommandContext`
-    classes were introduced in Symfony 6.4.
-
 Trigger An External Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1966,12 +1913,6 @@ Once handled, the handler will return a
 contains many useful information such as the exit code or the output of the
 process. You can refer to the page dedicated on
 :ref:`handler results <messenger-getting-handler-results>` for more information.
-
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Component\\Process\\Messenger\\RunProcessMessage`
-    and :class:`Symfony\\Component\\Process\\Messenger\\RunProcessContext`
-    classes were introduced in Symfony 6.4.
 
 Pinging A Webservice
 --------------------
@@ -2012,11 +1953,6 @@ is it up or down. It is possible to do so by dispatching a
 The handler will return a
 :class:`Symfony\\Contracts\\HttpClient\\ResponseInterface`, allowing you to
 gather and process information returned by the HTTP request.
-
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Component\\HttpClient\\Messenger\\PingWebhookMessage`
-    class was introduced in Symfony 6.4.
 
 Getting Results from your Handlers
 ----------------------------------
@@ -2538,11 +2474,6 @@ provided in order to ease the declaration of these special handlers::
         }
     }
 
-.. versionadded:: 6.3
-
-    The :method:`Symfony\\Component\\Messenger\\Handler\\BatchHandlerTrait::getBatchSize`
-    method was introduced in Symfony 6.3.
-
 .. note::
 
     When the ``$ack`` argument of ``__invoke()`` is ``null``, the message is
@@ -2868,10 +2799,6 @@ of the process. For each, the event class is the event name:
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerStartedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerStoppedEvent`
 
-.. versionadded:: 6.2
-
-    The ``WorkerRateLimitedEvent`` was introduced in Symfony 6.2.
-
 Additional Handler Arguments
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2919,11 +2846,6 @@ Then your handler will look like this::
             // ...
         }
     }
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\\Component\\Messenger\\Stamp\\HandlerArgumentsStamp`
-    was introduced in Symfony 6.2.
 
 .. _messenger-multiple-buses:
 
@@ -3037,10 +2959,6 @@ an **event bus**. The event bus could have zero or more subscribers.
             ;
             $eventBus->middleware()->id('validation');
         };
-
-.. versionadded:: 6.2
-
-    The ``allow_no_senders`` option was introduced in Symfony 6.2.
 
 This will create three new services:
 
@@ -3246,12 +3164,6 @@ The built-in :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHa
 will take care of this message to redispatch it through the same bus it was
 dispatched at first. You can also use the second argument of the ``RedispatchMessage``
 constructor to provide transports to use when redispatching the message.
-
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage`
-    and :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
-    classes were introduced in Symfony 6.3.
 
 Learn more
 ----------
