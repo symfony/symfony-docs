@@ -181,8 +181,6 @@ after the use declarations, like in this example from `ServiceRouterLoader`_::
      */
     class ServiceRouterLoader extends ObjectRouteLoader
 
-.. _`ServiceRouterLoader`: https://github.com/symfony/symfony/blob/4.4/src/Symfony/Component/Routing/Loader/DependencyInjection/ServiceRouterLoader.php
-
 The deprecation must be added to the ``CHANGELOG.md`` file of the impacted component:
 
 .. code-block:: markdown
@@ -239,3 +237,5 @@ Commands and their options should be named and described using the English
 imperative mood (i.e. 'run' instead of 'runs', 'list' instead of 'lists'). Using
 the imperative mood is concise and consistent with similar command-line
 interfaces (such as Unix man pages).
+
+.. _`ServiceRouterLoader`: https://github.com/symfony/symfony/blob/4.4/src/Symfony/Component/Routing/Loader/DependencyInjection/ServiceRouterLoader.php
