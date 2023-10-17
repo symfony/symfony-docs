@@ -191,6 +191,11 @@ when constructing the normalizer::
         AbstractNormalizer::ALLOW_EXTRA_ATTRIBUTES => false,
     ]);
 
+.. tip::
+
+    If your object contains nested objects, an ``ExtraAttributesException`` will be thrown at first nested object containing
+    extra attributes. When this happens, you can use :ref:`Attributes Groups section <component-serializer-collecting-extra-attributes-errors-while-denormalizing>`
+
 Deserializing in an Existing Object
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1273,8 +1278,8 @@ Collecting Type Errors While Denormalizing
 ------------------------------------------
 
 When denormalizing a payload to an object with typed properties, you'll get an
-exception if the payload contains properties that don't have the same type as
-the object.
+exception ``NotNormalizableValueException`` if the payload contains properties that don't have the same type as
+the object, at first incorrect type.
 
 In those situations, use the ``COLLECT_DENORMALIZATION_ERRORS`` option to
 collect all exceptions at once, and to get the object partially denormalized::
@@ -1293,6 +1298,30 @@ collect all exceptions at once, and to get the object partially denormalized::
                 $parameters['hint'] = $exception->getMessage();
             }
             $violations->add(new ConstraintViolation($message, '', $parameters, null, $exception->getPath(), null));
+        }
+
+        return $this->json($violations, 400);
+    }
+
+Collecting Extra Attributes Errors While Denormalizing
+------------------------------------------
+
+When denormalizing a payload with ``ALLOW_EXTRA_ATTRIBUTES`` set to false to an object with nested objects, you'll get an
+exception at first ``ExtraAttributesException`` in nested objects.
+
+In those situations, use the ``COLLECT_EXTRA_ATTRIBUTES_ERRORS`` option to
+collect all exceptions at once, and to get the object partially denormalized::
+
+    try {
+        $dto = $serializer->deserialize($request->getContent(), MyDto::class, 'json', [
+            DenormalizerInterface::COLLECT_EXTRA_ATTRIBUTES_ERRORS => true,
+        ]);
+    } catch (PartialDenormalizationException $e) {
+        $violations = new ConstraintViolationList();
+        if (null !== $extraAttributesException = $e->getExtraAttributesError()) {
+            foreach ($extraAttributesException->getExtraAttributes() as $extraAttribute) {
+                $violations->add(new ConstraintViolation('This attribute is not allowed.', '', [], null, $extraAttribute, null));
+            };
         }
 
         return $this->json($violations, 400);
