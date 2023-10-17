@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-10-17T07:41:51Z
+
+Can you add a versionadded?
+
+---------------------------------------------------------------------------
+
+by alamirault at 2023-10-17T08:00:59Z
+
+`InteractiveLoginEvent` already exists on 4.4 branch (and 2.0 :smiley: )
