@@ -142,6 +142,9 @@ Here are some important envelope stamps that are shipped with the Symfony Messen
 
 #. :class:`Symfony\\Component\\Messenger\\Stamp\\DelayStamp`,
    to delay handling of an asynchronous message.
+#. :class:`Symfony\\Component\\Messenger\\Stamp\\PriorityStamp`,
+   to prioritize messages of the same type within a queue. Read more
+   at :doc:`/messenger/message_priority`.
 #. :class:`Symfony\\Component\\Messenger\\Stamp\\DispatchAfterCurrentBusStamp`,
    to make the message be handled after the current bus has executed. Read more
    at :doc:`/messenger/dispatch_after_current_bus`.
