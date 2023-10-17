@@ -2825,6 +2825,12 @@ Authentication Events
 Other Events
 ~~~~~~~~~~~~
 
+:class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
+    Dispatched after authentication was fully successful only when the authenticator
+    implements :class:`Symfony\\Component\\Security\\Http\\Authenticator\\InteractiveAuthenticatorInterface`,
+    which indicates login requires explicit user action (e.g. a login form).
+    Listeners to this event can modify the response sent back to the user.
+
 :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
     Dispatched just before a user logs out of your application. See
     :ref:`security-logging-out`.
