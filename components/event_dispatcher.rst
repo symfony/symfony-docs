@@ -331,9 +331,9 @@ is notified each time those events are dispatched.
 
 Another way to listen to events is via an *event subscriber*. An event
 subscriber is a PHP class that's able to tell the dispatcher exactly which
-events it should subscribe to. It implements the
+events it should subscribe to. It implements the 
 :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
-interface, which requires a single static method called
+interface, which requires a single static method called 
 :method:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents`.
 Take the following example of a subscriber that subscribes to the
 ``kernel.response`` and ``order.placed`` events::
@@ -408,7 +408,7 @@ In some cases, it may make sense for a listener to prevent any other listeners
 from being called. In other words, the listener needs to be able to tell
 the dispatcher to stop all propagation of the event to future listeners
 (i.e. to not notify any more listeners). This can be accomplished from
-inside a listener via the
+inside a listener via the 
 :method:`Symfony\\Contracts\\EventDispatcher\\Event::stopPropagation` method::
 
     use Acme\Store\Event\OrderPlacedEvent;
