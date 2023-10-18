@@ -490,7 +490,7 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 
     class MyCustomWarmer implements CacheWarmerInterface
     {
-        public function warmUp($cacheDirectory): array
+        public function warmUp(string $cacheDir, string $buildDir = null): array
         {
             // ... do some sort of operations to "warm" your cache
 
@@ -515,7 +515,15 @@ the :class:`Symfony\\Component\\HttpKernel\\CacheWarmer\\CacheWarmerInterface` i
 The ``warmUp()`` method must return an array with the files and classes to
 preload. Files must be absolute paths and classes must be fully-qualified class
 names. The only restriction is that files must be stored in the cache directory.
-If you don't need to preload anything, return an empty array.
+If you don't need to preload anything, return an empty array. If read-only
+artefacts need to be created, you can store them in a different directory
+with the ``$buildDir`` parameter of the ``warmUp()`` method.
+
+.. versionadded:: 6.4
+
+    The ``$buildDir`` parameter of the
+    :method:`Symfony\\Component\\HttpKernel\\CacheWarmer\\WarmableInterface::warmUp`
+    method was introduced in Symfony 6.4.
 
 The ``isOptional()`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony, optional warmers
