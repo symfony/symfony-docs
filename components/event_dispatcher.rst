@@ -406,8 +406,7 @@ In some cases, it may make sense for a listener to prevent any other listeners
 from being called. In other words, the listener needs to be able to tell
 the dispatcher to stop all propagation of the event to future listeners
 (i.e. to not notify any more listeners). This can be accomplished from
-inside a listener via the 
-:method:`Symfony\\Contracts\\EventDispatcher\\Event::stopPropagation` method::
+inside a listener via the :method:`Symfony\\Contracts\\EventDispatcher\\Event::stopPropagation` method::
 
     use Acme\Store\Event\OrderPlacedEvent;
 
