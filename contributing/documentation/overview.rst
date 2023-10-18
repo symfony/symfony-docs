@@ -293,3 +293,4 @@ definitely don't want you to waste your time!
 .. _`SymfonyConnect`: https://symfony.com/connect/login
 .. _`Symfony Documentation Badge`: https://connect.symfony.com/badge/36/symfony-documentation-contributor
 .. _`the README file of symfony-docs repository`: https://github.com/symfony/symfony-docs#readme
+
