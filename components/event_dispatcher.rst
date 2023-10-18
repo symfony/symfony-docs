@@ -331,10 +331,8 @@ is notified each time those events are dispatched.
 
 Another way to listen to events is via an *event subscriber*. An event
 subscriber is a PHP class that's able to tell the dispatcher exactly which
-events it should subscribe to. It implements the 
-:class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
-interface, which requires a single static method called 
-:method:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents`.
+events it should subscribe to. It implements the :class:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface`
+interface, which requires a single static method called :method:`Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents`.
 Take the following example of a subscriber that subscribes to the
 ``kernel.response`` and ``order.placed`` events::
 
