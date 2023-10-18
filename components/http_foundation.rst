@@ -487,6 +487,20 @@ Sending the response to the client is done by calling the method
 
     $response->send();
 
+The ``send()`` method takes an optional ``flush`` argument. If set to
+``false``, functions like ``fastcgi_finish_request()`` or
+``litespeed_finish_request()`` are not called. This is useful when debugging
+your application to see which exceptions are thrown in listeners of the
+:class:`Symfony\\Component\\HttpKernel\\Event\\TerminateEvent`. You can learn
+more about it in
+:ref:`the dedicated section about Kernel events <http-kernel-creating-listener>`.
+
+.. versionadded:: 6.4
+
+    The ``$flush`` parameter of the
+    :method:`Symfony\\Component\\HttpFoundation\\Response::send` method
+    was introduced in Symfony 6.4.
+
 Setting Cookies
 ~~~~~~~~~~~~~~~
 
