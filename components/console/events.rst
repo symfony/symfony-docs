@@ -215,7 +215,8 @@ method::
 .. tip::
 
     All the available signals (``SIGINT``, ``SIGQUIT``, etc.) are defined as
-    `constants of the PCNTL PHP extension`_.
+    `constants of the PCNTL PHP extension`_. The extension has to be installed
+    for these constants to be available.
 
 If you use the Console component inside a Symfony application, commands can
 handle signals themselves. To do so, implement the
