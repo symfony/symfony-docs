@@ -123,6 +123,40 @@ Now, create a ``validators`` catalog file in the ``translations/`` directory:
 You may need to clear your cache (even in the dev environment) after creating
 this file for the first time.
 
+Translatable Objects
+--------------------
+
+In some cases, you may want to translate content from a simple function with multiple checks or contexts.
+For example, when using the ``Callback`` constraints.
+
+You can use the :class:`Symfony\\Component\\Translation\\TranslatableMessage` class like this:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        use Symfony\Component\Translation\TranslatableMessage;
+        use Symfony\Component\Validator\Constraints as Assert;
+        use Symfony\Component\Validator\Context\ExecutionContextInterface;
+        
+        #[Assert\Callback]
+        public function validate(ExecutionContextInterface $context, mixed $payload): void
+        {
+            // somehow you have an array of "fake names"
+            $fakeNames = [/* ... */];
+        
+            // check if the name is actually a fake name
+            if (in_array($this->getFirstName(), $fakeNames)) {
+                $context->buildViolation(new TranslatableMessage('author.name.fake', [], 'validators'))
+                    ->atPath('firstName')
+                    ->addViolation()
+                ;
+            }
+        }
+
+Learn more about 
+:ref:`translatable object <translatable-objects>`.
+
 Custom Translation Domain
 -------------------------
 
