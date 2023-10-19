@@ -1639,7 +1639,7 @@ To see a list of all available storages, run:
 handler_id
 ..........
 
-**type**: ``string`` or ``null`` **default**: ``null``
+**type**: ``string`` | ``null`` **default**: ``null``
 
 By default at `null` if `framework.session.save_path` is not set.
 The session handler configured by php.ini is used, unless option
