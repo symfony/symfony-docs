@@ -55,7 +55,7 @@ handle_all_throwables
 
 **type**: ``boolean`` **default**: ``true``
 
-Set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
+When at ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
 thrown by the application and will turn them into HTTP responses.
 
 .. versionadded:: 6.2
@@ -1901,7 +1901,7 @@ This option is related to the `session.sid_bits_per_character PHP option`_.
 save_path
 .........
 
-**type**: ``string`` or ``null`` **default**: ``%kernel.cache_dir%/sessions``
+**type**: ``string`` | ``null`` **default**: ``%kernel.cache_dir%/sessions``
 
 This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the session files are created.
