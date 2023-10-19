@@ -464,18 +464,29 @@ the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\SerializerExtractor`
 provides list information. This extractor is *not* registered automatically
 with the ``property_info`` service in the Symfony Framework::
 
-    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 
-    $serializerClassMetadataFactory = new ClassMetadataFactory(
-        new AnnotationLoader(new AnnotationReader)
-    );
+    $serializerClassMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
     $serializerExtractor = new SerializerExtractor($serializerClassMetadataFactory);
 
     // the `serializer_groups` option must be configured (may be set to null)
     $serializerExtractor->getProperties($class, ['serializer_groups' => ['mygroup']]);
+
+.. versionadded:: 6.4
+
+    The
+    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AttributeLoader`
+    was introduced in Symfony 6.4. Prior to this, the
+    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader`
+    must be used.
+
+.. deprecated:: 6.4
+
+    The
+    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader`
+    was deprecated in Symfony 6.4.
 
 If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
 checked but you will get only the properties considered by the Serializer
