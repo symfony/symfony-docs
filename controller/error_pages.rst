@@ -10,18 +10,16 @@ Symfony catches all the exceptions and displays a special **exception page**
 with lots of debug information to help you discover the root problem:
 
 .. image:: /_images/controller/error_pages/exceptions-in-dev-environment.png
-   :alt: A typical exception page in the development environment
-   :align: center
-   :class: with-browser
+    :alt: A typical exception page in the development environment with the full stacktrace and log information.
+    :class: with-browser
 
 Since these pages contain a lot of sensitive internal information, Symfony won't
 display them in the production environment. Instead, it'll show a minimal and
 generic **error page**:
 
 .. image:: /_images/controller/error_pages/errors-in-prod-environment.png
-   :alt: A typical error page in the production environment
-   :align: center
-   :class: with-browser
+    :alt: A typical error page in the production environment.
+    :class: with-browser
 
 Error pages for the production environment can be customized in different ways
 depending on your needs:

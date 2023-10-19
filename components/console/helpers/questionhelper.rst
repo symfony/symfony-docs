@@ -72,6 +72,14 @@ the second argument is not provided, ``true`` is assumed.
 
     The regex defaults to ``/^y/i``.
 
+.. note::
+
+    By default, the question helper uses the error output (``stderr``) as
+    its default output. This behavior can be changed by passing an instance of
+    :class:`Symfony\\Component\\Console\\Output\\StreamOutput` to the
+    :method:`Symfony\\Component\\Console\\Helper\\QuestionHelper::ask`
+    method.
+
 Asking the User for Information
 -------------------------------
 

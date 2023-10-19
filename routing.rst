@@ -462,6 +462,15 @@ route details:
     |             | utf8: true                                              |
     +-------------+---------------------------------------------------------+
 
+.. tip::
+
+    Use the ``--show-aliases`` option to show all available aliases for a given
+    route.
+
+.. versionadded:: 6.4
+
+    The ``--show-aliases`` option was introduced in Symfony 6.4.
+
 The other command is called ``router:match`` and it shows which route will match
 the given URL. It's useful to find out why some URL is not executing the
 controller action that you expect:
@@ -1443,7 +1452,8 @@ when importing the routes.
             # trailing_slash_on_root: false
 
             # you can optionally exclude some files/subdirectories when loading attributes
-            # exclude: '../../src/Controller/{DebugEmailController}.php'
+            # (the value must be a string or an array of PHP glob patterns)
+            # exclude: '../../src/Controller/{Debug*Controller.php}'
 
     .. code-block:: xml
 
@@ -1458,12 +1468,13 @@ when importing the routes.
                 the 'prefix' value is added to the beginning of all imported route URLs
                 the 'name-prefix' value is added to the beginning of all imported route names
                 the 'exclude' option defines the files or subdirectories ignored when loading attributes
+                (the value must be a PHP glob pattern and you can repeat this option any number of times)
             -->
             <import resource="../../src/Controller/"
                 type="attribute"
                 prefix="/blog"
                 name-prefix="blog_"
-                exclude="../../src/Controller/{DebugEmailController}.php">
+                exclude="../../src/Controller/{Debug*Controller.php}">
                 <!-- these requirements are added to all imported routes -->
                 <requirement key="_locale">en|es|fr</requirement>
             </import>
@@ -1489,7 +1500,8 @@ when importing the routes.
                     false,
                     // the optional fourth argument is used to exclude some files
                     // or subdirectories when loading attributes
-                    '../../src/Controller/{DebugEmailController}.php'
+                    // (the value must be a string or an array of PHP glob patterns)
+                    '../../src/Controller/{Debug*Controller.php}'
                 )
                 // this is added to the beginning of all imported route URLs
                 ->prefix('/blog')
@@ -2236,6 +2248,33 @@ For that reason each route has an internal name that must be unique in the
 application. If you don't set the route name explicitly with the ``name``
 option, Symfony generates an automatic name based on the controller and action.
 
+Symfony declares route aliases based on the FQCN if the target class has an
+``__invoke()`` method that adds a route **and** if the target class added
+one route exactly. Symfony also automatically adds an alias for every method
+that defines only one route. Consider the following class::
+
+        // src/Controller/MainController.php
+        namespace App\Controller;
+
+        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+        use Symfony\Component\Routing\Annotation\Route;
+
+        final class MainController extends AbstractController
+        {
+            #[Route('/', name: 'homepage')]
+            public function homepage(): Response
+            {
+                // ...
+            }
+        }
+
+Symfony will add a route alias named ``App\Controller\MainController::homepage``.
+
+.. versionadded:: 6.4
+
+    The automatic declaration of route aliases based on FQCNs was introduced in
+    Symfony 6.4.
+
 Generating URLs in Controllers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2523,8 +2562,10 @@ method) or globally with these configuration parameters:
     .. code-block:: php
 
         // config/services.php
-        $container->setParameter('router.request_context.scheme', 'https');
-        $container->setParameter('asset.request_context.secure', true);
+        $container->parameters()
+            ->set('router.request_context.scheme', 'https')
+            ->set('asset.request_context.secure', true)
+        ;
 
 Outside of console commands, use the ``schemes`` option to define the scheme of
 each route explicitly:
@@ -2652,13 +2693,13 @@ A signed URI is an URI that includes a hash value that depends on the contents o
 the URI. This way, you can later check the integrity of the signed URI by
 recomputing its hash value and comparing it with the hash included in the URI.
 
-Symfony provides a utility to sign URIs via the :class:`Symfony\\Component\\HttpKernel\\UriSigner`
+Symfony provides a utility to sign URIs via the :class:`Symfony\\Component\\HttpFoundation\\UriSigner`
 service, which you can inject in your services or controllers::
 
     // src/Service/SomeService.php
     namespace App\Service;
 
-    use Symfony\Component\HttpKernel\UriSigner;
+    use Symfony\Component\HttpFoundation\UriSigner;
 
     class SomeService
     {
@@ -2687,6 +2728,12 @@ service, which you can inject in your services or controllers::
             $uriSignatureIsValid = $this->uriSigner->checkRequest($request);
         }
     }
+
+.. versionadded:: 6.4
+
+    The namespace of the ``UriSigner`` class changed in Symfony 6.4 from
+    ``Symfony\Component\HttpKernel\UriSigner`` to
+    ``Symfony\Component\HttpFoundation\UriSigner``.
 
 Troubleshooting
 ---------------

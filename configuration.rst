@@ -606,10 +606,15 @@ different scenarios: staging, quality assurance, client review, etc.)
 Configuration Based on Environment Variables
 --------------------------------------------
 
-Using `environment variables`_ (or "env vars" for short) is a common practice to
-configure options that depend on where the application is run (e.g. the database
-credentials are usually different in production versus your local machine). If
-the values are sensitive, you can even :doc:`encrypt them as secrets </configuration/secrets>`.
+Using `environment variables`_ (or "env vars" for short) is a common practice to:
+
+* Configure options that depend on where the application is run (e.g. the database
+  credentials are usually different in production versus your local machine);
+* Configure options that can change dynamically in a production environment (e.g.
+  to update the value of an expired API key without having to redeploy the entire
+  application).
+
+In other cases, it's recommended to keep using :ref:`configuration parameters <configuration-parameters>`.
 
 Use the special syntax ``%env(ENV_VAR_NAME)%`` to reference environment variables.
 The values of these options are resolved at runtime (only once per request, to
@@ -679,6 +684,56 @@ To define the value of an env var, you have several options:
 * :ref:`Add the value to a .env file <config-dot-env>`;
 * :ref:`Encrypt the value as a secret <configuration-secrets>`;
 * Set the value as a real environment variable in your shell or your web server.
+
+If your application tries to use an env var that hasn't been defined, you'll see
+an exception. You can prevent that by defining a default value for the env var.
+To do so, define a parameter with the same name as the env var using this syntax:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/framework.yaml
+        parameters:
+            # if the SECRET env var value is not defined anywhere, Symfony uses this value
+            env(SECRET): 'some_secret'
+
+        # ...
+
+    .. code-block:: xml
+
+        <!-- config/packages/framework.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <parameters>
+                <!-- if the SECRET env var value is not defined anywhere, Symfony uses this value -->
+                <parameter key="env(SECRET)">some_secret</parameter>
+            </parameters>
+
+            <!-- ... -->
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/framework.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (ContainerBuilder $container, FrameworkConfig $framework) {
+            // if the SECRET env var value is not defined anywhere, Symfony uses this value
+            $container->setParameter('env(SECRET)', 'some_secret');
+
+            // ...
+        };
 
 .. tip::
 
@@ -839,40 +894,50 @@ In production, the ``.env`` files are also parsed and loaded on each request. So
 the easiest way to define env vars is by creating a ``.env.local`` file on your
 production server(s) with your production values.
 
-To improve performance, you can optionally run the ``dotenv:dump`` command (available
-in :ref:`Symfony Flex <symfony-flex>` 1.2 or later). The command is not registered
-by default, so you must register first in your services:
-
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        Symfony\Component\Dotenv\Command\DotenvDumpCommand:
-            - '%kernel.project_dir%/.env'
-            - '%kernel.environment%'
-
-In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
-(which is the default):
-
-.. code-block:: yaml
-
-    # config/services.yaml
-    services:
-        Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
-
-Then, run the command:
+To improve performance, you can optionally run the ``dump-env`` Composer command:
 
 .. code-block:: terminal
 
     # parses ALL .env files and dumps their final values to .env.local.php
-    $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
+    $ composer dump-env prod
+
+.. sidebar:: Dumping Environment Variables without Composer
+
+    If you don't have Composer installed in production, you can use the
+    ``dotenv:dump`` command instead (available in :ref:`Symfony Flex <symfony-flex>`
+    1.2 or later). The command is not registered by default, so you must register
+    first in your services:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Component\Dotenv\Command\DotenvDumpCommand:
+                - '%kernel.project_dir%/.env'
+                - '%kernel.environment%'
+
+    In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
+    (which is the default):
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            Symfony\Component\Dotenv\Command\DotenvDumpCommand: ~
+
+    Then, run the command:
+
+    .. code-block:: terminal
+
+        # parses ALL .env files and dumps their final values to .env.local.php
+        $ APP_ENV=prod APP_DEBUG=0 php bin/console dotenv:dump
 
 After running this command, Symfony will load the ``.env.local.php`` file to
 get the environment variables and will not spend time parsing the ``.env`` files.
 
 .. tip::
 
-    Update your deployment tools/workflow to run the ``dump-env`` command after
+    Update your deployment tools/workflow to run the ``dotenv:dump`` command after
     each deploy to improve the application performance.
 
 .. _configuration-secrets:
@@ -943,6 +1008,74 @@ environment variables, with their values, referenced in Symfony's container conf
 
     # run this command to show all the details for a specific env var:
     $ php bin/console debug:container --env-var=FOO
+
+Creating Your Own Logic To Load Env Vars
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You can implement your own logic to load environment variables if the default
+Symfony behavior doesn't fit your needs. To do so, create a service whose class
+implements :class:`Symfony\\Component\\DependencyInjection\\EnvVarLoaderInterface`.
+
+.. note::
+
+    If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
+    the autoconfiguration feature will enable and tag thise service automatically.
+    Otherwise, you need to register and :doc:`tag your service </service_container/tags>`
+    with the ``container.env_var_loader`` tag.
+
+Let's say you have a JSON file named ``env.json`` containing your environment
+variables:
+
+.. code-block:: json
+
+    {
+        "vars": {
+            "APP_ENV": "prod",
+            "APP_DEBUG": false
+        }
+    }
+
+You can define a class like the following ``JsonEnvVarLoader`` to populate the
+environment variables from the file::
+
+    namespace App\DependencyInjection;
+
+    use Symfony\Component\DependencyInjection\EnvVarLoaderInterface;
+
+    final class JsonEnvVarLoader implements EnvVarLoaderInterface
+    {
+        private const ENV_VARS_FILE = 'env.json';
+
+        public function loadEnvVars(): array
+        {
+            $fileName = __DIR__.\DIRECTORY_SEPARATOR.self::ENV_VARS_FILE;
+            if (!is_file($fileName)) {
+                // throw an exception or just ignore this loader, depending on your needs
+            }
+
+            $content = json_decode(file_get_contents($fileName), true);
+
+            return $content['vars'];
+        }
+    }
+
+That's it! Now the application will look for a ``env.json`` file in the
+current directory to populate environment variables (in addition to the
+already existing ``.env`` files).
+
+.. tip::
+
+    If you want an env var to have a value on a certain environment but to fallback
+    on loaders on another environment, assign an empty value to the env var for
+    the environment you want to use loaders:
+
+    .. code-block:: bash
+
+        # .env (or .env.local)
+        APP_ENV=prod
+
+        # .env.prod (or .env.local.prod) - this will fallback on the loaders you defined
+        APP_ENV=
 
 .. _configuration-accessing-parameters:
 

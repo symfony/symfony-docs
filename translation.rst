@@ -84,10 +84,9 @@ are located:
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
             <framework:config default-locale="en">
-                <framework:translator>
-                    <framework:default-path>'%kernel.project_dir%/translations'</framework:default-path>
-                    <!-- ... -->
-                </framework:translator>
+                <framework:translator
+                    default-path="%kernel.project_dir%/translations"
+                />
             </framework:config>
         </container>
 
@@ -563,16 +562,21 @@ if you're generating translations with specialized programs or teams.
                 ;
             };
 
-.. note::
+Translations of Doctrine Entities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    You can also store translations in a database; it can be handled by
-    Doctrine through the `Translatable Extension`_ or the `Translatable Behavior`_
-    (PHP 5.4+). For more information, see the documentation for these libraries.
+Unlike the contents of templates, it's not practical to translate the contents
+stored in Doctrine Entities using translation catalogs. Instead, use the
+Doctrine `Translatable Extension`_ or the `Translatable Behavior`_. For more
+information, read the documentation of those libraries.
 
-    For any other storage, you need to provide a custom class implementing the
-    :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface`
-    interface. See the :ref:`dic-tags-translation-loader` tag for more
-    information.
+Custom Translation Resources
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If your translations use a format not supported by Symfony or you store them
+in a special way (e.g. not using files or Doctrine entities), you need to provide
+a custom class implementing the :class:`Symfony\\Component\\Translation\\Loader\\LoaderInterface`
+interface. See the :ref:`dic-tags-translation-loader` tag for more information.
 
 .. _translation-providers:
 
@@ -757,6 +761,28 @@ now use the following commands to push (upload) and pull (download) translations
 
     # check out the command help to see its options (format, domains, locales, intl-icu, etc.)
     $ php bin/console translation:pull --help
+
+    # the "--as-tree" option will write YAML messages as a tree-like structure instead
+    # of flat keys
+    $ php bin/console translation:pull loco --force --as-tree
+
+.. versionadded:: 6.4
+
+    The ``--as-tree`` option of the ``translation:pull`` command was introduced
+    in Symfony 6.4.
+
+Creating Custom Providers
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+In addition to using Symfony's built-in translation providers, you can create
+your own providers. To do so, you need to create two classes:
+
+#. The first class must implement :class:`Symfony\\Component\\Translation\\Provider\\ProviderInterface`;
+#. The second class needs to be a factory which will create instances of the first class. It must implement
+:class:`Symfony\\Component\\Translation\\Provider\\ProviderFactoryInterface` (you can extend :class:`Symfony\\Component\\Translation\\Provider\\AbstractProviderFactory` to simplify its creation).
+
+After creating these two classes, you need to register your factory as a service
+and tag it with :ref:`translation.provider_factory <reference-dic-tags-translation-provider-factory>`.
 
 .. _translation-locale:
 
@@ -1065,9 +1091,24 @@ of:
 
             });
 
+            // you can optionally declare an argument in your callback to receive the
+            // injected locale
+            $this->localeSwitcher->runWithLocale('es', function(string $locale) {
+
+                // here, the $locale argument will be set to 'es'
+
+            });
+
             // ...
         }
     }
+
+.. versionadded:: 6.4
+
+    The support of declaring an argument in the callback to inject the locale
+    being used in the
+    :method:`Symfony\\Component\\Translation\\LocaleSwitcher::runWithLocale`
+    method was introduced in Symfony 6.4.
 
 When using :ref:`autowiring <services-autowire>`, type-hint any controller or
 service argument with the :class:`Symfony\\Component\\Translation\\LocaleSwitcher`
@@ -1340,16 +1381,17 @@ Pseudo-localization translator
 
     The pseudolocalization translator is meant to be used for development only.
 
-The following image shows the main menu of the interface of a popular Internet
-service:
+The following image shows a typical menu on a webpage:
 
 .. image:: /_images/translation/pseudolocalization-interface-original.png
+    :alt: A menu showing multiple items nicely aligned next to eachother.
 
 This other image shows the same menu when the user switches the language to
 Spanish. Unexpectedly, some text is cut and other contents are so long that
 they overflow and you can't see them:
 
 .. image:: /_images/translation/pseudolocalization-interface-translated.png
+    :alt: In Spanish, some menu items contain more letters which result in them being cut.
 
 These kind of errors are very common, because different languages can be longer
 or shorter than the original application language. Another common issue is to
@@ -1454,10 +1496,14 @@ readable, contents to help you internationalize it. See for example the
 difference in the `Symfony Demo`_ application. This is the original page:
 
 .. image:: /_images/translation/pseudolocalization-symfony-demo-disabled.png
+    :alt: The Symfony demo login page.
+    :class: with-browser
 
 And this is the same page with pseudolocalization enabled:
 
 .. image:: /_images/translation/pseudolocalization-symfony-demo-enabled.png
+    :alt: The Symfony demo login page with pseudolocalization.
+    :class: with-browser
 
 Summary
 -------

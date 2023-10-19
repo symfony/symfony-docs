@@ -119,3 +119,20 @@ If you don't want to use suffix at all, pass an empty string::
     $truncatedMessage = $formatter->truncate('test', 10);
     // result: test
     // because length of the "test..." string is shorter than 10
+
+Formatting Time
+~~~~~~~~~~~~~~~
+
+Sometimes you want to format seconds to time. This is possible with the
+:method:`Symfony\\Component\\Console\\Helper\\FormatterHelper::formatTime` method.
+The first argument is the seconds to format and the second argument is the
+precision (default ``1``) of the result::
+
+    $formatter->truncate(42);        // 42 secs
+    $formatter->truncate(125);       // 2 mins
+    $formatter->truncate(125, 2);    // 2 mins, 5 secs
+    $formatter->truncate(172799, 4); // 1 day, 23 hrs, 59 mins, 59 secs
+
+.. versionadded:: 6.4
+
+    The support for exact times were introduced in Symfony 6.4.

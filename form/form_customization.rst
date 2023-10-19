@@ -51,10 +51,12 @@ customized using other Twig functions, as illustrated in the following diagram:
 
 .. raw:: html
 
-    <object data="../_images/form/form-field-parts.svg" type="image/svg+xml"></object>
+    <object data="../_images/form/form-field-parts.svg" type="image/svg+xml"
+        alt="Wireframe showing all functions in a form row, which are mentioned directly below."
+    ></object>
 
 The :ref:`form_label() <reference-forms-twig-label>`,
-:ref:`form_widget() <reference-forms-twig-widget>`,
+:ref:`form_widget() <reference-forms-twig-widget>` (the HTML input),
 :ref:`form_help() <reference-forms-twig-help>` and
 :ref:`form_errors() <reference-forms-twig-errors>` Twig functions give you total
 control over how each form field is rendered, so you can fully customize them:

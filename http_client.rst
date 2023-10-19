@@ -1047,8 +1047,8 @@ HTTP Compression
 
 The HTTP header ``Accept-Encoding: gzip`` is added automatically if:
 
-* When using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
-* When using the native HTTP client: `Zlib PHP extension`_ is installed
+* using cURL client: cURL was compiled with ZLib support (see ``php --ri curl``)
+* using the native HTTP client: `Zlib PHP extension`_ is installed
 
 If the server does respond with a gzipped response, it's decoded transparently.
 To disable HTTP compression, send an ``Accept-Encoding: identity`` HTTP header.
@@ -1154,6 +1154,10 @@ following methods::
 
     // returns detailed logs about the requests and responses of the HTTP transaction
     $httpLogs = $response->getInfo('debug');
+
+    // the special "pause_handler" info item is a callable that allows to delay the request
+    // for a given number of seconds; this allows you to delay retries, throttle streams, etc.
+    $response->getInfo('pause_handler')(2);
 
 .. note::
 
@@ -1464,7 +1468,7 @@ installed in your application::
     // this won't hit the network if the resource is already in the cache
     $response = $client->request('GET', 'https://example.com/cacheable-resource');
 
-:class:`Symfony\\Component\\HttpClient\\CachingHttpClient`` accepts a third argument
+:class:`Symfony\\Component\\HttpClient\\CachingHttpClient` accepts a third argument
 to set the options of the :class:`Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache`.
 
 Consuming Server-Sent Events

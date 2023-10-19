@@ -152,6 +152,17 @@ Listeners receive a
     It is then dispatched just after the ``ConsoleEvents::ERROR`` event.
     The exit code received in this case is the exception code.
 
+    Additionally, the event is dispatched when the command is being exited on
+    a signal. You can learn more about signals in the
+    :ref:`the dedicated section <console-events_signal>`.
+
+    .. versionadded:: 6.4
+
+        Dispatching the ``ConsoleEvents::TERMINATE`` event on exit
+        signal was introduced in Symfony 6.4.
+
+.. _console-events_signal:
+
 The ``ConsoleEvents::SIGNAL`` Event
 -----------------------------------
 
@@ -204,7 +215,8 @@ method::
 .. tip::
 
     All the available signals (``SIGINT``, ``SIGQUIT``, etc.) are defined as
-    `constants of the PCNTL PHP extension`_.
+    `constants of the PCNTL PHP extension`_. The extension has to be installed
+    for these constants to be available.
 
 If you use the Console component inside a Symfony application, commands can
 handle signals themselves. To do so, implement the

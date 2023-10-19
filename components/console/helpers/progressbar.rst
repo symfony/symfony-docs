@@ -5,6 +5,7 @@ When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 
 .. image:: /_images/components/console/progressbar.gif
+    :alt: Console output showing a progress bar advance to 100%, with the esimated time left, the memory usage and a special message that changes when the bar closes completion.
 
 .. note::
 
@@ -42,6 +43,14 @@ number of units, and advance the progress as the command executes::
     You can also regress the progress bar (i.e. step backwards) by calling
     ``$progress->advance()`` with a negative value. For example, if you call
     ``$progress->advance(-2)`` then it will regress the progress bar 2 steps.
+
+.. note::
+
+    By default, the progress bar helper uses the error output (``stderr``) as
+    its default output. This behavior can be changed by passing an instance of
+    :class:`Symfony\\Component\\Console\\Output\\StreamOutput` to the
+    :class:`Symfony\\Component\\Console\\Helper\\ProgressBar`
+    constructor.
 
 Instead of advancing the bar by a number of steps (with the
 :method:`Symfony\\Component\\Console\\Helper\\ProgressBar::advance` method),
@@ -234,10 +243,14 @@ current progress of the bar. Here is a list of the built-in placeholders:
 * ``memory``: The current memory usage;
 * ``message``: used to display arbitrary messages in the progress bar (as explained later).
 
+The time fields ``elapsed``, ``remaining`` and ``estimated`` are displayed with
+a precision of 2. That means ``172799`` seconds are displayed as
+``1 day, 23 hrs`` instead of ``1 day, 23 hrs, 59 mins, 59 secs``.
+
 For instance, here is how you could set the format to be the same as the
 ``debug`` one::
 
-    $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:6s%/%estimated:-6s% %memory:6s%');
+    $progressBar->setFormat(' %current%/%max% [%bar%] %percent:3s%% %elapsed:16s%/%estimated:-16s% %memory:6s%');
 
 Notice the ``:6s`` part added to some placeholders? That's how you can tweak
 the appearance of the bar (formatting and alignment). The part after the colon

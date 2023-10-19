@@ -22,6 +22,7 @@ process is called a *place*. You do also define *transitions* that describe
 the action to get from one place to another.
 
 .. image:: /_images/components/workflow/states_transitions.png
+    :alt: An example state diagram for a workflow, showing transitions and places.
 
 A set of places and transitions creates a **definition**. A workflow needs
 a ``Definition`` and a way to write the states to the objects (i.e. an

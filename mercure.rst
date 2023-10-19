@@ -67,7 +67,11 @@ you must start it with the ``--no-tls`` option.
 Running a Mercure Hub
 ~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: /_images/mercure/schema.png
+.. raw:: html
+
+    <object data="_images/mercure/hub.svg" type="image/svg+xml"
+        alt="Flow diagram showing a Symfony app communicating with the Mercure Hub using a POST request, and the Mercure Hub using SSE to communicate to the clients."
+    ></object>
 
 If you use the Docker integration, a hub is already up and running,
 and you can go straight to the next section.
@@ -309,6 +313,7 @@ as patterns:
     the received events:
 
     .. image:: /_images/mercure/chrome.png
+        :alt: The Chrome DevTools showing the EventStream tab containing information about each SSE event.
 
     To use it:
 
@@ -328,7 +333,11 @@ The Mercure protocol comes with a discovery mechanism.
 To leverage it, the Symfony application must expose the URL of the Mercure Hub
 in a ``Link`` HTTP header.
 
-.. image:: /_images/mercure/discovery.png
+.. raw:: html
+
+    <object data="_images/mercure/discovery.svg" type="image/svg+xml"
+        alt="Flow diagram showing the Link response header set by the Symfony app to respond to an API request for a book with ID 1."
+    ></object>
 
 You can create ``Link`` headers with the ``Discovery`` helper class
 (under the hood, it uses the :doc:`WebLink Component </web_link>`)::
@@ -693,6 +702,8 @@ enable it::
     $ composer require --dev symfony/debug-pack
 
 .. image:: /_images/mercure/panel.png
+    :alt: The Mercure panel of the Symfony Profiler, showing information like time, memory, topics and data of each message sent by Mercure.
+    :class: with-browser
 
 Async dispatching
 -----------------

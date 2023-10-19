@@ -573,6 +573,13 @@ attribute like this::
         }
     }
 
+.. note::
+
+    Some IDEs will show an error when using ``#[Target]`` as in the previous example:
+    *"Attribute cannot be applied to a property because it does not contain the 'Attribute::TARGET_PROPERTY' flag"*.
+    The reason is that thanks to `PHP constructor promotion`_ this constructor
+    argument is both a parameter and a class property. You can safely ignore this error message.
+
 .. _autowire-attribute:
 
 Fixing Non-Autowireable Arguments
@@ -651,7 +658,8 @@ Generate Closures With Autowiring
 ---------------------------------
 
 A **service closure** is an anonymous function that returns a service. This type
-of instanciation is handy when you are dealing with lazy-loading.
+of instanciation is handy when you are dealing with lazy-loading.  It is also
+useful for non-shared service dependencies.
 
 Automatically creating a closure encapsulating the service instanciation can be
 done with the
@@ -687,7 +695,7 @@ attribute::
     {
         public function __construct(
             #[AutowireServiceClosure('third_party.remote_message_formatter')]
-            \Closure $messageFormatterResolver
+            private \Closure $messageFormatterResolver
         ) {
         }
 
@@ -709,7 +717,9 @@ In this case, you can use the
 :class:`Symfony\Component\DependencyInjection\Attribute\\AutowireCallable` attribute
 to generate a closure with the same signature as a specific method of a service. When
 this closure is called, it will pass all its arguments to the underlying service
-function::
+function.  If the closure needs to be called more than once, the service instance
+is reused for repeated calls.  Unlike a service closure, this will not
+create extra instances of a non-shared service::
 
     // src/Service/MessageGenerator.php
     namespace App\Service;
@@ -720,7 +730,7 @@ function::
     {
         public function __construct(
             #[AutowireCallable(service: 'third_party.remote_message_formatter', method: 'format')]
-            \Closure $formatCallable
+            private \Closure $formatCallable
         ) {
         }
 
@@ -833,3 +843,4 @@ over all code.
 
 .. _ROT13: https://en.wikipedia.org/wiki/ROT13
 .. _service definition prototype: https://symfony.com/blog/new-in-symfony-3-3-psr-4-based-service-discovery
+.. _`PHP constructor promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion

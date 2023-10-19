@@ -8,15 +8,20 @@ In order to do so, the Serializer component follows the following schema.
 
 .. raw:: html
 
-    <object data="../_images/components/serializer/serializer_workflow.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/serializer/serializer_workflow.svg" type="image/svg+xml"
+        alt="A flow diagram showing how objects are serialized/deserialized. This is described in the subsequent paragraph."
+    ></object>
 
-As you can see in the picture above, an array is used as an intermediary between
-objects and serialized contents. This way, encoders will only deal with turning
-specific **formats** into **arrays** and vice versa. The same way, Normalizers
-will deal with turning specific **objects** into **arrays** and vice versa.
+When (de)serializing objects, the Serializer uses an array as the intermediary
+between objects and serialized contents. Encoders will only deal with
+turning specific **formats** into **arrays** and vice versa. The same way,
+normalizers will deal with turning specific **objects** into **arrays** and
+vice versa. The Serializer deals with calling the normalizers and encoders
+when serializing objects or deserializing formats.
 
-Serialization is a complex topic. This component may not cover all your use cases out of the box,
-but it can be useful for developing tools to serialize and deserialize your objects.
+Serialization is a complex topic. This component may not cover all your use
+cases out of the box, but it can be useful for developing tools to
+serialize and deserialize your objects.
 
 Installation
 ------------
@@ -869,7 +874,7 @@ The Serializer component provides several built-in normalizers:
     Normalizes a PHP object using an object that implements :class:`Symfony\\Component\\Serializer\\Normalizer\\NormalizableInterface`.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\UidNormalizer`
-    This normalizer converts objects that implement
+    This normalizer converts objects that extend
     :class:`Symfony\\Component\\Uid\\AbstractUid` into strings.
     The default normalization format for objects that implement :class:`Symfony\\Component\\Uid\\Uuid`
     is the `RFC 4122`_ format (example: ``d9e7a184-5d5b-11ea-a62a-3499710062d0``).

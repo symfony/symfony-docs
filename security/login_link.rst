@@ -271,7 +271,7 @@ number::
 This will send an email like this to the user:
 
 .. image:: /_images/security/login_link_email.png
-   :align: center
+   :alt: A default Symfony e-mail containing the text "Click on the button below to confirm you want to sign in" and the button with the login link.
 
 .. tip::
 
@@ -667,6 +667,8 @@ Once this first hash is processed and encoded in Base64, a new one is created
 from the first hash value and the ``kernel.secret`` container parameter. This
 allows Symfony to sign this final hash, which is contained in the login URL.
 The final hash is also a Base64 encoded SHA-256 hash.
+
+.. _login-link_customize-success-handler:
 
 Customizing the Success Handler
 -------------------------------

@@ -1,5 +1,5 @@
-Introduction
-============
+Front-end Tools: Handling CSS & JavaScript
+==========================================
 
 Symfony gives you the flexibility to choose any front-end tools you want. This could
 be dead-simple - like putting CSS & JS directly in the ``public/`` directory - or
@@ -25,16 +25,16 @@ Requires a build step?            yes                no
 Works in all browsers?            yes                yes
 Supports `Stimulus/UX`_           yes                yes
 Supports Sass/Tailwind            yes                :ref:`yes <asset-mapper-tailwind>`
-Supports React, Vue, Svelte?      yes                yes (but read note below)
-Supports TypeScript               yes                no (but read note below)
+Supports React, Vue, Svelte?      yes                yes :ref:`[1] <ux-note-1>`
+Supports TypeScript               yes                no :ref:`[1] <ux-note-1>`
 ================================  =================  ======================================================
 
-.. note::
+.. _ux-note-1:
 
-    Using JSX (React), Vue or TypeScript with AssetMapper is possible, but you'll
-    need to use their native tools for pre-compilation. Also, some features (like
-    Vue single-file components) cannot be compiled down to pure JavaScript that can
-    be executed by a browser.
+**[1]** Using JSX (React), Vue or TypeScript with AssetMapper is possible, but you'll
+need to use their native tools for pre-compilation. Also, some features (like
+Vue single-file components) cannot be compiled down to pure JavaScript that can
+be executed by a browser.
 
 .. _frontend-webpack-encore:
 
@@ -135,12 +135,6 @@ Other Front-End Articles
 
 * :doc:`/frontend/create_ux_bundle`
 * :doc:`/frontend/custom_version_strategy`
-
-.. toctree::
-    :maxdepth: 1
-    :glob:
-
-    frontend/*
 
 .. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
 .. _`Webpack`: https://webpack.js.org/

@@ -41,7 +41,9 @@ squares).
 
 .. raw:: html
 
-    <object data="_images/rate_limiter/fixed_window.svg" type="image/svg+xml"></object>
+    <object data="_images/rate_limiter/fixed_window.svg" type="image/svg+xml"
+        alt="A timeline showing fixed windows that accept a maximum of 5 hits."
+    ></object>
 
 Its main drawback is that resource usage is not evenly distributed in time and
 it can overload the server at the window edges. In this example,
@@ -62,7 +64,9 @@ using a 1 hour window that slides over the timeline:
 
 .. raw:: html
 
-    <object data="_images/rate_limiter/sliding_window.svg" type="image/svg+xml"></object>
+    <object data="_images/rate_limiter/sliding_window.svg" type="image/svg+xml"
+        alt="The same timeline with a sliding window that accepts only 5 hits in the previous hour."
+    ></object>
 
 As you can see, this removes the edges of the window and would prevent the
 6th request at 11:45.
@@ -85,18 +89,20 @@ Token Bucket Rate Limiter
 This technique implements the `token bucket algorithm`_, which defines
 continuously updating the budget of resource usage. It roughly works like this:
 
-* A bucket is created with an initial set of tokens;
-* A new token is added to the bucket with a predefined frequency (e.g. every second);
-* Allowing an event consumes one or more tokens;
-* If the bucket still contains tokens, the event is allowed; otherwise, it's denied;
-* If the bucket is at full capacity, new tokens are discarded.
+#. A bucket is created with an initial set of tokens;
+#. A new token is added to the bucket with a predefined frequency (e.g. every second);
+#. Allowing an event consumes one or more tokens;
+#. If the bucket still contains tokens, the event is allowed; otherwise, it's denied;
+#. If the bucket is at full capacity, new tokens are discarded.
 
 The below diagram shows a token bucket of size 4 that is filled with a rate
 of 1 token per 15 minutes:
 
 .. raw:: html
 
-    <object data="_images/rate_limiter/token_bucket.svg" type="image/svg+xml"></object>
+    <object data="_images/rate_limiter/token_bucket.svg" type="image/svg+xml"
+        alt="A timeline showing the token bucket over time, as described in this section."
+    ></object>
 
 This algorithm handles more complex back-off burst management.
 For instance, it can allow a user to try a password 5 times and then only
@@ -314,6 +320,11 @@ processes by reserving unused tokens.
             $limit->wait();
         } while (!$limit->isAccepted());
 
+.. versionadded:: 6.4
+
+    The support for the ``reserve()`` method for the ``SlidingWindow`` strategy
+    was introduced in Symfony 6.4.
+
 Exposing the Rate Limiter Status
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -342,7 +353,7 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
             $limit = $limiter->consume();
             $headers = [
                 'X-RateLimit-Remaining' => $limit->getRemainingTokens(),
-                'X-RateLimit-Retry-After' => $limit->getRetryAfter()->getTimestamp(),
+                'X-RateLimit-Retry-After' => $limit->calculateTimeForTokens(1, 1),
                 'X-RateLimit-Limit' => $limit->getLimit(),
             ];
 
@@ -358,6 +369,19 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
             return $response;
         }
     }
+
+.. versionadded:: 6.4
+
+    The :method:`Symfony\\Component\\RateLimiter\\Policy\\SlidingWindow::calculateTimeForTokens`
+    method was introduced in Symfony 6.4.
+
+.. deprecated:: 6.4
+
+    The :method:`Symfony\\Component\\RateLimiter\\Policy\\SlidingWindow::getRetryAfter`
+    method is deprecated since Symfony 6.4. Prior to this version, the
+    ``getRetryAfter()`` method must be used instead of the
+    :method:`Symfony\\Component\\RateLimiter\\Policy\\SlidingWindow::calculateTimeForTokens`
+    method.
 
 .. _rate-limiter-storage:
 
@@ -520,5 +544,5 @@ you can use a specific :ref:`named lock <lock-named-locks>` via the
 .. _`Apache mod_ratelimit`: https://httpd.apache.org/docs/current/mod/mod_ratelimit.html
 .. _`NGINX rate limiting`: https://www.nginx.com/blog/rate-limiting-nginx/
 .. _`token bucket algorithm`: https://en.wikipedia.org/wiki/Token_bucket
-.. _`PHP date relative formats`: https://www.php.net/datetime.formats.relative
+.. _`PHP date relative formats`: https://www.php.net/manual/en/datetime.formats.php#datetime.formats.relative
 .. _`Race conditions`: https://en.wikipedia.org/wiki/Race_condition

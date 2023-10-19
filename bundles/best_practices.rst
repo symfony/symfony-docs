@@ -63,6 +63,7 @@ The following is the recommended directory structure of an AcmeBlogBundle:
 .. code-block:: text
 
     <your-bundle>/
+    ├── assets/
     ├── config/
     ├── docs/
     │   └─ index.md
@@ -121,7 +122,8 @@ Doctrine ORM entities                                ``src/Entity/``
 Doctrine ODM documents                               ``src/Document/``
 Event Listeners                                      ``src/EventListener/``
 Configuration (routes, services, etc.)               ``config/``
-Web Assets (CSS, JS, images)                         ``public/``
+Web Assets (compiled CSS and JS, images)             ``public/``
+Web Asset sources (``.scss``, ``.ts``, Stimulus)     ``assets/``
 Translation files                                    ``translations/``
 Validation (when not using attributes)               ``config/validation/``
 Serialization (when not using attributes)            ``config/serialization/``
@@ -529,16 +531,12 @@ Resources
 ---------
 
 If the bundle references any resources (config files, translation files, etc.),
-don't use physical paths (e.g. ``__DIR__/config/services.xml``) but logical
-paths (e.g. ``@AcmeBlogBundle/config/services.xml``).
+you can use physical paths (e.g. ``__DIR__/config/services.xml``).
 
-The logical paths are required because of the bundle overriding mechanism that
-lets you override any resource/file of any bundle. See :ref:`http-kernel-resource-locator`
-for more details about transforming physical paths into logical paths.
-
-Beware that templates use a simplified version of the logical path shown above.
-For example, an ``index.html.twig`` template located in the ``templates/Default/``
-directory of the AcmeBlogBundle, is referenced as ``@AcmeBlog/Default/index.html.twig``.
+In the past, we recommended to only use logical paths (e.g.
+``@AcmeBlogBundle/config/services.xml``) and resolve them with the
+:ref:`resource locator <http-kernel-resource-locator>` provided by the Symfony
+kernel, but this is no longer a recommended practice.
 
 Learn more
 ----------

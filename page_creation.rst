@@ -38,6 +38,7 @@ Suppose you want to create a page - ``/lucky/number`` - that generates a lucky (
 random) number and prints it. To do that, create a "Controller" class and a
 "controller" method inside of it::
 
+    <?php
     // src/Controller/LuckyController.php
     namespace App\Controller;
 
@@ -79,7 +80,8 @@ metadata to code):
           }
       }
 
-That's it! If you are using Symfony web server, try it out by going to: http://localhost:8000/lucky/number
+That's it! If you are using :doc:`the Symfony web server </setup/symfony_server>`,
+try it out by going to: http://localhost:8000/lucky/number
 
 .. tip::
 

@@ -27,7 +27,9 @@ Concepts
 
 .. raw:: html
 
-    <object data="../_images/components/messenger/overview.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/messenger/overview.svg" type="image/svg+xml"
+        alt="A flow diagram visualizing how each concept relates to eachother. Each concept is described in the subsequent text."
+    ></object>
 
 **Sender**:
    Responsible for serializing and sending messages to *something*. This
@@ -140,26 +142,37 @@ through the transport layer, use the ``SerializerStamp`` stamp::
 
 Here are some important envelope stamps that are shipped with the Symfony Messenger:
 
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\DelayStamp`,
-   to delay handling of an asynchronous message.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\DispatchAfterCurrentBusStamp`,
-   to make the message be handled after the current bus has executed. Read more
-   at :doc:`/messenger/dispatch_after_current_bus`.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp`,
-   a stamp that marks the message as handled by a specific handler.
-   Allows accessing the handler returned value and the handler name.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`,
-   an internal stamp that marks the message as received from a transport.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\SentStamp`,
-   a stamp that marks the message as sent by a specific sender.
-   Allows accessing the sender FQCN and the alias if available from the
-   :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SendersLocator`.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`,
-   to configure the serialization groups used by the transport.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp`,
-   to configure the validation groups used when the validation middleware is enabled.
-#. :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`,
-   an internal stamp when a message fails due to an exception in the handler.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\DelayStamp`,
+  to delay handling of an asynchronous message.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\DispatchAfterCurrentBusStamp`,
+  to make the message be handled after the current bus has executed. Read more
+  at :ref:`messenger-transactional-messages`.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp`,
+  a stamp that marks the message as handled by a specific handler.
+  Allows accessing the handler returned value and the handler name.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\ReceivedStamp`,
+  an internal stamp that marks the message as received from a transport.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\SentStamp`,
+  a stamp that marks the message as sent by a specific sender.
+  Allows accessing the sender FQCN and the alias if available from the
+  :class:`Symfony\\Component\\Messenger\\Transport\\Sender\\SendersLocator`.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\SerializerStamp`,
+  to configure the serialization groups used by the transport.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\ValidationStamp`,
+  to configure the validation groups used when the validation middleware is enabled.
+* :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp`,
+  an internal stamp when a message fails due to an exception in the handler.
+
+.. note::
+
+    The :class:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp` stamp
+    contains a :class:`Symfony\\Component\\ErrorHandler\\Exception\\FlattenException`,
+    which is a representation of the exception that made the message fail. You can
+    get this exception with the
+    :method:`Symfony\\Component\\Messenger\\Stamp\\ErrorDetailsStamp::getFlattenException`
+    method. This exception is normalized thanks to the
+    :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\Normalizer\\FlattenExceptionNormalizer`
+    which helps error reporting in the Messenger context.
 
 Instead of dealing directly with the messages in the middleware you receive the envelope.
 Hence you can inspect the envelope content and its stamps, or add any::

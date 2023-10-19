@@ -122,7 +122,8 @@ is capable of sending messages (e.g. to a queueing system) and then
 .. note::
 
     If you want to use a transport that's not supported, check out the
-    `Enqueue's transport`_, which supports things like Kafka and Google Pub/Sub.
+    `Enqueue's transport`_, which backs services like Kafka and Google
+    Pub/Sub.
 
 A transport is registered using a "DSN". Thanks to Messenger's Flex recipe, your
 ``.env`` file already has a few examples.
@@ -402,6 +403,8 @@ Then, in your handler, you can query for a fresh object::
     }
 
 This guarantees the entity contains fresh data.
+
+.. _messenger-handling-messages-synchronously:
 
 Handling Messages Synchronously
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1105,9 +1108,17 @@ to retry them:
     # remove messages without retrying them and show each message before removing it
     $ php bin/console messenger:failed:remove 20 30 --show-messages
 
+    # remove all messages in the failure transport
+    $ php bin/console messenger:failed:remove --all
+
 .. versionadded:: 6.2
 
     The ``--class-filter`` and ``--stats`` options were introduced in Symfony 6.2.
+
+.. versionadded:: 6.4
+
+    The ``--all`` option was introduced in Symfony 6.4.
+
 
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
@@ -1411,6 +1422,14 @@ your Envelope::
     of the stop conditions is reached. Thus, the worker's stop logic cannot be reached if it
     is stuck in a blocking call.
 
+.. tip::
+
+    If your application faces socket exceptions or `high connection churn`_
+    (shown by the rapid creation and deletion of connections), consider using
+    `AMQProxy`_. This tool works as a gateway between Symfony Messenger and AMQP server,
+    maintaining stable connections and minimizing overheads (which also improves
+    the overall performance).
+
 Doctrine Transport
 ~~~~~~~~~~~~~~~~~~
 
@@ -1442,36 +1461,6 @@ DSN by using the ``table_name`` option:
 
 Or, to create the table yourself, set the ``auto_setup`` option to ``false`` and
 :ref:`generate a migration <doctrine-creating-the-database-tables-schema>`.
-
-.. tip::
-
-    To avoid tools like Doctrine Migrations from trying to remove this table because
-    it's not part of your normal schema, you can set the ``schema_filter`` option:
-
-    .. configuration-block::
-
-        .. code-block:: yaml
-
-            # config/packages/doctrine.yaml
-            doctrine:
-                dbal:
-                    schema_filter: '~^(?!messenger_messages)~'
-
-        .. code-block:: xml
-
-            <!-- config/packages/doctrine.xml -->
-            <doctrine:dbal schema-filter="~^(?!messenger_messages)~"/>
-
-        .. code-block:: php
-
-            # config/packages/doctrine.php
-            $container->loadFromExtension('doctrine', [
-                'dbal' => [
-                    'schema_filter'  => '~^(?!messenger_messages)~',
-                    // ...
-                ],
-                // ...
-            ]);
 
 .. caution::
 
@@ -1584,6 +1573,8 @@ The Redis transport DSN may looks like this:
     MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
+    # Multiple Redis Sentinel Hosts Example
+    MESSENGER_TRANSPORT_DSN=redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&sentinel_master=db
 
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
@@ -1624,8 +1615,8 @@ persistent_id            String, if null connection is          null
 retry_interval           Int, value in milliseconds             ``0``
 read_timeout             Float, value in seconds                ``0``
                          default indicates unlimited
-timeout                  Float, value in seconds                ``0``
-                         default indicates unlimited
+timeout                  Connection timeout. Float, value in    ``0``
+                         seconds default indicates unlimited
 sentinel_master          String, if null or empty Sentinel      null
                          support is disabled
 =======================  =====================================  =================================
@@ -1634,6 +1625,10 @@ sentinel_master          String, if null or empty Sentinel      null
 
     The ``persistent_id``, ``retry_interval``, ``read_timeout``, ``timeout``, and
     ``sentinel_master`` options were introduced in Symfony 6.1.
+
+.. versionadded:: 6.4
+
+    Support for the multiple Redis Sentinel hosts DNS was introduced in Symfony 6.4.
 
 .. caution::
 
@@ -1944,7 +1939,7 @@ Once handled, the handler will return a
 :class:`Symfony\\Component\\Console\\Messenger\\RunCommandContext` which
 contains many useful information such as the exit code or the output of the
 process. You can refer to the page dedicated on
-:doc:`handler results </messenger/handler_results>` for more information.
+:ref:`handler results <messenger-getting-handler-results>` for more information.
 
 .. versionadded:: 6.4
 
@@ -1982,7 +1977,7 @@ Once handled, the handler will return a
 :class:`Symfony\\Component\\Process\\Messenger\\RunProcessContext` which
 contains many useful information such as the exit code or the output of the
 process. You can refer to the page dedicated on
-:doc:`handler results </messenger/handler_results>` for more information.
+:ref:`handler results <messenger-getting-handler-results>` for more information.
 
 .. versionadded:: 6.4
 
@@ -2034,6 +2029,106 @@ gather and process information returned by the HTTP request.
 
     The :class:`Symfony\\Component\\HttpClient\\Messenger\\PingWebhookMessage`
     class was introduced in Symfony 6.4.
+
+Getting Results from your Handlers
+----------------------------------
+
+When a message is handled, the :class:`Symfony\\Component\\Messenger\\Middleware\\HandleMessageMiddleware`
+adds a :class:`Symfony\\Component\\Messenger\\Stamp\\HandledStamp` for each object that handled the message.
+You can use this to get the value returned by the handler(s)::
+
+    use Symfony\Component\Messenger\MessageBusInterface;
+    use Symfony\Component\Messenger\Stamp\HandledStamp;
+
+    $envelope = $messageBus->dispatch(new SomeMessage());
+
+    // get the value that was returned by the last message handler
+    $handledStamp = $envelope->last(HandledStamp::class);
+    $handledStamp->getResult();
+
+    // or get info about all of handlers
+    $handledStamps = $envelope->all(HandledStamp::class);
+
+.. _messenger-getting-handler-results:
+
+Getting Results when Working with Command & Query Buses
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Messenger component can be used in CQRS architectures where command & query
+buses are central pieces of the application. Read Martin Fowler's
+`article about CQRS`_ to learn more and
+:ref:`how to configure multiple buses <messenger-multiple-buses>`.
+
+As queries are usually synchronous and expected to be handled once,
+getting the result from the handler is a common need.
+
+A :class:`Symfony\\Component\\Messenger\\HandleTrait` exists to get the result
+of the handler when processing synchronously. It also ensures that exactly one
+handler is registered. The ``HandleTrait`` can be used in any class that has a
+``$messageBus`` property::
+
+    // src/Action/ListItems.php
+    namespace App\Action;
+
+    use App\Message\ListItemsQuery;
+    use App\MessageHandler\ListItemsQueryResult;
+    use Symfony\Component\Messenger\HandleTrait;
+    use Symfony\Component\Messenger\MessageBusInterface;
+
+    class ListItems
+    {
+        use HandleTrait;
+
+        public function __construct(
+            private MessageBusInterface $messageBus,
+        ) {
+        }
+
+        public function __invoke(): void
+        {
+            $result = $this->query(new ListItemsQuery(/* ... */));
+
+            // Do something with the result
+            // ...
+        }
+
+        // Creating such a method is optional, but allows type-hinting the result
+        private function query(ListItemsQuery $query): ListItemsQueryResult
+        {
+            return $this->handle($query);
+        }
+    }
+
+Hence, you can use the trait to create command & query bus classes.
+For example, you could create a special ``QueryBus`` class and inject it
+wherever you need a query bus behavior instead of the ``MessageBusInterface``::
+
+    // src/MessageBus/QueryBus.php
+    namespace App\MessageBus;
+
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\HandleTrait;
+    use Symfony\Component\Messenger\MessageBusInterface;
+
+    class QueryBus
+    {
+        use HandleTrait;
+
+        public function __construct(
+            private MessageBusInterface $messageBus,
+        ) {
+        }
+
+        /**
+         * @param object|Envelope $query
+         *
+         * @return mixed The handler returned value
+         */
+        public function query($query): mixed
+        {
+            return $this->handle($query);
+        }
+    }
 
 Customizing Handlers
 --------------------
@@ -2164,6 +2259,134 @@ A single handler class can handle multiple messages. For that add the
     Implementing the :class:`Symfony\\Component\\Messenger\\Handler\\MessageSubscriberInterface`
     is another way to handle multiple messages with one handler class. This
     interface was deprecated in Symfony 6.2.
+
+.. _messenger-transactional-messages:
+
+Transactional Messages: Handle New Messages After Handling is Done
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A message handler can ``dispatch`` new messages while handling others, to either
+the same or a different bus (if the application has
+:ref:`multiple buses <messenger-multiple-buses>`). Any errors or exceptions that
+occur during this process can have unintended consequences, such as:
+
+#. If using the ``DoctrineTransactionMiddleware`` and a dispatched message throws
+   an exception, then any database transactions in the original handler will be
+   rolled back.
+#. If the message is dispatched to a different bus, then the dispatched message
+   will be handled even if some code later in the current handler throws an exception.
+
+An Example ``RegisterUser`` Process
+...................................
+
+Consider an application with both a *command* and an *event* bus. The application
+dispatches a command named ``RegisterUser`` to the command bus. The command is
+handled by the ``RegisterUserHandler`` which creates a ``User`` object, stores
+that object to a database and dispatches a ``UserRegistered`` message to the event bus.
+
+There are many handlers to the ``UserRegistered`` message, one handler may send
+a welcome email to the new user. We are using the ``DoctrineTransactionMiddleware``
+to wrap all database queries in one database transaction.
+
+**Problem 1:** If an exception is thrown when sending the welcome email, then
+the user will not be created because the ``DoctrineTransactionMiddleware`` will
+rollback the Doctrine transaction, in which the user has been created.
+
+**Problem 2:** If an exception is thrown when saving the user to the database,
+the welcome email is still sent because it is handled asynchronously.
+
+DispatchAfterCurrentBusMiddleware Middleware
+............................................
+
+For many applications, the desired behavior is to *only* handle messages that
+are dispatched by a handler once that handler has fully finished. This can be done by
+using the ``DispatchAfterCurrentBusMiddleware`` and adding a
+``DispatchAfterCurrentBusStamp`` stamp to :ref:`the message Envelope <messenger-envelopes>`::
+
+    // src/Messenger/CommandHandler/RegisterUserHandler.php
+    namespace App\Messenger\CommandHandler;
+
+    use App\Entity\User;
+    use App\Messenger\Command\RegisterUser;
+    use App\Messenger\Event\UserRegistered;
+    use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\MessageBusInterface;
+    use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
+
+    class RegisterUserHandler
+    {
+        public function __construct(
+            private MessageBusInterface $eventBus,
+            private EntityManagerInterface $em,
+        ) {
+        }
+
+        public function __invoke(RegisterUser $command): void
+        {
+            $user = new User($command->getUuid(), $command->getName(), $command->getEmail());
+            $this->em->persist($user);
+
+            // The DispatchAfterCurrentBusStamp marks the event message to be handled
+            // only if this handler does not throw an exception.
+
+            $event = new UserRegistered($command->getUuid());
+            $this->eventBus->dispatch(
+                (new Envelope($event))
+                    ->with(new DispatchAfterCurrentBusStamp())
+            );
+
+            // ...
+        }
+    }
+
+.. code-block:: php
+
+    // src/Messenger/EventSubscriber/WhenUserRegisteredThenSendWelcomeEmail.php
+    namespace App\Messenger\EventSubscriber;
+
+    use App\Entity\User;
+    use App\Messenger\Event\UserRegistered;
+    use Doctrine\ORM\EntityManagerInterface;
+    use Symfony\Component\Mailer\MailerInterface;
+    use Symfony\Component\Mime\RawMessage;
+
+    class WhenUserRegisteredThenSendWelcomeEmail
+    {
+        public function __construct(
+            private MailerInterface $mailer,
+            EntityManagerInterface $em,
+        ) {
+        }
+
+        public function __invoke(UserRegistered $event): void
+        {
+            $user = $this->em->getRepository(User::class)->find($event->getUuid());
+
+            $this->mailer->send(new RawMessage('Welcome '.$user->getFirstName()));
+        }
+    }
+
+This means that the ``UserRegistered`` message would not be handled until
+*after* the ``RegisterUserHandler`` had completed and the new ``User`` was
+persisted to the database. If the ``RegisterUserHandler`` encounters an
+exception, the ``UserRegistered`` event will never be handled. And if an
+exception is thrown while sending the welcome email, the Doctrine transaction
+will not be rolled back.
+
+.. note::
+
+    If ``WhenUserRegisteredThenSendWelcomeEmail`` throws an exception, that
+    exception will be wrapped into a ``DelayedMessageHandlingException``. Using
+    ``DelayedMessageHandlingException::getExceptions`` will give you all
+    exceptions that are thrown while handling a message with the
+    ``DispatchAfterCurrentBusStamp``.
+
+The ``dispatch_after_current_bus`` middleware is enabled by default. If you're
+configuring your middleware manually, be sure to register
+``dispatch_after_current_bus`` before ``doctrine_transaction`` in the middleware
+chain. Also, the ``dispatch_after_current_bus`` middleware must be loaded for
+*all* of the buses being used.
 
 Binding Handlers to Different Transports
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2397,7 +2620,7 @@ for each bus looks like this:
 #. ``add_bus_name_stamp_middleware`` - adds a stamp to record which bus this
    message was dispatched into;
 
-#. ``dispatch_after_current_bus``- see :doc:`/messenger/dispatch_after_current_bus`;
+#. ``dispatch_after_current_bus``- see :ref:`messenger-transactional-messages`;
 
 #. ``failed_message_processing_middleware`` - processes messages that are being
    retried via the :ref:`failure transport <messenger-failure-transport>` to make
@@ -2420,7 +2643,10 @@ a message is received via the worker (for messages that were sent to a transport
 to be handled asynchronously). Keep this in mind if you create your own middleware.
 
 You can add your own middleware to this list, or completely disable the default
-middleware and *only* include your own:
+middleware and *only* include your own.
+
+If a middleware service is abstract, you can configure its constructor's arguments
+and a different instance will be created per bus.
 
 .. configuration-block::
 
@@ -2434,9 +2660,11 @@ middleware and *only* include your own:
                         # disable the default middleware
                         default_middleware: false
 
-                        # and/or add your own
                         middleware:
-                            # service ids that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
+                            # use and configure parts of the default middleware you want
+                            - 'add_bus_name_stamp_middleware': ['messenger.bus.default']
+
+                            # add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
                             - 'App\Middleware\MyMiddleware'
                             - 'App\Middleware\AnotherMiddleware'
 
@@ -2456,11 +2684,17 @@ middleware and *only* include your own:
             <framework:config>
                 <framework:messenger>
                     <!-- default-middleware: disable the default middleware -->
-                    <framework:bus name="messenger.bus.default" default-middleware="false"/>
+                    <framework:bus name="messenger.bus.default" default-middleware="false">
 
-                    <!-- and/or add your own -->
-                    <framework:middleware id="App\Middleware\MyMiddleware"/>
-                    <framework:middleware id="App\Middleware\AnotherMiddleware"/>
+                        <!-- use and configure parts of the default middleware you want -->
+                        <framework:middleware id="add_bus_name_stamp_middleware">
+                            <framework:argument>messenger.bus.default</framework:argument>
+                        </framework:middleware>
+
+                        <!-- add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface -->
+                        <framework:middleware id="App\Middleware\MyMiddleware"/>
+                        <framework:middleware id="App\Middleware\AnotherMiddleware"/>
+                    </framework:bus>
                 </framework:messenger>
             </framework:config>
         </container>
@@ -2474,15 +2708,15 @@ middleware and *only* include your own:
             $messenger = $framework->messenger();
 
             $bus = $messenger->bus('messenger.bus.default')
-                ->defaultMiddleware(false);
+                ->defaultMiddleware(false); // disable the default middleware
+
+            // use and configure parts of the default middleware you want
+            $bus->middleware()->id('add_bus_name_stamp_middleware')->arguments(['messenger.bus.default']);
+
+            // add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
             $bus->middleware()->id('App\Middleware\MyMiddleware');
             $bus->middleware()->id('App\Middleware\AnotherMiddleware');
         };
-
-.. note::
-
-    If a middleware service is abstract, a different instance of the service will
-    be created per bus.
 
 .. _middleware-doctrine:
 
@@ -2513,6 +2747,9 @@ may want to use:
                             # instead of keeping them open forever
                             - doctrine_close_connection
 
+                            # logs an error when a Doctrine transaction was opened but not closed
+                            - doctrine_open_transaction_logger
+
                             # wraps all handlers in a single Doctrine transaction
                             # handlers do not need to call flush() and an error
                             # in any handler will cause a rollback
@@ -2539,6 +2776,7 @@ may want to use:
                         <framework:middleware id="doctrine_transaction"/>
                         <framework:middleware id="doctrine_ping_connection"/>
                         <framework:middleware id="doctrine_close_connection"/>
+                        <framework:middleware id="doctrine_open_transaction_logger"/>
 
                         <!-- or pass a different entity manager to any -->
                         <!--
@@ -2563,6 +2801,7 @@ may want to use:
             $bus->middleware()->id('doctrine_transaction');
             $bus->middleware()->id('doctrine_ping_connection');
             $bus->middleware()->id('doctrine_close_connection');
+            $bus->middleware()->id('doctrine_open_transaction_logger');
             // Using another entity manager
             $bus->middleware()->id('doctrine_transaction')
                 ->arguments(['custom']);
@@ -2704,12 +2943,336 @@ Then your handler will look like this::
     The :class:`Symfony\\Component\\Messenger\\Stamp\\HandlerArgumentsStamp`
     was introduced in Symfony 6.2.
 
+.. _messenger-multiple-buses:
+
 Multiple Buses, Command & Event Buses
 -------------------------------------
 
 Messenger gives you a single message bus service by default. But, you can configure
 as many as you want, creating "command", "query" or "event" buses and controlling
-their middleware. See :doc:`/messenger/multiple_buses`.
+their middleware.
+
+A common architecture when building applications is to separate commands from
+queries. Commands are actions that do something and queries fetch data. This
+is called CQRS (Command Query Responsibility Segregation). See Martin Fowler's
+`article about CQRS`_ to learn more. This architecture could be used together
+with the Messenger component by defining multiple buses.
+
+A **command bus** is a little different from a **query bus**. For example, command
+buses usually don't provide any results and query buses are rarely asynchronous.
+You can configure these buses and their rules by using middleware.
+
+It might also be a good idea to separate actions from reactions by introducing
+an **event bus**. The event bus could have zero or more subscribers.
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            messenger:
+                # The bus that is going to be injected when injecting MessageBusInterface
+                default_bus: command.bus
+                buses:
+                    command.bus:
+                        middleware:
+                            - validation
+                            - doctrine_transaction
+                    query.bus:
+                        middleware:
+                            - validation
+                    event.bus:
+                        default_middleware:
+                            enabled: true
+                            # set "allow_no_handlers" to true (default is false) to allow having
+                            # no handler configured for this bus without throwing an exception
+                            allow_no_handlers: false
+                            # set "allow_no_senders" to false (default is true) to throw an exception
+                            # if no sender is configured for this bus
+                            allow_no_senders: true
+                        middleware:
+                            - validation
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <!-- The bus that is going to be injected when injecting MessageBusInterface -->
+                <framework:messenger default-bus="command.bus">
+                    <framework:bus name="command.bus">
+                        <framework:middleware id="validation"/>
+                        <framework:middleware id="doctrine_transaction"/>
+                    </framework:bus>
+                    <framework:bus name="query.bus">
+                        <framework:middleware id="validation"/>
+                    </framework:bus>
+                    <framework:bus name="event.bus">
+                        <!-- set "allow-no-handlers" to true (default is false) to allow having
+                              no handler configured for this bus without throwing an exception -->
+                        <!-- set "allow-no-senders" to false (default is true) to throw an exception
+                             if no sender is configured for this bus -->
+                        <framework:default-middleware enabled="true" allow-no-handlers="false" allow-no-senders="true"/>
+                        <framework:middleware id="validation"/>
+                    </framework:bus>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            // The bus that is going to be injected when injecting MessageBusInterface
+            $framework->messenger()->defaultBus('command.bus');
+
+            $commandBus = $framework->messenger()->bus('command.bus');
+            $commandBus->middleware()->id('validation');
+            $commandBus->middleware()->id('doctrine_transaction');
+
+            $queryBus = $framework->messenger()->bus('query.bus');
+            $queryBus->middleware()->id('validation');
+
+            $eventBus = $framework->messenger()->bus('event.bus');
+            $eventBus->defaultMiddleware()
+                ->enabled(true)
+                // set "allowNoHandlers" to true (default is false) to allow having
+                // no handler configured for this bus without throwing an exception
+                ->allowNoHandlers(false)
+                // set "allowNoSenders" to false (default is true) to throw an exception
+                // if no sender is configured for this bus
+                ->allowNoSenders(true)
+            ;
+            $eventBus->middleware()->id('validation');
+        };
+
+.. versionadded:: 6.2
+
+    The ``allow_no_senders`` option was introduced in Symfony 6.2.
+
+This will create three new services:
+
+* ``command.bus``: autowireable with the :class:`Symfony\\Component\\Messenger\\MessageBusInterface`
+  type-hint (because this is the ``default_bus``);
+
+* ``query.bus``: autowireable with ``MessageBusInterface $queryBus``;
+
+* ``event.bus``: autowireable with ``MessageBusInterface $eventBus``.
+
+Restrict Handlers per Bus
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, each handler will be available to handle messages on *all*
+of your buses. To prevent dispatching a message to the wrong bus without an error,
+you can restrict each handler to a specific bus using the ``messenger.message_handler`` tag:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            App\MessageHandler\SomeCommandHandler:
+                tags: [{ name: messenger.message_handler, bus: command.bus }]
+                # prevent handlers from being registered twice (or you can remove
+                # the MessageHandlerInterface that autoconfigure uses to find handlers)
+                autoconfigure: false
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <service id="App\MessageHandler\SomeCommandHandler">
+                    <tag name="messenger.message_handler" bus="command.bus"/>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        $container->services()
+            ->set(App\MessageHandler\SomeCommandHandler::class)
+            ->tag('messenger.message_handler', ['bus' => 'command.bus']);
+
+This way, the ``App\MessageHandler\SomeCommandHandler`` handler will only be
+known by the ``command.bus`` bus.
+
+You can also automatically add this tag to a number of classes by using
+the :ref:`_instanceof service configuration <di-instanceof>`. Using this,
+you can determine the message bus based on an implemented interface:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            _instanceof:
+                # all services implementing the CommandHandlerInterface
+                # will be registered on the command.bus bus
+                App\MessageHandler\CommandHandlerInterface:
+                    tags:
+                        - { name: messenger.message_handler, bus: command.bus }
+
+                # while those implementing QueryHandlerInterface will be
+                # registered on the query.bus bus
+                App\MessageHandler\QueryHandlerInterface:
+                    tags:
+                        - { name: messenger.message_handler, bus: query.bus }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- all services implementing the CommandHandlerInterface
+                     will be registered on the command.bus bus -->
+                <instanceof id="App\MessageHandler\CommandHandlerInterface">
+                    <tag name="messenger.message_handler" bus="command.bus"/>
+                </instanceof>
+
+                <!-- while those implementing QueryHandlerInterface will be
+                     registered on the query.bus bus -->
+                <instanceof id="App\MessageHandler\QueryHandlerInterface">
+                    <tag name="messenger.message_handler" bus="query.bus"/>
+                </instanceof>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        use App\MessageHandler\CommandHandlerInterface;
+        use App\MessageHandler\QueryHandlerInterface;
+
+        return function(ContainerConfigurator $container): void {
+            $services = $container->services();
+
+            // ...
+
+            // all services implementing the CommandHandlerInterface
+            // will be registered on the command.bus bus
+            $services->instanceof(CommandHandlerInterface::class)
+                ->tag('messenger.message_handler', ['bus' => 'command.bus']);
+
+            // while those implementing QueryHandlerInterface will be
+            // registered on the query.bus bus
+            $services->instanceof(QueryHandlerInterface::class)
+                ->tag('messenger.message_handler', ['bus' => 'query.bus']);
+        };
+
+Debugging the Buses
+~~~~~~~~~~~~~~~~~~~
+
+The ``debug:messenger`` command lists available messages & handlers per bus.
+You can also restrict the list to a specific bus by providing its name as an argument.
+
+.. code-block:: terminal
+
+    $ php bin/console debug:messenger
+
+      Messenger
+      =========
+
+      command.bus
+      -----------
+
+       The following messages can be dispatched:
+
+       ---------------------------------------------------------------------------------------
+        App\Message\DummyCommand
+            handled by App\MessageHandler\DummyCommandHandler
+        App\Message\MultipleBusesMessage
+            handled by App\MessageHandler\MultipleBusesMessageHandler
+       ---------------------------------------------------------------------------------------
+
+      query.bus
+      ---------
+
+       The following messages can be dispatched:
+
+       ---------------------------------------------------------------------------------------
+        App\Message\DummyQuery
+            handled by App\MessageHandler\DummyQueryHandler
+        App\Message\MultipleBusesMessage
+            handled by App\MessageHandler\MultipleBusesMessageHandler
+       ---------------------------------------------------------------------------------------
+
+.. tip::
+
+    The command will also show the PHPDoc description of the message and handler classes.
+
+Redispatching a Message
+-----------------------
+
+It you want to redispatch a message (using the same transport and envelope), create
+a new :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage` and dispatch
+it through your bus. Reusing the same ``SmsNotification`` example shown earlier::
+
+    // src/MessageHandler/SmsNotificationHandler.php
+    namespace App\MessageHandler;
+
+    use App\Message\SmsNotification;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+    use Symfony\Component\Messenger\Message\RedispatchMessage;
+    use Symfony\Component\Messenger\MessageBusInterface;
+
+    #[AsMessageHandler]
+    class SmsNotificationHandler
+    {
+        public function __construct(private MessageBusInterface $bus)
+        {
+        }
+
+        public function __invoke(SmsNotification $message): void
+        {
+            // do something with the message
+            // then redispatch it based on your own logic
+
+            if ($needsRedispatch) {
+                $this->bus->dispatch(new RedispatchMessage($message));
+            }
+        }
+    }
+
+The built-in :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+will take care of this message to redispatch it through the same bus it was
+dispatched at first. You can also use the second argument of the ``RedispatchMessage``
+constructor to provide transports to use when redispatching the message.
+
+.. versionadded:: 6.3
+
+    The :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMessage`
+    and :class:`Symfony\\Component\\Messenger\\Handler\\RedispatchMessageHandler`
+    classes were introduced in Symfony 6.3.
 
 Learn more
 ----------
@@ -2730,3 +3293,6 @@ Learn more
 .. _`Visibility Timeout`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-visibility-timeout.html
 .. _`FIFO queue`: https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/FIFO-queues.html
 .. _`LISTEN/NOTIFY`: https://www.postgresql.org/docs/current/sql-notify.html
+.. _`AMQProxy`: https://github.com/cloudamqp/amqproxy
+.. _`high connection churn`: https://www.rabbitmq.com/connections.html#high-connection-churn
+.. _`article about CQRS`: https://martinfowler.com/bliki/CQRS.html

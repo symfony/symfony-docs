@@ -657,7 +657,9 @@ It's a beautiful thing.
 
 .. raw:: html
 
-    <object data="../_images/http/request-flow.svg" type="image/svg+xml"></object>
+    <object data="../_images/http/request-flow.svg" type="image/svg+xml"
+        alt="A flow diagram visualizing the previously described process from front controller to response."
+    ></object>
 
 Where Symfony Delivers
 ----------------------

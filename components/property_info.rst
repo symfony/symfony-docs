@@ -225,7 +225,15 @@ provide whether properties are readable or writable as booleans::
 The :class:`Symfony\\Component\\PropertyInfo\\Extractor\\ReflectionExtractor` looks
 for getter/isser/setter/hasser method in addition to whether or not a property is public
 to determine if it's accessible. This based on how the :doc:`PropertyAccess </components/property_access>`
-works.
+works. It assumes camel case style method names following `PSR-1`_. For example,
+both ``myProperty`` and ``my_property`` properties are readable if there's a
+``getMyProperty()`` method and writable if there's a ``setMyProperty()`` method.
+
+.. versionadded:: 6.4
+
+    In Symfony versions prior to 6.4, snake case properties (e.g. ``my_property``)
+    were not writable by camel case methods (e.g. ``setMyProperty()``). You had
+    to define method names with underscores (e.g. ``setMy_property()``).
 
 .. _property-info-initializable:
 
@@ -552,6 +560,7 @@ service by defining it as a service with one or more of the following
 * ``property_info.initializable_extractor`` if it provides initializable information
   (it checks if a property can be initialized through the constructor).
 
+.. _`PSR-1`: https://www.php-fig.org/psr/psr-1/
 .. _`phpDocumentor Reflection`: https://github.com/phpDocumentor/ReflectionDocBlock
 .. _`phpdocumentor/reflection-docblock`: https://packagist.org/packages/phpdocumentor/reflection-docblock
 .. _`phpstan/phpdoc-parser`: https://packagist.org/packages/phpstan/phpdoc-parser

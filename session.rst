@@ -400,6 +400,10 @@ Check out the Symfony config reference to learn more about the other available
     ``session.auto_start = 1`` This directive should be turned off in
     ``php.ini``, in the web server directives or in ``.htaccess``.
 
+The session cookie is also available in :ref:`the Response object <component-http-foundation-response>`.
+This is useful to get that cookie in the CLI context or when using PHP runners
+like Roadrunner or Swoole.
+
 Session Idle Time/Keep Alive
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -663,6 +667,12 @@ and only the first one stored the CSRF token in the session.
     If you use Memcached instead of Redis, follow a similar approach but
     replace ``RedisSessionHandler`` by
     :class:`Symfony\\Component\\HttpFoundation\\Session\\Storage\\Handler\\MemcachedSessionHandler`.
+
+.. tip::
+
+    When using Redis with a DSN in the
+    :ref:`handler_id <config-framework-session-handler-id>` config option, you can
+    add the ``prefix`` and ``ttl`` options as query string parameters in the DSN.
 
 .. _session-database-pdo:
 

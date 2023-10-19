@@ -38,6 +38,7 @@ Dependency Injection
 * :ref:`Autowire <autowire-attribute>`
 * :ref:`AutowireCallable <autowiring_closures>`
 * :doc:`AutowireDecorated </service_container/service_decoration>`
+* :doc:`AutowireIterator <service-locator_autowire-iterator>`
 * :ref:`AutowireLocator <service-locator_autowire-locator>`
 * :ref:`AutowireServiceClosure <autowiring_closures>`
 * :ref:`Exclude <service-psr4-loader>`
@@ -116,7 +117,7 @@ Validator
 Each validation constraint comes with a PHP attribute. See
 :doc:`/reference/constraints` for a full list of validation constraints.
 
-* :doc:`HasNamedArgument </validation/custom_constraint>`
+* :doc:`HasNamedArguments </validation/custom_constraint>`
 
 Workflow
 ~~~~~~~~

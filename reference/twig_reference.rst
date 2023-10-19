@@ -286,6 +286,41 @@ expression
 Creates an :class:`Symfony\\Component\\ExpressionLanguage\\Expression` related
 to the :doc:`ExpressionLanguage component </components/expression_language>`.
 
+impersonation_path
+~~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_path(identifier) }}
+
+``identifier``
+    **type**: ``string``
+
+Generates a URL that you can visit to
+:doc:`impersonate a user </security/impersonating_user>`, identified by the
+``identifier`` argument.
+
+.. versionadded:: 6.4
+
+    The ``impersonation_path()`` function was introduced in Symfony 6.4.
+
+impersonation_url
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: twig
+
+    {{ impersonation_url(identifier) }}
+
+``identifier``
+    **type**: ``string``
+
+It's similar to the `impersonation_path`_ function, but it generates
+absolute URLs instead of relative URLs.
+
+.. versionadded:: 6.4
+
+    The ``impersonation_url()`` function was introduced in Symfony 6.4.
+
 impersonation_exit_path
 ~~~~~~~~~~~~~~~~~~~~~~~
 

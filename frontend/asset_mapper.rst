@@ -215,7 +215,7 @@ This adds the ``bootstrap`` package to your ``importmap.php`` file::
         // ...
 
         'bootstrap' => [
-            'url' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/+esm',
+            'version' => '5.3.0',
         ],
     ];
 
@@ -248,11 +248,29 @@ computers if some files are missing.
     such as ``@popperjs/core``. The ``download`` option will download both the main
     package *and* its dependencies.
 
-To update all 3rd party packages in your ``importmap.php`` file, run:
+You can check for available updates for your third-party packages by running:
 
 .. code-block:: terminal
 
+    # check for updates for all packages
+    $ php bin/console importmap:outdated
+
+    # check for updates for the given list of packages
+    $ php bin/console importmap:outdated bootstrap lodash
+
+.. versionadded:: 6.4
+
+    The ``importmap:outdated`` command was introduced in Symfony 6.4.
+
+To update third-party packages in your ``importmap.php`` file, run:
+
+.. code-block:: terminal
+
+    # updates all packages
     $ php bin/console importmap:update
+
+    # updates only the given list of packages
+    $ php bin/console importmap:update bootstrap lodash
 
 How does the importmap Work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -659,6 +677,14 @@ same way::
     live in your ``importmap.php`` file, so their preload setting is handled
     explicitly in that file.
 
+If the :doc:`WebLink Component </web_link>` is available in your application,
+Symfony will add a ``Link`` header in the response to preload the CSS files.
+
+.. versionadded:: 6.4
+
+    Automatic preloading of CSS files when WebLink is available was
+    introduced in Symfony 6.4.
+
 Frequently Asked Questions
 --------------------------
 
@@ -759,120 +785,15 @@ component.
 Using Tailwind CSS
 ------------------
 
-.. seealso::
-
-    Check out `symfonycasts/tailwind-bundle`_ for an even easier way to use
-    Tailwind with Symfony.
-
-Want to use the `Tailwind`_ CSS framework with the AssetMapper component? No problem.
-First, install the ``tailwindcss`` binary. This can be installed via npm (run
-``npm --init`` if you don't already have a ``package.json`` file):
-
-.. code-block:: terminal
-
-    $ npm install -D tailwindcss
-
-Or you can install the `Tailwind standalone binary`_, which does not require Node.
-
-Next, generate the ``tailwind.config.js`` file:
-
-.. code-block:: terminal
-
-    $ npx tailwindcss init
-
-    # or with the standalone binary:
-    $ ./tailwindcss init
-
-Update ``tailwind.config.js`` to point to your template and JavaScript files:
-
-.. code-block:: diff
-
-    // tailwind.config.js
-    // ....
-
-    -   content: [],
-    +   content: [
-    +       "./assets/**/*.js",
-    +       "./templates/**/*.html.twig",
-    +   ],
-
-Then add the base lines to your ``assets/styles/app.css`` file:
-
-.. code-block:: css
-
-    /* assets/styles/app.css */
-    @tailwind base;
-    @tailwind components;
-    @tailwind utilities;
-
-Now that Tailwind is setup, run the ``tailwindcss`` binary in "watch" mode
-to build the CSS file to a new ``assets/app.built.css`` path:
-
-.. code-block:: terminal
-
-    $ npx tailwindcss build -i assets/styles/app.css -o assets/styles/app.built.css --watch
-
-    # or with the standalone binary:
-    $ ./tailwindcss build -i assets/styles/app.css -o assets/styles/app.built.css --watch
-
-Finally, instead of pointing directly to ``styles/app.css`` in your template,
-point to the new ``styles/app.built.css`` file:
-
-.. code-block:: diff
-
-    {# templates/base.html.twig #}
-
-    - <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-    + <link rel="stylesheet" href="{{ asset('styles/app.built.css') }}">
-
-Done! You can choose to ignore the ``assets/styles/app.built.css`` file from Git
-or commit it to ease deployment.
+To use the `Tailwind`_ CSS framework with the AssetMapper component, check out
+`symfonycasts/tailwind-bundle`_.
 
 .. _asset-mapper-sass:
 
 Using Sass
 ----------
 
-To use Sass with the AssetMapper component, install the sass binary. You can
-`download it from the latest GitHub release`_ (does not require Node) or
-install it via npm:
-
-.. code-block:: terminal
-
-    $ npm install -D dart-sass
-
-Next, create an ``assets/styles/app.scss`` file and write some dazzling CSS:
-
-.. code-block:: scss
-
-    /* assets/styles/app.scss */
-    $primary-color: skyblue;
-
-    body {
-        background: $primary-color;
-    }
-
-Then, run the ``dart-sass`` binary in "watch" mode to build the CSS file to a
-new ``assets/styles/app.css`` path:
-
-.. code-block:: terminal
-
-    $ npx dart-sass assets/styles/app.scss assets/styles/app.css --watch
-
-    # or with the standalone binary:
-    ./sass assets/styles/app.scss assets/styles/app.css --watch
-
-In your template, point directly to the ``styles/app.css`` file (``base.html.twig``
-points to ``styles/app.css`` by default):
-
-.. code-block:: html+twig
-
-    {# templates/base.html.twig #}
-    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-
-Done! You can choose to ignore the ``assets/styles/app.css`` file from Git
-or commit it to ease deployment. To prevent the source ``.scss`` files from being
-exposed to the public, see :ref:`exclude_patterns <excluded_patterns>`.
+To use Sass with AssetMapper component, check out `symfonycasts/sass-bundle`_.
 
 Third-Party Bundles & Custom Asset Paths
 ----------------------------------------
@@ -1141,6 +1062,49 @@ re-calculated when you expect it to, you can run:
 
 This will force the AssetMapper component to re-calculate the content of all files.
 
+Run Security Audits on Your Dependencies
+----------------------------------------
+
+Similar to ``npm`` and ``yarn``, the AssetMapper component comes bundled with a
+command that checks security vulnerabilities in the dependencies of your application:
+
+.. code-block:: terminal
+
+    $ php bin/console importmap:audit
+
+    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
+    Severity  Title                                          Package    Version  Patched in  More info
+    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
+    Medium    jQuery Cross Site Scripting vulnerability      jquery     3.3.1    3.5.0       https://api.github.com/advisories/GHSA-257q-pV89-V3xv
+    Medium    Potential XSS vulnerability in jQuery          jquery     3.3.1    3.5.0       https://api.github.com/advisories/GHSA-jpcq-cgw6-v4j6
+    Medium    Potential XSS vulnerability in jQuery          jquery     3.3.1    3.5.0       https://api.github.com/advisories/GHSA-gxr4-xjj5-5px2
+    Medium    XSS in jQuery as used in Drupal, etc.          jquery     3.3.1    3.4.0       https://api.github.com/advisories/GHSA-6c3j-c64m-qhgg
+    Medium    Prototype Pollution in jQuery                  jquery     3.3.1    3.4.0       https://api.github.com/advisories/GHSA-wV67-q8rr-grjp
+    High      Prototype Pollution in JSON5 via Parse Method  json5      1.0.0    1.0.2       https://api.github.com/advisories/GHSA-9c47-m6qq-7p4h
+    Medium    semver vulnerable to RegExp Denial of Service  semver     4.3.0    5.7.2       https://api.github.com/advisories/GHSA-c2qf-rxjj-qqgw
+    High      RegExp Denial of Service in sever              semver     4.3.0    4.3.2       https://api.github.com/advisories/GHSA-X6fg-f45m-jf5g
+    Critical  Prototype Pollution in minimist                minimist   1.1.3    1.2.6       https://api.github.com/advisories/GHSA-xvch-5gv4-984h
+    Medium    Prototype Pollution in minimist                minimist   1.1.3    1.2.3       https://api.github.com/advisories/GHSA-vh95-rmgr-6w4m
+    Medium    ESLint dependencies are vulnerable             minimist   1.1.3    1.2.2       https://api.github.com/advisories/GHSA-7fhm-mqm4-2wp7
+    Medium    Bootstrap Vulnerable to Cross-Site Scripting   bootstrap  4.1.3    4.3.1       https://api.github.com/advisories/GHSA-9v3M-8fp8-mi99
+    --------  ---------------------------------------------  ---------  -------  ----------  -----------------------------------------------------
+
+    7 packages found: 7 audited / 0 skipped
+    12 vulnerabilities found: 1 Critical / 2 High / 9 Medium
+
+The command will return the ``0`` exit code if no vulnerability is found, or
+the ``-1`` exit code otherwise. This means that you can seamlessly integrate this
+command as part of your CI to be warned anytime a new vulnerability is found.
+
+.. tip::
+
+    The command takes a ``--format`` option to choose the output format between
+    ``txt`` and ``json``.
+
+.. versionadded:: 6.4
+
+    The ``importmap:audit`` command was introduced in Symfony 6.4.
+
 .. _latest asset-mapper recipe: https://github.com/symfony/recipes/tree/main/symfony/asset-mapper
 .. _import statement: https://caniuse.com/es6-module-dynamic-import
 .. _ES6: https://caniuse.com/es6
@@ -1156,9 +1120,8 @@ This will force the AssetMapper component to re-calculate the content of all fil
 .. _auto minify: https://developers.cloudflare.com/support/speed/optimization-file-size/using-cloudflare-auto-minify/
 .. _Lighthouse: https://developers.google.com/web/tools/lighthouse
 .. _Tailwind: https://tailwindcss.com/
-.. _Tailwind standalone binary: https://tailwindcss.com/blog/standalone-cli
-.. _download it from the latest GitHub release: https://github.com/sass/dart-sass/releases/latest
 .. _BabdevPagerfantaBundle: https://github.com/BabDev/PagerfantaBundle
 .. _Cloudflare: https://www.cloudflare.com/
 .. _EasyAdminBundle: https://github.com/EasyCorp/EasyAdminBundle
-.. _symfonycasts/tailwind-bundle: https://github.com/SymfonyCasts/tailwind-bundle
+.. _symfonycasts/tailwind-bundle: https://symfony.com/bundles/TailwindBundle/current/index.html
+.. _symfonycasts/sass-bundle: https://symfony.com/bundles/SassBundle/current/index.html

@@ -237,6 +237,7 @@ After logging in, you can use the security profiler to see if this badge is
 present:
 
 .. image:: /_images/security/profiler-badges.png
+    :alt: The Security page of the Symfony profiler, with the "Authenticators" tab showing the remember me badge in the passport object.
 
 Without this badge, remember me will be not be activated (regardless of all
 other settings).

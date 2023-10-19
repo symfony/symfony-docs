@@ -159,7 +159,12 @@ Adding Interfaces to "Micro" Kernel
 When using the ``MicroKernelTrait``, you can also implement the
 ``CompilerPassInterface`` to automatically register the kernel itself as a
 compiler pass as explained in the dedicated
-:ref:`compiler pass section <kernel-as-compiler-pass>`.
+:ref:`compiler pass section <kernel-as-compiler-pass>`. If the
+:class:`Symfony\\Component\\DependencyInjection\\Extension\\ExtensionInterface`
+is implemented when using the ``MicroKernelTrait``, then the kernel will
+be automatically registered as an extension. You can learn more about it in
+the dedicated section about
+:ref:`managing configuration with extensions <components-dependency-injection-extension>`.
 
 It is also possible to implement the ``EventSubscriberInterface`` to handle
 events directly from the kernel, again it will be registered automatically::

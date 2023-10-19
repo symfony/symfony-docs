@@ -72,7 +72,9 @@ and ends with a :class:`Symfony\\Component\\HttpFoundation\\Response`.
 
 .. raw:: html
 
-    <object data="../_images/components/http_kernel/http-workflow.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/http_kernel/http-workflow.svg" type="image/svg+xml"
+        alt="A flow diagram showing all HTTP Kernel events in the Request-Response lifecycle. Each event is numbered 1 to 8 and described in detail in the following subsections."
+    ></object>
 
 The exact details of this workflow are the key to understanding how the kernel
 (and the Symfony Framework or any other library that uses the kernel) works.
@@ -523,7 +525,9 @@ to the exception.
 
 .. raw:: html
 
-    <object data="../_images/components/http_kernel/http-workflow-exception.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/http_kernel/http-workflow-exception.svg" type="image/svg+xml"
+        alt="The HTTP KErnel flow diagram showing how exceptions bypass all further steps and are directly transformed to responses."
+    ></object>
 
 Each listener to this event is passed a :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent`
 object, which you can use to access the original exception via the
@@ -682,7 +686,9 @@ your controller).
 
 .. raw:: html
 
-    <object data="../_images/components/http_kernel/http-workflow-subrequest.svg" type="image/svg+xml"></object>
+    <object data="../_images/components/http_kernel/http-workflow-subrequest.svg" type="image/svg+xml"
+        alt="The HTTP Kernel flow diagram with a sub request from a controller starting the lifecycle at step 1 again and feeding the sub Response content back into the controller."
+    ></object>
 
 To execute a sub request, use ``HttpKernel::handle()``, but change the second
 argument as follows::
@@ -728,19 +734,17 @@ Locating Resources
 ------------------
 
 The HttpKernel component is responsible of the bundle mechanism used in Symfony
-applications. The key feature of the bundles is that they allow to override any
-resource used by the application (config files, templates, controllers,
-translation files, etc.)
+applications. One of the key features of the bundles is that you can use logic
+paths instead of physical paths to refer to any of their resources (config files,
+templates, controllers, translation files, etc.)
 
-This overriding mechanism works because resources are referenced not by their
-physical path but by their logical path. For example, the ``services.xml`` file
-stored in the ``Resources/config/`` directory of a bundle called FooBundle is
-referenced as ``@FooBundle/Resources/config/services.xml``. This logical path
-will work when the application overrides that file and even if you change the
-directory of FooBundle.
+This allows to import resources even if you don't know where in the filesystem a
+bundle will be installed. For example, the ``services.xml`` file stored in the
+``Resources/config/`` directory of a bundle called FooBundle can be referenced as
+``@FooBundle/Resources/config/services.xml`` instead of ``__DIR__/Resources/config/services.xml``.
 
-The HttpKernel component provides a method called :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
-which can be used to transform logical paths into physical paths::
+This is possible thanks to the :method:`Symfony\\Component\\HttpKernel\\Kernel::locateResource`
+method provided by the kernel, which transforms logical paths into physical paths::
 
     $path = $kernel->locateResource('@FooBundle/Resources/config/services.xml');
 

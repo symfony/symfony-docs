@@ -360,6 +360,11 @@ After that, you can create the test database and all tables using:
 
 .. tip::
 
+    You can run these commands to create the database during the
+    :doc:`test bootstrap process <testing/bootstrap>`.
+
+.. tip::
+
     A common practice is to append the ``_test`` suffix to the original
     database names in tests. If the database name in production is called
     ``project_acme`` the name of the testing database could be
@@ -574,15 +579,55 @@ This allows you to create all types of requests you can think of:
     :ref:`framework.test <reference-framework-test>` option is enabled).
     This means you can override the service entirely if you need to.
 
-.. caution::
+Multiple Requests in One Test
+.............................
 
-    Before each request, the client reboots the kernel, recreating
-    the container from scratch.
-    This ensures that every requests are "isolated" using "new" service objects.
-    Also, it means that entities loaded by Doctrine repositories will
-    be "detached", so they will need to be refreshed by the manager or
-    queried again from a repository.
-    You can disable this behavior by calling the :method:`disableReboot() <Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot>` method.
+After making a request, subsequent requests will make the client reboot the kernel.
+This recreates the container from scratch to ensures that requests are isolated
+and use new service objects each time. This behavior can have some unexpected
+consequences: for example, the security token will be cleared, Doctrine entities
+will be detached, etc.
+
+First, you can call the client's :method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::disableReboot`
+method to reset the kernel instead of rebooting it. In practice, Symfony
+will call the ``reset()`` method of every service tagged with ``kernel.reset``.
+However, this will **also** clear the security token, detach Doctrine entities, etc.
+
+In order to solve this issue, create a :doc:`compiler pass </service_container/compiler_passes>`
+to remove the ``kernel.reset`` tag from some services in your test environment::
+
+    // src/Kernel.php
+    namespace App;
+
+    use App\DependencyInjection\Compiler\CustomPass;
+    use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+    use Symfony\Component\DependencyInjection\ContainerBuilder;
+    use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+
+    class Kernel extends BaseKernel
+    {
+        use MicroKernelTrait;
+
+        // ...
+
+        protected function build(ContainerBuilder $container): void
+        {
+            if ('test' === $this->environment) {
+                $container->addCompilerPass(new class() implements CompilerPassInterface {
+                    public function process(ContainerBuilder $container): void
+                    {
+                        // prevents the security token to be cleared
+                        $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
+
+                        // prevents Doctrine entities to be detached
+                        $container->getDefinition('doctrine')->clearTag('kernel.reset');
+
+                        // ...
+                    }
+                });
+            }
+        }
+    }
 
 Browsing the Site
 .................
@@ -672,12 +717,20 @@ You can pass any
 :class:`Symfony\\Component\\Security\\Core\\User\\UserInterface` instance to
 ``loginUser()``. This method creates a special
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\TestBrowserToken` object and
-stores in the session of the test client.
+stores in the session of the test client. If you need to define custom
+attributes in this token, you can use the ``tokenAttributes`` argument of the
+:method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser` method.
 
 .. note::
 
     By design, the ``loginUser()`` method doesn't work when using stateless firewalls.
     Instead, add the appropriate token/header in each ``request()`` call.
+
+.. versionadded:: 6.4
+
+    The ``tokenAttributes`` argument of the
+    :method:`Symfony\\Bundle\\FrameworkBundle\\KernelBrowser::loginUser` method
+    was introduced in Symfony 6.4.
 
 Making AJAX Requests
 ....................
@@ -925,7 +978,8 @@ Response Assertions
     Asserts a specific HTTP status code.
 ``assertResponseRedirects(string $expectedLocation = null, int $expectedCode = null, string $message = '')``
     Asserts the response is a redirect response (optionally, you can check
-    the target location and status code).
+    the target location and status code). The excepted location can be either
+    an absolute or a relative path.
 ``assertResponseHasHeader(string $headerName, string $message = '')``/``assertResponseNotHasHeader(string $headerName, string $message = '')``
     Asserts the given header is (not) available on the response, e.g. ``assertResponseHasHeader('content-type');``.
 ``assertResponseHeaderSame(string $headerName, string $expectedValue, string $message = '')``/``assertResponseHeaderNotSame(string $headerName, string $expectedValue, string $message = '')``
@@ -942,6 +996,11 @@ Response Assertions
     is the same as the expected value.
 ``assertResponseIsUnprocessable(string $message = '')``
     Asserts the response is unprocessable (HTTP status is 422)
+
+.. versionadded:: 6.4
+
+    The support for relative path in ``assertResponseRedirects()`` was introduced
+    in Symfony 6.4.
 
 Request Assertions
 ..................
@@ -1085,6 +1144,33 @@ Notifier Assertions
 
     The Notifier assertions were introduced in Symfony 6.2.
 
+HttpClient Assertions
+.....................
+
+.. tip::
+
+    For all the following assertions, ``$client->enableProfiler()`` must be
+    called before the code that will trigger HTTP request(s).
+
+``assertHttpClientRequest(string $expectedUrl, string $expectedMethod = 'GET', string|array $expectedBody = null, array $expectedHeaders = [], string $httpClientId = 'http_client')``
+    Asserts that the given URL has been called using, if specified,
+    the given method body and headers. By default it will check on the HttpClient,
+    but you can also pass a specific HttpClient ID.
+    (It will succeed if the request has been called multiple times.)
+
+``assertNotHttpClientRequest(string $unexpectedUrl, string $expectedMethod = 'GET', string $httpClientId = 'http_client')``
+    Asserts that the given URL has not been called using GET or the specified method.
+    By default it will check on the HttpClient, but a HttpClient id can be specified.
+
+``assertHttpClientRequestCount(int $count, string $httpClientId = 'http_client')``
+    Asserts that the given number of requests has been made on the HttpClient.
+    By default it will check on the HttpClient, but you can also pass a specific
+    HttpClient ID.
+
+.. versionadded:: 6.4
+
+    The HttpClient assertions were introduced in Symfony 6.4.
+
 .. TODO
 ..  End to End Tests (E2E)
 ..  ----------------------
@@ -1105,12 +1191,12 @@ Learn more
 
 .. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://docs.phpunit.de/
-.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/9.6/writing-tests-for-phpunit.html
-.. _`PHPUnit documentation`: https://docs.phpunit.de/en/9.6/configuration.html
+.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/10.3/writing-tests-for-phpunit.html
+.. _`PHPUnit documentation`: https://docs.phpunit.de/en/10.3/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
 .. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`DoctrineFixturesBundle documentation`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 .. _`SymfonyMakerBundle`: https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html
-.. _`PHPUnit Assertion`: https://docs.phpunit.de/en/9.6/assertions.html
+.. _`PHPUnit Assertion`: https://docs.phpunit.de/en/10.3/assertions.html
 .. _`section 4.1.18 of RFC 3875`: https://tools.ietf.org/html/rfc3875#section-4.1.18

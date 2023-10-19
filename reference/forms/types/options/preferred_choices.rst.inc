@@ -42,7 +42,7 @@ be especially useful if your values are objects::
 This will "prefer" the "now" and "tomorrow" choices only:
 
 .. image:: /_images/reference/form/choice-example3.png
-   :align: center
+    :alt: A choice list with "now" and "tomorrow" on top, separated by a line from "1 week" and "1 month".
 
 Finally, if your values are objects, you can also specify a property path string
 on the object that will return true or false.

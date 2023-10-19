@@ -164,7 +164,7 @@ You can also add links to the HTTP response directly from controllers and servic
         public function index(Request $request): Response
         {
             // using the addLink() shortcut provided by AbstractController
-            $this->addLink($request, new Link('preload', '/app.css'));
+            $this->addLink($request, (new Link('preload', '/app.css'))->withAttribute('as', 'style'));
 
             // alternative if you don't want to use the addLink() shortcut
             $linkProvider = $request->attributes->get('_links', new GenericLinkProvider());

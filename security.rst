@@ -442,6 +442,12 @@ the database::
         }
     }
 
+.. note::
+
+    If your user class is a Doctrine entity and you hash user passwords, the
+    Doctrine repository class related to the user class must implement the
+    :class:`Symfony\\Component\\Security\\Core\\User\\PasswordUpgraderInterface`.
+
 .. tip::
 
     The ``make:registration-form`` maker command can help you set-up the
@@ -619,7 +625,7 @@ website. If you visit your homepage right now, you *will* have access and
 you'll see that you're visiting a page behind the firewall in the toolbar:
 
 .. image:: /_images/security/anonymous_wdt.png
-   :align: center
+   :alt: The Symfony profiler toolbar where the Security information shows "Authenticated: no" and "Firewall name: main"
 
 Visiting a URL under a firewall doesn't necessarily require you to be authenticated
 (e.g. the login form has to be accessible or some parts of your application
@@ -1459,8 +1465,15 @@ Enable remote user authentication using the ``remote_user`` key:
 Limiting Login Attempts
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Symfony provides basic protection against `brute force login attacks`_.
-You must enable this using the ``login_throttling`` setting:
+Symfony provides basic protection against `brute force login attacks`_ thanks to
+the :doc:`Rate Limiter component </rate_limiter>`. If you haven't used this
+component in your application yet, install it before using this feature:
+
+.. code-block:: terminal
+
+    $ composer require symfony/rate-limiter
+
+Then, enable this feature using the ``login_throttling`` setting:
 
 .. configuration-block::
 
@@ -1688,6 +1701,19 @@ and set the ``limiter`` option to its service ID:
             ;
         };
 
+Customize Successful and Failed Authentication Behavior
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to customize how the successful or failed authentication process is
+handled, you don't have to overwrite the respective listeners globally. Instead,
+you can set custom success failure handlers by implementing the
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationSuccessHandlerInterface`
+or the
+:class:`Symfony\\Component\\Security\\Http\\Authentication\\AuthenticationFailureHandlerInterface`.
+
+Read :ref:`how to customize your success handler <login-link_customize-success-handler>`
+for more information about this.
+
 Login Programmatically
 ----------------------
 
@@ -1834,7 +1860,7 @@ Next, you need to create a route for this URL (but not a controller):
 
         class SecurityController extends AbstractController
         {
-            #[Route('/logout', name: 'app_logout', methods: ['POST'])]
+            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
             public function logout(): never
             {
                 // controller can be blank: it will never be called!
@@ -1847,7 +1873,7 @@ Next, you need to create a route for this URL (but not a controller):
         # config/routes.yaml
         app_logout:
             path: /logout
-            methods: POST
+            methods: GET
 
     .. code-block:: xml
 
@@ -1858,7 +1884,7 @@ Next, you need to create a route for this URL (but not a controller):
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="app_logout" path="/logout" methods="POST"/>
+            <route id="app_logout" path="/logout" methods="GET"/>
         </routes>
 
     .. code-block:: php
@@ -1868,7 +1894,7 @@ Next, you need to create a route for this URL (but not a controller):
 
         return function (RoutingConfigurator $routes): void {
             $routes->add('app_logout', '/logout')
-                ->methods(['POST'])
+                ->methods(['GET'])
             ;
         };
 
@@ -2640,11 +2666,6 @@ You can use ``IS_AUTHENTICATED`` anywhere roles are used: like
 user that has logged in will have this. Actually, there are some special attributes
 like this:
 
-* ``IS_AUTHENTICATED_REMEMBERED``: *all* logged in users have this, even
-  if they are logged in because of a "remember me cookie". Even if you don't
-  use the :doc:`remember me functionality </security/remember_me>`,
-  you can use this to check if the user is logged in.
-
 * ``IS_AUTHENTICATED_FULLY``: This is similar to ``IS_AUTHENTICATED_REMEMBERED``,
   but stronger. Users who are logged in only because of a "remember me cookie"
   will have ``IS_AUTHENTICATED_REMEMBERED`` but will not have ``IS_AUTHENTICATED_FULLY``.
@@ -2656,6 +2677,15 @@ like this:
 * ``IS_IMPERSONATOR``: When the current user is
   :doc:`impersonating </security/impersonating_user>` another user in this
   session, this attribute will match.
+
+.. note::
+
+    All logged in users also have an attribute called ``IS_AUTHENTICATED_REMEMBERED``,
+    even if the application doesn't use the Remember Me feature. This attribute
+    exists for backward-compatibility reasons with Symfony versions prior to 6.4.
+
+    This attribute behaves the same as ``IS_AUTHENTICATED``. That's why in modern
+    Symfony applications it's recommended to no longer use ``IS_AUTHENTICATED_REMEMBERED``.
 
 .. _user_session_refresh:
 
@@ -2763,7 +2793,9 @@ Authentication Events
 
 .. raw:: html
 
-    <object data="./_images/security/security_events.svg" type="image/svg+xml"></object>
+    <object data="_images/security/security_events.svg" type="image/svg+xml"
+        alt="A flow diagram showing the authentication events that are described in this section in a request-response cycle."
+    ></object>
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\CheckPassportEvent`
     Dispatched after the authenticator created the :ref:`security passport <security-passport>`.
@@ -2792,6 +2824,12 @@ Authentication Events
 
 Other Events
 ~~~~~~~~~~~~
+
+:class:`Symfony\\Component\\Security\\Http\\Event\\InteractiveLoginEvent`
+    Dispatched after authentication was fully successful only when the authenticator
+    implements :class:`Symfony\\Component\\Security\\Http\\Authenticator\\InteractiveAuthenticatorInterface`,
+    which indicates login requires explicit user action (e.g. a login form).
+    Listeners to this event can modify the response sent back to the user.
 
 :class:`Symfony\\Component\\Security\\Http\\Event\\LogoutEvent`
     Dispatched just before a user logs out of your application. See
@@ -2825,7 +2863,7 @@ Frequently Asked Questions
     Sometimes authentication may be successful, but after redirecting, you're
     logged out immediately due to a problem loading the ``User`` from the session.
     To see if this is an issue, check your log file (``var/log/dev.log``) for
-    the log message:
+    the log message.
 
 **Cannot refresh token because user has changed**
     If you see this, there are two possible causes. First, there may be a problem
@@ -2872,5 +2910,5 @@ Authorization (Denying Access)
 .. _`SymfonyCastsVerifyEmailBundle`: https://github.com/symfonycasts/verify-email-bundle
 .. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication
 .. _`Login CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
-.. _`SensitiveParameter PHP attribute`: https://wiki.php.net/rfc/redact_parameters_in_back_traces
-.. _`PHP date relative formats`: https://www.php.net/datetime.formats.relative
+.. _`PHP date relative formats`: https://www.php.net/manual/en/datetime.formats.php#datetime.formats.relative
+.. _`SensitiveParameter PHP attribute`: https://www.php.net/manual/en/class.sensitiveparameter.php

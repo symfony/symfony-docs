@@ -346,8 +346,11 @@ When you go to ``/product``, a single row is added to both the ``category`` and
 to whatever the ``id`` is of the new category. Doctrine manages the persistence of this
 relationship for you:
 
-.. image:: /_images/doctrine/mapping_relations.png
-    :align: center
+.. raw:: html
+
+    <object data="../_images/doctrine/mapping_relations.svg" type="image/svg+xml"
+        alt="Doctrine mapping associated Product and Category entities to a product and category database table"
+    ></object>
 
 If you're new to an ORM, this is the *hardest* concept: you need to stop thinking
 about your database, and instead *only* think about your objects. Instead of setting
@@ -393,8 +396,11 @@ Doctrine silently makes a second query to find the ``Category`` that's related
 to this ``Product``. It prepares the ``$category`` object and returns it to
 you.
 
-.. image:: /_images/doctrine/mapping_relations_proxy.png
-    :align: center
+.. raw:: html
+
+    <object data="../_images/doctrine/mapping_relations_proxy.svg" type="image/svg+xml"
+        alt="Doctrine only querying Category data when needed"
+    ></object>
 
 What's important is the fact that you have access to the product's related
 category, but the category data isn't actually retrieved until you ask for

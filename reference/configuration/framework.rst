@@ -234,7 +234,7 @@ The **default value** is:
         $request = Request::createFromGlobals();
         // ...
 
- .. _configuration-framework-http_method_override:
+.. _configuration-framework-http_method_override:
 
 trust_x_sendfile_type_header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1723,38 +1723,39 @@ and also to configure the session handler with a DSN:
 name
 ....
 
-**type**: ``string`` **default**: ``null``
+**type**: ``string``
 
-This specifies the name of the session cookie. By default, it will use the
-cookie name which is defined in the ``php.ini`` with the ``session.name``
-directive.
+This specifies the name of the session cookie.
+
+If not set, ``php.ini``'s `session.name`_ directive will be relied on.
 
 cookie_lifetime
 ...............
 
-**type**: ``integer`` **default**: ``null``
+**type**: ``integer``
 
-This determines the lifetime of the session - in seconds. The default value
-- ``null`` - means that the ``session.cookie_lifetime`` value from ``php.ini``
-will be used. Setting this value to ``0`` means the cookie is valid for
+This determines the lifetime of the session - in seconds.
+Setting this value to ``0`` means the cookie is valid for
 the length of the browser session.
+
+If not set, ``php.ini``'s `session.cookie_lifetime`_ directive will be relied on.
 
 cookie_path
 ...........
 
-**type**: ``string`` **default**: ``/``
+**type**: ``string``
 
-This determines the path to set in the session cookie. By default, it will
-use ``/``.
+This determines the path to set in the session cookie.
+
+If not set, ``php.ini``'s `session.cookie_path`_ directive will be relied on.
 
 cache_limiter
 .............
 
-**type**: ``string`` or ``int`` **default**: (an empty string)
+**type**: ``string`` **default**: ``0``
 
 If set to ``0``, Symfony won't set any particular header related to the cache
-and it will rely on the cache control method configured in the
-`session.cache-limiter`_ PHP.ini option.
+and it will rely on ``php.ini``'s `session.cache_limiter`_ directive.
 
 Unlike the other session options, ``cache_limiter`` is set as a regular
 :ref:`container parameter <configuration-parameters>`:
@@ -1791,19 +1792,22 @@ Unlike the other session options, ``cache_limiter`` is set as a regular
             'cache_limiter' => 0,
         ]);
 
+Be aware that if you configure it, you'll have to set other session-related options
+as parameters as well.
+
 cookie_domain
 .............
 
-**type**: ``string`` **default**: (an empty string)``''``
+**type**: ``string``
 
-This determines the domain to set in the session cookie. By default, it's
-blank, meaning the host name of the server which generated the cookie according
-to the cookie specification.
+This determines the domain to set in the session cookie.
+
+If not set, ``php.ini``'s `session.cookie_domain`_ directive will be relied on.
 
 cookie_samesite
 ...............
 
-**type**: ``string`` or ``null`` **default**: ``lax``
+**type**: ``string`` or ``null`` **default**: ``null``
 
 It controls the way cookies are sent when the HTTP request did not originate
 from the same domain that is associated with the cookies. Setting this option is
@@ -1817,8 +1821,7 @@ those cookies when making that HTTP request.
 
 The possible values for this option are:
 
-* ``null``, use it to disable this protection. Same behavior as in older Symfony
-  versions.
+* ``null``, use ``php.ini``'s `session.cookie_samesite`_ directive.
 * ``'none'`` (or the ``Symfony\Component\HttpFoundation\Cookie::SAMESITE_NONE`` constant), use it to allow
   sending of cookies when the HTTP request originated from a different domain
   (previously this was the default behavior of null, but in newer browsers ``'lax'``
@@ -1833,11 +1836,13 @@ The possible values for this option are:
 cookie_secure
 .............
 
-**type**: ``boolean`` or ``'auto'`` **default**: ``auto``
+**type**: ``boolean`` or ``'auto'``
 
 This determines whether cookies should only be sent over secure connections. In
 addition to ``true`` and ``false``, there's a special ``'auto'`` value that
 means ``true`` for HTTPS requests and ``false`` for HTTP requests.
+
+If not set, ``php.ini``'s `session.cookie_secure`_ directive will be relied on.
 
 cookie_httponly
 ...............
@@ -1852,9 +1857,11 @@ identity theft through XSS attacks.
 gc_divisor
 ..........
 
-**type**: ``integer`` **default**: ``100``
+**type**: ``integer``
 
 See `gc_probability`_.
+
+If not set, ``php.ini``'s `session.gc_divisor`_ directive will be relied on.
 
 gc_probability
 ..............
@@ -1869,34 +1876,36 @@ chance that the GC process will start on each request.
 gc_maxlifetime
 ..............
 
-**type**: ``integer`` **default**: ``1440``
+**type**: ``integer``
 
 This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session
 start and depends on `gc_divisor`_ and `gc_probability`_.
 
+If not set, ``php.ini``'s `session.gc_maxlifetime`_ directive will be relied on.
+
 sid_length
 ..........
 
-**type**: ``integer`` **default**: ``32``
+**type**: ``integer``
 
 This determines the length of session ID string, which can be an integer between
-``22`` and ``256`` (both inclusive), being ``32`` the recommended value. Longer
+``22`` and ``256`` (both inclusive), ``32`` being the recommended value. Longer
 session IDs are harder to guess.
 
-This option is related to the `session.sid_length PHP option`_.
+If not set, ``php.ini``'s `session.sid_length`_ directive will be relied on.
 
 sid_bits_per_character
 ......................
 
-**type**: ``integer`` **default**: ``4``
+**type**: ``integer``
 
 This determines the number of bits in the encoded session ID character. The possible
 values are ``4`` (0-9, a-f), ``5`` (0-9, a-v), and ``6`` (0-9, a-z, A-Z, "-", ",").
 The more bits results in stronger session ID. ``5`` is recommended value for
 most environments.
 
-This option is related to the `session.sid_bits_per_character PHP option`_.
+If not set, ``php.ini``'s `session.sid_bits_per_character`_ directive will be relied on.
 
 save_path
 .........
@@ -1906,8 +1915,7 @@ save_path
 This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the session files are created.
 
-You can also set this value to the ``save_path`` of your ``php.ini`` by
-setting the value to ``null``:
+If ``null``, ``php.ini``'s `session.save_path`_ directive will be relied on:
 
 .. configuration-block::
 
@@ -2002,11 +2010,12 @@ Whether to enable the session support in the framework.
 use_cookies
 ...........
 
-**type**: ``boolean`` **default**: ``null``
+**type**: ``boolean``
 
 This specifies if the session ID is stored on the client side using cookies or
-not. By default, it will use the value defined in the ``php.ini`` with the
-``session.use_cookies`` directive.
+not.
+
+If not set, ``php.ini``'s `session.use_cookies`_ directive will be relied on.
 
 ssi
 ~~~
@@ -3903,14 +3912,24 @@ the ``#[WithLogLevel]`` attribute::
 .. _`json_encode flags bitmask`: https://www.php.net/json_encode
 .. _`error_reporting PHP option`: https://www.php.net/manual/en/errorfunc.configuration.php#ini.error-reporting
 .. _`CSRF security attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery
-.. _`session.sid_length PHP option`: https://www.php.net/manual/session.configuration.php#ini.session.sid-length
-.. _`session.sid_bits_per_character PHP option`: https://www.php.net/manual/session.configuration.php#ini.session.sid-bits-per-character
 .. _`X-Robots-Tag HTTP header`: https://developers.google.com/search/reference/robots_meta_tag
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
 .. _`PEM formatted`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`haveibeenpwned.com`: https://haveibeenpwned.com/
-.. _`session.cache-limiter`: https://www.php.net/manual/en/session.configuration.php#ini.session.cache-limiter
+.. _`session.name`: https://www.php.net/manual/en/session.configuration.php#ini.session.name
+.. _`session.cookie_lifetime`: https://www.php.net/manual/en/session.configuration.php#ini.session.cookie-lifetime
+.. _`session.cookie_path`: https://www.php.net/manual/en/session.configuration.php#ini.session.cookie-path
+.. _`session.cache_limiter`: https://www.php.net/manual/en/session.configuration.php#ini.session.cache-limiter
+.. _`session.cookie_domain`: https://www.php.net/manual/en/session.configuration.php#ini.session.cookie-domain
+.. _`session.cookie_samesite`: https://www.php.net/manual/en/session.configuration.php#ini.session.cookie-samesite
+.. _`session.cookie_secure`: https://www.php.net/manual/en/session.configuration.php#ini.session.cookie-secure
+.. _`session.gc_divisor`: https://www.php.net/manual/en/session.configuration.php#ini.session.gc-divisor
+.. _`session.gc_maxlifetime`: https://www.php.net/manual/en/session.configuration.php#ini.session.gc-maxlifetime
+.. _`session.sid_length`: https://www.php.net/manual/en/session.configuration.php#ini.session.sid-length
+.. _`session.sid_bits_per_character`: https://www.php.net/manual/en/session.configuration.php#ini.session.sid-bits-per-character
+.. _`session.save_path`: https://www.php.net/manual/en/session.configuration.php#ini.session.save-path
+.. _`session.use_cookies`: https://www.php.net/manual/en/session.configuration.php#ini.session.use-cookies
 .. _`Microsoft NTLM authentication protocol`: https://docs.microsoft.com/en-us/windows/win32/secauthn/microsoft-ntlm
 .. _`utf-8 modifier`: https://www.php.net/reference.pcre.pattern.modifiers
 .. _`Link HTTP header`: https://tools.ietf.org/html/rfc5988

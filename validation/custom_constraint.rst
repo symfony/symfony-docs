@@ -24,8 +24,16 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
         class ContainsAlphanumeric extends Constraint
         {
             public string $message = 'The string "{{ string }}" contains an illegal character: it can only contain letters or numbers.';
-            // If the constraint has configuration options, define them as public properties
             public string $mode = 'strict';
+
+            // all configurable options must be passed to the constructor
+            public function __construct(string $mode = null, string $message = null, array $groups = null, $payload = null)
+            {
+                parent::__construct([], $groups, $payload);
+
+                $this->mode = $mode ?? $this->mode;
+                $this->message = $message ?? $this->message;
+            }
         }
 
 Add ``#[\Attribute]`` to the constraint class if you want to
@@ -113,12 +121,14 @@ The validator class only has one required method ``validate()``::
                 // ...
             }
 
-            if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
-                // the argument must be a string or an object implementing __toString()
-                $this->context->buildViolation($constraint->message)
-                    ->setParameter('{{ string }}', $value)
-                    ->addViolation();
+            if (preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
+                return;
             }
+
+            // the argument must be a string or an object implementing __toString()
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ string }}', $value)
+                ->addViolation();
         }
     }
 
@@ -216,6 +226,151 @@ If you're using the :ref:`default services.yaml configuration <service-container
 then your validator is already registered as a service and :doc:`tagged </service_container/tags>`
 with the necessary ``validator.constraint_validator``. This means you can
 :ref:`inject services or configuration <services-constructor-injection>` like any other service.
+
+Constraint Validators with Custom Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to add some configuration options to your custom constraint, first
+define those options as public properties on the constraint class::
+
+    // src/Validator/Foo.php
+    namespace App\Validator;
+
+    use Symfony\Component\Validator\Constraint;
+
+    #[\Attribute]
+    class Foo extends Constraint
+    {
+        public $mandatoryFooOption;
+        public $message = 'This value is invalid';
+        public $optionalBarOption = false;
+
+        public function __construct(
+            $mandatoryFooOption,
+            string $message = null,
+            bool $optionalBarOption = null,
+            array $groups = null,
+            $payload = null,
+            array $options = []
+        ) {
+            if (\is_array($mandatoryFooOption)) {
+                $options = array_merge($mandatoryFooOption, $options);
+            } elseif (null !== $mandatoryFooOption) {
+                $options['value'] = $mandatoryFooOption;
+            }
+
+            parent::__construct($options, $groups, $payload);
+
+            $this->message = $message ?? $this->message;
+            $this->optionalBarOption = $optionalBarOption ?? $this->optionalBarOption;
+        }
+
+        public function getDefaultOption()
+        {
+            return 'mandatoryFooOption';
+        }
+
+        public function getRequiredOptions()
+        {
+            return ['mandatoryFooOption'];
+        }
+    }
+
+Then, inside the validator class you can access these options directly via the
+constraint class passes to the ``validate()`` method::
+
+    class FooValidator extends ConstraintValidator
+    {
+        public function validate($value, Constraint $constraint)
+        {
+            // access any option of the constraint
+            if ($constraint->optionalBarOption) {
+                // ...
+            }
+
+            // ...
+        }
+    }
+
+When using this constraint in your own application, you can pass the value of
+the custom options like you pass any other option in built-in constraints:
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
+        use App\Validator as AcmeAssert;
+        use Symfony\Component\Validator\Constraints as Assert;
+
+        class AcmeEntity
+        {
+            // ...
+
+            #[Assert\NotBlank]
+            #[AcmeAssert\Foo(
+                mandatoryFooOption: 'bar',
+                optionalBarOption: true
+            )]
+            protected $name;
+
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\AcmeEntity:
+            properties:
+                name:
+                    - NotBlank: ~
+                    - App\Validator\Foo:
+                        mandatoryFooOption: bar
+                        optionalBarOption: true
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\AcmeEntity">
+                <property name="name">
+                    <constraint name="NotBlank"/>
+                    <constraint name="App\Validator\Foo">
+                        <option name="mandatoryFooOption">bar</option>
+                        <option name="optionalBarOption">true</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/AcmeEntity.php
+        namespace App\Entity;
+
+        use App\Validator\ContainsAlphanumeric;
+        use Symfony\Component\Validator\Constraints\NotBlank;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class AcmeEntity
+        {
+            public $name;
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata)
+            {
+                $metadata->addPropertyConstraint('name', new NotBlank());
+                $metadata->addPropertyConstraint('name', new Foo([
+                    'mandatoryFooOption' => 'bar',
+                    'optionalBarOption' => true,
+                ]));
+            }
+        }
 
 Create a Reusable Set of Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -351,7 +506,7 @@ A class constraint validator must be applied to the class itself:
 Testing Custom Constraints
 --------------------------
 
-Use the :class:`Symfony\\Component\\Validator\\Test\\ConstraintValidatorTestCase``
+Use the :class:`Symfony\\Component\\Validator\\Test\\ConstraintValidatorTestCase`
 class to simplify writing unit tests for your custom constraints::
 
     // tests/Validator/ContainsAlphanumericValidatorTest.php
@@ -394,3 +549,4 @@ class to simplify writing unit tests for your custom constraints::
             // ...
         }
     }
+

@@ -40,8 +40,8 @@ using a deprecated feature. When visiting your application in the
 in your browser, these notices are shown in the web dev toolbar:
 
 .. image:: /_images/install/deprecations-in-profiler.png
-   :align: center
-   :class: with-browser
+    :alt: The Logs page of the Symfony Profiler showing the deprecation notices.
+    :class: with-browser
 
 Ultimately, you should aim to stop using the deprecated functionality.
 Sometimes the warning might tell you exactly what to change.
@@ -152,9 +152,10 @@ starting with ``symfony/`` to the new major version:
     +         "symfony/console": "6.0.*",
               "...": "...",
 
-              "...": "A few libraries starting with
-                      symfony/ follow their own versioning scheme. You
-                      do not need to update these versions: you can
+              "...": "A few libraries starting with symfony/ follow their own
+                      versioning scheme (e.g. symfony/polyfill-[...],
+                      symfony/ux-[...], symfony/[...]-bundle).
+                      You do not need to update these versions: you can
                       upgrade them independently whenever you want",
               "symfony/monolog-bundle": "^3.5",
           },

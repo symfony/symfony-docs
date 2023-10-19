@@ -334,6 +334,20 @@ the application or when using a self-signed certificate::
 
     $dsn = 'smtp://user:pass@smtp.example.com?verify_peer=0';
 
+TLS Peer Fingerprint Verification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Additional fingerprint verification can be enforced with the ``peer_fingerprint``
+option. This is especially useful when a self-signed certificate is used and
+disabling ``verify_peer`` is needed, but security is still desired. Fingerprint
+may be specified as SHA1 or MD5 hash::
+
+    $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
+
+.. versionadded:: 6.4
+
+    The ``peer_fingerprint`` option was introduced in Symfony 6.4.
+
 Overriding default SMTP authenticators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -441,9 +455,12 @@ and create an :class:`Symfony\\Component\\Mime\\Email` object::
         }
     }
 
-That's it! The message will be sent via the transport you configured. If the
-transport is configured to :ref:`send emails asynchronously <mailer-sending-messages-async>`,
-the message won't be actually sent until :doc:`a worker consumes it <messenger-worker>`.
+That's it! The message will be sent immediately via the transport you configured.
+If you prefer to send emails asynchronously to improve performance, read the
+:ref:`Sending Messages Async <mailer-sending-messages-async>` section. Also, if
+your application has the :doc:`Messenger component </messenger>` installed, all
+emails will be sent asynchronously by default
+(but :ref:`you can change that <messenger-handling-messages-synchronously>`).
 
 Email Addresses
 ~~~~~~~~~~~~~~~
@@ -626,10 +643,26 @@ images inside the HTML contents::
         ->html('... <div background="cid:footer-signature"> ... </div> ...')
     ;
 
+You can also use the :method:`DataPart::setContentId() <Symfony\\Component\\Mime\\Part\\DataPart::setContentId>`
+method to define a custom Content-ID for the image and use it as its ``cid`` reference::
+
+    $part = new DataPart(new File('/path/to/images/signature.gif'));
+    $part->setContentId('footer-signature');
+
+    $email = (new Email())
+        // ...
+        ->addPart($part->asInline())
+        ->html('... <img src="cid:footer-signature"> ...')
+    ;
+
 .. versionadded:: 6.1
 
     The support of embedded images as HTML backgrounds was introduced in Symfony
     6.1.
+
+.. versionadded:: 6.3
+
+    The support of custom ``cid`` for embedded images was introduced in Symfony 6.3.
 
 .. _mailer-configure-email-globally:
 
@@ -788,12 +821,20 @@ for Twig templates::
         // path of the Twig template to render
         ->htmlTemplate('emails/signup.html.twig')
 
+        // change locale used in the template, e.g. to match user's locale
+        ->locale('de')
+
         // pass variables (name => value) to the template
         ->context([
             'expiration_date' => new \DateTime('+7 days'),
             'username' => 'foo',
         ])
     ;
+
+.. versionadded:: 6.4
+
+    The :method:`Symfony\\Bridge\\Twig\\Mime\\TemplatedEmail::locale` method
+    was introduced in Symfony 6.4.
 
 Then, create the template:
 

@@ -113,6 +113,11 @@ If you want to apply tags automatically for your own services, use the
                     ->tag('app.custom_tag');
         };
 
+.. caution::
+
+    If you're using PHP configuration, you need to call ``instanceof`` before
+    any service registration to make sure tags are correctly applied.
+
 It is also possible to use the ``#[AutoconfigureTag]`` attribute directly on the
 base class or interface::
 
@@ -207,6 +212,54 @@ method::
             });
         }
     }
+
+You can also make attributes usable on methods. To do so, update the previous
+example and add ``Attribute::TARGET_METHOD`::
+
+    // src/Attribute/SensitiveElement.php
+    namespace App\Attribute;
+
+    #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
+    class SensitiveElement
+    {
+        // ...
+    }
+
+Then, update the :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
+call to support ``ReflectionMethod``::
+
+    // src/Kernel.php
+    use App\Attribute\SensitiveElement;
+
+    class Kernel extends BaseKernel
+    {
+        // ...
+
+        protected function build(ContainerBuilder $container): void
+        {
+            // ...
+
+            $container->registerAttributeForAutoconfiguration(SensitiveElement::class, static function (
+                ChildDefinition $definition,
+                SensitiveElement $attribute,
+                // update the union type to support multiple types of reflection
+                // you can also use the "\Reflector" interface
+                \ReflectionClass|\ReflectionMethod $reflector): void {
+                    if ($reflection instanceof \ReflectionMethod) {
+                        // ...
+                    }
+                }
+            );
+        }
+    }
+
+.. tip::
+
+    You can also define an attribute to be usable on properties and parameters with
+    ``Attribute::TARGET_PROPERTY`` and ``Attribute::TARGET_PARAMETER``; then support
+    ``ReflectionProperty`` and ``ReflectionParameter`` in your
+    :method:`Symfony\\Component\\DependencyInjection\\ContainerBuilder::registerAttributeForAutoconfiguration`
+    callable.
 
 Creating custom Tags
 --------------------
@@ -503,6 +556,46 @@ To answer this, change the service declaration:
 
 .. tip::
 
+    The ``name`` attribute is used by default to define the name of the tag.
+    If you want to add a ``name`` attribute to some tag in XML or YAML formats,
+    you need to use this special syntax:
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/services.yaml
+            services:
+                MailerSmtpTransport:
+                    arguments: ['%mailer_host%']
+                    tags:
+                        # this is a tag called 'app.mail_transport'
+                        - { name: 'app.mail_transport', alias: 'smtp' }
+                        # this is a tag called 'app.mail_transport' with two attributes ('name' and 'alias')
+                        - app.mail_transport: { name: 'arbitrary-value', alias: 'smtp' }
+
+        .. code-block:: xml
+
+            <!-- config/services.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+                <services>
+                    <service id="MailerSmtpTransport">
+                        <argument>%mailer_host%</argument>
+                        <!-- this is a tag called 'app.mail_transport' -->
+                        <tag name="app.mail_transport" alias="sendmail"/>
+                        <!-- this is a tag called 'app.mail_transport' with two attributes ('name' and 'alias') -->
+                        <tag name="arbitrary-value" alias="smtp">app.mail_transport</tag>
+                    </service>
+                </services>
+            </container>
+
+.. tip::
+
     In YAML format, you may provide the tag as a simple string as long as
     you don't need to specify additional attributes. The following definitions
     are equivalent.
@@ -658,6 +751,14 @@ directly via PHP attributes:
                 ->args([tagged_iterator('app.handler')])
             ;
         };
+
+.. note::
+
+    Some IDEs will show an error when using ``#[TaggedIterator]`` together
+    with the `PHP constructor promotion`_:
+    *"Attribute cannot be applied to a property because it does not contain the 'Attribute::TARGET_PROPERTY' flag"*.
+    The reason is that those constructor arguments are both parameters and class
+    properties. You can safely ignore this error message.
 
 If for some reason you need to exclude one or more services when using a tagged
 iterator, add the ``exclude`` option:
@@ -890,12 +991,15 @@ you can define it in the configuration of the collecting service:
 Tagged Services with Index
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you want to retrieve a specific service within the injected collection
-you can use the ``index_by`` and ``default_index_method`` options of the
-argument in combination with ``!tagged_iterator``.
+By default, tagged services are indexed using their service IDs. You can change
+this behavior with two options of the tagged iterator (``index_by`` and
+``default_index_method``) which can be used independently or combined.
 
-Using the previous example, this service configuration creates a collection
-indexed by the ``key`` attribute:
+The ``index_by`` / ``indexAttribute`` Option
+............................................
+
+This option defines the name of the option/attribute that stores the value used
+to index the services:
 
 .. configuration-block::
 
@@ -980,10 +1084,9 @@ indexed by the ``key`` attribute:
             ;
         };
 
-After compilation the ``HandlerCollection`` is able to iterate over your
-application handlers. To retrieve a specific service from the iterator, call the
-``iterator_to_array()`` function and then use the ``key`` attribute to get the
-array element. For example, to retrieve the ``handler_two`` handler::
+In this example, the ``index_by`` option is ``key``. All services define that
+option/attribute, so that will be the value used to index the services. For example,
+to get the ``App\Handler\Two`` service::
 
     // src/Handler/HandlerCollection.php
     namespace App\Handler;
@@ -994,43 +1097,23 @@ array element. For example, to retrieve the ``handler_two`` handler::
         {
             $handlers = $handlers instanceof \Traversable ? iterator_to_array($handlers) : $handlers;
 
+            // this value is defined in the `key` option of the service
             $handlerTwo = $handlers['handler_two'];
         }
     }
 
-You can omit the index attribute (``key`` in the previous example) by setting
-the ``index_by`` attribute on the ``tagged_iterator`` tag. In this case, you
-must define a static method whose name follows the pattern:
-``getDefault<CamelCase index_by value>Name``.
+If some service doesn't define the option/attribute configured in ``index_by``,
+Symfony applies this fallback process:
 
-For example, if ``index_by`` is ``handler``, the method name must be
-``getDefaultHandlerName()``:
+#. If the service class defines a static method called ``getDefault<CamelCase index_by value>Name``
+   (in this example, ``getDefaultKeyName()``), call it and use the returned value;
+#. Otherwise, fall back to the default behavior and use the service ID.
 
-.. code-block:: yaml
+The ``default_index_method`` Option
+...................................
 
-    # config/services.yaml
-        services:
-            # ...
-
-            App\HandlerCollection:
-                arguments: [!tagged_iterator { tag: 'app.handler', index_by: 'handler' }]
-
-.. code-block:: php
-
-    // src/Handler/One.php
-    namespace App\Handler;
-
-    class One
-    {
-        // ...
-        public static function getDefaultHandlerName(): string
-        {
-            return 'handler_one';
-        }
-    }
-
-You also can define the name of the static method to implement on each service
-with the ``default_index_method`` attribute on the tagged argument:
+This option defines the name of the service class method that will be called to
+get the value used to index the services:
 
 .. configuration-block::
 
@@ -1057,7 +1140,6 @@ with the ``default_index_method`` attribute on the tagged argument:
             # ...
 
             App\HandlerCollection:
-                # use getIndex() instead of getDefaultIndexName()
                 arguments: [!tagged_iterator { tag: 'app.handler', default_index_method: 'getIndex' }]
 
     .. code-block:: xml
@@ -1073,7 +1155,6 @@ with the ``default_index_method`` attribute on the tagged argument:
                 <!-- ... -->
 
                 <service id="App\HandlerCollection">
-                    <!-- use getIndex() instead of getDefaultIndexName() -->
                     <argument type="tagged_iterator"
                         tag="app.handler"
                         default-index-method="getIndex"
@@ -1095,13 +1176,25 @@ with the ``default_index_method`` attribute on the tagged argument:
 
             // ...
 
-            // use getIndex() instead of getDefaultIndexName()
             $services->set(HandlerCollection::class)
                 ->args([
                     tagged_iterator('app.handler', null, 'getIndex'),
                 ])
             ;
         };
+
+If some service class doesn't define the method configured in ``default_index_method``,
+Symfony will fall back to using the service ID as its index inside the tagged services.
+
+Combining the ``index_by`` and ``default_index_method`` Options
+...............................................................
+
+You can combine both options in the same collection of tagged services. Symfony
+will process them in the following order:
+
+#. If the service defines the option/attribute configured in ``index_by``, use it;
+#. If the service class defines the method configured in ``default_index_method``, use it;
+#. Otherwise, fall back to using the service ID as its index inside the tagged services collection.
 
 .. _tags_as-tagged-item:
 
@@ -1122,3 +1215,5 @@ be used directly on the class of the service you want to configure::
     {
         // ...
     }
+
+.. _`PHP constructor promotion`: https://www.php.net/manual/en/language.oop5.decon.php#language.oop5.decon.constructor.promotion

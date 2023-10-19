@@ -240,4 +240,18 @@ guessers using the :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestC
 and :method:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase::getTypeGuessers`
 methods.
 
+When testing the themes of your forms, consider making your test extend the
+:class:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase` class. This saves a lot
+of boilerplate and code duplication by implementing the
+:class:`Symfony\\Component\\Form\\Test\\FormIntegrationTestCase` methods for you.
+All you need to do is to implement the
+:method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getTemplatePaths`, the
+:method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getTwigExtensions` and
+the :method:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase::getThemes` methods.
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Bridge\\Twig\\Test\\FormLayoutTestCase` class was
+    introduced in Symfony 6.4.
+
 .. _`PHPUnit data providers`: https://docs.phpunit.de/en/9.6/writing-tests-for-phpunit.html#data-providers
