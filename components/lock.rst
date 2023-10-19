@@ -260,6 +260,11 @@ Lock will be released automatically as soon as one process finishes::
     }
     // ...
 
+.. note::
+
+    In order for the above example to work, the `PCNTL`_ extension must be
+    installed.
+
 To disable this behavior, set the ``autoRelease`` argument of
 ``LockFactory::createLock()`` to ``false``. That will make the lock acquired
 for 3600 seconds or until ``Lock::release()`` is called::
@@ -1042,3 +1047,4 @@ are still running.
 .. _`ZooKeeper`: https://zookeeper.apache.org/
 .. _`readers-writer lock`: https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock
 .. _`priority policy`: https://en.wikipedia.org/wiki/Readers%E2%80%93writer_lock#Priority_policies
+.. _`PCNTL`: https://www.php.net/manual/book.pcntl.php
