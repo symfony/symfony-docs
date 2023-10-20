@@ -308,6 +308,56 @@ the configuration options used to run the application. This allows for example
 to run an application with the ``prod`` config (``kernel.environment``) in different
 scenarios like ``staging`` or ``production`` (``kernel.runtime_environment``).
 
+``kernel.runtime_mode``
+-----------------------
+
+**type**: ``string`` **default**: ``%env(query_string:default:container.runtime_mode:APP_RUNTIME_MODE)%``
+
+This parameter stores a query string of the current runtime mode used by the
+application. For example, the query string looks like ``web=1&worker=0`` when
+the application is running in web mode and ``web=1&worker=1`` when running in
+a long-running web server. This parameter can be set by using the
+``APP_RUNTIME_MODE`` env var.
+
+.. versionadded:: 6.4
+
+    The ``kernel.runtime_mode`` parameter was introduced in Symfony 6.4.
+
+``kernel.runtime_mode.web``
+---------------------------
+
+**type**: ``boolean`` **default**: ``%env(bool:default::key:web:default:kernel.runtime_mode:)%``
+
+Whether the application is running in a web environment.
+
+.. versionadded:: 6.4
+
+    The ``kernel.runtime_mode.web`` parameter was introduced in Symfony 6.4.
+
+``kernel.runtime_mode.cli``
+---------------------------
+
+**type**: ``boolean`` **default**: ``%env(not:default:kernel.runtime_mode.web:)%``
+
+Whether the application is running in a CLI environment. By default,
+this value is the opposite of the ``kernel.runtime_mode.web`` parameter.
+
+.. versionadded:: 6.4
+
+    The ``kernel.runtime_mode.cli`` parameter was introduced in Symfony 6.4.
+
+``kernel.runtime_mode.worker``
+------------------------------
+
+**type**: ``boolean`` **default**: ``%env(bool:default::key:worker:default:kernel.runtime_mode:)%``
+
+Whether the application is running in a worker/long-running environment. Not all web
+servers support it, and you have to use a long-running web server like `FrankenPHP`_.
+
+.. versionadded:: 6.4
+
+    The ``kernel.runtime_mode.worker`` parameter was introduced in Symfony 6.4.
+
 ``kernel.secret``
 -----------------
 
@@ -336,3 +386,4 @@ This parameter stores the value of
 
 .. _`character encoding`: https://en.wikipedia.org/wiki/Character_encoding
 .. _`reproducible builds`: https://en.wikipedia.org/wiki/Reproducible_builds
+.. _`FrankenPHP`: https://frankenphp.dev
