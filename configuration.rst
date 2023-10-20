@@ -1019,7 +1019,7 @@ implements :class:`Symfony\\Component\\DependencyInjection\\EnvVarLoaderInterfac
 .. note::
 
     If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-    the autoconfiguration feature will enable and tag thise service automatically.
+    the autoconfiguration feature will enable and tag this service automatically.
     Otherwise, you need to register and :doc:`tag your service </service_container/tags>`
     with the ``container.env_var_loader`` tag.
 
