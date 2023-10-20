@@ -1005,6 +1005,14 @@ increase or decrease this limit:
                 ->withMaxInputLength(20000)
         );
 
+It is possible to disable this length limit by setting the max input length to
+``-1``. Beware that it may expose your application to `DoS attacks`_.
+
+.. versionadded:: 6.4
+
+    The support for disabling the length limit of the HTML sanitizer was
+    introduced in Symfony 6.4.
+
 Custom Attribute Sanitizers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
