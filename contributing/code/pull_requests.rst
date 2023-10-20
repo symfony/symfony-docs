@@ -172,8 +172,8 @@ Then create a new branch off the ``5.4`` branch to work on the bug fix:
 
 .. tip::
 
-    Use a descriptive name for your branch (``ticket_XXX`` where ``XXX`` is the
-    ticket number is a good convention for bug fixes).
+    Use a descriptive name for your branch (``fix_XXX`` where ``XXX`` is the
+    issue number is a good convention for bug fixes).
 
 The above checkout commands automatically switch the code to the newly created
 branch (check the branch you are working on with ``git branch``).
@@ -338,7 +338,7 @@ Symfony as quickly as possible.
 Some answers to the questions trigger some more requirements:
 
 * If you answer yes to "Bug fix?", check if the bug is already listed in the
-  Symfony issues and reference it/them in "Fixed tickets";
+  Symfony issues and reference it/them in "Issues";
 
 * If you answer yes to "New feature?", you must submit a pull request to the
   documentation and reference it under the "Doc PR" section;
