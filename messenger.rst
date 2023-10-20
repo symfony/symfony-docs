@@ -1755,6 +1755,27 @@ The transport has a number of options:
     Use the stamp :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFifoStamp`
     to define the ``Message group ID`` and the ``Message deduplication ID``.
 
+    Another possibility is to enable the
+    :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Middleware\\AddFifoStampMiddleware`.
+    If your message implements
+    :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\MessageDeduplicationAwareInterface`,
+    the middleware will automatically add the
+    :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Transport\\AmazonSqsFifoStamp`
+    and set the ``Message deduplication ID``. Additionally, if your message implements the
+    :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\MessageGroupAwareInterface`,
+    the middleware will automatically set the ``Message group ID`` of the stamp.
+
+    You can learn more about middlewares in
+    :ref:`the dedicated section <messenger_middleware>`.
+
+    .. versionadded:: 6.4
+
+        The
+        :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Middleware\\AddFifoStampMiddleware`,
+        :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\MessageDeduplicationAwareInterface`
+        and :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\MessageGroupAwareInterface`
+        were introduced in Symfony 6.4.
+
     FIFO queues don't support setting a delay per message, a value of ``delay: 0``
     is required in the retry strategy settings.
 
@@ -2522,6 +2543,8 @@ and stamps. You can create this manually or allow the message bus to do it. Ther
 are a variety of different stamps for different purposes and they're used internally
 to track information about a message - like the message bus that's handling it
 or if it's being retried after failure.
+
+.. _messenger_middleware:
 
 Middleware
 ~~~~~~~~~~
