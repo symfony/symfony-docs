@@ -645,7 +645,7 @@ properties even if the child properties override those constraints**. Symfony
 will always merge the parent constraints for each property.
 
 You can't change this behavior, but you can overcome it by defining the parent
-and the child contraints in different :doc:`validation groups </validation/groups>`
+and the child constraints in different :doc:`validation groups </validation/groups>`
 and then select the appropriate group when validating each object.
 
 Debugging the Constraints

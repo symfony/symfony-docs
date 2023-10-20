@@ -153,7 +153,7 @@ Take the following ``access_control`` entries as an example:
                 ->requestMatcher('App\Security\RequestMatcher\MyRequestMatcher')
             ;
 
-            // require ROLE_ADMIN for 'admin' route. You can use the shortcut route('xxx') mehtod,
+            // require ROLE_ADMIN for 'admin' route. You can use the shortcut route('xxx') method,
             // instead of attributes(['_route' => 'xxx']) method
             $security->accessControl()
                 ->roles(['ROLE_ADMIN'])

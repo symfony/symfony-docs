@@ -650,10 +650,10 @@ Generate Closures With Autowiring
 ---------------------------------
 
 A **service closure** is an anonymous function that returns a service. This type
-of instanciation is handy when you are dealing with lazy-loading.  It is also
+of instantiation is handy when you are dealing with lazy-loading.  It is also
 useful for non-shared service dependencies.
 
-Automatically creating a closure encapsulating the service instanciation can be
+Automatically creating a closure encapsulating the service instantiation can be
 done with the
 :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireServiceClosure`
 attribute::
