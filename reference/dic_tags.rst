@@ -512,12 +512,6 @@ If you don't need to preload anything, return an empty array. If read-only
 artefacts need to be created, you can store them in a different directory
 with the ``$buildDir`` parameter of the ``warmUp()`` method.
 
-.. versionadded:: 6.4
-
-    The ``$buildDir`` parameter of the
-    :method:`Symfony\\Component\\HttpKernel\\CacheWarmer\\WarmableInterface::warmUp`
-    method was introduced in Symfony 6.4.
-
 The ``isOptional()`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony, optional warmers
 are always executed by default (you can change this by using the

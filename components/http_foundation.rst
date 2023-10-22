@@ -478,12 +478,6 @@ your application to see which exceptions are thrown in listeners of the
 more about it in
 :ref:`the dedicated section about Kernel events <http-kernel-creating-listener>`.
 
-.. versionadded:: 6.4
-
-    The ``$flush`` parameter of the
-    :method:`Symfony\\Component\\HttpFoundation\\Response::send` method
-    was introduced in Symfony 6.4.
-
 Setting Cookies
 ~~~~~~~~~~~~~~~
 

@@ -1768,14 +1768,6 @@ The transport has a number of options:
     You can learn more about middlewares in
     :ref:`the dedicated section <messenger_middleware>`.
 
-    .. versionadded:: 6.4
-
-        The
-        :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\Middleware\\AddFifoStampMiddleware`,
-        :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\MessageDeduplicationAwareInterface`
-        and :class:`Symfony\\Component\\Messenger\\Bridge\\AmazonSqs\\MessageGroupAwareInterface`
-        were introduced in Symfony 6.4.
-
     FIFO queues don't support setting a delay per message, a value of ``delay: 0``
     is required in the retry strategy settings.
 
