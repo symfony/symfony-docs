@@ -1515,7 +1515,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                 decorates: 'session.marshaller'
                 arguments:
                     - ['%env(file:resolve:SESSION_DECRYPTION_FILE)%']
-                    - '@Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner'
+                    - '@.inner'
 
     .. code-block:: xml
 
@@ -1531,7 +1531,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                     <argument type="collection">
                         <argument>env(file:resolve:SESSION_DECRYPTION_FILE)</argument>
                     </argument>
-                    <argument type="service" id="Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner"/>
+                    <argument type="service" id=".inner"/>
                 </service>
             </services>
         </container>
@@ -1552,7 +1552,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                 ->decorate('session.marshaller')
                 ->args([
                     [env('file:resolve:SESSION_DECRYPTION_FILE')],
-                    service(SodiumMarshaller::class.'.inner'),
+                    service('.inner'),
                 ]);
         };
 
