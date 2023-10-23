@@ -814,7 +814,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                     - ['%env(base64:CACHE_DECRYPTION_KEY)%']
                     # use multiple keys in order to rotate them
                     #- ['%env(base64:CACHE_DECRYPTION_KEY)%', '%env(base64:OLD_CACHE_DECRYPTION_KEY)%']
-                    - '@Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner'
+                    - '@.inner'
 
     .. code-block:: xml
 
@@ -837,7 +837,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                         <!-- use multiple keys in order to rotate them -->
                         <!-- <argument>env(base64:OLD_CACHE_DECRYPTION_KEY)</argument> -->
                     </argument>
-                    <argument type="service" id="Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner"/>
+                    <argument type="service" id=".inner"/>
                 </service>
             </services>
         </container>
@@ -854,7 +854,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
             ->addArgument(['env(base64:CACHE_DECRYPTION_KEY)'])
             // use multiple keys in order to rotate them
             //->addArgument(['env(base64:CACHE_DECRYPTION_KEY)', 'env(base64:OLD_CACHE_DECRYPTION_KEY)'])
-            ->addArgument(new Reference(SodiumMarshaller::class.'.inner'));
+            ->addArgument(new Reference('.inner'));
 
 .. caution::
 
