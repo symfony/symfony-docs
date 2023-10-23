@@ -1420,7 +1420,7 @@ You also have a service that defines many methods and one of them is the same
     {
         // other methods...
 
-        public function format($string $message, array $parameters): string
+        public function format(string $message, array $parameters): string
         {
             // ...
         }
@@ -1438,7 +1438,7 @@ Thanks to the ``#[AutowireCallable]`` attribute, you can now inject this
     class Mailer
     {
         public function __construct(
-            #[AutowireCallable(service: MessageUtils::class, method: 'formatMessage')]
+            #[AutowireCallable(service: MessageUtils::class, method: 'format')]
             private MessageFormatterInterface $formatter
         ) {
         }
@@ -1470,7 +1470,7 @@ an adapter for a functional interface through configuration:
 
             app.message_formatter:
                 class: App\Service\MessageFormatterInterface
-                from_callable: [!service {class: 'App\Service\MessageUtils'}, 'formatMessage']
+                from_callable: [!service {class: 'App\Service\MessageUtils'}, 'format']
 
     .. code-block:: xml
 
@@ -1485,7 +1485,7 @@ an adapter for a functional interface through configuration:
                 <!-- ... -->
 
                 <service id="app.message_formatter" class="App\Service\MessageFormatterInterface">
-                    <from-callable method="formatMessage">
+                    <from-callable method="format">
                         <service class="App\Service\MessageUtils"/>
                     </from-callable>
                 </service>
@@ -1506,7 +1506,7 @@ an adapter for a functional interface through configuration:
 
             $container
                 ->set('app.message_formatter', MessageFormatterInterface::class)
-                ->fromCallable([inline_service(MessageUtils::class), 'formatMessage'])
+                ->fromCallable([inline_service(MessageUtils::class), 'format'])
                 ->alias(MessageFormatterInterface::class, 'app.message_formatter')
             ;
         };
