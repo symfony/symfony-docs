@@ -28,8 +28,8 @@ The component supports:
 
 .. caution::
 
-    A backslash (``\``) must be escaped by 4 backslashes (``\\\\``) in a string
-    and 8 backslashes (``\\\\\\\\``) in a regex::
+    A backslash (``\``) must be escaped by 3 backslashes (``\\\\``) in a string
+    and 7 backslashes (``\\\\\\\\``) in a regex::
 
         echo $expressionLanguage->evaluate('"\\\\"'); // prints \
         $expressionLanguage->evaluate('"a\\\\b" matches "/^a\\\\\\\\b$/"'); // returns true
