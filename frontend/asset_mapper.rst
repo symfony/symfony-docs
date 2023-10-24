@@ -961,12 +961,6 @@ the polyfill loading.
 
         $ php bin/console importmap:require es-module-shims
 
-.. versionadded:: 6.4
-
-    Passing an importmap name in ``importmap_polyfill`` was
-    introduced in Symfony 6.4. Prior to this, you could pass ``false``
-    or a custom URL to load the polyfill.
-
 ``framework.asset_mapper.importmap_script_attributes``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
