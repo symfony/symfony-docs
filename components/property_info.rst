@@ -484,7 +484,7 @@ with the ``property_info`` service in the Symfony Framework::
 
 If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
 checked but you will get only the properties considered by the Serializer
-Component (notably the ``@Ignore`` annotation is taken into account).
+Component (notably the ``#[Ignore]`` attribute is taken into account).
 
 DoctrineExtractor
 ~~~~~~~~~~~~~~~~~
