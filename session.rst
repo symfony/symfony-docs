@@ -1051,7 +1051,7 @@ the MongoDB connection as argument, and the required parameters:
             $services->set(MongoDbSessionHandler::class)
                 ->args([
                     service('doctrine_mongodb.odm.default_connection'),
-                    ['database' => '%env('MONGODB_DB')%', 'collection' => 'sessions']
+                    ['database' => '%env("MONGODB_DB")%', 'collection' => 'sessions']
                 ])
             ;
         };
