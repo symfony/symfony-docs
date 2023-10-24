@@ -958,15 +958,31 @@ you expect are being included in the asset map.
 ``framework.asset_mapper.importmap_polyfill``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Configure the polyfill for older browsers. Default is `ES module shim`_. You can pass
-any URL to be included, or ``false`` to disable the polyfill.
+Configure the polyfill for older browsers. By default, the `ES module shim`_ is loaded
+via a CDN. You can pass the key of an item in ``importmap.php`` or ``false`` to disable
+the polyfill loading.
 
 .. code-block:: yaml
 
     framework:
         asset_mapper:
             importmap_polyfill: false # disable the shim ...
-            # importmap_polyfill: 'https://...' # ... or pass some custom URL
+            # importmap_polyfill: 'my_import_map' # ... or pass an importmap name
+
+.. tip::
+
+    You can tell the AssetMapper to load the `ES module shim`_ locally by
+    using the following command, without changing your configuration:
+
+    .. code-block:: terminal
+
+        $ php bin/console importmap:require es-module-shims
+
+.. versionadded:: 6.4
+
+    Passing an importmap name in ``importmap_polyfill`` was
+    introduced in Symfony 6.4. Prior to this, you could pass ``false``
+    or a custom URL to load the polyfill.
 
 ``framework.asset_mapper.importmap_script_attributes``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
