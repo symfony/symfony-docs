@@ -279,6 +279,13 @@ for each format:
 
     $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
+* Attributes in PHP files::
+
+    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+    use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
+
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
+
 * YAML files::
 
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
@@ -292,6 +299,21 @@ for each format:
     use Symfony\Component\Serializer\Mapping\Loader\XmlFileLoader;
 
     $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
+
+.. versionadded:: 6.4
+
+    The
+    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AttributeLoader`
+    was introduced in Symfony 6.4. Prior to this, the
+    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader`
+    must be used.
+
+.. deprecated:: 6.4
+
+    Reading annotations in PHP files is deprecated since Symfony 6.4.
+    Also, the
+    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader`
+    was deprecated in Symfony 6.4.
 
 .. _component-serializer-attributes-groups-annotations:
 .. _component-serializer-attributes-groups-attributes:
@@ -645,7 +667,7 @@ this is already set up and you only need to provide the configuration. Otherwise
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
     $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
 
@@ -1507,10 +1529,9 @@ Instead of throwing an exception, a custom callable can be executed when the
 maximum depth is reached. This is especially useful when serializing entities
 having unique identifiers::
 
-    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Annotation\MaxDepth;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
     use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
@@ -1534,7 +1555,7 @@ having unique identifiers::
     $level3->id = 3;
     $level2->child = $level3;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
     // all callback parameters are optional (you can omit the ones you don't use)
     $maxDepthHandler = function (object $innerObject, object $outerObject, string $attributeName, string $format = null, array $context = []): string {
@@ -1735,7 +1756,7 @@ this is already set up and you only need to provide the configuration. Otherwise
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
     $discriminator = new ClassDiscriminatorFromClassMetadata($classMetadataFactory);
 
