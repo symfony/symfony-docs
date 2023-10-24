@@ -994,7 +994,14 @@ working MongoDB connection in your Symfony application as explained in the
 `DoctrineMongoDBBundle configuration`_ article.
 
 Then, register a new handler service for ``MongoDbSessionHandler`` and pass it
-the MongoDB connection as argument:
+the MongoDB connection as argument, and the required parameters:
+
+``database``:
+    The name of the database
+
+``collection``:
+    The name of the collection
+
 
 .. configuration-block::
 
@@ -1007,6 +1014,7 @@ the MongoDB connection as argument:
             Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler:
                 arguments:
                     - '@doctrine_mongodb.odm.default_connection'
+                    - { database: '%env(MONGODB_DB)%', collection: 'sessions' }
 
     .. code-block:: xml
 
@@ -1022,6 +1030,10 @@ the MongoDB connection as argument:
             <services>
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler">
                     <argument type="service">doctrine_mongodb.odm.default_connection</argument>
+                    <argument type="collection">
+                        <argument key="database">%env('MONGODB_DB')%</argument>
+                        <argument key="collection">sessions</argument>
+                    </argument>
                 </service>
             </services>
         </container>
@@ -1039,6 +1051,7 @@ the MongoDB connection as argument:
             $services->set(MongoDbSessionHandler::class)
                 ->args([
                     service('doctrine_mongodb.odm.default_connection'),
+                    ['database' => '%env('MONGODB_DB')%', 'collection' => 'sessions']
                 ])
             ;
         };
@@ -1088,13 +1101,6 @@ configuration option to tell Symfony to use this service as the session handler:
             ;
         };
 
-.. note::
-
-    MongoDB ODM 1.x only works with the legacy driver, which is no longer
-    supported by the Symfony session class. Install the ``alcaeus/mongo-php-adapter``
-    package to retrieve the underlying ``\MongoDB\Client`` object or upgrade to
-    MongoDB ODM 2.0.
-
 That's all! Symfony will now use your MongoDB server to read and write the
 session data. You do not need to do anything to initialize your session
 collection. However, you may want to add an index to improve garbage collection
@@ -1123,7 +1129,11 @@ configure these values with the second argument passed to the
             Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler:
                 arguments:
                     - '@doctrine_mongodb.odm.default_connection'
-                    - { id_field: '_guid', 'expiry_field': 'eol' }
+                    -
+                        database: '%env(MONGODB_DB)%'
+                        collection: 'sessions'
+                        id_field: '_guid'
+                        expiry_field: 'eol'
 
     .. code-block:: xml
 
@@ -1138,6 +1148,8 @@ configure these values with the second argument passed to the
                 <service id="Symfony\Component\HttpFoundation\Session\Storage\Handler\MongoDbSessionHandler">
                     <argument type="service">doctrine_mongodb.odm.default_connection</argument>
                     <argument type="collection">
+                        <argument key="database">%env('MONGODB_DB')%</argument>
+                        <argument key="collection">sessions</argument>
                         <argument key="id_field">_guid</argument>
                         <argument key="expiry_field">eol</argument>
                     </argument>
@@ -1158,7 +1170,12 @@ configure these values with the second argument passed to the
             $services->set(MongoDbSessionHandler::class)
                 ->args([
                     service('doctrine_mongodb.odm.default_connection'),
-                    ['id_field' => '_guid', 'expiry_field' => 'eol'],
+                    [
+                        'database' => '%env('MONGODB_DB')%',
+                        'collection' => 'sessions'
+                        'id_field' => '_guid',
+                        'expiry_field' => 'eol',
+                    ],
                 ])
             ;
         };
