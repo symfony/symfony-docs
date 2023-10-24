@@ -271,14 +271,6 @@ that will be used by the normalizer must be aware of the format to use.
 The following code shows how to initialize the :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
 for each format:
 
-* Annotations in PHP files::
-
-    use Doctrine\Common\Annotations\AnnotationReader;
-    use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
-
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-
 * Attributes in PHP files::
 
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
@@ -300,22 +292,6 @@ for each format:
 
     $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
 
-.. versionadded:: 6.4
-
-    The
-    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AttributeLoader`
-    was introduced in Symfony 6.4. Prior to this, the
-    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader`
-    must be used.
-
-.. deprecated:: 6.4
-
-    Reading annotations in PHP files is deprecated since Symfony 6.4.
-    Also, the
-    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader`
-    was deprecated in Symfony 6.4.
-
-.. _component-serializer-attributes-groups-annotations:
 .. _component-serializer-attributes-groups-attributes:
 
 Then, create your groups definition:

@@ -468,20 +468,6 @@ with the ``property_info`` service in the Symfony Framework::
     // the `serializer_groups` option must be configured (may be set to null)
     $serializerExtractor->getProperties($class, ['serializer_groups' => ['mygroup']]);
 
-.. versionadded:: 6.4
-
-    The
-    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AttributeLoader`
-    was introduced in Symfony 6.4. Prior to this, the
-    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader`
-    must be used.
-
-.. deprecated:: 6.4
-
-    The
-    :class:`Symfony\\Component\\Serializer\\Mapping\\Loader\\AnnotationLoader`
-    was deprecated in Symfony 6.4.
-
 If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
 checked but you will get only the properties considered by the Serializer
 Component (notably the ``#[Ignore]`` attribute is taken into account).
