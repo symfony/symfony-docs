@@ -1,4 +1,4 @@
-ASymfony Docs Maintainer Guide
+Symfony Docs Maintainer Guide
 =============================
 
 The `symfony/symfony-docs`_ repository stores the Symfony project documentation
