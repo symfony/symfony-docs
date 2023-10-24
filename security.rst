@@ -2194,6 +2194,90 @@ Users with ``ROLE_SUPER_ADMIN``, will automatically have ``ROLE_ADMIN``,
     :doc:`security voter </security/voters>` that looks for the user roles
     in the database.
 
+You can also use the special ``*`` placeholder character to define hierarchy dynamically:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            role_hierarchy:
+                ROLE_*: ROLE_USER
+                ROLE_*_MODERATOR: ROLE_MODERATOR
+
+                ROLE_BLOG_*: ROLE_BLOG_READER
+                ROLE_BLOG_MODERATOR: [ROLE_BLOG_DELETE_POST, ROLE_BLOG_LOCK_POST]
+
+                ROLE_SHOP_*: ROLE_SHOP_USER
+                ROLE_SHOP_MODERATOR: [ROLE_SHOP_DELETE_ITEM, ROLE_SHOP_DELETE_REVIEW]
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <role id="ROLE_*">ROLE_USER</role>
+                <role id="ROLE_*_MODERATOR">ROLE_MODERATOR</role>
+
+                <role id="ROLE_BLOG_*">ROLE_BLOG_READER</role>
+                <role id="ROLE_BLOG_MODERATOR">ROLE_BLOG_DELETE_POST, ROLE_BLOG_LOCK_POST</role>
+
+                <role id="ROLE_SHOP_*">ROLE_SHOP_USER</role>
+                <role id="ROLE_SHOP_MODERATOR">ROLE_SHOP_DELETE_ITEM, ROLE_SHOP_DELETE_REVIEW</role>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            // ...
+
+            $security->roleHierarchy('ROLE_*', ['ROLE_USER']);
+            $security->roleHierarchy('ROLE_*_MODERATOR', ['ROLE_MODERATOR']);
+
+            $security->roleHierarchy('ROLE_BLOG_*', ['ROLE_BLOG_READER']);
+            $security->roleHierarchy('ROLE_BLOG_MODERATOR', ['ROLE_BLOG_DELETE_POST', 'ROLE_BLOG_LOCK_POST']);
+
+            $security->roleHierarchy('ROLE_SHOP_*', ['ROLE_SHOP_USER']);
+            $security->roleHierarchy('ROLE_SHOP_MODERATOR', ['ROLE_SHOP_DELETE_ITEM', 'ROLE_SHOP_DELETE_REVIEW']);
+        };
+
+With this configuration, you can easily configure that:
+
+    - Having a role grants ``ROLE_USER``.
+    - All moderators have ``ROLE_MODERATOR``.
+    - Anyone with the ``ROLE_BLOG_*`` can access the blog.
+    - Anyone with the ``ROLE_SHOP_*`` can access the shop.
+
+Even if a role is not explicitly defined in the hierarchy, if it is matched by a placeholder it will inherit the roles of this placeholder:
+
+    - Users with the ``ROLE_BLOG_ADMIN`` will also have the ``ROLE_BLOG_READER``
+    - Users with the ``ROLE_NEWS_MODERATOR`` will also have the ``ROLE_MODERATOR``
+
+.. caution::
+
+    The ``*`` placeholder character can only be used after a ``_`` and before a ``_`` or the end of the role name. That means role names like ``ROLE_BLOG*`` and ``ROLE_*BLOG`` will not be considered as valid placeholders.
+
+.. versionadded:: 6.4
+
+    The placeholder syntax was introduced in Symfony 6.4.
+
 .. _security-role-authorization:
 
 Add Code to Deny Access
