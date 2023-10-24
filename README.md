@@ -27,7 +27,7 @@ We love contributors! For more information on how you can contribute, please rea
 the [Symfony Docs Contributing Guide](https://symfony.com/doc/current/contributing/documentation/overview.html).
 
 **Important**: use `5.4` branch as the base of your pull requests, unless you are
-documenting a feature that was introduced *after* Symfony 5.4 (e.g. in Symfony 6.2).
+documenting a feature that was introduced *after* Symfony 5.4 (e.g. in Symfony 6.3).
 
 Build Documentation Locally
 ---------------------------
