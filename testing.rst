@@ -594,32 +594,27 @@ to remove the ``kernel.reset`` tag from some services in your test environment::
     // src/Kernel.php
     namespace App;
 
-    use App\DependencyInjection\Compiler\CustomPass;
     use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+    use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
     use Symfony\Component\DependencyInjection\ContainerBuilder;
     use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 
-    class Kernel extends BaseKernel
+    class Kernel extends BaseKernel implements CompilerPassInterface
     {
         use MicroKernelTrait;
 
         // ...
 
-        protected function build(ContainerBuilder $container): void
+        protected function process(ContainerBuilder $container): void
         {
             if ('test' === $this->environment) {
-                $container->addCompilerPass(new class() implements CompilerPassInterface {
-                    public function process(ContainerBuilder $container): void
-                    {
-                        // prevents the security token to be cleared
-                        $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
+                // prevents the security token to be cleared
+                $container->getDefinition('security.token_storage')->clearTag('kernel.reset');
 
-                        // prevents Doctrine entities to be detached
-                        $container->getDefinition('doctrine')->clearTag('kernel.reset');
+                // prevents Doctrine entities to be detached
+                $container->getDefinition('doctrine')->clearTag('kernel.reset');
 
-                        // ...
-                    }
-                });
+                // ...
             }
         }
     }
