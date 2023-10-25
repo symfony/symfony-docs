@@ -885,6 +885,25 @@ the env files ending in ``.local`` (``.env.local`` and ``.env.<environment>.loca
 **should not be committed** because only you will use them. In fact, the
 ``.gitignore`` file that comes with Symfony prevents them from being committed.
 
+Overriding Environment Variables Defined By The System
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to override an environment variable defined by the system, use the
+``overrideExistingVars`` parameter defined by the
+:method:`Symfony\\Component\\Dotenv\\Dotenv::loadEnv`,
+:method:`Symfony\\Component\\Dotenv\\Dotenv::bootEnv`, and
+:method:`Symfony\\Component\\Dotenv\\Dotenv::populate` methods::
+
+    use Symfony\Component\Dotenv\Dotenv;
+
+    $dotenv = new Dotenv();
+    $dotenv->loadEnv(__DIR__.'/.env', null, 'dev', ['test'], true);
+
+    // ...
+
+This will override environment variables defined by the system but it **won't**
+override environment variables defined in ``.env`` files.
+
 .. _configuration-env-var-in-prod:
 
 Configuring Environment Variables in Production
