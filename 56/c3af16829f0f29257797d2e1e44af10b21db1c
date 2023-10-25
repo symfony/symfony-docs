@@ -1,0 +1,41 @@
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-10-19T17:18:59Z
+
+First of all, congrats on your first doc contribution!
+
+I think we can make this even simpler. Just after "You may need to clear your cache (even in the dev environment) after creating this file for the first time.", we could add something like:
+
+```rst
+You can also use :class:`Ns\\TranslatableMessage` to build your violation message::
+
+// Your PHP example
+
+You can learn more about translatable messages in :ref:`the dedicated section <translatable-objects>`.
+```
+
+If you can, try not to get further than 80 chars lines 🙂
+
+---------------------------------------------------------------------------
+
+by cavasinf at 2023-10-20T07:00:40Z
+
+Sure 👍
+I made it shorter as you recommended.
+
+I still have the code blocks error about an undefined class.
+Looking at https://github.com/symfony/symfony-docs/blob/6.4/reference/constraints/NotBlank.rst it is made the same way, am I missing something?
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-10-20T11:42:12Z
+
+I think it's safe to ignore the error of the codeblocks as we're importing a "folder" here (and the parser is surely looking for some class or something)
+
+---------------------------------------------------------------------------
+
+by cavasinf at 2023-10-20T12:41:03Z
+
+> I think it's safe to ignore the error of the codeblocks as we're importing a "folder" here (and the parser is surely looking for some class or something)
+
+Good to go then 🤔
