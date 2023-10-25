@@ -144,6 +144,24 @@ a Doctrine entity listener in your application::
             // ...
         }
 
+You also need to add the ``#[EntityListeners([UserChangedNotifier::class])]`` attribute to the ``User``
+entity class::
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        // ...
+        use App\EventListener\UserChangedNotifier;
+        use Doctrine\ORM\Mapping\Entity;
+        use Doctrine\ORM\Mapping\EntityListeners;
+
+        #[EntityListeners([UserChangedNotifier::class])]
+        #[Entity]
+        class User
+        {
+            // ...
+        }
+
 Alternatively, if you prefer to not use PHP attributes, you must
 configure a service for the entity listener and :doc:`tag it </service_container/tags>`
 with the ``doctrine.orm.entity_listener`` tag as follows:
