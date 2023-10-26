@@ -897,7 +897,7 @@ If you need to override an environment variable defined by the system, use the
     use Symfony\Component\Dotenv\Dotenv;
 
     $dotenv = new Dotenv();
-    $dotenv->loadEnv(__DIR__.'/.env', null, 'dev', ['test'], true);
+    $dotenv->loadEnv(__DIR__.'/.env', overrideExistingVars: true);
 
     // ...
 
