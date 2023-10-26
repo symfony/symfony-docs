@@ -81,7 +81,7 @@ container into a single file, which could improve performance when using
         // config/services.php
 
         // ...
-        $container->parameters()->set('.container.dumper.inline_factories', true);
+        $configurator->parameters()->set('.container.dumper.inline_factories', true);
 
 .. _performance-use-opcache:
 
