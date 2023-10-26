@@ -196,7 +196,7 @@ It's difficult to manipulate or inspect the expressions created with the Express
 component, because the expressions are plain strings. A better approach is to
 turn those expressions into an AST. In computer science, `AST`_ (*Abstract
 Syntax Tree*) is *"a tree representation of the structure of source code written
-in a programming language"*. In Symfony, a ExpressionLanguage AST is a set of
+in a programming language"*. In Symfony, an ExpressionLanguage AST is a set of
 nodes that contain PHP classes representing the given expression.
 
 Dumping the AST
