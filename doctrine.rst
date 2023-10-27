@@ -743,7 +743,7 @@ but ``$comment`` is configured with the attribute since they cannot both follow
 the default convention.
 
 If you need to get other information from the request to query the database, you
-can also access to the request in your expression thanks to the ``request``
+can also access the request in your expression thanks to the ``request``
 variable. Let's say you pass the page limit of a list in a query parameter::
 
     #[Route('/product/{id}/comments')]
