@@ -7,8 +7,8 @@ The PHPUnit Bridge
 
 It comes with the following features:
 
-* Forces the tests to use a consistent locale (``C``) (if you create
-  locale-sensitive tests, use PHPUnit's ``setLocale()`` method);
+* Sets by default a consistent locale (``C``) for your tests (if you
+  create locale-sensitive tests, use PHPUnit's ``setLocale()`` method);
 
 * Auto-register ``class_exists`` to load Doctrine annotations (when used);
 
@@ -397,6 +397,41 @@ Log Deprecations
 
 For turning the verbose output off and write it to a log file instead you can use
 ``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``.
+
+Setting The Locale For Tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the PHPUnit Bridge forces the locale to ``C`` to avoid locale
+issues in tests. This behavior can be changed by setting the
+``SYMFONY_PHPUNIT_LOCALE`` environment variable to the desired locale:
+
+.. code-block:: bash
+
+    # .env.test
+    SYMFONY_PHPUNIT_LOCALE="fr_FR"
+
+Alternatively, you can set this environment variable in the PHPUnit
+configuration file:
+
+.. code-block:: xml
+
+    <!-- https://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <php>
+            <!-- ... -->
+            <env name="SYMFONY_PHPUNIT_LOCALE" value="fr_FR"/>
+        </php>
+    </phpunit>
+
+.. versionadded:: 6.4
+
+    The support for the ``SYMFONY_PHPUNIT_LOCALE`` environment variable was
+    introduced in Symfony 6.4.
 
 .. _write-assertions-about-deprecations:
 
