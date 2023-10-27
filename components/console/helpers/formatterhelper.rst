@@ -135,4 +135,4 @@ precision (default ``1``) of the result::
 
 .. versionadded:: 6.4
 
-    The support for exact times were introduced in Symfony 6.4.
+    The support for exact times was introduced in Symfony 6.4.
