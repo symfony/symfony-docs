@@ -361,9 +361,7 @@ To send a notification, autowire the
 
     class InvoiceController extends AbstractController
     {
-        /**
-         * @Route("/invoice/create")
-         */
+        #[Route('/invoice/create')]
         public function create(NotifierInterface $notifier)
         {
             // ...
