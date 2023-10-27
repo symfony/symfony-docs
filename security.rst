@@ -1459,7 +1459,7 @@ Then, enable this feature using the ``login_throttling`` setting:
 
     The ``login_throttling.interval`` option was introduced in Symfony 5.3.
 
-The Rate Limiter component uses by default the Symfony cache to store the previous
+The RateLimiter component uses by default the Symfony cache to store the previous
 login attempts. However, you can implement a :ref:`custom storage <rate-limiter-storage>`.
 
 Login attempts are limited on ``max_attempts`` (default: 5)
