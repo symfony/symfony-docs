@@ -179,7 +179,7 @@ send SMS messages::
 
     class SecurityController
     {
-        #[Route('/login/success')
+        #[Route('/login/success')]
         public function loginSuccess(TexterInterface $texter)
         {
             $sms = new SmsMessage(
