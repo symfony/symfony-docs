@@ -80,7 +80,10 @@ But if the form is not mapped to an object and you instead want to retrieve an
 array of your submitted data, how can you add constraints to the data of
 your form?
 
-The answer is to set up the constraints yourself, and attach them to the individual
+Constraints At Field Level
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+One possibility is to set up the constraints yourself, and attach them to the individual
 fields. The overall approach is covered a bit more in :doc:`this validation article </validation/raw_values>`,
 but here's a short example::
 
@@ -123,3 +126,55 @@ but here's a short example::
     When a form is only partially submitted (for example, in an HTTP PATCH
     request), only the constraints from the submitted form fields will be
     evaluated.
+
+Constraints At Class Level
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Another possibility is to add the constraints at the class level.
+This can be done by setting the ``constraints`` option in the
+``configureOptions()`` method::
+
+    use Symfony\Component\Form\Extension\Core\Type\TextType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Validator\Constraints\Length;
+    use Symfony\Component\Validator\Constraints\NotBlank;
+
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class);
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $constraints = [
+            'firstName' => new Length(['min' => 3]),
+            'lastName' => [
+                new NotBlank(),
+                new Length(['min' => 3]),
+            ],
+        ];
+
+        $resolver->setDefaults([
+            'data_class' => null,
+            'constraints' => $constraints,
+        ]);
+    }
+
+This means you can also do this when using the ``createFormBuilder()`` method
+in your controller::
+
+    $form = $this->createFormBuilder($defaultData, [
+            'constraints' => [
+                'firstName' => new Length(['min' => 3]),
+                'lastName' => [
+                    new NotBlank(),
+                    new Length(['min' => 3]),
+                ],
+            ],
+        ])
+        ->add('firstName', TextType::class)
+        ->add('lastName', TextType::class)
+        ->getForm();
