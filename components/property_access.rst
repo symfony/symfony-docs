@@ -406,20 +406,21 @@ Using non-standard adder/remover methods
 Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`` prefix, like in this example::
 
     // ...
-    class PeopleList
+    class Team
     {
         // ...
 
-        public function joinPeople(string $people): void
+        public function joinTeam(string $person): void
         {
-            $this->peoples[] = $people;
+            $this->team[] = $person;
         }
 
-        public function leavePeople(string $people): void
+        public function leaveTeam(string $person): void
         {
-            foreach ($this->peoples as $id => $item) {
-                if ($people === $item) {
-                    unset($this->peoples[$id]);
+            foreach ($this->team as $id => $item) {
+                if ($person === $item) {
+                    unset($this->team[$id]);
+
                     break;
                 }
             }
@@ -429,12 +430,12 @@ Sometimes, adder and remover methods don't use the standard ``add`` or ``remove`
     use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
     use Symfony\Component\PropertyAccess\PropertyAccessor;
 
-    $list = new PeopleList();
+    $list = new Team();
     $reflectionExtractor = new ReflectionExtractor(null, null, ['join', 'leave']);
     $propertyAccessor = new PropertyAccessor(PropertyAccessor::DISALLOW_MAGIC_METHODS, PropertyAccessor::THROW_ON_INVALID_PROPERTY_PATH, null, $reflectionExtractor, $reflectionExtractor);
-    $propertyAccessor->setValue($person, 'peoples', ['kevin', 'wouter']);
+    $propertyAccessor->setValue($person, 'team', ['kevin', 'wouter']);
 
-    var_dump($person->getPeoples()); // ['kevin', 'wouter']
+    var_dump($person->getTeam()); // ['kevin', 'wouter']
 
 Instead of calling ``add<SingularOfThePropertyName>()`` and ``remove<SingularOfThePropertyName>()``, the PropertyAccess
 component will call ``join<SingularOfThePropertyName>()`` and ``leave<SingularOfThePropertyName>()`` methods.
