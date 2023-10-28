@@ -428,11 +428,6 @@ configuration file:
         </php>
     </phpunit>
 
-.. versionadded:: 6.4
-
-    The support for the ``SYMFONY_PHPUNIT_LOCALE`` environment variable was
-    introduced in Symfony 6.4.
-
 .. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
