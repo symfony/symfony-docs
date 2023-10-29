@@ -413,7 +413,7 @@ option. You can configure a normalizer by calling
             // ...
 
             $resolver->setNormalizer('host', function (Options $options, string $value): string {
-                if ('http://' !== substr($value, 0, 7)) {
+                if (!str_starts_with($value, 'http://')) {
                     $value = 'http://'.$value;
                 }
 
@@ -434,7 +434,7 @@ if you need to use other options during normalization::
         {
             // ...
             $resolver->setNormalizer('host', function (Options $options, string $value): string {
-                if ('http://' !== substr($value, 0, 7) && 'https://' !== substr($value, 0, 8)) {
+                if (!str_starts_with($value, 'http://') && !str_starts_with($value, 'https://')) {
                     if ('ssl' === $options['encryption']) {
                         $value = 'https://'.$value;
                     } else {
