@@ -72,6 +72,14 @@ as the value to the current URL:
 
 .. tip::
 
+    You can leverage the Twig function ``impersonation_path('thomas')``
+
+    .. versionadded:: 6.4
+
+        The ``impersonation_path()`` function was introduced in Symfony 6.4.
+
+.. tip::
+
     Instead of adding a ``_switch_user`` query string parameter, you can pass
     the username in a custom HTTP header by adjusting the ``parameter`` setting.
     For example, to use ``X-Switch-User`` header (available in PHP as
@@ -127,6 +135,10 @@ To switch back to the original user, use the special ``_exit`` username:
 .. code-block:: text
 
     http://example.com/somewhere?_switch_user=_exit
+
+.. tip::
+
+    You can leverage the Twig function ``impersonation_exit_path('/somewhere')``
 
 This feature is only available to users with a special role called ``ROLE_ALLOWED_TO_SWITCH``.
 Using :ref:`role_hierarchy <security-role-hierarchy>` is a great way to give this
