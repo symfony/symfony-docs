@@ -74,10 +74,6 @@ as the value to the current URL:
 
     You can leverage the Twig function ``impersonation_path('thomas')``
 
-    .. versionadded:: 6.4
-
-        The ``impersonation_path()`` function was introduced in Symfony 6.4.
-
 .. tip::
 
     Instead of adding a ``_switch_user`` query string parameter, you can pass
