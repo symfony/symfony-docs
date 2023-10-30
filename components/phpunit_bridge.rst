@@ -428,6 +428,9 @@ configuration file:
         </php>
     </phpunit>
 
+Finally, if you want to avoid the bridge to force any locale, you can set the
+``SYMFONY_PHPUNIT_LOCALE`` environment variable to ``0``.
+
 .. _write-assertions-about-deprecations:
 
 Write Assertions about Deprecations
