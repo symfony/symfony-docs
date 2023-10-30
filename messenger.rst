@@ -2566,6 +2566,98 @@ of the process. For each, the event class is the event name:
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerStartedEvent`
 * :class:`Symfony\\Component\\Messenger\\Event\\WorkerStoppedEvent`
 
+Message Serializer For Custom Data Formats
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+It is likely that you receive messages from other applications that are not
+exactly in the format you need. Not all applications will return a JSON message
+with ``body`` and ``headers`` fields. In this case, you'll need to
+create a new message serializer. This can be done by implementing the
+:class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\SerializerInterface`.
+Let's say you want to create a message decoder::
+
+    namespace App\Messenger\Serializer;
+
+    use Symfony\Component\Messenger\Envelope;
+    use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
+
+    class MessageWithTokenDecoder implements SerializerInterface
+    {
+        public function decode(array $encodedEnvelope): Envelope
+        {
+            $envelope = \json_decode($encodedEnvelope, true);
+
+            try {
+                // parse the data you received with your custom fields
+                $data = $envelope['data'];
+                $data['token'] = $envelope['token'];
+
+                // other operations like getting information from stamps
+            } catch (\Throwable $throwable) {
+                // wrap any exception that may occur in the envelope to send it to the failure transport
+                return new Envelope($throwable);
+            }
+
+            return new Envelope($data);
+        }
+
+        public function encode(Envelope $envelope): array
+        {
+            // this decoder does not encode messages, but you can implement it by returning
+            // an array with serialized stamps if you need to send messages in a custom format
+            throw new \LogicException('This serializer is only used for decoding messages.');
+        }
+    }
+
+Now that this serializer is created, you can use it in your transport:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    my_transport:
+                        dsn: '%env(MY_TRANSPORT_DSN)%'
+                        serializer: 'App\Messenger\Serializer\MessageWithTokenDecoder'
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="my_transport" dsn="%env(MY_TRANSPORT_DSN)%" serializer="App\Messenger\Serializer\MessageWithTokenDecoder">
+                        <!-- ... -->
+                    </framework:transport>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        use App\Messenger\Serializer\MessageWithTokenDecoder;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            $messenger = $framework->messenger();
+
+            $messenger->transport('my_transport')
+                ->dsn('%env(MY_TRANSPORT_DSN)%')
+                ->serializer(MessageWithTokenDecoder::class);
+        };
+
 Multiple Buses, Command & Event Buses
 -------------------------------------
 
