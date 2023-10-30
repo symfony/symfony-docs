@@ -432,6 +432,9 @@ configuration file:
         </php>
     </phpunit>
 
+Finally, if you want to avoid the bridge to force any locale, you can set the
+``SYMFONY_PHPUNIT_LOCALE`` environment variable to ``0``.
+
 .. versionadded:: 6.4
 
     The support for the ``SYMFONY_PHPUNIT_LOCALE`` environment variable was
