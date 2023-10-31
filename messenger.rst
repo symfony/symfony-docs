@@ -756,6 +756,10 @@ Next, tell Supervisor to read your config and start your workers:
 
     $ sudo supervisorctl start messenger-consume:*
 
+    # If you deploy an update of your code, don't forget to restart your workers
+    # to run the new code
+    $ sudo supervisorctl restart messenger-consume:*
+
 See the `Supervisor docs`_ for more details.
 
 Graceful Shutdown
