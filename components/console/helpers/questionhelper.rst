@@ -52,7 +52,9 @@ the following to your command::
     }
 
 In this case, the user will be asked "Continue with this action?". If the user
-answers with ``y`` it returns ``true`` or ``false`` if they answer with ``n``.
+answers with ``y`` (or any word, expression starting with ``y`` due to default
+answer regex, e.g ``yeti``) it returns ``true`` or ``false`` otherwise, e.g. ``n``.
+
 The second argument to
 :method:`Symfony\\Component\\Console\\Question\\ConfirmationQuestion::__construct`
 is the default value to return if the user doesn't enter any valid input. If

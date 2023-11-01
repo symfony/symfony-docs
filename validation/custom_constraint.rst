@@ -543,7 +543,7 @@ class to simplify writing unit tests for your custom constraints::
                 ->assertRaised();
         }
 
-        public function provideInvalidConstraints(): iterable
+        public function provideInvalidConstraints(): \Generator
         {
             yield [new ContainsAlphanumeric(message: 'myMessage')];
             // ...
