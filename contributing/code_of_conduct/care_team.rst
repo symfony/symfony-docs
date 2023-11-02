@@ -19,30 +19,37 @@ the CARE team or if you prefer contact only individual members of the CARE team.
 Members
 -------
 
-Here are all the members of the CARE team (in alphabetic order). You can contact
-any of them directly using the contact details below or you can also contact all
-of them at once by emailing ** care@symfony.com **.
+Here are all the members of the CARE team (sorted alphabetically by surname).
+You can contact any of them directly using the contact details below or you can
+also contact all of them at once by emailing ** care@symfony.com **.
 
 * **Timo Bakx**
 
   * *E-mail*: timobakx [at] gmail.com
   * *Twitter*: `@TimoBakx <https://twitter.com/TimoBakx>`_
   * *SymfonyConnect*: `timobakx <https://connect.symfony.com/profile/timobakx>`_
-  * *SymfonySlack*: `@Timo Bakx <https://symfony-devs.slack.com/team/U3FQ2GVJA>`_
+  * *SymfonySlack*: `@Timo Bakx <https://symfony.com/slack>`_
 
 * **Zan Baldwin**
 
   * *E-mail*: hello [at] zanbaldwin.com
   * *Twitter*: `@ZanBaldwin <https://twitter.com/ZanBaldwin>`_
   * *SymfonyConnect*: `zanbaldwin <https://connect.symfony.com/profile/zanbaldwin>`_
-  * *SymfonySlack*: `@Zan <https://symfony-devs.slack.com/team/UBHGRU3NW>`_
+  * *SymfonySlack*: `@Zan <https://symfony.com/slack>`_
+
+* **Valentine Boineau**
+
+  * *E-mail*: valentine.boineau [at] gmail.com
+  * *Twitter*: `@BoineauV <https://twitter.com/BoineauV>`_
+  * *SymfonyConnect*: `valentineboineau <https://connect.symfony.com/profile/valentineboineau>`_
+  * *SymfonySlack*: `@Valentine <https://symfony.com/slack>`_
 
 * **Tobias Nyholm**
 
   * *E-mail*: tobias.nyholm [at] gmail.com
   * *Twitter*: `@tobiasnyholm <https://twitter.com/tobiasnyholm>`_
   * *SymfonyConnect*: `tobias <https://connect.symfony.com/profile/tobias>`_
-  * *SymfonySlack*: `@Tobias Nyholm <https://symfony-devs.slack.com/team/U3A9CNEDB>`_
+  * *SymfonySlack*: `@Tobias Nyholm <https://symfony.com/slack>`_
 
 About the CARE Team
 -------------------
