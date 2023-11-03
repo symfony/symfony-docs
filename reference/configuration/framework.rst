@@ -219,8 +219,8 @@ following values: ``phpstorm``, ``sublime``, ``textmate``, ``macvim``, ``emacs``
 
 .. note::
 
-    The ``phpstorm`` option is supported natively by PhpStorm on MacOS,
-    Windows requires `PhpStormProtocol`_ and Linux requires `phpstorm-url-handler`_.
+    The ``phpstorm`` option is supported natively by PhpStorm on MacOS and
+    Windows, Linux requires `phpstorm-url-handler`_.
 
 If you use another editor, the expected configuration value is a URL template
 that contains an ``%f`` placeholder where the file path is expected and ``%l``
@@ -310,6 +310,9 @@ Another alternative is to set the ``xdebug.file_link_format`` option in your
 
     // example for PhpStorm
     xdebug.file_link_format="phpstorm://open?file=%f&line=%l"
+
+    // example for PhpStorm with Jetbrains Toolbox
+    xdebug.file_link_format="jetbrains://php-storm/navigate/reference?project=example&file=%f:%l"
 
     // example for Sublime
     xdebug.file_link_format="subl://open?url=file://%f&line=%l"
@@ -3770,7 +3773,6 @@ use the configuration of the first exception that matches ``instanceof``:
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`Doctrine Cache`: https://www.doctrine-project.org/projects/doctrine-cache/en/current/index.html
-.. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
 .. _`blue/green deployment`: https://martinfowler.com/bliki/BlueGreenDeployment.html
 .. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev
