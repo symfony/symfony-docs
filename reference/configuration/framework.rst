@@ -219,8 +219,8 @@ following values: ``phpstorm``, ``sublime``, ``textmate``, ``macvim``, ``emacs``
 
 .. note::
 
-    The ``phpstorm`` option is supported natively by PhpStorm on MacOS and
-    Windows, Linux requires `phpstorm-url-handler`_.
+    The ``phpstorm`` option is supported natively by PhpStorm on macOS and
+    Windows; Linux requires installing `phpstorm-url-handler`_.
 
 If you use another editor, the expected configuration value is a URL template
 that contains an ``%f`` placeholder where the file path is expected and ``%l``
@@ -314,7 +314,7 @@ Another alternative is to set the ``xdebug.file_link_format`` option in your
     // example for PhpStorm with Jetbrains Toolbox
     xdebug.file_link_format="jetbrains://php-storm/navigate/reference?project=example&file=%f:%l"
 
-    // example for Sublime
+    // example for Sublime Text
     xdebug.file_link_format="subl://open?url=file://%f&line=%l"
 
 .. note::
