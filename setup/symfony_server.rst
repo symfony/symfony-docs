@@ -367,6 +367,9 @@ If you like some processes to start automatically, along with the webserver
         build_spa:
             cmd: ['yarn', '--cwd', './spa/', 'dev']
 
+        # auto start Docker compose when starting server (available since Symfony CLI 5.7.0)
+        docker_compose: ~
+
 .. _symfony-server-docker:
 
 Docker Integration
