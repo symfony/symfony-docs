@@ -107,36 +107,63 @@ of a variety of different values:
 
 **All ranges**
 
-``4``
+``4` (`Assert\Ip::V4`)`
     Validates for IPv4 addresses
-``6``
+``6` (`Assert\Ip::V6`)`
     Validates for IPv6 addresses
-``all``
+``all` (`Assert\Ip::ALL`)`
     Validates all IP formats
+
+**No public ranges**
+
+``4_no_public` (`Assert\Ip::V4_NO_PUBLIC`)`
+    Validates for IPv4 but without public IP ranges
+``6_no_public` (`Assert\Ip::V6_NO_PUBLIC`)`
+    Validates for IPv6 but without public IP ranges
+``all_no_public` (`Assert\Ip::ALL_NO_PUBLIC`)`
+    Validates for all IP formats but without public IP ranges
 
 **No private ranges**
 
-``4_no_priv``
+``4_no_private` (`Assert\Ip::V4_NO_PRIVATE`)`
     Validates for IPv4 but without private IP ranges
-``6_no_priv``
+``6_no_private` (`Assert\Ip::V6_NO_PRIVATE`)`
     Validates for IPv6 but without private IP ranges
-``all_no_priv``
+``all_no_private` (`Assert\Ip::ALL_NO_PRIVATE`)`
     Validates for all IP formats but without private IP ranges
 
 **No reserved ranges**
 
-``4_no_res``
+``4_no_reserved` (`Assert\Ip::V4_NO_RESERVED`)`
     Validates for IPv4 but without reserved IP ranges
-``6_no_res``
+``6_no_reserved` (`Assert\Ip::V6_NO_RESERVED`)`
     Validates for IPv6 but without reserved IP ranges
-``all_no_res``
+``all_no_reserved` (`Assert\Ip::ALL_NO_RESERVED`)`
     Validates for all IP formats but without reserved IP ranges
 
 **Only public ranges**
 
-``4_public``
+``4_public` (`Assert\Ip::V4_ONLY_PUBLIC`)`
     Validates for IPv4 but without private and reserved ranges
-``6_public``
+``6_public` (`Assert\Ip::V6_ONLY_PUBLIC`)`
     Validates for IPv6 but without private and reserved ranges
-``all_public``
+``all_public` (`Assert\Ip::ALL_ONLY_PUBLIC`)`
     Validates for all IP formats but without private and reserved ranges
+
+**Only private ranges**
+
+``4_private` (`Assert\Ip::V4_ONLY_PRIVATE`)`
+    Validates for IPv4 but without public and reserved ranges
+``6_private` (`Assert\Ip::V6_ONLY_PRIVATE`)`
+    Validates for IPv6 but without public and reserved ranges
+``all_private` (`Assert\Ip::ALL_ONLY_PRIVATE`)`
+    Validates for all IP formats but without public and reserved ranges
+
+**Only reserved ranges**
+
+``4_reserved` (`Assert\Ip::V4_ONLY_RESERVED`)`
+    Validates for IPv4 but without public and private ranges
+``6_reserved` (`Assert\Ip::V6_ONLY_RESERVED`)`
+    Validates for IPv6 but without public and private ranges
+``all_reserved` (`Assert\Ip::ALL_ONLY_RESERVED`)`
+    Validates for all IP formats but without public and private ranges

@@ -97,7 +97,7 @@ It's a constraint for the lowest value a valid netmask may have.
 
 **type**: ``string`` **default**: ``32`` for IPv4 or ``128`` for IPv6
 
-It's a constraint for the biggest value a valid netmask may have.
+It's a constraint for the biggest value a valid netmask may have. The value will be overwritten to `32` if it is greater than `32` and a `V4` is validated.
 
 ``netmaskRangeViolationMessage``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -124,10 +124,6 @@ Parameter        Description
 **type**: ``string`` **default**: ``all``
 
 This determines exactly *how* the CIDR notation is validated and can take one
-of these values:
-
-* ``4``: validates for CIDR notations that have an IPv4;
-* ``6``: validates for CIDR notations that have an IPv6;
-* ``all``: validates all CIDR formats.
+of the values available for `Ip` constraint.
 
 .. _`CIDR`: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
