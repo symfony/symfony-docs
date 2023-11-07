@@ -827,7 +827,7 @@ method::
 
 .. note::
 
-    All deprecation messages are displayed in the profiler logs into Deprecations tab.
+    All deprecation messages are displayed in the profiler logs in the "Deprecations" tab.
 
 Instead of passing the message, you may also pass a closure which returns
 a string (the deprecation message) or an empty string to ignore the deprecation.
