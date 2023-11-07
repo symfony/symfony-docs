@@ -128,8 +128,7 @@ The Cache component comes with a series of adapters pre-configured:
     logic to dynamically select the best possible storage based on your system
     (either PHP files or APCu).
 
-Some of these adapters could be configured via shortcuts. Using these shortcuts
-will create pools with service IDs that follow the pattern ``cache.[type]``.
+Some of these adapters could be configured via shortcuts.
 
 .. configuration-block::
 
@@ -140,15 +139,10 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             cache:
                 directory: '%kernel.cache_dir%/pools' # Only used with cache.adapter.filesystem
 
-                # service: cache.doctrine_dbal
                 default_doctrine_dbal_provider: 'doctrine.dbal.default_connection'
-                # service: cache.psr6
                 default_psr6_provider: 'app.my_psr6_service'
-                # service: cache.redis
                 default_redis_provider: 'redis://localhost'
-                # service: cache.memcached
                 default_memcached_provider: 'memcached://localhost'
-                # service: cache.pdo
                 default_pdo_provider: 'pgsql:host=localhost'
 
     .. code-block:: xml
@@ -164,13 +158,6 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
         >
             <framework:config>
-                <!--
-                default-doctrine-dbal-provider: Service: cache.doctrine_dbal
-                default-psr6-provider: Service: cache.psr6
-                default-redis-provider: Service: cache.redis
-                default-memcached-provider: Service: cache.memcached
-                default-pdo-provider: Service: cache.pdo
-                -->
                 <!-- "directory" attribute is only used with cache.adapter.filesystem -->
                 <framework:cache directory="%kernel.cache_dir%/pools"
                     default-doctrine-dbal-provider="doctrine.dbal.default_connection"
@@ -191,15 +178,11 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             $framework->cache()
                 // Only used with cache.adapter.filesystem
                 ->directory('%kernel.cache_dir%/pools')
-                // Service: cache.doctrine_dbal
+
                 ->defaultDoctrineDbalProvider('doctrine.dbal.default_connection')
-                // Service: cache.psr6
                 ->defaultPsr6Provider('app.my_psr6_service')
-                // Service: cache.redis
                 ->defaultRedisProvider('redis://localhost')
-                // Service: cache.memcached
                 ->defaultMemcachedProvider('memcached://localhost')
-                // Service: cache.pdo
                 ->defaultPdoProvider('pgsql:host=localhost')
             ;
         };
