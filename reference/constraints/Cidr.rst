@@ -116,6 +116,8 @@ Parameter        Description
 ``{{ max }}``    The maximum value a CIDR netmask may have
 ===============  ==============================================================
 
+.. include:: /reference/constraints/_normalizer-option.rst.inc
+
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 ``version``
