@@ -508,6 +508,21 @@ a new object with the modified property::
         ->withDomain('.example.com')
         ->withSecure(true);
 
+It is possible to define partitioned cookies, also known as `CHIPS`_, by using the
+:method:`Symfony\\Component\\HttpFoundation\\Cookie::withPartitioned` method::
+
+    $cookie = Cookie::create('foo')
+        ->withValue('bar')
+        ->withPartitioned();
+
+    // you can also set the partitioned argument to true when using the `create()` factory method
+    $cookie = Cookie::create('name', 'value', partitioned: true);
+
+.. versionadded:: 6.4
+
+    The :method:`Symfony\\Component\\HttpFoundation\\Cookie::withPartitioned`
+    method was introduced in Symfony 6.4.
+
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -945,3 +960,4 @@ Learn More
 .. _OWASP guidelines: https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html#always-return-json-with-an-object-on-the-outside
 .. _RFC 8674: https://tools.ietf.org/html/rfc8674
 .. _Doctrine Batch processing: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/batch-processing.html#iterating-results
+.. _`CHIPS`: https://developer.mozilla.org/en-US/docs/Web/Privacy/Partitioned_cookies
