@@ -801,11 +801,14 @@ method::
         ->setDeprecated('hostname', 'acme/package', '1.2')
 
         // you can also pass a custom deprecation message (%name% placeholder is available)
+        // %name% placeholder will be replaced by the deprecated option.
+        // This outputs the following deprecation message:
+        // Since acme/package 1.2: The option "hostname" is deprecated, use "host" instead.
         ->setDeprecated(
             'hostname',
             'acme/package',
             '1.2',
-            'The option "hostname" is deprecated, use "host" instead.'
+            'The option "%name%" is deprecated, use "host" instead.'
         )
     ;
 
@@ -821,6 +824,10 @@ method::
     ``false`` as the second argument of the
     :method:`Symfony\\Component\\OptionsResolver\\Options::offsetGet` method
     to not trigger the deprecation warning.
+
+.. note::
+
+    All deprecation messages are displayed in the profiler logs into Deprecations tab.
 
 Instead of passing the message, you may also pass a closure which returns
 a string (the deprecation message) or an empty string to ignore the deprecation.
