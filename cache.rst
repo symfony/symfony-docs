@@ -133,7 +133,12 @@ Some of these adapters could be configured via shortcuts.
                 default_psr6_provider: 'app.my_psr6_service'
                 default_redis_provider: 'redis://localhost'
                 default_memcached_provider: 'memcached://localhost'
-                default_pdo_provider: 'pgsql:host=localhost'
+                default_pdo_provider: 'app.my_pdo_service'
+
+        services:
+            app.my_pdo_service:
+                class: \PDO
+                arguments: ['pgsql:host=localhost']
 
     .. code-block:: xml
 
@@ -154,17 +159,24 @@ Some of these adapters could be configured via shortcuts.
                     default-psr6-provider="app.my_psr6_service"
                     default-redis-provider="redis://localhost"
                     default-memcached-provider="memcached://localhost"
-                    default-pdo-provider="pgsql:host=localhost"
+                    default-pdo-provider="app.my_pdo_service"
                 />
             </framework:config>
+
+            <services>
+                <service id="app.my_pdo_service" class="\PDO">
+                    <argument>pgsql:host=localhost</argument>
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
 
         // config/packages/cache.php
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework): void {
+        return static function (FrameworkConfig $framework, ContainerConfigurator $container): void {
             $framework->cache()
                 // Only used with cache.adapter.filesystem
                 ->directory('%kernel.cache_dir%/pools')
@@ -173,7 +185,12 @@ Some of these adapters could be configured via shortcuts.
                 ->defaultPsr6Provider('app.my_psr6_service')
                 ->defaultRedisProvider('redis://localhost')
                 ->defaultMemcachedProvider('memcached://localhost')
-                ->defaultPdoProvider('pgsql:host=localhost')
+                ->defaultPdoProvider('app.my_pdo_service')
+            ;
+
+            $container->services()
+                ->set('app.my_pdo_service', \PDO::class)
+                ->args(['pgsql:host=localhost'])
             ;
         };
 
