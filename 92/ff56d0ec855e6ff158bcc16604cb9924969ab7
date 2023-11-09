@@ -1,0 +1,80 @@
+---------------------------------------------------------------------------
+
+by BenMorel at 2023-11-03T11:30:46Z
+
+Thank you, @OskarStark!
+
+- Could the "short timeframe" be defined, like `x` weeks before release?
+- Could this be reflect on the [Symfony Releases Calendar](https://symfony.com/releases#symfony-releases-calendar)?
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-11-03T11:37:37Z
+
+> Could the "short timeframe" be defined, like x weeks before release?
+
+Not sure, as this is not a _hard_, more a _soft_ deadline, lets ask @nicolas-grekas and @fabpot
+
+> Could this be reflect on the [Symfony Releases Calendar](https://symfony.com/releases#symfony-releases-calendar)?
+
+Not sure it's worth, but possibly yes. But once done, @carsonbot could use that information
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2023-11-03T12:30:26Z
+
+We already document this as the "stabilization" period of two months here: https://symfony.com/doc/current/contributing/community/releases.html#development
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-11-03T13:08:07Z
+
+I agree, but this does not really explain what that mean for the contributor
+
+---------------------------------------------------------------------------
+
+by fabpot at 2023-11-06T12:03:32Z
+
+I don't think that this is needed as this is already described here: https://symfony.com/doc/current/contributing/community/releases.html#development
+
+Maybe adding a link to this paragraph would be enough.
+
+---------------------------------------------------------------------------
+
+by wouterj at 2023-11-06T12:14:53Z
+
+I agree that we should not duplicate the release cycle documentation, but I like mentioning it on this page. It's common to see contributors confused what they should do with their PR during this phase. What about replacing the strong warning with a more subtle paragraph like:
+
+```rst
+During the :ref:`stabilization phase <contributing-release-development>`, the development branch is in
+feature freeze. Please help the community prepare for the new version release. If you want to submit a
+new feature pull request, you should target the next version. For example, if ``6.3`` reached feature
+freeze, new features should target ``6.4``. If the ``6.4`` branch does not yet exists, target ``6.3``
+and rebase your pull requests once the branch is created.
+```
+
+(second sentence may be removed, I can't help myself pushing everyone to not focus on writing new features during these 2 months :stuck_out_tongue: )
+
+---------------------------------------------------------------------------
+
+by fabpot at 2023-11-06T12:22:42Z
+
+> I agree that we should not duplicate the release cycle documentation, but I like mentioning it on this page. It's common to see contributors confused what they should do with their PR during this phase. What about replacing the strong warning with a more subtle paragraph like:
+>
+> ```
+> During the :ref:`stabilization phase <contributing-release-development>`, the development branch is in
+> feature freeze. Please help the community prepare for the new version release. If you want to submit a
+> new feature pull request, you should target the next version. For example, if ``6.3`` reached feature
+> freeze, new features should target ``6.4``. If the ``6.4`` branch does not yet exists, target ``6.3``
+> and rebase your pull requests once the branch is created.
+> ```
+>
+> (second sentence may be removed, I can't help myself pushing everyone to not focus on writing new features during these 2 months 😛 )
+
+That works for me
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-11-06T13:46:03Z
+
+Thanks @wouterj, I used your proposal
