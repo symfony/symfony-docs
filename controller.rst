@@ -505,8 +505,15 @@ the validation fails as well as supported payload formats::
         // ...
     }
 
-
 The default status code returned if the validation fails is 422.
+
+.. tip::
+
+    If you build a JSON API, make sure to declare your route as using the JSON
+    :ref:`format <routing-format-parameter>`. This will make the error handling
+    output a JSON response in case of validation errors, rather than an HTML page::
+
+        #[Route('/dashboard', name: 'dashboard', format: 'json')]
 
 Make sure to install `phpstan/phpdoc-parser`_ and `phpdocumentor/type-resolver`_
 if you want to map a nested array of specific DTOs::
