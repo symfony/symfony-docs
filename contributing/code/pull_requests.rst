@@ -147,6 +147,12 @@ work:
     for the ``5.4`` branch, the PR will also be applied by the core team on
     all the ``6.x`` branches that are still maintained.
 
+During the :ref:`stabilization phase <contributing-release-development>`, the development branch is in
+feature freeze. Please help the community prepare for the new version release. If you want to submit a
+new feature pull request, you should target the next version. For example, if ``6.3`` reached feature
+freeze, new features should target ``6.4``. If the ``6.4`` branch does not yet exist, target ``6.3``
+and rebase your pull requests once the branch is created.
+
 Create a Topic Branch
 ~~~~~~~~~~~~~~~~~~~~~
 
