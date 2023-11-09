@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-11-08T18:43:37Z
+
+Target 5.4 I guess?
+
+---------------------------------------------------------------------------
+
+by dbu at 2023-11-09T07:33:43Z
+
+i found the place to reference the format option and linked it.
+
+> Target 5.4 I guess?
+
+this hint is about `MapRequestPayload` which has been added in version 6.3.
+
+if there is documentation about working with the error handler in general, it would make sense to add it there. but https://symfony.com/components/ErrorHandler is empty.
+
+https://symfony.com/doc/current/controller/error_pages.html#overriding-error-output-for-non-html-formats talks about custom normalizers - maybe somewhere in that chapter a hint would make sense.
