@@ -110,6 +110,8 @@ The actual default value of this option depends on other field options:
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc

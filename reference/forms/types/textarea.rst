@@ -52,6 +52,8 @@ an empty string, explicitly set the ``empty_data`` option to an empty string.
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
