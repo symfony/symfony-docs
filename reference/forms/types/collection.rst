@@ -337,6 +337,8 @@ error_bubbling
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
 
+.. include:: /reference/forms/types/options/label_html.rst.inc
+
 .. include:: /reference/forms/types/options/label_format.rst.inc
 
 .. include:: /reference/forms/types/options/mapped.rst.inc
