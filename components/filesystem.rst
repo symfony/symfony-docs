@@ -435,7 +435,7 @@ Especially when storing many paths, the amount of duplicated information is
 noticeable. You can use :method:`Symfony\\Component\\Filesystem\\Path::getLongestCommonBasePath`
 to check a list of paths for a common base path::
 
-    Path::getLongestCommonBasePath(
+    $basePath = Path::getLongestCommonBasePath(
         '/var/www/vhosts/project/httpdocs/config/config.yaml',
         '/var/www/vhosts/project/httpdocs/config/routing.yaml',
         '/var/www/vhosts/project/httpdocs/config/services.yaml',
@@ -444,17 +444,14 @@ to check a list of paths for a common base path::
     );
     // => /var/www/vhosts/project/httpdocs
 
-Use this path together with :method:`Symfony\\Component\\Filesystem\\Path::makeRelative`
-to shorten the stored paths::
-
-    $bp = '/var/www/vhosts/project/httpdocs';
+Use this path together to shorten the stored paths::
 
     return [
-        $bp.'/config/config.yaml',
-        $bp.'/config/routing.yaml',
-        $bp.'/config/services.yaml',
-        $bp.'/images/banana.gif',
-        $bp.'/uploads/images/nicer-banana.gif',
+        $basePath.'/config/config.yaml',
+        $basePath.'/config/routing.yaml',
+        $basePath.'/config/services.yaml',
+        $basePath.'/images/banana.gif',
+        $basePath.'/uploads/images/nicer-banana.gif',
     ];
 
 :method:`Symfony\\Component\\Filesystem\\Path::getLongestCommonBasePath` always
