@@ -527,7 +527,7 @@ help debug any issues.
 .. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`Platform.sh`: https://symfony.com/cloud/
-.. _`Read Platform.sh for Symfony technical docs`: https://symfony.com/doc/master/cloud/intro.html
+.. _`Read Platform.sh for Symfony technical docs`: https://symfony.com/doc/current/cloud/index.html
 .. _`Proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en
