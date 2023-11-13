@@ -444,7 +444,7 @@ to check a list of paths for a common base path::
     );
     // => /var/www/vhosts/project/httpdocs
 
-Use this path together to shorten the stored paths::
+Use this common base path to shorten the stored paths::
 
     return [
         $basePath.'/config/config.yaml',
