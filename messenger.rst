@@ -2097,11 +2097,16 @@ You can configure your handler by passing options to the attribute::
 
 Possible options to configure with the attribute are:
 
-* ``bus``
-* ``fromTransport``
-* ``handles``
-* ``method``
-* ``priority``
+============================  ====================================================================================================
+Option                        Description
+============================  ====================================================================================================
+``bus``                       Name of the bus from which the handler can receive messages, by default all buses.
+``fromTransport``             Name of the transport from which the handler can receive messages, by default all transports.
+``handles``                   Type of messages (FQCN) that can be processed by the handler, only needed if can't be guessed by
+                              type-hint.
+``method``                    Name of the method that will process the message, only if the target is a class.
+``priority``                  Priority of the handler when multiple handlers can process the same message.
+============================  ====================================================================================================
 
 .. _messenger-handler-config:
 
@@ -2160,11 +2165,16 @@ by tagging the handler service with ``messenger.message_handler``
 
 Possible options to configure with tags are:
 
-* ``bus``
-* ``from_transport``
-* ``handles``
-* ``method``
-* ``priority``
+============================  ====================================================================================================
+Option                        Description
+============================  ====================================================================================================
+``bus``                       Name of the bus from which the handler can receive messages, by default all buses.
+``from_transport``            Name of the transport from which the handler can receive messages, by default all transports.
+``handles``                   Type of messages (FQCN) that can be processed by the handler, only needed if can't be guessed by
+                              type-hint.
+``method``                    Name of the method that will process the message.
+``priority``                  Priority of the handler when multiple handlers can process the same message.
+============================  ====================================================================================================
 
 .. _handler-subscriber-options:
 
