@@ -79,9 +79,11 @@ container into a single file, which could improve performance when using
     .. code-block:: php
 
         // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-        // ...
-        $container->parameters()->set('.container.dumper.inline_factories', true);
+        return function(ContainerConfigurator $container): void {
+            $container->parameters()->set('.container.dumper.inline_factories', true);
+        };
 
 .. _performance-use-opcache:
 

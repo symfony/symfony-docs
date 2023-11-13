@@ -180,7 +180,9 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
     }
 
 Now, when the user enters ``1,2``, the result will be:
-``You have just selected: blue, yellow``.
+``You have just selected: blue, yellow``. The user can also enter strings
+(e.g. ``blue,yellow``) and even mix strings and the index of the choices
+(e.g. ``blue,2``).
 
 If the user does not enter anything, the result will be:
 ``You have just selected: red, blue``.
