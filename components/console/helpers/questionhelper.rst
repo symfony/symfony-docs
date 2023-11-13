@@ -113,8 +113,10 @@ Let the User Choose from a List of Answers
 
 If you have a predefined set of answers the user can choose from, you
 could use a :class:`Symfony\\Component\\Console\\Question\\ChoiceQuestion`
-which makes sure that the user can only enter a valid string
-from a predefined list::
+which makes sure that the user can only enter a valid string or the index
+of the choice from a predefined list. In the example below, typing ``blue``
+or ``1`` is the same choice for the user. A default value is set with ``0``
+but ``red`` could be set instead (could be more explicit)::
 
     use Symfony\Component\Console\Question\ChoiceQuestion;
 
