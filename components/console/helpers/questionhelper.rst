@@ -185,6 +185,8 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
 
 Now, when the user enters ``1,2``, the result will be:
 ``You have just selected: blue, yellow``.
+The user can enter string: ``blue,yellow`` as well or even mix string and
+the index of the choice like ``blue,2``.
 
 If the user does not enter anything, the result will be:
 ``You have just selected: red, blue``.
