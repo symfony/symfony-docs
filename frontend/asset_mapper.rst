@@ -196,9 +196,9 @@ this can be done by importing its full URL, like from a CDN:
 
     import { Alert } from 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/+esm';
 
-But yikes! Needing to include that URL is a pain! Instead, we can add
-this to our "importmap" via the ``importmap:require`` command. This command can
-be used to download any `npm package`_:
+But yikes! Needing to include that URL is a pain! Instead, we can add this package
+to our "importmap" via the ``importmap:require`` command. This command can be used
+to add any `npm package`_:
 
 .. code-block:: terminal
 
@@ -215,30 +215,29 @@ This adds the ``bootstrap`` package to your ``importmap.php`` file::
         ],
     ];
 
-Now you can import the ``bootstrap`` package like normal:
+.. note::
+
+    Sometimes, a package - like ``bootstrap`` - will have one or more dependencies,
+    such as ``@popperjs/core``. The ``importmap:require`` command will add both the
+    main package *and* its dependencies.
+
+After adding/updating the package in your ``importmap.php`` file, all new packages
+will be downloaded into an ``assets/vendor/`` directory.
+
+Now you can import the ``bootstrap`` package like usual:
 
 .. code-block:: javascript
 
     import { Alert } from 'bootstrap';
     // ...
 
-If you want to download the package locally, use the ``--download`` option:
+It's recommended to ignore the ``assets/vendor/`` directory and not commit it to
+your repository. Therefore, you'll need to run the ``php bin/console importmap:install``
+command to download the files on other computers if some files are missing:
 
 .. code-block:: terminal
 
-    $ php bin/console importmap:require bootstrap --download
-
-This will download the package into an ``assets/vendor/`` directory and update
-the ``importmap.php`` file to point to it. It's recommended to ignore this
-directory and not commit it to your repository. Therefore, you'll need to run the
-``php bin/console importmap:install`` command to download the files on other
-computers if some files are missing.
-
-.. note::
-
-    Sometimes, a package - like ``bootstrap`` - will have one or more dependencies,
-    such as ``@popperjs/core``. The ``download`` option will download both the main
-    package *and* its dependencies.
+    $ php bin/console importmap:install
 
 You can check for available updates for your third-party packages by running:
 
