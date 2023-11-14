@@ -909,6 +909,83 @@ place::
         }
     }
 
+Creating Your Own Marking Store
+-------------------------------
+
+You may need to implement your own store to execute some additional logic
+when the marking is updated. For example, you may have some specific needs
+to store the marking on certain workflows. To do this, you need to implement
+the
+:class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`::
+
+    namespace App\Workflow\MarkingStore;
+
+    use Symfony\Component\Workflow\Marking;
+    use Symfony\Component\Workflow\MarkingStore\MarkingStoreInterface;
+
+    final class BlogPostMarkingStore implements MarkingStoreInterface
+    {
+        public function getMarking(BlogPost $subject): Marking
+        {
+            return new Marking([$subject->getCurrentPlace() => 1]);
+        }
+
+        public function setMarking(BlogPost $subject, Marking $marking): void
+        {
+            $marking = key($marking->getPlaces());
+            $subject->setCurrentPlace($marking);
+        }
+    }
+
+Once your marking store is implemented, you can configure your workflow to use
+it:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # ...
+                    marking_store:
+                        service: 'App\Workflow\MarkingStore\BlogPostMarkingStore'
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+            <framework:config>
+                <framework:workflow name="blog_publishing">
+                    <!-- ... -->
+                    <framework:marking-store service="App\Workflow\MarkingStore\BlogPostMarkingStore"/>
+                </framework:workflow>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        use App\Workflow\MarkingStore\ReflectionMarkingStore;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            // ...
+
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            // ...
+
+            $blogPublishing->markingStore()
+                ->service(BlogPostMarkingStore::class);
+        };
+
 Usage in Twig
 -------------
 
