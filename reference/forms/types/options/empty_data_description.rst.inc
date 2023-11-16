@@ -15,14 +15,12 @@ This will still render an empty text box, but upon submission the ``John Doe``
 value will be set. Use the ``data`` or ``placeholder`` options to show this
 initial value in the rendered form.
 
-If a form is compound, you can set ``empty_data`` as an array, object or
-closure. See the :doc:`/form/use_empty_data` article for more details about
-these options.
-
 .. note::
 
-    If you want to set the ``empty_data`` option for your entire form class,
-    see the :doc:`/form/use_empty_data` article.
+    If a form is compound, you can set ``empty_data`` as an array, object or
+    closure. This option can be set for your entire form class, see the
+    :doc:`/form/use_empty_data` article for more details about these
+    options.
 
 .. caution::
 
