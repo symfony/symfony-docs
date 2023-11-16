@@ -174,7 +174,7 @@ instead of the ``default`` entity manager.
 **type**: ``Doctrine\ORM\QueryBuilder`` or a ``callable`` **default**: ``null``
 
 Allows you to create a custom query for your choices. See
-:ref:`ref-form-entity-query-builder` for an example.
+:ref:`how to use it <ref-form-entity-query-builder>` for an example.
 
 The value of this option can either be a ``QueryBuilder`` object, a callable or
 ``null`` (which will load all entities). When using a callable, you will be
@@ -211,7 +211,7 @@ submitted.
 
 Instead of allowing the `class`_ and `query_builder`_ options to fetch the
 entities to include for you, you can pass the ``choices`` option directly.
-See :ref:`reference-forms-entity-choices`.
+See :ref:`how to use choices <reference-forms-entity-choices>`.
 
 ``data_class``
 ~~~~~~~~~~~~~~
