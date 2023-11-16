@@ -199,9 +199,9 @@ LazyGhostTrait
 
 Ghost objects are empty objects, which see their properties populated the first
 time any method is called. Thanks to :class:`Symfony\\Component\\VarExporter\\LazyGhostTrait`,
-the implementation of the lazy mechanism is eased. In the following example, the
-``$hash`` property is defined as lazy. Also, the ``MyLazyObject::computeHash()``
-method should be called only when ``$hash``'s value need to be known::
+the implementation of the lazy mechanism is eased. The ``MyLazyObject::populateHash()``
+method will be called only when the object is actually used and needs to be
+initialized::
 
     namespace App\Hash;
 
@@ -219,16 +219,20 @@ method should be called only when ``$hash``'s value need to be known::
 
         public function __construct()
         {
-            self::createLazyGhost(initializer: [
-                'hash' => $this->computeHash(...),
-            ], instance: $this);
+            self::createLazyGhost(initializer: $this->populateHash(...), instance: $this);
         }
 
-        private function computeHash(array $data): string
+        private function populateHash(array $data): void
         {
             // Compute $this->hash value with the passed data
         }
     }
+
+.. deprecated:: 6.4
+
+    Using an array of closures for property-based initialization in the
+    ``createLazyGhost()`` method is deprecated since Symfony 6.4. Pass
+    a single closure that initializes the whole object instead.
 
 :class:`Symfony\\Component\\VarExporter\\LazyGhostTrait` also allows to
 convert non-lazy classes to lazy ones::
@@ -243,10 +247,10 @@ convert non-lazy classes to lazy ones::
 
         public function __construct(array $data)
         {
-            $this->hash = $this->computeHash($data);
+            $this->populateHash($data);
         }
 
-        private function computeHash(array $data): string
+        private function populateHash(array $data): void
         {
             // ...
         }
@@ -330,10 +334,10 @@ code::
     {
         public function __construct(array $data)
         {
-            $this->hash = $this->computeHash($data);
+            $this->populateHash($data);
         }
 
-        private function computeHash(array $data): string
+        private function populateHash(array $data): void
         {
             // ...
         }
