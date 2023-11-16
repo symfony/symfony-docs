@@ -167,6 +167,13 @@ recommended to define their mapping using XML files stored in
 :doc:`standard Symfony mechanism to override bundle parts </bundles/override>`.
 This is not possible when using annotations/attributes to define the mapping.
 
+Also, include explicit ``name`` values in the configuration for database tables
+and columns, to make sure your code is independent of the Doctrine naming strategy
+in use. Otherwise, for example when referring to columns in plain SQL queries,
+using different naming strategies may break your code. This may mean that the
+database schema elements belonging to your bundle follow another convention than
+the rest of the project.
+
 .. caution::
 
     The recommended bundle structure was changed in Symfony 5, read the
