@@ -2573,10 +2573,10 @@ of the process. For each, the event class is the event name:
 Message Serializer For Custom Data Formats
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-It is likely that you receive messages from other applications that are not
+If you receive messages from other applications, it's possible that they are not
 exactly in the format you need. Not all applications will return a JSON message
-with ``body`` and ``headers`` fields. In this case, you'll need to
-create a new message serializer. This can be done by implementing the
+with ``body`` and ``headers`` fields. In those cases, you'll need to create a
+new message serializer implementing the
 :class:`Symfony\\Component\\Messenger\\Transport\\Serialization\\SerializerInterface`.
 Let's say you want to create a message decoder::
 
@@ -2613,7 +2613,8 @@ Let's say you want to create a message decoder::
         }
     }
 
-Now that this serializer is created, you can use it in your transport:
+The next step is to tell Symfony to use this serializer in one or more of your
+transports:
 
 .. configuration-block::
 
