@@ -812,6 +812,56 @@ Symfony provides the following env var processors:
             // config/services.php
             $container->setParameter('typed_env', '%env(defined:FOO)%');
 
+.. _urlencode_environment_variable_processor:
+
+``env(urlencode:FOO)``
+    Urlencode the content of ``FOO`` env var. This is especially useful when
+    ``FOO`` value is not compatible with DSN syntax.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/framework.yaml
+            parameters:
+                env(DATABASE_URL): 'mysql://db_user:foo@b$r@127.0.0.1:3306/db_name'
+                encoded_database_url: '%env(urlencode:DATABASE_URL)%'
+
+        .. code-block:: xml
+
+            <!-- config/packages/framework.xml -->
+            <?xml version="1.0" encoding="UTF-8" ?>
+            <container xmlns="http://symfony.com/schema/dic/services"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:framework="http://symfony.com/schema/dic/symfony"
+                xsi:schemaLocation="http://symfony.com/schema/dic/services
+                    https://symfony.com/schema/dic/services/services-1.0.xsd
+                    http://symfony.com/schema/dic/symfony
+                    https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+                <parameters>
+                    <parameter key="env(DATABASE_URL)">mysql://db_user:foo@b$r@127.0.0.1:3306/db_name</parameter>
+                    <parameter key="encoded_database_url">%env(urlencode:DATABASE_URL)%</parameter>
+                </parameters>
+            </container>
+
+        .. code-block:: php
+
+            // config/packages/framework.php
+            namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+            use Symfony\Component\DependencyInjection\ContainerBuilder;
+            use Symfony\Config\FrameworkConfig;
+
+            return static function (ContainerBuilder $container): void {
+                $container->setParameter('env(DATABASE_URL)', 'mysql://db_user:foo@b$r@127.0.0.1:3306/db_name');
+                $container->setParameter('encoded_database_url', '%env(urlencode:DATABASE_URL)%');
+            };
+
+    .. versionadded:: 7.1
+
+        The ``env(urlencode:...)`` env var processor was introduced in Symfony 7.1.
+
 It is also possible to combine any number of processors:
 
 .. configuration-block::
