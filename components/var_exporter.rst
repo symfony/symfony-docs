@@ -224,12 +224,6 @@ initialized::
         }
     }
 
-.. deprecated:: 6.4
-
-    Using an array of closures for property-based initialization in the
-    ``createLazyGhost()`` method is deprecated since Symfony 6.4. Pass
-    a single closure that initializes the whole object instead.
-
 :class:`Symfony\\Component\\VarExporter\\LazyGhostTrait` also allows to
 convert non-lazy classes to lazy ones::
 
