@@ -518,11 +518,6 @@ It is possible to define partitioned cookies, also known as `CHIPS`_, by using t
     // you can also set the partitioned argument to true when using the `create()` factory method
     $cookie = Cookie::create('name', 'value', partitioned: true);
 
-.. versionadded:: 6.4
-
-    The :method:`Symfony\\Component\\HttpFoundation\\Cookie::withPartitioned`
-    method was introduced in Symfony 6.4.
-
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
 
