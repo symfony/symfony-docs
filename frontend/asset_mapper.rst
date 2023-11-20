@@ -1028,7 +1028,7 @@ you pass to ``importmap()``.
 
     If you look at the source of your page, by default, the ``<script type="module">``
     from ``importmap()`` will contain ``import 'app';`` - not something like
-    ``import ``/assets/app-4e986c1a2318dd050b1d47.js``. Both would work - but
+    ``import /assets/app-4e986c1a2318dd050b1d47.js``. Both would work - but
     because ``app`` appears in your ``importmap.php``, the browser will read ``app``
     from the ``importmap`` on the page and ultimately load ``/assets/app-4e986c1a2318dd050b1d47.js``
 
