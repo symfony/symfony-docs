@@ -21,7 +21,7 @@ The AssetMapper component has two main features:
 * :ref:`Importmaps <importmaps-javascript>`: A native browser feature that makes it easier
   to use the JavaScript ``import`` statement (e.g. ``import { Modal } from 'bootstrap'``)
   without a build system. It's supported in all browsers (thanks to a shim)
-  and is a `W3C standard <https://html.spec.whatwg.org/multipage/webappapis.html#import-maps>`_.
+  and is part of the `HTML5 standard <https://html.spec.whatwg.org/multipage/webappapis.html#import-maps>`_.
 
 Installation
 ------------
@@ -84,15 +84,16 @@ the file, the version part of the URL will change automatically!
 Serving Assets in dev vs prod
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the ``dev`` environment, the URL - ``/assets/images/duck-3c16d9220694c0e56d8648f25e6035e9.png``
-is handled and returned by your Symfony app. For the ``prod`` environment, before
-deploy, you should run:
+In the ``dev`` environment, the URL ``/assets/images/duck-3c16d9220694c0e56d8648f25e6035e9.png``
+is handled and returned by your Symfony app.
+
+For the ``prod`` environment, before deploy, you should run:
 
 .. code-block:: terminal
 
     $ php bin/console asset-map:compile
 
-This will physically copy all the files from your mapped directories into
+This will physically copy all the files from your mapped directories to
 ``public/assets/`` so that they're served directly by your web server.
 See :ref:`Deployment <asset-mapper-deployment>` for more details.
 
