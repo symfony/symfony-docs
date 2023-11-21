@@ -1304,6 +1304,11 @@ namespace ``Symfony\Config``::
     Nested configs (e.g. ``\Symfony\Config\Framework\CacheConfig``) are regular
     PHP objects which aren't autowired when using them as an argument type.
 
+.. note::
+
+    Be sure to not exclude the ``kernel.build_dir`` directory from your IDE
+    indexing, otherwise you won't get autocompletion for the ConfigBuilders.
+
 Keep Going!
 -----------
 
