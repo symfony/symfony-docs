@@ -609,7 +609,7 @@ When the browser downloads the page, this happens:
 3. It *then* sees the ``bootstrap`` import and downloads ``assets/bootstrap.js``.
 
 Instead of downloading all 3 files in parallel, the browser is forced to
-download them one-by-one as it discovers them. This is hurts performance. To fix
+download them one-by-one as it discovers them. This hurts performance. To fix
 this, in ``importmap.php``, add a ``preload`` key to the ``app`` entry, which
 points to the ``assets/app.js`` file. Actually, this should already be
 done for you::
