@@ -691,7 +691,7 @@ will automatically fetch them::
      * Fetch via primary key because {id} is in the route.
      */
     #[Route('/product/{id}')]
-    public function showByPk(Post $post): Response
+    public function showByPk(Product $product): Response
     {
     }
 
@@ -699,7 +699,7 @@ will automatically fetch them::
      * Perform a findOneBy() where the slug property matches {slug}.
      */
     #[Route('/product/{slug}')]
-    public function showBySlug(Post $post): Response
+    public function showBySlug(Product $product): Response
     {
     }
 
