@@ -222,11 +222,11 @@ Methods to Change Case
     u('foo BAR bάz')->localeUpper('el'); // 'FOO BAR BAZ'
 
     // changes all graphemes/code points to "title case"
-    u('foo ijssel ')->title();     // 'Foo ijssel'
+    u('foo ijssel')->title();     // 'Foo ijssel'
     u('foo ijssel')->title(true); // 'Foo Ijssel'
     // changes all graphemes/code points to "title case" according to locale-specific case mappings
-    u('foo ijssel')->localeTitle('en');     // 'Foo ijssel'
-    u('foo ijssel')->localeTitle('nl');     // 'Foo IJssel'
+    u('foo ijssel')->localeTitle('en'); // 'Foo ijssel'
+    u('foo ijssel')->localeTitle('nl'); // 'Foo IJssel'
 
     // changes all graphemes/code points to camelCase
     u('Foo: Bar-baz.')->camel(); // 'fooBarBaz'
