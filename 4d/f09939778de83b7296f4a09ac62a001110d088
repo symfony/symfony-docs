@@ -1,0 +1,19 @@
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-11-20T08:08:07Z
+
+This should target 7.1 :slightly_smiling_face:
+
+---------------------------------------------------------------------------
+
+by alamirault at 2023-11-20T18:03:23Z
+
+I read code target branch :man_facepalming:
+
+Rebased on 7.1 now
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-11-21T08:15:26Z
+
+Should we mention https://www.php.net/manual/en/function.urlencode.php somewhere? This may help people using it and bring additional doc to this feature :slightly_smiling_face:
