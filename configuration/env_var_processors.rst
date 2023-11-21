@@ -815,8 +815,9 @@ Symfony provides the following env var processors:
 .. _urlencode_environment_variable_processor:
 
 ``env(urlencode:FOO)``
-    Urlencode the content of ``FOO`` env var. This is especially useful when
-    ``FOO`` value is not compatible with DSN syntax.
+    Encodes the content of the ``FOO`` env var using the :phpfunction:`urlencode`
+    PHP function. This is especially useful when ``FOO`` value is not compatible
+    with DSN syntax.
 
     .. configuration-block::
 
