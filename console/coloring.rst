@@ -1,8 +1,10 @@
 How to Color and Style the Console Output
 =========================================
 
-By using colors in the command output, you can distinguish different types of
-output (e.g. important messages, titles, comments, etc.).
+Symfony provides an optional :doc:`console style </console/style>` to render the
+input and output of commands in a consistent way. If you prefer to apply your
+own style, use the utilities explained in this article to show colors in the command
+output (e.g. to differentiate between important messages, titles, comments, etc.).
 
 .. note::
 
