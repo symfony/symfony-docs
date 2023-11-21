@@ -1,8 +1,10 @@
 How to Color and Style the Console Output
 =========================================
 
-By using colors in the command output, you can distinguish different types of
-output (e.g. important messages, titles, comments, etc.).
+Symfony provides an optional :doc:`console style </console/style>` to render the
+input and output of commands in a consistent way. If you prefer to apply your
+own style, use the utilities explained in this article to show colors in the command
+output (e.g. to differentiate between important messages, titles, comments, etc.).
 
 .. note::
 
@@ -101,11 +103,6 @@ If your terminal belongs to the `list of terminal emulators that support links`_
 you can click on the *"Symfony Homepage"* text to open its URL in your default
 browser. Otherwise, you'll see *"Symfony Homepage"* as regular text and the URL
 will be lost.
-
-.. tip::
-
-    If you need a standard yet complete style, you can leverage the :doc:`default
-    Symfony Style </console/style>`.
 
 .. _Cmder: https://github.com/cmderdev/cmder
 .. _ConEmu: https://conemu.github.io/
