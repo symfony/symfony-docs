@@ -23,7 +23,7 @@ The AssetMapper component has two main features:
 * :ref:`Importmaps <importmaps-javascript>`: A native browser feature that makes it easier
   to use the JavaScript ``import`` statement (e.g. ``import { Modal } from 'bootstrap'``)
   without a build system. It's supported in all browsers (thanks to a shim)
-  and is a `W3C standard <https://html.spec.whatwg.org/multipage/webappapis.html#import-maps>`_.
+  and is part of the `HTML5 standard <https://html.spec.whatwg.org/multipage/webappapis.html#import-maps>`_.
 
 Installation
 ------------
