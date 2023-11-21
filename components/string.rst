@@ -203,7 +203,10 @@ Methods to Change Case
 ::
 
     // changes all graphemes/code points to lower case
-    u('FOO Bar')->lower();  // 'foo bar'
+    u('FOO Bar Brİan')->lower();  // 'foo bar bri̇an'
+    // changes all graphemes/code points to lower case according to locale-specific case mappings
+    u('FOO Bar Brİan')->localeLower('en');  // 'foo bar bri̇an'
+    u('FOO Bar Brİan')->localeLower('lt');  // 'foo bar bri̇̇an'
 
     // when dealing with different languages, uppercase/lowercase is not enough
     // there are three cases (lower, upper, title), some characters have no case,
@@ -213,11 +216,17 @@ Methods to Change Case
     u('Die O\'Brian Straße')->folded(); // "die o'brian strasse"
 
     // changes all graphemes/code points to upper case
-    u('foo BAR')->upper(); // 'FOO BAR'
+    u('foo BAR bάz')->upper(); // 'FOO BAR BΆZ'
+    // changes all graphemes/code points to upper case according to locale-specific case mappings
+    u('foo BAR bάz')->localeUpper('en'); // 'FOO BAR BΆZ'
+    u('foo BAR bάz')->localeUpper('el'); // 'FOO BAR BAZ'
 
     // changes all graphemes/code points to "title case"
-    u('foo bar')->title();     // 'Foo bar'
-    u('foo bar')->title(true); // 'Foo Bar'
+    u('foo ijssel ')->title();     // 'Foo ijssel'
+    u('foo ijssel')->title(true); // 'Foo Ijssel'
+    // changes all graphemes/code points to "title case" according to locale-specific case mappings
+    u('foo ijssel')->localeTitle('en');     // 'Foo ijssel'
+    u('foo ijssel')->localeTitle('nl');     // 'Foo IJssel'
 
     // changes all graphemes/code points to camelCase
     u('Foo: Bar-baz.')->camel(); // 'fooBarBaz'
@@ -225,6 +234,10 @@ Methods to Change Case
     u('Foo: Bar-baz.')->snake(); // 'foo_bar_baz'
     // other cases can be achieved by chaining methods. E.g. PascalCase:
     u('Foo: Bar-baz.')->camel()->title(); // 'FooBarBaz'
+
+.. versionadded:: 7.1
+    The ``localeLower()``, ``localeUpper()`` and ``localeTitle()`` methods were
+    introduced in Symfony 7.1.
 
 The methods of all string classes are case-sensitive by default. You can perform
 case-insensitive operations with the ``ignoreCase()`` method::
