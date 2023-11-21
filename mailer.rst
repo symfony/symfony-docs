@@ -1599,8 +1599,10 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 
 .. tip::
 
-   If your controller returns a redirect response after sending the email, make sure to have your client *not* follow redirects.
-   The kernel is rebooted after following the redirection and the message lost from the mailer event handler.
+   If your controller returns a redirect response after sending the email, make
+   sure to have your client *not* follow redirects. The kernel is rebooted after
+   following the redirection and the message will be lost from the mailer event
+   handler.
 
 .. _`Amazon SES`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Amazon/README.md
 .. _`App Password`: https://support.google.com/accounts/answer/185833
