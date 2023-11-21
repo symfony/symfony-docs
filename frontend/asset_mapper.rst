@@ -86,15 +86,16 @@ the file, the version part of the URL will change automatically!
 Serving Assets in dev vs prod
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In the ``dev`` environment, the URL - ``/assets/images/duck-3c16d9220694c0e56d8648f25e6035e9.png``
-is handled and returned by your Symfony app. For the ``prod`` environment, before
-deploy, you should run:
+In the ``dev`` environment, the URL ``/assets/images/duck-3c16d9220694c0e56d8648f25e6035e9.png``
+is handled and returned by your Symfony app.
+
+For the ``prod`` environment, before deploy, you should run:
 
 .. code-block:: terminal
 
     $ php bin/console asset-map:compile
 
-This will physically copy all the files from your mapped directories into
+This will physically copy all the files from your mapped directories to
 ``public/assets/`` so that they're served directly by your web server.
 See :ref:`Deployment <asset-mapper-deployment>` for more details.
 
