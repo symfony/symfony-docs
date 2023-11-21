@@ -1306,8 +1306,9 @@ namespace ``Symfony\Config``::
 
 .. note::
 
-    Be sure to not exclude the ``kernel.build_dir`` directory from your IDE
-    indexing, otherwise you won't get autocompletion for the ConfigBuilders.
+    In order to get ConfigBuilders autocompletion in your IDE/editor, make sure
+    to not exclude the directory where these classes are generated (by default,
+    in ``var/cache/dev/Symfony/Config/``).
 
 Keep Going!
 -----------
