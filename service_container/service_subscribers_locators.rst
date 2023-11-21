@@ -1004,6 +1004,15 @@ To unit test a service subscriber, you can create a fake container::
     $serviceSubscriber = new MyService($container);
     // ...
 
+.. note::
+
+    When defining the service locator like this, beware that the
+    :method:`Symfony\\Contracts\\Service\\ServiceLocatorTrait::getProvidedServices`
+    of your container will use the return type of the closures as the values of the
+    returned array. If no return type is defined, the value will be ``?``. If you
+    want the values to reflect the classes of your services, the return type has
+    to be set on your closures.
+
 Another alternative is to mock it using ``PHPUnit``::
 
     use Psr\Container\ContainerInterface;
