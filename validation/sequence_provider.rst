@@ -347,33 +347,28 @@ provides a sequence of groups to be validated:
 Advanced Validation Group Provider
 ----------------------------------
 
-In the previous section, you learned how to dynamically determine the
-sequence of groups to apply based on the state of your entity. This
-approach covers most common scenarios, but for more advanced needs, you
-may find it to be insufficient.
+In the previous section, you learned how to change the sequence of groups
+dynamically based on the state of your entity. However, in more advanced cases
+you might need to use some external configuration or service to define that
+sequence of groups.
 
-For instance, suppose you need to provide the sequence of groups from an
-external configuration or service that can change its value dynamically.
 Managing the entity initialization and manually setting its dependencies can
 be cumbersome, and the implementation might not align with the entity
-responsibilities.
-
-To address this, you can now configure the implementation of the
-:class:`Symfony\\Component\\Validator\\GroupProviderInterface`
-outside of the entity, and even register the group provider as a
-service if necessary.
+responsibilities. To solve this, you can configure the implementation of the
+:class:`Symfony\\Component\\Validator\\GroupProviderInterface` outside of the
+entity, and even register the group provider as a service.
 
 Here's how you can achieve this:
 
- 1) **Define a Separate Group Provider Class:** You can create a class that
-    implements the :class:`Symfony\\Component\\Validator\\GroupProviderInterface`
-    and handles the dynamic group sequence logic.
- 2) **Configure the User with the Provider:** Use the ``provider`` option within the
-    :class:`Symfony\\Component\\Validator\\Constraints\\GroupSequenceProvider`
-    attribute to link the entity with the provider class.
- 3) **Autowiring or Manual Tagging:** If autowiring is enabled, your custom provider
-    will be automatically linked. Otherwise, you can manually tag your service with
-    ``validator.group_provider``.
+ 1) **Define a Separate Group Provider Class:** create a class that implements
+    the :class:`Symfony\\Component\\Validator\\GroupProviderInterface`
+    and handles the dynamic group sequence logic;
+ 2) **Configure the User with the Provider:** use the ``provider`` option within
+    the :class:`Symfony\\Component\\Validator\\Constraints\\GroupSequenceProvider`
+    attribute to link the entity with the provider class;
+ 3) **Autowiring or Manual Tagging:** if :doc:` autowiring </service_container/autowiring>`
+    is enabled, your custom provider will be automatically linked. Otherwise, you must
+    :doc:`tag your service </service_container/tags>` manually with the ``validator.group_provider`` tag.
 
 .. configuration-block::
 
