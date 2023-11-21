@@ -2225,8 +2225,11 @@ It will help you understand and hopefully fixing unexpected behavior in your app
 Generating URLs
 ---------------
 
-Routing systems are bidirectional: 1) they associate URLs with controllers (as
-explained in the previous sections); 2) they generate URLs for a given route.
+Routing systems are bidirectional:
+
+1. they associate URLs with controllers (as explained in the previous sections);
+2. they generate URLs for a given route.
+
 Generating URLs from routes allows you to not write the ``<a href="...">``
 values manually in your HTML templates. Also, if the URL of some route changes,
 you only have to update the route configuration and all links will be updated.
