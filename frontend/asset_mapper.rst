@@ -969,7 +969,7 @@ pages. To add a CSS file to a specific page, create the file, then add a
     {% endblock %}
 
 For JavaScript, first create the new file (e.g. ``assets/checkout.js``). Then,
-add a ``script``` tag that imports it:
+add a ``script`` tag that imports it:
 
 .. code-block:: html+twig
 
