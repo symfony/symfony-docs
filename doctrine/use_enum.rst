@@ -15,7 +15,7 @@ First step is to create an enum::
     case Diamonds = 'D';
     case Clubs = 'C';
     case Spades = 'S';
-}
+    }
 
 .. note::
 
