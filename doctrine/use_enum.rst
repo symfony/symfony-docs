@@ -10,11 +10,11 @@ First step is to create an enum::
     // src/Enum/Suit.php
     namespace App\Enum;
 
-    enum Suit: string {
-    case Hearts = 'H';
-    case Diamonds = 'D';
-    case Clubs = 'C';
-    case Spades = 'S';
+        enum Suit: string {
+        case Hearts = 'H';
+        case Diamonds = 'D';
+        case Clubs = 'C';
+        case Spades = 'S';
     }
 
 .. note::
@@ -26,13 +26,13 @@ When the enum is created, you can use the ``enumType`` parameter of
 ``#[ORM\Column]`` attribute or use it directly for a more typed property::
 
     // src/Entity/Card.php
-    namespace App\Enum;
+    namespace App\Entity;
 
-    #[Column(type: Types::TEXT, enumType: Suit::class)]
+    #[Column(type: Types::STRING, enumType: Suit::class)]
     public string $suit;
 
     // or for a more typed property
-    #[Column(type: Types::TEXT)]
+    #[Column(type: Types::STRING)]
     public Suit $suit;
 
 .. caution::
