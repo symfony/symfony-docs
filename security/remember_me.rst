@@ -239,7 +239,7 @@ present:
 .. image:: /_images/security/profiler-badges.png
     :alt: The Security page of the Symfony profiler, with the "Authenticators" tab showing the remember me badge in the passport object.
 
-Without this badge, remember me will be not be activated (regardless of all
+Without this badge, remember me will not be activated (regardless of all
 other settings).
 
 Add Remember Me Support to Custom Authenticators
