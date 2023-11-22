@@ -39,8 +39,8 @@ Update your framework so that it implements this interface::
 
         public function handle(
             Request $request,
-            $type = HttpKernelInterface::MAIN_REQUEST,
-            $catch = true
+            int $type = HttpKernelInterface::MAIN_REQUEST,
+            bool $catch = true
         ) {
             // ...
         }
