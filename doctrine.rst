@@ -1076,7 +1076,7 @@ Learn more
     doctrine/multiple_entity_managers
     doctrine/resolve_target_entity
     doctrine/reverse_engineering
-    doctrine/use_enums
+    doctrine/use_enum
     testing/database
 
 .. _`Doctrine`: https://www.doctrine-project.org/

@@ -2,7 +2,7 @@ Use Enums
 =========
 
 PHP 8.1 added native Enumerations, which can be used to define a custom type
-and its possible values. Those can be used in association with Doctrine in 
+and its possible values. Those can be used in association with Doctrine in
 order to define a limited set of values availables for an entity property.
 
 First step is to create an enum::
@@ -12,8 +12,8 @@ First step is to create an enum::
 
     enum Suit: string {
     case Hearts = 'H';
-    case Diamonds = 'D'; 
-    case Clubs = 'C';
+    case Diamonds = 'D';
+    case Clubs = 'C'; 
     case Spades = 'S';
 }
 
@@ -22,7 +22,7 @@ First step is to create an enum::
     Only backed enums can be used with properties as Doctrine use the scalar
     equivalent of each value for storing.
 
-When the enum is created, you can use the ``enumType`` parameter of 
+When the enum is created, you can use the ``enumType`` parameter of
 ``#[ORM\Column]`` attribute or use it directly for a more typed property::
 
     // src/Entity/Card.php
