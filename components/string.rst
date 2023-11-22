@@ -236,6 +236,7 @@ Methods to Change Case
     u('Foo: Bar-baz.')->camel()->title(); // 'FooBarBaz'
 
 .. versionadded:: 7.1
+
     The ``localeLower()``, ``localeUpper()`` and ``localeTitle()`` methods were
     introduced in Symfony 7.1.
 
