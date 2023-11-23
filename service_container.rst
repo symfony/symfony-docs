@@ -233,7 +233,7 @@ each time you ask for it.
     it. Later, you'll learn how to :ref:`import many services at once
     <service-psr4-loader>` with resource.
 
-    If you'd prefer to manually wire your service, that's totally possible to
+    If you'd prefer to manually wire your service, you can
     :ref:`use explicit configuration <services-explicitly-configure-wire-services>`.
 
 .. _service-container_limiting-to-env:
