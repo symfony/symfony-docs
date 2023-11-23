@@ -1034,7 +1034,12 @@ If the server does respond with a gzipped response, it's decoded transparently.
 To disable HTTP compression, send an ``Accept-Encoding: identity`` HTTP header.
 
 Chunked transfer encoding is enabled automatically if both your PHP runtime and
-the remote server supports it.
+the remote server support it.
+
+.. caution::
+
+    If you set ``Accept-Encoding`` to e.g. ``gzip``, you will need to handle the
+    decompression yourself.
 
 HTTP/2 Support
 ~~~~~~~~~~~~~~
