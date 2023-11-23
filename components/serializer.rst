@@ -1275,11 +1275,6 @@ to ``true``::
     $result = $normalizer->denormalize($data, Dummy::class, 'json', [AbstractNormalizer::REQUIRE_ALL_PROPERTIES => true]);
     // throws Symfony\Component\Serializer\Exception\MissingConstructorArgumentException
 
-.. versionadded:: 6.3
-
-    The ``AbstractNormalizer::PREVENT_NULLABLE_FALLBACK`` context option
-    was introduced in Symfony 6.3.
-
 Skipping Uninitialized Properties
 ---------------------------------
 
