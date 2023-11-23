@@ -519,6 +519,17 @@ comes with an :class:`Symfony\\Component\\HttpKernel\\EventListener\\ErrorListen
 which if you choose to use, will do this and more by default (see the sidebar
 below for more details).
 
+The :class:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent` exposes the
+:method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::isKernelTerminating`
+method, which you can use to determine if the kernel is currently terminating
+at the moment the exception was thrown.
+
+.. versionadded:: 7.1
+
+    The
+    :method:`Symfony\\Component\\HttpKernel\\Event\\ExceptionEvent::isKernelTerminating`
+    method was introduced in Symfony 7.1.
+
 .. note::
 
     When setting a response for the ``kernel.exception`` event, the propagation
