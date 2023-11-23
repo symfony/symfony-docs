@@ -1053,7 +1053,8 @@ the remote server support it.
 
 .. caution::
 
-    If you set `Accept-Encoding` to e.g. `gzip`, you will need to handle the decompression yourself.
+    If you set ``Accept-Encoding`` to e.g. ``gzip``, you will need to handle the
+    decompression yourself.
 
 HTTP/2 Support
 ~~~~~~~~~~~~~~
