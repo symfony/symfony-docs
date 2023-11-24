@@ -114,7 +114,7 @@ We are now ready to write our first test::
             $matcher
                 ->expects($this->once())
                 ->method('getContext')
-                ->will($this->returnValue($this->createMock(Routing\RequestContext::class)))
+                ->willReturn($this->createMock(Routing\RequestContext::class))
             ;
             $controllerResolver = $this->createMock(ControllerResolverInterface::class);
             $argumentResolver = $this->createMock(ArgumentResolverInterface::class);
@@ -169,16 +169,16 @@ Response::
         $matcher
             ->expects($this->once())
             ->method('match')
-            ->will($this->returnValue([
+            ->willReturn([
                 '_route' => 'is_leap_year/{year}',
                 'year' => '2000',
                 '_controller' => [new LeapYearController(), 'index'],
-            ]))
+            ])
         ;
         $matcher
             ->expects($this->once())
             ->method('getContext')
-            ->will($this->returnValue($this->createMock(Routing\RequestContext::class)))
+            ->willReturn($this->createMock(Routing\RequestContext::class))
         ;
         $controllerResolver = new ControllerResolver();
         $argumentResolver = new ArgumentResolver();
