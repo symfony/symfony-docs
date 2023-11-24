@@ -21,22 +21,22 @@ Then, create a PHPUnit configuration file in ``example.com/phpunit.xml.dist``:
     <?xml version="1.0" encoding="UTF-8"?>
     <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.4/phpunit.xsd"
         backupGlobals="false"
         colors="true"
         bootstrap="vendor/autoload.php"
     >
-        <coverage processUncoveredFiles="true">
-            <include>
-                <directory suffix=".php">./src</directory>
-            </include>
-        </coverage>
-
+        <coverage/>
         <testsuites>
             <testsuite name="Test Suite">
                 <directory>./tests</directory>
             </testsuite>
         </testsuites>
+        <source>
+            <include>
+                <directory suffix=".php">./src</directory>
+            </include>
+        </source>
     </phpunit>
 
 This configuration defines sensible defaults for most PHPUnit settings; more
