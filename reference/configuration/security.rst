@@ -408,25 +408,21 @@ user logs out::
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+
+        // ...
+
+        return static function (SecurityConfig $securityConfig): void {
             // ...
-            'firewalls' => [
-                'main' => [
-                    'logout' => [
-                        'delete_cookies' => [
-                            'cookie1-name' => null,
-                            'cookie2-name' => [
-                                'path' => '/',
-                            ],
-                            'cookie3-name' => [
-                                'path' => null,
-                                'domain' => 'example.com',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+
+            $securityConfig->firewall('main')
+                ->logout()
+                    ->deleteCookie('cookie1-name')
+                    ->deleteCookie('cookie2-name')
+                        ->path('/')
+                    ->deleteCookie('cookie3-name')
+                        ->path(null)
+                        ->domain('example.com');
+        };
 
 
 clear_site_data
@@ -483,19 +479,16 @@ It's also possible to use ``*`` as a wildcard for all directives:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+
+        // ...
+
+        return static function (SecurityConfig $securityConfig): void {
             // ...
-            'firewalls' => [
-                'main' => [
-                    'logout' => [
-                        'clear-site-data' => [
-                            'cookies',
-                            'storage',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+
+            $securityConfig->firewall('main')
+                ->logout()
+                    ->clearSiteData(['cookies', 'storage']);
+        };
 
 .. versionadded:: 6.3
 
