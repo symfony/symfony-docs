@@ -326,9 +326,9 @@ Use the XLIFF Format for Your Translation Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Of all the translation formats supported by Symfony (PHP, Qt, ``.po``, ``.mo``,
-JSON, CSV, INI), ``XLIFF`` and ``gettext`` have the best support in the tools used
-by professional translators. And since it's based on XML, you can validate ``XLIFF``
-file contents as you write them.
+JSON, CSV, INI, etc.), ``XLIFF`` and ``gettext`` have the best support in the
+tools used by professional translators. And since it's based on XML, you can
+validate ``XLIFF`` file contents as you write them.
 
 Symfony also supports notes in XLIFF files, making them more user-friendly for
 translators. At the end, good translations are all about context, and these
