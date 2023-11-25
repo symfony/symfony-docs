@@ -65,8 +65,8 @@ you're using single or double quotes:
   boolean value);
 * When the string is ``null`` or ``~`` (otherwise, it would be considered as a
   ``null`` value);
-* When the string looks like a number, such as integers (e.g. ``2``, ``14``, etc.),
-  floats (e.g. ``2.6``, ``14.9``) and exponential numbers (e.g. ``12e7``, etc.)
+* When the string looks like a number, such as integers (e.g. ``2``, ``14``),
+  floats (e.g. ``2.6``, ``14.9``) and exponential numbers (e.g. ``12e7``)
   (otherwise, it would be treated as a numeric value);
 * When the string looks like a date (e.g. ``2014-12-31``) (otherwise it would be
   automatically converted into a Unix timestamp).

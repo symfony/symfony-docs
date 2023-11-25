@@ -480,10 +480,10 @@ must be named according to the following path: ``domain.locale.loader``:
 
 * **domain**: The translation domain;
 
-* **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``, etc);
+* **locale**: The locale that the translations are for (e.g. ``en_GB``, ``en``);
 
 * **loader**: How Symfony should load and parse the file (e.g. ``xlf``,
-  ``php``, ``yaml``, etc).
+  ``php``, ``yaml``).
 
 The loader can be the name of any registered loader. By default, Symfony
 provides many loaders which are selected based on the following file extensions:

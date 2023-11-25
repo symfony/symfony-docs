@@ -123,7 +123,7 @@ PHP type (including objects)::
 
 When using this component inside a Symfony application, certain objects and
 variables are automatically injected by Symfony so you can use them in your
-expressions (e.g. the request, the current user, etc.):
+expressions (e.g. the request, the current user):
 
 * :doc:`Variables available in security expressions </security/expressions>`;
 * :doc:`Variables available in service container expressions </service_container/expression_language>`;

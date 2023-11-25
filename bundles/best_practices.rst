@@ -254,7 +254,7 @@ With this, :ref:`Symfony Flex <symfony-flex>` will be able to automatically
 enable your bundle when it's installed.
 
 If your bundle requires any setup (e.g. configuration, new files, changes to
-``.gitignore``, etc), then you should create a `Symfony Flex recipe`_.
+``.gitignore``), then you should create a `Symfony Flex recipe`_.
 
 Documentation
 -------------

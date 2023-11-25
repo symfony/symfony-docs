@@ -248,8 +248,8 @@ Fragment Naming for All Fields of the Same Type
 
 These fragment names follow the ``type_part`` pattern, where the ``type``
 corresponds to the field *type* being rendered (e.g. ``textarea``, ``checkbox``,
-``date``, etc) and the ``part`` corresponds to *what* is being rendered (e.g.
-``label``, ``widget``, etc.)
+``date``) and the ``part`` corresponds to *what* is being rendered (e.g.
+``label``, ``widget``).
 
 A few examples of fragment names are:
 
@@ -265,8 +265,8 @@ Fragment Naming for Individual Fields
 
 These fragment names follow the ``_id_part`` pattern, where the ``id``
 corresponds to the field ``id`` attribute (e.g. ``product_description``,
-``user_age``, etc) and the ``part`` corresponds to *what* is being rendered
-(e.g. ``label``, ``widget``, etc.)
+``user_age``) and the ``part`` corresponds to *what* is being rendered
+(e.g. ``label``, ``widget``)
 
 The ``id`` attribute contains both the form name and the field name (e.g.
 ``product_price``). The form name can be set manually or generated automatically

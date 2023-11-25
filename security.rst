@@ -150,7 +150,7 @@ from the `MakerBundle`_:
         }
 
         /**
-         * The public representation of the user (e.g. a username, an email address, etc.)
+         * The public representation of the user (e.g. a username, an email address)
          *
          * @see UserInterface
          */
@@ -483,7 +483,7 @@ The Firewall
 The ``firewalls`` section of ``config/packages/security.yaml`` is the *most*
 important section. A "firewall" is your authentication system: the firewall
 defines which parts of your application are secured and *how* your users
-will be able to authenticate (e.g. login form, API token, etc).
+will be able to authenticate (e.g. login form, API token).
 
 .. configuration-block::
 
@@ -1549,7 +1549,7 @@ Then, enable this feature using the ``login_throttling`` setting:
 
     The value of the ``interval`` option must be a number followed by any of the
     units accepted by the `PHP date relative formats`_ (e.g. ``3 seconds``,
-    ``10 hours``, ``1 day``, etc.)
+    ``10 hours``, ``1 day``).
 
 Internally, Symfony uses the :doc:`Rate Limiter component </rate_limiter>`
 which by default uses Symfony's cache to store the previous login attempts.

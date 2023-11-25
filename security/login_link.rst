@@ -8,7 +8,7 @@ application when clicking on it.
 
 This authentication method can help you eliminate most of the customer support
 related to authentication (e.g. I forgot my password, how can I change or reset
-my password, etc.)
+my password).
 
 Using the Login Link Authenticator
 ----------------------------------

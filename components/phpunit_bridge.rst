@@ -515,7 +515,7 @@ Polyfills for the Unavailable Methods
 
 When using the ``simple-phpunit`` script, PHPUnit Bridge injects polyfills for
 most methods of the ``TestCase`` and ``Assert`` classes (e.g. ``expectException()``,
-``expectExceptionMessage()``, ``assertContainsEquals()``, etc.). This allows writing
+``expectExceptionMessage()``, ``assertContainsEquals()``). This allows writing
 test cases using the latest best practices while still remaining compatible with
 older PHPUnit versions.
 

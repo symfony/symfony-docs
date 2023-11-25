@@ -403,7 +403,7 @@ from being satisfied. For example, the routing system is fickle, and wouldn't
 recognize that the list page - ``/index.php``  - should be accessible also via ``/``
 (if Apache rewrite rules were added). Also, instead of developing the blog,
 a lot of time is being spent working on the "architecture" of the code (e.g.
-routing, calling controllers, templates, etc.). More time will need to be
+routing, calling controllers, templates). More time will need to be
 spent to handle form submissions, input validation, logging and security.
 Why should you have to reinvent solutions to all these routine problems?
 

@@ -138,7 +138,7 @@ work:
   (5.0, 6.0, etc.) comes out every two years. Because of the
   :ref:`special development process <major-version-development>` of those versions,
   you need to use the previous minor version for the features (e.g. use ``5.4``
-  instead of ``6.0``, use ``6.4`` instead of ``7.0``, etc.)
+  instead of ``6.0``, use ``6.4`` instead of ``7.0``)
 
 .. note::
 

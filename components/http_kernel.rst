@@ -40,7 +40,7 @@ This is a simplified overview of the request workflow in Symfony applications:
 #. The **browser** displays the **resource** to the **user**.
 
 Typically, some sort of framework or system is built to handle all the repetitive
-tasks (e.g. routing, security, etc) so that a developer can build each *page* of
+tasks (e.g. routing, security) so that a developer can build each *page* of
 the application. Exactly *how* these systems are built varies greatly. The HttpKernel
 component provides an interface that formalizes the process of starting with a
 request and creating the appropriate response. The component is meant to be the
@@ -405,7 +405,7 @@ to create a ``Response``.
 This can be useful if you want to use a "view" layer: instead of returning
 a ``Response`` from the controller, you return data that represents the page.
 A listener to this event could then use this data to create a ``Response`` that
-is in the correct format (e.g. HTML, JSON, etc).
+is in the correct format (e.g. HTML, JSON).
 
 At this stage, if no listener sets a response on the event, then an exception
 is thrown: either the controller *or* one of the view listeners must always
@@ -428,7 +428,7 @@ return a ``Response``.
     Additionally, a popular community bundle `FOSRestBundle`_ implements
     a listener on this event which aims to give you a robust view layer
     capable of using a single controller to return many different content-type
-    responses (e.g. HTML, JSON, XML, etc).
+    responses (e.g. HTML, JSON, XML).
 
 .. _component-http-kernel-kernel-response:
 

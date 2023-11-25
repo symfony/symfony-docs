@@ -238,7 +238,7 @@ Use Dependency Injection to Get Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you extend the base ``AbstractController``, you can only get access to the most
-common services (e.g. ``twig``, ``router``, ``doctrine``, etc.), directly from the
+common services (e.g. ``twig``, ``router``, ``doctrine``), directly from the
 container via ``$this->container->get()``.
 Instead, you must use dependency injection to fetch services by
 :ref:`type-hinting action method arguments <controller-accessing-services>` or
@@ -326,7 +326,7 @@ Use the XLIFF Format for Your Translation Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Of all the translation formats supported by Symfony (PHP, Qt, ``.po``, ``.mo``,
-JSON, CSV, INI, etc.), ``XLIFF`` and ``gettext`` have the best support in the tools used
+JSON, CSV, INI), ``XLIFF`` and ``gettext`` have the best support in the tools used
 by professional translators. And since it's based on XML, you can validate ``XLIFF``
 file contents as you write them.
 

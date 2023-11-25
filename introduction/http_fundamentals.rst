@@ -34,7 +34,7 @@ Step 1: The Client Sends a Request
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every conversation on the web starts with a *request*. The request is a text
-message created by a client (e.g. a browser, a smartphone app, etc) in a
+message created by a client (e.g. a browser, a smartphone app) in a
 special format known as HTTP. The client sends that request to a server,
 and then waits for the response.
 
@@ -61,7 +61,7 @@ resource the client is requesting. The first line of an HTTP request is the
 most important, because it contains two important things: the HTTP method (GET)
 and the URI (``/``).
 
-The URI (e.g. ``/``, ``/contact``, etc) is the unique address or location
+The URI (e.g. ``/``, ``/contact``) is the unique address or location
 that identifies the resource the client wants. The HTTP method (e.g. ``GET``)
 defines what the client wants to *do* with the resource. The HTTP methods (also
 known as verbs) define the few common ways that the client can act upon the
@@ -297,7 +297,7 @@ The Front Controller
 ~~~~~~~~~~~~~~~~~~~~
 
 Traditionally, applications were built so that each "page" of a site was
-its own physical file (e.g. ``index.php``, ``contact.php``, etc.).
+its own physical file (e.g. ``index.php``, ``contact.php``).
 
 There are several problems with this approach, including the inflexibility
 of the URLs (what if you wanted to change ``blog.php`` to ``news.php`` without

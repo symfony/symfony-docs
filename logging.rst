@@ -93,7 +93,7 @@ Handlers: Writing Logs to different Locations
 ---------------------------------------------
 
 The logger has a stack of *handlers*, and each can be used to write the log entries
-to different locations (e.g. files, database, Slack, etc).
+to different locations (e.g. files, database, Slack).
 
 .. tip::
 

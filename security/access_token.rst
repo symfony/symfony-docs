@@ -26,7 +26,7 @@ To use the access token authenticator, you must configure a ``token_handler``.
 The token handler receives the token from the request and returns the
 correct user identifier. To get the user identifier, implementations may
 need to load and validate the token (e.g. revocation, expiration time,
-digital signature, etc.).
+digital signature).
 
 .. configuration-block::
 
