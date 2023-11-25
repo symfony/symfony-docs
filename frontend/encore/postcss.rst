@@ -43,7 +43,7 @@ Next, create a ``postcss.config.js`` file at the root of your project:
         }
     }
 
-That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc files.
+That's it! The ``postcss-loader`` will now be used for all CSS, Sass, etc. files.
 You can also pass options to the `postcss-loader`_ by passing a callback:
 
 .. code-block:: diff

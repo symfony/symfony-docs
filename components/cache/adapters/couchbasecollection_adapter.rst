@@ -55,7 +55,7 @@ helper method allows creating and configuring a `Couchbase Collection`_ class in
         'couchbase://10.0.0.100',
         'couchbase://10.0.0.101',
         'couchbase://10.0.0.102',
-        // etc...
+        // etc.
     ]);
 
     // a single DSN can define multiple servers using the following syntax:

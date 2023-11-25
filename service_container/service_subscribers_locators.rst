@@ -880,7 +880,7 @@ services based on type-hinted helper methods::
         }
     }
 
-This  allows you to create helper traits like RouterAware, LoggerAware, etc...
+This  allows you to create helper traits like RouterAware, LoggerAware, etc.
 and compose your services with them::
 
     // src/Service/LoggerAware.php

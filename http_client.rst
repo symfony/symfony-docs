@@ -2114,7 +2114,7 @@ with some helper methods to test the request:
 * ``getRequestMethod()`` - returns the HTTP method;
 * ``getRequestUrl()`` - returns the URL the request would be sent to;
 * ``getRequestOptions()`` - returns an array containing other information about
-  the request such as headers, query parameters, body content etc.
+  the request such as headers, query parameters, body content, etc.
 
 Usage example::
 
