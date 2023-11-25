@@ -270,7 +270,7 @@ In Webpack Encore you can use this option via the ``addExternals()`` method:
 
     // this won't include jQuery and React in the output bundles generated
     // by Webpack Encore. You'll need to load those dependencies yourself
-    // (e.g with a `<script>` tag) to make the application or website work.
+    // (e.g. with a `<script>` tag) to make the application or website work.
     Encore.addExternals({
         jquery: 'jQuery',
         react: 'react'

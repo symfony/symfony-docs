@@ -1722,7 +1722,7 @@ FailedMessageEvent
 
     public function onMessage(FailedMessageEvent $event): void
     {
-        // e.g you can get more information on this error when sending an email
+        // e.g. you can get more information on this error when sending an email
         $event->getError();
 
         // do something with the message

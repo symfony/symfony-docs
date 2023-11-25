@@ -637,7 +637,7 @@ And that's all!
 .. caution::
 
     Time-based function mocking follows the `PHP namespace resolutions rules`_
-    so "fully qualified function calls" (e.g ``\time()``) cannot be mocked.
+    so "fully qualified function calls" (e.g. ``\time()``) cannot be mocked.
 
 The ``@group time-sensitive`` annotation is equivalent to calling
 ``ClockMock::register(MyTest::class)``. If you want to mock a function used in a

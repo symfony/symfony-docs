@@ -1316,7 +1316,7 @@ The AMQP transport DSN may looks like this:
 If you want to use TLS/SSL encrypted AMQP, you must also provide a CA certificate.
 Define the certificate path in the ``amqp.cacert`` PHP.ini setting
 (e.g. ``amqp.cacert = /etc/ssl/certs``) or in the ``cacert`` parameter of the
-DSN (e.g ``amqps://localhost?cacert=/etc/ssl/certs/``).
+DSN (e.g. ``amqps://localhost?cacert=/etc/ssl/certs/``).
 
 The default port used by TLS/SSL encrypted AMQP is 5671, but you can overwrite
 it in the ``port`` parameter of the DSN (e.g. ``amqps://localhost?cacert=/etc/ssl/certs/&port=12345``).

@@ -1215,7 +1215,7 @@ it does not exactly match any of the public keys provided in this option, the
 connection is aborted before sending or receiving any data.
 
 The value of this option is an associative array of ``algorithm => hash``
-(e.g ``['pin-sha256' => '...']``).
+(e.g. ``['pin-sha256' => '...']``).
 
 proxy
 .....
@@ -1244,7 +1244,7 @@ useful to improve security when IPs are checked before the URL is passed to the
 client and to make your tests easier.
 
 The value of this option is an associative array of ``domain => IP address``
-(e.g ``['symfony.com' => '46.137.106.254', ...]``).
+(e.g. ``['symfony.com' => '46.137.106.254', ...]``).
 
 retry_strategy
 ..............
