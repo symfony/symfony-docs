@@ -1,4 +1,4 @@
-Preventing Duplication by "Splitting" Shared Code into Separate Files
+Preventing Duplication by "Splitting" Shared Code with Webpack Encore
 =====================================================================
 
 Suppose you have multiple entry files and *each* requires ``jquery``. In this

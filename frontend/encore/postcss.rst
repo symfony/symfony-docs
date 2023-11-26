@@ -1,5 +1,5 @@
-PostCSS and autoprefixing (postcss-loader)
-==========================================
+PostCSS and autoprefixing (postcss-loader) with Webpack Encore
+==============================================================
 
 `PostCSS`_ is a CSS post-processing tool that can transform your CSS in a lot
 of cool ways, like `autoprefixing`_, `linting`_ and more!

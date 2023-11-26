@@ -1,5 +1,5 @@
-Enabling React.js
-=================
+Enabling React.js with Webpack Encore
+=====================================
 
 .. admonition:: Screencast
     :class: screencast
@@ -9,7 +9,7 @@ Enabling React.js
 .. tip::
 
     Check out live demos of Symfony UX React component at `https://ux.symfony.com/react`_!
-    
+
 Using React? First add some dependencies with Yarn:
 
 .. code-block:: terminal
