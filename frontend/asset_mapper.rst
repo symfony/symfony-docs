@@ -953,6 +953,25 @@ This is a list of glob patterns that will be excluded from the asset map:
 You can use the ``debug:asset-map`` command to double-check that the files
 you expect are being included in the asset map.
 
+``framework.asset_mapper.exclude_dotfiles``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Whether to exclude any file starting with a ``.`` from the asset mapper. This
+is useful if you want to avoid leaking sensitive files like ``.env`` or
+``.gitignore`` in the files published by the asset mapper.
+
+.. code-block:: yaml
+
+    framework:
+        asset_mapper:
+            exclude_dotfiles: true
+
+This option is enabled by default.
+
+.. versionadded:: 7.1
+
+    The ``exclude_dotfiles`` option was introduced in Symfony 7.1.
+
 .. _config-importmap-polyfill:
 
 ``framework.asset_mapper.importmap_polyfill``
