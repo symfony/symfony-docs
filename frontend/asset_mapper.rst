@@ -968,9 +968,9 @@ is useful if you want to avoid leaking sensitive files like ``.env`` or
 
 This option is enabled by default.
 
-.. versionadded:: 7.1
+.. versionadded:: 6.4
 
-    The ``exclude_dotfiles`` option was introduced in Symfony 7.1.
+    The ``exclude_dotfiles`` option was introduced in Symfony 6.4.
 
 .. _config-importmap-polyfill:
 
