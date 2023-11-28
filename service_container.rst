@@ -80,8 +80,8 @@ in the container.
     There are actually *many* more services in the container, and each service has
     a unique id in the container, like ``request_stack`` or ``router.default``. For a full
     list, you can run ``php bin/console debug:container``. But most of the time,
-    you won't need to worry about this. See :ref:`services-wire-specific-service`.
-    See :doc:`/service_container/debug`.
+    you won't need to worry about this. See :ref:`how to choose a specific service
+    <services-wire-specific-service>`. See :doc:`/service_container/debug`.
 
 .. _service-container-creating-service:
 
@@ -228,10 +228,11 @@ each time you ask for it.
 
     Thanks to this configuration, you can automatically use any classes from the
     ``src/`` directory as a service, without needing to manually configure
-    it. Later, you'll learn more about this in :ref:`service-psr4-loader`.
+    it. Later, you'll learn how to :ref:`import many services at once
+    <service-psr4-loader>` with resource.
 
-    If you'd prefer to manually wire your service, that's totally possible: see
-    :ref:`services-explicitly-configure-wire-services`.
+    If you'd prefer to manually wire your service, you can
+    :ref:`use explicit configuration <services-explicitly-configure-wire-services>`.
 
 .. _service-container_limiting-to-env:
 
@@ -923,8 +924,8 @@ argument for *any* service defined in this file! You can bind arguments by name
 (e.g. ``$adminEmail``), by type (e.g. ``Psr\Log\LoggerInterface``) or both
 (e.g. ``Psr\Log\LoggerInterface $requestLogger``).
 
-The ``bind`` config can also be applied to specific services or when loading many
-services at once (i.e. :ref:`service-psr4-loader`).
+The ``bind`` config can also be applied to specific services or when
+:ref:`loading many services at once <service-psr4-loader>`).
 
 Abstract Service Arguments
 --------------------------
@@ -1167,9 +1168,9 @@ key. For example, the default Symfony configuration contains this:
 This can be used to quickly make many classes available as services and apply some
 default configuration. The ``id`` of each service is its fully-qualified class name.
 You can override any service that's imported by using its id (class name) below
-(e.g. see :ref:`services-manually-wire-args`). If you override a service, none of
-the options (e.g. ``public``) are inherited from the import (but the overridden
-service *does* still inherit from ``_defaults``).
+(e.g. see :ref:`how to manually wire arguments <services-manually-wire-args>`).
+If you override a service, none of the options (e.g. ``public``) are inherited
+from the import (but the overridden service *does* still inherit from ``_defaults``).
 
 You can also ``exclude`` certain paths. This is optional, but will slightly increase
 performance in the ``dev`` environment: excluded paths are not tracked and so modifying

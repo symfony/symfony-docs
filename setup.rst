@@ -219,8 +219,7 @@ which in turn installs several packages like ``symfony/debug-bundle``,
 You won't see the ``symfony/debug-pack`` dependency in your ``composer.json``,
 as Flex automatically unpacks the pack. This means that it only adds the real
 packages as dependencies (e.g. you will see a new ``symfony/var-dumper`` in
-``require-dev``). While it is not recommended, you can use the ``composer
-require --no-unpack ...`` option to disable unpacking.
+``require-dev``).
 
 .. _security-checker:
 
