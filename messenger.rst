@@ -1587,6 +1587,8 @@ The Redis transport DSN may looks like this:
     MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
+    # TLS Example
+    MESSENGER_TRANSPORT_DSN=rediss://localhost:6379/messages
 
 .. versionadded:: 5.1
 
@@ -1617,7 +1619,6 @@ stream_max_entries   The maximum number of entries which    ``0`` (which means "
                      the stream will be trimmed to. Set
                      it to a large enough number to
                      avoid losing pending messages
-tls                  Enable TLS support for the connection  false
 redeliver_timeout    Timeout before retrying a pending      ``3600``
                      message which is owned by an
                      abandoned consumer (if a worker died
@@ -1655,6 +1656,14 @@ claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
 .. versionadded:: 5.2
 
     The ``delete_after_reject`` and ``lazy`` options were introduced in Symfony 5.2.
+
+.. versionadded:: 5.3
+
+    The ``rediss://`` DSN scheme support for TLS protocol was introduced in Symfony 5.3.
+
+.. deprecated:: 5.3
+
+    The ``tls`` option was deprecated in Symfony 5.3, use ``rediss://`` DSN scheme for TLS support instead.
 
 .. deprecated:: 5.4
 
