@@ -471,7 +471,7 @@ As for groups, attributes can be selected during both the serialization and dese
 Ignoring Attributes
 -------------------
 
-All attributes are included by default when serializing objects. There are two
+All accessible attributes are included by default when serializing objects. There are two
 options to ignore some of those attributes.
 
 Option 1: Using ``@Ignore`` Annotation
