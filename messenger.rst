@@ -1569,6 +1569,8 @@ The Redis transport DSN may looks like this:
     MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
+    # TLS Example
+    MESSENGER_TRANSPORT_DSN=rediss://localhost:6379/messages
 
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
@@ -1615,10 +1617,44 @@ sentinel_master          String, if null or empty Sentinel      null
                          support is disabled
 =======================  =====================================  =================================
 
+<<<<<<< HEAD
 .. versionadded:: 6.1
 
     The ``persistent_id``, ``retry_interval``, ``read_timeout``, ``timeout``, and
     ``sentinel_master`` options were introduced in Symfony 6.1.
+=======
+===================  =====================================  =================================
+Option               Description                            Default
+===================  =====================================  =================================
+stream               The Redis stream name                  messages
+group                The Redis consumer group name          symfony
+consumer             Consumer name used in Redis            consumer
+auto_setup           Create the Redis group automatically?  true
+auth                 The Redis password
+delete_after_ack     If ``true``, messages are deleted      false
+                     automatically after processing them
+delete_after_reject  If ``true``, messages are deleted      true
+                     automatically if they are rejected
+lazy                 Connect only when a connection is      false
+                     really needed
+serializer           How to serialize the final payload     ``Redis::SERIALIZER_PHP``
+                     in Redis (the
+                     ``Redis::OPT_SERIALIZER`` option)
+stream_max_entries   The maximum number of entries which    ``0`` (which means "no trimming")
+                     the stream will be trimmed to. Set
+                     it to a large enough number to
+                     avoid losing pending messages
+redeliver_timeout    Timeout before retrying a pending      ``3600``
+                     message which is owned by an
+                     abandoned consumer (if a worker died
+                     for some reason, this will occur,
+                     eventually you should retry the
+                     message) - in seconds.
+claim_interval       Interval on which pending/abandoned    ``60000`` (1 Minute)
+                     messages should be checked for to
+                     claim - in milliseconds
+===================  =====================================  =================================
+>>>>>>> 5.4
 
 .. caution::
 
