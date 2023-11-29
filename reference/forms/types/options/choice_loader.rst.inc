@@ -57,7 +57,7 @@ better performance::
             return ChoiceType::class;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 // the example below will create a CallbackChoiceLoader from the callable
