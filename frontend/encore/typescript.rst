@@ -1,5 +1,5 @@
-Enabling TypeScript (ts-loader)
-===============================
+Enabling TypeScript (ts-loader) with Webpack Encore
+===================================================
 
 Want to use `TypeScript`_? No problem! First, enable it:
 

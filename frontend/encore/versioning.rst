@@ -1,5 +1,5 @@
-Asset Versioning
-================
+Asset Versioning with Webpack Encore
+====================================
 
 .. _encore-long-term-caching:
 
