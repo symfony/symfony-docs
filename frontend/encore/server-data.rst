@@ -1,5 +1,5 @@
-Passing Information from Twig to JavaScript
-===========================================
+Passing Information from Twig to JavaScript with Webpack Encore
+===============================================================
 
 In Symfony applications, you may find that you need to pass some dynamic data
 (e.g. user information) from Twig to your JavaScript code. One great way to pass

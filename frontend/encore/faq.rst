@@ -1,5 +1,5 @@
-FAQ and Common Issues
-=====================
+WebpackEncore: FAQ and Common Issues
+====================================
 
 .. _how-do-i-deploy-my-encore-assets:
 

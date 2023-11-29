@@ -1,5 +1,5 @@
-Async Code Splitting
-====================
+Async Code Splitting with Webpack Encore
+========================================
 
 When you require/import a JavaScript or CSS module, Webpack compiles that code into
 the final JavaScript or CSS file. Usually, that's exactly what you want. But what
