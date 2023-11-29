@@ -1162,6 +1162,23 @@ the key  ``#comment`` can be used for encoding XML comments::
 You can pass the context key ``as_collection`` in order to have the results
 always as a collection.
 
+.. note::
+
+    You may need to add some attributes on the root node::
+
+        $encoder = new XmlEncoder();
+        $encoder->encode([
+            '@attribute1' => 'foo',
+            '@attribute2' => 'bar',
+            '#' => ['foo' => ['@bar' => 'value', '#' => 'baz']]
+        ], 'xml');
+
+        // will return:
+        // <?xml version="1.0"?>
+        // <response attribute1="foo" attribute2="bar">
+        // <foo bar="value">baz</foo>
+        // </response>
+
 .. tip::
 
     XML comments are ignored by default when decoding contents, but this
