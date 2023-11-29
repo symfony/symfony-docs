@@ -1616,6 +1616,11 @@ sentinel_master          String, if null or empty Sentinel      null
                          support is disabled
 =======================  =====================================  =================================
 
+.. versionadded:: 6.1
+
+    The ``persistent_id``, ``retry_interval``, ``read_timeout``, ``timeout``, and
+    ``sentinel_master`` options were introduced in Symfony 6.1.
+
 .. caution::
 
     There should never be more than one ``messenger:consume`` command running with the same
