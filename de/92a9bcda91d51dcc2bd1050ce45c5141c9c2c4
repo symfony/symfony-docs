@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-11-27T15:21:18Z
+
+Ok, should be ready to go - read and proofread again. The Code Blocks failure isn't legit - it can't find the `importmap()` function.
+
+---------------------------------------------------------------------------
+
+by smnandre at 2023-11-27T15:26:06Z
+
+> Ok, should be ready to go - read and proofread again. The Code Blocks failure isn't legit - it can't find the `importmap()` function.
+
+I think asset-mapper is not installed in the test application: https://github.com/symfony-tools/symfony-application/blob/6.4/composer.json
+
+---------------------------------------------------------------------------
+
+by weaverryan at 2023-11-27T16:25:07Z
+
+> I think asset-mapper is not installed in the test application: https://github.com/symfony-tools/symfony-application/blob/6.4/composer.json
+
+Apparently I thought of that a long time ago, but forgot: https://github.com/symfony-tools/symfony-application/pull/16
+
+It shouldn't be a blocker. But yes, we should merge that at some point.
