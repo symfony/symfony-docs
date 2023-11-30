@@ -1958,7 +1958,7 @@ assertions on the request before returning the mocked response::
         },
     ];
 
-    $client = new MockHttpClient($expectedRequest);
+    $client = new MockHttpClient($expectedRequests);
 
     // ...
 
