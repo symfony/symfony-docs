@@ -212,10 +212,10 @@ pages from a server.
 
 By default, the debug toolbar displays the information of the initial page load
 and doesn't refresh after each AJAX request. However, you can set the
-``Symfony-Debug-Toolbar-Replace`` header to a value of ``1`` in the response to
+``Symfony-Debug-Toolbar-Replace`` header to a value of ``'1'`` in the response to
 the AJAX request to force the refresh of the toolbar::
 
-    $response->headers->set('Symfony-Debug-Toolbar-Replace', 1);
+    $response->headers->set('Symfony-Debug-Toolbar-Replace', '1');
 
 Ideally this header should only be set during development and not for
 production. To do that, create an :doc:`event subscriber </event_dispatcher>`
@@ -250,7 +250,7 @@ event::
             }
 
             $response = $event->getResponse();
-            $response->headers->set('Symfony-Debug-Toolbar-Replace', 1);
+            $response->headers->set('Symfony-Debug-Toolbar-Replace', '1');
         }
     }
 
