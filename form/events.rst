@@ -62,7 +62,7 @@ A) The ``FormEvents::PRE_SET_DATA`` Event
 The ``FormEvents::PRE_SET_DATA`` event is dispatched at the beginning of the
 ``Form::setData()`` method. It is used to modify the data given during
 pre-population with
-:method:`FormEvent::setData() <Symfony\\Component\\Form\\FormEvent::setData>`.
+:method:`PreSetData::setData() <Symfony\\Component\\Form\\Event\\PreSetDataEvent>`.
 The method :method:`Form::setData() <Symfony\\Component\\Form\\Form::setData>`
 is locked since the event is dispatched from it and will throw an exception
 if called from a listener.
@@ -277,13 +277,13 @@ method of the ``FormFactory``::
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\Event\PreSubmitEvent;
     use Symfony\Component\Form\FormEvents;
 
     $form = $formFactory->createBuilder()
         ->add('username', TextType::class)
         ->add('showEmail', CheckboxType::class)
-        ->addEventListener(FormEvents::PRE_SUBMIT, function (FormEvent $event): void {
+        ->addEventListener(FormEvents::PRE_SUBMIT, function (PreSubmitEvent $event): void {
             $user = $event->getData();
             $form = $event->getForm();
 
@@ -313,7 +313,7 @@ callback for better readability::
 
     use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
     use Symfony\Component\Form\Extension\Core\Type\TextType;
-    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\Event\PreSetDataEvent;
     use Symfony\Component\Form\FormEvents;
 
     // ...
@@ -331,7 +331,7 @@ callback for better readability::
             ;
         }
 
-        public function onPreSetData(FormEvent $event): void
+        public function onPreSetData(PreSetDataEvent $event): void
         {
             // ...
         }
@@ -353,7 +353,8 @@ Consider the following example of a form event subscriber::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Form\Extension\Core\Type\EmailType;
-    use Symfony\Component\Form\FormEvent;
+    use Symfony\Component\Form\Event\PreSetDataEvent;
+    use Symfony\Component\Form\Event\PreSubmitEvent;
     use Symfony\Component\Form\FormEvents;
 
     class AddEmailFieldListener implements EventSubscriberInterface
@@ -366,7 +367,7 @@ Consider the following example of a form event subscriber::
             ];
         }
 
-        public function onPreSetData(FormEvent $event): void
+        public function onPreSetData(PreSetDataEvent $event): void
         {
             $user = $event->getData();
             $form = $event->getForm();
@@ -378,7 +379,7 @@ Consider the following example of a form event subscriber::
             }
         }
 
-        public function onPreSubmit(FormEvent $event): void
+        public function onPreSubmit(PreSubmitEvent $event): void
         {
             $user = $event->getData();
             $form = $event->getForm();
