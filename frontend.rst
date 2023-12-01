@@ -26,6 +26,7 @@ Supports `Stimulus/UX`_           yes                                 yes
 Supports Sass/Tailwind            :ref:`yes <asset-mapper-tailwind>`  yes
 Supports React, Vue, Svelte?      yes :ref:`[1] <ux-note-1>`          yes
 Supports TypeScript               :ref:`yes <asset-mapper-ts>`        yes
+Versioned assets                  always                              optional
 ================================  ==================================  ==========
 
 .. _ux-note-1:
