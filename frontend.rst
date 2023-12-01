@@ -16,17 +16,18 @@ fast frontend, *and* enjoy the process:
   to Webpack Encore that runs entirely in PHP. It's currently experimental.
 
 ================================  =================  ======================================================
-                                  Encore             AssetMapper
+                                  Webpack Encore     AssetMapper
 ================================  =================  ======================================================
 Production Ready?                 yes                yes
 Stable?                           yes                :doc:`experimental </contributing/code/experimental>`
-Requirements                      Node.js            none: pure PHP
+Requirements                      Node.js            none (pure PHP)
 Requires a build step?            yes                no
 Works in all browsers?            yes                yes
 Supports `Stimulus/UX`_           yes                yes
 Supports Sass/Tailwind            yes                :ref:`yes <asset-mapper-tailwind>`
 Supports React, Vue, Svelte?      yes                yes :ref:`[1] <ux-note-1>`
 Supports TypeScript               yes                no :ref:`[1] <ux-note-1>`
+Versioned assets                  optional           always
 ================================  =================  ======================================================
 
 .. _ux-note-1:
