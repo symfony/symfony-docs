@@ -1,5 +1,5 @@
-CSS Preprocessors: Sass, LESS, Stylus, etc.
-===========================================
+CSS Preprocessors: Sass, etc. with Webpack Encore
+=================================================
 
 To use the Sass, LESS or Stylus pre-processors, enable the one you want in ``webpack.config.js``:
 

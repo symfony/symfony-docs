@@ -1,5 +1,5 @@
-Using a CDN
-===========
+Using a CDN with Webpack Encore
+===============================
 
 Are you deploying to a CDN? That's awesome :) Once you've made sure that your
 built files are uploaded to the CDN, configure it in Encore:

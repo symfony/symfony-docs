@@ -8,33 +8,44 @@ more advanced - like scaffolding your front-end with a tool like Next.js.
 However, Symfony *does* come with two powerful options to help you build a modern,
 fast frontend, *and* enjoy the process:
 
-* :ref:`Webpack Encore <frontend-webpack-encore>` is a powerful tool built with `Node.js`_
-  on top of `Webpack`_ that allows you to write modern CSS & JavaScript and handle
-  things like JSX (React), Vue or TypeScript.
+* :ref:`AssetMapper <frontend-asset-mapper>` (recommended for new projects) runs
+  entirely in PHP, doesn't require any build step and leverages modern web standards.
 
-* :ref:`AssetMapper <frontend-asset-mapper>`, is a production-ready simpler alternative
-  to Webpack Encore that runs entirely in PHP.
+* :ref:`Webpack Encore <frontend-webpack-encore>` is built with `Node.js`_
+  on top of `Webpack`_.
 
-================================  =================  ======================================================
-                                  Encore             AssetMapper
-================================  =================  ======================================================
-Production Ready?                 yes                yes
-Stable?                           yes                yes
-Requirements                      Node.js            none: pure PHP
-Requires a build step?            yes                no
-Works in all browsers?            yes                yes
-Supports `Stimulus/UX`_           yes                yes
-Supports Sass/Tailwind            yes                :ref:`yes <asset-mapper-tailwind>`
-Supports React, Vue, Svelte?      yes                yes :ref:`[1] <ux-note-1>`
-Supports TypeScript               yes                no :ref:`[1] <ux-note-1>`
-================================  =================  ======================================================
+================================  ==================================  ==========
+                                  AssetMapper                         Encore
+================================  ==================================  ==========
+Production Ready?                 yes                                 yes
+Stable?                           yes                                 yes
+Requirements                      none                                Node.js
+Requires a build step?            no                                  yes
+Works in all browsers?            yes                                 yes
+Supports `Stimulus/UX`_           yes                                 yes
+Supports Sass/Tailwind            :ref:`yes <asset-mapper-tailwind>`  yes
+Supports React, Vue, Svelte?      yes :ref:`[1] <ux-note-1>`          yes
+Supports TypeScript               :ref:`yes <asset-mapper-ts>`        yes
+================================  ==================================  ==========
 
 .. _ux-note-1:
 
-**[1]** Using JSX (React), Vue or TypeScript with AssetMapper is possible, but you'll
+**[1]** Using JSX (React), Vue, etc with AssetMapper is possible, but you'll
 need to use their native tools for pre-compilation. Also, some features (like
 Vue single-file components) cannot be compiled down to pure JavaScript that can
 be executed by a browser.
+
+.. _frontend-asset-mapper:
+
+AssetMapper (Recommended)
+-------------------------
+
+AssetMapper is the recommended system for handling your assets. It runs entirely
+in PHP with *no* complex build step or dependencies. It does this by leveraging
+the ``importmap`` feature of your browser, which is available in all browsers thanks
+to a polyfill.
+
+:doc:`Read the AssetMapper Documentation </frontend/asset_mapper>`
 
 .. _frontend-webpack-encore:
 
@@ -50,82 +61,14 @@ It *wraps* Webpack, giving you a clean & powerful API for bundling JavaScript mo
 pre-processing CSS & JS and compiling and minifying assets. Encore gives you a professional
 asset system that's a *delight* to use.
 
-Encore is inspired by `Webpacker`_ and `Mix`_, but stays in the spirit of Webpack:
-using its features, concepts and naming conventions for a familiar feel. It aims
-to solve the most common Webpack use cases.
-
-.. tip::
-
-    Encore is made by `Symfony`_ and works *beautifully* in Symfony applications.
-    But it can be used in any PHP application and even with other server-side
-    programming languages!
-
-.. _encore-toc:
-
-Encore Documentation
---------------------
-
-Getting Started
-...............
-
-* :doc:`Installation </frontend/encore/installation>`
-* :doc:`Using Webpack Encore </frontend/encore/simple-example>`
-
-Adding more Features
-....................
-
-* :doc:`CSS Preprocessors: Sass, LESS, etc. </frontend/encore/css-preprocessors>`
-* :doc:`PostCSS and autoprefixing </frontend/encore/postcss>`
-* :doc:`Enabling React.js </frontend/encore/reactjs>`
-* :doc:`Enabling Vue.js (vue-loader) </frontend/encore/vuejs>`
-* :doc:`/frontend/encore/copy-files`
-* :doc:`Configuring Babel </frontend/encore/babel>`
-* :doc:`Source maps </frontend/encore/sourcemaps>`
-* :doc:`Enabling TypeScript (ts-loader) </frontend/encore/typescript>`
-
-Optimizing
-..........
-
-* :doc:`Versioning (and the entrypoints.json/manifest.json files) </frontend/encore/versioning>`
-* :doc:`Using a CDN </frontend/encore/cdn>`
-* :doc:`/frontend/encore/code-splitting`
-* :doc:`/frontend/encore/split-chunks`
-* :doc:`/frontend/encore/url-loader`
-
-Guides
-......
-
-* :doc:`Using Bootstrap CSS & JS </frontend/encore/bootstrap>`
-* :doc:`jQuery and Legacy Applications </frontend/encore/legacy-applications>`
-* :doc:`Passing Information from Twig to JavaScript </frontend/encore/server-data>`
-* :doc:`webpack-dev-server and Hot Module Replacement (HMR) </frontend/encore/dev-server>`
-* :doc:`Adding custom loaders & plugins </frontend/encore/custom-loaders-plugins>`
-* :doc:`Advanced Webpack Configuration </frontend/encore/advanced-config>`
-* :doc:`Using Encore in a Virtual Machine </frontend/encore/virtual-machine>`
-
-Issues & Questions
-..................
-
-* :doc:`FAQ & Common Issues </frontend/encore/faq>`
-
-Full API
-........
-
-* `Full API`_
-
-.. _frontend-asset-mapper:
-
-AssetMapper
------------
-
-AssetMapper is an alternative to Webpack Encore that runs entirely in PHP
-without any complex build steps. It leverages the ``importmap`` feature of
-your browser, which is available in all browsers thanks to a polyfill.
-
-:doc:`Read the AssetMapper Documentation </frontend/asset_mapper>`
+:doc:`Read the Encore Documentation </frontend/encore/index>`
 
 Stimulus & Symfony UX Components
 --------------------------------
+
+Once you've installed AssetMapper or Encore, it's time to start building your
+front-end. You can write your JavaScript however you want, but we recommend
+using `Stimulus`_, `Turbo`_ and a set of tools called `Symfony UX`_.
 
 To learn about Stimulus & the UX Components, see:
 the `StimulusBundle Documentation`_
@@ -139,10 +82,9 @@ Other Front-End Articles
 .. _`Webpack Encore`: https://www.npmjs.com/package/@symfony/webpack-encore
 .. _`Webpack`: https://webpack.js.org/
 .. _`Node.js`: https://nodejs.org/
-.. _`Webpacker`: https://github.com/rails/webpacker
-.. _`Mix`: https://laravel.com/docs/mix
-.. _`Symfony`: https://symfony.com/
-.. _`Full API`: https://github.com/symfony/webpack-encore/blob/master/index.js
 .. _`Webpack Encore screencast series`: https://symfonycasts.com/screencast/webpack-encore
 .. _StimulusBundle Documentation: https://symfony.com/bundles/StimulusBundle/current/index.html
 .. _Stimulus/UX: https://symfony.com/bundles/StimulusBundle/current/index.html
+.. _Stimulus: https://stimulus.hotwired.dev/
+.. _Turbo: https://turbo.hotwired.dev/
+.. _Symfony UX: https://ux.symfony.com

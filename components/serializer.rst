@@ -437,8 +437,8 @@ As for groups, attributes can be selected during both the serialization and dese
 Ignoring Attributes
 -------------------
 
-All attributes are included by default when serializing objects. There are two
-options to ignore some of those attributes.
+All accessible attributes are included by default when serializing objects.
+There are two options to ignore some of those attributes.
 
 Option 1: Using ``#[Ignore]`` Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1098,6 +1098,23 @@ the key  ``#comment`` can be used for encoding XML comments::
 
 You can pass the context key ``as_collection`` in order to have the results
 always as a collection.
+
+.. note::
+
+    You may need to add some attributes on the root node::
+
+        $encoder = new XmlEncoder();
+        $encoder->encode([
+            '@attribute1' => 'foo',
+            '@attribute2' => 'bar',
+            '#' => ['foo' => ['@bar' => 'value', '#' => 'baz']]
+        ], 'xml');
+
+        // will return:
+        // <?xml version="1.0"?>
+        // <response attribute1="foo" attribute2="bar">
+        // <foo bar="value">baz</foo>
+        // </response>
 
 .. tip::
 

@@ -1,5 +1,5 @@
-Copying & Referencing Images
-============================
+Copying & Referencing Images with Webpack Encore
+================================================
 
 Need to reference a static file - like the path to an image for an ``img`` tag?
 That can be tricky if you store your assets outside of the public document root.

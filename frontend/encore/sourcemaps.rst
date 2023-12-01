@@ -1,5 +1,5 @@
-Enabling Source Maps
-====================
+Enabling Source Maps with Webpack Encore
+========================================
 
 `Source maps`_ allow browsers to access the original code related to some
 asset (e.g. the Sass code that was compiled to CSS or the TypeScript code that

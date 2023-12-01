@@ -1537,6 +1537,8 @@ The Redis transport DSN may looks like this:
     MESSENGER_TRANSPORT_DSN=redis://host-01:6379,redis://host-02:6379,redis://host-03:6379,redis://host-04:6379
     # Unix Socket Example
     MESSENGER_TRANSPORT_DSN=redis:///var/run/redis.sock
+    # TLS Example
+    MESSENGER_TRANSPORT_DSN=rediss://localhost:6379/messages
     # Multiple Redis Sentinel Hosts Example
     MESSENGER_TRANSPORT_DSN=redis:?host[redis1:26379]&host[redis2:26379]&host[redis3:26379]&sentinel_master=db
 
@@ -1564,7 +1566,6 @@ stream_max_entries       The maximum number of entries which    ``0`` (which mea
                          the stream will be trimmed to. Set
                          it to a large enough number to
                          avoid losing pending messages
-tls                      Enable TLS support for the connection  false
 redeliver_timeout        Timeout before retrying a pending      ``3600``
                          message which is owned by an
                          abandoned consumer (if a worker died

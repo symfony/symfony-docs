@@ -1,5 +1,5 @@
-Configuring Babel
-=================
+Configuring Babel with Encore
+=============================
 
 `Babel`_ is automatically configured for all ``.js`` and ``.jsx`` files via the
 ``babel-loader`` with sensible defaults (e.g. with the ``@babel/preset-env`` and
