@@ -62,7 +62,7 @@ A) The ``FormEvents::PRE_SET_DATA`` Event
 The ``FormEvents::PRE_SET_DATA`` event is dispatched at the beginning of the
 ``Form::setData()`` method. It is used to modify the data given during
 pre-population with
-:method:`PreSetData::setData() <Symfony\\Component\\Form\\Event\\PreSetDataEvent>`.
+:method:`PreSetDataEvent::setData() <Symfony\\Component\\Form\\Event\\PreSetDataEvent::setData>`.
 The method :method:`Form::setData() <Symfony\\Component\\Form\\Form::setData>`
 is locked since the event is dispatched from it and will throw an exception
 if called from a listener.
