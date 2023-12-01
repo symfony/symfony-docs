@@ -51,9 +51,9 @@ The following database servers are known to be compatible:
 
 .. note::
 
-    Newer releases of Doctrine DBAL might increase these minimal versions. Please check
-    the manual page on `Doctrine DBAL Platforms`_ if your database server is compatible
-    with the installed Doctrine DBAL version.
+    Newer releases of Doctrine DBAL might increase these minimal versions. Check
+    the manual page on `Doctrine DBAL Platforms`_ if your database server is
+    compatible with the installed Doctrine DBAL version.
 
 .. _`Doctrine DBAL Connection`: https://github.com/doctrine/dbal/blob/master/src/Connection.php
 .. _`Doctrine DBAL URL`: https://www.doctrine-project.org/projects/doctrine-dbal/en/current/reference/configuration.html#connecting-using-a-url
