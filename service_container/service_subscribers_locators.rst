@@ -570,6 +570,23 @@ Now you can inject the service locator in any other services:
 
 .. configuration-block::
 
+    .. code-block:: php-attributes
+
+        // src/CommandBus.php
+        namespace App;
+
+        use Psr\Container\ContainerInterface;
+        use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+        class CommandBus
+        {
+            public function __construct(
+                #[Autowire(service: 'app.command_handler_locator')]
+                private ContainerInterface $locator,
+            ) {
+            }
+        }
+
     .. code-block:: yaml
 
         # config/services.yaml
