@@ -87,6 +87,17 @@ method in the extension)::
         }
     }
 
+:doc:Implement process() directly in the bundle definition by extending AbstractBundle
+and implementing CompilerPassInterface.::
+
+    class SurvosApiGridBundle extends AbstractBundle implements CompilerPassInterface
+    {
+    // The compiler pass
+    public function process(ContainerBuilder $container): void
+    {
+
+    }
+
 If you are using custom :doc:`service tags </service_container/tags>` in a
 bundle then by convention, tag names consist of the name of the bundle
 (lowercase, underscores as separators), followed by a dot, and finally the
