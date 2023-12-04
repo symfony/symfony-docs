@@ -379,10 +379,6 @@ from inside ``app.js``:
 Handling CSS
 ------------
 
-.. versionadded:: 6.4
-
-    The ability to import CSS files was introduced in Symfony 6.4.
-
 CSS can be added to your page by importing it from a JavaScript file. The default
 ``assets/app.js`` already imports ``assets/styles/app.css``:
 
@@ -638,10 +634,6 @@ validate the performance of your site!
 
 Performance: Understanding Preloading
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.4
-
-    Automatic preloading of JavaScript files was introduced in Symfony 6.4.
 
 One issue that LightHouse may report is:
 
