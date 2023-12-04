@@ -948,6 +948,17 @@ you don't need to do *anything*: the service will be automatically loaded. Then,
 implements ``Twig\Extension\ExtensionInterface``. And thanks to ``autowire``, you can even add
 constructor arguments without any configuration.
 
+Autconfiguration also works with attributes. Some attributes like
+:class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`,
+:class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener` and
+:class:`Symfony\\Component\\Console\\Attribute\\AsCommand` are registered
+for autoconfiguration. Any class using these attributes will have tags applied
+to them.
+
+.. versionadded:: 5.3
+
+    Autoconfiguration through attributes was introduced in Symfony 5.3.
+
 Linting Service Definitions
 ---------------------------
 
