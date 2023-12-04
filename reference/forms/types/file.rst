@@ -55,6 +55,10 @@ You might calculate the filename in one of the following ways::
     // use the original file name
     $file->move($directory, $file->getClientOriginalName());
 
+    // when "webkitdirectory" upload was used
+    // otherwise the value will be the same as getClientOriginalName
+    // $file->move($directory, $file->getClientOriginalPath());
+
     // compute a random name and try to guess the extension (more secure)
     $extension = $file->guessExtension();
     if (!$extension) {
@@ -63,9 +67,9 @@ You might calculate the filename in one of the following ways::
     }
     $file->move($directory, rand(1, 99999).'.'.$extension);
 
-Using the original name via ``getClientOriginalName()`` is not safe as it
-could have been manipulated by the end-user. Moreover, it can contain
-characters that are not allowed in file names. You should sanitize the name
+Using the original name via ``getClientOriginalName()`` or ``getClientOriginalPath``
+is not safe as it could have been manipulated by the end-user. Moreover, it can contain
+characters that are not allowed in file names. You should sanitize the value
 before using it directly.
 
 Read :doc:`/controller/upload_file` for an example of how to manage a file
