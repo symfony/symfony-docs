@@ -2,8 +2,11 @@ Front-end Tools: Handling CSS & JavaScript
 ==========================================
 
 Symfony gives you the flexibility to choose any front-end tools you want. There
-are generally two approaches: :ref:`building your HTML with PHP & Twig <frontend-twig-php>`
-or :ref:`building your frontend with a JavaScript framework <frontend-js>` like React.
+are generally two approaches:
+
+#. :ref:`building your HTML with PHP & Twig <frontend-twig-php>`;
+#. :ref:`building your frontend with a JavaScript framework <frontend-js>` like React.
+
 Both work great - and are discussed below.
 
 .. _frontend-twig-php:
