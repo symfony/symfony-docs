@@ -48,8 +48,8 @@ of packages in ``importmap`` should be the same as the ones in ``peerDependencie
                     "fetch": "eager",
                     "enabled": true,
                     "autoimport": {
-                        "dist/bootstrap4-theme.css": false,
-                        "dist/bootstrap5-theme.css": true
+                        "@acme/feature/dist/bootstrap4-theme.css": false,
+                        "@acme/feature/dist/bootstrap5-theme.css": true
                     }
                 }
             },
