@@ -1,11 +1,17 @@
 Front-end Tools: Handling CSS & JavaScript
 ==========================================
 
-Symfony gives you the flexibility to choose any front-end tools you want. This could
-be dead-simple - like putting CSS & JS directly in the ``public/`` directory - or
-more advanced - like scaffolding your front-end with a tool like Next.js.
+Symfony gives you the flexibility to choose any front-end tools you want. There
+are generally two approaches: :ref:`building your HTML with PHP & Twig <frontend-twig-php>`
+or :ref:`building your frontend with a JavaScript framework <frontend-js>` like React.
+Both work great - and are discussed below.
 
-However, Symfony *does* come with two powerful options to help you build a modern,
+.. _frontend-twig-php:
+
+Using PHP & Twig
+----------------
+
+Symfony comes with two powerful options to help you build a modern,
 fast frontend, *and* enjoy the process:
 
 * :ref:`AssetMapper <frontend-asset-mapper>` (recommended for new projects) runs
@@ -39,7 +45,7 @@ be executed by a browser.
 .. _frontend-asset-mapper:
 
 AssetMapper (Recommended)
--------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 AssetMapper is the recommended system for handling your assets. It runs entirely
 in PHP with *no* complex build step or dependencies. It does this by leveraging
@@ -51,7 +57,7 @@ to a polyfill.
 .. _frontend-webpack-encore:
 
 Webpack Encore
---------------
+~~~~~~~~~~~~~~
 
 .. screencast::
 
@@ -65,7 +71,7 @@ asset system that's a *delight* to use.
 :doc:`Read the Encore Documentation </frontend/encore/index>`
 
 Stimulus & Symfony UX Components
---------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once you've installed AssetMapper or Encore, it's time to start building your
 front-end. You can write your JavaScript however you want, but we recommend
@@ -73,6 +79,18 @@ using `Stimulus`_, `Turbo`_ and a set of tools called `Symfony UX`_.
 
 To learn about Stimulus & the UX Components, see:
 the `StimulusBundle Documentation`_
+
+.. _frontend-js:
+
+Using a Front-end Framework (React, Vue, Svelte, etc)
+-----------------------------------------------------
+
+If you want to use a front-end framework (Next.js, React, Vue, Svelte, etc),
+we recommend using their native tools and using Symfony as a pure API. A wonderful
+tool to do that is `API Platform`_. Their standard distribution comes with a
+Symfony-powered API backend, frontend scaffolding in Next.js (other frameworks
+are also supported) and a React admin interface. It comes fully Dockerized and even
+contains a web server.
 
 Other Front-End Articles
 ------------------------
@@ -89,3 +107,4 @@ Other Front-End Articles
 .. _Stimulus: https://stimulus.hotwired.dev/
 .. _Turbo: https://turbo.hotwired.dev/
 .. _Symfony UX: https://ux.symfony.com
+.. _API Platform: https://api-platform.com/
