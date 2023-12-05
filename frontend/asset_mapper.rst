@@ -993,10 +993,6 @@ rendered by the ``{{ importmap() }}`` Twig function:
 Page-Specific CSS & JavaScript
 ------------------------------
 
----> TODO HEre
----> need to add the entrypoint in the importmap.php file
-----> and should NOT call parent() in the javascript block
-
 Sometimes you may choose to include CSS or JavaScript files only on certain
 pages. For JavaScript, an easy way is to load the file with a `dynamic import`_:
 
