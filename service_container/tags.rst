@@ -220,7 +220,7 @@ method::
     }
 
 You can also make attributes usable on methods. To do so, update the previous
-example and add ``Attribute::TARGET_METHOD`::
+example and add ``Attribute::TARGET_METHOD``::
 
     // src/Attribute/SensitiveElement.php
     namespace App\Attribute;
