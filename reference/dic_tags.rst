@@ -516,7 +516,7 @@ The ``warmUp()`` method must return an array with the files and classes to
 preload. Files must be absolute paths and classes must be fully-qualified class
 names. The only restriction is that files must be stored in the cache directory.
 If you don't need to preload anything, return an empty array. If read-only
-artefacts need to be created, you can store them in a different directory
+artifacts need to be created, you can store them in a different directory
 with the ``$buildDir`` parameter of the ``warmUp()`` method.
 
 .. versionadded:: 6.4
