@@ -2,8 +2,8 @@ The Runtime Component
 =====================
 
     The Runtime Component decouples the bootstrapping logic from any global state
-    to make sure the application can run with runtimes like PHP-PM, ReactPHP,
-    Swoole, etc. without any changes.
+    to make sure the application can run with runtimes like `PHP-PM`_, `ReactPHP`_,
+    `Swoole`_, etc. without any changes.
 
 Installation
 ------------
@@ -468,5 +468,7 @@ The end user will now be able to create front controller like::
         return new SomeCustomPsr15Application();
     };
 
+.. _PHP-PM: https://github.com/php-pm/php-pm
+.. _Swoole: https://openswoole.com/
 .. _ReactPHP: https://reactphp.org/
 .. _`PSR-15`: https://www.php-fig.org/psr/psr-15/
