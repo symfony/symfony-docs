@@ -118,6 +118,9 @@ resources::
     namespace Shared;
 
     // ...
+    use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+    use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+    // ...
 
     class Kernel extends BaseKernel
     {
