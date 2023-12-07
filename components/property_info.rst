@@ -183,6 +183,26 @@ for a property::
 
 See :ref:`components-property-info-type` for info about the ``Type`` class.
 
+Documentation Block
+~~~~~~~~~~~~~~~~~~~
+
+Extractors that implement :class:`Symfony\\Component\\PropertyInfo\\PropertyDocBlockExtractorInterface`
+can provide the full documentation block for a property as a string::
+
+    $docBlock = $propertyInfo->getDocBlock($class, $property);
+    /*
+        Example Result
+        --------------
+        string(79):
+            This is the subsequent paragraph in the DocComment.
+            It can span multiple lines.
+    */
+
+.. versionadded:: 7.1
+
+    The :class:`Symfony\\Component\\PropertyInfo\\PropertyDocBlockExtractorInterface``
+    interface was introduced in Symfony 7.1.
+
 .. _property-info-description:
 
 Description Information
@@ -413,6 +433,12 @@ library is present::
     // Description information.
     $phpDocExtractor->getShortDescription($class, $property);
     $phpDocExtractor->getLongDescription($class, $property);
+    $phpDocExtractor->getDocBlock($class, $property);
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor::getDocBlock``
+    method was introduced in Symfony 7.1.
 
 PhpStanExtractor
 ~~~~~~~~~~~~~~~~
