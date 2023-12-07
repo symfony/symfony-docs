@@ -1,0 +1,37 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-11-03T08:58:39Z
+
+I talked to @dunglas before and he agrees with the documentation move
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-11-03T13:29:00Z
+
+The PR is ready :slightly_smiling_face: I took every topic of the README and integrated it. I also updated with your suggested changes @dunglas, thank you :+1:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-11-03T13:34:41Z
+
+I think we should target 6.4 branch, because symfony/panther:5.4 will never exist 🤔
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-11-03T13:40:19Z
+
+Rebased on 6.4 :+1:
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-11-15T06:01:28Z
+
+@dunglas is this PR ready from your side?
+
+Are you planing to move panther to Symfony 6.4 or later?
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-11-15T07:37:05Z
+
+@OskarStark I think that in 6.4/7.0 we can no longer make any changes because their release is imminent (3 weeks).
