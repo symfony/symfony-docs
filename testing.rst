@@ -1166,12 +1166,15 @@ HttpClient Assertions
 
     The HttpClient assertions were introduced in Symfony 6.4.
 
-.. TODO
-..  End to End Tests (E2E)
-..  ----------------------
-..  * panther
-..  * testing javascript
-..  * UX or form collections as example?
+End to End Tests (E2E)
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to test the application as a whole, including the JavaScript
+code, you can use a real browser instead of the test client. This is
+called an end-to-end test and it's a great way to test the application.
+
+This can be achieved thanks to the Panther component. You can learn more
+about it in :doc:`the dedicated page </testing/end_to_end>`.
 
 Learn more
 ----------
