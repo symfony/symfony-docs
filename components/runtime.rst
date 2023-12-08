@@ -117,6 +117,10 @@ template:
         }
     }
 
+If you want a reference, the The Symfony's runtime can be found at
+<a href="https://github.com/symfony/symfony/blob/5.4/src/Symfony/Component/Runtime/Internal/autoload_runtime.template" class="reference external" title="Symfony autoload_runtime.template" rel="external noopener noreferrer" target="_blank">src/Symfony/Component/Runtime/Internal/autoload_runtime.template()</a>.
+
+
 Using the Runtime
 -----------------
 
