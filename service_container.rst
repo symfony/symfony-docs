@@ -1038,10 +1038,6 @@ Autconfiguration also works with attributes. Some attributes like
 for autoconfiguration. Any class using these attributes will have tags applied
 to them.
 
-.. versionadded:: 5.3
-
-    Autoconfiguration through attributes was introduced in Symfony 5.3.
-
 Linting Service Definitions
 ---------------------------
 
