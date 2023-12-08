@@ -257,7 +257,8 @@ the application ID to run under CLI context::
 
     // bin/console
     use Shared\Kernel;
-    // ...
+    use Symfony\Component\Console\Input\InputInterface;
+    use Symfony\Component\Console\Input\InputOption;
 
     return function (InputInterface $input, array $context) {
         $kernel = new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG'], $input->getParameterOption(['--id', '-i'], $context['APP_ID']));
