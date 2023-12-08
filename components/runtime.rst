@@ -73,7 +73,6 @@ To make a console application, the bootstrap code would look like::
         return new Application($kernel);
     };
 
-
 Selecting Runtimes
 ------------------
 
