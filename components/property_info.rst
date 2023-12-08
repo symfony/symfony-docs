@@ -200,7 +200,7 @@ can provide the full documentation block for a property as a string::
 
 .. versionadded:: 7.1
 
-    The :class:`Symfony\\Component\\PropertyInfo\\PropertyDocBlockExtractorInterface``
+    The :class:`Symfony\\Component\\PropertyInfo\\PropertyDocBlockExtractorInterface`
     interface was introduced in Symfony 7.1.
 
 .. _property-info-description:
@@ -437,7 +437,7 @@ library is present::
 
 .. versionadded:: 7.1
 
-    The :method:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor::getDocBlock``
+    The :method:`Symfony\\Component\\PropertyInfo\\Extractor\\PhpDocExtractor::getDocBlock`
     method was introduced in Symfony 7.1.
 
 PhpStanExtractor
