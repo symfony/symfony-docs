@@ -28,7 +28,7 @@ the [Symfony Docs Contributing Guide](https://symfony.com/doc/current/contributi
 
 > [!IMPORTANT]
 > Use `5.4` branch as the base of your pull requests, unless you are documenting a
-> feature that was introduced *after* Symfony 5.4 (e.g. in Symfony 6.3).
+> feature that was introduced *after* Symfony 6.4 (e.g. in Symfony 7.1).
 
 Build Documentation Locally
 ---------------------------
