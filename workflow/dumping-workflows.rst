@@ -65,6 +65,25 @@ files and ``PlantUmlDumper`` to create the PlantUML files::
 Styling
 -------
 
+You can use ``--with-metadata`` option in the ``workflow:dump`` command to include places, transitions and
+workflow's metadata.
+
+The DOT image will look like this :
+
+.. image:: /_images/components/workflow/blogpost_metadata.png
+
+.. note::
+
+    The ``--with-metadata`` option only works for the DOT dumper for now.
+
+.. note::
+
+    The ``label`` metadata is not included in the dumped metadata, because it is used as a place's title.
+
+.. versionadded:: 6.4
+
+    The ``--with-metadata`` option was introduced in Symfony 6.4.
+
 You can use ``metadata`` with the following keys to style the workflow:
 
 * for places:
