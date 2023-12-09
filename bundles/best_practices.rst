@@ -482,6 +482,13 @@ can be used for autowiring.
 Services should not use autowiring or autoconfiguration. Instead, all services should
 be defined explicitly.
 
+.. tip::
+
+    If there is no intention for the service id to be used by the end user, you can
+    mark it as *hidden* by prefixing it with a dot (e.g. ``.acme_blog.logger``).
+    This prevents the service from being listed in the default ``debug:container``
+    command output.
+
 .. seealso::
 
     You can learn much more about service loading in bundles reading this article:
