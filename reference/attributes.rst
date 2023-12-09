@@ -80,6 +80,7 @@ Security
 ~~~~~~~~
 
 * :ref:`CurrentUser <security-json-login>`
+* :ref:`IsCsrfTokenValid <csrf-controller-attributes>`
 * :ref:`IsGranted <security-securing-controller-attributes>`
 
 Serializer

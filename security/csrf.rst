@@ -164,6 +164,8 @@ method to check its validity::
         }
     }
 
+.. _csrf-controller-attributes:
+
 Alternatively you can use the
 :class:`Symfony\\Component\\Security\\Http\\Attribute\\IsCsrfTokenValid`
 attribute on the controller action::
