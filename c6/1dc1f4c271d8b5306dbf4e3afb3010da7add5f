@@ -1,0 +1,23 @@
+---------------------------------------------------------------------------
+
+by MrYamous at 2023-11-20T09:47:23Z
+
+Seems related to #19138
+
+If we're sure this change happened with DBAL 3.7, i think we should update the 4.X mention in [Doctrine Configuration Reference](https://symfony.com/doc/current/reference/configuration/doctrine.html#doctrine-dbal-configuration) page too
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-11-21T13:56:24Z
+
+I think @MrYamous comment is important. Also, I can't find any reference to this change id DBAL 3.7 release notes: https://github.com/doctrine/dbal/releases/tag/3.7.0
+
+@louismariegaborit can you please link to the specific commit or release notes that mention this change? Thanks!
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2023-11-21T14:35:10Z
+
+IIUC [this is the relevant PR](https://github.com/doctrine/dbal/pull/5844) in doctrine/dbal 3.6
+
+This seems to be confirmed by the discussion in #18395
