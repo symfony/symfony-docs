@@ -103,6 +103,7 @@ via a third-party provider:
 Service               Install with
 ===================== ==============================================
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
+`Azure`_              ``composer require symfony/azure-mailer``
 `Brevo`_              ``composer require symfony/brevo-mailer``
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailchimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
@@ -114,6 +115,10 @@ Service               Install with
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
 ===================== ==============================================
+
+.. versionadded:: 7.1
+
+    The Azure integration was introduced in Symfony 7.1.
 
 .. note::
 
@@ -166,6 +171,8 @@ party provider:
 | `Amazon SES`_          | - SMTP ses+smtp://USERNAME:PASSWORD@default         |
 |                        | - HTTP ses+https://ACCESS_KEY:SECRET_KEY@default    |
 |                        | - API ses+api://ACCESS_KEY:SECRET_KEY@default       |
++------------------------+-----------------------------------------------------+
+| `Azure`_               | - API azure+api://ACS_RESOURCE_NAME:KEY@default     |
 +------------------------+-----------------------------------------------------+
 | `Brevo`_               | - SMTP brevo+smtp://USERNAME:PASSWORD@default       |
 |                        | - HTTP n/a                                          |
@@ -1815,6 +1822,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
    handler.
 
 .. _`Amazon SES`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Amazon/README.md
+.. _`Azure`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Azure/README.md
 .. _`App Password`: https://support.google.com/accounts/answer/185833
 .. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Brevo/README.md
 .. _`default_socket_timeout`: https://www.php.net/manual/en/filesystem.configuration.php#ini.default-socket-timeout
