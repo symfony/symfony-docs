@@ -700,11 +700,6 @@ create your own User from the claims, you must
 Creating Users from Token
 -------------------------
 
-.. versionadded:: 6.3
-
-    The possibility to omit the user provider in case of stateless firewalls
-    was introduced in Symfony 6.3.
-
 Some types of tokens (for instance OIDC) contain all information required
 to create a user entity (e.g. username and roles). In this case, you don't
 need a user provider to create a user from the database::
