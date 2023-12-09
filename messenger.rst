@@ -1582,8 +1582,13 @@ read_timeout             Float, value in seconds                ``0``
 timeout                  Connection timeout. Float, value in    ``0``
                          seconds default indicates unlimited
 sentinel_master          String, if null or empty Sentinel      null
-                         support is disabled
+redis_sentinel           support is disabled
 =======================  =====================================  =================================
+
+.. versionadded:: 7.1
+
+    The option `redis_sentinel` as an alias for `sentinel_master` was introduced
+    in Symfony 7.1.
 
 .. caution::
 
