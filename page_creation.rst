@@ -282,6 +282,7 @@ OK, time to finish mastering the fundamentals by reading these articles:
 * :doc:`/controller`
 * :doc:`/templates`
 * :doc:`/configuration`
+* :doc:`/frontend`
 
 Then, learn about other important topics like the
 :doc:`service container </service_container>`,
