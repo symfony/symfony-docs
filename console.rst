@@ -513,8 +513,8 @@ console::
     {
         public function testExecute()
         {
-            $kernel = self::bootKernel();
-            $application = new Application($kernel);
+            self::bootKernel();
+            $application = new Application(self::$kernel);
 
             $command = $application->find('app:create-user');
             $commandTester = new CommandTester($command);
