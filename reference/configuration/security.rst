@@ -1013,6 +1013,8 @@ multiple firewalls, the "context" could actually be shared:
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
 
+.. _reference-security-stateless:
+
 stateless
 ~~~~~~~~~
 
