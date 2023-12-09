@@ -310,6 +310,15 @@ machine type, use ``camelCased workflow name + StateMachine``::
         }
     }
 
+To get the enabled transition of a Workflow, you can use
+:method:`Symfony\\Component\\Workflow\\WorkflowInterface::getEnabledTransition`
+method.
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\Workflow\\WorkflowInterface::getEnabledTransition`
+    method was introduced in Symfony 7.1.
+
 Workflows can also be injected thanks to their name and the
 :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target`
 attribute::
