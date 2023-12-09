@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-12-09T09:00:26Z
+
+@javiereguiluz maybe do you know if this is true. I am wondering, as we explicitly mention to add it to the beginning before and now it should be changed to the reverse... 🤔 I've never had more than one form_theme...
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-12-09T10:59:25Z
+
+@OskarStark you made me doubt about this 😓 Let's ask Symfony Form experts like @xabbuh or @HeahDude  Thanks!
+
+---------------------------------------------------------------------------
+
+by HeahDude at 2023-12-09T16:58:18Z
+
+This is true as said in the linked documentation in the PR description.
