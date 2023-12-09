@@ -514,8 +514,8 @@ console::
     {
         public function testExecute(): void
         {
-            $kernel = self::bootKernel();
-            $application = new Application($kernel);
+            self::bootKernel();
+            $application = new Application(self::$kernel);
 
             $command = $application->find('app:create-user');
             $commandTester = new CommandTester($command);
