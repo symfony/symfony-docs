@@ -709,24 +709,40 @@ create your own User from the claims, you must
         }
     }
 
-Using Self-Claimed Tokens
+Creating Users from Token
 -------------------------
-
-You may use tokens that are self-claimed, meaning that they contain all
-the information needed to authenticate the user. This happens when a security
-token doesn't need a user provider to get all needed information about the
-user. For instance, a JWT can be self-claimed when it contains a username as
-well as the roles of the user.
-
-When using self-claimed tokens with stateless firewalls, you can omit to
-configure a user provider. The token authenticator will use the token to
-create a user object with the claims of the token. This means that you can
-skip creating your own user provider.
 
 .. versionadded:: 6.3
 
     The possibility to omit the user provider in case of stateless firewalls
-    and self-claimed tokens was introduced in Symfony 6.3.
+    was introduced in Symfony 6.3.
+
+Some types of tokens (for instance OIDC) contain all information required
+to create a user entity (e.g. username and roles). In this case, you don't
+need a user provider to create a user from the database::
+
+    // src/Security/AccessTokenHandler.php
+    namespace App\Security;
+
+    // ...
+    class AccessTokenHandler implements AccessTokenHandlerInterface
+    {
+        // ...
+
+        public function getUserBadgeFrom(string $accessToken): UserBadge
+        {
+            // get the data from the token
+            $payload = ...;
+
+            return new UserBadge(
+                $payload->getUserId(),
+                fn (string $userIdentifier) => new User($userIdentifier, $payload->getRoles())
+            );
+        }
+    }
+
+When using this strategy, you can omit the ``user_provider`` configuration
+for :ref:`stateless firewalls <reference-security-stateless>`.
 
 .. _`JSON Web Tokens (JWT)`: https://datatracker.ietf.org/doc/html/rfc7519
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
