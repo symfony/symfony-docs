@@ -838,10 +838,88 @@ iterator, add the ``exclude`` option:
             ;
         };
 
-.. note::
+In the case the referencing service is itself tagged with the tag being used in the tagged
+iterator, it is automatically excluded from the injected iterable. This behavior can be
+disabled by setting the ``exclude_self`` option to ``false``:
 
-    In the case the referencing service is itself tagged with the tag being used in the tagged
-    iterator, it is automatically excluded from the injected iterable.
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/HandlerCollection.php
+        namespace App;
+
+        use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+
+        class HandlerCollection
+        {
+            public function __construct(
+                #[TaggedIterator('app.handler', exclude: ['App\Handler\Three'], excludeSelf: false)]
+                iterable $handlers
+            ) {
+            }
+        }
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+        services:
+            # ...
+
+            # This is the service we want to exclude, even if the 'app.handler' tag is attached
+            App\Handler\Three:
+                tags: ['app.handler']
+
+            App\HandlerCollection:
+                arguments:
+                    - !tagged_iterator { tag: app.handler, exclude: ['App\Handler\Three'], exclude_self: false }
+
+    .. code-block:: xml
+
+        <!-- config/services.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <services>
+                <!-- ... -->
+
+                <!-- This is the service we want to exclude, even if the 'app.handler' tag is attached -->
+                <service id="App\Handler\Three">
+                    <tag name="app.handler"/>
+                </service>
+
+                <service id="App\HandlerCollection">
+                    <!-- inject all services tagged with app.handler as first argument -->
+                    <argument type="tagged_iterator" tag="app.handler" exclude-self="false">
+                        <exclude>App\Handler\Three</exclude>
+                    </argument>
+                </service>
+            </services>
+        </container>
+
+    .. code-block:: php
+
+        // config/services.php
+        namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+        return function(ContainerConfigurator $containerConfigurator) {
+            $services = $containerConfigurator->services();
+
+            // ...
+
+            // This is the service we want to exclude, even if the 'app.handler' tag is attached
+            $services->set(App\Handler\Three::class)
+                ->tag('app.handler')
+            ;
+
+            $services->set(App\HandlerCollection::class)
+                // inject all services tagged with app.handler as first argument
+                ->args([tagged_iterator('app.handler', exclude: [App\Handler\Three::class], excludeSelf: false)])
+            ;
+        };
 
 .. seealso::
 
