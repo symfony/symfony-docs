@@ -80,10 +80,6 @@ The DOT image will look like this :
 
     The ``label`` metadata is not included in the dumped metadata, because it is used as a place's title.
 
-.. versionadded:: 6.4
-
-    The ``--with-metadata`` option was introduced in Symfony 6.4.
-
 You can use ``metadata`` with the following keys to style the workflow:
 
 * for places:
