@@ -1,7 +1,7 @@
 ``placeholder``
 ~~~~~~~~~~~~~~~
 
-**type**: ``string`` or ``boolean``
+**type**: ``string`` or ``TranslatableMessage`` or ``boolean``
 
 This option determines whether or not a special "empty" option (e.g. "Choose
 an option") will appear at the top of a select widget. This option only
@@ -14,6 +14,9 @@ applies if the ``multiple`` option is set to false.
 
     $builder->add('states', ChoiceType::class, [
         'placeholder' => 'Choose an option',
+
+        // or if you want to translate the text
+        'placeholder' => new TranslatableMessage('form.placeholder.select_option', [], 'form'),
     ]);
 
 * Guarantee that no "empty" value option is displayed::
