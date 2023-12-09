@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-12-01T15:45:32Z
+
+In the Symfony Demo app we recently had to do this change to fix some PHPStan issue: https://github.com/symfony/demo/pull/1457/commits/b9b47c74c5de06900577ef2dd57ba7e5ad9ea400
+
+---------------------------------------------------------------------------
+
+by theofidry at 2023-12-08T18:59:14Z
+
+I am not sure we should worry about PHPStan here however, the variable type is documented correctly and PHPStan does not come with Symfony by default.
