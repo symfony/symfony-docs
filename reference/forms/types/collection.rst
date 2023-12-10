@@ -229,6 +229,27 @@ you'd use the :doc:`EmailType </reference/forms/types/email>`. If you want
 to embed a collection of some other form, pass the form type class as this
 option (e.g. ``MyFormType::class``).
 
+keep_as_list
+~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+When set to ``true``, the ``keep_as_list`` option affects the reindexing
+of nested form names within a collection. This feature is particularly useful
+when working with collection types and removing items from the collection
+during form submission.
+
+When this option is set to ``false``, if you have a collection of 3 items and
+you remove the second item, the indexes will be ``0`` and ``2`` when validating
+the collection. However, by enabling the ``keep_as_list`` option and setting
+it to ``true``, the indexes will be reindexed as ``0`` and ``1``. This ensures
+that the indexes remain consecutive and do not have gaps, providing a clearer
+and more predictable structure for your nested forms.
+
+.. versionadded:: 7.1
+
+    The ``keep_as_list`` option was introduced in Symfony 7.1.
+
 prototype
 ~~~~~~~~~
 
