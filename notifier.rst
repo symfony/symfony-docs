@@ -88,6 +88,7 @@ Service             Package                                DSN                  
 `RingCentral`_      ``symfony/ring-central-notifier``      ``ringcentral://API_TOKEN@default?from=FROM``
 `Sendberry`_        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
 `Sms77`_            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
+`SmsSluzba`_        ``symfony/sms-sluzba-notifier``        ``sms-sluzba://USERNAME:PASSWORD@default``
 `SimpleTextin`_     ``symfony/simple-textin-notifier``     ``simpletextin://API_KEY@default?from=FROM``
 `Sinch`_            ``symfony/sinch-notifier``             ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
 `Smsapi`_           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default?from=FROM``
@@ -109,6 +110,10 @@ Service             Package                                DSN                  
     Some third party transports, when using the API, support status callbacks
     via webhooks. See the :doc:`Webhook documentation </webhook>` for more
     details.
+
+.. versionadded:: 7.1
+
+    The `SmsSluzba`_ integration was introduced in Symfony 7.1.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -1006,6 +1011,7 @@ is dispatched. Listeners receive a
 .. _`Smsbox`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsbox/README.md
 .. _`Smsapi`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsapi/README.md
 .. _`Smsc`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Smsc/README.md
+.. _`SmsSluzba`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsSluzba/README.md
 .. _`SpotHit`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SpotHit/README.md
 .. _`Telegram`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telegram/README.md
 .. _`Telnyx`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Telnyx/README.md
