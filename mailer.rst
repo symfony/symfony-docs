@@ -106,11 +106,11 @@ Service               Install with
 `Azure`_              ``composer require symfony/azure-mailer``
 `Brevo`_              ``composer require symfony/brevo-mailer``
 `Infobip`_            ``composer require symfony/infobip-mailer``
-`Mandrill`_           ``composer require symfony/mailchimp-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``
 `Mailjet`_            ``composer require symfony/mailjet-mailer``
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
+`Mandrill`_           ``composer require symfony/mailchimp-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
