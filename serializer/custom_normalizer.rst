@@ -48,6 +48,13 @@ to customize the normalized data. To do that, leverage the ``ObjectNormalizer``:
         {
             return $data instanceof Topic;
         }
+
+        public function getSupportedTypes(?string $format): array
+        {
+            return [
+                Topic::class => true,
+            ];
+        }·
     }
 
 .. deprecated:: 6.1
