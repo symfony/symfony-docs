@@ -105,7 +105,7 @@ Service               Install with
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
 `Brevo`_              ``composer require symfony/brevo-mailer``
 `Infobip`_            ``composer require symfony/infobip-mailer``
-`Mailchimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
+`Mandrill`_           ``composer require symfony/mailchimp-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``
 `Mailjet`_            ``composer require symfony/mailjet-mailer``
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
@@ -1826,8 +1826,8 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Inky`: https://get.foundation/emails/docs/inky.html
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
-.. _`Mailchimp Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
 .. _`MailerSend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailerSend/README.md
+.. _`Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
 .. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
 .. _`Markdown syntax`: https://commonmark.org/
