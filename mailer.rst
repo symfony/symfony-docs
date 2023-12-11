@@ -99,9 +99,9 @@ Using a 3rd Party Transport
 Instead of using your own SMTP server or sendmail binary, you can send emails
 via a third-party provider:
 
-===================== ==============================================
+===================== ===============================================
 Service               Install with
-===================== ==============================================
+===================== ===============================================
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``
@@ -112,7 +112,7 @@ Service               Install with
 `Postmark`_           ``composer require symfony/postmark-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``
 `Sendinblue`_         ``composer require symfony/sendinblue-mailer``
-===================== ==============================================
+===================== ===============================================
 
 .. versionadded:: 6.2
 
