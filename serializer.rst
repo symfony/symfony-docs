@@ -511,20 +511,22 @@ given class:
         |          |   "groups" => [                                            |
         |          |       "book:read",                                         |
         |          |       "book:write",                                        |
-        |          |   ]                                                        |
+        |          |   ],                                                       |
         |          |   "maxDepth" => 1,                                         |
-        |          |   "serializedName" => "book_name"                          |
-        |          |   "ignore" => false                                        |
+        |          |   "serializedName" => "book_name",                         |
+        |          |   "serializedPath" => null,                                |
+        |          |   "ignore" => false,                                       |
         |          |   "normalizationContexts" => [],                           |
         |          |   "denormalizationContexts" => []                          |
         |          | ]                                                          |
         | isbn     | [                                                          |
         |          |   "groups" => [                                            |
         |          |       "book:read",                                         |
-        |          |   ]                                                        |
+        |          |   ],                                                       |
         |          |   "maxDepth" => null,                                      |
-        |          |   "serializedName" => null                                 |
-        |          |   "ignore" => false                                        |
+        |          |   "serializedName" => null,                                |
+        |          |   "serializedPath" => [data][isbn],                        |
+        |          |   "ignore" => false,                                       |
         |          |   "normalizationContexts" => [],                           |
         |          |   "denormalizationContexts" => []                          |
         |          | ]                                                          |
