@@ -99,9 +99,9 @@ Using a 3rd Party Transport
 Instead of using your own SMTP server or sendmail binary, you can send emails
 via a third-party provider:
 
-===================== ==============================================
+===================== ===============================================
 Service               Install with
-===================== ==============================================
+===================== ===============================================
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
 `Azure`_              ``composer require symfony/azure-mailer``
 `Brevo`_              ``composer require symfony/brevo-mailer``
