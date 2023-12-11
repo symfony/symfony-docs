@@ -697,6 +697,36 @@ create your own User from the claims, you must
         }
     }
 
+Creating Users from Token
+-------------------------
+
+Some types of tokens (for instance OIDC) contain all information required
+to create a user entity (e.g. username and roles). In this case, you don't
+need a user provider to create a user from the database::
+
+    // src/Security/AccessTokenHandler.php
+    namespace App\Security;
+
+    // ...
+    class AccessTokenHandler implements AccessTokenHandlerInterface
+    {
+        // ...
+
+        public function getUserBadgeFrom(string $accessToken): UserBadge
+        {
+            // get the data from the token
+            $payload = ...;
+
+            return new UserBadge(
+                $payload->getUserId(),
+                fn (string $userIdentifier) => new User($userIdentifier, $payload->getRoles())
+            );
+        }
+    }
+
+When using this strategy, you can omit the ``user_provider`` configuration
+for :ref:`stateless firewalls <reference-security-stateless>`.
+
 .. _`JSON Web Tokens (JWT)`: https://datatracker.ietf.org/doc/html/rfc7519
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
 .. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750

@@ -348,7 +348,7 @@ the :class:`Symfony\\Component\\RateLimiter\\Reservation` object returned by the
             $limit = $limiter->consume();
             $headers = [
                 'X-RateLimit-Remaining' => $limit->getRemainingTokens(),
-                'X-RateLimit-Retry-After' => $limit->calculateTimeForTokens(1, 1),
+                'X-RateLimit-Retry-After' => $limit->getRetryAfter()->getTimestamp() - time(),
                 'X-RateLimit-Limit' => $limit->getLimit(),
             ];
 
