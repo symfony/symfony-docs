@@ -103,12 +103,8 @@ via a third-party provider:
 Service               Install with
 ===================== ==============================================
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
-<<<<<<< HEAD
 `Infobip`_            ``composer require symfony/infobip-mailer``
-`Mailchimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
-=======
-`Mailchimp`_          ``composer require symfony/mailchimp-mailer``
->>>>>>> 5.4
+`Mandrill`_           ``composer require symfony/mailchimp-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``
 `Mailjet`_            ``composer require symfony/mailjet-mailer``
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
