@@ -133,7 +133,6 @@ precision (default ``1``) of the result::
     Helper::formatTime(125, 2);    // 2 mins, 5 secs
     Helper::formatTime(172799, 4); // 1 day, 23 hrs, 59 mins, 59 secs
 
-
 Formatting Memory
 ---------------
 
