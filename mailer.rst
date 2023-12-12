@@ -112,7 +112,7 @@ Service               Install with                                    Webhook su
 `Mandrill`_           ``composer require symfony/mailchimp-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``    yes
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
-`SendGrid`_           ``composer require symfony/sendgrid-mailer``
+`SendGrid`_           ``composer require symfony/sendgrid-mailer``    yes
 ===================== =============================================== ===============
 
 .. versionadded:: 6.2
