@@ -77,20 +77,27 @@ The Webhook component routing needs to be defined:
             ;
         };
 
-Currently, the following third-party mailer services support webhooks:
+Currently, the following third-party services support webhooks:
 
-=============== ==========================================
-Mailer service  Parser service name
-=============== ==========================================
-Mailgun         ``mailer.webhook.request_parser.mailgun``
-Postmark        ``mailer.webhook.request_parser.postmark``
-Sendgrid        ``mailer.webhook.request_parser.sendgrid``
-=============== ==========================================
+======== ==========================================
+Service  Parser service name
+======== ==========================================
+Brevo    ``mailer.webhook.request_parser.brevo``
+Mailgun  ``mailer.webhook.request_parser.mailgun``
+Mailjet  ``mailer.webhook.request_parser.mailjet``
+Postmark ``mailer.webhook.request_parser.postmark``
+Sendgrid ``mailer.webhook.request_parser.sendgrid``
+Vonage   ``notifier.webhook.request_parser.vonage``
+======== ==========================================
+
+.. versionadded:: 6.3
+
+    The support for Mailgun and Postmark was introduced in Symfony 6.3.
 
 .. versionadded:: 6.4
 
-    Webhook support for the Sendgrid service was introduced in Symfony 6.4.
-
+    The support for Brevo, Mailjet, Sendgrid and Vonage was introduced in
+    Symfony 6.4.
 
 Set up the webhook in the third-party mailer. For Mailgun, you can do this
 in the control panel. As URL, make sure to use the ``/webhook/mailer_mailgun``
