@@ -86,15 +86,6 @@ Sendgrid ``mailer.webhook.request_parser.sendgrid``
 Vonage   ``notifier.webhook.request_parser.vonage``
 ======== ==========================================
 
-.. versionadded:: 6.3
-
-    The support for Mailgun and Postmark was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The support for Brevo, Mailjet, Sendgrid and Vonage was introduced in
-    Symfony 6.4.
-
 Set up the webhook in the third-party mailer. For Mailgun, you can do this
 in the control panel. As URL, make sure to use the ``/webhook/mailer_mailgun``
 path behind the domain you're using.
