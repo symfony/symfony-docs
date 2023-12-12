@@ -93,6 +93,8 @@ native        ``native://default``                      Mailer uses the sendmail
     It's highly recommended to NOT use ``native://default`` as you cannot control
     how sendmail is configured (prefer using ``sendmail://default`` if possible).
 
+.. _mailer_3rd_party_transport:
+
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -286,6 +288,12 @@ party provider:
 
         # .env
         MAILER_DSN=smtp://KEY:DOMAIN@smtp.eu.mailgun.org.com:25
+
+.. tip::
+
+    Some third party mailers, when using the API, support status callback
+    via webhooks. See the :doc:`Webhook documentation </webhook>` for more
+    details.
 
 High Availability
 ~~~~~~~~~~~~~~~~~
