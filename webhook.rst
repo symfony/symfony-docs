@@ -3,7 +3,7 @@ Webhook
 
 .. versionadded:: 6.3
 
-    The Webhook component was introduced in Symfony 6.3
+    The Webhook component was introduced in Symfony 6.3.
 
 The Webhook component is used to respond to remote webhooks to trigger actions
 in your application. This document focuses on using webhooks to listen to remote
@@ -84,7 +84,13 @@ Mailer service  Parser service name
 =============== ==========================================
 Mailgun         ``mailer.webhook.request_parser.mailgun``
 Postmark        ``mailer.webhook.request_parser.postmark``
+Sendgrid        ``mailer.webhook.request_parser.sendgrid``
 =============== ==========================================
+
+.. versionadded:: 6.4
+
+    Webhook support for the Sendgrid service was introduced in Symfony 6.4.
+
 
 Set up the webhook in the third-party mailer. For Mailgun, you can do this
 in the control panel. As URL, make sure to use the ``/webhook/mailer_mailgun``
