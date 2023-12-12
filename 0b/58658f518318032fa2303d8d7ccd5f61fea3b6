@@ -1,0 +1,54 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-12-09T15:58:59Z
+
+A personal big big thank you for driving this forward. Thank you Timo 🙏
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-12-09T18:55:54Z
+
+Please rebase on 6.3, thanks
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-12-09T19:08:18Z
+
+Congrats on this new version 🥳
+
+---------------------------------------------------------------------------
+
+by TimoBakx at 2023-12-09T21:14:12Z
+
+@OskarStark thank you for reminding me.
+
+- Rebased and retargeted to 6.3
+- Squashed commits into 1
+- Fixed inconsistent internal naming in a literal string
+- Added `type` attribute in XML config (see https://github.com/symfony/symfony/pull/52978)
+
+The code block check fails due to Webhook not being installed in the test application ([symfony-tools/symfony-application](https://github.com/symfony-tools/symfony-application.git)). Should I add it there?
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2023-12-09T21:53:04Z
+
+I am glad to see some news for this component documentation, congratulations
+
+---------------------------------------------------------------------------
+
+by TimoBakx at 2023-12-10T07:57:15Z
+
+Thank you @MrYamous and @OskarStark for the feedback. I've updated everything accordingly.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-12-12T10:12:38Z
+
+Can you please rebase? I fixed the Build error
+
+---------------------------------------------------------------------------
+
+by TimoBakx at 2023-12-12T10:30:11Z
+
+@OskarStark Rebased & squashed.
