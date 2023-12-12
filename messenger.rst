@@ -485,6 +485,17 @@ The first argument is the receiver's name (or service id if you routed to a
 custom service). By default, the command will run forever: looking for new messages
 on your transport and handling them. This command is called your "worker".
 
+If you want to consume messages from all available receivers, you can use the
+command with the ``--all`` option:
+
+.. code-block:: terminal
+
+    $ php bin/console messenger:consume --all
+
+.. versionadded:: 7.1
+
+    The ``--all`` option was introduced in Symfony 7.1.
+
 .. tip::
 
     To properly stop a worker, throw an instance of
