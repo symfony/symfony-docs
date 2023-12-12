@@ -281,8 +281,8 @@ OK, time to finish mastering the fundamentals by reading these articles:
 * :doc:`/routing`
 * :doc:`/controller`
 * :doc:`/templates`
-* :doc:`/configuration`
 * :doc:`/frontend`
+* :doc:`/configuration`
 
 Then, learn about other important topics like the
 :doc:`service container </service_container>`,
