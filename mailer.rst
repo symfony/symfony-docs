@@ -179,7 +179,7 @@ party provider:
 |                        | - HTTP n/a                                          |
 |                        | - API infobip+api://KEY@BASE_URL                    |
 +------------------------+-----------------------------------------------------+
-| `Mailchimp Mandrill`_  | - SMTP mandrill+smtp://USERNAME:PASSWORD@default    |
+| `Mandrill`_            | - SMTP mandrill+smtp://USERNAME:PASSWORD@default    |
 |                        | - HTTP mandrill+https://KEY@default                 |
 |                        | - API mandrill+api://KEY@default                    |
 +------------------------+-----------------------------------------------------+
@@ -1484,8 +1484,8 @@ If your transport does not support tags and metadata, they will be added as cust
 The following transports currently support tags and metadata:
 
 * Brevo
-* Mailchimp
 * Mailgun
+* Mandrill
 * Postmark
 * Sendgrid
 
