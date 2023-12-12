@@ -98,7 +98,7 @@ Service             Package                                DSN                  
 `Telnyx`_           ``symfony/telnyx-notifier``            ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 `TurboSms`_         ``symfony/turbo-sms-notifier``         ``turbosms://AUTH_TOKEN@default?from=FROM``
 `Twilio`_           ``symfony/twilio-notifier``            ``twilio://SID:TOKEN@default?from=FROM``                                                                                  yes
-`Vonage`_           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@default?from=FROM``
+`Vonage`_           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@default?from=FROM``                                                                                 yes
 `Yunpian`_          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@default``
 ==================  =====================================  ========================================================================================================================= ===============
 
