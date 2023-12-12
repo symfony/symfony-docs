@@ -1601,6 +1601,7 @@ and set the ``limiter`` option to its service ID:
                     $globalFactory: '@limiter.ip_login'
                     # localFactory is the limiter for username+IP
                     $localFactory: '@limiter.username_ip_login'
+                    $secret: '%kernel.secret%'
 
         security:
             firewalls:
@@ -1651,6 +1652,8 @@ and set the ``limiter`` option to its service ID:
                     <srv:argument type="service" id="limiter.ip_login"/>
                     <!-- 2nd argument is the limiter for username+IP -->
                     <srv:argument type="service" id="limiter.username_ip_login"/>
+                    <!-- 3rd argument is the app secret -->
+                    <srv:argument type="service" id="%kernel.secret%"/>
                 </srv:service>
             </srv:services>
 
@@ -1693,6 +1696,8 @@ and set the ``limiter`` option to its service ID:
                     new Reference('limiter.ip_login'),
                     // 2nd argument is the limiter for username+IP
                     new Reference('limiter.username_ip_login'),
+                    // 3rd argument is the app secret
+                    new Reference('kernel.secret'),
                 ]);
 
             $security->firewall('main')
