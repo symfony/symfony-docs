@@ -99,34 +99,34 @@ file:
 
 With this done, you can now add a RemoteEvent consumer to react to the webhooks::
 
-use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
-use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
-use Symfony\Component\RemoteEvent\Event\Mailer\MailerDeliveryEvent;
-use Symfony\Component\RemoteEvent\Event\Mailer\MailerEngagementEvent;
-use Symfony\Component\RemoteEvent\RemoteEvent;
+    use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
+    use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
+    use Symfony\Component\RemoteEvent\Event\Mailer\MailerDeliveryEvent;
+    use Symfony\Component\RemoteEvent\Event\Mailer\MailerEngagementEvent;
+    use Symfony\Component\RemoteEvent\RemoteEvent;
 
-#[AsRemoteEventConsumer('mailer_mailgun')]
-final readonly class WebhookListener implements ConsumerInterface
-{
-    public function consume(RemoteEvent $event): void
+    #[AsRemoteEventConsumer('mailer_mailgun')]
+    final readonly class WebhookListener implements ConsumerInterface
     {
-        if ($event instanceof MailerDeliveryEvent) {
-            $this->handleMailDelivery($event);
-        } elseif ($event instanceof MailerEngagementEvent) {
-            $this->handleMailEngagement($event);
-        } else {
-            // This is not an email event
-            return;
+        public function consume(RemoteEvent $event): void
+        {
+            if ($event instanceof MailerDeliveryEvent) {
+                $this->handleMailDelivery($event);
+            } elseif ($event instanceof MailerEngagementEvent) {
+                $this->handleMailEngagement($event);
+            } else {
+                // This is not an email event
+                return;
+            }
+        }
+
+        private function handleMailDelivery(MailerDeliveryEvent $event): void
+        {
+            // Handle the mail delivery event
+        }
+
+        private function handleMailEngagement(MailerEngagementEvent $event): void
+        {
+            // Handle the mail engagement event
         }
     }
-
-    private function handleMailDelivery(MailerDeliveryEvent $event): void
-    {
-        // Handle the mail delivery event
-    }
-
-    private function handleMailEngagement(MailerEngagementEvent $event): void
-    {
-        // Handle the mail engagement event
-    }
-}
