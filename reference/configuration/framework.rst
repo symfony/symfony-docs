@@ -3547,6 +3547,16 @@ enabled
 
 Adds a `Link HTTP header`_ to the response.
 
+webhook
+~~~~~~~
+
+.. versionadded:: 6.3
+
+    The Webhook configuration was introduced in Symfony 6.3.
+
+The ``webhook`` option (and its children) are used to configure the webhooks
+defined in your application. Read more about the options in the :ref:`Webhook documentation <webhook>`.
+
 workflows
 ~~~~~~~~~
 
