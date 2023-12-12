@@ -75,16 +75,15 @@ The Webhook component routing needs to be defined:
 
 Currently, the following third-party services support webhooks:
 
-======== ==========================================
-Service  Parser service name
-======== ==========================================
-Brevo    ``mailer.webhook.request_parser.brevo``
-Mailgun  ``mailer.webhook.request_parser.mailgun``
-Mailjet  ``mailer.webhook.request_parser.mailjet``
-Postmark ``mailer.webhook.request_parser.postmark``
-Sendgrid ``mailer.webhook.request_parser.sendgrid``
-Vonage   ``notifier.webhook.request_parser.vonage``
-======== ==========================================
+============== ==========================================
+Mailer Service Parser service name
+============== ==========================================
+Brevo          ``mailer.webhook.request_parser.brevo``
+Mailgun        ``mailer.webhook.request_parser.mailgun``
+Mailjet        ``mailer.webhook.request_parser.mailjet``
+Postmark       ``mailer.webhook.request_parser.postmark``
+Sendgrid       ``mailer.webhook.request_parser.sendgrid``
+============== ==========================================
 
 Set up the webhook in the third-party mailer. For Mailgun, you can do this
 in the control panel. As URL, make sure to use the ``/webhook/mailer_mailgun``
@@ -143,11 +142,16 @@ Currently, the following third-party sms transports support webhooks:
 SMS service  Parser service name
 ============ ==========================================
 Twilio       ``notifier.webhook.request_parser.twilio``
+Vonage       ``notifier.webhook.request_parser.vonage``
 ============ ==========================================
 
 .. versionadded:: 6.3
 
     The support for Twilio was introduced in Symfony 6.3.
+
+.. versionadded:: 6.4
+
+    The support for Vonage was introduced in Symfony 6.4.
 
 For SMS transports, an additional ``SmsEvent`` is available in the RemoteEvent
 consumer::
