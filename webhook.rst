@@ -1,10 +1,6 @@
 Webhook
 =======
 
-.. versionadded:: 6.3
-
-    The Webhook component was introduced in Symfony 6.3.
-
 The Webhook component is used to respond to remote webhooks to trigger actions
 in your application. This document focuses on using webhooks to listen to remote
 events in other Symfony components.
