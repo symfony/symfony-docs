@@ -179,7 +179,7 @@ Provider              SMTP                                                 HTTP 
 ===================== ==================================================== =========================================== ========================================
 `Amazon SES`_         ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
 `Google Gmail`_       gmail+smtp://USERNAME:APP-PASSWORD@default           n/a                                         n/a
-`Mailchimp Mandrill`_ mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
+`Mandrill`_           mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
 `Mailgun`_            mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
 `Mailjet`_            mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
 `Postmark`_           postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
@@ -1403,8 +1403,8 @@ If your transport does not support tags and metadata, they will be added as cust
 
 The following transports currently support tags and metadata:
 
-* Mailchimp
 * Mailgun
+* Mandrill
 * Postmark
 * Sendgrid
 * Sendinblue
