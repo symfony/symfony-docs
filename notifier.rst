@@ -55,9 +55,9 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-==================  =====================================  ===========================================================================
-Service             Package                                DSN
-==================  =====================================  ===========================================================================
+==================  =====================================  ========================================================================================================================= ===============
+Service             Package                                DSN                                                                                                                       Webhook support
+==================  =====================================  ========================================================================================================================= ===============
 `46elks`_           ``symfony/forty-six-elks-notifier``    ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
 `AllMySms`_         ``symfony/all-my-sms-notifier``        ``allmysms://LOGIN:APIKEY@default?from=FROM``
 `AmazonSns`_        ``symfony/amazon-sns-notifier``        ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
@@ -95,10 +95,10 @@ Service             Package                                DSN
 `SpotHit`_          ``symfony/spot-hit-notifier``          ``spothit://TOKEN@default?from=FROM``
 `Telnyx`_           ``symfony/telnyx-notifier``            ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 `TurboSms`_         ``symfony/turbo-sms-notifier``         ``turbosms://AUTH_TOKEN@default?from=FROM``
-`Twilio`_           ``symfony/twilio-notifier``            ``twilio://SID:TOKEN@default?from=FROM``
+`Twilio`_           ``symfony/twilio-notifier``            ``twilio://SID:TOKEN@default?from=FROM``                                                                                  yes
 `Vonage`_           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@default?from=FROM``
 `Yunpian`_          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@default``
-==================  =====================================  ===========================================================================
+==================  =====================================  ========================================================================================================================= ===============
 
 .. versionadded:: 6.1
 
@@ -115,6 +115,12 @@ Service             Package                                DSN
     The Bandwith, iSendPro, Plivo, RingCentral, SimpleTextin and Termii integrations
     were introduced in Symfony 6.3.
     The ``from`` option in ``Smsapi`` DSN is optional since Symfony 6.3.
+
+.. tip::
+
+    Some third party transports, when using the API, support status callback
+    via webhooks. See the :doc:`Webhook documentation </webhook>` for more
+    details.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:

@@ -106,7 +106,7 @@ With this done, you can now add a RemoteEvent consumer to react to the webhooks:
     use Symfony\Component\RemoteEvent\RemoteEvent;
 
     #[AsRemoteEventConsumer('mailer_mailgun')]
-    final readonly class WebhookListener implements ConsumerInterface
+    class WebhookListener implements ConsumerInterface
     {
         public function consume(RemoteEvent $event): void
         {
@@ -128,5 +128,50 @@ With this done, you can now add a RemoteEvent consumer to react to the webhooks:
         private function handleMailEngagement(MailerEngagementEvent $event): void
         {
             // Handle the mail engagement event
+        }
+    }
+
+Usage in combination with the Notifier component
+------------------------------------------------
+
+The usage of the Webhook component when using a third-party transport in
+the Notifier is very similar to the usage with the Mailer.
+
+Currently, the following third-party sms transports support webhooks:
+
+============ ==========================================
+SMS service  Parser service name
+============ ==========================================
+Twilio       ``notifier.webhook.request_parser.twilio``
+============ ==========================================
+
+.. versionadded:: 6.3
+
+    The support for Twilio was introduced in Symfony 6.3.
+
+For SMS transports, an additional ``SmsEvent`` is available in the RemoteEvent
+consumer::
+
+    use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
+    use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
+    use Symfony\Component\RemoteEvent\Event\Sms\SmsEvent;
+    use Symfony\Component\RemoteEvent\RemoteEvent;
+
+    #[AsRemoteEventConsumer('notifier_twilio')]
+    class WebhookListener implements ConsumerInterface
+    {
+        public function consume(RemoteEvent $event): void
+        {
+            if ($event instanceof SmsEvent) {
+                $this->handleSmsEvent($event);
+            } else {
+                // This is not an sms event
+                return;
+            }
+        }
+
+        private function handleSmsEvent(SmsEvent $event): void
+        {
+            // Handle the sms event
         }
     }
