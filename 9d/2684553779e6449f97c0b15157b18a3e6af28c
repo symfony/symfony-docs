@@ -1,0 +1,30 @@
+---------------------------------------------------------------------------
+
+by TimoBakx at 2023-12-12T10:48:19Z
+
+Might the wiring be ~missing~ incorrect for these bridges? They seem to be missing here: https://github.com/symfony/symfony/blob/a3686fbfbbbfec317213f831eabeb5a450720545/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/FrameworkExtension.php#L2589C15-L2589C15
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-12-12T11:00:11Z
+
+Ok I think this should be put on hold and waiting code merge of https://github.com/symfony/symfony/pull/53004
+
+Then we'll see if this goes in 7.1 or if it is considered as a bugfix that should target 6.4.
+
+---------------------------------------------------------------------------
+
+by TimoBakx at 2023-12-12T11:36:30Z
+
+I have a slightly different alternative for Twilio and Vonage, as they use a different event from the Mailer implementations:
+https://github.com/symfony/symfony-docs/pull/19269
+
+Vonage is added in 6.4, I can make a follow-up PR for that bit.
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-12-12T11:53:34Z
+
+Alright I think we can actually merge this as is. The PR I opened on the code repo only checks that we remove some ids from the container conditionally, but the ids already exist. :+1:
+
+Your follow is a great idea, Timo!
