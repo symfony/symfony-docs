@@ -105,10 +105,10 @@ via a third-party provider:
 Service               Install with                                    Webhook support
 ===================== =============================================== ===============
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
-`Brevo`_              ``composer require symfony/brevo-mailer``
+`Brevo`_              ``composer require symfony/brevo-mailer``       yes
 `Infobip`_            ``composer require symfony/infobip-mailer``
 `Mailgun`_            ``composer require symfony/mailgun-mailer``     yes
-`Mailjet`_            ``composer require symfony/mailjet-mailer``
+`Mailjet`_            ``composer require symfony/mailjet-mailer``     yes
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Mandrill`_           ``composer require symfony/mailchimp-mailer``
