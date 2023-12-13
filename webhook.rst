@@ -145,14 +145,6 @@ Twilio       ``notifier.webhook.request_parser.twilio``
 Vonage       ``notifier.webhook.request_parser.vonage``
 ============ ==========================================
 
-.. versionadded:: 6.3
-
-    The support for Twilio was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The support for Vonage was introduced in Symfony 6.4.
-
 For SMS transports, an additional ``SmsEvent`` is available in the RemoteEvent
 consumer::
 
