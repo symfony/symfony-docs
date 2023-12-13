@@ -1000,7 +1000,11 @@ both ``app`` and ``checkout``:
 .. code-block:: twig
 
     {# templates/products/checkout.html.twig #}
-    {% block javascripts %}
+    {#
+        Override an "importmap" block in base.html.twig.
+        If you don't have this, add it around the {{ importmap('app') }} call.
+    #}
+    {% block importmap %}
         {# do NOT call parent() #}
 
         {{ importmap('app', 'checkout') }}
@@ -1009,7 +1013,7 @@ both ``app`` and ``checkout``:
 By passing both ``app`` and ``checkout``, the ``importmap()`` function will
 output the ``importmap`` and also add a ``<script type="module">`` tag that
 loads the ``app.js`` file *and* the ``checkout.js`` file. It's important
-to *not* call ``parent()`` in the ``javascripts`` block. Each page can only
+to *not* call ``parent()`` in the ``importmap`` block. Each page can only
 have *one* importmap, so ``importmap()`` must be called exactly once.
 
 If, for some reason, you want to execute *only* ``checkout.js``
