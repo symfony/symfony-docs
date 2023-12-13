@@ -1857,11 +1857,6 @@ you have imported the logout route loader in your routes:
             $routes->import('security.route_loader.logout', 'service');
         };
 
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Bundle\\SecurityBundle\\Routing\\LogoutRouteLoader` was
-    introduced in Symfony 6.4.
-
 Logout programmatically
 ~~~~~~~~~~~~~~~~~~~~~~~
 
