@@ -1587,6 +1587,7 @@ and set the ``limiter`` option to its service ID:
                     $globalFactory: '@limiter.ip_login'
                     # localFactory is the limiter for username+IP
                     $localFactory: '@limiter.username_ip_login'
+                    $secret: '%kernel.secret%'
 
         security:
             firewalls:
@@ -1637,6 +1638,8 @@ and set the ``limiter`` option to its service ID:
                     <srv:argument type="service" id="limiter.ip_login"/>
                     <!-- 2nd argument is the limiter for username+IP -->
                     <srv:argument type="service" id="limiter.username_ip_login"/>
+                    <!-- 3rd argument is the app secret -->
+                    <srv:argument type="service" id="%kernel.secret%"/>
                 </srv:service>
             </srv:services>
 
@@ -1679,6 +1682,8 @@ and set the ``limiter`` option to its service ID:
                     new Reference('limiter.ip_login'),
                     // 2nd argument is the limiter for username+IP
                     new Reference('limiter.username_ip_login'),
+                    // 3rd argument is the app secret
+                    new Reference('kernel.secret'),
                 ]);
 
             $security->firewall('main')
@@ -1763,7 +1768,7 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
                 main:
                     # ...
                     logout:
-                        path: app_logout
+                        path: /logout
 
                         # where to redirect after logout
                         # target: app_any_route
@@ -1784,11 +1789,10 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
                 <!-- ... -->
 
                 <firewall name="main">
-                    <!-- ... -->
-                    <logout path="app_logout"/>
+                    <logout path="/logout"/>
 
                     <!-- use "target" to configure where to redirect after logout
-                    <logout path="app_logout" target="app_any_route"/>
+                    <logout path="/logout" target="app_any_route"/>
                     -->
                 </firewall>
             </config>
@@ -1805,68 +1809,53 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
             $mainFirewall = $security->firewall('main');
             // ...
             $mainFirewall->logout()
-                // the argument can be either a route name or a path
-                ->path('app_logout')
+                ->path('/logout')
 
                 // where to redirect after logout
                 // ->target('app_any_route')
             ;
         };
 
-Next, you need to create a route for this URL (but not a controller):
+Symfony will then un-authenticate users navigating to the configured ``path``,
+and redirect them to the configured ``target``.
+
+.. tip::
+
+    If you need to reference the logout path, you can use the ``_logout_<firewallname>``
+    route name (e.g. ``_logout_main``).
+
+If your project does not use :ref:`Symfony Flex <symfony-flex>`, make sure
+you have imported the logout route loader in your routes:
 
 .. configuration-block::
 
-    .. code-block:: php-attributes
-
-        // src/Controller/SecurityController.php
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class SecurityController extends AbstractController
-        {
-            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
-            public function logout(): never
-            {
-                // controller can be blank: it will never be called!
-                throw new \Exception('Don\'t forget to activate logout in security.yaml');
-            }
-        }
-
     .. code-block:: yaml
 
-        # config/routes.yaml
-        app_logout:
-            path: /logout
-            methods: GET
+        # config/routes/security.yaml
+        _symfony_logout:
+            resource: security.route_loader.logout
+            type: service
 
     .. code-block:: xml
 
-        <!-- config/routes.xml -->
+        <!-- config/routes/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="app_logout" path="/logout" methods="GET"/>
+            <import resource="security.route_loader.logout" type="service"/>
         </routes>
 
     .. code-block:: php
 
-        // config/routes.php
+        // config/routes/security.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes): void {
-            $routes->add('app_logout', '/logout')
-                ->methods(['GET'])
-            ;
+        return static function (RoutingConfigurator $routes): void {
+            $routes->import('security.route_loader.logout', 'service');
         };
-
-That's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
-Symfony will un-authenticate the current user and redirect them.
 
 Logout programmatically
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -1944,6 +1933,105 @@ to execute custom logic::
             $event->setResponse($response);
         }
     }
+
+Customizing Logout Path
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Another option is to configure ``path`` as a route name. This can be useful
+if you want logout URIs to be dynamic (e.g. translated according to the
+current locale). In that case, you have to create this route yourself:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        app_logout:
+            path:
+                en: /logout
+                fr: /deconnexion
+            methods: GET
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="app_logout" path="/logout" methods="GET">
+                <path locale="en">/logout</path>
+                <path locale="fr">/deconnexion</path>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes): void {
+            $routes->add('app_logout', [
+                'en' => '/logout',
+                'fr' => '/deconnexion',
+            ])
+                ->methods(['GET'])
+            ;
+        };
+
+Then, pass the route name to the ``path`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        path: app_logout
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <logout path="app_logout"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            // ...
+
+            $mainFirewall = $security->firewall('main');
+            // ...
+            $mainFirewall->logout()
+                ->path('app_logout')
+            ;
+        };
 
 .. _retrieving-the-user-object:
 

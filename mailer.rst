@@ -93,27 +93,29 @@ native        ``native://default``                      Mailer uses the sendmail
     It's highly recommended to NOT use ``native://default`` as you cannot control
     how sendmail is configured (prefer using ``sendmail://default`` if possible).
 
+.. _mailer_3rd_party_transport:
+
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instead of using your own SMTP server or sendmail binary, you can send emails
 via a third-party provider:
 
-===================== ===============================================
-Service               Install with
-===================== ===============================================
+===================== =============================================== ===============
+Service               Install with                                    Webhook support
+===================== =============================================== ===============
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
-`Brevo`_              ``composer require symfony/brevo-mailer``
+`Brevo`_              ``composer require symfony/brevo-mailer``       yes
 `Infobip`_            ``composer require symfony/infobip-mailer``
-`Mailgun`_            ``composer require symfony/mailgun-mailer``
-`Mailjet`_            ``composer require symfony/mailjet-mailer``
+`Mailgun`_            ``composer require symfony/mailgun-mailer``     yes
+`Mailjet`_            ``composer require symfony/mailjet-mailer``     yes
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Mandrill`_           ``composer require symfony/mailchimp-mailer``
-`Postmark`_           ``composer require symfony/postmark-mailer``
+`Postmark`_           ``composer require symfony/postmark-mailer``    yes
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
-`SendGrid`_           ``composer require symfony/sendgrid-mailer``
-===================== ==============================================
+`SendGrid`_           ``composer require symfony/sendgrid-mailer``    yes
+===================== =============================================== ===============
 
 .. note::
 
@@ -179,7 +181,7 @@ party provider:
 |                        | - HTTP n/a                                          |
 |                        | - API infobip+api://KEY@BASE_URL                    |
 +------------------------+-----------------------------------------------------+
-| `Mailchimp Mandrill`_  | - SMTP mandrill+smtp://USERNAME:PASSWORD@default    |
+| `Mandrill`_            | - SMTP mandrill+smtp://USERNAME:PASSWORD@default    |
 |                        | - HTTP mandrill+https://KEY@default                 |
 |                        | - API mandrill+api://KEY@default                    |
 +------------------------+-----------------------------------------------------+
@@ -267,6 +269,12 @@ party provider:
 
         # .env
         MAILER_DSN=smtp://KEY:DOMAIN@smtp.eu.mailgun.org.com:25
+
+.. tip::
+
+    Some third party mailers, when using the API, support status callback
+    via webhooks. See the :doc:`Webhook documentation </webhook>` for more
+    details.
 
 High Availability
 ~~~~~~~~~~~~~~~~~
@@ -1484,8 +1492,8 @@ If your transport does not support tags and metadata, they will be added as cust
 The following transports currently support tags and metadata:
 
 * Brevo
-* Mailchimp
 * Mailgun
+* Mandrill
 * Postmark
 * Sendgrid
 

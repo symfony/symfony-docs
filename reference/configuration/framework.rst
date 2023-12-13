@@ -3547,6 +3547,12 @@ enabled
 
 Adds a `Link HTTP header`_ to the response.
 
+webhook
+~~~~~~~
+
+The ``webhook`` option (and its children) are used to configure the webhooks
+defined in your application. Read more about the options in the :ref:`Webhook documentation <webhook>`.
+
 workflows
 ~~~~~~~~~
 
