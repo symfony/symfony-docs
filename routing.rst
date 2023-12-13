@@ -1603,14 +1603,11 @@ information in a controller via the ``Request`` object::
         }
     }
 
-To get this information in a service, see :doc:`/service_container/request`.
-In templates, you can use the :ref:`Twig global app variable <twig-app-variable>` to get
-the current route and its attributes:
-
-.. code-block:: twig
-
-    {% app.current_route %}
-    {% app.current_route_parameters %}
+In services, you can get this information by
+:doc:`injecting the RequestStack service </service_container/request>`.
+In templates, use the :ref:`Twig global app variable <twig-app-variable>`
+to get the current route name (``app.current_route``) and its parameters
+(``app.current_route_parameters``).
 
 .. versionadded:: 6.2
 
