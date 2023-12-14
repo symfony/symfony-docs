@@ -884,10 +884,6 @@ running the ``messenger:consume`` command.
 Rate limited transport
 ~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.2
-
-    The ``rate_limiter`` option was introduced in Symfony 6.2.
-
 Sometimes you might need to rate limit your message worker. You can configure a
 rate limiter on a transport (requires the :doc:`RateLimiter component </rate-limiter>`)
 by setting its ``rate_limiter`` option:
