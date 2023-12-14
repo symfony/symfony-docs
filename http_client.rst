@@ -144,8 +144,8 @@ method to retrieve a new instance of the client with new default options::
         'extra' => ['my-key' => 'my-value'],
     ]);
 
-Alternatively, the :class:`Symfony\\Component\\HttpClient\\HttpOptions` class brings most of the available options with
-type-hinted getters and setters::
+Alternatively, the :class:`Symfony\\Component\\HttpClient\\HttpOptions` class
+brings most of the available options with type-hinted getters and setters::
 
     $this->client = $client->withOptions(
         (new HttpOptions())
