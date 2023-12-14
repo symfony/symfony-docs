@@ -881,6 +881,67 @@ running the ``messenger:consume`` command.
 
 .. _messenger-retries-failures:
 
+Rate limited transport
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 6.2
+
+    The ``rate_limiter`` option was introduced in Symfony 6.2.
+
+Sometimes you might need to rate limit your message worker. You can configure a
+rate limiter on a transport (requires the :doc:`RateLimiter component </rate-limiter>`)
+by setting its ``rate_limiter`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/messenger.yaml
+        framework:
+            messenger:
+                transports:
+                    async:
+                        rate_limiter: your_rate_limiter_name
+
+    .. code-block:: xml
+
+        <!-- config/packages/messenger.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony
+                https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
+
+            <framework:config>
+                <framework:messenger>
+                    <framework:transport name="async">
+                        <option key="rate_limiter">your_rate_limiter_name</option>
+                    </framework:transport>
+                </framework:messenger>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/messenger.php
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework) {
+            $framework->messenger()
+                ->transport('async')
+                    ->options(['rate_limiter' => 'your_rate_limiter_name'])
+            ;
+        };
+
+.. caution::
+
+    When a rate limiter is configured on a transport, it will block the whole
+    worker when the limit is hit. You should make sure you configure a dedicated
+    worker for a rate limited transport to avoid other transports to be blocked.
+
 Retries & Failures
 ------------------
 
