@@ -149,6 +149,16 @@ method to retrieve a new instance of the client with new default options::
 
     The ``withOptions()`` method was introduced in Symfony 5.3.
 
+Alternatively, the :class:`Symfony\\Component\\HttpClient\\HttpOptions` class brings most of the available options with
+type-hinted getters and setters::
+
+    $this->client = $client->withOptions(
+        (new HttpOptions())
+            ->setBaseUri('https://...')
+            ->setHeaders(['header-name' => 'header-value'])
+            ->toArray()
+    );
+
 Some options are described in this guide:
 
 * `Authentication`_
