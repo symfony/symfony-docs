@@ -589,6 +589,32 @@ Using Events And Handling Signals
 When a command is running, many events are dispatched, one of them allows to
 react to signals, read more in :doc:`this section </components/console/events>`.
 
+Profiling Commands
+------------------
+
+Symfony allows to profile the execution of any command, including yours. First,
+make sure that the :ref:`debug mode <debug-mode>` and the :doc:`profiler </profiler>`
+are enabled. Then, add the ``--profile`` option when running the command:
+
+.. code-block:: terminal
+
+    $ php bin/console --profile app:my-command
+
+Symfony will now collect data about the command execution, which is helpful to
+debug errors or check other issues. When the command execution is over, the
+profile is accessible through the web page of the profiler.
+
+.. tip::
+
+    If you run the command in verbose mode (adding the ``-v`` option), Symfony
+    will display in the output a clickable link to the command profile (if your
+    terminal supports links). If you run it in debug verbosity (``-vvv``) you'll
+    also see the time and memory consumed by the command.
+
+.. versionadded:: 6.4
+
+    The ``--profile`` option was introduced in Symfony 6.4.
+
 Learn More
 ----------
 
