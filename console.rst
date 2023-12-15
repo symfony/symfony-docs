@@ -611,10 +611,6 @@ profile is accessible through the web page of the profiler.
     terminal supports links). If you run it in debug verbosity (``-vvv``) you'll
     also see the time and memory consumed by the command.
 
-.. versionadded:: 6.4
-
-    The ``--profile`` option was introduced in Symfony 6.4.
-
 Learn More
 ----------
 
