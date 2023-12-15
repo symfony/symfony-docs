@@ -263,7 +263,7 @@ reusable configuration value. By convention, parameters are defined under the
 
                 // PHP constants as parameter values
                 ->set('app.some_constant', GLOBAL_CONSTANT)
-                ->set('app.another_constant', BlogPost::MAX_ITEMS);
+                ->set('app.another_constant', BlogPost::MAX_ITEMS)
 
                 // Enum case as parameter values
                 ->set('app.some_enum', PostState::Published);
