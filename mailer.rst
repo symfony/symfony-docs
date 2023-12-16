@@ -174,19 +174,19 @@ transport, but you can force to use one:
 This table shows the full list of available DSN formats for each third
 party provider:
 
-===================== ==================================================== =========================================== ========================================
-Provider              SMTP                                                 HTTP                                        API
-===================== ==================================================== =========================================== ========================================
-`Amazon SES`_         ses+smtp://USERNAME:PASSWORD@default                 ses+https://ACCESS_KEY:SECRET_KEY@default   ses+api://ACCESS_KEY:SECRET_KEY@default
-`Google Gmail`_       gmail+smtp://USERNAME:APP-PASSWORD@default           n/a                                         n/a
-`Mandrill`_           mandrill+smtp://USERNAME:PASSWORD@default            mandrill+https://KEY@default                mandrill+api://KEY@default
-`Mailgun`_            mailgun+smtp://USERNAME:PASSWORD@default             mailgun+https://KEY:DOMAIN@default          mailgun+api://KEY:DOMAIN@default
-`Mailjet`_            mailjet+smtp://ACCESS_KEY:SECRET_KEY@default         n/a                                         mailjet+api://ACCESS_KEY:SECRET_KEY@default
-`Postmark`_           postmark+smtp://ID@default                           n/a                                         postmark+api://KEY@default
-`Sendgrid`_           sendgrid+smtp://KEY@default                          n/a                                         sendgrid+api://KEY@default
-`Sendinblue`_         sendinblue+smtp://USERNAME:PASSWORD@default          n/a                                         sendinblue+api://KEY@default
-`OhMySMTP`_           ohmysmtp+smtp://API_TOKEN@default                    n/a                                         ohmysmtp+api://API_TOKEN@default
-===================== ==================================================== =========================================== ========================================
+===================== ======================================================== =============================================== ============================================
+Provider              SMTP                                                     HTTP                                        API
+===================== ======================================================== =============================================== ============================================
+`Amazon SES`_         ``ses+smtp://USERNAME:PASSWORD@default``                 ``ses+https://ACCESS_KEY:SECRET_KEY@default``   ``ses+api://ACCESS_KEY:SECRET_KEY@default``
+`Google Gmail`_       ``gmail+smtp://USERNAME:APP-PASSWORD@default``           n/a                                             n/a
+`Mandrill`_           ``mandrill+smtp://USERNAME:PASSWORD@default``            ``mandrill+https://KEY@default``                ``mandrill+api://KEY@default``
+`Mailgun`_            ``mailgun+smtp://USERNAME:PASSWORD@default``             ``mailgun+https://KEY:DOMAIN@default``          ``mailgun+api://KEY:DOMAIN@default``
+`Mailjet`_            ``mailjet+smtp://ACCESS_KEY:SECRET_KEY@default``         n/a                                             ``mailjet+api://ACCESS_KEY:SECRET_KEY@default``
+`Postmark`_           ``postmark+smtp://ID@default``                           n/a                                             ``postmark+api://KEY@default``
+`Sendgrid`_           ``sendgrid+smtp://KEY@default``                          n/a                                             ``sendgrid+api://KEY@default``
+`Sendinblue`_         ``sendinblue+smtp://USERNAME:PASSWORD@default``          n/a                                             ``sendinblue+api://KEY@default``
+`OhMySMTP`_           ``ohmysmtp+smtp://API_TOKEN@default``                    n/a                                             ``ohmysmtp+api://API_TOKEN@default``
+===================== ======================================================== =============================================== ============================================
 
 .. caution::
 
