@@ -34,7 +34,7 @@ You can set these options via command line options:
     $ yarn encore dev-server --port 9000
 
     # if you use the npm package manager
-    $ npm run dev-server -- --port 9000
+    $ npm run dev-server --port 9000
 
 You can also set these options using the ``Encore.configureDevServerOptions()``
 method in your ``webpack.config.js`` file:
