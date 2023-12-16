@@ -233,7 +233,7 @@ data.
 Context
 -------
 
-Many Serializer features can be configured :doc:`using a context </serializer#serializer_serializer-context>`.
+Many Serializer features can be configured :ref:`using a context <serializer_serializer-context>`.
 
 .. _component-serializer-attributes-groups:
 
