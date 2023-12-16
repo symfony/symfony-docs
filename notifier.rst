@@ -221,6 +221,7 @@ integration with these chat services:
 Service                                  Package                               DSN
 =======================================  ====================================  =============================================================================
 `AmazonSns`_                             ``symfony/amazon-sns-notifier``       ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
+`Bluesky`_                               ``symfony/bluesky-notifier``          ``bluesky://USERNAME:PASSWORD@default``
 `Chatwork`_                              ``symfony/chatwork-notifier``         ``chatwork://API_TOKEN@default?room_id=ID``
 `Discord`_                               ``symfony/discord-notifier``          ``discord://TOKEN@default?webhook_id=ID``
 `FakeChat`_                              ``symfony/fake-chat-notifier``        ``fakechat+email://default?to=TO&from=FROM`` or ``fakechat+logger://default``
@@ -240,6 +241,10 @@ Service                                  Package                               D
 `Zendesk`_                               ``symfony/zendesk-notifier``          ``zendesk://EMAIL:TOKEN@SUBDOMAIN``
 `Zulip`_                                 ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ======================================   ====================================  =============================================================================
+
+.. versionadded:: 7.1
+
+    The ``Bluesky`` integration was introduced in Symfony 7.1.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
@@ -942,6 +947,7 @@ is dispatched. Listeners receive a
 .. _`AllMySms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AllMySms/README.md
 .. _`AmazonSns`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/AmazonSns/README.md
 .. _`Bandwidth`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Bandwidth/README.md
+.. _`Bluesky`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Bluesky/README.md
 .. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Brevo/README.md
 .. _`Chatwork`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Chatwork/README.md
 .. _`Clickatell`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Clickatell/README.md
