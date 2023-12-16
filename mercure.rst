@@ -53,7 +53,7 @@ that handles persistent SSE connections with the clients.
 The Symfony app publishes the updates to the hub, that will broadcast them to
 clients.
 
-Thanks to :ref:`the Docker integration of Symfony </setup/docker>`,
+Thanks to :doc:`the Docker integration of Symfony </setup/docker>`,
 :ref:`Flex <symfony-flex>` proposes to install a Mercure hub.
 Run ``docker-compose up`` to start the hub if you have chosen this option.
 
