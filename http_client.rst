@@ -1905,6 +1905,20 @@ in order when requests are made::
     $response1 = $client->request('...'); // returns $responses[0]
     $response2 = $client->request('...'); // returns $responses[1]
 
+It is also possible to create a
+:class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` directly
+from a file, which is particularly useful when storing your responses
+snapshots in files::
+
+    use Symfony\Component\HttpClient\Response\MockResponse;
+
+    $response = MockResponse::fromFile('tests/fixtures/response.xml');
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\HttpClient\\Response\\MockResponse::fromFile`
+    method was introduced in Symfony 7.1.
+
 Another way of using :class:`Symfony\\Component\\HttpClient\\MockHttpClient` is to
 pass a callback that generates the responses dynamically when it's called::
 
@@ -2078,6 +2092,19 @@ You can use :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse` 
     $response = new JsonMockResponse([
         'foo' => 'bar',
     ]);
+
+Just like :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse`, you can
+also create a :class:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse`
+directly from a file::
+
+    use Symfony\Component\HttpClient\Response\JsonMockResponse;
+
+    $response = JsonMockResponse::fromFile('tests/fixtures/response.json');
+
+.. versionadded:: 7.1
+
+    The :method:`Symfony\\Component\\HttpClient\\Response\\JsonMockResponse::fromFile`
+    method was introduced in Symfony 7.1.
 
 Testing Request Data
 ~~~~~~~~~~~~~~~~~~~~
