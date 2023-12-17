@@ -104,7 +104,7 @@ and what headers your reverse proxy uses to send information:
             # ...
             trusted_proxies: '%env(TRUSTED_PROXIES)%'
 
-.. caution::
+.. danger::
 
     Enabling the ``Request::HEADER_X_FORWARDED_HOST`` option exposes the
     application to `HTTP Host header attacks`_. Make sure the proxy really

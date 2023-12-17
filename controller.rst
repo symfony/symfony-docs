@@ -146,7 +146,7 @@ and ``redirect()`` methods::
         return $this->redirect('http://symfony.com/doc');
     }
 
-.. caution::
+.. danger::
 
     The ``redirect()`` method does not check its destination in any way. If you
     redirect to a URL provided by end-users, your application may be open

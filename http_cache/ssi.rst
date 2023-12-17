@@ -27,7 +27,7 @@ The SSI instructions are done via HTML comments:
 There are some other `available directives`_ but
 Symfony manages only the ``#include virtual`` one.
 
-.. caution::
+.. danger::
 
     Be careful with SSI, your website may fall victim to injections.
     Please read this `OWASP article`_ first!

@@ -136,7 +136,7 @@ Then, register the class as a service that :doc:`decorates </service_container/s
             ;
         };
 
-.. caution::
+.. danger::
 
     You must protect the ``PURGE`` HTTP method somehow to avoid random people
     purging your cached data.
