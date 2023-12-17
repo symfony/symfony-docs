@@ -98,6 +98,7 @@ Service             Package                                DSN                  
 `Telnyx`_           ``symfony/telnyx-notifier``            ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 `TurboSms`_         ``symfony/turbo-sms-notifier``         ``turbosms://AUTH_TOKEN@default?from=FROM``
 `Twilio`_           ``symfony/twilio-notifier``            ``twilio://SID:TOKEN@default?from=FROM``                                                                                  yes
+`Unifonic`_         ``symfony/unifonic-notifier``          ``unifonic://APP_SID@default?from=FROM``
 `Vonage`_           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@default?from=FROM``                                                                                 yes
 `Yunpian`_          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@default``
 ==================  =====================================  ========================================================================================================================= ===============
@@ -244,7 +245,7 @@ Service                                  Package                               D
 
 .. versionadded:: 7.1
 
-    The ``Bluesky`` integration was introduced in Symfony 7.1.
+    The ``Bluesky`` and ``Unifonic`` integrations were introduced in Symfony 7.1.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
@@ -1008,6 +1009,7 @@ is dispatched. Listeners receive a
 .. _`TurboSms`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/TurboSms/README.md
 .. _`Twilio`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Twilio/README.md
 .. _`Twitter`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Twitter/README.md
+.. _`Unifonic`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Unifonic/README.md
 .. _`Vonage`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Vonage/README.md
 .. _`Yunpian`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Yunpian/README.md
 .. _`Zendesk`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Zendesk/README.md
