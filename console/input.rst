@@ -416,6 +416,14 @@ The Console component adds some predefined options to all commands:
 * ``--help``: displays the command help
 * ``--ansi|--no-ansi``: whether to force of disable coloring the output
 
+To disable the output of a command, you can also set the
+``SYMFONY_CONSOLE_OUTPUT`` environment variable to ``false``.
+
+.. versionadded:: 7.1
+
+    The support for the ``SYMFONY_CONSOLE_OUTPUT`` environment variable was
+    introduced in Symfony 7.1.
+
 When using the ``FrameworkBundle``, two more options are predefined:
 
 * ``--env``: sets the Kernel configuration environment (defaults to ``APP_ENV``)
