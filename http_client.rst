@@ -619,7 +619,7 @@ A generator or any ``Traversable`` can also be used instead of a closure.
 
 To submit a form with file uploads, pass the file handle to the ``body`` option::
 
-    $fileHandle = fopen('/path/to/the/file' 'r');
+    $fileHandle = fopen('/path/to/the/file', 'r');
     $client->request('POST', 'https://...', ['body' => ['the_file' => $fileHandle]]);
 
 By default, this code will populate the filename and content-type with the data
