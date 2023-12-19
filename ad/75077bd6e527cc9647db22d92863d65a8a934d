@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by smnandre at 2023-12-19T06:45:43Z
+
+@OskarStark the failing CI seems due to AssetMapper not installed in the [symfony-tools/symfony-application](https://github.com/symfony-tools/symfony-application).
+
+Is it possible to add it, as it's the default "webapp" install now ?
