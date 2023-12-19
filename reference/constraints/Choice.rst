@@ -262,7 +262,7 @@ Available Options
 ``callback``
 ~~~~~~~~~~~~
 
-**type**: ``string|array|Closure``
+**type**: ``callable|string|null`` **default**: ``null``
 
 This is a callback method that can be used instead of the `choices`_ option
 to return the choices array. See
