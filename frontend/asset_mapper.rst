@@ -1007,7 +1007,7 @@ both ``app`` and ``checkout``:
     {% block importmap %}
         {# do NOT call parent() #}
 
-        {{ importmap('app', 'checkout') }}
+        {{ importmap(['app', 'checkout']) }}
     {% endblock %}
 
 By passing both ``app`` and ``checkout``, the ``importmap()`` function will
