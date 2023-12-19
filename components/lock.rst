@@ -518,8 +518,8 @@ MongoDB Connection String:
 PdoStore
 ~~~~~~~~
 
-The PdoStore saves locks in an SQL database. It requires a `PDO`_ connection or a `Data Source Name (DSN)`_. This store does not
-support blocking, and expects a TTL to avoid stalled locks::
+The PdoStore saves locks in an SQL database. It requires a `PDO`_ connection or a `Data Source Name (DSN)`_.
+This store does not support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\PdoStore;
 
