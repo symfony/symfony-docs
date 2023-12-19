@@ -215,6 +215,16 @@ at a rate of another 500 requests every 15 minutes. If you don't make that
 number of requests, the unused ones don't accumulate (the ``limit`` option
 prevents that number from being higher than 5,000).
 
+.. tip::
+
+    All rate-limiters are tagged with the ``rate_limiter`` tag, so you can
+    easily find them with a tagged iterator or locator.
+
+    .. versionadded:: 7.1
+
+        The automatic addition of the ``rate_limiter`` tag was introduced
+        in Symfony 7.1.
+
 Rate Limiting in Action
 -----------------------
 
