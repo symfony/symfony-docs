@@ -1,0 +1,31 @@
+---------------------------------------------------------------------------
+
+by GromNaN at 2021-10-20T17:14:49Z
+
+Since these features are deprecated in 5.4 and replaced by `DoctrineDbalStore` and `DoctrineDbalPostgreSqlStore`, this PR may target branch 5.4.
+
+Also, the new classes needs to be documented. (related to #15903)
+
+---------------------------------------------------------------------------
+
+by JohJohan at 2021-10-20T18:07:37Z
+
+@GromNaN if you think its a good idea to write all documentation in one pull request? There are multiple open issue to write documentation for this see: https://github.com/symfony/symfony-docs/issues/15952 & https://github.com/symfony/symfony-docs/issues/15950 & https://github.com/symfony/symfony-docs/issues/15945
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-08-14T07:53:35Z
+
+Can you please rebase on top of 6.3 branch? Thanks
+
+---------------------------------------------------------------------------
+
+by JohJohan at 2023-08-14T08:58:32Z
+
+@OskarStark done :)
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-12-19T14:23:51Z
+
+Any news on this PR? This would close 6.0 milestone and two more issues :muscle:
