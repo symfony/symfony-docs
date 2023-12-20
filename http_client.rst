@@ -1907,7 +1907,7 @@ in order when requests are made::
 
 It is also possible to create a
 :class:`Symfony\\Component\\HttpClient\\Response\\MockResponse` directly
-from a file, which is particularly useful when storing your responses
+from a file, which is particularly useful when storing your response
 snapshots in files::
 
     use Symfony\Component\HttpClient\Response\MockResponse;
