@@ -63,6 +63,7 @@ from the ``security`` channel. The following example does that only in the
                             <monolog:channel>security</monolog:channel>
                         </monolog:channels>
                     </monolog:handler>
+                </monolog:config>
             </when>
 
                 <monolog:handler name="main" type="stream" path="%kernel.logs_dir%/main.log">
