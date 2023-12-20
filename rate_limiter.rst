@@ -218,7 +218,8 @@ prevents that number from being higher than 5,000).
 .. tip::
 
     All rate-limiters are tagged with the ``rate_limiter`` tag, so you can
-    easily find them with a tagged iterator or locator.
+    find them with a :doc:`tagged iterator </service_container/tags>` or
+    :doc:`locator </service_container/service_subscribers_locators>`.
 
     .. versionadded:: 7.1
 
