@@ -136,3 +136,15 @@ precision (default ``1``) of the result::
 .. versionadded:: 6.4
 
     The support for exact times was introduced in Symfony 6.4.
+
+Formatting Memory
+-----------------
+
+Sometimes you want to format memory to GiB, MiB, KiB and B. This is possible with the
+:method:`Symfony\\Component\\Console\\Helper\\Helper::formatMemory` method.
+The only argument is the memory size to format::
+
+    Helper::formatMemory(512);                // 512 B
+    Helper::formatMemory(1024);               // 1 KiB
+    Helper::formatMemory(1024 * 1024);        // 1.0 MiB
+    Helper::formatMemory(1024 * 1024 * 1024); // 1 GiB
