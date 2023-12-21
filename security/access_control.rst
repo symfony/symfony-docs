@@ -19,10 +19,10 @@ things:
 1. Matching Options
 -------------------
 
-Symfony creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
-for each ``access_control`` entry, which determines whether or not a given
-access control should be used on this request. The following ``access_control``
-options are used for matching:
+Symfony uses :class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher` for
+each ``access_control`` entry, which determines which implementation of
+:class:`Symfony\\Component\\HttpFoundation\\RequestMatcherInterface` should be used
+on this request. The following ``access_control`` options are used for matching:
 
 * ``path``: a regular expression (without delimiters)
 * ``ip`` or ``ips``: netmasks are also supported (can be a comma-separated string)
