@@ -80,6 +80,29 @@ implement ``TranslatableInterface`` to translate or display custom labels::
         }
     }
 
+Another way of controlling the label displayed in the ``<option>`` element is by 
+using the `choice_label`. In your `Enum` add a label method::
+
+    // src/Enum/TexAlign.php
+    // ...
+    
+    public function label(): string
+    {
+        return match ($this) {
+            self::Left => 'Left aligned',
+            self::Center => 'Center aligned',
+            self::Right => 'Right aligned',
+        }
+    }
+
+Then in your `EnumType` add the `choice_label`::
+
+    $builder->add('alignment', EnumType::class, [
+        'class' => TextAlign::class,
+        'choice_label' => fn (TextAlign $alignment) => $alignment->label(),
+    ]);
+
+
 Field Options
 -------------
 
