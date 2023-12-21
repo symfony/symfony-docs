@@ -904,7 +904,7 @@ running the ``messenger:consume`` command.
 
 .. _messenger-retries-failures:
 
-Rate limited transport
+Rate Limited Transport
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 6.2
