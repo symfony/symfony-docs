@@ -132,3 +132,15 @@ precision (default ``1``) of the result::
     Helper::formatTime(125);       // 2 mins
     Helper::formatTime(125, 2);    // 2 mins, 5 secs
     Helper::formatTime(172799, 4); // 1 day, 23 hrs, 59 mins, 59 secs
+
+Formatting Memory
+-----------------
+
+Sometimes you want to format memory to GiB, MiB, KiB and B. This is possible with the
+:method:`Symfony\\Component\\Console\\Helper\\Helper::formatMemory` method.
+The only argument is the memory size to format::
+
+    Helper::formatMemory(512);                // 512 B
+    Helper::formatMemory(1024);               // 1 KiB
+    Helper::formatMemory(1024 * 1024);        // 1.0 MiB
+    Helper::formatMemory(1024 * 1024 * 1024); // 1 GiB
