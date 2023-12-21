@@ -80,7 +80,7 @@ implement ``TranslatableInterface`` to translate or display custom labels::
         }
     }
 
-Another way of controlling the label displayed in the ``<option>`` element is by 
+Another way of controlling the label displayed in the ``<option>`` element is by
 using the `choice_label`. In your `Enum` add a label method::
 
     // src/Enum/TexAlign.php
@@ -92,7 +92,7 @@ using the `choice_label`. In your `Enum` add a label method::
             self::Left => 'Left aligned',
             self::Center => 'Center aligned',
             self::Right => 'Right aligned',
-        }
+        };
     }
 
 Then in your `EnumType` add the `choice_label`::
