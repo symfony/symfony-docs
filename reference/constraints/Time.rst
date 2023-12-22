@@ -115,8 +115,4 @@ Option     Pattern                          Correct value   Incorrect value
 ``false``  ``/^(\d{2}):(\d{2})$/``          ``12:00``       ``12:00:00``
 =========  ===============================  ==============  ================
 
-.. versionadded:: 6.4
-
-    The ``withSeconds`` option was introduced in Symfony 6.4.
-
 .. include:: /reference/constraints/_payload-option.rst.inc

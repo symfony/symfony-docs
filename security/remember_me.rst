@@ -152,10 +152,6 @@ you can add a ``_remember_me`` key to the body of your POST request.
     Optionally, you can configure a custom name for this key using the
     ``name`` setting under the ``remember_me`` section of your firewall.
 
-.. versionadded:: 6.3
-
-    The JSON login ``_remember_me`` option was introduced in Symfony 6.3.
-
 Always activating Remember Me
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -239,7 +235,7 @@ present:
 .. image:: /_images/security/profiler-badges.png
     :alt: The Security page of the Symfony profiler, with the "Authenticators" tab showing the remember me badge in the passport object.
 
-Without this badge, remember me will be not be activated (regardless of all
+Without this badge, remember me will not be activated (regardless of all
 other settings).
 
 Add Remember Me Support to Custom Authenticators

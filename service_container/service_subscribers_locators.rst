@@ -247,10 +247,6 @@ service type to a service.
 Add Dependency Injection Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.2
-
-    The ability to add attributes was introduced in Symfony 6.2.
-
 As an alternate to aliasing services in your configuration, you can also configure
 the following dependency injection attributes in the ``getSubscribedServices()``
 method directly:
@@ -375,12 +371,6 @@ attribute::
         }
     }
 
-.. versionadded:: 6.4
-
-    The
-    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireLocator`
-    attribute was introduced in Symfony 6.4.
-
 .. note::
 
     To receive an iterable instead of a service locator, you can switch the
@@ -388,12 +378,6 @@ attribute::
     attribute to
     :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireIterator`
     attribute.
-
-    .. versionadded:: 6.4
-
-        The
-        :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireIterator`
-        attribute was introduced in Symfony 6.4.
 
 .. _service-subscribers-locators_defining-service-locator:
 
@@ -569,6 +553,23 @@ other services. To do so, create a new service definition using the
 Now you can inject the service locator in any other services:
 
 .. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/CommandBus.php
+        namespace App;
+
+        use Psr\Container\ContainerInterface;
+        use Symfony\Component\DependencyInjection\Attribute\Autowire;
+
+        class CommandBus
+        {
+            public function __construct(
+                #[Autowire(service: 'app.command_handler_locator')]
+                private ContainerInterface $locator,
+            ) {
+            }
+        }
 
     .. code-block:: yaml
 
@@ -939,10 +940,6 @@ and compose your services with them::
 ``SubscribedService`` Attributes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.2
-
-    The ability to add attributes was introduced in Symfony 6.2.
-
 You can use the ``attributes`` argument of ``SubscribedService`` to add any
 of the following dependency injection attributes:
 
@@ -1023,6 +1020,15 @@ To unit test a service subscriber, you can create a fake container::
     // Create the service subscriber
     $serviceSubscriber = new MyService($container);
     // ...
+
+.. note::
+
+    When defining the service locator like this, beware that the
+    :method:`Symfony\\Contracts\\Service\\ServiceLocatorTrait::getProvidedServices`
+    of your container will use the return type of the closures as the values of the
+    returned array. If no return type is defined, the value will be ``?``. If you
+    want the values to reflect the classes of your services, the return type has
+    to be set on your closures.
 
 Another alternative is to mock it using ``PHPUnit``::
 

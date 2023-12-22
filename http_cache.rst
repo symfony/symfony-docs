@@ -229,10 +229,6 @@ The *easiest* way to cache a response is by caching it for a specific amount of 
             return $response;
         }
 
-.. versionadded:: 6.2
-
-    The ``#[Cache()]`` attribute was introduced in Symfony 6.2.
-
 Thanks to this new code, your HTTP response will have the following header:
 
 .. code-block:: text

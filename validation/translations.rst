@@ -123,6 +123,29 @@ Now, create a ``validators`` catalog file in the ``translations/`` directory:
 You may need to clear your cache (even in the dev environment) after creating
 this file for the first time.
 
+You can also use :class:`Symfony\\Component\\Translation\\TranslatableMessage` to build your violation message::
+
+    use Symfony\Component\Translation\TranslatableMessage;
+    use Symfony\Component\Validator\Constraints as Assert;
+    use Symfony\Component\Validator\Context\ExecutionContextInterface;
+    
+    #[Assert\Callback]
+    public function validate(ExecutionContextInterface $context, mixed $payload): void
+    {
+        // somehow you have an array of "fake names"
+        $fakeNames = [/* ... */];
+    
+        // check if the name is actually a fake name
+        if (in_array($this->getFirstName(), $fakeNames, true)) {
+            $context->buildViolation(new TranslatableMessage('author.name.fake', [], 'validators'))
+                ->atPath('firstName')
+                ->addViolation()
+            ;
+        }
+    }
+
+You can learn more about translatable messages in :ref:`the dedicated section <translatable-objects>`.
+
 Custom Translation Domain
 -------------------------
 

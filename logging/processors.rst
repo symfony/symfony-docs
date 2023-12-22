@@ -31,7 +31,7 @@ using a processor::
         ) {
         }
 
-        // this method is called for each log record; optimize it to not hurt performance
+        // method is called for each log record; optimize it to not hurt performance
         public function __invoke(LogRecord $record): LogRecord
         {
             try {

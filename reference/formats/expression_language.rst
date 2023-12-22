@@ -21,15 +21,10 @@ The component supports:
 * **null** - ``null``
 * **exponential** - also known as scientific (e.g. ``1.99E+3`` or ``1e-2``)
 
-.. versionadded:: 6.1
-
-    Support for decimals without leading zeros and underscore separators were
-    introduced in Symfony 6.1.
-
 .. caution::
 
-    A backslash (``\``) must be escaped by 4 backslashes (``\\\\``) in a string
-    and 8 backslashes (``\\\\\\\\``) in a regex::
+    A backslash (``\``) must be escaped by 3 backslashes (``\\\\``) in a string
+    and 7 backslashes (``\\\\\\\\``) in a regex::
 
         echo $expressionLanguage->evaluate('"\\\\"'); // prints \
         $expressionLanguage->evaluate('"a\\\\b" matches "/^a\\\\\\\\b$/"'); // returns true
@@ -114,10 +109,6 @@ operator)::
     $expressionLanguage->evaluate('fruit?.color', ['fruit' => '...'])
     $expressionLanguage->evaluate('fruit?.getStock()', ['fruit' => '...'])
 
-.. versionadded:: 6.1
-
-    The null safe operator was introduced in Symfony 6.1.
-
 .. _component-expression-functions:
 
 Working with Functions
@@ -175,10 +166,6 @@ This function will return the case of an enumeration::
     ));
 
 This will print out ``true``.
-
-.. versionadded:: 6.3
-
-    The ``enum()`` function was introduced in Symfony 6.3.
 
 .. tip::
 
@@ -255,11 +242,6 @@ Comparison Operators
 * ``starts with``
 * ``ends with``
 
-.. versionadded:: 6.1
-
-    The ``contains``, ``starts with`` and ``ends with`` operators were introduced
-    in Symfony 6.1.
-
 .. tip::
 
     To test if a string does *not* match a regex, use the logical ``not``
@@ -333,7 +315,7 @@ Array Operators
 * ``in`` (contain)
 * ``not in`` (does not contain)
 
-For example::
+These operators are using strict comparison. For example::
 
     class User
     {
@@ -352,12 +334,9 @@ For example::
 
 The ``$inGroup`` would evaluate to ``true``.
 
-.. deprecated:: 6.3
+.. note::
 
-    In Symfony versions previous to 6.3, ``in`` and ``not in`` operators
-    were using loose comparison. Using these operators with variables of
-    different types is now deprecated, and these operators will be using
-    strict comparison from Symfony 7.0.
+    The ``in`` and ``not in`` operators are using strict comparison.
 
 Numeric Operators
 ~~~~~~~~~~~~~~~~~

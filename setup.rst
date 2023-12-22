@@ -14,7 +14,7 @@ Technical Requirements
 
 Before creating your first Symfony application you must:
 
-* Install PHP 8.1 or higher and these PHP extensions (which are installed and
+* Install PHP 8.2 or higher and these PHP extensions (which are installed and
   enabled by default in most PHP 8 installations): `Ctype`_, `iconv`_,
   `PCRE`_, `Session`_, `SimpleXML`_, and `Tokenizer`_;
 * `Install Composer`_, which is used to install PHP packages.
@@ -46,10 +46,10 @@ application:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ symfony new my_project_directory --version="6.4.*@dev" --webapp
+    $ symfony new my_project_directory --version="7.0.*" --webapp
 
     # run this if you are building a microservice, console application or API
-    $ symfony new my_project_directory --version="6.4.*@dev"
+    $ symfony new my_project_directory --version="7.0.*"
 
 The only difference between these two commands is the number of packages
 installed by default. The ``--webapp`` option installs all the packages that you
@@ -61,12 +61,12 @@ Symfony application using Composer:
 .. code-block:: terminal
 
     # run this if you are building a traditional web application
-    $ composer create-project symfony/skeleton:"6.4.*@dev" my_project_directory
+    $ composer create-project symfony/skeleton:"7.0.*" my_project_directory
     $ cd my_project_directory
     $ composer require webapp
 
     # run this if you are building a microservice, console application or API
-    $ composer create-project symfony/skeleton:"6.4.*@dev" my_project_directory
+    $ composer create-project symfony/skeleton:"7.0.*" my_project_directory
 
 No matter which command you run to create the Symfony application. All of them
 will create a new ``my_project_directory/`` directory, download some dependencies
@@ -219,8 +219,7 @@ which in turn installs several packages like ``symfony/debug-bundle``,
 You won't see the ``symfony/debug-pack`` dependency in your ``composer.json``,
 as Flex automatically unpacks the pack. This means that it only adds the real
 packages as dependencies (e.g. you will see a new ``symfony/var-dumper`` in
-``require-dev``). While it is not recommended, you can use the ``composer
-require --no-unpack ...`` option to disable unpacking.
+``require-dev``).
 
 .. _security-checker:
 

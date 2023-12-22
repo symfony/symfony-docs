@@ -526,6 +526,7 @@
 /components https://symfony.com/components
 /components/index https://symfony.com/components
 /serializer/normalizers /components/serializer#normalizers
+/components/serializer#component-serializer-attributes-groups-annotations /components/serializer#component-serializer-attributes-groups-attributes
 /logging/monolog_regex_based_excludes /logging/monolog_exclude_http_codes
 /security/named_encoders /security/named_hashers
 /components/inflector /components/string#inflector

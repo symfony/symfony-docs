@@ -29,11 +29,6 @@ until you interact with the proxy in some way.
     In PHP versions prior to 8.0 lazy services do not support parameters with
     default values for built-in PHP classes (e.g. ``PDO``).
 
-.. versionadded:: 6.2
-
-    Starting from Symfony 6.2, service laziness is supported out of the box
-    without having to install any additional package.
-
 .. _lazy-services_configuration:
 
 Configuration
@@ -128,11 +123,6 @@ laziness, and supports lazy-autowiring of intersection types::
         FooInterface|BarInterface $foo,
     ) {
     }
-
-.. versionadded:: 6.3
-
-    The ``lazy`` argument of the ``#[Autowire()]`` attribute was introduced in
-    Symfony 6.3.
 
 Interface Proxifying
 --------------------

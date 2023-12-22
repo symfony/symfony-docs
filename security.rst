@@ -468,12 +468,6 @@ You can also manually hash a password by running:
 Read more about all available hashers and password migration in
 :doc:`security/passwords`.
 
-.. versionadded:: 6.2
-
-    In applications using Symfony 6.2 and PHP 8.2 or newer, the
-    `SensitiveParameter PHP attribute`_ is applied to all plain passwords and
-    sensitive tokens so they don't appear in stack traces.
-
 .. _firewalls-authentication:
 .. _a-authentication-firewalls:
 
@@ -612,10 +606,6 @@ don't accidentally block Symfony's dev tools - which live under URLs like
 
     This feature is not supported by the XML configuration format.
 
-    .. versionadded:: 6.4
-
-        The feature to use an array of regex was introduced in Symfony 6.4.
-
 All *real* URLs are handled by the ``main`` firewall (no ``pattern`` key means
 it matches *all* URLs). A firewall can have many modes of authentication,
 in other words, it enables many ways to ask the question "Who are you?".
@@ -679,10 +669,6 @@ use the :class:`Symfony\\Bundle\\SecurityBundle\\Security` service::
             // ...
         }
     }
-
-.. versionadded:: 6.2
-
-    The ``getFirewallConfig()`` method was introduced in Symfony 6.2.
 
 .. _security-authenticators:
 
@@ -1601,6 +1587,7 @@ and set the ``limiter`` option to its service ID:
                     $globalFactory: '@limiter.ip_login'
                     # localFactory is the limiter for username+IP
                     $localFactory: '@limiter.username_ip_login'
+                    $secret: '%kernel.secret%'
 
         security:
             firewalls:
@@ -1651,6 +1638,8 @@ and set the ``limiter`` option to its service ID:
                     <srv:argument type="service" id="limiter.ip_login"/>
                     <!-- 2nd argument is the limiter for username+IP -->
                     <srv:argument type="service" id="limiter.username_ip_login"/>
+                    <!-- 3rd argument is the app secret -->
+                    <srv:argument type="service" id="%kernel.secret%"/>
                 </srv:service>
             </srv:services>
 
@@ -1693,6 +1682,8 @@ and set the ``limiter`` option to its service ID:
                     new Reference('limiter.ip_login'),
                     // 2nd argument is the limiter for username+IP
                     new Reference('limiter.username_ip_login'),
+                    // 3rd argument is the app secret
+                    new Reference('kernel.secret'),
                 ]);
 
             $security->firewall('main')
@@ -1716,17 +1707,6 @@ for more information about this.
 
 Login Programmatically
 ----------------------
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
-    class was introduced in Symfony 6.2. Prior to 6.2, it was called
-    ``Symfony\Component\Security\Core\Security``.
-
-.. versionadded:: 6.2
-
-    The :method:`Symfony\\Bundle\\SecurityBundle\\Security::login`
-    method was introduced in Symfony 6.2.
 
 You can log in a user programmatically using the ``login()`` method of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
@@ -1769,14 +1749,6 @@ You can log in a user programmatically using the ``login()`` method of the
         }
     }
 
-.. versionadded:: 6.3
-
-    The feature to use a custom redirection logic was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The feature to add badges was introduced in Symfony 6.4.
-
 .. _security-logging-out:
 
 Logging Out
@@ -1796,7 +1768,7 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
                 main:
                     # ...
                     logout:
-                        path: app_logout
+                        path: /logout
 
                         # where to redirect after logout
                         # target: app_any_route
@@ -1817,11 +1789,10 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
                 <!-- ... -->
 
                 <firewall name="main">
-                    <!-- ... -->
-                    <logout path="app_logout"/>
+                    <logout path="/logout"/>
 
                     <!-- use "target" to configure where to redirect after logout
-                    <logout path="app_logout" target="app_any_route"/>
+                    <logout path="/logout" target="app_any_route"/>
                     -->
                 </firewall>
             </config>
@@ -1838,82 +1809,56 @@ To enable logging out, activate the  ``logout`` config parameter under your fire
             $mainFirewall = $security->firewall('main');
             // ...
             $mainFirewall->logout()
-                // the argument can be either a route name or a path
-                ->path('app_logout')
+                ->path('/logout')
 
                 // where to redirect after logout
                 // ->target('app_any_route')
             ;
         };
 
-Next, you need to create a route for this URL (but not a controller):
+Symfony will then un-authenticate users navigating to the configured ``path``,
+and redirect them to the configured ``target``.
+
+.. tip::
+
+    If you need to reference the logout path, you can use the ``_logout_<firewallname>``
+    route name (e.g. ``_logout_main``).
+
+If your project does not use :ref:`Symfony Flex <symfony-flex>`, make sure
+you have imported the logout route loader in your routes:
 
 .. configuration-block::
 
-    .. code-block:: php-attributes
-
-        // src/Controller/SecurityController.php
-        namespace App\Controller;
-
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-        use Symfony\Component\Routing\Annotation\Route;
-
-        class SecurityController extends AbstractController
-        {
-            #[Route('/logout', name: 'app_logout', methods: ['GET'])]
-            public function logout(): never
-            {
-                // controller can be blank: it will never be called!
-                throw new \Exception('Don\'t forget to activate logout in security.yaml');
-            }
-        }
-
     .. code-block:: yaml
 
-        # config/routes.yaml
-        app_logout:
-            path: /logout
-            methods: GET
+        # config/routes/security.yaml
+        _symfony_logout:
+            resource: security.route_loader.logout
+            type: service
 
     .. code-block:: xml
 
-        <!-- config/routes.xml -->
+        <!-- config/routes/security.xml -->
         <?xml version="1.0" encoding="UTF-8" ?>
         <routes xmlns="http://symfony.com/schema/routing"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://symfony.com/schema/routing
                 https://symfony.com/schema/routing/routing-1.0.xsd">
 
-            <route id="app_logout" path="/logout" methods="GET"/>
+            <import resource="security.route_loader.logout" type="service"/>
         </routes>
 
     .. code-block:: php
 
-        // config/routes.php
+        // config/routes/security.php
         use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
-        return function (RoutingConfigurator $routes): void {
-            $routes->add('app_logout', '/logout')
-                ->methods(['GET'])
-            ;
+        return static function (RoutingConfigurator $routes): void {
+            $routes->import('security.route_loader.logout', 'service');
         };
-
-That's it! By sending a user to the ``app_logout`` route (i.e. to ``/logout``)
-Symfony will un-authenticate the current user and redirect them.
 
 Logout programmatically
 ~~~~~~~~~~~~~~~~~~~~~~~
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\Bundle\SecurityBundle\Security <Symfony\\Bundle\\SecurityBundle\\Security>`
-    class was introduced in Symfony 6.2. Prior to 6.2, it was called
-    ``Symfony\Component\Security\Core\Security``.
-
-.. versionadded:: 6.2
-
-    The :method:`Symfony\\Bundle\\SecurityBundle\\Security::logout`
-    method was introduced in Symfony 6.2.
 
 You can logout user programmatically using the ``logout()`` method of the
 :class:`Symfony\\Bundle\\SecurityBundle\\Security` helper::
@@ -1989,6 +1934,105 @@ to execute custom logic::
         }
     }
 
+Customizing Logout Path
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Another option is to configure ``path`` as a route name. This can be useful
+if you want logout URIs to be dynamic (e.g. translated according to the
+current locale). In that case, you have to create this route yourself:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/routes.yaml
+        app_logout:
+            path:
+                en: /logout
+                fr: /deconnexion
+            methods: GET
+
+    .. code-block:: xml
+
+        <!-- config/routes.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                https://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="app_logout" path="/logout" methods="GET">
+                <path locale="en">/logout</path>
+                <path locale="fr">/deconnexion</path>
+            </route>
+        </routes>
+
+    .. code-block:: php
+
+        // config/routes.php
+        use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+
+        return function (RoutingConfigurator $routes): void {
+            $routes->add('app_logout', [
+                'en' => '/logout',
+                'fr' => '/deconnexion',
+            ])
+                ->methods(['GET'])
+            ;
+        };
+
+Then, pass the route name to the ``path`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        path: app_logout
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <logout path="app_logout"/>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security): void {
+            // ...
+
+            $mainFirewall = $security->firewall('main');
+            // ...
+            $mainFirewall->logout()
+                ->path('app_logout')
+            ;
+        };
+
 .. _retrieving-the-user-object:
 
 Fetching the User Object
@@ -2048,12 +2092,6 @@ If you need to get the logged in user from a service, use the
             // ...
         }
     }
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\\Bundle\\SecurityBundle\\Security` class
-    was introduced in Symfony 6.2. In previous Symfony versions this class was
-    defined in ``Symfony\Component\Security\Core\Security``.
 
 Fetch the User in a Template
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2454,15 +2492,6 @@ that is thrown with the ``exceptionCode`` argument::
         // ...
     }
 
-.. versionadded:: 6.2
-
-    The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The ``exceptionCode`` argument of the ``#[IsGranted()]`` attribute was
-    introduced in Symfony 6.3.
-
 .. _security-template:
 
 Access Control in Templates
@@ -2677,15 +2706,6 @@ like this:
 * ``IS_IMPERSONATOR``: When the current user is
   :doc:`impersonating </security/impersonating_user>` another user in this
   session, this attribute will match.
-
-.. note::
-
-    All logged in users also have an attribute called ``IS_AUTHENTICATED_REMEMBERED``,
-    even if the application doesn't use the Remember Me feature. This attribute
-    exists for backward-compatibility reasons with Symfony versions prior to 6.4.
-
-    This attribute behaves the same as ``IS_AUTHENTICATED``. That's why in modern
-    Symfony applications it's recommended to no longer use ``IS_AUTHENTICATED_REMEMBERED``.
 
 .. _user_session_refresh:
 
@@ -2911,4 +2931,3 @@ Authorization (Denying Access)
 .. _`HTTP Basic authentication`: https://en.wikipedia.org/wiki/Basic_access_authentication
 .. _`Login CSRF attacks`: https://en.wikipedia.org/wiki/Cross-site_request_forgery#Forging_login_requests
 .. _`PHP date relative formats`: https://www.php.net/manual/en/datetime.formats.php#datetime.formats.relative
-.. _`SensitiveParameter PHP attribute`: https://www.php.net/manual/en/class.sensitiveparameter.php

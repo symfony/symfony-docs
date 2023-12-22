@@ -118,8 +118,7 @@ The Cache component comes with a series of adapters pre-configured:
     logic to dynamically select the best possible storage based on your system
     (either PHP files or APCu).
 
-Some of these adapters could be configured via shortcuts. Using these shortcuts
-will create pools with service IDs that follow the pattern ``cache.[type]``.
+Some of these adapters could be configured via shortcuts.
 
 .. configuration-block::
 
@@ -130,16 +129,16 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
             cache:
                 directory: '%kernel.cache_dir%/pools' # Only used with cache.adapter.filesystem
 
-                # service: cache.doctrine_dbal
                 default_doctrine_dbal_provider: 'doctrine.dbal.default_connection'
-                # service: cache.psr6
                 default_psr6_provider: 'app.my_psr6_service'
-                # service: cache.redis
                 default_redis_provider: 'redis://localhost'
-                # service: cache.memcached
                 default_memcached_provider: 'memcached://localhost'
-                # service: cache.pdo
-                default_pdo_provider: 'pgsql:host=localhost'
+                default_pdo_provider: 'app.my_pdo_service'
+
+        services:
+            app.my_pdo_service:
+                class: \PDO
+                arguments: ['pgsql:host=localhost']
 
     .. code-block:: xml
 
@@ -154,43 +153,44 @@ will create pools with service IDs that follow the pattern ``cache.[type]``.
                 https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
         >
             <framework:config>
-                <!--
-                default-doctrine-dbal-provider: Service: cache.doctrine_dbal
-                default-psr6-provider: Service: cache.psr6
-                default-redis-provider: Service: cache.redis
-                default-memcached-provider: Service: cache.memcached
-                default-pdo-provider: Service: cache.pdo
-                -->
                 <!-- "directory" attribute is only used with cache.adapter.filesystem -->
                 <framework:cache directory="%kernel.cache_dir%/pools"
                     default-doctrine-dbal-provider="doctrine.dbal.default_connection"
                     default-psr6-provider="app.my_psr6_service"
                     default-redis-provider="redis://localhost"
                     default-memcached-provider="memcached://localhost"
-                    default-pdo-provider="pgsql:host=localhost"
+                    default-pdo-provider="app.my_pdo_service"
                 />
             </framework:config>
+
+            <services>
+                <service id="app.my_pdo_service" class="\PDO">
+                    <argument>pgsql:host=localhost</argument>
+                </service>
+            </services>
         </container>
 
     .. code-block:: php
 
         // config/packages/cache.php
+        use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
         use Symfony\Config\FrameworkConfig;
 
-        return static function (FrameworkConfig $framework): void {
+        return static function (FrameworkConfig $framework, ContainerConfigurator $container): void {
             $framework->cache()
                 // Only used with cache.adapter.filesystem
                 ->directory('%kernel.cache_dir%/pools')
-                // Service: cache.doctrine_dbal
+
                 ->defaultDoctrineDbalProvider('doctrine.dbal.default_connection')
-                // Service: cache.psr6
                 ->defaultPsr6Provider('app.my_psr6_service')
-                // Service: cache.redis
                 ->defaultRedisProvider('redis://localhost')
-                // Service: cache.memcached
                 ->defaultMemcachedProvider('memcached://localhost')
-                // Service: cache.pdo
-                ->defaultPdoProvider('pgsql:host=localhost')
+                ->defaultPdoProvider('app.my_pdo_service')
+            ;
+
+            $container->services()
+                ->set('app.my_pdo_service', \PDO::class)
+                ->args(['pgsql:host=localhost'])
             ;
         };
 
@@ -745,19 +745,11 @@ Clear all cache pools:
 
     $ php bin/console cache:pool:clear --all
 
-.. versionadded:: 6.3
-
-    The ``--all`` option was introduced in Symfony 6.3.
-
 Clear all cache pools except some:
 
 .. code-block:: terminal
 
     $ php bin/console cache:pool:clear --all --exclude=my_cache_pool --exclude=another_cache_pool
-
-.. versionadded:: 6.4
-
-    The ``--exclude`` option was introduced in Symfony 6.4.
 
 Clear all caches everywhere:
 
@@ -766,10 +758,6 @@ Clear all caches everywhere:
     $ php bin/console cache:pool:clear cache.global_clearer
 
 Clear cache by tag(s):
-
-.. versionadded:: 6.1
-
-    The ``cache:pool:invalidate-tags`` command was introduced in Symfony 6.1.
 
 .. code-block:: terminal
 
@@ -814,7 +802,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                     - ['%env(base64:CACHE_DECRYPTION_KEY)%']
                     # use multiple keys in order to rotate them
                     #- ['%env(base64:CACHE_DECRYPTION_KEY)%', '%env(base64:OLD_CACHE_DECRYPTION_KEY)%']
-                    - '@Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner'
+                    - '@.inner'
 
     .. code-block:: xml
 
@@ -837,7 +825,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                         <!-- use multiple keys in order to rotate them -->
                         <!-- <argument>env(base64:OLD_CACHE_DECRYPTION_KEY)</argument> -->
                     </argument>
-                    <argument type="service" id="Symfony\Component\Cache\Marshaller\SodiumMarshaller.inner"/>
+                    <argument type="service" id=".inner"/>
                 </service>
             </services>
         </container>
@@ -854,7 +842,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
             ->addArgument(['env(base64:CACHE_DECRYPTION_KEY)'])
             // use multiple keys in order to rotate them
             //->addArgument(['env(base64:CACHE_DECRYPTION_KEY)', 'env(base64:OLD_CACHE_DECRYPTION_KEY)'])
-            ->addArgument(new Reference(SodiumMarshaller::class.'.inner'));
+            ->addArgument(new Reference('.inner'));
 
 .. caution::
 

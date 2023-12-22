@@ -233,7 +233,7 @@ data.
 Context
 -------
 
-Many Serializer features can be configured :doc:`using a context </serializer#serializer_serializer-context>`.
+Many Serializer features can be configured :ref:`using a context <serializer_serializer-context>`.
 
 .. _component-serializer-attributes-groups:
 
@@ -271,13 +271,12 @@ that will be used by the normalizer must be aware of the format to use.
 The following code shows how to initialize the :class:`Symfony\\Component\\Serializer\\Mapping\\Factory\\ClassMetadataFactory`
 for each format:
 
-* Annotations in PHP files::
+* Attributes in PHP files::
 
-    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
 * YAML files::
 
@@ -293,7 +292,6 @@ for each format:
 
     $classMetadataFactory = new ClassMetadataFactory(new XmlFileLoader('/path/to/your/definition.xml'));
 
-.. _component-serializer-attributes-groups-annotations:
 .. _component-serializer-attributes-groups-attributes:
 
 Then, create your groups definition:
@@ -439,8 +437,8 @@ As for groups, attributes can be selected during both the serialization and dese
 Ignoring Attributes
 -------------------
 
-All attributes are included by default when serializing objects. There are two
-options to ignore some of those attributes.
+All accessible attributes are included by default when serializing objects.
+There are two options to ignore some of those attributes.
 
 Option 1: Using ``#[Ignore]`` Attribute
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -645,7 +643,7 @@ this is already set up and you only need to provide the configuration. Otherwise
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
     $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
 
@@ -711,10 +709,6 @@ automatically detect and use it to serialize related attributes.
 
 The ``ObjectNormalizer`` also takes care of methods starting with ``has``, ``get``,
 and ``can``.
-
-.. versionadded:: 6.1
-
-    The support of canners (methods prefixed by ``can``) was introduced in Symfony 6.1.
 
 Using Callbacks to Serialize Properties with Object Instances
 -------------------------------------------------------------
@@ -811,11 +805,6 @@ The Serializer component provides several built-in normalizers:
     combine the following values: ``PropertyNormalizer::NORMALIZE_PUBLIC``,
     ``PropertyNormalizer::NORMALIZE_PROTECTED`` or ``PropertyNormalizer::NORMALIZE_PRIVATE``.
 
-    .. versionadded:: 6.2
-
-        The ``PropertyNormalizer::NORMALIZE_VISIBILITY`` context option and its
-        values were introduced in Symfony 6.2.
-
 :class:`Symfony\\Component\\Serializer\\Normalizer\\JsonSerializableNormalizer`
     This normalizer works with classes that implement :phpclass:`JsonSerializable`.
 
@@ -851,10 +840,6 @@ The Serializer component provides several built-in normalizers:
 
     By default, an exception is thrown when data is not a valid backed enumeration. If you
     want ``null`` instead, you can set the ``BackedEnumNormalizer::ALLOW_INVALID_VALUES`` option.
-
-    .. versionadded:: 6.3
-
-        The ``BackedEnumNormalizer::ALLOW_INVALID_VALUES`` context option was introduced in Symfony 6.3.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\FormErrorNormalizer`
     This normalizer works with classes that implement
@@ -895,11 +880,6 @@ The Serializer component provides several built-in normalizers:
     method. You can define the locale to use to translate the object by
     setting the ``TranslatableNormalizer::NORMALIZATION_LOCALE_KEY`` serializer
     context option.
-
-    .. versionadded:: 6.4
-
-        The :class:`Symfony\\Component\\Serializer\\Normalizer\\TranslatableNormalizer`
-        was introduced in Symfony 6.4.
 
 .. note::
 
@@ -1030,10 +1010,6 @@ Option                           Description                                    
 ``json_decode_recursion_depth``  Sets maximum recursion depth.                                                                               ``512``
 ===============================  ==========================================================================================================  ================================
 
-.. versionadded:: 6.4
-
-    The support of ``json_decode_detailed_errors`` was introduced in Symfony 6.4.
-
 The ``CsvEncoder``
 ~~~~~~~~~~~~~~~~~~
 
@@ -1122,6 +1098,23 @@ the key  ``#comment`` can be used for encoding XML comments::
 
 You can pass the context key ``as_collection`` in order to have the results
 always as a collection.
+
+.. note::
+
+    You may need to add some attributes on the root node::
+
+        $encoder = new XmlEncoder();
+        $encoder->encode([
+            '@attribute1' => 'foo',
+            '@attribute2' => 'bar',
+            '#' => ['foo' => ['@bar' => 'value', '#' => 'baz']]
+        ], 'xml');
+
+        // will return:
+        // <?xml version="1.0"?>
+        // <response attribute1="foo" attribute2="bar">
+        // <foo bar="value">baz</foo>
+        // </response>
 
 .. tip::
 
@@ -1252,10 +1245,6 @@ you can use "context builders" to define the context using a fluent interface::
 
     $serializer->serialize($something, 'csv', $contextBuilder->toArray());
 
-.. versionadded:: 6.1
-
-    Context builders were introduced in Symfony 6.1.
-
 .. note::
 
     The Serializer component provides a context builder
@@ -1280,6 +1269,28 @@ to ``true``::
     $normalizer = new ObjectNormalizer();
     $result = $normalizer->normalize($dummy, 'json', [AbstractObjectNormalizer::SKIP_NULL_VALUES => true]);
     // ['bar' => 'notNull']
+
+Require all Properties
+----------------------
+
+By default, the Serializer will add ``null`` to nullable properties when the parameters for those are not provided.
+You can change this behavior by setting the ``AbstractNormalizer::REQUIRE_ALL_PROPERTIES`` context option
+to ``true``::
+
+    class Dummy
+    {
+        public function __construct(
+            public string $foo,
+            public ?string $bar,
+        ) {
+        }
+    }
+
+    $data = ['foo' => 'notNull'];
+
+    $normalizer = new ObjectNormalizer();
+    $result = $normalizer->denormalize($data, Dummy::class, 'json', [AbstractNormalizer::REQUIRE_ALL_PROPERTIES => true]);
+    // throws Symfony\Component\Serializer\Exception\MissingConstructorArgumentException
 
 Skipping Uninitialized Properties
 ---------------------------------
@@ -1533,10 +1544,9 @@ Instead of throwing an exception, a custom callable can be executed when the
 maximum depth is reached. This is especially useful when serializing entities
 having unique identifiers::
 
-    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\Serializer\Annotation\MaxDepth;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
     use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
@@ -1560,7 +1570,7 @@ having unique identifiers::
     $level3->id = 3;
     $level2->child = $level3;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
     // all callback parameters are optional (you can omit the ones you don't use)
     $maxDepthHandler = function (object $innerObject, object $outerObject, string $attributeName, string $format = null, array $context = []): string {
@@ -1761,7 +1771,7 @@ this is already set up and you only need to provide the configuration. Otherwise
     use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
     use Symfony\Component\Serializer\Serializer;
 
-    $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+    $classMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
 
     $discriminator = new ClassDiscriminatorFromClassMetadata($classMetadataFactory);
 

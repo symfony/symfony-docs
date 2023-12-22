@@ -229,11 +229,6 @@ Access the value of the first node of the current selection::
     // but you can get the unchanged text by passing FALSE as argument
     $text = $crawler->filterXPath('//body/p')->innerText(false);
 
-.. versionadded:: 6.3
-
-    The removal of whitespace characters by default in ``innerText()`` was
-    introduced in Symfony 6.3.
-
 Access the attribute value of the first node of the current selection::
 
     $class = $crawler->filterXPath('//body/p')->attr('class');
@@ -244,11 +239,6 @@ Access the attribute value of the first node of the current selection::
     by using the second argument of the ``attr()`` method::
 
         $class = $crawler->filterXPath('//body/p')->attr('class', 'my-default-class');
-
-    .. versionadded:: 6.4
-
-        The possibility to specify a default value to the ``attr()`` method
-        was introduced in Symfony 6.4.
 
 Extract attribute and/or node values from the list of nodes::
 
@@ -671,10 +661,6 @@ parser, set its ``useHtml5Parser`` constructor argument to ``true``::
 
 By doing so, the crawler will use the HTML5 parser provided by the `masterminds/html5`_
 library to parse the documents.
-
-.. versionadded:: 6.3
-
-    The ``useHtml5Parser`` argument was introduced in Symfony 6.3.
 
 Learn more
 ----------

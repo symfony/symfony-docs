@@ -80,10 +80,6 @@ implement ``TranslatableInterface`` to translate or display custom labels::
         }
     }
 
-.. versionadded:: 6.4
-
-    Support for ``TranslatableInterface`` was introduced in Symfony 6.4.
-
 Field Options
 -------------
 
@@ -192,6 +188,8 @@ These options inherit from the :doc:`FormType </reference/forms/types/form>`:
 .. include:: /reference/forms/types/options/label.rst.inc
 
 .. include:: /reference/forms/types/options/label_attr.rst.inc
+
+.. include:: /reference/forms/types/options/label_html.rst.inc
 
 .. include:: /reference/forms/types/options/label_format.rst.inc
 

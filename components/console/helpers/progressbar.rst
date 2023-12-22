@@ -5,7 +5,7 @@ When executing longer-running commands, it may be helpful to show progress
 information, which updates as your command runs:
 
 .. image:: /_images/components/console/progressbar.gif
-    :alt: Console output showing a progress bar advance to 100%, with the esimated time left, the memory usage and a special message that changes when the bar closes completion.
+    :alt: Console output showing a progress bar advance to 100%, with the estimated time left, the memory usage and a special message that changes when the bar closes completion.
 
 .. note::
 
@@ -68,10 +68,6 @@ that starting point::
 
     // displays the progress bar starting at 25 completed units
     $progressBar->start(null, 25);
-
-.. versionadded:: 6.2
-
-    The option to start a progress bar at a certain point was introduced in Symfony 6.2.
 
 .. tip::
 
@@ -374,10 +370,6 @@ with the ``setPlaceholderFormatter`` method::
     $progressBar->setPlaceholderFormatter('countdown', function (ProgressBar $progressBar) {
         return $progressBar->getMaxSteps() - $progressBar->getProgress();
     });
-
-.. versionadded:: 6.3
-
-    The ``setPlaceholderFormatter()`` method was introduced in Symfony 6.3.
 
 Custom Messages
 ~~~~~~~~~~~~~~~

@@ -168,11 +168,6 @@ follows:
     ``'draft'`` or ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``
     instead of ``'to_review'``.
 
-.. versionadded:: 6.4
-
-    Since Symfony 6.4, the ``type`` option under ``marking_store`` can be
-    omitted when the ``property`` option is explicitly set.
-
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
     // src/Entity/BlogPost.php
@@ -230,11 +225,6 @@ you must declare a setter to write your property::
             // assign the property and do something with the context
         }
     }
-
-.. versionadded:: 6.4
-
-    The feature to use public properties instead of getter/setter methods
-    and private properties was introduced in Symfony 6.4.
 
 .. note::
 
@@ -341,16 +331,6 @@ attribute::
 
 This allows you to decorrelate the argument name of any implementation
 name.
-
-.. versionadded:: 6.2
-
-    All workflows and state machines services are tagged since in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    Injecting a workflow with only its name and
-    :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Target` was
-    introduced in Symfony 6.3.
 
 .. tip::
 
@@ -463,21 +443,6 @@ order:
 
         $workflow->apply($subject, $transitionName, [Workflow::DISABLE_ANNOUNCE_EVENT => true]);
 
-The context is accessible in all events except for the ``workflow.guard`` events::
-
-    // $context must be an array
-    $context = ['context_key' => 'context_value'];
-    $workflow->apply($subject, $transitionName, $context);
-
-    // in an event listener (workflow.guard events)
-    $context = $event->getContext(); // returns ['context']
-
-.. deprecated:: 6.4
-
-    Gathering events context is deprecated since Symfony 6.4 and the
-    :method:`Symfony\\Component\\Workflow\\Event::getContext` method will be
-    removed in Symfony 7.0.
-
 .. note::
 
     The leaving and entering events are triggered even for transitions that stay
@@ -562,10 +527,6 @@ attributes::
 You may refer to the documentation about
 :ref:`defining event listeners with PHP attributes <event-dispatcher_event-listener-attributes>`
 for further use.
-
-.. versionadded:: 6.4
-
-    The workflow event attributes were introduced in Symfony 6.4.
 
 .. _workflow-usage-guard-events:
 
@@ -908,6 +869,83 @@ place::
             ];
         }
     }
+
+Creating Your Own Marking Store
+-------------------------------
+
+You may need to implement your own store to execute some additional logic
+when the marking is updated. For example, you may have some specific needs
+to store the marking on certain workflows. To do this, you need to implement
+the
+:class:`Symfony\\Component\\Workflow\\MarkingStore\\MarkingStoreInterface`::
+
+    namespace App\Workflow\MarkingStore;
+
+    use Symfony\Component\Workflow\Marking;
+    use Symfony\Component\Workflow\MarkingStore\MarkingStoreInterface;
+
+    final class BlogPostMarkingStore implements MarkingStoreInterface
+    {
+        public function getMarking(BlogPost $subject): Marking
+        {
+            return new Marking([$subject->getCurrentPlace() => 1]);
+        }
+
+        public function setMarking(BlogPost $subject, Marking $marking): void
+        {
+            $marking = key($marking->getPlaces());
+            $subject->setCurrentPlace($marking);
+        }
+    }
+
+Once your marking store is implemented, you can configure your workflow to use
+it:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/workflow.yaml
+        framework:
+            workflows:
+                blog_publishing:
+                    # ...
+                    marking_store:
+                        service: 'App\Workflow\MarkingStore\BlogPostMarkingStore'
+
+    .. code-block:: xml
+
+        <!-- config/packages/workflow.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:framework="http://symfony.com/schema/dic/symfony"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/symfony https://symfony.com/schema/dic/symfony/symfony-1.0.xsd"
+        >
+            <framework:config>
+                <framework:workflow name="blog_publishing">
+                    <!-- ... -->
+                    <framework:marking-store service="App\Workflow\MarkingStore\BlogPostMarkingStore"/>
+                </framework:workflow>
+            </framework:config>
+        </container>
+
+    .. code-block:: php
+
+        // config/packages/workflow.php
+        use App\Workflow\MarkingStore\ReflectionMarkingStore;
+        use Symfony\Config\FrameworkConfig;
+
+        return static function (FrameworkConfig $framework): void {
+            // ...
+
+            $blogPublishing = $framework->workflows()->workflows('blog_publishing');
+            // ...
+
+            $blogPublishing->markingStore()
+                ->service(BlogPostMarkingStore::class);
+        };
 
 Usage in Twig
 -------------

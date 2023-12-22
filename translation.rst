@@ -451,11 +451,6 @@ The ``translation:extract`` command looks for missing translations in:
 * Any PHP file/class stored in the ``src/`` directory that uses
   :ref:`Constraints Attributes <validation-constraints>`  with ``*message`` named argument(s).
 
-.. versionadded:: 6.2
-
-    The support of PHP files/classes that use constraint attributes was
-    introduced in Symfony 6.2.
-
 .. _translation-resource-locations:
 
 Translation Resource/File Names and Locations
@@ -498,10 +493,6 @@ provides many loaders which are selected based on the following file extensions:
 * ``.mo``: `Machine object format`_;
 * ``.po``: `Portable object format`_;
 * ``.qt``: `QT Translations TS XML`_ file;
-
-.. versionadded:: 6.1
-
-    The ``.xliff`` file extension support was introduced in Symfony 6.1.
 
 The choice of which loader to use is entirely up to you and is a matter of
 taste. The recommended option is to use YAML for simple projects and use XLIFF
@@ -606,10 +597,6 @@ Loco (localise.biz)   ``composer require symfony/loco-translation-provider``
 Lokalise              ``composer require symfony/lokalise-translation-provider``
 Phrase                ``composer require symfony/phrase-translation-provider``
 ====================  ===========================================================
-
-.. versionadded:: 6.4
-
-    The ``Phrase`` translation provider was introduced in Symfony 6.4.
 
 Each library includes a :ref:`Symfony Flex recipe <symfony-flex>` that will add
 a configuration example to your ``.env`` file. For example, suppose you want to
@@ -765,11 +752,6 @@ now use the following commands to push (upload) and pull (download) translations
     # the "--as-tree" option will write YAML messages as a tree-like structure instead
     # of flat keys
     $ php bin/console translation:pull loco --force --as-tree
-
-.. versionadded:: 6.4
-
-    The ``--as-tree`` option of the ``translation:pull`` command was introduced
-    in Symfony 6.4.
 
 Creating Custom Providers
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1043,10 +1025,6 @@ checks translation resources for several locales:
 Switch Locale Programmatically
 ------------------------------
 
-.. versionadded:: 6.1
-
-    The ``LocaleSwitcher`` was introduced in Symfony 6.1.
-
 Sometimes you need to change the locale of the application dynamically
 just to run some code. Imagine a console command that renders Twig templates
 of emails in different languages. You need to change the locale only to
@@ -1102,13 +1080,6 @@ of:
             // ...
         }
     }
-
-.. versionadded:: 6.4
-
-    The support of declaring an argument in the callback to inject the locale
-    being used in the
-    :method:`Symfony\\Component\\Translation\\LocaleSwitcher::runWithLocale`
-    method was introduced in Symfony 6.4.
 
 When using :ref:`autowiring <services-autowire>`, type-hint any controller or
 service argument with the :class:`Symfony\\Component\\Translation\\LocaleSwitcher`

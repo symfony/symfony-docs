@@ -159,11 +159,6 @@ this behavior by using the ``lock`` key like:
             ;
         };
 
-.. versionadded:: 6.1
-
-    The CSV support (e.g. ``zookeeper://localhost01,localhost02:2181``) in
-    ZookeeperStore DSN was introduced in Symfony 6.1.
-
 Locking a Resource
 ------------------
 

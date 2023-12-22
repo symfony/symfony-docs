@@ -1,5 +1,5 @@
-Adding Custom Loaders & Plugins
-===============================
+Adding Custom Loaders & Plugins with Webpack Encore
+===================================================
 
 Adding Custom Loaders
 ---------------------

@@ -231,10 +231,6 @@ as the factory class:
                 ->constructor('create');
         };
 
-.. versionadded:: 6.3
-
-    The ``constructor`` option was introduced in Symfony 6.3.
-
 Non-Static Factories
 --------------------
 
@@ -376,10 +372,6 @@ method name:
 
 Using Expressions in Service Factories
 --------------------------------------
-
-.. versionadded:: 6.1
-
-    Using expressions as factories was introduced in Symfony 6.1.
 
 Instead of using PHP classes as a factory, you can also use
 :doc:`expressions </service_container/expression_language>`. This allows you to

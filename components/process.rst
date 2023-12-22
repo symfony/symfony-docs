@@ -413,10 +413,6 @@ instead::
 Executing a PHP Child Process with the Same Configuration
 ---------------------------------------------------------
 
-.. versionadded:: 6.4
-
-    The ``PhpSubprocess`` helper was introduced in Symfony 6.4.
-
 When you start a PHP process, it uses the default configuration defined in
 your ``php.ini`` file. You can bypass these options with the ``-d`` command line
 option. For example, if ``memory_limit`` is set to ``256M``, you can disable this

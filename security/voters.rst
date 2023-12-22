@@ -126,10 +126,6 @@ calls out to the "voter" system. Right now, no voters will vote on whether or no
 the user can "view" or "edit" a ``Post``. But you can create your *own* voter that
 decides this using whatever logic you want.
 
-.. versionadded:: 6.2
-
-    The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
-
 Creating the custom Voter
 -------------------------
 

@@ -270,13 +270,9 @@ you can control. The following configuration options exist for a mapping:
 ``type``
 ........
 
-One of ``annotation`` (for PHP annotations; it's the default value),
-``attribute`` (for PHP attributes), ``xml``, ``yml``, ``php`` or
-``staticphp``. This specifies which type of metadata type your mapping uses.
-
-.. deprecated:: 6.4
-
-    Annotations are deprecated since Symfony 6.4, use attributes instead.
+One of ``attribute`` (for PHP attributes; it's the default value),
+``xml``, ``yml``, ``php`` or ``staticphp``. This specifies which
+type of metadata type your mapping uses.
 
 See `Doctrine Metadata Drivers`_ for more information about this option.
 

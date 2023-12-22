@@ -34,7 +34,7 @@ to learn everything about them.
 
 .. seealso::
 
-    This article covers listeners and subscribers for Doctrine ORM. If you are
+    This article covers listeners for Doctrine ORM. If you are
     using ODM for MongoDB, read the `DoctrineMongoDBBundle documentation`_.
 
 Doctrine Lifecycle Callbacks
@@ -334,7 +334,7 @@ listener in the Symfony application by creating a new service for it and
                         # this is the only required option for the lifecycle listener tag
                         event: 'postPersist'
 
-                        # listeners can define their priority in case multiple subscribers or listeners are associated
+                        # listeners can define their priority in case listeners are associated
                         # to the same event (default priority = 0; higher numbers = listener is run earlier)
                         priority: 500
 
@@ -352,7 +352,7 @@ listener in the Symfony application by creating a new service for it and
 
                 <!--
                     * 'event' is the only required option that defines the lifecycle listener
-                    * 'priority': used when multiple subscribers or listeners are associated to the same event
+                    * 'priority': used when multiple listeners are associated to the same event
                     *             (default priority = 0; higher numbers = listener is run earlier)
                     * 'connection': restricts the listener to a specific Doctrine connection
                 -->
@@ -381,7 +381,7 @@ listener in the Symfony application by creating a new service for it and
                     // this is the only required option for the lifecycle listener tag
                     'event' => 'postPersist',
 
-                    // listeners can define their priority in case multiple subscribers or listeners are associated
+                    // listeners can define their priority in case multiple listeners are associated
                     // to the same event (default priority = 0; higher numbers = listener is run earlier)
                     'priority' => 500,
 
@@ -397,25 +397,8 @@ listener in the Symfony application by creating a new service for it and
 
 .. tip::
 
-    Symfony loads (and instantiates) Doctrine listeners only when the related
-    Doctrine event is actually fired; whereas Doctrine subscribers are always
-    loaded (and instantiated) by Symfony, making them less performant.
-
-.. tip::
-
     The value of the ``connection`` option can also be a
     :ref:`configuration parameter <configuration-parameters>`.
-
-Doctrine Lifecycle Subscribers
-------------------------------
-
-.. deprecated:: 6.3
-
-    Lifecycle subscribers are deprecated starting from Symfony 6.3.
-
-This was another way of listening to events provided by Doctrine. However, they
-were deprecated in Symfony 6.3 and it's no longer recommended to use them.
-Instead, use any of the other alternatives shown above.
 
 .. _`Doctrine`: https://www.doctrine-project.org/
 .. _`lifecycle events`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/events.html#lifecycle-events

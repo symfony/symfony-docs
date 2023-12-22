@@ -132,7 +132,7 @@ work:
   branch (you can find them on the `Symfony releases page`_). E.g. if you
   found a bug introduced in ``v5.1.10``, you need to work on ``5.4``.
 
-* ``6.4``, if you are adding a new feature.
+* ``7.1``, if you are adding a new feature.
 
   The only exception is when a new :doc:`major Symfony version </contributing/community/releases>`
   (5.0, 6.0, etc.) comes out every two years. Because of the
@@ -146,6 +146,12 @@ work:
     recent branches on a regular basis. For instance, if you submit a PR
     for the ``5.4`` branch, the PR will also be applied by the core team on
     all the ``6.x`` branches that are still maintained.
+
+During the :ref:`stabilization phase <contributing-release-development>`, the development branch is in
+feature freeze. Please help the community prepare for the new version release. If you want to submit a
+new feature pull request, you should target the next version. For example, if ``6.3`` reached feature
+freeze, new features should target ``6.4``. If the ``6.4`` branch does not yet exist, target ``6.3``
+and rebase your pull requests once the branch is created.
 
 Create a Topic Branch
 ~~~~~~~~~~~~~~~~~~~~~
@@ -172,8 +178,8 @@ Then create a new branch off the ``5.4`` branch to work on the bug fix:
 
 .. tip::
 
-    Use a descriptive name for your branch (``ticket_XXX`` where ``XXX`` is the
-    ticket number is a good convention for bug fixes).
+    Use a descriptive name for your branch (``fix_XXX`` where ``XXX`` is the
+    issue number is a good convention for bug fixes).
 
 The above checkout commands automatically switch the code to the newly created
 branch (check the branch you are working on with ``git branch``).
@@ -338,7 +344,7 @@ Symfony as quickly as possible.
 Some answers to the questions trigger some more requirements:
 
 * If you answer yes to "Bug fix?", check if the bug is already listed in the
-  Symfony issues and reference it/them in "Fixed tickets";
+  Symfony issues and reference it/them in "Issues";
 
 * If you answer yes to "New feature?", you must submit a pull request to the
   documentation and reference it under the "Doc PR" section;

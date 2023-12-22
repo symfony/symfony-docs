@@ -48,6 +48,77 @@ access_denied_url
 Defines the URL where the user is redirected after a ``403`` HTTP error (unless
 you define a custom access denial handler). Example: ``/no-permission``
 
+delete_cookies
+~~~~~~~~~~~~~~
+
+**type**: ``array`` **default**: ``[]``
+
+Lists the names (and other optional features) of the cookies to delete when the
+user logs out::
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            # ...
+
+            firewalls:
+                main:
+                    # ...
+                    logout:
+                        delete_cookies:
+                            cookie1-name: null
+                            cookie2-name:
+                                path: '/'
+                            cookie3-name:
+                                path: null
+                                domain: example.com
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd">
+
+            <config>
+                <!-- ... -->
+
+                <firewall name="main">
+                    <!-- ... -->
+                    <logout path="...">
+                        <delete-cookie name="cookie1-name"/>
+                        <delete-cookie name="cookie2-name" path="/"/>
+                        <delete-cookie name="cookie3-name" domain="example.com"/>
+                    </logout>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+
+        // ...
+
+        return static function (SecurityConfig $securityConfig): void {
+            // ...
+
+            $securityConfig->firewall('main')
+                ->logout()
+                    ->deleteCookie('cookie1-name')
+                    ->deleteCookie('cookie2-name')
+                        ->path('/')
+                    ->deleteCookie('cookie3-name')
+                        ->path(null)
+                        ->domain('example.com');
+        };
+
 erase_credentials
 ~~~~~~~~~~~~~~~~~
 
@@ -408,25 +479,21 @@ user logs out::
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+
+        // ...
+
+        return static function (SecurityConfig $securityConfig): void {
             // ...
-            'firewalls' => [
-                'main' => [
-                    'logout' => [
-                        'delete_cookies' => [
-                            'cookie1-name' => null,
-                            'cookie2-name' => [
-                                'path' => '/',
-                            ],
-                            'cookie3-name' => [
-                                'path' => null,
-                                'domain' => 'example.com',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
-        ]);
+
+            $securityConfig->firewall('main')
+                ->logout()
+                    ->deleteCookie('cookie1-name')
+                    ->deleteCookie('cookie2-name')
+                        ->path('/')
+                    ->deleteCookie('cookie3-name')
+                        ->path(null)
+                        ->domain('example.com');
+        };
 
 
 clear_site_data
@@ -483,23 +550,16 @@ It's also possible to use ``*`` as a wildcard for all directives:
     .. code-block:: php
 
         // config/packages/security.php
-        $container->loadFromExtension('security', [
+
+        // ...
+
+        return static function (SecurityConfig $securityConfig): void {
             // ...
-            'firewalls' => [
-                'main' => [
-                    'logout' => [
-                        'clear-site-data' => [
-                            'cookies',
-                            'storage',
-                        ],
-                    ],
-                ],
-            ],
-        ]);
 
-.. versionadded:: 6.3
-
-    The ``clear_site_data`` option was introduced in Symfony 6.3.
+            $securityConfig->firewall('main')
+                ->logout()
+                    ->clearSiteData(['cookies', 'storage']);
+        };
 
 invalidate_session
 ..................
@@ -540,10 +600,6 @@ enable_csrf
 Set this option to ``true`` to enable CSRF protection in the logout process
 using Symfony's default CSRF token manager. Set also the ``csrf_token_manager``
 option if you need to use a custom CSRF token manager.
-
-.. versionadded:: 6.2
-
-    The ``enable_csrf`` option was introduced in Symfony 6.2.
 
 csrf_parameter
 ..............
@@ -807,10 +863,6 @@ user_identifier
 
 **type**: ``string`` **default**: ``emailAddress``
 
-.. versionadded:: 6.3
-
-    The ``user_identifier`` option was introduced in Symfony 6.3.
-
 The value of this option tells Symfony which parameter to use to find the user
 identifier in the "distinguished name".
 
@@ -961,6 +1013,8 @@ multiple firewalls, the "context" could actually be shared:
     ignored and you won't be able to authenticate on multiple firewalls at the
     same time.
 
+.. _reference-security-stateless:
+
 stateless
 ~~~~~~~~~
 
@@ -1012,10 +1066,6 @@ the session must not be used when authenticating users:
 
 Routes under this firewall will be :ref:`configured stateless <stateless-routing>`
 when they are not explicitly configured stateless or not.
-
-.. versionadded:: 6.3
-
-    Stateless firewall marking routes stateless was introduced in Symfony 6.3.
 
 User Checkers
 ~~~~~~~~~~~~~

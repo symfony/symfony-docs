@@ -127,10 +127,6 @@ about the :doc:`expression language syntax </reference/formats/expression_langua
 Alternatively, you can set the ``negate`` option to ``false`` in order to
 assert that the expression must return ``true`` for validation to fail.
 
-.. versionadded:: 6.2
-
-   The ``negate`` option was introduced in Symfony 6.2.
-
 .. sidebar:: Mapping the Error to a Specific Field
 
     You can also attach the constraint to a specific property and still validate
@@ -247,10 +243,6 @@ in your expression:
 You also have access to the ``is_valid()`` function in your expression. This function
 checks that the data passed to function doesn't raise any validation violation.
 
-.. versionadded:: 6.4
-
-    The ``is_valid()`` expression function was introduced in Symfony 6.4.
-
 .. include:: /reference/constraints/_groups-option.rst.inc
 
 ``message``
@@ -275,10 +267,6 @@ Parameter        Description
 **type**: ``boolean`` **default**: ``true``
 
 If ``false``, the validation fails when expression returns ``true``.
-
-.. versionadded:: 6.2
-
-   The ``negate`` option was introduced in Symfony 6.2.
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 

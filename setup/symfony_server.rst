@@ -65,11 +65,7 @@ run the Symfony server in the background:
 
     .. code-block:: terminal
 
-        # find the installed version of the Symfony binary
-        $ symfony version
-
-        # change the path to the location of your Symfony binary and replace {version} too
-        $ sudo codesign --force --deep --sign - /opt/homebrew/Cellar/symfony-cli/{version}/bin/symfony
+        $ sudo codesign --force --deep --sign - $(whereis -q symfony)
 
 Enabling PHP-FPM
 ----------------
@@ -367,6 +363,9 @@ If you like some processes to start automatically, along with the webserver
         build_spa:
             cmd: ['yarn', '--cwd', './spa/', 'dev']
 
+        # auto start Docker compose when starting server (available since Symfony CLI 5.7.0)
+        docker_compose: ~
+
 .. _symfony-server-docker:
 
 Docker Integration
@@ -524,7 +523,7 @@ help debug any issues.
 .. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`Docker`: https://en.wikipedia.org/wiki/Docker_(software)
 .. _`Platform.sh`: https://symfony.com/cloud/
-.. _`Read Platform.sh for Symfony technical docs`: https://symfony.com/doc/master/cloud/intro.html
+.. _`Read Platform.sh for Symfony technical docs`: https://symfony.com/doc/current/cloud/index.html
 .. _`Proxy settings in Windows`: https://www.dummies.com/computers/operating-systems/windows-10/how-to-set-up-a-proxy-in-windows-10/
 .. _`Proxy settings in macOS`: https://support.apple.com/guide/mac-help/enter-proxy-server-settings-on-mac-mchlp2591/mac
 .. _`Proxy settings in Ubuntu`: https://help.ubuntu.com/stable/ubuntu-help/net-proxy.html.en

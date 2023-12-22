@@ -352,10 +352,6 @@ an authorization server.
 1) Configure the OidcUserInfoTokenHandler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.3
-
-    The ``OidcUserInfoTokenHandler`` class was introduced in Symfony 6.3.
-
 The ``OidcUserInfoTokenHandler`` requires the ``symfony/http-client`` package to
 make the needed HTTP requests. If you haven't installed it yet, run this command:
 
@@ -539,10 +535,6 @@ claims. To create your own user object from the claims, you must
 2) Configure the OidcTokenHandler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.3
-
-    The ``OidcTokenHandler`` class was introduced in Symfony 6.3.
-
 The ``OidcTokenHandler`` requires ``web-token/jwt-signature``,
 ``web-token/jwt-checker`` and ``web-token/jwt-signature-algorithm-ecdsa``
 packages. If you haven't installed them yet, run these commands:
@@ -704,6 +696,36 @@ create your own User from the claims, you must
             // implement your own logic to load and return the user object
         }
     }
+
+Creating Users from Token
+-------------------------
+
+Some types of tokens (for instance OIDC) contain all information required
+to create a user entity (e.g. username and roles). In this case, you don't
+need a user provider to create a user from the database::
+
+    // src/Security/AccessTokenHandler.php
+    namespace App\Security;
+
+    // ...
+    class AccessTokenHandler implements AccessTokenHandlerInterface
+    {
+        // ...
+
+        public function getUserBadgeFrom(string $accessToken): UserBadge
+        {
+            // get the data from the token
+            $payload = ...;
+
+            return new UserBadge(
+                $payload->getUserId(),
+                fn (string $userIdentifier) => new User($userIdentifier, $payload->getRoles())
+            );
+        }
+    }
+
+When using this strategy, you can omit the ``user_provider`` configuration
+for :ref:`stateless firewalls <reference-security-stateless>`.
 
 .. _`JSON Web Tokens (JWT)`: https://datatracker.ietf.org/doc/html/rfc7519
 .. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html

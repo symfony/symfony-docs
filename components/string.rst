@@ -565,10 +565,6 @@ the injected slugger is the same as the request locale::
 Slug Emojis
 ~~~~~~~~~~~
 
-.. versionadded:: 6.2
-
-    The Emoji transliteration feature was introduced in Symfony 6.2.
-
 You can transform any emojis into their textual representation::
 
     use Symfony\Component\String\Slugger\AsciiSlugger;
@@ -602,10 +598,6 @@ If you want to strip emojis from slugs, use the special ``strip`` locale::
 
     $slug = $slugger->slug('a 😺, 🐈‍⬛, and a 🦁');
     // $slug = 'a-and-a';
-
-.. versionadded:: 6.3
-
-    The option to strip emojis from slugs was introduced in Symfony 6.3.
 
 .. _string-inflector:
 

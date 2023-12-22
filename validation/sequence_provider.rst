@@ -344,6 +344,95 @@ provides a sequence of groups to be validated:
             }
         }
 
+Advanced Validation Group Provider
+----------------------------------
+
+In the previous section, you learned how to change the sequence of groups
+dynamically based on the state of your entity. However, in more advanced cases
+you might need to use some external configuration or service to define that
+sequence of groups.
+
+Managing the entity initialization and manually setting its dependencies can
+be cumbersome, and the implementation might not align with the entity
+responsibilities. To solve this, you can configure the implementation of the
+:class:`Symfony\\Component\\Validator\\GroupProviderInterface` outside of the
+entity, and even register the group provider as a service.
+
+Here's how you can achieve this:
+
+ 1) **Define a Separate Group Provider Class:** create a class that implements
+    the :class:`Symfony\\Component\\Validator\\GroupProviderInterface`
+    and handles the dynamic group sequence logic;
+ 2) **Configure the User with the Provider:** use the ``provider`` option within
+    the :class:`Symfony\\Component\\Validator\\Constraints\\GroupSequenceProvider`
+    attribute to link the entity with the provider class;
+ 3) **Autowiring or Manual Tagging:** if :doc:` autowiring </service_container/autowiring>`
+    is enabled, your custom provider will be automatically linked. Otherwise, you must
+    :doc:`tag your service </service_container/tags>` manually with the ``validator.group_provider`` tag.
+
+.. configuration-block::
+
+    .. code-block:: php-attributes
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        // ...
+        use App\Validator\UserGroupProvider;
+
+        #[Assert\GroupSequenceProvider(provider: UserGroupProvider::class)]
+        class User
+        {
+            // ...
+        }
+
+    .. code-block:: yaml
+
+        # config/validator/validation.yaml
+        App\Entity\User:
+            group_sequence_provider: App\Validator\UserGroupProvider
+
+    .. code-block:: xml
+
+        <!-- config/validator/validation.xml -->
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="App\Entity\User">
+                <group-sequence-provider>
+                    <value>App\Validator\UserGroupProvider</value>
+                </group-sequence-provider>
+                <!-- ... -->
+            </class>
+        </constraint-mapping>
+
+    .. code-block:: php
+
+        // src/Entity/User.php
+        namespace App\Entity;
+
+        // ...
+        use App\Validator\UserGroupProvider;
+        use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+        class User
+        {
+            // ...
+
+            public static function loadValidatorMetadata(ClassMetadata $metadata): void
+            {
+                $metadata->setGroupProvider(UserGroupProvider::class);
+                $metadata->setGroupSequenceProvider(true);
+                // ...
+            }
+        }
+
+With this approach, you can maintain a clean separation between the entity
+structure and the group sequence logic, allowing for more advanced use cases.
+
 How to Sequentially Apply Constraints on a Single Property
 ----------------------------------------------------------
 

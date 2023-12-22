@@ -355,10 +355,6 @@ and the special ``!php/enum`` syntax to parse them as proper PHP enums::
     // the value of the 'foo' key is a string because it missed the `!php/enum` syntax
     // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => 'foo'];
 
-.. versionadded:: 6.2
-
-    The support for PHP enumerations was introduced in Symfony 6.2.
-
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -421,10 +417,6 @@ By default, digit-only array keys are dumped as integers. You can use the
 
     $dumped = Yaml::dump([200 => 'foo'], 2, 4, Yaml::DUMP_NUMERIC_KEY_AS_STRING);
     // '200': foo
-
-.. versionadded:: 6.3
-
-    The ``DUMP_NUMERIC_KEY_AS_STRING`` flag was introduced in Symfony 6.3.
 
 Syntax Validation
 ~~~~~~~~~~~~~~~~~

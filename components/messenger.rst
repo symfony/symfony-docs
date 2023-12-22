@@ -292,16 +292,22 @@ do is to write your own CSV receiver::
 
     class NewOrdersFromCsvFileReceiver implements ReceiverInterface
     {
+        private $connection;
+
         public function __construct(
             private SerializerInterface $serializer,
             private string $filePath,
         ) {
+            // Available connection bundled with the Messenger component
+            // can be found in "Symfony\Component\Messenger\Bridge\*\Transport\Connection".
+            $this->connection = /* create your connection */;
         }
 
         public function get(): iterable
         {
             // Receive the envelope according to your transport ($yourEnvelope here),
             // in most cases, using a connection is the easiest solution.
+            $yourEnvelope = $this->connection->get();
             if (null === $yourEnvelope) {
                 return [];
             }
@@ -327,7 +333,9 @@ do is to write your own CSV receiver::
         public function reject(Envelope $envelope): void
         {
             // In the case of a custom connection
-            $this->connection->reject($this->findCustomStamp($envelope)->getId());
+            $id = /* get the message id thanks to information or stamps present in the envelope */;
+
+            $this->connection->reject($id);
         }
     }
 

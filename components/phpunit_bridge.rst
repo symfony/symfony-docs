@@ -7,8 +7,8 @@ The PHPUnit Bridge
 
 It comes with the following features:
 
-* Forces the tests to use a consistent locale (``C``) (if you create
-  locale-sensitive tests, use PHPUnit's ``setLocale()`` method);
+* Sets by default a consistent locale (``C``) for your tests (if you
+  create locale-sensitive tests, use PHPUnit's ``setLocale()`` method);
 
 * Auto-register ``class_exists`` to load Doctrine annotations (when used);
 
@@ -291,10 +291,6 @@ Here is a summary that should help you pick the right configuration:
 Ignoring Deprecations
 .....................
 
-.. versionadded:: 6.1
-
-    The ``ignoreFile`` feature was introduced in Symfony 6.1.
-
 If your application has some deprecations that you can't fix for some reasons,
 you can tell Symfony to ignore them.
 
@@ -401,6 +397,39 @@ Log Deprecations
 
 For turning the verbose output off and write it to a log file instead you can use
 ``SYMFONY_DEPRECATIONS_HELPER='logFile=/path/deprecations.log'``.
+
+Setting The Locale For Tests
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the PHPUnit Bridge forces the locale to ``C`` to avoid locale
+issues in tests. This behavior can be changed by setting the
+``SYMFONY_PHPUNIT_LOCALE`` environment variable to the desired locale:
+
+.. code-block:: bash
+
+    # .env.test
+    SYMFONY_PHPUNIT_LOCALE="fr_FR"
+
+Alternatively, you can set this environment variable in the PHPUnit
+configuration file:
+
+.. code-block:: xml
+
+    <!-- https://phpunit.de/manual/6.0/en/appendixes.configuration.html -->
+    <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.0/phpunit.xsd"
+    >
+
+        <!-- ... -->
+
+        <php>
+            <!-- ... -->
+            <env name="SYMFONY_PHPUNIT_LOCALE" value="fr_FR"/>
+        </php>
+    </phpunit>
+
+Finally, if you want to avoid the bridge to force any locale, you can set the
+``SYMFONY_PHPUNIT_LOCALE`` environment variable to ``0``.
 
 .. _write-assertions-about-deprecations:
 
@@ -540,10 +569,6 @@ allows you to mock the PHP's built-in time functions ``time()``, ``microtime()``
 ``sleep()``, ``usleep()``, ``gmdate()``, and ``hrtime()``. Additionally the
 function ``date()`` is mocked so it uses the mocked time if no timestamp is
 specified.
-
-.. versionadded:: 6.2
-
-    Support for mocking the ``hrtime()`` function was introduced in Symfony 6.2.
 
 Other functions with an optional timestamp parameter that defaults to ``time()``
 will still use the system time instead of the mocked time. This means that you
@@ -741,10 +766,6 @@ reason, this component also provides mocks for these PHP functions:
 * :phpfunction:`trait_exists`
 * :phpfunction:`enum_exists`
 
-.. versionadded:: 6.3
-
-    The ``enum_exists`` function was introduced in Symfony 6.3.
-
 Use Case
 ~~~~~~~~
 
@@ -815,10 +836,6 @@ To register an enumeration and mock :phpfunction:`enum_exists`,
 PHP 8.1 and later, calling ``class_exists`` on a enum will return ``true``.
 That's why calling ``ClassExistsMock::withMockedEnums()`` will also register the enum
 as a mocked class.
-
-.. versionadded:: 6.3
-
-    The ``enum_exists`` function was introduced in Symfony 6.3.
 
 Troubleshooting
 ---------------

@@ -1,8 +1,10 @@
 How to Color and Style the Console Output
 =========================================
 
-By using colors in the command output, you can distinguish different types of
-output (e.g. important messages, titles, comments, etc.).
+Symfony provides an optional :doc:`console style </console/style>` to render the
+input and output of commands in a consistent way. If you prefer to apply your
+own style, use the utilities explained in this article to show colors in the command
+output (e.g. to differentiate between important messages, titles, comments, etc.).
 
 .. note::
 
@@ -55,10 +57,6 @@ Any hex color is supported for foreground and background colors. Besides that, t
     If the terminal doesn't support true colors, the given color is replaced by
     the nearest color depending on the terminal capabilities. E.g. ``#c0392b`` is
     degraded to ``#d75f5f`` in 256-color terminals and to ``red`` in 8-color terminals.
-
-    .. versionadded:: 6.2
-
-        The support for 256-color terminals was introduced in Symfony 6.2.
 
 And available options are: ``bold``, ``underscore``, ``blink``, ``reverse``
 (enables the "reverse video" mode where the background and foreground colors

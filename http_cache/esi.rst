@@ -279,8 +279,4 @@ The ``render_esi`` helper supports three other useful options:
 ``absolute_uri``
      If set to true, an absolute URI will be generated. **default**: ``false``
 
-.. versionadded:: 6.2
-
-    The ``absolute_uri`` option was introduced in Symfony 6.2.
-
 .. _`ESI`: https://www.w3.org/TR/esi-lang/

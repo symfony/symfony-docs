@@ -1,10 +1,6 @@
 When
 ====
 
-.. versionadded:: 6.2
-
-    The ``When`` constraint was introduced in Symfony 6.2.
-
 This constraint allows you to apply constraints validation only if the
 provided expression returns true. See `Basic Usage`_ for an example.
 
@@ -274,10 +270,6 @@ You can also pass custom variables using the `values`_ option.
 **type**: ``array|Constraint``
 
 One or multiple constraints that are applied if the expression returns true.
-
-.. versionadded:: 6.4
-
-    Passing a single ``Constraint`` instead of an array was introduced in Symfony 6.4.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 

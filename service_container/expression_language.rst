@@ -76,10 +76,6 @@ In this context, you have access to 3 functions:
 ``env``
     Returns the value of an env variable.
 
-.. versionadded:: 6.1
-
-    The ``env()`` function was introduced in Symfony 6.1.
-
 You also have access to the :class:`Symfony\\Component\\DependencyInjection\\Container`
 via a ``container`` variable. Here's another example:
 
@@ -126,7 +122,3 @@ via a ``container`` variable. Here's another example:
 Expressions can be used in ``arguments``, ``properties``, as arguments with
 ``configurator``, as arguments to ``calls`` (method calls) and in
 ``factories`` (:doc:`service factories </service_container/factories>`).
-
-.. versionadded:: 6.1
-
-    Using expressions in ``factories`` was introduced in Symfony 6.1.

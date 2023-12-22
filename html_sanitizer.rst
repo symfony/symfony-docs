@@ -1,10 +1,6 @@
 HTML Sanitizer
 ==============
 
-.. versionadded:: 6.1
-
-    The HTML Sanitizer component was introduced in Symfony 6.1.
-
 The HTML Sanitizer component aims at sanitizing/cleaning untrusted HTML
 code (e.g. created by a WYSIWYG editor in the browser) into HTML that can
 be trusted. It is based on the `HTML Sanitizer W3C Standard Proposal`_.
@@ -1008,6 +1004,9 @@ increase or decrease this limit:
                 // inputs longer (in characters) than this value will be truncated (default: 20000)
                 ->withMaxInputLength(20000)
         );
+
+It is possible to disable this length limit by setting the max input length to
+``-1``. Beware that it may expose your application to `DoS attacks`_.
 
 Custom Attribute Sanitizers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~

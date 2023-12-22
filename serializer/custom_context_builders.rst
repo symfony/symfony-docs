@@ -1,10 +1,6 @@
 How to Create your Custom Context Builder
 =========================================
 
-.. versionadded:: 6.1
-
-    Context builders were introduced in Symfony 6.1.
-
 The :doc:`Serializer Component </components/serializer>` uses Normalizers
 and Encoders to transform any data to any data-structure (e.g. JSON).
 That serialization process can be configured thanks to a

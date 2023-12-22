@@ -413,7 +413,7 @@ option. You can configure a normalizer by calling
             // ...
 
             $resolver->setNormalizer('host', function (Options $options, string $value): string {
-                if ('http://' !== substr($value, 0, 7)) {
+                if (!str_starts_with($value, 'http://')) {
                     $value = 'http://'.$value;
                 }
 
@@ -434,7 +434,7 @@ if you need to use other options during normalization::
         {
             // ...
             $resolver->setNormalizer('host', function (Options $options, string $value): string {
-                if ('http://' !== substr($value, 0, 7) && 'https://' !== substr($value, 0, 8)) {
+                if (!str_starts_with($value, 'http://') && !str_starts_with($value, 'https://')) {
                     if ('ssl' === $options['encryption']) {
                         $value = 'https://'.$value;
                     } else {
@@ -790,11 +790,14 @@ method::
         ->setDeprecated('hostname', 'acme/package', '1.2')
 
         // you can also pass a custom deprecation message (%name% placeholder is available)
+        // %name% placeholder will be replaced by the deprecated option.
+        // This outputs the following deprecation message:
+        // Since acme/package 1.2: The option "hostname" is deprecated, use "host" instead.
         ->setDeprecated(
             'hostname',
             'acme/package',
             '1.2',
-            'The option "hostname" is deprecated, use "host" instead.'
+            'The option "%name%" is deprecated, use "host" instead.'
         )
     ;
 
@@ -810,6 +813,10 @@ method::
     ``false`` as the second argument of the
     :method:`Symfony\\Component\\OptionsResolver\\Options::offsetGet` method
     to not trigger the deprecation warning.
+
+.. note::
+
+    All deprecation messages are displayed in the profiler logs in the "Deprecations" tab.
 
 Instead of passing the message, you may also pass a closure which returns
 a string (the deprecation message) or an empty string to ignore the deprecation.
@@ -861,10 +868,6 @@ if an unknown option is passed. You can ignore not defined options by using the
         'hostname' => 'acme/package',
         'version'  => '1.2.3'
     ]);
-
-.. versionadded:: 6.3
-
-    The ``ignoreUndefined()`` method was introduced in Symfony 6.3.
 
 Chaining Option Configurations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

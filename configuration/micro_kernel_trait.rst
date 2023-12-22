@@ -120,10 +120,6 @@ Next, create an ``index.php`` file that defines the kernel class and runs it:
         $response->send();
         $kernel->terminate($request, $response);
 
-.. versionadded:: 6.1
-
-    The PHP attributes notation has been introduced in Symfony 6.1.
-
 That's it! To test it, start the :doc:`Symfony Local Web Server
 </setup/symfony_server>`:
 
@@ -337,10 +333,6 @@ add a service conditionally based on the ``foo`` value::
             }
         }
     }
-
-.. versionadded:: 6.1
-
-    The ``AbstractExtension`` class was introduced in Symfony 6.1.
 
 Unlike the previous kernel, this loads an external ``config/framework.yaml`` file,
 because the configuration started to get bigger:

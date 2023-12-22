@@ -51,7 +51,7 @@ You can rely on the logger to use this dependency inside a command::
             $myDependency = new MyDependency($logger);
             $myDependency->doStuff();
 
-            // ...
+            return Command::SUCCESS;
         }
     }
 

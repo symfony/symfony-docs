@@ -44,7 +44,10 @@ The database connection information is stored as an environment variable called
     DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=5.7"
 
     # to use mariadb:
-    DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=mariadb-10.5.8"
+    # Before doctrine/dbal < 3.7
+    # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=mariadb-10.5.8"
+    # Since doctrine/dbal 3.7
+    # DATABASE_URL="mysql://db_user:db_password@127.0.0.1:3306/db_name?serverVersion=10.5.8-MariaDB"
 
     # to use sqlite:
     # DATABASE_URL="sqlite:///%kernel.project_dir%/var/app.db"
@@ -606,10 +609,6 @@ the :ref:`doctrine-queries` section.
 Automatically Fetching Objects (EntityValueResolver)
 ----------------------------------------------------
 
-.. versionadded:: 6.2
-
-    Entity Value Resolver was introduced in Symfony 6.2.
-
 .. versionadded:: 2.7.1
 
     Autowiring of the ``EntityValueResolver`` was introduced in DoctrineBundle 2.7.1.
@@ -691,7 +690,7 @@ will automatically fetch them::
      * Fetch via primary key because {id} is in the route.
      */
     #[Route('/product/{id}')]
-    public function showByPk(Post $post): Response
+    public function showByPk(Product $product): Response
     {
     }
 
@@ -699,7 +698,7 @@ will automatically fetch them::
      * Perform a findOneBy() where the slug property matches {slug}.
      */
     #[Route('/product/{slug}')]
-    public function showBySlug(Post $post): Response
+    public function showBySlug(Product $product): Response
     {
     }
 
@@ -747,7 +746,7 @@ but ``$comment`` is configured with the attribute since they cannot both follow
 the default convention.
 
 If you need to get other information from the request to query the database, you
-can also access to the request in your expression thanks to the ``request``
+can also access the request in your expression thanks to the ``request``
 variable. Let's say you pass the page limit of a list in a query parameter::
 
     #[Route('/product/{id}/comments')]
@@ -757,11 +756,6 @@ variable. Let's say you pass the page limit of a list in a query parameter::
         iterable $comments
     ): Response {
     }
-
-.. versionadded:: 6.4
-
-    The support for the ``request`` variable in expressions was introduced
-    in Symfony 6.4.
 
 MapEntity Options
 ~~~~~~~~~~~~~~~~~

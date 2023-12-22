@@ -58,9 +58,9 @@ handle_all_throwables
 When set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
 thrown by the application and will turn them into HTTP responses.
 
-.. versionadded:: 6.2
+The ``handle_all_throwables`` option was introduced in Symfony 6.2.
+Starting from Symfony 7.0, the default value of this option is ``true``.
 
-    The ``handle_all_throwables`` option was introduced in Symfony 6.2.
 
 .. _configuration-framework-http_cache:
 
@@ -122,10 +122,6 @@ skip_response_headers
 Set of response headers that will never be cached even when the response is cacheable
 and public.
 
-.. versionadded:: 6.3
-
-    The ``skip_response_headers`` option was introduced in Symfony 6.3.
-
 allow_reload
 ............
 
@@ -165,51 +161,18 @@ which the cache can serve a stale response when an error is encountered
 (default: 60). This setting is overridden by the stale-if-error HTTP
 Cache-Control extension (see RFC 5861).
 
-terminate_on_cache_hit
-......................
-
-**type**: ``boolean`` **default**: ``true``
-
-If ``true``, the :ref:`kernel.terminate <component-http-kernel-kernel-terminate>`
-event is dispatched even when the cache is hit.
-
-Unless your application needs to process events on cache hits, it's recommended
-to set this to ``false`` to improve performance, because it avoids having to
-bootstrap the Symfony framework on a cache hit.
-
-.. versionadded:: 6.2
-
-    The ``terminate_on_cache_hit`` option was introduced in Symfony 6.2.
-
-.. deprecated:: 6.2
-
-    Setting the ``terminate_on_cache_hit`` option to ``true`` was deprecated in
-    Symfony 6.2 and the option will be removed in Symfony 7.0.
-
  .. _configuration-framework-http_method_override:
 
 http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: (see explanation below)
+**type**: ``boolean`` **default**: ``false``
 
 This determines whether the ``_method`` request parameter is used as the
 intended HTTP method on POST requests. If enabled, the
 :method:`Request::enableHttpMethodParameterOverride <Symfony\\Component\\HttpFoundation\\Request::enableHttpMethodParameterOverride>`
 method gets called automatically. It becomes the service container parameter
 named ``kernel.http_method_override``.
-
-The **default value** is:
-
-* ``true``, if you have an existing application that you've upgraded from an older
-  Symfony version without resyncing the :doc:`Symfony Flex </setup/flex>` recipes;
-* ``false``, if you've created a new Symfony application or updated the Symfony
-  Flex recipes. This is also the default value starting from Symfony 7.0.
-
-.. deprecated:: 6.1
-
-    Not setting a value explicitly for this option is deprecated since Symfony 6.1
-    because the default value will change to ``false`` in Symfony 7.0.
 
 .. seealso::
 
@@ -240,10 +203,6 @@ trust_x_sendfile_type_header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **type**: ``boolean`` **default**: ``false``
-
-.. versionadded:: 6.1
-
-    The ``trust_x_sendfile_type_header`` option was introduced in Symfony 6.1.
 
 ``X-Sendfile`` is a special HTTP header that tells web servers to replace the
 response contents by the file that is defined in that header. This improves
@@ -287,8 +246,8 @@ following values: ``phpstorm``, ``sublime``, ``textmate``, ``macvim``, ``emacs``
 
 .. note::
 
-    The ``phpstorm`` option is supported natively by PhpStorm on MacOS,
-    Windows requires `PhpStormProtocol`_ and Linux requires `phpstorm-url-handler`_.
+    The ``phpstorm`` option is supported natively by PhpStorm on macOS and
+    Windows; Linux requires installing `phpstorm-url-handler`_.
 
 If you use another editor, the expected configuration value is a URL template
 that contains an ``%f`` placeholder where the file path is expected and ``%l``
@@ -331,10 +290,6 @@ feature is to configure it on a system level. First, you can define this option
 in the ``SYMFONY_IDE`` environment variable, which Symfony reads automatically
 when ``framework.ide`` config is not set.
 
-.. versionadded:: 6.1
-
-    ``SYMFONY_IDE`` environment variable support was introduced in Symfony 6.1.
-
 Another alternative is to set the ``xdebug.file_link_format`` option in your
 ``php.ini`` configuration file. The format to use is the same as for the
 ``framework.ide`` option, but without the need to escape the percent signs
@@ -345,7 +300,10 @@ Another alternative is to set the ``xdebug.file_link_format`` option in your
     // example for PhpStorm
     xdebug.file_link_format="phpstorm://open?file=%f&line=%l"
 
-    // example for Sublime
+    // example for PhpStorm with Jetbrains Toolbox
+    xdebug.file_link_format="jetbrains://php-storm/navigate/reference?project=example&file=%f:%l"
+
+    // example for Sublime Text
     xdebug.file_link_format="subl://open?url=file://%f&line=%l"
 
 .. note::
@@ -1047,10 +1005,6 @@ crypto_method
 The minimum version of TLS to accept. The value must be one of the
 ``STREAM_CRYPTO_METHOD_TLSv*_CLIENT`` constants defined by PHP.
 
-.. versionadded:: 6.3
-
-    The ``crypto_method`` option was introduced in Symfony 6.3.
-
 delay
 .....
 
@@ -1075,10 +1029,6 @@ extra
 
 Arbitrary additional data to pass to the HTTP client for further use.
 This can be particularly useful when :ref:`decorating an existing client <extensibility>`.
-
-.. versionadded:: 6.3
-
-    The ``extra`` option has been introduced in Symfony 6.3.
 
 .. _http-headers:
 
@@ -1294,10 +1244,6 @@ enough to be sure about the server, so you should combine this with the
 html_sanitizer
 ~~~~~~~~~~~~~~
 
-.. versionadded:: 6.1
-
-    The HTML sanitizer configuration was introduced in Symfony 6.1.
-
 The ``html_sanitizer`` option (and its children) are used to configure
 custom HTML sanitizers. Read more about the options in the
 :ref:`HTML sanitizer documentation <html-sanitizer-configuration>`.
@@ -1387,10 +1333,6 @@ collect_serializer_data
 Set this option to ``true`` to enable the serializer data collector and its
 profiler panel. When this option is ``true``, all normalizers and encoders are
 decorated by traceable implementations that collect profiling information about them.
-
-.. versionadded:: 6.1
-
-    The ``collect_serializer_data`` option was introduced in Symfony 6.1.
 
 rate_limiter
 ~~~~~~~~~~~~
@@ -1572,10 +1514,6 @@ cache_dir
 
 The directory where routing information will be cached. Can be set to
 ``~`` (``null``) to disable route caching.
-
-.. versionadded:: 6.2
-
-    The ``cache_dir`` setting was introduced in Symfony 6.2.
 
 secrets
 ~~~~~~~
@@ -2743,18 +2681,6 @@ settings is configured.
 
 .. _reference-validation-enable_annotations:
 
-enable_annotations
-..................
-
-**type**: ``boolean`` **default**: ``true``
-
-If this option is enabled, validation constraints can be defined using annotations or `PHP attributes`_.
-
-.. deprecated:: 6.4
-
-    This option is deprecated since Symfony 6.4, use the ``enable_attributes``
-    option instead.
-
 enable_attributes
 .................
 
@@ -2940,18 +2866,6 @@ enabled
 Whether to enable the ``serializer`` service or not in the service container.
 
 .. _reference-serializer-enable_annotations:
-
-enable_annotations
-..................
-
-**type**: ``boolean`` **default**: ``true``
-
-If this option is enabled, serialization groups can be defined using annotations or attributes.
-
-.. deprecated:: 6.4
-
-    This option is deprecated since Symfony 6.4, use the ``enable_attributes``
-    option instead.
 
 enable_attributes
 .................
@@ -3431,10 +3345,6 @@ Name of the lock you want to create.
 semaphore
 ~~~~~~~~~
 
-.. versionadded:: 6.1
-
-    The ``semaphore`` option was introduced in Symfony 6.1.
-
 **type**: ``string`` | ``array``
 
 The default semaphore adapter. Store's DSN are also allowed.
@@ -3640,6 +3550,12 @@ enabled
 **type**: ``boolean`` **default**: ``true`` or ``false`` depending on your installation
 
 Adds a `Link HTTP header`_ to the response.
+
+webhook
+~~~~~~~
+
+The ``webhook`` option (and its children) are used to configure the webhooks
+defined in your application. Read more about the options in the :ref:`Webhook documentation <webhook>`.
 
 workflows
 ~~~~~~~~~
@@ -3881,10 +3797,6 @@ to the ``#[WithHttpStatus]`` attribute on the exception class::
     {
     }
 
-.. versionadded:: 6.3
-
-    The ``#[WithHttpStatus]`` attribute was introduced in Symfony 6.3.
-
 It is also possible to map a log level on a custom exception class using
 the ``#[WithLogLevel]`` attribute::
 
@@ -3898,13 +3810,8 @@ the ``#[WithLogLevel]`` attribute::
     {
     }
 
-.. versionadded:: 6.3
-
-    The ``#[WithLogLevel]`` attribute was introduced in Symfony 6.3.
-
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
-.. _`PhpStormProtocol`: https://github.com/aik099/PhpStormProtocol
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
 .. _`blue/green deployment`: https://martinfowler.com/bliki/BlueGreenDeployment.html
 .. _`gulp-rev`: https://www.npmjs.com/package/gulp-rev

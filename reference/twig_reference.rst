@@ -300,10 +300,6 @@ Generates a URL that you can visit to
 :doc:`impersonate a user </security/impersonating_user>`, identified by the
 ``identifier`` argument.
 
-.. versionadded:: 6.4
-
-    The ``impersonation_path()`` function was introduced in Symfony 6.4.
-
 impersonation_url
 ~~~~~~~~~~~~~~~~~
 
@@ -316,10 +312,6 @@ impersonation_url
 
 It's similar to the `impersonation_path`_ function, but it generates
 absolute URLs instead of relative URLs.
-
-.. versionadded:: 6.4
-
-    The ``impersonation_url()`` function was introduced in Symfony 6.4.
 
 impersonation_exit_path
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -441,10 +433,6 @@ Translates the text into the current language. More information in
 
 sanitize_html
 ~~~~~~~~~~~~~
-
-.. versionadded:: 6.1
-
-    The ``sanitize_html()`` filter was introduced in Symfony 6.1.
 
 .. code-block:: twig
 

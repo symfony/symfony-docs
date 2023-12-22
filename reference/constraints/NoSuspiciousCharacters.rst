@@ -1,10 +1,6 @@
 NoSuspiciousCharacters
 ======================
 
-.. versionadded:: 6.3
-
-    The ``NoSuspiciousCharacters`` constraint was introduced in Symfony 6.3.
-
 Validates that the given string does not contain characters used in spoofing
 security attacks, such as invisible characters such as zero-width spaces or
 characters that are visually similar.

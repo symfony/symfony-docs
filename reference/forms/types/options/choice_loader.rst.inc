@@ -46,6 +46,7 @@ better performance::
     use App\StaticClass;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\ChoiceList\ChoiceList;
+    use Symfony\Component\Form\ChoiceList\Loader\ChoiceLoaderInterface;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
     use Symfony\Component\OptionsResolver\Options;
     use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -57,17 +58,17 @@ better performance::
             return ChoiceType::class;
         }
 
-        public function configureOptions(OptionsResolver $resolver)
+        public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
                 // the example below will create a CallbackChoiceLoader from the callable
-                'choice_loader' => ChoiceList::lazy($this, function() {
+                'choice_loader' => ChoiceList::lazy($this, function () {
                     return StaticClass::getConstants();
                 }),
 
                 // you can pass your own loader as well, depending on other options
                 'some_key' => null,
-                'choice_loader' => function (Options $options): array {
+                'choice_loader' => function (Options $options): ChoiceLoaderInterface {
                     return ChoiceList::loader(
                         // pass the instance of the type or type extension which is
                         // currently configuring the choice list as first argument

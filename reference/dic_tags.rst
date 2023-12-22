@@ -337,13 +337,6 @@ Value resolvers implement the
 and are used to resolve argument values for controllers as described here:
 :doc:`/controller/argument_value_resolver`.
 
-.. versionadded:: 6.2
-
-    The ``ValueResolverInterface`` was introduced in Symfony 6.2. Prior to
-    6.2, you had to use the
-    :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentValueResolverInterface`,
-    which defines different methods.
-
 data_collector
 --------------
 
@@ -516,14 +509,8 @@ The ``warmUp()`` method must return an array with the files and classes to
 preload. Files must be absolute paths and classes must be fully-qualified class
 names. The only restriction is that files must be stored in the cache directory.
 If you don't need to preload anything, return an empty array. If read-only
-artefacts need to be created, you can store them in a different directory
+artifacts need to be created, you can store them in a different directory
 with the ``$buildDir`` parameter of the ``warmUp()`` method.
-
-.. versionadded:: 6.4
-
-    The ``$buildDir`` parameter of the
-    :method:`Symfony\\Component\\HttpKernel\\CacheWarmer\\WarmableInterface::warmUp`
-    method was introduced in Symfony 6.4.
 
 The ``isOptional()`` method should return true if it's possible to use the
 application without calling this cache warmer. In Symfony, optional warmers
@@ -1079,22 +1066,15 @@ file
 
 When executing the ``translation:extract`` command, it uses extractors to
 extract translation messages from a file. By default, the Symfony Framework
-has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` and a PHP
-extractor to find and extract translation keys from Twig templates and PHP files.
+has a :class:`Symfony\\Bridge\\Twig\\Translation\\TwigExtractor` to find and
+extract translation keys from Twig templates.
 
-Symfony includes two PHP extractors: :class:`Symfony\\Component\\Translation\\Extractor\\PhpExtractor`
-and :class:`Symfony\\Component\\Translation\\Extractor\\PhpAstExtractor`. The
-first one is simple but doesn't require to install any packages; the second one
-is much more advanced, but requires to install this dependency in your project:
+If you also want to find and extract translation keys from PHP files, install
+the following dependency to activate the :class:`Symfony\\Component\\Translation\\Extractor\\PhpAstExtractor`:
 
 .. code-block:: terminal
 
     $ composer require nikic/php-parser
-
-.. deprecated:: 6.2
-
-    The ``PhpExtractor`` class is deprecated since Symfony 6.2. The ``PhpAstExtractor``
-    class will be the only PHP extractor available starting from Symfony 7.0.
 
 You can create your own extractor by creating a class that implements
 :class:`Symfony\\Component\\Translation\\Extractor\\ExtractorInterface`

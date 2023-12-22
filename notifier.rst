@@ -55,9 +55,9 @@ to send SMS messages to mobile phones. This feature requires subscribing to
 a third-party service that sends SMS messages. Symfony provides integration
 with a couple popular SMS services:
 
-==================  =====================================  ===========================================================================
-Service             Package                                DSN
-==================  =====================================  ===========================================================================
+==================  =====================================  ========================================================================================================================= ===============
+Service             Package                                DSN                                                                                                                       Webhook support
+==================  =====================================  ========================================================================================================================= ===============
 `46elks`_           ``symfony/forty-six-elks-notifier``    ``forty-six-elks://API_USERNAME:API_PASSWORD@default?from=FROM``
 `AllMySms`_         ``symfony/all-my-sms-notifier``        ``allmysms://LOGIN:APIKEY@default?from=FROM``
 `AmazonSns`_        ``symfony/amazon-sns-notifier``        ``sns://ACCESS_KEY:SECRET_KEY@default?region=REGION``
@@ -87,7 +87,6 @@ Service             Package                                DSN
 `Redlink`_          ``symfony/redlink-notifier``           ``redlink://API_KEY:APP_KEY@default?from=SENDER_NAME&version=API_VERSION``
 `RingCentral`_      ``symfony/ring-central-notifier``      ``ringcentral://API_TOKEN@default?from=FROM``
 `Sendberry`_        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
-`Sendinblue`_       ``symfony/sendinblue-notifier``        ``sendinblue://API_KEY@default?sender=PHONE``
 `Sms77`_            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
 `SimpleTextin`_     ``symfony/simple-textin-notifier``     ``simpletextin://API_KEY@default?from=FROM``
 `Sinch`_            ``symfony/sinch-notifier``             ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
@@ -98,35 +97,16 @@ Service             Package                                DSN
 `SpotHit`_          ``symfony/spot-hit-notifier``          ``spothit://TOKEN@default?from=FROM``
 `Telnyx`_           ``symfony/telnyx-notifier``            ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 `TurboSms`_         ``symfony/turbo-sms-notifier``         ``turbosms://AUTH_TOKEN@default?from=FROM``
-`Twilio`_           ``symfony/twilio-notifier``            ``twilio://SID:TOKEN@default?from=FROM``
-`Vonage`_           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@default?from=FROM``
+`Twilio`_           ``symfony/twilio-notifier``            ``twilio://SID:TOKEN@default?from=FROM``                                                                                  yes
+`Vonage`_           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@default?from=FROM``                                                                                 yes
 `Yunpian`_          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@default``
-==================  =====================================  ===========================================================================
+==================  =====================================  ========================================================================================================================= ===============
 
-.. versionadded:: 6.1
+.. tip::
 
-    The 46elks, OrangeSms, KazInfoTeh and Sendberry integrations were introduced in Symfony 6.1.
-    The ``no_stop_clause`` option in ``OvhCloud`` DSN was introduced in Symfony 6.1.
-    The ``test`` option in ``Smsapi`` DSN was introduced in Symfony 6.1.
-
-.. versionadded:: 6.2
-
-    The ContactEveryone and SMSFactor integrations were introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The Bandwith, iSendPro, Plivo, RingCentral, SimpleTextin and Termii integrations
-    were introduced in Symfony 6.3.
-    The ``from`` option in ``Smsapi`` DSN is optional since Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The `Redlink`_ and `Brevo`_ integrations were introduced in Symfony 6.4.
-
-.. deprecated:: 6.4
-
-    The `Sendinblue`_ integration is deprecated since
-    Symfony 6.4, use the `Brevo`_ integration instead.
+    Some third party transports, when using the API, support status callbacks
+    via webhooks. See the :doc:`Webhook documentation </webhook>` for more
+    details.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -217,14 +197,6 @@ send SMS messages::
         }
     }
 
-.. versionadded:: 6.2
-
-    The 3rd argument of ``SmsMessage`` (``$from``) was introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The 4th argument of ``SmsMessage`` (``$options``) was introduced in Symfony 6.3.
-
 The ``send()`` method returns a variable of type
 :class:`Symfony\\Component\\Notifier\\Message\\SentMessage` which provides
 information such as the message ID and the original message contents.
@@ -268,14 +240,6 @@ Service                                  Package                               D
 `Zendesk`_                               ``symfony/zendesk-notifier``          ``zendesk://EMAIL:TOKEN@SUBDOMAIN``
 `Zulip`_                                 ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ======================================   ====================================  =============================================================================
-
-.. versionadded:: 6.2
-
-    The Zendesk and Chatwork integration were introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The LINE Notify, Mastodon and Twitter integrations were introduced in Symfony 6.3.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
@@ -455,18 +419,6 @@ Service          Package                               DSN
 `PagerDuty`_     ``symfony/pager-duty-notifier``       ``pagerduty://TOKEN@SUBDOMAIN``
 `Pushover`_      ``symfony/pushover-notifier``         ``pushover://USER_KEY:APP_TOKEN@default``
 ===============  ====================================  ==============================================================================
-
-.. versionadded:: 6.1
-
-    The Engagespot integration was introduced in Symfony 6.1.
-
-.. versionadded:: 6.3
-
-    The PagerDuty and Pushover integrations were introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The Novu, Ntfy and GoIP integrations were introduced in Symfony 6.4.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -829,10 +781,6 @@ also exists to modify messages sent to those channels.
 Customize Browser Notifications (Flash Messages)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.1
-
-    Support for customizing importance levels was introduced in Symfony 6.1.
-
 The default behavior for browser channel notifications is to add a
 :ref:`flash message <flash-messages>` with ``notification`` as its key.
 
@@ -891,11 +839,6 @@ You can benefit from this class by using it directly or extending the
 :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\KernelTestCase`.
 
 See :ref:`testing documentation <notifier-assertions>` for the list of available assertions.
-
-.. versionadded:: 6.2
-
-    The :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\NotificationAssertionsTrait`
-    was introduced in Symfony 6.2.
 
 Disabling Delivery
 ------------------
@@ -1046,7 +989,6 @@ is dispatched. Listeners receive a
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
 .. _`SMSFactor`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsFactor/README.md
 .. _`Sendberry`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendberry/README.md
-.. _`Sendinblue`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendinblue/README.md
 .. _`SimpleTextin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SimpleTextin/README.md
 .. _`Sinch`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sinch/README.md
 .. _`Slack`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Slack/README.md

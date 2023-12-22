@@ -808,7 +808,3 @@ but you can change the lifetime per link using the third argument of the
     // the third optional argument is the lifetime in seconds
     $loginLinkDetails = $loginLinkHandler->createLoginLink($user, null, 60);
     $loginLink = $loginLinkDetails->getUrl();
-
-.. versionadded:: 6.2
-
-    The argument to customize the link lifetime was introduced in Symfony 6.2.

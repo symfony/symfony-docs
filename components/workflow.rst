@@ -85,6 +85,41 @@ method to initialize the object property::
     // initiate workflow
     $workflow->getMarking($blogPost);
 
+Using The Workflow Registry
+---------------------------
+
+When you define multiple workflows you may consider using a ``Registry``,
+which is an object that stores and provides access to different workflows.
+A registry will also help you to decide if a workflow supports the object you
+are trying to use it with::
+
+    use Acme\Entity\BlogPost;
+    use Acme\Entity\Newsletter;
+    use Symfony\Component\Workflow\Registry;
+    use Symfony\Component\Workflow\SupportStrategy\InstanceOfSupportStrategy;
+
+    $blogPostWorkflow = ...;
+    $newsletterWorkflow = ...;
+
+    $registry = new Registry();
+    $registry->addWorkflow($blogPostWorkflow, new InstanceOfSupportStrategy(BlogPost::class));
+    $registry->addWorkflow($newsletterWorkflow, new InstanceOfSupportStrategy(Newsletter::class));
+
+You can then use the registry to get the workflow for a specific object::
+
+    $blogPost = new BlogPost();
+    $workflow = $registry->get($blogPost);
+
+    // initiate workflow
+    $workflow->getMarking($blogPost);
+
+.. caution::
+
+    Beware that injecting the ``Registry`` into your services is **not**
+    recommended. Indeed, it prevents some optimization like lazy-loading
+    from working and could be a performance hog. Instead, you should always
+    inject the workflow you need.
+
 Learn more
 ----------
 

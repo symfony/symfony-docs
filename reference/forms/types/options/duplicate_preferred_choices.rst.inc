@@ -20,7 +20,3 @@ option to ``false``, to only display preferred choices at the top of the list::
         'preferred_choices' => ['muppets', 'arr'],
         'duplicate_preferred_choices' => false,
     ]);
-
-.. versionadded:: 6.4
-
-    The ``duplicate_preferred_choices`` option was introduced in Symfony 6.4.

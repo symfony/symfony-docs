@@ -19,10 +19,10 @@ things:
 1. Matching Options
 -------------------
 
-Symfony creates an instance of :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher`
-for each ``access_control`` entry, which determines whether or not a given
-access control should be used on this request. The following ``access_control``
-options are used for matching:
+Symfony uses :class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher` for
+each ``access_control`` entry, which determines which implementation of
+:class:`Symfony\\Component\\HttpFoundation\\RequestMatcherInterface` should be used
+on this request. The following ``access_control`` options are used for matching:
 
 * ``path``: a regular expression (without delimiters)
 * ``ip`` or ``ips``: netmasks are also supported (can be a comma-separated string)
@@ -32,14 +32,6 @@ options are used for matching:
 * ``request_matcher``: a service implementing ``RequestMatcherInterface``
 * ``attributes``: an array, which can be used to specify one or more :ref:`request attributes <accessing-request-data>` that must match exactly
 * ``route``: a route name
-
-.. versionadded:: 6.1
-
-    The ``request_matcher`` option was introduced in Symfony 6.1.
-
-.. versionadded:: 6.2
-
-    The ``route`` and ``attributes`` options were introduced in Symfony 6.2.
 
 Take the following ``access_control`` entries as an example:
 
@@ -161,7 +153,7 @@ Take the following ``access_control`` entries as an example:
                 ->requestMatcher('App\Security\RequestMatcher\MyRequestMatcher')
             ;
 
-            // require ROLE_ADMIN for 'admin' route. You can use the shortcut route('xxx') mehtod,
+            // require ROLE_ADMIN for 'admin' route. You can use the shortcut route('xxx') method,
             // instead of attributes(['_route' => 'xxx']) method
             $security->accessControl()
                 ->roles(['ROLE_ADMIN'])

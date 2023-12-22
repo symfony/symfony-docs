@@ -52,7 +52,9 @@ the following to your command::
     }
 
 In this case, the user will be asked "Continue with this action?". If the user
-answers with ``y`` it returns ``true`` or ``false`` if they answer with ``n``.
+answers with ``y`` (or any word, expression starting with ``y`` due to default
+answer regex, e.g ``yeti``) it returns ``true`` or ``false`` otherwise, e.g. ``n``.
+
 The second argument to
 :method:`Symfony\\Component\\Console\\Question\\ConfirmationQuestion::__construct`
 is the default value to return if the user doesn't enter any valid input. If
@@ -111,8 +113,10 @@ Let the User Choose from a List of Answers
 
 If you have a predefined set of answers the user can choose from, you
 could use a :class:`Symfony\\Component\\Console\\Question\\ChoiceQuestion`
-which makes sure that the user can only enter a valid string
-from a predefined list::
+which makes sure that the user can only enter a valid string or the index
+of the choice from a predefined list. In the example below, typing ``blue``
+or ``1`` is the same choice for the user. A default value is set with ``0``
+but ``red`` could be set instead (could be more explicit)::
 
     use Symfony\Component\Console\Question\ChoiceQuestion;
 
@@ -176,7 +180,9 @@ this use :method:`Symfony\\Component\\Console\\Question\\ChoiceQuestion::setMult
     }
 
 Now, when the user enters ``1,2``, the result will be:
-``You have just selected: blue, yellow``.
+``You have just selected: blue, yellow``. The user can also enter strings
+(e.g. ``blue,yellow``) and even mix strings and the index of the choices
+(e.g. ``blue,2``).
 
 If the user does not enter anything, the result will be:
 ``You have just selected: red, blue``.

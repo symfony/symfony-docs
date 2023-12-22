@@ -278,10 +278,6 @@ The parameter being deprecated must be set before being declared as deprecated.
 Otherwise a :class:`Symfony\\Component\\DependencyInjection\\Exception\\ParameterNotFoundException`
 exception will be thrown.
 
-.. versionadded:: 6.3
-
-    The ``ContainerBuilder::deprecateParameter()`` method was introduced in Symfony 6.3.
-
 .. note::
 
     Just registering an extension with the container is not enough to get

@@ -26,7 +26,6 @@ file::
         Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
         Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
         Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
-        Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle::class => ['all' => true],
         // this bundle is enabled only in 'dev' and 'test', so you can't use it in 'prod'
         Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
     ];
@@ -55,11 +54,6 @@ Start by creating a new class called ``AcmeTestBundle``::
     class AcmeTestBundle extends AbstractBundle
     {
     }
-
-.. versionadded:: 6.1
-
-    The :class:`Symfony\\Component\\HttpKernel\\Bundle\\AbstractBundle` was
-    introduced in Symfony 6.1.
 
 .. caution::
 

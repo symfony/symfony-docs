@@ -145,20 +145,12 @@ has some methods to filter the input values:
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::getString`
     Returns the parameter value as a string;
 
-.. versionadded:: 6.3
-
-    The ``ParameterBag::getEnum()`` and ``ParameterBag::getString()`` methods
-    were introduced in Symfony 6.3.
-
 :method:`Symfony\\Component\\HttpFoundation\\ParameterBag::filter`
     Filters the parameter by using the PHP :phpfunction:`filter_var` function.
-
-    .. deprecated:: 6.3
-
-        Ignoring invalid values when using ``filter()`` is deprecated and will throw
-        a :class:`Symfony\\Component\\HttpKernel\\Exception\\BadRequestHttpException`
-        in Symfony 7.0. You can use the ``FILTER_NULL_ON_FAILURE`` flag to keep
-        ignoring them.
+    If invalid values are found, a
+    :class:`Symfony\\Component\\HttpKernel\\Exception\\BadRequestHttpException`
+    is thrown. The ``FILTER_NULL_ON_FAILURE`` flag can be used to ignore invalid
+    values.
 
 All getters take up to two arguments: the first one is the parameter name
 and the second one is the default value to return if the parameter does not
@@ -222,11 +214,6 @@ which returns an instance of :class:`Symfony\\Component\\HttpFoundation\\InputBa
 wrapping this data::
 
     $data = $request->getPayload();
-
-.. versionadded:: 6.3
-
-    The :method:`Symfony\\Component\\HttpFoundation\\Request::getPayload`
-    method was introduced in Symfony 6.3.
 
 Identifying a Request
 ~~~~~~~~~~~~~~~~~~~~~
@@ -392,10 +379,6 @@ use the ``isPrivateIp()`` method from the
     $isPrivate = IpUtils::isPrivateIp($ipv6);
     // $isPrivate = false
 
-.. versionadded:: 6.3
-
-    The ``isPrivateIp()`` method was introduced in Symfony 6.3.
-
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -495,12 +478,6 @@ your application to see which exceptions are thrown in listeners of the
 more about it in
 :ref:`the dedicated section about Kernel events <http-kernel-creating-listener>`.
 
-.. versionadded:: 6.4
-
-    The ``$flush`` parameter of the
-    :method:`Symfony\\Component\\HttpFoundation\\Response::send` method
-    was introduced in Symfony 6.4.
-
 Setting Cookies
 ~~~~~~~~~~~~~~~
 
@@ -530,6 +507,16 @@ a new object with the modified property::
         ->withExpires(strtotime('Fri, 20-May-2011 15:25:52 GMT'))
         ->withDomain('.example.com')
         ->withSecure(true);
+
+It is possible to define partitioned cookies, also known as `CHIPS`_, by using the
+:method:`Symfony\\Component\\HttpFoundation\\Cookie::withPartitioned` method::
+
+    $cookie = Cookie::create('foo')
+        ->withValue('bar')
+        ->withPartitioned();
+
+    // you can also set the partitioned argument to true when using the `create()` factory method
+    $cookie = Cookie::create('name', 'value', partitioned: true);
 
 Managing the HTTP Cache
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -578,11 +565,6 @@ call::
         'last_modified'    => new \DateTime(),
         'etag'             => 'abcdef',
     ]);
-
-.. versionadded:: 6.1
-
-    The ``stale_if_error`` and ``stale_while_revalidate`` options were
-    introduced in Symfony 6.1.
 
 To check if the Response validators (``ETag``, ``Last-Modified``) match a
 conditional value specified in the client Request, use the
@@ -646,11 +628,6 @@ represented by a PHP callable instead of a string::
 Streaming a JSON Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` class was
-    introduced in Symfony 6.3.
-
 The :class:`Symfony\\Component\\HttpFoundation\\StreamedJsonResponse` allows to
 stream large JSON responses using PHP generators to keep the used resources low.
 
@@ -663,9 +640,9 @@ containing JSON serializable data::
 
     // any method or function returning a PHP Generator
     function loadArticles(): \Generator {
-         yield ['title' => 'Article 1'];
-         yield ['title' => 'Article 2'];
-         yield ['title' => 'Article 3'];
+        yield ['title' => 'Article 1'];
+        yield ['title' => 'Article 2'];
+        yield ['title' => 'Article 3'];
     };
 
     $response = new StreamedJsonResponse(
@@ -739,10 +716,6 @@ including generators::
 
         return new StreamedJsonResponse(loadArticles());
     }
-
-.. versionadded:: 6.4
-
-    The ``StreamedJsonResponse`` support of iterables was introduced in Symfony 6.4.
 
 .. _component-http-foundation-serving-files:
 
@@ -982,3 +955,4 @@ Learn More
 .. _OWASP guidelines: https://cheatsheetseries.owasp.org/cheatsheets/AJAX_Security_Cheat_Sheet.html#always-return-json-with-an-object-on-the-outside
 .. _RFC 8674: https://tools.ietf.org/html/rfc8674
 .. _Doctrine Batch processing: https://www.doctrine-project.org/projects/doctrine-orm/en/2.14/reference/batch-processing.html#iterating-results
+.. _`CHIPS`: https://developer.mozilla.org/en-US/docs/Web/Privacy/Partitioned_cookies

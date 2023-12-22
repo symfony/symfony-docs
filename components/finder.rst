@@ -337,10 +337,6 @@ using a closure, return ``false`` for the directories which you want to prune.
 Pruning directories early can improve performance significantly depending on the
 file/directory hierarchy complexity and the number of excluded directories.
 
-.. versionadded:: 6.4
-
-    The feature to prune directories was introduced in Symfony 6.4.
-
 Sorting Results
 ---------------
 
@@ -351,11 +347,6 @@ Sort the results by name, extension, size or type (directories first, then files
     $finder->sortByExtension();
     $finder->sortBySize();
     $finder->sortByType();
-
-.. versionadded:: 6.2
-
-    The ``sortByCaseInsensitiveName()``, ``sortByExtension()`` and ``sortBySize()``
-    methods were introduced in Symfony 6.2.
 
 .. tip::
 

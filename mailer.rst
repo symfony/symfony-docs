@@ -93,42 +93,29 @@ native        ``native://default``                      Mailer uses the sendmail
     It's highly recommended to NOT use ``native://default`` as you cannot control
     how sendmail is configured (prefer using ``sendmail://default`` if possible).
 
+.. _mailer_3rd_party_transport:
+
 Using a 3rd Party Transport
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Instead of using your own SMTP server or sendmail binary, you can send emails
 via a third-party provider:
 
-===================== ==============================================
-Service               Install with
-===================== ==============================================
+===================== =============================================== ===============
+Service               Install with                                    Webhook support
+===================== =============================================== ===============
 `Amazon SES`_         ``composer require symfony/amazon-mailer``
-`Brevo`_              ``composer require symfony/brevo-mailer``
+`Brevo`_              ``composer require symfony/brevo-mailer``       yes
 `Infobip`_            ``composer require symfony/infobip-mailer``
-`Mailchimp Mandrill`_ ``composer require symfony/mailchimp-mailer``
-`Mailgun`_            ``composer require symfony/mailgun-mailer``
-`Mailjet`_            ``composer require symfony/mailjet-mailer``
+`Mailgun`_            ``composer require symfony/mailgun-mailer``     yes
+`Mailjet`_            ``composer require symfony/mailjet-mailer``     yes
 `MailPace`_           ``composer require symfony/mail-pace-mailer``
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
-`Postmark`_           ``composer require symfony/postmark-mailer``
+`Mandrill`_           ``composer require symfony/mailchimp-mailer``
+`Postmark`_           ``composer require symfony/postmark-mailer``    yes
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
-`SendGrid`_           ``composer require symfony/sendgrid-mailer``
-===================== ==============================================
-
-.. versionadded:: 6.2
-
-    The Infobip integration was introduced in Symfony 6.2 and the ``MailPace``
-    integration was renamed in Symfony 6.2 (in previous Symfony versions it was
-    called ``OhMySMTP``).
-
-.. versionadded:: 6.3
-
-    The MailerSend integration was introduced in Symfony 6.3.
-
-.. versionadded:: 6.4
-
-    The ``Brevo`` (in previous Symfony versions it was called ``Sendinblue``)
-    and ``Scaleway`` integrations were introduced in Symfony 6.4.
+`SendGrid`_           ``composer require symfony/sendgrid-mailer``    yes
+===================== =============================================== ===============
 
 .. note::
 
@@ -194,7 +181,7 @@ party provider:
 |                        | - HTTP n/a                                          |
 |                        | - API infobip+api://KEY@BASE_URL                    |
 +------------------------+-----------------------------------------------------+
-| `Mailchimp Mandrill`_  | - SMTP mandrill+smtp://USERNAME:PASSWORD@default    |
+| `Mandrill`_            | - SMTP mandrill+smtp://USERNAME:PASSWORD@default    |
 |                        | - HTTP mandrill+https://KEY@default                 |
 |                        | - API mandrill+api://KEY@default                    |
 +------------------------+-----------------------------------------------------+
@@ -226,10 +213,6 @@ party provider:
 |                        | - HTTP n/a                                          |
 |                        | - API sendgrid+api://KEY@default                    |
 +------------------------+-----------------------------------------------------+
-
-.. versionadded:: 6.3
-
-    The ``sandbox`` option in ``Mailjet`` API was introduced in Symfony 6.3.
 
 .. caution::
 
@@ -286,6 +269,12 @@ party provider:
 
         # .env
         MAILER_DSN=smtp://KEY:DOMAIN@smtp.eu.mailgun.org.com:25
+
+.. tip::
+
+    Some third party mailers, when using the API, support status callbacks
+    via webhooks. See the :doc:`Webhook documentation </webhook>` for more
+    details.
 
 High Availability
 ~~~~~~~~~~~~~~~~~
@@ -344,10 +333,6 @@ may be specified as SHA1 or MD5 hash::
 
     $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
 
-.. versionadded:: 6.4
-
-    The ``peer_fingerprint`` option was introduced in Symfony 6.4.
-
 Overriding default SMTP authenticators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -372,11 +357,6 @@ This can be done from ``EsmtpTransport`` constructor or using the
 
     // Option 2: call a method to redefine the authenticators
     $transport->setAuthenticators([new XOAuth2Authenticator()]);
-
-.. versionadded:: 6.3
-
-    The ``$authenticators`` constructor parameter and the ``setAuthenticators()``
-    method were introduced in Symfony 6.3.
 
 Other Options
 ~~~~~~~~~~~~~
@@ -412,10 +392,6 @@ Other Options
     The number of messages to send per second (0 to disable this limitation)::
 
         $dsn = 'smtps://smtp.example.com?max_per_second=2'
-
-    .. versionadded:: 6.2
-
-        The ``max_per_second`` option was introduced in Symfony 6.2.
 
 Creating & Sending Messages
 ---------------------------
@@ -600,12 +576,6 @@ the ``DataPart``::
         ->addPart(new DataPart(fopen('/path/to/documents/contract.doc', 'r')))
     ;
 
-.. deprecated:: 6.2
-
-    In Symfony versions previous to 6.2, the method ``attachPart()`` could be
-    used to add attachments. This method has been deprecated and replaced
-    with ``addPart()``.
-
 Embedding Images
 ~~~~~~~~~~~~~~~~
 
@@ -654,15 +624,6 @@ method to define a custom Content-ID for the image and use it as its ``cid`` ref
         ->addPart($part->asInline())
         ->html('... <img src="cid:footer-signature"> ...')
     ;
-
-.. versionadded:: 6.1
-
-    The support of embedded images as HTML backgrounds was introduced in Symfony
-    6.1.
-
-.. versionadded:: 6.3
-
-    The support of custom ``cid`` for embedded images was introduced in Symfony 6.3.
 
 .. _mailer-configure-email-globally:
 
@@ -830,11 +791,6 @@ for Twig templates::
             'username' => 'foo',
         ])
     ;
-
-.. versionadded:: 6.4
-
-    The :method:`Symfony\\Bridge\\Twig\\Mime\\TemplatedEmail::locale` method
-    was introduced in Symfony 6.4.
 
 Then, create the template:
 
@@ -1429,11 +1385,6 @@ the "rendering" of the email (computed headers, body rendering, ...) is also
 deferred and will only happen just before the email is sent by the Messenger
 handler.
 
-.. versionadded:: 6.2
-
-    The following example about rendering the email before calling
-    ``$mailer->send($email)`` works as of Symfony 6.2.
-
 When sending an email asynchronously, its instance must be serializable.
 This is always the case for :class:`Symfony\\Bridge\\Twig\\Mime\\Email`
 instances, but when sending a
@@ -1507,21 +1458,12 @@ disable asynchronous delivery.
     an open connection to the SMTP server in between sending emails.
     You can do so by using the ``stop()`` method.
 
-.. versionadded:: 6.1
-
-    The :method:`Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport::stop`
-    method was made public in Symfony 6.1.
-
 You can also select the transport by adding an ``X-Bus-Transport`` header (which
 will be removed automatically from the final message)::
 
     // Use the bus transport "app.another_bus":
     $email->getHeaders()->addTextHeader('X-Bus-Transport', 'app.another_bus');
     $mailer->send($email);
-
-.. versionadded:: 6.2
-
-    The ``X-Bus-Transport`` header support was introduced in Symfony 6.2.
 
 Adding Tags and Metadata to Emails
 ----------------------------------
@@ -1550,8 +1492,8 @@ If your transport does not support tags and metadata, they will be added as cust
 The following transports currently support tags and metadata:
 
 * Brevo
-* Mailchimp
 * Mailgun
+* Mandrill
 * Postmark
 * Sendgrid
 
@@ -1564,16 +1506,8 @@ The following transports only support metadata:
 * Amazon SES (note that Amazon refers to this feature as "tags", but Symfony
   calls it "metadata" because it contains a key and a value)
 
-.. versionadded:: 6.1
-
-    Metadata support for Amazon SES was introduced in Symfony 6.1.
-
 Draft Emails
 ------------
-
-.. versionadded:: 6.1
-
-    ``Symfony\Component\Mime\DraftEmail`` was introduced in 6.1.
 
 :class:`Symfony\\Component\\Mime\\DraftEmail` is a special instance of
 :class:`Symfony\\Component\\Mime\\Email`. Its purpose is to build up an email
@@ -1599,7 +1533,7 @@ Here's an example of making one available to download::
         {
             $message = (new DraftEmail())
                 ->html($this->renderView(/* ... */))
-                ->attach(/* ... */)
+                ->addPart(/* ... */)
             ;
 
             $response = new Response($message->toString());
@@ -1646,10 +1580,6 @@ the email is sent::
         $event->addStamp(new SomeMessengerStamp());
     }
 
-.. versionadded:: 6.2
-
-    Methods ``addStamp()`` and ``getStamps()`` were introduced in Symfony 6.2.
-
 If you want to stop the Message from being sent, call ``reject()`` (it will
 also stop the event propagation)::
 
@@ -1659,10 +1589,6 @@ also stop the event propagation)::
     {
         $event->reject();
     }
-
-.. versionadded:: 6.3
-
-    The ``reject()`` method was introduced in Symfony 6.3.
 
 Execute this command to find out which listeners are registered for this event
 and their priorities:
@@ -1675,10 +1601,6 @@ SentMessageEvent
 ~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\SentMessageEvent`
-
-.. versionadded:: 6.2
-
-    The ``SentMessageEvent`` event was introduced in Symfony 6.2.
 
 ``SentMessageEvent`` allows you to act on the :class:`Symfony\\Component\\\Mailer\\\SentMessage`
 class to access the original message (``getOriginalMessage()``) and some debugging
@@ -1710,10 +1632,6 @@ FailedMessageEvent
 ~~~~~~~~~~~~~~~~~~
 
 **Event Class**: :class:`Symfony\\Component\\Mailer\\Event\\FailedMessageEvent`
-
-.. versionadded:: 6.2
-
-    The ``FailedMessageEvent`` event was introduced in Symfony 6.2.
 
 ``FailedMessageEvent`` allows acting on the the initial message in case of a failure::
 
@@ -1763,10 +1681,6 @@ to test if sending emails works correctly:
 
 This command bypasses the :doc:`Messenger bus </messenger>`, if configured, to
 ease testing emails even when the Messenger consumer is not running.
-
-.. versionadded:: 6.2
-
-    The ``mailer:test`` command was introduced in Symfony 6.2.
 
 Disabling Delivery
 ~~~~~~~~~~~~~~~~~~
@@ -1901,6 +1815,13 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
         }
     }
 
+.. tip::
+
+   If your controller returns a redirect response after sending the email, make
+   sure to have your client *not* follow redirects. The kernel is rebooted after
+   following the redirection and the message will be lost from the mailer event
+   handler.
+
 .. _`Amazon SES`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Amazon/README.md
 .. _`App Password`: https://support.google.com/accounts/answer/185833
 .. _`Brevo`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Brevo/README.md
@@ -1913,8 +1834,8 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`Inky`: https://get.foundation/emails/docs/inky.html
 .. _`league/html-to-markdown`: https://github.com/thephpleague/html-to-markdown
 .. _`load balancing`: https://en.wikipedia.org/wiki/Load_balancing_(computing)
-.. _`Mailchimp Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
 .. _`MailerSend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/MailerSend/README.md
+.. _`Mandrill`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailchimp/README.md
 .. _`Mailgun`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailgun/README.md
 .. _`Mailjet`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Mailjet/README.md
 .. _`Markdown syntax`: https://commonmark.org/

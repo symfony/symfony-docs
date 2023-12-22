@@ -70,10 +70,6 @@ to create each type of UUID::
     // UUIDv8 uniqueness will be implementation-specific and SHOULD NOT be assumed.
     $uuid = Uuid::v8();
 
-.. versionadded:: 6.2
-
-    UUID versions 7 and 8 were introduced in Symfony 6.2.
-
 If your UUID value is already generated in another format, use any of the
 following methods to create a ``Uuid`` object from it::
 
@@ -94,10 +90,10 @@ configure the behavior of the factory using configuration files::
         # config/packages/uid.yaml
         framework:
             uid:
-                default_uuid_version: 7
+                default_uuid_version: 6
                 name_based_uuid_version: 5
                 name_based_uuid_namespace: 6ba7b810-9dad-11d1-80b4-00c04fd430c8
-                time_based_uuid_version: 7
+                time_based_uuid_version: 6
                 time_based_uuid_node: 121212121212
 
     .. code-block:: xml
@@ -113,10 +109,10 @@ configure the behavior of the factory using configuration files::
 
             <framework:config>
                 <framework:uid
-                    default_uuid_version="7"
+                    default_uuid_version="6"
                     name_based_uuid_version="5"
                     name_based_uuid_namespace="6ba7b810-9dad-11d1-80b4-00c04fd430c8"
-                    time_based_uuid_version="7"
+                    time_based_uuid_version="6"
                     time_based_uuid_node="121212121212"
                 />
             </framework:config>
@@ -135,10 +131,10 @@ configure the behavior of the factory using configuration files::
 
             $container->extension('framework', [
                 'uid' => [
-                    'default_uuid_version' => 7,
+                    'default_uuid_version' => 6,
                     'name_based_uuid_version' => 5,
                     'name_based_uuid_namespace' => '6ba7b810-9dad-11d1-80b4-00c04fd430c8',
-                    'time_based_uuid_version' => 7,
+                    'time_based_uuid_version' => 6,
                     'time_based_uuid_node' => 121212121212,
                 ],
             ]);
@@ -160,7 +156,7 @@ on the configuration you defined::
 
         public function generate(): void
         {
-            // This creates a UUID of the version given in the configuration file (v7 by default)
+            // This creates a UUID of the version given in the configuration file (v6 by default)
             $uuid = $this->uuidFactory->create();
 
             $nameBasedUuid = $this->uuidFactory->nameBased(/** ... */);
@@ -183,10 +179,6 @@ Use these methods to transform the UUID object into different bases::
     $uuid->toBase58();  // string(22) "TuetYWNHhmuSQ3xPoVLv9M"
     $uuid->toRfc4122(); // string(36) "d9e7a184-5d5b-11ea-a62a-3499710062d0"
     $uuid->toHex();     // string(34) "0xd9e7a1845d5b11eaa62a3499710062d0"
-
-.. versionadded:: 6.2
-
-    The ``toHex()`` method was introduced in Symfony 6.2.
 
 Working with UUIDs
 ~~~~~~~~~~~~~~~~~~
@@ -246,10 +238,6 @@ type, which converts to/from UUID objects automatically::
 
         // ...
     }
-
-.. versionadded:: 6.2
-
-    The ``UuidType::NAME`` constant was introduced in Symfony 6.2.
 
 There's also a Doctrine generator to help auto-generate UUID values for the
 entity primary keys::
@@ -387,10 +375,6 @@ Use these methods to transform the ULID object into different bases::
     $ulid->toRfc4122(); // string(36) "0171069d-593d-97d3-8b3e-23d06de5b308"
     $ulid->toHex();     // string(34) "0x0171069d593d97d38b3e23d06de5b308"
 
-.. versionadded:: 6.2
-
-    The ``toHex()`` method was introduced in Symfony 6.2.
-
 Working with ULIDs
 ~~~~~~~~~~~~~~~~~~
 
@@ -433,10 +417,6 @@ type, which converts to/from ULID objects automatically::
 
         // ...
     }
-
-.. versionadded:: 6.2
-
-    The ``UlidType::NAME`` constant was introduced in Symfony 6.2.
 
 There's also a Doctrine generator to help auto-generate ULID values for the
 entity primary keys::

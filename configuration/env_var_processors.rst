@@ -418,10 +418,6 @@ Symfony provides the following env var processors:
                     ->set(\RedisCluster::class, \RedisCluster::class)->args([null, '%env(shuffle:csv:REDIS_NODES)%']);
             };
 
-    .. versionadded:: 6.2
-
-        The ``env(shuffle:...)`` env var processor was introduced in Symfony 6.2.
-
 ``env(file:FOO)``
     Returns the contents of a file whose path is the value of the ``FOO`` env var:
 
@@ -782,10 +778,6 @@ Symfony provides the following env var processors:
             // config/services.php
             $container->setParameter('typed_env', '%env(enum:App\Enum\Environment:APP_ENV)%');
 
-    .. versionadded:: 6.2
-
-        The ``env(enum:...)`` env var processor was introduced in Symfony 6.2.
-
 ``env(defined:NO_FOO)``
     Evaluates to ``true`` if the env var exists and its value is not ``''``
     (an empty string) or ``null``; it returns ``false`` otherwise.
@@ -819,10 +811,6 @@ Symfony provides the following env var processors:
 
             // config/services.php
             $container->setParameter('typed_env', '%env(defined:FOO)%');
-
-    .. versionadded:: 6.4
-
-        The ``env(defined:...)`` env var processor was introduced in Symfony 6.4.
 
 It is also possible to combine any number of processors:
 

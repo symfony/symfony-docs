@@ -262,7 +262,7 @@ Available Options
 ``callback``
 ~~~~~~~~~~~~
 
-**type**: ``string|array|Closure``
+**type**: ``callable|string|null`` **default**: ``null``
 
 This is a callback method that can be used instead of the `choices`_ option
 to return the choices array. See
@@ -314,10 +314,6 @@ match
 When this option is ``false``, the constraint checks that the given value is
 not one of the values defined in the ``choices`` option. In practice, it makes
 the ``Choice`` constraint behave like a ``NotChoice`` constraint.
-
-.. versionadded:: 6.2
-
-    The ``match`` option was introduced in Symfony 6.2.
 
 ``message``
 ~~~~~~~~~~~

@@ -29,12 +29,6 @@ more control::
         },
     ]);
 
-.. versionadded:: 6.2
-
-    Starting from Symfony 6.2, you can use any object that implements
-    :class:`Symfony\\Contracts\\Translation\\TranslatableInterface` as the value
-    of the choice label.
-
 This method is called for *each* choice, passing you the ``$choice`` and
 ``$key`` from the choices array (additional ``$value`` is related to `choice_value`_).
 This will give you:

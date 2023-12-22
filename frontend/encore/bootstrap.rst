@@ -1,5 +1,5 @@
-Using Bootstrap CSS & JS
-========================
+Using Bootstrap CSS & JS with Webpack Encore
+============================================
 
 This article explains how to install and integrate the `Bootstrap CSS framework`_
 in your Symfony application using :doc:`Webpack Encore </frontend>`.

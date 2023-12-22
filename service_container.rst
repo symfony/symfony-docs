@@ -80,8 +80,8 @@ in the container.
     There are actually *many* more services in the container, and each service has
     a unique id in the container, like ``request_stack`` or ``router.default``. For a full
     list, you can run ``php bin/console debug:container``. But most of the time,
-    you won't need to worry about this. See :ref:`services-wire-specific-service`.
-    See :doc:`/service_container/debug`.
+    you won't need to worry about this. See :ref:`how to choose a specific service
+    <services-wire-specific-service>`. See :doc:`/service_container/debug`.
 
 .. _service-container-creating-service:
 
@@ -228,10 +228,11 @@ each time you ask for it.
 
     Thanks to this configuration, you can automatically use any classes from the
     ``src/`` directory as a service, without needing to manually configure
-    it. Later, you'll learn more about this in :ref:`service-psr4-loader`.
+    it. Later, you'll learn how to :ref:`import many services at once
+    <service-psr4-loader>` with resource.
 
-    If you'd prefer to manually wire your service, that's totally possible: see
-    :ref:`services-explicitly-configure-wire-services`.
+    If you'd prefer to manually wire your service, you can
+    :ref:`use explicit configuration <services-explicitly-configure-wire-services>`.
 
 .. _service-container_limiting-to-env:
 
@@ -816,10 +817,6 @@ Our configuration looks like this:
     Closures can be injected :ref:`by using autowiring <autowiring_closures>`
     and its dedicated attributes.
 
-.. versionadded:: 6.1
-
-    The ``closure`` argument type was introduced in Symfony 6.1.
-
 .. _services-binding:
 
 Binding Arguments by Name or Type
@@ -927,8 +924,8 @@ argument for *any* service defined in this file! You can bind arguments by name
 (e.g. ``$adminEmail``), by type (e.g. ``Psr\Log\LoggerInterface``) or both
 (e.g. ``Psr\Log\LoggerInterface $requestLogger``).
 
-The ``bind`` config can also be applied to specific services or when loading many
-services at once (i.e. :ref:`service-psr4-loader`).
+The ``bind`` config can also be applied to specific services or when
+:ref:`loading many services at once <service-psr4-loader>`).
 
 Abstract Service Arguments
 --------------------------
@@ -1029,6 +1026,13 @@ you don't need to do *anything*: the service will be automatically loaded. Then,
 ``autoconfigure`` will add the ``twig.extension`` tag *for* you, because your class
 implements ``Twig\Extension\ExtensionInterface``. And thanks to ``autowire``, you can even add
 constructor arguments without any configuration.
+
+Autconfiguration also works with attributes. Some attributes like
+:class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`,
+:class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener` and
+:class:`Symfony\\Component\\Console\\Attribute\\AsCommand` are registered
+for autoconfiguration. Any class using these attributes will have tags applied
+to them.
 
 Linting Service Definitions
 ---------------------------
@@ -1168,17 +1172,12 @@ key. For example, the default Symfony configuration contains this:
     may use the :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Exclude`
     attribute directly on your class to exclude it.
 
-    .. versionadded:: 6.3
-
-        The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\Exclude`
-        attribute was introduced in Symfony 6.3.
-
 This can be used to quickly make many classes available as services and apply some
 default configuration. The ``id`` of each service is its fully-qualified class name.
 You can override any service that's imported by using its id (class name) below
-(e.g. see :ref:`services-manually-wire-args`). If you override a service, none of
-the options (e.g. ``public``) are inherited from the import (but the overridden
-service *does* still inherit from ``_defaults``).
+(e.g. see :ref:`how to manually wire arguments <services-manually-wire-args>`).
+If you override a service, none of the options (e.g. ``public``) are inherited
+from the import (but the overridden service *does* still inherit from ``_defaults``).
 
 You can also ``exclude`` certain paths. This is optional, but will slightly increase
 performance in the ``dev`` environment: excluded paths are not tracked and so modifying
@@ -1420,7 +1419,7 @@ You also have a service that defines many methods and one of them is the same
     {
         // other methods...
 
-        public function format($string $message, array $parameters): string
+        public function format(string $message, array $parameters): string
         {
             // ...
         }
@@ -1438,7 +1437,7 @@ Thanks to the ``#[AutowireCallable]`` attribute, you can now inject this
     class Mailer
     {
         public function __construct(
-            #[AutowireCallable(service: MessageUtils::class, method: 'formatMessage')]
+            #[AutowireCallable(service: MessageUtils::class, method: 'format')]
             private MessageFormatterInterface $formatter
         ) {
         }
@@ -1450,11 +1449,6 @@ Thanks to the ``#[AutowireCallable]`` attribute, you can now inject this
             // ...
         }
     }
-
-.. versionadded:: 6.3
-
-    The :class:`Symfony\\Component\\DependencyInjection\\Attribute\\AutowireCallable`
-    attribute was introduced in Symfony 6.3.
 
 Instead of using the ``#[AutowireCallable]`` attribute, you can also generate
 an adapter for a functional interface through configuration:
@@ -1470,7 +1464,7 @@ an adapter for a functional interface through configuration:
 
             app.message_formatter:
                 class: App\Service\MessageFormatterInterface
-                from_callable: [!service {class: 'App\Service\MessageUtils'}, 'formatMessage']
+                from_callable: [!service {class: 'App\Service\MessageUtils'}, 'format']
 
     .. code-block:: xml
 
@@ -1485,7 +1479,7 @@ an adapter for a functional interface through configuration:
                 <!-- ... -->
 
                 <service id="app.message_formatter" class="App\Service\MessageFormatterInterface">
-                    <from-callable method="formatMessage">
+                    <from-callable method="format">
                         <service class="App\Service\MessageUtils"/>
                     </from-callable>
                 </service>
@@ -1506,7 +1500,7 @@ an adapter for a functional interface through configuration:
 
             $container
                 ->set('app.message_formatter', MessageFormatterInterface::class)
-                ->fromCallable([inline_service(MessageUtils::class), 'formatMessage'])
+                ->fromCallable([inline_service(MessageUtils::class), 'format'])
                 ->alias(MessageFormatterInterface::class, 'app.message_formatter')
             ;
         };

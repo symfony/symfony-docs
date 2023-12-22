@@ -81,10 +81,6 @@ readable. These are the main advantages and disadvantages of each format:
     methods in the ``src/Kernel.php`` file to add support for the ``.xml`` file
     extension.
 
-    .. versionadded:: 6.1
-
-        The automatic loading of PHP configuration files was introduced in Symfony 6.1.
-
 Importing Configuration Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -263,7 +259,7 @@ reusable configuration value. By convention, parameters are defined under the
 
                 // PHP constants as parameter values
                 ->set('app.some_constant', GLOBAL_CONSTANT)
-                ->set('app.another_constant', BlogPost::MAX_ITEMS);
+                ->set('app.another_constant', BlogPost::MAX_ITEMS)
 
                 // Enum case as parameter values
                 ->set('app.some_enum', PostState::Published);
@@ -291,14 +287,6 @@ reusable configuration value. By convention, parameters are defined under the
         <parameter key="app.admin_email" trim="true">
             something@example.com
         </parameter>
-
-.. versionadded:: 6.2
-
-    Passing an enum case as a service parameter was introduced in Symfony 6.2.
-
-.. versionadded:: 6.3
-
-    The ``trim`` attribute was introduced in Symfony 6.3.
 
 Once defined, you can reference this parameter value from any other
 configuration file using a special syntax: wrap the parameter name in two ``%``
@@ -394,10 +382,6 @@ a new ``locale`` parameter is added to the ``config/services.yaml`` file).
     ``.mailer.transport``), are available only during the container compilation.
     They are useful when working with :ref:`Compiler Passes </service_container/compiler_passes>`
     to declare some temporary parameters that won't be available later in the application.
-
-.. versionadded:: 6.3
-
-    Compile-time parameters were introduced in Symfony 6.3.
 
 .. seealso::
 
@@ -885,6 +869,25 @@ the env files ending in ``.local`` (``.env.local`` and ``.env.<environment>.loca
 **should not be committed** because only you will use them. In fact, the
 ``.gitignore`` file that comes with Symfony prevents them from being committed.
 
+Overriding Environment Variables Defined By The System
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to override an environment variable defined by the system, use the
+``overrideExistingVars`` parameter defined by the
+:method:`Symfony\\Component\\Dotenv\\Dotenv::loadEnv`,
+:method:`Symfony\\Component\\Dotenv\\Dotenv::bootEnv`, and
+:method:`Symfony\\Component\\Dotenv\\Dotenv::populate` methods::
+
+    use Symfony\Component\Dotenv\Dotenv;
+
+    $dotenv = new Dotenv();
+    $dotenv->loadEnv(__DIR__.'/.env', overrideExistingVars: true);
+
+    // ...
+
+This will override environment variables defined by the system but it **won't**
+override environment variables defined in ``.env`` files.
+
 .. _configuration-env-var-in-prod:
 
 Configuring Environment Variables in Production
@@ -907,17 +910,6 @@ To improve performance, you can optionally run the ``dump-env`` Composer command
     ``dotenv:dump`` command instead (available in :ref:`Symfony Flex <symfony-flex>`
     1.2 or later). The command is not registered by default, so you must register
     first in your services:
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        services:
-            Symfony\Component\Dotenv\Command\DotenvDumpCommand:
-                - '%kernel.project_dir%/.env'
-                - '%kernel.environment%'
-
-    In PHP >= 8, you can remove the two arguments when autoconfiguration is enabled
-    (which is the default):
 
     .. code-block:: yaml
 
@@ -984,10 +976,6 @@ Use the ``debug:dotenv`` command to understand how Symfony parses the different
     # look for a specific variable passing its full or partial name as an argument
     $ php bin/console debug:dotenv foo
 
-.. versionadded:: 6.2
-
-    The option to pass variable names to ``debug:dotenv`` was introduced in Symfony 6.2.
-
 Additionally, and regardless of how you set environment variables, you can see all
 environment variables, with their values, referenced in Symfony's container configuration:
 
@@ -1019,7 +1007,7 @@ implements :class:`Symfony\\Component\\DependencyInjection\\EnvVarLoaderInterfac
 .. note::
 
     If you're using the :ref:`default services.yaml configuration <service-container-services-load-example>`,
-    the autoconfiguration feature will enable and tag thise service automatically.
+    the autoconfiguration feature will enable and tag this service automatically.
     Otherwise, you need to register and :doc:`tag your service </service_container/tags>`
     with the ``container.env_var_loader`` tag.
 
@@ -1294,6 +1282,12 @@ namespace ``Symfony\Config``::
     Only root classes in the namespace ``Symfony\Config`` are ConfigBuilders.
     Nested configs (e.g. ``\Symfony\Config\Framework\CacheConfig``) are regular
     PHP objects which aren't autowired when using them as an argument type.
+
+.. note::
+
+    In order to get ConfigBuilders autocompletion in your IDE/editor, make sure
+    to not exclude the directory where these classes are generated (by default,
+    in ``var/cache/dev/Symfony/Config/``).
 
 Keep Going!
 -----------

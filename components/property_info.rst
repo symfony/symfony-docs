@@ -229,12 +229,6 @@ works. It assumes camel case style method names following `PSR-1`_. For example,
 both ``myProperty`` and ``my_property`` properties are readable if there's a
 ``getMyProperty()`` method and writable if there's a ``setMyProperty()`` method.
 
-.. versionadded:: 6.4
-
-    In Symfony versions prior to 6.4, snake case properties (e.g. ``my_property``)
-    were not writable by camel case methods (e.g. ``setMyProperty()``). You had
-    to define method names with underscores (e.g. ``setMy_property()``).
-
 .. _property-info-initializable:
 
 Property Initializable Information
@@ -464,14 +458,11 @@ the :class:`Symfony\\Component\\PropertyInfo\\Extractor\\SerializerExtractor`
 provides list information. This extractor is *not* registered automatically
 with the ``property_info`` service in the Symfony Framework::
 
-    use Doctrine\Common\Annotations\AnnotationReader;
     use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
     use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-    use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+    use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 
-    $serializerClassMetadataFactory = new ClassMetadataFactory(
-        new AnnotationLoader(new AnnotationReader)
-    );
+    $serializerClassMetadataFactory = new ClassMetadataFactory(new AttributeLoader());
     $serializerExtractor = new SerializerExtractor($serializerClassMetadataFactory);
 
     // the `serializer_groups` option must be configured (may be set to null)
@@ -479,7 +470,7 @@ with the ``property_info`` service in the Symfony Framework::
 
 If ``serializer_groups`` is set to ``null``, serializer groups metadata won't be
 checked but you will get only the properties considered by the Serializer
-Component (notably the ``@Ignore`` annotation is taken into account).
+Component (notably the ``#[Ignore]`` attribute is taken into account).
 
 DoctrineExtractor
 ~~~~~~~~~~~~~~~~~

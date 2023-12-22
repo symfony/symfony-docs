@@ -249,6 +249,13 @@ Options
 
 .. include:: /reference/constraints/_groups-option.rst.inc
 
+.. note::
+
+    Unlike other constraints, the ``Valid`` constraint does not use the ``Default``
+    group. This means that it will always be applied by default, **even** if you
+    specify a group when calling the validator. If you want to restrict the
+    constraint to a subset of groups, you have to define the ``groups`` option.
+
 .. include:: /reference/constraints/_payload-option.rst.inc
 
 ``traverse``

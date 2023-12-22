@@ -175,10 +175,6 @@ The output of this command will be:
     | Author: Charles Dickens      |
     +------------------------------+
 
-.. versionadded:: 6.1
-
-    Support for vertical rendering was introduced in Symfony 6.1.
-
 The table style can be changed to any built-in styles via
 :method:`Symfony\\Component\\Console\\Helper\\Table::setStyle`::
 

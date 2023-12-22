@@ -39,10 +39,6 @@ First you need to create a Constraint class and extend :class:`Symfony\\Componen
 Add ``#[\Attribute]`` to the constraint class if you want to
 use it as an attribute in other classes.
 
-.. versionadded:: 6.1
-
-    The ``#[HasNamedArguments]`` attribute was introduced in Symfony 6.1.
-
 You can use ``#[HasNamedArguments]`` to make some constraint options required::
 
     // src/Validator/ContainsAlphanumeric.php
@@ -543,7 +539,7 @@ class to simplify writing unit tests for your custom constraints::
                 ->assertRaised();
         }
 
-        public function provideInvalidConstraints(): iterable
+        public function provideInvalidConstraints(): \Generator
         {
             yield [new ContainsAlphanumeric(message: 'myMessage')];
             // ...

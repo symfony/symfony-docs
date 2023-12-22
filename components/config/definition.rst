@@ -171,11 +171,6 @@ The configuration can now be written like this::
         ->end()
     ;
 
-.. versionadded:: 6.3
-
-    The support of enum values in ``enumNode()`` was introduced
-    in Symfony 6.3.
-
 Array Nodes
 ~~~~~~~~~~~
 

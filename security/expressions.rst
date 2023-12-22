@@ -69,10 +69,6 @@ and ``#[IsGranted()]`` attribute also accept an
             }
         }
 
-.. versionadded:: 6.2
-
-    The ``#[IsGranted()]`` attribute was introduced in Symfony 6.2.
-
 In this example, if the current user has ``ROLE_ADMIN`` or if the current
 user object's ``isSuperAdmin()`` method returns ``true``, then access will
 be granted (note: your User object may not have an ``isSuperAdmin()`` method,

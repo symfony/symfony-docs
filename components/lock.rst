@@ -475,21 +475,15 @@ avoid stalled locks::
 
 The ``MongoDbStore`` takes the following ``$options`` (depending on the first parameter type):
 
-==============  ================================================================================================
-Option          Description
-==============  ================================================================================================
-gcProbability   Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
-gcProbablity    Same as ``gcProbability``, see the deprecation note below
-database        The name of the database
-collection      The name of the collection
-uriOptions      Array of URI options for `MongoDBClient::__construct`_
-driverOptions   Array of driver options for `MongoDBClient::__construct`_
-=============   ================================================================================================
-
-.. deprecated:: 6.3
-
-    The ``gcProbablity`` option (notice the typo in its name) is deprecated since
-    Symfony 6.3, use the ``gcProbability`` option instead.
+=============  ================================================================================================
+Option         Description
+=============  ================================================================================================
+gcProbability  Should a TTL Index be created expressed as a probability from 0.0 to 1.0 (Defaults to ``0.001``)
+database       The name of the database
+collection     The name of the collection
+uriOptions     Array of URI options for `MongoDBClient::__construct`_
+driverOptions  Array of driver options for `MongoDBClient::__construct`_
+=============  ================================================================================================
 
 When the first parameter is a:
 
@@ -518,13 +512,12 @@ MongoDB Connection String:
 PdoStore
 ~~~~~~~~
 
-The PdoStore saves locks in an SQL database. It is identical to DoctrineDbalStore
-but requires a `PDO`_ connection or a `Data Source Name (DSN)`_. This store does
-not support blocking, and expects a TTL to avoid stalled locks::
+The PdoStore saves locks in an SQL database. It requires a `PDO`_ connection or a `Data Source Name (DSN)`_.
+This store does not support blocking, and expects a TTL to avoid stalled locks::
 
     use Symfony\Component\Lock\Store\PdoStore;
 
-    // a PDO or DSN for lazy connecting through PDO
+    // a PDO instance or DSN for lazy connecting through PDO
     $databaseConnectionOrDSN = 'mysql:host=127.0.0.1;dbname=app';
     $store = new PdoStore($databaseConnectionOrDSN, ['db_username' => 'myuser', 'db_password' => 'mypassword']);
 
@@ -564,11 +557,6 @@ the command:
 
     $ php bin/console make:migration
 
-.. versionadded:: 6.3
-
-    The automatic table generation when running the ``make:migration`` command
-    was introduced in Symfony 6.3.
-
 If you prefer to create the table yourself and it has not already been created, you can
 create this table explicitly by calling the
 :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::createTable` method.
@@ -584,9 +572,8 @@ the :method:`Symfony\\Component\\Lock\\Store\\DoctrineDbalStore::save` method.
 PostgreSqlStore
 ~~~~~~~~~~~~~~~
 
-The PostgreSqlStore and DoctrineDbalPostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL.
-It is identical to DoctrineDbalPostgreSqlStore but requires `PDO`_ connection or
-a `Data Source Name (DSN)`_. It supports native blocking, as well as sharing
+The PostgreSqlStore uses `Advisory Locks`_ provided by PostgreSQL. It requires a
+`PDO`_ connection or a `Data Source Name (DSN)`_. It supports native blocking, as well as sharing
 locks::
 
     use Symfony\Component\Lock\Store\PostgreSqlStore;
@@ -620,10 +607,6 @@ store locks and does not expire.
 
 RedisStore
 ~~~~~~~~~~
-
-.. versionadded:: 6.3
-
-    ``\Relay\Relay`` support was introduced in Symfony 6.3.
 
 The RedisStore saves locks on a Redis server, it requires a Redis connection
 implementing the ``\Redis``, ``\RedisArray``, ``\RedisCluster``, ``\Relay\Relay`` or
