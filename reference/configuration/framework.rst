@@ -3030,7 +3030,7 @@ php_errors
 log
 ...
 
-**type**: ``boolean|int`` **default**: ``true``
+**type**: ``boolean`` | ``int`` **default**: ``true``
 
 Use the application logger instead of the PHP logger for logging PHP errors.
 When an integer value is used, it also sets the log level. Those integer
