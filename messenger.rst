@@ -892,7 +892,7 @@ running the ``messenger:consume`` command.
 
 .. _messenger-retries-failures:
 
-Rate limited transport
+Rate Limited Transport
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Sometimes you might need to rate limit your message worker. You can configure a
