@@ -1643,7 +1643,7 @@ handler_id
 
 By default at `null` if `framework.session.save_path` is not set.
 The session handler configured by php.ini is used, unless option
-`framework.session.save_path` is used, in which case the default is to store sessions
+``framework.session.save_path`` is used, in which case the default is to store sessions
 using the native file session handler.
 
 It is possible to :ref:`store sessions in a database <session-database>`,
