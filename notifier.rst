@@ -104,7 +104,7 @@ Service             Package                                DSN                  
 
 .. tip::
 
-    Some third party transports, when using the API, support status callback
+    Some third party transports, when using the API, support status callbacks
     via webhooks. See the :doc:`Webhook documentation </webhook>` for more
     details.
 
