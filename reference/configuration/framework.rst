@@ -55,7 +55,7 @@ handle_all_throwables
 
 **type**: ``boolean`` **default**: ``true``
 
-When at ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
+When set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
 thrown by the application and will turn them into HTTP responses.
 
 .. versionadded:: 6.2
