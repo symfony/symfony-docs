@@ -2381,7 +2381,7 @@ will not be rolled back.
 
     If ``WhenUserRegisteredThenSendWelcomeEmail`` throws an exception, that
     exception will be wrapped into a ``DelayedMessageHandlingException``. Using
-    ``DelayedMessageHandlingException::getExceptions`` will give you all
+    ``DelayedMessageHandlingException::getWrappedExceptions`` will give you all
     exceptions that are thrown while handling a message with the
     ``DispatchAfterCurrentBusStamp``.
 
