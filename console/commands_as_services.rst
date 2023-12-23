@@ -133,3 +133,5 @@ only when the ``app:sunshine`` command is actually called.
 .. caution::
 
     Calling the ``list`` command will instantiate all commands, including lazy commands.
+    However, if the command is a ``Symfony\Component\Console\Command\LazyCommand``, then
+    the underlying command factory will not be executed.
