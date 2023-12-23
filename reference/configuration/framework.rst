@@ -59,7 +59,7 @@ When set to ``true``, the Symfony kernel will catch all ``\Throwable`` exception
 thrown by the application and will turn them into HTTP responses.
 
 The ``handle_all_throwables`` option was introduced in Symfony 6.2.
-Starting from Symfony 7.0, the default value of this option is ``true``.
+Starting from Symfony 7.0, the default value is ``true``.
 
 
 .. _configuration-framework-http_cache:
