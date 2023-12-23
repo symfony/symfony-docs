@@ -120,9 +120,9 @@ the application is installed (e.g. in case the project is accessed in a host
 subdirectory) and the optional asset package base path.
 
 Symfony provides various cache busting implementations via the
-:ref:`assets.version <reference-framework-assets-version>`, 
-:ref:`assets.version_strategy <reference-assets-version-strategy>`, 
-and :ref:`assets.json_manifest_path <reference-assets-json-manifest-path>` 
+:ref:`assets.version <reference-framework-assets-version>`,
+:ref:`assets.version_strategy <reference-assets-version-strategy>`,
+and :ref:`assets.json_manifest_path <reference-assets-json-manifest-path>`
 configuration options.
 
 .. seealso::
