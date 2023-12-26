@@ -17,7 +17,7 @@ control over when exactly your form is submitted and what data is passed to it::
         $form = $this->createForm(TaskType::class, $task);
 
         if ($request->isMethod('POST')) {
-            $form->submit($request->request->get($form->getName()));
+            $form->submit($request->request->all($form->getName()));
 
             if ($form->isSubmitted() && $form->isValid()) {
                 // perform some action...
