@@ -90,7 +90,7 @@ custom normalizers and/or encoders can also be loaded by tagging them as
 :ref:`serializer.encoder <reference-dic-tags-serializer-encoder>`. It's also
 possible to set the priority of the tag in order to decide the matching order.
 
-.. caution::
+.. danger::
 
     Always make sure to load the ``DateTimeNormalizer`` when serializing the
     ``DateTime`` or ``DateTimeImmutable`` classes to avoid excessive memory

@@ -718,7 +718,7 @@ class, which can make this even easier::
 The ``JsonResponse`` class sets the ``Content-Type`` header to
 ``application/json`` and encodes your data to JSON when needed.
 
-.. caution::
+.. danger::
 
     To avoid XSSI `JSON Hijacking`_, you should pass an associative array
     as the outermost array to ``JsonResponse`` and not an indexed array so

@@ -41,7 +41,7 @@ autoescape
 If set to ``false``, automatic escaping is disabled (you can still escape each content
 individually in the templates).
 
-.. caution::
+.. danger::
 
     Setting this option to ``false`` is dangerous and it will make your
     application vulnerable to `XSS attacks`_ because most third-party bundles
