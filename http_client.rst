@@ -150,7 +150,7 @@ brings most of the available options with type-hinted getters and setters::
     $this->client = $client->withOptions(
         (new HttpOptions())
             ->setBaseUri('https://...')
-            // setHeaders() replaces *all* headers at once, and deletes the headers you do not provide
+            // replaces *all* headers at once, and deletes the headers you do not provide
             ->setHeaders(['header-name' => 'header-value'])
             // add or replace a single header using addHeader()
             ->addHeader('another-header-name', 'another-header-value')
@@ -159,7 +159,8 @@ brings most of the available options with type-hinted getters and setters::
 
 .. versionadded:: 7.1
 
-    The :method:`Symfony\\Component\\HttpClient\\HttpOptions::addHeader` method was introduced in Symfony 7.1.
+    The :method:`Symfony\\Component\\HttpClient\\HttpOptions::addHeader`
+    method was introduced in Symfony 7.1.
 
 Some options are described in this guide:
 
