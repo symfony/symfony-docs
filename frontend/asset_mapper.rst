@@ -406,7 +406,7 @@ CSS can be added to your page by importing it from a JavaScript file. The defaul
     // ...
 
 When you call ``importmap('app')`` in ``base.html.twig``, AssetMapper parses
-``assets/app.js`` (and any JavaScript files that *it* imports) looking for ``import``
+``assets/app.js`` (and any JavaScript files that it imports) looking for ``import``
 statements for CSS files. The final collection of CSS files is rendered onto
 the page as ``link`` tags in the order they were imported.
 
@@ -513,7 +513,7 @@ Missing importmap Entry
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 One of the most common errors will come from your browser's console, and
-will something like this:
+will look something like this:
 
     Failed to resolve module specifier "    bootstrap". Relative references must start
     with either "/", "./", or "../".
@@ -764,25 +764,25 @@ If you *do* need to support very old browsers, you should use a tool like
     (https://caniuse.com/import-maps), you can use an ``importShim()`` function
     from the shim: https://www.npmjs.com/package/es-module-shims#user-content-polyfill-edge-case-dynamic-import
 
-Can I Use with Sass or Tailwind?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Can I Use it with Sass or Tailwind?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sure! See :ref:`Using Tailwind CSS <asset-mapper-tailwind>` or :ref:`Using Sass <asset-mapper-sass>`.
 
-Can I use with TypeScript?
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Can I Use it with TypeScript?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sure! See :ref:`Using TypeScript <asset-mapper-ts>`.
 
-Can I use with JSX or Vue?
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+Can I Use it with JSX or Vue?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Probably not. And if you're writing an application in React, Svelte or another
 frontend framework, you'll probably be better off using *their* tools directly.
 
 JSX *can* be compiled directly to a native JavaScript file but if you're using a lot of JSX,
 you'll probably want to use a tool like :ref:`Encore <frontend-webpack-encore>`.
-See the `UX React Documentation`_ for more details about using with the AssetMapper
+See the `UX React Documentation`_ for more details about using it with the AssetMapper
 component.
 
 Vue files *can* be written in native JavaScript, and those *will* work with
@@ -796,7 +796,7 @@ component.
 Using TypeScript
 ----------------
 
-To use TypeScript with AssetMapper component, check out `sensiolabs/typescript-bundle`_.
+To use TypeScript with the AssetMapper component, check out `sensiolabs/typescript-bundle`_.
 
 Third-Party Bundles & Custom Asset Paths
 ----------------------------------------
@@ -875,7 +875,7 @@ Then try the command again.
 Configuration Options
 ---------------------
 
-You can see every available configuration option and some info by running:
+You can see every available configuration options and some info by running:
 
 .. code-block:: terminal
 
@@ -897,7 +897,7 @@ can be a simple list:
                 - assets/
                 - vendor/some/package/assets
 
-Of you can give each path a "namespace" that will be used in the asset map:
+Or you can give each path a "namespace" that will be used in the asset map:
 
 .. code-block:: yaml
 
@@ -1101,7 +1101,7 @@ command that checks security vulnerabilities in the dependencies of your applica
     6 vulnerabilities found: 1 Critical / 1 High / 4 Medium
 
 The command will return the ``0`` exit code if no vulnerability is found, or
-the ``-1`` exit code otherwise. This means that you can seamlessly integrate this
+the ``1`` exit code otherwise. This means that you can seamlessly integrate this
 command as part of your CI to be warned anytime a new vulnerability is found.
 
 .. tip::
