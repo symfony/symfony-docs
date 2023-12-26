@@ -338,6 +338,8 @@ There are several options that you can set using a ``.symfony.local.yaml`` confi
     using the ``proxy:domain:attach`` command for the current project when you start
     the server.
 
+.. _symfony-server_configuring-workers:
+
 Configuring Workers
 ~~~~~~~~~~~~~~~~~~~
 

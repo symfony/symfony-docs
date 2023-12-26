@@ -83,6 +83,13 @@ To build the assets, run the following if you use the Yarn package manager:
 All of these commands - e.g. ``dev`` or ``watch`` - are shortcuts that are defined
 in your ``package.json`` file.
 
+.. tip::
+
+    If you're using the Symfony CLI tool, you can configure workers to be
+    automatically run along with the webserver. You can find more information
+    in the :ref:`Symfony CLI Workers <symfony-server_configuring-workers>`
+    documentation.
+
 .. caution::
 
     Whenever you make changes in your ``webpack.config.js`` file, you must
