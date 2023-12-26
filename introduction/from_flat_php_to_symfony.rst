@@ -240,7 +240,7 @@ the ``templates/layout.php``:
 You now have a setup that will allow you to reuse the layout.
 Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony
-solves this using a `Templating`_ component. You'll see it in action shortly.
+solves this using `Twig`_. You'll see it in action shortly.
 
 Adding a Blog "show" Page
 -------------------------
@@ -568,9 +568,8 @@ nice way to group related pages. The controller functions are also sometimes cal
 
 The two controllers (or actions) are still lightweight. Each uses the
 :doc:`Doctrine ORM library </doctrine>` to retrieve objects from the
-database and the Templating component to render a template and return a
-``Response`` object. The ``list.html.twig`` template is now quite a bit simpler,
-and uses Twig:
+database and Twig to render a template and return a ``Response`` object.
+The ``list.html.twig`` template is now quite a bit simpler, and uses Twig:
 
 .. code-block:: html+twig
 
@@ -677,7 +676,7 @@ migrating the blog from flat PHP to Symfony has improved your life:
   :doc:`routing </routing>`, or rendering :doc:`controllers </controller>`;
 
 * Symfony gives you **access to open source tools** such as `Doctrine`_ and the
-  `Templating`_, :doc:`Security </security>`, :doc:`Form </components/form>`,
+  `Twig`_, :doc:`Security </security>`, :doc:`Form </components/form>`,
   `Validator`_ and `Translation`_ components (to name a few);
 
 * The application now enjoys **fully-flexible URLs** thanks to the Routing
@@ -694,7 +693,7 @@ A good selection of `Symfony community tools`_ can be found on GitHub.
 
 .. _`Model-View-Controller`: https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 .. _`Doctrine`: https://www.doctrine-project.org/
-.. _Templating: https://github.com/symfony/templating
+.. _Twig: https://github.com/twigphp/twig
 .. _Translation: https://github.com/symfony/translation
 .. _`Composer`: https://getcomposer.org
 .. _`download Composer`: https://getcomposer.org/download/

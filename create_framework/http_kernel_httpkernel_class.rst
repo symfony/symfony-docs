@@ -114,11 +114,6 @@ client; that's what the ``ResponseListener`` does::
 
     $dispatcher->addSubscriber(new HttpKernel\EventListener\ResponseListener('UTF-8'));
 
-If you want out of the box support for streamed responses, subscribe
-to ``StreamedResponseListener``::
-
-    $dispatcher->addSubscriber(new HttpKernel\EventListener\StreamedResponseListener());
-
 And in your controller, return a ``StreamedResponse`` instance instead of a
 ``Response`` instance.
 

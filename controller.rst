@@ -379,6 +379,8 @@ attribute, arguments of your controller's action can be automatically fulfilled:
         // ...
     }
 
+.. _controller-mapping-query-string:
+
 Mapping The Whole Query String
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -439,6 +441,8 @@ HTTP status to return if the validation fails::
     }
 
 The default status code returned if the validation fails is 404.
+
+.. _controller-mapping-request-payload:
 
 Mapping Request Payload
 ~~~~~~~~~~~~~~~~~~~~~~~

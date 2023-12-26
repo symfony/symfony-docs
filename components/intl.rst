@@ -424,6 +424,15 @@ platforms::
     $transliterator->transliterate('Menus with 🥗 or 🧆');
     // => 'Menus with :green_salad: or :falafel:'
 
+Furthermore the ``EmojiTransliterator`` provides a special ``strip`` locale
+that removes all the emojis from a string::
+
+    use Symfony\Component\Intl\Transliterator\EmojiTransliterator;
+
+    $transliterator = EmojiTransliterator::create('strip');
+    $transliterator->transliterate('🎉Hey!🥳 🎁Happy Birthday!🎁');
+    // => 'Hey! Happy Birthday!'
+
 .. tip::
 
     Combine this emoji transliterator with the :ref:`Symfony String slugger <string-slugger-emoji>`
