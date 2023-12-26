@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-12-23T10:56:44Z
+
+But afterwards there is no mention about `strip` locale, isn't it?
+
+I am for keeping it and change it to remove potentially confusion
+
+---------------------------------------------------------------------------
+
+by smnandre at 2023-12-23T11:49:46Z
+
+If it's changed **_and_** moved outside the Slugger section i agree :)
