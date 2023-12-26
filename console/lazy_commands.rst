@@ -10,6 +10,13 @@ The traditional way of adding commands to your application is to use
 :method:`Symfony\\Component\\Console\\Application::add`, which expects a
 ``Command`` instance as an argument.
 
+This approach can have downsides as some commands might be expensive to
+instantiate in which case you may want to lazy-load them. Note however that lazy-loading
+is not absolute. Indeed a few commands such as `list`, `help` or `_complete` can
+require to instantiate other commands although they are lazy. For example `list` needs
+to get the name and description of all commands, which might require the command to be
+instantiated to get.
+
 In order to lazy-load commands, you need to register an intermediate loader
 which will be responsible for returning ``Command`` instances::
 
@@ -19,7 +26,9 @@ which will be responsible for returning ``Command`` instances::
     use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
 
     $commandLoader = new FactoryCommandLoader([
-        'app:heavy' => function (): Command { return new HeavyCommand(); },
+        // Note that the `list` command will still instantiate that command
+        // in this example.
+        'app:heavy' => static fn(): Command => new HeavyCommand(),
     ]);
 
     $application = new Application();
@@ -35,6 +44,28 @@ but the :method:`Symfony\\Component\\Console\\Application::setCommandLoader`
 method accepts any
 :class:`Symfony\\Component\\Console\\CommandLoader\\CommandLoaderInterface`
 instance so you can use your own implementation.
+
+Another way to do so is to take advantage of ``Symfony\Component\Console\Command\LazyCommand``::
+
+    use App\Command\HeavyCommand;
+    use Symfony\Component\Console\Application;
+    use Symfony\Component\Console\Command\Command;
+    use Symfony\Component\Console\CommandLoader\FactoryCommandLoader;
+
+    // In this case although the command is instantiated, the underlying command factory
+    // will not be executed unless the command is actually executed or one tries to access
+    // to its input definition to know its argument or option inputs.
+    $lazyCommand = new LazyCommand(
+        'app:heavy',
+        [],
+        'This is another more complete form of lazy command.',
+        false,
+        static fn (): Command => new HeavyCommand(),
+    );
+
+    $application = new Application();
+    $application->add($lazyCommand);
+    $application->run();
 
 Built-in Command Loaders
 ------------------------

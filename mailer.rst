@@ -272,7 +272,7 @@ party provider:
 
 .. tip::
 
-    Some third party mailers, when using the API, support status callback
+    Some third party mailers, when using the API, support status callbacks
     via webhooks. See the :doc:`Webhook documentation </webhook>` for more
     details.
 

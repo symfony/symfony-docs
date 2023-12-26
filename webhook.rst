@@ -12,17 +12,17 @@ Installation
 
     $ composer require symfony/webhook
 
-Usage in combination with the Mailer component
+Usage in Combination with the Mailer Component
 ----------------------------------------------
 
 When using a third-party mailer, you can use the Webhook component to receive
 webhook calls from the third-party mailer.
 
-In this example Mailgun is used with ``'mailer_mailgun'`` as webhook type.
-Any type name can be used as long as it's unique. Make sure to use it in the
+In this example Mailgun is used with ``'mailer_mailgun'`` as the webhook type.
+Any type name can be used as long as it is unique. Make sure to use it in the
 routing configuration, the webhook URL and the RemoteEvent consumer.
 
-Install the third party mailer as described in the documentation of the
+Install the third-party mailer as described in the documentation of the
 :ref:`Mailer component <mailer_3rd_party_transport>`.
 
 The Webhook component routing needs to be defined:
@@ -130,13 +130,13 @@ With this done, you can now add a RemoteEvent consumer to react to the webhooks:
         }
     }
 
-Usage in combination with the Notifier component
+Usage in Combination with the Notifier Component
 ------------------------------------------------
 
 The usage of the Webhook component when using a third-party transport in
 the Notifier is very similar to the usage with the Mailer.
 
-Currently, the following third-party sms transports support webhooks:
+Currently, the following third-party SMS transports support webhooks:
 
 ============ ==========================================
 SMS service  Parser service name
