@@ -79,6 +79,19 @@ Symfony ships with the following value resolvers in the
 
         The ``BackedEnumValueResolver`` and ``EnumRequirement`` were introduced in Symfony 6.1.
 
+
+:class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestPayloadValueResolver`
+    Maps the request payload or the query string into the type-hinted object.
+
+    Because this is a :ref:`targeted value resolver <value-resolver-targeted>`,
+    you'll have to use either the :ref:`MapRequestPayload <controller-mapping-request-payload>`
+    or the :ref:`MapQueryString <controller-mapping-query-string>` attribute
+    in order to use this resolver.
+
+    .. versionadded:: 6.3
+
+        The ``RequestPayloadValueResolver`` was introduced in Symfony 6.3.
+
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestAttributeValueResolver`
     Attempts to find a request attribute that matches the name of the argument.
 
@@ -429,6 +442,8 @@ command to see which argument resolvers are present and in which order they run:
 
 You can also configure the name passed to the ``ValueResolver`` attribute to target
 your resolver. Otherwise it will default to the service's id.
+
+.. _value-resolver-targeted:
 
 ``controller.targeted_value_resolver``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

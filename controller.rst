@@ -388,6 +388,8 @@ attribute, arguments of your controller's action can be automatically fulfilled:
     The :class:`Symfony\\Component\\HttpKernel\\Attribute\\MapQueryParameter` attribute
     was introduced in Symfony 6.3.
 
+.. _controller-mapping-query-string:
+
 Mapping The Whole Query String
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -457,6 +459,8 @@ The default status code returned if the validation fails is 404.
 .. versionadded:: 6.4
 
     The ``validationFailedStatusCode`` parameter was introduced in Symfony 6.4.
+
+.. _controller-mapping-request-payload:
 
 Mapping Request Payload
 ~~~~~~~~~~~~~~~~~~~~~~~
