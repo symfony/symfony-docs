@@ -487,6 +487,13 @@ on your transport and handling them. This command is called your "worker".
 
 .. tip::
 
+    In a development environment and if you're using the Symfony CLI tool,
+    you can configure workers to be automatically run along with the webserver.
+    You can find more information in the
+    :ref:`Symfony CLI Workers <symfony-server_configuring-workers>` documentation.
+
+.. tip::
+
     To properly stop a worker, throw an instance of
     :class:`Symfony\\Component\\Messenger\\Exception\\StopWorkerException`.
 
