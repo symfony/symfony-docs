@@ -880,7 +880,7 @@ The form can look like anything, but it usually follows some conventions:
     Actually, all of this can be configured under the ``form_login`` key. See
     :ref:`reference-security-firewall-form-login` for more details.
 
-.. caution::
+.. danger::
 
     This login form is currently not protected against CSRF attacks. Read
     :ref:`form_login-csrf` on how to protect your login form.

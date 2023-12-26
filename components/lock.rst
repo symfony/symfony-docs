@@ -809,7 +809,7 @@ instance, to clean up the ``/tmp`` directory or after a reboot of the machine
 when a directory uses ``tmpfs``. It's not an issue if the lock is released when
 the process ended, but it is in case of ``Lock`` reused between requests.
 
-.. caution::
+.. danger::
 
     Do not store locks on a volatile file system if they have to be reused in
     several requests.
@@ -842,7 +842,7 @@ When the Memcached service is shared and used for multiple usage, Locks could be
 removed by mistake. For instance some implementation of the PSR-6 ``clear()``
 method uses the Memcached's ``flush()`` method which purges and removes everything.
 
-.. caution::
+.. danger::
 
     The method ``flush()`` must not be called, or locks should be stored in a
     dedicated Memcached service away from Cache.
@@ -950,7 +950,7 @@ be lost without notifying the running processes.
 When the Redis service is shared and used for multiple usages, locks could be
 removed by mistake.
 
-.. caution::
+.. danger::
 
     The command ``FLUSHDB`` must not be called, or locks should be stored in a
     dedicated Redis service away from Cache.

@@ -1679,7 +1679,7 @@ Then, register the ``SodiumMarshaller`` service using this key:
                 ]);
         };
 
-.. caution::
+.. danger::
 
     This will encrypt the values of the cache items, but not the cache keys. Be
     careful not to leak sensitive data in the keys.

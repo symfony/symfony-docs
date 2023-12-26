@@ -732,7 +732,7 @@ To do so, define a parameter with the same name as the env var using this syntax
     always exists, because its value will be ``null`` when the related env var
     is not defined.
 
-.. caution::
+.. danger::
 
     Beware that dumping the contents of the ``$_SERVER`` and ``$_ENV`` variables
     or outputting the ``phpinfo()`` contents will display the values of the
