@@ -239,7 +239,7 @@ And parse them by using the ``PARSE_OBJECT`` flag::
 The YAML component uses PHP's ``serialize()`` method to generate a string
 representation of the object.
 
-.. caution::
+.. danger::
 
     Object serialization is specific to this implementation, other PHP YAML
     parsers will likely not recognize the ``php/object`` tag and non-PHP

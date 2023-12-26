@@ -108,7 +108,7 @@ so you can also pass your own value (e.g. ``0b00110``).
             # ...
             trusted_proxies: '%env(TRUSTED_PROXIES)%'
 
-.. caution::
+.. danger::
 
     The "trusted proxies" feature does not work as expected when using the
     `nginx realip module`_. Disable that module when serving Symfony applications.
