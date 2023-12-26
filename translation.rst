@@ -708,6 +708,13 @@ configure the ``providers`` option:
 
 .. tip::
 
+    If you use Crowdin as a provider and some of your locales are different from
+    the `Crowdin Language Codes`_, you have to set the `Custom Language Codes`_ in the Crowdin project
+    for each of your locales, in order to override the default value. You need to select the
+    "locale" placeholder and specify the custom code in the "Custom Code" field.
+
+.. tip::
+
     If you use Lokalise as a provider and a locale format following the `ISO
     639-1`_ (e.g. "en" or "fr"), you have to set the `Custom Language Name setting`_
     in Lokalise for each of your locales, in order to override the
@@ -1544,5 +1551,7 @@ Learn more
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
 .. _`pseudolocalization`: https://en.wikipedia.org/wiki/Pseudolocalization
 .. _`Symfony Demo`: https://github.com/symfony/demo
+.. _`Crowdin Language Codes`: https://developer.crowdin.com/language-codes
+.. _`Custom Language Codes`: https://support.crowdin.com/project-settings/#languages
 .. _`Identification via User-Agent`: https://developers.phrase.com/api/#overview--identification-via-user-agent
 .. _`Phrase Tag Bundle`: https://github.com/wickedOne/phrase-tag-bundle
