@@ -92,6 +92,7 @@ Service             Package                                DSN                  
 `Sinch`_            ``symfony/sinch-notifier``             ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
 `Smsapi`_           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default?from=FROM``
 `SmsBiuras`_        ``symfony/sms-biuras-notifier``        ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
+`Smsbox`_           ``symfony/smsbox-notifier``            ``smsbox://APIKEY@default?mode=MODE&strategy=STRATEGY&sender=SENDER``
 `Smsc`_             ``symfony/smsc-notifier``              ``smsc://LOGIN:PASSWORD@default?from=FROM``
 `SMSFactor`_        ``symfony/sms-factor-notifier``        ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
 `SpotHit`_          ``symfony/spot-hit-notifier``          ``spothit://TOKEN@default?from=FROM``
@@ -245,7 +246,7 @@ Service                                  Package                               D
 
 .. versionadded:: 7.1
 
-    The ``Bluesky`` and ``Unifonic`` integrations were introduced in Symfony 7.1.
+    The ``Bluesky``, ``Unifonic`` and ``Smsbox`` integrations were introduced in Symfony 7.1.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
