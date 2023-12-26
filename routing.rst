@@ -2600,7 +2600,7 @@ same URL, but with the HTTPS scheme.
 
 If you want to force a group of routes to use HTTPS, you can define the default
 scheme when importing them. The following example forces HTTPS on all routes
-defined as annotations:
+defined as attributes:
 
 .. configuration-block::
 
