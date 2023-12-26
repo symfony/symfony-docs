@@ -247,7 +247,7 @@ are done doing other stuff::
     **synchronously** inside this event. Be aware that ``kernel.terminate``
     is called only if you use PHP-FPM.
 
-.. caution::
+.. danger::
 
     Beware also that if you do that, the said PHP-FPM process will not be
     available to serve any new request until the subprocess is finished. This
