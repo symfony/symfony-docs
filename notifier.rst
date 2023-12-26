@@ -246,7 +246,8 @@ Service                                  Package                               D
 
 .. versionadded:: 7.1
 
-    The ``Bluesky``, ``Unifonic`` and ``Smsbox`` integrations were introduced in Symfony 7.1.
+    The ``Bluesky``, ``Unifonic`` and ``Smsbox`` integrations
+    were introduced in Symfony 7.1.
 
 Chatters are configured using the ``chatter_transports`` setting:
 
