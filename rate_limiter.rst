@@ -11,7 +11,7 @@ Symfony uses these rate limiters in built-in features like :ref:`login throttlin
 which limits how many failed login attempts a user can make in a given period of
 time, but you can use them for your own features too.
 
-.. caution::
+.. danger::
 
     By definition, the Symfony rate limiters require Symfony to be booted
     in a PHP process. This makes them not useful to protect against `DoS attacks`_.

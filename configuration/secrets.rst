@@ -47,7 +47,7 @@ running:
 This will generate ``config/secrets/prod/prod.encrypt.public.php`` and
 ``config/secrets/prod/prod.decrypt.private.php``.
 
-.. caution::
+.. danger::
 
     The ``prod.decrypt.private.php`` file is highly sensitive. Your team of developers
     and even Continuous Integration services don't need that key. If the
