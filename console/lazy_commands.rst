@@ -12,8 +12,8 @@ The traditional way of adding commands to your application is to use
 
 This approach can have downsides as some commands might be expensive to
 instantiate in which case you may want to lazy-load them. Note however that lazy-loading
-is not absolute. Indeed a few commands such as `list`, `help` or `_complete` can
-require to instantiate other commands although they are lazy. For example `list` needs
+is not absolute. Indeed a few commands such as ``list``, ``help`` or ``_complete`` can
+require to instantiate other commands although they are lazy. For example ``list`` needs
 to get the name and description of all commands, which might require the command to be
 instantiated to get.
 
@@ -54,7 +54,7 @@ Another way to do so is to take advantage of ``Symfony\Component\Console\Command
 
     // In this case although the command is instantiated, the underlying command factory
     // will not be executed unless the command is actually executed or one tries to access
-    // to its input definition to know its argument or option inputs.
+    // its input definition to know its argument or option inputs.
     $lazyCommand = new LazyCommand(
         'app:heavy',
         [],
