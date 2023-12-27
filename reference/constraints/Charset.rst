@@ -16,7 +16,7 @@ Validator   :class:`Symfony\\Component\\Validator\\Constraints\\CharsetValidator
 Basic Usage
 -----------
 
-If you wanted to ensure that the ``content`` property of an ``FileDTO``
+If you wanted to ensure that the ``content`` property of a ``FileDTO``
 class uses UTF-8, you could do the following:
 
 .. configuration-block::
@@ -87,7 +87,7 @@ Options
 
 An encoding or a set of encodings to check against. If you pass an array of
 encodings, the validator will check if the value is encoded in *any* of the
-encodings. This option accept any value that can be passed to
+encodings. This option accepts any value that can be passed to
 :phpfunction:`mb_detect_encoding()`.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
