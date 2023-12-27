@@ -3806,6 +3806,11 @@ the ``#[WithLogLevel]`` attribute::
     {
     }
 
+``#[WithHttpStatus]`` and ``#[WithLogLevel]`` attributes also work with parent
+classes and (since 7.1) interfaces. To find the effective HTTP status and log
+level, the framework will look on the parent hierarchy first, starting on the
+immediate parent, then it will look on the interfaces.
+
 .. _`HTTP Host header attacks`: https://www.skeletonscribe.net/2013/05/practical-http-host-header-attacks.html
 .. _`Security Advisory Blog post`: https://symfony.com/blog/security-releases-symfony-2-0-24-2-1-12-2-2-5-and-2-3-3-released#cve-2013-4752-request-gethost-poisoning
 .. _`phpstorm-url-handler`: https://github.com/sanduhrs/phpstorm-url-handler
