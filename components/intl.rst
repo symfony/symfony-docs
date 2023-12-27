@@ -3,13 +3,6 @@ The Intl Component
 
     This component provides access to the localization data of the `ICU library`_.
 
-.. caution::
-
-    The replacement layer is limited to the ``en`` locale. If you want to use
-    other locales, you should `install the intl extension`_. There is no conflict
-    between the two because, even if you use the extension, this package can still
-    be useful to access the ICU data.
-
 .. seealso::
 
     This article explains how to use the Intl features as an independent component
@@ -465,7 +458,6 @@ Learn more
     /reference/forms/types/locale
     /reference/forms/types/timezone
 
-.. _install the intl extension: https://www.php.net/manual/en/intl.setup.php
 .. _ICU library: https://icu.unicode.org/
 .. _`Unicode ISO 15924 Registry`: https://www.unicode.org/iso15924/iso15924-codes.html
 .. _`ISO 3166-1 alpha-2`: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
