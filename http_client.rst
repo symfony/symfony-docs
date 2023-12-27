@@ -152,14 +152,14 @@ brings most of the available options with type-hinted getters and setters::
             ->setBaseUri('https://...')
             // replaces *all* headers at once, and deletes the headers you do not provide
             ->setHeaders(['header-name' => 'header-value'])
-            // add or replace a single header using addHeader()
-            ->addHeader('another-header-name', 'another-header-value')
+            // set or replace a single header using addHeader()
+            ->setHeader('another-header-name', 'another-header-value')
             ->toArray()
     );
 
 .. versionadded:: 7.1
 
-    The :method:`Symfony\\Component\\HttpClient\\HttpOptions::addHeader`
+    The :method:`Symfony\\Component\\HttpClient\\HttpOptions::setHeader`
     method was introduced in Symfony 7.1.
 
 Some options are described in this guide:
