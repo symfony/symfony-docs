@@ -72,7 +72,6 @@ Service             Package                                DSN                  
 `GoIP`_             ``symfony/goip-notifier``              ``goip://USERNAME:PASSWORD@HOST:80?sim_slot=SIM_SLOT``
 `Infobip`_          ``symfony/infobip-notifier``           ``infobip://AUTH_TOKEN@HOST?from=FROM``
 `Iqsms`_            ``symfony/iqsms-notifier``             ``iqsms://LOGIN:PASSWORD@default?from=FROM``
-`iSendPro`_         ``symfony/isendpro-notifier``          ``isendpro://ACCOUNT_KEY_ID@default?from=FROM&no_stop=NO_STOP&sandbox=SANDBOX``
 `KazInfoTeh`_       ``symfony/kaz-info-teh-notifier``      ``kaz-info-teh://USERNAME:PASSWORD@default?sender=FROM``
 `LightSms`_         ``symfony/light-sms-notifier``         ``lightsms://LOGIN:TOKEN@default?from=PHONE``
 `Mailjet`_          ``symfony/mailjet-notifier``           ``mailjet://TOKEN@default?from=FROM``
@@ -86,16 +85,16 @@ Service             Package                                DSN                  
 `Plivo`_            ``symfony/plivo-notifier``             ``plivo://AUTH_ID:AUTH_TOKEN@default?from=FROM``
 `Redlink`_          ``symfony/redlink-notifier``           ``redlink://API_KEY:APP_KEY@default?from=SENDER_NAME&version=API_VERSION``
 `RingCentral`_      ``symfony/ring-central-notifier``      ``ringcentral://API_TOKEN@default?from=FROM``
+`SMSFactor`_        ``symfony/sms-factor-notifier``        ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
 `Sendberry`_        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
-`Sms77`_            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
-`SmsSluzba`_        ``symfony/sms-sluzba-notifier``        ``sms-sluzba://USERNAME:PASSWORD@default``
 `SimpleTextin`_     ``symfony/simple-textin-notifier``     ``simpletextin://API_KEY@default?from=FROM``
 `Sinch`_            ``symfony/sinch-notifier``             ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
-`Smsapi`_           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default?from=FROM``
+`Sms77`_            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
 `SmsBiuras`_        ``symfony/sms-biuras-notifier``        ``smsbiuras://UID:API_KEY@default?from=FROM&test_mode=0``
+`SmsSluzba`_        ``symfony/sms-sluzba-notifier``        ``sms-sluzba://USERNAME:PASSWORD@default``
+`Smsapi`_           ``symfony/smsapi-notifier``            ``smsapi://TOKEN@default?from=FROM``
 `Smsbox`_           ``symfony/smsbox-notifier``            ``smsbox://APIKEY@default?mode=MODE&strategy=STRATEGY&sender=SENDER``
 `Smsc`_             ``symfony/smsc-notifier``              ``smsc://LOGIN:PASSWORD@default?from=FROM``
-`SMSFactor`_        ``symfony/sms-factor-notifier``        ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
 `SpotHit`_          ``symfony/spot-hit-notifier``          ``spothit://TOKEN@default?from=FROM``
 `Telnyx`_           ``symfony/telnyx-notifier``            ``telnyx://API_KEY@default?from=FROM&messaging_profile_id=MESSAGING_PROFILE_ID``
 `TurboSms`_         ``symfony/turbo-sms-notifier``         ``turbosms://AUTH_TOKEN@default?from=FROM``
@@ -103,6 +102,7 @@ Service             Package                                DSN                  
 `Unifonic`_         ``symfony/unifonic-notifier``          ``unifonic://APP_SID@default?from=FROM``
 `Vonage`_           ``symfony/vonage-notifier``            ``vonage://KEY:SECRET@default?from=FROM``                                                                                 yes
 `Yunpian`_          ``symfony/yunpian-notifier``           ``yunpian://APIKEY@default``
+`iSendPro`_         ``symfony/isendpro-notifier``          ``isendpro://ACCOUNT_KEY_ID@default?from=FROM&no_stop=NO_STOP&sandbox=SANDBOX``
 ==================  =====================================  ========================================================================================================================= ===============
 
 .. tip::
