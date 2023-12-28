@@ -23,10 +23,6 @@ Next, download any plugins you want, like ``autoprefixer``:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn add autoprefixer --dev
-
-    # if you use the npm package manager
     $ npm install autoprefixer --save-dev
 
 Next, create a ``postcss.config.js`` file at the root of your project:
@@ -36,7 +32,7 @@ Next, create a ``postcss.config.js`` file at the root of your project:
     module.exports = {
         plugins: {
             // include whatever plugins you want
-            // but make sure you install these via yarn or npm!
+            // but make sure you install these via npm!
 
             // add browserslist config to package.json (see below)
             autoprefixer: {}

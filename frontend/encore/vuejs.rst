@@ -73,10 +73,6 @@ your Vue.js app update *without* a browser refresh! To activate it, use the
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn encore dev-server
-
-    # if you use the npm package manager
     $ npm run dev-server
 
 That's it! Change one of your ``.vue`` files and watch your browser update. But

@@ -87,11 +87,11 @@ In this case, the file located at ``[assets directory]/dist/controller.js`` will
                }
            }
 
-    2. Run either ``npm install`` or ``yarn install`` to install the new dependencies.
+    2. Run ``npm install`` to install the new dependencies.
 
     3. Write your Stimulus controller with TypeScript in ``src/controller.ts``.
 
-    4. Run ``npm run build`` or ``yarn run build`` to transpile your TypeScript controller into JavaScript.
+    4. Run ``npm run build`` to transpile your TypeScript controller into JavaScript.
 
 To use your controller in a template (e.g. one defined in your bundle) you can use it like this:
 
