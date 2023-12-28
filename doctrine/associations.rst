@@ -644,6 +644,15 @@ also generated a ``removeProduct()`` method::
 Thanks to this, if you call ``$category->removeProduct($product)``, the ``category_id``
 on that ``Product`` will be set to ``null`` in the database.
 
+.. warning::
+
+    Please be aware that the inverse side could be associated with a large amount of records.
+    I.e. there could be a large amount of products with the same category.
+    In this case ``$this->products->contains($product)`` could lead to unwanted database
+    requests and very high memory consumption with the risk of hard to debug "Out of memory" errors.
+
+    So make sure if you need an inverse side and check if the generated code could lead to such issues.
+
 But, instead of setting the ``category_id`` to null, what if you want the ``Product``
 to be *deleted* if it becomes "orphaned" (i.e. without a ``Category``)? To choose
 that behavior, use the `orphanRemoval`_ option inside ``Category``:
