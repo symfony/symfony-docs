@@ -2003,7 +2003,7 @@ Sometimes, you may need to regularly ping a webservice to get its status, e.g.
 is it up or down. It is possible to do so by dispatching a
 :class:`Symfony\\Component\\HttpClient\\Messenger\\PingWebhookMessage`::
 
-    use Symfony\Component\HttpClient\Messenger\RPingWebhookMessage;
+    use Symfony\Component\HttpClient\Messenger\PingWebhookMessage;
     use Symfony\Component\Messenger\MessageBusInterface;
 
     class LivenessService
@@ -2015,10 +2015,10 @@ is it up or down. It is possible to do so by dispatching a
         public function ping(): void
         {
             // An HttpExceptionInterface is thrown on 3xx/4xx/5xx
-            $this->bus->dispatch(new PingWebhookMessage('GET', 'https://example.com/status');
+            $this->bus->dispatch(new PingWebhookMessage('GET', 'https://example.com/status'));
 
             // Ping, but does not throw on 3xx/4xx/5xx
-            $this->bus->dispatch(new PingWebhookMessage('GET', 'https://example.com/status', throw: false);
+            $this->bus->dispatch(new PingWebhookMessage('GET', 'https://example.com/status', throw: false));
 
             // Any valid HttpClientInterface option can be used
             $this->bus->dispatch(new PingWebhookMessage('POST', 'https://example.com/status', [
