@@ -1653,7 +1653,7 @@ and set the ``limiter`` option to its service ID:
                     <!-- 2nd argument is the limiter for username+IP -->
                     <srv:argument type="service" id="limiter.username_ip_login"/>
                     <!-- 3rd argument is the app secret -->
-                    <srv:argument type="service" id="%kernel.secret%"/>
+                    <srv:argument type="string">%kernel.secret%</srv:argument>
                 </srv:service>
             </srv:services>
 
@@ -1697,7 +1697,7 @@ and set the ``limiter`` option to its service ID:
                     // 2nd argument is the limiter for username+IP
                     new Reference('limiter.username_ip_login'),
                     // 3rd argument is the app secret
-                    new Reference('kernel.secret'),
+                    param('kernel.secret'),
                 ]);
 
             $security->firewall('main')
