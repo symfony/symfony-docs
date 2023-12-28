@@ -1002,10 +1002,6 @@ special parameters created by Symfony:
 .. _routing-format-parameter:
 .. _routing-locale-parameter:
 
-``_controller``
-    This parameter is used to determine which controller and action is executed
-    when the route is matched.
-
 ``_format``
     The matched value is used to set the "request format" of the ``Request`` object.
     This is used for such things as setting the ``Content-Type`` of the response
