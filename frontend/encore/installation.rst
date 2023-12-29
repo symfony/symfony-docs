@@ -1,12 +1,8 @@
 Installing Encore
 =================
 
-First, make sure you `install Node.js`_. Optionally you can also install the
-`Yarn package manager`_. In the next sections you will always see the commands
-for both ``npm`` and ``yarn``, but you only need to run one of them.
-
-The following instructions depend on whether you are installing Encore in a
-Symfony application or not.
+First, make sure you `install Node.js`_. Then, follow the instructions below,
+which depend on whether you are installing Encore in a Symfony application or not.
 
 Installing Encore in Symfony Applications
 -----------------------------------------
@@ -17,11 +13,6 @@ project:
 .. code-block:: terminal
 
     $ composer require symfony/webpack-encore-bundle
-
-    # if you use the Yarn package manager
-    $ yarn install
-
-    # if you use the npm package manager
     $ npm install
 
 If you are using :ref:`Symfony Flex <symfony-flex>`, this will install and enable
@@ -36,24 +27,19 @@ and files by yourself following the instructions shown in the next section.
 Installing Encore in non Symfony Applications
 ---------------------------------------------
 
-Install Encore into your project via Yarn:
+Install Encore into your project via npm:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn add @symfony/webpack-encore --dev
-
-    # if you use the npm package manager
     $ npm install @symfony/webpack-encore --save-dev
 
 This command creates (or modifies) a ``package.json`` file and downloads
-dependencies into a ``node_modules/`` directory. Yarn also creates/updates a
-``yarn.lock`` (called ``package-lock.json`` if you use npm).
+dependencies into a ``node_modules/`` directory.
 
 .. tip::
 
-    You *should* commit ``package.json`` and ``yarn.lock`` (or ``package-lock.json``
-    if using npm) to version control, but ignore ``node_modules/``.
+    You *should* commit ``package.json`` and ``package-lock.json``
+    to version control, but ignore ``node_modules/``.
 
 Creating the webpack.config.js File
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -223,5 +209,4 @@ on which features of Encore you have enabled.
     :doc:`split chunks </frontend/encore/split-chunks>`.
 
 .. _`install Node.js`: https://nodejs.org/en/download/
-.. _`Yarn package manager`: https://yarnpkg.com/getting-started/install
 .. _`WebpackEncoreBundle`: https://github.com/symfony/webpack-encore-bundle
