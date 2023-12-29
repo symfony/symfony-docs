@@ -1,15 +1,11 @@
 Using webpack-dev-server and HMR
 ================================
 
-While developing, instead of using ``yarn encore dev --watch``, you can use the
+While developing, instead of using ``npx encore dev --watch``, you can use the
 `webpack-dev-server`_:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn encore dev-server
-
-    # if you use the npm package manager
     $ npm run dev-server
 
 This builds and serves the front-end assets from a new server. This server runs at
@@ -30,10 +26,6 @@ You can set these options via command line options:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn encore dev-server --port 9000
-
-    # if you use the npm package manager
     $ npm run dev-server -- --port 9000
 
 You can also set these options using the ``Encore.configureDevServerOptions()``
@@ -90,10 +82,6 @@ server SSL certificate:
 
     .. code-block:: terminal
 
-        # if you use the Yarn package manager
-        $ NODE_OPTIONS=--openssl-legacy-provider yarn encore dev-server
-
-        # if you use the npm package manager
         $ NODE_OPTIONS=--openssl-legacy-provider npm run dev-server
 
 CORS Issues
