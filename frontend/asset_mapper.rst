@@ -1044,7 +1044,7 @@ This will force the AssetMapper component to re-calculate the content of all fil
 Run Security Audits on Your Dependencies
 ----------------------------------------
 
-Similar to ``npm`` and ``yarn``, the AssetMapper component comes bundled with a
+Similar to ``npm``, the AssetMapper component comes bundled with a
 command that checks security vulnerabilities in the dependencies of your application:
 
 .. code-block:: terminal

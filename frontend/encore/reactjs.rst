@@ -9,15 +9,11 @@ Enabling React.js with Webpack Encore
 .. tip::
 
     Check out live demos of Symfony UX React component at `https://ux.symfony.com/react`_!
-
-Using React? First add some dependencies with Yarn:
+    
+Using React? First add some dependencies with npm:
 
 .. code-block:: terminal
 
-    # if you use the Yarn package manager
-    $ yarn add react react-dom prop-types
-
-    # if you use the npm package manager
     $ npm install react react-dom prop-types --save
 
 Enable react in your ``webpack.config.js``:

@@ -288,7 +288,7 @@ server provides a ``run`` command to wrap them as follows:
 
     # compile Webpack assets using Symfony Encore ... but do that in the
     # background to not block the terminal
-    $ symfony run -d yarn encore dev --watch
+    $ symfony run -d npx encore dev --watch
 
     # continue working and running other commands...
 
@@ -298,7 +298,7 @@ server provides a ``run`` command to wrap them as follows:
     # and you can also check if the command is still running
     $ symfony server:status
     Web server listening on ...
-    Command "yarn ..." running with PID ...
+    Command "npx ..." running with PID ...
 
     # stop the web server (and all the associated commands) when you are finished
     $ symfony server:stop
@@ -351,9 +351,9 @@ If you like some processes to start automatically, along with the webserver
     # .symfony.local.yaml
     workers:
         # built-in command that builds and watches front-end assets
-        # yarn_encore_watch:
-        #     cmd: ['yarn', 'encore', 'dev', '--watch']
-        yarn_encore_watch: ~
+        # npm_encore_watch:
+        #     cmd: ['npx', 'encore', 'dev', '--watch']
+        npm_encore_watch: ~
 
         # built-in command that starts messenger consumer
         # messenger_consume_async:
@@ -363,7 +363,7 @@ If you like some processes to start automatically, along with the webserver
 
         # you can also add your own custom commands
         build_spa:
-            cmd: ['yarn', '--cwd', './spa/', 'dev']
+            cmd: ['npm', '--cwd', './spa/', 'dev']
 
         # auto start Docker compose when starting server (available since Symfony CLI 5.7.0)
         docker_compose: ~
