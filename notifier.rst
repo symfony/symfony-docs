@@ -87,6 +87,7 @@ Service             Package                                DSN                  
 `RingCentral`_      ``symfony/ring-central-notifier``      ``ringcentral://API_TOKEN@default?from=FROM``
 `SMSFactor`_        ``symfony/sms-factor-notifier``        ``sms-factor://TOKEN@default?sender=SENDER&push_type=PUSH_TYPE``
 `Sendberry`_        ``symfony/sendberry-notifier``         ``sendberry://USERNAME:PASSWORD@default?auth_key=AUTH_KEY&from=FROM``
+`Seven.io`_         ``symfony/sevenio-notifier``           ``sevenio://API_KEY@default?from=FROM``
 `SimpleTextin`_     ``symfony/simple-textin-notifier``     ``simpletextin://API_KEY@default?from=FROM``
 `Sinch`_            ``symfony/sinch-notifier``             ``sinch://ACCOUNT_ID:AUTH_TOKEN@default?from=FROM``
 `Sms77`_            ``symfony/sms77-notifier``             ``sms77://API_KEY@default?from=FROM``
@@ -114,6 +115,11 @@ Service             Package                                DSN                  
 .. versionadded:: 7.1
 
     The `SmsSluzba`_ integration was introduced in Symfony 7.1.
+
+.. deprecated:: 7.1
+
+    The `Sms77`_ integration is deprecated since
+    Symfony 7.1, use the `Seven.io`_ integration instead.
 
 To enable a texter, add the correct DSN in your ``.env`` file and
 configure the ``texter_transports``:
@@ -1003,6 +1009,7 @@ is dispatched. Listeners receive a
 .. _`RocketChat`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/RocketChat/README.md
 .. _`SMSFactor`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SmsFactor/README.md
 .. _`Sendberry`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sendberry/README.md
+.. _`Seven.io`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sevenio/README.md
 .. _`SimpleTextin`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/SimpleTextin/README.md
 .. _`Sinch`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Sinch/README.md
 .. _`Slack`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Notifier/Bridge/Slack/README.md
