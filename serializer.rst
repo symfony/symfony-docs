@@ -216,7 +216,7 @@ Use the options to specify context specific to normalization or denormalization:
     {
         #[Context(
             normalizationContext: [DateTimeNormalizer::FORMAT_KEY => 'Y-m-d'],
-            denormalizationContext: [DateTimeNormalizer::FORMAT_KEY => \DateTime::RFC3339],
+            denormalizationContext: [DateTimeNormalizer::FORMAT_KEY => '!Y-m-d'], // To prevent to have the time from the moment of denormalization
         )]
         public \DateTimeInterface $createdAt;
 
