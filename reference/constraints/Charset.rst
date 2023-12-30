@@ -96,7 +96,7 @@ encodings. This option accepts any value that can be passed to
 ``message``
 ~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``The detected encoding "{{ detected }}" does not match one of the accepted encoding: "{{ encodings }}".``
+**type**: ``string`` **default**: ``The detected character encoding is invalid ({{ detected }}). Allowed encodings are {{ encodings }}.``
 
 This is the message that will be shown if the value does not match any of the
 accepted encodings.
