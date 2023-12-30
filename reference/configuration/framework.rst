@@ -312,7 +312,7 @@ Another alternative is to set the ``xdebug.file_link_format`` option in your
     xdebug.file_link_format="phpstorm://open?file=%f&line=%l"
 
     // example for PhpStorm with Jetbrains Toolbox
-    xdebug.file_link_format="jetbrains://php-storm/navigate/reference?project=example&file=%f:%l"
+    xdebug.file_link_format="jetbrains://phpstorm/navigate/reference?project=example&path=%f:%l"
 
     // example for Sublime Text
     xdebug.file_link_format="subl://open?url=file://%f&line=%l"
