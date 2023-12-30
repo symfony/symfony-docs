@@ -76,6 +76,18 @@ If set to ``true``, the HTML input will be rendered as a native HTML5
 
     As HTML5 number format is normalized, it is incompatible with ``grouping`` option.
 
+model_type
+~~~~~~~~~~
+
+**type**: ``string`` **default**: ``float``
+
+If, for some reason, you need the value to be converted to an ``integer`` instead of a ``float``,
+you can set the option value to ``integer``.
+
+.. versionadded:: 7.1
+
+    The ``model_type`` option was introduced in Symfony 7.1.
+
 scale
 ~~~~~
 
