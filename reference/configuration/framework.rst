@@ -53,12 +53,10 @@ out all the application users.
 handle_all_throwables
 ~~~~~~~~~~~~~~~~~~~~~
 
-**type**: ``boolean`` **default**: ``false``
+**type**: ``boolean`` **default**: ``true``
 
-If set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
+When set to ``true``, the Symfony kernel will catch all ``\Throwable`` exceptions
 thrown by the application and will turn them into HTTP responses.
-
-Starting from Symfony 7.0, the default value of this option will be ``true``.
 
 .. _configuration-framework-http_cache:
 
@@ -1575,11 +1573,13 @@ To see a list of all available storages, run:
 handler_id
 ..........
 
-**type**: ``string`` **default**: ``session.handler.native_file``
+**type**: ``string`` | ``null`` **default**: ``null``
 
-The service id or DSN used for session storage. The default value ``'session.handler.native_file'``
-will let Symfony manage the sessions itself using files to store the session metadata.
-Set it to ``null`` to use the native PHP session mechanism.
+By default at ``null`` if ``framework.session.save_path`` is not set.
+The session handler configured by php.ini is used, unless option
+``framework.session.save_path`` is used, in which case the default is to store sessions
+using the native file session handler.
+
 It is possible to :ref:`store sessions in a database <session-database>`,
 and also to configure the session handler with a DSN:
 
@@ -1844,7 +1844,7 @@ If not set, ``php.ini``'s `session.sid_bits_per_character`_ directive will be re
 save_path
 .........
 
-**type**: ``string`` or ``null`` **default**: ``%kernel.cache_dir%/sessions``
+**type**: ``string`` | ``null`` **default**: ``%kernel.cache_dir%/sessions``
 
 This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the session files are created.
@@ -2940,7 +2940,7 @@ php_errors
 log
 ...
 
-**type**: ``boolean|int`` **default**: ``%kernel.debug%``
+**type**: ``boolean`` | ``int`` **default**: ``true``
 
 Use the application logger instead of the PHP logger for logging PHP errors.
 When an integer value is used, it also sets the log level. Those integer
