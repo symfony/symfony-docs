@@ -1,0 +1,35 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2023-06-15T14:56:53Z
+
+Is this change really necessary? Aren't DSN already strings?
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2023-11-28T12:54:02Z
+
+The important part is the lower part of the PR: Switching from the old array syntax to the newer Configurator syntax.
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2023-11-28T13:35:43Z
+
+The string stuff can be removed 👍
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2023-11-28T13:44:03Z
+
+Well, I thought that casting it to a string (just to make sure) would be a good idea. Don't you think?
+
+---------------------------------------------------------------------------
+
+by xabbuh at 2023-11-28T14:13:24Z
+
+I don't think so. If I don't miss anything, we don't do that anywhere else.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2023-11-28T14:31:50Z
+
+OK, there you go :-)
