@@ -180,7 +180,7 @@ Use these methods to transform the UUID object into different bases::
     $uuid->toRfc4122(); // string(36) "d9e7a184-5d5b-11ea-a62a-3499710062d0"
     $uuid->toHex();     // string(34) "0xd9e7a1845d5b11eaa62a3499710062d0"
 
-Some UUID versions support being converted from one version to another::
+You can also convert some UUID versions to others::
 
     // convert V1 to V6 or V7
     $uuid = Uuid::v1();
