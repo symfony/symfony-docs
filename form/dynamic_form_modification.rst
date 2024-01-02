@@ -9,7 +9,7 @@ how to customize your form based on three common use-cases:
    Example: you have a "Product" form and need to modify/add/remove a field
    based on the data on the underlying Product being edited.
 
-2) :ref:`How to dynamically Generate Forms Based on user Data <form-events-user-data>`
+2) :ref:`How to Dynamically Generate Forms Based on User Data <form-events-user-data>`
 
    Example: you create a "Friend Message" form and need to build a drop-down
    that contains only users that are friends with the *current* authenticated
@@ -188,7 +188,7 @@ Great! Now use that in your form class::
 
 .. _form-events-user-data:
 
-How to dynamically Generate Forms Based on user Data
+How to Dynamically Generate Forms Based on User Data
 ----------------------------------------------------
 
 Sometimes you want a form to be generated dynamically based not only on data
