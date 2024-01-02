@@ -1575,10 +1575,10 @@ handler_id
 
 **type**: ``string`` | ``null`` **default**: ``null``
 
-By default at ``null`` if ``framework.session.save_path`` is not set.
-The session handler configured by php.ini is used, unless option
-``framework.session.save_path`` is used, in which case the default is to store sessions
-using the native file session handler.
+If ``framework.session.save_path`` is not set, the default value of this option
+is ``null``, which means to use the session handler configured in php.ini. If the
+``framework.session.save_path`` option is set, then Symfony stores sessions using
+the native file session handler.
 
 It is possible to :ref:`store sessions in a database <session-database>`,
 and also to configure the session handler with a DSN:
