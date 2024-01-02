@@ -751,13 +751,13 @@ the default convention.
 
 If you need to get other information from the request to query the database, you
 can also access the request in your expression thanks to the ``request``
-variable. Let's say you pass the page limit of a list in a query parameter::
+variable. Let's say you want the first or the last comment of a product depending on a query parameter named ``sort``::
 
     #[Route('/product/{id}/comments')]
     public function show(
         Product $product,
-        #[MapEntity(expr: 'repository.findBy(["product_id" => id], null, request.query.get("limit", 10)')]
-        iterable $comments
+        #[MapEntity(expr: 'repository.findOneBy({"product": id}, {"createdAt": request.query.get("sort", "DESC")})')]
+        Comment $comment
     ): Response {
     }
 
