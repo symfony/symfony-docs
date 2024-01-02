@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by xabbuh at 2023-12-30T09:35:54Z
+
+Good catch @MirakuSan 👍 Can you please update the XML example as well (i.e. change line 1656 to `<srv:argument type="string">%kernel.secret%</srv:argument>`)?
+
+---------------------------------------------------------------------------
+
+by MirakuSan at 2023-12-30T23:00:17Z
+
+yeap @xabbuh, I'll do this asap! 🙏
+
+**Edit:** Done ✅
