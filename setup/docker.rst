@@ -53,7 +53,8 @@ variables. See :ref:`symfony-server-docker`.
 
 .. note::
 
-    Mac users need to explicitly allow the default Docker socket to be used for the Docker integration to work as explained in the `Docker documentation`_.
+    macOS users need to explicitly allow the default Docker socket to be used
+    for the Docker integration to work `as explained in the Docker documentation`_.
 
 .. _`https://github.com/dunglas/symfony-docker`: https://github.com/dunglas/symfony-docker
-.. _`Docker documentation`: https://docs.docker.com/desktop/mac/permission-requirements/
+.. _`as explained in the Docker documentation`: https://docs.docker.com/desktop/mac/permission-requirements/
