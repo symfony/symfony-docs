@@ -932,6 +932,28 @@ get the environment variables and will not spend time parsing the ``.env`` files
     Update your deployment tools/workflow to run the ``dotenv:dump`` command after
     each deploy to improve the application performance.
 
+Store Environment Variables In Another File
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+By default, the environment variables are stored in the ``.env`` file located
+at the root of your project. However, you can store them in another file by
+setting the ``SYMFONY_DOTENV_PATH`` environment variable to the path and
+filename of the file where the environment variables are stored. Symfony will
+then look for the environment variables in that file, but also in the local
+and environment-specific files (e.g. ``.*.local`` and
+``.*.<environment>.local``). You can find more information about this
+in the :ref:`dedicated section <configuration-multiple-env-files>`.
+
+Because this environment variable is used to find the files where you
+application environment variable are store, it must be defined at the
+system level (e.g. in your web server configuration) and not in the
+``.env`` files.
+
+.. versionadded:: 7.1
+
+    The support for the ``SYMFONY_DOTENV_PATH`` environment variable was
+    introduced in Symfony 7.1.
+
 .. _configuration-secrets:
 
 Encrypting Environment Variables (Secrets)
