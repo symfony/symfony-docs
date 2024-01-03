@@ -788,7 +788,7 @@ Technically, Early Hints are an informational HTTP response with the status code
 status code and sends its headers immediately.
 
 This way, browsers can start downloading the assets immediately; like the
-``style.css`` and ``script.js`` files in the above example). The
+``style.css`` and ``script.js`` files in the above example. The
 ``sendEarlyHints()`` method also returns the ``Response`` object, which you
 must use to create the full response sent from the controller action.
 
