@@ -110,17 +110,36 @@ in the service subscriber::
     that you have :ref:`autoconfigure <services-autoconfigure>` enabled. You
     can also manually add the ``container.service_subscriber`` tag.
 
-The injected service is an instance of :class:`Symfony\\Component\\DependencyInjection\\ServiceLocator`
-which implements both the PSR-11 ``ContainerInterface`` and :class:`Symfony\\Contracts\\Service\\ServiceProviderInterface`.
-It is also a callable and a countable::
+A service locator is a PSR11 container that contains a set of services,
+but only instantiates them when they are actually used. Let's take a closer
+look at this part::
+
+    // ...
+    $handler = $this->locator->get($commandClass);
+
+    return $handler->handle($command);
+
+In the example above, the ``$handler`` service is only instantiated when the
+``$this->locator->get($commandClass)`` method is called.
+
+You can also type-hint the service locator argument with
+:class:`Symfony\\Contracts\\Service\\ServiceCollectionInterface` instead of
+:class:`Psr\\Container\\ContainerInterface`. By doing so, you'll be able to
+count and iterate over the services of the locator::
 
     // ...
     $numberOfHandlers = count($this->locator);
     $nameOfHandlers = array_keys($this->locator->getProvidedServices());
-    // ...
-    $handler = ($this->locator)($commandClass);
 
-    return $handler->handle($command);
+    // you can iterate through all services of the locator
+    foreach ($this->locator as $serviceId => $service) {
+        // do something with the service, the service id or both
+    }
+
+.. versionadded:: 7.1
+
+    The :class:`Symfony\\Contracts\\Service\\ServiceCollectionInterface` was
+    introduced in Symfony 7.1.
 
 Including Services
 ------------------
