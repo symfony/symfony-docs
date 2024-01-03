@@ -13,10 +13,10 @@ This builds and serves the front-end assets from a new server. This server runs 
 This server does not actually write the files to disk; instead it serves them from memory,
 allowing for hot module reloading.
 
-As a consequence, the ``link`` and ``script`` tags need to point to the new server. If you're using the
-``encore_entry_script_tags()`` and ``encore_entry_link_tags()`` Twig shortcuts (or are
-:ref:`processing your assets through entrypoints.json <load-manifest-files>` in some other way),
-you're done: the paths in your templates will automatically point to the dev server.
+As a consequence, the ``link`` and ``script`` tags need to point to the new server.
+If you're using the ``encore_entry_script_tags()`` and ``encore_entry_link_tags()``
+Twig shortcuts (or are :ref:`processing your assets through entrypoints.json <load-manifest-files>`
+in some other way), you're done: the paths in your templates will automatically point to the dev server.
 
 dev-server Options
 ------------------
