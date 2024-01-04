@@ -198,7 +198,7 @@ you can pass the class name and the method as an array.
         // src/Entity/Author.php
         namespace App\Entity;
 
-        use App\Entity\Genre
+        use App\Entity\Genre;
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
