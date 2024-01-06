@@ -91,7 +91,7 @@ and what headers your reverse proxy uses to send information:
 .. versionadded:: 7.1
 
     ``private_ranges`` as a shortcut for private IP address ranges for the
-    `trusted_proxies` option was introduced in Symfony 7.1.
+    ``trusted_proxies`` option was introduced in Symfony 7.1.
 
 .. caution::
 
