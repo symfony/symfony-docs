@@ -33,6 +33,8 @@ and what headers your reverse proxy uses to send information:
             # ...
             # the IP address (or range) of your proxy
             trusted_proxies: '192.0.0.1,10.0.0.0/8'
+            # shortcut for private IP address ranges of your proxy
+            trusted_proxies: 'private_ranges'
             # trust *all* "X-Forwarded-*" headers
             trusted_headers: ['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port', 'x-forwarded-prefix']
             # or, if your proxy instead uses the "Forwarded" header
@@ -53,6 +55,8 @@ and what headers your reverse proxy uses to send information:
             <framework:config>
                 <!-- the IP address (or range) of your proxy -->
                 <framework:trusted-proxies>192.0.0.1,10.0.0.0/8</framework:trusted-proxies>
+                <!-- shortcut for private IP address ranges of your proxy -->
+                <framework:trusted-proxies>private_ranges</framework:trusted-proxies>
 
                 <!-- trust *all* "X-Forwarded-*" headers -->
                 <framework:trusted-header>x-forwarded-for</framework:trusted-header>
@@ -75,12 +79,19 @@ and what headers your reverse proxy uses to send information:
             $framework
                 // the IP address (or range) of your proxy
                 ->trustedProxies('192.0.0.1,10.0.0.0/8')
+                // shortcut for private IP address ranges of your proxy
+                ->trustedProxies('private_ranges')
                 // trust *all* "X-Forwarded-*" headers (the ! prefix means to not trust those headers)
                 ->trustedHeaders(['x-forwarded-for', 'x-forwarded-host', 'x-forwarded-proto', 'x-forwarded-port', 'x-forwarded-prefix'])
                 // or, if your proxy instead uses the "Forwarded" header
                 ->trustedHeaders(['forwarded'])
             ;
         };
+
+.. versionadded:: 7.1
+
+    ``private_ranges`` as a shortcut for private IP address ranges for the
+    `trusted_proxies` option was introduced in Symfony 7.1.
 
 .. caution::
 
