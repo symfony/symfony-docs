@@ -2611,7 +2611,7 @@ defined as attributes:
             resource: '../../src/Controller/'
             type: attribute
             defaults:
-            schemes: [https]
+                schemes: [https]
 
     .. code-block:: xml
 
