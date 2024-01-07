@@ -2610,7 +2610,6 @@ defined as attributes:
         controllers:
             resource: '../../src/Controller/'
             type: attribute
-            defaults:
             schemes: [https]
 
     .. code-block:: xml
