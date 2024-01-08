@@ -5,7 +5,7 @@ MacAddress
 
     The ``MacAddress`` constraint was introduced in Symfony 7.1.
 
-This constraint ensures that the given value is a valid MAC address (internally it
+This constraint ensures that the given value is a valid `MAC address`_ (internally it
 uses the ``FILTER_VALIDATE_MAC`` option of the :phpfunction:`filter_var` PHP
 function).
 
@@ -102,3 +102,5 @@ Parameter            Description
 .. include:: /reference/constraints/_normalizer-option.rst.inc
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+.. _`MAC address`: https://en.wikipedia.org/wiki/MAC_address
