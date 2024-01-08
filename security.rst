@@ -1132,7 +1132,7 @@ token (or whatever you need to return) and return the JSON response:
 
     The ``#[CurrentUser]`` can only be used in controller arguments to
     retrieve the authenticated user. In services, you would use
-    :method:`Symfony\\Component\\Security\\Core\\Security::getUser`.
+    :method:`Symfony\\Bundle\\SecurityBundle\\Security::getUser`.
 
 That's it! To summarize the process:
 
