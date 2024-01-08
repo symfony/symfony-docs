@@ -987,6 +987,7 @@ this is configurable for each transport:
                             multiplier: 2
                             max_delay: 0
                             # applies randomness to the delay that can prevent the thundering herd effect
+                            # the value (between 0 and 1.0) is the percentage of 'delay' that will be added/subtracted
                             jitter: 0.1
                             # override all of this with a service that
                             # implements Symfony\Component\Messenger\Retry\RetryStrategyInterface
@@ -1033,12 +1034,17 @@ this is configurable for each transport:
                     ->multiplier(2)
                     ->maxDelay(0)
                     // applies randomness to the delay that can prevent the thundering herd effect
+                    // the value (between 0 and 1.0) is the percentage of 'delay' that will be added/subtracted
                     ->jitter(0.1)
                     // override all of this with a service that
                     // implements Symfony\Component\Messenger\Retry\RetryStrategyInterface
                     ->service(null)
             ;
         };
+
+.. versionadded:: 7.1
+
+    The ``jitter`` option was introduced in Symfony 7.1.
 
 .. tip::
 
