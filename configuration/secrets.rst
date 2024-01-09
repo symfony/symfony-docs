@@ -166,6 +166,11 @@ secrets' values by passing the ``--reveal`` option:
       DATABASE_PASSWORD   "my secret"
      ------------------- ------------ -------------
 
+.. versionadded:: 7.1
+
+    Symfony 7.1 introduced the optional ``name`` argument.
+    When this argument is provided, only that secret will be outputted.
+
 Remove Secrets
 --------------
 
