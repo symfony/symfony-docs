@@ -122,5 +122,7 @@ Here is an example of how to use the ``getSupportedTypes()`` method::
         }
     }
 
-Note that ``supports*()`` method implementations should not assume that
-``getSupportedTypes()`` has been called before.
+.. note::
+
+    The ``supports*()`` method implementations should not assume that
+    ``getSupportedTypes()`` has been called before.
