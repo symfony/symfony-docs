@@ -640,34 +640,6 @@ automatically! You can simplify the controller to::
 That's it! The bundle uses the ``{id}`` from the route to query for the ``Product``
 by the ``id`` column. If it's not found, a 404 page is generated.
 
-This behavior is enabled by default on all your controllers. You can
-disable it by setting the ``doctrine.orm.controller_resolver.auto_mapping``
-config option to ``false``.
-
-When disabled, you can enable it individually on the desired controllers by
-using the ``MapEntity`` attribute::
-
-    // src/Controller/ProductController.php
-    namespace App\Controller;
-
-    use App\Entity\Product;
-    use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-    use Symfony\Component\HttpFoundation\Response;
-    use Symfony\Component\Routing\Annotation\Route;
-    // ...
-
-    class ProductController extends AbstractController
-    {
-        #[Route('/product/{id}')]
-        public function show(
-            #[MapEntity]
-            Product $product
-        ): Response {
-            // use the Product!
-            // ...
-        }
-    }
-
 .. tip::
 
     When enabled globally, it's possible to disable the behavior on a specific
@@ -713,8 +685,38 @@ Automatic fetching works in these situations:
   *all* of the wildcards in your route that are actually properties
   on your entity (non-properties are ignored).
 
-You can control this behavior by actually *adding* the ``MapEntity``
-attribute and using the `MapEntity options`_.
+This behavior is enabled by default on all your controllers.
+
+You can only allow the use of the primary key ``id`` as a lookup placeholder
+for the routes parameters by setting ``doctrine.orm.controller_resolver.auto_mapping``
+config option to ``false``. The others entity attributes than ``id`` can't be used
+to autowire the entity.
+
+When disabled, you can enable the entity autowiring individually on the desired controllers
+by using the ``MapEntity`` attribute. You can control ``EntityValueResolver`` behavior
+with it by using the `MapEntity options`_ ::
+
+    // src/Controller/ProductController.php
+    namespace App\Controller;
+
+    use App\Entity\Product;
+    use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+    use Symfony\Component\HttpFoundation\Response;
+    use Symfony\Component\Routing\Annotation\Route;
+    // ...
+
+    class ProductController extends AbstractController
+    {
+        #[Route('/product/{slug}')]
+        public function show(
+            #[MapEntity(mapping: ['slug' => 'slug'])]
+            Product $product
+        ): Response {
+            // use the Product!
+            // ...
+        }
+    }
+
 
 Fetch via an Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
