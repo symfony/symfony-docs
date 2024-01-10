@@ -389,3 +389,25 @@ Parameter        Description
 ===============  ==============================================================
 
 .. include:: /reference/constraints/_payload-option.rst.inc
+
+``separator``
+~~~~~~~~~~~~~
+
+**type**: ``string`` **default**: ``-------------------``
+
+This option allows you to customize separator after preferred choices.
+
+.. versionadded:: 7.1
+
+    The ``separator`` option was introduced in Symfony 7.1.
+
+``separator_html``
+~~~~~~~~~~~~~~~~~~
+
+**type**: ``boolean`` **default**: ``false``
+
+If this option is true, `separator`_ option will be display as HTML instead of text
+
+.. versionadded:: 7.1
+
+    The ``separator_html`` option was introduced in Symfony 7.1.
