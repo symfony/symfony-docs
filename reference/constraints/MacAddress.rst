@@ -87,7 +87,7 @@ Options
 ``message``
 ~~~~~~~~~~~
 
-**type**: ``string`` **default**: ``This is not a valid MAC address.``
+**type**: ``string`` **default**: ``This value is not a valid MAC address.``
 
 This is the message that will be shown if the value is not a valid MAC address.
 
