@@ -199,7 +199,7 @@ The ``make:entity`` command is a tool to make life easier. But this is *your* co
 add/remove fields, add/remove methods or update configuration.
 
 Doctrine supports a wide variety of field types, each with their own options.
-To see a full list, check out `Doctrine's Mapping Types documentation`_.
+Check out the `list of Doctrine mapping types`_ in the Doctrine documentation.
 If you want to use XML instead of attributes, add ``type: xml`` and
 ``dir: '%kernel.project_dir%/config/doctrine'`` to the entity mappings in your
 ``config/packages/doctrine.yaml`` file.
@@ -1075,7 +1075,7 @@ Learn more
 
 .. _`Doctrine`: https://www.doctrine-project.org/
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
-.. _`Doctrine's Mapping Types documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html
+.. _`list of Doctrine mapping types`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html#reference-mapping-types
 .. _`Query Builder`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/query-builder.html
 .. _`Doctrine Query Language`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/dql-doctrine-query-language.html
 .. _`Reserved SQL keywords documentation`: https://www.doctrine-project.org/projects/doctrine-orm/en/current/reference/basic-mapping.html#quoting-reserved-words
