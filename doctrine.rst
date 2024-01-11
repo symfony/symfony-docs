@@ -601,8 +601,12 @@ the :ref:`doctrine-queries` section.
     see the web debug toolbar, install the ``profiler`` :ref:`Symfony pack <symfony-packs>`
     by running this command: ``composer require --dev symfony/profiler-pack``.
 
+    For more information on ``profiler``, see :doc:`/profiler`.
+
 Automatically Fetching Objects (ParamConverter)
 -----------------------------------------------
+
+.. _doctrine-entity-value-resolver:
 
 In many cases, you can use the `SensioFrameworkExtraBundle`_ to do the query
 for you automatically! First, install the bundle in case you don't have it:
