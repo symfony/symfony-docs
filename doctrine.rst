@@ -605,6 +605,8 @@ the :ref:`doctrine-queries` section.
     see the web debug toolbar, install the ``profiler`` :ref:`Symfony pack <symfony-packs>`
     by running this command: ``composer require --dev symfony/profiler-pack``.
 
+    For more information, read the :doc:`Symfony profiler documentation </profiler>`.
+
 .. _doctrine-entity-value-resolver:
 
 Automatically Fetching Objects (EntityValueResolver)
