@@ -2962,7 +2962,7 @@ Let's say you want to create a message decoder::
         {
             try {
                 // parse the data you received with your custom fields
-                $data = $encodedEnvelope['data'];
+                $data = json_decode($encodedEnvelope['body'], true);
                 $data['token'] = $encodedEnvelope['token'];
 
                 // other operations like getting information from stamps
