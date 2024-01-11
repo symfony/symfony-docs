@@ -104,6 +104,11 @@ are located:
             ;
         };
 
+Additionally, you can enable only some locales instead of all of them. You can
+do this by using the
+:ref:`dedicated option <reference-translator-enabled-locales>` in your
+configuration.
+
 .. _translation-basic:
 
 Basic Translation
@@ -256,9 +261,10 @@ using the ``trans()`` method:
 
 #. A catalog of translated messages is loaded from translation resources
    defined for the ``locale`` (e.g. ``fr_FR``). Messages from the
-   :ref:`fallback locale <translation-fallback>` are also loaded and added to
-   the catalog if they don't already exist. The end result is a large
-   "dictionary" of translations.
+   :ref:`fallback locale <translation-fallback>` and the
+   :ref:`enabled locales <reference-translator-enabled-locales>` are also
+   loaded and added to the catalog if they don't already exist. The end result
+   is a large "dictionary" of translations.
 
 #. If the message is located in the catalog, the translation is returned. If
    not, the translator returns the original message.

@@ -121,7 +121,10 @@ Now, create a ``validators`` catalog file in the ``translations/`` directory:
         ];
 
 You may need to clear your cache (even in the dev environment) after creating
-this file for the first time.
+this file for the first time. You may also need to enable the locale in your
+application configuration. This can be done by setting the
+:ref:`enabled_locales <reference-translator-enabled-locales>` option in
+your configuration files.
 
 You can also use :class:`Symfony\\Component\\Translation\\TranslatableMessage` to build your violation message::
 
