@@ -453,3 +453,24 @@ This will display the following table in the terminal:
     | Love    |
     | Symfony |
     +---------+
+
+.. tip::
+
+    You can create multiple lines using the :method:`Symfony\\Component\\Console\\Helper\\Table::addRows` method::
+
+        // ...
+        $table->addRows([
+            ['Hello', 'World'],
+            ['Love', 'Symfony'],
+        ]);
+        $table->render();
+        // ...
+
+    This will display:
+
+    .. code-block:: terminal
+
+        +-------+---------+
+        | Hello | World   |
+        | Love  | Symfony |
+        +-------+---------+
