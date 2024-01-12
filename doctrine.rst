@@ -449,12 +449,8 @@ Consider the following controller code::
         public function createProduct(ValidatorInterface $validator): Response
         {
             $product = new Product();
-            // This will trigger an error: the column isn't nullable in the database
-            $product->setName(null);
-            // This will trigger a type mismatch error: an integer is expected
-            $product->setPrice('1999');
 
-            // ...
+            // ... update the product data somehow (e.g. with a form) ...
 
             $errors = $validator->validate($product);
             if (count($errors) > 0) {
