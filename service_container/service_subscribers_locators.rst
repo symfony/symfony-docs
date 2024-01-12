@@ -110,16 +110,15 @@ in the service subscriber::
     that you have :ref:`autoconfigure <services-autoconfigure>` enabled. You
     can also manually add the ``container.service_subscriber`` tag.
 
-A service locator is a PSR11 container that contains a set of services,
-but only instantiates them when they are actually used. Let's take a closer
-look at this part::
+A service locator is a `PSR-11 container`_ that contains a set of services,
+but only instantiates them when they are actually used. Consider the following code::
 
     // ...
     $handler = $this->locator->get($commandClass);
 
     return $handler->handle($command);
 
-In the example above, the ``$handler`` service is only instantiated when the
+In this example, the ``$handler`` service is only instantiated when the
 ``$this->locator->get($commandClass)`` method is called.
 
 You can also type-hint the service locator argument with
@@ -1066,3 +1065,4 @@ Another alternative is to mock it using ``PHPUnit``::
     // ...
 
 .. _`Command pattern`: https://en.wikipedia.org/wiki/Command_pattern
+.. _`PSR-11 container`: https://www.php-fig.org/psr/psr-11/
