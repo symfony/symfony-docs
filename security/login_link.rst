@@ -28,8 +28,8 @@ this is not yet the case.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The login link authenticator is configured using the ``login_link`` option
-under the firewall. You must configure a ``check_route`` and
-``signature_properties`` when enabling this authenticator:
+under the firewall. You must configure a ``check_route`` with a route name
+and ``signature_properties`` when enabling this authenticator:
 
 .. configuration-block::
 
