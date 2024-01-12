@@ -104,10 +104,10 @@ are located:
             ;
         };
 
-Additionally, you can enable only some locales instead of all of them. You can
-do this by using the
-:ref:`dedicated option <reference-translator-enabled-locales>` in your
-configuration.
+.. tip::
+
+    You can also define the :ref:`enabled_locales option <reference-translator-enabled-locales>`
+    to restrict the locales that your application is available in.
 
 .. _translation-basic:
 
