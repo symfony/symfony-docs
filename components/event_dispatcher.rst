@@ -480,9 +480,8 @@ Learn More
 
 .. toctree::
     :maxdepth: 1
-    :glob:
 
-    event_dispatcher
+    /components/event_dispatcher/generic_event
 
 * :ref:`The kernel.event_listener tag <dic-tags-kernel-event-listener>`
 * :ref:`The kernel.event_subscriber tag <dic-tags-kernel-event-subscriber>`
