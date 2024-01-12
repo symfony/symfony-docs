@@ -449,6 +449,8 @@ Consider the following controller code::
         {
             $product = new Product();
 
+            // ... update the product data somehow (e.g. with a form) ...
+
             $errors = $validator->validate($product);
             if (count($errors) > 0) {
                 return new Response((string) $errors, 400);
