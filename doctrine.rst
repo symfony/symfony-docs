@@ -685,16 +685,14 @@ Automatic fetching works in these situations:
   *all* of the wildcards in your route that are actually properties
   on your entity (non-properties are ignored).
 
-This behavior is enabled by default on all your controllers.
+This behavior is enabled by default on all controllers. If you prefer, you can
+restrict this feature to only work on route wildcards called ``id`` to look for
+entities by primary key. To do so, set the option
+``doctrine.orm.controller_resolver.auto_mapping`` to ``false``.
 
-You can only allow the use of the primary key ``id`` as a lookup placeholder
-for the routes parameters by setting ``doctrine.orm.controller_resolver.auto_mapping``
-config option to ``false``. The others entity attributes than ``id`` can't be used
-to autowire the entity.
-
-When disabled, you can enable the entity autowiring individually on the desired controllers
-by using the ``MapEntity`` attribute. You can control ``EntityValueResolver`` behavior
-with it by using the `MapEntity options`_ ::
+When ``auto_mapping`` is disabled, you can configure the mapping explicitly for
+any controller argument with the ``MapEntity`` attribute. You can even control
+the ``EntityValueResolver`` behavior by using the `MapEntity options`_ ::
 
     // src/Controller/ProductController.php
     namespace App\Controller;
@@ -717,12 +715,11 @@ with it by using the `MapEntity options`_ ::
         }
     }
 
-
 Fetch via an Expression
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-If automatic fetching doesn't work, you can write an expression using the
-:doc:`ExpressionLanguage component </components/expression_language>`::
+If automatic fetching doesn't work for your use case, you can write an expression
+using the :doc:`ExpressionLanguage component </components/expression_language>`::
 
     #[Route('/product/{product_id}')]
     public function show(
