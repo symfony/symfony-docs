@@ -1,0 +1,11 @@
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2024-01-03T17:15:56Z
+
+Thanks for your suggestions Kevin! I reworked the PR, is it better now? 🙂
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2024-01-11T09:12:43Z
+
+I tried to remove useless implementation details and go for the type-hint approach Nicolas suggested.
