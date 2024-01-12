@@ -21,8 +21,8 @@ this is not yet the case.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The login link authenticator is configured using the ``login_link`` option
-under the firewall. You must configure a ``check_route`` and
-``signature_properties`` when enabling this authenticator:
+under the firewall and requires defining two options called ``check_route``
+and ``signature_properties`` (explained below):
 
 .. configuration-block::
 
@@ -75,7 +75,7 @@ contain at least one property of your ``User`` object that uniquely
 identifies this user (e.g. the user ID). Read more about this setting
 :ref:`further down below <security-login-link-signature>`.
 
-The ``check_route`` must be an existing route and it will be used to
+The ``check_route`` must be the name of an existing route and it will be used to
 generate the login link that will authenticate the user. You don't need a
 controller (or it can be empty) because the login link authenticator will
 intercept requests to this route:
