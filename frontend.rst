@@ -15,7 +15,7 @@ Using PHP & Twig
 ----------------
 
 Symfony comes with two powerful options to help you build a modern,
-fast frontend, *and* enjoy the process:
+fast frontend:
 
 * :ref:`AssetMapper <frontend-asset-mapper>` (recommended for new projects) runs
   entirely in PHP, doesn't require any build step and leverages modern web standards.
@@ -51,7 +51,7 @@ AssetMapper (Recommended)
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 AssetMapper is the recommended system for handling your assets. It runs entirely
-in PHP with *no* complex build step or dependencies. It does this by leveraging
+in PHP with no complex build step or dependencies. It does this by leveraging
 the ``importmap`` feature of your browser, which is available in all browsers thanks
 to a polyfill.
 
@@ -66,21 +66,21 @@ Webpack Encore
 
     Do you prefer video tutorials? Check out the `Webpack Encore screencast series`_.
 
-`Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your application.
-It *wraps* Webpack, giving you a clean & powerful API for bundling JavaScript modules,
-pre-processing CSS & JS and compiling and minifying assets. Encore gives you a professional
-asset system that's a *delight* to use.
+`Webpack Encore`_ is a simpler way to integrate `Webpack`_ (a professional
+asset system) into your application.
+It wraps Webpack, giving you a clean & powerful API for bundling JavaScript modules,
+pre-processing CSS & JS and compiling and minifying assets.
 
 :doc:`Read the Encore Documentation </frontend/encore/index>`
 
 Stimulus & Symfony UX Components
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Once you've installed AssetMapper or Encore, it's time to start building your
+Once you've installed AssetMapper or Webpack Encore, it's time to start building your
 front-end. You can write your JavaScript however you want, but we recommend
 using `Stimulus`_, `Turbo`_ and a set of tools called `Symfony UX`_.
 
-To learn about Stimulus & the UX Components, see:
+To learn about Stimulus & the UX Components, see
 the `StimulusBundle Documentation`_
 
 .. _frontend-js:
