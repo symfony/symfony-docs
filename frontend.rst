@@ -14,8 +14,7 @@ Both work great - and are discussed below.
 Using PHP & Twig
 ----------------
 
-Symfony comes with two powerful options to help you build a modern,
-fast frontend:
+Symfony comes with two powerful options to help you build a modern and fast frontend:
 
 * :ref:`AssetMapper <frontend-asset-mapper>` (recommended for new projects) runs
   entirely in PHP, doesn't require any build step and leverages modern web standards.
@@ -66,8 +65,7 @@ Webpack Encore
 
     Do you prefer video tutorials? Check out the `Webpack Encore screencast series`_.
 
-`Webpack Encore`_ is a simpler way to integrate `Webpack`_ (a professional
-asset system) into your application.
+`Webpack Encore`_ is a simpler way to integrate `Webpack`_ into your application.
 It wraps Webpack, giving you a clean & powerful API for bundling JavaScript modules,
 pre-processing CSS & JS and compiling and minifying assets.
 
