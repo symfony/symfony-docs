@@ -25,6 +25,39 @@ in method parameters:
            resource: '../src/Controller/'
            tags: ['controller.service_arguments']
 
+.. note::
+
+    If you don't use either :doc:`autowiring </service_container/autowiring>`
+    or :ref:`autoconfiguration <services-autoconfigure>` and you extend the
+    ``AbstractController``, you'll need to apply other tags and make some method
+    calls to register your controllers as services:
+
+    .. code-block:: yaml
+
+        # config/services.yaml
+
+        # this extended configuration is only required when not using autowiring/autoconfiguration,
+        # which is uncommon and not recommended
+
+        abstract_controller.locator:
+            class: Symfony\Component\DependencyInjection\ServiceLocator
+            arguments:
+                -
+                    router: '@router'
+                    request_stack: '@request_stack'
+                    http_kernel: '@http_kernel'
+                    session: '@session'
+                    parameter_bag: '@parameter_bag'
+                    # you can add more services here as you need them (e.g. the `serializer`
+                    # service) and have a look at the AbstractController class to see
+                    # which services are defined in the locator
+
+        App\Controller\:
+            resource: '../src/Controller/'
+            tags: ['controller.service_arguments']
+            calls:
+                - [setContainer, ['@abstract_controller.locator']]
+
 If you prefer, you can use the ``#[AsController]`` PHP attribute to automatically
 apply the ``controller.service_arguments`` tag to your controller services::
 
