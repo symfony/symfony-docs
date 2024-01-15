@@ -81,8 +81,9 @@ model_type
 
 **type**: ``string`` **default**: ``float``
 
-If, for some reason, you need the value to be converted to an ``integer`` instead of a ``float``,
-you can set the option value to ``integer``.
+By default, the money value is converted to a ``float`` PHP type. If you need the
+value to be converted into an integer (e.g. because some library needs money
+values stored in cents as integers) set this option to ``integer``.
 
 .. versionadded:: 7.1
 
