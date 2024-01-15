@@ -5,7 +5,7 @@ Symfony gives you the flexibility to choose any front-end tools you want. There
 are generally two approaches:
 
 #. :ref:`building your HTML with PHP & Twig <frontend-twig-php>`;
-#. :ref:`building your frontend with a JavaScript framework <frontend-js>` like React.
+#. :ref:`building your frontend with a JavaScript framework <frontend-js>` like React, Vue, Svelte, etc.
 
 Both work great - and are discussed below.
 
