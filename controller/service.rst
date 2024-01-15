@@ -58,7 +58,6 @@ in method parameters:
             calls:
                 - [setContainer, ['@abstract_controller.locator']]
 
-
 If you prefer, you can use the ``#[AsController]`` PHP attribute to automatically
 apply the ``controller.service_arguments`` tag to your controller services::
 
