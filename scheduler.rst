@@ -190,7 +190,7 @@ Custom Triggers
 ~~~~~~~~~~~~~~~
 
 Custom triggers allow to configure any frequency dynamically. They are created
-as services that implement :class:`Symfony\\Component\\Scheduler\\TriggerInterface`.
+as services that implement :class:`Symfony\\Component\\Scheduler\\Trigger\\TriggerInterface`.
 
 For example, if you want to send customer reports daily except for holiday periods::
 
