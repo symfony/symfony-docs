@@ -133,6 +133,27 @@ Scheduling Recurring Messages
 A ``RecurringMessage`` is a message associated with a trigger, which configures
 the frequency of the message. Symfony provides different types of triggers:
 
+:class:`Symfony\\Component\\Scheduler\\Trigger\\CronExpressionTrigger`
+    A trigger that uses the same syntax as the `cron command-line utility`_.
+
+:class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackTrigger`
+    A trigger that uses a callback to determine the next run date.
+
+:class:`Symfony\\Component\\Scheduler\\Trigger\\ExcludeTimeTrigger`
+    A trigger that excludes certain times from a given trigger.
+
+:class:`Symfony\\Component\\Scheduler\\Trigger\\JitterTrigger`
+    A trigger that adds a random jitter to a given trigger. The jitter is some
+    time that it's added/subtracted to the original triggering date/time. This
+    allows to distribute the load of the scheduled tasks instead of running them
+    all at the exact same time.
+
+:class:`Symfony\\Component\\Scheduler\\Trigger\\PeriodicalTrigger`
+    A trigger that uses a ``DateInterval`` to determine the next run date.
+
+Most of them can be created via the :class:`Symfony\\Component\\Scheduler\\RecurringMessage`
+class, as shown in the following examples.
+
 Cron Expression Triggers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -147,7 +168,7 @@ It uses the same syntax as the `cron command-line utility`_::
 
     The feature to define the cron timezone was introduced in Symfony 6.4.
 
-Before using it, you must install the following dependency:
+Before using it, you have to install the following dependency:
 
 .. code-block:: terminal
 
@@ -227,7 +248,7 @@ Then, define your recurring message::
         new SendDailySalesReports('...'),
     );
 
-Finally, the recurring messages must be attached to a schedule::
+Finally, the recurring messages has to be attached to a schedule::
 
     // src/Scheduler/MyScheduleProvider.php
     namespace App\Scheduler;
