@@ -143,15 +143,16 @@ the frequency of the message. Symfony provides different types of triggers:
     A trigger that excludes certain times from a given trigger.
 
 :class:`Symfony\\Component\\Scheduler\\Trigger\\JitterTrigger`
-    A trigger that adds a random jitter to a given trigger. This allows to
-    distribute the load of the scheduled tasks instead of running them all
-    at the same time.
+    A trigger that adds a random jitter to a given trigger. The jitter is some
+    time that it's added/subtracted to the original triggering date/time. This
+    allows to distribute the load of the scheduled tasks instead of running them
+    all at the exact same time.
 
 :class:`Symfony\\Component\\Scheduler\\Trigger\\PeriodicalTrigger`
     A trigger that uses a ``DateInterval`` to determine the next run date.
 
 Most of them can be created via the :class:`Symfony\\Component\\Scheduler\\RecurringMessage`
-class, as we'll see in the following examples.
+class, as shown in the following examples.
 
 Cron Expression Triggers
 ~~~~~~~~~~~~~~~~~~~~~~~~
