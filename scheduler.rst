@@ -140,6 +140,13 @@ It uses the same syntax as the `cron command-line utility`_::
 
     RecurringMessage::cron('* * * * *', new Message());
 
+    // optionally you can define the timezone used by the cron expression
+    RecurringMessage::cron('* * * * *', new Message(), new \DateTimeZone('Africa/Malabo'));
+
+.. versionadded:: 6.4
+
+    The feature to define the cron timezone was introduced in Symfony 6.4.
+
 Before using it, you must install the following dependency:
 
 .. code-block:: terminal
@@ -150,10 +157,6 @@ Before using it, you must install the following dependency:
 
     Check out the `crontab.guru website`_ if you need help to construct/understand
     cron expressions.
-
-.. versionadded:: 6.4
-
-    Since version 6.4, it is now possible to add and define a timezone as a 3rd argument
 
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
@@ -291,11 +294,15 @@ recurring messages. You can narrow down the list to a specific schedule:
         15 4 */3 * *        App\Messenger\Foo(0:17..)  Mon, 18 Dec 2023 ...
        -------------------- -------------------------- ---------------------
 
+    # you can also specify a date to use for the next run date:
+    $ php bin/console --date=2025-10-18
+
+    # use the --all option to also display the terminated recurring messages
+    $ php bin/console --all
+
 .. versionadded:: 6.4
 
-    Since version 6.4, you can even specify a date to determine the next run date
-    using the ``--date`` option. Additionally, you have the option to display
-    terminated recurring messages using the ``--all`` option.
+    The ``--date`` and ``--all`` options were introduced in Symfony 6.4.
 
 Efficient management with Symfony Scheduler
 -------------------------------------------
