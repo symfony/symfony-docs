@@ -316,7 +316,7 @@ what it missed::
             return $this->schedule ??= (new Schedule())
                 ->with(
                     // ...
-                );
+                )
                 ->stateful($this->cache)
         }
     }
@@ -338,7 +338,7 @@ same task more than once::
             return $this->schedule ??= (new Schedule())
                 ->with(
                     // ...
-                );
+                )
                 ->lock($this->lockFactory->createLock('my-lock')
         }
     }
@@ -363,7 +363,9 @@ before being further redispatched to its corresponding handler::
         public function getSchedule(): Schedule
         {
             return $this->schedule ??= (new Schedule())
-                ->with(RecurringMessage::every('5 seconds'), new RedispatchMessage(new Message(), 'async'))
+                ->with(
+                    RecurringMessage::every('5 seconds'),
+                    new RedispatchMessage(new Message(), 'async')
                 );
         }
     }
