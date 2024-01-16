@@ -1,10 +1,6 @@
 Scheduler
 =========
 
-.. versionadded:: 6.3
-
-    The Scheduler component was introduced in Symfony 6.3
-
 The scheduler component manages task scheduling within your PHP application, like
 running a task each night at 3 AM, every two weeks except for holidays or any
 other custom schedule you might need.
@@ -143,10 +139,6 @@ It uses the same syntax as the `cron command-line utility`_::
     // optionally you can define the timezone used by the cron expression
     RecurringMessage::cron('* * * * *', new Message(), new \DateTimeZone('Africa/Malabo'));
 
-.. versionadded:: 6.4
-
-    The feature to define the cron timezone was introduced in Symfony 6.4.
-
 Before using it, you must install the following dependency:
 
 .. code-block:: terminal
@@ -266,9 +258,9 @@ the Messenger component:
 .. image:: /_images/components/scheduler/generate_consume.png
     :alt: Symfony Scheduler - generate and consume
 
-.. versionadded:: 6.4
+.. tip::
 
-    Since version 6.4, you can define your messages via a ``callback`` via the
+    You can also define your messages via a ``callback`` using the
     :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
 
 Debugging the Schedule
@@ -299,10 +291,6 @@ recurring messages. You can narrow down the list to a specific schedule:
 
     # use the --all option to also display the terminated recurring messages
     $ php bin/console --all
-
-.. versionadded:: 6.4
-
-    The ``--date`` and ``--all`` options were introduced in Symfony 6.4.
 
 Efficient management with Symfony Scheduler
 -------------------------------------------
