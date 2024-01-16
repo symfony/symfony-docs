@@ -1,10 +1,6 @@
 Scheduler
 =========
 
-.. versionadded:: 6.3
-
-    The Scheduler component was introduced in Symfony 6.3
-
 The scheduler component manages task scheduling within your PHP application, like
 running a task each night at 3 AM, every two weeks except for holidays or any
 other custom schedule you might need.
@@ -140,6 +136,9 @@ It uses the same syntax as the `cron command-line utility`_::
 
     RecurringMessage::cron('* * * * *', new Message());
 
+    // optionally you can define the timezone used by the cron expression
+    RecurringMessage::cron('* * * * *', new Message(), new \DateTimeZone('Africa/Malabo'));
+
 Before using it, you must install the following dependency:
 
 .. code-block:: terminal
@@ -150,10 +149,6 @@ Before using it, you must install the following dependency:
 
     Check out the `crontab.guru website`_ if you need help to construct/understand
     cron expressions.
-
-.. versionadded:: 6.4
-
-    Since version 6.4, it is now possible to add and define a timezone as a 3rd argument
 
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
@@ -263,9 +258,9 @@ the Messenger component:
 .. image:: /_images/components/scheduler/generate_consume.png
     :alt: Symfony Scheduler - generate and consume
 
-.. versionadded:: 6.4
+.. tip::
 
-    Since version 6.4, you can define your messages via a ``callback`` via the
+    You can also define your messages via a ``callback`` using the
     :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
 
 Debugging the Schedule
@@ -291,11 +286,11 @@ recurring messages. You can narrow down the list to a specific schedule:
         15 4 */3 * *        App\Messenger\Foo(0:17..)  Mon, 18 Dec 2023 ...
        -------------------- -------------------------- ---------------------
 
-.. versionadded:: 6.4
+    # you can also specify a date to use for the next run date:
+    $ php bin/console --date=2025-10-18
 
-    Since version 6.4, you can even specify a date to determine the next run date
-    using the ``--date`` option. Additionally, you have the option to display
-    terminated recurring messages using the ``--all`` option.
+    # use the --all option to also display the terminated recurring messages
+    $ php bin/console --all
 
 Efficient management with Symfony Scheduler
 -------------------------------------------
