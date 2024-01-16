@@ -164,13 +164,13 @@ handling the request::
     // ...
     $response = $kernel->handle($request);
 
-Overriding configuration behind hidden SSL termination
+Overriding Configuration Behind Hidden SSL Termination
 ------------------------------------------------------
 
 Some cloud setups (like running a Docker container with the "Web App for Containers"
-in `Microsoft Azure`_) do SSL termination and contact your web server over http, but
+in `Microsoft Azure`_) do SSL termination and contact your web server over HTTP, but
 do not change the remote address nor set the ``X-Forwarded-*`` headers. This means
-the trusted proxy funcationality of Symfony can't help you.
+the trusted proxy feature of Symfony can't help you.
 
 Once you made sure your server is only reachable through the cloud proxy over HTTPS
 and not through HTTP, you can override the information your web server sends to PHP.
@@ -181,7 +181,7 @@ For Nginx, this could look like this:
     location ~ ^/index\.php$ {
         fastcgi_pass 127.0.0.1:9000;
         include fastcgi.conf;
-        # Lie to symfony about the protocol and port so that it generates the correct https URLs
+        # Lie to Symfony about the protocol and port so that it generates the correct HTTPS URLs
         fastcgi_param SERVER_PORT "443";
         fastcgi_param HTTPS "on";
     }
