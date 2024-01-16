@@ -190,6 +190,8 @@ For example, if you want to send customer reports daily except for holiday perio
         {
         }
 
+        // use this method to give a nice displayable name to
+        // identify your trigger (it eases debugging)
         public function __toString(): string
         {
             return $this->inner.' (except holidays)';
