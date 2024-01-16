@@ -170,11 +170,37 @@ defined by PHP datetime functions::
     $until = '2023-06-12';
     RecurringMessage::every('first Monday of next month', new Message(), $from, $until);
 
-Custom Triggers
-~~~~~~~~~~~~~~~
+Triggers
+~~~~~~~~
 
+Triggers allow to configure the frequency of a recurring message. The Scheduler
+component comes with two implementations of the
+:class:`Symfony\\Component\\Scheduler\\TriggerInterface`
+which you can use directly and will cover most use cases::
+
+    use Symfony\Component\Scheduler\Trigger\DateIntervalTrigger;
+    use Symfony\Component\Scheduler\Trigger\DatePeriodTrigger;
+
+    $trigger = new DateIntervalTrigger('2 minutes', '2024-01-01', '2024-12-31');
+
+    // you can also pass an integer as the first argument, which will be interpreted as the interval in seconds
+    $trigger = new DateIntervalTrigger(120, '2024-01-01', '2024-12-31');
+
+    // you can also omit the start date to use the current date, and/or omit the end date to have no end date
+    $trigger = new DateIntervalTrigger('2 minutes');
+
+    // you can also create a trigger from a DatePeriod by using the DatePeriodTrigger
+    $datePeriod = new DatePeriod(
+        new DateTimeImmutable('2024-01-01'),
+        new DateInterval('P1D'),
+        new DateTimeImmutable('2024-12-31'),
+    );
+
+    $trigger = new DatePeriodTrigger($datePeriod);
+
+If these triggers don't cover your use cases, you can create custom triggers.
 Custom triggers allow to configure any frequency dynamically. They are created
-as services that implement :class:`Symfony\\Component\\Scheduler\\TriggerInterface`.
+as services that also implement :class:`Symfony\\Component\\Scheduler\\TriggerInterface`.
 
 For example, if you want to send customer reports daily except for holiday periods::
 
