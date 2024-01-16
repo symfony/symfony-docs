@@ -2485,6 +2485,15 @@ when the route doesn't exist::
 Forcing HTTPS on Generated URLs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. note::
+
+    If your server runs behind a proxy that terminates SSL, make sure to
+    :doc:`configure Symfony to work behind a proxy </deployment/proxies>`
+
+    The configuration for the scheme is only used for non-HTTP requests.
+    The ``schemes`` option together with incorrect proxy configuration will
+    lead to a redirect loop.
+
 By default, generated URLs use the same HTTP scheme as the current request.
 In console commands, where there is no HTTP request, URLs use ``http`` by
 default. You can change this per command (via the router's ``getContext()``
