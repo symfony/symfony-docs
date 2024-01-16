@@ -1,0 +1,36 @@
+---------------------------------------------------------------------------
+
+by kbond at 2023-12-09T15:17:41Z
+
+When documenting "hashed cron expressions", [this documentation](https://github.com/zenstruck/schedule-bundle/blob/1.x/doc/define-tasks.md#hashed-cron-expression) that explains the _spec_ can be adapted.
+
+---------------------------------------------------------------------------
+
+by alexandre-daubois at 2023-12-12T12:49:56Z
+
+Let's not forget about the `versionadded` directive :slightly_smiling_face: [Like this](https://github.com/TimoBakx/symfony-docs/blob/a632c9b032db8fc5632f5fb3f82a958793d7827b/webhook.rst?plain=1#L6)
+
+---------------------------------------------------------------------------
+
+by alli83 at 2023-12-14T15:15:20Z
+
+I'll add a link to redirect to cache and lock
+
+---------------------------------------------------------------------------
+
+by MrYamous at 2023-12-14T22:22:44Z
+
+Congrats for your work on this doc :)
+
+---------------------------------------------------------------------------
+
+by alli83 at 2023-12-14T23:48:28Z
+
+@MrYamous Indeed, I've kind of overlooked the version differences 😅. I'll include them in versionadded notes
+And I'll open a new PR on 6.4 for the Dynamic schedule part
+
+---------------------------------------------------------------------------
+
+by alli83 at 2023-12-20T08:16:12Z
+
+@weaverryan thanks for the feedback! I'll update it and ping you
