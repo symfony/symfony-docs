@@ -241,6 +241,22 @@ Service                                  Package                               D
 `Zulip`_                                 ``symfony/zulip-notifier``            ``zulip://EMAIL:TOKEN@HOST?channel=CHANNEL``
 ======================================   ====================================  =============================================================================
 
+.. caution::
+
+    By default, if you have the :doc:`Messenger component </messenger>` installed,
+    the notifications will be sent through the MessageBus. If you don't have a
+    message consumer running, messages will never be sent.
+
+    To change this behavior, add the following configuration to send messages
+    directly via the transport:
+
+    .. code-block:: yaml
+
+        # config/packages/notifier.yaml
+        framework:
+            notifier:
+                message_bus: false
+
 Chatters are configured using the ``chatter_transports`` setting:
 
 .. code-block:: bash
