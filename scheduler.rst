@@ -157,15 +157,28 @@ class, as shown in the following examples.
 Cron Expression Triggers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-It uses the same syntax as the `cron command-line utility`_::
-
-    RecurringMessage::cron('* * * * *', new Message());
-
-Before using it, you have to install the following dependency:
+Before using cron triggers, you have to install the following dependency:
 
 .. code-block:: terminal
 
     composer require dragonmantank/cron-expression
+
+Then, define the trigger date/time using the same syntax as the
+`cron command-line utility`_::
+
+    RecurringMessage::cron('* * * * *', new Message());
+
+You can also used some special values that represent common cron expressions:
+
+* ``#yearly``, ``#annually`` - Run once a year, midnight, Jan. 1 - ``0 0 1 1 *``
+* ``#monthly`` - Run once a month, midnight, first of month - ``0 0 1 * *``
+* ``#weekly`` - Run once a week, midnight on Sun - ``0 0 * * 0``
+* ``#daily``, ``#midnight`` - Run once a day, midnight - ``0 0 * * *``
+* ``#hourly`` - Run once an hour, first minute - ``0 * * * *``
+
+For example::
+
+    RecurringMessage::cron('#daily', new Message());
 
 .. tip::
 
