@@ -1839,8 +1839,8 @@ and ``BitBucketCodeRepository`` classes:
 
 .. note::
 
-    The values of the array parameter `mapping` should be strings.
-    Otherwise, it will implicitly be cast into strings.
+    The values of the ``mapping`` array option must be strings.
+    Otherwise, they will be cast into strings automatically.
 
 Once configured, the serializer uses the mapping to pick the correct class::
 
