@@ -1054,7 +1054,7 @@ token (or whatever you need to return) and return the JSON response:
 
       class ApiLoginController extends AbstractController
       {
-          #[Route('/api/login', name: 'api_login')]
+          #[Route('/api/login', name: 'api_login', methods: ['POST'])]
     -     public function index(): Response
     +     public function index(#[CurrentUser] ?User $user): Response
           {
