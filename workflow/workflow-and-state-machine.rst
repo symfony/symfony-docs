@@ -267,13 +267,13 @@ machine type, use ``camelCased workflow name + StateMachine``::
     {
         public function __construct(
             // Symfony will inject the 'pull_request' state machine configured before
-            private WorkflowInterface $pullRequestWorkflow,
+            private WorkflowInterface $pullRequestStateMachine,
         ) {
         }
 
         public function someMethod(PullRequest $pullRequest): void
         {
-            $this->pullRequestWorkflow->apply($pullRequest, 'wait_for_review', [
+            $this->pullRequestStateMachine->apply($pullRequest, 'wait_for_review', [
                 'log_comment' => 'My logging comment for the wait for review transition.',
             ]);
             // ...
