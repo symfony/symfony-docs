@@ -173,9 +173,9 @@ performance. Define the list of annotated classes to compile in the
 
         $this->addAnnotatedClassesToCompile([
             // you can define the fully qualified class names...
-            'App\\Controller\\DefaultController',
+            'Acme\\BlogBundle\\Controller\\AuthorController',
             // ... but glob patterns are also supported:
-            '**Bundle\\Controller\\',
+            'Acme\\BlogBundle\\Form\\**',
 
             // ...
         ]);

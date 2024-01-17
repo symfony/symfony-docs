@@ -22,12 +22,15 @@ file::
     return [
         // 'all' means that the bundle is enabled for any Symfony environment
         Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
-        Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
-        Symfony\Bundle\TwigBundle\TwigBundle::class => ['all' => true],
-        Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
-        Doctrine\Bundle\DoctrineBundle\DoctrineBundle::class => ['all' => true],
+        // ...
+
+        // this bundle is enabled only in 'dev'
+        Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true],
+        // ...
+
         // this bundle is enabled only in 'dev' and 'test', so you can't use it in 'prod'
         Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
+        // ...
     ];
 
 .. tip::
@@ -40,18 +43,18 @@ Creating a Bundle
 -----------------
 
 This section creates and enables a new bundle to show there are only a few steps required.
-The new bundle is called AcmeTestBundle, where the ``Acme`` portion is an example
+The new bundle is called AcmeBlogBundle, where the ``Acme`` portion is an example
 name that should be replaced by some "vendor" name that represents you or your
-organization (e.g. AbcTestBundle for some company named ``Abc``).
+organization (e.g. AbcBlogBundle for some company named ``Abc``).
 
-Start by creating a new class called ``AcmeTestBundle``::
+Start by creating a new class called ``AcmeBlogBundle``::
 
-    // src/AcmeTestBundle.php
-    namespace Acme\TestBundle;
+    // src/AcmeBlogBundle.php
+    namespace Acme\BlogBundle;
 
     use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-    class AcmeTestBundle extends AbstractBundle
+    class AcmeBlogBundle extends AbstractBundle
     {
     }
 
@@ -67,10 +70,10 @@ Start by creating a new class called ``AcmeTestBundle``::
 
 .. tip::
 
-    The name AcmeTestBundle follows the standard
+    The name AcmeBlogBundle follows the standard
     :ref:`Bundle naming conventions <bundles-naming-conventions>`. You could
-    also choose to shorten the name of the bundle to simply TestBundle by naming
-    this class TestBundle (and naming the file ``TestBundle.php``).
+    also choose to shorten the name of the bundle to simply BlogBundle by naming
+    this class BlogBundle (and naming the file ``BlogBundle.php``).
 
 This empty class is the only piece you need to create the new bundle. Though
 commonly empty, this class is powerful and can be used to customize the behavior
@@ -79,10 +82,10 @@ of the bundle. Now that you've created the bundle, enable it::
     // config/bundles.php
     return [
         // ...
-        Acme\TestBundle\AcmeTestBundle::class => ['all' => true],
+        Acme\BlogBundle\AcmeBlogBundle::class => ['all' => true],
     ];
 
-And while it doesn't do anything yet, AcmeTestBundle is now ready to be used.
+And while it doesn't do anything yet, AcmeBlogBundle is now ready to be used.
 
 Bundle Directory Structure
 --------------------------
@@ -91,30 +94,30 @@ The directory structure of a bundle is meant to help to keep code consistent
 between all Symfony bundles. It follows a set of conventions, but is flexible
 to be adjusted if needed:
 
-``src/``
-    Contains all PHP classes related to the bundle logic (e.g. ``Controller/RandomController.php``).
+``assets/``
+    Contains the web asset sources like JavaScript and TypeScript files, CSS and
+    Sass files, but also images and other assets related to the bundle that are
+    not in ``public/`` (e.g. Stimulus controllers).
 
 ``config/``
-    Houses configuration, including routing configuration (e.g. ``routing.yaml``).
-
-``templates/``
-    Holds templates organized by controller name (e.g. ``random/index.html.twig``).
-
-``translations/``
-    Holds translations organized by domain and locale (e.g. ``AcmeTestBundle.en.xlf``).
+    Houses configuration, including routing configuration (e.g. ``routes.php``).
 
 ``public/``
     Contains web assets (images, compiled CSS and JavaScript files, etc.) and is
     copied or symbolically linked into the project ``public/`` directory via the
     ``assets:install`` console command.
 
-``assets/``
-    Contains the web asset sources (JavaScript and TypeScript files, CSS and Sass
-    files, etc.), images and other assets related to the bundle that are not in
-    ``public/`` (e.g. Stimulus controllers)
+``src/``
+    Contains all PHP classes related to the bundle logic (e.g. ``Controller/CategoryController.php``).
+
+``templates/``
+    Holds templates organized by controller name (e.g. ``category/show.html.twig``).
 
 ``tests/``
     Holds all tests for the bundle.
+
+``translations/``
+    Holds translations organized by domain and locale (e.g. ``AcmeBlogBundle.en.xlf``).
 
 .. caution::
 
@@ -126,7 +129,7 @@ to be adjusted if needed:
     new structure. Override the ``Bundle::getPath()`` method to change to
     the old structure::
 
-        class AcmeTestBundle extends AbstractBundle
+        class AcmeBlogBundle extends AbstractBundle
         {
             public function getPath(): string
             {
@@ -145,12 +148,12 @@ to be adjusted if needed:
         {
             "autoload": {
                 "psr-4": {
-                    "Acme\\TestBundle\\": "src/"
+                    "Acme\\BlogBundle\\": "src/"
                 }
             },
             "autoload-dev": {
                 "psr-4": {
-                    "Acme\\TestBundle\\Tests\\": "tests/"
+                    "Acme\\BlogBundle\\Tests\\": "tests/"
                 }
             }
         }
