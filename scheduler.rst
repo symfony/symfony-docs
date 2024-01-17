@@ -160,12 +160,6 @@ methods::
     $trigger->inner(); // CronExpressionTrigger
     $trigger->decorators(); // [ExcludeTimeTrigger, JitterTrigger]
 
-.. versionadded:: 6.4
-
-    The :method:`Symfony\\Component\\Scheduler\\Trigger\\AbstractDecoratedTrigger::inner`
-    and :method:`Symfony\\Component\\Scheduler\\Trigger\\AbstractDecoratedTrigger::decorators`
-    methods were introduced in Symfony 6.4.
-
 Most of them can be created via the :class:`Symfony\\Component\\Scheduler\\RecurringMessage`
 class, as shown in the following examples.
 
