@@ -1443,10 +1443,10 @@ may include their own Twig templates (in the ``Resources/views/`` directory of
 each bundle). To avoid messing with your own templates, Symfony adds bundle
 templates under an automatic namespace created after the bundle name.
 
-For example, the templates of a bundle called ``AcmeFooBundle`` are available
-under the ``AcmeFoo`` namespace. If this bundle includes the template
-``<your-project>/vendor/acmefoo-bundle/Resources/views/user/profile.html.twig``,
-you can refer to it as ``@AcmeFoo/user/profile.html.twig``.
+For example, the templates of a bundle called ``AcmeBlogBundle`` are available
+under the ``AcmeBlog`` namespace. If this bundle includes the template
+``<your-project>/vendor/acme/blog-bundle/Resources/views/user/profile.html.twig``,
+you can refer to it as ``@AcmeBlog/user/profile.html.twig``.
 
 .. tip::
 
