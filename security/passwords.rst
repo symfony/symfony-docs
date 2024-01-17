@@ -518,13 +518,13 @@ migration by returning ``true`` in the ``needsRehash()`` method::
     namespace App\Security;
 
     // ...
-    use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+    use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 
-    class CustomPasswordHasher implements UserPasswordHasherInterface
+    class CustomPasswordHasher implements PasswordHasherInterface
     {
         // ...
 
-        public function needsRehash(string $hashed): bool
+        public function needsRehash(string $hashedPassword): bool
         {
             // check whether the current password is hashed using an outdated hasher
             $hashIsOutdated = ...;
