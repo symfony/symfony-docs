@@ -175,7 +175,7 @@ of your bundle's configuration.
 
 The ``Configuration`` class to handle the sample configuration looks like::
 
-    // src/Acme/SocialBundle/DependencyInjection/Configuration.php
+    // src/DependencyInjection/Configuration.php
     namespace Acme\SocialBundle\DependencyInjection;
 
     use Symfony\Component\Config\Definition\Builder\TreeBuilder;
@@ -216,7 +216,7 @@ This class can now be used in your ``load()`` method to merge configurations and
 force validation (e.g. if an additional option was passed, an exception will be
 thrown)::
 
-    // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
+    // src/DependencyInjection/AcmeSocialExtension.php
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
@@ -236,7 +236,7 @@ For example, imagine your bundle has the following example config:
 
 .. code-block:: xml
 
-    <!-- src/Acme/SocialBundle/Resources/config/services.xml -->
+    <!-- src/config/services.xml -->
     <?xml version="1.0" encoding="UTF-8" ?>
     <container xmlns="http://symfony.com/schema/dic/services"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -253,8 +253,8 @@ For example, imagine your bundle has the following example config:
 
 In your extension, you can load this and dynamically set its arguments::
 
-    // src/Acme/SocialBundle/DependencyInjection/AcmeSocialExtension.php
-    // ...
+    // src/DependencyInjection/AcmeSocialExtension.php
+    namespace Acme\SocialBundle\DependencyInjection;
 
     use Symfony\Component\Config\FileLocator;
     use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
@@ -279,7 +279,7 @@ In your extension, you can load this and dynamically set its arguments::
     :class:`Symfony\\Component\\HttpKernel\\DependencyInjection\\ConfigurableExtension`
     to do this automatically for you::
 
-        // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+        // src/DependencyInjection/HelloExtension.php
         namespace Acme\HelloBundle\DependencyInjection;
 
         use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -371,6 +371,7 @@ logic to the bundle class directly::
     configuration definition from one or more files::
 
         // src/AcmeSocialBundle.php
+        namespace Acme\SocialBundle;
 
         // ...
         class AcmeSocialBundle extends AbstractBundle
@@ -413,7 +414,7 @@ The ``config:dump-reference`` command dumps the default configuration of a
 bundle in the console using the Yaml format.
 
 As long as your bundle's configuration is located in the standard location
-(``YourBundle\DependencyInjection\Configuration``) and does not have
+(``<YourBundle>/src/DependencyInjection/Configuration``) and does not have
 a constructor, it will work automatically. If you
 have something different, your ``Extension`` class must override the
 :method:`Extension::getConfiguration() <Symfony\\Component\\DependencyInjection\\Extension\\Extension::getConfiguration>`
@@ -447,7 +448,8 @@ URL nor does it need to exist). By default, the namespace for a bundle is
 ``http://example.org/schema/dic/DI_ALIAS``, where ``DI_ALIAS`` is the DI alias of
 the extension. You might want to change this to a more professional URL::
 
-    // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+    // src/DependencyInjection/AcmeHelloExtension.php
+    namespace Acme\HelloBundle\DependencyInjection;
 
     // ...
     class AcmeHelloExtension extends Extension
@@ -476,10 +478,11 @@ namespace is then replaced with the XSD validation base path returned from
 method. This namespace is then followed by the rest of the path from the base
 path to the file itself.
 
-By convention, the XSD file lives in the ``Resources/config/schema/``, but you
+By convention, the XSD file lives in ``config/schema/`` directory, but you
 can place it anywhere you like. You should return this path as the base path::
 
-    // src/Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+    // src/DependencyInjection/AcmeHelloExtension.php
+    namespace Acme\HelloBundle\DependencyInjection;
 
     // ...
     class AcmeHelloExtension extends Extension
@@ -488,7 +491,7 @@ can place it anywhere you like. You should return this path as the base path::
 
         public function getXsdValidationBasePath(): string
         {
-            return __DIR__.'/../Resources/config/schema';
+            return __DIR__.'/../config/schema';
         }
     }
 
