@@ -94,11 +94,12 @@ so, get the entity manager via the service container as follows::
     namespace App\Tests\Repository;
 
     use App\Entity\Product;
+    use Doctrine\Persistence\ObjectManager;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
     class ProductRepositoryTest extends KernelTestCase
     {
-        private \Doctrine\Persistence\ObjectManager $entityManager;
+        private ObjectManager $entityManager;
 
         protected function setUp(): void
         {
