@@ -168,7 +168,7 @@ Then, define the trigger date/time using the same syntax as the
 
     RecurringMessage::cron('* * * * *', new Message());
 
-You can also used some special values that represent common cron expressions:
+You can also use some special values that represent common cron expressions:
 
 * ``#yearly``, ``#annually`` - Run once a year, midnight, Jan. 1 - ``0 0 1 1 *``
 * ``#monthly`` - Run once a month, midnight, first of month - ``0 0 1 * *``
