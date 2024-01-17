@@ -147,6 +147,25 @@ the frequency of the message. Symfony provides different types of triggers:
 :class:`Symfony\\Component\\Scheduler\\Trigger\\PeriodicalTrigger`
     A trigger that uses a ``DateInterval`` to determine the next run date.
 
+The :class:`Symfony\\Component\\Scheduler\\Trigger\\JitterTrigger` and
+:class:`Symfony\\Component\\Scheduler\\Trigger\\ExcludeTimeTrigger` are decorators
+and modify the behavior of the trigger they wrap. You can get the decorated
+trigger as well as the decorators by calling the
+:method:`Symfony\\Component\\Scheduler\\Trigger\\AbstractDecoratedTrigger::inner`
+and :method:`Symfony\\Component\\Scheduler\\Trigger\\AbstractDecoratedTrigger::decorators`
+methods::
+
+    $trigger = new ExcludeTimeTrigger(new JitterTrigger(CronExpressionTrigger::fromSpec('#midnight', new MyMessage()));
+
+    $trigger->inner(); // CronExpressionTrigger
+    $trigger->decorators(); // [ExcludeTimeTrigger, JitterTrigger]
+
+.. versionadded:: 6.4
+
+    The :method:`Symfony\\Component\\Scheduler\\Trigger\\AbstractDecoratedTrigger::inner`
+    and :method:`Symfony\\Component\\Scheduler\\Trigger\\AbstractDecoratedTrigger::decorators`
+    methods were introduced in Symfony 6.4.
+
 Most of them can be created via the :class:`Symfony\\Component\\Scheduler\\RecurringMessage`
 class, as shown in the following examples.
 
