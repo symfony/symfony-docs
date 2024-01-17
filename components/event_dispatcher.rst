@@ -272,15 +272,6 @@ order. Start by creating this custom event class and documenting it::
 
 Each listener now has access to the order via the ``getOrder()`` method.
 
-.. note::
-
-    If you don't need to pass any additional data to the event listeners, you
-    can also use the default
-    :class:`Symfony\\Contracts\\EventDispatcher\\Event` class. In such case,
-    you can document the event and its name in a generic ``StoreEvents`` class,
-    similar to the :class:`Symfony\\Component\\HttpKernel\\KernelEvents`
-    class.
-
 Dispatch the Event
 ..................
 
@@ -303,6 +294,32 @@ of the event to dispatch::
 Notice that the special ``OrderPlacedEvent`` object is created and passed to
 the ``dispatch()`` method. Now, any listener to the ``OrderPlacedEvent::class``
 event will receive the ``OrderPlacedEvent``.
+
+.. note::
+
+    If you don't need to pass any additional data to the event listeners, you
+    can also use the default
+    :class:`Symfony\\Contracts\\EventDispatcher\\Event` class. In such case,
+    you can document the event and its name in a generic ``StoreEvents`` class,
+    similar to the :class:`Symfony\\Component\\HttpKernel\\KernelEvents`
+    class::
+
+        namespace App\Event;
+
+        class StoreEvents {
+
+            /**
+            * @Event("Symfony\Contracts\EventDispatcher\Event")
+            */
+            public const ORDER_PLACED = 'order.placed';
+        }
+
+    And use the :class:`Symfony\\Contracts\\EventDispatcher\\Event` class to
+    dispatch the event::
+
+        use Symfony\Contracts\EventDispatcher\Event;
+
+        $this->eventDispatcher->dispatch(new Event(), StoreEvents::ORDER_PLACED);
 
 .. _event_dispatcher-using-event-subscribers:
 
