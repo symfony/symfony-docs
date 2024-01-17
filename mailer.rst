@@ -110,6 +110,7 @@ Service               Install with                                    Webhook su
 `MailerSend`_         ``composer require symfony/mailer-send-mailer``
 `Mandrill`_           ``composer require symfony/mailchimp-mailer``
 `Postmark`_           ``composer require symfony/postmark-mailer``    yes
+`Resend`_             ``composer require symfony/resend-mailer``      yes
 `Scaleway`_           ``composer require symfony/scaleway-mailer``
 `SendGrid`_           ``composer require symfony/sendgrid-mailer``    yes
 ===================== =============================================== ===============
@@ -207,6 +208,10 @@ party provider:
 | `Postmark`_            | - SMTP postmark+smtp://ID@default                   |
 |                        | - HTTP n/a                                          |
 |                        | - API postmark+api://KEY@default                    |
++------------------------+-----------------------------------------------------+
+| `Resend`_              | - SMTP resend+smtp://resend:API_KEY@default         |
+|                        | - HTTP n/a                                          |
+|                        | - API resend+api://API_KEY@default                  |
 +------------------------+-----------------------------------------------------+
 | `Scaleway`_            | - SMTP scaleway+smtp://PROJECT_ID:API_KEY@default   |
 |                        | - HTTP n/a                                          |
@@ -1503,6 +1508,7 @@ The following transports currently support tags and metadata:
 The following transports only support tags:
 
 * MailPace
+* Resend
 
 The following transports only support metadata:
 
@@ -1847,6 +1853,7 @@ the :class:`Symfony\\Bundle\\FrameworkBundle\\Test\\MailerAssertionsTrait`::
 .. _`OpenSSL PHP extension`: https://www.php.net/manual/en/book.openssl.php
 .. _`PEM encoded`: https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail
 .. _`Postmark`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Postmark/README.md
+.. _`Resend`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Resend/README.md
 .. _`RFC 3986`: https://www.ietf.org/rfc/rfc3986.txt
 .. _`S/MIME`: https://en.wikipedia.org/wiki/S/MIME
 .. _`Scaleway`: https://github.com/symfony/symfony/blob/{version}/src/Symfony/Component/Mailer/Bridge/Scaleway/README.md
