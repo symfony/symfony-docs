@@ -1837,6 +1837,11 @@ and ``BitBucketCodeRepository`` classes:
             </class>
         </serializer>
 
+.. note::
+
+    The values of the array parameter `mapping` should be strings.
+    Otherwise, it will implicitly be cast into strings.
+
 Once configured, the serializer uses the mapping to pick the correct class::
 
     $serialized = $serializer->serialize(new GitHubCodeRepository(), 'json');
