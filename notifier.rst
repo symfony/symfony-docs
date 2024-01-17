@@ -271,6 +271,22 @@ Service                                  Package                               D
 
     The LINE Notify, Mastodon and Twitter integrations were introduced in Symfony 6.3.
 
+.. caution::
+
+    If you have the messenger component installed, the default component
+    configuration implies sending notifications through the MessageBus.
+    If you don't have a message consumer running, messages will never be sent.
+    To send messages directly via the transport, add the following line to the configuration.
+
+    .. configuration-block::
+
+        .. code-block:: yaml
+
+            # config/packages/notifier.yaml
+            framework:
+                notifier:
+                    message_bus: false
+
 Chatters are configured using the ``chatter_transports`` setting:
 
 .. code-block:: bash
