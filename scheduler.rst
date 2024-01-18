@@ -48,7 +48,7 @@ the task of creating a report::
 
     class SendDailySalesReports
     {
-        public function __construct(private string $id) {}
+        public function __construct(private int $id) {}
 
         public function getId(): int
         {
@@ -60,6 +60,9 @@ Next, create the handler that processes that kind of message::
 
     // src/Scheduler/Handler/SendDailySalesReportsHandler.php
     namespace App\Scheduler\Handler;
+
+    use App\Scheduler\Message\SendDailySalesReports;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
     #[AsMessageHandler]
     class SendDailySalesReportsHandler
@@ -105,8 +108,12 @@ The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsSchedule` attribute,
 which by default references the schedule named ``default``, allows you to register
 on a particular schedule::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
+
+    use Symfony\Component\Scheduler\Attribute\AsSchedule;
+    use Symfony\Component\Scheduler\Schedule;
+    use Symfony\Component\Scheduler\ScheduleProviderInterface;
 
     #[AsSchedule]
     class SaleTaskProvider implements ScheduleProviderInterface
@@ -260,7 +267,7 @@ Then, define your recurring message::
 
 Finally, the recurring messages has to be attached to a schedule::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
@@ -344,7 +351,7 @@ via the ``stateful`` option (and the :doc:`Cache component </components/cache>`)
 This way, when it wakes up again, it looks at all the dates and can catch up on
 what it missed::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
@@ -366,7 +373,7 @@ To scale your schedules more effectively, you can use multiple workers. In such
 cases, a good practice is to add a :doc:`lock </components/lock>` to prevent the
 same task more than once::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
@@ -395,7 +402,7 @@ your message in a :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMess
 This allows you to specify a transport on which your message will be redispatched
 before being further redispatched to its corresponding handler::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
