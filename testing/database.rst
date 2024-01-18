@@ -20,18 +20,18 @@ Suppose the class you want to test looks like this::
     namespace App\Salary;
 
     use App\Entity\Employee;
-    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManager;
 
     class SalaryCalculator
     {
         public function __construct(
-            private ObjectManager $objectManager,
+            private EntityManager $entityManager,
         ) {
         }
 
         public function calculateTotalSalary(int $id): int
         {
-            $employeeRepository = $this->objectManager
+            $employeeRepository = $this->entityManager
                 ->getRepository(Employee::class);
             $employee = $employeeRepository->find($id);
 
@@ -47,8 +47,8 @@ constructor, you can pass a mock object within a test::
 
     use App\Entity\Employee;
     use App\Salary\SalaryCalculator;
-    use Doctrine\Persistence\ObjectManager;
-    use Doctrine\Persistence\ObjectRepository;
+    use Doctrine\ORM\EntityManager;
+    use Doctrine\ORM\EntityRepository;
     use PHPUnit\Framework\TestCase;
 
     class SalaryCalculatorTest extends TestCase
@@ -60,20 +60,20 @@ constructor, you can pass a mock object within a test::
             $employee->setBonus(1100);
 
             // Now, mock the repository so it returns the mock of the employee
-            $employeeRepository = $this->createMock(ObjectRepository::class);
+            $employeeRepository = $this->createMock(EntityRepository::class);
             $employeeRepository->expects($this->any())
                 ->method('find')
                 ->willReturn($employee);
 
             // Last, mock the EntityManager to return the mock of the repository
             // (this is not needed if the class being tested injects the
-            // repository it uses instead of the entire object manager)
-            $objectManager = $this->createMock(ObjectManager::class);
-            $objectManager->expects($this->any())
+            // repository it uses instead of the entire entity manager)
+            $entityManager = $this->createMock(EntityManager::class);
+            $entityManager->expects($this->any())
                 ->method('getRepository')
                 ->willReturn($employeeRepository);
 
-            $salaryCalculator = new SalaryCalculator($objectManager);
+            $salaryCalculator = new SalaryCalculator($entityManager);
             $this->assertEquals(2100, $salaryCalculator->calculateTotalSalary(1));
         }
     }
@@ -94,12 +94,12 @@ so, get the entity manager via the service container as follows::
     namespace App\Tests\Repository;
 
     use App\Entity\Product;
-    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManager;
     use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
     class ProductRepositoryTest extends KernelTestCase
     {
-        private ObjectManager $entityManager;
+        private EntityManager $entityManager;
 
         protected function setUp(): void
         {
