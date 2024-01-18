@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+
+by ilohpro at 2022-02-22T16:48:43Z
+
+Hi,
+Is it possible to show how to use custom transport factory by loading the dsn from a property of the current user requesting Symfony ?
+This should also be very usefull .
+Thank you
+
+---------------------------------------------------------------------------
+
+by AlbertMorenoDEV at 2022-05-02T09:40:09Z
+
+Hello,
+
+Does a transport gets created in every request? Just wondering because not sure how good would be doing that 🤔
+
+Could you elaborate on a specific example?
+
+Cheers
