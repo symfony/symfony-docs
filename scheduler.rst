@@ -48,7 +48,7 @@ the task of creating a report::
 
     class SendDailySalesReports
     {
-        public function __construct(private string $id) {}
+        public function __construct(private int $id) {}
 
         public function getId(): int
         {
@@ -60,6 +60,9 @@ Next, create the handler that processes that kind of message::
 
     // src/Scheduler/Handler/SendDailySalesReportsHandler.php
     namespace App\Scheduler\Handler;
+
+    use App\Scheduler\Message\SendDailySalesReports;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
     #[AsMessageHandler]
     class SendDailySalesReportsHandler
@@ -105,8 +108,12 @@ The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsSchedule` attribute,
 which by default references the schedule named ``default``, allows you to register
 on a particular schedule::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
+
+    use Symfony\Component\Scheduler\Attribute\AsSchedule;
+    use Symfony\Component\Scheduler\Schedule;
+    use Symfony\Component\Scheduler\ScheduleProviderInterface;
 
     #[AsSchedule]
     class SaleTaskProvider implements ScheduleProviderInterface
@@ -168,22 +175,67 @@ Then, define the trigger date/time using the same syntax as the
 
     RecurringMessage::cron('* * * * *', new Message());
 
-You can also use some special values that represent common cron expressions:
-
-* ``#yearly``, ``#annually`` - Run once a year, midnight, Jan. 1 - ``0 0 1 1 *``
-* ``#monthly`` - Run once a month, midnight, first of month - ``0 0 1 * *``
-* ``#weekly`` - Run once a week, midnight on Sun - ``0 0 * * 0``
-* ``#daily``, ``#midnight`` - Run once a day, midnight - ``0 0 * * *``
-* ``#hourly`` - Run once an hour, first minute - ``0 * * * *``
-
-For example::
-
-    RecurringMessage::cron('#daily', new Message());
-
 .. tip::
 
     Check out the `crontab.guru website`_ if you need help to construct/understand
     cron expressions.
+
+You can also use some special values that represent common cron expressions:
+
+* ``@yearly``, ``@annually`` - Run once a year, midnight, Jan. 1 - ``0 0 1 1 *``
+* ``@monthly`` - Run once a month, midnight, first of month - ``0 0 1 * *``
+* ``@weekly`` - Run once a week, midnight on Sun - ``0 0 * * 0``
+* ``@daily``, ``@midnight`` - Run once a day, midnight - ``0 0 * * *``
+* ``@hourly`` - Run once an hour, first minute - ``0 * * * *``
+
+For example::
+
+    RecurringMessage::cron('@daily', new Message());
+
+Hashed Cron Expression
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you have many trigger scheduled at same time (for example, at midnight, ``0 0 * * *``)
+this will create a very long running schedules list right at this time.
+This may cause an issue if a task has a memory leak.
+
+You can add a ``#``(for hash) symbol in expression to generate random value. The value
+is deterministic based on the message. This means that while the value is random, it is
+predictable and consistent. A message with string representation ``my task``
+and a defined frequency of ``# # * * *`` will have an idempotent frequency
+of ``56 20 * * *`` (every day at 8:56pm).
+
+A hash range ``#(x-y)`` can also be used. For example, ``# #(0-7) * * *`` means daily,
+some time between midnight and 7am. Using the ``#`` without a range creates a range
+of any valid value for the field. ``# # # # #`` is short for ``#(0-59) #(0-23) #(1-28)
+#(1-12) #(0-6)``.
+
+You can also use some special values that represent common hashed cron expressions:
+
+======================  ========================================================================
+Alias                   Converts to
+======================  ========================================================================
+``#hourly``             ``# * * * *`` (at some minute every hour)
+``#daily``              ``# # * * *`` (at some time every day)
+``#weekly``             ``# # * * #`` (at some time every week)
+``#weekly@midnight``    ``# #(0-2) * * #`` (at ``#midnight`` one day every week)
+``#monthly``            ``# # # * *`` (at some time on some day, once per month)
+``#monthly@midnight``   ``# #(0-2) # * *`` (at ``#midnight`` on some day, once per month)
+``#annually``           ``# # # # *`` (at some time on some day, once per year)
+``#annually@midnight``  ``# #(0-2) # # *``  (at ``#midnight`` on some day, once per year)
+``#yearly``             ``# # # # *`` alias for ``#annually``
+``#yearly@midnight``    ``# #(0-2) # # *`` alias for ``#annually@midnight``
+``#midnight``           ``# #(0-2) * * *`` (at some time between midnight and 2:59am, every day)
+======================  ========================================================================
+
+For example::
+
+    RecurringMessage::cron('#midnight', new Message());
+
+.. note::
+
+    The day of month range is ``1-28``, this is to account for February
+    which has a minimum of 28 days.
 
 .. versionadded:: 6.4
 
@@ -260,7 +312,7 @@ Then, define your recurring message::
 
 Finally, the recurring messages has to be attached to a schedule::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
@@ -344,7 +396,7 @@ via the ``stateful`` option (and the :doc:`Cache component </components/cache>`)
 This way, when it wakes up again, it looks at all the dates and can catch up on
 what it missed::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
@@ -366,7 +418,7 @@ To scale your schedules more effectively, you can use multiple workers. In such
 cases, a good practice is to add a :doc:`lock </components/lock>` to prevent the
 same task more than once::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
@@ -395,7 +447,7 @@ your message in a :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMess
 This allows you to specify a transport on which your message will be redispatched
 before being further redispatched to its corresponding handler::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
