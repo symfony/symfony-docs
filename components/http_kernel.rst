@@ -721,6 +721,14 @@ look like this::
         // ...
     }
 
+.. note::
+
+    The default value of the ``_format`` request attribute is ``html``. If your
+    sub request returns a different format (e.g. ``json``) you can set it by
+    defining the ``_format`` attribute explicitly on the request::
+
+        $request->attributes->set('_format', 'json');
+
 .. _http-kernel-resource-locator:
 
 Locating Resources
