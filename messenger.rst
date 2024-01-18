@@ -562,7 +562,7 @@ different messages to them. For example:
                             #    name: high
                             #queues:
                             #    messages_high: ~
-                            # or redis try "group"
+                            # for redis try "group"
                     async_priority_low:
                         dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                         options:
