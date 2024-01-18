@@ -711,6 +711,11 @@ look like this::
 
 .. _http-kernel-resource-locator:
 
+Also, note that by default, if the ``_format`` attribute is not set in your request, the value will be ``html``.
+So, if your sub request returns something else than ``html`` (like json for instance) you can set it by setting the ``_format`` attribute on the request::
+
+    $request->attributes->set('_format', 'json');
+
 Locating Resources
 ------------------
 
