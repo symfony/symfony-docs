@@ -197,7 +197,7 @@ this interface::
                 // ... send the link and return a response (see next section)
             }
 
-            // if it's not submitted, render the "request" form
+            // if it's not submitted, render the form to request the "login link"
             return $this->render('security/request_login_link.html.twig');
         }
 
