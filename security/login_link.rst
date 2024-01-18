@@ -13,9 +13,8 @@ my password, etc.)
 Using the Login Link Authenticator
 ----------------------------------
 
-This guide assumes you have setup security and have created a user object
-in your application. Follow :doc:`the main security guide </security>` if
-this is not yet the case.
+This guide assumes you have :doc:`setup security and have created a user object </security>`
+in your application.
 
 1) Configure the Login Link Authenticator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -134,9 +133,8 @@ intercept requests to this route:
 2) Generate the Login Link
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Now that the authenticator is able to check the login links, you must
-create a page where a user can request a login link and log in to your
-website.
+Now that the authenticator is able to check the login links, you can
+create a page where a user can request a login link.
 
 The login link can be generated using the
 :class:`Symfony\\Component\\Security\\Http\\LoginLink\\LoginLinkHandlerInterface`.
@@ -158,7 +156,7 @@ this interface::
         #[Route('/login', name: 'login')]
         public function requestLoginLink(LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request): Response
         {
-            // check if login form is submitted
+            // check if form is submitted
             if ($request->isMethod('POST')) {
                 // load the user in some way (e.g. using the form input)
                 $email = $request->request->get('email');
@@ -172,8 +170,8 @@ this interface::
                 // ... send the link and return a response (see next section)
             }
 
-            // if it's not submitted, render the "login" form
-            return $this->render('security/login.html.twig');
+            // if it's not submitted, render the form to request the "login link"
+            return $this->render('security/request_login_link.html.twig');
         }
 
         // ...
@@ -181,7 +179,7 @@ this interface::
 
 .. code-block:: html+twig
 
-    {# templates/security/login.html.twig #}
+    {# templates/security/request_login_link.html.twig #}
     {% extends 'base.html.twig' %}
 
     {% block body %}
@@ -793,7 +791,7 @@ features such as the locale used to generate the link::
                 // ...
             }
 
-            return $this->render('security/login.html.twig');
+            return $this->render('security/request_login_link.html.twig');
         }
 
         // ...
