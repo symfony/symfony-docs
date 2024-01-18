@@ -359,50 +359,31 @@ Other Options
 Custom Transport Factories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There is a way to easily create your own custom transport factory in case you need to do something special creating the actual transport.
+If you want to support your own custom DSN (``acme://...``), you can create a
+custom transport factory. To do so, create a class that implements
+:class:`Symfony\\Component\\Mailer\\Transport\\TransportFactoryInterface` or, if
+you prefer, extend the :class:`Symfony\\Component\\Mailer\\Transport\\AbstractTransportFactory`
+class to save some boilerplate code::
 
-The new factory needs to implement :class:`Symfony\\Component\\Mailer\\Transport\\TransportFactoryInterface`. To remove some boilerplate you can even extend from :class:`Symfony\\Component\\Mailer\\Transport\\AbstractTransportFactory` which will simplify the new factory::
-
-
-    final class CustomTransportFactory extends AbstractTransportFactory
+    // src/Mailer/AcmeTransportFactory.php
+    final class AcmeTransportFactory extends AbstractTransportFactory
     {
         public function create(Dsn $dsn): TransportInterface
         {
-            // create and return the transport
+            // parse the given DSN, extract data/credentials from it
+            // and then, create and return the transport
         }
 
         protected function getSupportedSchemes(): array
         {
-            return ['custom_schema'];
+            // this supports DSN starting with `acme://`
+            return ['acme'];
         }
     }
 
-Finally, declare the new factory in setting tag the tag `mailer.transport_factory`:
-
-.. configuration-block::
-
-    .. code-block:: yaml
-
-        # config/services.yaml
-        mailer.transport_factory.custom:
-            class: App\CustomTransportFactory
-            parent: mailer.transport_factory.abstract
-            tags:
-              - {name: mailer.transport_factory}
-
-    .. code-block:: xml
-
-        <!-- config/services.xml -->
-        <service id="mailer.transport_factory.custom" class="App\CustomTransportFactory" parent="mailer.transport_factory.abstract">
-            <tag name="mailer.transport_factory"/>
-        </service>
-
-    .. code-block:: php
-
-        // config/services.php
-        $services->set('mailer.transport_factory.custom', App\CustomTransportFactory::class)
-                 ->parent('mailer.transport_factory.abstract')
-                 ->tag('mailer.transport_factory');
+After creating the custom transport class, register it as a service in your
+application and :doc:`tag it </service_container/tags>` with the
+``mailer.transport_factory`` tag.
 
 Creating & Sending Messages
 ---------------------------
