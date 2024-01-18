@@ -86,6 +86,10 @@ Resend         ``mailer.webhook.request_parser.resend``
 Sendgrid       ``mailer.webhook.request_parser.sendgrid``
 ============== ==========================================
 
+.. versionadded:: 7.1
+
+    The Resend webhook was introduced in Symfony 7.1.
+
 Set up the webhook in the third-party mailer. For Mailgun, you can do this
 in the control panel. As URL, make sure to use the ``/webhook/mailer_mailgun``
 path behind the domain you're using.
