@@ -188,9 +188,7 @@ To inject this service into your class, use the ``bind`` option:
             bind:
                 Symfony\WebpackEncoreBundle\Asset\EntrypointLookupInterface $entryPointLookupEmail: '@webpack_encore.entrypoint_lookup[email]'
 
-Now you can inject your service into your class:
-
-.. code-block:: php
+Now you can inject your service into your class::
 
     public function __construct(EntrypointLookupInterface $entryPointLookupEmail) {}
 
