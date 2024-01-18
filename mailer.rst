@@ -401,6 +401,35 @@ Other Options
 
         $dsn = 'smtps://smtp.example.com?max_per_second=2'
 
+Custom Transport Factories
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you want to support your own custom DSN (``acme://...``), you can create a
+custom transport factory. To do so, create a class that implements
+:class:`Symfony\\Component\\Mailer\\Transport\\TransportFactoryInterface` or, if
+you prefer, extend the :class:`Symfony\\Component\\Mailer\\Transport\\AbstractTransportFactory`
+class to save some boilerplate code::
+
+    // src/Mailer/AcmeTransportFactory.php
+    final class AcmeTransportFactory extends AbstractTransportFactory
+    {
+        public function create(Dsn $dsn): TransportInterface
+        {
+            // parse the given DSN, extract data/credentials from it
+            // and then, create and return the transport
+        }
+
+        protected function getSupportedSchemes(): array
+        {
+            // this supports DSN starting with `acme://`
+            return ['acme'];
+        }
+    }
+
+After creating the custom transport class, register it as a service in your
+application and :doc:`tag it </service_container/tags>` with the
+``mailer.transport_factory`` tag.
+
 Creating & Sending Messages
 ---------------------------
 
