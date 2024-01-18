@@ -1,0 +1,15 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2022-10-19T15:25:57Z
+
+There might be some small differences in semantics ... but I think that using "login form" is still correct, even if this is not a "username+password form" but a "request a link form". To me, technically speaking, both are "login forms".
+
+Let's wait for more opinions about this. E.g. @wouterj or @OskarStark
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2022-10-19T15:34:26Z
+
+I have two arguments:
+1. Technical: Requesting a link doesn't log somebody in. The login is done by clicking the link in the email. So I wouldn't call it a "login form".
+2. Consistency: At https://symfony.com/doc/current/security.html#form-login you're using the term "login form" in its classic meaning. So if you see the "request link form" as "login form" too, you'd need to call the former a "login form with username and password" - as opposed to a "login form to request a link" ;-)
