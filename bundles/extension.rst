@@ -123,7 +123,7 @@ method::
 
     class AcmeHelloBundle extends AbstractBundle
     {
-        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
+        public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $containerBuilder): void
         {
             // load an XML, PHP or Yaml file
             $container->import('../config/services.xml');
