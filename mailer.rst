@@ -117,7 +117,7 @@ Service               Install with                                    Webhook su
 
 .. versionadded:: 7.1
 
-    The Azure integration was introduced in Symfony 7.1.
+    The Azure and Resend integrations were introduced in Symfony 7.1.
 
 .. note::
 
