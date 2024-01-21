@@ -363,9 +363,14 @@ not this is allowed. If your voter isn't called, see :ref:`declaring-the-voter-a
 Events
 ------
 
-The firewall dispatches the ``security.switch_user`` event right after the impersonation
-is completed. The :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent` is
-passed to the listener, and you can use this to get the user that you are now impersonating.
+Just before the impersonation is fully completed, the ``security.switch_user`` event is
+dispatched.
+The :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent` is
+passed to the :doc:`listener or subscriber </event_dispatcher>`, and you can use
+this to get the user that you are now impersonating.
+
+This event is also dispatched just before impersonation is fully exited. You can
+use it to get the original impersonator user.
 
 The :ref:`locale-sticky-session` section does not update the locale when you
 impersonate a user. If you *do* want to be sure to update the locale when you
