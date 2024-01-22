@@ -101,7 +101,7 @@ The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsSchedule` attribute,
 which by default references the schedule named ``default``, allows you to register
 on a particular schedule::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule]
@@ -268,7 +268,7 @@ Then, define your recurring message::
 
 Finally, the recurring messages has to be attached to a schedule::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
@@ -344,15 +344,25 @@ recurring messages. You can narrow down the list to a specific schedule:
 Efficient management with Symfony Scheduler
 -------------------------------------------
 
-If a worker becomes idle, the recurring messages won't be generated (because they
-are created on-the-fly by the scheduler transport).
+When a worker is restarted or undergoes shutdown for a period, the Scheduler
+transport won't be able to generate the messages (because they are created
+on-the-fly by the scheduler transport). This implies that any messages
+scheduled to be sent during the worker's inactive period are not sent, and the
+Scheduler will lose track of the last processed message. Upon restart, it will
+recalculate the messages to be generated from that point onward.
+
+To illustrate, consider a recurring message set to be sent every 3 days. If a
+worker is restarted on day 2, the message will be sent 3 days from the restart,
+on day 5.
+
+While this behavior may not necessarily pose a problem, there is a possibility
+that it may not align with what you are seeking.
 
 That's why the scheduler allows to remember the last execution date of a message
 via the ``stateful`` option (and the :doc:`Cache component </components/cache>`).
-This way, when it wakes up again, it looks at all the dates and can catch up on
-what it missed::
+This allows the system to retain the state of the schedule, ensuring that when a worker is restarted, it resumes from the point it left off.::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
@@ -374,7 +384,7 @@ To scale your schedules more effectively, you can use multiple workers. In such
 cases, a good practice is to add a :doc:`lock </components/lock>` to prevent the
 same task more than once::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
@@ -403,7 +413,7 @@ your message in a :class:`Symfony\\Component\\Messenger\\Message\\RedispatchMess
 This allows you to specify a transport on which your message will be redispatched
 before being further redispatched to its corresponding handler::
 
-    // src/Scheduler/MyScheduleProvider.php
+    // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
 
     #[AsSchedule('uptoyou')]
