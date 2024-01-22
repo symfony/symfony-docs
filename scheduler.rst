@@ -194,29 +194,72 @@ Then, define the trigger date/time using the same syntax as the
 
     RecurringMessage::cron('* * * * *', new Message());
 
-    // optionally you can define the timezone used by the cron expression
-    RecurringMessage::cron('* * * * *', new Message(), new \DateTimeZone('Africa/Malabo'));
-
-.. versionadded:: 6.4
-
-    The feature to define the cron timezone was introduced in Symfony 6.4.
-
-You can also use some special values that represent common cron expressions:
-
-* ``#yearly``, ``#annually`` - Run once a year, midnight, Jan. 1 - ``0 0 1 1 *``
-* ``#monthly`` - Run once a month, midnight, first of month - ``0 0 1 * *``
-* ``#weekly`` - Run once a week, midnight on Sun - ``0 0 * * 0``
-* ``#daily``, ``#midnight`` - Run once a day, midnight - ``0 0 * * *``
-* ``#hourly`` - Run once an hour, first minute - ``0 * * * *``
-
-For example::
-
-    RecurringMessage::cron('#daily', new Message());
-
 .. tip::
 
     Check out the `crontab.guru website`_ if you need help to construct/understand
     cron expressions.
+
+You can also use some special values that represent common cron expressions:
+
+* ``@yearly``, ``@annually`` - Run once a year, midnight, Jan. 1 - ``0 0 1 1 *``
+* ``@monthly`` - Run once a month, midnight, first of month - ``0 0 1 * *``
+* ``@weekly`` - Run once a week, midnight on Sun - ``0 0 * * 0``
+* ``@daily``, ``@midnight`` - Run once a day, midnight - ``0 0 * * *``
+* ``@hourly`` - Run once an hour, first minute - ``0 * * * *``
+
+For example::
+
+    RecurringMessage::cron('@daily', new Message());
+
+Hashed Cron Expressions
+·······················
+
+If you have many triggers scheduled at same time (for example, at midnight, ``0 0 * * *``)
+this will create a very long running list of schedules at that exact time.
+This may cause an issue if a task has a memory leak.
+
+You can add a hash symbol (``#``) in expressions to generate random values.
+Athough the values are random, they are predictable and consistent because they
+are generated based on the message. A message with string representation ``my task``
+and a defined frequency of ``# # * * *`` will have an idempotent frequency
+of ``56 20 * * *`` (every day at 8:56pm).
+
+You can also use hash ranges (``#(x-y)``) to define the list of possible values
+for that random part. For example, ``# #(0-7) * * *`` means daily, some time
+between midnight and 7am. Using the ``#`` without a range creates a range of any
+valid value for the field. ``# # # # #`` is short for ``#(0-59) #(0-23) #(1-28)
+#(1-12) #(0-6)``.
+
+You can also use some special values that represent common hashed cron expressions:
+
+======================  ========================================================================
+Alias                   Converts to
+======================  ========================================================================
+``#hourly``             ``# * * * *`` (at some minute every hour)
+``#daily``              ``# # * * *`` (at some time every day)
+``#weekly``             ``# # * * #`` (at some time every week)
+``#weekly@midnight``    ``# #(0-2) * * #`` (at ``#midnight`` one day every week)
+``#monthly``            ``# # # * *`` (at some time on some day, once per month)
+``#monthly@midnight``   ``# #(0-2) # * *`` (at ``#midnight`` on some day, once per month)
+``#annually``           ``# # # # *`` (at some time on some day, once per year)
+``#annually@midnight``  ``# #(0-2) # # *``  (at ``#midnight`` on some day, once per year)
+``#yearly``             ``# # # # *`` alias for ``#annually``
+``#yearly@midnight``    ``# #(0-2) # # *`` alias for ``#annually@midnight``
+``#midnight``           ``# #(0-2) * * *`` (at some time between midnight and 2:59am, every day)
+======================  ========================================================================
+
+For example::
+
+    RecurringMessage::cron('#midnight', new Message());
+
+.. note::
+
+    The day of month range is ``1-28``, this is to account for February
+    which has a minimum of 28 days.
+
+.. versionadded:: 6.4
+
+    Since version 6.4, it is now possible to add and define a timezone as a 3rd argument
 
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
