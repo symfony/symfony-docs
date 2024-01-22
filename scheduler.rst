@@ -238,10 +238,6 @@ For example::
     The day of month range is ``1-28``, this is to account for February
     which has a minimum of 28 days.
 
-.. versionadded:: 6.4
-
-    Since version 6.4, it is now possible to add and define a timezone as a 3rd argument
-
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
 
@@ -352,11 +348,6 @@ the Messenger component:
 .. image:: /_images/components/scheduler/generate_consume.png
     :alt: Symfony Scheduler - generate and consume
 
-.. versionadded:: 6.4
-
-    Since version 6.4, you can define your messages via a ``callback`` via the
-    :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
-
 Debugging the Schedule
 ----------------------
 
@@ -379,12 +370,6 @@ recurring messages. You can narrow down the list to a specific schedule:
         every 2 days        App\Messenger\Foo(0:17..)  Sun, 03 Dec 2023 ...
         15 4 */3 * *        App\Messenger\Foo(0:17..)  Mon, 18 Dec 2023 ...
        -------------------- -------------------------- ---------------------
-
-.. versionadded:: 6.4
-
-    Since version 6.4, you can even specify a date to determine the next run date
-    using the ``--date`` option. Additionally, you have the option to display
-    terminated recurring messages using the ``--all`` option.
 
 Efficient management with Symfony Scheduler
 -------------------------------------------
