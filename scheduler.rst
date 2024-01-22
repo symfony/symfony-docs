@@ -192,22 +192,23 @@ For example::
 
     RecurringMessage::cron('@daily', new Message());
 
-Hashed Cron Expression
-~~~~~~~~~~~~~~~~~~~~~~
+Hashed Cron Expressions
+·······················
 
-If you have many trigger scheduled at same time (for example, at midnight, ``0 0 * * *``)
-this will create a very long running schedules list right at this time.
+If you have many triggers scheduled at same time (for example, at midnight, ``0 0 * * *``)
+this will create a very long running list of schedules at that exact time.
 This may cause an issue if a task has a memory leak.
 
-You can add a ``#``(for hash) symbol in expression to generate random value. The value
-is deterministic based on the message. This means that while the value is random, it is
-predictable and consistent. A message with string representation ``my task``
+You can add a hash symbol (``#``) in expressions to generate random values.
+Athough the values are random, they are predictable and consistent because they
+are generated based on the message. A message with string representation ``my task``
 and a defined frequency of ``# # * * *`` will have an idempotent frequency
 of ``56 20 * * *`` (every day at 8:56pm).
 
-A hash range ``#(x-y)`` can also be used. For example, ``# #(0-7) * * *`` means daily,
-some time between midnight and 7am. Using the ``#`` without a range creates a range
-of any valid value for the field. ``# # # # #`` is short for ``#(0-59) #(0-23) #(1-28)
+You can also use hash ranges (``#(x-y)``) to define the list of possible values
+for that random part. For example, ``# #(0-7) * * *`` means daily, some time
+between midnight and 7am. Using the ``#`` without a range creates a range of any
+valid value for the field. ``# # # # #`` is short for ``#(0-59) #(0-23) #(1-28)
 #(1-12) #(0-6)``.
 
 You can also use some special values that represent common hashed cron expressions:
