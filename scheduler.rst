@@ -501,6 +501,103 @@ before being further redispatched to its corresponding handler::
         }
     }
 
+Scheduler Events
+----------------
+
+PreRunEvent
+~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PreRunEvent`
+
+``PreRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
+or cancel message before it's consumed::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Scheduler\Event\PreRunEvent;
+
+    public function onMessage(PreRunEvent $event): void
+    {
+        $schedule = $event->getSchedule();
+        $context = $event->getMessageContext();
+        $message = $event->getMessage();
+
+        // do something with the schedule, context or message
+
+        // and/or cancel message
+        $event->shouldCancel(true);
+    }
+
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\PreRunEvent"
+
+PostRunEvent
+~~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PostRunEvent`
+
+``PostRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
+after message is consumed::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Scheduler\Event\PostRunEvent;
+
+    public function onMessage(PostRunEvent $event): void
+    {
+        $schedule = $event->getSchedule();
+        $context = $event->getMessageContext();
+        $message = $event->getMessage();
+
+        // do something with the schedule, context or message
+    }
+
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\PostRunEvent"
+
+FailureEvent
+~~~~~~~~~~~~
+
+**Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\FailureEvent`
+
+``FailureEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
+when message consumption throw an exception::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Scheduler\Event\FailureEvent;
+
+    public function onMessage(FailureEvent $event): void
+    {
+        $schedule = $event->getSchedule();
+        $context = $event->getMessageContext();
+        $message = $event->getMessage();
+
+        $error = $event->getError();
+
+        // do something with the schedule, context, message or error (logging, ...)
+
+        // and/or ignore failure event
+        $event->shouldIgnore(true);
+    }
+
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\FailureEvent"
+
+.. versionadded:: 6.4
+
+    Methods ``PreRunEvent``, ``PostRunEvent`` and ``FailureEvent`` were introduced
+    in Symfony 6.4.
+
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization
 .. _`cron command-line utility`: https://en.wikipedia.org/wiki/Cron
 .. _`crontab.guru website`: https://crontab.guru/
