@@ -44,7 +44,7 @@ the task of creating a report::
 
     class SendDailySalesReports
     {
-        public function __construct(private string $id) {}
+        public function __construct(private int $id) {}
 
         public function getId(): int
         {
@@ -56,6 +56,9 @@ Next, create the handler that processes that kind of message::
 
     // src/Scheduler/Handler/SendDailySalesReportsHandler.php
     namespace App\Scheduler\Handler;
+
+    use App\Scheduler\Message\SendDailySalesReports;
+    use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
     #[AsMessageHandler]
     class SendDailySalesReportsHandler
@@ -103,6 +106,10 @@ on a particular schedule::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
+
+    use Symfony\Component\Scheduler\Attribute\AsSchedule;
+    use Symfony\Component\Scheduler\Schedule;
+    use Symfony\Component\Scheduler\ScheduleProviderInterface;
 
     #[AsSchedule]
     class SaleTaskProvider implements ScheduleProviderInterface
