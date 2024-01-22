@@ -194,6 +194,13 @@ Then, define the trigger date/time using the same syntax as the
 
     RecurringMessage::cron('* * * * *', new Message());
 
+    // optionally you can define the timezone used by the cron expression
+    RecurringMessage::cron('* * * * *', new Message(), new \DateTimeZone('Africa/Malabo'));
+
+.. versionadded:: 6.4
+
+    Since version 6.4, it is now possible to add and define a timezone as a 3rd argument
+
 .. tip::
 
     Check out the `crontab.guru website`_ if you need help to construct/understand
@@ -256,10 +263,6 @@ For example::
 
     The day of month range is ``1-28``, this is to account for February
     which has a minimum of 28 days.
-
-.. versionadded:: 6.4
-
-    Since version 6.4, it is now possible to add and define a timezone as a 3rd argument
 
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
@@ -353,6 +356,11 @@ Finally, the recurring messages has to be attached to a schedule::
         }
     }
 
+.. versionadded:: 6.4
+
+    Since version 6.4, you can define your messages via a ``callback`` via the
+    :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
+
 Consuming Messages (Running the Worker)
 ---------------------------------------
 
@@ -370,11 +378,6 @@ the Messenger component:
 
 .. image:: /_images/components/scheduler/generate_consume.png
     :alt: Symfony Scheduler - generate and consume
-
-.. versionadded:: 6.4
-
-    Since version 6.4, you can define your messages via a ``callback`` via the
-    :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
 
 Debugging the Schedule
 ----------------------
