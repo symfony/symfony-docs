@@ -336,14 +336,19 @@ recurring messages. You can narrow down the list to a specific schedule:
 Efficient management with Symfony Scheduler
 -------------------------------------------
 
-When a worker is restarted or undergoes shutdown for a period, the Scheduler transport won't be able to generate the messages (because they are created on-the-fly by the scheduler transport).
-This implies that any messages scheduled to be sent during the worker's inactive period are not sent, and the Scheduler will lose track of the last processed message.
-Upon restart, it will recalculate the messages to be generated from that point onward.
+When a worker is restarted or undergoes shutdown for a period, the Scheduler
+transport won't be able to generate the messages (because they are created
+on-the-fly by the scheduler transport). This implies that any messages
+scheduled to be sent during the worker's inactive period are not sent, and the
+Scheduler will lose track of the last processed message. Upon restart, it will
+recalculate the messages to be generated from that point onward.
 
-To illustrate, consider a recurring message set to be sent every 3 days.
-If a worker is restarted on day 2, the message will be sent 3 days from the restart, on day 5.
+To illustrate, consider a recurring message set to be sent every 3 days. If a
+worker is restarted on day 2, the message will be sent 3 days from the restart,
+on day 5.
 
-While this behavior may not necessarily pose a problem, there is a possibility that it may not align with what you are seeking.
+While this behavior may not necessarily pose a problem, there is a possibility
+that it may not align with what you are seeking.
 
 That's why the scheduler allows to remember the last execution date of a message
 via the ``stateful`` option (and the :doc:`Cache component </components/cache>`).
