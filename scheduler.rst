@@ -193,7 +193,7 @@ For example::
     RecurringMessage::cron('@daily', new Message());
 
 Hashed Cron Expressions
-·······················
+.......................
 
 If you have many triggers scheduled at same time (for example, at midnight, ``0 0 * * *``)
 this will create a very long running list of schedules at that exact time.
