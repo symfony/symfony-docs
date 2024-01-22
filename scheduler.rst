@@ -360,7 +360,8 @@ that it may not align with what you are seeking.
 
 That's why the scheduler allows to remember the last execution date of a message
 via the ``stateful`` option (and the :doc:`Cache component </components/cache>`).
-This allows the system to retain the state of the schedule, ensuring that when a worker is restarted, it resumes from the point it left off.::
+This allows the system to retain the state of the schedule, ensuring that when
+a worker is restarted, it resumes from the point it left off::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
