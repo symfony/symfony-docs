@@ -784,8 +784,8 @@ Symfony provides the following env var processors:
             // config/services.php
             $container->setParameter('suit', '%env(enum:App\Enum\Suit:CARD_SUIT)%');
 
-    The value stored in the ``CARD_SUIT`` env var would be a string like `'spades'` but the
-    application will use the ``Suit::Spdes`` enum value.
+    The value stored in the ``CARD_SUIT`` env var would be a string (e.g. ``'spades'``)
+    but the application will use the enum value (e.g. ``Suit::Spades``).
 
     .. versionadded:: 6.2
 
