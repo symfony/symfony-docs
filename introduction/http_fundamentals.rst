@@ -216,7 +216,7 @@ have all the request information at your fingertips::
 
     // retrieves $_GET and $_POST variables respectively
     $request->query->get('id');
-    $request->request->get('category', 'default category');
+    $request->getPayload()->get('category', 'default category');
 
     // retrieves $_SERVER variables
     $request->server->get('HTTP_HOST');
