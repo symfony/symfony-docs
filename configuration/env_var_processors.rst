@@ -745,11 +745,13 @@ Symfony provides the following env var processors:
     Tries to convert an environment variable to an actual ``\BackedEnum`` value.
     This processor takes the fully qualified name of the ``\BackedEnum`` as an argument::
 
-        # App\Enum\Environment
+        // App\Enum\Suit.php
         enum Environment: string
         {
-            case Development = 'dev';
-            case Production = 'prod';
+            case Clubs = 'clubs';
+            case Spades = 'spades';
+            case Diamonds = 'diamonds';
+            case Hearts = 'hearts';
         }
 
     .. configuration-block::
@@ -758,7 +760,7 @@ Symfony provides the following env var processors:
 
             # config/services.yaml
             parameters:
-                typed_env: '%env(enum:App\Enum\Environment:APP_ENV)%'
+                suit: '%env(enum:App\Enum\Suit:CARD_SUIT)%'
 
         .. code-block:: xml
 
@@ -773,14 +775,17 @@ Symfony provides the following env var processors:
                     https://symfony.com/schema/dic/symfony/symfony-1.0.xsd">
 
                 <parameters>
-                    <parameter key="typed_env">%env(enum:App\Enum\Environment:APP_ENV)%</parameter>
+                    <parameter key="suit">%env(enum:App\Enum\Suit:CARD_SUIT)%</parameter>
                 </parameters>
             </container>
 
         .. code-block:: php
 
             // config/services.php
-            $container->setParameter('typed_env', '%env(enum:App\Enum\Environment:APP_ENV)%');
+            $container->setParameter('suit', '%env(enum:App\Enum\Suit:CARD_SUIT)%');
+
+    The value stored in the ``CARD_SUIT`` env var would be a string (e.g. ``'spades'``)
+    but the application will use the enum value (e.g. ``Suit::Spades``).
 
     .. versionadded:: 6.2
 
