@@ -205,42 +205,6 @@ Then, define the trigger date/time using the same syntax as the
 
     Since version 6.4, it is now possible to add and define a timezone as a 3rd argument.
 
-Another way of declaring cron triggers is to use the
-:class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute
-on an invokable class::
-
-    // src/Scheduler/Task/SendDailySalesReports.php
-    namespace App\Scheduler\Task;
-
-    use Symfony\Component\Scheduler\Attribute\AsCronTask;
-
-    #[AsCronTask('0 0 * * *')]
-    class SendDailySalesReports
-    {
-        public function __invoke()
-        {
-            // ...
-        }
-    }
-
-This is the most basic way to define a cron trigger. However, the attribute
-takes more parameters to customize the trigger::
-
-    // adds randomly up to 6 seconds to the trigger time to avoid load spikes
-    #[AsCronTask('0 0 * * *', jitter: 6)]
-
-    // defines the method name to call instead as well as the arguments to pass to it
-    #[AsCronTask('0 0 * * *', method: 'sendEmail', arguments: ['email' => 'admin@symfony.com'])]
-
-    // defines the timezone to use
-    #[AsCronTask('0 0 * * *', timezone: 'Africa/Malabo')]
-
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute
-    was introduced in Symfony 6.4.
-
-
 .. tip::
 
     Check out the `crontab.guru website`_ if you need help to construct/understand
@@ -257,6 +221,10 @@ You can also use some special values that represent common cron expressions:
 For example::
 
     RecurringMessage::cron('@daily', new Message());
+
+.. tip::
+
+    You can also define cron tasks using :ref:`the AsCronTask attribute <scheduler-attributes-cron-task>`.
 
 Hashed Cron Expressions
 .......................
@@ -321,54 +289,9 @@ defined by PHP datetime functions::
     $until = '2023-06-12';
     RecurringMessage::every('first Monday of next month', new Message(), $from, $until);
 
-Like cron triggers, you can also use the
-:class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute
-on an invokable class::
+.. tip::
 
-    // src/Scheduler/Task/SendDailySalesReports.php
-    namespace App\Scheduler\Task;
-
-    use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
-
-    #[AsPeriodicTask(frequency: '1 day', from: '2022-01-01', until: '2023-06-12')]
-    class SendDailySalesReports
-    {
-        public function __invoke()
-        {
-            // ...
-        }
-    }
-
-.. note::
-
-    The ``from`` and ``until`` options are optional. If not defined, the task
-    will be executed indefinitely.
-
-The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigger::
-
-    // the frequency can be defined as an integer representing the number of seconds
-    #[AsPeriodicTask(frequency: 86400)]
-
-    // adds randomly up to 6 seconds to the trigger time to avoid load spikes
-    #[AsPeriodicTask(frequency: '1 day', jitter: 6)]
-
-    // defines the method name to call instead as well as the arguments to pass to it
-    #[AsPeriodicTask(frequency: '1 day', method: 'sendEmail', arguments: ['email' => 'admin@symfony.com'])]
-    class SendDailySalesReports
-    {
-        public function sendEmail(string $email): void
-        {
-            // ...
-        }
-    }
-
-    // defines the timezone to use
-    #[AsPeriodicTask(frequency: '1 day', timezone: 'Africa/Malabo')]
-
-.. versionadded:: 6.4
-
-    The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute
-    was introduced in Symfony 6.4.
+    You can also define periodic tasks using :ref:`the AsPeriodicTask attribute <scheduler-attributes-periodic-task>`.
 
 Custom Triggers
 ~~~~~~~~~~~~~~~
@@ -516,17 +439,94 @@ be used. Also, by default, the ``__invoke`` method of your service will be calle
 but, it's also possible to specify the method to call via the ``method``option
 and you can define arguments via ``arguments``option if necessary.
 
-The distinction between these two attributes lies in the trigger options:
+.. scheduler-attributes-cron-task::
 
-* :class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute
-  defines the following trigger options: ``frequencies``, ``from``, ``until`` and
-  ``jitter``,
-* :class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute
-  defines the following trigger options: ``expression``, ``jitter``.
+``AsCronTask`` Example
+......................
 
-By defining one of these two attributes, it enables the execution of your
-service or command, considering all the options that have been specified within
-the attributes.
+This is the most basic way to define a cron trigger with this attribute::
+
+    // src/Scheduler/Task/SendDailySalesReports.php
+    namespace App\Scheduler\Task;
+
+    use Symfony\Component\Scheduler\Attribute\AsCronTask;
+
+    #[AsCronTask('0 0 * * *')]
+    class SendDailySalesReports
+    {
+        public function __invoke()
+        {
+            // ...
+        }
+    }
+
+The attribute takes more parameters to customize the trigger::
+
+    // adds randomly up to 6 seconds to the trigger time to avoid load spikes
+    #[AsCronTask('0 0 * * *', jitter: 6)]
+
+    // defines the method name to call instead as well as the arguments to pass to it
+    #[AsCronTask('0 0 * * *', method: 'sendEmail', arguments: ['email' => 'admin@example.com'])]
+
+    // defines the timezone to use
+    #[AsCronTask('0 0 * * *', timezone: 'Africa/Malabo')]
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute
+    was introduced in Symfony 6.4.
+
+.. scheduler-attributes-periodic-task::
+
+``AsPeriodicTask`` Example
+..........................
+
+This is the most basic way to define a periodic trigger with this attribute::
+
+    // src/Scheduler/Task/SendDailySalesReports.php
+    namespace App\Scheduler\Task;
+
+    use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
+
+    #[AsPeriodicTask(frequency: '1 day', from: '2022-01-01', until: '2023-06-12')]
+    class SendDailySalesReports
+    {
+        public function __invoke()
+        {
+            // ...
+        }
+    }
+
+.. note::
+
+    The ``from`` and ``until`` options are optional. If not defined, the task
+    will be executed indefinitely.
+
+The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigger::
+
+    // the frequency can be defined as an integer representing the number of seconds
+    #[AsPeriodicTask(frequency: 86400)]
+
+    // adds randomly up to 6 seconds to the trigger time to avoid load spikes
+    #[AsPeriodicTask(frequency: '1 day', jitter: 6)]
+
+    // defines the method name to call instead as well as the arguments to pass to it
+    #[AsPeriodicTask(frequency: '1 day', method: 'sendEmail', arguments: ['email' => 'admin@symfony.com'])]
+    class SendDailySalesReports
+    {
+        public function sendEmail(string $email): void
+        {
+            // ...
+        }
+    }
+
+    // defines the timezone to use
+    #[AsPeriodicTask(frequency: '1 day', timezone: 'Africa/Malabo')]
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute
+    was introduced in Symfony 6.4.
 
 Managing Scheduled Messages
 ---------------------------
