@@ -81,6 +81,13 @@ Routing
 
 * :doc:`Route </routing>`
 
+Scheduler
+~~~~~~~~~
+
+* :ref:`AsCronTask <scheduler-attributes-cron-task>`
+* :ref:`AsPeriodicTask <scheduler-attributes-periodic-task>`
+* :ref:`AsSchedule <scheduler_attaching-recurring-messages>`
+
 Security
 ~~~~~~~~
 
