@@ -510,7 +510,7 @@ PreRunEvent
 **Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PreRunEvent`
 
 ``PreRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
-or cancel message before it's consumed::
+or cancel a message before it's consumed::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Scheduler\Event\PreRunEvent;
@@ -540,7 +540,7 @@ PostRunEvent
 **Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PostRunEvent`
 
 ``PostRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
-after message is consumed::
+after a message is consumed::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Scheduler\Event\PostRunEvent;
@@ -567,7 +567,7 @@ FailureEvent
 **Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\FailureEvent`
 
 ``FailureEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
-when message consumption throw an exception::
+when a message consumption throws an exception::
 
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\Scheduler\Event\FailureEvent;
@@ -595,8 +595,8 @@ and their priorities:
 
 .. versionadded:: 6.4
 
-    Methods ``PreRunEvent``, ``PostRunEvent`` and ``FailureEvent`` were introduced
-    in Symfony 6.4.
+    The ``PreRunEvent``, ``PostRunEvent`` and ``FailureEvent`` events were
+    introduced in Symfony 6.4.
 
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization
 .. _`cron command-line utility`: https://en.wikipedia.org/wiki/Cron
