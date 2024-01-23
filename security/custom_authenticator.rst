@@ -339,9 +339,9 @@ would initialize the passport like this::
     {
         public function authenticate(Request $request): Passport
         {
-            $password = $request->request->get('password');
-            $username = $request->request->get('username');
-            $csrfToken = $request->request->get('csrf_token');
+            $password = $request->getPayload()->get('password');
+            $username = $request->getPayload()->get('username');
+            $csrfToken = $request->getPayload()->get('csrf_token');
 
             // ... validate no parameter is empty
 

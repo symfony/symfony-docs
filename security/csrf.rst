@@ -156,7 +156,7 @@ method to check its validity::
 
     public function delete(Request $request): Response
     {
-        $submittedToken = $request->request->get('token');
+        $submittedToken = $request->getPayload()->get('token');
 
         // 'delete-item' is the same value used in the template to generate the token
         if ($this->isCsrfTokenValid('delete-item', $submittedToken)) {
