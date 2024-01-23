@@ -285,11 +285,6 @@ Custom Triggers
 Custom triggers allow to configure any frequency dynamically. They are created
 as services that implement :class:`Symfony\\Component\\Scheduler\\Trigger\\TriggerInterface`.
 
-.. versionadded:: 6.4
-
-    Since version 6.4, you can define your messages via a ``callback`` via the
-    :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
-
 For example, if you want to send customer reports daily except for holiday periods::
 
     // src/Scheduler/Trigger/NewUserWelcomeEmailHandler.php
@@ -361,21 +356,32 @@ Finally, the recurring messages has to be attached to a schedule::
         }
     }
 
-So, this RecurringMessage will encompass both the trigger, defining the generation frequency of the message, and the message itself, the one to be processed by a specific handler.
+So, this ``RecurringMessage`` will encompass both the trigger, defining the
+generation frequency of the message, and the message itself, the one to be
+processed by a specific handler.
 
-But what is interesting to know is that it also provides you with the ability to generate your message(s) dynamically.
+But what is interesting to know is that it also provides you with the ability to
+generate your message(s) dynamically.
 
-A dynamic vision for the messages generated
+A Dynamic Vision for the Messages Generated
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This proves particularly useful when the message depends on data stored in databases or third-party services.
+This proves particularly useful when the message depends on data stored in
+databases or third-party services.
 
-Taking your example of reports generation, it depends on customer requests.
-Depending on the specific demands, any number of reports may need to be generated at a defined frequency.
-For these dynamic scenarios, it gives you the capability to dynamically define our message(s) instead of statically.
-This is achieved by defining a :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
+Following the previous example of reports generation: they depend on customer requests.
+Depending on the specific demands, any number of reports may need to be generated
+at a defined frequency. For these dynamic scenarios, it gives you the capability
+to dynamically define our message(s) instead of statically. This is achieved by
+defining a :class:`Symfony\\Component\\Scheduler\\Trigger\\CallbackMessageProvider`.
 
-Essentially, this means you can dynamically, at runtime, define your message(s) through a callback that gets executed each time the scheduler transport checks for messages to be generated::
+.. versionadded:: 6.4
+
+    The ``CallbackMessageProvider`` was introduced in Symfony 6.4.
+
+Essentially, this means you can dynamically, at runtime, define your message(s)
+through a callback that gets executed each time the scheduler transport
+checks for messages to be generated::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
@@ -394,7 +400,6 @@ Essentially, this means you can dynamically, at runtime, define your message(s) 
                     // instead of being static as in the previous example
                     new CallbackMessageProvider([$this, 'generateReports'], 'foo')),
                     RecurringMessage::cron(‘3 8 * * 1’, new CleanUpOldSalesReport())
-
                 );
         }
 
@@ -403,61 +408,76 @@ Essentially, this means you can dynamically, at runtime, define your message(s) 
             // ...
             yield new SendDailySalesReports();
             yield new ReportSomethingReportSomethingElse();
-            ....
         }
     }
 
-Exploring alternatives for crafting your Recurring Messages
+Exploring Alternatives for Crafting your Recurring Messages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There is also another way to build a RecurringMessage, and this can be done simply by adding an attribute above a service or a command:
-:class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute and :class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute.
+There is also another way to build a ``RecurringMessage``, and this can be done
+by adding one of these attributes to a service or a command:
+:class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` and
+:class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask`.
 
-For both of these attributes, you have the ability to define the schedule to roll with using the ``schedule``option. By default, the ``default`` named schedule will be used.
-Also, by default, the ``__invoke`` method of your service will be called but, it's also possible to specify the method to call via the ``method``option and you can define arguments via ``arguments``option if necessary.
+For both of these attributes, you have the ability to define the schedule to
+use via the ``schedule``option. By default, the ``default`` named schedule will
+be used. Also, by default, the ``__invoke`` method of your service will be called
+but, it's also possible to specify the method to call via the ``method``option
+and you can define arguments via ``arguments``option if necessary.
 
-The distinction between these two attributes lies in the options pertaining to the trigger:
+The distinction between these two attributes lies in the trigger options:
 
-#. :class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute:
+* :class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute
+  defines the following trigger options: ``frequencies``, ``from``, ``until`` and
+  ``jitter``,
+* :class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute
+  defines the following trigger options: ``expression``, ``jitter``.
 
-    #. You can configure various options such as ``frequencies``, ``from``, ``until`` and ``jitter``, encompassing options related to the trigger.
-
-#. :class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute:
-
-    #. You can configure various options such as ``expression``, ``jitter``, encompassing options related to the trigger.
-
-By defining one of these two attributes, it enables the execution of your service or command, considering all the options that have been specified within the attributes.
+By defining one of these two attributes, it enables the execution of your
+service or command, considering all the options that have been specified within
+the attributes.
 
 Managing Scheduled Messages
 ---------------------------
 
-Modifying Scheduled Messages in real time
+Modifying Scheduled Messages in Real-Time
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-While planning a schedule in advance is beneficial, it is rare for a schedule to remain static over time.
-After a certain period, some RecurringMessages may become obsolete, while others may need to be integrated into our planning.
+While planning a schedule in advance is beneficial, it is rare for a schedule to
+remain static over time. After a certain period, some ``RecurringMessages`` may
+become obsolete, while others may need to be integrated into the planning.
 
-As a general practice, to alleviate a heavy workload, the recurring messages in the schedules are stored in memory to avoid recalculation each time the scheduler transport generates messages.
-However, this approach can have a flip side.
+As a general practice, to alleviate a heavy workload, the recurring messages in
+the schedules are stored in memory to avoid recalculation each time the scheduler
+transport generates messages. However, this approach can have a flip side.
 
-In the context of our sales company, certain promotions may occur during specific periods and need to be communicated repetitively throughout a given timeframe
-or the deletion of old reports needs to be halted under certain circumstances.
+Following the same report generation example as above, the company might do some
+promotions during specific periods (and they need to be communicated repetitively
+throughout a given timeframe) or the deletion of old reports needs to be halted
+under certain circumstances.
 
-This is why the Scheduler incorporates a mechanism to dynamically modify the schedule and consider all changes in real-time.
+This is why the ``Scheduler`` incorporates a mechanism to dynamically modify the
+schedule and consider all changes in real-time.
 
-Strategies for adding, removing, and modifying entries within the Schedule
+Strategies for Adding, Removing, and Modifying Entries within the Schedule
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The schedule provides you with the ability to :method:`Symfony\\Component\\Scheduler\Schedule::add`, :method:`Symfony\\Component\\Scheduler\Schedule::remove`, or :method:`Symfony\\Component\\Scheduler\Schedule::clear` all associated recurring messages,
-resulting in the reset and recalculation of the in-memory stack of recurring messages.
+The schedule provides you with the ability to :method:`Symfony\\Component\\Scheduler\Schedule::add`,
+:method:`Symfony\\Component\\Scheduler\Schedule::remove`, or :method:`Symfony\\Component\\Scheduler\Schedule::clear`
+all associated recurring messages, resulting in the reset and recalculation of
+the in-memory stack of recurring messages.
 
-For instance, for various reasons, if there's no need to generate a report, a callback can be employed to conditionally skip generating of some or all reports.
+For instance, for various reasons, if there's no need to generate a report, a
+callback can be employed to conditionally skip generating of some or all reports.
 
 However, if the intention is to completely remove a recurring message and its recurrence,
-the :class:`Symfony\\Component\\Scheduler\Schedule` offers a :method:`Symfony\\Component\\Scheduler\Schedule::remove` or a :method:`Symfony\\Component\\Scheduler\Schedule::removeById` method.
-This can be particularly useful in your case, especially if you need to halt the generation of the recurring message, which involves deleting old reports.
+the :class:`Symfony\\Component\\Scheduler\Schedule` offers a :method:`Symfony\\Component\\Scheduler\Schedule::remove`
+or a :method:`Symfony\\Component\\Scheduler\Schedule::removeById` method. This can
+be particularly useful in your case, especially if you need to halt the generation
+of the recurring message, which involves deleting old reports.
 
-In your handler, you can check a condition and, if affirmative, access the :class:`Symfony\\Component\\Scheduler\Schedule` and invoke this method::
+In your handler, you can check a condition and, if affirmative, access the
+:class:`Symfony\\Component\\Scheduler\Schedule` and invoke this method::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
@@ -492,7 +512,7 @@ In your handler, you can check a condition and, if affirmative, access the :clas
     {
         public function __invoke(CleanUpOldSalesReport $cleanUpOldSalesReport): void
         {
-            // do what you have to do
+            // do some work here...
 
             if ($isFinished) {
                 $this->mySchedule->removeCleanUpMessage();
@@ -500,40 +520,47 @@ In your handler, you can check a condition and, if affirmative, access the :clas
         }
     }
 
-Nevertheless, this system may not be the most suitable for all scenarios. Also, the handler should ideally be designed to process the type of message it is intended for,
-without making decisions about adding or removing a new recurring message.
+Nevertheless, this system may not be the most suitable for all scenarios. Also,
+the handler should ideally be designed to process the type of message it is
+intended for, without making decisions about adding or removing a new recurring
+message.
 
-For instance, if, due to an external event, there is a need to add a recurrent message aimed at deleting reports,
-it can be challenging to achieve within the handler. This is because the handler will no longer be called or executed once there are no more messages of that type.
+For instance, if, due to an external event, there is a need to add a recurrent
+message aimed at deleting reports, it can be challenging to achieve within the
+handler. This is because the handler will no longer be called or executed once
+there are no more messages of that type.
 
-However, the Scheduler also features an event system that is integrated into a Symfony full-stack application by grafting onto Symfony Messenger events.
-These events are dispatched through a listener, providing a convenient means to respond.
+However, the Scheduler also features an event system that is integrated into a
+Symfony full-stack application by grafting onto Symfony Messenger events. These
+events are dispatched through a listener, providing a convenient means to respond.
 
 Managing Scheduled Messages via Events
 --------------------------------------
 
-A strategic event handling
+A Strategic Event Handling
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The goal is to provide flexibility in deciding when to take action while preserving decoupling.
-Three primary event types have been introduced types
+The goal is to provide flexibility in deciding when to take action while
+preserving decoupling. Three primary event types have been introduced types
 
-    #. PRE_RUN_EVENT
+* ``PRE_RUN_EVENT``
+* ``POST_RUN_EVENT``
+* ``FAILURE_EVENT``
 
-    #. POST_RUN_EVENT
+Access to the schedule is a crucial feature, allowing effortless addition or
+removal of message types. Additionally, it will be possible to access the
+currently processed message and its message context.
 
-    #. FAILURE_EVENT
+In consideration of our scenario, you can listen to the ``PRE_RUN_EVENT`` and
+check if a certain condition is met. For instance, you might decide to add a
+recurring message for cleaning old reports again, with the same or different
+configurations, or add any other recurring message(s).
 
-Access to the schedule is a crucial feature, allowing effortless addition or removal of message types.
-Additionally, it will be possible to access the currently processed message and its message context.
-
-In consideration of our scenario, you can easily listen to the PRE_RUN_EVENT and check if a certain condition is met.
-
-For instance, you might decide to add a recurring message for cleaning old reports again, with the same or different configurations, or add any other recurring message(s).
-
-If you had chosen to handle the deletion of the recurring message, you could have easily done so in a listener for this event.
-
-Importantly, it reveals a specific feature :method:`Symfony\\Component\\Scheduler\\Event\\PreRunEvent::shouldCancel` that allows you to prevent the message of the deleted recurring message from being transferred and processed by its handler::
+If you had chosen to handle the deletion of the recurring message, you could
+have done so in a listener for this event. Importantly, it reveals a specific
+feature :method:`Symfony\\Component\\Scheduler\\Event\\PreRunEvent::shouldCancel`
+that allows you to prevent the message of the deleted recurring message from
+being transferred and processed by its handler::
 
     // src/Scheduler/SaleTaskProvider.php
     namespace App\Scheduler;
@@ -543,7 +570,7 @@ Importantly, it reveals a specific feature :method:`Symfony\\Component\\Schedule
     {
         public function getSchedule(): Schedule
         {
-            $this->removeOldReports = RecurringMessage::cron(‘3 8 * * 1’, new CleanUpOldSalesReport());
+            $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
 
             return $this->schedule ??= (new Schedule())
                 ->with(
@@ -559,7 +586,7 @@ Importantly, it reveals a specific feature :method:`Symfony\\Component\\Schedule
                     // can target directly the RecurringMessage being processed
                     $schedule->removeById($messageContext->id);
 
-                    //Allow to call the ShouldCancel() and avoid the message to be handled
+                    // allow to call the ShouldCancel() and avoid the message to be handled
                         $event->shouldCancel(true);
                 }
                 ->after(function(PostRunEvent $event) {
@@ -570,6 +597,103 @@ Importantly, it reveals a specific feature :method:`Symfony\\Component\\Schedule
                 }
         }
     }
+
+Scheduler Events
+~~~~~~~~~~~~~~~~
+
+PreRunEvent
+...........
+
+**Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PreRunEvent`
+
+``PreRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
+or cancel a message before it's consumed::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Scheduler\Event\PreRunEvent;
+
+    public function onMessage(PreRunEvent $event): void
+    {
+        $schedule = $event->getSchedule();
+        $context = $event->getMessageContext();
+        $message = $event->getMessage();
+
+        // do something with the schedule, context or message
+
+        // and/or cancel message
+        $event->shouldCancel(true);
+    }
+
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\PreRunEvent"
+
+PostRunEvent
+............
+
+**Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PostRunEvent`
+
+``PostRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
+after a message is consumed::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Scheduler\Event\PostRunEvent;
+
+    public function onMessage(PostRunEvent $event): void
+    {
+        $schedule = $event->getSchedule();
+        $context = $event->getMessageContext();
+        $message = $event->getMessage();
+
+        // do something with the schedule, context or message
+    }
+
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\PostRunEvent"
+
+FailureEvent
+............
+
+**Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\FailureEvent`
+
+``FailureEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
+when a message consumption throws an exception::
+
+    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+    use Symfony\Component\Scheduler\Event\FailureEvent;
+
+    public function onMessage(FailureEvent $event): void
+    {
+        $schedule = $event->getSchedule();
+        $context = $event->getMessageContext();
+        $message = $event->getMessage();
+
+        $error = $event->getError();
+
+        // do something with the schedule, context, message or error (logging, ...)
+
+        // and/or ignore failure event
+        $event->shouldIgnore(true);
+    }
+
+Execute this command to find out which listeners are registered for this event
+and their priorities:
+
+.. code-block:: terminal
+
+    $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\FailureEvent"
+
+.. versionadded:: 6.4
+
+    The ``PreRunEvent``, ``PostRunEvent`` and ``FailureEvent`` events were
+    introduced in Symfony 6.4.
 
 Consuming Messages (Running the Worker)
 ---------------------------------------
@@ -700,103 +824,6 @@ before being further redispatched to its corresponding handler::
                 );
         }
     }
-
-Scheduler Events
-----------------
-
-PreRunEvent
-~~~~~~~~~~~
-
-**Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PreRunEvent`
-
-``PreRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
-or cancel a message before it's consumed::
-
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\Scheduler\Event\PreRunEvent;
-
-    public function onMessage(PreRunEvent $event): void
-    {
-        $schedule = $event->getSchedule();
-        $context = $event->getMessageContext();
-        $message = $event->getMessage();
-
-        // do something with the schedule, context or message
-
-        // and/or cancel message
-        $event->shouldCancel(true);
-    }
-
-Execute this command to find out which listeners are registered for this event
-and their priorities:
-
-.. code-block:: terminal
-
-    $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\PreRunEvent"
-
-PostRunEvent
-~~~~~~~~~~~~
-
-**Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\PostRunEvent`
-
-``PostRunEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
-after a message is consumed::
-
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\Scheduler\Event\PostRunEvent;
-
-    public function onMessage(PostRunEvent $event): void
-    {
-        $schedule = $event->getSchedule();
-        $context = $event->getMessageContext();
-        $message = $event->getMessage();
-
-        // do something with the schedule, context or message
-    }
-
-Execute this command to find out which listeners are registered for this event
-and their priorities:
-
-.. code-block:: terminal
-
-    $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\PostRunEvent"
-
-FailureEvent
-~~~~~~~~~~~~
-
-**Event Class**: :class:`Symfony\\Component\\Scheduler\\Event\\FailureEvent`
-
-``FailureEvent`` allows to modify the :class:`Symfony\\Component\\Scheduler\\Schedule`
-when a message consumption throws an exception::
-
-    use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-    use Symfony\Component\Scheduler\Event\FailureEvent;
-
-    public function onMessage(FailureEvent $event): void
-    {
-        $schedule = $event->getSchedule();
-        $context = $event->getMessageContext();
-        $message = $event->getMessage();
-
-        $error = $event->getError();
-
-        // do something with the schedule, context, message or error (logging, ...)
-
-        // and/or ignore failure event
-        $event->shouldIgnore(true);
-    }
-
-Execute this command to find out which listeners are registered for this event
-and their priorities:
-
-.. code-block:: terminal
-
-    $ php bin/console debug:event-dispatcher "Symfony\Component\Scheduler\Event\FailureEvent"
-
-.. versionadded:: 6.4
-
-    The ``PreRunEvent``, ``PostRunEvent`` and ``FailureEvent`` events were
-    introduced in Symfony 6.4.
 
 .. _`Memoizing`: https://en.wikipedia.org/wiki/Memoization
 .. _`cron command-line utility`: https://en.wikipedia.org/wiki/Cron
