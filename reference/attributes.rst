@@ -89,8 +89,8 @@ Routing
 Scheduler
 ~~~~~~~~~
 
-* :ref:`AsCronTask <scheduler_cron-expression-triggers>`
-* :ref:`AsPeriodicTask <scheduler_periodical-triggers>`
+* :ref:`AsCronTask <scheduler-attributes-cron-task>`
+* :ref:`AsPeriodicTask <scheduler-attributes-periodic-task>`
 * :ref:`AsSchedule <scheduler_attaching-recurring-messages>`
 
 Security

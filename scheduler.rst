@@ -182,8 +182,6 @@ methods::
 Most of them can be created via the :class:`Symfony\\Component\\Scheduler\\RecurringMessage`
 class, as shown in the following examples.
 
-.. _scheduler_cron-expression-triggers:
-
 Cron Expression Triggers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -271,8 +269,6 @@ For example::
 
     The day of month range is ``1-28``, this is to account for February
     which has a minimum of 28 days.
-
-.. _scheduler_periodical-triggers:
 
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
