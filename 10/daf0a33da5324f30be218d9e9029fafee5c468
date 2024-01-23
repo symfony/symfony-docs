@@ -1,0 +1,10 @@
+---------------------------------------------------------------------------
+
+by alamirault at 2023-10-17T18:25:47Z
+
+If we want document it, we must take example on this on same page I think
+
+> The easiest way to generate a user class is using the ``make:user`` command
+from the `MakerBundle`_:
+
+But explaining how it works before is very important, maybe `make:security:form-login` must be added in a `tips` section after explanation ?
