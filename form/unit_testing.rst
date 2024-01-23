@@ -147,19 +147,19 @@ make sure the ``FormRegistry`` uses the created instance::
     namespace App\Tests\Form\Type;
 
     use App\Form\Type\TestedType;
-    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManager;
     use Symfony\Component\Form\PreloadedExtension;
     use Symfony\Component\Form\Test\TypeTestCase;
     // ...
 
     class TestedTypeTest extends TypeTestCase
     {
-        private MockObject|ObjectManager $objectManager;
+        private MockObject&EntityManager $entityManager;
 
         protected function setUp(): void
         {
             // mock any dependencies
-            $this->objectManager = $this->createMock(ObjectManager::class);
+            $this->entityManager = $this->createMock(EntityManager::class);
 
             parent::setUp();
         }
@@ -167,7 +167,7 @@ make sure the ``FormRegistry`` uses the created instance::
         protected function getExtensions(): array
         {
             // create a type instance with the mocked dependencies
-            $type = new TestedType($this->objectManager);
+            $type = new TestedType($this->entityManager);
 
             return [
                 // register the type instances with the PreloadedExtension

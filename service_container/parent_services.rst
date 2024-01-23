@@ -9,7 +9,7 @@ you may have multiple repository classes which need the
     // src/Repository/BaseDoctrineRepository.php
     namespace App\Repository;
 
-    use Doctrine\Persistence\ObjectManager;
+    use Doctrine\ORM\EntityManager;
     use Psr\Log\LoggerInterface;
 
     // ...
@@ -18,7 +18,7 @@ you may have multiple repository classes which need the
         protected LoggerInterface $logger;
 
         public function __construct(
-            protected ObjectManager $objectManager,
+            protected EntityManager $entityManager,
         ) {
         }
 
