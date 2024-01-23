@@ -1065,6 +1065,12 @@ and should not be retried. If you throw
 :class:`Symfony\\Component\\Messenger\\Exception\\UnrecoverableMessageHandlingException`,
 the message will not be retried.
 
+.. note::
+
+    Messages that will not be retried, will still show up in the configured failure transport.
+    If you want to avoid that, consider handling the error yourself and let the handler
+    successfully end.
+
 Forcing Retrying
 ~~~~~~~~~~~~~~~~
 
