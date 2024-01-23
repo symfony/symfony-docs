@@ -598,7 +598,7 @@ the ``Request`` class::
 
         // retrieves GET and POST variables respectively
         $request->query->get('page');
-        $request->request->get('page');
+        $request->getPayload()->get('page');
 
         // retrieves SERVER variables
         $request->server->get('HTTP_HOST');

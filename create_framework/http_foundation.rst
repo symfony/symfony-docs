@@ -178,7 +178,7 @@ fingertips thanks to a nice and simple API::
 
     // retrieves GET and POST variables respectively
     $request->query->get('foo');
-    $request->request->get('bar', 'default value if bar does not exist');
+    $request->getPayload()->get('bar', 'default value if bar does not exist');
 
     // retrieves SERVER variables
     $request->server->get('HTTP_HOST');

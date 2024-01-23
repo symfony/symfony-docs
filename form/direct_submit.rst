@@ -17,7 +17,7 @@ control over when exactly your form is submitted and what data is passed to it::
         $form = $this->createForm(TaskType::class, $task);
 
         if ($request->isMethod('POST')) {
-            $form->submit($request->request->all($form->getName()));
+            $form->submit($request->getPayload()->get($form->getName()));
 
             if ($form->isSubmitted() && $form->isValid()) {
                 // perform some action...
@@ -41,7 +41,7 @@ the fields defined by the form class. Otherwise, you'll see a form validation er
         if ($request->isMethod('POST')) {
             // '$json' represents payload data sent by React/Angular/Vue
             // the merge of parameters is needed to submit all form fields
-            $form->submit(array_merge($json, $request->request->all()));
+            $form->submit(array_merge($json, $request->getPayload()->all()));
 
             // ...
         }
@@ -73,4 +73,4 @@ the fields defined by the form class. Otherwise, you'll see a form validation er
     manually so that they are validated::
 
         // 'email' and 'username' are added manually to force their validation
-        $form->submit(array_merge(['email' => null, 'username' => null], $request->request->all()), false);
+        $form->submit(array_merge(['email' => null, 'username' => null], $request->getPayload()->all()), false);
