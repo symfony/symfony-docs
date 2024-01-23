@@ -717,6 +717,17 @@ Most websites have a login form where users authenticate using an
 identifier (e.g. email address or username) and a password. This
 functionality is provided by the built-in :class:`Symfony\\Component\\Security\\Http\Authenticator\\FormLoginAuthenticator`.
 
+You can run the following command to create everything needed to add a login
+form in your application:
+
+.. code-block:: terminal
+
+    $ php bin/console make:security:form-login
+
+This command will create the required controller and template and it will also
+update the security configuration. Alternatively, if you prefer to make these
+changes manually, follow the next steps.
+
 First, create a controller for the login form:
 
 .. code-block:: terminal
