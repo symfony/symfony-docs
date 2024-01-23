@@ -159,7 +159,7 @@ this interface::
             // check if form is submitted
             if ($request->isMethod('POST')) {
                 // load the user in some way (e.g. using the form input)
-                $email = $request->request->get('email');
+                $email = $request->getPayload()->get('email');
                 $user = $userRepository->findOneBy(['email' => $email]);
 
                 // create a login link for $user this returns an instance
@@ -228,7 +228,7 @@ number::
         public function requestLoginLink(NotifierInterface $notifier, LoginLinkHandlerInterface $loginLinkHandler, UserRepository $userRepository, Request $request): Response
         {
             if ($request->isMethod('POST')) {
-                $email = $request->request->get('email');
+                $email = $request->getPayload()->get('email');
                 $user = $userRepository->findOneBy(['email' => $email]);
 
                 $loginLinkDetails = $loginLinkHandler->createLoginLink($user);

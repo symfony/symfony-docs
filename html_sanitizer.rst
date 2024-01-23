@@ -56,7 +56,7 @@ automatically when type-hinting for
         {
             public function createAction(HtmlSanitizerInterface $htmlSanitizer, Request $request): Response
             {
-                $unsafeContents = $request->request->get('post_contents');
+                $unsafeContents = $request->getPayload()->get('post_contents');
 
                 $safeContents = $htmlSanitizer->sanitize($unsafeContents);
                 // ... proceed using the safe HTML
