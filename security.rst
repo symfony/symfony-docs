@@ -650,7 +650,33 @@ Most websites have a login form where users authenticate using an
 identifier (e.g. email address or username) and a password. This
 functionality is provided by the built-in :class:`Symfony\\Component\\Security\\Http\Authenticator\\FormLoginAuthenticator`.
 
-First, create a controller for the login form:
+`MakerBundle` has a new ``make:security:form-login`` command that was introduced
+in ``v1.x.x`` that will generate the controller, twig template, and configure
+``security.yaml`` after answering a couple of questions:
+
+.. code-block:: terminal
+
+    $ php bin/console make:security:form-login
+
+     Choose a name for the controller class (e.g. SecurityController) [SecurityController]:
+     > SecurityController
+
+     Do you want to generate a '/logout' URL? (yes/no) [yes]:
+     > y
+
+     created: src/Controller/SecurityController.php
+     created: templates/security/login.html.twig
+     updated: config/packages/security.yaml
+
+
+      Success!
+
+
+     Next: Review and adapt the login template: security/login.html.twig to suite your needs.
+
+WooHoo! You're all set to start authenticating users.
+
+If you prefer to do this manually, first, create a controller for the login form:
 
 .. code-block:: terminal
 
