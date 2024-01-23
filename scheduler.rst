@@ -96,6 +96,8 @@ Another important difference is that messages in the Scheduler component are
 recurring. They are represented via the :class:`Symfony\\Component\\Scheduler\\RecurringMessage`
 class.
 
+.. _scheduler_attaching-recurring-messages:
+
 Attaching Recurring Messages to a Schedule
 ------------------------------------------
 
@@ -180,6 +182,8 @@ methods::
 Most of them can be created via the :class:`Symfony\\Component\\Scheduler\\RecurringMessage`
 class, as shown in the following examples.
 
+.. _scheduler_cron-expression-triggers:
+
 Cron Expression Triggers
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -199,7 +203,43 @@ Then, define the trigger date/time using the same syntax as the
 
 .. versionadded:: 6.4
 
-    Since version 6.4, it is now possible to add and define a timezone as a 3rd argument
+    Since version 6.4, it is now possible to add and define a timezone as a 3rd argument.
+
+Another way of declaring cron triggers is to use the
+:class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute
+on an invokable class::
+
+    // src/Scheduler/Task/SendDailySalesReports.php
+    namespace App\Scheduler\Task;
+
+    use Symfony\Component\Scheduler\Attribute\AsCronTask;
+
+    #[AsCronTask('0 0 * * *')]
+    class SendDailySalesReports
+    {
+        public function __invoke()
+        {
+            // ...
+        }
+    }
+
+This is the most basic way to define a cron trigger. However, the attribute
+takes more parameters to customize the trigger::
+
+    // adds randomly up to 6 seconds to the trigger time to avoid load spikes
+    #[AsCronTask('0 0 * * *', jitter: 6)]
+
+    // defines the method name to call instead as well as the arguments to pass to it
+    #[AsCronTask('0 0 * * *', method: 'sendEmail', arguments: ['email' => 'admin@symfony.com'])]
+
+    // defines the timezone to use
+    #[AsCronTask('0 0 * * *', timezone: 'Africa/Malabo')]
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute
+    was introduced in Symfony 6.4.
+
 
 .. tip::
 
@@ -264,6 +304,8 @@ For example::
     The day of month range is ``1-28``, this is to account for February
     which has a minimum of 28 days.
 
+.. _scheduler_periodical-triggers:
+
 Periodical Triggers
 ~~~~~~~~~~~~~~~~~~~
 
@@ -278,6 +320,55 @@ defined by PHP datetime functions::
     $from = new \DateTimeImmutable('13:47', new \DateTimeZone('Europe/Paris'));
     $until = '2023-06-12';
     RecurringMessage::every('first Monday of next month', new Message(), $from, $until);
+
+Like cron triggers, you can also use the
+:class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute
+on an invokable class::
+
+    // src/Scheduler/Task/SendDailySalesReports.php
+    namespace App\Scheduler\Task;
+
+    use Symfony\Component\Scheduler\Attribute\AsPeriodicTask;
+
+    #[AsPeriodicTask(frequency: '1 day', from: '2022-01-01', until: '2023-06-12')]
+    class SendDailySalesReports
+    {
+        public function __invoke()
+        {
+            // ...
+        }
+    }
+
+.. note::
+
+    The ``from`` and ``until`` options are optional. If not defined, the task
+    will be executed indefinitely.
+
+The ``#[AsPeriodicTask]`` attribute takes many parameters to customize the trigger::
+
+    // the frequency can be defined as an integer representing the number of seconds
+    #[AsPeriodicTask(frequency: 86400)]
+
+    // adds randomly up to 6 seconds to the trigger time to avoid load spikes
+    #[AsPeriodicTask(frequency: '1 day', jitter: 6)]
+
+    // defines the method name to call instead as well as the arguments to pass to it
+    #[AsPeriodicTask(frequency: '1 day', method: 'sendEmail', arguments: ['email' => 'admin@symfony.com'])]
+    class SendDailySalesReports
+    {
+        public function sendEmail(string $email): void
+        {
+            // ...
+        }
+    }
+
+    // defines the timezone to use
+    #[AsPeriodicTask(frequency: '1 day', timezone: 'Africa/Malabo')]
+
+.. versionadded:: 6.4
+
+    The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsPeriodicTask` attribute
+    was introduced in Symfony 6.4.
 
 Custom Triggers
 ~~~~~~~~~~~~~~~
