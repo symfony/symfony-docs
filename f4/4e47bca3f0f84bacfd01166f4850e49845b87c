@@ -1,0 +1,7 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-01-23T11:48:54Z
+
+We've just merged #19292 (from Dec. 2023) that adds many things, including these two attributes.
+
+I'm going to merge this PR too and try to combine some ideas from it in the existing docs. Thanks.
