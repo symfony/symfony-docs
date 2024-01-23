@@ -363,11 +363,10 @@ not this is allowed. If your voter isn't called, see :ref:`declaring-the-voter-a
 Events
 ------
 
-Just before the impersonation is fully completed, the ``security.switch_user`` event is
-dispatched.
-The :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent` is
-passed to the :doc:`listener or subscriber </event_dispatcher>`, and you can use
-this to get the user that you are now impersonating.
+the ``security.switch_user`` event is dispatched just before the impersonation
+is fully completed. Your :doc:`listener or subscriber </event_dispatcher>` will
+receive a :class:`Symfony\\Component\\Security\\Http\\Event\\SwitchUserEvent`,
+which you can use to get the user that you are now impersonating.
 
 This event is also dispatched just before impersonation is fully exited. You can
 use it to get the original impersonator user.
