@@ -521,7 +521,7 @@ before merging.
 
 .. _ProGit: https://git-scm.com/book
 .. _GitHub: https://github.com/join
-.. _`GitHub's documentation`: https://help.github.com/github/using-git/ignoring-files
+.. _`GitHub's documentation`: https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 .. _Symfony repository: https://github.com/symfony/symfony
 .. _Symfony releases page: https://symfony.com/releases#maintained-symfony-branches
 .. _`documentation repository`: https://github.com/symfony/symfony-docs
