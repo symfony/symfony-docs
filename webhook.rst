@@ -31,10 +31,6 @@ Resend         ``mailer.webhook.request_parser.resend``
 Sendgrid       ``mailer.webhook.request_parser.sendgrid``
 ============== ==========================================
 
-.. versionadded:: 6.4
-
-    The support for Brevo, Mailjet and Sendgrid was introduced in Symfony 6.4.
-
 .. versionadded:: 7.1
 
     The support for Resend was introduced in Symfony 7.1.
