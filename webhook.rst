@@ -15,17 +15,26 @@ Installation
 Usage in Combination with the Mailer Component
 ----------------------------------------------
 
-When using a third-party mailer, you can use the Webhook component to receive
-webhook calls from the third-party mailer.
+When using a third-party mailer provider, you can use the Webhook component to
+receive webhook calls from this provider.
 
-In this example Mailgun is used with ``'mailer_mailgun'`` as the webhook type.
-Any type name can be used as long as it is unique. Make sure to use it in the
-routing configuration, the webhook URL and the RemoteEvent consumer.
+Currently, the following third-party mailer providers support webhooks:
 
-Install the third-party mailer as described in the documentation of the
-:ref:`Mailer component <mailer_3rd_party_transport>`.
+=============== ==========================================
+Mailer service  Parser service name
+=============== ==========================================
+Mailgun         ``mailer.webhook.request_parser.mailgun``
+Postmark        ``mailer.webhook.request_parser.postmark``
+=============== ==========================================
 
-The Webhook component routing needs to be defined:
+.. note::
+
+    Install the third-party mailer provider you want to use as described in the
+    documentation of the :ref:`Mailer component <mailer_3rd_party_transport>`.
+    Mailgun is used as the provider in this document as an example.
+
+To connect the provider to your application, you need to configure the Webhook
+component routing:
 
 .. configuration-block::
 
@@ -73,30 +82,27 @@ The Webhook component routing needs to be defined:
             ;
         };
 
-Currently, the following third-party services support webhooks:
+In this example, we are using ``mailer_mailgun`` as the webhook routing name.
+The routing name must be unique as this is what connects the provider with your
+webhook consumer code.
 
-============== ==========================================
-Mailer Service Parser service name
-============== ==========================================
-Brevo          ``mailer.webhook.request_parser.brevo``
-Mailgun        ``mailer.webhook.request_parser.mailgun``
-Mailjet        ``mailer.webhook.request_parser.mailjet``
-Postmark       ``mailer.webhook.request_parser.postmark``
-Sendgrid       ``mailer.webhook.request_parser.sendgrid``
-============== ==========================================
+The webhook routing name is part of the URL you need to configure at the
+third-party mailer provider. The URL is the concatenation of your domain name
+and the routing name you chose in the configuration (like
+``https://example.com/webhook/mailer_mailgun``.
 
-Set up the webhook in the third-party mailer. For Mailgun, you can do this
-in the control panel. As URL, make sure to use the ``/webhook/mailer_mailgun``
-path behind the domain you're using.
+For Mailgun, you will get a secret for the webhook. Store this secret as
+MAILER_MAILGUN_SECRET (in the :doc:`secrets management system
+</configuration/secrets>` or in a ``.env`` file).
 
-Mailgun will provide a secret for the webhook. Add this secret to your ``.env``
-file:
+When done, add a :class:`Symfony\\Component\\RemoteEvent\\RemoteEvent` consumer
+to react to incoming webhooks (the webhook routing name is what connects your
+class to the provider).
 
-.. code-block:: env
-
-    MAILER_MAILGUN_SECRET=your_secret
-
-With this done, you can now add a RemoteEvent consumer to react to the webhooks::
+For mailer webhooks, react to the
+:class:`Symfony\\Component\\RemoteEvent\\Event\\Mailer\\MailerDeliveryEvent` or
+:class:`Symfony\\Component\\RemoteEvent\\Event\\Mailer\\MailerEngagementEvent`
+events::
 
     use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
     use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
@@ -145,8 +151,8 @@ Twilio       ``notifier.webhook.request_parser.twilio``
 Vonage       ``notifier.webhook.request_parser.vonage``
 ============ ==========================================
 
-For SMS transports, an additional ``SmsEvent`` is available in the RemoteEvent
-consumer::
+For SMS webhooks, react to the
+:class:`Symfony\\Component\\RemoteEvent\\Event\\Sms\\SmsEvent` event::
 
     use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
     use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
@@ -161,13 +167,13 @@ consumer::
             if ($event instanceof SmsEvent) {
                 $this->handleSmsEvent($event);
             } else {
-                // This is not an sms event
+                // This is not an SMS event
                 return;
             }
         }
 
         private function handleSmsEvent(SmsEvent $event): void
         {
-            // Handle the sms event
+            // Handle the SMS event
         }
     }
