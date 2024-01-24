@@ -30,10 +30,6 @@ Postmark       ``mailer.webhook.request_parser.postmark``
 Sendgrid       ``mailer.webhook.request_parser.sendgrid``
 ============== ==========================================
 
-.. versionadded:: 6.4
-
-    The support for Brevo, Mailjet and Sendgrid was introduced in Symfony 6.4.
-
 .. note::
 
     Install the third-party mailer provider you want to use as described in the
