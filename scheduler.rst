@@ -435,7 +435,7 @@ be used. Also, by default, the ``__invoke`` method of your service will be calle
 but, it's also possible to specify the method to call via the ``method``option
 and you can define arguments via ``arguments``option if necessary.
 
-.. _scheduler-attributes-cron-task::
+.. _scheduler-attributes-cron-task:
 
 ``AsCronTask`` Example
 ......................
@@ -472,7 +472,7 @@ The attribute takes more parameters to customize the trigger::
     The :class:`Symfony\\Component\\Scheduler\\Attribute\\AsCronTask` attribute
     was introduced in Symfony 6.4.
 
-.. _scheduler-attributes-periodic-task::
+.. _scheduler-attributes-periodic-task:
 
 ``AsPeriodicTask`` Example
 ..........................
