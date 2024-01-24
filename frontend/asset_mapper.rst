@@ -413,10 +413,8 @@ the page as ``link`` tags in the order they were imported.
 .. note::
 
     Importing a CSS file is *not* something that is natively supported by
-    JavaScript modules and normally causes an error. AssetMapper makes this
-    work by adding an importmap entry for each CSS file that is valid, but
-    does nothing. AssetMapper adds a ``link`` tag for each CSS file, but when
-    the JavaScript executes the ``import`` statement, nothing additional happens.
+    JavaScript modules. AssetMapper makes this work by adding an importmap entry for each CSS file,
+    and then adds a ``link`` tag for each CSS file.
 
 .. _asset-mapper-3rd-party-css:
 
