@@ -791,10 +791,13 @@ recurring messages. You can narrow down the list to a specific schedule:
        -------------------- -------------------------- ---------------------
 
     # you can also specify a date to use for the next run date:
-    $ php bin/console --date=2025-10-18
+    $ php bin/console debug:scheduler --date=2025-10-18
+
+    # you can also specify a date to use for the next run date for a schedule:
+    $ php bin/console debug:scheduler name_of_schedule --date=2025-10-18
 
     # use the --all option to also display the terminated recurring messages
-    $ php bin/console --all
+    $ php bin/console debug:scheduler --all
 
 Efficient management with Symfony Scheduler
 -------------------------------------------
