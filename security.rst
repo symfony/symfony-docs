@@ -577,7 +577,7 @@ Only one firewall is active on each request: Symfony uses the ``pattern`` key
 to find the first match (you can also
 :doc:`match by host or other things </security/firewall_restriction>`).
 Here, all real URLs are handled by the ``main`` firewall (no ``pattern`` key means
-it matches *all* URLs). 
+it matches *all* URLs).
 
 The ``dev`` firewall is really a fake firewall: it makes sure that you
 don't accidentally block Symfony's dev tools - which live under URLs like
