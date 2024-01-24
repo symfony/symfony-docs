@@ -742,7 +742,7 @@ Symfony provides the following env var processors:
     This processor takes the fully qualified name of the ``\BackedEnum`` as an argument::
 
         // App\Enum\Suit.php
-        enum Environment: string
+        enum Suit: string
         {
             case Clubs = 'clubs';
             case Spades = 'spades';
