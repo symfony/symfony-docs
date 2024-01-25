@@ -223,6 +223,12 @@ party provider:
     you need to add the ``ping_threshold`` parameter to your ``MAILER_DSN`` with
     a value lower than ``10``: ``ses+smtp://USERNAME:PASSWORD@default?ping_threshold=9``
 
+.. caution::
+
+    If you send custom headers when using the `Amazon SES`_ transport (to receive
+    them later via a webhook), make sure to use the ``ses+https`` provider because
+    it's the only one that supports them.
+
 .. note::
 
     When using SMTP, the default timeout for sending a message before throwing an
