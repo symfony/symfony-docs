@@ -171,7 +171,7 @@ This table shows the full list of available DSN formats for each third
 party provider:
 
 ===================== ======================================================== =============================================== ============================================
-Provider              SMTP                                                     HTTP                                        API
+Provider              SMTP                                                     HTTP                                            API
 ===================== ======================================================== =============================================== ============================================
 `Amazon SES`_         ``ses+smtp://USERNAME:PASSWORD@default``                 ``ses+https://ACCESS_KEY:SECRET_KEY@default``   ``ses+api://ACCESS_KEY:SECRET_KEY@default``
 `Google Gmail`_       ``gmail+smtp://USERNAME:APP-PASSWORD@default``           n/a                                             n/a
@@ -203,8 +203,9 @@ Provider              SMTP                                                     H
 
 .. caution::
 
-    If you need to send custom headers to receive them later via webhook using the `Amazon SES` transport
-    be sure to use the ``ses+https`` provider since custom headers are not transmited otherwise. 
+    If you send custom headers when using the `Amazon SES`_ transport (to receive
+    them later via a webhook), make sure to use the ``ses+https`` provider because
+    it's the only one that supports them.
 
 .. note::
 
