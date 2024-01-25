@@ -205,6 +205,7 @@ If this is the first time you run the proxy, you must configure it as follows:
    * `Proxy settings in Ubuntu`_.
 
 #. Set the following URL as the value of the **Automatic Proxy Configuration**:
+
    ``http://127.0.0.1:7080/proxy.pac``
 
 Now run this command to start the proxy:
