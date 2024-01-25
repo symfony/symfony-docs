@@ -1031,7 +1031,7 @@ you don't need to do *anything*: the service will be automatically loaded. Then,
 implements ``Twig\Extension\ExtensionInterface``. And thanks to ``autowire``, you can even add
 constructor arguments without any configuration.
 
-Autconfiguration also works with attributes. Some attributes like
+Autoconfiguration also works with attributes. Some attributes like
 :class:`Symfony\\Component\\Messenger\\Attribute\\AsMessageHandler`,
 :class:`Symfony\\Component\\EventDispatcher\\Attribute\\AsEventListener` and
 :class:`Symfony\\Component\\Console\\Attribute\\AsCommand` are registered
