@@ -201,6 +201,11 @@ Provider              SMTP                                                     H
 
         The ``ping_threshold`` option for ``ses-smtp`` was introduced in Symfony 5.4.
 
+.. caution::
+
+    If you need to send custom headers to receive them later via webhook using the `Amazon SES` transport
+    be sure to use the ``ses+https`` provider since custom headers are not transmited otherwise. 
+
 .. note::
 
     When using SMTP, the default timeout for sending a message before throwing an
