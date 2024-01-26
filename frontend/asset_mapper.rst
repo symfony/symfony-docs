@@ -93,6 +93,13 @@ This will physically copy all the files from your mapped directories to
 ``public/assets/`` so that they're served directly by your web server.
 See :ref:`Deployment <asset-mapper-deployment>` for more details.
 
+.. tip::
+
+    If you need to copy the compiled assets to a different location (e.g. upload
+    them to S3), create a service that implements ``Symfony\Component\AssetMapper\Path\PublicAssetsFilesystemInterface``
+    and set its service id (or an alias) to ``asset_mapper.local_public_assets_filesystem``
+    (to replace the built-in service).
+
 Debugging: Seeing All Mapped Assets
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
