@@ -182,6 +182,19 @@ Next, use Composer to download new versions of the libraries:
 
     $ composer update "symfony/*"
 
+A best practice after updating to a new major version is to clear the cache.
+Instead of running the ``cache:clear`` command (which won't work if the application
+is not bootable in the console after the upgrade) it's better to remove the entire
+cache directory contents:
+
+.. code-block:: terminal
+
+    # run this command on Linux and macOS
+    $ rm -rf var/cache/*
+
+    # run this command on Windows
+    C:\> rmdir /s /q var\cache\*
+
 .. include:: /setup/_update_dep_errors.rst.inc
 
 .. include:: /setup/_update_all_packages.rst.inc
