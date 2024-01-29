@@ -160,7 +160,7 @@ you can access it using the ``getConnection()`` method and the name of the conne
         public function someMethod(ManagerRegistry $doctrine): void
         {
             $connection = $doctrine->getConnection('customer');
-            $result = $connection->fetchAll('SELECT name FROM customer');
+            $result = $connection->fetchAllAssociative('SELECT name FROM customer');
 
             // ...
         }
