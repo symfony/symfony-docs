@@ -643,11 +643,10 @@ profile is accessible through the web page of the profiler.
 
 .. caution::
 
-    If you use Messenger component and want to profile the ``messenger:consume``
-    command please be aware that it will only create the profile only when
-    running with the ``--no-reset`` option. Moreover, you should consider using
-    the ``--limit`` option to only process one or few messages and let the command
-    finish on it's own. This can make the Performance tab of the profile more readable.
+    When profiling the ``messenger:consume`` command from the :doc:`Messenger </messenger>`
+    component, add the ``--no-reset`` option to the command or you won't get any
+    profile. Moreover, consider using the ``--limit`` option to only process a few
+    messages to make the profile more readable in the profiler.
 
 .. versionadded:: 6.4
 
