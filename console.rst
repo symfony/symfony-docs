@@ -641,6 +641,14 @@ profile is accessible through the web page of the profiler.
     terminal supports links). If you run it in debug verbosity (``-vvv``) you'll
     also see the time and memory consumed by the command.
 
+.. caution::
+
+    If you use Messenger component and want to profile the ``messenger:consume``
+    command please be aware that it will only create the profile only when
+    running with the ``--no-reset`` option. Moreover, you should consider using
+    the ``--limit`` option to only process one or few messages and let the command
+    finish on it's own. This can make the Performance tab of the profile more readable.
+
 .. versionadded:: 6.4
 
     The ``--profile`` option was introduced in Symfony 6.4.
