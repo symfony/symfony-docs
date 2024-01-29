@@ -611,6 +611,13 @@ profile is accessible through the web page of the profiler.
     terminal supports links). If you run it in debug verbosity (``-vvv``) you'll
     also see the time and memory consumed by the command.
 
+.. caution::
+
+    When profiling the ``messenger:consume`` command from the :doc:`Messenger </messenger>`
+    component, add the ``--no-reset`` option to the command or you won't get any
+    profile. Moreover, consider using the ``--limit`` option to only process a few
+    messages to make the profile more readable in the profiler.
+
 Learn More
 ----------
 
