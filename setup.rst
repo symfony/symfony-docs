@@ -20,9 +20,11 @@ Before creating your first Symfony application you must:
 
 * `Install Composer`_, which is used to install PHP packages.
 
-Optionally, you can also `install Symfony CLI`_. This creates a binary called
-``symfony`` that provides all the tools you need to develop and run your
-Symfony application locally.
+.. _setup-symfony-cli:
+
+Also, `install the Symfony CLI`_. This is optional, but it gives you a
+helpful binary called ``symfony`` that provides all tools you need to
+develop and run your Symfony application locally.
 
 The ``symfony`` binary also provides a tool to check if your computer meets all
 requirements. Open your console terminal and run this command:
@@ -53,8 +55,8 @@ application:
     $ symfony new my_project_directory --version=5.4
 
 The only difference between these two commands is the number of packages
-installed by default. The ``--webapp`` option installs all the packages that you
-usually need to build web applications, so the installation size will be bigger.
+installed by default. The ``--webapp`` option installs extra packages to give
+you everything you need to build a web application.
 
 If you're not using the Symfony binary, run these commands to create the new
 Symfony application using Composer:
@@ -227,8 +229,8 @@ require --no-unpack ...`` option to disable unpacking.
 Checking Security Vulnerabilities
 ---------------------------------
 
-The ``symfony`` binary created when you `install Symfony CLI`_ provides a command
-to check whether your project's dependencies contain any known security
+The ``symfony`` binary created when you installed the :ref:`Symfony CLI <setup-symfony-cli>`
+provides a command to check whether your project's dependencies contain any known security
 vulnerability:
 
 .. code-block:: terminal
@@ -312,7 +314,7 @@ Learn More
 
 .. _`Stellar Development with Symfony`: https://symfonycasts.com/screencast/symfony
 .. _`Install Composer`: https://getcomposer.org/download/
-.. _`install Symfony CLI`: https://symfony.com/download
+.. _`install the Symfony CLI`: https://symfony.com/download
 .. _`symfony-cli/symfony-cli GitHub repository`: https://github.com/symfony-cli/symfony-cli
 .. _`The Symfony Demo Application`: https://github.com/symfony/demo
 .. _`Symfony Flex`: https://github.com/symfony/flex
