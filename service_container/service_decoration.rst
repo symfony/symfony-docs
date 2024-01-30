@@ -301,7 +301,8 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             class Bar
             {
                 public function __construct(
-                    private #[AutowireDecorated] $inner,
+                    #[AutowireDecorated]
+                    private $inner,
                 ) {
                 }
                 // ...
@@ -311,7 +312,8 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
             class Baz
             {
                 public function __construct(
-                    private #[AutowireDecorated] $inner,
+                    #[AutowireDecorated]
+                    private $inner,
                 ) {
                 }
 
