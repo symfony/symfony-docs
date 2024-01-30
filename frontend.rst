@@ -48,7 +48,7 @@ be executed by a browser.
 
 .. _ux-note-2:
 
-**[2]** There are plugins available to remove comments from CSS files.
+**[2]** There are some PostCSS plugins available to remove comments from CSS files.
 
 .. _frontend-asset-mapper:
 
