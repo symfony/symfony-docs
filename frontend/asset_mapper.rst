@@ -875,7 +875,7 @@ file:
         asset_mapper:
             paths:
                 - assets/
-                - vendor/some/package/assets
+                - vendor/babdev/pagerfanta-bundle/Resources/public/css/
 
 Then try the command again.
 
