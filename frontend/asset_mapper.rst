@@ -44,7 +44,7 @@ It also *updated* the ``templates/base.html.twig`` file:
 .. code-block:: diff
 
     {% block javascripts %}
-    +    {{ importmap('app') }}
+    +    {% block importmap %}{{ importmap('app') }}{% endblock %}
     {% endblock %}
 
 If you're not using Flex, you'll need to create & update these files manually. See
