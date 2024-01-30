@@ -1,0 +1,56 @@
+---------------------------------------------------------------------------
+
+by smnandre at 2024-01-28T21:57:27Z
+
+For maximal fairness, what do you think adding a link to the needed PostCSS install documentation (as it's done with AssetMapper SASS/Tailwing) ?
+
+-> https://symfony.com/doc/4.x/frontend/encore/postcss.html
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-01-28T22:56:31Z
+
+First (and foremost): Removing comments is an important topic! To backend devs (i.e. typical Symfony users) it might not be obvious that all their comments will be public in the end. So I think that there should be an own heading at https://symfony.com/doc/6.4/frontend/asset_mapper.html about comments.
+
+But what to write there? Some counter-arguments against PostCSS:
+* It only covers CSS files, not JavaScript.
+* Knowing the JavaScript community, I'm sure it's not the only possible tool for this purpose ;-)
+* Giving detailed instructions might become a maintenance nightmare soon. What was the reason for abandoning https://symfony.com/doc/4.x/frontend/encore/postcss.html ?
+
+But what about just adding a general information (to make people aware), followed by a list of links to some appropriate tools? Something like:
+
+> Since AssetMapper does not modify your files, all comments in CSS and JavaScript files will remain in the deployed files and become readable by the public. To remove comments, you might want to take a look at the following tools:
+
+Ping @weaverryan @javiereguiluz - what do you think?
+
+---------------------------------------------------------------------------
+
+by smnandre at 2024-01-28T23:03:09Z
+
+@ThomasLandauer
+
+I was only referencing the fact Encore needs another tool to remove comments from CSS files... so the row you suggested in your PR could be 100% objective with that precision.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-01-28T23:17:14Z
+
+Oh sorry - I should have opened a separate issue then ;-)
+
+So what you're saying, is:
+* Encore removes comments from JavaScript files out of the box
+* To remove comments from CSS files too, you need to set up a tool like PostCSS
+Right?
+=> Hm, not so easy to get across in one table cell ;-) => Maybe a separate row for JavaScript and CSS?
+
+---------------------------------------------------------------------------
+
+by smnandre at 2024-01-28T23:26:18Z
+
+What I'm saying is: _**if**_ there were a row concerning comment removal in this table, it should not create the false impression that Encore trims comments from CSS files without additional tools ;)
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-01-28T23:42:28Z
+
+Yeah, thanks, I now changed the table. What do you think?
