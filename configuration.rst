@@ -936,21 +936,44 @@ Storing Environment Variables In Other Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 By default, the environment variables are stored in the ``.env`` file located
-at the root of your project. However, you can store them in other file by
-setting the ``SYMFONY_DOTENV_PATH`` environment variable to the absolute path of
-that custom file.
+at the root of your project. However, you can store them in other files in
+multiple ways.
+
+If you use the :doc:`Runtime component </components/runtime>`, the dotenv
+path is part of the options you can set in your ``composer.json`` file:
+
+.. code-block:: json
+
+      {
+          // ...
+          "extra": {
+              // ...
+              "runtime": {
+                  "dotenv_path": "my/custom/path/to/.env"
+              }
+          }
+      }
+
+You can also set the ``SYMFONY_DOTENV_PATH`` environment variable at system
+level (e.g. in your web server configuration or in your Dockerfile):
+
+.. code-block:: bash
+
+    # .env (or .env.local)
+    SYMFONY_DOTENV_PATH=my/custom/path/to/.env
+
+Finally, you can directly invoke the ``Dotenv`` class in your
+``bootstrap.php`` file or any other file of your application::
+
+    use Symfony\Component\Dotenv\Dotenv;
+
+    (new Dotenv())->bootEnv(dirname(__DIR__).'my/custom/path/to/.env');
 
 Symfony will then look for the environment variables in that file, but also in
 the local and environment-specific files (e.g. ``.*.local`` and
 ``.*.<environment>.local``). Read
 :ref:`how to override environment variables <configuration-multiple-env-files>`
 to learn more about this.
-
-.. caution::
-
-    The ``SYMFONY_DOTENV_PATH`` environment variable must be defined at the
-    system level (e.g. in your web server configuration) and not in any default
-    or custom ``.env`` file.
 
 .. versionadded:: 7.1
 
