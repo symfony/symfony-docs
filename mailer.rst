@@ -347,29 +347,29 @@ may be specified as SHA1 or MD5 hash::
 
     $dsn = 'smtp://user:pass@smtp.example.com?peer_fingerprint=6A1CF3B08D175A284C30BC10DE19162307C7286E';
 
-Disabling automatic TLS
+Disabling Automatic TLS
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 7.1
 
-    Disabling automatic TLS was introduced in Symfony 7.1.
+    The option to disable automatic TLS was introduced in Symfony 7.1.
 
-By default, mailer will check if OpenSSL extension is enabled and if SMTP server
-is capable of STARTTLS, it will issue this command to enable encryption on stream.
-This behavior can be turned off by calling ``setAutoTls(false)`` on ``EsmtpTransport``
-instance, or by setting ``auto_tls`` option in DSN::
+By default, the Mailer component will use encryption when the OpenSSL extension
+is enabled and the SMTP server supports ``STARTTLS``. This behavior can be turned
+off by calling ``setAutoTls(false)`` on the ``EsmtpTransport`` instance, or by
+setting the ``auto_tls`` option to ``false`` in the DSN::
 
     $dsn = 'smtp://user:pass@10.0.0.25?auto_tls=false';
 
 .. caution::
 
-    It's not recommended to disable TLS while connecting to SMTP server over
-    internet, but it can be useful when both application and SMTP server are in
-    secured network, where there is no need for additional encryption.
+    It's not recommended to disable TLS while connecting to an SMTP server over
+    the Internet, but it can be useful when both the application and the SMTP
+    server are in a secured network, where there is no need for additional encryption.
 
 .. note::
 
-    This setting works only when ``smtp://`` protocol is used.
+    This setting only works when the ``smtp://`` protocol is used.
 
 Overriding default SMTP authenticators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
