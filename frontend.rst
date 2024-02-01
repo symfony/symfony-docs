@@ -48,7 +48,7 @@ be executed by a browser.
 
 .. _ux-note-2:
 
-**[2]** There are some PostCSS plugins available to remove comments from CSS files.
+**[2]** There are some `PostCSS`_ plugins available to remove comments from CSS files.
 
 .. _frontend-asset-mapper:
 
@@ -115,3 +115,4 @@ Other Front-End Articles
 .. _Turbo: https://turbo.hotwired.dev/
 .. _Symfony UX: https://ux.symfony.com
 .. _API Platform: https://api-platform.com/
+.. _PostCSS: https://postcss.org/
