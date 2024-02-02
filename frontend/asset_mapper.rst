@@ -930,15 +930,19 @@ This option is enabled by default.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Configure the polyfill for older browsers. By default, the `ES module shim`_ is loaded
-via a CDN. You can pass the key of an item in ``importmap.php`` or ``false`` to disable
-the polyfill loading.
+via a CDN (i.e. the default value for this setting is `es-module-shims`):
 
 .. code-block:: yaml
 
     framework:
         asset_mapper:
-            importmap_polyfill: false # disable the shim ...
-            # importmap_polyfill: 'my_import_map' # ... or pass an importmap name
+            # set this option to false to disable the shim entirely
+            # (your website/web app won't work in old browsers)
+            importmap_polyfill: false
+
+            # you can also use a custom polyfill by adding it to your importmap.php file
+            # and setting this option to the key of that file in the importmap.php file
+            # importmap_polyfill: 'custom_polyfill'
 
 .. tip::
 
