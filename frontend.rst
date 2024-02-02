@@ -109,10 +109,10 @@ Other Front-End Articles
 .. _`Webpack`: https://webpack.js.org/
 .. _`Node.js`: https://nodejs.org/
 .. _`Webpack Encore screencast series`: https://symfonycasts.com/screencast/webpack-encore
-.. _StimulusBundle Documentation: https://symfony.com/bundles/StimulusBundle/current/index.html
-.. _Stimulus/UX: https://symfony.com/bundles/StimulusBundle/current/index.html
-.. _Stimulus: https://stimulus.hotwired.dev/
-.. _Turbo: https://turbo.hotwired.dev/
-.. _Symfony UX: https://ux.symfony.com
-.. _API Platform: https://api-platform.com/
-.. _PostCSS: https://postcss.org/
+.. _`StimulusBundle Documentation`: https://symfony.com/bundles/StimulusBundle/current/index.html
+.. _`Stimulus/UX`: https://symfony.com/bundles/StimulusBundle/current/index.html
+.. _`Stimulus`: https://stimulus.hotwired.dev/
+.. _`Turbo`: https://turbo.hotwired.dev/
+.. _`Symfony UX`: https://ux.symfony.com
+.. _`API Platform`: https://api-platform.com/
+.. _`PostCSS`: https://postcss.org/
