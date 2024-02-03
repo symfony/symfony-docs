@@ -820,8 +820,14 @@ The Serializer component provides several built-in normalizers:
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeNormalizer`
     This normalizer converts :phpclass:`DateTimeInterface` objects (e.g.
-    :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings.
-    By default, it uses the `RFC3339`_ format.
+    :phpclass:`DateTime` and :phpclass:`DateTimeImmutable`) into strings,
+    integers or floats. By default, it converts them to strings using the `RFC3339`_ format.
+    To convert the objects to integers or floats, set the serializer context option
+    ``DateTimeNormalizer::CAST_KEY`` to ``int`` or ``float``.
+
+.. versionadded:: 7.1
+
+    ``DateTimeNormalizer::CAST_KEY`` context option was introduced in Symfony 7.1.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer`
     This normalizer converts :phpclass:`DateTimeZone` objects into strings that
