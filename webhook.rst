@@ -20,20 +20,21 @@ receive webhook calls from this provider.
 
 Currently, the following third-party mailer providers support webhooks:
 
-============== ==========================================
+============== ============================================
 Mailer Service Parser service name
-============== ==========================================
+============== ============================================
 Brevo          ``mailer.webhook.request_parser.brevo``
+MailerSend     ``mailer.webhook.request_parser.mailersend``
 Mailgun        ``mailer.webhook.request_parser.mailgun``
 Mailjet        ``mailer.webhook.request_parser.mailjet``
 Postmark       ``mailer.webhook.request_parser.postmark``
 Resend         ``mailer.webhook.request_parser.resend``
 Sendgrid       ``mailer.webhook.request_parser.sendgrid``
-============== ==========================================
+============== ============================================
 
 .. versionadded:: 7.1
 
-    The support for Resend was introduced in Symfony 7.1.
+    The support for ``Resend`` and ``MailerSend`` were introduced in Symfony 7.1.
 
 .. note::
 
