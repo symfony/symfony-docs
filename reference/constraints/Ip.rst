@@ -97,6 +97,8 @@ Parameter        Description
 
 .. include:: /reference/constraints/_payload-option.rst.inc
 
+.. _reference-constraint-ip-version:
+
 ``version``
 ~~~~~~~~~~~
 
@@ -132,6 +134,33 @@ of a variety of different values:
 ``all_no_res``
     Validates for all IP formats but without reserved IP ranges
 
+**No public ranges**
+
+``4_no_public``
+    Validates for IPv4 but without public IP ranges
+``6_no_public``
+    Validates for IPv6 but without public IP ranges
+``all_no_public``
+    Validates for all IP formats but without public IP range
+
+**Only private ranges**
+
+``4_private``
+    Validates for IPv4 but without public and reserved ranges
+``6_private``
+    Validates for IPv6 but without public and reserved ranges
+``all_private``
+    Validates for all IP formats but without public and reserved ranges
+
+**Only reserved ranges**
+
+``4_reserved``
+    Validates for IPv4 but without private and public ranges
+``6_reserved``
+    Validates for IPv6 but without private and public ranges
+``all_reserved``
+    Validates for all IP formats but without private and public ranges
+
 **Only public ranges**
 
 ``4_public``
@@ -140,3 +169,8 @@ of a variety of different values:
     Validates for IPv6 but without private and reserved ranges
 ``all_public``
     Validates for all IP formats but without private and reserved ranges
+
+.. versionadded:: 7.1
+
+    The ``*_no_public``, ``*_reserved`` and ``*_public`` ranges were introduced
+    in Symfony 7.1.
