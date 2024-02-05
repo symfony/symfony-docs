@@ -41,7 +41,7 @@ your code.
 .. deprecated:: 5.4
 
     Using :class:`Symfony\\Component\\Cache\\Adapter\\PdoAdapter` with a
-    :class:`Doctrine\\DBAL\\Connection` or a DBAL URL is deprecated since Symfony 5.4
+    ``Doctrine\DBAL\Connection`` or a DBAL URL is deprecated since Symfony 5.4
     and will be removed in Symfony 6.0.
     Use :class:`Symfony\\Component\\Cache\\Adapter\\DoctrineDbalAdapter` instead.
 

@@ -139,7 +139,7 @@ The following arguments are supported by the ``SymfonyRuntime``:
 :class:`Symfony\\Component\\Console\\Application`
     An application for creating CLI applications.
 
-:class:`Symfony\\Component\\Command\\Command`
+:class:`Symfony\\Component\\Console\\Command\\Command`
     For creating one line command CLI applications (using
     ``Command::setCode()``).
 
