@@ -104,71 +104,21 @@ Parameter        Description
 
 **type**: ``string`` **default**: ``4``
 
-This determines exactly *how* the IP address is validated and can take one
-of a variety of different values:
+This determines exactly *how* the IP address is validated. This option defines a
+lot of different possible values based on the ranges and the type of IP address
+that you want to allow/deny:
 
-**All ranges**
-
-``4``
-    Validates for IPv4 addresses
-``6``
-    Validates for IPv6 addresses
-``all``
-    Validates all IP formats
-
-**No private ranges**
-
-``4_no_priv``
-    Validates for IPv4 but without private IP ranges
-``6_no_priv``
-    Validates for IPv6 but without private IP ranges
-``all_no_priv``
-    Validates for all IP formats but without private IP ranges
-
-**No reserved ranges**
-
-``4_no_res``
-    Validates for IPv4 but without reserved IP ranges
-``6_no_res``
-    Validates for IPv6 but without reserved IP ranges
-``all_no_res``
-    Validates for all IP formats but without reserved IP ranges
-
-**No public ranges**
-
-``4_no_public``
-    Validates for IPv4 but without public IP ranges
-``6_no_public``
-    Validates for IPv6 but without public IP ranges
-``all_no_public``
-    Validates for all IP formats but without public IP range
-
-**Only private ranges**
-
-``4_private``
-    Validates for IPv4 but without public and reserved ranges
-``6_private``
-    Validates for IPv6 but without public and reserved ranges
-``all_private``
-    Validates for all IP formats but without public and reserved ranges
-
-**Only reserved ranges**
-
-``4_reserved``
-    Validates for IPv4 but without private and public ranges
-``6_reserved``
-    Validates for IPv6 but without private and public ranges
-``all_reserved``
-    Validates for all IP formats but without private and public ranges
-
-**Only public ranges**
-
-``4_public``
-    Validates for IPv4 but without private and reserved ranges
-``6_public``
-    Validates for IPv6 but without private and reserved ranges
-``all_public``
-    Validates for all IP formats but without private and reserved ranges
+====================  ===================  ===================  ==================
+Ranges Allowed        IPv4 addresses only  IPv6 addresses only  Both IPv4 and IPv6
+====================  ===================  ===================  ==================
+All                   ``4``                ``6``                ``all``
+All except private    ``4_no_priv``        ``6_no_priv``        ``all_no_priv``
+All except reserved   ``4_no_res``         ``6_no_res``         ``all_no_res``
+All except public     ``4_no_public``      ``6_no_public``      ``all_no_public``
+Only private          ``4_private``        ``6_private``        ``all_private``
+Only reserved         ``4_reserved``       ``6_reserved``       ``all_reserved``
+Only public           ``4_public``         ``6_public``         ``all_public``
+====================  ===================  ===================  ==================
 
 .. versionadded:: 7.1
 
