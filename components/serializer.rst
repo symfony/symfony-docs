@@ -827,7 +827,7 @@ The Serializer component provides several built-in normalizers:
 
     .. versionadded:: 7.1
 
-        ``DateTimeNormalizer::CAST_KEY`` context option was introduced in Symfony 7.1.
+        The ``DateTimeNormalizer::CAST_KEY`` context option was introduced in Symfony 7.1.
 
 :class:`Symfony\\Component\\Serializer\\Normalizer\\DateTimeZoneNormalizer`
     This normalizer converts :phpclass:`DateTimeZone` objects into strings that
