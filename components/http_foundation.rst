@@ -388,17 +388,19 @@ address, it uses a certain HTTP method, etc.):
 
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HeaderRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HostRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IpsRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\MethodRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PathRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\QueryParameterRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
 
 You can use them individually or combine them using the
-:class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher`
-class::
+:class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher` class::
 
     use Symfony\Component\HttpFoundation\ChainRequestMatcher;
     use Symfony\Component\HttpFoundation\RequestMatcher\HostRequestMatcher;
@@ -420,6 +422,11 @@ class::
     if ($matcher->matches($request)) {
         // ...
     }
+
+.. versionadded:: 7.1
+
+    The ``HeaderRequestMatcher`` and ``QueryParameterRequestMatcher`` were
+    introduced in Symfony 7.1.
 
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
