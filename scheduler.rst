@@ -318,7 +318,7 @@ Finally, the recurring messages has to be attached to a schedule::
         public function getSchedule(): Schedule
         {
             return $this->schedule ??= (new Schedule())
-                ->with(
+                ->add(
                     RecurringMessage::trigger(
                         new ExcludeHolidaysTrigger(
                             CronExpressionTrigger::fromSpec('@daily'),
@@ -404,7 +404,7 @@ a worker is restarted, it resumes from the point it left off::
             $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
 
             return $this->schedule ??= (new Schedule())
-                ->with(
+                ->add(
                     // ...
                 )
                 ->stateful($this->cache)
@@ -426,7 +426,7 @@ same task more than once::
             $this->removeOldReports = RecurringMessage::cron('3 8 * * 1', new CleanUpOldSalesReport());
 
             return $this->schedule ??= (new Schedule())
-                ->with(
+                ->add(
                     // ...
                 )
                 ->lock($this->lockFactory->createLock('my-lock')
@@ -453,7 +453,7 @@ before being further redispatched to its corresponding handler::
         public function getSchedule(): Schedule
         {
             return $this->schedule ??= (new Schedule())
-                ->with(
+                ->add(
                     RecurringMessage::every('5 seconds'),
                     new RedispatchMessage(new Message(), 'async')
                 );
