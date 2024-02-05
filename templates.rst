@@ -818,6 +818,13 @@ errors. It's useful to run it before deploying your application to production
     # you can also show the deprecated features used in your templates
     $ php bin/console lint:twig --show-deprecations templates/email/
 
+    # you can also excludes directories
+    $ php bin/console lint:twig templates/ --excludes=data_collector --excludes=dev_tool
+
+.. versionadded:: 7.1
+
+    The option to exclude directories was introduced in Symfony 7.1.
+
 When running the linter inside `GitHub Actions`_, the output is automatically
 adapted to the format required by GitHub, but you can force that format too:
 
