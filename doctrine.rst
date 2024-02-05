@@ -820,6 +820,21 @@ control behavior:
 ``disabled``
     If true, the ``EntityValueResolver`` will not try to replace the argument.
 
+``message``
+    If a ``message`` option is configured, the value of the ``message`` option will be displayed in the development
+    environment for the :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException` exception::
+
+        #[Route('/product/{product_id}')]
+        public function show(
+            #[MapEntity(id: 'product_id', message: 'The product does not exist')]
+            Product $product
+        ): Response {
+        }
+
+.. versionadded:: 7.1
+
+    The ``message`` option was introduced in Symfony 7.1.
+
 Updating an Object
 ------------------
 
