@@ -454,8 +454,7 @@ before being further redispatched to its corresponding handler::
         {
             return $this->schedule ??= (new Schedule())
                 ->add(
-                    RecurringMessage::every('5 seconds'),
-                    new RedispatchMessage(new Message(), 'async')
+                    RecurringMessage::every('5 seconds', new RedispatchMessage(new Message(), 'async'))
                 );
         }
     }
