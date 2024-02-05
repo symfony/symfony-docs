@@ -821,8 +821,8 @@ control behavior:
     If true, the ``EntityValueResolver`` will not try to replace the argument.
 
 ``message``
-    If a ``message`` option is configured, the value of the ``message`` option will be displayed in the development
-    environment for the :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException` exception::
+    An optional custom message displayed when there's a :class:`Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException`,
+    but **only in the development environment** (you won't see this message in production)::
 
         #[Route('/product/{product_id}')]
         public function show(
