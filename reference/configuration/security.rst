@@ -302,7 +302,7 @@ is set to ``true``) when they try to access a protected resource but aren't
 fully authenticated.
 
 This path **must** be accessible by a normal, unauthenticated user, else
-you may create a redirect loop.
+you might create a redirect loop.
 
 check_path
 ..........
