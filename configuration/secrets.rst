@@ -170,7 +170,7 @@ Reveal Existing Secrets
 -----------------------
 
 If you have the **decryption key**, the ``secrets:reveal`` command allows
-you to reveal a single secrets value.
+you to reveal a single secret's value.
 
 .. code-block:: terminal
 
