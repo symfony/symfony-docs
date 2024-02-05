@@ -379,6 +379,48 @@ use the ``isPrivateIp()`` method from the
     $isPrivate = IpUtils::isPrivateIp($ipv6);
     // $isPrivate = false
 
+Matching a Request Against a Set of Rules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The HttpFoundation component provides some matcher classes that allow you to
+check if a given request meets certain conditions (e.g. it comes from some IP
+address, it uses a certain HTTP method, etc.):
+
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HostRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IpsRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\MethodRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PathRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
+
+You can use them individually or combine them using the
+:class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher`
+class::
+
+    use Symfony\Component\HttpFoundation\ChainRequestMatcher;
+    use Symfony\Component\HttpFoundation\RequestMatcher\HostRequestMatcher;
+    use Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher;
+    use Symfony\Component\HttpFoundation\RequestMatcher\SchemeRequestMatcher;
+
+    // use only one criteria to match the request
+    $schemeMatcher = new SchemeRequestMatcher('https');
+    if ($schemeMatcher->matches($request)) {
+        // ...
+    }
+
+    // use a set of criteria to match the request
+    $matcher = new ChainRequestMatcher([
+        new HostRequestMatcher('example.com'),
+        new PathRequestMatcher('/admin'),
+    ]);
+
+    if ($matcher->matches($request)) {
+        // ...
+    }
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
