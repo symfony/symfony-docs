@@ -124,10 +124,10 @@ Parameter        Description
 **type**: ``string`` **default**: ``all``
 
 This determines exactly *how* the CIDR notation is validated and can take one
-of these values:
+of :ref:`IP version ranges <reference-constraint-ip-version>`.
 
-* ``4``: validates for CIDR notations that have an IPv4;
-* ``6``: validates for CIDR notations that have an IPv6;
-* ``all``: validates all CIDR formats.
+.. versionadded:: 7.1
+
+    The support of all IP version ranges was introduced in Symfony 7.1.
 
 .. _`CIDR`: https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing
