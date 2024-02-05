@@ -391,7 +391,7 @@ address, it uses a certain HTTP method, etc.):
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HeaderRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HostRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IpsRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\MethodRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PathRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`
