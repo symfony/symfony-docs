@@ -396,12 +396,12 @@ use the ``isPrivateIp()`` method from the
 
     The ``isPrivateIp()`` method was introduced in Symfony 6.3.
 
-Matching a Request Against a Set Rules
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Matching a Request Against a Set of Rules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you need to match a request against a set of rules, you can use
-request matchers. The HttpFoundation component provides many matchers
-to be used:
+The HttpFoundation component provides some matcher classes that allow you to
+check if a given request meets certain conditions (e.g. it comes from some IP
+address, it uses a certain HTTP method, etc.):
 
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher`
@@ -413,7 +413,7 @@ to be used:
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
 
-You can either use them directly or combine them using the
+You can use them individually or combine them using the
 :class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher`
 class::
 
