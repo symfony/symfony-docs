@@ -396,6 +396,48 @@ use the ``isPrivateIp()`` method from the
 
     The ``isPrivateIp()`` method was introduced in Symfony 6.3.
 
+Matching a Request Against a Set Rules
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you need to match a request against a set of rules, you can use
+request matchers. The HttpFoundation component provides many matchers
+to be used:
+
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\AttributesRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\ExpressionRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\HostRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IpsRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\IsJsonMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\MethodRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PathRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`
+* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
+
+You can either use them directly or combine them using the
+:class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher`
+class::
+
+    use Symfony\Component\HttpFoundation\ChainRequestMatcher;
+    use Symfony\Component\HttpFoundation\RequestMatcher\HostRequestMatcher;
+    use Symfony\Component\HttpFoundation\RequestMatcher\PathRequestMatcher;
+    use Symfony\Component\HttpFoundation\RequestMatcher\SchemeRequestMatcher;
+
+    // use only one criteria to match the request
+    $schemeMatcher = new SchemeRequestMatcher('https');
+    if ($schemeMatcher->matches($request)) {
+        // ...
+    }
+
+    // use a set of criteria to match the request
+    $matcher = new ChainRequestMatcher([
+        new HostRequestMatcher('example.com'),
+        new PathRequestMatcher('/admin'),
+    ]);
+
+    if ($matcher->matches($request)) {
+        // ...
+    }
+
 Accessing other Data
 ~~~~~~~~~~~~~~~~~~~~
 
