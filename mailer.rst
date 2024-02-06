@@ -1474,7 +1474,7 @@ handler.
     ``$mailer->send($email)`` works as of Symfony 6.2.
 
 When sending an email asynchronously, its instance must be serializable.
-This is always the case for :class:`Symfony\\Bridge\\Twig\\Mime\\Email`
+This is always the case for :class:`Symfony\\Component\\Mailer\\Mailer`
 instances, but when sending a
 :class:`Symfony\\Bridge\\Twig\\Mime\\TemplatedEmail`, you must ensure that
 the ``context`` is serializable. If you have non-serializable variables,
