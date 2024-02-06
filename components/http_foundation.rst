@@ -841,6 +841,23 @@ It is possible to delete the file after the response is sent with the
 :method:`Symfony\\Component\\HttpFoundation\\BinaryFileResponse::deleteFileAfterSend` method.
 Please note that this will not work when the ``X-Sendfile`` header is set.
 
+Alternatively, ``BinaryFileResponse`` supports instances of ``\SplTempFileObject``.
+This is useful when you want to serve a file that has been created in memory
+and that will be automatically deleted after the response is sent::
+
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+    $file = new \SplTempFileObject();
+    $file->fwrite('Hello World');
+    $file->rewind();
+
+    $response = new BinaryFileResponse($file);
+
+.. versionadded:: 7.1
+
+    The support for ``\SplTempFileObject`` in ``BinaryFileResponse``
+    was introduced in Symfony 7.1.
+
 If the size of the served file is unknown (e.g. because it's being generated on the fly,
 or because a PHP stream filter is registered on it, etc.), you can pass a ``Stream``
 instance to ``BinaryFileResponse``. This will disable ``Range`` and ``Content-Length``
