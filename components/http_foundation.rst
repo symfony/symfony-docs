@@ -397,7 +397,6 @@ address, it uses a certain HTTP method, etc.):
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\PortRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\QueryParameterRequestMatcher`
 * :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
-* :class:`Symfony\\Component\\HttpFoundation\\RequestMatcher\\SchemeRequestMatcher`
 
 You can use them individually or combine them using the
 :class:`Symfony\\Component\\HttpFoundation\\ChainRequestMatcher` class::
