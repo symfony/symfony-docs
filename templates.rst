@@ -662,7 +662,7 @@ Rendering a Template in Services
 Inject the ``twig`` Symfony service into your own services and use its
 ``render()`` method. When using :doc:`service autowiring </service_container/autowiring>`
 you only need to add an argument in the service constructor and type-hint it with
-the :class:`Twig\\Environment` class::
+the `Twig Environment`_::
 
     // src/Service/SomeService.php
     namespace App\Service;
@@ -1648,24 +1648,25 @@ If you're using the default ``services.yaml`` configuration, this will already
 work! Otherwise, :ref:`create a service <service-container-creating-service>`
 for this class and :doc:`tag your service </service_container/tags>` with ``twig.runtime``.
 
-.. _`Twig`: https://twig.symfony.com
-.. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
+.. _`Cross-Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
+.. _`default Twig filters and functions`: https://twig.symfony.com/doc/3.x/#reference
 .. _`filters`: https://twig.symfony.com/doc/3.x/filters/index.html
 .. _`functions`: https://twig.symfony.com/doc/3.x/functions/index.html
-.. _`with_context`: https://twig.symfony.com/doc/3.x/functions/include.html
-.. _`Twig template loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
-.. _`Twig raw filter`: https://twig.symfony.com/doc/3.x/filters/raw.html
-.. _`Twig output escaping docs`: https://twig.symfony.com/doc/3.x/api.html#escaper-extension
-.. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
-.. _`Twig template inheritance`: https://twig.symfony.com/doc/3.x/tags/extends.html
-.. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
-.. _`Cross-Site Scripting`: https://en.wikipedia.org/wiki/Cross-site_scripting
 .. _`GitHub Actions`: https://docs.github.com/en/free-pro-team@latest/actions
-.. _`UX Twig Component`: https://symfony.com/bundles/ux-twig-component/current/index.html
-.. _`UX Live Component`: https://symfony.com/bundles/ux-live-component/current/index.html
-.. _`Twig Extensions`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
-.. _`default Twig filters and functions`: https://twig.symfony.com/doc/3.x/#reference
-.. _`official Twig extensions`: https://github.com/twigphp?q=extra
 .. _`global variables`: https://twig.symfony.com/doc/3.x/advanced.html#id1
 .. _`hinclude.js`: https://mnot.github.io/hinclude/
 .. _`Turbo Streams`: https://symfony.com/bundles/ux-turbo/current/index.html
+.. _`official Twig extensions`: https://github.com/twigphp?q=extra
+.. _`snake case`: https://en.wikipedia.org/wiki/Snake_case
+.. _`tags`: https://twig.symfony.com/doc/3.x/tags/index.html
+.. _`Twig block tag`: https://twig.symfony.com/doc/3.x/tags/block.html
+.. _`Twig Environment`: https://github.com/twigphp/Twig/blob/3.x/src/Loader/FilesystemLoader.php
+.. _`Twig Extensions`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
+.. _`Twig output escaping docs`: https://twig.symfony.com/doc/3.x/api.html#escaper-extension
+.. _`Twig raw filter`: https://twig.symfony.com/doc/3.x/filters/raw.html
+.. _`Twig template inheritance`: https://twig.symfony.com/doc/3.x/tags/extends.html
+.. _`Twig template loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
+.. _`Twig`: https://twig.symfony.com
+.. _`UX Live Component`: https://symfony.com/bundles/ux-live-component/current/index.html
+.. _`UX Twig Component`: https://symfony.com/bundles/ux-twig-component/current/index.html
+.. _`with_context`: https://twig.symfony.com/doc/3.x/functions/include.html

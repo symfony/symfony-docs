@@ -194,7 +194,7 @@ instance.
 
 To solve this problem, call the :method:`Symfony\\Component\\Validator\\ValidatorBuilder::setMappingCache`
 method of the Validator builder and pass your own caching class (which must
-implement the PSR-6 interface :class:`Psr\\Cache\\CacheItemPoolInterface`)::
+implement the PSR-6 interface ``Psr\Cache\CacheItemPoolInterface``)::
 
     use Symfony\Component\Validator\Validation;
 
