@@ -53,8 +53,8 @@ In addition, some components and official bundles provide other value resolvers:
 
 PSR-7 Objects Resolver:
     Injects a Symfony HttpFoundation ``Request`` object created from a PSR-7 object
-    of type :class:`Psr\\Http\\Message\\ServerRequestInterface`,
-    :class:`Psr\\Http\\Message\\RequestInterface` or :class:`Psr\\Http\\Message\\MessageInterface`.
+    of type ``Psr\Http\Message\ServerRequestInterface``,
+    ``Psr\Http\Message\RequestInterface`` or ``Psr\Http\Message\MessageInterface``.
     It requires installing :doc:`the PSR-7 Bridge </components/psr7>` component.
 
 Adding a Custom Value Resolver
@@ -250,7 +250,7 @@ To ensure your resolvers are added in the right position you can run the followi
 command to see which argument resolvers are present and in which order they run.
 
 .. code-block:: terminal
-    
+
     $ php bin/console debug:container debug.argument_resolver.inner --show-arguments
 
 .. tip::

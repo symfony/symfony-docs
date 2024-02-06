@@ -1339,8 +1339,7 @@ twig.loader
 
 **Purpose**: Register a custom service that loads Twig templates
 
-By default, Symfony uses only one `Twig Loader`_ -
-:class:`Symfony\\Bundle\\TwigBundle\\Loader\\FilesystemLoader`. If you need
+By default, Symfony uses only one `Twig Loader`_ - `FilesystemLoader`_. If you need
 to load Twig templates from another resource, you can create a service for
 the new loader and tag it with ``twig.loader``.
 
@@ -1457,6 +1456,7 @@ Then, tag it with the ``validator.initializer`` tag (it has no options).
 For an example, see the ``DoctrineInitializer`` class inside the Doctrine
 Bridge.
 
+.. _`FilesystemLoader`: https://github.com/twigphp/Twig/blob/3.x/src/Loader/FilesystemLoader.php
 .. _`Twig's documentation`: https://twig.symfony.com/doc/3.x/advanced.html#creating-an-extension
 .. _`Twig Loader`: https://twig.symfony.com/doc/3.x/api.html#loaders
 .. _`PHP class preloading`: https://www.php.net/manual/en/opcache.configuration.php#ini.opcache.preload
