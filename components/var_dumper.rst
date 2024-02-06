@@ -170,7 +170,7 @@ Outside a Symfony application, use the :class:`Symfony\\Component\\VarDumper\\Du
     ]);
 
     VarDumper::setHandler(function (mixed $var) use ($cloner, $dumper): ?string {
-        $dumper->dump($cloner->cloneVar($var));
+        return $dumper->dump($cloner->cloneVar($var));
     });
 
 .. note::
