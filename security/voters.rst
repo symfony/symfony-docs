@@ -35,17 +35,28 @@ The Voter Interface
 -------------------
 
 A custom voter needs to implement
-:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\VoterInterface`,
+:class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\CacheableVoterInterface`
 or extend :class:`Symfony\\Component\\Security\\Core\\Authorization\\Voter\\Voter`,
 which makes creating a voter even easier::
 
     use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
     use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-    abstract class Voter implements VoterInterface
+    abstract class Voter implements VoterInterface, CacheableVoterInterface
     {
         abstract protected function supports(string $attribute, $subject) bool;
         abstract protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool;
+
+        public function supportsAttribute(string $attribute): bool
+        {
+            return true;
+        }
+
+        public function supportsType(string $subjectType): bool
+        {
+            return true;
+        }
     }
 
 .. _how-to-use-the-voter-in-a-controller:
