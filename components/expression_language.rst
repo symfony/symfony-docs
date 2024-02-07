@@ -14,8 +14,6 @@ Installation
 
 .. include:: /components/require_autoload.rst.inc
 
-How can the Expression Engine Help Me?
-
 .. _how-can-the-expression-engine-help-me:
 
 How can the Expression Language Help Me?
