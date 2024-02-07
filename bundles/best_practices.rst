@@ -292,7 +292,7 @@ following standardized instructions in your ``README.md`` file.
         Open a command console, enter your project directory and execute:
 
         ```console
-        $ composer require <package-name>
+        composer require <package-name>
         ```
 
         Applications that don't use Symfony Flex
@@ -304,7 +304,7 @@ following standardized instructions in your ``README.md`` file.
         following command to download the latest stable version of this bundle:
 
         ```console
-        $ composer require <package-name>
+        composer require <package-name>
         ```
 
         ### Step 2: Enable the Bundle
@@ -333,9 +333,9 @@ following standardized instructions in your ``README.md`` file.
 
         Open a command console, enter your project directory and execute:
 
-        .. code-block:: bash
-
-            $ composer require <package-name>
+        ```bash
+        composer require <package-name>
+        ```
 
         Applications that don't use Symfony Flex
         ----------------------------------------
@@ -346,9 +346,9 @@ following standardized instructions in your ``README.md`` file.
         Open a command console, enter your project directory and execute the
         following command to download the latest stable version of this bundle:
 
-        .. code-block:: terminal
-
-            $ composer require <package-name>
+       ```bash
+        composer require <package-name>
+        ```
 
         Step 2: Enable the Bundle
         ~~~~~~~~~~~~~~~~~~~~~~~~~
