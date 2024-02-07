@@ -475,7 +475,7 @@ The context is accessible in all events except for the ``workflow.guard`` events
 .. deprecated:: 6.4
 
     Gathering events context is deprecated since Symfony 6.4 and the
-    :method:`Symfony\\Component\\Workflow\\Event::getContext` method will be
+    :method:`Symfony\\Component\\Workflow\\Event\\Event::getContext` method will be
     removed in Symfony 7.0.
 
 .. note::
