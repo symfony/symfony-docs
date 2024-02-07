@@ -92,6 +92,26 @@ can chain multiple coalescing operators.
 * ``foo[3] ?? 'no'``
 * ``foo.baz ?? foo['baz'] ?? 'no'``
 
+Parsing and Linting Expressions
+...............................
+
+The ExpressionLanguage component provides a way to parse and lint expressions.
+The :method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::parse`
+method returns a :class:`Symfony\\Component\\ExpressionLanguage\\ParsedExpression`
+instance that can be used to inspect and manipulate the expression. The
+:method:`Symfony\\Component\\ExpressionLanguage\\ExpressionLanguage::lint`, on the
+other hand, returns a boolean indicating if the expression is valid or not::
+
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+
+    $expressionLanguage = new ExpressionLanguage();
+
+    var_dump($expressionLanguage->parse('1 + 2'));
+    // displays the AST nodes of the expression which can be
+    // inspected and manipulated
+
+    var_dump($expressionLanguage->lint('1 + 2')); // displays true
+
 Passing in Variables
 --------------------
 

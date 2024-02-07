@@ -509,7 +509,7 @@ like this::
         $cloner = new VarCloner();
         $dumper = 'cli' === PHP_SAPI ? new CliDumper() : new HtmlDumper();
 
-        $dumper->dump($cloner->cloneVar($var));
+        return $dumper->dump($cloner->cloneVar($var));
     });
 
 Cloners
