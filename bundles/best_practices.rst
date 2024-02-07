@@ -333,9 +333,9 @@ following standardized instructions in your ``README.md`` file.
 
         Open a command console, enter your project directory and execute:
 
-        ```bash
-        composer require <package-name>
-        ```
+        .. code-block:: terminal
+
+            composer require <package-name>
 
         Applications that don't use Symfony Flex
         ----------------------------------------
