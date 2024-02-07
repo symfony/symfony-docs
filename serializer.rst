@@ -385,10 +385,10 @@ stored in one of the following locations:
 
 .. note::
 
-    By default, the ``Default`` group is used when normalizing and denormalizing
-    objects. A group corresponding to the class name is also used. For example,
-    if you are normalizing a ``App\Entity\Product`` object, the ``Product`` group
-    is also included by default.
+    The groups used by default when normalizing and denormalizing objects are
+    ``Default`` and the group that matches the class name. For example, if you
+    are normalizing a ``App\Entity\Product`` object, the groups used are
+    ``Default`` and ``Product``.
 
     .. versionadded:: 7.1
 
