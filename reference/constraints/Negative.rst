@@ -8,7 +8,7 @@ want to allow zero as value.
 ==========  ===================================================================
 Applies to  :ref:`property or method <validation-property-target>`
 Class       :class:`Symfony\\Component\\Validator\\Constraints\\Negative`
-Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LesserThanValidator`
+Validator   :class:`Symfony\\Component\\Validator\\Constraints\\LessThanValidator`
 ==========  ===================================================================
 
 Basic Usage
