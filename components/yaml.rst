@@ -355,6 +355,26 @@ and the special ``!php/enum`` syntax to parse them as proper PHP enums::
     // the value of the 'foo' key is a string because it missed the `!php/enum` syntax
     // $parameters = ['foo' => 'FooEnum::Foo', 'bar' => 'foo'];
 
+You can also use ``!php/enum`` to get all the enumeration cases by only
+giving the enumeration FQCN::
+
+    enum FooEnum: string
+    {
+        case Foo = 'foo';
+        case Bar = 'bar';
+    }
+
+    // ...
+
+    $yaml = '{ bar: !php/enum FooEnum }';
+    $parameters = Yaml::parse($yaml, Yaml::PARSE_CONSTANT);
+    // $parameters = ['bar' => ['foo', 'bar']];
+
+.. versionadded:: 7.1
+
+    The support for using the enum FQCN without specifying a case
+    was introduced in Symfony 7.1.
+
 Parsing and Dumping of Binary Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
