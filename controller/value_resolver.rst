@@ -191,8 +191,8 @@ In addition, some components, bridges and official bundles provide other value r
 
 PSR-7 Objects Resolver:
     Injects a Symfony HttpFoundation ``Request`` object created from a PSR-7 object
-    of type :class:`Psr\\Http\\Message\\ServerRequestInterface`,
-    :class:`Psr\\Http\\Message\\RequestInterface` or :class:`Psr\\Http\\Message\\MessageInterface`.
+    of type ``Psr\Http\Message\ServerRequestInterface``,
+    ``Psr\Http\Message\RequestInterface`` or ``Psr\Http\Message\MessageInterface``.
     It requires installing :doc:`the PSR-7 Bridge </components/psr7>` component.
 
 Managing Value Resolvers
