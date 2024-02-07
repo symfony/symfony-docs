@@ -112,6 +112,30 @@ other hand, returns a boolean indicating if the expression is valid or not::
 
     var_dump($expressionLanguage->lint('1 + 2')); // displays true
 
+The call to these methods can be configured through flags. The available flags
+are available in the :class:`Symfony\\Component\\ExpressionLanguage\\Parser` class
+and are the following:
+
+* ``IGNORE_UNKNOWN_VARIABLES``: don't throw an exception if a variable is not
+  defined in the expression;
+* ``IGNORE_UNKNOWN_FUNCTIONS``: don't throw an exception if a function is not
+  defined in the expression.
+
+This is how you can use these flags::
+
+    use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
+    use Symfony\Component\ExpressionLanguage\Parser;
+
+    $expressionLanguage = new ExpressionLanguage();
+
+    // this return true because the unknown variables and functions are ignored
+    var_dump($expressionLanguage->lint('unknown_var + unknown_function()', Parser::IGNORE_UNKNOWN_VARIABLES | Parser::IGNORE_UNKNOWN_FUNCTIONS));
+
+.. versionadded:: 7.1
+
+    The support for flags in the ``parse()`` and ``lint()`` methods
+    was introduced in Symfony 7.1.
+
 Passing in Variables
 --------------------
 
