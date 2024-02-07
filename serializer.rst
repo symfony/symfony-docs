@@ -383,6 +383,18 @@ stored in one of the following locations:
 * All ``*.yaml`` and ``*.xml`` files in the ``Resources/config/serialization/``
   directory of a bundle.
 
+.. note::
+
+    By default, the ``Default`` group is used when normalizing and denormalizing
+    objects. A group corresponding to the class name is also used. For example,
+    if you are normalizing a ``App\Entity\Product`` object, the ``Product`` group
+    is also included by default.
+
+    .. versionadded:: 7.1
+
+        The default use of the class name and ``Default`` groups when normalizing
+        and denormalizing objects was introduced in Symfony 7.1.
+
 .. _serializer-enabling-metadata-cache:
 
 Using Nested Attributes
