@@ -180,16 +180,16 @@ listed in the manifest::
     // error:
 
 If your JSON file is not on your local filesystem but is accessible over HTTP,
-use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\RemoteJsonManifestVersionStrategy`
+use the :class:`Symfony\\Component\\Asset\\VersionStrategy\\JsonManifestVersionStrategy`
 with the :doc:`HttpClient component </http_client>`::
 
     use Symfony\Component\Asset\Package;
-    use Symfony\Component\Asset\VersionStrategy\RemoteJsonManifestVersionStrategy;
+    use Symfony\Component\Asset\VersionStrategy\JsonManifestVersionStrategy;
     use Symfony\Component\HttpClient\HttpClient;
 
     $httpClient = HttpClient::create();
     $manifestUrl = 'https://cdn.example.com/rev-manifest.json';
-    $package = new Package(new RemoteJsonManifestVersionStrategy($manifestUrl, $httpClient));
+    $package = new Package(new JsonManifestVersionStrategy($manifestUrl, $httpClient));
 
 Custom Version Strategies
 .........................
