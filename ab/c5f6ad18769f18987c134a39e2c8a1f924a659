@@ -1,0 +1,44 @@
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-01-25T09:51:43Z
+
+Not sure about this change. It's true that it's a bit deep internal explanation, but AssetMapper is still too new ... and it's confusing to see those empty and "fake" imports that AssetMapper does to make the CSS files work.
+
+I'd say that we should keep the internal details ... maybe with some reword if we want.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-01-25T11:07:10Z
+
+The important part is explained right above this box:
+> The final collection of CSS files is rendered onto the page as link tags in the order they were imported.
+
+My point: When importing a CSS file into a JavaScript file, what else could possibly happen (besides creating those mentioned `<link>`s)? So I just can't think of which (not done) actions the passages "but does nothing" and "nothing additional happens" are referring to.
+
+---------------------------------------------------------------------------
+
+by javiereguiluz at 2024-01-25T16:31:15Z
+
+Let me show you a real example. It's from live.symfony.com which was upgraded to AssetMapper the other day:
+
+```js
+
+{
+    "imports": {
+        "app": "/assets/app-8ec4b11d9d04ad28fc3acd8a4aa42add.js",
+        "/assets/styles/app.css": "data:application/javascript,",
+        // ...
+        "/assets/@symfony/ux-live-component/live.min.css": "data:application/javascript,document.head.appendChild%28Object.assign%28document.createElement%28%22link%22%29%2C%7Brel%3A%22stylesheet%22%2Chref%3A%22%2Fassets%2F%40symfony%2Fux-live-component%2Flive.min-5108f988fb2a3dbb292d6feebc9db7e8.css%22%7D%29%29",
+        // ...
+    }
+}
+```
+
+See the "ugly" and empty `"data:application/javascript,"` ? It's not a mistake, although it looks like one. These are the "fake" and empty imports that AssetMapper must use in CSS files sometimes.
+
+---------------------------------------------------------------------------
+
+by ThomasLandauer at 2024-01-25T17:12:12Z
+
+1. Looks neither look ugly nor empty to me ;-) Looks like some urlescaped piece of JavaScript that's creating the `<link>`, (just like the "prototype" JavaScript stuff on the form collections page). If I look at the files that Webpack Encore creates, they're a nightmare too - so what ;-)
+2. If you think that this bothers people, then show it on the page and explain it. But the stuff I deleted does not explain it! It creates the false impression that it's very important that there is really "nothing else" happening - and I still have no idea what this "nothing else" could possibly be .. ;-)
