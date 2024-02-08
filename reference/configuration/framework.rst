@@ -2529,7 +2529,7 @@ translator
 cache_dir
 .........
 
-**type**: ``string`` | ``null`` **default**: ``%kernel.cache_dir%/translations/``
+**type**: ``string`` | ``null`` **default**: ``%kernel.cache_dir%/translations``
 
 Defines the directory where the translation cache is stored. Use ``null`` to
 disable this cache.
