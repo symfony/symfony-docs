@@ -12,8 +12,8 @@ Creating a New Normalizer
 Imagine you want add, modify, or remove some properties during the serialization
 process. For that you'll have to create your own normalizer. But it's usually
 preferable to let Symfony normalize the object, then hook into the normalization
-to customize the normalized data. To do that, leverage the
-``NormalizerAwareInterface`` and the ``NormalizerAwareTrait``. This will give
+to customize the normalized data. To do that, you can inject a
+``NormalizerInterface`` and wire it to Symfony's object normalizer. This will give
 you access to a ``$normalizer`` property which takes care of most of the
 normalization process::
 
@@ -21,16 +21,16 @@ normalization process::
     namespace App\Serializer;
 
     use App\Entity\Topic;
+    use Symfony\Component\DependencyInjection\Attribute\Autowire;
     use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-    use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
-    use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
     use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-    class TopicNormalizer implements NormalizerInterface, NormalizerAwareInterface
+    class TopicNormalizer implements NormalizerInterface
     {
-        use NormalizerAwareTrait;
-
         public function __construct(
+            #[Autowire(service: 'serializer.normalizer.object')]
+            private readonly NormalizerInterface $normalizer,
+
             private UrlGeneratorInterface $router,
         ) {
         }
