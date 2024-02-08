@@ -123,7 +123,7 @@ In this example, the ``$handler`` service is only instantiated when the
 
 You can also type-hint the service locator argument with
 :class:`Symfony\\Contracts\\Service\\ServiceCollectionInterface` instead of
-:class:`Psr\\Container\\ContainerInterface`. By doing so, you'll be able to
+``Psr\Container\ContainerInterface``. By doing so, you'll be able to
 count and iterate over the services of the locator::
 
     // ...
