@@ -7,7 +7,6 @@ they are released as stable versions.
 Creating a New Project Based on an Unstable Symfony Version
 -----------------------------------------------------------
 
-
 Suppose that the Symfony 5.4 version hasn't been released yet and you want to create
 a new project to test its features. First, `install the Composer package manager`_.
 Then, open a command console, enter your project's directory and

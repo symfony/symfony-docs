@@ -292,7 +292,6 @@ The following credential classes are supported by default:
             $apiToken
         ));
 
-
 Self Validating Passport
 ~~~~~~~~~~~~~~~~~~~~~~~~
 

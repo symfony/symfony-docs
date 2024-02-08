@@ -2862,7 +2862,6 @@ annotation changes). For performance reasons, it is recommended to disable
 debug mode in production, which will happen automatically if you use the
 default value.
 
-
 secrets
 ~~~~~~~
 

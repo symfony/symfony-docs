@@ -320,6 +320,5 @@ The secrets system is enabled by default and some of its behavior can be configu
             ;
         };
 
-
 .. _`libsodium`: https://pecl.php.net/package/libsodium
 .. _`paragonie/sodium_compat`: https://github.com/paragonie/sodium_compat

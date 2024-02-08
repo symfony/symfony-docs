@@ -44,7 +44,6 @@ example:
                 ->tag('twig.extension');
         };
 
-
 Services tagged with the ``twig.extension`` tag are collected during the
 initialization of TwigBundle and added to Twig as extensions.
 
@@ -347,7 +346,6 @@ Then, define the chain as a service:
 
             $services->set(TransportChain::class);
         };
-
 
 Define Services with a Custom Tag
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

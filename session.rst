@@ -1002,7 +1002,6 @@ the MongoDB connection as argument, and the required parameters:
 ``collection``:
     The name of the collection
 
-
 .. configuration-block::
 
     .. code-block:: yaml

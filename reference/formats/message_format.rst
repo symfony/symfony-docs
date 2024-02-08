@@ -63,7 +63,6 @@ The basic usage of the MessageFormat allows you to use placeholders (called
             'say_hello' => "Hello {name}!",
         ];
 
-
 .. caution::
 
     In the previous translation format, placeholders were often wrapped in ``%``

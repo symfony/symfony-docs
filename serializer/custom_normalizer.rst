@@ -86,4 +86,3 @@ is called.
     as well the ones included in `API Platform`_ natively implement this interface.
 
 .. _`API Platform`: https://api-platform.com
-

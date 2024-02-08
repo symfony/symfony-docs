@@ -193,7 +193,6 @@ production. To do that, create an :doc:`event subscriber </event_dispatcher>`
 and listen to the :ref:`kernel.response <component-http-kernel-kernel-response>`
 event::
 
-
     use Symfony\Component\EventDispatcher\EventSubscriberInterface;
     use Symfony\Component\HttpKernel\Event\ResponseEvent;
     use Symfony\Component\HttpKernel\KernelInterface;

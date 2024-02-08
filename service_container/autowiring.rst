@@ -119,7 +119,6 @@ both services:
                 ->autowire();
         };
 
-
 Now, you can use the ``TwitterClient`` service immediately in a controller::
 
     // src/Controller/DefaultController.php
@@ -256,7 +255,6 @@ adding a service alias:
             $services->alias(Rot13Transformer::class, 'app.rot13.transformer');
         };
 
-
 This creates a service "alias", whose id is ``App\Util\Rot13Transformer``.
 Thanks to this, autowiring sees this and uses it whenever the ``Rot13Transformer``
 class is type-hinted.
@@ -359,7 +357,6 @@ To fix that, add an :ref:`alias <service-autowiring-alias>`:
             // an App\Util\TransformerInterface type-hint is detected
             $services->alias(TransformerInterface::class, Rot13Transformer::class);
         };
-
 
 Thanks to the ``App\Util\TransformerInterface`` alias, the autowiring subsystem
 knows that the ``App\Util\Rot13Transformer`` service should be injected when

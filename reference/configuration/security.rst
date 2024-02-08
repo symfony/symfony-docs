@@ -303,7 +303,6 @@ the ``debug:firewall`` command:
 
     The ``debug:firewall`` command was introduced in Symfony 5.3.
 
-
 .. _reference-security-firewall-form-login:
 
 ``form_login`` Authentication

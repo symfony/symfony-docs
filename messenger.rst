@@ -1604,7 +1604,6 @@ The Redis transport DSN may looks like this:
 A number of options can be configured via the DSN or via the ``options`` key
 under the transport in ``messenger.yaml``:
 
-
 ===================  =====================================  =================================
 Option               Description                            Default
 ===================  =====================================  =================================
@@ -2360,7 +2359,6 @@ and a different instance will be created per bus.
                             # add your own services that implement Symfony\Component\Messenger\Middleware\MiddlewareInterface
                             - 'App\Middleware\MyMiddleware'
                             - 'App\Middleware\AnotherMiddleware'
-
 
     .. code-block:: xml
 
