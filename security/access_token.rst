@@ -697,6 +697,187 @@ create your own User from the claims, you must
         }
     }
 
+Using CAS 2.0
+-------------
+
+`Central Authentication Service (CAS)`_ is an enterprise multilingual single
+sign-on solution and identity provider for the web and attempts to be a
+comprehensive platform for your authentication and authorization needs.
+
+Configure the Cas2Handler
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Symfony provides a generic ``Cas2Handler`` to call your CAS server. It requires
+the ``symfony/http-client`` package to make the needed HTTP requests. If you
+haven't installed it yet, run this command:
+
+.. code-block:: terminal
+
+    $ composer require symfony/http-client
+
+You can configure a ``cas`` ``token_handler``:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            cas:
+                                validation_url: https://www.example.com/cas/validate
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <access-token>
+                        <token-handler>
+                            <cas validation-url="https://www.example.com/cas/validate"/>
+                        </token-handler>
+                    </access-token>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->accessToken()
+                    ->tokenHandler()
+                        ->cas()
+                            ->validationUrl('https://www.example.com/cas/validate')
+            ;
+        };
+
+The ``cas`` token handler automatically creates an HTTP client to call
+the specified ``validation_url``. If you prefer using your own client, you can
+specify the service name via the ``http_client`` option:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            cas:
+                                validation_url: https://www.example.com/cas/validate
+                                http_client: cas.client
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <access-token>
+                        <token-handler>
+                            <cas validation-url="https://www.example.com/cas/validate" http-client="cas.client"/>
+                        </token-handler>
+                    </access-token>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->accessToken()
+                    ->tokenHandler()
+                        ->cas()
+                            ->validationUrl('https://www.example.com/cas/validate')
+                            ->httpClient('cas.client')
+            ;
+        };
+
+By default the token handler will read the validation URL XML response with
+ ``cas`` prefix but you can configure another prefix:
+
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        # config/packages/security.yaml
+        security:
+            firewalls:
+                main:
+                    access_token:
+                        token_handler:
+                            cas:
+                                validation_url: https://www.example.com/cas/validate
+                                prefix: cas-example
+
+    .. code-block:: xml
+
+        <!-- config/packages/security.xml -->
+        <?xml version="1.0" encoding="UTF-8"?>
+        <srv:container xmlns="http://symfony.com/schema/dic/security"
+            xmlns:srv="http://symfony.com/schema/dic/services"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/services
+                https://symfony.com/schema/dic/services/services-1.0.xsd
+                http://symfony.com/schema/dic/security
+                https://symfony.com/schema/dic/security/security-1.0.xsd">
+
+            <config>
+                <firewall name="main">
+                    <access-token>
+                        <token-handler>
+                            <cas validation-url="https://www.example.com/cas/validate" prefix="cas-example"/>
+                        </token-handler>
+                    </access-token>
+                </firewall>
+            </config>
+        </srv:container>
+
+    .. code-block:: php
+
+        // config/packages/security.php
+        use Symfony\Config\SecurityConfig;
+
+        return static function (SecurityConfig $security) {
+            $security->firewall('main')
+                ->accessToken()
+                    ->tokenHandler()
+                        ->cas()
+                            ->validationUrl('https://www.example.com/cas/validate')
+                            ->prefix('cas-example')
+            ;
+        };
+
 Creating Users from Token
 -------------------------
 
@@ -727,8 +908,9 @@ need a user provider to create a user from the database::
 When using this strategy, you can omit the ``user_provider`` configuration
 for :ref:`stateless firewalls <reference-security-stateless>`.
 
+.. _`Central Authentication Service (CAS)`: https://en.wikipedia.org/wiki/Central_Authentication_Service
 .. _`JSON Web Tokens (JWT)`: https://datatracker.ietf.org/doc/html/rfc7519
-.. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
-.. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
-.. _`OpenID Connect Specification`: https://openid.net/specs/openid-connect-core-1_0.html
 .. _`OpenID Connect (OIDC)`: https://en.wikipedia.org/wiki/OpenID#OpenID_Connect_(OIDC)
+.. _`OpenID Connect Specification`: https://openid.net/specs/openid-connect-core-1_0.html
+.. _`RFC6750`: https://datatracker.ietf.org/doc/html/rfc6750
+.. _`SAML2 (XML structures)`: https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html
