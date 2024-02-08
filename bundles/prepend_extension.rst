@@ -187,7 +187,7 @@ method::
     The ``prependExtension()`` method, like ``prepend()``, is called only at compile time.
 
 Alternatively, you can use the ``prepend`` parameter of the
-:method:`Symfony\\Component\\DependencyInjection\\Loader\\ContainerConfigurator::extension`
+:method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::extension`
 method::
 
     use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -211,7 +211,7 @@ method::
 .. versionadded:: 7.1
 
     The ``prepend`` parameter of the
-    :method:`Symfony\\Component\\DependencyInjection\\Loader\\ContainerConfigurator::extension`
+    :method:`Symfony\\Component\\DependencyInjection\\Loader\\Configurator\\ContainerConfigurator::extension`
     method was added in Symfony 7.1.
 
 More than one Bundle using PrependExtensionInterface
