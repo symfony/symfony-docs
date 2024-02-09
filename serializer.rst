@@ -555,7 +555,6 @@ given class:
 
     The debug:serializer`` command was introduced in Symfony 6.3.
 
-
 Going Further with the Serializer
 ---------------------------------
 

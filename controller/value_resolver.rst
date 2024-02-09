@@ -79,7 +79,6 @@ Symfony ships with the following value resolvers in the
 
         The ``BackedEnumValueResolver`` and ``EnumRequirement`` were introduced in Symfony 6.1.
 
-
 :class:`Symfony\\Component\\HttpKernel\\Controller\\ArgumentResolver\\RequestPayloadValueResolver`
     Maps the request payload or the query string into the type-hinted object.
 

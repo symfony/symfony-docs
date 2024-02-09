@@ -93,7 +93,6 @@ is called.
     All built-in :ref:`normalizers and denormalizers <component-serializer-normalizers>`
     as well the ones included in `API Platform`_ natively implement this interface.
 
-<<<<<<< HEAD
 .. deprecated:: 6.3
 
     The :class:`Symfony\\Component\\Serializer\\Normalizer\\CacheableSupportsMethodInterface`
@@ -156,6 +155,4 @@ Here is an example of how to use the ``getSupportedTypes()`` method::
     The ``supports*()`` method implementations should not assume that
     ``getSupportedTypes()`` has been called before.
 
-=======
->>>>>>> 5.4
 .. _`API Platform`: https://api-platform.com
