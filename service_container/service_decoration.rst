@@ -377,7 +377,6 @@ the ``decoration_priority`` option. Its value is an integer that defaults to
                 ->args([service('.inner')]);
         };
 
-
 The generated code will be the following::
 
     $this->services[Foo::class] = new Baz(new Bar(new Foo()));

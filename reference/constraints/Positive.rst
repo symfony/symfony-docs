@@ -63,7 +63,6 @@ positive number (greater than zero):
         use Symfony\Component\Validator\Constraints as Assert;
         use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-
         class Employee
         {
             // ...

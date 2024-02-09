@@ -10,7 +10,6 @@ Installation
 
     $ composer require symfony/process
 
-
 .. include:: /components/require_autoload.rst.inc
 
 Usage

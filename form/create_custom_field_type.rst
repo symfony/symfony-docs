@@ -465,7 +465,6 @@ Symfony passes a series of variables to the template used to render the form
 type. You can also pass your own variables, which can be based on the options
 defined by the form or be completely independent::
 
-
     // src/Form/Type/PostalAddressType.php
     namespace App\Form\Type;
 

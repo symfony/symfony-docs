@@ -135,7 +135,6 @@ The following cache adapters are available:
 
     cache/adapters/*
 
-
 .. _cache-component-psr6-caching:
 
 Generic Caching (PSR-6)

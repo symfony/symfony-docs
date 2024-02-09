@@ -141,7 +141,6 @@ After creating the strategy PHP class, register it as a Symfony service.
                 );
         };
 
-
 Finally, enable the new asset versioning for all the application assets or just
 for some :ref:`asset package <reference-framework-assets-packages>` thanks to
 the :ref:`version_strategy <reference-assets-version-strategy>` option:

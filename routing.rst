@@ -1853,7 +1853,6 @@ host name:
             ;
         };
 
-
 The value of the ``host`` option can include parameters (which is useful in
 multi-tenant applications) and these parameters can be validated too with
 ``requirements``:
