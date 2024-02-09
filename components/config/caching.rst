@@ -55,3 +55,17 @@ the cache file itself. This ``.meta`` file contains the serialized resources,
 whose timestamps are used to determine if the cache is still fresh. When
 not in debug mode, the cache is considered to be "fresh" as soon as it exists,
 and therefore no ``.meta`` file will be generated.
+
+You can explicitly define the absolute path to the meta file::
+
+    use Symfony\Component\Config\ConfigCache;
+    use Symfony\Component\Config\Resource\FileResource;
+
+    $cachePath = __DIR__.'/cache/appUserMatcher.php';
+
+    // the third optional argument indicates the absolute path to the meta file
+    $userMatcherCache = new ConfigCache($cachePath, true, '/my/absolute/path/to/cache.meta');
+
+.. versionadded:: 7.1
+
+    The argument to customize the meta file path was introduced in Symfony 7.1.
