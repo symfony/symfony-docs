@@ -45,7 +45,6 @@ service's class or interface name. Want to :doc:`log </logging>` something? No p
         }
     }
 
-
 What other services are available? Find out by running:
 
 .. code-block:: terminal
@@ -512,7 +511,6 @@ pass here. No problem! In your configuration, you can explicitly set this argume
                 ->arg('$adminEmail', 'manager@example.com')
             ;
         };
-
 
 Thanks to this, the container will pass ``manager@example.com`` to the ``$adminEmail``
 argument of ``__construct`` when creating the ``SiteUpdateManager`` service. The

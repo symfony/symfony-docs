@@ -71,7 +71,6 @@ configuration:
                 ->synthetic();
         };
 
-
 Now, you can inject the instance in the container using
 :method:`Container::set() <Symfony\\Component\\DependencyInjection\\Container::set>`::
 

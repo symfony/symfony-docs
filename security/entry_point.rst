@@ -68,7 +68,6 @@ You can configure this using the ``entry_point`` setting:
             $security->enableAuthenticatorManager(true);
             // ....
 
-
             // allow authentication using a form or HTTP basic
             $mainFirewall = $security->firewall('main');
             $mainFirewall

@@ -55,7 +55,6 @@ and ``50``, you might add the following:
             protected $firstName;
         }
 
-
     .. code-block:: yaml
 
         # config/validator/validation.yaml

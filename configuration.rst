@@ -338,7 +338,6 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             ]);
         };
 
-
 .. note::
 
     If some parameter value includes the ``%`` character, you need to escape it

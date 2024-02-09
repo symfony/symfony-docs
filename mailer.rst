@@ -323,7 +323,6 @@ Other Options
 
         This option was introduced in Symfony 5.2.
 
-
 ``local_domain``
     The domain name to use in ``HELO`` command::
 
@@ -1350,7 +1349,6 @@ you have a transport called ``async``, you can route the message there:
                 ->routing('Symfony\Component\Mailer\Messenger\SendEmailMessage')
                 ->senders(['async']);
         };
-
 
 Thanks to this, instead of being delivered immediately, messages will be sent to
 the transport to be handled later (see :ref:`messenger-worker`).

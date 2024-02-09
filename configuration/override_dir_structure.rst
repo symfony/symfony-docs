@@ -74,7 +74,6 @@ Web front-controller::
     require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
     // ...
 
-
 .. _override-config-dir:
 
 Override the Configuration Directory

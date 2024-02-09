@@ -501,13 +501,11 @@ And here is the controller::
         }
     }
 
-
 .. tip::
 
     You cannot use the ``mercure()`` helper and the ``setCookie()``
     method at the same time (it would set the cookie twice on a single request). Choose
     either one method or the other.
-
 
 Programmatically Generating The JWT Used to Publish
 ---------------------------------------------------

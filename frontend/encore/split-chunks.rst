@@ -22,7 +22,6 @@ To enable this, call ``splitEntryChunks()``:
 
     +     .splitEntryChunks()
 
-
 Now, each output file (e.g. ``homepage.js``) *may* be split into multiple file
 (e.g. ``homepage.js`` & ``vendors-node_modules_jquery_dist_jquery_js.js`` - the
 filename of the second will be less obvious when you build for production). This

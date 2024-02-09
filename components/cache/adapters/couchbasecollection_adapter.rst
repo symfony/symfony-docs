@@ -36,7 +36,6 @@ the second and third parameters::
         $defaultLifetime
     );
 
-
 Configure the Connection
 ------------------------
 
@@ -67,7 +66,6 @@ helper method allows creating and configuring a `Couchbase Collection`_ class in
     $client = CouchbaseCollectionAdapter::createConnection(
         'couchbase:?host[localhost]&host[localhost:12345]'
     );
-
 
 Configure the Options
 ---------------------

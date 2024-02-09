@@ -26,7 +26,6 @@ The Workflow of a Request
     :doc:`/event_dispatcher` articles to learn about how to use it to create
     controllers and define events in Symfony applications.
 
-
 Every HTTP web interaction begins with a request and ends with a response.
 Your job as a developer is to create PHP code that reads the request information
 (e.g. the URL) and creates and returns a response (e.g. an HTML page or JSON string).

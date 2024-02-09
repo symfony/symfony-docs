@@ -82,7 +82,6 @@ You can mark the service as ``lazy`` by manipulating its definition:
             $services->set(AppExtension::class)->lazy();
         };
 
-
 Once you inject the service into another service, a virtual `proxy`_ with the
 same signature of the class representing the service should be injected. The
 same happens when calling ``Container::get()`` directly.

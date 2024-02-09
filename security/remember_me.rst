@@ -289,7 +289,6 @@ Persistent tokens
 
         The ``service`` option was introduced in Symfony 5.1.
 
-
 .. _security-remember-me-signature:
 
 Using Signed Remember Me Tokens

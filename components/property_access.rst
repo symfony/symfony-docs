@@ -186,7 +186,6 @@ method::
     // instead of throwing an exception the following code returns null
     $value = $propertyAccessor->getValue($person, 'birthday');
 
-
 .. _components-property-access-magic-get:
 
 Magic ``__get()`` Method

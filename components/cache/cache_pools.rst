@@ -25,7 +25,6 @@ ready to use in your applications.
 
     adapters/*
 
-
 Using the Cache Contracts
 -------------------------
 

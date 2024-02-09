@@ -53,7 +53,6 @@ create your own encoder that uses the
     ``Symfony\Component\Serializer\Encoder\ContextAwareDecoderInterface``
     or ``Symfony\Component\Serializer\Encoder\ContextAwareEncoderInterface`` accordingly.
 
-
 Registering it in your app
 --------------------------
 
