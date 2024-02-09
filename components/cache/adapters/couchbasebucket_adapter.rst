@@ -41,7 +41,6 @@ the second and third parameters::
         $defaultLifetime
     );
 
-
 Configure the Connection
 ------------------------
 
@@ -72,7 +71,6 @@ helper method allows creating and configuring a `Couchbase Bucket`_ class instan
     $client = CouchbaseBucketAdapter::createConnection(
         'couchbase:?host[localhost]&host[localhost:12345]'
     );
-
 
 Configure the Options
 ---------------------

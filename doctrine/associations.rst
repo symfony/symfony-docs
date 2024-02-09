@@ -605,7 +605,6 @@ that behavior, use the `orphanRemoval`_ option inside ``Category``:
         #[ORM\OneToMany(targetEntity: Product::class, mappedBy: 'category', orphanRemoval: true)]
         private array $products;
 
-
 Thanks to this, if the ``Product`` is removed from the ``Category``, it will be
 removed from the database entirely.
 

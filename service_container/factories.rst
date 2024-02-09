@@ -82,7 +82,6 @@ create its object:
                 ->factory([NewsletterManagerStaticFactory::class, 'createNewsletterManager']);
         };
 
-
 .. note::
 
     When using a factory to create services, the value chosen for class

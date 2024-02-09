@@ -46,7 +46,6 @@ create your own encoder that uses the
         }
     }
 
-
 Registering it in your app
 --------------------------
 

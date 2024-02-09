@@ -9,7 +9,7 @@ Enabling React.js with Webpack Encore
 .. tip::
 
     Check out live demos of Symfony UX React component at `https://ux.symfony.com/react`_!
-    
+
 Using React? First add some dependencies with npm:
 
 .. code-block:: terminal
@@ -27,7 +27,6 @@ Enable react in your ``webpack.config.js``:
           // ...
     +     .enableReactPreset()
       ;
-
 
 Then restart Encore. When you do, it will give you a command you can run to
 install any missing dependencies. After running that command and restarting
