@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-02-08T18:38:59Z
+
+You could also switch max blank lines to 1
+
+---------------------------------------------------------------------------
+
+by alamirault at 2024-02-08T19:01:13Z
+
+https://github.com/symfony/symfony-docs/blob/7a6096e58ae20f13234cf9b9e64ffac4ddd7b440/contributing/code/stack_trace.rst?plain=1#L123-L126
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-02-08T19:02:30Z
+
+Oh yes...
+
+---------------------------------------------------------------------------
+
+by alamirault at 2024-02-08T19:03:05Z
+
+@OskarStark
+
+With `1`, this file is invalid. As is an expected output, we should exclude violation or remove this line ? Or don't change rule ?
+
+https://github.com/symfony/symfony-docs/blob/7a6096e58ae20f13234cf9b9e64ffac4ddd7b440/contributing/code/stack_trace.rst?plain=1#L123-L126
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-02-08T19:05:56Z
+
+Lets keep it as is, we don't need to be too strict, one and two lines is ok
