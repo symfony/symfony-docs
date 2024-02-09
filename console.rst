@@ -538,7 +538,6 @@ call ``setAutoExit(false)`` on it to get the command result in ``CommandTester``
 
         $tester = new ApplicationTester($application);
 
-
 .. caution::
 
     When testing ``InputOption::VALUE_NONE`` command options, you must pass an

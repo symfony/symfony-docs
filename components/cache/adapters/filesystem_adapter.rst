@@ -63,6 +63,5 @@ adapter offers better read performance when using tag-based invalidation::
 
     $cache = new FilesystemTagAwareAdapter();
 
-
 .. _`tmpfs`: https://wiki.archlinux.org/index.php/tmpfs
 .. _`RAM disk solutions`: https://en.wikipedia.org/wiki/List_of_RAM_drive_software

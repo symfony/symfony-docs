@@ -545,4 +545,3 @@ class to simplify writing unit tests for your custom constraints::
             // ...
         }
     }
-

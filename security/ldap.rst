@@ -197,7 +197,6 @@ use the ``ldap`` user provider.
             ;
         };
 
-
 .. caution::
 
     The Security component escapes provided input data when the LDAP user
@@ -530,4 +529,3 @@ Configuration example for form login and query_string
 .. _`LDAP PHP extension`: https://www.php.net/manual/en/intro.ldap.php
 .. _`RFC4515`: https://datatracker.ietf.org/doc/rfc4515/
 .. _`LDAP injection`: http://projects.webappsec.org/w/page/13246947/LDAP%20Injection
-

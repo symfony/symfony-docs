@@ -228,7 +228,6 @@ computer, and execute the following command:
 
 Replace ``[token]`` with the value of your Gitlab personal access token.
 
-
 Configure Your Project's ``composer.json`` File
 -----------------------------------------------
 
@@ -308,4 +307,3 @@ install the new private recipes, run the following command:
 
 .. _`release of version 1.16`: https://github.com/symfony/cli
 .. _`Symfony recipe files`: https://github.com/symfony/recipes/tree/flex/main
-

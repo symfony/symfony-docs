@@ -197,7 +197,6 @@ When using Caddy on the server, you can use a configuration like this:
         encode zstd gzip
         file_server
 
-
         # otherwise, use PHP-FPM (replace "unix//var/..." with "127.0.0.1:9000" when using TCP)
         php_fastcgi unix//var/run/php/php7.4-fpm.sock {
             # optionally set the value of the environment variables used in the application
