@@ -178,7 +178,6 @@ You can override this behavior as follows::
     // the second argument is optional and defines what to do when the service doesn't exist
     $newsletterManager = $containerBuilder->get('newsletter_manager', ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE);
 
-
 These are all the possible behaviors:
 
  * ``ContainerInterface::EXCEPTION_ON_INVALID_REFERENCE``: throws an exception

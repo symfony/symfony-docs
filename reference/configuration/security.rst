@@ -495,7 +495,6 @@ user logs out::
                         ->domain('example.com');
         };
 
-
 clear_site_data
 ...............
 
