@@ -340,7 +340,6 @@ somewhat like this::
             throw new \Exception("Unhandled legacy mapping for $requestPathInfo");
         }
 
-
         public static function handleRequest(Request $request, Response $response, string $publicDirectory): void
         {
             $legacyScriptFilename = LegacyBridge::getLegacyScript($request);

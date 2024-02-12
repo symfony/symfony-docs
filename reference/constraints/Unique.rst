@@ -95,7 +95,6 @@ Options
 
 **type**: ``array`` | ``string``
 
-
 .. versionadded:: 6.1
 
     The ``fields`` option was introduced in Symfony 6.1.

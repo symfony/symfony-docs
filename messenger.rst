@@ -1191,7 +1191,6 @@ to retry them:
 
     The ``--all`` option was introduced in Symfony 6.4.
 
-
 If the message fails again, it will be re-sent back to the failure transport
 due to the normal :ref:`retry rules <messenger-retries-failures>`. Once the max
 retry has been hit, the message will be discarded permanently.
