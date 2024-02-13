@@ -1047,8 +1047,8 @@ both ``app`` and ``checkout``:
 
     {# templates/products/checkout.html.twig #}
     {#
-        Override an "importmap" block in base.html.twig.
-        If you don't have this, add it around the {{ importmap('app') }} call.
+        Override an "importmap" block from base.html.twig.
+        If you don't have that block, add it around the {{ importmap('app') }} call.
     #}
     {% block importmap %}
         {# do NOT call parent() #}
