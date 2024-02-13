@@ -269,7 +269,7 @@ the combination value is unique (e.g. two users could have the same email,
 as long as they don't have the same name also).
 
 If you need to require two fields to be individually unique (e.g. a unique
-``email`` *and* a unique ``username``), you use two ``UniqueEntity`` entries,
+``email`` and a unique ``username``), you use two ``UniqueEntity`` entries,
 each with a single field.
 
 .. include:: /reference/constraints/_groups-option.rst.inc
