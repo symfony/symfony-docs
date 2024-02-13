@@ -60,7 +60,7 @@ follows:
                     supports:
                         - App\Entity\BlogPost
                     initial_marking: draft
-                    places:
+                    places:          # defining places manually is optional
                         - draft
                         - reviewed
                         - rejected
@@ -97,10 +97,13 @@ follows:
                     </framework:marking-store>
                     <framework:support>App\Entity\BlogPost</framework:support>
                     <framework:initial-marking>draft</framework:initial-marking>
+
+                    <!-- defining places manually is optional -->
                     <framework:place>draft</framework:place>
                     <framework:place>reviewed</framework:place>
                     <framework:place>rejected</framework:place>
                     <framework:place>published</framework:place>
+
                     <framework:transition name="to_review">
                         <framework:from>draft</framework:from>
                         <framework:to>reviewed</framework:to>
@@ -135,6 +138,7 @@ follows:
                 ->type('method')
                 ->property('currentPlace');
 
+            // defining places manually is optional
             $blogPublishing->place()->name('draft');
             $blogPublishing->place()->name('reviewed');
             $blogPublishing->place()->name('rejected');
@@ -167,6 +171,17 @@ follows:
     E.g. you can use ``!php/const App\Entity\BlogPost::STATE_DRAFT`` instead of
     ``'draft'`` or ``!php/const App\Entity\BlogPost::TRANSITION_TO_REVIEW``
     instead of ``'to_review'``.
+
+.. tip::
+
+    You can omit the ``places`` option if your transitions define all the places
+    that are used in the workflow. Symfony will automatically extract the places
+    from the transitions.
+
+    .. versionadded:: 7.1
+
+        The support for omitting the ``places`` option was introduced in
+        Symfony 7.1.
 
 The configured property will be used via its implemented getter/setter methods by the marking store::
 
