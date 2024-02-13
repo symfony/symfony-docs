@@ -95,7 +95,6 @@ Options
 
 **type**: ``array`` | ``string``
 
-
 This is defines the key or keys in a collection that should be checked for
 uniqueness. By default, all collection keys are checked for uniqueness.
 

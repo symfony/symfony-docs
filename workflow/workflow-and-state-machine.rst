@@ -282,7 +282,6 @@ machine type, use ``camelCased workflow name + StateMachine``::
         // ...
     }
 
-
 Automatic and Manual Validation
 -------------------------------
 
