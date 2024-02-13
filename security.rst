@@ -635,9 +635,6 @@ are public). On the other hand, all pages that you want to be *aware* of a logge
 user have to be under the same firewall. So if you want to display a *"You are logged in
 as ..."* message on every page, they all have to be included in the same firewall.
 
-The same firewall can have many modes of authentication. In other words, it
-enables many ways to ask the question *"Who are you?"*.
-
 You'll learn how to restrict access to URLs, controllers or
 anything else within your firewall in the :ref:`access control
 <security-access-control>` section.
