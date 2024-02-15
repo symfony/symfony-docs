@@ -188,6 +188,11 @@ to add any `npm package`_:
 
     $ php bin/console importmap:require bootstrap
 
+.. note::
+
+    If you're getting a 404 error, you can contact the package maintainer and ask them to
+    include `"main":` and `"module":` to the package's `package.json`.
+
 This adds the ``bootstrap`` package to your ``importmap.php`` file::
 
     // importmap.php
@@ -207,6 +212,8 @@ This adds the ``bootstrap`` package to your ``importmap.php`` file::
     such as ``@popperjs/core``. The ``importmap:require`` command will add both the
     main package *and* its dependencies. If a package includes a main CSS file,
     that will also be added (see :ref:`Handling 3rd-Party CSS <asset-mapper-3rd-party-css>`).
+    If the associated CSS file isn't added to the importmap, you can contact the package
+    maintainer and ask them to include `"style":` to the package's `package.json`.
 
 Now you can import the ``bootstrap`` package like usual:
 
