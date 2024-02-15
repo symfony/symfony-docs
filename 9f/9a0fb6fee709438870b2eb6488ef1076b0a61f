@@ -1,0 +1,13 @@
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-02-14T10:02:23Z
+
+> Contains https://github.com/symfony/symfony-docs/pull/19534 to reduce rebase works after one of those gets merged.
+
+No need, we can handle that while merging your PR 👍
+
+---------------------------------------------------------------------------
+
+by OskarStark at 2024-02-15T07:51:55Z
+
+Can you please remove SMSense? Thanks
