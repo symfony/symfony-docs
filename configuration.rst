@@ -349,7 +349,6 @@ configuration file using a special syntax: wrap the parameter name in two ``%``
             ]);
         };
 
-
 .. note::
 
     If some parameter value includes the ``%`` character, you need to escape it
@@ -1084,7 +1083,7 @@ already existing ``.env`` files).
         # .env (or .env.local)
         APP_ENV=prod
 
-        # .env.prod (or .env.local.prod) - this will fallback on the loaders you defined
+        # .env.prod (or .env.prod.local) - this will fallback on the loaders you defined
         APP_ENV=
 
 .. _configuration-accessing-parameters:

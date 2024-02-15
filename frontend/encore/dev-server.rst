@@ -122,7 +122,6 @@ Live Reloading when changing PHP / Twig Files
 To utilize the HMR superpower along with live reload for your PHP code and
 templates, set the following options:
 
-
 .. code-block:: javascript
 
     // webpack.config.js

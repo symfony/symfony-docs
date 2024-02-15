@@ -467,7 +467,6 @@ and use that when configuring the pool.
                     ->adapters(['cache.adapter.redis'])
                     ->provider('app.my_custom_redis_provider');
 
-
             $container->register('app.my_custom_redis_provider', \Redis::class)
                 ->setFactory([RedisAdapter::class, 'createConnection'])
                 ->addArgument('redis://localhost')

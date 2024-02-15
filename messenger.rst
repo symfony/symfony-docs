@@ -2607,7 +2607,6 @@ and a different instance will be created per bus.
                             - 'App\Middleware\MyMiddleware'
                             - 'App\Middleware\AnotherMiddleware'
 
-
     .. code-block:: xml
 
         <!-- config/packages/messenger.xml -->

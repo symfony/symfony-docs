@@ -99,4 +99,3 @@ Filtering data::
             $event['data'] = strtolower($event['data']);
         }
     }
-
