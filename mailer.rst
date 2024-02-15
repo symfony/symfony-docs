@@ -1473,13 +1473,6 @@ render the email before calling ``$mailer->send($email)``::
 
         $mailer->send($email);
     }
-<<<<<<< HEAD
-=======
-=======
-Thanks to this, instead of being delivered immediately, messages will be sent to
-the transport to be handled later (see :ref:`messenger-worker`).
->>>>>>> 5.4
->>>>>>> 6.3
 
 You can configure which bus is used to dispatch the message using the ``message_bus`` option.
 You can also set this to ``false`` to call the Mailer transport directly and
