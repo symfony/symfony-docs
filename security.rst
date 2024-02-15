@@ -913,8 +913,7 @@ The form can look like anything, but it usually follows some conventions:
 
 .. danger::
 
-    This login form is currently not protected against CSRF attacks. Read
-    :ref:`form_login-csrf` on how to protect your login form.
+    This login form is currently not protected against CSRF attacks (see below).
 
 And that's it! When you submit the form, the security system automatically
 reads the ``_username`` and ``_password`` POST parameter, loads the user via
