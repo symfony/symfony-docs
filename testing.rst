@@ -1092,9 +1092,9 @@ Learn more
     /components/css_selector
 
 .. _`PHPUnit`: https://phpunit.de/
-.. _`documentation`: https://phpunit.readthedocs.io/
-.. _`Writing Tests for PHPUnit`: https://phpunit.readthedocs.io/en/9.5/writing-tests-for-phpunit.html
-.. _`PHPUnit documentation`: https://phpunit.readthedocs.io/en/9.5/configuration.html
+.. _`documentation`: https://docs.phpunit.de/en/9.6
+.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/9.6/writing-tests-for-phpunit.html
+.. _`PHPUnit documentation`: https://docs.phpunit.de/en/9.6/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
 .. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
