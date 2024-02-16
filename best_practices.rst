@@ -376,17 +376,15 @@ inside the ``#[Security]`` attribute.
 Web Assets
 ----------
 
-Use Webpack Encore to Process Web Assets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. _use-webpack-encore-to-process-web-assets:
 
-Web assets are things like CSS, JavaScript, and image files that make the
-frontend of your site look and work great. `Webpack`_ is the leading JavaScript
-module bundler that compiles, transforms and packages assets for usage in a browser.
+Use AssetMapper to Manage Web Assets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:doc:`Webpack Encore </frontend>` is a JavaScript library that gets rid of most
-of Webpack complexity without hiding any of its features or distorting its usage
-and philosophy. It was created for Symfony applications, but it works
-for any application using any technology.
+Web assets are the CSS, JavaScript, and image files that make the frontend of
+your site look and work great. :doc:`AssetMapper </frontend/asset_mapper>` lets
+you write modern JavaScript and CSS without the complexity of using a bundler
+such as `Webpack`_ (directly or via :doc:`Webpack Encore </frontend/encore/index>`).
 
 Tests
 -----
