@@ -74,8 +74,8 @@ The path - ``images/duck.png`` - is relative to your mapped directory (``assets/
 This is known as the **logical path** to your asset.
 
 If you look at the HTML in your page, the URL will be something
-like: ``/assets/images/duck-3c16d9220694c0e56d8648f25e6035e9.png``. If you update
-the file, the version part of the URL will change automatically!
+like: ``/assets/images/duck-3c16d9220694c0e56d8648f25e6035e9.png``. If you change
+the file, the version part of the URL will also change automatically.
 
 Serving Assets in dev vs prod
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
