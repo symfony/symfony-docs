@@ -1189,8 +1189,8 @@ Learn more
 
 .. _`PHPUnit`: https://phpunit.de/
 .. _`documentation`: https://docs.phpunit.de/
-.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/10.3/writing-tests-for-phpunit.html
-.. _`PHPUnit documentation`: https://docs.phpunit.de/en/10.3/configuration.html
+.. _`Writing Tests for PHPUnit`: https://docs.phpunit.de/en/10.5/writing-tests-for-phpunit.html
+.. _`PHPUnit documentation`: https://docs.phpunit.de/en/10.5/configuration.html
 .. _`unit test`: https://en.wikipedia.org/wiki/Unit_testing
 .. _`DAMADoctrineTestBundle`: https://github.com/dmaicher/doctrine-test-bundle
 .. _`Doctrine data fixtures`: https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
