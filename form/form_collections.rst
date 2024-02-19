@@ -579,8 +579,8 @@ on the server. In order for this to work in an HTML form, you must remove
 the DOM element for the collection item to be removed, before submitting
 the form.
 
-In our JavaScript, we first need add a "delete" button to each existing tag on the page.
-Then, we append the "add delete button" method in the function that adds the new tags.
+In the JavaScript code, add a "delete" button to each existing tag on the page.
+Then, append the "add delete button" method in the function that adds the new tags:
 
 .. code-block:: javascript
 
