@@ -121,7 +121,7 @@ You can also configure laziness when your service is injected with the
     }
 
 This attribute also allows you to define the interfaces to proxy when using
-laziness, and supports lazy-autowiring of intersection types::
+laziness, and supports lazy-autowiring of union types::
 
     public function __construct(
         #[Autowire(service: 'foo', lazy: FooInterface::class)]
