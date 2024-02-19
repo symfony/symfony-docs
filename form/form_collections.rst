@@ -314,7 +314,7 @@ you'll replace with a unique, incrementing number (e.g. ``task[tags][3][name]``)
 
 .. code-block:: javascript
 
-    const addFormToCollection = (e) => {
+    function addFormToCollection(e) {
       const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
       const item = document.createElement('li');
@@ -579,7 +579,8 @@ on the server. In order for this to work in an HTML form, you must remove
 the DOM element for the collection item to be removed, before submitting
 the form.
 
-First, add a "delete this tag" link to each tag form:
+In our JavaScript, we first need add a "delete" button to each existing tag on the page.
+Then, we append the "add delete button" method in the function that adds the new tags.
 
 .. code-block:: javascript
 
@@ -591,7 +592,7 @@ First, add a "delete this tag" link to each tag form:
 
     // ... the rest of the block from above
 
-    const addFormToCollection = (e) => {
+    function addFormToCollection(e) {
         // ...
 
         // add a delete link to the new form
@@ -602,7 +603,7 @@ The ``addTagFormDeleteLink()`` function will look something like this:
 
 .. code-block:: javascript
 
-    const addTagFormDeleteLink = (item) => {
+    function addTagFormDeleteLink(item) {
         const removeFormButton = document.createElement('button');
         removeFormButton.innerText = 'Delete this tag';
 
