@@ -167,8 +167,8 @@ this section, the ``assets/app.js`` file is loaded & executed by the browser.
 
 .. tip::
 
-    When importing relative files, be sure to include the ``.js`` extension.
-    Unlike in Node, the extension is required in the browser environment.
+    When importing relative files, be sure to include the ``.js`` filename extension.
+    Unlike in Node.js, this extension is required in the browser environment.
 
 Importing 3rd Party JavaScript Packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
